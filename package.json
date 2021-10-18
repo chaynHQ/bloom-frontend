@@ -14,6 +14,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.0.2",
     "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.22.0",
