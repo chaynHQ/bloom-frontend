@@ -1,0 +1,8 @@
+{
+  "Index": {
+    "title": "Home",
+    "introduction": "Proyecto inicial con <nextLink>Next.js</nextLink>, <reduxLink>Redux</reduxLink> y <muiLink>MUI</muiLink>",
+    "getStarted": "Empieza editando el archivo <code>pages/index.tsx</code>",
+    "nextDocs": "Next.js docs"
+  }
+}
