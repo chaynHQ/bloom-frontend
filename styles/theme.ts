@@ -4,10 +4,14 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#F3D6D8',
+      main: '#d81b60',
+      light: '#F3D6D8',
+      dark: '#a00037',
     },
     secondary: {
-      main: '#F0244D',
+      main: '#ffbfa4',
+      light: '#FFEAE1',
+      dark: '#FF976A',
     },
     background: {
       default: '#FDF3EF',
@@ -17,16 +21,20 @@ let theme = createTheme({
       main: '#F3D6D8',
     },
   },
+  shape: {
+    borderRadius: 20,
+  },
   typography: {
     fontFamily: 'Open Sans, sans-serif',
     h1: {
-      fontFamily: 'Montserrat, sans-serif',
-      fontSize: '3.25rem',
+      fontFamily: 'Montserrat Semibold, sans-serif',
+      fontSize: '2.75rem',
     },
     h2: {
       fontSize: '2.25rem',
     },
     h3: {
+      fontFamily: 'Open Sans Semibold, sans-serif',
       fontSize: '1.75rem',
     },
     h4: {
@@ -37,7 +45,16 @@ let theme = createTheme({
     },
     h6: {
       fontSize: '1rem',
-      fontWeight: 'bold',
+      fontWeight: 'bolder',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: 'bolder',
+        },
+      },
     },
   },
 });
