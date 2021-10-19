@@ -7,4 +7,9 @@ module.exports = {
     NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN,
     NEXT_PUBLIC_ROLLBAR_ENVIRONMENT: process.env.NEXT_PUBLIC_ROLLBAR_ENVIRONMENT,
   },
+  i18n: {
+    locales: ['en', 'es',],
+    defaultLocale: 'en',
+    localeDetection: false
+  },
 };

@@ -1,6 +1,7 @@
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import createEmotionCache from '../config/emotionCache';
@@ -20,16 +21,18 @@ function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <title>My page</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
+    <NextIntlProvider messages={pageProps.messages}>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <title>My page</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
+    </NextIntlProvider>
   );
 }
 export default wrapper.withRedux(MyApp);
