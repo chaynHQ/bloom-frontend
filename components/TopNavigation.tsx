@@ -1,8 +1,10 @@
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import bloomLogo from '../public/bloom_logo.png';
 import LanguageMenu from './LanguageMenu';
+import Link from './Link';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
@@ -11,14 +13,25 @@ const appBarStyle = {
   px: 3,
   py: 1,
   height: 48,
+  color: 'text.primary',
 } as const;
-
 const logoContainerStyle = { width: 200, position: 'relative' } as const;
+const navigationLinkStyle = { ':hover': { color: 'primary.dark' } } as const;
 
 const TopNavigation = () => {
+  const t = useTranslations('TopNavigation');
+
+  const navigationLinks = [
+    { title: t('about'), href: '/about' },
+    { title: t('immediateHelp'), href: '/immediate-help' },
+    { title: t('therapy'), href: '/therapy' },
+    { title: t('courses'), href: '/courses' },
+    { title: t('account'), href: '/account' },
+  ];
+
   return (
     <AppBar sx={appBarStyle}>
-      <Box sx={logoContainerStyle}>
+      <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
         <Image
           alt="Bloom logo"
           src={bloomLogo}
@@ -26,8 +39,15 @@ const TopNavigation = () => {
           objectFit="contain"
           objectPosition="left"
         />
-      </Box>
-      <LanguageMenu />
+      </Link>
+      <Stack direction="row" spacing={3} alignItems="center">
+        {navigationLinks.map((link) => (
+          <Link key={link.title} href={link.href} unstyled sx={navigationLinkStyle}>
+            {link.title}
+          </Link>
+        ))}
+        <LanguageMenu />
+      </Stack>
     </AppBar>
   );
 };

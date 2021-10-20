@@ -45,6 +45,7 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     props: {
       messages: {
         ...require(`../messages/shared/${locale}.json`),
+        ...require(`../messages/topNavigation/${locale}.json`),
         ...require(`../messages/index/${locale}.json`),
       },
     },
