@@ -56,6 +56,14 @@ let theme = createTheme({
         },
       },
     },
+    MuiMenu: {
+      styleOverrides: {
+        list: {
+          padding: 2.5,
+          '& .MuiButton-root': { margin: 2.5 },
+        },
+      },
+    },
   },
 });
 theme = responsiveFontSizes(theme);

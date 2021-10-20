@@ -31,7 +31,6 @@ const Home: NextPage = () => {
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           component={Link}
-          noLinkStyle
           href="https://nextjs.org/docs"
         >
           {t.rich('nextDocs')}
