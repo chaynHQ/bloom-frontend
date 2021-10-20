@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import TopNavigation from '../components/TopNavigation';
 import createEmotionCache from '../config/emotionCache';
 import { wrapper } from '../store/index';
 import '../styles/globals.css';
@@ -29,6 +30,7 @@ function MyApp(props: MyAppProps) {
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <TopNavigation />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>
