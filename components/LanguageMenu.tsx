@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import Link from '../components/Link';
+import Link from './Link';
 
 export default function LanguageMenu() {
   const router = useRouter();
@@ -31,6 +31,7 @@ export default function LanguageMenu() {
         onClick={handleClick}
         startIcon={<LanguageIcon />}
         size="medium"
+        sx={{ width: 80 }}
       >
         {locale}
       </Button>
