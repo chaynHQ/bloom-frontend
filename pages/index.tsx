@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   const t = useTranslations('Index');
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box sx={{ mt: 10 }}>
         <Typography variant="h1" component="h1" gutterBottom>
           H1 -{' '}
@@ -45,7 +45,7 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     props: {
       messages: {
         ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/topNavigation/${locale}.json`),
+        ...require(`../messages/navigation/${locale}.json`),
         ...require(`../messages/index/${locale}.json`),
       },
     },

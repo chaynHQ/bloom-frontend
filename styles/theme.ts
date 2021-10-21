@@ -58,9 +58,35 @@ let theme = createTheme({
     },
     MuiMenu: {
       styleOverrides: {
+        paper: {
+          borderRadius: 14,
+        },
         list: {
-          padding: 4,
-          '& .MuiButton-root': { margin: 4 },
+          padding: 6,
+          backgroundColor: '#a00037',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          minHeight: 32,
+          minWidth: 64,
+          padding: 0,
+          color: '#ffffff',
+          fontFamily: 'Montserrat Semibold, sans-serif',
+          border: '1px #a00037 solid',
+          borderRadius: 16,
+
+          '&:hover': {
+            borderColor: '#F3D6D8',
+          },
+
+          '& a': {
+            display: 'block',
+            width: '100%',
+            padding: '6px 10px',
+          },
         },
       },
     },
