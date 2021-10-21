@@ -12,17 +12,17 @@ import Link from './Link';
 import NavigationMenu from './NavigationMenu';
 
 const drawerContainerStyle = {
-  width: '70vw',
   display: 'flex',
   flexDirection: 'column',
+  width: '70vw',
   paddingTop: 2,
 } as const;
 
 const logoContainerStyle = {
-  marginLeft: 2,
+  position: 'relative',
   width: 80,
   height: 48,
-  position: 'relative',
+  marginLeft: 2,
 } as const;
 
 const NavigationDrawer = () => {

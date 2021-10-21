@@ -15,16 +15,16 @@ const appBarStyle = {
   bgcolor: 'primary.light',
 } as const;
 const appBarContainerStyles = {
-  height: 48,
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  height: 48,
 } as const;
 const logoContainerStyle = {
+  position: 'relative',
   width: { xs: 80, md: 120 },
   height: 48,
-  position: 'relative',
 } as const;
 
 const TopBar = () => {
