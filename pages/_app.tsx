@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import TopBar from '../components/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import { wrapper } from '../store/index';
 import '../styles/globals.css';
@@ -29,10 +30,12 @@ function MyApp(props: MyAppProps) {
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <TopBar />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>
     </NextIntlProvider>
   );
 }
+
 export default wrapper.withRedux(MyApp);
