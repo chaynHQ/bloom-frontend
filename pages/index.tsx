@@ -18,8 +18,8 @@ const Home: NextPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ my: 6 }}>
-        <AppBar sx={{ flexDirection: 'row' }}>
+      <Box sx={{ mt: 10 }}>
+        <AppBar sx={{ bgcolor: 'primary.light', flexDirection: 'row' }}>
           {locales?.map((language) => {
             const currentLocale = language === locale;
 
@@ -28,8 +28,8 @@ const Home: NextPage = () => {
                 key={language}
                 component={Link}
                 noLinkStyle
-                color={currentLocale ? 'secondary' : 'primary'}
-                variant="contained"
+                variant={currentLocale ? 'outlined' : 'contained'}
+                disabled={currentLocale}
                 startIcon={currentLocale && <LanguageIcon />}
                 href="/"
                 locale={language}
@@ -39,7 +39,48 @@ const Home: NextPage = () => {
             );
           })}
         </AppBar>
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Typography variant="h1" component="h1" gutterBottom>
+          H1 -{' '}
+          {t.rich('introduction', {
+            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+          })}
+        </Typography>
+        <Typography variant="h2" component="h2" gutterBottom>
+          H2 -{' '}
+          {t.rich('introduction', {
+            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+          })}
+        </Typography>
+        <Typography variant="h3" component="h3" gutterBottom>
+          H3 -{' '}
+          {t.rich('introduction', {
+            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+          })}
+        </Typography>
+        <Typography variant="h4" component="h4" gutterBottom>
+          H4 -{' '}
+          {t.rich('introduction', {
+            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+          })}
+        </Typography>
+        <Typography variant="h5" component="h5" gutterBottom>
+          H5 -{' '}
+          {t.rich('introduction', {
+            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+          })}
+        </Typography>
+        <Typography variant="h6" component="h6" gutterBottom>
+          H6 -{' '}
           {t.rich('introduction', {
             nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
             reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
@@ -52,7 +93,7 @@ const Home: NextPage = () => {
           })}
         </Typography>
         <Button
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           component={Link}
           noLinkStyle
@@ -60,7 +101,32 @@ const Home: NextPage = () => {
         >
           {t.rich('nextDocs')}
         </Button>
+        <Button
+          component={Link}
+          sx={{ mt: 2, mr: 1.5 }}
+          variant="contained"
+          color="secondary"
+          noLinkStyle
+          href="https://nextjs.org/docs"
+        >
+          {t.rich('nextDocs')}
+        </Button>
+        <Button
+          component={Link}
+          sx={{ mt: 2, mr: 1.5 }}
+          variant="outlined"
+          noLinkStyle
+          href="https://nextjs.org/docs"
+        >
+          {t.rich('nextDocs')}
+        </Button>
       </Box>
+      <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
+      <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'primary.dark', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.main', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.light', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.dark', height: '2.5rem' }}></Box>
     </Container>
   );
 };
