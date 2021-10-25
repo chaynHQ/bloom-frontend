@@ -1,3 +1,5 @@
+import LanguageIcon from '@mui/icons-material/Language';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -36,6 +38,12 @@ const Home: NextPage = () => {
           {t.rich('nextDocs')}
         </Button>
       </Box>
+      <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
+      <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'primary.dark', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.main', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.light', height: '2.5rem' }}></Box>
+      <Box sx={{ bgcolor: 'secondary.dark', height: '2.5rem' }}></Box>
     </Container>
   );
 };
