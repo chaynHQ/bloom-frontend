@@ -19,7 +19,7 @@ interface HeaderProps {
 
 const headerContainerStyles = {
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: { xs: 'column', md: 'row' },
   justifyContent: 'space-between',
 } as const;
 
@@ -27,7 +27,11 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 150, md: 250 },
   height: { xs: 150, md: 250 },
+  marginLeft: { xs: 0, md: 5 },
+  marginTop: { xs: 4, md: 0 },
+  alignSelf: { xs: 'center', md: 'auto' },
 } as const;
+
 const textContainerStyle = {
   maxWidth: 600,
 } as const;
