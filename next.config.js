@@ -8,8 +8,8 @@ module.exports = {
     NEXT_PUBLIC_ROLLBAR_ENVIRONMENT: process.env.NEXT_PUBLIC_ROLLBAR_ENVIRONMENT,
   },
   i18n: {
-    locales: ['en', 'es',],
+    locales: ['en', 'es'],
     defaultLocale: 'en',
-    localeDetection: false
+    localeDetection: false,
   },
 };
