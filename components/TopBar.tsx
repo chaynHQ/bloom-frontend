@@ -33,7 +33,7 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AppBar sx={appBarStyle}>
+    <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
         {isSmallScreen && <NavigationDrawer />}
         <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>

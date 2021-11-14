@@ -33,9 +33,9 @@ export default function LanguageMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         aria-label={t('languageMenu')}
-        variant={'outlined'}
+        color="inherit"
         onClick={handleClick}
-        endIcon={<LanguageIcon />}
+        startIcon={<LanguageIcon />}
         size="medium"
       >
         {locale}
@@ -44,6 +44,7 @@ export default function LanguageMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        elevation={1}
         MenuListProps={{
           id: 'language-menu',
         }}
