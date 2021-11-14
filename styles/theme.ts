@@ -4,18 +4,18 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#d81b60',
-      light: '#F3D6D8',
-      dark: '#a00037',
+      main: '#F3D6D8',
+      light: '#F7E2E4',
+      dark: '#EA0050',
     },
     secondary: {
-      main: '#ffbfa4',
+      main: '#FFBFA4',
       light: '#FFEAE1',
       dark: '#FF976A',
     },
     background: {
       default: '#FDF3EF',
-      paper: '#F3D6D8',
+      paper: '#F7E2E4',
     },
     info: {
       main: '#F3D6D8',
@@ -49,10 +49,60 @@ let theme = createTheme({
     },
   },
   components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: '#000000',
+          textDecorationColor: '#EA0050',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
           fontWeight: 'bolder',
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: 'transparent',
+
+          '&:hover': {
+            backgroundColor: '#F7E2E4',
+            border: '1px solid #EA0050',
+          },
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: '#EA0050',
+            opacity: 0.1,
+          },
+        },
+        outlinedPrimary: {
+          color: '#000000',
+          borderColor: '#F3D6D8',
+        },
+        containedPrimary: {
+          borderColor: 'transparent',
+        },
+        containedSecondary: {
+          borderColor: 'transparent',
+          '&:hover': {
+            backgroundColor: '#FFEAE1',
+            border: '1px solid #FF976A',
+          },
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: '#FF976A',
+            opacity: 0.1,
+          },
+        },
+        outlinedSecondary: {
+          color: '#000000',
+          borderColor: '#FF976A',
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: '#FF976A',
+            opacity: 0.1,
+          },
+          '&:hover': {
+            backgroundColor: '#FFEAE1',
+            border: '1px solid #FF976A',
+          },
         },
       },
     },
@@ -63,7 +113,6 @@ let theme = createTheme({
         },
         list: {
           padding: 6,
-          backgroundColor: '#a00037',
         },
       },
     },
@@ -71,11 +120,8 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 32,
-          minWidth: 64,
+          minWidth: 60,
           padding: 0,
-          color: '#ffffff',
-          fontFamily: 'Montserrat Semibold, sans-serif',
-          border: '1px #a00037 solid',
           borderRadius: 16,
 
           '&:hover': {
@@ -86,6 +132,16 @@ let theme = createTheme({
             display: 'block',
             width: '100%',
             padding: '6px 10px',
+            textAlign: 'center',
+          },
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#FDF3EF',
           },
         },
       },
