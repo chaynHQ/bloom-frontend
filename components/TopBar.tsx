@@ -13,13 +13,14 @@ import NavigationMenu from './NavigationMenu';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
+  '+ div': { marginTop: { xs: 6, md: 8 } },
 } as const;
 const appBarContainerStyles = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: 48,
+  height: { xs: 48, md: 64 },
 } as const;
 const logoContainerStyle = {
   position: 'relative',

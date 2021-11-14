@@ -45,6 +45,14 @@ let theme = createTheme({
     },
   },
   components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: '100% !important',
+          padding: '0 calc((100vw - 1000px) / 2) !important',
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
