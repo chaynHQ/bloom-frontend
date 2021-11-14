@@ -6,7 +6,7 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Header from '../components/Header';
 import Link from '../components/Link';
-import bloomLogo from '../public/bloom_logo.png';
+import bloomLogo from '../public/illustration_tea_peach.png';
 
 const Home: NextPage = () => {
   const t = useTranslations('Index');
