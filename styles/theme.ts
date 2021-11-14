@@ -27,25 +27,21 @@ let theme = createTheme({
   typography: {
     fontFamily: 'Open Sans, sans-serif',
     h1: {
-      fontFamily: 'Montserrat Semibold, sans-serif',
-      fontSize: '2.75rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '2.25rem',
+      fontWeight: 500,
     },
     h2: {
-      fontSize: '2.25rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '1.875rem',
+      fontWeight: 500,
     },
     h3: {
-      fontFamily: 'Open Sans Semibold, sans-serif',
-      fontSize: '1.75rem',
+      fontSize: '1.625rem',
     },
     h4: {
-      fontSize: '1.5rem',
-    },
-    h5: {
       fontSize: '1.25rem',
-    },
-    h6: {
-      fontSize: '1rem',
-      fontWeight: 'bolder',
+      fontWeight: 600,
     },
   },
   components: {
