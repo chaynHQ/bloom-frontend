@@ -12,30 +12,28 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      <Box sx={{ mt: 10 }}>
-        <Typography variant="h1" component="h1" gutterBottom>
-          H1 -{' '}
-          {t.rich('introduction', {
-            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
-            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
-            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
-          })}
-        </Typography>
+      <Typography variant="h1" component="h1" gutterBottom>
+        H1 -{' '}
+        {t.rich('introduction', {
+          nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+          reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+          muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+        })}
+      </Typography>
 
-        <Typography variant="body1" component="p" gutterBottom>
-          {t.rich('getStarted', {
-            code: (children) => <code>{children}</code>,
-          })}
-        </Typography>
-        <Button
-          sx={{ mt: 2, mr: 1.5 }}
-          variant="contained"
-          component={Link}
-          href="https://nextjs.org/docs"
-        >
-          {t.rich('nextDocs')}
-        </Button>
-      </Box>
+      <Typography variant="body1" component="p" gutterBottom>
+        {t.rich('getStarted', {
+          code: (children) => <code>{children}</code>,
+        })}
+      </Typography>
+      <Button
+        sx={{ mt: 2, mr: 1.5 }}
+        variant="contained"
+        component={Link}
+        href="https://nextjs.org/docs"
+      >
+        {t.rich('nextDocs')}
+      </Button>
       <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
       <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>
       <Box sx={{ bgcolor: 'primary.dark', height: '2.5rem' }}></Box>

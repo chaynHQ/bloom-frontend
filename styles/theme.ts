@@ -15,10 +15,6 @@ let theme = createTheme({
     },
     background: {
       default: '#FDF3EF',
-      paper: '#F7E2E4',
-    },
-    info: {
-      main: '#F3D6D8',
     },
   },
   shape: {
@@ -44,12 +40,31 @@ let theme = createTheme({
       fontWeight: 600,
     },
   },
+});
+
+theme = createTheme(theme, {
+  palette: {
+    background: {
+      paper: theme.palette.primary.light,
+    },
+    info: {
+      main: theme.palette.primary.main,
+    },
+  },
   components: {
     MuiContainer: {
       styleOverrides: {
         root: {
           maxWidth: '100% !important',
-          padding: '0 calc((100vw - 1000px) / 2) !important',
+          paddingTop: 40,
+          paddingBottom: 40,
+
+          [theme.breakpoints.up('lg')]: {
+            paddingTop: 80,
+            paddingBottom: 80,
+            paddingLeft: 'calc((100vw - 1000px) / 2) !important',
+            paddingRight: 'calc((100vw - 1000px) / 2) !important',
+          },
         },
       },
     },
@@ -57,7 +72,7 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           color: '#000000',
-          textDecorationColor: '#EA0050',
+          textDecorationColor: theme.palette.primary.dark,
         },
       },
     },
@@ -70,17 +85,17 @@ let theme = createTheme({
           borderColor: 'transparent',
 
           '&:hover': {
-            backgroundColor: '#F7E2E4',
-            border: '1px solid #EA0050',
+            backgroundColor: theme.palette.primary.light,
+            borderColor: theme.palette.primary.dark,
           },
           '& .MuiTouchRipple-root span': {
-            backgroundColor: '#EA0050',
+            backgroundColor: theme.palette.primary.dark,
             opacity: 0.1,
           },
         },
         outlinedPrimary: {
           color: '#000000',
-          borderColor: '#F3D6D8',
+          borderColor: theme.palette.primary.main,
         },
         containedPrimary: {
           borderColor: 'transparent',
@@ -88,24 +103,24 @@ let theme = createTheme({
         containedSecondary: {
           borderColor: 'transparent',
           '&:hover': {
-            backgroundColor: '#FFEAE1',
-            border: '1px solid #FF976A',
+            backgroundColor: theme.palette.secondary.light,
+            borderColor: theme.palette.secondary.dark,
           },
           '& .MuiTouchRipple-root span': {
-            backgroundColor: '#FF976A',
+            backgroundColor: theme.palette.secondary.dark,
             opacity: 0.1,
           },
         },
         outlinedSecondary: {
           color: '#000000',
-          borderColor: '#FF976A',
+          borderColor: theme.palette.secondary.dark,
           '& .MuiTouchRipple-root span': {
-            backgroundColor: '#FF976A',
+            backgroundColor: theme.palette.secondary.dark,
             opacity: 0.1,
           },
           '&:hover': {
-            backgroundColor: '#FFEAE1',
-            border: '1px solid #FF976A',
+            backgroundColor: theme.palette.secondary.light,
+            borderColor: theme.palette.secondary.dark,
           },
         },
       },
@@ -129,7 +144,7 @@ let theme = createTheme({
           borderRadius: 16,
 
           '&:hover': {
-            borderColor: '#F3D6D8',
+            borderColor: theme.palette.primary.main,
           },
 
           '& a': {
@@ -145,7 +160,7 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           '&:hover': {
-            backgroundColor: '#FDF3EF',
+            backgroundColor: theme.palette.background.default,
           },
         },
       },

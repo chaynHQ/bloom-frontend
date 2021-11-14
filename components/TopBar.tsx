@@ -21,6 +21,8 @@ const appBarContainerStyles = {
   justifyContent: 'space-between',
   alignItems: 'center',
   height: { xs: 48, md: 64 },
+  paddingTop: '0 !important',
+  paddingBottom: '0 !important',
 } as const;
 const logoContainerStyle = {
   position: 'relative',
