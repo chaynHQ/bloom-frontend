@@ -42,10 +42,10 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        <Typography variant="h1" component="h1" gutterBottom>
+        <Typography variant="h1" component="h1">
           {title}
         </Typography>
-        <Typography variant="body1" component="p" gutterBottom>
+        <Typography variant="body1" component="p">
           {introduction}
         </Typography>
       </Box>
