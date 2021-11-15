@@ -1,8 +1,12 @@
 {
   "TherapyBooking": {
-    "title": "Book therapy",
-    "introduction1": "Bumble has partnered with Bloom to offer you free, confidential support.",
-    "introduction2": "Bloom connects you to a therapist who can offer tailored support. You'll have access to six, hour-long sessions with a therapist of your choice.",
-    "bookingButton": "Book now"
+    "title": "Bloom therapy",
+    "introduction": "Bumble has partnered with Bloom to offer you free, confidential support. Bloom connects you to a therapist who can offer tailored support. You'll have access to six, hour-long sessions with a therapist of your choice.",
+    "bookingButton": "Book now",
+    "bookingTitle": "Book a therapy session",
+    "bookingDescription1": "You have <strongText>4</strongText> therapy sessions left to book.",
+    "bookingDescription2": "We recommend only booking one session in advance.",
+    "bookingDescription3": "Ready to book your next session? Select a therapist and time that suits you.",
+    "illustrationHorizontalLeaf": "Illustration of two leaves joined with a rose"
   }
 }

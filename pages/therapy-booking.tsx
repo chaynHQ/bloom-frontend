@@ -5,8 +5,12 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
+import Header from '../components/Header';
+import illustrationHorizontalLeaf from '../public/illustration_horizontal_leaf.png';
+import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 const TherapyBooking: NextPage = () => {
   const t = useTranslations('TherapyBooking');
@@ -39,36 +43,81 @@ const TherapyBooking: NextPage = () => {
     app_config: { allow_switch_to_ada: 0, predefined: [] },
   } as const;
 
+  const headerProps = {
+    title: t.rich('title'),
+    introduction: t.rich('introduction'),
+    imageSrc: illustrationTeaPeach,
+    imageAlt: 'Bloom logo',
+  };
+
+  const bookingContainerStyle = {
+    backgroundColor: 'secondary.light',
+    textAlign: { xs: 'left', md: 'center' },
+  };
+
+  const imageContainerStyle = {
+    position: 'relative',
+    width: 100,
+    height: 80,
+    marginY: { xs: 2, md: 2 },
+    marginX: { xs: 'unset', md: 'auto' },
+  } as const;
+
   const openWidget = () => {
     setWidgetOpen(true);
   };
 
   return (
-    <Container>
-      <Box sx={{ mt: 14 }}>
-        <Typography variant="h1" component="h1" gutterBottom>
-          {t.rich('title')}
+    <Box>
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
+      <Container sx={bookingContainerStyle}>
+        <Typography variant="h2" component="h2">
+          {t.rich('bookingTitle')}
         </Typography>
-        <Typography variant="body1" component="p" gutterBottom>
-          {t.rich('introduction1')}
+        <Typography variant="body1" component="p">
+          {t.rich('bookingDescription1', {
+            strongText: (children) => <strong>{children}</strong>,
+          })}
         </Typography>
-        <Typography variant="body1" component="p" gutterBottom>
-          {t.rich('introduction2')}
+        <Typography variant="body1" component="p">
+          {t.rich('bookingDescription2')}
         </Typography>
-        <Button sx={{ mt: 2, mr: 1.5 }} variant="contained" onClick={openWidget}>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={t.raw('illustrationHorizontalLeaf')}
+            src={illustrationHorizontalLeaf}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+        <Typography variant="body1" component="p">
+          {t.rich('bookingDescription3')}
+        </Typography>
+        <Button
+          sx={{ mt: 4 }}
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={openWidget}
+        >
           {t.rich('bookingButton')}
         </Button>
-      </Box>
-      {widgetOpen && (
-        <Script
-          id="widget-js"
-          src="//widget.simplybook.it/v2/widget/widget.js"
-          onLoad={() => {
-            new (window as any).SimplybookWidget(widgetConfig);
-          }}
-        />
-      )}
-    </Container>
+        {widgetOpen && (
+          <Script
+            id="widget-js"
+            src="//widget.simplybook.it/v2/widget/widget.js"
+            onLoad={() => {
+              new (window as any).SimplybookWidget(widgetConfig);
+            }}
+          />
+        )}
+      </Container>
+    </Box>
   );
 };
 
