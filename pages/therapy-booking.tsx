@@ -1,3 +1,7 @@
+import EventIcon from '@mui/icons-material/Event';
+import LanguageIcon from '@mui/icons-material/Language';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -5,12 +9,11 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
 import Header from '../components/Header';
-import illustrationHorizontalLeaf from '../public/illustration_horizontal_leaf.png';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
+// import Image from 'next/image';
 
 const TherapyBooking: NextPage = () => {
   const t = useTranslations('TherapyBooking');
@@ -50,18 +53,36 @@ const TherapyBooking: NextPage = () => {
     imageAlt: 'Bloom logo',
   };
 
-  const bookingContainerStyle = {
+  const containerStyle = {
     backgroundColor: 'secondary.light',
-    textAlign: { xs: 'left', md: 'center' },
-  };
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: 100,
-    height: 80,
-    marginY: { xs: 2, md: 2 },
-    marginX: { xs: 'unset', md: 'auto' },
+    textAlign: 'center',
   } as const;
+
+  const stepsContainerStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexFlow: 'wrap',
+  } as const;
+
+  const stepContainerStyle = {
+    position: 'relative',
+    width: { xs: '100%', md: '25%' },
+    padding: { xs: 2, md: 4 },
+    alignText: 'center',
+  } as const;
+
+  const stepIconStyle = {
+    fontSize: 50,
+    marginBottom: { xs: 1, md: 2 },
+  } as const;
+
+  // const imageContainerStyle = {
+  //   position: 'relative',
+  //   width: 100,
+  //   height: 80,
+  //   marginY: { xs: 2, md: 2 },
+  //   marginX: { xs: 'unset', md: 'auto' },
+  // } as const;
 
   const openWidget = () => {
     setWidgetOpen(true);
@@ -75,31 +96,14 @@ const TherapyBooking: NextPage = () => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
-      <Container sx={bookingContainerStyle}>
-        <Typography variant="h2" component="h2">
-          {t.rich('bookingTitle')}
-        </Typography>
+      <Container sx={containerStyle}>
         <Typography variant="body1" component="p">
           {t.rich('bookingDescription1', {
             strongText: (children) => <strong>{children}</strong>,
           })}
         </Typography>
-        <Typography variant="body1" component="p">
-          {t.rich('bookingDescription2')}
-        </Typography>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={t.raw('illustrationHorizontalLeaf')}
-            src={illustrationHorizontalLeaf}
-            layout="fill"
-            objectFit="contain"
-          />
-        </Box>
-        <Typography variant="body1" component="p">
-          {t.rich('bookingDescription3')}
-        </Typography>
         <Button
-          sx={{ mt: 4 }}
+          sx={{ mb: 4, mt: 4 }}
           variant="contained"
           color="secondary"
           size="large"
@@ -107,6 +111,40 @@ const TherapyBooking: NextPage = () => {
         >
           {t.rich('bookingButton')}
         </Button>
+        <Box sx={stepsContainerStyle}>
+          <Box sx={stepContainerStyle}>
+            {/* <Box sx={imageContainerStyle}>
+              <Image
+                alt={t.raw('illustrationHorizontalLeaf')}
+                src={illustrationHorizontalLeaf}
+                layout="fill"
+                objectFit="contain"
+              />
+            </Box> */}
+            <LanguageIcon sx={stepIconStyle} color="secondary" />
+            <Typography variant="body1" component="p">
+              {t.rich('step1')}
+            </Typography>
+          </Box>
+          <Box sx={stepContainerStyle}>
+            <PersonPinIcon sx={stepIconStyle} color="secondary" />
+            <Typography variant="body1" component="p">
+              {t.rich('step2')}
+            </Typography>
+          </Box>
+          <Box sx={stepContainerStyle}>
+            <ScheduleIcon sx={stepIconStyle} color="secondary" />
+            <Typography variant="body1" component="p">
+              {t.rich('step3')}
+            </Typography>
+          </Box>
+          <Box sx={stepContainerStyle}>
+            <EventIcon sx={stepIconStyle} color="secondary" />
+            <Typography variant="body1" component="p">
+              {t.rich('step4')}
+            </Typography>
+          </Box>
+        </Box>
         {widgetOpen && (
           <Script
             id="widget-js"
