@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Header from '../components/Header';
 import Link from '../components/Link';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
@@ -23,22 +23,14 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Container>
-      <Box sx={{ mt: 10 }}>
-        <Typography variant="h1" component="h1" gutterBottom>
-          H1 -{' '}
-          {t.rich('introduction', {
-            nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
-            reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
-            muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
-          })}
-        </Typography>
-
-        <Typography variant="body1" component="p" gutterBottom>
-          {t.rich('getStarted', {
-            code: (children) => <code>{children}</code>,
-          })}
-        </Typography>
+    <Box>
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
+      <Container>
         <Button
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
@@ -47,14 +39,14 @@ const Home: NextPage = () => {
         >
           {t.rich('nextDocs')}
         </Button>
-      </Box>
-      <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
-      <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>
-      <Box sx={{ bgcolor: 'primary.dark', height: '2.5rem' }}></Box>
-      <Box sx={{ bgcolor: 'secondary.main', height: '2.5rem' }}></Box>
-      <Box sx={{ bgcolor: 'secondary.light', height: '2.5rem' }}></Box>
-      <Box sx={{ bgcolor: 'secondary.dark', height: '2.5rem' }}></Box>
-    </Container>
+        <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
+        <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>
+        <Box sx={{ bgcolor: 'primary.dark', height: '2.5rem' }}></Box>
+        <Box sx={{ bgcolor: 'secondary.main', height: '2.5rem' }}></Box>
+        <Box sx={{ bgcolor: 'secondary.light', height: '2.5rem' }}></Box>
+        <Box sx={{ bgcolor: 'secondary.dark', height: '2.5rem' }}></Box>
+      </Container>
+    </Box>
   );
 };
 

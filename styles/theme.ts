@@ -4,21 +4,17 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#d81b60',
-      light: '#F3D6D8',
-      dark: '#a00037',
+      main: '#F3D6D8',
+      light: '#F7E2E4',
+      dark: '#EA0050',
     },
     secondary: {
-      main: '#ffbfa4',
+      main: '#FFBFA4',
       light: '#FFEAE1',
       dark: '#FF976A',
     },
     background: {
       default: '#FDF3EF',
-      paper: '#F3D6D8',
-    },
-    info: {
-      main: '#F3D6D8',
     },
   },
   shape: {
@@ -47,15 +43,43 @@ let theme = createTheme({
       fontWeight: 600,
       marginBottom: '0.75rem',
     },
-    h5: {
-      fontSize: '1.25rem',
+  },
+});
+
+theme = createTheme(theme, {
+  palette: {
+    background: {
+      paper: theme.palette.primary.light,
     },
-    h6: {
-      fontSize: '1rem',
-      fontWeight: 'bolder',
+    info: {
+      main: theme.palette.primary.main,
     },
   },
   components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: '100% !important',
+          paddingTop: 40,
+          paddingBottom: 40,
+
+          [theme.breakpoints.up('lg')]: {
+            paddingTop: 80,
+            paddingBottom: 80,
+            paddingLeft: 'calc((100vw - 1000px) / 2) !important',
+            paddingRight: 'calc((100vw - 1000px) / 2) !important',
+          },
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: '#000000',
+          textDecorationColor: theme.palette.primary.dark,
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -114,7 +138,6 @@ let theme = createTheme({
         },
         list: {
           padding: 6,
-          backgroundColor: '#a00037',
         },
       },
     },
@@ -122,21 +145,28 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 32,
-          minWidth: 64,
+          minWidth: 60,
           padding: 0,
-          color: '#ffffff',
-          fontFamily: 'Montserrat Semibold, sans-serif',
-          border: '1px #a00037 solid',
           borderRadius: 16,
 
           '&:hover': {
-            borderColor: '#F3D6D8',
+            borderColor: theme.palette.primary.main,
           },
 
           '& a': {
             display: 'block',
             width: '100%',
             padding: '6px 10px',
+            textAlign: 'center',
+          },
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: theme.palette.background.default,
           },
         },
       },
