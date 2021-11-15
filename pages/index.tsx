@@ -6,7 +6,7 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Header from '../components/Header';
 import Link from '../components/Link';
-import bloomLogo from '../public/illustration_tea_peach.png';
+import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 const Home: NextPage = () => {
   const t = useTranslations('Index');
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
       muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
     }),
-    imageSrc: bloomLogo,
+    imageSrc: illustrationTeaPeach,
     imageAlt: 'Bloom logo',
   };
 

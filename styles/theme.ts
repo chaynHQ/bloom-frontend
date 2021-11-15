@@ -26,18 +26,22 @@ let theme = createTheme({
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '2.25rem',
       fontWeight: 500,
+      marginBottom: '1rem',
     },
     h2: {
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '1.875rem',
       fontWeight: 500,
+      marginBottom: '1rem',
     },
     h3: {
       fontSize: '1.625rem',
+      marginBottom: '1rem',
     },
     h4: {
       fontSize: '1.25rem',
       fontWeight: 600,
+      marginBottom: '0.75rem',
     },
   },
 });
@@ -80,9 +84,11 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           fontWeight: 'bolder',
+          borderRadius: '100px',
           borderWidth: '1px',
           borderStyle: 'solid',
           borderColor: 'transparent',
+          textTransform: 'unset',
 
           '&:hover': {
             backgroundColor: theme.palette.primary.light,
