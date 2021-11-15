@@ -13,13 +13,16 @@ import NavigationMenu from './NavigationMenu';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
+  '+ div': { marginTop: { xs: 6, md: 8 } },
 } as const;
 const appBarContainerStyles = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: 48,
+  height: { xs: 48, md: 64 },
+  paddingTop: '0 !important',
+  paddingBottom: '0 !important',
 } as const;
 const logoContainerStyle = {
   position: 'relative',
@@ -33,7 +36,7 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AppBar sx={appBarStyle}>
+    <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
         {isSmallScreen && <NavigationDrawer />}
         <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
