@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import Link from './Link';
 
-const linkStyle = { textTransform: 'uppercase', fontSize: 14 } as const;
+const linkStyle = { fontSize: 14 } as const;
 
 export default function LanguageMenu() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function LanguageMenu() {
         endIcon={<LanguageIcon />}
         size="medium"
       >
-        {locale}
+        {locale?.toUpperCase()}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -51,10 +51,12 @@ export default function LanguageMenu() {
         {locales
           ?.filter((language) => language !== locale)
           .map((language) => {
+            const languageUppercase = language.toUpperCase();
+            console.log(languageUppercase);
             return (
               <MenuItem key={language}>
                 <Link sx={linkStyle} href="/" locale={language} unstyled>
-                  {language}
+                  {languageUppercase}
                 </Link>
               </MenuItem>
             );

@@ -1,5 +1,3 @@
-import LanguageIcon from '@mui/icons-material/Language';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -8,9 +6,21 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Link from '../components/Link';
+import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 const Home: NextPage = () => {
   const t = useTranslations('Index');
+
+  const headerProps = {
+    title: t.rich('title'),
+    introduction: t.rich('introduction', {
+      nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+      reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
+      muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
+    }),
+    imageSrc: illustrationTeaPeach,
+    imageAlt: 'Bloom logo',
+  };
 
   return (
     <Container>

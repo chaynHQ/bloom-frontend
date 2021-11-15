@@ -27,18 +27,25 @@ let theme = createTheme({
   typography: {
     fontFamily: 'Open Sans, sans-serif',
     h1: {
-      fontFamily: 'Montserrat Semibold, sans-serif',
-      fontSize: '2.75rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '2.25rem',
+      fontWeight: 500,
+      marginBottom: '1rem',
     },
     h2: {
-      fontSize: '2.25rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '1.875rem',
+      fontWeight: 500,
+      marginBottom: '1rem',
     },
     h3: {
-      fontFamily: 'Open Sans Semibold, sans-serif',
-      fontSize: '1.75rem',
+      fontSize: '1.625rem',
+      marginBottom: '1rem',
     },
     h4: {
-      fontSize: '1.5rem',
+      fontSize: '1.25rem',
+      fontWeight: 600,
+      marginBottom: '0.75rem',
     },
     h5: {
       fontSize: '1.25rem',
@@ -53,6 +60,50 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 'bolder',
+          borderRadius: '100px',
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: 'transparent',
+          textTransform: 'unset',
+
+          '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+            borderColor: theme.palette.primary.dark,
+          },
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.primary.dark,
+            opacity: 0.1,
+          },
+        },
+        outlinedPrimary: {
+          color: '#000000',
+          borderColor: theme.palette.primary.main,
+        },
+        containedPrimary: {
+          borderColor: 'transparent',
+        },
+        containedSecondary: {
+          borderColor: 'transparent',
+          '&:hover': {
+            backgroundColor: theme.palette.secondary.light,
+            borderColor: theme.palette.secondary.dark,
+          },
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.secondary.dark,
+            opacity: 0.1,
+          },
+        },
+        outlinedSecondary: {
+          color: '#000000',
+          borderColor: theme.palette.secondary.dark,
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.secondary.dark,
+            opacity: 0.1,
+          },
+          '&:hover': {
+            backgroundColor: theme.palette.secondary.light,
+            borderColor: theme.palette.secondary.dark,
+          },
         },
       },
     },
