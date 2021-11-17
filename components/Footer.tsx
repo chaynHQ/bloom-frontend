@@ -1,7 +1,7 @@
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import YoutubeIcon from '@mui/icons-material/Youtube';
+import YoutubeIcon from '@mui/icons-material/YouTube';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
@@ -64,16 +64,10 @@ const Footer = (props: FooterProps) => {
           {t.raw('footer.chaynDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/chaynhq"
-          >
+          <IconButton aria-label="Instagram" href="https://www.instagram.com/chaynhq">
             <InstagramIcon />
           </IconButton>
-          <IconButton
-            aria-label="Facebook"
-            href="https://www.facebook.com/chayn/"
-          >
+          <IconButton aria-label="Facebook" href="https://www.facebook.com/chayn/">
             <FacebookIcon />
           </IconButton>
           <IconButton aria-label="Twitter" href="https://twitter.com/ChaynHQ">
@@ -99,10 +93,7 @@ const Footer = (props: FooterProps) => {
           {t.raw('footer.bumbleDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/bumble"
-          >
+          <IconButton aria-label="Instagram" href="https://www.instagram.com/bumble">
             <InstagramIcon />
           </IconButton>
           <IconButton aria-label="Tiktok" href="https://www.tiktok.com/@bumble">
