@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import * as React from 'react';
+import { rowStyle } from '../styles/common';
 
 interface HeaderProps {
   title:
@@ -18,8 +19,7 @@ interface HeaderProps {
 }
 
 const headerContainerStyles = {
-  display: 'flex',
-  flexDirection: { xs: 'column', md: 'row' },
+  ...rowStyle,
   justifyContent: 'space-between',
 } as const;
 

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import bloomLogo from '../public/bloom_logo.svg';
+import { rowStyle } from '../styles/common';
 import LanguageMenu from './LanguageMenu';
 import Link from './Link';
 import NavigationDrawer from './NavigationDrawer';
@@ -16,8 +17,7 @@ const appBarStyle = {
   '+ div': { marginTop: { xs: 6, md: 8 } },
 } as const;
 const appBarContainerStyles = {
-  display: 'flex',
-  flexDirection: 'row',
+  ...rowStyle,
   justifyContent: 'space-between',
   alignItems: 'center',
   height: { xs: 48, md: 64 },
