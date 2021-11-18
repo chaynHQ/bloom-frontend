@@ -1,0 +1,15 @@
+{
+  "Navigation": {
+    "menu": "Navigation menu",
+    "menuOpen": "Open navigation menu",
+    "menuClose": "Close navigation menu",
+    "languageMenu": "Language menu",
+    "bloomLogo": "Bloom logo",
+    "home": "Home",
+    "about": "About",
+    "immediateHelp": "Immediate help",
+    "therapy": "Therapy",
+    "courses": "Courses",
+    "account": "Account"
+  }
+}
