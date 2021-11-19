@@ -38,7 +38,7 @@ const TopBar = () => {
       <Container sx={appBarContainerStyles}>
         {/* {isSmallScreen && <NavigationDrawer />} */}
         <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
-          <Image alt={t('bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+          <Image alt={t('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {/* {!isSmallScreen && <NavigationMenu />} */}
         <LanguageMenu />
