@@ -43,6 +43,11 @@ let theme = createTheme({
       fontWeight: 600,
       marginBottom: '0.75rem',
     },
+    subtitle1: {
+      fontSize: '1.25rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontStyle: 'italic',
+    },
   },
 });
 
