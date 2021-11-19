@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import PartnerHeader from '../components/PartnerHeader';
 // import Image from 'next/image';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import illustrationTeaPeach from '../public/illustration_tea_peach.png';
+import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '../styles/common';
 
 const Register: NextPage = () => {
@@ -17,7 +17,7 @@ const Register: NextPage = () => {
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
     partnerLogoAlt: tShared.raw('bloomBumbleLogo'),
-    imageSrc: illustrationTeaPeach,
+    imageSrc: illustrationBloomHeadYellow,
     imageAlt: tShared.raw('bloomLogo'),
   };
 
