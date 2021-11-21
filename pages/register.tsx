@@ -98,7 +98,9 @@ const Register: NextPage = () => {
             <RegisterForm />
 
             <Typography variant="body2" component="p" textAlign="center">
-              {t.rich('terms')}
+              {t.rich('terms', {
+                policiesLink: (children) => <Link href="#">{children}</Link>,
+              })}
             </Typography>
           </CardContent>
         </Card>

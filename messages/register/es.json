@@ -5,7 +5,7 @@
     "bloomBumbleLink": "More about Bloom x Bumble",
     "createAccountDescription": "Create your account to access Bloom.",
     "noCodeLink": "Dont have a bumble access code?",
-    "terms": "By continuing, you are indicating that you accept our Terms of Service and Privacy Policy",
+    "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
 
     "form": {
       "submit": "Enter Bloom",
