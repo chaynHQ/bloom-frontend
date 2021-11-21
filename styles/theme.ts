@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles';
 
 // Create a theme instance.
 let theme = createTheme({
@@ -90,14 +90,10 @@ theme = createTheme(theme, {
         root: {
           fontWeight: 'bolder',
           borderRadius: '100px',
-          borderWidth: '1px',
-          borderStyle: 'solid',
-          borderColor: 'transparent',
           textTransform: 'unset',
 
           '&:hover': {
-            backgroundColor: theme.palette.primary.light,
-            borderColor: theme.palette.primary.dark,
+            backgroundColor: lighten(theme.palette.primary.main, 0.1),
           },
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.dark,
@@ -114,8 +110,7 @@ theme = createTheme(theme, {
         containedSecondary: {
           borderColor: 'transparent',
           '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-            borderColor: theme.palette.secondary.dark,
+            backgroundColor: lighten(theme.palette.secondary.main, 0.2),
           },
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.secondary.dark,
@@ -172,6 +167,59 @@ theme = createTheme(theme, {
         root: {
           '&:hover': {
             backgroundColor: theme.palette.background.default,
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: theme.palette.common.white,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: 20,
+
+          ':last-child': {
+            padding: 20,
+          },
+          [theme.breakpoints.up('md')]: {
+            padding: 40,
+
+            ':last-child': {
+              padding: 40,
+            },
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: 18,
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        underline: {
+          ':after': {
+            borderColor: theme.palette.secondary.dark,
+          },
+          '&:hover:not(.Mui-disabled)::before': {
+            borderColor: theme.palette.secondary.main,
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: theme.palette.text.primary,
           },
         },
       },

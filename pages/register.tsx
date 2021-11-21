@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -9,11 +11,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
-// import Image from 'next/image';
+import RegisterForm from '../components/RegisterForm';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBeehive from '../public/illustration_beehive.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '../styles/common';
+
 const Register: NextPage = () => {
   const t = useTranslations('Register');
   const tShared = useTranslations('Shared');
@@ -30,11 +33,13 @@ const Register: NextPage = () => {
   const containerStyle = {
     ...rowStyle,
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
     backgroundColor: 'primary.light',
   } as const;
 
   const textContainerStyle = {
     maxWidth: 600,
+    width: { xs: '100%', md: '45%' },
   } as const;
 
   const extraContentStyle = {
@@ -48,6 +53,10 @@ const Register: NextPage = () => {
     width: { xs: 175, md: 250 },
     height: { xs: 140, md: 200 },
     marginTop: { xs: 4, md: 8 },
+  } as const;
+
+  const formCardStyle = {
+    width: { xs: '100%', md: '45%' },
   } as const;
 
   const ExtraContent = () => {
@@ -76,7 +85,23 @@ const Register: NextPage = () => {
           </Typography>
           {!isSmallScreen && <ExtraContent />}
         </Box>
-        <Box></Box>
+        <Card sx={formCardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t.rich('title')}
+            </Typography>
+            <Typography variant="body1" component="p">
+              {t.rich('createAccountDescription')}
+            </Typography>
+            <Link href="#">{t.rich('noCodeLink')}</Link>
+
+            <RegisterForm />
+
+            <Typography variant="body2" component="p" textAlign="center">
+              {t.rich('terms')}
+            </Typography>
+          </CardContent>
+        </Card>
       </Container>
       {isSmallScreen && (
         <Container>
