@@ -16,7 +16,7 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   backgroundColor: 'common.white',
   paddingBottom: { xs: 0, md: 0 },
-  paddingTop: { xs: 6, md: 15 },
+  paddingTop: { xs: 2, md: 12 },
 } as const;
 
 const imageContainerStyle = {
