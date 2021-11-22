@@ -93,13 +93,16 @@ const Register: NextPage = () => {
             <Typography variant="body1" component="p">
               {t.rich('createAccountDescription')}
             </Typography>
-            <Link href="#">{t.rich('noCodeLink')}</Link>
 
             <RegisterForm />
 
             <Typography variant="body2" component="p" textAlign="center">
               {t.rich('terms', {
-                policiesLink: (children) => <Link href="#">{children}</Link>,
+                policiesLink: (children) => (
+                  <Link href="https://chayn.notion.site/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43">
+                    {children}
+                  </Link>
+                ),
               })}
             </Typography>
           </CardContent>
