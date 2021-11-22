@@ -1,7 +1,7 @@
-import EventIcon from '@mui/icons-material/Event';
-import LanguageIcon from '@mui/icons-material/Language';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
-import ScheduleIcon from '@mui/icons-material/Schedule';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -9,15 +9,53 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
 import Header from '../components/Header';
+import illustrationChange from '../public/illustration_change.svg';
+import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
+import illustrationConfidential from '../public/illustration_confidential.svg';
+import illustrationDateSelector from '../public/illustration_date_selector.svg';
+import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
-// import Image from 'next/image';
+import { rowStyle } from '../styles/common';
+
+interface StepItem {
+  text:
+    | string
+    | React.ReactNodeArray
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  illustrationSrc: StaticImageData;
+  illustrationAlt: string;
+}
 
 const TherapyBooking: NextPage = () => {
   const t = useTranslations('TherapyBooking');
   const [widgetOpen, setWidgetOpen] = useState(false);
+
+  const steps: Array<StepItem> = [
+    {
+      text: t('step1'),
+      illustrationSrc: illustrationChooseTherapist,
+      illustrationAlt: t('illustrationChooseTherapist'),
+    },
+    {
+      text: t('step2'),
+      illustrationSrc: illustrationDateSelector,
+      illustrationAlt: t('illustrationDateSelector'),
+    },
+    {
+      text: t('step3'),
+      illustrationSrc: illustrationChange,
+      illustrationAlt: t('illustrationChange'),
+    },
+    {
+      text: t('step4'),
+      illustrationSrc: illustrationConfidential,
+      illustrationAlt: t('illustrationConfidential'),
+    },
+  ];
 
   const widgetConfig = {
     widget_type: 'iframe',
@@ -56,9 +94,18 @@ const TherapyBooking: NextPage = () => {
   const containerStyle = {
     backgroundColor: 'secondary.light',
     textAlign: 'center',
+    ...rowStyle,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  } as const;
+
+  const faqsContainerStyle = {
+    maxWidth: '680px !important',
+    margin: 'auto',
   } as const;
 
   const stepsContainerStyle = {
+    width: { xs: '100%', md: '50%' },
     display: 'flex',
     flexDirection: 'row',
     flexFlow: 'wrap',
@@ -66,24 +113,23 @@ const TherapyBooking: NextPage = () => {
 
   const stepContainerStyle = {
     position: 'relative',
-    width: { xs: '100%', md: '25%' },
-    padding: { xs: 2, md: 4 },
+    width: { xs: '100%', sm: '50%' },
+    padding: { xs: 2, md: 2 },
     alignText: 'center',
   } as const;
 
-  const stepIconStyle = {
-    fontSize: 50,
-    marginBottom: { xs: 1, md: 2 },
+  const imageContainerStyle = {
+    position: 'relative',
+    width: 100,
+    height: 80,
+    marginY: { xs: 2, md: 2 },
+    marginX: 'auto',
   } as const;
 
-  // const imageContainerStyle = {
-  //   position: 'relative',
-  //   width: 100,
-  //   height: 80,
-  //   marginY: { xs: 2, md: 2 },
-  //   marginX: { xs: 'unset', md: 'auto' },
-  // } as const;
-
+  const bookingButtonStyle = {
+    minWidth: { xs: '100%', sm: 200 },
+    marginY: 4,
+  } as const;
   const openWidget = () => {
     setWidgetOpen(true);
   };
@@ -97,64 +143,92 @@ const TherapyBooking: NextPage = () => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Typography variant="body1" component="p">
-          {t.rich('bookingDescription1', {
-            strongText: (children) => <strong>{children}</strong>,
-          })}
-        </Typography>
-        <Button
-          sx={{ mb: 4, mt: 4 }}
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={openWidget}
-        >
-          {t.rich('bookingButton')}
-        </Button>
-        <Box sx={stepsContainerStyle}>
-          <Box sx={stepContainerStyle}>
-            {/* <Box sx={imageContainerStyle}>
-              <Image
-                alt={t.raw('illustrationHorizontalLeaf')}
-                src={illustrationHorizontalLeaf}
-                layout="fill"
-                objectFit="contain"
-              />
-            </Box> */}
-            <LanguageIcon sx={stepIconStyle} color="secondary" />
-            <Typography variant="body1" component="p">
-              {t.rich('step1')}
-            </Typography>
-          </Box>
-          <Box sx={stepContainerStyle}>
-            <PersonPinIcon sx={stepIconStyle} color="secondary" />
-            <Typography variant="body1" component="p">
-              {t.rich('step2')}
-            </Typography>
-          </Box>
-          <Box sx={stepContainerStyle}>
-            <ScheduleIcon sx={stepIconStyle} color="secondary" />
-            <Typography variant="body1" component="p">
-              {t.rich('step3')}
-            </Typography>
-          </Box>
-          <Box sx={stepContainerStyle}>
-            <EventIcon sx={stepIconStyle} color="secondary" />
-            <Typography variant="body1" component="p">
-              {t.rich('step4')}
-            </Typography>
-          </Box>
+        <Box mt={4} textAlign="left">
+          <Typography variant="body1" component="p">
+            {t.rich('bookingDescription1', {
+              strongText: (children) => <strong>{children}</strong>,
+            })}
+          </Typography>
+          <Button
+            sx={bookingButtonStyle}
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={openWidget}
+          >
+            {t.rich('bookingButton')}
+          </Button>
         </Box>
-        {widgetOpen && (
-          <Script
-            id="widget-js"
-            src="//widget.simplybook.it/v2/widget/widget.js"
-            onLoad={() => {
-              new (window as any).SimplybookWidget(widgetConfig);
-            }}
-          />
-        )}
+        <Box sx={stepsContainerStyle}>
+          {steps.map((step, i) => (
+            <Box key={`step${i}`} sx={stepContainerStyle}>
+              <Box sx={imageContainerStyle}>
+                <Image
+                  alt={step.illustrationAlt}
+                  src={step.illustrationSrc}
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </Box>
+              <Typography variant="body1" component="p">
+                {step.text}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Container>
+
+      <Container>
+        <Typography variant="h2" component="h2" mb={2} textAlign="center">
+          {t.rich('faqHeader')}
+        </Typography>
+        <Box textAlign="center">
+          <Image
+            alt={t.raw('illustrationLeafMix')}
+            src={illustrationLeafMix}
+            width={100}
+            height={100}
+          />
+        </Box>
+
+        <Box sx={faqsContainerStyle}>
+          {[...Array(8)].map((x, i) => (
+            <Accordion key={`panel${i}`}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`panel${i}-content`}
+                id={`panel${i}-header`}
+              >
+                <Typography variant="body1" component="h3">
+                  {t.rich(`faqTitle${i}`)}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{t.rich(`faqBody${i}`)}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+          <Button
+            sx={bookingButtonStyle}
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={openWidget}
+          >
+            {t.rich('bookingButton')}
+          </Button>
+        </Box>
+      </Container>
+
+      {widgetOpen && (
+        <Script
+          id="widget-js"
+          src="//widget.simplybook.it/v2/widget/widget.js"
+          onLoad={() => {
+            new (window as any).SimplybookWidget(widgetConfig);
+          }}
+        />
+      )}
     </Box>
   );
 };
