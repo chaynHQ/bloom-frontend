@@ -8,6 +8,23 @@
     "step1": "Choose your preferred language",
     "step2": "View and select therapists (if several are available)",
     "step3": "Choose a date and time that suits you.",
-    "step4": "Confirm your details and the appointment."
+    "step4": "Confirm your details and the appointment.",
+    "faqHeader": "More about how Bloom therapy works",
+    "faqTitle0": "Do I have to pay for therapy?",
+    "faqBody0": "No, the cost of your six therapy sessions has been covered by Bumble. You can access Bloom therapy for free.",
+    "faqTitle1": "What happens if I can't make it to my therapy session anymore?",
+    "faqBody1": "Use the link in your confirmation email to reschedule your therapy session, with as much notice as possible. Cancelling with less than 24-hours notice will use up one of your therapy credits, so try to make sure you cancel or rearrange in advance.",
+    "faqTitle2": "How many sessions do I get?",
+    "faqBody2": "Bumble has covered the cost of six, one-hour therapy sessions.",
+    "faqTitle3": "How much time do I have left to book my therapy sessions?",
+    "faqBody3": "Your therapy sessions are available until December 2022. You can choose how much you want to space out the sessions, whether it's a week or a month. We recommend you chat with your therapist to decide what would work best for you.",
+    "faqTitle4": "Can I do the sessions in-person?",
+    "faqBody4": "All sessions will be held online on video calls. Bloom specialises in digital, remote support, so our therapists are experienced in getting the best out of an online session.",
+    "faqTitle5": "What if I don't get along with the therapist?",
+    "faqBody5": "We're all human, so don't worry if you didn't click with the therapist you chose. You're free to book your next session with a different one.",
+    "faqTitle6": "What happens when my six sessions are up?",
+    "faqBody6": "Have a discussion with your therapist about whether they think you could benefit from more sessions. Unfortunately, the cost of more sessions won't be covered by Bumble. Our therapists can share their prices with you, and you can decide whether to continue with them.",
+    "faqTitle7": "I didn't go to therapy, but it says I used up a session?",
+    "faqBody7": "If you didn't attend your therapy session or cancelled/rescheduled with less than 24-hours notice, then unfortunately that uses up one of your sessions. Our therapists hold slots for you, so we want to respect their time. "
   }
 }

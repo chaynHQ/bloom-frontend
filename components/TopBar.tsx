@@ -7,7 +7,6 @@ import Image from 'next/image';
 import * as React from 'react';
 import bloomLogo from '../public/bloom_logo.svg';
 import { rowStyle } from '../styles/common';
-import LanguageMenu from './LanguageMenu';
 import Link from './Link';
 
 const appBarStyle = {
@@ -41,7 +40,7 @@ const TopBar = () => {
           <Image alt={t('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {/* {!isSmallScreen && <NavigationMenu />} */}
-        <LanguageMenu />
+        {/* <LanguageMenu /> */}
       </Container>
     </AppBar>
   );

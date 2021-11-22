@@ -35,13 +35,12 @@ let theme = createTheme({
       marginBottom: '1rem',
     },
     h3: {
-      fontSize: '1.625rem',
+      fontSize: '1.5rem',
       marginBottom: '1rem',
     },
     h4: {
-      fontSize: '1.25rem',
+      fontSize: '1rem',
       fontWeight: 600,
-      marginBottom: '0.75rem',
     },
     subtitle1: {
       fontSize: '1.25rem',
