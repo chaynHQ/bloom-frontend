@@ -21,19 +21,22 @@ interface HeaderProps {
 const headerContainerStyles = {
   ...rowStyle,
   justifyContent: 'space-between',
+  flexWrap: 'wrap',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 250 },
-  height: { xs: 150, md: 250 },
-  marginLeft: { xs: 0, md: 5 },
+  width: { xs: 150, md: 225 },
+  height: { xs: 150, md: 225 },
+  marginLeft: { xs: 'auto', md: 5 },
+  marginRight: { xs: 'auto', md: 0 },
   marginTop: { xs: 4, md: 0 },
   alignSelf: { xs: 'center', md: 'auto' },
 } as const;
 
 const textContainerStyle = {
-  maxWidth: 600,
+  maxWidth: { xs: '100%', md: '55%' },
+  width: { xs: '100%', md: 'auto' },
 } as const;
 
 const Header = (props: HeaderProps) => {

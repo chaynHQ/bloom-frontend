@@ -1,0 +1,17 @@
+{
+  "Register": {
+    "title": "Create account",
+    "introduction": "Together, Bumble and Bloom are providing resources to sexual assault and relationship abuse survivors within the global Bumble community through a free online trauma support program.",
+    "bloomBumbleLink": "More about Bloom for Bumble",
+    "createAccountDescription": "Create your account to access Bloom.",
+    "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
+
+    "form": {
+      "submit": "Create account",
+      "codeLabel": "Bumble access code",
+      "nameLabel": "First name / nickname",
+      "emailLabel": "Email",
+      "passwordLabel": "Password"
+    }
+  }
+}
