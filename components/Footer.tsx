@@ -55,7 +55,7 @@ const Footer = (props: FooterProps) => {
     <Container sx={footerContainerStyle}>
       <Box sx={brandContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={t.raw('bloomLogo')} src={bloomLogo} />
+          <Image alt={t.raw('alt.bloomLogo')} src={bloomLogo} />
         </Box>
         <Typography variant="body2" component="p">
           {t.raw('footer.chaynDetails1')}
@@ -84,7 +84,7 @@ const Footer = (props: FooterProps) => {
 
       <Box sx={brandContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={t.raw('bloomLogo')} src={bumbleLogo} />
+          <Image alt={t.raw('alt.bloomLogo')} src={bumbleLogo} />
         </Box>
         <Typography variant="body2" component="p">
           {t.raw('footer.bumbleDetails1')}
@@ -97,7 +97,7 @@ const Footer = (props: FooterProps) => {
             <InstagramIcon />
           </IconButton>
           <IconButton aria-label="Tiktok" href="https://www.tiktok.com/@bumble">
-            <Image alt={t.raw('bloomLogo')} src={tiktokLogo} />
+            <Image alt={t.raw('alt.bloomLogo')} src={tiktokLogo} />
           </IconButton>
           <IconButton
             aria-label="Youtube"

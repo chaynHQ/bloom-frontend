@@ -7,10 +7,7 @@ import Image from 'next/image';
 import * as React from 'react';
 import bloomLogo from '../public/bloom_logo.svg';
 import { rowStyle } from '../styles/common';
-import LanguageMenu from './LanguageMenu';
 import Link from './Link';
-import NavigationDrawer from './NavigationDrawer';
-import NavigationMenu from './NavigationMenu';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
@@ -38,12 +35,12 @@ const TopBar = () => {
   return (
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
-        {isSmallScreen && <NavigationDrawer />}
+        {/* {isSmallScreen && <NavigationDrawer />} */}
         <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
-          <Image alt={t('bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+          <Image alt={t('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
-        {!isSmallScreen && <NavigationMenu />}
-        <LanguageMenu />
+        {/* {!isSmallScreen && <NavigationMenu />} */}
+        {/* <LanguageMenu /> */}
       </Container>
     </AppBar>
   );
