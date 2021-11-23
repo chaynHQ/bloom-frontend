@@ -150,9 +150,7 @@ const Welcome: NextPage = () => {
           <Typography variant="body1" component="p">
             {t.rich('bumbleIntroduction', {
               bumbleLink: (children) => (
-                <Link href="https://www.notion.so/chayn/Pilot-copy-327dad13539240c8831b49637230c6b5#90182f7b99f347c28b6e4f2d2477f81d">
-                  {children}
-                </Link>
+                <Link href="https://bumble.com/?pid=press&c=press-release">{children}</Link>
               ),
             })}
           </Typography>

@@ -59,7 +59,7 @@ const TherapyBooking: NextPage = () => {
 
   const widgetConfig = {
     widget_type: 'iframe',
-    url: 'https://chayn.simplybook.it',
+    url: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
     theme: 'dainty',
     theme_settings: {
       timeline_show_end_time: '1',
@@ -105,7 +105,7 @@ const TherapyBooking: NextPage = () => {
   } as const;
 
   const stepsContainerStyle = {
-    width: { xs: '100%', md: '50%' },
+    width: { xs: '100%', md: '60%' },
     display: 'flex',
     flexDirection: 'row',
     flexFlow: 'wrap',
