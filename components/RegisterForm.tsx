@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+import Link from '../components/Link';
 
 interface RegisterFormProps {}
 
@@ -26,7 +27,14 @@ const RegisterForm = (props: RegisterFormProps) => {
           variant="standard"
           fullWidth
         />
-        <Button sx={{ mt: 2, mr: 1.5 }} variant="contained" fullWidth color="secondary">
+        <Button
+          component={Link}
+          href="/therapy-booking"
+          sx={{ mt: 2, mr: 1.5 }}
+          variant="contained"
+          fullWidth
+          color="secondary"
+        >
           {t.rich('submit')}
         </Button>
       </form>

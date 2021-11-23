@@ -43,7 +43,7 @@ let theme = createTheme({
       fontWeight: 600,
     },
     subtitle1: {
-      fontSize: '1.25rem',
+      fontSize: '1.375rem',
       fontFamily: 'Montserrat, sans-serif',
       fontStyle: 'italic',
     },
