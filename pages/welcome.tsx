@@ -1,5 +1,6 @@
 import { Link } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
@@ -45,15 +46,17 @@ const Welcome: NextPage = () => {
 
   const imageContainerStyle = {
     position: 'relative',
-    width: { xs: 200, md: 225 },
-    height: { xs: 200, md: 225 },
-    marginLeft: 12,
+    width: { xs: 160, md: 225 },
+    height: { xs: 160, md: 225 },
+    marginX: { xs: 'auto', md: 12 },
+    marginBottom: { xs: 4, md: 0 },
   } as const;
 
   const smallImageContainerStyle = {
     position: 'relative',
-    width: { xs: 160, md: 180 },
-    height: { xs: 120, md: 130 },
+    width: { xs: 150, md: 180 },
+    height: { xs: 70, md: 85 },
+    marginBottom: { xs: 4, md: 6 },
     marginLeft: 12,
   } as const;
 
@@ -62,7 +65,8 @@ const Welcome: NextPage = () => {
   } as const;
 
   const resourcesStyle = {
-    maxWidth: 700,
+    fontSize: '1.125rem',
+    maxWidth: 800,
     marginX: 'auto',
     textAlign: 'center',
   } as const;
@@ -113,7 +117,7 @@ const Welcome: NextPage = () => {
         </Typography>
       </Container>
       <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
-        <Box sx={rowItem}>
+        <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
             <Image alt={tShared.raw('alt.crown1')} src={illustrationCrown1} />
           </Box>
@@ -125,6 +129,16 @@ const Welcome: NextPage = () => {
               bloomLink: (children) => <Link href="https://bloom.chayn.co/">{children}</Link>,
             })}
           </Typography>
+          <Button
+            sx={{ mt: 3 }}
+            variant="contained"
+            fullWidth
+            color="secondary"
+            component={Link}
+            href="/register"
+          >
+            {t.rich('getStarted')}
+          </Button>
         </Box>
         <Box sx={rowItem}>
           <Box sx={smallImageContainerStyle}>
