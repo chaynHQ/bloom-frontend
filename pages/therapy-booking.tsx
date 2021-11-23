@@ -105,7 +105,7 @@ const TherapyBooking: NextPage = () => {
   } as const;
 
   const stepsContainerStyle = {
-    width: { xs: '100%', md: '50%' },
+    width: { xs: '100%', md: '60%' },
     display: 'flex',
     flexDirection: 'row',
     flexFlow: 'wrap',
