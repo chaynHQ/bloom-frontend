@@ -43,7 +43,7 @@ let theme = createTheme({
       fontWeight: 600,
     },
     subtitle1: {
-      fontSize: '1.25rem',
+      fontSize: '1.375rem',
       fontFamily: 'Montserrat, sans-serif',
       fontStyle: 'italic',
     },
@@ -64,8 +64,8 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           maxWidth: '100% !important',
-          paddingTop: 40,
-          paddingBottom: 40,
+          paddingTop: 50,
+          paddingBottom: 50,
 
           [theme.breakpoints.up('lg')]: {
             paddingTop: 80,
@@ -174,6 +174,11 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           backgroundColor: theme.palette.common.white,
+          marginTop: 20,
+
+          [theme.breakpoints.up('md')]: {
+            marginTop: 0,
+          },
         },
       },
     },
