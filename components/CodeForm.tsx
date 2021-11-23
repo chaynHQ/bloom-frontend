@@ -19,7 +19,7 @@ const CodeForm = (props: CodeFormProps) => {
       <form autoComplete="off">
         <TextField id="code" label={t.rich('form.codeLabel')} variant="standard" fullWidth />
         <Button
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2 }}
           variant="contained"
           fullWidth
           color="secondary"
