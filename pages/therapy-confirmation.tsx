@@ -17,8 +17,8 @@ const TherapyConfirmation: NextPage = () => {
   const tS = useTranslations('Shared');
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
+    title: t.rich('confirmation.title'),
+    introduction: t.rich('confirmation.introduction'),
     imageSrc: illustrationTeaPeach,
     imageAlt: 'alt.personTea',
   };
@@ -40,21 +40,17 @@ const TherapyConfirmation: NextPage = () => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
-
       <Container sx={containerStyle}>
-        <Box maxWidth={700}>
-          <Typography variant="h2" component="h2">
-            {t.rich('confirmation.header')}
-          </Typography>
-          <Typography variant="body1" component="p">
-            {t.rich('confirmation.description')}
-          </Typography>
-          <Typography variant="body1" component="p" mt={3}>
-            {t.rich('confirmation.returnDescription', {
-              bookingLink: (children) => <Link href="/therapy-booking">{children}</Link>,
-            })}
-          </Typography>
-        </Box>
+        <Typography variant="body1" component="p">
+          {t.rich('confirmation.returnDescription')}
+        </Typography>
+        <Typography variant="body1" component="p">
+          {t.rich('confirmation.bookmarkDescription', {
+            bookingLink: (children) => (
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>
+            ),
+          })}
+        </Typography>
       </Container>
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">

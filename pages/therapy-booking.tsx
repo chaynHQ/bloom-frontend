@@ -72,7 +72,12 @@ const TherapyBooking: NextPage = () => {
     timeline: 'modern',
     datepicker: 'top_calendar',
     is_rtl: false,
-    app_config: { allow_switch_to_ada: 0, predefined: [] },
+    app_config: {
+      allow_switch_to_ada: 0,
+      predefined: {
+        client: {},
+      },
+    },
   } as const;
 
   const headerProps = {
