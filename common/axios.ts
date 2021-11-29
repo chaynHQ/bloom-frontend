@@ -4,7 +4,7 @@ import rollbar from '../config/rollbar';
 
 const { publicRuntimeConfig } = getConfig();
 
-let baseUrl = publicRuntimeConfig.BASE_URL;
+let baseUrl = publicRuntimeConfig.NEXT_PUBLIC_BASE_URL;
 
 const axiosInstance = axios.create({
   baseURL: `${baseUrl}/api/`,
