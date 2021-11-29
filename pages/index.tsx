@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
     }),
     imageSrc: illustrationTeaPeach,
-    imageAlt: 'Bloom logo',
+    imageAlt: 'alt.personTea',
   };
 
   return (

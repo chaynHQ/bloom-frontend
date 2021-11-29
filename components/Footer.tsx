@@ -49,19 +49,19 @@ const socialsContainerStyle = {
 
 const Footer = (props: FooterProps) => {
   //   const {  } = props;
-  const t = useTranslations('Shared');
+  const tS = useTranslations('Shared');
 
   return (
     <Container sx={footerContainerStyle}>
       <Box sx={brandContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={t.raw('alt.bloomLogo')} src={bloomLogo} />
+          <Image alt={tS.raw('alt.bloomLogo')} src={bloomLogo} />
         </Box>
         <Typography variant="body2" component="p">
-          {t.raw('footer.chaynDetails1')}
+          {tS.raw('footer.chaynDetails1')}
         </Typography>
         <Typography variant="body2" component="p">
-          {t.raw('footer.chaynDetails2')}
+          {tS.raw('footer.chaynDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
           <IconButton aria-label="Instagram" href="https://www.instagram.com/chaynhq">
@@ -84,20 +84,20 @@ const Footer = (props: FooterProps) => {
 
       <Box sx={brandContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={t.raw('alt.bloomLogo')} src={bumbleLogo} />
+          <Image alt={tS.raw('alt.bloomLogo')} src={bumbleLogo} />
         </Box>
         <Typography variant="body2" component="p">
-          {t.raw('footer.bumbleDetails1')}
+          {tS.raw('footer.bumbleDetails1')}
         </Typography>
         <Typography variant="body2" component="p">
-          {t.raw('footer.bumbleDetails2')}
+          {tS.raw('footer.bumbleDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
           <IconButton aria-label="Instagram" href="https://www.instagram.com/bumble">
             <InstagramIcon />
           </IconButton>
           <IconButton aria-label="Tiktok" href="https://www.tiktok.com/@bumble">
-            <Image alt={t.raw('alt.bloomLogo')} src={tiktokLogo} />
+            <Image alt={tS.raw('alt.bloomLogo')} src={tiktokLogo} />
           </IconButton>
           <IconButton
             aria-label="Youtube"
@@ -110,9 +110,9 @@ const Footer = (props: FooterProps) => {
 
       <Box sx={descriptionContainerStyle}>
         <Typography variant="body1" component="p" sx={{ mb: 1 }}>
-          {t.rich('footer.chaynDescription')}
+          {tS.rich('footer.chaynDescription')}
         </Typography>
-        <Link href="#">{t.rich('footer.policies')}</Link>
+        <Link href="#">{tS.rich('footer.policies')}</Link>
       </Box>
     </Container>
   );

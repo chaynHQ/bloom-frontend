@@ -19,15 +19,15 @@ import { rowStyle } from '../styles/common';
 
 const Register: NextPage = () => {
   const t = useTranslations('Register');
-  const tShared = useTranslations('Shared');
+  const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: tShared.raw('bloomBumbleLogo'),
+    partnerLogoAlt: 'alt.bloomBumbleLogo',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: tShared.raw('bloomLogo'),
+    imageAlt: 'alt.bloomLogo',
   };
 
   const containerStyle = {
@@ -64,7 +64,7 @@ const Register: NextPage = () => {
       <Box sx={extraContentStyle}>
         <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
         <Box sx={imageContainerStyle}>
-          <Image alt={tShared.raw('alt.beehive')} src={illustrationBeehive} />
+          <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} />
         </Box>
       </Box>
     );

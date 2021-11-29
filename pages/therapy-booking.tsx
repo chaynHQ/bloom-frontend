@@ -1,7 +1,3 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -12,7 +8,10 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
+import { therapyFaqs } from '../common/therapyFaqs';
+import Faqs from '../components/Faqs';
 import Header from '../components/Header';
+import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
 import illustrationChange from '../public/illustration_change.svg';
 import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
 import illustrationConfidential from '../public/illustration_confidential.svg';
@@ -21,41 +20,33 @@ import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 import { rowStyle } from '../styles/common';
 
-interface StepItem {
-  text:
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  illustrationSrc: StaticImageData;
-  illustrationAlt: string;
-}
+const steps: Array<ImageTextItem> = [
+  {
+    text: 'step1',
+    illustrationSrc: illustrationChooseTherapist,
+    illustrationAlt: 'alt.chooseTherapist',
+  },
+  {
+    text: 'step2',
+    illustrationSrc: illustrationDateSelector,
+    illustrationAlt: 'alt.dateSelector',
+  },
+  {
+    text: 'step3',
+    illustrationSrc: illustrationChange,
+    illustrationAlt: 'alt.change',
+  },
+  {
+    text: 'step4',
+    illustrationSrc: illustrationConfidential,
+    illustrationAlt: 'alt.confidential',
+  },
+];
 
 const TherapyBooking: NextPage = () => {
   const t = useTranslations('TherapyBooking');
+  const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
-
-  const steps: Array<StepItem> = [
-    {
-      text: t('step1'),
-      illustrationSrc: illustrationChooseTherapist,
-      illustrationAlt: t('illustrationChooseTherapist'),
-    },
-    {
-      text: t('step2'),
-      illustrationSrc: illustrationDateSelector,
-      illustrationAlt: t('illustrationDateSelector'),
-    },
-    {
-      text: t('step3'),
-      illustrationSrc: illustrationChange,
-      illustrationAlt: t('illustrationChange'),
-    },
-    {
-      text: t('step4'),
-      illustrationSrc: illustrationConfidential,
-      illustrationAlt: t('illustrationConfidential'),
-    },
-  ];
 
   const widgetConfig = {
     widget_type: 'iframe',
@@ -88,7 +79,7 @@ const TherapyBooking: NextPage = () => {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
     imageSrc: illustrationTeaPeach,
-    imageAlt: 'Bloom logo',
+    imageAlt: 'alt.personTea',
   };
 
   const containerStyle = {
@@ -102,28 +93,6 @@ const TherapyBooking: NextPage = () => {
   const faqsContainerStyle = {
     maxWidth: '680px !important',
     margin: 'auto',
-  } as const;
-
-  const stepsContainerStyle = {
-    width: { xs: '100%', md: '60%' },
-    display: 'flex',
-    flexDirection: 'row',
-    flexFlow: 'wrap',
-  } as const;
-
-  const stepContainerStyle = {
-    position: 'relative',
-    width: { xs: '100%', sm: '50%' },
-    padding: { xs: 2, md: 2 },
-    alignText: 'center',
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: 100,
-    height: 80,
-    marginY: { xs: 2, md: 2 },
-    marginX: 'auto',
   } as const;
 
   const bookingButtonStyle = {
@@ -159,23 +128,7 @@ const TherapyBooking: NextPage = () => {
             {t.rich('bookingButton')}
           </Button>
         </Box>
-        <Box sx={stepsContainerStyle}>
-          {steps.map((step, i) => (
-            <Box key={`step${i}`} sx={stepContainerStyle}>
-              <Box sx={imageContainerStyle}>
-                <Image
-                  alt={step.illustrationAlt}
-                  src={step.illustrationSrc}
-                  layout="fill"
-                  objectFit="contain"
-                />
-              </Box>
-              <Typography variant="body1" component="p">
-                {step.text}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+        <ImageTextGrid items={steps} translations="TherapyBooking.steps" />
       </Container>
 
       <Container>
@@ -184,7 +137,7 @@ const TherapyBooking: NextPage = () => {
         </Typography>
         <Box textAlign="center">
           <Image
-            alt={t.raw('illustrationLeafMix')}
+            alt={tS.raw('alt.partialLeavesRose')}
             src={illustrationLeafMix}
             width={100}
             height={100}
@@ -192,22 +145,7 @@ const TherapyBooking: NextPage = () => {
         </Box>
 
         <Box sx={faqsContainerStyle}>
-          {[...Array(8)].map((x, i) => (
-            <Accordion key={`panel${i}`}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={`panel${i}-content`}
-                id={`panel${i}-header`}
-              >
-                <Typography variant="body1" component="h3">
-                  {t.rich(`faqTitle${i}`)}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{t.rich(`faqBody${i}`)}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+          <Faqs faqList={therapyFaqs} translations="TherapyBooking.faqs" />
           <Button
             sx={bookingButtonStyle}
             variant="contained"

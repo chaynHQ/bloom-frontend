@@ -29,6 +29,7 @@ const logoContainerStyle = {
 
 const TopBar = () => {
   const t = useTranslations('Navigation');
+  const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -37,7 +38,7 @@ const TopBar = () => {
       <Container sx={appBarContainerStyles}>
         {/* {isSmallScreen && <NavigationDrawer />} */}
         <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
-          <Image alt={t('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+          <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {/* {!isSmallScreen && <NavigationMenu />} */}
         {/* <LanguageMenu /> */}
