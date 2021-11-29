@@ -22,15 +22,15 @@ import { rowStyle } from '../styles/common';
 
 const Welcome: NextPage = () => {
   const t = useTranslations('Welcome');
-  const tShared = useTranslations('Shared');
+  const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: tShared.raw('bloomBumbleLogo'),
+    partnerLogoAlt: 'alt.bloomBumbleLogo',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: tShared.raw('bloomLogo'),
+    imageAlt: 'alt.personBloom',
   };
 
   const rowContainerStyle = {
@@ -100,7 +100,7 @@ const Welcome: NextPage = () => {
       </Container>
       <Container sx={rowContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={tShared.raw('alt.they5')} src={illustrationThey5Yellow} />
+          <Image alt={tS.raw('alt.person1')} src={illustrationThey5Yellow} />
         </Box>
         <Box sx={rowItem}>
           <Typography variant="h2" component="h2">
@@ -119,7 +119,7 @@ const Welcome: NextPage = () => {
       <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
         <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tShared.raw('alt.crown1')} src={illustrationCrown1} />
+            <Image alt={tS.raw('alt.partialLeavesRose')} src={illustrationCrown1} />
           </Box>
           <Typography variant="h2" component="h2">
             {t.rich('bloomTitle')}
@@ -142,7 +142,7 @@ const Welcome: NextPage = () => {
         </Box>
         <Box sx={rowItem}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tShared.raw('alt.crown2')} src={illustrationCrown2} />
+            <Image alt={tS.raw('alt.partialLeavesBee')} src={illustrationCrown2} />
           </Box>
           <Typography variant="h2" component="h2">
             {t.rich('bumbleTitle')}
