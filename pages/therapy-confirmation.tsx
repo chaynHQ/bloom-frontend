@@ -4,30 +4,32 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { therapyFaqs } from '../common/therapyFaqs';
+import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import Link from '../components/Link';
+import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 const TherapyConfirmation: NextPage = () => {
   const t = useTranslations('TherapyBooking');
+  const tS = useTranslations('Shared');
 
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
     imageSrc: illustrationTeaPeach,
-    imageAlt: 'Bloom logo',
+    imageAlt: 'alt.personTea',
   };
 
   const containerStyle = {
     backgroundColor: 'secondary.light',
   } as const;
 
-  const imageContainerStyle = {
-    position: 'relative',
-    width: 100,
-    height: 80,
-    marginY: { xs: 2, md: 2 },
-    marginX: 'auto',
+  const faqsContainerStyle = {
+    maxWidth: '680px !important',
+    margin: 'auto',
   } as const;
 
   return (
@@ -52,6 +54,22 @@ const TherapyConfirmation: NextPage = () => {
               bookingLink: (children) => <Link href="/therapy-booking">{children}</Link>,
             })}
           </Typography>
+        </Box>
+      </Container>
+      <Container>
+        <Typography variant="h2" component="h2" mb={2} textAlign="center">
+          {t.rich('faqHeader')}
+        </Typography>
+        <Box textAlign="center">
+          <Image
+            alt={tS.raw('alt.partialLeavesRose')}
+            src={illustrationLeafMix}
+            width={100}
+            height={100}
+          />
+        </Box>
+        <Box sx={faqsContainerStyle}>
+          <Faqs faqList={therapyFaqs} translations="TherapyBooking.faqs" />
         </Box>
       </Container>
     </Box>

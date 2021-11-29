@@ -29,6 +29,7 @@ const NavigationDrawer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const t = useTranslations('Navigation');
+  const tS = useTranslations('Shared');
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -59,7 +60,7 @@ const NavigationDrawer = () => {
             sx={{ marginLeft: 'auto', minWidth: 40, '& .MuiButton-startIcon': { marginRight: 0 } }}
           ></Button>
           <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
-            <Image alt={t('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
           </Link>
           <NavigationMenu />
         </Container>

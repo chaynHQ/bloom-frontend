@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { rowStyle } from '../styles/common';
@@ -42,6 +43,8 @@ const textContainerStyle = {
 const Header = (props: HeaderProps) => {
   const { title, introduction, imageAlt, imageSrc } = props;
 
+  const tS = useTranslations('Shared');
+
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
@@ -53,7 +56,7 @@ const Header = (props: HeaderProps) => {
         </Typography>
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={imageAlt} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image alt={tS(imageAlt)} src={imageSrc} layout="fill" objectFit="contain" />
       </Box>
     </Container>
   );

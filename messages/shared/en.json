@@ -13,7 +13,16 @@
     "alt": {
       "bloomLogo": "Bloom logo",
       "bloomBumbleLogo": "Bloom for Bumble logo",
-      "beehive": "Illustration of bee hive"
+      "personBloom": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
+      "beehive": "Illustration of a bee hive",
+      "partialLeavesRose": "Illustration of two leaves joined with a rose",
+      "partialLeavesBee": "Illustration of two leaves with a bee hovering above",
+      "personTea": "Illustration of a person sitting, holding a tea",
+      "person1": "Illustration of a person sitting and holding their knees, with a leaf and rose on their shoulder",
+      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
+      "dateSelector": "Illustration of a calendar with a heart in the middle",
+      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
+      "confidential": "Illustration of a document with a lock in the corner"
     }
   }
 }
