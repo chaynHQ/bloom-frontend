@@ -228,6 +228,24 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          '& .MuiCheckbox-root': {
+            color: theme.palette.text.primary,
+            paddingTop: 0,
+            paddingBottom: 0,
+
+            '&.Mui-checked': {
+              color: theme.palette.primary.dark,
+            },
+            '+ .MuiFormControlLabel-label': {
+              fontSize: theme.typography.body2.fontSize,
+            },
+          },
+        },
+      },
+    },
   },
 });
 theme = responsiveFontSizes(theme);

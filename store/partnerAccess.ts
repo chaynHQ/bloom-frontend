@@ -7,7 +7,7 @@ export type PartnerAccess = {
   activatedAt: Date | null;
   featureLiveChat: boolean | null;
   featureTherapy: boolean | null;
-  code: string | null;
+  partnerAccessCode: string | null;
   therapySessionsRemaining: number | null;
   therapySessionsRedeemed: number | null;
 };
@@ -17,7 +17,7 @@ const initialState: PartnerAccess = {
   activatedAt: null,
   featureLiveChat: false,
   featureTherapy: false,
-  code: null,
+  partnerAccessCode: null,
   therapySessionsRemaining: null,
   therapySessionsRedeemed: null,
 };

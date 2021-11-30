@@ -17,7 +17,12 @@ const CodeForm = (props: CodeFormProps) => {
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off">
-        <TextField id="code" label={t.rich('form.codeLabel')} variant="standard" fullWidth />
+        <TextField
+          id="partnerAccessCode"
+          label={t.rich('form.codeLabel')}
+          variant="standard"
+          fullWidth
+        />
         <Button
           sx={{ mt: 2 }}
           variant="contained"

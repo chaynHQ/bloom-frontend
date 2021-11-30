@@ -8,7 +8,7 @@ export type User = {
   firebaseUid: string | null;
   name: string | null;
   email: string | null;
-  code: string | null;
+  partnerAccessCode: string | null;
   languageDefault: LANGUAGES;
   contactPermission: boolean;
 };
@@ -18,7 +18,7 @@ const initialState: User = {
   firebaseUid: null,
   name: null,
   email: null,
-  code: null,
+  partnerAccessCode: null,
   languageDefault: LANGUAGES.en,
   contactPermission: false,
 };
