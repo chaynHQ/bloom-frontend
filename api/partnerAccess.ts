@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
 import { PartnerAccess } from '../store/partnerAccess';
 
 // Define a service using a base URL and expected endpoints
@@ -7,9 +8,12 @@ export const partnerAccessApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
   endpoints: (builder) => ({
     getPartnerAccess: builder.query<PartnerAccess, string>({
-      query: () => `partnerA-acess/me`,
+      query: () => `partner-access/me`,
     }),
-    validateCode: builder.mutation<PartnerAccess, Partial<PartnerAccess>>({
+    validateCode: builder.mutation<
+      { status: PARTNER_ACCESS_CODE_STATUS },
+      { partnerAccessCode: string }
+    >({
       query(body) {
         return {
           url: `partner-access/validate-code`,
