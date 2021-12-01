@@ -1,8 +1,8 @@
 import { configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { Action } from 'redux';
-import { partnerAccessApi } from '../api/partnerAccess';
-import { userApi } from '../api/user';
+import { partnerAccessApi } from './partnerAccess';
+import { userApi } from './user';
 
 const initStore = () =>
   configureStore({

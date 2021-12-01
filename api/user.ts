@@ -1,5 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { User } from '../store/user';
+import { LANGUAGES } from '../common/constants';
+
+export type User = {
+  id: string | null;
+  firebaseUid: string | null;
+  name: string | null;
+  email: string | null;
+  partnerAccessCode: string | null;
+  languageDefault: LANGUAGES;
+  contactPermission: boolean;
+};
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({

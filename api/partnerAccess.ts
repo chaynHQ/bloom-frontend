@@ -1,6 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
-import { PartnerAccess } from '../store/partnerAccess';
+
+export type PartnerAccess = {
+  id: string | null;
+  activatedAt: Date | null;
+  featureLiveChat: boolean | null;
+  featureTherapy: boolean | null;
+  partnerAccessCode: string | null;
+  therapySessionsRemaining: number | null;
+  therapySessionsRedeemed: number | null;
+};
 
 // Define a service using a base URL and expected endpoints
 export const partnerAccessApi = createApi({
