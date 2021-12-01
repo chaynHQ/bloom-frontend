@@ -19,7 +19,7 @@ import illustrationConfidential from '../public/illustration_confidential.svg';
 import illustrationDateSelector from '../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
-import { AppState } from '../store';
+import { AppState } from '../store/index';
 import { rowStyle } from '../styles/common';
 
 const steps: Array<ImageTextItem> = [
@@ -50,9 +50,9 @@ const TherapyBooking: NextPage = () => {
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user } = useAppSelector((state: AppState) => state);
+  const state = useAppSelector((state: AppState) => state);
 
-  console.log('user', user);
+  console.log('user', state);
 
   const widgetConfig = {
     widget_type: 'iframe',

@@ -9,10 +9,9 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
-import { useValidateCodeMutation } from '../api/partnerAccess';
-import { useAddUserMutation } from '../api/user';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
 import { auth } from '../config/firebase';
+import { useAddUserMutation, useValidateCodeMutation } from '../store/api';
 
 const containerStyle = {
   marginY: 3,
