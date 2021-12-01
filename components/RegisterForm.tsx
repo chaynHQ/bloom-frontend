@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useValidateCodeMutation } from '../api/partnerAccess';
 import { useAddUserMutation } from '../api/user';
 import { LANGUAGES } from '../common/constants';
-import { firebaseAuth } from '../config/firebase';
+import { auth } from '../config/firebase';
 
 interface RegisterFormProps {}
 
@@ -21,7 +21,6 @@ const containerStyle = {
 const RegisterForm = (props: RegisterFormProps) => {
   const t = useTranslations('Register.form');
 
-  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>('');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
@@ -40,7 +39,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     });
     console.log('validate code response', validateCodeResponse);
 
-    firebaseAuth
+    auth
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -100,11 +99,10 @@ const RegisterForm = (props: RegisterFormProps) => {
         />
         <FormControl>
           <FormControlLabel
-            sx={{ fontSize: '14px' }}
-            label="Can we email you for feedback on how to improve Bloom?"
+            label={t.rich('contactPermissionLabel')}
             control={
               <Checkbox
-                aria-label="Can we email you for feedback on how to improve Bloom?"
+                aria-label={t.raw('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />
             }

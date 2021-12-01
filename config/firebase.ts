@@ -20,5 +20,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-export const firebaseAnalytics = firebase.analytics();
-export const firebaseAuth = firebase.auth();
+
+export const analytics = typeof window !== 'undefined' ? firebase.analytics() : null;
+export const auth = firebase.auth();
