@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
@@ -16,8 +15,6 @@ import { rowStyle } from '../styles/common';
 
 const Login: NextPage = () => {
   const t = useTranslations('Auth');
-  const tS = useTranslations('Shared');
-  const theme = useTheme();
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
