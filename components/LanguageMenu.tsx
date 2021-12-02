@@ -53,7 +53,6 @@ export default function LanguageMenu() {
           ?.filter((language) => language !== locale)
           .map((language) => {
             const languageUppercase = language.toUpperCase();
-            console.log(languageUppercase);
             return (
               <MenuItem key={language}>
                 <Link sx={linkStyle} href="/" locale={language} unstyled>

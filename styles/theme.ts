@@ -16,6 +16,9 @@ let theme = createTheme({
     background: {
       default: '#FDF3EF',
     },
+    error: {
+      main: '#EA0050',
+    },
   },
   shape: {
     borderRadius: 20,
@@ -224,6 +227,24 @@ theme = createTheme(theme, {
         root: {
           '&.Mui-focused': {
             color: theme.palette.text.primary,
+          },
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          '& .MuiCheckbox-root': {
+            color: theme.palette.text.primary,
+            paddingTop: 0,
+            paddingBottom: 0,
+
+            '&.Mui-checked': {
+              color: theme.palette.primary.dark,
+            },
+            '+ .MuiFormControlLabel-label': {
+              fontSize: theme.typography.body2.fontSize,
+            },
           },
         },
       },

@@ -2,16 +2,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
+import { RootState } from '../app/store';
+import { AuthNextPage } from '../common/authNextPage';
 import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
+import { useTypedSelector } from '../hooks/store';
 import illustrationChange from '../public/illustration_change.svg';
 import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
 import illustrationConfidential from '../public/illustration_confidential.svg';
@@ -43,11 +45,13 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const TherapyBooking: NextPage = () => {
+const TherapyBooking: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
+  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
+  console.log('partner', partner);
   const widgetConfig = {
     widget_type: 'iframe',
     url: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
@@ -120,7 +124,7 @@ const TherapyBooking: NextPage = () => {
         <Box mt={4} textAlign="left">
           <Typography variant="body1" component="p">
             {t.rich('bookingDescription1', {
-              strongText: (children) => <strong>{children}</strong>,
+              strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
             })}
           </Typography>
           <Button
@@ -187,5 +191,6 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
+TherapyBooking.requireAuth = true;
 
 export default TherapyBooking;

@@ -2,8 +2,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import * as React from 'react';
-import Link from '../components/Link';
+import { useState } from 'react';
 
 interface CodeFormProps {}
 
@@ -13,18 +14,32 @@ const containerStyle = {
 
 const CodeForm = (props: CodeFormProps) => {
   const t = useTranslations('Welcome');
+  const [codeInput, setCodeInput] = useState<string | null>(null);
+  const router = useRouter();
+
+  const submitHandler = () => {
+    router.push({
+      pathname: '/register',
+      query: codeInput ? { code: codeInput } : {},
+    });
+  };
 
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off">
-        <TextField id="code" label={t.rich('form.codeLabel')} variant="standard" fullWidth />
+        <TextField
+          id="partnerAccessCode"
+          onChange={(e) => setCodeInput(e.target.value)}
+          label={t.rich('form.codeLabel')}
+          variant="standard"
+          fullWidth
+        />
         <Button
           sx={{ mt: 2 }}
           variant="contained"
           fullWidth
           color="secondary"
-          component={Link}
-          href="/register"
+          onClick={submitHandler}
         >
           {t.rich('getStarted')}
         </Button>
