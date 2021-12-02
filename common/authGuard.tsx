@@ -31,7 +31,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     } else {
       callGetUser();
     }
-  }, [getUser, router]);
+  }, [getUser, router, user.id]);
 
   if (!verified || getUserIsLoading) {
     return (
