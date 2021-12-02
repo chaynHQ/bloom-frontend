@@ -48,3 +48,4 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   } else {
     return null;
   }
+}

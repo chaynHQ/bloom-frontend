@@ -24,6 +24,9 @@ const slice = createSlice({
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.partner;
     });
+    builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
+      return payload.partner;
+    });
   },
 });
 
