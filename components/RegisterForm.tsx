@@ -9,9 +9,9 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
 import { auth } from '../config/firebase';
-import { useAddUserMutation, useValidateCodeMutation } from '../store/api';
 
 const containerStyle = {
   marginY: 3,
@@ -61,6 +61,10 @@ const RegisterForm = () => {
           contactPermission: contactPermissionInput,
           languageDefault: LANGUAGES.en,
         });
+        if ('error' in userResponse || ('data' in userResponse && !userResponse.data.user)) {
+          setFormError(t('createUserError'));
+          return;
+        }
         router.push('/therapy-booking');
       })
       .catch((error) => {

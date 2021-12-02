@@ -13,6 +13,7 @@
       "passwordLabel": "Password",
       "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",
       "invalidCodeError": "Your access code appears to be invalid. Check for typos or get in touch with Bloom.",
+      "createUserError": "There was an error setting up your account. Please get in touch with the Bloom team and we'll help you get started.",
       "firebase": {
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",

@@ -8,18 +8,18 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
-import { useAppSelector } from '../common/hooks';
+import { RootState } from '../app/store';
 import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
+import { useTypedSelector } from '../hooks/store';
 import illustrationChange from '../public/illustration_change.svg';
 import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
 import illustrationConfidential from '../public/illustration_confidential.svg';
 import illustrationDateSelector from '../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
-import { AppState } from '../store/index';
 import { rowStyle } from '../styles/common';
 
 const steps: Array<ImageTextItem> = [
@@ -50,9 +50,7 @@ const TherapyBooking: NextPage = () => {
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const state = useAppSelector((state: AppState) => state);
-
-  console.log('user', state);
+  const { user, partnerAccess } = useTypedSelector((state: RootState) => state);
 
   const widgetConfig = {
     widget_type: 'iframe',
@@ -126,7 +124,7 @@ const TherapyBooking: NextPage = () => {
         <Box mt={4} textAlign="left">
           <Typography variant="body1" component="p">
             {t.rich('bookingDescription1', {
-              strongText: (children) => <strong>{children}</strong>,
+              strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
             })}
           </Typography>
           <Button
