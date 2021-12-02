@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
 import { PartnerAccess } from './partnerAccessSlice';
+import { Partner } from './partnerSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
 
 interface GetUserResponse {
   user: User;
   partnerAccess: PartnerAccess;
+  partner: Partner;
 }
 
 export const api = createApi({

@@ -4,6 +4,7 @@ import { Action } from 'redux';
 import { api } from './api';
 import currentReducer from './currentSlice';
 import partnerAccessReducer from './partnerAccessSlice';
+import partnerReducer from './partnerSlice';
 import userReducer from './userSlice';
 
 const initStore = () =>
@@ -12,6 +13,7 @@ const initStore = () =>
       [api.reducerPath]: api.reducer,
       user: userReducer,
       partnerAccess: partnerAccessReducer,
+      partner: partnerReducer,
       current: currentReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
