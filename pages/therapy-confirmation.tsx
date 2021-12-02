@@ -1,20 +1,23 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { RootState } from '../app/store';
+import { AuthNextPage } from '../common/authNextPage';
 import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import Link from '../components/Link';
+import { useTypedSelector } from '../hooks/store';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
-const TherapyConfirmation: NextPage = () => {
+const TherapyConfirmation: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
+  const { user, partnerAccess } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
     title: t.rich('confirmation.title'),
@@ -83,5 +86,6 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
+TherapyConfirmation.requireAuth = true;
 
 export default TherapyConfirmation;

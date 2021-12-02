@@ -2,13 +2,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
 import { RootState } from '../app/store';
+import { AuthNextPage } from '../common/authNextPage';
 import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
@@ -45,7 +45,7 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const TherapyBooking: NextPage = () => {
+const TherapyBooking: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
@@ -191,5 +191,6 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
+TherapyBooking.requireAuth = true;
 
 export default TherapyBooking;

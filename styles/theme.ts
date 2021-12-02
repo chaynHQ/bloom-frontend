@@ -16,6 +16,9 @@ let theme = createTheme({
     background: {
       default: '#FDF3EF',
     },
+    error: {
+      main: '#EA0050',
+    },
   },
   shape: {
     borderRadius: 20,

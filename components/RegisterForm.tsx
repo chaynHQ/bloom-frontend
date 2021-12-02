@@ -52,6 +52,10 @@ const RegisterForm = () => {
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         const user = userCredential.user;
+        const token = await user?.getIdToken();
+        if (token) {
+          localStorage.setItem('accessToken', token);
+        }
 
         const userResponse = await createUser({
           firebaseUid: user?.uid,
@@ -61,6 +65,7 @@ const RegisterForm = () => {
           contactPermission: contactPermissionInput,
           languageDefault: LANGUAGES.en,
         });
+
         if ('error' in userResponse || ('data' in userResponse && !userResponse.data.user)) {
           setFormError(t('createUserError'));
           return;
