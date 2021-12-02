@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
+import Link from '../components/Link';
 import { auth } from '../config/firebase';
 
 const containerStyle = {
@@ -26,7 +27,11 @@ const RegisterForm = () => {
     codeParam = codeParam + '';
   }
 
-  const [formError, setFormError] = useState<string>('');
+  const [formError, setFormError] = useState<
+    | string
+    | React.ReactNodeArray
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  >();
   const [codeInput, setCodeInput] = useState<string>(codeParam ? codeParam : '');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
@@ -43,16 +48,35 @@ const RegisterForm = () => {
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
     });
+    console.log('validateCodeResponse', validateCodeResponse);
 
-    if (
-      'error' in validateCodeResponse ||
-      ('data' in validateCodeResponse &&
-        validateCodeResponse.data.status !== PARTNER_ACCESS_CODE_STATUS.VALID)
-    ) {
-      setFormError(t('invalidCodeError'));
+    const isApiErrorType = (
+      error: any,
+    ): error is { data: { statusCode: number; message: string } } => 'data' in error;
+
+    if ('error' in validateCodeResponse && isApiErrorType(validateCodeResponse.error)) {
+      const validateCodeError = validateCodeResponse.error.data.message;
+
+      if (validateCodeError === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
+        setFormError(t('codeErrors.alreadyInUse'));
+      } else if (validateCodeError === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
+        setFormError(t('codeErrors.expired'));
+      } else if (
+        validateCodeError === PARTNER_ACCESS_CODE_STATUS.INVALID_CODE ||
+        PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST
+      ) {
+        setFormError(t('codeErrors.invalid'));
+      } else {
+        setFormError(
+          t.rich('codeErrors.internal', {
+            contactLink: (children) => (
+              <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
+            ),
+          }),
+        );
+      }
       return;
     }
-
     auth
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
@@ -72,7 +96,13 @@ const RegisterForm = () => {
         });
 
         if ('error' in userResponse || ('data' in userResponse && !userResponse.data.user)) {
-          setFormError(t('createUserError'));
+          setFormError(
+            t.rich('createUserError', {
+              contactLink: (children) => (
+                <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
+              ),
+            }),
+          );
           return;
         }
         router.push('/therapy-booking');
@@ -87,7 +117,17 @@ const RegisterForm = () => {
           setFormError(t('firebase.weakPassword'));
         }
         if (errorCode === 'auth/email-already-in-use') {
-          setFormError(t('firebase.emailAlreadyInUse'));
+          setFormError(
+            t.rich('firebase.emailAlreadyInUse', {
+              loginLink: (children) => (
+                <strong>
+                  <Link sx={{ color: 'primary.dark' }} href="/login">
+                    {children}
+                  </Link>
+                </strong>
+              ),
+            }),
+          );
         }
       });
   };

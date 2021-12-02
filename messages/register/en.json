@@ -12,12 +12,18 @@
       "emailLabel": "Email",
       "passwordLabel": "Password",
       "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",
-      "invalidCodeError": "Your access code appears to be invalid. Check for typos or get in touch with Bloom.",
-      "createUserError": "There was an error setting up your account. Please get in touch with the Bloom team and we'll help you get started.",
+      "codeErrors": {
+        "internal": "There was an error validating your access code. Please <contactLink>send a message to the Bloom team</contactLink> and we'll help you get started",
+        "expired": "This code has expired. Get in touch with the Bumble team.",
+        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the Bumble team.",
+        "doesNotExist": "Your access code appears to be invalid. Check for typos or get in touch with the Bumble team.",
+        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the Bumble team."
+      },
+      "createUserError": "There was an error setting up your account. Please <contactLink>send a message to the Bloom team</contactLink> and we'll help you get started",
       "firebase": {
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to login to continue"
+        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue"
       }
     }
   }

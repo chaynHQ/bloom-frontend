@@ -39,7 +39,8 @@ export const api = createApi({
       query: () => `partner-access/me`,
     }),
     validateCode: builder.mutation<
-      { status: PARTNER_ACCESS_CODE_STATUS },
+      | { status: PARTNER_ACCESS_CODE_STATUS }
+      | { error: { data: { statusCode: number; message: string } } },
       { partnerAccessCode: string }
     >({
       query(body) {
