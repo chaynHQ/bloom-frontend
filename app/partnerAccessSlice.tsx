@@ -33,6 +33,9 @@ const slice = createSlice({
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.partnerAccess;
     });
+    builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
+      return payload.partnerAccess;
+    });
   },
 });
 

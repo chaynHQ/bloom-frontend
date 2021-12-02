@@ -38,12 +38,8 @@ const slice = createSlice({
       return payload.user;
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload;
+      return payload.user;
     });
-    // builder.addMatcher(api.endpoints.login.matchFulfilled, (state, { payload }) => {
-    //   state.token = payload.token;
-    //   state.user = payload.user;
-    // });
   },
 });
 
