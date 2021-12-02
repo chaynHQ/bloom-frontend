@@ -10,7 +10,7 @@ module.exports = {
     NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
   },
   i18n: {
-    locales: ['en', 'es'],
+    locales: ['en'],
     defaultLocale: 'en',
     localeDetection: false,
   },

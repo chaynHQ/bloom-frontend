@@ -19,7 +19,7 @@ const containerStyle = {
 } as const;
 
 const RegisterForm = () => {
-  const t = useTranslations('Register.form');
+  const t = useTranslations('Auth.form');
   const router = useRouter();
   let codeParam = router.query.code;
 
@@ -194,7 +194,7 @@ const RegisterForm = () => {
           color="secondary"
           type="submit"
         >
-          {t.rich('submit')}
+          {t.rich('registerSubmit')}
         </Button>
       </form>
     </Box>
