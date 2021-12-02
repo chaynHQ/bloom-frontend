@@ -44,7 +44,6 @@ const RegisterForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError('');
-
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
     });

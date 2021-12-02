@@ -51,7 +51,7 @@ const TherapyBooking: AuthNextPage = () => {
   const [widgetOpen, setWidgetOpen] = useState(false);
 
   const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
-  console.log('partner', partner);
+
   const widgetConfig = {
     widget_type: 'iframe',
     url: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,

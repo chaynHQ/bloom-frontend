@@ -23,8 +23,14 @@ export const api = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getUser: builder.query<User, string>({
-      query: () => 'user/me',
+    getUser: builder.mutation<GetUserResponse, string>({
+      query(body) {
+        return {
+          url: 'user/me',
+          method: 'POST',
+          body,
+        };
+      },
     }),
     addUser: builder.mutation<GetUserResponse, Partial<User>>({
       query(body) {
@@ -51,21 +57,11 @@ export const api = createApi({
         };
       },
     }),
-    // login: builder.mutation<UserResponse, LoginRequest>({
-    //   query: (credentials) => ({
-    //     url: 'login',
-    //     method: 'POST',
-    //     body: credentials,
-    //   }),
-    // }),
-    protected: builder.mutation<{ message: string }, void>({
-      query: () => 'protected',
-    }),
   }),
 });
 
 export const {
-  useGetUserQuery,
+  useGetUserMutation,
   useAddUserMutation,
   useGetPartnerAccessQuery,
   useValidateCodeMutation,
