@@ -20,9 +20,14 @@ const containerStyle = {
 const RegisterForm = () => {
   const t = useTranslations('Register.form');
   const router = useRouter();
+  let codeParam = router.query.code;
+
+  if (codeParam instanceof Array) {
+    codeParam = codeParam + '';
+  }
 
   const [formError, setFormError] = useState<string>('');
-  const [codeInput, setCodeInput] = useState<string>('');
+  const [codeInput, setCodeInput] = useState<string>(codeParam ? codeParam : '');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
@@ -93,6 +98,7 @@ const RegisterForm = () => {
         <TextField
           id="partnerAccessCode"
           onChange={(e) => setCodeInput(e.target.value)}
+          defaultValue={codeInput}
           label={t.rich('codeLabel')}
           variant="standard"
           fullWidth
