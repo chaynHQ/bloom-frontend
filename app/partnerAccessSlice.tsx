@@ -25,7 +25,11 @@ const initialState: PartnerAccess = {
 const slice = createSlice({
   name: 'partnerAccess',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clear: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.getPartnerAccess.matchFulfilled, (state, { payload }) => {
       state = payload;

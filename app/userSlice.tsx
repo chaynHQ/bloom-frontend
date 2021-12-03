@@ -32,7 +32,11 @@ const initialState: User = {
 const slice = createSlice({
   name: 'user',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clear: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.user;
@@ -43,6 +47,7 @@ const slice = createSlice({
   },
 });
 
-export default slice.reducer;
-
+const { actions, reducer } = slice;
+export const { clear } = actions;
 export const selectCurrentUser = (state: RootState) => state.user;
+export default reducer;
