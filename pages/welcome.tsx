@@ -10,6 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import Image from 'next/image';
 import CodeForm from '../components/CodeForm';
 import PartnerHeader from '../components/PartnerHeader';
@@ -73,6 +74,9 @@ const Welcome: NextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('title')}</title>
+      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
@@ -126,7 +130,7 @@ const Welcome: NextPage = () => {
           </Typography>
           <Typography variant="body1" component="p">
             {t.rich('bloomIntroduction', {
-              bloomLink: (children) => <Link href="https://bloom.chayn.co/">{children}</Link>,
+              bloomLink: (children) => <Link href="https://chayn.co/">{children}</Link>,
             })}
           </Typography>
           <Button
