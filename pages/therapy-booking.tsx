@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
@@ -114,6 +115,9 @@ const TherapyBooking: AuthNextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('title')}</title>
+      </Head>
       <Header
         title={headerProps.title}
         introduction={headerProps.introduction}

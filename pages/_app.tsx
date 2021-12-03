@@ -35,7 +35,7 @@ function MyApp(props: MyAppProps) {
     <NextIntlProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>My page</title>
+          <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <ThemeProvider theme={theme}>

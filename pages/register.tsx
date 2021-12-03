@@ -8,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
@@ -72,6 +73,9 @@ const Register: NextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('register.title')}</title>
+      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
