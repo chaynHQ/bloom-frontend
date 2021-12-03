@@ -28,6 +28,7 @@
       },
       "createUserError": "There was an error setting up your account. Please <contactLink>send a message to the Bloom team</contactLink> and we'll help you get started",
       "firebase": {
+        "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
         "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue"

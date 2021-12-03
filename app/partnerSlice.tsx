@@ -19,7 +19,11 @@ const initialState: Partner = {
 const slice = createSlice({
   name: 'partner',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clear: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.partner;
