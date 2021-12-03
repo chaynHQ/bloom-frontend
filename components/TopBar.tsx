@@ -5,6 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
+import { RootState } from '../app/store';
 import { useTypedSelector } from '../hooks/store';
 import bloomLogo from '../public/bloom_logo.svg';
 import { rowStyle } from '../styles/common';
