@@ -49,6 +49,9 @@ const LoginForm = () => {
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
         }
+        if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
+          setFormError(t('firebase.authError'));
+        }
       });
   };
 
