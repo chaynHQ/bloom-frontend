@@ -5,6 +5,10 @@ export interface faqItem {
 
 export const therapyFaqs: Array<faqItem> = [
   {
+    title: 'faqTitle0',
+    body: 'faqBody0',
+  },
+  {
     title: 'faqTitle1',
     body: 'faqBody1',
   },
@@ -31,5 +35,25 @@ export const therapyFaqs: Array<faqItem> = [
   {
     title: 'faqTitle7',
     body: 'faqBody7',
+  },
+  {
+    title: 'faqTitle8',
+    body: 'faqBody8',
+  },
+  {
+    title: 'faqTitle9',
+    body: 'faqBody9',
+  },
+  {
+    title: 'faqTitle10',
+    body: 'faqBody10',
+  },
+  {
+    title: 'faqTitle11',
+    body: 'faqBody11',
+  },
+  {
+    title: 'faqTitle12',
+    body: 'faqBody12',
   },
 ];
