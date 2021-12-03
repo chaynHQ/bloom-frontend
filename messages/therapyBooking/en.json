@@ -1,0 +1,39 @@
+{
+  "TherapyBooking": {
+    "title": "Bloom therapy",
+    "introduction": "Bumble has partnered with Bloom to offer you free, confidential support. Bloom connects you to a therapist who can offer tailored support. You'll have access to six, hour-long sessions with a therapist of your choice.",
+    "bookingButton": "Begin booking",
+    "bookingDescription1": "You have <strongText>4</strongText> therapy sessions available to book.",
+    "steps": {
+      "step1": "You choose from our carefully selected, multilingual therapists.",
+      "step2": "Pick a date and time that works for you. All sessions are online.",
+      "step3": "If you change your mind, you can stop the sessions or change therapist at any point.",
+      "step4": "Everything you share remains strictly confidential, between you and the therapist."
+    },
+    "faqHeader": "More about how Bloom therapy works",
+    "faqs": {
+      "faqTitle0": "Do I have to pay for therapy?",
+      "faqBody0": "No, the cost of your six therapy sessions has been covered by Bumble. You can access Bloom therapy for free.",
+      "faqTitle1": "What happens if I can't make it to my therapy session anymore?",
+      "faqBody1": "Use the link in your confirmation email to reschedule your therapy session, with as much notice as possible. Cancelling with less than 24-hours notice will use up one of your therapy credits, so try to make sure you cancel or rearrange in advance.",
+      "faqTitle2": "How many sessions do I get?",
+      "faqBody2": "Bumble has covered the cost of six, one-hour therapy sessions.",
+      "faqTitle3": "How much time do I have left to book my therapy sessions?",
+      "faqBody3": "Your therapy sessions are available until December 2022. You can choose how much you want to space out the sessions, whether it's a week or a month. We recommend you chat with your therapist to decide what would work best for you.",
+      "faqTitle4": "Can I do the sessions in-person?",
+      "faqBody4": "All sessions will be held online on video calls. Bloom specialises in digital, remote support, so our therapists are experienced in getting the best out of an online session.",
+      "faqTitle5": "What if I don't get along with the therapist?",
+      "faqBody5": "We're all human, so don't worry if you didn't click with the therapist you chose. You're free to book your next session with a different one.",
+      "faqTitle6": "What happens when my six sessions are up?",
+      "faqBody6": "Have a discussion with your therapist about whether they think you could benefit from more sessions. Unfortunately, the cost of more sessions won't be covered by Bumble. Our therapists can share their prices with you, and you can decide whether to continue with them.",
+      "faqTitle7": "I didn't go to therapy, but it says I used up a session?",
+      "faqBody7": "If you didn't attend your therapy session or cancelled/rescheduled with less than 24-hours notice, then unfortunately that uses up one of your sessions. Our therapists hold slots for you, so we want to respect their time. "
+    },
+    "confirmation": {
+      "title": "All booked",
+      "introduction": "Your therapy session is booked in. Look out for an email from 'Bloom', which will remind you of the time and date and provide a video call link. For any reason, if you can't make the session, the same email includes a link to book again.",
+      "returnDescription": "After your therapy session, come back to Bloom to book your next one.",
+      "bookmarkDescription": "You may want to bookmark <bookingLink>bloom-therapy.chayn.co</bookingLink> so you can find us again later."
+    }
+  }
+}

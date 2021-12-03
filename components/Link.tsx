@@ -41,7 +41,7 @@ export type LinkProps = {
   activeClassName?: string;
   as?: NextLinkProps['as'];
   href: NextLinkProps['href'];
-  noLinkStyle?: boolean;
+  unstyled?: boolean;
 } & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
   Omit<MuiLinkProps, 'href'>;
 
@@ -53,7 +53,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
     as: linkAs,
     className: classNameProps,
     href,
-    noLinkStyle,
+    unstyled,
     role, // Link don't have roles.
     ...other
   } = props;
@@ -68,14 +68,14 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
     typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
 
   if (isExternal) {
-    if (noLinkStyle) {
+    if (unstyled) {
       return <Anchor className={className} href={href} ref={ref} {...other} />;
     }
 
     return <MuiLink className={className} href={href} ref={ref} {...other} />;
   }
 
-  if (noLinkStyle) {
+  if (unstyled) {
     return <NextLinkComposed className={className} ref={ref} to={href} {...other} />;
   }
 

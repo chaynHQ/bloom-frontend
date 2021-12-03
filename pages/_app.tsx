@@ -4,8 +4,11 @@ import { ThemeProvider } from '@mui/material/styles';
 import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { wrapper } from '../app/store';
+import { AuthGuard } from '../common/authGuard';
+import Footer from '../components/Footer';
+import TopBar from '../components/TopBar';
 import createEmotionCache from '../config/emotionCache';
-import { wrapper } from '../store/index';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 
@@ -18,21 +21,38 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+  }: {
+    Component: any;
+    emotionCache?: EmotionCache;
+    pageProps: any;
+  } = props;
 
   return (
     <NextIntlProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>My page</title>
+          <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />
+          <TopBar />
+          {Component.requireAuth ? (
+            <AuthGuard>
+              <Component {...pageProps} />
+            </AuthGuard>
+          ) : (
+            <Component {...pageProps} />
+          )}{' '}
+          <Footer />
         </ThemeProvider>
       </CacheProvider>
     </NextIntlProvider>
   );
 }
+
 export default wrapper.withRedux(MyApp);

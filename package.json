@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "start:heroku": "NODE_OPTIONS='--max_old_space_size=460' next start -p $PORT"
   },
   "dependencies": {
     "@emotion/cache": "^11.4.0",
@@ -17,7 +18,7 @@
     "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.0.2",
     "@reduxjs/toolkit": "^1.6.1",
-    "axios": "^0.22.0",
+    "firebase": "^9.5.0",
     "next": "11.1.2",
     "next-intl": "^2.0.5",
     "next-redux-wrapper": "^7.0.5",
