@@ -13,7 +13,7 @@
     },
     "form": {
       "codeLabel": "Bumble access code",
-      "nameLabel": "First name / nickname",
+      "nameLabel": "First name/nickname",
       "emailLabel": "Email",
       "passwordLabel": "Password",
       "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",

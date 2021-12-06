@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { wrapper } from '../app/store';
 import { AuthGuard } from '../common/authGuard';
 import Footer from '../components/Footer';
+import LeaveSiteButton from '../components/LeaveSiteButton';
 import TopBar from '../components/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import '../styles/globals.css';
@@ -41,6 +42,7 @@ function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
+          <LeaveSiteButton />
           {Component.requireAuth ? (
             <AuthGuard>
               <Component {...pageProps} />
