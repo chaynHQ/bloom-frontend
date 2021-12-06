@@ -80,7 +80,10 @@ const TherapyBooking: AuthNextPage = () => {
     app_config: {
       allow_switch_to_ada: 0,
       predefined: {
-        client: {},
+        client: {
+          name: user.name,
+          email: user.email,
+        },
       },
     },
   } as const;
