@@ -93,6 +93,8 @@ theme = createTheme(theme, {
           fontWeight: 'bolder',
           borderRadius: '100px',
           textTransform: 'unset',
+          paddingLeft: 16,
+          paddingRight: 16,
 
           '&:hover': {
             backgroundColor: lighten(theme.palette.primary.main, 0.1),

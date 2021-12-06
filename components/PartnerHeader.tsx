@@ -14,30 +14,25 @@ interface HeaderProps {
 
 const headerContainerStyles = {
   ...rowStyle,
+  alignItems: 'end',
   justifyContent: 'space-between',
   backgroundColor: 'common.white',
   paddingBottom: { xs: 0, md: 0 },
-  paddingTop: { xs: 2, md: 12 },
+  paddingTop: { xs: 6, md: 8 },
+  minHeight: { xs: 260, md: 410 },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 250 },
-  height: { xs: 150, md: 290 },
-  marginTop: { xs: 4, md: 0 },
-  alignSelf: { xs: 'center', md: 'auto' },
+  width: { xs: 150, md: 230 },
+  height: { xs: 150, md: 265 },
 } as const;
 
 const logoContainerStyle = {
   position: 'relative',
   width: { xs: 160, md: 300 },
-  height: { xs: 150, md: 250 },
+  height: { xs: 160, md: 280 },
   marginTop: { xs: 4, md: 0 },
-  alignSelf: { xs: 'center', md: 'auto' },
-} as const;
-
-const textContainerStyle = {
-  maxWidth: 600,
 } as const;
 
 const PartnerHeader = (props: HeaderProps) => {
