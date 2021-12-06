@@ -21,18 +21,18 @@ interface HeaderProps {
 
 const headerContainerStyles = {
   ...rowStyle,
+  alignItems: 'end',
   justifyContent: 'space-between',
   flexWrap: 'wrap',
+  minHeight: { xs: 220, md: 410 },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 225 },
-  height: { xs: 150, md: 225 },
+  width: { xs: 150, md: 210 },
+  height: { xs: 150, md: 210 },
   marginLeft: { xs: 'auto', md: 5 },
   marginRight: { xs: 'auto', md: 0 },
-  marginTop: { xs: 4, md: 0 },
-  alignSelf: { xs: 'center', md: 'auto' },
 } as const;
 
 const textContainerStyle = {
