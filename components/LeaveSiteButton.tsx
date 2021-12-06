@@ -6,7 +6,7 @@ import * as React from 'react';
 const containerStyles = {
   position: 'fixed',
   textAlign: 'right',
-  right: { xs: 16, md: 80 },
+  right: { xs: 16, lg: 80 },
   top: { xs: 15, md: 25 },
   zIndex: 100,
 } as const;
