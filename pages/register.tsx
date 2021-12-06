@@ -64,6 +64,9 @@ const Register: NextPage = () => {
     return (
       <Box sx={extraContentStyle}>
         <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
+        <Typography pt={2} variant="body1" component="p">
+          {t.rich('loginLink', { loginLink: (children) => <Link href="/login">{children}</Link> })}
+        </Typography>
         <Box sx={imageContainerStyle}>
           <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} />
         </Box>
