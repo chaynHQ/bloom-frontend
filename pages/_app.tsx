@@ -5,13 +5,13 @@ import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { wrapper } from '../app/store';
-import { AuthGuard } from '../common/authGuard';
 import Footer from '../components/Footer';
 import LeaveSiteButton from '../components/LeaveSiteButton';
 import TopBar from '../components/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import '../styles/globals.css';
 import theme from '../styles/theme';
+import { AuthGuard } from '../utils/authGuard';
 
 // For SSG compatibility with MUI
 // Client-side emotion cache, shared for the whole session of the user in the browser.

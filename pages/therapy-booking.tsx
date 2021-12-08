@@ -9,11 +9,10 @@ import Image from 'next/image';
 import Script from 'next/script';
 import { useState } from 'react';
 import { RootState } from '../app/store';
-import { AuthNextPage } from '../common/authNextPage';
-import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
+import { therapyFaqs } from '../constants/faqs';
 import { useTypedSelector } from '../hooks/store';
 import illustrationChange from '../public/illustration_change.svg';
 import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
@@ -22,6 +21,7 @@ import illustrationDateSelector from '../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 import { rowStyle } from '../styles/common';
+import { AuthNextPage } from '../utils/authNextPage';
 
 const steps: Array<ImageTextItem> = [
   {

@@ -6,14 +6,14 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { RootState } from '../app/store';
-import { AuthNextPage } from '../common/authNextPage';
-import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import Link from '../components/Link';
+import { therapyFaqs } from '../constants/faqs';
 import { useTypedSelector } from '../hooks/store';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
+import { AuthNextPage } from '../utils/authNextPage';
 
 const TherapyConfirmation: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
