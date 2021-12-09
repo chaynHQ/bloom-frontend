@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../app/api';
 import { auth } from '../config/firebase';
-import { LOGIN } from '../constants/events';
+import { LOGIN_SUCCESS } from '../constants/events';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const containerStyle = {
@@ -47,7 +47,7 @@ const LoginForm = () => {
         }
         const userResponse = await getUser('');
         if ('data' in userResponse) {
-          logEvent(LOGIN, { ...getEventUserData(userResponse.data) });
+          logEvent(LOGIN_SUCCESS, { ...getEventUserData(userResponse.data) });
           router.push('/therapy-booking');
         }
       })

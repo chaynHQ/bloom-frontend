@@ -5,20 +5,27 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { RootState } from '../app/store';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import Link from '../components/Link';
+import { THERAPY_CONFIRMATION_VIEWED } from '../constants/events';
 import { therapyFaqs } from '../constants/faqs';
 import { useTypedSelector } from '../hooks/store';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 import { AuthNextPage } from '../utils/authNextPage';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const TherapyConfirmation: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
-  const { user, partnerAccess } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
+
+  useEffect(() => {
+    logEvent(THERAPY_CONFIRMATION_VIEWED, getEventUserData({ user, partnerAccess, partner }));
+  }, []);
 
   const headerProps = {
     title: t.rich('confirmation.title'),
