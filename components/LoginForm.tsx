@@ -6,7 +6,11 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { useGetUserMutation } from '../app/api';
 import { auth } from '../config/firebase';
+import { LOGIN } from '../constants/events';
+import logEvent, { getEventUserData } from '../utils/logEvent';
+
 const containerStyle = {
   marginY: 3,
 } as const;
@@ -27,6 +31,7 @@ const LoginForm = () => {
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
+  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,8 +45,11 @@ const LoginForm = () => {
         if (token) {
           localStorage.setItem('accessToken', token);
         }
-
-        router.push('/therapy-booking');
+        const userResponse = await getUser('');
+        if ('data' in userResponse) {
+          logEvent(LOGIN, { ...getEventUserData(userResponse.data) });
+          router.push('/therapy-booking');
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

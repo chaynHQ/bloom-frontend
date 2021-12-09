@@ -12,8 +12,10 @@ import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
+import { REGISTER } from '../constants/events';
 import { LANGUAGES } from '../constants/languages';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const containerStyle = {
   marginY: 3,
@@ -48,7 +50,6 @@ const RegisterForm = () => {
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
     });
-    console.log('validateCodeResponse', validateCodeResponse);
 
     const isApiErrorType = (
       error: any,
@@ -105,6 +106,8 @@ const RegisterForm = () => {
           );
           return;
         }
+
+        logEvent(REGISTER, { ...getEventUserData(userResponse.data) });
         router.push('/therapy-booking');
       })
       .catch((error) => {
