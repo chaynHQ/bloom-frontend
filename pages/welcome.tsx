@@ -1,4 +1,3 @@
-import { Link } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -13,6 +12,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import CodeForm from '../components/CodeForm';
+import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';

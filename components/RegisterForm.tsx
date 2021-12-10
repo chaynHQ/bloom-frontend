@@ -12,8 +12,10 @@ import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
+import rollbar from '../config/rollbar';
 import {
   REGISTER_ERROR,
+  REGISTER_FIREBASE_ERROR,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
@@ -81,6 +83,7 @@ const RegisterForm = () => {
             ),
           }),
         );
+        rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: 'bumble', message: error });
         return;
       }
@@ -102,7 +105,7 @@ const RegisterForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+        logEvent(REGISTER_FIREBASE_ERROR, { partner: 'bumble', message: errorMessage });
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -115,9 +118,7 @@ const RegisterForm = () => {
             t.rich('firebase.emailAlreadyInUse', {
               loginLink: (children) => (
                 <strong>
-                  <Link sx={{ color: 'primary.dark' }} href="/login">
-                    {children}
-                  </Link>
+                  <Link href="/login">{children}</Link>
                 </strong>
               ),
             }),
@@ -125,6 +126,10 @@ const RegisterForm = () => {
         }
         return;
       });
+
+    if (!firebaseUser) {
+      return;
+    }
 
     const userResponse = await createUser({
       firebaseUid: firebaseUser?.uid,
@@ -138,6 +143,7 @@ const RegisterForm = () => {
     if ('error' in userResponse) {
       const errorMessage = getErrorMessage(userResponse.error);
       logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+      rollbar.error('User register create user error', userResponse.error);
 
       setFormError(
         t.rich('createUserError', {
@@ -191,7 +197,7 @@ const RegisterForm = () => {
           required
         />
         {formError && (
-          <Typography variant="body2" component="p" color="primary.dark" mb={2}>
+          <Typography variant="body1" component="p" color="error.main" mb={2}>
             {formError}
           </Typography>
         )}

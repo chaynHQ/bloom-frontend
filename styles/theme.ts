@@ -82,7 +82,7 @@ theme = createTheme(theme, {
     MuiLink: {
       styleOverrides: {
         root: {
-          color: '#000000',
+          color: 'inherit',
           textDecorationColor: theme.palette.primary.dark,
         },
       },
