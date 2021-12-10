@@ -124,6 +124,7 @@ const RegisterForm = () => {
             }),
           );
         }
+        return;
       });
 
     if (!firebaseUser) {

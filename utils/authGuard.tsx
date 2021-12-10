@@ -9,6 +9,7 @@ import { useUser } from '../hooks/useUser';
 import { getErrorMessage } from './errorMessage';
 import logEvent, { getEventUserData } from './logEvent';
 
+
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const [verified, setVerified] = useState(false);
@@ -28,6 +29,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           rollbar.error('Auth guard get user error', userResponse.error);
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
+
         localStorage.removeItem('accessToken');
         router.replace('/login');
       }
