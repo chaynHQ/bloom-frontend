@@ -5,6 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
+import firebase from 'firebase/compat/app';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -54,11 +55,9 @@ const RegisterForm = () => {
   const [createUser, { isLoading: createIsLoading }] = useAddUserMutation();
   const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const validateAccessCode = async () => {
     logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: 'bumble' });
 
-    setFormError('');
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
     });
@@ -85,13 +84,15 @@ const RegisterForm = () => {
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: 'bumble', message: error });
-        return;
+        throw error;
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: 'bumble', message: error });
-      return;
+      throw error;
     }
     logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: 'bumble' });
+  };
 
+  const createFirebaseUser = async () => {
     const firebaseUser = await auth
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
@@ -124,12 +125,12 @@ const RegisterForm = () => {
             }),
           );
         }
+        throw error;
       });
+    return firebaseUser;
+  };
 
-    if (!firebaseUser) {
-      return;
-    }
-
+  const createUserRecord = async (firebaseUser: firebase.User) => {
     const userResponse = await createUser({
       firebaseUid: firebaseUser?.uid,
       partnerAccessCode: codeInput,
@@ -139,10 +140,15 @@ const RegisterForm = () => {
       languageDefault: LANGUAGES.en,
     });
 
+    if ('data' in userResponse && userResponse.data.user.id) {
+      logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
+    }
+
     if ('error' in userResponse) {
-      const errorMessage = getErrorMessage(userResponse.error);
+      const error = userResponse.error;
+      const errorMessage = getErrorMessage(error);
       logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
-      rollbar.error('User register create user error', userResponse.error);
+      rollbar.error('User register create user error', error);
 
       setFormError(
         t.rich('createUserError', {
@@ -151,11 +157,22 @@ const RegisterForm = () => {
           ),
         }),
       );
-      return;
+      throw error;
     }
+  };
 
-    logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
-    router.push('/therapy-booking');
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormError('');
+
+    try {
+      await validateAccessCode();
+      const firebaseUser = await createFirebaseUser();
+      await createUserRecord(firebaseUser!);
+      router.push('/therapy-booking');
+    } catch {
+      // errors handled in each function
+    }
   };
 
   return (
