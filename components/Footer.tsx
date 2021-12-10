@@ -9,13 +9,15 @@ import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
+import { RootState } from '../app/store';
+import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../constants/events';
+import { useTypedSelector } from '../hooks/store';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
 import tiktokLogo from '../public/tiktok.svg';
 import { rowStyle } from '../styles/common';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 import Link from './Link';
-
-interface FooterProps {}
 
 const footerContainerStyle = {
   ...rowStyle,
@@ -25,7 +27,8 @@ const footerContainerStyle = {
   paddingY: { xs: 6, md: 10 },
 } as const;
 
-const imageContainerStyle = {
+const logoContainerStyle = {
+  display: 'block',
   width: 160,
   height: 34,
   marginBottom: 1.75,
@@ -47,16 +50,18 @@ const socialsContainerStyle = {
   marginLeft: -1,
 } as const;
 
-const Footer = (props: FooterProps) => {
-  //   const {  } = props;
+const Footer = () => {
   const tS = useTranslations('Shared');
+
+  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccess, partner });
 
   return (
     <Container sx={footerContainerStyle}>
       <Box sx={brandContainerStyle}>
-        <Box sx={imageContainerStyle}>
+        <Link href={'https://chayn.co'} sx={logoContainerStyle}>
           <Image alt={tS.raw('alt.bloomLogo')} src={bloomLogo} />
-        </Box>
+        </Link>
         <Typography variant="body2" component="p">
           {tS.raw('footer.chaynDetails1')}
         </Typography>
@@ -64,18 +69,37 @@ const Footer = (props: FooterProps) => {
           {tS.raw('footer.chaynDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
-          <IconButton aria-label="Instagram" href="https://www.instagram.com/chaynhq">
+          <IconButton
+            aria-label="Instagram"
+            href="https://www.instagram.com/chaynhq"
+            onClick={() => logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: '' })}
+          >
             <InstagramIcon />
           </IconButton>
-          <IconButton aria-label="Facebook" href="https://www.facebook.com/chayn/">
+          <IconButton
+            aria-label="Facebook"
+            href="https://www.facebook.com/chayn/"
+            onClick={() =>
+              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Facebook' })
+            }
+          >
             <FacebookIcon />
           </IconButton>
-          <IconButton aria-label="Twitter" href="https://twitter.com/ChaynHQ">
+          <IconButton
+            aria-label="Twitter"
+            href="https://twitter.com/ChaynHQ"
+            onClick={() =>
+              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Twitter' })
+            }
+          >
             <TwitterIcon />
           </IconButton>
           <IconButton
             aria-label="Youtube"
             href="https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg"
+            onClick={() =>
+              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
+            }
           >
             <YoutubeIcon />
           </IconButton>
@@ -83,9 +107,9 @@ const Footer = (props: FooterProps) => {
       </Box>
 
       <Box sx={brandContainerStyle}>
-        <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.bloomLogo')} src={bumbleLogo} />
-        </Box>
+        <Link href={'https://bumble.com'} sx={logoContainerStyle}>
+          <Image alt={tS.raw('alt.bumbleLogo')} src={bumbleLogo} />
+        </Link>
         <Typography variant="body2" component="p">
           {tS.raw('footer.bumbleDetails1')}
         </Typography>
@@ -93,15 +117,33 @@ const Footer = (props: FooterProps) => {
           {tS.raw('footer.bumbleDetails2')}
         </Typography>
         <Box sx={socialsContainerStyle}>
-          <IconButton aria-label="Instagram" href="https://www.instagram.com/bumble">
+          <IconButton
+            aria-label="Instagram"
+            href="https://www.instagram.com/bumble"
+            onClick={() =>
+              logEvent(PARTNER_SOCIAL_LINK_CLICKED, {
+                ...eventUserData,
+                social_account: 'Instagram',
+              })
+            }
+          >
             <InstagramIcon />
           </IconButton>
-          <IconButton aria-label="Tiktok" href="https://www.tiktok.com/@bumble">
+          <IconButton
+            aria-label="Tiktok"
+            href="https://www.tiktok.com/@bumble"
+            onClick={() =>
+              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Tiktok' })
+            }
+          >
             <Image alt={tS.raw('alt.bloomLogo')} src={tiktokLogo} />
           </IconButton>
           <IconButton
             aria-label="Youtube"
             href="https://www.youtube.com/channel/UCERo8J7mug7cVcwIKaoJLww"
+            onClick={() =>
+              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
+            }
           >
             <YoutubeIcon />
           </IconButton>

@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import { faqItem } from '../common/therapyFaqs';
+import { faqItem } from '../constants/faqs';
 
 interface FaqsProps {
   translations: string;

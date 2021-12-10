@@ -15,8 +15,8 @@ export interface PartnerAccess {
 const initialState: PartnerAccess = {
   id: null,
   activatedAt: null,
-  featureLiveChat: false,
-  featureTherapy: false,
+  featureLiveChat: null,
+  featureTherapy: null,
   partnerAccessCode: null,
   therapySessionsRemaining: null,
   therapySessionsRedeemed: null,

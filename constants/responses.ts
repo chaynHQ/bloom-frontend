@@ -1,8 +1,3 @@
-export enum LANGUAGES {
-  en = 'en',
-  es = 'es',
-}
-
 export enum PARTNER_ACCESS_CODE_STATUS {
   VALID = 'VALID',
   INVALID_CODE = 'INVALID_CODE',

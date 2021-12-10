@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LANGUAGES } from '../common/constants';
+import { LANGUAGES } from '../constants/languages';
 import { api } from './api';
 import type { RootState } from './store';
 
