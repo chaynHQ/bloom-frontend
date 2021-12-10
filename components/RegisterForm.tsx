@@ -12,9 +12,17 @@ import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
-import { REGISTER } from '../constants/events';
+import {
+  REGISTER_ERROR,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  VALIDATE_ACCESS_CODE_ERROR,
+  VALIDATE_ACCESS_CODE_INVALID,
+  VALIDATE_ACCESS_CODE_SUCCESS,
+} from '../constants/events';
 import { LANGUAGES } from '../constants/languages';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
+import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const containerStyle = {
@@ -46,25 +54,23 @@ const RegisterForm = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    logEvent(REGISTER_REQUEST, { partner: 'bumble' });
+
     setFormError('');
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
     });
 
-    const isApiErrorType = (
-      error: any,
-    ): error is { data: { statusCode: number; message: string } } => 'data' in error;
+    if ('error' in validateCodeResponse) {
+      const error = getErrorMessage(validateCodeResponse.error);
 
-    if ('error' in validateCodeResponse && isApiErrorType(validateCodeResponse.error)) {
-      const validateCodeError = validateCodeResponse.error.data.message;
-
-      if (validateCodeError === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
+      if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
         setFormError(t('codeErrors.alreadyInUse'));
-      } else if (validateCodeError === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
+      } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
         setFormError(t('codeErrors.expired'));
       } else if (
-        validateCodeError === PARTNER_ACCESS_CODE_STATUS.INVALID_CODE ||
-        PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST
+        error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||
+        PARTNER_ACCESS_CODE_STATUS.INVALID_CODE
       ) {
         setFormError(t('codeErrors.invalid'));
       } else {
@@ -75,10 +81,15 @@ const RegisterForm = () => {
             ),
           }),
         );
+        logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: 'bumble', message: error });
+        return;
       }
+      logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: 'bumble', message: error });
       return;
     }
-    auth
+    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: 'bumble' });
+
+    const firebaseUser = await auth
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -86,29 +97,7 @@ const RegisterForm = () => {
         if (token) {
           localStorage.setItem('accessToken', token);
         }
-
-        const userResponse = await createUser({
-          firebaseUid: user?.uid,
-          partnerAccessCode: codeInput,
-          name: nameInput,
-          email: emailInput,
-          contactPermission: contactPermissionInput,
-          languageDefault: LANGUAGES.en,
-        });
-
-        if ('error' in userResponse || ('data' in userResponse && !userResponse.data.user)) {
-          setFormError(
-            t.rich('createUserError', {
-              contactLink: (children) => (
-                <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-              ),
-            }),
-          );
-          return;
-        }
-
-        logEvent(REGISTER, { ...getEventUserData(userResponse.data) });
-        router.push('/therapy-booking');
+        return user;
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -132,7 +121,34 @@ const RegisterForm = () => {
             }),
           );
         }
+        return;
       });
+
+    const userResponse = await createUser({
+      firebaseUid: firebaseUser?.uid,
+      partnerAccessCode: codeInput,
+      name: nameInput,
+      email: emailInput,
+      contactPermission: contactPermissionInput,
+      languageDefault: LANGUAGES.en,
+    });
+
+    if ('error' in userResponse) {
+      const errorMessage = getErrorMessage(userResponse.error);
+      logEvent(REGISTER_ERROR, { message: errorMessage });
+
+      setFormError(
+        t.rich('createUserError', {
+          contactLink: (children) => (
+            <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
+          ),
+        }),
+      );
+      return;
+    }
+
+    logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
+    router.push('/therapy-booking');
   };
 
   return (
