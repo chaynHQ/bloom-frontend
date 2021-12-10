@@ -42,7 +42,7 @@ export const api = createApi({
       },
     }),
     getPartnerAccess: builder.query<PartnerAccess, string>({
-      query: () => `partner-access/me`,
+      query: (id) => `partner-access/${id}`,
     }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }

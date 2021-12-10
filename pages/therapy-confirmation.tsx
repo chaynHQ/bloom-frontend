@@ -6,26 +6,49 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { RootState } from '../app/store';
+import { useGetUserMutation } from '../app/api';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import Link from '../components/Link';
-import { THERAPY_CONFIRMATION_VIEWED } from '../constants/events';
+import rollbar from '../config/rollbar';
+import {
+  GET_USER_ERROR,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  THERAPY_CONFIRMATION_VIEWED,
+} from '../constants/events';
 import { therapyFaqs } from '../constants/faqs';
-import { useTypedSelector } from '../hooks/store';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 import { AuthNextPage } from '../utils/authNextPage';
+import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const TherapyConfirmation: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
-  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
+
+  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   useEffect(() => {
-    logEvent(THERAPY_CONFIRMATION_VIEWED, getEventUserData({ user, partnerAccess, partner }));
-  }, []);
+    async function callGetUser() {
+      logEvent(GET_USER_REQUEST);
+      const userResponse = await getUser('');
+
+      if ('data' in userResponse && userResponse.data.user.id) {
+        const eventUserData = getEventUserData(userResponse.data);
+        logEvent(GET_USER_SUCCESS, eventUserData);
+        logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
+      } else {
+        if ('error' in userResponse) {
+          rollbar.error('Therapy confirmation get user error', userResponse.error);
+          logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
+        }
+        logEvent(THERAPY_CONFIRMATION_VIEWED);
+      }
+    }
+    callGetUser();
+  }, [getUser]);
 
   const headerProps = {
     title: t.rich('confirmation.title'),
