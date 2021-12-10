@@ -191,7 +191,7 @@ const RegisterForm = () => {
           required
         />
         {formError && (
-          <Typography variant="body2" component="p" color="primary.dark" mb={2}>
+          <Typography variant="body1" component="p" color="error.main" mb={2}>
             {formError}
           </Typography>
         )}
