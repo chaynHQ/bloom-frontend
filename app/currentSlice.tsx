@@ -15,7 +15,11 @@ const initialState: Current = {
 const slice = createSlice({
   name: 'current',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    clearCurrentSlice: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchPending, (state, { payload }) => {
       state.loading = true;
@@ -26,6 +30,7 @@ const slice = createSlice({
   },
 });
 
-export default slice.reducer;
-
+const { actions, reducer } = slice;
+export const { clearCurrentSlice } = actions;
 export const selectCurrent = (state: RootState) => state.current;
+export default reducer;

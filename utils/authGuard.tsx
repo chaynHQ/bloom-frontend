@@ -33,6 +33,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       }
     }
     if (user.id) {
+      console.log('found user id');
       setVerified(true);
     }
     const accessToken = localStorage.getItem('accessToken');

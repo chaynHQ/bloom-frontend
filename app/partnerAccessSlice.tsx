@@ -26,7 +26,7 @@ const slice = createSlice({
   name: 'partnerAccess',
   initialState: initialState,
   reducers: {
-    clear: (state) => {
+    clearPartnerAccessSlice: (state) => {
       state = initialState;
     },
   },
@@ -43,6 +43,7 @@ const slice = createSlice({
   },
 });
 
-export default slice.reducer;
-
+const { actions, reducer } = slice;
+export const { clearPartnerAccessSlice } = actions;
 export const selectPartnerAccess = (state: RootState) => state.partnerAccess;
+export default reducer;
