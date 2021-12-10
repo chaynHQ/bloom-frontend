@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import router from 'next/router';
 import Header from '../components/Header';
 import Link from '../components/Link';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
@@ -21,6 +22,8 @@ const Home: NextPage = () => {
     imageSrc: illustrationTeaPeach,
     imageAlt: 'alt.personTea',
   };
+
+  router.replace('/therapy-booking');
 
   return (
     <Box>

@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { PARTNER_ACCESS_CODE_STATUS } from '../common/constants';
+import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
 import { PartnerAccess } from './partnerAccessSlice';
 import { Partner } from './partnerSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
 
-interface GetUserResponse {
+export interface GetUserResponse {
   user: User;
   partnerAccess: PartnerAccess;
   partner: Partner;
@@ -42,7 +42,7 @@ export const api = createApi({
       },
     }),
     getPartnerAccess: builder.query<PartnerAccess, string>({
-      query: () => `partner-access/me`,
+      query: (id) => `partner-access/${id}`,
     }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
