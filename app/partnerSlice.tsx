@@ -20,7 +20,7 @@ const slice = createSlice({
   name: 'partner',
   initialState: initialState,
   reducers: {
-    clear: (state) => {
+    clearPartnerSlice: (state) => {
       state = initialState;
     },
   },
@@ -34,6 +34,7 @@ const slice = createSlice({
   },
 });
 
-export default slice.reducer;
-
+const { actions, reducer } = slice;
+export const { clearPartnerSlice } = actions;
 export const selectPartner = (state: RootState) => state.partner;
+export default reducer;

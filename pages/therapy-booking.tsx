@@ -7,13 +7,13 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState } from '../app/store';
-import { AuthNextPage } from '../common/authNextPage';
-import { therapyFaqs } from '../common/therapyFaqs';
 import Faqs from '../components/Faqs';
 import Header from '../components/Header';
 import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
+import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../constants/events';
+import { therapyFaqs } from '../constants/faqs';
 import { useTypedSelector } from '../hooks/store';
 import illustrationChange from '../public/illustration_change.svg';
 import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
@@ -22,6 +22,8 @@ import illustrationDateSelector from '../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 import { rowStyle } from '../styles/common';
+import { AuthNextPage } from '../utils/authNextPage';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const steps: Array<ImageTextItem> = [
   {
@@ -52,6 +54,10 @@ const TherapyBooking: AuthNextPage = () => {
   const [widgetOpen, setWidgetOpen] = useState(false);
 
   const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccess, partner });
+  useEffect(() => {
+    logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
+  }, []);
 
   const widgetConfig = {
     widget_type: 'iframe',
@@ -112,7 +118,10 @@ const TherapyBooking: AuthNextPage = () => {
     minWidth: { xs: '100%', sm: 200 },
     marginY: 4,
   } as const;
+
   const openWidget = () => {
+    logEvent(THERAPY_BOOKING_OPENED, eventUserData);
+
     setWidgetOpen(true);
   };
 

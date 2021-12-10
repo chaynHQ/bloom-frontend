@@ -6,7 +6,21 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { useGetUserMutation } from '../app/api';
+import Link from '../components/Link';
 import { auth } from '../config/firebase';
+import rollbar from '../config/rollbar';
+import {
+  GET_USER_ERROR,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  LOGIN_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+} from '../constants/events';
+import { getErrorMessage } from '../utils/errorMessage';
+import logEvent, { getEventUserData } from '../utils/logEvent';
+
 const containerStyle = {
   marginY: 3,
 } as const;
@@ -27,10 +41,12 @@ const LoginForm = () => {
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
+  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError('');
+    logEvent(LOGIN_REQUEST);
 
     auth
       .signInWithEmailAndPassword(emailInput, passwordInput)
@@ -40,12 +56,36 @@ const LoginForm = () => {
         if (token) {
           localStorage.setItem('accessToken', token);
         }
+        logEvent(LOGIN_SUCCESS);
+        logEvent(GET_USER_REQUEST);
 
-        router.push('/therapy-booking');
+        const userResponse = await getUser('');
+
+        if ('data' in userResponse) {
+          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+          router.push('/therapy-booking');
+        }
+        if ('error' in userResponse) {
+          const errorMessage = getErrorMessage(userResponse.error);
+          logEvent(GET_USER_ERROR, { message: errorMessage });
+          rollbar.error('User login get user error', userResponse.error);
+
+          setFormError(
+            t.rich('getUserError', {
+              contactLink: (children) => (
+                <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
+              ),
+            }),
+          );
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+
+      logEvent(LOGIN_ERROR, { message: errorCode });
+        rollbar.error('User login firebase error', error);
+
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
         }
@@ -76,7 +116,7 @@ const LoginForm = () => {
           required
         />
         {formError && (
-          <Typography variant="body2" component="p" color="primary.dark" mb={2}>
+          <Typography variant="body1" component="p" color="error.main" mb={2}>
             {formError}
           </Typography>
         )}

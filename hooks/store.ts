@@ -1,5 +1,16 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import type { AppDispatch, RootState } from '../app/store'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { clearCurrentSlice } from '../app/currentSlice';
+import { clearPartnerAccessSlice } from '../app/partnerAccessSlice';
+import { clearPartnerSlice } from '../app/partnerSlice';
+import type { AppDispatch, RootState } from '../app/store';
+import { clearUserSlice } from '../app/userSlice';
 
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
-export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export const clearStore = async () => {
+  clearCurrentSlice();
+  clearPartnerAccessSlice();
+  clearPartnerSlice();
+  clearUserSlice();
+};

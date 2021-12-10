@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LANGUAGES } from '../common/constants';
+import { LANGUAGES } from '../constants/languages';
 import { api } from './api';
 import type { RootState } from './store';
 
@@ -33,7 +33,7 @@ const slice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    clear: (state) => {
+    clearUserSlice: (state) => {
       state = initialState;
     },
   },
@@ -48,6 +48,6 @@ const slice = createSlice({
 });
 
 const { actions, reducer } = slice;
-export const { clear } = actions;
+export const { clearUserSlice } = actions;
 export const selectCurrentUser = (state: RootState) => state.user;
 export default reducer;
