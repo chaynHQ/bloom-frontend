@@ -12,8 +12,10 @@ import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
+import rollbar from '../config/rollbar';
 import {
   REGISTER_ERROR,
+  REGISTER_FIREBASE_ERROR,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
@@ -81,6 +83,7 @@ const RegisterForm = () => {
             ),
           }),
         );
+        rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: 'bumble', message: error });
         return;
       }
@@ -102,7 +105,7 @@ const RegisterForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+        logEvent(REGISTER_FIREBASE_ERROR, { partner: 'bumble', message: errorMessage });
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -138,6 +141,7 @@ const RegisterForm = () => {
     if ('error' in userResponse) {
       const errorMessage = getErrorMessage(userResponse.error);
       logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+      rollbar.error('User register create user error', userResponse.error);
 
       setFormError(
         t.rich('createUserError', {

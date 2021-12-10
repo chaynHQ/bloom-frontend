@@ -9,7 +9,15 @@ import { useState } from 'react';
 import { useGetUserMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
-import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from '../constants/events';
+import rollbar from '../config/rollbar';
+import {
+  GET_USER_ERROR,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  LOGIN_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+} from '../constants/events';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
@@ -38,7 +46,7 @@ const LoginForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError('');
-    logEvent(LOGIN_REQUEST, { partner: 'bumble' });
+    logEvent(LOGIN_REQUEST);
 
     auth
       .signInWithEmailAndPassword(emailInput, passwordInput)
@@ -48,14 +56,20 @@ const LoginForm = () => {
         if (token) {
           localStorage.setItem('accessToken', token);
         }
+        logEvent(LOGIN_SUCCESS);
+        logEvent(GET_USER_REQUEST);
+
         const userResponse = await getUser('');
+
         if ('data' in userResponse) {
-          logEvent(LOGIN_SUCCESS, { ...getEventUserData(userResponse.data) });
+          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
           router.push('/therapy-booking');
         }
         if ('error' in userResponse) {
           const errorMessage = getErrorMessage(userResponse.error);
-          logEvent(LOGIN_ERROR, { partner: 'bumble', message: errorMessage });
+          logEvent(GET_USER_ERROR, { message: errorMessage });
+          rollbar.error('User login get user error', userResponse.error);
+
           setFormError(
             t.rich('createUserError', {
               contactLink: (children) => (
@@ -68,7 +82,8 @@ const LoginForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        logEvent(LOGIN_ERROR, { partner: 'bumble', message: errorCode });
+        logEvent(LOGIN_ERROR, { message: errorCode });
+        rollbar.error('User login firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));

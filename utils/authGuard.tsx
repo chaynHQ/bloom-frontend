@@ -3,7 +3,11 @@ import { CircularProgress, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
+import rollbar from '../config/rollbar';
+import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useUser } from '../hooks/useUser';
+import { getErrorMessage } from './errorMessage';
+import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -13,11 +17,17 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     async function callGetUser() {
+      logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {
+        logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
         setVerified(true);
       } else {
+        if ('error' in userResponse) {
+          rollbar.error('Auth guard get user error', userResponse.error);
+          logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
+        }
         localStorage.removeItem('accessToken');
         router.replace('/login');
       }
