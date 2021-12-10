@@ -118,16 +118,17 @@ const RegisterForm = () => {
             t.rich('firebase.emailAlreadyInUse', {
               loginLink: (children) => (
                 <strong>
-                  <Link sx={{ color: 'primary.dark' }} href="/login">
-                    {children}
-                  </Link>
+                  <Link href="/login">{children}</Link>
                 </strong>
               ),
             }),
           );
         }
-        return;
       });
+
+    if (!firebaseUser) {
+      return;
+    }
 
     const userResponse = await createUser({
       firebaseUid: firebaseUser?.uid,

@@ -71,7 +71,7 @@ const LoginForm = () => {
           rollbar.error('User login get user error', userResponse.error);
 
           setFormError(
-            t.rich('createUserError', {
+            t.rich('getUserError', {
               contactLink: (children) => (
                 <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
               ),
