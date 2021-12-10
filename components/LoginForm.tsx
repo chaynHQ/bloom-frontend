@@ -83,7 +83,7 @@ const LoginForm = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        logEvent(LOGIN_ERROR, { message: errorCode });
+      logEvent(LOGIN_ERROR, { message: errorCode });
         rollbar.error('User login firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {

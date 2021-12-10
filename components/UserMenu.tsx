@@ -6,8 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { clear } from '../app/userSlice';
 import { auth } from '../config/firebase';
+import { clearStore } from '../hooks/store';
 
 const linkStyle = { fontSize: 14 } as const;
 
@@ -29,7 +29,7 @@ export default function UserMenu() {
 
   const logout = async () => {
     localStorage.removeItem('accessToken');
-    await clear();
+    await clearStore();
     auth.signOut();
     router.push('/login');
   };

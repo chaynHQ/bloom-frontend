@@ -3,17 +3,17 @@ import { CircularProgress, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
+import { RootState } from '../app/store';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
-import { useUser } from '../hooks/useUser';
+import { useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from './errorMessage';
 import logEvent, { getEventUserData } from './logEvent';
-
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const [verified, setVerified] = useState(false);
-  const { user } = useUser();
+  const { user } = useTypedSelector((state: RootState) => state);
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   useEffect(() => {
