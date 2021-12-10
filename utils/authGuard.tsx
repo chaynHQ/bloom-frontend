@@ -14,7 +14,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const [verified, setVerified] = useState(false);
   const { user } = useTypedSelector((state: RootState) => state);
-
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   useEffect(() => {
@@ -30,12 +29,12 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           rollbar.error('Auth guard get user error', userResponse.error);
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
+
         localStorage.removeItem('accessToken');
         router.replace('/login');
       }
     }
     if (user.id) {
-      console.log('found user id');
       setVerified(true);
     }
     const accessToken = localStorage.getItem('accessToken');

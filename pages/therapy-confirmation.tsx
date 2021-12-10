@@ -27,7 +27,6 @@ import logEvent, { getEventUserData } from '../utils/logEvent';
 const TherapyConfirmation: AuthNextPage = () => {
   const t = useTranslations('TherapyBooking');
   const tS = useTranslations('Shared');
-
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   useEffect(() => {
