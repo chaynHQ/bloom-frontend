@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../app/api';
 import { auth } from '../config/firebase';
-import { LOGIN_SUCCESS } from '../constants/events';
+import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from '../constants/events';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 const containerStyle = {
@@ -36,6 +36,7 @@ const LoginForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError('');
+    logEvent(LOGIN_REQUEST, { partner: 'bumble' });
 
     auth
       .signInWithEmailAndPassword(emailInput, passwordInput)
@@ -54,6 +55,8 @@ const LoginForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        logEvent(LOGIN_ERROR, { partner: 'bumble', message: errorCode });
+
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
         }

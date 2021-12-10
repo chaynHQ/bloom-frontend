@@ -54,9 +54,9 @@ const TherapyBooking: AuthNextPage = () => {
   const [widgetOpen, setWidgetOpen] = useState(false);
 
   const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
-
+  const eventUserData = getEventUserData({ user, partnerAccess, partner });
   useEffect(() => {
-    logEvent(THERAPY_BOOKING_VIEWED, getEventUserData({ user, partnerAccess, partner }));
+    logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
   }, []);
 
   const widgetConfig = {
@@ -120,7 +120,7 @@ const TherapyBooking: AuthNextPage = () => {
   } as const;
 
   const openWidget = () => {
-    logEvent(THERAPY_BOOKING_OPENED, getEventUserData({ user, partnerAccess, partner }));
+    logEvent(THERAPY_BOOKING_OPENED, eventUserData);
 
     setWidgetOpen(true);
   };
@@ -208,3 +208,5 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   };
 }
 TherapyBooking.requireAuth = true;
+
+export default TherapyBooking;

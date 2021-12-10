@@ -14,10 +14,10 @@ import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import {
   REGISTER_ERROR,
-  REGISTER_REQUEST,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
+  VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../constants/events';
 import { LANGUAGES } from '../constants/languages';
@@ -54,7 +54,7 @@ const RegisterForm = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    logEvent(REGISTER_REQUEST, { partner: 'bumble' });
+    logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: 'bumble' });
 
     setFormError('');
     const validateCodeResponse = await validateCode({
@@ -102,6 +102,8 @@ const RegisterForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
         }
@@ -135,7 +137,7 @@ const RegisterForm = () => {
 
     if ('error' in userResponse) {
       const errorMessage = getErrorMessage(userResponse.error);
-      logEvent(REGISTER_ERROR, { message: errorMessage });
+      logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
 
       setFormError(
         t.rich('createUserError', {

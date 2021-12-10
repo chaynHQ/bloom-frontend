@@ -2,6 +2,8 @@ import { Button } from '@mui/material';
 import { Box, lighten } from '@mui/system';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+import { LEAVE_SITE_BUTTON_CLICKED } from '../constants/events';
+import logEvent from '../utils/logEvent';
 
 const containerStyles = {
   position: 'fixed',
@@ -24,6 +26,7 @@ const LeaveSiteButton = () => {
   const tS = useTranslations('Shared');
 
   const hideSite = () => {
+    logEvent(LEAVE_SITE_BUTTON_CLICKED);
     window.open('https://en.wikipedia.org/wiki/Main_Page', '_newtab');
     location.replace(
       'https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l=',
