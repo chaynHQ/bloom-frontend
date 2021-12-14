@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import Header from '../components/Header';
 import Link from '../components/Link';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
@@ -12,7 +13,9 @@ import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 const Home: NextPage = () => {
   // TODO: remove router replace once home page exists
   const router = useRouter();
-  router.replace('/therapy-booking');
+  useEffect(() => {
+    router.replace('/therapy-booking');
+  }, [router]);
 
   const t = useTranslations('Index');
 
