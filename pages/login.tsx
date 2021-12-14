@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import Link from '../components/Link';
 import LoginForm from '../components/LoginForm';
 import PartnerHeader from '../components/PartnerHeader';
@@ -41,6 +42,9 @@ const Login: NextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('login.title')}</title>
+      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
