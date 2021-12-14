@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import { faqItem } from '../constants/faqs';
+import Link from './Link';
 
 interface FaqsProps {
   translations: string;
@@ -35,7 +36,18 @@ const Faqs = (props: FaqsProps) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{t.rich(faq.body)}</Typography>
+            <Typography>
+              {t.rich(
+                faq.body,
+                faq.link
+                  ? {
+                      faqLink: (children) => (
+                        <Link href={faq.link ? faq.link : '#'}>{children}</Link>
+                      ),
+                    }
+                  : {},
+              )}
+            </Typography>
           </AccordionDetails>
         </Accordion>
       ))}
