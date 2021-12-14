@@ -1,6 +1,7 @@
 export interface faqItem {
   title: string;
   body: string;
+  link?: string;
 }
 
 export const therapyFaqs: Array<faqItem> = [
@@ -31,6 +32,7 @@ export const therapyFaqs: Array<faqItem> = [
   {
     title: 'faqTitle6',
     body: 'faqBody6',
+    link: 'https://chayn.typeform.com/to/OY9Wdk4h',
   },
   {
     title: 'faqTitle7',
@@ -43,6 +45,7 @@ export const therapyFaqs: Array<faqItem> = [
   {
     title: 'faqTitle9',
     body: 'faqBody9',
+    link: 'https://chayn.typeform.com/to/OY9Wdk4h',
   },
   {
     title: 'faqTitle10',
@@ -55,5 +58,6 @@ export const therapyFaqs: Array<faqItem> = [
   {
     title: 'faqTitle12',
     body: 'faqBody12',
+    link: 'https://chayn.typeform.com/to/OY9Wdk4h',
   },
 ];
