@@ -55,9 +55,10 @@ const TherapyBooking: AuthNextPage = () => {
 
   const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccess, partner });
+
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
-  }, []);
+  }, [eventUserData]);
 
   const widgetConfig = {
     widget_type: 'iframe',
