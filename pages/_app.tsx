@@ -49,7 +49,7 @@ function MyApp(props: MyAppProps) {
             </AuthGuard>
           ) : (
             <Component {...pageProps} />
-          )}{' '}
+          )}
           <Footer />
         </ThemeProvider>
       </CacheProvider>
