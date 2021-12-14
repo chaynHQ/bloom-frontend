@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
@@ -36,7 +35,6 @@ const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const { user } = useTypedSelector((state: RootState) => state);
 
