@@ -6,15 +6,22 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
-import ResetPasswordForm from '../components/ResetPasswordForm';
+import { EmailForm, PasswordForm } from '../components/ResetPasswordForm';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '../styles/common';
 
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
+  const router = useRouter();
+  const codeParam: string | undefined = router.query.code
+    ? router.query.code instanceof Array
+      ? router.query.code + ''
+      : router.query.code
+    : undefined;
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
@@ -60,10 +67,10 @@ const ResetPassword: NextPage = () => {
               {t.rich('resetPassword.title')}
             </Typography>
             <Typography variant="body1" component="p">
-              {t.rich('resetPassword.description')}
+              {codeParam ? t.rich('resetPassword.step2') : t.rich('resetPassword.step1')}
             </Typography>
 
-            <ResetPasswordForm />
+            {!!codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
           </CardContent>
         </Card>
       </Container>
