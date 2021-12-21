@@ -17,10 +17,10 @@ import { rowStyle } from '../styles/common';
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
   const router = useRouter();
-  const codeParam: string | undefined = router.query.code
-    ? router.query.code instanceof Array
-      ? router.query.code + ''
-      : router.query.code
+  const codeParam: string | undefined = router.query.oobCode
+    ? router.query.oobCode instanceof Array
+      ? router.query.oobCode + ''
+      : router.query.oobCode
     : undefined;
 
   const headerProps = {
@@ -66,11 +66,7 @@ const ResetPassword: NextPage = () => {
             <Typography variant="h2" component="h2">
               {t.rich('resetPassword.title')}
             </Typography>
-            <Typography variant="body1" component="p">
-              {codeParam ? t.rich('resetPassword.step2') : t.rich('resetPassword.step1')}
-            </Typography>
-
-            {!!codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
+            {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
           </CardContent>
         </Card>
       </Container>

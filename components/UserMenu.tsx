@@ -9,12 +9,8 @@ import * as React from 'react';
 import { auth } from '../config/firebase';
 import { clearStore } from '../hooks/store';
 
-const linkStyle = { fontSize: 14 } as const;
-
 export default function UserMenu() {
   const router = useRouter();
-  const locale = router.locale;
-  const locales = router.locales;
   const t = useTranslations('Navigation');
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

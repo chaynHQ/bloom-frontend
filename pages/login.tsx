@@ -68,6 +68,11 @@ const Login: NextPage = () => {
             </Typography>
 
             <LoginForm />
+            <Typography variant="body1" component="p" textAlign="center">
+              {t.rich('login.resetPasswordLink', {
+                resetLink: (children) => <Link href="/reset-password">{children}</Link>,
+              })}
+            </Typography>
           </CardContent>
         </Card>
       </Container>

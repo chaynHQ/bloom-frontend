@@ -6,16 +6,15 @@
     "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
     "login": {
       "title": "Welcome back",
-      "description": "Sign in to access Bloom"
+      "description": "Sign in to access Bloom",
+      "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>"
     },
     "register": {
       "title": "Create account",
       "description": "Create your account to access Bloom."
     },
     "resetPassword": {
-      "title": "Reset your password",
-      "step1": "We'll send you an email to begin resetting your password.",
-      "step2": "Almost there! You can now set your new password."
+      "title": "Reset your password"
     },
     "form": {
       "codeLabel": "Bumble access code",
@@ -24,9 +23,13 @@
       "passwordLabel": "Password",
       "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",
       "registerSubmit": "Create account",
+      "resetPasswordStep1": "We'll send you an email to begin resetting your password.",
+      "resetPasswordStep2": "Almost there! You can now set your new password.",
       "resetPasswordSubmit": "Reset password",
-      "resetPasswordSent": "Check your emails for a reset link from bloom. Didn't receive one? Check your junk folder or resend the email",
-      "loginSubmit": "Sign in",
+      "resendPasswordSubmit": "Resend email",
+      "resetPasswordSent": "Check your emails for a reset link from Bloom. Didn't receive one? Check your junk folder or resend the email.",
+      "passwordResetSuccess": "Your password has been reset! You can now continue to login with your new password.",
+      "loginSubmit": "Login",
       "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
       "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
       "codeErrors": {
@@ -40,7 +43,9 @@
         "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue"
+        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
+        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
       }
     }
   }
