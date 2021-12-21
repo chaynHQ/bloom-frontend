@@ -35,6 +35,8 @@ jobs:
 
       - name: Build app
         run: yarn build
+        with:
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
