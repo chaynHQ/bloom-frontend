@@ -6,16 +6,22 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Link from '../components/Link';
-import LoginForm from '../components/LoginForm';
 import PartnerHeader from '../components/PartnerHeader';
+import { EmailForm, PasswordForm } from '../components/ResetPasswordForm';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '../styles/common';
 
-const Login: NextPage = () => {
+const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
+  const router = useRouter();
+  const codeParam: string | undefined = router.query.oobCode
+    ? router.query.oobCode instanceof Array
+      ? router.query.oobCode + ''
+      : router.query.oobCode
+    : undefined;
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
@@ -42,9 +48,6 @@ const Login: NextPage = () => {
 
   return (
     <Box>
-      <Head>
-        <title>{t('login.title')}</title>
-      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
@@ -61,18 +64,9 @@ const Login: NextPage = () => {
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('login.title')}
+              {t.rich('resetPassword.title')}
             </Typography>
-            <Typography variant="body1" component="p">
-              {t.rich('login.description')}
-            </Typography>
-
-            <LoginForm />
-            <Typography variant="body1" component="p" textAlign="center">
-              {t.rich('login.resetPasswordLink', {
-                resetLink: (children) => <Link href="/reset-password">{children}</Link>,
-              })}
-            </Typography>
+            {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
           </CardContent>
         </Card>
       </Container>
@@ -92,4 +86,4 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   };
 }
 
-export default Login;
+export default ResetPassword;

@@ -28,11 +28,6 @@ const containerStyle = {
 const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const router = useRouter();
-  let codeParam = router.query.code;
-
-  if (codeParam instanceof Array) {
-    codeParam = codeParam + '';
-  }
 
   const [formError, setFormError] = useState<
     | string
@@ -83,7 +78,7 @@ const LoginForm = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-      logEvent(LOGIN_ERROR, { message: errorCode });
+        logEvent(LOGIN_ERROR, { message: errorCode });
         rollbar.error('User login firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
