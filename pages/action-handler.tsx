@@ -1,14 +1,15 @@
 import { CircularProgress, Container } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+// Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {
   const router = useRouter();
 
   if (router.isReady) {
     let modeParam = router.query.mode;
     if (modeParam && modeParam === 'resetPassword') {
-      router.replace(`/reset-password?oobCode=${router.query.oobCode}`);
+      router.replace(`/auth/reset-password?oobCode=${router.query.oobCode}`);
     } else {
       router.replace('/404');
     }
@@ -21,17 +22,5 @@ const ActionHandler: NextPage = () => {
     </Container>
   );
 };
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/auth/${locale}.json`),
-      },
-    },
-  };
-}
 
 export default ActionHandler;

@@ -58,7 +58,7 @@ const LoginForm = () => {
 
         if ('data' in userResponse) {
           logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
-          router.push('/therapy-booking');
+          router.push('/therapy/book-session');
         }
         if ('error' in userResponse) {
           const errorMessage = getErrorMessage(userResponse.error);

@@ -27,7 +27,7 @@ export default function UserMenu() {
     localStorage.removeItem('accessToken');
     await clearStore();
     auth.signOut();
-    router.push('/login');
+    router.push('/auth/login');
   };
 
   const menuItemStyle = {

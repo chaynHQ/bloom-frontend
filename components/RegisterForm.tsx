@@ -119,7 +119,7 @@ const RegisterForm = () => {
             t.rich('firebase.emailAlreadyInUse', {
               loginLink: (children) => (
                 <strong>
-                  <Link href="/login">{children}</Link>
+                  <Link href="/auth/login">{children}</Link>
                 </strong>
               ),
             }),
@@ -169,7 +169,7 @@ const RegisterForm = () => {
       await validateAccessCode();
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
-      router.push('/therapy-booking');
+      router.push('/therapy/book-session');
     } catch {
       // errors handled in each function
     }

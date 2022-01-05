@@ -10,10 +10,10 @@ import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
   const { partnerAccess } = useTypedSelector((state: RootState) => state);
-  const t = useTranslations('TherapyBooking.accessGuard');
+  const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
 
-  if (!partnerAccess) {
+  if (!partnerAccess || !partnerAccess.featureTherapy) {
     const imageContainerStyle = {
       position: 'relative',
       width: { xs: 150, md: 210 },

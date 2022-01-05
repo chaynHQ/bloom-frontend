@@ -138,13 +138,13 @@ export const PasswordForm = (props: PasswordFormProps) => {
         } else if (errorCode === 'auth/expired-action-code') {
           setFormError(
             t.rich('firebase.expiredCode', {
-              resetLink: (children) => <Link href="/reset-password">{children}</Link>,
+              resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
             }),
           );
         } else {
           setFormError(
             t.rich('firebase.invalidCode', {
-              resetLink: (children) => <Link href="/reset-password">{children}</Link>,
+              resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
             }),
           );
         }
@@ -163,7 +163,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           component={Link}
           fullWidth
           color="secondary"
-          href="/login"
+          href="/auth/login"
         >
           {t.rich('loginSubmit')}
         </Button>

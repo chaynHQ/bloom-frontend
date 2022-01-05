@@ -42,7 +42,7 @@ const TopBar = () => {
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
         {/* {isSmallScreen && <NavigationDrawer />} */}
-        <Link href="/therapy-booking" aria-label={t('home')} sx={logoContainerStyle}>
+        <Link href="/therapy/book-session" aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {user.id && localStorage.getItem('accessToken') && <UserMenu />}
