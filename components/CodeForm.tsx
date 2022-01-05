@@ -19,7 +19,7 @@ const CodeForm = (props: CodeFormProps) => {
 
   const submitHandler = () => {
     router.push({
-      pathname: '/register',
+      pathname: '/auth/register',
       query: codeInput ? { code: codeInput } : {},
     });
   };

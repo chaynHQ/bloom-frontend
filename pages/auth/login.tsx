@@ -7,12 +7,12 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Link from '../components/Link';
-import LoginForm from '../components/LoginForm';
-import PartnerHeader from '../components/PartnerHeader';
-import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import { rowStyle } from '../styles/common';
+import Link from '../../components/Link';
+import LoginForm from '../../components/loginForm';
+import PartnerHeader from '../../components/PartnerHeader';
+import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import { rowStyle } from '../../styles/common';
 
 const Login: NextPage = () => {
   const t = useTranslations('Auth');
@@ -70,7 +70,7 @@ const Login: NextPage = () => {
             <LoginForm />
             <Typography variant="body1" component="p" textAlign="center">
               {t.rich('login.resetPasswordLink', {
-                resetLink: (children) => <Link href="/reset-password">{children}</Link>,
+                resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
               })}
             </Typography>
           </CardContent>
@@ -84,9 +84,9 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/auth/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/auth/${locale}.json`),
       },
     },
   };

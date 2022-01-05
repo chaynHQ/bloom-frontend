@@ -7,12 +7,12 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import Link from '../components/Link';
-import PartnerHeader from '../components/PartnerHeader';
-import { EmailForm, PasswordForm } from '../components/ResetPasswordForm';
-import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import { rowStyle } from '../styles/common';
+import Link from '../../components/Link';
+import PartnerHeader from '../../components/PartnerHeader';
+import { EmailForm, PasswordForm } from '../../components/ResetPasswordForm';
+import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import { rowStyle } from '../../styles/common';
 
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
@@ -78,9 +78,9 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/auth/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/auth/${locale}.json`),
       },
     },
   };

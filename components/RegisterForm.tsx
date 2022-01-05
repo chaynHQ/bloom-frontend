@@ -119,7 +119,7 @@ const RegisterForm = () => {
             t.rich('firebase.emailAlreadyInUse', {
               loginLink: (children) => (
                 <strong>
-                  <Link href="/login">{children}</Link>
+                  <Link href="/auth/login">{children}</Link>
                 </strong>
               ),
             }),
