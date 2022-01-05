@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -22,7 +22,6 @@ import illustrationDateSelector from '../../public/illustration_date_selector.sv
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../styles/common';
-import { AuthNextPage } from '../../utils/authNextPage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
@@ -49,7 +48,7 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const BookSession: AuthNextPage = () => {
+const BookSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
@@ -211,6 +210,5 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
-BookSession.requireAuth = true;
 
 export default BookSession;

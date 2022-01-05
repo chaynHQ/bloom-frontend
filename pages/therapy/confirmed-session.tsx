@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -20,12 +20,11 @@ import {
 import { therapyFaqs } from '../../constants/faqs';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
-import { AuthNextPage } from '../../utils/authNextPage';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
-const ConfirmedSession: AuthNextPage = () => {
+const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
@@ -122,6 +121,5 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
-ConfirmedSession.requireAuth = true;
 
 export default ConfirmedSession;
