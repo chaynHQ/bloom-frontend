@@ -22,7 +22,6 @@ import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
 const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');
@@ -66,47 +65,45 @@ const ConfirmedSession: NextPage = () => {
   } as const;
 
   return (
-    <TherapyAccessGuard>
-      <Box>
-        <Head>
-          <title>{t('title')}</title>
-        </Head>
-        <Header
-          title={headerProps.title}
-          introduction={headerProps.introduction}
-          imageSrc={headerProps.imageSrc}
-          imageAlt={headerProps.imageAlt}
-        />
-        <Container sx={containerStyle}>
-          <Typography variant="body1" component="p">
-            {t.rich('confirmation.returnDescription')}
-          </Typography>
-          <Typography variant="body1" component="p">
-            {t.rich('confirmation.bookmarkDescription', {
-              bookingLink: (children) => (
-                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>
-              ),
-            })}
-          </Typography>
-        </Container>
-        <Container>
-          <Typography variant="h2" component="h2" mb={2} textAlign="center">
-            {t.rich('faqHeader')}
-          </Typography>
-          <Box textAlign="center">
-            <Image
-              alt={tS.raw('alt.partialLeavesRose')}
-              src={illustrationLeafMix}
-              width={100}
-              height={100}
-            />
-          </Box>
-          <Box sx={faqsContainerStyle}>
-            <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
-          </Box>
-        </Container>
-      </Box>
-    </TherapyAccessGuard>
+    <Box>
+      <Head>
+        <title>{t('title')}</title>
+      </Head>
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
+      <Container sx={containerStyle}>
+        <Typography variant="body1" component="p">
+          {t.rich('confirmation.returnDescription')}
+        </Typography>
+        <Typography variant="body1" component="p">
+          {t.rich('confirmation.bookmarkDescription', {
+            bookingLink: (children) => (
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>
+            ),
+          })}
+        </Typography>
+      </Container>
+      <Container>
+        <Typography variant="h2" component="h2" mb={2} textAlign="center">
+          {t.rich('faqHeader')}
+        </Typography>
+        <Box textAlign="center">
+          <Image
+            alt={tS.raw('alt.partialLeavesRose')}
+            src={illustrationLeafMix}
+            width={100}
+            height={100}
+          />
+        </Box>
+        <Box sx={faqsContainerStyle}>
+          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
