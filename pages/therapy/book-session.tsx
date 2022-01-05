@@ -8,23 +8,23 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-import { RootState } from '../app/store';
-import Faqs from '../components/Faqs';
-import Header from '../components/Header';
-import ImageTextGrid, { ImageTextItem } from '../components/ImageTextGrid';
-import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../constants/events';
-import { therapyFaqs } from '../constants/faqs';
-import { useTypedSelector } from '../hooks/store';
-import illustrationChange from '../public/illustration_change.svg';
-import illustrationChooseTherapist from '../public/illustration_choose_therapist.svg';
-import illustrationConfidential from '../public/illustration_confidential.svg';
-import illustrationDateSelector from '../public/illustration_date_selector.svg';
-import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
-import illustrationTeaPeach from '../public/illustration_tea_peach.png';
-import { rowStyle } from '../styles/common';
-import { AuthNextPage } from '../utils/authNextPage';
-import logEvent, { getEventUserData } from '../utils/logEvent';
-import { TherapyAccessGuard } from '../utils/therapyAccessGuard';
+import { RootState } from '../../app/store';
+import Faqs from '../../components/Faqs';
+import Header from '../../components/Header';
+import ImageTextGrid, { ImageTextItem } from '../../components/ImageTextGrid';
+import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
+import { therapyFaqs } from '../../constants/faqs';
+import { useTypedSelector } from '../../hooks/store';
+import illustrationChange from '../../public/illustration_change.svg';
+import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
+import illustrationConfidential from '../../public/illustration_confidential.svg';
+import illustrationDateSelector from '../../public/illustration_date_selector.svg';
+import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
+import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import { rowStyle } from '../../styles/common';
+import { AuthNextPage } from '../../utils/authNextPage';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
 const steps: Array<ImageTextItem> = [
   {
@@ -49,8 +49,8 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const TherapyBooking: AuthNextPage = () => {
-  const t = useTranslations('TherapyBooking');
+const BookSession: AuthNextPage = () => {
+  const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
@@ -156,7 +156,7 @@ const TherapyBooking: AuthNextPage = () => {
               {t.rich('bookingButton')}
             </Button>
           </Box>
-          <ImageTextGrid items={steps} translations="TherapyBooking.steps" />
+          <ImageTextGrid items={steps} translations="Therapy.steps" />
         </Container>
 
         <Container>
@@ -173,7 +173,7 @@ const TherapyBooking: AuthNextPage = () => {
           </Box>
 
           <Box sx={faqsContainerStyle}>
-            <Faqs faqList={therapyFaqs} translations="TherapyBooking.faqs" />
+            <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
             <Button
               sx={bookingButtonStyle}
               variant="contained"
@@ -204,13 +204,13 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/therapyBooking/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/therapy/${locale}.json`),
       },
     },
   };
 }
-TherapyBooking.requireAuth = true;
+BookSession.requireAuth = true;
 
-export default TherapyBooking;
+export default BookSession;

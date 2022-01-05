@@ -6,27 +6,27 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { useGetUserMutation } from '../app/api';
-import Faqs from '../components/Faqs';
-import Header from '../components/Header';
-import Link from '../components/Link';
-import rollbar from '../config/rollbar';
+import { useGetUserMutation } from '../../app/api';
+import Faqs from '../../components/Faqs';
+import Header from '../../components/Header';
+import Link from '../../components/Link';
+import rollbar from '../../config/rollbar';
 import {
   GET_USER_ERROR,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   THERAPY_CONFIRMATION_VIEWED,
-} from '../constants/events';
-import { therapyFaqs } from '../constants/faqs';
-import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
-import illustrationTeaPeach from '../public/illustration_tea_peach.png';
-import { AuthNextPage } from '../utils/authNextPage';
-import { getErrorMessage } from '../utils/errorMessage';
-import logEvent, { getEventUserData } from '../utils/logEvent';
-import { TherapyAccessGuard } from '../utils/therapyAccessGuard';
+} from '../../constants/events';
+import { therapyFaqs } from '../../constants/faqs';
+import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
+import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import { AuthNextPage } from '../../utils/authNextPage';
+import { getErrorMessage } from '../../utils/errorMessage';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
-const TherapyConfirmation: AuthNextPage = () => {
-  const t = useTranslations('TherapyBooking');
+const ConfirmedSession: AuthNextPage = () => {
+  const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
@@ -103,7 +103,7 @@ const TherapyConfirmation: AuthNextPage = () => {
             />
           </Box>
           <Box sx={faqsContainerStyle}>
-            <Faqs faqList={therapyFaqs} translations="TherapyBooking.faqs" />
+            <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
           </Box>
         </Container>
       </Box>
@@ -115,13 +115,13 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/therapyBooking/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/therapy/${locale}.json`),
       },
     },
   };
 }
-TherapyConfirmation.requireAuth = true;
+ConfirmedSession.requireAuth = true;
 
-export default TherapyConfirmation;
+export default ConfirmedSession;

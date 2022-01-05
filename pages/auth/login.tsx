@@ -8,7 +8,7 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Link from '../../components/Link';
-import LoginForm from '../../components/loginForm';
+import LoginForm from '../../components/LoginForm';
 import PartnerHeader from '../../components/PartnerHeader';
 import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
