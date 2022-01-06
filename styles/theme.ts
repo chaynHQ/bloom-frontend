@@ -93,8 +93,8 @@ theme = createTheme(theme, {
           fontWeight: 'bolder',
           borderRadius: '100px',
           textTransform: 'unset',
-          paddingLeft: 16,
-          paddingRight: 16,
+          paddingLeft: 24,
+          paddingRight: 24,
 
           '&:hover': {
             backgroundColor: lighten(theme.palette.primary.main, 0.1),
@@ -212,6 +212,17 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.secondary.dark,
+
+          '&.Mui-checked': {
+            color: theme.palette.secondary.dark,
+          },
+        },
+      },
+    },
     MuiInput: {
       styleOverrides: {
         underline: {
@@ -229,6 +240,17 @@ theme = createTheme(theme, {
         root: {
           '&.Mui-focused': {
             color: theme.palette.text.primary,
+          },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          marginBottom: 8,
+
+          '&.Mui-focused': {
+            color: theme.palette.common.black,
           },
         },
       },
