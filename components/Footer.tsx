@@ -53,8 +53,10 @@ const socialsContainerStyle = {
 const Footer = () => {
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccess, partner });
+  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
+    (state: RootState) => state,
+  );
+  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
 
   return (
     <Container sx={footerContainerStyle}>

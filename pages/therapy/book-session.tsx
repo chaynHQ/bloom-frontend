@@ -52,8 +52,10 @@ const BookSession: NextPage = () => {
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccess, partner });
+  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
+    (state: RootState) => state,
+  );
+  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
