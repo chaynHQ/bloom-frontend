@@ -35,12 +35,12 @@ function MyApp(props: MyAppProps) {
     pageProps: any;
   } = props;
 
+  const router = useRouter();
+  const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
+
   // Adds required permissions guard to pages, redirecting where required permissions are missing
   // New pages will default to requiring authenticated and public pages must be added to the array below
   const ComponentWithGuard = () => {
-    const router = useRouter();
-    const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
-
     const publicPaths = ['index', 'welcome', 'auth', 'action-handler'];
     const component = <Component {...pageProps} />;
 
@@ -75,7 +75,7 @@ function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
-          <LeaveSiteButton />
+          {pathname !== 'partner-admin' && <LeaveSiteButton />}
           <ComponentWithGuard />
           <Footer />
         </ThemeProvider>

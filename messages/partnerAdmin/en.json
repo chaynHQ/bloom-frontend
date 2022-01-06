@@ -2,7 +2,22 @@
   "PartnerAdmin": {
     "createAccessCode": {
       "title": "Create access code",
-      "introduction": "Refer someone to Bloom by creating an access code for their account."
+      "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
+      "courseAccess": "Access to online courses",
+      "therapyAccess": "Access to six therapy sessions",
+      "courseResultLink": "Please tell the user to go to",
+      "courseResultPassword": "They can use their email address and the password",
+      "therapyResultLink": "Please tell the user to go to",
+      "therapyResultCode": "They can use their email address and the access code",
+      "form": {
+        "featuresLabel": "Select support type offered to this user",
+        "featureCoursesLabel": "Online courses",
+        "featureTherapyLabel": "Six therapy sessions",
+        "reset": "Create another code",
+        "errors": {
+          "featureRequired": "Select a support type before creating an access code"
+        }
+      }
     },
     "accessGuard": {
       "title": "Access required",

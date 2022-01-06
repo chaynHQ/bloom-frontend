@@ -1,33 +1,32 @@
+import { Card, CardContent, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { RootState } from '../../app/store';
-import Header from '../../components/Header';
-import { useTypedSelector } from '../../hooks/store';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import AdminHeader from '../../components/PartnerAdminHeader';
+import bumbleLogo from '../../public/bumble_logo.svg';
 import { rowStyle } from '../../styles/common';
 
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const tS = useTranslations('Shared');
-
-  const { partner } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    partnerLogoSrc: bumbleLogo,
+    partnerLogoAlt: 'alt.bumbleLogo',
   };
 
   const containerStyle = {
     backgroundColor: 'secondary.light',
-    textAlign: 'center',
     ...rowStyle,
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  } as const;
+
+  const cardStyle = {
+    width: { xs: '100%', md: '60%' },
   } as const;
 
   return (
@@ -35,13 +34,26 @@ const CreateAccessCode: NextPage = () => {
       <Head>
         <title>{t('title')}</title>
       </Head>
-      <Header
+      <AdminHeader
         title={headerProps.title}
         introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
+        partnerLogoSrc={headerProps.partnerLogoSrc}
+        partnerLogoAlt={headerProps.partnerLogoAlt}
       />
-      <Container sx={containerStyle}></Container>
+      <Container sx={containerStyle}>
+        <Card sx={cardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t.rich('title')}
+            </Typography>
+            <Typography variant="body1" component="p" mb={2}>
+              {t.rich('introduction')}
+            </Typography>
+
+            {/* <CreateAccessCodeForm /> */}
+          </CardContent>
+        </Card>
+      </Container>
     </Box>
   );
 };
