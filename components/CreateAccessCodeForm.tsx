@@ -11,25 +11,87 @@ import Button from '@mui/material/Button';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
+import { useAddPartnerAccessMutation } from '../app/api';
 import Link from '../components/Link';
+import rollbar from '../config/rollbar';
+import {
+  CREATE_PARTNER_ACCESS_ERROR,
+  CREATE_PARTNER_ACCESS_REQUEST,
+  CREATE_PARTNER_ACCESS_SUCCESS,
+} from '../constants/events';
+import { getErrorMessage } from '../utils/errorMessage';
+import logEvent from '../utils/logEvent';
 
 const CreateAccessCodeForm = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
+  const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
+  const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
+    useAddPartnerAccessMutation();
 
-  const submitHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const createPartnerAccess = async () => {
+    const partnerAccessResponse = await addPartnerAccess({
+      featureLiveChat: true,
+      featureTherapy: true,
+      therapySessionsRemaining: 6,
+      therapySessionsRedeemed: 0,
+    });
+
+    if ('data' in partnerAccessResponse) {
+      setPartnerAccessCode(partnerAccessResponse.data.accessCode);
+    }
+
+    if ('error' in partnerAccessResponse) {
+      const error = partnerAccessResponse.error;
+      const errorMessage = getErrorMessage(error);
+
+      logEvent(CREATE_PARTNER_ACCESS_ERROR, { partner: 'bumble', message: errorMessage });
+      rollbar.error('User register create user error', error);
+
+      setFormError(t.rich('form.errors.createPartnerAccessError'));
+      throw error;
+    }
+  };
+
+  const submitHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!selectedFeature) {
       setFormError(t.rich('form.errors.featureRequired'));
       return;
     }
-    console.log(selectedFeature);
+
+    if (selectedFeature === 'courses') {
+      const eventData = {
+        partner: 'bumble',
+        feature_courses: true,
+        feature_live_chat: false,
+        feature_therapy: false,
+        therapy_sessions_total: 0,
+      };
+      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
+      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
+    }
+
+    if (selectedFeature === 'therapy') {
+      const eventData = {
+        partner: 'bumble',
+        feature_courses: true,
+        feature_live_chat: true,
+        feature_therapy: true,
+        therapy_sessions_total: 6,
+      };
+
+      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
+      await createPartnerAccess();
+      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
+    }
+
     setFormSubmitSuccess(true);
   };
 
@@ -46,7 +108,6 @@ const CreateAccessCodeForm = () => {
       </Button>
     </Box>
   );
-
   if (formSubmitSuccess) {
     if (selectedFeature === 'courses') {
       return (
@@ -80,7 +141,7 @@ const CreateAccessCodeForm = () => {
             {`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}
           </Link>
           <Typography variant="body1" component="p">
-            {t.rich('therapyResultCode')} <strong>CODE</strong>
+            {t.rich('therapyResultCode')} <strong>{partnerAccessCode}</strong>
           </Typography>
           <FormResetButton />
         </Box>

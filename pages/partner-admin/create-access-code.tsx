@@ -4,9 +4,13 @@ import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import CreateAccessCodeForm from '../../components/CreateAccessCodeForm';
 import AdminHeader from '../../components/PartnerAdminHeader';
+import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import bumbleLogo from '../../public/bumble_logo.svg';
 import { rowStyle } from '../../styles/common';
+import logEvent from '../../utils/logEvent';
 
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
@@ -29,6 +33,11 @@ const CreateAccessCode: NextPage = () => {
     width: { xs: '100%', md: '60%' },
   } as const;
 
+  useEffect(() => {
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: 'bumble' });
+    console.log('CREATE_PARTNER_ACCESS_VIEWED');
+  }, []);
+
   return (
     <Box>
       <Head>
@@ -50,7 +59,7 @@ const CreateAccessCode: NextPage = () => {
               {t.rich('introduction')}
             </Typography>
 
-            {/* <CreateAccessCodeForm /> */}
+            <CreateAccessCodeForm />
           </CardContent>
         </Card>
       </Container>

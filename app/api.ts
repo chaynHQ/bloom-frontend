@@ -43,9 +43,6 @@ export const api = createApi({
         };
       },
     }),
-    getPartnerAccess: builder.query<PartnerAccess, string>({
-      query: (id) => `partner-access/${id}`,
-    }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
       | { error: { data: { statusCode: number; message: string } } },
@@ -59,12 +56,21 @@ export const api = createApi({
         };
       },
     }),
+    addPartnerAccess: builder.mutation<PartnerAccess, Partial<PartnerAccess>>({
+      query(body) {
+        return {
+          url: 'partner-access',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetUserMutation,
   useAddUserMutation,
-  useGetPartnerAccessQuery,
+  useAddPartnerAccessMutation,
   useValidateCodeMutation,
 } = api;

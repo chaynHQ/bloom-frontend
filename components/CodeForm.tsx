@@ -28,7 +28,7 @@ const CodeForm = (props: CodeFormProps) => {
     <Box sx={containerStyle}>
       <form autoComplete="off">
         <TextField
-          id="partnerAccessCode"
+          id="accessCode"
           onChange={(e) => setCodeInput(e.target.value)}
           label={t.rich('form.codeLabel')}
           variant="standard"

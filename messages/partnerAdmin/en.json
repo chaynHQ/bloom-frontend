@@ -15,6 +15,7 @@
         "featureTherapyLabel": "Six therapy sessions",
         "reset": "Create another code",
         "errors": {
+          "createPartnerAccessError": "There was an error creating the access code. Try again or message the Bloom team.",
           "featureRequired": "Select a support type before creating an access code"
         }
       }
