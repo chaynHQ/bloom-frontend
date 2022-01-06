@@ -108,48 +108,45 @@ const CreateAccessCodeForm = () => {
       </Button>
     </Box>
   );
-  if (formSubmitSuccess) {
-    if (selectedFeature === 'courses') {
-      return (
-        <Box>
-          <Typography variant="h4" component="h4" mb={1}>
-            {t.rich('courseAccess')}
-          </Typography>
-          <Typography variant="body1" component="p">
-            {t.rich('courseResultLink')}
-          </Typography>
-          <Link href={'https://www.bloom-pilot.chayn.co/bumble-welcome'}>
-            https://www.bloom-pilot.chayn.co/bumble-welcome
-          </Link>
-          <Typography variant="body1" component="p">
-            {t.rich('courseResultPassword')}{' '}
-            <strong>{process.env.NEXT_PUBLIC_PILOT_COURSES_PASSWORD}</strong>
-          </Typography>
-          <FormResetButton />
-        </Box>
-      );
-    } else {
-      return (
-        <Box>
-          <Typography variant="h4" component="h4" mb={1}>
-            {t.rich('therapyAccess')}
-          </Typography>
-          <Typography variant="body1" component="p">
-            {t.rich('therapyResultLink')}
-          </Typography>
-          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}>
-            {`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}
-          </Link>
-          <Typography variant="body1" component="p">
-            {t.rich('therapyResultCode')} <strong>{partnerAccessCode}</strong>
-          </Typography>
-          <FormResetButton />
-        </Box>
-      );
-    }
-  }
 
-  return (
+  const FormSuccessCourses = () => (
+    <Box>
+      <Typography variant="h4" component="h4" mb={1}>
+        {t.rich('courseAccess')}
+      </Typography>
+      <Typography variant="body1" component="p">
+        {t.rich('courseResultLink')}
+      </Typography>
+      <Link href={'https://www.bloom-pilot.chayn.co/bumble-welcome'}>
+        https://www.bloom-pilot.chayn.co/bumble-welcome
+      </Link>
+      <Typography variant="body1" component="p">
+        {t.rich('courseResultPassword')}{' '}
+        <strong>{process.env.NEXT_PUBLIC_PILOT_COURSES_PASSWORD}</strong>
+      </Typography>
+      <FormResetButton />
+    </Box>
+  );
+
+  const FormSuccessTherapy = () => (
+    <Box>
+      <Typography variant="h4" component="h4" mb={1}>
+        {t.rich('therapyAccess')}
+      </Typography>
+      <Typography variant="body1" component="p">
+        {t.rich('therapyResultLink')}
+      </Typography>
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}>
+        {`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}
+      </Link>
+      <Typography variant="body1" component="p">
+        {t.rich('therapyResultCode')} <strong>{partnerAccessCode}</strong>
+      </Typography>
+      <FormResetButton />
+    </Box>
+  );
+
+  const Form = () => (
     <form autoComplete="off">
       <FormControl fullWidth component="fieldset">
         <FormLabel component="legend">{t.rich('form.featuresLabel')}</FormLabel>
@@ -182,6 +179,14 @@ const CreateAccessCodeForm = () => {
       </Button>
     </form>
   );
+
+  if (formSubmitSuccess && selectedFeature === 'courses') {
+    return <FormSuccessCourses />;
+  }
+  if (formSubmitSuccess && selectedFeature === 'therapy') {
+    return <FormSuccessTherapy />;
+  }
+  return <Form />;
 };
 
 export default CreateAccessCodeForm;
