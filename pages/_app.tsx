@@ -13,6 +13,7 @@ import createEmotionCache from '../config/emotionCache';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 import { AuthGuard } from '../utils/authGuard';
+import { PartnerAdminGuard } from '../utils/partnerAdminGuard';
 import { TherapyAccessGuard } from '../utils/therapyAccessGuard';
 
 // For SSG compatibility with MUI
@@ -51,6 +52,13 @@ function MyApp(props: MyAppProps) {
       return (
         <AuthGuard>
           <TherapyAccessGuard>{component}</TherapyAccessGuard>
+        </AuthGuard>
+      );
+    }
+    if (pathname === 'partner-admin') {
+      return (
+        <AuthGuard>
+          <PartnerAdminGuard>{component}</PartnerAdminGuard>
         </AuthGuard>
       );
     }

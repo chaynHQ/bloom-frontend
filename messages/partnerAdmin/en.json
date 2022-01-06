@@ -1,0 +1,12 @@
+{
+  "PartnerAdmin": {
+    "createAccessCode": {
+      "title": "Create access code",
+      "introduction": "Refer someone to Bloom by creating an access code for their account."
+    },
+    "accessGuard": {
+      "title": "Access required",
+      "introduction": "Your account does not include access to partner pages. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+    }
+  }
+}
