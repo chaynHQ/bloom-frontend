@@ -10,13 +10,13 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from '../components/Link';
-import PartnerHeader from '../components/PartnerHeader';
-import RegisterForm from '../components/RegisterForm';
-import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import illustrationBeehive from '../public/illustration_beehive.svg';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import { rowStyle } from '../styles/common';
+import Link from '../../components/Link';
+import PartnerHeader from '../../components/PartnerHeader';
+import RegisterForm from '../../components/RegisterForm';
+import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
+import illustrationBeehive from '../../public/illustration_beehive.svg';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import { rowStyle } from '../../styles/common';
 
 const Register: NextPage = () => {
   const t = useTranslations('Auth');
@@ -65,7 +65,9 @@ const Register: NextPage = () => {
       <Box sx={extraContentStyle}>
         <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
         <Typography pt={2} variant="body1" component="p">
-          {t.rich('loginLink', { loginLink: (children) => <Link href="/login">{children}</Link> })}
+          {t.rich('loginLink', {
+            loginLink: (children) => <Link href="/auth/login">{children}</Link>,
+          })}
         </Typography>
         <Box sx={imageContainerStyle}>
           <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} />
@@ -128,9 +130,9 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/auth/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/auth/${locale}.json`),
       },
     },
   };

@@ -4,6 +4,7 @@ import { Action } from 'redux';
 import { api } from './api';
 import currentReducer from './currentSlice';
 import partnerAccessReducer from './partnerAccessSlice';
+import partnerAdminReducer from './partnerAdminSlice';
 import partnerReducer from './partnerSlice';
 import userReducer from './userSlice';
 
@@ -13,6 +14,7 @@ const initStore = () =>
       [api.reducerPath]: api.reducer,
       user: userReducer,
       partnerAccess: partnerAccessReducer,
+      partnerAdmin: partnerAdminReducer,
       partner: partnerReducer,
       current: currentReducer,
     },

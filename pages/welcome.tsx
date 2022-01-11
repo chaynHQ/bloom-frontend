@@ -139,7 +139,7 @@ const Welcome: NextPage = () => {
             fullWidth
             color="secondary"
             component={Link}
-            href="/register"
+            href="/auth/register"
           >
             {t.rich('getStarted')}
           </Button>

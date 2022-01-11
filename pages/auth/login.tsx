@@ -6,22 +6,16 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
-import Link from '../components/Link';
-import PartnerHeader from '../components/PartnerHeader';
-import { EmailForm, PasswordForm } from '../components/ResetPasswordForm';
-import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import { rowStyle } from '../styles/common';
+import Head from 'next/head';
+import Link from '../../components/Link';
+import LoginForm from '../../components/LoginForm';
+import PartnerHeader from '../../components/PartnerHeader';
+import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import { rowStyle } from '../../styles/common';
 
-const ResetPassword: NextPage = () => {
+const Login: NextPage = () => {
   const t = useTranslations('Auth');
-  const router = useRouter();
-  const codeParam: string | undefined = router.query.oobCode
-    ? router.query.oobCode instanceof Array
-      ? router.query.oobCode + ''
-      : router.query.oobCode
-    : undefined;
 
   const headerProps = {
     partnerLogoSrc: bloomBumbleLogo,
@@ -48,6 +42,9 @@ const ResetPassword: NextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('login.title')}</title>
+      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
@@ -64,9 +61,18 @@ const ResetPassword: NextPage = () => {
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('resetPassword.title')}
+              {t.rich('login.title')}
             </Typography>
-            {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
+            <Typography variant="body1" component="p">
+              {t.rich('login.description')}
+            </Typography>
+
+            <LoginForm />
+            <Typography variant="body1" component="p" textAlign="center">
+              {t.rich('login.resetPasswordLink', {
+                resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+              })}
+            </Typography>
           </CardContent>
         </Card>
       </Container>
@@ -78,12 +84,12 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/auth/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/auth/${locale}.json`),
       },
     },
   };
 }
 
-export default ResetPassword;
+export default Login;

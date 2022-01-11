@@ -18,7 +18,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/therapy-booking',
+        destination: '/therapy/book-session',
         permanent: false,
       },
     ];
