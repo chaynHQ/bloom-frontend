@@ -23,7 +23,6 @@ import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { TherapyAccessGuard } from '../../utils/therapyAccessGuard';
 
 const steps: Array<ImageTextItem> = [
   {
@@ -53,8 +52,10 @@ const BookSession: NextPage = () => {
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccess, partner } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccess, partner });
+  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
+    (state: RootState) => state,
+  );
+  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
@@ -127,75 +128,73 @@ const BookSession: NextPage = () => {
   };
 
   return (
-    <TherapyAccessGuard>
-      <Box>
-        <Head>
-          <title>{t('title')}</title>
-        </Head>
-        <Header
-          title={headerProps.title}
-          introduction={headerProps.introduction}
-          imageSrc={headerProps.imageSrc}
-          imageAlt={headerProps.imageAlt}
-        />
-        <Container sx={containerStyle}>
-          <Box mt={4} textAlign="left">
-            <Typography variant="body1" component="p">
-              {t.rich('bookingDescription1', {
-                strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
-              })}
-            </Typography>
-            <Button
-              sx={bookingButtonStyle}
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={openWidget}
-            >
-              {t.rich('bookingButton')}
-            </Button>
-          </Box>
-          <ImageTextGrid items={steps} translations="Therapy.steps" />
-        </Container>
-
-        <Container>
-          <Typography variant="h2" component="h2" mb={2} textAlign="center">
-            {t.rich('faqHeader')}
+    <Box>
+      <Head>
+        <title>{t('title')}</title>
+      </Head>
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
+      <Container sx={containerStyle}>
+        <Box mt={4} textAlign="left">
+          <Typography variant="body1" component="p">
+            {t.rich('bookingDescription1', {
+              strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
+            })}
           </Typography>
-          <Box textAlign="center">
-            <Image
-              alt={tS.raw('alt.partialLeavesRose')}
-              src={illustrationLeafMix}
-              width={100}
-              height={100}
-            />
-          </Box>
+          <Button
+            sx={bookingButtonStyle}
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={openWidget}
+          >
+            {t.rich('bookingButton')}
+          </Button>
+        </Box>
+        <ImageTextGrid items={steps} translations="Therapy.steps" />
+      </Container>
 
-          <Box sx={faqsContainerStyle}>
-            <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
-            <Button
-              sx={bookingButtonStyle}
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={openWidget}
-            >
-              {t.rich('bookingButton')}
-            </Button>
-          </Box>
-        </Container>
-
-        {widgetOpen && (
-          <Script
-            id="widget-js"
-            src="//widget.simplybook.it/v2/widget/widget.js"
-            onLoad={() => {
-              new (window as any).SimplybookWidget(widgetConfig);
-            }}
+      <Container>
+        <Typography variant="h2" component="h2" mb={2} textAlign="center">
+          {t.rich('faqHeader')}
+        </Typography>
+        <Box textAlign="center">
+          <Image
+            alt={tS.raw('alt.partialLeavesRose')}
+            src={illustrationLeafMix}
+            width={100}
+            height={100}
           />
-        )}
-      </Box>
-    </TherapyAccessGuard>
+        </Box>
+
+        <Box sx={faqsContainerStyle}>
+          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
+          <Button
+            sx={bookingButtonStyle}
+            variant="contained"
+            color="secondary"
+            size="large"
+            onClick={openWidget}
+          >
+            {t.rich('bookingButton')}
+          </Button>
+        </Box>
+      </Container>
+
+      {widgetOpen && (
+        <Script
+          id="widget-js"
+          src="//widget.simplybook.it/v2/widget/widget.js"
+          onLoad={() => {
+            new (window as any).SimplybookWidget(widgetConfig);
+          }}
+        />
+      )}
+    </Box>
   );
 };
 

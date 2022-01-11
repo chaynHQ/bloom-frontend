@@ -7,7 +7,7 @@ export interface PartnerAccess {
   activatedAt: Date | null;
   featureLiveChat: boolean | null;
   featureTherapy: boolean | null;
-  partnerAccessCode: string | null;
+  accessCode: string | null;
   therapySessionsRemaining: number | null;
   therapySessionsRedeemed: number | null;
 }
@@ -17,7 +17,7 @@ const initialState: PartnerAccess = {
   activatedAt: null,
   featureLiveChat: null,
   featureTherapy: null,
-  partnerAccessCode: null,
+  accessCode: null,
   therapySessionsRemaining: null,
   therapySessionsRedeemed: null,
 };
@@ -31,7 +31,7 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.getPartnerAccess.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
       state = payload;
     });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
