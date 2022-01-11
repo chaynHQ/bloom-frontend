@@ -2,7 +2,7 @@
   "Auth": {
     "introduction": "Bumble has partnered with Bloom to provide resources to sexual assault and relationship abuse survivors within the global Bumble community through a free online trauma support program.",
     "bloomBumbleLink": "More about Bloom for Bumble",
-    "loginLink": "Already have an account? <loginLink>Go to login</auth/loginLink>",
+    "loginLink": "Already have an account? <loginLink>Go to login<loginLink>",
     "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
     "login": {
       "title": "Welcome back",
@@ -43,7 +43,7 @@
         "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</auth/loginLink> to continue.",
+        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login<loginLink> to continue.",
         "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
       }
