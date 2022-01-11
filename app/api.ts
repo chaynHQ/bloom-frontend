@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
 import { PartnerAccess } from './partnerAccessSlice';
+import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner } from './partnerSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
@@ -8,6 +9,7 @@ import { User } from './userSlice';
 export interface GetUserResponse {
   user: User;
   partnerAccess: PartnerAccess;
+  partnerAdmin: PartnerAdmin;
   partner: Partner;
 }
 
@@ -41,9 +43,6 @@ export const api = createApi({
         };
       },
     }),
-    getPartnerAccess: builder.query<PartnerAccess, string>({
-      query: (id) => `partner-access/${id}`,
-    }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
       | { error: { data: { statusCode: number; message: string } } },
@@ -57,12 +56,21 @@ export const api = createApi({
         };
       },
     }),
+    addPartnerAccess: builder.mutation<PartnerAccess, Partial<PartnerAccess>>({
+      query(body) {
+        return {
+          url: 'partner-access',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetUserMutation,
   useAddUserMutation,
-  useGetPartnerAccessQuery,
+  useAddPartnerAccessMutation,
   useValidateCodeMutation,
 } = api;

@@ -30,7 +30,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         }
 
         localStorage.removeItem('accessToken');
-        router.replace('/login');
+        router.replace('/auth/login');
       }
     }
     if (user.id) {
@@ -38,7 +38,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
-      router.replace('/login');
+      router.replace('/auth/login');
     } else {
       callGetUser();
     }

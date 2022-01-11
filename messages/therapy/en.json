@@ -1,5 +1,5 @@
 {
-  "TherapyBooking": {
+  "Therapy": {
     "title": "Bloom therapy",
     "introduction": "Bumble has partnered with Bloom to offer you free, confidential support. Bloom connects you to a therapist who can offer tailored support. You'll have access to six, hour-long sessions with a therapist of your choice.",
     "bookingButton": "Begin booking",
@@ -47,7 +47,7 @@
     },
     "accessGuard": {
       "title": "Therapy not available",
-      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>"
+      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
     }
   }
 }

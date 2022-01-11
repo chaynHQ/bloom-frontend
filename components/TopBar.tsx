@@ -1,8 +1,8 @@
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { RootState } from '../app/store';
 import { useTypedSelector } from '../hooks/store';
@@ -34,7 +34,10 @@ const logoContainerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const theme = useTheme();
+  const router = useRouter();
+  const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
+  const homepage =
+    pathname === 'partner-admin' ? '/partner-admin/create-access-code' : '/therapy/book-session';
 
   const { user } = useTypedSelector((state: RootState) => state);
 
@@ -42,7 +45,7 @@ const TopBar = () => {
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
         {/* {isSmallScreen && <NavigationDrawer />} */}
-        <Link href="/therapy-booking" aria-label={t('home')} sx={logoContainerStyle}>
+        <Link href={homepage} aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {user.id && localStorage.getItem('accessToken') && <UserMenu />}

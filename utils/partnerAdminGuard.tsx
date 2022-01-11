@@ -8,12 +8,12 @@ import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
-export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
-  const { partnerAccess } = useTypedSelector((state: RootState) => state);
-  const t = useTranslations('Therapy.accessGuard');
+export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
+  const { partnerAdmin, user } = useTypedSelector((state: RootState) => state);
+  const t = useTranslations('PartnerAdmin.accessGuard');
   const tS = useTranslations('Shared');
 
-  if (!partnerAccess || !partnerAccess.featureTherapy) {
+  if (!partnerAdmin) {
     const imageContainerStyle = {
       position: 'relative',
       width: { xs: 150, md: 210 },
