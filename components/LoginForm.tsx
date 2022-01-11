@@ -58,7 +58,7 @@ const LoginForm = () => {
 
         if ('data' in userResponse) {
           logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
-          if (userResponse.data.partnerAdmin.id) {
+          if (userResponse.data.partnerAdmin?.id) {
             router.push('/partner-admin/create-access-code');
           } else {
             router.push('/therapy/book-session');
