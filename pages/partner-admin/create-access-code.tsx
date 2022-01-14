@@ -35,7 +35,6 @@ const CreateAccessCode: NextPage = () => {
 
   useEffect(() => {
     logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: 'bumble' });
-    console.log('CREATE_PARTNER_ACCESS_VIEWED');
   }, []);
 
   return (
