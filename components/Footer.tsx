@@ -53,10 +53,8 @@ const socialsContainerStyle = {
 const Footer = () => {
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses });
 
   return (
     <Container sx={footerContainerStyle}>
@@ -74,7 +72,9 @@ const Footer = () => {
           <IconButton
             aria-label="Instagram"
             href="https://www.instagram.com/chaynhq"
-            onClick={() => logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: '' })}
+            onClick={() =>
+              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Instagram' })
+            }
           >
             <InstagramIcon />
           </IconButton>

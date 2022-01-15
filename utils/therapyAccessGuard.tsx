@@ -9,11 +9,15 @@ import { useTypedSelector } from '../hooks/store';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
-  const { partnerAccess } = useTypedSelector((state: RootState) => state);
+  const { partnerAccesses } = useTypedSelector((state: RootState) => state);
   const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
 
-  if (!partnerAccess || !partnerAccess.featureTherapy) {
+  const therapyAccess = partnerAccesses.find(function (partnerAccess) {
+    return partnerAccess.featureTherapy === true;
+  });
+
+  if (!therapyAccess) {
     const imageContainerStyle = {
       position: 'relative',
       width: { xs: 150, md: 210 },

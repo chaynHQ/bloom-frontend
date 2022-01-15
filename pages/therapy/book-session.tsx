@@ -52,10 +52,12 @@ const BookSession: NextPage = () => {
   const tS = useTranslations('Shared');
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses });
+
+  const therapyAccess = partnerAccesses.find(function (partnerAccess) {
+    return partnerAccess.featureTherapy === true;
+  });
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
@@ -142,7 +144,7 @@ const BookSession: NextPage = () => {
         <Box mt={4} textAlign="left">
           <Typography variant="body1" component="p">
             {t.rich('bookingDescription1', {
-              strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
+              strongText: () => <strong>{therapyAccess?.therapySessionsRemaining}</strong>,
             })}
           </Typography>
           <Button

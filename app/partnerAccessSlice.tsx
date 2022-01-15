@@ -19,10 +19,10 @@ export interface PartnerAccesses extends Array<PartnerAccess> {}
 const initialState: PartnerAccesses = [];
 
 const slice = createSlice({
-  name: 'partnerAccess',
+  name: 'partnerAccesses',
   initialState: initialState,
   reducers: {
-    clearPartnerAccessSlice: (state) => {
+    clearPartnerAccessesSlice: (state) => {
       state = initialState;
     },
   },
@@ -31,15 +31,15 @@ const slice = createSlice({
       state.push(payload);
     });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      return payload.partnerAccesses;
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      return payload.partnerAccesses;
     });
   },
 });
 
 const { actions, reducer } = slice;
-export const { clearPartnerAccessSlice } = actions;
-export const selectPartnerAccess = (state: RootState) => state.partnerAccess;
+export const { clearPartnerAccessesSlice } = actions;
+export const selectPartnerAccesses = (state: RootState) => state.partnerAccesses;
 export default reducer;

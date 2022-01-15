@@ -13,7 +13,7 @@ import logEvent, { getEventUserData } from './logEvent';
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const [verified, setVerified] = useState(false);
-  const { user, partnerAccess } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   const loadingContainerStyle = {
@@ -63,9 +63,13 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     );
   }
 
+  const liveChatAccess = partnerAccesses.find(function (partnerAccess) {
+    return partnerAccess.featureLiveChat === true;
+  });
+
   return (
     <>
-      {partnerAccess.featureLiveChat && <Crisp email={user.email} />}
+      {liveChatAccess && <Crisp email={user.email} />}
       {children}
     </>
   );
