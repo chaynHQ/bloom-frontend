@@ -2,6 +2,7 @@ import { configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { Action } from 'redux';
 import { api } from './api';
+import coursesReducer from './coursesSlice';
 import currentReducer from './currentSlice';
 import partnerAccessReducer from './partnerAccessSlice';
 import partnerAdminReducer from './partnerAdminSlice';
@@ -13,6 +14,7 @@ const initStore = () =>
     reducer: {
       [api.reducerPath]: api.reducer,
       user: userReducer,
+      courses: coursesReducer,
       partnerAccess: partnerAccessReducer,
       partnerAdmin: partnerAdminReducer,
       partner: partnerReducer,

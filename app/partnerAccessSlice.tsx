@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { api } from './api';
+import { Partner } from './partnerSlice';
 import type { RootState } from './store';
 
 export interface PartnerAccess {
@@ -10,17 +11,12 @@ export interface PartnerAccess {
   accessCode: string | null;
   therapySessionsRemaining: number | null;
   therapySessionsRedeemed: number | null;
+  partner: Partner;
 }
 
-const initialState: PartnerAccess = {
-  id: null,
-  activatedAt: null,
-  featureLiveChat: null,
-  featureTherapy: null,
-  accessCode: null,
-  therapySessionsRemaining: null,
-  therapySessionsRedeemed: null,
-};
+export interface PartnerAccesses extends Array<PartnerAccess> {}
+
+const initialState: PartnerAccesses = [];
 
 const slice = createSlice({
   name: 'partnerAccess',
@@ -32,7 +28,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
-      state = payload;
+      state.push(payload);
     });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.partnerAccess;
