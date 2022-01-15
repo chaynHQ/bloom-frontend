@@ -14,6 +14,7 @@ import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
+import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import {
   REGISTER_ERROR,
   REGISTER_FIREBASE_ERROR,
@@ -23,8 +24,6 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../constants/events';
-import { LANGUAGES } from '../constants/languages';
-import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
