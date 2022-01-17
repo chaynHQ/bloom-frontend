@@ -13,7 +13,7 @@ import logEvent, { getEventUserData } from './logEvent';
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const [verified, setVerified] = useState(false);
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccess } = useTypedSelector((state: RootState) => state);
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
 
   const loadingContainerStyle = {
@@ -63,14 +63,10 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     );
   }
 
-  const liveChatAccess = partnerAccesses.find(function (partnerAccess) {
-    return partnerAccess.featureLiveChat === true;
-  });
-
   return (
     <>
       {/* Include live chat widget if user's access allows. For now only show on staging for testing */}
-      {liveChatAccess && process.env.NEXT_PUBLIC_ENV !== 'production' && (
+      {partnerAccess.featureLiveChat && process.env.NEXT_PUBLIC_ENV !== 'production' && (
         <Crisp email={user.email} />
       )}
       {children}
