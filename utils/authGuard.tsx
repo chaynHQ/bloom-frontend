@@ -65,7 +65,10 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   return (
     <>
-      {partnerAccess.featureLiveChat && <Crisp email={user.email} />}
+      {/* Include live chat widget if user's access allows. For now only show on staging for testing */}
+      {partnerAccess.featureLiveChat && process.env.NEXT_PUBLIC_ENV !== 'production' && (
+        <Crisp email={user.email} />
+      )}
       {children}
     </>
   );
