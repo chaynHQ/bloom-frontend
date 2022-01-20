@@ -43,26 +43,19 @@ function MyApp(props: MyAppProps) {
   const ComponentWithGuard = () => {
     const publicPaths = ['index', 'welcome', 'auth', 'action-handler'];
     const component = <Component {...pageProps} />;
+    let children = null;
 
     if (publicPaths.includes(pathname)) {
       return component;
     }
-
     if (pathname === 'therapy') {
-      return (
-        <AuthGuard>
-          <TherapyAccessGuard>{component}</TherapyAccessGuard>
-        </AuthGuard>
-      );
+      children = <TherapyAccessGuard>{component}</TherapyAccessGuard>;
     }
     if (pathname === 'partner-admin') {
-      return (
-        <AuthGuard>
-          <PartnerAdminGuard>{component}</PartnerAdminGuard>
-        </AuthGuard>
-      );
+      children = <PartnerAdminGuard>{component}</PartnerAdminGuard>;
     }
-    return <AuthGuard>{component}</AuthGuard>;
+
+    return <AuthGuard>{children || component}</AuthGuard>;
   };
 
   return (
