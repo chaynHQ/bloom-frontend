@@ -10,6 +10,20 @@
       "bumbleDetails2": "BUMBLE HOLDING LTD",
       "policies": "Our policies"
     },
+    "404": {
+      "title": "404 - Page not found",
+      "description": "This page could not be found. Check the url or go back to the",
+      "authenticatedRedirect": "courses page",
+      "unauthenticatedRedirect": "welcome page",
+      "goBack": "Back to"
+    },
+    "500": {
+      "title": "500 - Internal error",
+      "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
+      "authenticatedRedirect": "courses page",
+      "unauthenticatedRedirect": "welcome page",
+      "goBack": "Back to"
+    },
     "alt": {
       "bloomLogo": "Bloom logo",
       "bumbleLogo": "Bumble logo",
