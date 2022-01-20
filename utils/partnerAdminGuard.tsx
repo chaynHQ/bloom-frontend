@@ -9,7 +9,7 @@ import { useTypedSelector } from '../hooks/store';
 import illustrationTeaPeach from '../public/illustration_tea_peach.png';
 
 export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
-  const { partnerAdmin, user } = useTypedSelector((state: RootState) => state);
+  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
   const t = useTranslations('PartnerAdmin.accessGuard');
   const tS = useTranslations('Shared');
 
