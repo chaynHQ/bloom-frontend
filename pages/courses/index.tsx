@@ -66,27 +66,18 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  // load the published content outside of the preview mode
   let sbParams = {
-    version: 'published', // or 'published'
-    cv: 0,
-  };
-
-  if (preview) {
-    // load the draft version inside of the preview mode
-    sbParams.version = 'draft';
-    sbParams.cv = Date.now();
-  }
-
-  let { data } = await Storyblok.get('cdn/stories/', {
+    version: preview ? 'draft' : 'published',
+    cv: preview ? Date.now() : 0,
     starts_with: 'courses/',
     filter_query: {
       component: {
         in: 'Course',
       },
     },
-    ...sbParams,
-  });
+  };
+
+  let { data } = await Storyblok.get('cdn/stories/', sbParams);
 
   return {
     props: {

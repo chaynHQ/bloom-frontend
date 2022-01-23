@@ -4,13 +4,13 @@ import { Partner } from './partnerSlice';
 import type { RootState } from './store';
 
 export interface PartnerAccess {
-  id: string | null;
-  activatedAt: Date | null;
-  featureLiveChat: boolean | null;
-  featureTherapy: boolean | null;
-  accessCode: string | null;
-  therapySessionsRemaining: number | null;
-  therapySessionsRedeemed: number | null;
+  id: string;
+  activatedAt: Date;
+  featureLiveChat: boolean;
+  featureTherapy: boolean;
+  accessCode: string;
+  therapySessionsRemaining: number;
+  therapySessionsRedeemed: number;
   partner: Partner;
 }
 
