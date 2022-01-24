@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import Header from '../../components/Header';
@@ -24,8 +24,21 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const tS = useTranslations('Shared');
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const storyPartners = story.content.included_for_partners;
+
+    if (!partnerAccesses && storyPartners.includes('Public')) {
+      setIncorrectAccess(false);
+    }
+
+    partnerAccesses.map((partnerAccess) => {
+      if (storyPartners.includes(partnerAccess.partner.name)) {
+        setIncorrectAccess(false);
+      }
+    });
+  }, []);
 
   const headerProps = {
     title: story.content.name,
@@ -47,24 +60,30 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
       <Head>
         <title>{t('title')}</title>
       </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
-      />
-      <Container sx={containerStyle}>
-        {story.content.weeks.map((week: any) => {
-          return (
-            <Box mb={3} key={week.name.split(':')[0]}>
-              <Typography key={week.name}>{week.name}</Typography>
-              {week.sessions.map((session: any) => {
-                return <Typography key={session.slug}>{session.content.name}</Typography>;
-              })}
-            </Box>
-          );
-        })}
-      </Container>
+      {incorrectAccess ? (
+        <Container sx={containerStyle}></Container>
+      ) : (
+        <Box>
+          <Header
+            title={headerProps.title}
+            introduction={headerProps.introduction}
+            imageSrc={headerProps.imageSrc}
+            imageAlt={headerProps.imageAlt}
+          />
+          <Container sx={containerStyle}>
+            {story.content.weeks.map((week: any) => {
+              return (
+                <Box mb={3} key={week.name.split(':')[0]}>
+                  <Typography key={week.name}>{week.name}</Typography>
+                  {week.sessions.map((session: any) => {
+                    return <Typography key={session.slug}>{session.content.name}</Typography>;
+                  })}
+                </Box>
+              );
+            })}
+          </Container>
+        </Box>
+      )}
     </Box>
   );
 };

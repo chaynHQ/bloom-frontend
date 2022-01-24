@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
-import { Courses } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import Header from '../../components/Header';
 import { useTypedSelector } from '../../hooks/store';
@@ -21,14 +20,34 @@ interface Props {
 }
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
-  const [loadedCourses, setLoadedCourses] = useState<Courses[]>([]);
+  const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!partnerAccesses) {
+      const coursesWithAccess = stories.filter((course) =>
+        course.content.included_for_partners.includes('Public'),
+      );
+      setLoadedCourses(coursesWithAccess);
+    }
+
+    let partners: Array<string> = [];
+
+    partnerAccesses.map((partnerAccess) => {
+      if (partnerAccess.partner.name) {
+        partners.push(partnerAccess.partner.name);
+      }
+    });
+
+    const coursesWithAccess = stories.filter((course) =>
+      partners.some((partner) => course.content.included_for_partners.includes(partner)),
+    );
+    setLoadedCourses(coursesWithAccess);
+  }, []);
 
   const headerProps = {
     title: t.rich('title'),
@@ -57,8 +76,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        {stories.map((story) => {
-          return <Typography key={story.content.name}>{story.content.name}</Typography>;
+        {loadedCourses.map((course) => {
+          return <Typography key={course.content.name}>{course.content.name}</Typography>;
         })}
       </Container>
     </Box>
