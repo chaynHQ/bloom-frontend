@@ -75,6 +75,8 @@ NEXT_PUBLIC_PILOT_COURSES_PASSWORD=
 NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=
 ```
 
+**When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
+
 ### Run locally
 
 Start the app in development mode (with hot-code reloading, error reporting, etc.):
@@ -145,13 +147,13 @@ A **Partner admin user** is a team member of a partner who uses the app to compl
 
 ### Internationalisation
 
-Multiple languages are supported across the app. For static text, all strings are wrapped and translated using `next-intl`. For CMS Storyblok content, each field in a story or bloks is translatable and is returned based on the requested locale.
+Multiple languages are supported across the app. For static text, all strings are wrapped and translated using [next-intl](https://github.com/amannn/next-intl). For CMS Storyblok content, each field in a story or bloks is translatable and is returned based on the requested locale. Next.js supports i18n routing and Storyblok has an extension to support translated routes, however this is not currently used.
 
-Integrations are chosen with internationalisation as a priority, with Crisp and Simplybook supporting multiple timezones and translations.
+Integrations are chosen with internationalisation as a priority, with Crisp and Simplybook supporting multiple timezones and languages.
 
 ### Storyblok CMS
 
-Content is delivered by Storyblok, a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. Dynamic component based pages can be created for info pages e.g. `/about`, which are handled by our `DynamicComponent.tsx`. Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages e.g. `/courses/[slug].tsx`. Courses and Sessions are Storyblok Content Types with defined schemas that can then be processed in the custom pages.
+Content is delivered by Storyblok, a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. Dynamic component based pages can be created for info pages e.g. `/about`, which are handled by our [DynamicComponent.tsx](components/DynamicComponent.tsx). Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages e.g. [/courses/[slug].tsx](pages//courses/[slug].tsx). Courses and Sessions are Storyblok Content Types with defined schemas that can then be processed in the custom pages.
 
 ## Git flow and deployment
 
