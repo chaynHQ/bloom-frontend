@@ -38,7 +38,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
         setIncorrectAccess(false);
       }
     });
-  }, []);
+  }, [partnerAccesses, story.content.included_for_partners]);
 
   const headerProps = {
     title: story.content.name,

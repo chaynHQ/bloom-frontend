@@ -40,7 +40,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
         setIncorrectAccess(false);
       }
     });
-  }, []);
+  }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   const headerProps = {
     title: story.content.name,

@@ -47,7 +47,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       partners.some((partner) => course.content.included_for_partners.includes(partner)),
     );
     setLoadedCourses(coursesWithAccess);
-  }, []);
+  }, [partnerAccesses, stories]);
 
   const headerProps = {
     title: t.rich('title'),
