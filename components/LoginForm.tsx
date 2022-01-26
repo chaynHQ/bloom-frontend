@@ -47,7 +47,8 @@ const LoginForm = () => {
       .signInWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        const token = await user?.getIdToken();
+        const token = await user?.getIdToken(true);
+
         if (token) {
           localStorage.setItem('accessToken', token);
         }
