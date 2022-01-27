@@ -1,9 +1,13 @@
+import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
 import StoryblokClient from 'storyblok-js-client';
 import { LANGUAGES } from '../constants/enums';
 
+const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_STORYBLOK_TOKEN } = publicRuntimeConfig;
+
 const Storyblok = new StoryblokClient({
-  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
+  accessToken: NEXT_PUBLIC_STORYBLOK_TOKEN,
   cache: {
     clear: 'auto',
     type: 'memory',
