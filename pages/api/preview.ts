@@ -1,4 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_STORYBLOK_TOKEN } = publicRuntimeConfig;
 
 export default async function preview(req: NextApiRequest, res: NextApiResponse) {
   const { slug = '' } = req.query;
@@ -7,7 +11,7 @@ export default async function preview(req: NextApiRequest, res: NextApiResponse)
 
   // Check the secret and next parameters
   // This secret should only be known to this API route and the CMS
-  if (req.query.secret !== process.env.NEXT_PUBLIC_STORYBLOK_TOKEN) {
+  if (req.query.secret !== NEXT_PUBLIC_STORYBLOK_TOKEN) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
