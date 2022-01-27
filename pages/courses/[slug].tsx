@@ -115,25 +115,27 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/');
+  // let { data } = await Storyblok.get('cdn/links/?starts_with=courses/');
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
-    if (!data.links[linkKey].is_startpage) {
-      return;
-    }
+  paths.push({ params: { slug: 'dating-boundaries-and-relationships' } });
 
-    // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
-    let splittedSlug = slug.split('/');
+  // Object.keys(data.links).forEach((linkKey) => {
+  //   if (!data.links[linkKey].is_startpage) {
+  //     return;
+  //   }
 
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ params: { slug: splittedSlug[1] }, locale });
-      }
-    }
-  });
+  //   // get array for slug because of catch all
+  //   const slug = data.links[linkKey].slug;
+  //   let splittedSlug = slug.split('/');
+
+  //   if (locales) {
+  //     // create additional languages
+  //     for (const locale of locales) {
+  //       paths.push({ params: { slug: splittedSlug[1] }, locale });
+  //     }
+  //   }
+  // });
 
   return {
     paths: paths,
