@@ -34,11 +34,11 @@ let theme = createTheme({
     h2: {
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '1.875rem',
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: '1rem',
     },
     h3: {
-      fontSize: '1.5rem',
+      fontSize: '1.375rem',
       marginBottom: '1rem',
     },
     h4: {
@@ -192,15 +192,8 @@ theme = createTheme(theme, {
         root: {
           padding: 20,
 
-          ':last-child': {
-            padding: 20,
-          },
           [theme.breakpoints.up('md')]: {
             padding: 40,
-
-            ':last-child': {
-              padding: 40,
-            },
           },
         },
       },

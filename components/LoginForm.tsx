@@ -62,7 +62,7 @@ const LoginForm = () => {
           if (userResponse.data.partnerAdmin?.id) {
             router.push('/partner-admin/create-access-code');
           } else {
-            router.push('/therapy/book-session');
+            router.push('/courses');
           }
         }
         if ('error' in userResponse) {

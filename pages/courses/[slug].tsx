@@ -8,8 +8,12 @@ import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import Header from '../../components/Header';
+import Link from '../../components/Link';
+import SessionCard from '../../components/SessionCard';
+import Video from '../../components/Video';
+import { auth } from '../../config/firebase';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import { rowStyle } from '../../styles/common';
 import { getEventUserData } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
 
@@ -19,9 +23,16 @@ interface Props {
   messages: any;
 }
 
+const videoConfig = {
+  showinfo: 1,
+  controls: 1,
+  modestbranding: 1,
+};
+
 const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
+
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
@@ -43,17 +54,33 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    imageSrc: story.content.image.filename,
+    translatedImageAlt: story.content.image.alt,
   };
 
   const containerStyle = {
     backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    // ...rowStyle,
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-between',
   } as const;
+
+  const introductionContainerStyle = {
+    ...rowStyle,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  } as const;
+
+  const sessionsContainerStyle = {
+    marginTop: 4,
+  } as const;
+
+  const cardsContainerStyle = {
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
+    justifyContent: 'space-between',
+    marginTop: { xs: 2, md: 3 },
+  } as const;
+
+  console.log('auth.currentUser', auth.currentUser);
+  console.log('story.content', story.content);
 
   return (
     <Box>
@@ -68,19 +95,39 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
             title={headerProps.title}
             introduction={headerProps.introduction}
             imageSrc={headerProps.imageSrc}
-            imageAlt={headerProps.imageAlt}
+            translatedImageAlt={headerProps.translatedImageAlt}
           />
           <Container sx={containerStyle}>
-            {story.content.weeks.map((week: any) => {
-              return (
-                <Box mb={3} key={week.name.split(':')[0]}>
-                  <Typography key={week.name}>{week.name}</Typography>
-                  {week.sessions.map((session: any) => {
-                    return <Typography key={session.slug}>{session.content.name}</Typography>;
+            <Box sx={introductionContainerStyle}>
+              <Box>
+                <Typography component="h2" variant="h2">
+                  {t('courseDetail.introductionTitle')}
+                </Typography>
+                <Typography component="p" variant="body1">
+                  {t.rich('courseDetail.introductionDescription', {
+                    transcriptLink: (children) => <Link href="#">{children}</Link>,
                   })}
-                </Box>
-              );
-            })}
+                </Typography>
+              </Box>
+              <Video url={story.content.video.url} width={{ xs: '100%', sm: '70%', md: '55%' }} />
+            </Box>
+
+            <Box sx={sessionsContainerStyle}>
+              {story.content.weeks.map((week: any) => {
+                return (
+                  <Box mb={6} key={week.name.split(':')[0]}>
+                    <Typography key={week.name} component="h2" variant="h2">
+                      {week.name}
+                    </Typography>
+                    <Box sx={cardsContainerStyle}>
+                      {week.sessions.map((session: any) => {
+                        return <SessionCard key={session.id} session={session} />;
+                      })}
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
           </Container>
         </Box>
       )}

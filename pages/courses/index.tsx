@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -77,7 +77,17 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         {loadedCourses.map((course) => {
-          return <Typography key={course.content.name}>{course.content.name}</Typography>;
+          return (
+            <Card sx={{ marginBottom: 20 }} key={course.content.name}>
+              <CardActionArea href={`/${course.full_slug}`}>
+                <CardContent>
+                  <Typography component="h3" variant="h3">
+                    {course.content.name}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          );
         })}
       </Container>
     </Box>

@@ -16,7 +16,8 @@ interface HeaderProps {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   imageSrc: StaticImageData;
-  imageAlt: string;
+  imageAlt?: string;
+  translatedImageAlt?: string;
 }
 
 const headerContainerStyles = {
@@ -25,6 +26,7 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
+  paddingTop: 12.5,
 } as const;
 
 const imageContainerStyle = {
@@ -41,9 +43,14 @@ const textContainerStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, imageSrc } = props;
+  const { title, introduction, imageAlt, translatedImageAlt, imageSrc } = props;
 
   const tS = useTranslations('Shared');
+  const imageAltText = translatedImageAlt
+    ? translatedImageAlt
+    : imageAlt
+    ? tS(imageAlt)
+    : undefined;
 
   return (
     <Container sx={headerContainerStyles}>
@@ -56,7 +63,7 @@ const Header = (props: HeaderProps) => {
         </Typography>
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={tS(imageAlt)} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
       </Box>
     </Container>
   );
