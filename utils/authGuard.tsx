@@ -6,15 +6,14 @@ import { RootState } from '../app/store';
 import Crisp from '../components/Crisp';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from './errorMessage';
 import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
-  const [verified, setVerified] = useState(false);
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
+  const [verified, setVerified] = useState(false);
 
   const loadingContainerStyle = {
     display: 'flex',
@@ -23,8 +22,12 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     alignItems: 'center',
   } as const;
 
+  const [getUser] = useGetUserMutation();
+  const dispatch: any = useAppDispatch();
+
   useEffect(() => {
     async function callGetUser() {
+      console.log('authgruard callGetUser');
       logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
 
@@ -37,7 +40,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        localStorage.removeItem('accessToken');
         router.replace('/auth/login');
       }
     }
@@ -47,15 +49,19 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       return;
     }
 
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      router.replace('/auth/login');
-    } else {
-      callGetUser();
+    if (user.loading) {
+      return;
     }
+
+    if (!user.token) {
+      router.replace('/auth/login');
+      return;
+    }
+
+    callGetUser();
   }, [getUser, router, user]);
 
-  if (!verified || !user.id || getUserIsLoading) {
+  if (user.loading || !verified) {
     return (
       <Container sx={loadingContainerStyle}>
         <CircularProgress color="error" />

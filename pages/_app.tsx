@@ -1,15 +1,20 @@
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+// Import the functions you need from the SDKs you need
 import { NextIntlProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { wrapper } from '../app/store';
+import { setLoading, setToken } from '../app/userSlice';
 import Footer from '../components/Footer';
 import LeaveSiteButton from '../components/LeaveSiteButton';
 import TopBar from '../components/TopBar';
 import createEmotionCache from '../config/emotionCache';
+import { auth } from '../config/firebase';
+import { useAppDispatch } from '../hooks/store';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 import { AuthGuard } from '../utils/authGuard';
@@ -35,8 +40,21 @@ function MyApp(props: MyAppProps) {
     pageProps: any;
   } = props;
 
+  const dispatch: any = useAppDispatch();
   const router = useRouter();
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async function (user) {
+      if (user) {
+        // Gets current (or refreshed if expired) firebase token
+        const token = await user.getIdToken();
+        await dispatch(setToken(token));
+      }
+
+      dispatch(setLoading(false));
+    });
+  }, [dispatch]);
 
   // Adds required permissions guard to pages, redirecting where required permissions are missing
   // New pages will default to requiring authenticated and public pages must be added to the array below
