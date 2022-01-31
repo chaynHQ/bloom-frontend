@@ -6,12 +6,13 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import Header from '../../components/Header';
 import Link from '../../components/Link';
 import SessionCard from '../../components/SessionCard';
 import Video from '../../components/Video';
-import { auth } from '../../config/firebase';
+import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
 import { getEventUserData } from '../../utils/logEvent';
@@ -23,12 +24,6 @@ interface Props {
   messages: any;
 }
 
-const videoConfig = {
-  showinfo: 1,
-  controls: 1,
-  modestbranding: 1,
-};
-
 const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
@@ -36,6 +31,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
+    PROGRESS_STATUS.NOT_STARTED,
+  );
+  const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
+  const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
@@ -49,7 +49,26 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
         setIncorrectAccess(false);
       }
     });
-  }, [partnerAccesses, story.content.included_for_partners]);
+
+    const userCourse = courses.find(function (course: Course) {
+      return Number(course.storyblokId) === story.id;
+    });
+
+    if (userCourse) {
+      let courseSessionsStarted: Array<number> = [];
+      let courseSessionsCompleted: Array<number> = [];
+      userCourse.sessions.map((session) => {
+        if (session.completed) {
+          courseSessionsCompleted.push(Number(session.storyblokId));
+        } else {
+          courseSessionsStarted.push(Number(session.storyblokId));
+        }
+      });
+      setCourseProgress(userCourse.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED);
+      setSessionsStarted(courseSessionsStarted);
+      setSessionsCompleted(courseSessionsCompleted);
+    }
+  }, [partnerAccesses, story.content.included_for_partners, courses, story.id]);
 
   const headerProps = {
     title: story.content.name,
@@ -78,9 +97,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     justifyContent: 'space-between',
     marginTop: { xs: 2, md: 3 },
   } as const;
-
-  console.log('auth.currentUser', auth.currentUser);
-  console.log('story.content', story.content);
 
   return (
     <Box>
@@ -121,7 +137,18 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                     </Typography>
                     <Box sx={cardsContainerStyle}>
                       {week.sessions.map((session: any) => {
-                        return <SessionCard key={session.id} session={session} />;
+                        const sessionProgress = sessionsStarted.includes(session.id)
+                          ? PROGRESS_STATUS.STARTED
+                          : sessionsCompleted.includes(session.id)
+                          ? PROGRESS_STATUS.COMPLETED
+                          : null;
+                        return (
+                          <SessionCard
+                            key={session.id}
+                            session={session}
+                            sessionProgress={sessionProgress}
+                          />
+                        );
                       })}
                     </Box>
                   </Box>
@@ -145,7 +172,6 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}`, sbParams);
-  console.log(data);
 
   return {
     props: {

@@ -1,3 +1,4 @@
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -13,10 +14,12 @@ import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { PROGRESS_STATUS } from '../constants/enums';
 import { rowStyle } from '../styles/common';
 
 interface SessionCardProps {
   session: StoryData;
+  sessionProgress: PROGRESS_STATUS | null;
 }
 
 const cardStyle = {
@@ -47,7 +50,7 @@ const rowStyles = {
 } as const;
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session } = props;
+  const { session, sessionProgress } = props;
   const t = useTranslations('Courses');
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -59,7 +62,12 @@ const SessionCard = (props: SessionCardProps) => {
       <CardActionArea href={`/${session.full_slug}`}>
         <CardContent sx={cardContentStyle}>
           <Box sx={{ ...rowStyles, mb: 1 }}>
-            <DonutLargeIcon color="error"></DonutLargeIcon>
+            {sessionProgress === PROGRESS_STATUS.STARTED && (
+              <DonutLargeIcon color="error"></DonutLargeIcon>
+            )}
+            {sessionProgress === PROGRESS_STATUS.COMPLETED && (
+              <CheckCircleIcon color="error"></CheckCircleIcon>
+            )}
             <Typography key={session.slug} component="h3" variant="h3">
               {session.content.name}
             </Typography>

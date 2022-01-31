@@ -16,3 +16,9 @@ export enum PARTNER_ACCESS_CODE_STATUS {
   ALREADY_IN_USE = 'ALREADY_IN_USE',
   CODE_EXPIRED = 'CODE_EXPIRED',
 }
+
+export enum PROGRESS_STATUS {
+  STARTED = 'started',
+  COMPLETED = 'completed',
+  NOT_STARTED = 'not started',
+}
