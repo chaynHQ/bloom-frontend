@@ -47,7 +47,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     const token = await auth.currentUser?.getIdToken(true);
 
     if (token) {
-      await delay(200); // allow time for new token to update in state
+      // allow time for new token to update in state
+      await delay(200);
       // retry the initial query
       result = await baseQuery(args, api, extraOptions);
     }

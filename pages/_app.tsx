@@ -45,6 +45,8 @@ function MyApp(props: MyAppProps) {
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
+    // Add listener for new firebase auth token, updating it in state to be used in request headers
+    // Required for restoring user state following app reload or revisiting site
     auth.onIdTokenChanged(async function (user) {
       const token = await user?.getIdToken();
 

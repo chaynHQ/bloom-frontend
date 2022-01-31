@@ -6,7 +6,7 @@ import { RootState } from '../app/store';
 import Crisp from '../components/Crisp';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
-import { useAppDispatch, useTypedSelector } from '../hooks/store';
+import { useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from './errorMessage';
 import logEvent, { getEventUserData } from './logEvent';
 
@@ -15,6 +15,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [getUser] = useGetUserMutation();
 
   const loadingContainerStyle = {
     display: 'flex',
@@ -23,10 +24,8 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     alignItems: 'center',
   } as const;
 
-  const [getUser] = useGetUserMutation();
-  const dispatch: any = useAppDispatch();
-
   useEffect(() => {
+    // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
       logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
@@ -50,6 +49,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
 
     if (user.id) {
+      // User already authenticated and loaded
       setVerified(true);
       return;
     }
@@ -59,6 +59,8 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       return;
     }
 
+    // User firebase token exists but user data doesn't, so reload user data
+    // Handles restoring user data on app reload or revisiting the site
     setLoading(true);
     callGetUser();
   }, [getUser, router, user, loading]);
