@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../app/api';
-import { setToken } from '../app/userSlice';
+import { setUserToken } from '../app/userSlice';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
@@ -55,7 +55,7 @@ const LoginForm = () => {
         const token = await userCredential.user?.getIdToken();
 
         if (token) {
-          await dispatch(setToken(token));
+          await dispatch(setUserToken(token));
         }
 
         const userResponse = await getUser('');

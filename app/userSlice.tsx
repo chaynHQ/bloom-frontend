@@ -3,6 +3,8 @@ import { LANGUAGES } from '../constants/enums';
 import { api } from './api';
 import type { RootState } from './store';
 
+const lodashMerge = require('lodash/merge');
+
 export interface User {
   loading: boolean;
   token: string | null;
@@ -38,25 +40,25 @@ const slice = createSlice({
     clearUserSlice: (state) => {
       state = initialState;
     },
-    setToken(state, action: PayloadAction<string>) {
+    setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
+    setUserLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
   },
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.user;
+      return lodashMerge({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.user;
+      return lodashMerge({}, state, payload.user);
     });
   },
 });
 
 const { actions, reducer } = slice;
-export const { clearUserSlice, setToken, setLoading } = actions;
+export const { clearUserSlice, setUserToken, setUserLoading } = actions;
 export const selectCurrentUser = (state: RootState) => state.user;
 export default reducer;

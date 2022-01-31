@@ -14,6 +14,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const loadingContainerStyle = {
     display: 'flex',
@@ -27,7 +28,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     async function callGetUser() {
-      console.log('authgruard callGetUser');
       logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
 
@@ -42,14 +42,15 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
         router.replace('/auth/login');
       }
+      setLoading(false);
+    }
+
+    if (loading || user.loading) {
+      return;
     }
 
     if (user.id) {
       setVerified(true);
-      return;
-    }
-
-    if (user.loading) {
       return;
     }
 
@@ -58,10 +59,11 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       return;
     }
 
+    setLoading(true);
     callGetUser();
-  }, [getUser, router, user]);
+  }, [getUser, router, user, loading]);
 
-  if (user.loading || !verified) {
+  if (!verified) {
     return (
       <Container sx={loadingContainerStyle}>
         <CircularProgress color="error" />

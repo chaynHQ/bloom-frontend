@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { wrapper } from '../app/store';
-import { setLoading, setToken } from '../app/userSlice';
+import { setUserLoading, setUserToken } from '../app/userSlice';
 import Footer from '../components/Footer';
 import LeaveSiteButton from '../components/LeaveSiteButton';
 import TopBar from '../components/TopBar';
@@ -45,14 +45,13 @@ function MyApp(props: MyAppProps) {
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
-    auth.onAuthStateChanged(async function (user) {
-      if (user) {
-        // Gets current (or refreshed if expired) firebase token
-        const token = await user.getIdToken();
-        await dispatch(setToken(token));
-      }
+    auth.onIdTokenChanged(async function (user) {
+      const token = await user?.getIdToken();
 
-      dispatch(setLoading(false));
+      if (token) {
+        await dispatch(setUserToken(token));
+      }
+      dispatch(setUserLoading(false));
     });
   }, [dispatch]);
 

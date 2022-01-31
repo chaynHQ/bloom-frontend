@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
-import { setToken } from '../app/userSlice';
+import { setUserToken } from '../app/userSlice';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
@@ -99,7 +99,7 @@ const RegisterForm = () => {
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         if (userCredential.user) {
-          await dispatch(setToken(userCredential.user.refreshToken));
+          await dispatch(setUserToken(userCredential.user.refreshToken));
         }
         return userCredential.user;
       })
