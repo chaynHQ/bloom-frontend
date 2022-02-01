@@ -13,9 +13,10 @@ import Link from '../../components/Link';
 import SessionCard from '../../components/SessionCard';
 import Video from '../../components/Video';
 import { PROGRESS_STATUS } from '../../constants/enums';
+import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
-import { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
 
 interface Props {
@@ -36,6 +37,15 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   );
   const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
   const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
+
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, {
+      ...eventUserData,
+      course_name: story.content.name,
+      course_id: story.id,
+      course_user_progress: courseProgress,
+    });
+  });
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
