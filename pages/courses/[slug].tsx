@@ -85,8 +85,8 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
-    imageSrc: story.content.image_with_background.filename,
-    translatedImageAlt: story.content.image._with_backgroundalt,
+    imageSrc: story.content.image_with_background?.filename,
+    translatedImageAlt: story.content.image_with_background?.alt,
   };
 
   const containerStyle = {
@@ -104,17 +104,17 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     ...rowStyle,
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    gap: 4,
   } as const;
 
   const sessionsContainerStyle = {
-    marginTop: 4,
+    marginTop: 6,
   } as const;
 
   const cardsContainerStyle = {
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },
     justifyContent: 'space-between',
-    marginTop: { xs: 2, md: 3 },
   } as const;
 
   const imageContainerStyle = {
@@ -150,7 +150,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   return (
     <Box>
       <Head>
-        <title>{t('title')}</title>
+        <title>{story.content.name}</title>
       </Head>
       {incorrectAccess ? (
         <IncorrectAccess />
@@ -181,7 +181,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
               {story.content.weeks.map((week: any) => {
                 return (
                   <Box mb={6} key={week.name.split(':')[0]}>
-                    <Typography key={week.name} component="h2" variant="h2">
+                    <Typography mb={{ xs: 0, md: 3.5 }} key={week.name} component="h2" variant="h2">
                       {week.name}
                     </Typography>
                     <Box sx={cardsContainerStyle}>

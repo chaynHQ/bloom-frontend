@@ -26,19 +26,20 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
-  paddingTop: 12.5,
+  paddingTop: 13.5,
+  gap: '30px',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 210 },
-  height: { xs: 150, md: 210 },
-  marginLeft: { xs: 'auto', md: 5 },
+  width: { xs: 180, md: 210 },
+  height: { xs: 180, md: 210 },
+  marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: 'auto', md: 0 },
 } as const;
 
 const textContainerStyle = {
-  maxWidth: { xs: '100%', md: '55%' },
+  maxWidth: 600,
   width: { xs: '100%', md: 'auto' },
 } as const;
 
