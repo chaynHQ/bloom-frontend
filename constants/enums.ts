@@ -18,7 +18,7 @@ export enum PARTNER_ACCESS_CODE_STATUS {
 }
 
 export enum PROGRESS_STATUS {
-  STARTED = 'started',
-  COMPLETED = 'completed',
-  NOT_STARTED = 'not started',
+  STARTED = 'Started',
+  COMPLETED = 'Completed',
+  NOT_STARTED = 'Not started',
 }

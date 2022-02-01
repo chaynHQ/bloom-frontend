@@ -85,8 +85,8 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
-    imageSrc: story.content.image.filename,
-    translatedImageAlt: story.content.image.alt,
+    imageSrc: story.content.image_with_background.filename,
+    translatedImageAlt: story.content.image._with_backgroundalt,
   };
 
   const containerStyle = {

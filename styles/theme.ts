@@ -40,6 +40,7 @@ let theme = createTheme({
     h3: {
       fontSize: '1.375rem',
       marginBottom: '1rem',
+      lineHeight: 1.4,
     },
     h4: {
       fontSize: '1rem',

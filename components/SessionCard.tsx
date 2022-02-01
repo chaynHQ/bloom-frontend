@@ -61,18 +61,18 @@ const SessionCard = (props: SessionCardProps) => {
     <Card sx={cardStyle} key={session.id}>
       <CardActionArea href={`/${session.full_slug}`}>
         <CardContent sx={cardContentStyle}>
-          <Box sx={{ ...rowStyles, mb: 1 }}>
+          <Box sx={{ ...rowStyles }}>
             {sessionProgress === PROGRESS_STATUS.STARTED && (
               <DonutLargeIcon color="error"></DonutLargeIcon>
             )}
             {sessionProgress === PROGRESS_STATUS.COMPLETED && (
               <CheckCircleIcon color="error"></CheckCircleIcon>
             )}
-            <Typography key={session.slug} component="h3" variant="h3">
+            <Typography component="h3" variant="h3">
               {session.content.name}
             </Typography>
           </Box>
-          <Typography key={session.slug} component="p" variant="body1">
+          <Typography component="p" variant="body1">
             Session 1
           </Typography>
         </CardContent>
