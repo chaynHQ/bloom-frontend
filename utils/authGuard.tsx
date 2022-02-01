@@ -12,9 +12,10 @@ import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
-  const [verified, setVerified] = useState(false);
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
+  const [verified, setVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [getUser] = useGetUserMutation();
 
   const loadingContainerStyle = {
     display: 'flex',
@@ -24,6 +25,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   } as const;
 
   useEffect(() => {
+    // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
       logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
@@ -37,25 +39,33 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        localStorage.removeItem('accessToken');
         router.replace('/auth/login');
       }
+      setLoading(false);
+    }
+
+    if (loading || user.loading) {
+      return;
     }
 
     if (user.id) {
+      // User already authenticated and loaded
       setVerified(true);
       return;
     }
 
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
+    if (!user.token) {
       router.replace('/auth/login');
-    } else {
-      callGetUser();
+      return;
     }
-  }, [getUser, router, user]);
 
-  if (!verified || !user.id || getUserIsLoading) {
+    // User firebase token exists but user data doesn't, so reload user data
+    // Handles restoring user data on app reload or revisiting the site
+    setLoading(true);
+    callGetUser();
+  }, [getUser, router, user, loading]);
+
+  if (!verified) {
     return (
       <Container sx={loadingContainerStyle}>
         <CircularProgress color="error" />

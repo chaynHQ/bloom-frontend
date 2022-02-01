@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
+import { setUserToken } from '../app/userSlice';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
@@ -24,6 +25,7 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../constants/events';
+import { useAppDispatch } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
@@ -53,6 +55,7 @@ const RegisterForm = () => {
 
   const [createUser, { isLoading: createIsLoading }] = useAddUserMutation();
   const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
+  const dispatch: any = useAppDispatch();
 
   const validateAccessCode = async () => {
     logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: 'bumble' });
@@ -95,12 +98,10 @@ const RegisterForm = () => {
     const firebaseUser = await auth
       .createUserWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
-        const user = userCredential.user;
-        const token = await user?.getIdToken();
-        if (token) {
-          localStorage.setItem('accessToken', token);
+        if (userCredential.user) {
+          await dispatch(setUserToken(userCredential.user.refreshToken));
         }
-        return user;
+        return userCredential.user;
       })
       .catch((error) => {
         const errorCode = error.code;
