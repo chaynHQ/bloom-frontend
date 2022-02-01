@@ -5,6 +5,10 @@
     "courseDetail": {
       "introductionTitle": "Course introduction",
       "introductionDescription": "Watch the introduction video or read the <transcriptLink>transcript</transcriptLink>"
+    },
+    "accessGuard": {
+      "title": "Course content not available",
+      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
     }
   }
 }

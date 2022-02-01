@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { Course } from '../../app/coursesSlice';
@@ -15,6 +16,7 @@ import Video from '../../components/Video';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
@@ -91,6 +93,13 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     backgroundColor: 'secondary.light',
   } as const;
 
+  const accessContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    justifyContent: 'center',
+  } as const;
+
   const introductionContainerStyle = {
     ...rowStyle,
     flexWrap: 'wrap',
@@ -108,13 +117,43 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     marginTop: { xs: 2, md: 3 },
   } as const;
 
+  const imageContainerStyle = {
+    position: 'relative',
+    width: { xs: 150, md: 210 },
+    height: { xs: 150, md: 210 },
+    marginBottom: 4,
+  } as const;
+
+  const IncorrectAccess = () => {
+    return (
+      <Container sx={accessContainerStyle}>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={tS('alt.personTea')}
+            src={illustrationTeaPeach}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+        <Typography variant="h2" component="h2" mb={2}>
+          {t('accessGuard.title')}
+        </Typography>
+        <Typography variant="body1" component="p" mb={2}>
+          {t.rich('accessGuard.introduction', {
+            contactLink: (children) => <Link href="/courses">{children}</Link>,
+          })}
+        </Typography>
+      </Container>
+    );
+  };
+
   return (
     <Box>
       <Head>
         <title>{t('title')}</title>
       </Head>
       {incorrectAccess ? (
-        <Container sx={containerStyle}></Container>
+        <IncorrectAccess />
       ) : (
         <Box>
           <Header
