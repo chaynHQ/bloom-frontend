@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../app/api';
+import { setUserToken } from '../app/userSlice';
 import Link from '../components/Link';
 import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
@@ -18,6 +19,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
 } from '../constants/events';
+import { useAppDispatch } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
@@ -37,6 +39,7 @@ const LoginForm = () => {
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
+  const dispatch: any = useAppDispatch();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,14 +49,14 @@ const LoginForm = () => {
     auth
       .signInWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
-        const user = userCredential.user;
-        const token = await user?.getIdToken(true);
-
-        if (token) {
-          localStorage.setItem('accessToken', token);
-        }
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_USER_REQUEST);
+
+        const token = await userCredential.user?.getIdToken();
+
+        if (token) {
+          await dispatch(setUserToken(token));
+        }
 
         const userResponse = await getUser('');
 
