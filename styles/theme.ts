@@ -198,6 +198,18 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiCardActionArea: {
+      styleOverrides: {
+        root: {
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.primary.main,
+          },
+        },
+        focusHighlight: {
+          backgroundColor: theme.palette.primary.dark,
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
