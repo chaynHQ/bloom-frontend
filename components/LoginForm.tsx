@@ -47,7 +47,8 @@ const LoginForm = () => {
       .signInWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        const token = await user?.getIdToken();
+        const token = await user?.getIdToken(true);
+
         if (token) {
           localStorage.setItem('accessToken', token);
         }
@@ -61,7 +62,7 @@ const LoginForm = () => {
           if (userResponse.data.partnerAdmin?.id) {
             router.push('/partner-admin/create-access-code');
           } else {
-            router.push('/therapy/book-session');
+            router.push('/courses');
           }
         }
         if ('error' in userResponse) {

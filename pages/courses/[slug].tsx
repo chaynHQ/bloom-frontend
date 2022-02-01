@@ -4,13 +4,21 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import Header from '../../components/Header';
+import Link from '../../components/Link';
+import SessionCard from '../../components/SessionCard';
+import Video from '../../components/Video';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
-import { getEventUserData } from '../../utils/logEvent';
+import { rowStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
 
 interface Props {
@@ -22,49 +30,183 @@ interface Props {
 const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
+
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
+    PROGRESS_STATUS.NOT_STARTED,
+  );
+  const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
+  const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, {
+      ...eventUserData,
+      course_name: story.content.name,
+      course_id: story.id,
+      course_user_progress: courseProgress,
+    });
+  });
+
+  useEffect(() => {
+    const storyPartners = story.content.included_for_partners;
+
+    if (!partnerAccesses && storyPartners.includes('Public')) {
+      setIncorrectAccess(false);
+    }
+
+    partnerAccesses.map((partnerAccess) => {
+      if (storyPartners.includes(partnerAccess.partner.name)) {
+        setIncorrectAccess(false);
+      }
+    });
+
+    const userCourse = courses.find(function (course: Course) {
+      return Number(course.storyblokId) === story.id;
+    });
+
+    if (userCourse) {
+      let courseSessionsStarted: Array<number> = [];
+      let courseSessionsCompleted: Array<number> = [];
+      userCourse.sessions.map((session) => {
+        if (session.completed) {
+          courseSessionsCompleted.push(Number(session.storyblokId));
+        } else {
+          courseSessionsStarted.push(Number(session.storyblokId));
+        }
+      });
+      setCourseProgress(userCourse.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED);
+      setSessionsStarted(courseSessionsStarted);
+      setSessionsCompleted(courseSessionsCompleted);
+    }
+  }, [partnerAccesses, story.content.included_for_partners, courses, story.id]);
 
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    imageSrc: story.content.image_with_background.filename,
+    translatedImageAlt: story.content.image._with_backgroundalt,
   };
 
   const containerStyle = {
     backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    // ...rowStyle,
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-between',
   } as const;
+
+  const accessContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    justifyContent: 'center',
+  } as const;
+
+  const introductionContainerStyle = {
+    ...rowStyle,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  } as const;
+
+  const sessionsContainerStyle = {
+    marginTop: 4,
+  } as const;
+
+  const cardsContainerStyle = {
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
+    justifyContent: 'space-between',
+    marginTop: { xs: 2, md: 3 },
+  } as const;
+
+  const imageContainerStyle = {
+    position: 'relative',
+    width: { xs: 150, md: 210 },
+    height: { xs: 150, md: 210 },
+    marginBottom: 4,
+  } as const;
+
+  const IncorrectAccess = () => {
+    return (
+      <Container sx={accessContainerStyle}>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={tS('alt.personTea')}
+            src={illustrationTeaPeach}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+        <Typography variant="h2" component="h2" mb={2}>
+          {t('accessGuard.title')}
+        </Typography>
+        <Typography variant="body1" component="p" mb={2}>
+          {t.rich('accessGuard.introduction', {
+            contactLink: (children) => <Link href="/courses">{children}</Link>,
+          })}
+        </Typography>
+      </Container>
+    );
+  };
 
   return (
     <Box>
       <Head>
         <title>{t('title')}</title>
       </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
-      />
-      <Container sx={containerStyle}>
-        {story.content.weeks.map((week: any) => {
-          return (
-            <Box mb={3} key={week.name.split(':')[0]}>
-              <Typography key={week.name}>{week.name}</Typography>
-              {week.sessions.map((session: any) => {
-                return <Typography key={session.slug}>{session.content.name}</Typography>;
+      {incorrectAccess ? (
+        <IncorrectAccess />
+      ) : (
+        <Box>
+          <Header
+            title={headerProps.title}
+            introduction={headerProps.introduction}
+            imageSrc={headerProps.imageSrc}
+            translatedImageAlt={headerProps.translatedImageAlt}
+          />
+          <Container sx={containerStyle}>
+            <Box sx={introductionContainerStyle}>
+              <Box>
+                <Typography component="h2" variant="h2">
+                  {t('courseDetail.introductionTitle')}
+                </Typography>
+                <Typography component="p" variant="body1">
+                  {t.rich('courseDetail.introductionDescription', {
+                    transcriptLink: (children) => <Link href="#">{children}</Link>,
+                  })}
+                </Typography>
+              </Box>
+              <Video url={story.content.video.url} width={{ xs: '100%', sm: '70%', md: '55%' }} />
+            </Box>
+
+            <Box sx={sessionsContainerStyle}>
+              {story.content.weeks.map((week: any) => {
+                return (
+                  <Box mb={6} key={week.name.split(':')[0]}>
+                    <Typography key={week.name} component="h2" variant="h2">
+                      {week.name}
+                    </Typography>
+                    <Box sx={cardsContainerStyle}>
+                      {week.sessions.map((session: any) => {
+                        const sessionProgress = sessionsStarted.includes(session.id)
+                          ? PROGRESS_STATUS.STARTED
+                          : sessionsCompleted.includes(session.id)
+                          ? PROGRESS_STATUS.COMPLETED
+                          : null;
+                        return (
+                          <SessionCard
+                            key={session.id}
+                            session={session}
+                            sessionProgress={sessionProgress}
+                          />
+                        );
+                      })}
+                    </Box>
+                  </Box>
+                );
               })}
             </Box>
-          );
-        })}
-      </Container>
+          </Container>
+        </Box>
+      )}
     </Box>
   );
 };
@@ -79,7 +221,6 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}`, sbParams);
-  console.log(data);
 
   return {
     props: {

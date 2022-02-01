@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../../app/store';
 import Header from '../../../components/Header';
@@ -12,7 +12,7 @@ import { useTypedSelector } from '../../../hooks/store';
 import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../../styles/common';
 import { getEventUserData } from '../../../utils/logEvent';
-import Storyblok, { useStoryblok } from '../../../utils/storyblok';
+import Storyblok from '../../../utils/storyblok';
 
 interface Props {
   story: StoryData;
@@ -26,11 +26,21 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
   const tS = useTranslations('Shared');
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
 
-  const storyblokEnableBridge = preview;
-  story = useStoryblok(story, storyblokEnableBridge, locale);
+  useEffect(() => {
+    const coursePartners = story.content.course.content.included_for_partners;
 
-  useEffect(() => {}, []);
+    if (!partnerAccesses && coursePartners.includes('Public')) {
+      setIncorrectAccess(false);
+    }
+
+    partnerAccesses.map((partnerAccess) => {
+      if (coursePartners.includes(partnerAccess.partner.name)) {
+        setIncorrectAccess(false);
+      }
+    });
+  }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   const headerProps = {
     title: story.content.name,
@@ -52,13 +62,19 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
       <Head>
         <title>{story.content.name}</title>
       </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
-      />
-      <Container sx={containerStyle}></Container>
+      {incorrectAccess ? (
+        <Container sx={containerStyle}></Container>
+      ) : (
+        <Box>
+          <Header
+            title={headerProps.title}
+            introduction={headerProps.introduction}
+            imageSrc={headerProps.imageSrc}
+            imageAlt={headerProps.imageAlt}
+          />
+          <Container sx={containerStyle}></Container>
+        </Box>
+      )}
     </Box>
   );
 };
@@ -69,6 +85,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
 
   let sbParams = {
+    resolve_relations: 'Session.course',
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
   };

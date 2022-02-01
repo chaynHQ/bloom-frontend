@@ -4,22 +4,22 @@ import { api } from './api';
 import type { RootState } from './store';
 
 export interface Session {
-  id?: string | null;
-  name?: string | null;
-  slug?: string | null;
-  storyblokId?: string | null;
-  status?: STORYBLOK_STORY_STATUS_ENUM | null;
-  completed?: string | null;
+  id: string;
+  name: string;
+  slug: string;
+  storyblokId: number;
+  status: STORYBLOK_STORY_STATUS_ENUM;
+  completed: string;
 }
 
 export interface Course {
-  id: string | null;
-  name: string | null;
-  slug: string | null;
-  status: STORYBLOK_STORY_STATUS_ENUM | null;
-  storyblokId: string | null;
-  completed: boolean | null;
-  session: Session[];
+  id: string;
+  name: string;
+  slug: string;
+  status: STORYBLOK_STORY_STATUS_ENUM;
+  storyblokId: number;
+  completed: boolean;
+  sessions: Session[];
 }
 
 export interface Courses extends Array<Course> {}

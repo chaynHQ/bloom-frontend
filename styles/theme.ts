@@ -34,12 +34,13 @@ let theme = createTheme({
     h2: {
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '1.875rem',
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: '1rem',
     },
     h3: {
-      fontSize: '1.5rem',
+      fontSize: '1.375rem',
       marginBottom: '1rem',
+      lineHeight: 1.4,
     },
     h4: {
       fontSize: '1rem',
@@ -192,16 +193,21 @@ theme = createTheme(theme, {
         root: {
           padding: 20,
 
-          ':last-child': {
-            padding: 20,
-          },
           [theme.breakpoints.up('md')]: {
             padding: 40,
-
-            ':last-child': {
-              padding: 40,
-            },
           },
+        },
+      },
+    },
+    MuiCardActionArea: {
+      styleOverrides: {
+        root: {
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.primary.main,
+          },
+        },
+        focusHighlight: {
+          backgroundColor: theme.palette.primary.dark,
         },
       },
     },
