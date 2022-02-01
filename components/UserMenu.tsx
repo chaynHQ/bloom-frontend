@@ -24,7 +24,6 @@ export default function UserMenu() {
   };
 
   const logout = async () => {
-    localStorage.removeItem('accessToken');
     await clearStore();
     auth.signOut();
     router.push('/auth/login');

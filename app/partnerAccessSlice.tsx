@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { api } from './api';
+import { Partner } from './partnerSlice';
 import type { RootState } from './store';
 
 export interface PartnerAccess {
@@ -10,40 +11,35 @@ export interface PartnerAccess {
   accessCode: string | null;
   therapySessionsRemaining: number | null;
   therapySessionsRedeemed: number | null;
+  partner: Partner;
 }
 
-const initialState: PartnerAccess = {
-  id: null,
-  activatedAt: null,
-  featureLiveChat: null,
-  featureTherapy: null,
-  accessCode: null,
-  therapySessionsRemaining: null,
-  therapySessionsRedeemed: null,
-};
+export interface PartnerAccesses extends Array<PartnerAccess> {}
+
+const initialState: PartnerAccesses = [];
 
 const slice = createSlice({
-  name: 'partnerAccess',
+  name: 'partnerAccesses',
   initialState: initialState,
   reducers: {
-    clearPartnerAccessSlice: (state) => {
+    clearPartnerAccessesSlice: (state) => {
       state = initialState;
     },
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
-      state = payload;
+      state.push(payload);
     });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      return payload.partnerAccesses;
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      return payload.partnerAccesses;
     });
   },
 });
 
 const { actions, reducer } = slice;
-export const { clearPartnerAccessSlice } = actions;
-export const selectPartnerAccess = (state: RootState) => state.partnerAccess;
+export const { clearPartnerAccessesSlice } = actions;
+export const selectPartnerAccesses = (state: RootState) => state.partnerAccesses;
 export default reducer;

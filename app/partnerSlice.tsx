@@ -25,11 +25,8 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partner;
-    });
-    builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partner;
+    builder.addMatcher(api.endpoints.getPartner.matchFulfilled, (state, { payload }) => {
+      return payload;
     });
   },
 });

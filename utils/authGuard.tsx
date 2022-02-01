@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
+import Crisp from '../components/Crisp';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
@@ -11,11 +12,20 @@ import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
-  const { user } = useTypedSelector((state: RootState) => state);
-  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
+  const [loading, setLoading] = useState(false);
+  const [getUser] = useGetUserMutation();
+
+  const loadingContainerStyle = {
+    display: 'flex',
+    height: '100vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+  } as const;
 
   useEffect(() => {
+    // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
       logEvent(GET_USER_REQUEST);
       const userResponse = await getUser('');
@@ -29,34 +39,50 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        localStorage.removeItem('accessToken');
         router.replace('/auth/login');
       }
+      setLoading(false);
     }
-    if (user.id) {
-      setVerified(true);
-    }
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      router.replace('/auth/login');
-    } else {
-      callGetUser();
-    }
-  }, [getUser, router, user.id]);
 
-  if (!verified || getUserIsLoading) {
+    if (loading || user.loading) {
+      return;
+    }
+
+    if (user.id) {
+      // User already authenticated and loaded
+      setVerified(true);
+      return;
+    }
+
+    if (!user.token) {
+      router.replace('/auth/login');
+      return;
+    }
+
+    // User firebase token exists but user data doesn't, so reload user data
+    // Handles restoring user data on app reload or revisiting the site
+    setLoading(true);
+    callGetUser();
+  }, [getUser, router, user, loading]);
+
+  if (!verified) {
     return (
-      <Container
-        sx={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}
-      >
+      <Container sx={loadingContainerStyle}>
         <CircularProgress color="error" />
       </Container>
     );
   }
 
-  if (verified) {
-    return <>{children}</>;
-  } else {
-    return null;
-  }
+  const liveChatAccess = partnerAccesses.find(function (partnerAccess) {
+    return partnerAccess.featureLiveChat === true;
+  });
+
+  return (
+    <>
+      {liveChatAccess && process.env.NEXT_PUBLIC_ENV !== 'production' && (
+        <Crisp email={user.email} />
+      )}
+      {children}
+    </>
+  );
 }

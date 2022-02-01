@@ -1,6 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { PARTNER_ACCESS_CODE_STATUS } from '../constants/responses';
-import { PartnerAccess } from './partnerAccessSlice';
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
+import { auth } from '../config/firebase';
+import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
+import { delay } from '../utils/delay';
+import { Courses } from './coursesSlice';
+import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner } from './partnerSlice';
 import { RootState } from './store';
@@ -8,22 +17,47 @@ import { User } from './userSlice';
 
 export interface GetUserResponse {
   user: User;
-  partnerAccess: PartnerAccess;
+  partnerAccesses: PartnerAccesses;
   partnerAdmin: PartnerAdmin;
-  partner: Partner;
+  courses: Courses;
 }
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const user = (getState() as RootState).user;
+    const token = user.token;
+
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions,
+) => {
+  let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && result.error.status === 401) {
+    // force reset token
+    const token = await auth.currentUser?.getIdToken(true);
+
+    if (token) {
+      // allow time for new token to update in state
+      await delay(200);
+      // retry the initial query
+      result = await baseQuery(args, api, extraOptions);
+    }
+  }
+  return result;
+};
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).user.token || localStorage.getItem('accessToken');
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getUser: builder.mutation<GetUserResponse, string>({
       query(body) {
@@ -42,6 +76,9 @@ export const api = createApi({
           body,
         };
       },
+    }),
+    getPartner: builder.query<Partner, string>({
+      query: (name) => ({ url: `partner/${name}` }),
     }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
