@@ -24,7 +24,7 @@ interface CourseCardProps {
 
 const cardStyle = {
   alignSelf: 'flex-start',
-  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  width: '100%',
   backgroundColor: 'background.default',
 } as const;
 

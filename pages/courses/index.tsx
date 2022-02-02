@@ -32,10 +32,16 @@ const cardsContainerStyle = {
   marginTop: { xs: 2, md: 3 },
 } as const;
 
+const cardColumnStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  gap: 4,
+} as const;
+
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
   const t = useTranslations('Courses');
-  const tS = useTranslations('Shared');
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
@@ -55,18 +61,18 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       setLoadedCourses(coursesWithAccess);
     }
 
-    let partners: Array<string> = [];
+    let userPartners: Array<string> = [];
 
     partnerAccesses.map((partnerAccess) => {
       if (partnerAccess.partner.name) {
-        partners.push(partnerAccess.partner.name);
+        userPartners.push(partnerAccess.partner.name);
       }
     });
 
     const coursesWithAccess = stories.filter((course) =>
-      partners.some((partner) => course.content.included_for_partners.includes(partner)),
+      userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
     );
-    setLoadedCourses(coursesWithAccess);
+    setLoadedCourses(coursesWithAccess.concat(coursesWithAccess));
 
     if (courses) {
       let courseCoursesStarted: Array<number> = [];
@@ -81,7 +87,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, stories]);
+  }, [partnerAccesses, stories, courses]);
 
   const headerProps = {
     title: t.rich('title'),
@@ -103,14 +109,30 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         <Box sx={cardsContainerStyle}>
-          {loadedCourses.map((course) => {
-            const courseProgress = coursesStarted.includes(course.id)
-              ? PROGRESS_STATUS.STARTED
-              : coursesCompleted.includes(course.id)
-              ? PROGRESS_STATUS.COMPLETED
-              : null;
-            return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
-          })}
+          <Box sx={cardColumnStyle}>
+            {loadedCourses.map((course, index) => {
+              if (index % 2 === 0) return;
+
+              const courseProgress = coursesStarted.includes(course.id)
+                ? PROGRESS_STATUS.STARTED
+                : coursesCompleted.includes(course.id)
+                ? PROGRESS_STATUS.COMPLETED
+                : null;
+              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
+            })}
+          </Box>
+          <Box sx={cardColumnStyle}>
+            {loadedCourses.map((course, index) => {
+              if (index % 2 === 1) return;
+
+              const courseProgress = coursesStarted.includes(course.id)
+                ? PROGRESS_STATUS.STARTED
+                : coursesCompleted.includes(course.id)
+                ? PROGRESS_STATUS.COMPLETED
+                : null;
+              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
+            })}
+          </Box>
         </Box>
       </Container>
     </Box>
