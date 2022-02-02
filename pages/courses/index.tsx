@@ -1,4 +1,3 @@
-import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -7,10 +6,13 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
+import CourseCard from '../../components/CourseCard';
 import Header from '../../components/Header';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
-import { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
 
 interface Props {
@@ -19,13 +21,31 @@ interface Props {
   messages: any;
 }
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+} as const;
+
+const cardsContainerStyle = {
+  display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },
+  justifyContent: 'space-between',
+  marginTop: { xs: 2, md: 3 },
+} as const;
+
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
-
+  const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
+  const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+
+  useEffect(() => {
+    logEvent(COURSE_LIST_VIEWED, {
+      ...eventUserData,
+    });
+  }, []);
 
   useEffect(() => {
     if (!partnerAccesses) {
@@ -47,6 +67,20 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       partners.some((partner) => course.content.included_for_partners.includes(partner)),
     );
     setLoadedCourses(coursesWithAccess);
+
+    if (courses) {
+      let courseCoursesStarted: Array<number> = [];
+      let courseCoursesCompleted: Array<number> = [];
+      courses.map((course) => {
+        if (course.completed) {
+          courseCoursesCompleted.push(Number(course.storyblokId));
+        } else {
+          courseCoursesStarted.push(Number(course.storyblokId));
+        }
+      });
+      setCoursesStarted(courseCoursesStarted);
+      setCoursesCompleted(courseCoursesCompleted);
+    }
   }, [partnerAccesses, stories]);
 
   const headerProps = {
@@ -55,14 +89,6 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
     imageSrc: illustrationTeaPeach,
     imageAlt: 'alt.personTea',
   };
-
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    // ...rowStyle,
-    // flexWrap: 'wrap',
-    // justifyContent: 'space-between',
-  } as const;
 
   return (
     <Box>
@@ -76,19 +102,16 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        {loadedCourses.map((course) => {
-          return (
-            <Card sx={{ marginBottom: 20 }} key={course.content.name}>
-              <CardActionArea href={`/${course.full_slug}`}>
-                <CardContent>
-                  <Typography component="h3" variant="h3">
-                    {course.content.name}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          );
-        })}
+        <Box sx={cardsContainerStyle}>
+          {loadedCourses.map((course) => {
+            const courseProgress = coursesStarted.includes(course.id)
+              ? PROGRESS_STATUS.STARTED
+              : coursesCompleted.includes(course.id)
+              ? PROGRESS_STATUS.COMPLETED
+              : null;
+            return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
+          })}
+        </Box>
       </Container>
     </Box>
   );
