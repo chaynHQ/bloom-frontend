@@ -33,6 +33,7 @@ const cardContentStyle = {
   gap: 2,
   padding: { xs: 2, md: 3 },
   paddingBottom: { xs: 1, md: 1 },
+  minHeight: { xs: 124, md: 136 },
 } as const;
 
 const collapseContentStyle = {
@@ -51,12 +52,6 @@ const rowStyles = {
   gap: 1.5,
 } as const;
 
-const imageContainerStyle = {
-  position: 'relative',
-  width: { xs: 100, md: 100 },
-  height: { xs: 100, md: 100 },
-} as const;
-
 const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -69,15 +64,14 @@ const CourseCard = (props: CourseCardProps) => {
     <Card sx={cardStyle} key={course.id}>
       <CardActionArea href={`/${course.full_slug}`}>
         <CardContent sx={cardContentStyle}>
-          <Box sx={imageContainerStyle}>
-            <Image
-              alt="test"
-              src={course.content.image.filename}
-              layout="fill"
-              objectFit="contain"
-            />
-          </Box>
-          <Box>
+          <Image
+            alt="test"
+            src={course.content.image.filename}
+            width={100}
+            height={100}
+            objectFit="contain"
+          />
+          <Box flex={1}>
             <Typography key={course.slug} component="h3" variant="h3">
               {course.content.name}
             </Typography>

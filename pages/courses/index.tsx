@@ -23,20 +23,21 @@ interface Props {
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
+  paddingTop: { xs: 2, sm: 6 },
 } as const;
 
 const cardsContainerStyle = {
   display: 'flex',
-  flexDirection: { xs: 'column', md: 'row' },
+  flexDirection: 'row',
+  flexWrap: 'wrap',
   justifyContent: 'space-between',
-  marginTop: { xs: 2, md: 3 },
 } as const;
 
 const cardColumnStyle = {
   display: 'flex',
   flexDirection: 'column',
-  width: { xs: '100%', md: 'calc(50% - 1rem)' },
-  gap: 4,
+  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
+  gap: { xs: 0, sm: 2, md: 4 },
 } as const;
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
