@@ -18,7 +18,7 @@ import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { getEventUserData, logEvent } from '../../utils/logEvent';
 import Storyblok from '../../utils/storyblok';
 
 interface Props {
@@ -32,22 +32,18 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const tS = useTranslations('Shared');
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
   const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
-
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, {
-      ...eventUserData,
-      course_name: story.content.name,
-      course_id: story.id,
-      course_user_progress: courseProgress,
-    });
-  });
+  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventData = {
+    ...eventUserData,
+    course_name: story.content.name,
+    course_storyblok_id: story.id,
+  };
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
@@ -80,7 +76,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
       setSessionsStarted(courseSessionsStarted);
       setSessionsCompleted(courseSessionsCompleted);
     }
-  }, [partnerAccesses, story.content.included_for_partners, courses, story.id]);
+  }, [partnerAccesses, story, courses, courseProgress]);
+
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
+  }, []);
 
   const headerProps = {
     title: story.content.name,
@@ -174,7 +174,12 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                   })}
                 </Typography>
               </Box>
-              <Video url={story.content.video.url} width={{ xs: '100%', sm: '70%', md: '55%' }} />
+              <Video
+                url={story.content.video.url}
+                eventData
+                eventPrefix="COURSE_INTRO"
+                width={{ xs: '100%', sm: '70%', md: '55%' }}
+              />
             </Box>
 
             <Box sx={sessionsContainerStyle}>
