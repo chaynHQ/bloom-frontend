@@ -85,6 +85,10 @@ theme = createTheme(theme, {
         root: {
           color: 'inherit',
           textDecorationColor: theme.palette.primary.dark,
+
+          '&.MuiLink-button.MuiTypography-body1': {
+            paddingBottom: '3px',
+          },
         },
       },
     },

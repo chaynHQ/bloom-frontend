@@ -8,7 +8,7 @@ import logEvent from '../utils/logEvent';
 interface VideoProps {
   url: string;
   width?: string | number | ResponsiveStyleValue<string | number>;
-  eventData: {};
+  eventData: any;
   eventPrefix: string;
 }
 

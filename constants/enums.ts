@@ -22,3 +22,8 @@ export enum PROGRESS_STATUS {
   COMPLETED = 'Completed',
   NOT_STARTED = 'Not started',
 }
+
+export enum VIDEO_TYPES {
+  COURSE_INTRO = 'COURSE_INTRO',
+  SESSION = 'SESSION',
+}
