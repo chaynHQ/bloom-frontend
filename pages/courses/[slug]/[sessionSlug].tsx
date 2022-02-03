@@ -1,3 +1,5 @@
+import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
+import { Link as MuiLink, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
@@ -7,11 +9,17 @@ import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../../app/store';
 import Header from '../../../components/Header';
+import SessionContentCard from '../../../components/SessionContentCard';
+import Video from '../../../components/Video';
+import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
 import { LANGUAGES } from '../../../constants/enums';
+import {
+  SESSION_VIDEO_TRANSCRIPT_CLOSED,
+  SESSION_VIDEO_TRANSCRIPT_OPENED,
+} from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
-import { rowStyle } from '../../../styles/common';
-import { getEventUserData } from '../../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import Storyblok from '../../../utils/storyblok';
 
 interface Props {
@@ -21,12 +29,29 @@ interface Props {
   locale: LANGUAGES;
 }
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+} as const;
+
+const cardColumnStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: { xs: 2, md: 4 },
+} as const;
+
 const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
+  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventData = {
+    ...eventUserData,
+    session_name: story.content.name,
+    session_storyblok_id: story.id,
+  };
 
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
@@ -49,13 +74,20 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
     imageAlt: 'alt.personTea',
   };
 
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  } as const;
+  useEffect(() => {
+    if (openTranscriptModal === null) {
+      return;
+    }
+
+    logEvent(
+      openTranscriptModal ? SESSION_VIDEO_TRANSCRIPT_OPENED : SESSION_VIDEO_TRANSCRIPT_CLOSED,
+      {
+        ...eventData,
+        session_name: story.content.name,
+        course_name: story.content.name,
+      },
+    );
+  }, [openTranscriptModal]);
 
   return (
     <Box>
@@ -72,7 +104,39 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
             imageSrc={headerProps.imageSrc}
             imageAlt={headerProps.imageAlt}
           />
-          <Container sx={containerStyle}></Container>
+          <Container sx={containerStyle}>
+            <Box sx={cardColumnStyle}>
+              <SessionContentCard
+                title={t('sessionDetail.videoTitle')}
+                titleIcon={SlowMotionVideoIcon}
+              >
+                <Typography component="p" variant="body1" mb={3}>
+                  {t.rich('sessionDetail.videoDescription', {
+                    transcriptLink: (children) => (
+                      <MuiLink
+                        component="button"
+                        variant="body1"
+                        onClick={() => setOpenTranscriptModal(true)}
+                      >
+                        {children}
+                      </MuiLink>
+                    ),
+                  })}
+                </Typography>
+                <Video
+                  url={story.content.video.url}
+                  eventData={eventData}
+                  eventPrefix="COURSE_INTRO"
+                />
+                <VideoTranscriptModal
+                  videoName={story.content.name}
+                  content={story.content.video_transcript}
+                  setOpenTranscriptModal={setOpenTranscriptModal}
+                  openTranscriptModal={openTranscriptModal}
+                />
+              </SessionContentCard>
+            </Box>
+          </Container>
         </Box>
       )}
     </Box>

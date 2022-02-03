@@ -84,7 +84,7 @@ const SessionCard = (props: SessionCardProps) => {
           onClick={handleExpandClick}
           size="small"
         >
-          <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
+          <KeyboardArrowDownIcon color="error" />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
