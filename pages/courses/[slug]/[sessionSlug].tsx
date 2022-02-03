@@ -139,15 +139,23 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
                   openTranscriptModal={openTranscriptModal}
                 />
               </SessionContentCard>
+
               <SessionContentCard
                 title={t('sessionDetail.activityTitle')}
                 titleIcon={StarBorderIcon}
+                richtextContent
               >
                 <div>{render(story.content.activity)}</div>
               </SessionContentCard>
-              <SessionContentCard title={t('sessionDetail.bonusTitle')} titleIcon={LinkIcon}>
+
+              <SessionContentCard
+                title={t('sessionDetail.bonusTitle')}
+                titleIcon={LinkIcon}
+                richtextContent
+              >
                 <div>{render(story.content.bonus)}</div>
               </SessionContentCard>
+
               <SessionContentCard
                 title={t('sessionDetail.chatTitle')}
                 titleIcon={ChatBubbleOutlineIcon}

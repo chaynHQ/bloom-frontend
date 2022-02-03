@@ -17,6 +17,7 @@ interface SessionContentCardProps {
   title: string;
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
   titleIconSize?: number;
+  richtextContent?: boolean;
 }
 
 const cardStyle = {
@@ -40,7 +41,7 @@ const rowStyles = {
 } as const;
 
 const SessionContentCard = (props: SessionContentCardProps) => {
-  const { children, title, titleIcon, titleIconSize = 28 } = props;
+  const { children, title, titleIcon, titleIconSize = 28, richtextContent = false } = props;
   const t = useTranslations('Courses');
   const TitleIcon = titleIcon;
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -52,6 +53,10 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   const titleIconStyle = {
     width: { xs: 24, md: titleIconSize },
     height: { xs: 24, md: titleIconSize },
+  } as const;
+
+  const collapseContainerStyle = {
+    paddingTop: `${richtextContent ? '0.25rem' : '1.25rem'} !important`,
   } as const;
 
   return (
