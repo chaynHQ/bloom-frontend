@@ -16,6 +16,7 @@ import { LANGUAGES } from '../../../constants/enums';
 import {
   SESSION_VIDEO_TRANSCRIPT_CLOSED,
   SESSION_VIDEO_TRANSCRIPT_OPENED,
+  SESSION_VIEWED,
 } from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
@@ -52,6 +53,12 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
     session_name: story.content.name,
     session_storyblok_id: story.id,
   };
+  const headerProps = {
+    title: story.content.name,
+    introduction: story.content.description,
+    imageSrc: illustrationTeaPeach,
+    imageAlt: 'alt.personTea',
+  };
 
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
@@ -67,13 +74,6 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
     });
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
-  const headerProps = {
-    title: story.content.name,
-    introduction: story.content.description,
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
-  };
-
   useEffect(() => {
     if (openTranscriptModal === null) {
       return;
@@ -88,6 +88,10 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
       },
     );
   }, [openTranscriptModal]);
+
+  useEffect(() => {
+    logEvent(SESSION_VIEWED, eventData);
+  }, []);
 
   return (
     <Box>
@@ -123,11 +127,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
                     ),
                   })}
                 </Typography>
-                <Video
-                  url={story.content.video.url}
-                  eventData={eventData}
-                  eventPrefix="COURSE_INTRO"
-                />
+                <Video url={story.content.video.url} eventData={eventData} eventPrefix="SESSION" />
                 <VideoTranscriptModal
                   videoName={story.content.name}
                   content={story.content.video_transcript}
