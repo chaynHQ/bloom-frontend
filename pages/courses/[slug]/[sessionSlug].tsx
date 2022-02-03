@@ -1,4 +1,7 @@
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import LinkIcon from '@mui/icons-material/Link';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Link as MuiLink, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -7,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { RootState } from '../../../app/store';
 import Header from '../../../components/Header';
 import SessionContentCard from '../../../components/SessionContentCard';
@@ -134,6 +138,24 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
                   setOpenTranscriptModal={setOpenTranscriptModal}
                   openTranscriptModal={openTranscriptModal}
                 />
+              </SessionContentCard>
+              <SessionContentCard
+                title={t('sessionDetail.activityTitle')}
+                titleIcon={StarBorderIcon}
+              >
+                <div>{render(story.content.activity)}</div>
+              </SessionContentCard>
+              <SessionContentCard title={t('sessionDetail.bonusTitle')} titleIcon={LinkIcon}>
+                <div>{render(story.content.bonus)}</div>
+              </SessionContentCard>
+              <SessionContentCard
+                title={t('sessionDetail.chatTitle')}
+                titleIcon={ChatBubbleOutlineIcon}
+                titleIconSize={24}
+              >
+                <Typography component="p" variant="body1">
+                  {t('sessionDetail.chatDescription')}
+                </Typography>
               </SessionContentCard>
             </Box>
           </Container>

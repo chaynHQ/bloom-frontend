@@ -16,6 +16,7 @@ interface SessionContentCardProps {
   children: any;
   title: string;
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+  titleIconSize?: number;
 }
 
 const cardStyle = {
@@ -32,11 +33,6 @@ const collapseContainerStyle = {
   paddingTop: '1.25rem !important',
 } as const;
 
-const titleIconStyle = {
-  width: { xs: 24, md: 28 },
-  height: { xs: 24, md: 28 },
-} as const;
-
 const rowStyles = {
   ...rowStyle,
   alignItems: 'center',
@@ -44,7 +40,7 @@ const rowStyles = {
 } as const;
 
 const SessionContentCard = (props: SessionContentCardProps) => {
-  const { children, title, titleIcon } = props;
+  const { children, title, titleIcon, titleIconSize = 28 } = props;
   const t = useTranslations('Courses');
   const TitleIcon = titleIcon;
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -52,6 +48,11 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const titleIconStyle = {
+    width: { xs: 24, md: titleIconSize },
+    height: { xs: 24, md: titleIconSize },
+  } as const;
 
   return (
     <Card sx={cardStyle} key={''}>
