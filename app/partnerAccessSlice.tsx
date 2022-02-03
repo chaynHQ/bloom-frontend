@@ -28,7 +28,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
-      state.push(payload);
+      return state.concat(payload);
     });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
       return payload.partnerAccesses;
