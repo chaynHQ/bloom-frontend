@@ -3,8 +3,6 @@ import { LANGUAGES } from '../constants/enums';
 import { api } from './api';
 import type { RootState } from './store';
 
-const lodashMerge = require('lodash/merge');
-
 export interface User {
   loading: boolean;
   token: string | null;
@@ -50,10 +48,10 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return lodashMerge({}, state, payload.user);
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return lodashMerge({}, state, payload.user);
+      return Object.assign({}, state, payload.user);
     });
   },
 });
