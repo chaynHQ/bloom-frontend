@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
-import Crisp from '../components/Crisp';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
@@ -73,16 +72,5 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     );
   }
 
-  const liveChatAccess = partnerAccesses.find(function (partnerAccess) {
-    return partnerAccess.featureLiveChat === true;
-  });
-
-  return (
-    <>
-      {liveChatAccess && process.env.NEXT_PUBLIC_ENV !== 'production' && (
-        <Crisp email={user.email} />
-      )}
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

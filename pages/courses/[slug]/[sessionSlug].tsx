@@ -1,8 +1,10 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CircleIcon from '@mui/icons-material/Circle';
 import LinkIcon from '@mui/icons-material/Link';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Link as MuiLink, Typography } from '@mui/material';
+import { Button, Link as MuiLink, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
@@ -12,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RootState } from '../../../app/store';
+import CrispButton from '../../../components/CrispButton';
 import Header from '../../../components/Header';
 import SessionContentCard from '../../../components/SessionContentCard';
 import Video from '../../../components/Video';
@@ -42,7 +45,24 @@ const cardColumnStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: { xs: 2, md: 4 },
+  gap: { xs: 2, md: 3 },
+} as const;
+
+const dotsStyle = {
+  color: 'primary.dark',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: { xs: 1, md: 1.25 },
+} as const;
+
+const dotStyle = {
+  width: { xs: 8, md: 10 },
+  height: { xs: 8, md: 10 },
+} as const;
+
+const crispButtonContainerStyle = {
+  paddingTop: 2.5,
+  paddingBottom: 1,
 } as const;
 
 const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
@@ -50,6 +70,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
   const tS = useTranslations('Shared');
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const eventData = {
@@ -76,6 +97,12 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
         setIncorrectAccess(false);
       }
     });
+
+    setLiveChatAccess(
+      !!partnerAccesses.find(function (partnerAccess) {
+        return partnerAccess.featureLiveChat === true;
+      }),
+    );
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   useEffect(() => {
@@ -96,6 +123,17 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
   }, []);
+
+  const Dots = () => {
+    return (
+      <Box sx={dotsStyle}>
+        <CircleIcon sx={dotStyle} />
+        <CircleIcon sx={dotStyle} />
+      </Box>
+    );
+  };
+
+  const completeSession = () => {};
 
   return (
     <Box>
@@ -139,7 +177,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
                   openTranscriptModal={openTranscriptModal}
                 />
               </SessionContentCard>
-
+              <Dots />
               <SessionContentCard
                 title={t('sessionDetail.activityTitle')}
                 titleIcon={StarBorderIcon}
@@ -147,6 +185,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
               >
                 <div>{render(story.content.activity)}</div>
               </SessionContentCard>
+              <Dots />
 
               <SessionContentCard
                 title={t('sessionDetail.bonusTitle')}
@@ -155,16 +194,38 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
               >
                 <div>{render(story.content.bonus)}</div>
               </SessionContentCard>
+              <Dots />
 
-              <SessionContentCard
-                title={t('sessionDetail.chatTitle')}
-                titleIcon={ChatBubbleOutlineIcon}
-                titleIconSize={24}
+              {liveChatAccess && (
+                <>
+                  <SessionContentCard
+                    title={t('sessionDetail.chatTitle')}
+                    titleIcon={ChatBubbleOutlineIcon}
+                    titleIconSize={24}
+                  >
+                    <Typography component="p" variant="body1">
+                      {t('sessionDetail.chatDescription')}
+                    </Typography>
+                    <Box sx={crispButtonContainerStyle}>
+                      <CrispButton
+                        email={user.email}
+                        eventData={eventData}
+                        buttonText={t('sessionDetail.startChatButton')}
+                      />
+                    </Box>
+                  </SessionContentCard>
+                  <Dots />
+                </>
+              )}
+
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={completeSession}
+                startIcon={<CheckCircleIcon />}
               >
-                <Typography component="p" variant="body1">
-                  {t('sessionDetail.chatDescription')}
-                </Typography>
-              </SessionContentCard>
+                {t('sessionDetail.sessionComplete')}
+              </Button>
             </Box>
           </Container>
         </Box>

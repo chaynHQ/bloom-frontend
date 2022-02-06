@@ -208,6 +208,7 @@ theme = createTheme(theme, {
         root: {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.main,
+            opacity: 0.2,
           },
         },
         focusHighlight: {

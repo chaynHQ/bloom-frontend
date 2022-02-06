@@ -69,7 +69,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     if (userCourse) {
       let courseSessionsStarted: Array<number> = [];
       let courseSessionsCompleted: Array<number> = [];
-      userCourse.sessions.map((session) => {
+      userCourse.sessions?.map((session) => {
         if (session.completed) {
           courseSessionsCompleted.push(Number(session.storyblokId));
         } else {

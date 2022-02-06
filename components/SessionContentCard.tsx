@@ -25,15 +25,6 @@ const cardStyle = {
   backgroundColor: 'background.default',
 } as const;
 
-const titleContainerStyle = {
-  paddingTop: '1.25rem !important',
-  paddingBottom: '1.25rem !important',
-} as const;
-
-const collapseContainerStyle = {
-  paddingTop: '1.25rem !important',
-} as const;
-
 const rowStyles = {
   ...rowStyle,
   alignItems: 'center',
@@ -51,12 +42,18 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   };
 
   const titleIconStyle = {
-    width: { xs: 24, md: titleIconSize },
-    height: { xs: 24, md: titleIconSize },
+    width: { xs: titleIconSize, md: titleIconSize + 4 },
+    height: { xs: titleIconSize, md: titleIconSize + 4 },
   } as const;
 
   const collapseContainerStyle = {
     paddingTop: `${richtextContent ? '0.25rem' : '1.25rem'} !important`,
+  } as const;
+
+  const titleContainerStyle = {
+    paddingTop: '1.25rem !important',
+    paddingBottom: '1.25rem !important',
+    bgcolor: expanded ? 'primary.light' : 'none',
   } as const;
 
   return (

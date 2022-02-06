@@ -12,7 +12,9 @@
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
       "chatTitle": "Reflect with us",
-      "chatDescription": "If you’d like to share your reflections about this session, or there’s something you struggled with whilst completing it, the Bloom team are here to listen. "
+      "chatDescription": "If you’d like to share your reflections about this session, or there’s something you struggled with whilst completing it, the Bloom team are here to listen.",
+      "startChatButton": "Start a chat",
+      "sessionComplete": "Session complete"
     },
     "accessGuard": {
       "title": "Course content not available",
