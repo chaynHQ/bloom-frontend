@@ -13,7 +13,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { useCompleteSessionMutation } from '../../../app/api';
+import { useCompleteSessionMutation, useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import CrispButton from '../../../components/CrispButton';
@@ -27,6 +27,9 @@ import {
   SESSION_COMPLETE_ERROR,
   SESSION_COMPLETE_REQUEST,
   SESSION_COMPLETE_SUCCESS,
+  SESSION_STARTED_ERROR,
+  SESSION_STARTED_REQUEST,
+  SESSION_STARTED_SUCCESS,
   SESSION_VIDEO_TRANSCRIPT_CLOSED,
   SESSION_VIDEO_TRANSCRIPT_OPENED,
   SESSION_VIEWED,
@@ -85,7 +88,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
+  const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [completeSession, { isLoading: completeSessionIsLoading }] = useCompleteSessionMutation();
+  const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
 
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const eventData = {
@@ -141,9 +146,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
   }, [courses, story.content.course.id, story.id]);
 
   useEffect(() => {
-    if (openTranscriptModal === null) {
-      return;
-    }
+    if (openTranscriptModal === null) return;
 
     logEvent(
       openTranscriptModal ? SESSION_VIDEO_TRANSCRIPT_OPENED : SESSION_VIDEO_TRANSCRIPT_CLOSED,
@@ -154,6 +157,40 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
       },
     );
   }, [openTranscriptModal]);
+
+  useEffect(() => {
+    async function callStartSession() {
+      const startSessionResponse = await startSession({
+        storyblokId: story.id.toString(),
+      });
+
+      if ('data' in startSessionResponse) {
+        setSessionProgress(PROGRESS_STATUS.STARTED);
+        logEvent(SESSION_STARTED_SUCCESS, eventData);
+      }
+
+      if ('error' in startSessionResponse) {
+        const error = startSessionResponse.error;
+
+        logEvent(SESSION_STARTED_ERROR, eventData);
+        rollbar.error('Session complete error', error);
+
+        throw error;
+      }
+    }
+
+    if (!videoStarted || sessionProgress !== null) return;
+
+    if (videoStarted) {
+      logEvent(SESSION_STARTED_REQUEST, {
+        ...eventData,
+        session_name: story.content.name,
+        course_name: story.content.name,
+      });
+
+      callStartSession();
+    }
+  }, [videoStarted]);
 
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
@@ -227,7 +264,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                     ),
                   })}
                 </Typography>
-                <Video url={story.content.video.url} eventData={eventData} eventPrefix="SESSION" />
+                <Video
+                  url={story.content.video.url}
+                  setVideoStarted={setVideoStarted}
+                  eventData={eventData}
+                  eventPrefix="SESSION"
+                />
                 <VideoTranscriptModal
                   videoName={story.content.name}
                   content={story.content.video_transcript}
@@ -285,10 +327,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
               >
                 {t('sessionDetail.sessionComplete')}
               </Button>
-              <Typography sx={errorStyle} variant="body1">
-                {t('errors.completeSessionError')}
-              </Typography>
-              {error && <Typography color="error">{error}</Typography>}
+
+              {error && (
+                <Typography sx={errorStyle} variant="body1">
+                  {error}
+                </Typography>
+              )}
             </Box>
           </Container>
         </Box>

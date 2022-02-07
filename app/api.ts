@@ -105,6 +105,15 @@ export const api = createApi({
         };
       },
     }),
+    startSession: builder.mutation<Course, SessionActionPayload>({
+      query(body) {
+        return {
+          url: 'session-user',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
     completeSession: builder.mutation<Course, SessionActionPayload>({
       query(body) {
         return {
@@ -121,6 +130,7 @@ export const {
   useGetUserMutation,
   useAddUserMutation,
   useAddPartnerAccessMutation,
+  useStartSessionMutation,
   useCompleteSessionMutation,
   useValidateCodeMutation,
 } = api;
