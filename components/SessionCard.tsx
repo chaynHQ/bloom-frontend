@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../constants/enums';
@@ -51,7 +50,6 @@ const rowStyles = {
 
 const SessionCard = (props: SessionCardProps) => {
   const { session, sessionProgress } = props;
-  const t = useTranslations('Courses');
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleExpandClick = () => {
@@ -61,13 +59,9 @@ const SessionCard = (props: SessionCardProps) => {
     <Card sx={cardStyle} key={session.id}>
       <CardActionArea href={`/${session.full_slug}`}>
         <CardContent sx={cardContentStyle}>
-          <Box sx={{ ...rowStyles }}>
-            {sessionProgress === PROGRESS_STATUS.STARTED && (
-              <DonutLargeIcon color="error"></DonutLargeIcon>
-            )}
-            {sessionProgress === PROGRESS_STATUS.COMPLETED && (
-              <CheckCircleIcon color="error"></CheckCircleIcon>
-            )}
+          <Box sx={rowStyles}>
+            {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
+            {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
             <Typography component="h3" variant="h3">
               {session.content.name}
             </Typography>

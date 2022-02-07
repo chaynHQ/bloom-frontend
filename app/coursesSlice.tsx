@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { STORYBLOK_STORY_STATUS_ENUM } from '../constants/enums';
 import { api } from './api';
 import type { RootState } from './store';
+import { User } from './userSlice';
 
 export interface Session {
   id: string;
@@ -20,6 +21,24 @@ export interface Course {
   storyblokId: number;
   completed: boolean;
   sessions: Session[];
+}
+export interface SessionUser {
+  id: string;
+  completed: boolean;
+  sessionId: string;
+  session: Partial<Session>;
+  courseUserId: string;
+  courseUser: CourseUser;
+}
+
+export interface CourseUser {
+  id: string;
+  completed: boolean;
+  userId: string;
+  user: User;
+  courseId: string;
+  course: Course;
+  sessionUser: SessionUser[];
 }
 
 export interface Courses extends Array<Course> {}
@@ -40,6 +59,19 @@ const slice = createSlice({
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       return payload.courses;
+    });
+    builder.addMatcher(api.endpoints.completeSession.matchFulfilled, (state, { payload }) => {
+      let course = state.find(function (course: Course) {
+        return course.id === payload.id;
+      });
+
+      if (course) {
+        Object.assign({}, course, payload);
+      } else {
+        state.concat(payload);
+      }
+
+      return state;
     });
   },
 });

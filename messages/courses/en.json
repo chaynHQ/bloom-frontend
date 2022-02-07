@@ -19,6 +19,9 @@
     "accessGuard": {
       "title": "Course content not available",
       "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
+    },
+    "errors": {
+      "completeSessionError": "There was an error marking this session as complete. Try again a little later."
     }
   }
 }

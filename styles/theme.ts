@@ -51,6 +51,12 @@ let theme = createTheme({
       fontFamily: 'Montserrat, sans-serif',
       fontStyle: 'italic',
     },
+    body1: {
+      fontSize: '1rem',
+      '@media (min-width:900px)': {
+        fontSize: '1.125rem',
+      },
+    },
   },
 });
 

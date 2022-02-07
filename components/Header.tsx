@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
+import { PROGRESS_STATUS } from '../constants/enums';
 import { rowStyle } from '../styles/common';
+import ProgressStatus from './ProgressStatus';
 
 interface HeaderProps {
   title:
@@ -18,6 +20,7 @@ interface HeaderProps {
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
+  progressStatus?: PROGRESS_STATUS;
 }
 
 const headerContainerStyles = {
@@ -44,7 +47,7 @@ const textContainerStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, translatedImageAlt, imageSrc } = props;
+  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, progressStatus } = props;
 
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt
@@ -62,6 +65,7 @@ const Header = (props: HeaderProps) => {
         <Typography variant="body1" component="p">
           {introduction}
         </Typography>
+        {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>
       <Box sx={imageContainerStyle}>
         <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />

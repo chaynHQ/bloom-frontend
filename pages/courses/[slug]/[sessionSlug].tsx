@@ -13,14 +13,20 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { useCompleteSessionMutation } from '../../../app/api';
+import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import CrispButton from '../../../components/CrispButton';
 import Header from '../../../components/Header';
 import SessionContentCard from '../../../components/SessionContentCard';
 import Video from '../../../components/Video';
 import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
-import { LANGUAGES } from '../../../constants/enums';
+import rollbar from '../../../config/rollbar';
+import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import {
+  SESSION_COMPLETE_ERROR,
+  SESSION_COMPLETE_REQUEST,
+  SESSION_COMPLETE_SUCCESS,
   SESSION_VIDEO_TRANSCRIPT_CLOSED,
   SESSION_VIDEO_TRANSCRIPT_OPENED,
   SESSION_VIEWED,
@@ -65,18 +71,29 @@ const crispButtonContainerStyle = {
   paddingBottom: 1,
 } as const;
 
-const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
+const errorStyle = {
+  color: 'primary.dark',
+  marginTop: 2,
+  fontWeight: 600,
+} as const;
+
+const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) => {
   const t = useTranslations('Courses');
-  const tS = useTranslations('Shared');
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
+  const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
+  const [completeSession, { isLoading: completeSessionIsLoading }] = useCompleteSessionMutation();
+
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const eventData = {
     ...eventUserData,
     session_name: story.content.name,
     session_storyblok_id: story.id,
+    course_name: story.content.course.content.name,
+    course_storyblok_id: story.content.course.id,
   };
   const headerProps = {
     title: story.content.name,
@@ -106,6 +123,24 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   useEffect(() => {
+    const userCourse = courses.find(function (course: Course) {
+      return Number(course.storyblokId) === story.content.course.id;
+    });
+
+    if (userCourse) {
+      const userSession = userCourse.sessions.find(function (session: Session) {
+        return Number(session.storyblokId) === story.id;
+      });
+
+      if (userSession) {
+        userSession.completed
+          ? setSessionProgress(PROGRESS_STATUS.COMPLETED)
+          : setSessionProgress(PROGRESS_STATUS.STARTED);
+      }
+    }
+  }, [courses, story.content.course.id, story.id]);
+
+  useEffect(() => {
     if (openTranscriptModal === null) {
       return;
     }
@@ -133,7 +168,29 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
     );
   };
 
-  const completeSession = () => {};
+  const completeSessionAction = async () => {
+    logEvent(SESSION_COMPLETE_REQUEST, eventData);
+
+    const completeSessionResponse = await completeSession({
+      storyblokId: story.id.toString(),
+    });
+
+    if ('data' in completeSessionResponse) {
+      setSessionProgress(PROGRESS_STATUS.COMPLETED);
+      logEvent(SESSION_COMPLETE_SUCCESS, eventData);
+      window.scrollTo(0, 0);
+    }
+
+    if ('error' in completeSessionResponse) {
+      const error = completeSessionResponse.error;
+
+      logEvent(SESSION_COMPLETE_ERROR, eventData);
+      rollbar.error('Session complete error', error);
+
+      setError(t('errors.completeSessionError'));
+      throw error;
+    }
+  };
 
   return (
     <Box>
@@ -149,6 +206,7 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
             introduction={headerProps.introduction}
             imageSrc={headerProps.imageSrc}
             imageAlt={headerProps.imageAlt}
+            progressStatus={sessionProgress!}
           />
           <Container sx={containerStyle}>
             <Box sx={cardColumnStyle}>
@@ -220,12 +278,17 @@ const Session: NextPage<Props> = ({ story, preview, messages, locale }) => {
 
               <Button
                 color="secondary"
+                size="large"
                 variant="contained"
-                onClick={completeSession}
-                startIcon={<CheckCircleIcon />}
+                onClick={completeSessionAction}
+                startIcon={<CheckCircleIcon color="error" />}
               >
                 {t('sessionDetail.sessionComplete')}
               </Button>
+              <Typography sx={errorStyle} variant="body1">
+                {t('errors.completeSessionError')}
+              </Typography>
+              {error && <Typography color="error">{error}</Typography>}
             </Box>
           </Container>
         </Box>
@@ -290,4 +353,4 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 }
 
-export default Session;
+export default SessionDetail;
