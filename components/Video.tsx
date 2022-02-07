@@ -1,5 +1,6 @@
+import { Theme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { ResponsiveStyleValue } from '@mui/system/styleFunctionSx';
+import { SxProps } from '@mui/system';
 import * as React from 'react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
@@ -7,9 +8,9 @@ import logEvent from '../utils/logEvent';
 
 interface VideoProps {
   url: string;
-  width?: string | number | ResponsiveStyleValue<string | number>;
   eventData: any;
   eventPrefix: string;
+  containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -25,7 +26,7 @@ const videoStyle = {
 } as const;
 
 const Video = (props: VideoProps) => {
-  const { url, eventData, eventPrefix, width, setVideoStarted } = props;
+  const { url, eventData, eventPrefix, containerStyles, setVideoStarted } = props;
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const player = useRef<ReactPlayer>(null);
 
@@ -66,9 +67,13 @@ const Video = (props: VideoProps) => {
     }
   };
 
+  const containerStyle = {
+    ...containerStyles,
+    maxWidth: 514, // <515px prevents the "Watch on youtube" button
+  } as const;
+
   return (
-    // maxWidth <515px prevents the "Watch on youtube" button
-    <Box width={width} maxWidth={514}>
+    <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           ref={player}

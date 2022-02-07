@@ -272,6 +272,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                   setVideoStarted={setVideoStarted}
                   eventData={eventData}
                   eventPrefix="SESSION"
+                  containerStyles={{ mx: 'auto', mb: 2 }}
                 />
                 <VideoTranscriptModal
                   videoName={story.content.name}

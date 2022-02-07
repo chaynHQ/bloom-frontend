@@ -212,7 +212,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                 url={story.content.video.url}
                 eventData={eventData}
                 eventPrefix="COURSE_INTRO"
-                width={{ xs: '100%', sm: '70%', md: '55%' }}
+                containerStyles={{ width: { xs: '100%', sm: '70%', md: '55%' } }}
               />
             </Box>
 
