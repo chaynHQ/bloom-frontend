@@ -156,38 +156,41 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
         course_name: story.content.name,
       },
     );
+    if (openTranscriptModal && sessionProgress === null) {
+      callStartSession();
+    }
   }, [openTranscriptModal]);
 
-  useEffect(() => {
-    async function callStartSession() {
-      const startSessionResponse = await startSession({
-        storyblokId: story.id.toString(),
-      });
+  async function callStartSession() {
+    logEvent(SESSION_STARTED_REQUEST, {
+      ...eventData,
+      session_name: story.content.name,
+      course_name: story.content.name,
+    });
 
-      if ('data' in startSessionResponse) {
-        setSessionProgress(PROGRESS_STATUS.STARTED);
-        logEvent(SESSION_STARTED_SUCCESS, eventData);
-      }
+    const startSessionResponse = await startSession({
+      storyblokId: story.id.toString(),
+    });
 
-      if ('error' in startSessionResponse) {
-        const error = startSessionResponse.error;
-
-        logEvent(SESSION_STARTED_ERROR, eventData);
-        rollbar.error('Session complete error', error);
-
-        throw error;
-      }
+    if ('data' in startSessionResponse) {
+      setSessionProgress(PROGRESS_STATUS.STARTED);
+      logEvent(SESSION_STARTED_SUCCESS, eventData);
     }
 
+    if ('error' in startSessionResponse) {
+      const error = startSessionResponse.error;
+
+      logEvent(SESSION_STARTED_ERROR, eventData);
+      rollbar.error('Session complete error', error);
+
+      throw error;
+    }
+  }
+
+  useEffect(() => {
     if (!videoStarted || sessionProgress !== null) return;
 
     if (videoStarted) {
-      logEvent(SESSION_STARTED_REQUEST, {
-        ...eventData,
-        session_name: story.content.name,
-        course_name: story.content.name,
-      });
-
       callStartSession();
     }
   }, [videoStarted]);
