@@ -78,7 +78,7 @@ const SessionContentCard = (props: SessionContentCardProps) => {
 
   return (
     <Card sx={cardStyle} key={''}>
-      <CardActionArea onClick={handleExpandClick}>
+      <CardActionArea onClick={handleExpandClick} aria-label={`${t('expand')} ${title}`}>
         <CardContent sx={{ ...titleContainerStyle, ...rowStyles }}>
           <TitleIcon sx={titleIconStyle} color="error" />
           <Typography component="h3" variant="h3" mb={0} flex={1}>

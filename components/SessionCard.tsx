@@ -65,7 +65,10 @@ const SessionCard = (props: SessionCardProps) => {
 
   return (
     <Card sx={cardStyle} key={session.id}>
-      <CardActionArea href={`/${session.full_slug}`}>
+      <CardActionArea
+        href={`/${session.full_slug}`}
+        aria-label={`${t('navigateToSession')} ${session.name}`}
+      >
         <CardContent sx={cardContentStyle}>
           <Box sx={rowStyles}>
             <Box mt={0.5}>
@@ -84,7 +87,7 @@ const SessionCard = (props: SessionCardProps) => {
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}
-          aria-label="Expand summary"
+          aria-label={`${t('expandSummary')} ${session.name}`}
           onClick={handleExpandClick}
           size="small"
         >
