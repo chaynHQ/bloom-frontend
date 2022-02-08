@@ -1,6 +1,6 @@
 # Bloom
 
-Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom informs and empowers survivors by offering courses that combine important information about trauma and gender-based violence with therapeutic practices to help heal from trauma
+Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events.
 
 ## Get involved
 
