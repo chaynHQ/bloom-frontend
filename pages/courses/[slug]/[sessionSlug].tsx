@@ -18,6 +18,7 @@ import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import CrispButton from '../../../components/CrispButton';
 import Header from '../../../components/Header';
+import Link from '../../../components/Link';
 import SessionContentCard from '../../../components/SessionContentCard';
 import Video from '../../../components/Video';
 import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
@@ -89,6 +90,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
   const [error, setError] = useState<string | null>(null);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
+  const [weekString, setWeekString] = useState<string>('');
   const [completeSession, { isLoading: completeSessionIsLoading }] = useCompleteSessionMutation();
   const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
 
@@ -128,6 +130,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   useEffect(() => {
+    story.content.course.content.weeks.map((week: any) => {
+      week.sessions.map((session: any) => {
+        session === story.uuid && setWeekString(week.name);
+      });
+    });
+
     const userCourse = courses.find(function (course: Course) {
       return Number(course.storyblokId) === story.content.course.id;
     });
@@ -143,7 +151,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
           : setSessionProgress(PROGRESS_STATUS.STARTED);
       }
     }
-  }, [courses, story.content.course.id, story.id]);
+  }, [courses, story.content.course.id, story.id, story.content.course.content.weeks]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
@@ -247,7 +255,18 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
             imageSrc={headerProps.imageSrc}
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress!}
-          />
+          >
+            <Typography>
+              {t('course')}:{' '}
+              <Link href={`/${story.content.course.full_slug}`}>
+                {story.content.course.content.name}
+              </Link>
+            </Typography>
+
+            <Typography mb={3.5} mt={0.5}>
+              {weekString} - {t('session')} {story.position / 10 - 1}
+            </Typography>
+          </Header>
           <Container sx={containerStyle}>
             <Box sx={cardColumnStyle}>
               <SessionContentCard
@@ -256,7 +275,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                 eventPrefix="SESSION_VIDEO"
                 eventData={eventData}
               >
-                <Typography component="p" variant="body1" mb={3}>
+                <Typography mb={3}>
                   {t.rich('sessionDetail.videoDescription', {
                     transcriptLink: (children) => (
                       <MuiLink
@@ -316,9 +335,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                     eventPrefix="SESSION_CHAT"
                     eventData={eventData}
                   >
-                    <Typography component="p" variant="body1">
-                      {t('sessionDetail.chatDescription')}
-                    </Typography>
+                    <Typography>{t('sessionDetail.chatDescription')}</Typography>
                     <Box sx={crispButtonContainerStyle}>
                       <CrispButton
                         email={user.email}

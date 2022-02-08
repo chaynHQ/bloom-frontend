@@ -21,6 +21,7 @@ interface HeaderProps {
   imageAlt?: string;
   translatedImageAlt?: string;
   progressStatus?: PROGRESS_STATUS;
+  children?: any;
 }
 
 const headerContainerStyles = {
@@ -29,7 +30,7 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
-  paddingTop: 13.5,
+  paddingTop: '8.5rem !important',
   gap: '30px',
 } as const;
 
@@ -47,7 +48,8 @@ const textContainerStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, progressStatus } = props;
+  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, progressStatus, children } =
+    props;
 
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt
@@ -59,6 +61,7 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
+        {children}
         <Typography variant="h1" component="h1">
           {title}
         </Typography>
