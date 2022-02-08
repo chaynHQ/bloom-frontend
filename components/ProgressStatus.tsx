@@ -13,6 +13,8 @@ interface ProgressStatusProps {
 const rowStyles = {
   ...rowStyle,
   gap: 1.5,
+  marginTop: 2,
+  alignItems: 'center',
 } as const;
 
 const ProgressStatus = (props: ProgressStatusProps) => {

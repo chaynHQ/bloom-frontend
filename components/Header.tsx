@@ -35,8 +35,8 @@ const headerContainerStyles = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 180, md: 210 },
-  height: { xs: 180, md: 210 },
+  width: { xs: 180, md: 240 },
+  height: { xs: 180, md: 240 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: 'auto', md: 0 },
 } as const;

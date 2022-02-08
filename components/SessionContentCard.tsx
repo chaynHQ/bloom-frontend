@@ -26,6 +26,7 @@ interface SessionContentCardProps {
 const cardStyle = {
   width: { xs: '100%', md: 700 },
   backgroundColor: 'background.default',
+  marginTop: 0,
 } as const;
 
 const rowStyles = {
@@ -60,13 +61,19 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   } as const;
 
   const collapseContainerStyle = {
-    paddingTop: `${richtextContent ? '0.25rem' : '1.25rem'} !important`,
+    paddingY: `${richtextContent ? '0.5rem' : '1.25rem'} !important`,
   } as const;
 
   const titleContainerStyle = {
-    paddingTop: '1.25rem !important',
-    paddingBottom: '1.25rem !important',
+    paddingY: { xs: '1rem !important', md: '1.25rem !important' },
     bgcolor: expanded ? 'primary.light' : 'none',
+  } as const;
+
+  const arrowStyle = {
+    width: { xs: 26, md: 30 },
+    height: { xs: 26, md: 30 },
+
+    transform: expanded ? 'rotate(180deg)' : 'none',
   } as const;
 
   return (
@@ -77,7 +84,7 @@ const SessionContentCard = (props: SessionContentCardProps) => {
           <Typography component="h3" variant="h3" mb={0} flex={1}>
             {title}
           </Typography>
-          <KeyboardArrowDownIcon sx={titleIconStyle} color="error" />
+          <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
         </CardContent>
       </CardActionArea>
 

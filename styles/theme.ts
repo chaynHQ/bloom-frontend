@@ -53,7 +53,7 @@ let theme = createTheme({
     },
     body1: {
       fontSize: '1rem',
-      '@media (min-width:900px)': {
+      '@media (min-width:1200px)': {
         fontSize: '1.125rem',
       },
     },
@@ -101,7 +101,7 @@ theme = createTheme(theme, {
     MuiButton: {
       styleOverrides: {
         root: {
-          fontWeight: 'bolder',
+          fontWeight: 'bold',
           borderRadius: '100px',
           textTransform: 'unset',
           paddingLeft: 24,
@@ -113,6 +113,9 @@ theme = createTheme(theme, {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.dark,
             opacity: 0.1,
+          },
+          '@media (min-width:900px)': {
+            fontSize: '1.125rem',
           },
         },
         outlinedPrimary: {

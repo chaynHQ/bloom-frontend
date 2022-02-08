@@ -2,7 +2,6 @@ import { GetUserResponse } from '../app/api';
 import { analytics } from '../config/firebase';
 
 export const logEvent = (event: string, params?: {}) => {
-  console.log(event, params);
   analytics?.logEvent(event, params!);
 };
 
