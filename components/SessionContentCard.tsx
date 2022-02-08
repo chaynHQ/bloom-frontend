@@ -11,6 +11,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { rowStyle } from '../styles/common';
+import logEvent from '../utils/logEvent';
 
 interface SessionContentCardProps {
   children: any;
@@ -18,6 +19,8 @@ interface SessionContentCardProps {
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
   titleIconSize?: number;
   richtextContent?: boolean;
+  eventPrefix: string;
+  eventData: any;
 }
 
 const cardStyle = {
@@ -32,13 +35,23 @@ const rowStyles = {
 } as const;
 
 const SessionContentCard = (props: SessionContentCardProps) => {
-  const { children, title, titleIcon, titleIconSize = 28, richtextContent = false } = props;
+  const {
+    children,
+    title,
+    titleIcon,
+    titleIconSize = 28,
+    richtextContent = false,
+    eventPrefix,
+    eventData,
+  } = props;
   const t = useTranslations('Courses');
   const TitleIcon = titleIcon;
+  eventPrefix;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    logEvent(`${eventPrefix}_${!expanded ? 'OPENED' : 'CLOSED'}`, eventData);
   };
 
   const titleIconStyle = {

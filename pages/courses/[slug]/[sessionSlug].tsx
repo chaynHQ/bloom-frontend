@@ -253,6 +253,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
               <SessionContentCard
                 title={t('sessionDetail.videoTitle')}
                 titleIcon={SlowMotionVideoIcon}
+                eventPrefix="SESSION_VIDEO"
+                eventData={eventData}
               >
                 <Typography component="p" variant="body1" mb={3}>
                   {t.rich('sessionDetail.videoDescription', {
@@ -282,10 +284,13 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                 />
               </SessionContentCard>
               <Dots />
+
               <SessionContentCard
                 title={t('sessionDetail.activityTitle')}
                 titleIcon={StarBorderIcon}
                 richtextContent
+                eventPrefix="SESSION_ACTIVITY"
+                eventData={eventData}
               >
                 <div>{render(story.content.activity)}</div>
               </SessionContentCard>
@@ -295,6 +300,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                 title={t('sessionDetail.bonusTitle')}
                 titleIcon={LinkIcon}
                 richtextContent
+                eventPrefix="SESSION_BONUS_CONTENT"
+                eventData={eventData}
               >
                 <div>{render(story.content.bonus)}</div>
               </SessionContentCard>
@@ -306,6 +313,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                     title={t('sessionDetail.chatTitle')}
                     titleIcon={ChatBubbleOutlineIcon}
                     titleIconSize={24}
+                    eventPrefix="SESSION_CHAT"
+                    eventData={eventData}
                   >
                     <Typography component="p" variant="body1">
                       {t('sessionDetail.chatDescription')}
