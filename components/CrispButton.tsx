@@ -1,6 +1,8 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Button } from '@mui/material';
 import { useEffect } from 'react';
+import { SESSION_CRISP_CHAT_OPENED } from '../constants/events';
+import logEvent from '../utils/logEvent';
 
 interface CrispButtonProps {
   buttonText: string;
@@ -25,10 +27,15 @@ const CrispButton = (props: CrispButtonProps) => {
     })();
   }, [email]);
 
+  const openChatWidget = () => {
+    (window as any).$crisp.push(['do', 'chat:open']);
+    logEvent(SESSION_CRISP_CHAT_OPENED, eventData);
+  };
+
   return (
     <Button
       variant="contained"
-      onClick={() => (window as any).$crisp.push(['do', 'chat:open'])}
+      onClick={openChatWidget}
       startIcon={<ChatBubbleOutlineIcon color="error" />}
     >
       {buttonText}

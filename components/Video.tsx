@@ -8,7 +8,7 @@ import logEvent from '../utils/logEvent';
 
 interface VideoProps {
   url: string;
-  eventData: any;
+  eventData: {};
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;

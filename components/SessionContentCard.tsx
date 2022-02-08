@@ -20,7 +20,7 @@ interface SessionContentCardProps {
   titleIconSize?: number;
   richtextContent?: boolean;
   eventPrefix: string;
-  eventData: any;
+  eventData: {};
 }
 
 const cardStyle = {
@@ -51,7 +51,7 @@ const SessionContentCard = (props: SessionContentCardProps) => {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    logEvent(`${eventPrefix}_${!expanded ? 'OPENED' : 'CLOSED'}`, eventData);
+    logEvent(`${eventPrefix}_${!expanded ? 'EXPANDED' : 'COLLAPSED'}`, eventData);
   };
 
   const titleIconStyle = {
