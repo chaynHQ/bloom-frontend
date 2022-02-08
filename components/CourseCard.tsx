@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
@@ -55,6 +56,7 @@ const rowStyles = {
 const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
+  const t = useTranslations('Courses');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -62,7 +64,10 @@ const CourseCard = (props: CourseCardProps) => {
 
   return (
     <Card sx={cardStyle} key={course.id}>
-      <CardActionArea href={`/${course.full_slug}`}>
+      <CardActionArea
+        href={`/${course.full_slug}`}
+        aria-label={`${t('navigateToCourse')} ${course.content.name}`}
+      >
         <CardContent sx={cardContentStyle}>
           <Image
             alt="test"
@@ -94,7 +99,7 @@ const CourseCard = (props: CourseCardProps) => {
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}
-          aria-label="Expand summary"
+          aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"
         >
