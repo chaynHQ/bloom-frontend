@@ -5,8 +5,8 @@
     "session": "Session",
     "expand": "Expand",
     "expandSummary": "Expand summary for",
-    "navigateToSession": "Navigate to session - ",
-    "navigateToCourse": "Navigate to course - ",
+    "navigateToSession": "Navigate to session -",
+    "navigateToCourse": "Navigate to course -",
     "courseDetail": {
       "introductionTitle": "Course introduction",
       "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>"
