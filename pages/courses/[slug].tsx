@@ -134,7 +134,9 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const cardsContainerStyle = {
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
+    gap: 4,
   } as const;
 
   const imageContainerStyle = {
