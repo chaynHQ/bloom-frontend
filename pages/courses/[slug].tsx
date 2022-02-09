@@ -191,6 +191,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
             introduction={headerProps.introduction}
             imageSrc={headerProps.imageSrc}
             translatedImageAlt={headerProps.translatedImageAlt}
+            progressStatus={courseProgress!}
           />
           <Container sx={containerStyle}>
             <Box sx={introductionContainerStyle}>
