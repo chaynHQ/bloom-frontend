@@ -51,40 +51,47 @@ const rowStyles = {
 
 const SessionCard = (props: SessionCardProps) => {
   const { session, sessionProgress } = props;
-  const t = useTranslations('Courses');
   const [expanded, setExpanded] = useState<boolean>(false);
+
+  const t = useTranslations('Courses');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const arrowStyle = {
+    transform: expanded ? 'rotate(180deg)' : 'none',
+  } as const;
+
   return (
     <Card sx={cardStyle} key={session.id}>
-      <CardActionArea href={`/${session.full_slug}`}>
+      <CardActionArea
+        href={`/${session.full_slug}`}
+        aria-label={`${t('navigateToSession')} ${session.name}`}
+      >
         <CardContent sx={cardContentStyle}>
-          <Box sx={{ ...rowStyles }}>
-            {sessionProgress === PROGRESS_STATUS.STARTED && (
-              <DonutLargeIcon color="error"></DonutLargeIcon>
-            )}
-            {sessionProgress === PROGRESS_STATUS.COMPLETED && (
-              <CheckCircleIcon color="error"></CheckCircleIcon>
-            )}
+          <Box sx={rowStyles}>
+            <Box mt={0.5}>
+              {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
+              {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
+            </Box>
             <Typography component="h3" variant="h3">
               {session.content.name}
             </Typography>
           </Box>
-          <Typography component="p" variant="body1">
-            Session {session.position / 10 - 1}
+          <Typography component="p" variant="body1" color="grey.700">
+            {t('session')} {session.position / 10 - 1}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}
-          aria-label="Expand summary"
+          aria-label={`${t('expandSummary')} ${session.name}`}
           onClick={handleExpandClick}
           size="small"
         >
-          <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
+          <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

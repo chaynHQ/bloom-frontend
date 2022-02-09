@@ -69,7 +69,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     if (userCourse) {
       let courseSessionsStarted: Array<number> = [];
       let courseSessionsCompleted: Array<number> = [];
-      userCourse.sessions.map((session) => {
+      userCourse.sessions?.map((session) => {
         if (session.completed) {
           courseSessionsCompleted.push(Number(session.storyblokId));
         } else {
@@ -212,7 +212,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                 url={story.content.video.url}
                 eventData={eventData}
                 eventPrefix="COURSE_INTRO"
-                width={{ xs: '100%', sm: '70%', md: '55%' }}
+                containerStyles={{ width: { xs: '100%', sm: '70%', md: '55%' } }}
               />
             </Box>
 

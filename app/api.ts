@@ -8,7 +8,7 @@ import {
 import { auth } from '../config/firebase';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import { delay } from '../utils/delay';
-import { Courses } from './coursesSlice';
+import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner } from './partnerSlice';
@@ -20,6 +20,9 @@ export interface GetUserResponse {
   partnerAccesses: PartnerAccesses;
   partnerAdmin: PartnerAdmin;
   courses: Courses;
+}
+export interface SessionActionPayload {
+  storyblokId: string;
 }
 
 const baseQuery = fetchBaseQuery({
@@ -102,6 +105,24 @@ export const api = createApi({
         };
       },
     }),
+    startSession: builder.mutation<Course, SessionActionPayload>({
+      query(body) {
+        return {
+          url: 'session-user',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    completeSession: builder.mutation<Course, SessionActionPayload>({
+      query(body) {
+        return {
+          url: 'session-user/complete',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -109,5 +130,7 @@ export const {
   useGetUserMutation,
   useAddUserMutation,
   useAddPartnerAccessMutation,
+  useStartSessionMutation,
+  useCompleteSessionMutation,
   useValidateCodeMutation,
 } = api;

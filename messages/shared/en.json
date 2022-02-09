@@ -15,6 +15,11 @@
       "description": "Read the transcript for video - ",
       "closeModal": "Close transcript"
     },
+    "progressStatus": {
+      "started": "Started",
+      "completed": "Completed",
+      "notStarted": "Not started"
+    },
     "404": {
       "title": "404 - Page not found",
       "description": "This page could not be found. Check the url or go back to the",
