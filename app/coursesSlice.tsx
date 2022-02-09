@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { WritableDraft } from 'immer/dist/internal';
 import { STORYBLOK_STORY_STATUS_ENUM } from '../constants/enums';
 import { api } from './api';
 import type { RootState } from './store';
@@ -45,6 +46,19 @@ export interface Courses extends Array<Course> {}
 
 const initialState: Courses = [];
 
+const mergeUpdatedCourse = (state: WritableDraft<Courses>, payload: Course) => {
+  const course = state.filter((course) => course.id === payload.id);
+
+  if (course) {
+    state = state.filter((course) => course.id !== payload.id);
+    state.push(Object.assign({}, course, payload));
+  } else {
+    state.concat(payload);
+  }
+
+  return state;
+};
+
 const slice = createSlice({
   name: 'courses',
   initialState: initialState,
@@ -61,17 +75,10 @@ const slice = createSlice({
       return payload.courses;
     });
     builder.addMatcher(api.endpoints.completeSession.matchFulfilled, (state, { payload }) => {
-      let course = state.find(function (course: Course) {
-        return course.id === payload.id;
-      });
-
-      if (course) {
-        Object.assign({}, course, payload);
-      } else {
-        state.concat(payload);
-      }
-
-      return state;
+      return mergeUpdatedCourse(state, payload);
+    });
+    builder.addMatcher(api.endpoints.startSession.matchFulfilled, (state, { payload }) => {
+      return mergeUpdatedCourse(state, payload);
     });
   },
 });
