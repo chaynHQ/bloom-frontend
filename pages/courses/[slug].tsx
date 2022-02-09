@@ -144,6 +144,14 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     marginBottom: 4,
   } as const;
 
+  const getSessionProgress = (sessionId: number) => {
+    return sessionsStarted.includes(sessionId)
+      ? PROGRESS_STATUS.STARTED
+      : sessionsCompleted.includes(sessionId)
+      ? PROGRESS_STATUS.COMPLETED
+      : null;
+  };
+
   const IncorrectAccess = () => {
     return (
       <Container sx={accessContainerStyle}>
@@ -225,11 +233,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                     </Typography>
                     <Box sx={cardsContainerStyle}>
                       {week.sessions.map((session: any) => {
-                        const sessionProgress = sessionsStarted.includes(session.id)
-                          ? PROGRESS_STATUS.STARTED
-                          : sessionsCompleted.includes(session.id)
-                          ? PROGRESS_STATUS.COMPLETED
-                          : null;
+                        const sessionProgress = getSessionProgress(session.id);
                         return (
                           <SessionCard
                             key={session.id}

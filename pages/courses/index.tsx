@@ -48,6 +48,13 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
+  const headerProps = {
+    title: t.rich('title'),
+    introduction: t.rich('introduction'),
+    imageSrc: illustrationTeaPeach,
+    imageAlt: 'alt.personTea',
+  };
+
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED, {
       ...eventUserData,
@@ -73,7 +80,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
     const coursesWithAccess = stories.filter((course) =>
       userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
     );
-    setLoadedCourses(coursesWithAccess.concat(coursesWithAccess));
+    setLoadedCourses(coursesWithAccess);
 
     if (courses) {
       let courseCoursesStarted: Array<number> = [];
@@ -90,11 +97,12 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
     }
   }, [partnerAccesses, stories, courses]);
 
-  const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+  const getCourseProgress = (courseId: number) => {
+    return coursesStarted.includes(courseId)
+      ? PROGRESS_STATUS.STARTED
+      : coursesCompleted.includes(courseId)
+      ? PROGRESS_STATUS.COMPLETED
+      : null;
   };
 
   return (
@@ -113,24 +121,14 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
           <Box sx={cardColumnStyle}>
             {loadedCourses.map((course, index) => {
               if (index % 2 === 0) return;
-
-              const courseProgress = coursesStarted.includes(course.id)
-                ? PROGRESS_STATUS.STARTED
-                : coursesCompleted.includes(course.id)
-                ? PROGRESS_STATUS.COMPLETED
-                : null;
+              const courseProgress = getCourseProgress(course.id);
               return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
             })}
           </Box>
           <Box sx={cardColumnStyle}>
             {loadedCourses.map((course, index) => {
               if (index % 2 === 1) return;
-
-              const courseProgress = coursesStarted.includes(course.id)
-                ? PROGRESS_STATUS.STARTED
-                : coursesCompleted.includes(course.id)
-                ? PROGRESS_STATUS.COMPLETED
-                : null;
+              const courseProgress = getCourseProgress(course.id);
               return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
             })}
           </Box>
