@@ -24,7 +24,7 @@ interface SessionCardProps {
 
 const cardStyle = {
   alignSelf: 'flex-start',
-  minWidth: { xs: '100%', md: 'calc(50% - 1rem)' },
+  width: { xs: '100%', md: 'calc(50% - 1rem)' },
   backgroundColor: 'background.default',
 } as const;
 
