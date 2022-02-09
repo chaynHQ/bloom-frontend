@@ -181,7 +181,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
     });
 
     if ('data' in startSessionResponse) {
-      setSessionProgress(PROGRESS_STATUS.STARTED);
       logEvent(SESSION_STARTED_SUCCESS, eventData);
     }
 
@@ -224,7 +223,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
     });
 
     if ('data' in completeSessionResponse) {
-      setSessionProgress(PROGRESS_STATUS.COMPLETED);
       logEvent(SESSION_COMPLETE_SUCCESS, eventData);
       window.scrollTo(0, 0);
     }
@@ -344,19 +342,22 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                       />
                     </Box>
                   </SessionContentCard>
-                  <Dots />
                 </>
               )}
-
-              <Button
-                color="secondary"
-                size="large"
-                variant="contained"
-                onClick={completeSessionAction}
-                startIcon={<CheckCircleIcon color="error" />}
-              >
-                {t('sessionDetail.sessionComplete')}
-              </Button>
+              {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
+                <>
+                  <Dots />
+                  <Button
+                    color="secondary"
+                    size="large"
+                    variant="contained"
+                    onClick={completeSessionAction}
+                    startIcon={<CheckCircleIcon color="error" />}
+                  >
+                    {t('sessionDetail.sessionComplete')}
+                  </Button>
+                </>
+              )}
 
               {error && (
                 <Typography sx={errorStyle} variant="body1">
