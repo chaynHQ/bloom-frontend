@@ -24,8 +24,8 @@ const headerContainerStyles = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 230 },
-  height: { xs: 150, md: 265 },
+  width: { xs: 160, md: 265 },
+  height: { xs: 160, md: 265 },
 } as const;
 
 const logoContainerStyle = {

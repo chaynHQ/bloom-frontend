@@ -24,15 +24,16 @@ const containerStyle = {
 const itemContainerStyle = {
   position: 'relative',
   width: { xs: '100%', sm: '50%' },
-  padding: { xs: 2, md: 2 },
+  paddingX: 2,
+  paddingY: 1,
   alignText: 'center',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
   width: 100,
-  height: 80,
-  marginY: { xs: 2, md: 2 },
+  height: 100,
+  marginY: 3,
   marginX: 'auto',
 } as const;
 

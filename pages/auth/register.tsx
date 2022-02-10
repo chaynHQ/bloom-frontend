@@ -51,9 +51,10 @@ const Register: NextPage = () => {
 
   const imageContainerStyle = {
     position: 'relative',
-    width: { xs: 175, md: 250 },
-    height: { xs: 140, md: 200 },
-    marginTop: { xs: 4, md: 8 },
+    width: { xs: 170, md: 250 },
+    height: { xs: 170, md: 250 },
+    marginTop: { xs: 4, md: 6 },
+    marginLeft: { xs: 0, md: 2 },
   } as const;
 
   const formCardStyle = {
@@ -70,7 +71,7 @@ const Register: NextPage = () => {
           })}
         </Typography>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} />
+          <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} layout="fill" />
         </Box>
       </Box>
     );

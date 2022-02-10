@@ -20,7 +20,7 @@ import {
   COURSE_OVERVIEW_VIEWED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 
@@ -160,7 +160,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
         <Box sx={imageContainerStyle}>
           <Image
             alt={tS('alt.personTea')}
-            src={illustrationTeaPeach}
+            src={illustrationPerson4Peach}
             layout="fill"
             objectFit="contain"
           />
