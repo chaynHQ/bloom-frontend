@@ -8,12 +8,12 @@ import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import CourseCard from '../../components/CourseCard';
 import Header from '../../components/Header';
+import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Storyblok from '../../utils/storyblok';
 
 interface Props {
   stories: StoryData[];

@@ -12,6 +12,7 @@ import Link from '../../components/Link';
 import SessionCard from '../../components/SessionCard';
 import Video from '../../components/Video';
 import VideoTranscriptModal from '../../components/VideoTranscriptModal';
+import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
@@ -22,7 +23,6 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
 import { rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
-import Storyblok from '../../utils/storyblok';
 
 interface Props {
   story: StoryData;

@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction } from 'react';
 import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { RichTextOptions } from '../utils/storyblok';
+import { RichTextOptions } from '../utils/richText';
 
 const modalStyle = {
   position: 'absolute',

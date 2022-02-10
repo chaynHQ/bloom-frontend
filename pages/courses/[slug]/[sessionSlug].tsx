@@ -23,6 +23,7 @@ import SessionContentCard from '../../../components/SessionContentCard';
 import Video from '../../../components/Video';
 import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
 import rollbar from '../../../config/rollbar';
+import Storyblok from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import {
   SESSION_COMPLETE_ERROR,
@@ -38,7 +39,7 @@ import {
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
-import Storyblok, { RichTextOptions } from '../../../utils/storyblok';
+import { RichTextOptions } from '../../../utils/richText';
 
 interface Props {
   story: StoryData;
