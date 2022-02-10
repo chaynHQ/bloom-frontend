@@ -1,6 +1,7 @@
 import { CircularProgress, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { hotjar } from 'react-hotjar';
 import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
 import rollbar from '../config/rollbar';
@@ -49,6 +50,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     if (user.id) {
       // User already authenticated and loaded
+      hotjar.identify('USER_ID', { userProperty: user.id });
       setVerified(true);
       return;
     }
