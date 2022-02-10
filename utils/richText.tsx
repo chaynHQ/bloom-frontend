@@ -2,10 +2,12 @@ import { Typography } from '@mui/material';
 import { MARK_LINK } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/Link';
 import StoryblokImage from '../components/StoryblokImage';
+import StoryblokVideo from '../components/StoryblokVideo';
 
 export const RichTextOptions = {
   blokResolvers: {
     ['image']: (props: any) => <StoryblokImage {...props} />,
+    ['video']: (props: any) => <StoryblokVideo {...props} />,
   },
   markResolvers: {
     [MARK_LINK]: (children: any, props: any) => {
