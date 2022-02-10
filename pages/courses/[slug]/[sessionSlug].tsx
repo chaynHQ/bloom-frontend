@@ -37,7 +37,7 @@ import {
   SESSION_VIEWED,
 } from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
-import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
@@ -106,7 +106,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
-    imageSrc: illustrationTeaPeach,
+    imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
 

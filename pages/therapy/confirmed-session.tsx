@@ -14,7 +14,7 @@ import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const ConfirmedSession: NextPage = () => {
@@ -31,7 +31,7 @@ const ConfirmedSession: NextPage = () => {
   const headerProps = {
     title: t.rich('confirmation.title'),
     introduction: t.rich('confirmation.introduction'),
-    imageSrc: illustrationTeaPeach,
+    imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
 
@@ -72,12 +72,7 @@ const ConfirmedSession: NextPage = () => {
           {t.rich('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image
-            alt={tS.raw('alt.partialLeavesRose')}
-            src={illustrationLeafMix}
-            width={100}
-            height={100}
-          />
+          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
         </Box>
         <Box sx={faqsContainerStyle}>
           <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />

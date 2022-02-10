@@ -12,7 +12,7 @@ import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -51,8 +51,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    imageSrc: illustrationPerson3Pink,
+    imageAlt: 'alt.personSitting',
   };
 
   useEffect(() => {
