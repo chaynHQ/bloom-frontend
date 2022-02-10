@@ -16,3 +16,14 @@ export enum PARTNER_ACCESS_CODE_STATUS {
   ALREADY_IN_USE = 'ALREADY_IN_USE',
   CODE_EXPIRED = 'CODE_EXPIRED',
 }
+
+export enum PROGRESS_STATUS {
+  STARTED = 'Started',
+  COMPLETED = 'Completed',
+  NOT_STARTED = 'Not started',
+}
+
+export enum VIDEO_TYPES {
+  COURSE_INTRO = 'COURSE_INTRO',
+  SESSION = 'SESSION',
+}

@@ -60,7 +60,7 @@ function MyApp(props: MyAppProps) {
   // Adds required permissions guard to pages, redirecting where required permissions are missing
   // New pages will default to requiring authenticated and public pages must be added to the array below
   const ComponentWithGuard = () => {
-    const publicPaths = ['index', 'welcome', 'auth', 'action-handler'];
+    const publicPaths = ['index', 'welcome', 'auth', 'action-handler', '404', '500'];
     const component = <Component {...pageProps} />;
     let children = null;
 
