@@ -46,7 +46,9 @@ function MyApp(props: MyAppProps) {
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
-    hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
+    if (process.env.NEXT_PUBLIC_ENV === 'staging') {
+      hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
+    }
 
     // Add listener for new firebase auth token, updating it in state to be used in request headers
     // Required for restoring user state following app reload or revisiting site
