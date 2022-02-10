@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction } from 'react';
 import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { RichTextOptions } from '../utils/storyblok';
 
 const modalStyle = {
   position: 'absolute',
@@ -69,7 +70,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
             {tS('videoTranscript.description')}
             {videoName}
           </Typography>
-          <div>{render(content)}</div>
+          <div>{render(content, RichTextOptions)}</div>
         </Box>
       </Box>
     </Modal>

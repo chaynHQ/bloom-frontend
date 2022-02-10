@@ -61,7 +61,12 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   } as const;
 
   const collapseContainerStyle = {
-    paddingY: `${richtextContent ? '0.5rem' : '1.25rem'} !important`,
+    ':first-of-type': {
+      marginTop: 0,
+    },
+    ':last-of-type': {
+      marginBottom: 0,
+    },
   } as const;
 
   const titleContainerStyle = {

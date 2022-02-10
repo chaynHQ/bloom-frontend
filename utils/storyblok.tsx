@@ -1,5 +1,9 @@
+import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import StoryblokClient from 'storyblok-js-client';
+import { MARK_LINK } from 'storyblok-rich-text-react-renderer';
+import Link from '../components/Link';
+import StoryblokImage from '../components/StoryblokImage';
 import { LANGUAGES } from '../constants/enums';
 
 const Storyblok = new StoryblokClient({
@@ -9,6 +13,36 @@ const Storyblok = new StoryblokClient({
     type: 'memory',
   },
 });
+
+export const RichTextOptions = {
+  blokResolvers: {
+    ['image']: (props: any) => <StoryblokImage {...props} />,
+  },
+  markResolvers: {
+    [MARK_LINK]: (children: any, props: any) => {
+      const { href, target, linktype } = props;
+      if (linktype === 'email') {
+        return <a href={`mailto:${href}`}>{children}</a>;
+      }
+      if (href?.match(/^(https?:)?\/\//)) {
+        // External links: map to <a>
+        return (
+          <a href={href} target={target}>
+            {children}
+          </a>
+        );
+      }
+      // Internal links: map to <Link>
+      if (href)
+        return (
+          <Link href={href}>
+            <a>{children}</a>
+          </Link>
+        );
+      else return <Typography>{children}</Typography>;
+    },
+  },
+};
 
 export function useStoryblok(originalStory: any, preview: boolean, locale: LANGUAGES) {
   let [story, setStory] = useState(originalStory);

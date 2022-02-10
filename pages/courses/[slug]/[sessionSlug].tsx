@@ -38,7 +38,7 @@ import {
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationTeaPeach from '../../../public/illustration_tea_peach.png';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
-import Storyblok from '../../../utils/storyblok';
+import Storyblok, { RichTextOptions } from '../../../utils/storyblok';
 
 interface Props {
   story: StoryData;
@@ -309,7 +309,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                 eventPrefix="SESSION_ACTIVITY"
                 eventData={eventData}
               >
-                <div>{render(story.content.activity)}</div>
+                <>{render(story.content.activity, RichTextOptions)}</>
               </SessionContentCard>
               <Dots />
 
@@ -320,7 +320,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
                 eventPrefix="SESSION_BONUS_CONTENT"
                 eventData={eventData}
               >
-                <div>{render(story.content.bonus)}</div>
+                <>{render(story.content.bonus, RichTextOptions)}</>
               </SessionContentCard>
               <Dots />
 
