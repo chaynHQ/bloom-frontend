@@ -70,7 +70,7 @@ const CourseCard = (props: CourseCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Image
-            alt="test"
+            alt={course.content.image.alt}
             src={course.content.image.filename}
             width={100}
             height={100}
