@@ -6,7 +6,7 @@ import { useTranslations } from 'use-intl';
 import { RootState } from '../app/store';
 import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
-import illustrationTeaPeach from '../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
 
 export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
   const { partnerAdmin } = useTypedSelector((state: RootState) => state);
@@ -34,7 +34,7 @@ export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
         <Box sx={imageContainerStyle}>
           <Image
             alt={tS('alt.personTea')}
-            src={illustrationTeaPeach}
+            src={illustrationPerson4Peach}
             layout="fill"
             objectFit="contain"
           />
