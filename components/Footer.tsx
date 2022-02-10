@@ -31,7 +31,7 @@ const logoContainerStyle = {
   display: 'block',
   width: 160,
   height: 34,
-  marginBottom: 1.75,
+  marginBottom: 1.5,
 } as const;
 
 const descriptionContainerStyle = {
@@ -138,7 +138,7 @@ const Footer = () => {
               logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Tiktok' })
             }
           >
-            <Image alt={tS.raw('alt.bloomLogo')} src={tiktokLogo} />
+            <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
           </IconButton>
           <IconButton
             aria-label="Youtube"
