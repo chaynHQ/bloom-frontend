@@ -10,6 +10,9 @@ module.exports = {
     NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
     NEXT_PUBLIC_CRISP_WEBSITE_ID: process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID,
   },
+  images: {
+    domains: ['a.storyblok.com'],
+  },
   i18n: {
     locales: ['en'],
     defaultLocale: 'en',

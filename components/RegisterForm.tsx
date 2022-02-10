@@ -169,7 +169,7 @@ const RegisterForm = () => {
       await validateAccessCode();
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
-      router.push('/therapy/book-session');
+      router.push('/courses');
     } catch {
       // errors handled in each function
     }
