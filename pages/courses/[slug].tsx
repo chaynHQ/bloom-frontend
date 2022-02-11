@@ -1,4 +1,4 @@
-import { Box, Container, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -7,21 +7,15 @@ import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
+import CourseIntroduction from '../../components/CourseIntroduction';
 import Header from '../../components/Header';
 import Link from '../../components/Link';
 import SessionCard from '../../components/SessionCard';
-import Video from '../../components/Video';
-import VideoTranscriptModal from '../../components/VideoTranscriptModal';
 import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import {
-  COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
-  COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
-  COURSE_OVERVIEW_VIEWED,
-} from '../../constants/events';
+import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 
 interface Props {
@@ -30,13 +24,42 @@ interface Props {
   messages: any;
 }
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+} as const;
+
+const accessContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  justifyContent: 'center',
+} as const;
+
+const sessionsContainerStyle = {
+  marginTop: 6,
+} as const;
+
+const cardsContainerStyle = {
+  display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  gap: 4,
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 150, md: 210 },
+  height: { xs: 150, md: 210 },
+  marginBottom: 4,
+} as const;
+
 const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
-  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -86,65 +109,12 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-  useEffect(() => {
-    if (openTranscriptModal === null) {
-      return;
-    }
-
-    logEvent(
-      openTranscriptModal
-        ? COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED
-        : COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
-      {
-        ...eventData,
-        course_name: story.content.name,
-      },
-    );
-  }, [openTranscriptModal]);
-
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
     imageSrc: story.content.image_with_background?.filename,
     translatedImageAlt: story.content.image_with_background?.alt,
   };
-
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-  } as const;
-
-  const accessContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    justifyContent: 'center',
-  } as const;
-
-  const introductionContainerStyle = {
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 4,
-  } as const;
-
-  const sessionsContainerStyle = {
-    marginTop: 6,
-  } as const;
-
-  const cardsContainerStyle = {
-    display: 'flex',
-    flexDirection: { xs: 'column', md: 'row' },
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 4,
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 150, md: 210 },
-    height: { xs: 150, md: 210 },
-    marginBottom: 4,
-  } as const;
 
   const getSessionProgress = (sessionId: number) => {
     return sessionsStarted.includes(sessionId)
@@ -194,38 +164,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
             progressStatus={courseProgress!}
           />
           <Container sx={containerStyle}>
-            <Box sx={introductionContainerStyle}>
-              <Box maxWidth={400}>
-                <Typography component="h2" variant="h2">
-                  {t('courseDetail.introductionTitle')}
-                </Typography>
-                <Typography component="p" variant="body1">
-                  {t.rich('courseDetail.introductionDescription', {
-                    transcriptLink: (children) => (
-                      <MuiLink
-                        component="button"
-                        variant="body1"
-                        onClick={() => setOpenTranscriptModal(true)}
-                      >
-                        {children}
-                      </MuiLink>
-                    ),
-                  })}
-                </Typography>
-                <VideoTranscriptModal
-                  videoName={story.content.name}
-                  content={story.content.video_transcript}
-                  setOpenTranscriptModal={setOpenTranscriptModal}
-                  openTranscriptModal={openTranscriptModal}
-                />
-              </Box>
-              <Video
-                url={story.content.video.url}
-                eventData={eventData}
-                eventPrefix="COURSE_INTRO"
-                containerStyles={{ width: { xs: '100%', sm: '70%', md: '55%' } }}
-              />
-            </Box>
+            {story.content.video && <CourseIntroduction course={story} eventData={eventData} />}
 
             <Box sx={sessionsContainerStyle}>
               {story.content.weeks.map((week: any) => {
