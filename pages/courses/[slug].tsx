@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import CourseIntroduction from '../../components/CourseIntroduction';
@@ -17,6 +18,7 @@ import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
+import { RichTextOptions } from '../../utils/richText';
 
 interface Props {
   story: StoryData;
@@ -124,7 +126,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
       : null;
   };
 
-  const IncorrectAccess = () => {
+  if (incorrectAccess) {
     return (
       <Container sx={accessContainerStyle}>
         <Box sx={imageContainerStyle}>
@@ -145,27 +147,27 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
         </Typography>
       </Container>
     );
-  };
-
+  }
+  console.log(story.content);
   return (
     <Box>
       <Head>
         <title>{story.content.name}</title>
       </Head>
-      {incorrectAccess ? (
-        <IncorrectAccess />
-      ) : (
-        <Box>
-          <Header
-            title={headerProps.title}
-            introduction={headerProps.introduction}
-            imageSrc={headerProps.imageSrc}
-            translatedImageAlt={headerProps.translatedImageAlt}
-            progressStatus={courseProgress!}
-          />
-          <Container sx={containerStyle}>
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        translatedImageAlt={headerProps.translatedImageAlt}
+        progressStatus={courseProgress!}
+      />
+      <Container sx={containerStyle}>
+        {story.content.coming_soon && (
+          <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
+        )}
+        {!story.content.coming_soon && (
+          <>
             {story.content.video && <CourseIntroduction course={story} eventData={eventData} />}
-
             <Box sx={sessionsContainerStyle}>
               {story.content.weeks.map((week: any) => {
                 return (
@@ -189,9 +191,9 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
                 );
               })}
             </Box>
-          </Container>
-        </Box>
-      )}
+          </>
+        )}
+      </Container>
     </Box>
   );
 };

@@ -267,114 +267,119 @@ const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) =>
             </Typography>
           </Header>
           <Container sx={containerStyle}>
-            <Box sx={cardColumnStyle}>
-              {story.content.video && (
-                <>
-                  <SessionContentCard
-                    title={t('sessionDetail.videoTitle')}
-                    titleIcon={SlowMotionVideoIcon}
-                    eventPrefix="SESSION_VIDEO"
-                    eventData={eventData}
-                  >
-                    <Typography mb={3}>
-                      {t.rich('sessionDetail.videoDescription', {
-                        transcriptLink: (children) => (
-                          <MuiLink
-                            component="button"
-                            variant="body1"
-                            onClick={() => setOpenTranscriptModal(true)}
-                          >
-                            {children}
-                          </MuiLink>
-                        ),
-                      })}
-                    </Typography>
-                    <Video
-                      url={story.content.video.url}
-                      setVideoStarted={setVideoStarted}
+            {story.content.coming_soon && (
+              <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
+            )}
+            {!story.content.coming_soon && (
+              <Box sx={cardColumnStyle}>
+                {story.content.video && (
+                  <>
+                    <SessionContentCard
+                      title={t('sessionDetail.videoTitle')}
+                      titleIcon={SlowMotionVideoIcon}
+                      eventPrefix="SESSION_VIDEO"
                       eventData={eventData}
-                      eventPrefix="SESSION"
-                      containerStyles={{ mx: 'auto', mb: 2 }}
-                    />
-                    <VideoTranscriptModal
-                      videoName={story.content.name}
-                      content={story.content.video_transcript}
-                      setOpenTranscriptModal={setOpenTranscriptModal}
-                      openTranscriptModal={openTranscriptModal}
-                    />
-                  </SessionContentCard>
-                  <Dots />
-                </>
-              )}
-              {story.content.activity && (
-                <>
-                  <SessionContentCard
-                    title={t('sessionDetail.activityTitle')}
-                    titleIcon={StarBorderIcon}
-                    richtextContent
-                    eventPrefix="SESSION_ACTIVITY"
-                    eventData={eventData}
-                  >
-                    <>{render(story.content.activity, RichTextOptions)}</>
-                  </SessionContentCard>
-                  <Dots />
-                </>
-              )}
-              {story.content.bonus && (
-                <>
-                  <SessionContentCard
-                    title={t('sessionDetail.bonusTitle')}
-                    titleIcon={LinkIcon}
-                    richtextContent
-                    eventPrefix="SESSION_BONUS_CONTENT"
-                    eventData={eventData}
-                  >
-                    <>{render(story.content.bonus, RichTextOptions)}</>
-                  </SessionContentCard>
-                  <Dots />
-                </>
-              )}
-              {liveChatAccess && (
-                <>
-                  <SessionContentCard
-                    title={t('sessionDetail.chatTitle')}
-                    titleIcon={ChatBubbleOutlineIcon}
-                    titleIconSize={24}
-                    eventPrefix="SESSION_CHAT"
-                    eventData={eventData}
-                  >
-                    <Typography>{t('sessionDetail.chatDescription')}</Typography>
-                    <Box sx={crispButtonContainerStyle}>
-                      <CrispButton
-                        email={user.email}
+                    >
+                      <Typography mb={3}>
+                        {t.rich('sessionDetail.videoDescription', {
+                          transcriptLink: (children) => (
+                            <MuiLink
+                              component="button"
+                              variant="body1"
+                              onClick={() => setOpenTranscriptModal(true)}
+                            >
+                              {children}
+                            </MuiLink>
+                          ),
+                        })}
+                      </Typography>
+                      <Video
+                        url={story.content.video.url}
+                        setVideoStarted={setVideoStarted}
                         eventData={eventData}
-                        buttonText={t('sessionDetail.startChatButton')}
+                        eventPrefix="SESSION"
+                        containerStyles={{ mx: 'auto', mb: 2 }}
                       />
-                    </Box>
-                  </SessionContentCard>
-                </>
-              )}
-              {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-                <>
-                  <Dots />
-                  <Button
-                    color="secondary"
-                    size="large"
-                    variant="contained"
-                    onClick={completeSessionAction}
-                    startIcon={<CheckCircleIcon color="error" />}
-                  >
-                    {t('sessionDetail.sessionComplete')}
-                  </Button>
-                </>
-              )}
+                      <VideoTranscriptModal
+                        videoName={story.content.name}
+                        content={story.content.video_transcript}
+                        setOpenTranscriptModal={setOpenTranscriptModal}
+                        openTranscriptModal={openTranscriptModal}
+                      />
+                    </SessionContentCard>
+                    <Dots />
+                  </>
+                )}
+                {story.content.activity && (
+                  <>
+                    <SessionContentCard
+                      title={t('sessionDetail.activityTitle')}
+                      titleIcon={StarBorderIcon}
+                      richtextContent
+                      eventPrefix="SESSION_ACTIVITY"
+                      eventData={eventData}
+                    >
+                      <>{render(story.content.activity, RichTextOptions)}</>
+                    </SessionContentCard>
+                    <Dots />
+                  </>
+                )}
+                {story.content.bonus && (
+                  <>
+                    <SessionContentCard
+                      title={t('sessionDetail.bonusTitle')}
+                      titleIcon={LinkIcon}
+                      richtextContent
+                      eventPrefix="SESSION_BONUS_CONTENT"
+                      eventData={eventData}
+                    >
+                      <>{render(story.content.bonus, RichTextOptions)}</>
+                    </SessionContentCard>
+                    <Dots />
+                  </>
+                )}
+                {liveChatAccess && (
+                  <>
+                    <SessionContentCard
+                      title={t('sessionDetail.chatTitle')}
+                      titleIcon={ChatBubbleOutlineIcon}
+                      titleIconSize={24}
+                      eventPrefix="SESSION_CHAT"
+                      eventData={eventData}
+                    >
+                      <Typography>{t('sessionDetail.chatDescription')}</Typography>
+                      <Box sx={crispButtonContainerStyle}>
+                        <CrispButton
+                          email={user.email}
+                          eventData={eventData}
+                          buttonText={t('sessionDetail.startChatButton')}
+                        />
+                      </Box>
+                    </SessionContentCard>
+                  </>
+                )}
+                {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
+                  <>
+                    <Dots />
+                    <Button
+                      color="secondary"
+                      size="large"
+                      variant="contained"
+                      onClick={completeSessionAction}
+                      startIcon={<CheckCircleIcon color="error" />}
+                    >
+                      {t('sessionDetail.sessionComplete')}
+                    </Button>
+                  </>
+                )}
 
-              {error && (
-                <Typography sx={errorStyle} variant="body1">
-                  {error}
-                </Typography>
-              )}
-            </Box>
+                {error && (
+                  <Typography sx={errorStyle} variant="body1">
+                    {error}
+                  </Typography>
+                )}
+              </Box>
+            )}
           </Container>
         </Box>
       )}
