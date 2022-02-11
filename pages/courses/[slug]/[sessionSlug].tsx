@@ -23,7 +23,7 @@ import SessionContentCard from '../../../components/SessionContentCard';
 import Video from '../../../components/Video';
 import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
 import rollbar from '../../../config/rollbar';
-import Storyblok from '../../../config/storyblok';
+import Storyblok, { useStoryblok } from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import {
   SESSION_COMPLETE_ERROR,
@@ -44,6 +44,7 @@ import { RichTextOptions } from '../../../utils/richText';
 interface Props {
   story: StoryData;
   preview: boolean;
+  sbParams: {};
   messages: any;
   locale: LANGUAGES;
 }
@@ -82,8 +83,10 @@ const errorStyle = {
   fontWeight: 600,
 } as const;
 
-const SessionDetail: NextPage<Props> = ({ story, preview, messages, locale }) => {
+const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');
+  story = useStoryblok(story, preview, sbParams, messages);
+
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
@@ -392,8 +395,12 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   let sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
 
-  let sbParams = {
+  const extraSbParams = {
     resolve_relations: 'Session.course',
+  };
+
+  const sbParams = {
+    ...extraSbParams,
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
   };
@@ -404,6 +411,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
+      sbParams: extraSbParams,
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),

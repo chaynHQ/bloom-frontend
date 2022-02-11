@@ -10,7 +10,7 @@ const Storyblok = new StoryblokClient({
   },
 });
 
-export function useStoryblok(originalStory: any, preview: boolean, locale: LANGUAGES) {
+export function useStoryblok(originalStory: any, preview: boolean, params: {}, locale: LANGUAGES) {
   let [story, setStory] = useState(originalStory);
 
   // adds the events for updating the visual editor
@@ -37,6 +37,7 @@ export function useStoryblok(originalStory: any, preview: boolean, locale: LANGU
       storyblokInstance.on('enterEditmode', (event: any) => {
         // loading the draft version on initial enter of editor
         Storyblok.get(`cdn/stories/${event.storyId}`, {
+          ...params,
           version: 'draft',
           language: locale,
         })

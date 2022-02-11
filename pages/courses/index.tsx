@@ -43,11 +43,11 @@ const cardColumnStyle = {
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
-  const t = useTranslations('Courses');
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const t = useTranslations('Courses');
 
   const headerProps = {
     title: t.rich('title'),

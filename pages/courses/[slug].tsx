@@ -12,8 +12,8 @@ import CourseIntroduction from '../../components/CourseIntroduction';
 import Header from '../../components/Header';
 import Link from '../../components/Link';
 import SessionCard from '../../components/SessionCard';
-import Storyblok from '../../config/storyblok';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import Storyblok, { useStoryblok } from '../../config/storyblok';
+import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
@@ -23,7 +23,9 @@ import { RichTextOptions } from '../../utils/richText';
 interface Props {
   story: StoryData;
   preview: boolean;
+  sbParams: {};
   messages: any;
+  locale: LANGUAGES;
 }
 
 const containerStyle = {
@@ -56,9 +58,11 @@ const imageContainerStyle = {
   marginBottom: 4,
 } as const;
 
-const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
+const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
+
+  story = useStoryblok(story, preview, sbParams, messages);
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
@@ -148,7 +152,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
       </Container>
     );
   }
-  console.log(story.content);
+
   return (
     <Box>
       <Head>
@@ -199,10 +203,14 @@ const CourseOverview: NextPage<Props> = ({ story, preview, messages }) => {
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  let slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
+  const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  let sbParams = {
+  const extraSbParams = {
     resolve_relations: 'week.sessions',
+  };
+
+  const sbParams = {
+    ...extraSbParams,
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
   };
@@ -213,11 +221,13 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
+      sbParams: extraSbParams,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
       },
+      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
