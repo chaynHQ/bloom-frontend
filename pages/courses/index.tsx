@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -117,22 +118,34 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Box sx={cardsContainerStyle}>
-          <Box sx={cardColumnStyle}>
-            {loadedCourses.map((course, index) => {
-              if (index % 2 === 0) return;
-              const courseProgress = getCourseProgress(course.id);
-              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
-            })}
+        {loadedCourses.length === 0 ? (
+          <Box>
+            <Typography component="p" variant="body1">
+              {t('noCourses')}
+            </Typography>
           </Box>
-          <Box sx={cardColumnStyle}>
-            {loadedCourses.map((course, index) => {
-              if (index % 2 === 1) return;
-              const courseProgress = getCourseProgress(course.id);
-              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
-            })}
+        ) : (
+          <Box sx={cardsContainerStyle}>
+            <Box sx={cardColumnStyle}>
+              {loadedCourses.map((course, index) => {
+                if (index % 2 === 0) return;
+                const courseProgress = getCourseProgress(course.id);
+                return (
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                );
+              })}
+            </Box>
+            <Box sx={cardColumnStyle}>
+              {loadedCourses.map((course, index) => {
+                if (index % 2 === 1) return;
+                const courseProgress = getCourseProgress(course.id);
+                return (
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                );
+              })}
+            </Box>
           </Box>
-        </Box>
+        )}
       </Container>
     </Box>
   );
