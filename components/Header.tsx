@@ -30,7 +30,7 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
-  paddingTop: '8.5rem !important',
+  paddingTop: { xs: '7rem !important', md: '8.5rem !important' },
   gap: '30px',
 } as const;
 
@@ -51,6 +51,14 @@ const textContainerStyle = {
   minHeight: { xs: 180, md: 240 },
 } as const;
 
+const childrenContentStyle = {
+  marginBottom: 2,
+} as const;
+
+const textContentStyle = {
+  marginTop: 'auto',
+} as const;
+
 const Header = (props: HeaderProps) => {
   const { title, introduction, imageAlt, translatedImageAlt, imageSrc, progressStatus, children } =
     props;
@@ -65,8 +73,8 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        <Box mb={2}>{children}</Box>
-        <Box>
+        <Box sx={childrenContentStyle}>{children}</Box>
+        <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
