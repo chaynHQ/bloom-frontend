@@ -68,20 +68,20 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         course.content.included_for_partners.includes('Public'),
       );
       setLoadedCourses(coursesWithAccess);
+    } else {
+      let userPartners: Array<string> = [];
+
+      partnerAccesses.map((partnerAccess) => {
+        if (partnerAccess.partner.name) {
+          userPartners.push(partnerAccess.partner.name);
+        }
+      });
+
+      const coursesWithAccess = stories.filter((course) =>
+        userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
+      );
+      setLoadedCourses(coursesWithAccess);
     }
-
-    let userPartners: Array<string> = [];
-
-    partnerAccesses.map((partnerAccess) => {
-      if (partnerAccess.partner.name) {
-        userPartners.push(partnerAccess.partner.name);
-      }
-    });
-
-    const coursesWithAccess = stories.filter((course) =>
-      userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
-    );
-    setLoadedCourses(coursesWithAccess);
 
     if (courses) {
       let courseCoursesStarted: Array<number> = [];
