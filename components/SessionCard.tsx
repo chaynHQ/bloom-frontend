@@ -19,7 +19,7 @@ import { rowStyle } from '../styles/common';
 
 interface SessionCardProps {
   session: StoryData;
-  sessionProgress: PROGRESS_STATUS | null;
+  sessionProgress: PROGRESS_STATUS;
 }
 
 const cardStyle = {
@@ -71,10 +71,12 @@ const SessionCard = (props: SessionCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={rowStyles}>
-            <Box mt={0.5}>
-              {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
-              {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
-            </Box>
+            {sessionProgress !== PROGRESS_STATUS.NOT_STARTED && (
+              <Box mt={0.5}>
+                {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
+                {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
+              </Box>
+            )}
             <Typography component="h3" variant="h3">
               {session.content.name}
             </Typography>

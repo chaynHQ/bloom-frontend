@@ -127,7 +127,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
       ? PROGRESS_STATUS.STARTED
       : sessionsCompleted.includes(sessionId)
       ? PROGRESS_STATUS.COMPLETED
-      : null;
+      : PROGRESS_STATUS.NOT_STARTED;
   };
 
   if (incorrectAccess) {
