@@ -259,7 +259,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
             progressStatus={sessionProgress!}
           >
             <Typography>
-              {t('course')}:{' '}
+              <Link href={`/courses`}>{t('courses')}</Link> /{' '}
               <Link href={`/${story.content.course.full_slug}`}>
                 {story.content.course.content.name}
               </Link>
