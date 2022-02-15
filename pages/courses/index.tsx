@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -12,7 +13,7 @@ import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -42,17 +43,17 @@ const cardColumnStyle = {
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
-  const t = useTranslations('Courses');
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const t = useTranslations('Courses');
 
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    imageSrc: illustrationPerson3Pink,
+    imageAlt: 'alt.personSitting',
   };
 
   useEffect(() => {
@@ -67,20 +68,20 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         course.content.included_for_partners.includes('Public'),
       );
       setLoadedCourses(coursesWithAccess);
+    } else {
+      let userPartners: Array<string> = [];
+
+      partnerAccesses.map((partnerAccess) => {
+        if (partnerAccess.partner.name) {
+          userPartners.push(partnerAccess.partner.name);
+        }
+      });
+
+      const coursesWithAccess = stories.filter((course) =>
+        userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
+      );
+      setLoadedCourses(coursesWithAccess);
     }
-
-    let userPartners: Array<string> = [];
-
-    partnerAccesses.map((partnerAccess) => {
-      if (partnerAccess.partner.name) {
-        userPartners.push(partnerAccess.partner.name);
-      }
-    });
-
-    const coursesWithAccess = stories.filter((course) =>
-      userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
-    );
-    setLoadedCourses(coursesWithAccess);
 
     if (courses) {
       let courseCoursesStarted: Array<number> = [];
@@ -117,22 +118,34 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Box sx={cardsContainerStyle}>
-          <Box sx={cardColumnStyle}>
-            {loadedCourses.map((course, index) => {
-              if (index % 2 === 0) return;
-              const courseProgress = getCourseProgress(course.id);
-              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
-            })}
+        {loadedCourses.length === 0 ? (
+          <Box>
+            <Typography component="p" variant="body1">
+              {t('noCourses')}
+            </Typography>
           </Box>
-          <Box sx={cardColumnStyle}>
-            {loadedCourses.map((course, index) => {
-              if (index % 2 === 1) return;
-              const courseProgress = getCourseProgress(course.id);
-              return <CourseCard key={course.id} course={course} courseProgress={courseProgress} />;
-            })}
+        ) : (
+          <Box sx={cardsContainerStyle}>
+            <Box sx={cardColumnStyle}>
+              {loadedCourses.map((course, index) => {
+                if (index % 2 === 0) return;
+                const courseProgress = getCourseProgress(course.id);
+                return (
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                );
+              })}
+            </Box>
+            <Box sx={cardColumnStyle}>
+              {loadedCourses.map((course, index) => {
+                if (index % 2 === 1) return;
+                const courseProgress = getCourseProgress(course.id);
+                return (
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                );
+              })}
+            </Box>
           </Box>
-        </Box>
+        )}
       </Container>
     </Box>
   );

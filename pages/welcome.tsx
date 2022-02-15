@@ -16,9 +16,9 @@ import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import illustrationCrown1 from '../public/illustration_crown1.svg';
-import illustrationCrown2 from '../public/illustration_crown2.svg';
-import illustrationThey5Yellow from '../public/illustration_they5_yellow.svg';
+import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
+import illustrationLeafMixBee from '../public/illustration_leaf_mix_bee.svg';
+import illustrationPerson5Yellow from '../public/illustration_person5_yellow.svg';
 import { rowStyle } from '../styles/common';
 
 const Welcome: NextPage = () => {
@@ -31,7 +31,7 @@ const Welcome: NextPage = () => {
     partnerLogoSrc: bloomBumbleLogo,
     partnerLogoAlt: 'alt.bloomBumbleLogo',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.personBloom',
+    imageAlt: 'alt.bloomHead',
   };
 
   const rowContainerStyle = {
@@ -62,7 +62,7 @@ const Welcome: NextPage = () => {
   } as const;
 
   const rowItem = {
-    width: { xs: '100%', md: '45%' },
+    width: { xs: '100%', sm: '60%', md: '45%' },
   } as const;
 
   const resourcesStyle = {
@@ -104,7 +104,7 @@ const Welcome: NextPage = () => {
       </Container>
       <Container sx={rowContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.person1')} src={illustrationThey5Yellow} />
+          <Image alt={tS.raw('alt.personSitting')} src={illustrationPerson5Yellow} />
         </Box>
         <Box sx={rowItem}>
           <Typography variant="h2" component="h2">
@@ -123,7 +123,7 @@ const Welcome: NextPage = () => {
       <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
         <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tS.raw('alt.partialLeavesRose')} src={illustrationCrown1} />
+            <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} />
           </Box>
           <Typography variant="h2" component="h2">
             {t.rich('bloomTitle')}
@@ -146,7 +146,7 @@ const Welcome: NextPage = () => {
         </Box>
         <Box sx={rowItem}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tS.raw('alt.partialLeavesBee')} src={illustrationCrown2} />
+            <Image alt={tS.raw('alt.leafMixBee')} src={illustrationLeafMixBee} />
           </Box>
           <Typography variant="h2" component="h2">
             {t.rich('bumbleTitle')}

@@ -20,7 +20,7 @@ import illustrationChooseTherapist from '../../public/illustration_choose_therap
 import illustrationConfidential from '../../public/illustration_confidential.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -101,7 +101,7 @@ const BookSession: NextPage = () => {
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
+    imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
 
@@ -119,7 +119,7 @@ const BookSession: NextPage = () => {
   } as const;
 
   const bookingButtonStyle = {
-    minWidth: { xs: '100%', sm: 200 },
+    minWidth: 200,
     marginY: 4,
   } as const;
 
@@ -165,12 +165,7 @@ const BookSession: NextPage = () => {
           {t.rich('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image
-            alt={tS.raw('alt.partialLeavesRose')}
-            src={illustrationLeafMix}
-            width={100}
-            height={100}
-          />
+          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
         </Box>
 
         <Box sx={faqsContainerStyle}>

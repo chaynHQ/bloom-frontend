@@ -29,10 +29,11 @@
     "react-player": "^2.9.0",
     "react-redux": "^7.2.5",
     "rollbar": "^2.24.0",
-    "storyblok-js-client": "^4.2.0"
+    "storyblok-js-client": "^4.2.0",
+    "storyblok-rich-text-react-renderer": "^2.5.2",
+    "@storyblok/storyblok-editable": "^1.0.0"
   },
   "devDependencies": {
-    "@storyblok/storyblok-editable": "^1.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
@@ -46,7 +47,6 @@
     "lodash": "^4.17.21",
     "prettier": "^2.4.1",
     "react-test-renderer": "^17.0.2",
-    "storyblok-rich-text-react-renderer": "^2.5.2",
     "ts-jest": "^27.0.5",
     "typescript": "4.4.3"
   }
