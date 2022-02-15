@@ -30,7 +30,7 @@ const headerContainerStyles = {
   justifyContent: 'space-between',
   flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
-  paddingTop: '8.5rem !important',
+  paddingTop: { xs: '7rem !important', md: '8.5rem !important' },
   gap: '30px',
 } as const;
 
@@ -43,8 +43,20 @@ const imageContainerStyle = {
 } as const;
 
 const textContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   maxWidth: 600,
   width: { xs: '100%', md: 'auto' },
+  minHeight: { xs: 180, md: 240 },
+} as const;
+
+const childrenContentStyle = {
+  marginBottom: 2,
+} as const;
+
+const textContentStyle = {
+  marginTop: 'auto',
 } as const;
 
 const Header = (props: HeaderProps) => {
@@ -61,13 +73,15 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        {children}
-        <Typography variant="h1" component="h1">
-          {title}
-        </Typography>
-        <Typography variant="body1" component="p">
-          {introduction}
-        </Typography>
+        <Box sx={childrenContentStyle}>{children}</Box>
+        <Box sx={textContentStyle}>
+          <Typography variant="h1" component="h1">
+            {title}
+          </Typography>
+          <Typography variant="body1" component="p">
+            {introduction}
+          </Typography>
+        </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>
       <Box sx={imageContainerStyle}>

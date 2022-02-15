@@ -37,10 +37,7 @@ const TopBar = () => {
   const tS = useTranslations('Shared');
   const router = useRouter();
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
-  const homepage =
-    pathname === 'partner-admin'
-      ? '/partner-admin/create-access-code'
-      : '/therapy/confirmed-session';
+  const homepage = pathname === 'partner-admin' ? '/partner-admin/create-access-code' : '/courses';
 
   const { user } = useTypedSelector((state: RootState) => state);
 
