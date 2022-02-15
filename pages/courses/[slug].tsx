@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
@@ -23,7 +23,7 @@ import { RichTextOptions } from '../../utils/richText';
 interface Props {
   story: StoryData;
   preview: boolean;
-  sbParams: {};
+  sbParams: StoriesParams;
   messages: any;
   locale: LANGUAGES;
 }
@@ -62,7 +62,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
-  story = useStoryblok(story, preview, sbParams, messages);
+  story = useStoryblok(story, preview, sbParams, locale);
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);

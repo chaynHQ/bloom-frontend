@@ -11,7 +11,7 @@ import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useCompleteSessionMutation, useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
@@ -44,7 +44,7 @@ import { RichTextOptions } from '../../../utils/richText';
 interface Props {
   story: StoryData;
   preview: boolean;
-  sbParams: {};
+  sbParams: StoriesParams;
   messages: any;
   locale: LANGUAGES;
 }
