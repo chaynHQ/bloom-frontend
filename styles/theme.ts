@@ -90,7 +90,11 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           color: 'inherit',
-          textDecorationColor: theme.palette.primary.dark,
+          textDecorationColor: theme.palette.text.primary,
+
+          '&:hover': {
+            textDecorationColor: theme.palette.primary.dark,
+          },
 
           '&.MuiLink-button.MuiTypography-body1': {
             paddingBottom: '3px',

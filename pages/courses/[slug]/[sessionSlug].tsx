@@ -90,7 +90,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
-  const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS | null>(null);
+  const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
+    PROGRESS_STATUS.NOT_STARTED,
+  );
   const [error, setError] = useState<string | null>(null);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
@@ -168,7 +170,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
         course_name: story.content.name,
       },
     );
-    if (openTranscriptModal && sessionProgress === null) {
+    if (openTranscriptModal && sessionProgress === PROGRESS_STATUS.NOT_STARTED) {
       callStartSession();
     }
   }, [openTranscriptModal]);
@@ -199,7 +201,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
   }
 
   useEffect(() => {
-    if (!videoStarted || sessionProgress !== null) return;
+    if (!videoStarted || sessionProgress !== PROGRESS_STATUS.NOT_STARTED) return;
 
     if (videoStarted) {
       callStartSession();
@@ -256,16 +258,16 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
             introduction={headerProps.introduction}
             imageSrc={headerProps.imageSrc}
             imageAlt={headerProps.imageAlt}
-            progressStatus={sessionProgress!}
+            progressStatus={sessionProgress}
           >
             <Typography>
-              {t('course')}:{' '}
+              <Link href={`/courses`}>{t('courses')}</Link> /{' '}
               <Link href={`/${story.content.course.full_slug}`}>
                 {story.content.course.content.name}
               </Link>
             </Typography>
 
-            <Typography mb={3.5} mt={0.5}>
+            <Typography mt={0.5}>
               {weekString} - {t('session')} {story.position / 10 - 1}
             </Typography>
           </Header>
