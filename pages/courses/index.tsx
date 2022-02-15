@@ -128,7 +128,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
           <Box sx={cardsContainerStyle}>
             <Box sx={cardColumnStyle}>
               {loadedCourses.map((course, index) => {
-                if (index % 2 === 0) return;
+                if (index % 2 === 1) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
@@ -137,7 +137,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
             </Box>
             <Box sx={cardColumnStyle}>
               {loadedCourses.map((course, index) => {
-                if (index % 2 === 1) return;
+                if (index % 2 === 0) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
@@ -156,6 +156,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
     starts_with: 'courses/',
+    sort_by: 'position:desc',
     filter_query: {
       component: {
         in: 'Course',
