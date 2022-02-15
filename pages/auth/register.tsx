@@ -58,7 +58,7 @@ const Register: NextPage = () => {
   } as const;
 
   const formCardStyle = {
-    width: { xs: '100%', md: '45%' },
+    width: { xs: '100%', sm: '70%', md: '45%' },
   } as const;
 
   const ExtraContent = () => {

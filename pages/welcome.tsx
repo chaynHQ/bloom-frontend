@@ -62,7 +62,7 @@ const Welcome: NextPage = () => {
   } as const;
 
   const rowItem = {
-    width: { xs: '100%', md: '45%' },
+    width: { xs: '100%', sm: '60%', md: '45%' },
   } as const;
 
   const resourcesStyle = {

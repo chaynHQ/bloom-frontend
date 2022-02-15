@@ -60,13 +60,8 @@ const SessionContentCard = (props: SessionContentCardProps) => {
     height: { xs: titleIconSize, md: titleIconSize + 4 },
   } as const;
 
-  const collapseContainerStyle = {
-    ':first-of-type': {
-      marginTop: 0,
-    },
-    ':last-of-type': {
-      marginBottom: 0,
-    },
+  const contentContainerStyle = {
+    paddingY: richtextContent ? '1rem !important' : '2rem !important',
   } as const;
 
   const titleContainerStyle = {
@@ -94,7 +89,7 @@ const SessionContentCard = (props: SessionContentCardProps) => {
       </CardActionArea>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent sx={collapseContainerStyle}>{children}</CardContent>
+        <CardContent sx={contentContainerStyle}>{children}</CardContent>
       </Collapse>
     </Card>
   );
