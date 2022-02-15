@@ -36,7 +36,7 @@ const LeaveSiteButton = () => {
   return (
     <Box sx={containerStyles}>
       <Button color="primary" onClick={hideSite} sx={buttonStyle}>
-        {tS('leaveSiteButton').toUpperCase()}
+        {tS('leaveSiteButton')}
       </Button>
     </Box>
   );

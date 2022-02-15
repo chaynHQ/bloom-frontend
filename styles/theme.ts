@@ -115,7 +115,12 @@ theme = createTheme(theme, {
             opacity: 0.1,
           },
           '@media (min-width:900px)': {
-            fontSize: '1.125rem',
+            '&.MuiButton-sizeMedium': {
+              fontSize: '1rem',
+            },
+            '&.MuiButton-sizeLarge': {
+              fontSize: '1.125rem',
+            },
           },
         },
         outlinedPrimary: {
