@@ -43,8 +43,12 @@ const imageContainerStyle = {
 } as const;
 
 const textContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   maxWidth: 600,
   width: { xs: '100%', md: 'auto' },
+  minHeight: { xs: 180, md: 240 },
 } as const;
 
 const Header = (props: HeaderProps) => {
@@ -61,13 +65,15 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        {children}
-        <Typography variant="h1" component="h1">
-          {title}
-        </Typography>
-        <Typography variant="body1" component="p">
-          {introduction}
-        </Typography>
+        <Box mb={2}>{children}</Box>
+        <Box>
+          <Typography variant="h1" component="h1">
+            {title}
+          </Typography>
+          <Typography variant="body1" component="p">
+            {introduction}
+          </Typography>
+        </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>
       <Box sx={imageContainerStyle}>

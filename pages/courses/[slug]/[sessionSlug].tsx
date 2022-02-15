@@ -265,7 +265,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
               </Link>
             </Typography>
 
-            <Typography mb={3.5} mt={0.5}>
+            <Typography mt={0.5}>
               {weekString} - {t('session')} {story.position / 10 - 1}
             </Typography>
           </Header>

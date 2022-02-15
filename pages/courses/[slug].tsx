@@ -164,7 +164,9 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
-      />
+      >
+        <Link href={`/courses`}>{t('courses')}</Link>
+      </Header>
       <Container sx={containerStyle}>
         {story.content.coming_soon && (
           <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
