@@ -1,4 +1,4 @@
-export enum STORYBLOK_STORY_STATUS_ENUM {
+export enum STORYBLOK_STORY_STATUS {
   PUBLISHED = 'published',
   UNPUBLISHED = 'unpublished',
   DELETED = 'deleted',
