@@ -11,9 +11,8 @@ import Image from 'next/image';
 import * as React from 'react';
 import { RootState } from '../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../constants/events';
+import { getPartnerContent } from '../constants/partners';
 import { useTypedSelector } from '../hooks/store';
-import bloomLogo from '../public/bloom_logo.svg';
-import bumbleLogo from '../public/bumble_logo.svg';
 import tiktokLogo from '../public/tiktok.svg';
 import { rowStyle } from '../styles/common';
 import logEvent, { getEventUserData } from '../utils/logEvent';
@@ -56,101 +55,91 @@ const Footer = () => {
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
+  let partners: string[] = ['public'];
+  partnerAccesses.forEach((partnerAccess) => {
+    partnerAccess.partner.name && partners.push(partnerAccess.partner.name.toLowerCase());
+  });
+
   return (
     <Container sx={footerContainerStyle}>
-      <Box sx={brandContainerStyle}>
-        <Link href={'https://chayn.co'} sx={logoContainerStyle}>
-          <Image alt={tS.raw('alt.bloomLogo')} src={bloomLogo} />
-        </Link>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.chaynDetails1')}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.chaynDetails2')}
-        </Typography>
-        <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/chaynhq"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Instagram' })
-            }
-          >
-            <InstagramIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Facebook"
-            href="https://www.facebook.com/chayn/"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Facebook' })
-            }
-          >
-            <FacebookIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Twitter"
-            href="https://twitter.com/ChaynHQ"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Twitter' })
-            }
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Youtube"
-            href="https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
-            }
-          >
-            <YoutubeIcon />
-          </IconButton>
-        </Box>
-      </Box>
+      {partners.map((partner: string) => {
+        const partnerContent = getPartnerContent(partner);
+        if (!partnerContent) return;
 
-      <Box sx={brandContainerStyle}>
-        <Link href={'https://bumble.com'} sx={logoContainerStyle}>
-          <Image alt={tS.raw('alt.bumbleLogo')} src={bumbleLogo} />
-        </Link>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.bumbleDetails1')}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.bumbleDetails2')}
-        </Typography>
-        <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/bumble"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, {
-                ...eventUserData,
-                social_account: 'Instagram',
-              })
-            }
-          >
-            <InstagramIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Tiktok"
-            href="https://www.tiktok.com/@bumble"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Tiktok' })
-            }
-          >
-            <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
-          </IconButton>
-          <IconButton
-            aria-label="Youtube"
-            href="https://www.youtube.com/channel/UCERo8J7mug7cVcwIKaoJLww"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
-            }
-          >
-            <YoutubeIcon />
-          </IconButton>
-        </Box>
-      </Box>
+        return (
+          <Box key={`${partner}_footer`} sx={brandContainerStyle}>
+            <Link href={partnerContent.website} sx={logoContainerStyle}>
+              <Image alt={tS.raw(partnerContent.logoAlt)} src={partnerContent.logo} />
+            </Link>
+            <Typography variant="body2" component="p">
+              {tS.raw(partnerContent.footerLine1)}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {tS.raw(partnerContent.footerLine2)}
+            </Typography>
+            <Box sx={socialsContainerStyle}>
+              {partnerContent.facebook && (
+                <IconButton
+                  aria-label="Facebook"
+                  href={partnerContent.facebook}
+                  onClick={() =>
+                    logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Facebook' })
+                  }
+                >
+                  <FacebookIcon />
+                </IconButton>
+              )}
+              {partnerContent.instagram && (
+                <IconButton
+                  aria-label="Instagram"
+                  href={partnerContent.instagram}
+                  onClick={() =>
+                    logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Instagram' })
+                  }
+                >
+                  <InstagramIcon />
+                </IconButton>
+              )}
+              {partnerContent.twitter && (
+                <IconButton
+                  aria-label="Twitter"
+                  href={partnerContent.twitter}
+                  onClick={() =>
+                    logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Twitter' })
+                  }
+                >
+                  <TwitterIcon />
+                </IconButton>
+              )}
+              {partnerContent.youtube && (
+                <IconButton
+                  aria-label="Youtube"
+                  href={partnerContent.youtube}
+                  onClick={() =>
+                    logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
+                  }
+                >
+                  <YoutubeIcon />
+                </IconButton>
+              )}
+              {partnerContent.tiktok && (
+                <IconButton
+                  aria-label="Tiktok"
+                  href={partnerContent.tiktok}
+                  onClick={() =>
+                    logEvent(PARTNER_SOCIAL_LINK_CLICKED, {
+                      ...eventUserData,
+                      social_account: 'Tiktok',
+                    })
+                  }
+                >
+                  <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
+                </IconButton>
+              )}
+            </Box>
+          </Box>
+        );
+      })}
 
       <Box sx={descriptionContainerStyle}>
         <Typography variant="body1" component="p" sx={{ mb: 1 }}>
