@@ -213,7 +213,8 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: 20,
+          padding: 25,
+          paddingTop: 30,
 
           [theme.breakpoints.up('md')]: {
             padding: 40,

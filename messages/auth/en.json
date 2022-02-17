@@ -1,6 +1,7 @@
 {
   "Auth": {
-    "introduction": "Bumble has partnered with Bloom to provide resources to sexual assault and relationship abuse survivors within the global Bumble community through a free online trauma support program.",
+    "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
+    "bloomLink": "More about Bloom",
     "bloomBumbleLink": "More about Bloom for Bumble",
     "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
     "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",

@@ -2,24 +2,31 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from '../../components/Link';
 import LoginForm from '../../components/LoginForm';
 import PartnerHeader from '../../components/PartnerHeader';
-import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
 const Login: NextPage = () => {
   const t = useTranslations('Auth');
+  const tS = useTranslations('Shared');
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const headerProps = {
-    partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: 'alt.bloomBumbleLogo',
+    partnerLogoSrc: welcomeToBloom,
+    partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomLogo',
   };
@@ -40,6 +47,32 @@ const Login: NextPage = () => {
     width: { xs: '100%', sm: '70%', md: '45%' },
   } as const;
 
+  const extraContentStyle = {
+    display: { xs: 'flex', md: 'block' },
+    flexDirection: 'column',
+    alignItems: 'center',
+  } as const;
+
+  const imageContainerStyle = {
+    position: 'relative',
+    width: { xs: 120, md: 160 },
+    height: { xs: 70, md: 80 },
+    marginY: 2,
+  } as const;
+
+  const ExtraContent = () => {
+    return (
+      <Box sx={extraContentStyle}>
+        <Box sx={imageContainerStyle}>
+          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+        </Box>
+        <Link href="/welcome">{t.rich('bloomLink')}</Link>
+        <br />
+        <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
+      </Box>
+    );
+  };
+
   return (
     <Box>
       <Head>
@@ -56,7 +89,7 @@ const Login: NextPage = () => {
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
           </Typography>
-          <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
+          {!isSmallScreen && <ExtraContent />}
         </Box>
         <Card sx={formCardStyle}>
           <CardContent>
@@ -76,6 +109,11 @@ const Login: NextPage = () => {
           </CardContent>
         </Card>
       </Container>
+      {isSmallScreen && (
+        <Container>
+          <ExtraContent />
+        </Container>
+      )}
     </Box>
   );
 };
