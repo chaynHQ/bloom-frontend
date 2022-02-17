@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import { STORYBLOK_STORY_STATUS_ENUM } from '../constants/enums';
+import { STORYBLOK_STORY_STATUS } from '../constants/enums';
 import { api } from './api';
 import type { RootState } from './store';
 import { User } from './userSlice';
@@ -10,7 +10,7 @@ export interface Session {
   name: string;
   slug: string;
   storyblokId: number;
-  status: STORYBLOK_STORY_STATUS_ENUM;
+  status: STORYBLOK_STORY_STATUS;
   completed: string;
 }
 
@@ -18,7 +18,7 @@ export interface Course {
   id: string;
   name: string;
   slug: string;
-  status: STORYBLOK_STORY_STATUS_ENUM;
+  status: STORYBLOK_STORY_STATUS;
   storyblokId: number;
   completed: boolean;
   sessions: Session[];
