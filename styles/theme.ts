@@ -213,11 +213,15 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: 25,
+          padding: 24,
           paddingTop: 30,
 
           [theme.breakpoints.up('md')]: {
             padding: 40,
+
+            '&:last-child': {
+              paddingBottom: 40,
+            },
           },
         },
       },

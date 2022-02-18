@@ -45,31 +45,35 @@ const Login: NextPage = () => {
 
   const formCardStyle = {
     width: { xs: '100%', sm: '70%', md: '45%' },
-  } as const;
-
-  const extraContentStyle = {
-    display: { xs: 'flex', md: 'block' },
-    flexDirection: 'column',
-    alignItems: 'center',
+    alignSelf: 'flex-start',
   } as const;
 
   const imageContainerStyle = {
     position: 'relative',
     width: { xs: 120, md: 160 },
     height: { xs: 70, md: 80 },
-    marginY: 2,
+    marginBottom: 3,
+    marginTop: { xs: 0, md: 2 },
   } as const;
 
   const ExtraContent = () => {
     return (
-      <Box sx={extraContentStyle}>
+      <>
         <Box sx={imageContainerStyle}>
           <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
-        <Link href="/welcome">{t.rich('bloomLink')}</Link>
-        <br />
-        <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
-      </Box>
+        <Typography variant="h3" component="h3">
+          {t('login.newUserTitle')}
+        </Typography>
+        <Typography>
+          <Link href="/welcome">{t('bloomLink')}</Link>
+        </Typography>
+        <Typography mt={0.5}>
+          <Link mt="1rem !important" href="/welcome">
+            {t('bloomBumbleLink')}
+          </Link>
+        </Typography>
+      </>
     );
   };
 
