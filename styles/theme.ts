@@ -90,7 +90,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           color: 'inherit',
-          textDecorationColor: theme.palette.text.primary,
+          textDecorationColor: 'inherit',
 
           '&:hover': {
             textDecorationColor: theme.palette.primary.dark,

@@ -169,7 +169,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     setFormError('');
 
     try {
-      await validateAccessCode();
+      partnerContent && (await validateAccessCode());
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
       router.push('/courses');
@@ -189,7 +189,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             label={`${partnerContent.name} ${t('codeLabel')}`}
             variant="standard"
             fullWidth
-            required
+            required={!!partnerContent}
           />
         )}
         <TextField
