@@ -98,7 +98,7 @@ const SessionCard = (props: SessionCardProps) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography paragraph>{session.content.description}</Typography>
+          <Typography>{session.content.description}</Typography>
         </CardContent>
       </Collapse>
     </Card>
