@@ -118,7 +118,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
-    if (!partnerAccesses && coursePartners.includes('Public')) {
+    if (partnerAccesses.length === 0 && coursePartners.includes('Public')) {
       setIncorrectAccess(false);
     }
 
@@ -128,11 +128,10 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       }
     });
 
-    setLiveChatAccess(
-      !!partnerAccesses.find(function (partnerAccess) {
-        return partnerAccess.featureLiveChat === true;
-      }),
-    );
+    const liveAccess = partnerAccesses.find(function (partnerAccess) {
+      return partnerAccess.featureLiveChat === true;
+    });
+    if (liveAccess) setLiveChatAccess(true);
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   useEffect(() => {
