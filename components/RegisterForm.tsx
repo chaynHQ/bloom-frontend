@@ -178,7 +178,7 @@ const RegisterForm = () => {
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <TextField
+        {/* <TextField
           id="partnerAccessCode"
           onChange={(e) => setCodeInput(e.target.value)}
           defaultValue={codeInput}
@@ -186,7 +186,7 @@ const RegisterForm = () => {
           variant="standard"
           fullWidth
           required
-        />
+        /> */}
         <TextField
           id="name"
           onChange={(e) => setNameInput(e.target.value)}

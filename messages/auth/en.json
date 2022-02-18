@@ -13,7 +13,9 @@
     },
     "register": {
       "title": "Create account",
-      "description": "Create your account to access Bloom."
+      "description": "Create your account to access Bloom.",
+      "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
+      "moreInfoTitle": "Find out more"
     },
     "resetPassword": {
       "title": "Reset your password"

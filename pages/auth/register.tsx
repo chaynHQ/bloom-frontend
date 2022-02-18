@@ -13,9 +13,9 @@ import Image from 'next/image';
 import Link from '../../components/Link';
 import PartnerHeader from '../../components/PartnerHeader';
 import RegisterForm from '../../components/RegisterForm';
-import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
-import illustrationBeehive from '../../public/illustration_beehive.svg';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
 const Register: NextPage = () => {
@@ -25,8 +25,8 @@ const Register: NextPage = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const headerProps = {
-    partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: 'alt.bloomBumbleLogo',
+    partnerLogoSrc: welcomeToBloom,
+    partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomLogo',
   };
@@ -49,31 +49,37 @@ const Register: NextPage = () => {
     alignItems: 'center',
   } as const;
 
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 170, md: 250 },
-    height: { xs: 170, md: 250 },
-    marginTop: { xs: 4, md: 6 },
-    marginLeft: { xs: 0, md: 2 },
+  const formContainerStyle = {
+    width: { xs: '100%', sm: '70%', md: '45%' },
+    alignSelf: 'flex-start',
   } as const;
 
-  const formCardStyle = {
-    width: { xs: '100%', sm: '70%', md: '45%' },
+  const imageContainerStyle = {
+    position: 'relative',
+    width: { xs: 120, md: 160 },
+    height: { xs: 70, md: 80 },
+    marginBottom: 3,
+    marginTop: { xs: 0, md: 2 },
   } as const;
 
   const ExtraContent = () => {
     return (
-      <Box sx={extraContentStyle}>
-        <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
-        <Typography pt={2} variant="body1" component="p">
-          {t.rich('loginLink', {
-            loginLink: (children) => <Link href="/auth/login">{children}</Link>,
-          })}
-        </Typography>
+      <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.beehive')} src={illustrationBeehive} layout="fill" />
+          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
-      </Box>
+        <Typography variant="h3" component="h3">
+          {t('register.moreInfoTitle')}
+        </Typography>
+        <Typography>
+          <Link href="/welcome">{t('bloomLink')}</Link>
+        </Typography>
+        <Typography mt={0.5}>
+          <Link mt="1rem !important" href="/welcome">
+            {t('bloomBumbleLink')}
+          </Link>
+        </Typography>
+      </>
     );
   };
 
@@ -95,28 +101,35 @@ const Register: NextPage = () => {
           </Typography>
           {!isSmallScreen && <ExtraContent />}
         </Box>
-        <Card sx={formCardStyle}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
-              {t.rich('register.title')}
-            </Typography>
-            <Typography variant="body1" component="p">
-              {t.rich('register.description')}
-            </Typography>
+        <Box sx={formContainerStyle}>
+          <Card>
+            <CardContent>
+              <Typography variant="h2" component="h2">
+                {t.rich('register.title')}
+              </Typography>
+              <Typography variant="body1" component="p">
+                {t.rich('register.description')}
+              </Typography>
 
-            <RegisterForm />
+              <RegisterForm />
 
-            <Typography variant="body2" component="p" textAlign="center">
-              {t.rich('terms', {
-                policiesLink: (children) => (
-                  <Link href="https://chayn.notion.site/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43">
-                    {children}
-                  </Link>
-                ),
-              })}
-            </Typography>
-          </CardContent>
-        </Card>
+              <Typography variant="body2" component="p" textAlign="center">
+                {t.rich('terms', {
+                  policiesLink: (children) => (
+                    <Link href="https://chayn.notion.site/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43">
+                      {children}
+                    </Link>
+                  ),
+                })}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Typography mt={3} textAlign="center">
+            {t.rich('register.loginRedirect', {
+              loginLink: (children) => <Link href="/auth/login">{children}</Link>,
+            })}
+          </Typography>
+        </Box>
       </Container>
       {isSmallScreen && (
         <Container>
