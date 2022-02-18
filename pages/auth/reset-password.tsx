@@ -27,7 +27,7 @@ const ResetPassword: NextPage = () => {
     partnerLogoSrc: bloomBumbleLogo,
     partnerLogoAlt: 'alt.bloomBumbleLogo',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomLogo',
+    imageAlt: 'alt.bloomHead',
   };
 
   const containerStyle = {

@@ -1,8 +1,8 @@
 {
   "Auth": {
     "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
-    "bloomLink": "About Bloom",
-    "bloomBumbleLink": "About Bloom for Bumble",
+    "aboutBloom": "About Bloom",
+    "aboutBloomFor": "About Bloom for",
     "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
     "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
     "login": {
@@ -21,7 +21,7 @@
       "title": "Reset your password"
     },
     "form": {
-      "codeLabel": "Bumble access code",
+      "codeLabel": "access code",
       "nameLabel": "First name/nickname",
       "emailLabel": "Email",
       "passwordLabel": "Password",

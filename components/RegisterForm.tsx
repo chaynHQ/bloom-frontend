@@ -25,6 +25,7 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../constants/events';
+import { PartnerContent } from '../constants/partners';
 import { useAppDispatch } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
@@ -33,32 +34,34 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  codeParam: string;
+  partnerContent: PartnerContent | null;
+}
+
+const RegisterForm = (props: RegisterFormProps) => {
+  const { codeParam, partnerContent } = props;
+
   const t = useTranslations('Auth.form');
   const router = useRouter();
-  let codeParam = router.query.code;
 
-  if (codeParam instanceof Array) {
-    codeParam = codeParam + '';
-  }
-
+  const [codeInput, setCodeInput] = useState<string>(codeParam);
+  const [nameInput, setNameInput] = useState<string>('');
+  const [emailInput, setEmailInput] = useState<string>('');
+  const [passwordInput, setPasswordInput] = useState<string>('');
+  const [contactPermissionInput, setContactPermissionInput] = useState<boolean>(false);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const [codeInput, setCodeInput] = useState<string>(codeParam ? codeParam : '');
-  const [nameInput, setNameInput] = useState<string>('');
-  const [emailInput, setEmailInput] = useState<string>('');
-  const [passwordInput, setPasswordInput] = useState<string>('');
-  const [contactPermissionInput, setContactPermissionInput] = useState<boolean>(false);
 
   const [createUser, { isLoading: createIsLoading }] = useAddUserMutation();
   const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
 
   const validateAccessCode = async () => {
-    logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: 'bumble' });
+    logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: partnerContent?.name });
 
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
@@ -85,13 +88,13 @@ const RegisterForm = () => {
           }),
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
-        logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: 'bumble', message: error });
+        logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerContent?.name, message: error });
         throw error;
       }
-      logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: 'bumble', message: error });
+      logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerContent?.name, message: error });
       throw error;
     }
-    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: 'bumble' });
+    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerContent?.name });
   };
 
   const createFirebaseUser = async () => {
@@ -106,7 +109,7 @@ const RegisterForm = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        logEvent(REGISTER_FIREBASE_ERROR, { partner: 'bumble', message: errorMessage });
+        logEvent(REGISTER_FIREBASE_ERROR, { partner: partnerContent?.name, message: errorMessage });
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -147,7 +150,7 @@ const RegisterForm = () => {
     if ('error' in userResponse) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
-      logEvent(REGISTER_ERROR, { partner: 'bumble', message: errorMessage });
+      logEvent(REGISTER_ERROR, { partner: partnerContent?.name, message: errorMessage });
       rollbar.error('User register create user error', error);
 
       setFormError(
@@ -178,15 +181,17 @@ const RegisterForm = () => {
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        {/* <TextField
-          id="partnerAccessCode"
-          onChange={(e) => setCodeInput(e.target.value)}
-          defaultValue={codeInput}
-          label={t.rich('codeLabel')}
-          variant="standard"
-          fullWidth
-          required
-        /> */}
+        {partnerContent && (
+          <TextField
+            id="partnerAccessCode"
+            onChange={(e) => setCodeInput(e.target.value)}
+            defaultValue={codeInput}
+            label={`${partnerContent.name} ${t('codeLabel')}`}
+            variant="standard"
+            fullWidth
+            required
+          />
+        )}
         <TextField
           id="name"
           onChange={(e) => setNameInput(e.target.value)}

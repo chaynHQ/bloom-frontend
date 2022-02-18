@@ -1,9 +1,13 @@
+import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
 
 export interface PartnerContent {
+  name: string;
   logo: StaticImageData;
   logoAlt: string;
+  partnershipLogo?: StaticImageData;
+  partnershipLogoAlt?: string;
   website: string;
   footerLine1: string;
   footerLine2: string;
@@ -15,6 +19,7 @@ export interface PartnerContent {
 }
 
 export const publicContent: PartnerContent = {
+  name: 'Bloom',
   logo: bloomLogo,
   logoAlt: 'alt.bloomLogo',
   website: 'https://chayn.co',
@@ -27,8 +32,11 @@ export const publicContent: PartnerContent = {
 };
 
 export const bumbleContent: PartnerContent = {
+  name: 'Bumble',
   logo: bumbleLogo,
   logoAlt: 'alt.bumbleLogo',
+  partnershipLogo: bloomBumbleLogo,
+  partnershipLogoAlt: 'alt.bloomBumbleLogo',
   website: 'https://bumble.com',
   footerLine1: 'footer.bumbleLine1',
   footerLine2: 'footer.bumbleLine2',
@@ -40,4 +48,8 @@ export const bumbleContent: PartnerContent = {
 export const getPartnerContent = (partner: string) => {
   if (partner === 'public') return publicContent;
   if (partner === 'bumble') return bumbleContent;
+};
+
+export const getAllPartnersContent = () => {
+  return [bumbleContent];
 };

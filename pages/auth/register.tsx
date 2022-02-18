@@ -10,9 +10,13 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Link from '../../components/Link';
 import PartnerHeader from '../../components/PartnerHeader';
 import RegisterForm from '../../components/RegisterForm';
+import { getAllPartnersContent, getPartnerContent, PartnerContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -21,14 +25,32 @@ import { rowStyle } from '../../styles/common';
 const Register: NextPage = () => {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
+  const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+  const [codeParam, setCodeParam] = useState<string>('');
+  const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
+  const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
+
+  useEffect(() => {
+    const { code, partner } = router.query;
+
+    if (code) setCodeParam(code + '');
+
+    if (partner) {
+      const partnerContentResult = getPartnerContent(partner + '');
+      if (partnerContentResult) setPartnerContent(partnerContentResult);
+    } else {
+      setAllPartnersContent(getAllPartnersContent());
+    }
+  }, [router.query]);
+
   const headerProps = {
-    partnerLogoSrc: welcomeToBloom,
+    partnerLogoSrc: (partnerContent && partnerContent.partnershipLogo) || welcomeToBloom,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomLogo',
+    imageAlt: 'alt.bloomHead',
   };
 
   const containerStyle = {
@@ -41,12 +63,6 @@ const Register: NextPage = () => {
   const textContainerStyle = {
     maxWidth: 600,
     width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const extraContentStyle = {
-    display: { xs: 'flex', md: 'block' },
-    flexDirection: 'column',
-    alignItems: 'center',
   } as const;
 
   const formContainerStyle = {
@@ -71,14 +87,29 @@ const Register: NextPage = () => {
         <Typography variant="h3" component="h3">
           {t('register.moreInfoTitle')}
         </Typography>
-        <Typography>
-          <Link href="/welcome">{t('bloomLink')}</Link>
-        </Typography>
-        <Typography mt={0.5}>
-          <Link mt="1rem !important" href="/welcome">
-            {t('bloomBumbleLink')}
-          </Link>
-        </Typography>
+        {partnerContent ? (
+          // Show only the partner's welcome page link
+          <>
+            <Link mt="1rem !important" href={`/welcome/${partnerContent.name.toLowerCase()}`}>
+              {t('aboutBloomFor')} {partnerContent.name}
+            </Link>
+          </>
+        ) : (
+          // Show the public bloom and all other partner's welcome page links
+          <>
+            <Typography>
+              <Link href="/welcome">{t('aboutBloom')}</Link>
+            </Typography>
+
+            {allPartnersContent?.map((partner) => (
+              <Typography key={`${partner.name}-link`} mt={0.5}>
+                <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}>
+                  {t('aboutBloomFor')} {partner.name}
+                </Link>
+              </Typography>
+            ))}
+          </>
+        )}
       </>
     );
   };
@@ -111,7 +142,7 @@ const Register: NextPage = () => {
                 {t.rich('register.description')}
               </Typography>
 
-              <RegisterForm />
+              <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
 
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {

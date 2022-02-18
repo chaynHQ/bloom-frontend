@@ -28,7 +28,7 @@ const Login: NextPage = () => {
     partnerLogoSrc: welcomeToBloom,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomLogo',
+    imageAlt: 'alt.bloomHead',
   };
 
   const containerStyle = {
@@ -66,7 +66,7 @@ const Login: NextPage = () => {
           {t('login.newUserTitle')}
         </Typography>
         <Typography>
-          <Link href="/welcome">{t('bloomLink')}</Link>
+          <Link href="/welcome">{t('aboutBloom')}</Link>
         </Typography>
         <Typography mt={0.5}>
           <Link mt="1rem !important" href="/welcome">
