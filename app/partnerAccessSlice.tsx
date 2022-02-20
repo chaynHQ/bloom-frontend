@@ -5,6 +5,8 @@ import type { RootState } from './store';
 
 export interface PartnerAccess {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   activatedAt: Date;
   featureLiveChat: boolean;
   featureTherapy: boolean;
