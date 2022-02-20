@@ -71,14 +71,14 @@ const RegisterForm = (props: RegisterFormProps) => {
       const error = getErrorMessage(validateCodeResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
-        setFormError(t('codeErrors.alreadyInUse'));
+        setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerContent?.name }));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
-        setFormError(t('codeErrors.expired'));
+        setFormError(t('codeErrors.expired', { partnerName: partnerContent?.name }));
       } else if (
         error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||
         PARTNER_ACCESS_CODE_STATUS.INVALID_CODE
       ) {
-        setFormError(t('codeErrors.invalid'));
+        setFormError(t('codeErrors.invalid', { partnerName: partnerContent?.name }));
       } else {
         setFormError(
           t.rich('codeErrors.internal', {

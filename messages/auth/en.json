@@ -38,10 +38,9 @@
       "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
       "codeErrors": {
         "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "expired": "This code has expired. Get in touch with the Bumble team.",
-        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the Bumble team.",
-        "doesNotExist": "Your access code appears to be invalid. Check for typos or get in touch with the Bumble team.",
-        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the Bumble team."
+        "expired": "This code has expired. Get in touch with the {partnerName} team.",
+        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the {partnerName} team.",
+        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
       },
       "firebase": {
         "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
