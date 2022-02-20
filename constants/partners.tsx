@@ -45,7 +45,8 @@ export const bumbleContent: PartnerContent = {
   tiktok: 'https://www.tiktok.com/@bumble',
 };
 
-export const getPartnerContent = (partner: string) => {
+export const getPartnerContent = (partnerName: string) => {
+  const partner = partnerName.toLowerCase();
   if (partner === 'public') return publicContent;
   if (partner === 'bumble') return bumbleContent;
 };
