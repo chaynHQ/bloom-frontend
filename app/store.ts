@@ -3,7 +3,6 @@ import { createWrapper } from 'next-redux-wrapper';
 import { Action } from 'redux';
 import { api } from './api';
 import coursesReducer from './coursesSlice';
-import currentReducer from './currentSlice';
 import partnerAccessesReducer from './partnerAccessSlice';
 import partnerAdminReducer from './partnerAdminSlice';
 import partnerReducer from './partnerSlice';
@@ -18,7 +17,6 @@ const initStore = () =>
       partnerAccesses: partnerAccessesReducer,
       partnerAdmin: partnerAdminReducer,
       partner: partnerReducer,
-      current: currentReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
