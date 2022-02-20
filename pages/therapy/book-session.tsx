@@ -61,11 +61,6 @@ const BookSession: NextPage = () => {
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
   useEffect(() => {
-    let accesses = partnerAccesses.filter(
-      (partnerAccess) =>
-        !!partnerAccess.featureTherapy && partnerAccess.therapySessionsRemaining > 0,
-    );
-
     let partnerAccess = partnerAccesses.find(function (partnerAccess) {
       return partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0;
     });
