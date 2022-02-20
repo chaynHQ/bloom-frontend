@@ -13,6 +13,7 @@ import Image from 'next/image';
 import Link from '../../components/Link';
 import LoginForm from '../../components/LoginForm';
 import PartnerHeader from '../../components/PartnerHeader';
+import { getAllPartnersContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -56,6 +57,8 @@ const Login: NextPage = () => {
     marginTop: { xs: 0, md: 2 },
   } as const;
 
+  const allPartnersContent = getAllPartnersContent();
+
   const ExtraContent = () => {
     return (
       <>
@@ -68,11 +71,14 @@ const Login: NextPage = () => {
         <Typography>
           <Link href="/welcome">{t('aboutBloom')}</Link>
         </Typography>
-        <Typography mt={0.5}>
-          <Link mt="1rem !important" href="/welcome">
-            {t('bloomBumbleLink')}
-          </Link>
-        </Typography>
+
+        {allPartnersContent?.map((partner) => (
+          <Typography key={`${partner.name}-link`} mt={0.5}>
+            <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}>
+              {t('aboutBloomFor')} {partner.name}
+            </Link>
+          </Typography>
+        ))}
       </>
     );
   };
