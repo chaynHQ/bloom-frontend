@@ -7,11 +7,10 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import Link from '../../components/Link';
 import PartnerHeader from '../../components/PartnerHeader';
 import { EmailForm, PasswordForm } from '../../components/ResetPasswordForm';
-import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
 const ResetPassword: NextPage = () => {
@@ -24,8 +23,8 @@ const ResetPassword: NextPage = () => {
     : undefined;
 
   const headerProps = {
-    partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: 'alt.bloomBumbleLogo',
+    partnerLogoSrc: welcomeToBloom,
+    partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
@@ -59,7 +58,6 @@ const ResetPassword: NextPage = () => {
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
           </Typography>
-          <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
         </Box>
         <Card sx={formCardStyle}>
           <CardContent>
