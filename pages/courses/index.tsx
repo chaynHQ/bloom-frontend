@@ -67,7 +67,6 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       const coursesWithAccess = stories.filter((course) =>
         course.content.included_for_partners.includes('Public'),
       );
-      console.log('coursesWithAccess', coursesWithAccess);
       setLoadedCourses(coursesWithAccess);
     } else {
       let userPartners: Array<string> = [];

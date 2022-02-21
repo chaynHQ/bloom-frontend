@@ -6,20 +6,20 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import { faqItem } from '../constants/faqs';
-import { PartnerContent } from '../constants/partners';
+import { Partner } from '../constants/partners';
 import Link from './Link';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<faqItem>;
-  partnerContent?: PartnerContent | null;
+  partner?: Partner | null;
 }
 
 const Faqs = (props: FaqsProps) => {
-  const { faqList, translations, partnerContent } = props;
+  const { faqList, translations, partner } = props;
   const t = useTranslations(translations);
 
-  const partnerName = partnerContent ? partnerContent.name : '';
+  const partnerName = partner ? partner.name : '';
 
   return (
     <Box>
