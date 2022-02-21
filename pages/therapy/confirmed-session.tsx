@@ -6,13 +6,13 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
 import Faqs from '../../components/Faqs';
 import Header from '../../components/Header';
 import Link from '../../components/Link';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
-import { getPartnerContent, PartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
@@ -24,7 +24,7 @@ const ConfirmedSession: NextPage = () => {
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
-  const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
+  const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
 
   useEffect(() => {
     let accesses = partnerAccesses.filter(
@@ -39,11 +39,7 @@ const ConfirmedSession: NextPage = () => {
       // several partner accesses with redeemed therapy, get last one
       partnerAccess = accesses[accesses.length - 1];
     }
-
-    if (partnerAccess?.partner.name) {
-      const content = getPartnerContent(partnerAccess.partner.name);
-      content && setPartnerContent(content);
-    }
+    setPartnerAccess(partnerAccess);
   }, [partnerAccesses]);
 
   useEffect(() => {
@@ -97,7 +93,11 @@ const ConfirmedSession: NextPage = () => {
           <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
         </Box>
         <Box sx={faqsContainerStyle}>
-          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" partnerContent={partnerContent} />
+          <Faqs
+            faqList={therapyFaqs}
+            translations="Therapy.faqs"
+            partner={partnerAccess?.partner}
+          />
         </Box>
       </Container>
     </Box>

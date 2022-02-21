@@ -16,7 +16,6 @@ import ImageTextGrid, { ImageTextItem } from '../../components/ImageTextGrid';
 import { getSimplybookWidgetConfig } from '../../config/simplybook';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
-import { getPartnerContent, PartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationChange from '../../public/illustration_change.svg';
 import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
@@ -53,9 +52,8 @@ const steps: Array<ImageTextItem> = [
 const BookSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
-  const [therapyAccess, setTherapyAccess] = useState<PartnerAccess | null>(null);
+  const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
   const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
-  const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
   const [widgetOpen, setWidgetOpen] = useState(false);
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
@@ -77,11 +75,9 @@ const BookSession: NextPage = () => {
     }
 
     if (partnerAccess?.partner.name) {
-      setTherapyAccess(partnerAccess);
-      const content = getPartnerContent(partnerAccess.partner.name);
-      content && setPartnerContent(content);
+      setPartnerAccess(partnerAccess);
     }
-  }, [setTherapyAccess, partnerAccesses]);
+  }, [setPartnerAccess, partnerAccesses]);
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
@@ -89,7 +85,7 @@ const BookSession: NextPage = () => {
 
   const headerProps = {
     title: t.rich('title'),
-    introduction: t.rich('introduction', { partnerName: partnerContent?.name }),
+    introduction: t.rich('introduction', { partnerName: partnerAccess?.partner?.name }),
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
@@ -140,7 +136,7 @@ const BookSession: NextPage = () => {
           <Typography variant="body1" component="p">
             {hasTherapyRemaining
               ? t.rich('therapySessionsRemaining', {
-                  strongText: () => <strong>{therapyAccess?.therapySessionsRemaining}</strong>,
+                  strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,
                 })
               : t.rich('noTherapySessionsRemaining')}
           </Typography>
@@ -168,7 +164,11 @@ const BookSession: NextPage = () => {
         </Box>
 
         <Box sx={faqsContainerStyle}>
-          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" partnerContent={partnerContent} />
+          <Faqs
+            faqList={therapyFaqs}
+            translations="Therapy.faqs"
+            partner={partnerAccess?.partner}
+          />
           {hasTherapyRemaining && (
             <Button
               sx={bookingButtonStyle}

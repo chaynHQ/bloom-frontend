@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Partner } from '../constants/partners';
+import { getPartnerContent, Partner } from '../constants/partners';
 import { api } from './api';
 import type { RootState } from './store';
 
@@ -20,6 +20,23 @@ export interface PartnerAccesses extends Array<PartnerAccess> {}
 
 const initialState: PartnerAccesses = [];
 
+const mergeUserPartnerState = (partnerAccesses: PartnerAccess[]) => {
+  return partnerAccesses.map((partnerAccess) => {
+    if (partnerAccess.partner) {
+      let newPartnerAccess: PartnerAccess = {
+        ...partnerAccess,
+      };
+      newPartnerAccess.partner = Object.assign(
+        {},
+        newPartnerAccess.partner,
+        getPartnerContent(partnerAccess.partner.name), // populate state with static values
+      );
+      return newPartnerAccess;
+    }
+    return partnerAccess;
+  });
+};
+
 const slice = createSlice({
   name: 'partnerAccesses',
   initialState: initialState,
@@ -29,14 +46,11 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
-      return state.concat(payload);
-    });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccesses;
+      return mergeUserPartnerState(payload.partnerAccesses);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccesses;
+      return mergeUserPartnerState(payload.partnerAccesses);
     });
   },
 });

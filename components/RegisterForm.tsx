@@ -9,7 +9,7 @@ import firebase from 'firebase/compat/app';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../app/api';
 import { setUserToken } from '../app/userSlice';
 import Link from '../components/Link';
@@ -25,7 +25,7 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../constants/events';
-import { PartnerContent } from '../constants/partners';
+import { Partner } from '../constants/partners';
 import { useAppDispatch } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
@@ -36,16 +36,13 @@ const containerStyle = {
 
 interface RegisterFormProps {
   codeParam: string;
-  partnerContent: PartnerContent | null;
+  partnerContent: Partner | null;
 }
 
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerContent } = props;
 
-  const t = useTranslations('Auth.form');
-  const router = useRouter();
-
-  const [codeInput, setCodeInput] = useState<string>(codeParam);
+  const [codeInput, setCodeInput] = useState<string>('');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
@@ -59,6 +56,12 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [createUser, { isLoading: createIsLoading }] = useAddUserMutation();
   const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
+  const t = useTranslations('Auth.form');
+  const router = useRouter();
+
+  useEffect(() => {
+    setCodeInput(codeParam);
+  }, [codeParam]);
 
   const validateAccessCode = async () => {
     logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: partnerContent?.name });
@@ -185,7 +188,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           <TextField
             id="partnerAccessCode"
             onChange={(e) => setCodeInput(e.target.value)}
-            defaultValue={codeInput}
+            value={codeInput}
             label={`${partnerContent.name} ${t('codeLabel')}`}
             variant="standard"
             fullWidth

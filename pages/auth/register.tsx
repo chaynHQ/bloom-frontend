@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import Link from '../../components/Link';
 import PartnerHeader from '../../components/PartnerHeader';
 import RegisterForm from '../../components/RegisterForm';
-import { getAllPartnersContent, getPartnerContent, PartnerContent } from '../../constants/partners';
+import { getAllPartnersContent, getPartnerContent, Partner } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -30,8 +30,8 @@ const Register: NextPage = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const [codeParam, setCodeParam] = useState<string>('');
-  const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
-  const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
+  const [partnerContent, setPartnerContent] = useState<Partner | null>(null);
+  const [allPartnersContent, setAllPartnersContent] = useState<Partner[]>([]);
 
   useEffect(() => {
     const { code, partner } = router.query;
