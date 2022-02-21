@@ -12,6 +12,7 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../app/api';
+import { PartnerAdmin } from '../app/partnerAdminSlice';
 import Link from '../components/Link';
 import rollbar from '../config/rollbar';
 import {
@@ -22,7 +23,13 @@ import {
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent from '../utils/logEvent';
 
-const CreateAccessCodeForm = () => {
+interface CreateAccessCodeFormProps {
+  partnerAdmin: PartnerAdmin;
+}
+
+const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
+  const { partnerAdmin } = props;
+
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
@@ -34,6 +41,8 @@ const CreateAccessCodeForm = () => {
   >();
   const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
     useAddPartnerAccessMutation();
+
+  const welcomeURL = `${process.env.NEXT_PUBLIC_BASE_URL}/welcome?code=${partnerAccessCode}`;
 
   const createPartnerAccess = async () => {
     const partnerAccessResponse = await addPartnerAccess({
@@ -51,7 +60,10 @@ const CreateAccessCodeForm = () => {
       const error = partnerAccessResponse.error;
       const errorMessage = getErrorMessage(error);
 
-      logEvent(CREATE_PARTNER_ACCESS_ERROR, { partner: 'bumble', message: errorMessage });
+      logEvent(CREATE_PARTNER_ACCESS_ERROR, {
+        partner: partnerAdmin.partner?.name,
+        message: errorMessage,
+      });
       rollbar.error('User register create user error', error);
 
       setFormError(t.rich('form.errors.createPartnerAccessError'));
@@ -68,7 +80,7 @@ const CreateAccessCodeForm = () => {
 
     if (selectedFeature === 'courses') {
       const eventData = {
-        partner: 'bumble',
+        partner: partnerAdmin.partner?.name,
         feature_courses: true,
         feature_live_chat: false,
         feature_therapy: false,
@@ -80,7 +92,7 @@ const CreateAccessCodeForm = () => {
 
     if (selectedFeature === 'therapy') {
       const eventData = {
-        partner: 'bumble',
+        partner: partnerAdmin.partner?.name,
         feature_courses: true,
         feature_live_chat: true,
         feature_therapy: true,
@@ -109,38 +121,17 @@ const CreateAccessCodeForm = () => {
     </Box>
   );
 
-  const FormSuccessCourses = () => (
+  const FormSuccess = () => (
     <Box>
       <Typography variant="h4" component="h4" mb={1}>
-        {t.rich('courseAccess')}
+        {selectedFeature === 'courses' ? t('courseAccess') : t('therapyAccess')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('courseResultLink')}
+        {t.rich('resultLink')}
       </Typography>
-      <Link href={'https://www.bloom-pilot.chayn.co/bumble-welcome'}>
-        https://www.bloom-pilot.chayn.co/bumble-welcome
-      </Link>
+      <Link href={welcomeURL}>{welcomeURL}</Link>
       <Typography variant="body1" component="p">
-        {t.rich('courseResultPassword')}{' '}
-        <strong>{process.env.NEXT_PUBLIC_PILOT_COURSES_PASSWORD}</strong>
-      </Typography>
-      <FormResetButton />
-    </Box>
-  );
-
-  const FormSuccessTherapy = () => (
-    <Box>
-      <Typography variant="h4" component="h4" mb={1}>
-        {t.rich('therapyAccess')}
-      </Typography>
-      <Typography variant="body1" component="p">
-        {t.rich('therapyResultLink')}
-      </Typography>
-      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}>
-        {`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}
-      </Link>
-      <Typography variant="body1" component="p">
-        {t.rich('therapyResultCode')} <strong>{partnerAccessCode}</strong>
+        {t.rich('resultCode')} <strong>{partnerAccessCode}</strong>
       </Typography>
       <FormResetButton />
     </Box>
@@ -180,11 +171,8 @@ const CreateAccessCodeForm = () => {
     </form>
   );
 
-  if (formSubmitSuccess && selectedFeature === 'courses') {
-    return <FormSuccessCourses />;
-  }
-  if (formSubmitSuccess && selectedFeature === 'therapy') {
-    return <FormSuccessTherapy />;
+  if (formSubmitSuccess) {
+    return <FormSuccess />;
   }
   return <Form />;
 };

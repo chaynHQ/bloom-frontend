@@ -5,37 +5,40 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import { RootState } from '../../app/store';
 import CreateAccessCodeForm from '../../components/CreateAccessCodeForm';
 import AdminHeader from '../../components/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
-import bumbleLogo from '../../public/bumble_logo.svg';
+import { useTypedSelector } from '../../hooks/store';
+import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent from '../../utils/logEvent';
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+  ...rowStyle,
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+} as const;
+
+const cardStyle = {
+  width: { xs: '100%', md: '60%' },
+} as const;
+
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
+  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    partnerLogoSrc: bumbleLogo,
-    partnerLogoAlt: 'alt.bumbleLogo',
+    partnerLogoSrc: partnerAdmin.partner?.partnershipLogo || bloomLogo,
+    partnerLogoAlt: partnerAdmin.partner?.partnershipLogoAlt || 'alt.bloomLogo',
   };
 
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  } as const;
-
-  const cardStyle = {
-    width: { xs: '100%', md: '60%' },
-  } as const;
-
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: 'bumble' });
-  }, []);
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: partnerAdmin.partner?.name });
+  });
 
   return (
     <Box>
@@ -58,7 +61,7 @@ const CreateAccessCode: NextPage = () => {
               {t.rich('introduction')}
             </Typography>
 
-            <CreateAccessCodeForm />
+            <CreateAccessCodeForm partnerAdmin={partnerAdmin} />
           </CardContent>
         </Card>
       </Container>
