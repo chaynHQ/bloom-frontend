@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Partner } from '../constants/partners';
 import { api } from './api';
-import { Partner } from './partnerSlice';
 import type { RootState } from './store';
 
 export interface PartnerAccess {

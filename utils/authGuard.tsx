@@ -12,7 +12,7 @@ import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const [getUser] = useGetUserMutation();

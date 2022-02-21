@@ -2,7 +2,8 @@ import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
 
-export interface PartnerContent {
+export interface Partner {
+  id?: string;
   name: string;
   logo: StaticImageData;
   logoAlt: string;
@@ -18,7 +19,7 @@ export interface PartnerContent {
   tiktok?: string;
 }
 
-export const publicContent: PartnerContent = {
+export const publicContent: Partner = {
   name: 'Bloom',
   logo: bloomLogo,
   logoAlt: 'alt.bloomLogo',
@@ -31,7 +32,7 @@ export const publicContent: PartnerContent = {
   youtube: 'https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg',
 };
 
-export const bumbleContent: PartnerContent = {
+export const bumbleContent: Partner = {
   name: 'Bumble',
   logo: bumbleLogo,
   logoAlt: 'alt.bumbleLogo',
@@ -47,8 +48,8 @@ export const bumbleContent: PartnerContent = {
 
 export const getPartnerContent = (partnerName: string) => {
   const partner = partnerName.toLowerCase();
-  if (partner === 'public') return publicContent;
   if (partner === 'bumble') return bumbleContent;
+  return publicContent;
 };
 
 export const getAllPartnersContent = () => {

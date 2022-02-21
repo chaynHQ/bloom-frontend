@@ -1,21 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { api } from './api';
+import { getPartnerContent, Partner } from '../constants/partners';
+import { api, GetUserResponse } from './api';
 import type { RootState } from './store';
 
 export interface PartnerAdmin {
   id: string | null;
-  userId: string | null;
-  partnerId: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  partner: Partner | null;
 }
 
 const initialState: PartnerAdmin = {
   id: null,
-  userId: null,
-  partnerId: null,
   createdAt: null,
   updatedAt: null,
+  partner: null,
+};
+
+const mergeUserPartnerAdminState = (state: PartnerAdmin, payload: GetUserResponse) => {
+  if (payload.partnerAdmin.partner) {
+    let partnerAdmin: PartnerAdmin = {
+      ...payload.partnerAdmin,
+    };
+    partnerAdmin.partner = Object.assign(
+      {},
+      partnerAdmin.partner,
+      getPartnerContent(payload.partnerAdmin.partner.name), // populate state with static values
+    );
+    return partnerAdmin;
+  }
+  return payload.partnerAdmin;
 };
 
 const slice = createSlice({
@@ -28,10 +42,11 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAdmin;
+      return mergeUserPartnerAdminState(state, payload);
     });
+
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAdmin;
+      return mergeUserPartnerAdminState(state, payload);
     });
   },
 });
