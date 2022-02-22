@@ -8,8 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../app/partnerAccessSlice';
 import { RootState } from '../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../constants/events';
@@ -53,21 +53,30 @@ const socialsContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
-  const [eventUserData, setEventUserData] = React.useState<any>(null);
-  const [chaynDetails, setChaynDetails] = React.useState<Partner | null>(null);
+  const [eventUserData, setEventUserData] = useState<any>(null);
+  const [chaynContnet, setChaynDetails] = useState<Partner | null>(null);
+  const [partnerContent, setPartnerContent] = useState<Partner | null>(null);
+  const router = useRouter();
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
 
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses }));
     setChaynDetails(getPartnerContent('public'));
-  }, [partnerAccesses, user]);
 
-  interface PartnerDetailsProps {
+    const { partner } = router.query;
+
+    if (partner) {
+      const partnerContentResult = getPartnerContent(partner + '');
+      if (partnerContentResult) setPartnerContent(partnerContentResult);
+    }
+  }, [partnerAccesses, user, router.query]);
+
+  interface PartnerContentProps {
     partner: Partner;
   }
 
-  const PartnerDetails = (props: PartnerDetailsProps) => {
+  const PartnerContent = (props: PartnerContentProps) => {
     const { partner } = props;
 
     const socialLinkEvent =
@@ -150,11 +159,13 @@ const Footer = () => {
 
   return (
     <Container sx={footerContainerStyle}>
-      {chaynDetails && <PartnerDetails key="bloom_details" partner={chaynDetails} />}
-
+      {chaynContnet && <PartnerContent key="bloom_details" partner={chaynContnet} />}
+      {partnerContent && partnerAccesses.length === 0 && (
+        <PartnerContent key={`${partnerContent.name}_details`} partner={partnerContent} />
+      )}
       {partnerAccesses.map((partnerAccess: PartnerAccess) => {
         const partner: Partner = partnerAccess.partner;
-        return <PartnerDetails key={`${partner.name}_details`} partner={partner} />;
+        return <PartnerContent key={`${partner.name}_details`} partner={partner} />;
       })}
 
       <Box sx={descriptionContainerStyle}>
