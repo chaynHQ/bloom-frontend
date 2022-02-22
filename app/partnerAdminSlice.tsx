@@ -42,11 +42,11 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return mergeUserPartnerAdminState(state, payload);
+      if (payload.partnerAdmin) return mergeUserPartnerAdminState(state, payload);
     });
 
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return mergeUserPartnerAdminState(state, payload);
+      if (payload.partnerAdmin) return mergeUserPartnerAdminState(state, payload);
     });
   },
 });

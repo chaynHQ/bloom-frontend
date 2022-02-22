@@ -23,7 +23,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     justifyContent: 'center',
     alignItems: 'center',
   } as const;
-
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {

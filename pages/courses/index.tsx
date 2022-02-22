@@ -88,9 +88,9 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       let courseCoursesCompleted: Array<number> = [];
       courses.map((course) => {
         if (course.completed) {
-          courseCoursesCompleted.push(Number(course.storyblokId));
+          courseCoursesCompleted.push(course.storyblokId);
         } else {
-          courseCoursesStarted.push(Number(course.storyblokId));
+          courseCoursesStarted.push(course.storyblokId);
         }
       });
       setCoursesStarted(courseCoursesStarted);

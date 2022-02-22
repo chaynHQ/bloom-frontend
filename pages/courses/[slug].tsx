@@ -92,7 +92,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
     });
 
     const userCourse = courses.find(function (course: Course) {
-      return Number(course.storyblokId) === story.id;
+      return course.storyblokId === story.id;
     });
 
     if (userCourse) {

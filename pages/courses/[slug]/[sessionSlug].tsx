@@ -182,7 +182,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     });
 
     const startSessionResponse = await startSession({
-      storyblokId: story.id.toString(),
+      storyblokId: story.id,
     });
 
     if ('data' in startSessionResponse) {
@@ -224,7 +224,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
     const completeSessionResponse = await completeSession({
-      storyblokId: story.id.toString(),
+      storyblokId: story.id,
     });
 
     if ('data' in completeSessionResponse) {

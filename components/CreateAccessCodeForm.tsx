@@ -87,7 +87,6 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         therapy_sessions_total: 0,
       };
       logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
-      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
     }
 
     if (selectedFeature === 'therapy') {

@@ -47,10 +47,10 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return mergeUserPartnerState(payload.partnerAccesses);
+      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return mergeUserPartnerState(payload.partnerAccesses);
+      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
     });
   },
 });

@@ -22,7 +22,7 @@ export interface GetUserResponse {
   courses: Courses;
 }
 export interface SessionActionPayload {
-  storyblokId: string;
+  storyblokId: number;
 }
 
 const baseQuery = fetchBaseQuery({
