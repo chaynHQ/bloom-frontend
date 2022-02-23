@@ -114,7 +114,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-
+  console.log(story.content);
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
@@ -156,7 +156,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
           : setSessionProgress(PROGRESS_STATUS.STARTED);
       }
     }
-  }, [courses, story.content.course.id, story.id, story.content.course.content.weeks]);
+  }, [courses, story]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
@@ -311,11 +311,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         openTranscriptModal={openTranscriptModal}
                       />
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
-                {story.content.activity && (
+                {(story.content.activity.content.length > 1 ||
+                  story.content.activity.content[0].content) && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.activityTitle')}
                       titleIcon={StarBorderIcon}
@@ -325,11 +326,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     >
                       <>{render(story.content.activity, RichTextOptions)}</>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
-                {story.content.bonus && (
+                {(story.content.bonus.content.length > 1 ||
+                  story.content.bonus.content[0].content) && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.bonusTitle')}
                       titleIcon={LinkIcon}
@@ -339,11 +341,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     >
                       <>{render(story.content.bonus, RichTextOptions)}</>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {liveChatAccess && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.chatTitle')}
                       titleIcon={ChatBubbleOutlineIcon}
@@ -360,11 +362,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         />
                       </Box>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                   <>
+                    <Dots />
                     <Button
                       color="secondary"
                       size="large"
