@@ -9,8 +9,9 @@
       "resultCode": "They can use their email address and the access code",
       "form": {
         "featuresLabel": "Select support type offered to this user",
-        "featureCoursesLabel": "Online courses",
-        "featureTherapyLabel": "Six therapy sessions",
+        "featureCoursesLabel": "Courses only",
+        "featureLiveChatLabel": "Courses with live chat",
+        "featureTherapyLabel": "Courses with live chat and six therapy sessions",
         "reset": "Create another code",
         "errors": {
           "createPartnerAccessError": "There was an error creating the access code. Try again or message the Bloom team.",
