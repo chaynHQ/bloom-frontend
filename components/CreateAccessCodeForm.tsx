@@ -15,6 +15,7 @@ import { useAddPartnerAccessMutation } from '../app/api';
 import { PartnerAdmin } from '../app/partnerAdminSlice';
 import Link from '../components/Link';
 import rollbar from '../config/rollbar';
+import { PARTNER_ACCESS_FEATURES } from '../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
@@ -31,7 +32,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const { partnerAdmin } = props;
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<PARTNER_ACCESS_FEATURES | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
@@ -44,15 +45,42 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
 
   const welcomeURL = `${process.env.NEXT_PUBLIC_BASE_URL}/welcome?code=${partnerAccessCode}`;
 
-  const createPartnerAccess = async () => {
+  const createPartnerAccess = async (selectedFeature: PARTNER_ACCESS_FEATURES) => {
+    let eventData = {};
+    // Currently there are 2 access options, just courses or courses with therapy and live chat included
+    // 6 therapy sessions are added if therapy is included. In the future this could be more flexible, set by partner settings.
+    const includesTherapy = selectedFeature === 'therapy';
+
+    if (!includesTherapy) {
+      eventData = {
+        partner: partnerAdmin.partner?.name,
+        feature_courses: true,
+        feature_live_chat: false,
+        feature_therapy: false,
+        therapy_sessions_total: 0,
+      };
+    }
+
+    if (includesTherapy) {
+      eventData = {
+        partner: partnerAdmin.partner?.name,
+        feature_courses: true,
+        feature_live_chat: true,
+        feature_therapy: true,
+        therapy_sessions_total: 6,
+      };
+    }
+    logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
+
     const partnerAccessResponse = await addPartnerAccess({
-      featureLiveChat: true,
-      featureTherapy: true,
-      therapySessionsRemaining: 6,
+      featureLiveChat: includesTherapy,
+      featureTherapy: includesTherapy,
+      therapySessionsRemaining: includesTherapy ? 6 : 0,
       therapySessionsRedeemed: 0,
     });
 
     if ('data' in partnerAccessResponse) {
+      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
       setPartnerAccessCode(partnerAccessResponse.data.accessCode);
     }
 
@@ -61,8 +89,8 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       const errorMessage = getErrorMessage(error);
 
       logEvent(CREATE_PARTNER_ACCESS_ERROR, {
-        partner: partnerAdmin.partner?.name,
-        message: errorMessage,
+        ...eventData,
+        error: errorMessage,
       });
       rollbar.error('User register create user error', error);
 
@@ -77,32 +105,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       setFormError(t.rich('form.errors.featureRequired'));
       return;
     }
-
-    if (selectedFeature === 'courses') {
-      const eventData = {
-        partner: partnerAdmin.partner?.name,
-        feature_courses: true,
-        feature_live_chat: false,
-        feature_therapy: false,
-        therapy_sessions_total: 0,
-      };
-      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
-    }
-
-    if (selectedFeature === 'therapy') {
-      const eventData = {
-        partner: partnerAdmin.partner?.name,
-        feature_courses: true,
-        feature_live_chat: true,
-        feature_therapy: true,
-        therapy_sessions_total: 6,
-      };
-
-      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
-      await createPartnerAccess();
-      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
-    }
-
+    await createPartnerAccess(selectedFeature);
     setFormSubmitSuccess(true);
   };
 
@@ -144,15 +147,21 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           aria-label="feature"
           name="controlled-radio-buttons-group"
           value={selectedFeature}
-          onChange={(e) => setSelectedFeature(e.target.value)}
+          onChange={(e) =>
+            setSelectedFeature(
+              e.target.value === PARTNER_ACCESS_FEATURES.THERAPY
+                ? PARTNER_ACCESS_FEATURES.THERAPY
+                : PARTNER_ACCESS_FEATURES.COURSES,
+            )
+          }
         >
           <FormControlLabel
-            value="courses"
+            value={PARTNER_ACCESS_FEATURES.COURSES}
             control={<Radio />}
             label={t.rich('form.featureCoursesLabel')}
           />
           <FormControlLabel
-            value="therapy"
+            value={PARTNER_ACCESS_FEATURES.THERAPY}
             control={<Radio />}
             label={t.rich('form.featureTherapyLabel')}
           />
