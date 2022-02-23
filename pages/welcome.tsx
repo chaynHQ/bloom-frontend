@@ -72,13 +72,17 @@ const Welcome: NextPage = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const router = useRouter();
+  const [partnerParam, setPartnerParam] = useState<string>('bumble');
   const [codeParam, setCodeParam] = useState<string>('');
 
   useEffect(() => {
     const { code } = router.query;
-
     if (code) setCodeParam(code + '');
   }, [setCodeParam, router.query]);
+
+  const registerUrl = `/auth/register${partnerParam && '?partner=' + partnerParam}${
+    codeParam && '&code=' + codeParam
+  }`;
 
   return (
     <Box>
@@ -106,7 +110,7 @@ const Welcome: NextPage = () => {
               {t.rich('accessIntroduction')}
             </Typography>
 
-            <CodeForm codeParam={codeParam} />
+            <CodeForm codeParam={codeParam} partnerParam={partnerParam} />
           </CardContent>
         </Card>
       </Container>
@@ -147,7 +151,7 @@ const Welcome: NextPage = () => {
             fullWidth
             color="secondary"
             component={Link}
-            href="/auth/register"
+            href={registerUrl}
           >
             {t.rich('getStarted')}
           </Button>

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 interface CodeFormProps {
   codeParam: string;
+  partnerParam: string;
 }
 
 const containerStyle = {
@@ -15,7 +16,7 @@ const containerStyle = {
 } as const;
 
 const CodeForm = (props: CodeFormProps) => {
-  const { codeParam } = props;
+  const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
 
   const [codeInput, setCodeInput] = useState<string>('');
@@ -28,7 +29,7 @@ const CodeForm = (props: CodeFormProps) => {
   const submitHandler = () => {
     router.push({
       pathname: '/auth/register',
-      query: codeInput ? { code: codeInput } : {},
+      query: partnerParam ? { partner: partnerParam, ...(codeInput && { code: codeInput }) } : {},
     });
   };
 

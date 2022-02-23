@@ -360,11 +360,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         />
                       </Box>
                     </SessionContentCard>
+                    <Dots />
                   </>
                 )}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                   <>
-                    <Dots />
                     <Button
                       color="secondary"
                       size="large"
