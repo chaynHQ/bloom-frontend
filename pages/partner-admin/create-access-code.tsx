@@ -32,8 +32,8 @@ const CreateAccessCode: NextPage = () => {
   const headerProps = {
     title: t.rich('title'),
     introduction: t.rich('introduction'),
-    partnerLogoSrc: partnerAdmin.partner?.partnershipLogo || bloomLogo,
-    partnerLogoAlt: partnerAdmin.partner?.partnershipLogoAlt || 'alt.bloomLogo',
+    partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
+    partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
   };
 
   useEffect(() => {
