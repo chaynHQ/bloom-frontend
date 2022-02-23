@@ -1,12 +1,18 @@
-export enum STORYBLOK_STORY_STATUS_ENUM {
-  PUBLISHED = 'published',
-  UNPUBLISHED = 'unpublished',
-  DELETED = 'deleted',
-}
-
 export enum LANGUAGES {
   en = 'en',
   es = 'es',
+}
+
+export enum PARTNER_ACCESS_FEATURES {
+  COURSES = 'courses',
+  LIVE_CHAT = 'live chat',
+  THERAPY = 'therapy',
+}
+
+export enum STORYBLOK_STORY_STATUS {
+  PUBLISHED = 'published',
+  UNPUBLISHED = 'unpublished',
+  DELETED = 'deleted',
 }
 
 export enum PARTNER_ACCESS_CODE_STATUS {

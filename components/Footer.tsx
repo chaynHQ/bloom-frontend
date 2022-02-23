@@ -8,12 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import * as React from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { PartnerAccess } from '../app/partnerAccessSlice';
 import { RootState } from '../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../constants/events';
+import { getPartnerContent, Partner } from '../constants/partners';
 import { useTypedSelector } from '../hooks/store';
-import bloomLogo from '../public/bloom_logo.svg';
-import bumbleLogo from '../public/bumble_logo.svg';
 import tiktokLogo from '../public/tiktok.svg';
 import { rowStyle } from '../styles/common';
 import logEvent, { getEventUserData } from '../utils/logEvent';
@@ -52,105 +53,120 @@ const socialsContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
+  const [eventUserData, setEventUserData] = useState<any>(null);
+  const [chaynContnet, setChaynDetails] = useState<Partner | null>(null);
+  const [partnerContent, setPartnerContent] = useState<Partner | null>(null);
+  const router = useRouter();
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+
+  useEffect(() => {
+    setEventUserData(getEventUserData({ user, partnerAccesses }));
+    setChaynDetails(getPartnerContent('public'));
+
+    const { partner } = router.query;
+
+    if (partner) {
+      const partnerContentResult = getPartnerContent(partner + '');
+      if (partnerContentResult) setPartnerContent(partnerContentResult);
+    }
+  }, [partnerAccesses, user, router.query]);
+
+  interface PartnerContentProps {
+    partner: Partner;
+  }
+
+  const PartnerContent = (props: PartnerContentProps) => {
+    const { partner } = props;
+
+    const socialLinkEvent =
+      partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
+
+    return (
+      <Box key={`${partner.name}_footer`} sx={brandContainerStyle}>
+        <Link href={partner.website} sx={logoContainerStyle}>
+          <Image alt={tS.raw(partner.logoAlt)} src={partner.logo} />
+        </Link>
+        <Typography variant="body2" component="p">
+          {tS.raw(partner.footerLine1)}
+        </Typography>
+        <Typography variant="body2" component="p">
+          {tS.raw(partner.footerLine2)}
+        </Typography>
+        <Box sx={socialsContainerStyle}>
+          {partner.facebook && (
+            <IconButton
+              aria-label="Facebook"
+              href={partner.facebook}
+              onClick={() =>
+                logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Facebook' })
+              }
+            >
+              <FacebookIcon />
+            </IconButton>
+          )}
+          {partner.instagram && (
+            <IconButton
+              aria-label="Instagram"
+              href={partner.instagram}
+              onClick={() =>
+                logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Instagram' })
+              }
+            >
+              <InstagramIcon />
+            </IconButton>
+          )}
+          {partner.twitter && (
+            <IconButton
+              aria-label="Twitter"
+              href={partner.twitter}
+              onClick={() =>
+                logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
+              }
+            >
+              <TwitterIcon />
+            </IconButton>
+          )}
+          {partner.youtube && (
+            <IconButton
+              aria-label="Youtube"
+              href={partner.youtube}
+              onClick={() =>
+                logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
+              }
+            >
+              <YoutubeIcon />
+            </IconButton>
+          )}
+          {partner.tiktok && (
+            <IconButton
+              aria-label="Tiktok"
+              href={partner.tiktok}
+              onClick={() =>
+                logEvent(socialLinkEvent, {
+                  ...eventUserData,
+                  social_account: 'Tiktok',
+                })
+              }
+            >
+              <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
+    );
+  };
 
   return (
     <Container sx={footerContainerStyle}>
-      <Box sx={brandContainerStyle}>
-        <Link href={'https://chayn.co'} sx={logoContainerStyle}>
-          <Image alt={tS.raw('alt.bloomLogo')} src={bloomLogo} />
-        </Link>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.chaynDetails1')}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.chaynDetails2')}
-        </Typography>
-        <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/chaynhq"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Instagram' })
-            }
-          >
-            <InstagramIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Facebook"
-            href="https://www.facebook.com/chayn/"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Facebook' })
-            }
-          >
-            <FacebookIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Twitter"
-            href="https://twitter.com/ChaynHQ"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Twitter' })
-            }
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Youtube"
-            href="https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg"
-            onClick={() =>
-              logEvent(SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
-            }
-          >
-            <YoutubeIcon />
-          </IconButton>
-        </Box>
-      </Box>
-
-      <Box sx={brandContainerStyle}>
-        <Link href={'https://bumble.com'} sx={logoContainerStyle}>
-          <Image alt={tS.raw('alt.bumbleLogo')} src={bumbleLogo} />
-        </Link>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.bumbleDetails1')}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {tS.raw('footer.bumbleDetails2')}
-        </Typography>
-        <Box sx={socialsContainerStyle}>
-          <IconButton
-            aria-label="Instagram"
-            href="https://www.instagram.com/bumble"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, {
-                ...eventUserData,
-                social_account: 'Instagram',
-              })
-            }
-          >
-            <InstagramIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Tiktok"
-            href="https://www.tiktok.com/@bumble"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Tiktok' })
-            }
-          >
-            <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
-          </IconButton>
-          <IconButton
-            aria-label="Youtube"
-            href="https://www.youtube.com/channel/UCERo8J7mug7cVcwIKaoJLww"
-            onClick={() =>
-              logEvent(PARTNER_SOCIAL_LINK_CLICKED, { ...eventUserData, social_account: 'Youtube' })
-            }
-          >
-            <YoutubeIcon />
-          </IconButton>
-        </Box>
-      </Box>
+      {chaynContnet && <PartnerContent key="bloom_details" partner={chaynContnet} />}
+      {partnerContent && partnerAccesses.length === 0 && (
+        <PartnerContent key={`${partnerContent.name}_details`} partner={partnerContent} />
+      )}
+      {partnerAccesses.map((partnerAccess: PartnerAccess) => {
+        const partner: Partner = partnerAccess.partner;
+        return <PartnerContent key={`${partner.name}_details`} partner={partner} />;
+      })}
 
       <Box sx={descriptionContainerStyle}>
         <Typography variant="body1" component="p" sx={{ mb: 1 }}>

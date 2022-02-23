@@ -118,7 +118,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
-    if (!partnerAccesses && coursePartners.includes('Public')) {
+    if (partnerAccesses.length === 0 && coursePartners.includes('Public')) {
       setIncorrectAccess(false);
     }
 
@@ -128,11 +128,10 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       }
     });
 
-    setLiveChatAccess(
-      !!partnerAccesses.find(function (partnerAccess) {
-        return partnerAccess.featureLiveChat === true;
-      }),
-    );
+    const liveAccess = partnerAccesses.find(function (partnerAccess) {
+      return partnerAccess.featureLiveChat === true;
+    });
+    if (liveAccess) setLiveChatAccess(true);
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
   useEffect(() => {
@@ -183,7 +182,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     });
 
     const startSessionResponse = await startSession({
-      storyblokId: story.id.toString(),
+      storyblokId: story.id,
     });
 
     if ('data' in startSessionResponse) {
@@ -225,7 +224,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
     const completeSessionResponse = await completeSession({
-      storyblokId: story.id.toString(),
+      storyblokId: story.id,
     });
 
     if ('data' in completeSessionResponse) {
@@ -361,11 +360,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         />
                       </Box>
                     </SessionContentCard>
+                    <Dots />
                   </>
                 )}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                   <>
-                    <Dots />
                     <Button
                       color="secondary"
                       size="large"

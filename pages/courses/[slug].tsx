@@ -81,7 +81,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
 
-    if (!partnerAccesses && storyPartners.includes('Public')) {
+    if (partnerAccesses.length === 0 && storyPartners.includes('Public')) {
       setIncorrectAccess(false);
     }
 
@@ -92,7 +92,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
     });
 
     const userCourse = courses.find(function (course: Course) {
-      return Number(course.storyblokId) === story.id;
+      return course.storyblokId === story.id;
     });
 
     if (userCourse) {
@@ -164,9 +164,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
-      >
-        <Link href={`/courses`}>{t('courses')}</Link>
-      </Header>
+      />
       <Container sx={containerStyle}>
         {story.content.coming_soon && (
           <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>

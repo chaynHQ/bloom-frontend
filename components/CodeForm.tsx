@@ -4,23 +4,32 @@ import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-interface CodeFormProps {}
+interface CodeFormProps {
+  codeParam: string;
+  partnerParam: string;
+}
 
 const containerStyle = {
   marginY: 3,
 } as const;
 
 const CodeForm = (props: CodeFormProps) => {
+  const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
-  const [codeInput, setCodeInput] = useState<string | null>(null);
+
+  const [codeInput, setCodeInput] = useState<string>('');
   const router = useRouter();
+
+  useEffect(() => {
+    setCodeInput(codeParam);
+  }, [codeParam]);
 
   const submitHandler = () => {
     router.push({
       pathname: '/auth/register',
-      query: codeInput ? { code: codeInput } : {},
+      query: partnerParam ? { partner: partnerParam, ...(codeInput && { code: codeInput }) } : {},
     });
   };
 
@@ -29,6 +38,7 @@ const CodeForm = (props: CodeFormProps) => {
       <form autoComplete="off">
         <TextField
           id="accessCode"
+          value={codeInput}
           onChange={(e) => setCodeInput(e.target.value)}
           label={t.rich('form.codeLabel')}
           variant="standard"
