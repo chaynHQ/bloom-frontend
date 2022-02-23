@@ -114,7 +114,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-
+  console.log(story.content);
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
@@ -156,7 +156,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
           : setSessionProgress(PROGRESS_STATUS.STARTED);
       }
     }
-  }, [courses, story.content.course.id, story.id, story.content.course.content.weeks]);
+  }, [courses, story]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
@@ -313,7 +313,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     </SessionContentCard>
                   </>
                 )}
-                {story.content.activity && (
+                {(story.content.activity.content.length > 1 ||
+                  story.content.activity.content[0].content) && (
                   <>
                     <Dots />
                     <SessionContentCard
@@ -327,7 +328,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     </SessionContentCard>
                   </>
                 )}
-                {story.content.bonus && (
+                {(story.content.bonus.content.length > 1 ||
+                  story.content.bonus.content[0].content) && (
                   <>
                     <Dots />
                     <SessionContentCard
