@@ -70,6 +70,12 @@ const Footer = () => {
       const partnerContentResult = getPartnerContent(partner + '');
       if (partnerContentResult) setPartnerContent(partnerContentResult);
     }
+
+    // TODO: remove when welcome page is driven by storyblok
+    if (router.pathname === '/welcome') {
+      const partnerContentResult = getPartnerContent('bumble');
+      if (partnerContentResult) setPartnerContent(partnerContentResult);
+    }
   }, [partnerAccesses, user, router.query]);
 
   interface PartnerContentProps {
