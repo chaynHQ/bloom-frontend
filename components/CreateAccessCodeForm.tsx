@@ -32,7 +32,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const { partnerAdmin } = props;
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const [selectedFeature, setSelectedFeature] = useState<PARTNER_ACCESS_FEATURES | null>(null);
+  const [selectedTier, setSelectedTier] = useState<PARTNER_ACCESS_FEATURES | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
@@ -45,37 +45,35 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
 
   const welcomeURL = `${process.env.NEXT_PUBLIC_BASE_URL}/welcome?code=${partnerAccessCode}`;
 
-  const createPartnerAccess = async (selectedFeature: PARTNER_ACCESS_FEATURES) => {
-    let eventData = {};
-    // Currently there are 2 access options, just courses or courses with therapy and live chat included
-    // 6 therapy sessions are added if therapy is included. In the future this could be more flexible, set by partner settings.
-    const includesTherapy = selectedFeature === 'therapy';
+  const submitHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
 
-    if (!includesTherapy) {
-      eventData = {
-        partner: partnerAdmin.partner?.name,
-        feature_courses: true,
-        feature_live_chat: false,
-        feature_therapy: false,
-        therapy_sessions_total: 0,
-      };
+    if (!selectedTier) {
+      setFormError(t.rich('form.errors.featureRequired'));
+      return;
     }
 
-    if (includesTherapy) {
-      eventData = {
-        partner: partnerAdmin.partner?.name,
-        feature_courses: true,
-        feature_live_chat: true,
-        feature_therapy: true,
-        therapy_sessions_total: 6,
-      };
-    }
+    const includeLiveChat =
+      selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT ||
+      selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
+    const includeTherapy = selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
+    const therapySessionsRemaining: number =
+      selectedTier === PARTNER_ACCESS_FEATURES.THERAPY ? 6 : 0;
+
+    const eventData = {
+      partner: partnerAdmin.partner?.name,
+      feature_courses: true,
+      feature_live_chat: includeLiveChat,
+      feature_therapy: includeTherapy,
+      therapy_sessions_remaining: therapySessionsRemaining,
+    };
+
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
 
     const partnerAccessResponse = await addPartnerAccess({
-      featureLiveChat: includesTherapy,
-      featureTherapy: includesTherapy,
-      therapySessionsRemaining: includesTherapy ? 6 : 0,
+      featureLiveChat: includeLiveChat,
+      featureTherapy: includeTherapy,
+      therapySessionsRemaining: therapySessionsRemaining,
       therapySessionsRedeemed: 0,
     });
 
@@ -97,22 +95,14 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       setFormError(t.rich('form.errors.createPartnerAccessError'));
       throw error;
     }
-  };
 
-  const submitHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (!selectedFeature) {
-      setFormError(t.rich('form.errors.featureRequired'));
-      return;
-    }
-    await createPartnerAccess(selectedFeature);
     setFormSubmitSuccess(true);
   };
 
   const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setFormSubmitSuccess(false);
-    setSelectedFeature(null);
+    setSelectedTier(null);
   };
 
   const FormResetButton = () => (
@@ -126,7 +116,11 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const FormSuccess = () => (
     <Box>
       <Typography variant="h4" component="h4" mb={1}>
-        {selectedFeature === 'courses' ? t('courseAccess') : t('therapyAccess')}
+        {selectedTier === PARTNER_ACCESS_FEATURES.COURSES
+          ? t('courseAccess')
+          : selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT
+          ? t('liveChatAccess')
+          : t('therapyAccess')}
       </Typography>
       <Typography variant="body1" component="p">
         {t.rich('resultLink')}
@@ -146,19 +140,18 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         <RadioGroup
           aria-label="feature"
           name="controlled-radio-buttons-group"
-          value={selectedFeature}
-          onChange={(e) =>
-            setSelectedFeature(
-              e.target.value === PARTNER_ACCESS_FEATURES.THERAPY
-                ? PARTNER_ACCESS_FEATURES.THERAPY
-                : PARTNER_ACCESS_FEATURES.COURSES,
-            )
-          }
+          value={selectedTier}
+          onChange={(e) => setSelectedTier(e.target.value as PARTNER_ACCESS_FEATURES)}
         >
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.COURSES}
             control={<Radio />}
             label={t.rich('form.featureCoursesLabel')}
+          />
+          <FormControlLabel
+            value={PARTNER_ACCESS_FEATURES.LIVE_CHAT}
+            control={<Radio />}
+            label={t.rich('form.featureLiveChatLabel')}
           />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.THERAPY}
