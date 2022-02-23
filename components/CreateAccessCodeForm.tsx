@@ -54,7 +54,8 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
     }
 
     const includeLiveChat =
-      selectedTier === (PARTNER_ACCESS_FEATURES.LIVE_CHAT || PARTNER_ACCESS_FEATURES.THERAPY);
+      selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT ||
+      selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
     const includeTherapy = selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
     const therapySessionsRemaining: number =
       selectedTier === PARTNER_ACCESS_FEATURES.THERAPY ? 6 : 0;
@@ -115,7 +116,11 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const FormSuccess = () => (
     <Box>
       <Typography variant="h4" component="h4" mb={1}>
-        {selectedTier === 'courses' ? t('courseAccess') : t('therapyAccess')}
+        {selectedTier === PARTNER_ACCESS_FEATURES.COURSES
+          ? t('courseAccess')
+          : selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT
+          ? t('liveChatAccess')
+          : t('therapyAccess')}
       </Typography>
       <Typography variant="body1" component="p">
         {t.rich('resultLink')}

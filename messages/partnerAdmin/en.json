@@ -3,8 +3,9 @@
     "createAccessCode": {
       "title": "Create access code",
       "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
-      "courseAccess": "Access to online courses",
-      "therapyAccess": "Access to six therapy sessions",
+      "courseAccess": "Access to courses only",
+      "liveChatAccess": "Access to courses with live chat",
+      "therapyAccess": "Access to courses with live chat and six therapy sessions",
       "resultLink": "Please tell the user to go to",
       "resultCode": "They can use their email address and the access code",
       "form": {
