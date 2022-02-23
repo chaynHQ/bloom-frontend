@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -41,8 +41,15 @@ const cardColumnStyle = {
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
 
+const loadingContainerStyle = {
+  display: 'flex',
+  height: '100vh',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
-  const [loadedCourses, setLoadedCourses] = useState<StoryData[]>([]);
+  const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
@@ -118,7 +125,11 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        {loadedCourses.length === 0 ? (
+        {loadedCourses === null ? (
+          <Box sx={loadingContainerStyle}>
+            <CircularProgress color="error" />
+          </Box>
+        ) : loadedCourses.length === 0 ? (
           <Box>
             <Typography component="p" variant="body1">
               {t('noCourses')}
