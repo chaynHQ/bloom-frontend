@@ -28,9 +28,25 @@ export default function UserMenu() {
     auth.signOut();
     router.push('/auth/login');
   };
+  const menuButtonStyle = {
+    color: 'text.primary',
+    ':hover': { backgroundColor: 'background.default' },
+    '& .MuiTouchRipple-root span': {
+      backgroundColor: 'primary.main',
+      opacity: 0.2,
+    },
+  } as const;
 
   const menuItemStyle = {
-    color: 'text.primary',
+    ':hover': { backgroundColor: 'transparent' },
+    '& .MuiTouchRipple-root span': {
+      backgroundColor: 'transparent',
+    },
+  } as const;
+
+  const buttonStyle = {
+    ...menuButtonStyle,
+    '& .MuiButton-startIcon': { mx: 0 },
   } as const;
 
   return (
@@ -44,7 +60,7 @@ export default function UserMenu() {
         onClick={handleClick}
         startIcon={<Person />}
         size="medium"
-        sx={{ '& .MuiButton-startIcon': { mx: 0 } }}
+        sx={buttonStyle}
       ></Button>
       <Menu
         anchorEl={anchorEl}
@@ -55,8 +71,8 @@ export default function UserMenu() {
           id: 'language-menu',
         }}
       >
-        <MenuItem>
-          <Button sx={menuItemStyle} onClick={logout} startIcon={<Logout />}>
+        <MenuItem sx={menuItemStyle}>
+          <Button sx={menuButtonStyle} onClick={logout} startIcon={<Logout />}>
             {t.raw('logout')}
           </Button>
         </MenuItem>
