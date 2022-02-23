@@ -3,6 +3,11 @@ export enum LANGUAGES {
   es = 'es',
 }
 
+export enum PARTNER_ACCESS_FEATURES {
+  COURSES = 'courses',
+  THERAPY = 'therapy',
+}
+
 export enum STORYBLOK_STORY_STATUS {
   PUBLISHED = 'published',
   UNPUBLISHED = 'unpublished',

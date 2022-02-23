@@ -5,12 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import CodeForm from '../components/CodeForm';
 import Link from '../components/Link';
 import PartnerHeader from '../components/PartnerHeader';
@@ -21,56 +22,67 @@ import illustrationLeafMixBee from '../public/illustration_leaf_mix_bee.svg';
 import illustrationPerson5Yellow from '../public/illustration_person5_yellow.svg';
 import { rowStyle } from '../styles/common';
 
+const headerProps = {
+  partnerLogoSrc: bloomBumbleLogo,
+  partnerLogoAlt: 'alt.bloomBumbleLogo',
+  imageSrc: illustrationBloomHeadYellow,
+  imageAlt: 'alt.bloomHead',
+};
+
+const rowContainerStyle = {
+  ...rowStyle,
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 160, md: 225 },
+  height: { xs: 160, md: 225 },
+  marginX: { xs: 'auto', md: 12 },
+  marginBottom: { xs: 4, md: 0 },
+} as const;
+
+const smallImageContainerStyle = {
+  position: 'relative',
+  width: { xs: 150, md: 180 },
+  height: { xs: 70, md: 85 },
+  marginBottom: { xs: 4, md: 6 },
+  marginLeft: 12,
+} as const;
+
+const rowItem = {
+  width: { xs: '100%', sm: '60%', md: '45%' },
+} as const;
+
+const resourcesStyle = {
+  fontSize: '1.125rem',
+  maxWidth: 800,
+  marginX: 'auto',
+  textAlign: 'center',
+} as const;
+
 const Welcome: NextPage = () => {
   const t = useTranslations('Welcome');
   const tS = useTranslations('Shared');
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
+  const [partnerParam, setPartnerParam] = useState<string>('bumble');
+  const [codeParam, setCodeParam] = useState<string>('');
 
-  const headerProps = {
-    partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: 'alt.bloomBumbleLogo',
-    imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomHead',
-  };
+  useEffect(() => {
+    const { code } = router.query;
+    if (code) setCodeParam(code + '');
+  }, [setCodeParam, router.query]);
 
-  const rowContainerStyle = {
-    ...rowStyle,
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 160, md: 225 },
-    height: { xs: 160, md: 225 },
-    marginX: { xs: 'auto', md: 12 },
-    marginBottom: { xs: 4, md: 0 },
-  } as const;
-
-  const smallImageContainerStyle = {
-    position: 'relative',
-    width: { xs: 150, md: 180 },
-    height: { xs: 70, md: 85 },
-    marginBottom: { xs: 4, md: 6 },
-    marginLeft: 12,
-  } as const;
-
-  const rowItem = {
-    width: { xs: '100%', sm: '60%', md: '45%' },
-  } as const;
-
-  const resourcesStyle = {
-    fontSize: '1.125rem',
-    maxWidth: 800,
-    marginX: 'auto',
-    textAlign: 'center',
-  } as const;
+  const registerUrl = `/auth/register${partnerParam && '?partner=' + partnerParam}${
+    codeParam && '&code=' + codeParam
+  }`;
 
   return (
     <Box>
@@ -98,7 +110,7 @@ const Welcome: NextPage = () => {
               {t.rich('accessIntroduction')}
             </Typography>
 
-            <CodeForm />
+            <CodeForm codeParam={codeParam} partnerParam={partnerParam} />
           </CardContent>
         </Card>
       </Container>
@@ -139,7 +151,7 @@ const Welcome: NextPage = () => {
             fullWidth
             color="secondary"
             component={Link}
-            href="/auth/register"
+            href={registerUrl}
           >
             {t.rich('getStarted')}
           </Button>

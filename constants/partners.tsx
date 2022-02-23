@@ -1,9 +1,14 @@
+import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
 
-export interface PartnerContent {
+export interface Partner {
+  id?: string;
+  name: string;
   logo: StaticImageData;
   logoAlt: string;
+  partnershipLogo?: StaticImageData;
+  partnershipLogoAlt?: string;
   website: string;
   footerLine1: string;
   footerLine2: string;
@@ -14,7 +19,8 @@ export interface PartnerContent {
   tiktok?: string;
 }
 
-export const publicContent: PartnerContent = {
+export const publicContent: Partner = {
+  name: 'Bloom',
   logo: bloomLogo,
   logoAlt: 'alt.bloomLogo',
   website: 'https://chayn.co',
@@ -26,9 +32,12 @@ export const publicContent: PartnerContent = {
   youtube: 'https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg',
 };
 
-export const bumbleContent: PartnerContent = {
+export const bumbleContent: Partner = {
+  name: 'Bumble',
   logo: bumbleLogo,
   logoAlt: 'alt.bumbleLogo',
+  partnershipLogo: bloomBumbleLogo,
+  partnershipLogoAlt: 'alt.bloomBumbleLogo',
   website: 'https://bumble.com',
   footerLine1: 'footer.bumbleLine1',
   footerLine2: 'footer.bumbleLine2',
@@ -37,7 +46,12 @@ export const bumbleContent: PartnerContent = {
   tiktok: 'https://www.tiktok.com/@bumble',
 };
 
-export const getPartnerContent = (partner: string) => {
-  if (partner === 'public') return publicContent;
+export const getPartnerContent = (partnerName: string) => {
+  const partner = partnerName.toLowerCase();
   if (partner === 'bumble') return bumbleContent;
+  return publicContent;
+};
+
+export const getAllPartnersContent = () => {
+  return [bumbleContent];
 };

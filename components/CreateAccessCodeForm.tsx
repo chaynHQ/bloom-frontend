@@ -12,8 +12,10 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../app/api';
+import { PartnerAdmin } from '../app/partnerAdminSlice';
 import Link from '../components/Link';
 import rollbar from '../config/rollbar';
+import { PARTNER_ACCESS_FEATURES } from '../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
@@ -22,9 +24,15 @@ import {
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent from '../utils/logEvent';
 
-const CreateAccessCodeForm = () => {
+interface CreateAccessCodeFormProps {
+  partnerAdmin: PartnerAdmin;
+}
+
+const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
+  const { partnerAdmin } = props;
+
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<PARTNER_ACCESS_FEATURES | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
@@ -35,15 +43,44 @@ const CreateAccessCodeForm = () => {
   const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
     useAddPartnerAccessMutation();
 
-  const createPartnerAccess = async () => {
+  const welcomeURL = `${process.env.NEXT_PUBLIC_BASE_URL}/welcome?code=${partnerAccessCode}`;
+
+  const createPartnerAccess = async (selectedFeature: PARTNER_ACCESS_FEATURES) => {
+    let eventData = {};
+    // Currently there are 2 access options, just courses or courses with therapy and live chat included
+    // 6 therapy sessions are added if therapy is included. In the future this could be more flexible, set by partner settings.
+    const includesTherapy = selectedFeature === 'therapy';
+
+    if (!includesTherapy) {
+      eventData = {
+        partner: partnerAdmin.partner?.name,
+        feature_courses: true,
+        feature_live_chat: false,
+        feature_therapy: false,
+        therapy_sessions_total: 0,
+      };
+    }
+
+    if (includesTherapy) {
+      eventData = {
+        partner: partnerAdmin.partner?.name,
+        feature_courses: true,
+        feature_live_chat: true,
+        feature_therapy: true,
+        therapy_sessions_total: 6,
+      };
+    }
+    logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
+
     const partnerAccessResponse = await addPartnerAccess({
-      featureLiveChat: true,
-      featureTherapy: true,
-      therapySessionsRemaining: 6,
+      featureLiveChat: includesTherapy,
+      featureTherapy: includesTherapy,
+      therapySessionsRemaining: includesTherapy ? 6 : 0,
       therapySessionsRedeemed: 0,
     });
 
     if ('data' in partnerAccessResponse) {
+      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
       setPartnerAccessCode(partnerAccessResponse.data.accessCode);
     }
 
@@ -51,7 +88,10 @@ const CreateAccessCodeForm = () => {
       const error = partnerAccessResponse.error;
       const errorMessage = getErrorMessage(error);
 
-      logEvent(CREATE_PARTNER_ACCESS_ERROR, { partner: 'bumble', message: errorMessage });
+      logEvent(CREATE_PARTNER_ACCESS_ERROR, {
+        ...eventData,
+        error: errorMessage,
+      });
       rollbar.error('User register create user error', error);
 
       setFormError(t.rich('form.errors.createPartnerAccessError'));
@@ -65,33 +105,7 @@ const CreateAccessCodeForm = () => {
       setFormError(t.rich('form.errors.featureRequired'));
       return;
     }
-
-    if (selectedFeature === 'courses') {
-      const eventData = {
-        partner: 'bumble',
-        feature_courses: true,
-        feature_live_chat: false,
-        feature_therapy: false,
-        therapy_sessions_total: 0,
-      };
-      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
-      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
-    }
-
-    if (selectedFeature === 'therapy') {
-      const eventData = {
-        partner: 'bumble',
-        feature_courses: true,
-        feature_live_chat: true,
-        feature_therapy: true,
-        therapy_sessions_total: 6,
-      };
-
-      logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
-      await createPartnerAccess();
-      logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
-    }
-
+    await createPartnerAccess(selectedFeature);
     setFormSubmitSuccess(true);
   };
 
@@ -109,38 +123,17 @@ const CreateAccessCodeForm = () => {
     </Box>
   );
 
-  const FormSuccessCourses = () => (
+  const FormSuccess = () => (
     <Box>
       <Typography variant="h4" component="h4" mb={1}>
-        {t.rich('courseAccess')}
+        {selectedFeature === 'courses' ? t('courseAccess') : t('therapyAccess')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('courseResultLink')}
+        {t.rich('resultLink')}
       </Typography>
-      <Link href={'https://www.bloom-pilot.chayn.co/bumble-welcome'}>
-        https://www.bloom-pilot.chayn.co/bumble-welcome
-      </Link>
+      <Link href={welcomeURL}>{welcomeURL}</Link>
       <Typography variant="body1" component="p">
-        {t.rich('courseResultPassword')}{' '}
-        <strong>{process.env.NEXT_PUBLIC_PILOT_COURSES_PASSWORD}</strong>
-      </Typography>
-      <FormResetButton />
-    </Box>
-  );
-
-  const FormSuccessTherapy = () => (
-    <Box>
-      <Typography variant="h4" component="h4" mb={1}>
-        {t.rich('therapyAccess')}
-      </Typography>
-      <Typography variant="body1" component="p">
-        {t.rich('therapyResultLink')}
-      </Typography>
-      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}>
-        {`${process.env.NEXT_PUBLIC_BASE_URL}/welcome`}
-      </Link>
-      <Typography variant="body1" component="p">
-        {t.rich('therapyResultCode')} <strong>{partnerAccessCode}</strong>
+        {t.rich('resultCode')} <strong>{partnerAccessCode}</strong>
       </Typography>
       <FormResetButton />
     </Box>
@@ -154,15 +147,21 @@ const CreateAccessCodeForm = () => {
           aria-label="feature"
           name="controlled-radio-buttons-group"
           value={selectedFeature}
-          onChange={(e) => setSelectedFeature(e.target.value)}
+          onChange={(e) =>
+            setSelectedFeature(
+              e.target.value === PARTNER_ACCESS_FEATURES.THERAPY
+                ? PARTNER_ACCESS_FEATURES.THERAPY
+                : PARTNER_ACCESS_FEATURES.COURSES,
+            )
+          }
         >
           <FormControlLabel
-            value="courses"
+            value={PARTNER_ACCESS_FEATURES.COURSES}
             control={<Radio />}
             label={t.rich('form.featureCoursesLabel')}
           />
           <FormControlLabel
-            value="therapy"
+            value={PARTNER_ACCESS_FEATURES.THERAPY}
             control={<Radio />}
             label={t.rich('form.featureTherapyLabel')}
           />
@@ -180,11 +179,8 @@ const CreateAccessCodeForm = () => {
     </form>
   );
 
-  if (formSubmitSuccess && selectedFeature === 'courses') {
-    return <FormSuccessCourses />;
-  }
-  if (formSubmitSuccess && selectedFeature === 'therapy') {
-    return <FormSuccessTherapy />;
+  if (formSubmitSuccess) {
+    return <FormSuccess />;
   }
   return <Form />;
 };

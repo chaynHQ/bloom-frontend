@@ -90,7 +90,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           color: 'inherit',
-          textDecorationColor: theme.palette.text.primary,
+          textDecorationColor: 'inherit',
 
           '&:hover': {
             textDecorationColor: theme.palette.primary.dark,
@@ -213,7 +213,8 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: 20,
+          padding: 24,
+          paddingTop: 30,
 
           [theme.breakpoints.up('md')]: {
             padding: 40,

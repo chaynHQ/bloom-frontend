@@ -25,6 +25,8 @@ export interface Course {
 }
 export interface SessionUser {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   completed: boolean;
   sessionId: string;
   session: Partial<Session>;
@@ -34,6 +36,8 @@ export interface SessionUser {
 
 export interface CourseUser {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   completed: boolean;
   userId: string;
   user: User;

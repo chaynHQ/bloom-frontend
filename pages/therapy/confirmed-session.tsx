@@ -5,7 +5,8 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
 import Faqs from '../../components/Faqs';
 import Header from '../../components/Header';
@@ -23,6 +24,23 @@ const ConfirmedSession: NextPage = () => {
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
+
+  useEffect(() => {
+    let accesses = partnerAccesses.filter(
+      (partnerAccess) =>
+        !!partnerAccess.featureTherapy && partnerAccess.therapySessionsRedeemed > 0,
+    );
+    let partnerAccess = null;
+
+    if (accesses.length === 1) {
+      partnerAccess = accesses[0];
+    } else {
+      // several partner accesses with redeemed therapy, get last one
+      partnerAccess = accesses[accesses.length - 1];
+    }
+    setPartnerAccess(partnerAccess);
+  }, [partnerAccesses]);
 
   useEffect(() => {
     logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
@@ -75,7 +93,11 @@ const ConfirmedSession: NextPage = () => {
           <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
         </Box>
         <Box sx={faqsContainerStyle}>
-          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
+          <Faqs
+            faqList={therapyFaqs}
+            translations="Therapy.faqs"
+            partner={partnerAccess?.partner}
+          />
         </Box>
       </Container>
     </Box>

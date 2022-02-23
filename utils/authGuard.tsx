@@ -12,7 +12,7 @@ import logEvent, { getEventUserData } from './logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const [getUser] = useGetUserMutation();
@@ -23,7 +23,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     justifyContent: 'center',
     alignItems: 'center',
   } as const;
-
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
@@ -41,7 +40,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
         router.replace('/auth/login');
       }
-      setLoading(false);
     }
 
     if (loading || user.loading) {
@@ -67,6 +65,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     // Handles restoring user data on app reload or revisiting the site
     setLoading(true);
     callGetUser();
+    setLoading(false);
   }, [getUser, router, user, loading]);
 
   if (!verified) {

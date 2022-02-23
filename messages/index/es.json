@@ -1,7 +1,0 @@
-{
-  "Index": {
-    "title": "H1 - Inicio",
-    "introduction": "Proyecto inicial con <nextLink>Next.js</nextLink>, <reduxLink>Redux</reduxLink> y <muiLink>MUI</muiLink>",
-    "nextDocs": "Next.js documentación"
-  }
-}

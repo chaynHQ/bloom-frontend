@@ -81,7 +81,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
 
-    if (!partnerAccesses && storyPartners.includes('Public')) {
+    if (partnerAccesses.length === 0 && storyPartners.includes('Public')) {
       setIncorrectAccess(false);
     }
 
@@ -92,7 +92,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
     });
 
     const userCourse = courses.find(function (course: Course) {
-      return Number(course.storyblokId) === story.id;
+      return course.storyblokId === story.id;
     });
 
     if (userCourse) {
