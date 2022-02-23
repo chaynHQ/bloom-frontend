@@ -25,6 +25,22 @@ const logoContainerStyle = {
   marginLeft: 2,
 } as const;
 
+const buttonStyle = {
+  color: 'text.primary',
+  ':hover': { backgroundColor: 'background.default' },
+  '& .MuiButton-startIcon': { marginX: -2 },
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
+} as const;
+
+const closeButtonStyle = {
+  ...buttonStyle,
+  marginLeft: 'auto',
+  minWidth: 40,
+} as const;
+
 const NavigationDrawer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -48,7 +64,7 @@ const NavigationDrawer = () => {
         onClick={handleClick}
         startIcon={<MenuIcon />}
         size="large"
-        sx={{ '& .MuiButton-startIcon': { marginRight: 0 } }}
+        sx={buttonStyle}
       ></Button>
       <Drawer open={open} onClose={handleClose}>
         <Container sx={drawerContainerStyle}>
@@ -57,7 +73,7 @@ const NavigationDrawer = () => {
             onClick={handleClose}
             startIcon={<CloseIcon />}
             size="large"
-            sx={{ marginLeft: 'auto', minWidth: 40, '& .MuiButton-startIcon': { marginRight: 0 } }}
+            sx={closeButtonStyle}
           ></Button>
           <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
             <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />

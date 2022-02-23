@@ -28,6 +28,7 @@ export default function UserMenu() {
     auth.signOut();
     router.push('/auth/login');
   };
+
   const menuButtonStyle = {
     color: 'text.primary',
     ':hover': { backgroundColor: 'background.default' },
