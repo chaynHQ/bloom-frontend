@@ -129,7 +129,13 @@ const Welcome: NextPage = () => {
       </Container>
       <Container sx={{ backgroundColor: 'common.white' }}>
         <Typography sx={resourcesStyle} variant="body1" component="p">
-          {t.rich('resourcesIntroduction')}
+          {t.rich('resourcesIntroduction', {
+            resourcesLink: (children) => (
+              <Link target={'_blank'} href="https://www.chayn.co/bumble-resources">
+                {children}
+              </Link>
+            ),
+          })}
         </Typography>
       </Container>
       <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
