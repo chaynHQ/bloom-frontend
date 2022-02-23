@@ -311,11 +311,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         openTranscriptModal={openTranscriptModal}
                       />
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {story.content.activity && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.activityTitle')}
                       titleIcon={StarBorderIcon}
@@ -325,11 +325,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     >
                       <>{render(story.content.activity, RichTextOptions)}</>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {story.content.bonus && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.bonusTitle')}
                       titleIcon={LinkIcon}
@@ -339,11 +339,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     >
                       <>{render(story.content.bonus, RichTextOptions)}</>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {liveChatAccess && (
                   <>
+                    <Dots />
                     <SessionContentCard
                       title={t('sessionDetail.chatTitle')}
                       titleIcon={ChatBubbleOutlineIcon}
@@ -360,11 +360,11 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                         />
                       </Box>
                     </SessionContentCard>
-                    <Dots />
                   </>
                 )}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                   <>
+                    <Dots />
                     <Button
                       color="secondary"
                       size="large"
