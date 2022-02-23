@@ -40,7 +40,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
         router.replace('/auth/login');
       }
-      setLoading(false);
     }
 
     if (loading || user.loading) {
@@ -66,6 +65,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     // Handles restoring user data on app reload or revisiting the site
     setLoading(true);
     callGetUser();
+    setLoading(false);
   }, [getUser, router, user, loading]);
 
   if (!verified) {
