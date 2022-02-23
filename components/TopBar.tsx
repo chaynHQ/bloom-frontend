@@ -1,5 +1,7 @@
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -10,6 +12,8 @@ import { useTypedSelector } from '../hooks/store';
 import bloomLogo from '../public/bloom_logo.svg';
 import { rowStyle } from '../styles/common';
 import Link from './Link';
+import NavigationDrawer from './NavigationDrawer';
+import NavigationMenu from './NavigationMenu';
 import UserMenu from './UserMenu';
 
 const appBarStyle = {
@@ -35,7 +39,9 @@ const logoContainerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
+  const theme = useTheme();
   const router = useRouter();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
   const homepage = pathname === 'partner-admin' ? '/partner-admin/create-access-code' : '/courses';
 
@@ -44,12 +50,12 @@ const TopBar = () => {
   return (
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
-        {/* {isSmallScreen && <NavigationDrawer />} */}
+        {isSmallScreen && user.id && auth.currentUser && <NavigationDrawer />}
         <Link href={homepage} aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
+        {!isSmallScreen && user.id && auth.currentUser && <NavigationMenu />}
         {user.id && auth.currentUser && <UserMenu />}
-        {/* {!isSmallScreen && <NavigationMenu />} */}
         {/* <LanguageMenu /> */}
       </Container>
     </AppBar>
