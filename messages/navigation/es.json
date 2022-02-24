@@ -1,0 +1,17 @@
+{
+  "Navigation": {
+    "menu": "Navigation menu",
+    "menuOpen": "Open navigation menu",
+    "menuClose": "Close navigation menu",
+    "languageMenu": "Language menu",
+    "bloomLogo": "Bloom logo",
+    "logout": "Cerrar sesión",
+    "userMenu": "User menu",
+    "home": "Home",
+    "about": "Sobre Bloom",
+    "immediateHelp": "Immediate help",
+    "therapy": "Terapia",
+    "courses": "Cursos",
+    "account": "Account"
+  }
+}
