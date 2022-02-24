@@ -15,7 +15,7 @@ module.exports = {
     domains: ['a.storyblok.com'],
   },
   i18n: {
-    locales: ['en'],
+    locales: ['en', 'es'],
     defaultLocale: 'en',
     localeDetection: false,
   },

@@ -1,0 +1,28 @@
+{
+  "PartnerAdmin": {
+    "createAccessCode": {
+      "title": "Create access code",
+      "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
+      "courseAccess": "Access to courses only",
+      "liveChatAccess": "Access to courses and 1:1 chat",
+      "therapyAccess": "Access to courses, 1:1 chat and six therapy sessions",
+      "resultLink": "Please tell the user to go to",
+      "resultCode": "They can use their email address and the access code",
+      "form": {
+        "featuresLabel": "Select support type offered to this user",
+        "featureCoursesLabel": "Courses only",
+        "featureLiveChatLabel": "Courses and 1:1 chat",
+        "featureTherapyLabel": "Courses, 1:1 chat and six therapy sessions",
+        "reset": "Create another code",
+        "errors": {
+          "createPartnerAccessError": "There was an error creating the access code. Try again or message the Bloom team.",
+          "featureRequired": "Select a support type before creating an access code"
+        }
+      }
+    },
+    "accessGuard": {
+      "title": "Access required",
+      "introduction": "Your account does not include access to partner pages. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+    }
+  }
+}
