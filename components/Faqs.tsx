@@ -5,26 +5,35 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
+import { THERAPY_FAQ_OPENED } from '../constants/events';
 import { faqItem } from '../constants/faqs';
 import { Partner } from '../constants/partners';
+import logEvent from '../utils/logEvent';
 import Link from './Link';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<faqItem>;
   partner?: Partner | null;
+  eventUserData: any;
 }
 
 const Faqs = (props: FaqsProps) => {
-  const { faqList, translations, partner } = props;
+  const { faqList, translations, partner, eventUserData } = props;
   const t = useTranslations(translations);
 
   const partnerName = partner ? partner.name : '';
 
+  const handleChange = (faqTitle: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    if (isExpanded) {
+      logEvent(THERAPY_FAQ_OPENED, { faqTitle: t(faqTitle), faqId: faqTitle, ...eventUserData });
+    }
+  };
+
   return (
     <Box>
       {faqList.map((faq, i) => (
-        <Accordion key={`panel${i}`}>
+        <Accordion key={`panel${i}`} onChange={handleChange(faq.title)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}-content`}

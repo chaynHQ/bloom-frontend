@@ -114,7 +114,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-  console.log(story.content);
+
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
