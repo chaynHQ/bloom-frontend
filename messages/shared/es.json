@@ -1,0 +1,55 @@
+{
+  "Shared": {
+    "bloom": "Bloom",
+    "leaveSiteButton": "Salir del sitio",
+    "footer": {
+      "chaynDescription": "Bloom is brought to you by Chayn, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
+      "bloomLine1": "Built by CHAYN CIO.",
+      "bloomLine2": "UK Charity Number: 1196098",
+      "bumbleLine1": "In partnership with",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "policies": "Our policies"
+    },
+    "videoTranscript": {
+      "title": "Video transcript",
+      "description": "Read the transcript for video - ",
+      "closeModal": "Close transcript"
+    },
+    "progressStatus": {
+      "started": "Started",
+      "completed": "Completed",
+      "notStarted": "Not started"
+    },
+    "404": {
+      "title": "404 - Página no encontrada",
+      "description": "No se pudo encontrar la página. Revisa la url o vuelve a la",
+      "authenticatedRedirect": "página de cursos",
+      "unauthenticatedRedirect": "página de bienvenida",
+      "goBack": "Regresar a la"
+    },
+    "500": {
+      "title": "500 - Error interno",
+      "description": "Hmm, algo no va bien. Por favor, vuelve atrás e inténtalo de nuevo. Envíanos un mensaje a través del formulario de contacto si el error persiste.",
+      "authenticatedRedirect": "página de cursos",
+      "unauthenticatedRedirect": "página de bienvenida",
+      "goBack": "Regresar a la"
+    },
+    "alt": {
+      "bloomLogo": "Bloom logo",
+      "bumbleLogo": "Bumble logo",
+      "bloomBumbleLogo": "Bloom for Bumble logo",
+      "welcomeToBloom": "Welcome to Bloom",
+      "tiktokLogo": "Tiktok logo",
+      "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
+      "beehive": "Illustration of a bee hive",
+      "leafMix": "Illustration of two leaves joined with a rose",
+      "leafMixBee": "Illustration of two leaves with a bee hovering above",
+      "personTea": "Illustration of a person sitting, holding a tea",
+      "personSitting": "Illustration of a person sitting",
+      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
+      "dateSelector": "Illustration of a calendar with a heart in the middle",
+      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
+      "confidential": "Illustration of a document with a lock in the corner"
+    }
+  }
+}
