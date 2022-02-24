@@ -44,7 +44,7 @@ const ConfirmedSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
-  }, [eventUserData]);
+  }, []);
 
   const headerProps = {
     title: t.rich('confirmation.title'),
@@ -97,6 +97,7 @@ const ConfirmedSession: NextPage = () => {
             faqList={therapyFaqs}
             translations="Therapy.faqs"
             partner={partnerAccess?.partner}
+            eventUserData={eventUserData}
           />
         </Box>
       </Container>

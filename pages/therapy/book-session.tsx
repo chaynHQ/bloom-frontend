@@ -81,7 +81,7 @@ const BookSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     title: t.rich('title'),
@@ -168,6 +168,7 @@ const BookSession: NextPage = () => {
             faqList={therapyFaqs}
             translations="Therapy.faqs"
             partner={partnerAccess?.partner}
+            eventUserData={eventUserData}
           />
           {hasTherapyRemaining && (
             <Button

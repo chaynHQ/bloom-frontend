@@ -114,7 +114,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-  console.log(story.content);
+
   useEffect(() => {
     const coursePartners = story.content.course.content.included_for_partners;
 
@@ -313,36 +313,38 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                     </SessionContentCard>
                   </>
                 )}
-                {(story.content.activity.content.length > 1 ||
-                  story.content.activity.content[0].content) && (
-                  <>
-                    <Dots />
-                    <SessionContentCard
-                      title={t('sessionDetail.activityTitle')}
-                      titleIcon={StarBorderIcon}
-                      richtextContent
-                      eventPrefix="SESSION_ACTIVITY"
-                      eventData={eventData}
-                    >
-                      <>{render(story.content.activity, RichTextOptions)}</>
-                    </SessionContentCard>
-                  </>
-                )}
-                {(story.content.bonus.content.length > 1 ||
-                  story.content.bonus.content[0].content) && (
-                  <>
-                    <Dots />
-                    <SessionContentCard
-                      title={t('sessionDetail.bonusTitle')}
-                      titleIcon={LinkIcon}
-                      richtextContent
-                      eventPrefix="SESSION_BONUS_CONTENT"
-                      eventData={eventData}
-                    >
-                      <>{render(story.content.bonus, RichTextOptions)}</>
-                    </SessionContentCard>
-                  </>
-                )}
+                {story.content.activity.content &&
+                  (story.content.activity.content?.length > 1 ||
+                    story.content.activity.content[0].content) && (
+                    <>
+                      <Dots />
+                      <SessionContentCard
+                        title={t('sessionDetail.activityTitle')}
+                        titleIcon={StarBorderIcon}
+                        richtextContent
+                        eventPrefix="SESSION_ACTIVITY"
+                        eventData={eventData}
+                      >
+                        <>{render(story.content.activity, RichTextOptions)}</>
+                      </SessionContentCard>
+                    </>
+                  )}
+                {story.content.bonus.content &&
+                  (story.content.bonus.content?.length > 1 ||
+                    story.content.bonus.content[0].content) && (
+                    <>
+                      <Dots />
+                      <SessionContentCard
+                        title={t('sessionDetail.bonusTitle')}
+                        titleIcon={LinkIcon}
+                        richtextContent
+                        eventPrefix="SESSION_BONUS_CONTENT"
+                        eventData={eventData}
+                      >
+                        <>{render(story.content.bonus, RichTextOptions)}</>
+                      </SessionContentCard>
+                    </>
+                  )}
                 {liveChatAccess && (
                   <>
                     <Dots />
