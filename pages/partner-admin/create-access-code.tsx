@@ -17,8 +17,6 @@ import logEvent from '../../utils/logEvent';
 const containerStyle = {
   backgroundColor: 'secondary.light',
   ...rowStyle,
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
 } as const;
 
 const cardStyle = {

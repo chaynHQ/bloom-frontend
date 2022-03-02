@@ -95,8 +95,6 @@ const BookSession: NextPage = () => {
     backgroundColor: 'secondary.light',
     textAlign: 'center',
     ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
   } as const;
 
   const ctaContent = {

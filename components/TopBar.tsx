@@ -22,7 +22,6 @@ const appBarStyle = {
 
 const appBarContainerStyles = {
   ...rowStyle,
-  justifyContent: 'space-between',
   alignItems: 'center',
   height: { xs: 48, md: 64 },
   paddingTop: '0 !important',

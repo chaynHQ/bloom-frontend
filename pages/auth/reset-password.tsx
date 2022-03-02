@@ -31,8 +31,6 @@ const ResetPassword: NextPage = () => {
 
   const containerStyle = {
     ...rowStyle,
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
     backgroundColor: 'primary.light',
   } as const;
 

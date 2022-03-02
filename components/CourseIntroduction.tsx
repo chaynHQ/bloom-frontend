@@ -19,8 +19,6 @@ interface CourseIntroductionProps {
 
 const introductionContainerStyle = {
   ...rowStyle,
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
   gap: 4,
 } as const;
 

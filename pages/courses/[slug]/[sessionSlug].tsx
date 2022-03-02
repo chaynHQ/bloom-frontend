@@ -38,6 +38,7 @@ import {
 } from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
+import { columnStyle } from '../../../styles/common';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
@@ -54,16 +55,13 @@ const containerStyle = {
 } as const;
 
 const cardColumnStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+  ...columnStyle,
   gap: { xs: 2, md: 3 },
 } as const;
 
 const dotsStyle = {
+  ...columnStyle,
   color: 'primary.dark',
-  display: 'flex',
-  flexDirection: 'column',
   gap: { xs: 1, md: 1.25 },
 } as const;
 

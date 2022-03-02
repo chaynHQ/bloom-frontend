@@ -81,7 +81,7 @@ const CourseCard = (props: CourseCardProps) => {
               {course.content.name}
             </Typography>
             {courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
-              <Box sx={{ ...rowStyles }}>
+              <Box sx={rowStyles}>
                 {courseProgress === PROGRESS_STATUS.STARTED && (
                   <DonutLargeIcon color="error"></DonutLargeIcon>
                 )}

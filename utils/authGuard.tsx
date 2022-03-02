@@ -7,6 +7,7 @@ import { RootState } from '../app/store';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
+import { centeredContainerStyle } from '../styles/common';
 import { getErrorMessage } from './errorMessage';
 import logEvent, { getEventUserData } from './logEvent';
 
@@ -17,12 +18,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(false);
   const [getUser] = useGetUserMutation();
 
-  const loadingContainerStyle = {
-    display: 'flex',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  } as const;
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
@@ -70,7 +65,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   if (!verified) {
     return (
-      <Container sx={loadingContainerStyle}>
+      <Container sx={centeredContainerStyle}>
         <CircularProgress color="error" />
       </Container>
     );

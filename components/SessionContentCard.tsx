@@ -25,14 +25,8 @@ interface SessionContentCardProps {
 
 const cardStyle = {
   width: { xs: '100%', md: 700 },
-  backgroundColor: 'background.default',
   marginTop: 0,
-} as const;
-
-const rowStyles = {
-  ...rowStyle,
-  alignItems: 'center',
-  gap: 1.5,
+  backgroundColor: 'background.default',
 } as const;
 
 const SessionContentCard = (props: SessionContentCardProps) => {
@@ -65,6 +59,9 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   } as const;
 
   const titleContainerStyle = {
+    ...rowStyle,
+    alignItems: 'center',
+    gap: 1.5,
     paddingY: { xs: '1rem !important', md: '1.25rem !important' },
     bgcolor: expanded ? 'primary.light' : 'none',
   } as const;
@@ -72,14 +69,13 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   const arrowStyle = {
     width: { xs: 26, md: 30 },
     height: { xs: 26, md: 30 },
-
     transform: expanded ? 'rotate(180deg)' : 'none',
   } as const;
 
   return (
     <Card sx={cardStyle} key={''}>
       <CardActionArea onClick={handleExpandClick} aria-label={`${t('expand')} ${title}`}>
-        <CardContent sx={{ ...titleContainerStyle, ...rowStyles }}>
+        <CardContent sx={titleContainerStyle}>
           <TitleIcon sx={titleIconStyle} color="error" />
           <Typography component="h3" variant="h3" mb={0} flex={1}>
             {title}

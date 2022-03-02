@@ -7,16 +7,15 @@ import { RootState } from '../app/store';
 import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
+import { centeredContainerStyle, columnStyle } from '../styles/common';
 
 const Custom404: NextPage = () => {
   const t = useTranslations('Shared');
   const { user } = useTypedSelector((state: RootState) => state);
 
   const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
+    ...columnStyle,
     height: '100vh',
-    justifyContent: 'center',
     alignItems: 'flex-start',
   } as const;
 
@@ -24,20 +23,13 @@ const Custom404: NextPage = () => {
     position: 'relative',
     width: { xs: 180, md: 260 },
     height: { xs: 180, md: 260 },
-    ml: { xs: -3, md: -6 },
-    mb: 2,
-  } as const;
-
-  const loadingContainerStyle = {
-    display: 'flex',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: { xs: -3, md: -6 },
+    marginBottom: 2,
   } as const;
 
   if (user.loading) {
     return (
-      <Container sx={loadingContainerStyle}>
+      <Container sx={centeredContainerStyle}>
         <CircularProgress color="error" />
       </Container>
     );

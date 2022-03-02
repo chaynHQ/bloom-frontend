@@ -14,6 +14,7 @@ import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
+import { centeredContainerStyle, columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -27,26 +28,12 @@ const containerStyle = {
   paddingTop: { xs: 2, sm: 6 },
 } as const;
 
-const cardsContainerStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-} as const;
-
 const cardColumnStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
+  justifyContent: 'flex-start',
   width: { xs: '100%', sm: 'calc(50% - 1rem)' },
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
-
-const loadingContainerStyle = {
-  display: 'flex',
-  height: '100vh',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
@@ -126,7 +113,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
-          <Box sx={loadingContainerStyle}>
+          <Box sx={centeredContainerStyle}>
             <CircularProgress color="error" />
           </Box>
         ) : loadedCourses.length === 0 ? (
@@ -134,7 +121,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
             <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Box sx={cardsContainerStyle}>
+          <Box sx={rowStyle}>
             <Box sx={cardColumnStyle}>
               {loadedCourses.map((course, index) => {
                 if (index % 2 === 1) return;

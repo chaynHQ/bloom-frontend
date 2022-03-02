@@ -17,6 +17,7 @@ import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { columnStyle, rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -33,10 +34,8 @@ const containerStyle = {
 } as const;
 
 const accessContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   height: '100vh',
-  justifyContent: 'center',
 } as const;
 
 const sessionsContainerStyle = {
@@ -44,10 +43,8 @@ const sessionsContainerStyle = {
 } as const;
 
 const cardsContainerStyle = {
-  display: 'flex',
+  ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
   gap: 4,
 } as const;
 
