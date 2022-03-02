@@ -1,13 +1,14 @@
-import { Button, CircularProgress, Container, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import { RootState } from '../app/store';
 import Link from '../components/Link';
+import LoadingContainer from '../components/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
-import { centeredContainerStyle, columnStyle } from '../styles/common';
+import { columnStyle } from '../styles/common';
 
 const Custom500: NextPage = () => {
   const t = useTranslations('Shared');
@@ -28,11 +29,7 @@ const Custom500: NextPage = () => {
   } as const;
 
   if (user.loading) {
-    return (
-      <Container sx={centeredContainerStyle}>
-        <CircularProgress color="error" />
-      </Container>
-    );
+    return <LoadingContainer />;
   }
 
   return (

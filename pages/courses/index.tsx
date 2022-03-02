@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -9,12 +9,13 @@ import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import CourseCard from '../../components/CourseCard';
 import Header from '../../components/Header';
+import LoadingContainer from '../../components/LoadingContainer';
 import Storyblok from '../../config/storyblok';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
-import { centeredContainerStyle, columnStyle, rowStyle } from '../../styles/common';
+import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -113,9 +114,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
-          <Box sx={centeredContainerStyle}>
-            <CircularProgress color="error" />
-          </Box>
+          <LoadingContainer />
         ) : loadedCourses.length === 0 ? (
           <Box>
             <Typography>{t('noCourses')}</Typography>

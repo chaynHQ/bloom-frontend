@@ -10,10 +10,3 @@ export const columnStyle = {
   flexDirection: 'column',
   justifyContent: 'center',
 } as const;
-
-export const centeredContainerStyle = {
-  display: 'flex',
-  height: '100vh',
-  justifyContent: 'center',
-  alignItems: 'center',
-} as const;
