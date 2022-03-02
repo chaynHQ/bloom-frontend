@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { rowStyle } from '../styles/common';
 
 export interface ImageTextItem {
   text: string;
@@ -15,10 +16,8 @@ interface ImageTextGridProps {
 }
 
 const containerStyle = {
+  ...rowStyle,
   width: { xs: '100%', md: '60%' },
-  display: 'flex',
-  flexDirection: 'row',
-  flexFlow: 'wrap',
 } as const;
 
 const itemContainerStyle = {

@@ -14,7 +14,7 @@ import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
-import { rowStyle } from '../../styles/common';
+import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -29,8 +29,8 @@ const containerStyle = {
 } as const;
 
 const cardColumnStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
+  justifyContent: 'flex-start',
   width: { xs: '100%', sm: 'calc(50% - 1rem)' },
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;

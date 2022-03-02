@@ -8,12 +8,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import bloomLogo from '../public/bloom_logo.svg';
+import { columnStyle } from '../styles/common';
 import Link from './Link';
 import NavigationMenu from './NavigationMenu';
 
 const drawerContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   width: '70vw',
   paddingTop: 2,
 } as const;

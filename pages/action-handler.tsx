@@ -1,6 +1,7 @@
 import { CircularProgress, Container } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { columnStyle } from '../styles/common';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {
@@ -15,9 +16,7 @@ const ActionHandler: NextPage = () => {
     }
   }
   return (
-    <Container
-      sx={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}
-    >
+    <Container sx={{ ...columnStyle, height: '100vh', alignItems: 'center' }}>
       <CircularProgress color="error" />
     </Container>
   );

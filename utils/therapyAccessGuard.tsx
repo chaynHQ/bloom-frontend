@@ -7,6 +7,7 @@ import { RootState } from '../app/store';
 import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
+import { columnStyle } from '../styles/common';
 
 export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
@@ -28,10 +29,8 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
     return (
       <Container
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          ...columnStyle,
           height: '100vh',
-          justifyContent: 'center',
         }}
       >
         <Head>{t('title')}</Head>

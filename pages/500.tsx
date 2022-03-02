@@ -7,16 +7,15 @@ import { RootState } from '../app/store';
 import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
+import { columnStyle } from '../styles/common';
 
 const Custom500: NextPage = () => {
   const t = useTranslations('Shared');
   const { user } = useTypedSelector((state: RootState) => state);
 
   const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
+    ...columnStyle,
     height: '100vh',
-    justifyContent: 'center',
     alignItems: 'flex-start',
   } as const;
 

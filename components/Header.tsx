@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { PROGRESS_STATUS } from '../constants/enums';
-import { rowStyle } from '../styles/common';
+import { columnStyle, rowStyle } from '../styles/common';
 import ProgressStatus from './ProgressStatus';
 
 interface HeaderProps {
@@ -41,11 +41,10 @@ const imageContainerStyle = {
 } as const;
 
 const textContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   justifyContent: 'space-between',
-  maxWidth: { xs: '100%', md: '65%' },
   width: { xs: '100%', md: 'auto' },
+  maxWidth: { xs: '100%', md: '65%' },
   minHeight: { xs: 180, md: 240 },
 } as const;
 

@@ -4,3 +4,9 @@ export const rowStyle = {
   flexWrap: 'wrap',
   justifyContent: 'space-between',
 } as const;
+
+export const columnStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+} as const;
