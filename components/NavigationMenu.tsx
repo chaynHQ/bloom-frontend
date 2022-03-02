@@ -45,9 +45,9 @@ const NavigationMenu = () => {
       { title: t('courses'), href: '/courses' },
     ];
 
-    const therapyAccess = partnerAccesses.find(function (partnerAccess) {
-      return partnerAccess.featureTherapy === true;
-    });
+    const therapyAccess = partnerAccesses.find(
+      (partnerAccess) => partnerAccess.featureTherapy === true,
+    );
 
     if (!!therapyAccess) {
       links.push({ title: t('therapy'), href: '/therapy/book-session' });

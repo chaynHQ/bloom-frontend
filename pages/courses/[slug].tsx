@@ -91,9 +91,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
       }
     });
 
-    const userCourse = courses.find(function (course: Course) {
-      return course.storyblokId === story.id;
-    });
+    const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
 
     if (userCourse) {
       let courseSessionsStarted: Array<number> = [];

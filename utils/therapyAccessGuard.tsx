@@ -13,9 +13,9 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
   const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
 
-  const therapyAccess = partnerAccesses.find(function (partnerAccess) {
-    return partnerAccess.featureTherapy === true;
-  });
+  const therapyAccess = partnerAccesses.find(
+    (partnerAccess) => partnerAccess.featureTherapy === true,
+  );
 
   if (!therapyAccess) {
     const imageContainerStyle = {
