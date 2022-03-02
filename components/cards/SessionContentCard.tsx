@@ -10,8 +10,8 @@ import {
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { rowStyle } from '../styles/common';
-import logEvent from '../utils/logEvent';
+import { rowStyle } from '../../styles/common';
+import logEvent from '../../utils/logEvent';
 
 const cardStyle = {
   width: { xs: '100%', md: 700 },

@@ -4,9 +4,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { RootState } from '../app/store';
-import { useTypedSelector } from '../hooks/store';
-import Link from './Link';
+import { RootState } from '../../app/store';
+import { useTypedSelector } from '../../hooks/store';
+import Link from '../common/Link';
 
 const listStyle = {
   display: 'flex',

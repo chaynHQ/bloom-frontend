@@ -5,15 +5,15 @@ import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { auth } from '../config/firebase';
-import rollbar from '../config/rollbar';
+import { auth } from '../../config/firebase';
+import rollbar from '../../config/rollbar';
 import {
   RESET_PASSWORD_ERROR,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-} from '../constants/events';
-import logEvent from '../utils/logEvent';
-import Link from './Link';
+} from '../../constants/events';
+import logEvent from '../../utils/logEvent';
+import Link from '../common/Link';
 
 export const EmailForm = () => {
   const [emailInput, setEmailInput] = useState<string>('');

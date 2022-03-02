@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { hotjar } from 'react-hotjar';
 import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
-import LoadingContainer from '../components/LoadingContainer';
+import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';

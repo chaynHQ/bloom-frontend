@@ -6,9 +6,9 @@ import { StoryData } from 'storyblok-js-client';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
-} from '../constants/events';
-import { rowStyle } from '../styles/common';
-import { logEvent } from '../utils/logEvent';
+} from '../../constants/events';
+import { rowStyle } from '../../styles/common';
+import { logEvent } from '../../utils/logEvent';
 import Video from './Video';
 import VideoTranscriptModal from './VideoTranscriptModal';
 

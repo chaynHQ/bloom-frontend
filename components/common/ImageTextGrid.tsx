@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { rowStyle } from '../styles/common';
+import { rowStyle } from '../../styles/common';
 
 export interface ImageTextItem {
   text: string;

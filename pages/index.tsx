@@ -4,8 +4,8 @@ import Container from '@mui/material/Container';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import Header from '../components/Header';
-import Link from '../components/Link';
+import Link from '../components/common/Link';
+import Header from '../components/layout/Header';
 import illustrationPerson3Pink from '../public/illustration_person3_pink.svg';
 
 const Home: NextPage = () => {

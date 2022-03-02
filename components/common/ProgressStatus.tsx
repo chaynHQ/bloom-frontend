@@ -3,8 +3,8 @@ import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
-import { PROGRESS_STATUS } from '../constants/enums';
-import { rowStyle } from '../styles/common';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import { rowStyle } from '../../styles/common';
 
 const rowStyles = {
   ...rowStyle,

@@ -1,8 +1,8 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Button } from '@mui/material';
 import { useEffect } from 'react';
-import { SESSION_CRISP_CHAT_OPENED } from '../constants/events';
-import logEvent from '../utils/logEvent';
+import { SESSION_CRISP_CHAT_OPENED } from '../../constants/events';
+import logEvent from '../../utils/logEvent';
 
 interface CrispButtonProps {
   buttonText: string;

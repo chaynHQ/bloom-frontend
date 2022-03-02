@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import Link from './Link';
+import Link from '../common/Link';
 
 const linkStyle = { fontSize: 14 } as const;
 
