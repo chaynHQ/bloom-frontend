@@ -90,7 +90,7 @@ const ConfirmedSession: NextPage = () => {
           {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
         </Box>
         <Box sx={faqsContainerStyle}>
           <Faqs

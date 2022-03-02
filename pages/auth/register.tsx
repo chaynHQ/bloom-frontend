@@ -82,7 +82,7 @@ const Register: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
         <Typography variant="h3" component="h3">
           {t('register.moreInfoTitle')}

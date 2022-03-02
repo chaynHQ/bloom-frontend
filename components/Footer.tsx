@@ -91,13 +91,13 @@ const Footer = () => {
     return (
       <Box key={`${partner.name}_footer`} sx={brandContainerStyle}>
         <Link href={partner.website} sx={logoContainerStyle}>
-          <Image alt={tS.raw(partner.logoAlt)} src={partner.logo} />
+          <Image alt={tS(partner.logoAlt)} src={partner.logo} />
         </Link>
         <Typography variant="body2" component="p">
-          {tS.raw(partner.footerLine1)}
+          {tS(partner.footerLine1)}
         </Typography>
         <Typography variant="body2" component="p">
-          {tS.raw(partner.footerLine2)}
+          {tS(partner.footerLine2)}
         </Typography>
         <Box sx={socialsContainerStyle}>
           {partner.facebook && (
@@ -155,7 +155,7 @@ const Footer = () => {
                 })
               }
             >
-              <Image alt={tS.raw('alt.tiktokLogo')} src={tiktokLogo} />
+              <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} />
             </IconButton>
           )}
         </Box>

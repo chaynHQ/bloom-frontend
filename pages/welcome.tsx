@@ -116,7 +116,7 @@ const Welcome: NextPage = () => {
       </Container>
       <Container sx={rowContainerStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.personSitting')} src={illustrationPerson5Yellow} />
+          <Image alt={tS('alt.personSitting')} src={illustrationPerson5Yellow} />
         </Box>
         <Box sx={rowItem}>
           <Typography variant="h2" component="h2">
@@ -141,7 +141,7 @@ const Welcome: NextPage = () => {
       <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
         <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} />
+            <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} />
           </Box>
           <Typography variant="h2" component="h2">
             {t('bloomTitle')}

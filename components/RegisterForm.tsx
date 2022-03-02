@@ -230,7 +230,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             label={t('contactPermissionLabel')}
             control={
               <Checkbox
-                aria-label={t.raw('contactPermissionLabel')}
+                aria-label={t('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />
             }
