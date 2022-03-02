@@ -176,9 +176,9 @@ const Footer = () => {
 
       <Box sx={descriptionContainerStyle}>
         <Typography variant="body1" component="p" sx={{ mb: 1 }}>
-          {tS.rich('footer.chaynDescription')}
+          {tS('footer.chaynDescription')}
         </Typography>
-        <Link href="#">{tS.rich('footer.policies')}</Link>
+        <Link href="#">{tS('footer.policies')}</Link>
       </Box>
     </Container>
   );

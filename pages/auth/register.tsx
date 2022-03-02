@@ -138,10 +138,10 @@ const Register: NextPage = () => {
           <Card>
             <CardContent>
               <Typography variant="h2" component="h2">
-                {t.rich('register.title')}
+                {t('register.title')}
               </Typography>
               <Typography variant="body1" component="p">
-                {t.rich('register.description')}
+                {t('register.description')}
               </Typography>
 
               <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />

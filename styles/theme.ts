@@ -38,6 +38,7 @@ let theme = createTheme({
       marginBottom: '1rem',
     },
     h3: {
+      fontFamily: 'Montserrat, sans-serif',
       fontSize: '1.375rem',
       marginBottom: '1rem',
       lineHeight: 1.4,

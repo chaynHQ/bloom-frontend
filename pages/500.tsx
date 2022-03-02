@@ -49,10 +49,10 @@ const Custom500: NextPage = () => {
         <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
       </Box>
       <Typography variant="h1" component="h1">
-        {t.rich('500.title')}
+        {t('500.title')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('500.description')}
+        {t('500.description')}
       </Typography>
       <Button
         sx={{ mt: 3 }}

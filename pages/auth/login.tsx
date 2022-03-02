@@ -105,10 +105,10 @@ const Login: NextPage = () => {
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('login.title')}
+              {t('login.title')}
             </Typography>
             <Typography variant="body1" component="p">
-              {t.rich('login.description')}
+              {t('login.description')}
             </Typography>
 
             <LoginForm />

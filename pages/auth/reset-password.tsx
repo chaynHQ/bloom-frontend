@@ -62,7 +62,7 @@ const ResetPassword: NextPage = () => {
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('resetPassword.title')}
+              {t('resetPassword.title')}
             </Typography>
             {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
           </CardContent>

@@ -140,7 +140,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const Form = () => (
     <form autoComplete="off">
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{t.rich('form.featuresLabel')}</FormLabel>
+        <FormLabel component="legend">{t('form.featuresLabel')}</FormLabel>
         <RadioGroup
           aria-label="feature"
           name="controlled-radio-buttons-group"
@@ -150,17 +150,17 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.COURSES}
             control={<Radio />}
-            label={t.rich('form.featureCoursesLabel')}
+            label={t('form.featureCoursesLabel')}
           />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.LIVE_CHAT}
             control={<Radio />}
-            label={t.rich('form.featureLiveChatLabel')}
+            label={t('form.featureLiveChatLabel')}
           />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.THERAPY}
             control={<Radio />}
-            label={t.rich('form.featureTherapyLabel')}
+            label={t('form.featureTherapyLabel')}
           />
         </RadioGroup>
       </FormControl>
@@ -171,7 +171,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         </Typography>
       )}
       <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={submitHandler}>
-        {t.rich('title')}
+        {t('title')}
       </Button>
     </form>
   );

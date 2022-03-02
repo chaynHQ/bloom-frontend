@@ -47,8 +47,8 @@ const ConfirmedSession: NextPage = () => {
   }, []);
 
   const headerProps = {
-    title: t.rich('confirmation.title'),
-    introduction: t.rich('confirmation.introduction'),
+    title: t('confirmation.title'),
+    introduction: t('confirmation.introduction'),
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
@@ -75,7 +75,7 @@ const ConfirmedSession: NextPage = () => {
       />
       <Container sx={containerStyle}>
         <Typography variant="body1" component="p">
-          {t.rich('confirmation.returnDescription')}
+          {t('confirmation.returnDescription')}
         </Typography>
         <Typography variant="body1" component="p">
           {t.rich('confirmation.bookmarkDescription', {
@@ -87,7 +87,7 @@ const ConfirmedSession: NextPage = () => {
       </Container>
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t.rich('faqHeader')}
+          {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
           <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />

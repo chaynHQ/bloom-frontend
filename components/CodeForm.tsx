@@ -40,7 +40,7 @@ const CodeForm = (props: CodeFormProps) => {
           id="accessCode"
           value={codeInput}
           onChange={(e) => setCodeInput(e.target.value)}
-          label={t.rich('form.codeLabel')}
+          label={t('form.codeLabel')}
           variant="standard"
           fullWidth
         />
@@ -51,7 +51,7 @@ const CodeForm = (props: CodeFormProps) => {
           color="secondary"
           onClick={submitHandler}
         >
-          {t.rich('getStarted')}
+          {t('getStarted')}
         </Button>
       </form>
     </Box>
