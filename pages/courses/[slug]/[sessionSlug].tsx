@@ -128,9 +128,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       }
     });
 
-    const liveAccess = partnerAccesses.find(function (partnerAccess) {
-      return partnerAccess.featureLiveChat === true;
-    });
+    const liveAccess = partnerAccesses.find(
+      (partnerAccess) => partnerAccess.featureLiveChat === true,
+    );
     if (liveAccess) setLiveChatAccess(true);
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
@@ -141,14 +141,14 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       });
     });
 
-    const userCourse = courses.find(function (course: Course) {
-      return Number(course.storyblokId) === story.content.course.id;
-    });
+    const userCourse = courses.find(
+      (course: Course) => Number(course.storyblokId) === story.content.course.id,
+    );
 
     if (userCourse) {
-      const userSession = userCourse.sessions.find(function (session: Session) {
-        return Number(session.storyblokId) === story.id;
-      });
+      const userSession = userCourse.sessions.find(
+        (session: Session) => Number(session.storyblokId) === story.id,
+      );
 
       if (userSession) {
         userSession.completed

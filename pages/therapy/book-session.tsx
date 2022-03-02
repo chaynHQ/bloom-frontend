@@ -60,9 +60,10 @@ const BookSession: NextPage = () => {
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
   useEffect(() => {
-    let partnerAccess = partnerAccesses.find(function (partnerAccess) {
-      return partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0;
-    });
+    let partnerAccess = partnerAccesses.find(
+      (partnerAccess) =>
+        partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0,
+    );
     if (partnerAccess) {
       setHasTherapyRemaining(true);
     } else {
