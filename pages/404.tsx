@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Button, CircularProgress, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Image from 'next/image';
@@ -28,27 +28,40 @@ const Custom404: NextPage = () => {
     mb: 2,
   } as const;
 
+  const loadingContainerStyle = {
+    display: 'flex',
+    height: '100vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+  } as const;
+
+  if (user.loading) {
+    return (
+      <Container sx={loadingContainerStyle}>
+        <CircularProgress color="error" />
+      </Container>
+    );
+  }
+
   return (
     <Container sx={containerStyle}>
       <Box sx={imageContainerStyle}>
         <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
       </Box>
       <Typography variant="h1" component="h1">
-        {t.rich('404.title')}
+        {t('404.title')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('404.description')}{' '}
-        {user.id ? t('404.authenticatedRedirect') : t('404.unauthenticatedRedirect')}.
+        {user.token ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
       </Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.id ? '/courses' : '/welcome'}
+        href={user.token ? '/courses' : '/welcome'}
       >
-        {t.rich('404.goBack')}{' '}
-        {user.id ? t('404.authenticatedRedirect') : t('404.unauthenticatedRedirect')}
+        {user.token ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );
