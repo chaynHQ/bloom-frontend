@@ -78,9 +78,7 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          <Typography variant="body1" component="p">
-            {introduction}
-          </Typography>
+          <Typography>{introduction}</Typography>
         </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>

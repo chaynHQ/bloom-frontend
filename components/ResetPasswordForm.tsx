@@ -53,9 +53,7 @@ export const EmailForm = () => {
   };
   return (
     <Box>
-      <Typography variant="body1" component="p" mb={2}>
-        {t('resetPasswordStep1')}
-      </Typography>
+      <Typography mb={2}>{t('resetPasswordStep1')}</Typography>
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
         <TextField
           id="email"
@@ -66,7 +64,7 @@ export const EmailForm = () => {
           required
         />
         {formError && (
-          <Typography variant="body1" component="p" color="error.main" mb={2}>
+          <Typography color="error.main" mb={2}>
             {formError}
           </Typography>
         )}
@@ -83,9 +81,7 @@ export const EmailForm = () => {
           </Button>
         ) : (
           <Box>
-            <Typography variant="body1" component="p" mb={2}>
-              {t('resetPasswordSent')}
-            </Typography>
+            <Typography mb={2}>{t('resetPasswordSent')}</Typography>
             <Button
               sx={{ mt: 2, mr: 1.5 }}
               variant="contained"
@@ -154,9 +150,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
   if (formSuccess) {
     return (
       <Box>
-        <Typography variant="body1" component="p" mb={2}>
-          {t('passwordResetSuccess')}
-        </Typography>
+        <Typography mb={2}>{t('passwordResetSuccess')}</Typography>
         <Button
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
@@ -173,9 +167,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
 
   return (
     <Box>
-      <Typography variant="body1" component="p" mb={2}>
-        {t('resetPasswordStep2')}
-      </Typography>
+      <Typography mb={2}>{t('resetPasswordStep2')}</Typography>
       <form autoComplete="off" onSubmit={resetPasswordSubmit}>
         <TextField
           id="password"
@@ -187,7 +179,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           required
         />
         {formError && (
-          <Typography variant="body1" component="p" color="error.main" mb={2}>
+          <Typography color="error.main" mb={2}>
             {formError}
           </Typography>
         )}

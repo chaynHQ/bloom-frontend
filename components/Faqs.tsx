@@ -39,7 +39,7 @@ const Faqs = (props: FaqsProps) => {
             aria-controls={`panel${i}-content`}
             id={`panel${i}-header`}
           >
-            <Typography variant="body1" component="h3">
+            <Typography component="h3">
               {t.rich(faq.title, {
                 partnerName: partnerName,
               })}

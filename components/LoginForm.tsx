@@ -119,7 +119,7 @@ const LoginForm = () => {
           required
         />
         {formError && (
-          <Typography variant="body1" component="p" color="error.main" mb={2}>
+          <Typography color="error.main" mb={2}>
             {formError}
           </Typography>
         )}

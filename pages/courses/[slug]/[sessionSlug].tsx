@@ -289,7 +289,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                           transcriptLink: (children) => (
                             <MuiLink
                               component="button"
-                              variant="body1"
                               onClick={() => setOpenTranscriptModal(true)}
                             >
                               {children}
@@ -381,11 +380,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                   </>
                 )}
 
-                {error && (
-                  <Typography sx={errorStyle} variant="body1">
-                    {error}
-                  </Typography>
-                )}
+                {error && <Typography sx={errorStyle}>{error}</Typography>}
               </Box>
             )}
           </Container>

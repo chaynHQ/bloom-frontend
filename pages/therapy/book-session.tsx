@@ -133,7 +133,7 @@ const BookSession: NextPage = () => {
       />
       <Container sx={containerStyle}>
         <Box sx={ctaContent}>
-          <Typography variant="body1" component="p">
+          <Typography>
             {hasTherapyRemaining
               ? t.rich('therapySessionsRemaining', {
                   strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,

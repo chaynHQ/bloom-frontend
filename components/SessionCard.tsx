@@ -81,7 +81,7 @@ const SessionCard = (props: SessionCardProps) => {
               {session.content.name}
             </Typography>
           </Box>
-          <Typography component="p" variant="body1" color="grey.700">
+          <Typography color="grey.700">
             {t('session')} {session.position / 10 - 1}
           </Typography>
         </CardContent>

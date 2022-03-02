@@ -144,7 +144,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
         <Typography variant="h2" component="h2" mb={2}>
           {t('accessGuard.title')}
         </Typography>
-        <Typography variant="body1" component="p" mb={2}>
+        <Typography mb={2}>
           {t.rich('accessGuard.introduction', {
             contactLink: (children) => <Link href="/courses">{children}</Link>,
           })}
