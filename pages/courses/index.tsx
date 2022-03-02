@@ -18,12 +18,6 @@ import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg'
 import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
-interface Props {
-  stories: StoryData[];
-  preview: boolean;
-  messages: any;
-}
-
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 6 },
@@ -35,6 +29,12 @@ const cardColumnStyle = {
   width: { xs: '100%', sm: 'calc(50% - 1rem)' },
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
+
+interface Props {
+  stories: StoryData[];
+  preview: boolean;
+  messages: any;
+}
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);

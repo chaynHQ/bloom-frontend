@@ -18,11 +18,6 @@ import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../constants/enums';
 import { rowStyle } from '../styles/common';
 
-interface CourseCardProps {
-  course: StoryData;
-  courseProgress: PROGRESS_STATUS | null;
-}
-
 const cardStyle = {
   alignSelf: 'flex-start',
   width: '100%',
@@ -52,6 +47,11 @@ const rowStyles = {
   ...rowStyle,
   gap: 1.5,
 } as const;
+
+interface CourseCardProps {
+  course: StoryData;
+  courseProgress: PROGRESS_STATUS | null;
+}
 
 const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress } = props;

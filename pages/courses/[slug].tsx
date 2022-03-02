@@ -21,14 +21,6 @@ import { columnStyle, rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
-interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  messages: any;
-  locale: LANGUAGES;
-}
-
 const containerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
@@ -54,6 +46,14 @@ const imageContainerStyle = {
   height: { xs: 150, md: 210 },
   marginBottom: 4,
 } as const;
+
+interface Props {
+  story: StoryData;
+  preview: boolean;
+  sbParams: StoriesParams;
+  messages: any;
+  locale: LANGUAGES;
+}
 
 const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');

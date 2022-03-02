@@ -4,6 +4,11 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 
+const headerContainerStyles = {
+  backgroundColor: 'common.white',
+  paddingY: '40px !important',
+} as const;
+
 interface PartnerAdminHeaderProps {
   title:
     | string
@@ -16,11 +21,6 @@ interface PartnerAdminHeaderProps {
   partnerLogoSrc: StaticImageData;
   partnerLogoAlt: string;
 }
-
-const headerContainerStyles = {
-  backgroundColor: 'common.white',
-  paddingY: '40px !important',
-} as const;
 
 const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
   const { partnerLogoAlt, partnerLogoSrc } = props;

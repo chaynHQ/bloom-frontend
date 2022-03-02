@@ -9,6 +9,18 @@ import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
 import { columnStyle } from '../styles/common';
 
+const containerStyle = {
+  ...columnStyle,
+  height: '100vh',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 150, md: 210 },
+  height: { xs: 150, md: 210 },
+  marginBottom: 4,
+} as const;
+
 export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
   const t = useTranslations('Therapy.accessGuard');
@@ -19,20 +31,8 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
   );
 
   if (!therapyAccess) {
-    const imageContainerStyle = {
-      position: 'relative',
-      width: { xs: 150, md: 210 },
-      height: { xs: 150, md: 210 },
-      marginBottom: 4,
-    } as const;
-
     return (
-      <Container
-        sx={{
-          ...columnStyle,
-          height: '100vh',
-        }}
-      >
+      <Container sx={containerStyle}>
         <Head>{t('title')}</Head>
         <Box sx={imageContainerStyle}>
           <Image

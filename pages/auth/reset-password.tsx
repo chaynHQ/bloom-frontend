@@ -13,6 +13,20 @@ import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_ye
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
+const containerStyle = {
+  ...rowStyle,
+  backgroundColor: 'primary.light',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const formCardStyle = {
+  width: { xs: '100%', sm: '70%', md: '45%' },
+} as const;
+
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
   const router = useRouter();
@@ -28,20 +42,6 @@ const ResetPassword: NextPage = () => {
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
-
-  const containerStyle = {
-    ...rowStyle,
-    backgroundColor: 'primary.light',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const formCardStyle = {
-    width: { xs: '100%', sm: '70%', md: '45%' },
-  } as const;
 
   return (
     <Box>

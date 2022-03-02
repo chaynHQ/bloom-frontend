@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
+const containerStyle = {
+  marginY: 3,
+} as const;
+
 interface CodeFormProps {
   codeParam: string;
   partnerParam: string;
 }
-
-const containerStyle = {
-  marginY: 3,
-} as const;
 
 const CodeForm = (props: CodeFormProps) => {
   const { codeParam, partnerParam } = props;

@@ -42,14 +42,6 @@ import { columnStyle } from '../../../styles/common';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
-interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  messages: any;
-  locale: LANGUAGES;
-}
-
 const containerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
@@ -80,6 +72,14 @@ const errorStyle = {
   marginTop: 2,
   fontWeight: 600,
 } as const;
+
+interface Props {
+  story: StoryData;
+  preview: boolean;
+  sbParams: StoriesParams;
+  messages: any;
+  locale: LANGUAGES;
+}
 
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');

@@ -12,15 +12,15 @@ import { logEvent } from '../utils/logEvent';
 import Video from './Video';
 import VideoTranscriptModal from './VideoTranscriptModal';
 
-interface CourseIntroductionProps {
-  course: StoryData;
-  eventData: {};
-}
-
 const introductionContainerStyle = {
   ...rowStyle,
   gap: 4,
 } as const;
+
+interface CourseIntroductionProps {
+  course: StoryData;
+  eventData: {};
+}
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
   const { course, eventData } = props;

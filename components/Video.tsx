@@ -6,14 +6,6 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import logEvent from '../utils/logEvent';
 
-interface VideoProps {
-  url: string;
-  eventData: {};
-  eventPrefix: string;
-  containerStyles?: SxProps<Theme>;
-  setVideoStarted?: Dispatch<SetStateAction<boolean>>;
-}
-
 const videoContainerStyle = {
   position: 'relative',
   paddingTop: '56.25%',
@@ -24,6 +16,14 @@ const videoStyle = {
   top: 0,
   left: 0,
 } as const;
+
+interface VideoProps {
+  url: string;
+  eventData: {};
+  eventPrefix: string;
+  containerStyles?: SxProps<Theme>;
+  setVideoStarted?: Dispatch<SetStateAction<boolean>>;
+}
 
 const Video = (props: VideoProps) => {
   const { url, eventData, eventPrefix, containerStyles, setVideoStarted } = props;

@@ -26,6 +26,28 @@ import illustrationPerson4Peach from '../../public/illustration_person4_peach.sv
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+  textAlign: 'center',
+  ...rowStyle,
+} as const;
+
+const ctaContent = {
+  flex: 1,
+  textAlign: 'left',
+  marginTop: 4,
+} as const;
+
+const faqsContainerStyle = {
+  maxWidth: '680px !important',
+  margin: 'auto',
+} as const;
+
+const bookingButtonStyle = {
+  minWidth: 200,
+  marginY: 4,
+} as const;
+
 const steps: Array<ImageTextItem> = [
   {
     text: 'step1',
@@ -90,28 +112,6 @@ const BookSession: NextPage = () => {
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    ...rowStyle,
-  } as const;
-
-  const ctaContent = {
-    flex: 1,
-    textAlign: 'left',
-    marginTop: 4,
-  } as const;
-
-  const faqsContainerStyle = {
-    maxWidth: '680px !important',
-    margin: 'auto',
-  } as const;
-
-  const bookingButtonStyle = {
-    minWidth: 200,
-    marginY: 4,
-  } as const;
 
   const openWidget = () => {
     logEvent(THERAPY_BOOKING_OPENED, eventUserData);
