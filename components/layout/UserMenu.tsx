@@ -6,8 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { auth } from '../config/firebase';
-import { clearStore } from '../hooks/store';
+import { auth } from '../../config/firebase';
+import { clearStore } from '../../hooks/store';
 
 const menuButtonStyle = {
   color: 'text.primary',

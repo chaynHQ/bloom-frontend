@@ -12,20 +12,24 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
-import { PROGRESS_STATUS } from '../constants/enums';
-import { rowStyle } from '../styles/common';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import { rowStyle } from '../../styles/common';
 
 const cardStyle = {
   alignSelf: 'flex-start',
-  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  width: '100%',
   backgroundColor: 'background.default',
 } as const;
 
 const cardContentStyle = {
+  ...rowStyle,
+  gap: 2,
   padding: { xs: 2, md: 3 },
   paddingBottom: { xs: 1, md: 1 },
+  minHeight: { xs: 124, md: 136 },
 } as const;
 
 const collapseContentStyle = {
@@ -39,70 +43,74 @@ const cardActionsStyle = {
   alignItems: 'end',
 } as const;
 
-const cardContentRowStyles = {
+const rowStyles = {
   ...rowStyle,
   gap: 1.5,
 } as const;
 
-interface SessionCardProps {
-  session: StoryData;
-  sessionProgress: PROGRESS_STATUS;
+interface CourseCardProps {
+  course: StoryData;
+  courseProgress: PROGRESS_STATUS | null;
 }
 
-const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionProgress } = props;
+const CourseCard = (props: CourseCardProps) => {
+  const { course, courseProgress } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
-
   const t = useTranslations('Courses');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const arrowStyle = {
-    transform: expanded ? 'rotate(180deg)' : 'none',
-  } as const;
-
   return (
-    <Card sx={cardStyle} key={session.id}>
+    <Card sx={cardStyle} key={course.id}>
       <CardActionArea
-        href={`/${session.full_slug}`}
-        aria-label={`${t('navigateToSession')} ${session.name}`}
+        href={`/${course.full_slug}`}
+        aria-label={`${t('navigateToCourse')} ${course.content.name}`}
       >
         <CardContent sx={cardContentStyle}>
-          <Box sx={cardContentRowStyles}>
-            {sessionProgress !== PROGRESS_STATUS.NOT_STARTED && (
-              <Box mt={0.5}>
-                {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
-                {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
+          <Image
+            alt={course.content.image.alt}
+            src={course.content.image.filename}
+            width={100}
+            height={100}
+            objectFit="contain"
+          />
+          <Box flex={1}>
+            <Typography key={course.slug} component="h3" variant="h3">
+              {course.content.name}
+            </Typography>
+            {courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
+              <Box sx={rowStyles}>
+                {courseProgress === PROGRESS_STATUS.STARTED && (
+                  <DonutLargeIcon color="error"></DonutLargeIcon>
+                )}
+                {courseProgress === PROGRESS_STATUS.COMPLETED && (
+                  <CheckCircleIcon color="error"></CheckCircleIcon>
+                )}
+                <Typography>{courseProgress}</Typography>
               </Box>
             )}
-            <Typography component="h3" variant="h3">
-              {session.content.name}
-            </Typography>
           </Box>
-          <Typography color="grey.700">
-            {t('session')} {session.position / 10 - 1}
-          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}
-          aria-label={`${t('expandSummary')} ${session.name}`}
+          aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"
         >
-          <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
+          <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography>{session.content.description}</Typography>
+          <Typography paragraph>{course.content.description}</Typography>
         </CardContent>
       </Collapse>
     </Card>
   );
 };
 
-export default SessionCard;
+export default CourseCard;

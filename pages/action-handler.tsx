@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import LoadingContainer from '../components/LoadingContainer';
+import LoadingContainer from '../components/common/LoadingContainer';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {

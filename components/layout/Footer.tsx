@@ -10,15 +10,15 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { PartnerAccess } from '../app/partnerAccessSlice';
-import { RootState } from '../app/store';
-import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../constants/events';
-import { getPartnerContent, Partner } from '../constants/partners';
-import { useTypedSelector } from '../hooks/store';
+import { PartnerAccess } from '../../app/partnerAccessSlice';
+import { RootState } from '../../app/store';
+import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
+import { getPartnerContent, Partner } from '../../constants/partners';
+import { useTypedSelector } from '../../hooks/store';
+import { rowStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+import Link from '../common/Link';
 import tiktokLogo from '../public/tiktok.svg';
-import { rowStyle } from '../styles/common';
-import logEvent, { getEventUserData } from '../utils/logEvent';
-import Link from './Link';
 
 const footerContainerStyle = {
   ...rowStyle,

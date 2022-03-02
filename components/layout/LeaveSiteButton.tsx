@@ -2,8 +2,8 @@ import { Button } from '@mui/material';
 import { Box, lighten } from '@mui/system';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { LEAVE_SITE_BUTTON_CLICKED } from '../constants/events';
-import logEvent from '../utils/logEvent';
+import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
+import logEvent from '../../utils/logEvent';
 
 const containerStyles = {
   position: 'fixed',

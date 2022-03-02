@@ -4,7 +4,7 @@ import { SxProps } from '@mui/system';
 import * as React from 'react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
-import logEvent from '../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const videoContainerStyle = {
   position: 'relative',

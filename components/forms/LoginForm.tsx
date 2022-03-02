@@ -6,11 +6,10 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
-import { useGetUserMutation } from '../app/api';
-import { setUserToken } from '../app/userSlice';
-import Link from '../components/Link';
-import { auth } from '../config/firebase';
-import rollbar from '../config/rollbar';
+import { useGetUserMutation } from '../../app/api';
+import { setUserToken } from '../../app/userSlice';
+import { auth } from '../../config/firebase';
+import rollbar from '../../config/rollbar';
 import {
   GET_USER_ERROR,
   GET_USER_REQUEST,
@@ -18,10 +17,11 @@ import {
   LOGIN_ERROR,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-} from '../constants/events';
-import { useAppDispatch } from '../hooks/store';
-import { getErrorMessage } from '../utils/errorMessage';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+} from '../../constants/events';
+import { useAppDispatch } from '../../hooks/store';
+import { getErrorMessage } from '../../utils/errorMessage';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,

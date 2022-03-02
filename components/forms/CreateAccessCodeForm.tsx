@@ -11,18 +11,18 @@ import Button from '@mui/material/Button';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { useAddPartnerAccessMutation } from '../app/api';
-import { PartnerAdmin } from '../app/partnerAdminSlice';
-import Link from '../components/Link';
-import rollbar from '../config/rollbar';
-import { PARTNER_ACCESS_FEATURES } from '../constants/enums';
+import { useAddPartnerAccessMutation } from '../../app/api';
+import { PartnerAdmin } from '../../app/partnerAdminSlice';
+import rollbar from '../../config/rollbar';
+import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
   CREATE_PARTNER_ACCESS_SUCCESS,
-} from '../constants/events';
-import { getErrorMessage } from '../utils/errorMessage';
-import logEvent from '../utils/logEvent';
+} from '../../constants/events';
+import { getErrorMessage } from '../../utils/errorMessage';
+import logEvent from '../../utils/logEvent';
+import Link from '../common/Link';
 
 interface CreateAccessCodeFormProps {
   partnerAdmin: PartnerAdmin;

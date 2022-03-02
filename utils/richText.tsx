@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import { MARK_LINK } from 'storyblok-rich-text-react-renderer';
-import Link from '../components/Link';
-import StoryblokImage from '../components/StoryblokImage';
-import StoryblokVideo from '../components/StoryblokVideo';
+import Link from '../components/common/Link';
+import StoryblokImage from '../components/storyblok/StoryblokImage';
+import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
 export const RichTextOptions = {
   blokResolvers: {

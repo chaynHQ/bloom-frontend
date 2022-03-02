@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
-import { PROGRESS_STATUS } from '../constants/enums';
-import { columnStyle, rowStyle } from '../styles/common';
-import ProgressStatus from './ProgressStatus';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import { columnStyle, rowStyle } from '../../styles/common';
+import ProgressStatus from '../common/ProgressStatus';
 
 interface HeaderProps {
   title:
