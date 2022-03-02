@@ -57,8 +57,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const t = useTranslations('Courses');
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
+    title: t('title'),
+    introduction: t('introduction'),
     imageSrc: illustrationPerson3Pink,
     imageAlt: 'alt.personSitting',
   };

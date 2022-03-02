@@ -12,8 +12,8 @@ const Home: NextPage = () => {
   const t = useTranslations('Index');
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction', {
+    title: t('title'),
+    introduction: t('introduction', {
       nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
       reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
       muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           component={Link}
           href="https://nextjs.org/docs"
         >
-          {t.rich('nextDocs')}
+          {t('nextDocs')}
         </Button>
         <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
         <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>

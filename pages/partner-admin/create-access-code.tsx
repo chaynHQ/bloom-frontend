@@ -30,8 +30,8 @@ const CreateAccessCode: NextPage = () => {
   const { partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
+    title: t('title'),
+    introduction: t('introduction'),
     partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
     partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
   };
@@ -55,10 +55,10 @@ const CreateAccessCode: NextPage = () => {
         <Card sx={cardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('title')}
+              {t('title')}
             </Typography>
             <Typography variant="body1" component="p" mb={2}>
-              {t.rich('introduction')}
+              {t('introduction')}
             </Typography>
 
             <CreateAccessCodeForm partnerAdmin={partnerAdmin} />

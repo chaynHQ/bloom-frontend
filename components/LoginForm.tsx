@@ -104,7 +104,7 @@ const LoginForm = () => {
         <TextField
           id="email"
           onChange={(e) => setEmailInput(e.target.value)}
-          label={t.rich('emailLabel')}
+          label={t('emailLabel')}
           variant="standard"
           fullWidth
           required
@@ -112,7 +112,7 @@ const LoginForm = () => {
         <TextField
           id="password"
           onChange={(e) => setPasswordInput(e.target.value)}
-          label={t.rich('passwordLabel')}
+          label={t('passwordLabel')}
           type="password"
           variant="standard"
           fullWidth
@@ -131,7 +131,7 @@ const LoginForm = () => {
           color="secondary"
           type="submit"
         >
-          {t.rich('loginSubmit')}
+          {t('loginSubmit')}
         </Button>
       </form>
     </Box>

@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { RootState } from '../app/store';
-import { auth } from '../config/firebase';
 import { useTypedSelector } from '../hooks/store';
 import bloomLogo from '../public/bloom_logo.svg';
 import { rowStyle } from '../styles/common';
@@ -50,12 +49,12 @@ const TopBar = () => {
   return (
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
-        {isSmallScreen && user.id && auth.currentUser && <NavigationDrawer />}
+        {isSmallScreen && user.token && <NavigationDrawer />}
         <Link href={homepage} aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
-        {!isSmallScreen && user.id && auth.currentUser && <NavigationMenu />}
-        {user.id && auth.currentUser && <UserMenu />}
+        {!isSmallScreen && user.token && <NavigationMenu />}
+        {user.token && <UserMenu />}
         {/* <LanguageMenu /> */}
       </Container>
     </AppBar>

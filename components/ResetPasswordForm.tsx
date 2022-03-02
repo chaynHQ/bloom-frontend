@@ -54,13 +54,13 @@ export const EmailForm = () => {
   return (
     <Box>
       <Typography variant="body1" component="p" mb={2}>
-        {t.rich('resetPasswordStep1')}
+        {t('resetPasswordStep1')}
       </Typography>
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
         <TextField
           id="email"
           onChange={(e) => setEmailInput(e.target.value)}
-          label={t.rich('emailLabel')}
+          label={t('emailLabel')}
           variant="standard"
           fullWidth
           required
@@ -79,12 +79,12 @@ export const EmailForm = () => {
             color="secondary"
             type="submit"
           >
-            {t.rich('resetPasswordSubmit')}
+            {t('resetPasswordSubmit')}
           </Button>
         ) : (
           <Box>
             <Typography variant="body1" component="p" mb={2}>
-              {t.rich('resetPasswordSent')}
+              {t('resetPasswordSent')}
             </Typography>
             <Button
               sx={{ mt: 2, mr: 1.5 }}
@@ -93,7 +93,7 @@ export const EmailForm = () => {
               color="secondary"
               type="submit"
             >
-              {t.rich('resendPasswordSubmit')}
+              {t('resendPasswordSubmit')}
             </Button>
           </Box>
         )}
@@ -155,7 +155,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
     return (
       <Box>
         <Typography variant="body1" component="p" mb={2}>
-          {t.rich('passwordResetSuccess')}
+          {t('passwordResetSuccess')}
         </Typography>
         <Button
           sx={{ mt: 2, mr: 1.5 }}
@@ -165,7 +165,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           color="secondary"
           href="/auth/login"
         >
-          {t.rich('loginSubmit')}
+          {t('loginSubmit')}
         </Button>
       </Box>
     );
@@ -174,13 +174,13 @@ export const PasswordForm = (props: PasswordFormProps) => {
   return (
     <Box>
       <Typography variant="body1" component="p" mb={2}>
-        {t.rich('resetPasswordStep2')}
+        {t('resetPasswordStep2')}
       </Typography>
       <form autoComplete="off" onSubmit={resetPasswordSubmit}>
         <TextField
           id="password"
           onChange={(e) => setPasswordInput(e.target.value)}
-          label={t.rich('passwordLabel')}
+          label={t('passwordLabel')}
           type="password"
           variant="standard"
           fullWidth
@@ -199,7 +199,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           color="secondary"
           type="submit"
         >
-          {codeParam ? t.rich('resetPasswordSubmit') : t.rich('resetPasswordSubmit')}
+          {codeParam ? t('resetPasswordSubmit') : t('resetPasswordSubmit')}
         </Button>
       </form>
     </Box>

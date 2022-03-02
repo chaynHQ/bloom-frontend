@@ -198,7 +198,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         <TextField
           id="name"
           onChange={(e) => setNameInput(e.target.value)}
-          label={t.rich('nameLabel')}
+          label={t('nameLabel')}
           variant="standard"
           fullWidth
           required
@@ -206,7 +206,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         <TextField
           id="email"
           onChange={(e) => setEmailInput(e.target.value)}
-          label={t.rich('emailLabel')}
+          label={t('emailLabel')}
           variant="standard"
           fullWidth
           required
@@ -214,7 +214,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         <TextField
           id="password"
           onChange={(e) => setPasswordInput(e.target.value)}
-          label={t.rich('passwordLabel')}
+          label={t('passwordLabel')}
           type="password"
           variant="standard"
           fullWidth
@@ -227,10 +227,10 @@ const RegisterForm = (props: RegisterFormProps) => {
         )}
         <FormControl>
           <FormControlLabel
-            label={t.rich('contactPermissionLabel')}
+            label={t('contactPermissionLabel')}
             control={
               <Checkbox
-                aria-label={t.raw('contactPermissionLabel')}
+                aria-label={t('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />
             }
@@ -245,7 +245,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           color="secondary"
           type="submit"
         >
-          {t.rich('registerSubmit')}
+          {t('registerSubmit')}
         </Button>
       </form>
     </Box>

@@ -74,7 +74,7 @@ export default function UserMenu() {
       >
         <MenuItem sx={menuItemStyle}>
           <Button sx={menuButtonStyle} onClick={logout} startIcon={<Logout />}>
-            {t.raw('logout')}
+            {t('logout')}
           </Button>
         </MenuItem>
       </Menu>

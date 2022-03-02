@@ -49,7 +49,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
     event.preventDefault();
 
     if (!selectedTier) {
-      setFormError(t.rich('form.errors.featureRequired'));
+      setFormError(t('form.errors.featureRequired'));
       return;
     }
 
@@ -92,7 +92,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       });
       rollbar.error('User register create user error', error);
 
-      setFormError(t.rich('form.errors.createPartnerAccessError'));
+      setFormError(t('form.errors.createPartnerAccessError'));
       throw error;
     }
 
@@ -108,14 +108,14 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const FormResetButton = () => (
     <Box>
       <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
-        {t.rich('form.reset')}
+        {t('form.reset')}
       </Button>
     </Box>
   );
 
   const FormSuccess = () => (
     <Box>
-      <Typography variant="h4" component="h4" mb={1}>
+      <Typography variant="h3" component="h3" mb={1}>
         {selectedTier === PARTNER_ACCESS_FEATURES.COURSES
           ? t('courseAccess')
           : selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT
@@ -123,12 +123,16 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           : t('therapyAccess')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('resultLink')}
+        {t.rich('resultLink', {
+          welcomeURL: (children) => <Link href={welcomeURL}>{welcomeURL}</Link>,
+        })}
       </Typography>
-      <Link href={welcomeURL}>{welcomeURL}</Link>
       <Typography variant="body1" component="p">
-        {t.rich('resultCode')} <strong>{partnerAccessCode}</strong>
+        {t.rich('resultCode', {
+          partnerAccessCode: (children) => <strong>{partnerAccessCode}</strong>,
+        })}
       </Typography>
+
       <FormResetButton />
     </Box>
   );
@@ -136,7 +140,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const Form = () => (
     <form autoComplete="off">
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{t.rich('form.featuresLabel')}</FormLabel>
+        <FormLabel component="legend">{t('form.featuresLabel')}</FormLabel>
         <RadioGroup
           aria-label="feature"
           name="controlled-radio-buttons-group"
@@ -146,17 +150,17 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.COURSES}
             control={<Radio />}
-            label={t.rich('form.featureCoursesLabel')}
+            label={t('form.featureCoursesLabel')}
           />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.LIVE_CHAT}
             control={<Radio />}
-            label={t.rich('form.featureLiveChatLabel')}
+            label={t('form.featureLiveChatLabel')}
           />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.THERAPY}
             control={<Radio />}
-            label={t.rich('form.featureTherapyLabel')}
+            label={t('form.featureTherapyLabel')}
           />
         </RadioGroup>
       </FormControl>
@@ -167,7 +171,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         </Typography>
       )}
       <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={submitHandler}>
-        {t.rich('title')}
+        {t('title')}
       </Button>
     </form>
   );

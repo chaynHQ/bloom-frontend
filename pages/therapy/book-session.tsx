@@ -84,7 +84,7 @@ const BookSession: NextPage = () => {
   }, []);
 
   const headerProps = {
-    title: t.rich('title'),
+    title: t('title'),
     introduction: t.rich('introduction', { partnerName: partnerAccess?.partner?.name }),
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
@@ -138,7 +138,7 @@ const BookSession: NextPage = () => {
               ? t.rich('therapySessionsRemaining', {
                   strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,
                 })
-              : t.rich('noTherapySessionsRemaining')}
+              : t('noTherapySessionsRemaining')}
           </Typography>
           {hasTherapyRemaining && (
             <Button
@@ -148,7 +148,7 @@ const BookSession: NextPage = () => {
               size="large"
               onClick={openWidget}
             >
-              {t.rich('bookingButton')}
+              {t('bookingButton')}
             </Button>
           )}
         </Box>
@@ -157,10 +157,10 @@ const BookSession: NextPage = () => {
 
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t.rich('faqHeader')}
+          {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
         </Box>
 
         <Box sx={faqsContainerStyle}>
@@ -178,7 +178,7 @@ const BookSession: NextPage = () => {
               size="large"
               onClick={openWidget}
             >
-              {t.rich('bookingButton')}
+              {t('bookingButton')}
             </Button>
           )}
         </Box>

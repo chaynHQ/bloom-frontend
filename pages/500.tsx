@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Button, CircularProgress, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Image from 'next/image';
@@ -28,26 +28,40 @@ const Custom500: NextPage = () => {
     mb: 2,
   } as const;
 
+  const loadingContainerStyle = {
+    display: 'flex',
+    height: '100vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+  } as const;
+
+  if (user.loading) {
+    return (
+      <Container sx={loadingContainerStyle}>
+        <CircularProgress color="error" />
+      </Container>
+    );
+  }
+
   return (
     <Container sx={containerStyle}>
       <Box sx={imageContainerStyle}>
         <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
       </Box>
       <Typography variant="h1" component="h1">
-        {t.rich('500.title')}
+        {t('500.title')}
       </Typography>
       <Typography variant="body1" component="p">
-        {t.rich('500.description')}
+        {t('500.description')}
       </Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.id ? '/courses' : '/welcome'}
+        href={user.token ? '/courses' : '/welcome'}
       >
-        {t.rich('500.goBack')}{' '}
-        {user.id ? t('500.authenticatedRedirect') : t('500.unauthenticatedRedirect')}
+        {user.token ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );
