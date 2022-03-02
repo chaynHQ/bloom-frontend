@@ -17,11 +17,6 @@ import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../constants/enums';
 import { rowStyle } from '../styles/common';
 
-interface SessionCardProps {
-  session: StoryData;
-  sessionProgress: PROGRESS_STATUS;
-}
-
 const cardStyle = {
   alignSelf: 'flex-start',
   width: { xs: '100%', md: 'calc(50% - 1rem)' },
@@ -48,6 +43,11 @@ const cardContentRowStyles = {
   ...rowStyle,
   gap: 1.5,
 } as const;
+
+interface SessionCardProps {
+  session: StoryData;
+  sessionProgress: PROGRESS_STATUS;
+}
 
 const SessionCard = (props: SessionCardProps) => {
   const { session, sessionProgress } = props;

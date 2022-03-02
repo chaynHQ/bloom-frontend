@@ -13,6 +13,12 @@ import { useState } from 'react';
 import { rowStyle } from '../styles/common';
 import logEvent from '../utils/logEvent';
 
+const cardStyle = {
+  width: { xs: '100%', md: 700 },
+  marginTop: 0,
+  backgroundColor: 'background.default',
+} as const;
+
 interface SessionContentCardProps {
   children: any;
   title: string;
@@ -22,12 +28,6 @@ interface SessionContentCardProps {
   eventPrefix: string;
   eventData: {};
 }
-
-const cardStyle = {
-  width: { xs: '100%', md: 700 },
-  marginTop: 0,
-  backgroundColor: 'background.default',
-} as const;
 
 const SessionContentCard = (props: SessionContentCardProps) => {
   const {

@@ -10,23 +10,23 @@ import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
 import { columnStyle } from '../styles/common';
 
+const containerStyle = {
+  ...columnStyle,
+  height: '100vh',
+  alignItems: 'flex-start',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 180, md: 260 },
+  height: { xs: 180, md: 260 },
+  marginLeft: { xs: -3, md: -6 },
+  marginBottom: 2,
+} as const;
+
 const Custom404: NextPage = () => {
   const t = useTranslations('Shared');
   const { user } = useTypedSelector((state: RootState) => state);
-
-  const containerStyle = {
-    ...columnStyle,
-    height: '100vh',
-    alignItems: 'flex-start',
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 180, md: 260 },
-    height: { xs: 180, md: 260 },
-    marginLeft: { xs: -3, md: -6 },
-    marginBottom: 2,
-  } as const;
 
   if (user.loading) {
     return <LoadingContainer />;

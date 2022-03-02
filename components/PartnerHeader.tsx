@@ -5,13 +5,6 @@ import Image from 'next/image';
 import * as React from 'react';
 import { rowStyle } from '../styles/common';
 
-interface HeaderProps {
-  partnerLogoSrc: StaticImageData;
-  partnerLogoAlt: string;
-  imageSrc: StaticImageData;
-  imageAlt: string;
-}
-
 const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
@@ -33,6 +26,13 @@ const logoContainerStyle = {
   height: { xs: 160, md: 280 },
   marginTop: { xs: 4, md: 0 },
 } as const;
+
+interface HeaderProps {
+  partnerLogoSrc: StaticImageData;
+  partnerLogoAlt: string;
+  imageSrc: StaticImageData;
+  imageAlt: string;
+}
 
 const PartnerHeader = (props: HeaderProps) => {
   const { partnerLogoSrc, partnerLogoAlt, imageAlt, imageSrc } = props;

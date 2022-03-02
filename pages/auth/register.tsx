@@ -22,6 +22,29 @@ import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
+const containerStyle = {
+  ...rowStyle,
+  backgroundColor: 'primary.light',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const formContainerStyle = {
+  width: { xs: '100%', sm: '70%', md: '45%' },
+  alignSelf: 'flex-start',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 120, md: 160 },
+  height: { xs: 70, md: 80 },
+  marginBottom: 3,
+  marginTop: { xs: 0, md: 2 },
+} as const;
+
 const Register: NextPage = () => {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
@@ -52,29 +75,6 @@ const Register: NextPage = () => {
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
-
-  const containerStyle = {
-    ...rowStyle,
-    backgroundColor: 'primary.light',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const formContainerStyle = {
-    width: { xs: '100%', sm: '70%', md: '45%' },
-    alignSelf: 'flex-start',
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 120, md: 160 },
-    height: { xs: 70, md: 80 },
-    marginBottom: 3,
-    marginTop: { xs: 0, md: 2 },
-  } as const;
 
   const ExtraContent = () => {
     return (

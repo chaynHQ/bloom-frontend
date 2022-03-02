@@ -6,16 +6,16 @@ import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../constants/enums';
 import { rowStyle } from '../styles/common';
 
-interface ProgressStatusProps {
-  status: PROGRESS_STATUS;
-}
-
 const rowStyles = {
   ...rowStyle,
   gap: 1.5,
   marginTop: 2,
   alignItems: 'center',
 } as const;
+
+interface ProgressStatusProps {
+  status: PROGRESS_STATUS;
+}
 
 const ProgressStatus = (props: ProgressStatusProps) => {
   const { status } = props;
