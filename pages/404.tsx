@@ -23,8 +23,8 @@ const Custom404: NextPage = () => {
     position: 'relative',
     width: { xs: 180, md: 260 },
     height: { xs: 180, md: 260 },
-    ml: { xs: -3, md: -6 },
-    mb: 2,
+    marginLeft: { xs: -3, md: -6 },
+    marginBottom: 2,
   } as const;
 
   if (user.loading) {
