@@ -131,9 +131,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
           </Box>
         ) : loadedCourses.length === 0 ? (
           <Box>
-            <Typography component="p" variant="body1">
-              {t('noCourses')}
-            </Typography>
+            <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
           <Box sx={cardsContainerStyle}>

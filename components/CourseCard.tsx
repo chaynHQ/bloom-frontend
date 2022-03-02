@@ -88,9 +88,7 @@ const CourseCard = (props: CourseCardProps) => {
                 {courseProgress === PROGRESS_STATUS.COMPLETED && (
                   <CheckCircleIcon color="error"></CheckCircleIcon>
                 )}
-                <Typography component="p" variant="body1">
-                  {courseProgress}
-                </Typography>
+                <Typography>{courseProgress}</Typography>
               </Box>
             )}
           </Box>

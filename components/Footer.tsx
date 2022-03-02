@@ -175,9 +175,7 @@ const Footer = () => {
       })}
 
       <Box sx={descriptionContainerStyle}>
-        <Typography variant="body1" component="p" sx={{ mb: 1 }}>
-          {tS('footer.chaynDescription')}
-        </Typography>
+        <Typography sx={{ mb: 1 }}>{tS('footer.chaynDescription')}</Typography>
         <Link href="#">{tS('footer.policies')}</Link>
       </Box>
     </Container>

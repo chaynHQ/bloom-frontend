@@ -55,9 +55,7 @@ const ImageTextGrid = (props: ImageTextGridProps) => {
               objectFit="contain"
             />
           </Box>
-          <Typography variant="body1" component="p">
-            {t(item.text)}
-          </Typography>
+          <Typography>{t(item.text)}</Typography>
         </Box>
       ))}
     </Box>

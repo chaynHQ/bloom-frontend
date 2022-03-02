@@ -51,9 +51,7 @@ const Custom500: NextPage = () => {
       <Typography variant="h1" component="h1">
         {t('500.title')}
       </Typography>
-      <Typography variant="body1" component="p">
-        {t('500.description')}
-      </Typography>
+      <Typography>{t('500.description')}</Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"

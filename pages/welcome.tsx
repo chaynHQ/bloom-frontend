@@ -106,9 +106,7 @@ const Welcome: NextPage = () => {
             <Typography variant="h2" component="h2">
               {t('getStarted')}
             </Typography>
-            <Typography variant="body1" component="p">
-              {t('accessIntroduction')}
-            </Typography>
+            <Typography>{t('accessIntroduction')}</Typography>
 
             <CodeForm codeParam={codeParam} partnerParam={partnerParam} />
           </CardContent>
@@ -122,13 +120,11 @@ const Welcome: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('programTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
-            {t('programIntroduction')}
-          </Typography>
+          <Typography>{t('programIntroduction')}</Typography>
         </Box>
       </Container>
       <Container sx={{ backgroundColor: 'common.white' }}>
-        <Typography sx={resourcesStyle} variant="body1" component="p">
+        <Typography sx={resourcesStyle}>
           {t.rich('resourcesIntroduction', {
             resourcesLink: (children) => (
               <Link target={'_blank'} href="https://www.chayn.co/bumble-resources">
@@ -146,7 +142,7 @@ const Welcome: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('bloomTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
+          <Typography>
             {t.rich('bloomIntroduction', {
               bloomLink: (children) => <Link href="https://chayn.co/">{children}</Link>,
             })}
@@ -169,7 +165,7 @@ const Welcome: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('bumbleTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
+          <Typography>
             {t.rich('bumbleIntroduction', {
               bumbleLink: (children) => (
                 <Link href="https://bumble.com/?pid=press&c=press-release">{children}</Link>

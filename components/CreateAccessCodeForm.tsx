@@ -122,12 +122,12 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           ? t('liveChatAccess')
           : t('therapyAccess')}
       </Typography>
-      <Typography variant="body1" component="p">
+      <Typography>
         {t.rich('resultLink', {
           welcomeURL: (children) => <Link href={welcomeURL}>{welcomeURL}</Link>,
         })}
       </Typography>
-      <Typography variant="body1" component="p">
+      <Typography>
         {t.rich('resultCode', {
           partnerAccessCode: (children) => <strong>{partnerAccessCode}</strong>,
         })}
@@ -166,7 +166,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       </FormControl>
 
       {formError && (
-        <Typography variant="body1" component="p" color="error.main" mt={2}>
+        <Typography color="error.main" mt={2}>
           {formError}
         </Typography>
       )}

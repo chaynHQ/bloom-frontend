@@ -140,9 +140,7 @@ const Register: NextPage = () => {
               <Typography variant="h2" component="h2">
                 {t('register.title')}
               </Typography>
-              <Typography variant="body1" component="p">
-                {t('register.description')}
-              </Typography>
+              <Typography>{t('register.description')}</Typography>
 
               <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
 

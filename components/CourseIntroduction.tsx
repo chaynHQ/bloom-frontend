@@ -52,14 +52,10 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
         <Typography component="h2" variant="h2">
           {t('courseDetail.introductionTitle')}
         </Typography>
-        <Typography component="p" variant="body1">
+        <Typography>
           {t.rich('courseDetail.introductionDescription', {
             transcriptLink: (children) => (
-              <MuiLink
-                component="button"
-                variant="body1"
-                onClick={() => setOpenTranscriptModal(true)}
-              >
+              <MuiLink component="button" onClick={() => setOpenTranscriptModal(true)}>
                 {children}
               </MuiLink>
             ),

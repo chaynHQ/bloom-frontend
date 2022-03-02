@@ -74,10 +74,8 @@ const ConfirmedSession: NextPage = () => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Typography variant="body1" component="p">
-          {t('confirmation.returnDescription')}
-        </Typography>
-        <Typography variant="body1" component="p">
+        <Typography>{t('confirmation.returnDescription')}</Typography>
+        <Typography>
           {t.rich('confirmation.bookmarkDescription', {
             bookingLink: (children) => (
               <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>

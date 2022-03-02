@@ -51,7 +51,7 @@ const Custom404: NextPage = () => {
       <Typography variant="h1" component="h1">
         {t('404.title')}
       </Typography>
-      <Typography variant="body1" component="p">
+      <Typography>
         {user.token ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
       </Typography>
       <Button

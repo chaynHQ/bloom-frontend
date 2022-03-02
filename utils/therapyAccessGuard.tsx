@@ -46,7 +46,7 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
         <Typography variant="h2" component="h2" mb={2}>
           {t('title')}
         </Typography>
-        <Typography variant="body1" component="p" mb={2}>
+        <Typography mb={2}>
           {t.rich('introduction', {
             contactLink: (children) => (
               <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
