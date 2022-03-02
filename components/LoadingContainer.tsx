@@ -1,5 +1,11 @@
 import { CircularProgress, Container } from '@mui/material';
-import { centeredContainerStyle } from '../styles/common';
+
+const centeredContainerStyle = {
+  display: 'flex',
+  height: '100vh',
+  justifyContent: 'center',
+  alignItems: 'center',
+} as const;
 
 const LoadingContainer = () => {
   return (
