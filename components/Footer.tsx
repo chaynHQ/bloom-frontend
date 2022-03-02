@@ -23,8 +23,6 @@ import Link from './Link';
 const footerContainerStyle = {
   ...rowStyle,
   backgroundColor: 'common.white',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
   paddingY: { xs: 6, md: 10 },
 } as const;
 

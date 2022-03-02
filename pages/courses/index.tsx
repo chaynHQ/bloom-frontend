@@ -14,6 +14,7 @@ import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
+import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -25,13 +26,6 @@ interface Props {
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 6 },
-} as const;
-
-const cardsContainerStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
 } as const;
 
 const cardColumnStyle = {
@@ -134,7 +128,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
             <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Box sx={cardsContainerStyle}>
+          <Box sx={rowStyle}>
             <Box sx={cardColumnStyle}>
               {loadedCourses.map((course, index) => {
                 if (index % 2 === 1) return;

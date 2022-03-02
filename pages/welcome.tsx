@@ -29,12 +29,6 @@ const headerProps = {
   imageAlt: 'alt.bloomHead',
 };
 
-const rowContainerStyle = {
-  ...rowStyle,
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
-} as const;
-
 const textContainerStyle = {
   maxWidth: 600,
   width: { xs: '100%', md: '45%' },
@@ -95,7 +89,7 @@ const Welcome: NextPage = () => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
-      <Container sx={{ ...rowContainerStyle, backgroundColor: 'primary.light' }}>
+      <Container sx={{ ...rowStyle, backgroundColor: 'primary.light' }}>
         <Box sx={textContainerStyle}>
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
@@ -112,7 +106,7 @@ const Welcome: NextPage = () => {
           </CardContent>
         </Card>
       </Container>
-      <Container sx={rowContainerStyle}>
+      <Container sx={rowStyle}>
         <Box sx={imageContainerStyle}>
           <Image alt={tS('alt.personSitting')} src={illustrationPerson5Yellow} />
         </Box>
@@ -134,7 +128,7 @@ const Welcome: NextPage = () => {
           })}
         </Typography>
       </Container>
-      <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
+      <Container sx={{ ...rowStyle, backgroundColor: 'secondary.light' }}>
         <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
             <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} />

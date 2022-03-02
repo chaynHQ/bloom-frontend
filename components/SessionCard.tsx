@@ -44,7 +44,7 @@ const cardActionsStyle = {
   alignItems: 'end',
 } as const;
 
-const rowStyles = {
+const cardContentRowStyles = {
   ...rowStyle,
   gap: 1.5,
 } as const;
@@ -70,7 +70,7 @@ const SessionCard = (props: SessionCardProps) => {
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>
-          <Box sx={rowStyles}>
+          <Box sx={cardContentRowStyles}>
             {sessionProgress !== PROGRESS_STATUS.NOT_STARTED && (
               <Box mt={0.5}>
                 {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}

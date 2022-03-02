@@ -15,7 +15,6 @@ interface HeaderProps {
 const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
-  justifyContent: 'space-between',
   backgroundColor: 'common.white',
   paddingBottom: { xs: 0, md: 0 },
   paddingTop: { xs: 6, md: 8 },

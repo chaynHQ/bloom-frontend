@@ -27,8 +27,6 @@ interface HeaderProps {
 const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
   minHeight: { xs: 220, md: 410 },
   paddingTop: { xs: '7rem !important', md: '8.5rem !important' },
   gap: '30px',
@@ -46,7 +44,7 @@ const textContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  maxWidth: 600,
+  maxWidth: { xs: '100%', md: '65%' },
   width: { xs: '100%', md: 'auto' },
   minHeight: { xs: 180, md: 240 },
 } as const;
