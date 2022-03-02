@@ -14,7 +14,7 @@ import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
-import { columnStyle, rowStyle } from '../../styles/common';
+import { centeredContainerStyle, columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -34,13 +34,6 @@ const cardColumnStyle = {
   width: { xs: '100%', sm: 'calc(50% - 1rem)' },
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
-
-const loadingContainerStyle = {
-  display: 'flex',
-  height: '100vh',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
 
 const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
@@ -120,7 +113,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
-          <Box sx={loadingContainerStyle}>
+          <Box sx={centeredContainerStyle}>
             <CircularProgress color="error" />
           </Box>
         ) : loadedCourses.length === 0 ? (

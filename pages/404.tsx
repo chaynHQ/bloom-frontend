@@ -7,7 +7,7 @@ import { RootState } from '../app/store';
 import Link from '../components/Link';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
-import { columnStyle } from '../styles/common';
+import { centeredContainerStyle, columnStyle } from '../styles/common';
 
 const Custom404: NextPage = () => {
   const t = useTranslations('Shared');
@@ -27,16 +27,9 @@ const Custom404: NextPage = () => {
     mb: 2,
   } as const;
 
-  const loadingContainerStyle = {
-    display: 'flex',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  } as const;
-
   if (user.loading) {
     return (
-      <Container sx={loadingContainerStyle}>
+      <Container sx={centeredContainerStyle}>
         <CircularProgress color="error" />
       </Container>
     );
