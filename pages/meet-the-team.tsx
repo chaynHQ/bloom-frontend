@@ -84,48 +84,23 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
             {story.content.core_team_members.map((teamMember: any, index: number) => {
               if (index % 2 === 1) return;
               return (
-                <>
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member2`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member3`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                </>
+                <TeamMemberCard
+                  key={`${teamMember.name}_team_member`}
+                  teamMember={teamMember}
+                  alwaysOpen={true}
+                />
               );
             })}
           </Box>
           <Box sx={cardColumnStyle}>
             {story.content.core_team_members.map((teamMember: any, index: number) => {
-              // TODO: change this back to === 0
-              if (index % 2 === 1) return;
+              if (index % 2 === 0) return;
               return (
-                <>
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member4`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                  <TeamMemberCard
-                    key={`${teamMember.name}_team_member5`}
-                    teamMember={teamMember}
-                    alwaysOpen={true}
-                  />
-                </>
+                <TeamMemberCard
+                  key={`${teamMember.name}_team_member`}
+                  teamMember={teamMember}
+                  alwaysOpen={true}
+                />
               );
             })}
           </Box>
@@ -143,23 +118,15 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
             {story.content.supporting_team_members.map((teamMember: any, index: number) => {
               if (index % 2 === 1) return;
               return (
-                <>
-                  <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
-                  <TeamMemberCard key={`${teamMember.name}_team_member4`} teamMember={teamMember} />
-                  <TeamMemberCard key={`${teamMember.name}_team_member5`} teamMember={teamMember} />
-                </>
+                <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
               );
             })}
           </Box>
           <Box sx={cardColumnStyle}>
             {story.content.supporting_team_members.map((teamMember: any, index: number) => {
-              if (index % 2 === 1) return;
+              if (index % 2 === 0) return;
               return (
-                <>
-                  <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
-                  <TeamMemberCard key={`${teamMember.name}_team_member4`} teamMember={teamMember} />
-                  <TeamMemberCard key={`${teamMember.name}_team_member5`} teamMember={teamMember} />
-                </>
+                <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
               );
             })}
           </Box>
