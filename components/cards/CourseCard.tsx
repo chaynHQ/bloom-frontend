@@ -1,5 +1,3 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Card,
@@ -17,6 +15,7 @@ import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { rowStyle } from '../../styles/common';
+import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -80,16 +79,8 @@ const CourseCard = (props: CourseCardProps) => {
             <Typography key={course.slug} component="h3" variant="h3">
               {course.content.name}
             </Typography>
-            {courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
-              <Box sx={rowStyles}>
-                {courseProgress === PROGRESS_STATUS.STARTED && (
-                  <DonutLargeIcon color="error"></DonutLargeIcon>
-                )}
-                {courseProgress === PROGRESS_STATUS.COMPLETED && (
-                  <CheckCircleIcon color="error"></CheckCircleIcon>
-                )}
-                <Typography>{courseProgress}</Typography>
-              </Box>
+            {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
+              <ProgressStatus status={courseProgress} />
             )}
           </Box>
         </CardContent>
