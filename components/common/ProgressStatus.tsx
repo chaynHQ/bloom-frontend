@@ -11,6 +11,7 @@ const rowStyles = {
   gap: 1.5,
   marginTop: 2,
   alignItems: 'center',
+  justifyContent: 'flex-start',
 } as const;
 
 interface ProgressStatusProps {

@@ -48,6 +48,7 @@ const containerStyle = {
 
 const cardColumnStyle = {
   ...columnStyle,
+  alignItems: 'center',
   gap: { xs: 2, md: 3 },
 } as const;
 
@@ -287,6 +288,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                           transcriptLink: (children) => (
                             <MuiLink
                               component="button"
+                              variant="body1"
                               onClick={() => setOpenTranscriptModal(true)}
                             >
                               {children}

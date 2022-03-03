@@ -41,6 +41,7 @@ const cardActionsStyle = {
 
 const cardContentRowStyles = {
   ...rowStyle,
+  justifyContent: 'flex-start',
   gap: 1.5,
 } as const;
 
