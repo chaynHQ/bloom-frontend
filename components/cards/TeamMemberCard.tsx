@@ -103,7 +103,9 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
       </CardActionArea>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography paragraph>{teamMember.bio}</Typography>
+          <Typography variant="body2" mb={0} paragraph>
+            {teamMember.bio}
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>
