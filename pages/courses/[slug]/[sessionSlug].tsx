@@ -48,6 +48,7 @@ const containerStyle = {
 
 const cardColumnStyle = {
   ...columnStyle,
+  alignItems: 'center',
   gap: { xs: 2, md: 3 },
 } as const;
 
