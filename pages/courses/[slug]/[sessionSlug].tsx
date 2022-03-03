@@ -288,6 +288,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                           transcriptLink: (children) => (
                             <MuiLink
                               component="button"
+                              variant="body1"
                               onClick={() => setOpenTranscriptModal(true)}
                             >
                               {children}
