@@ -11,7 +11,7 @@ import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
 import Header from '../../components/layout/Header';
 import Storyblok from '../../config/storyblok';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
@@ -26,7 +26,8 @@ const containerStyle = {
 const cardColumnStyle = {
   ...columnStyle,
   justifyContent: 'flex-start',
-  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
+  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  maxWidth: 520,
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
 
@@ -34,9 +35,10 @@ interface Props {
   stories: StoryData[];
   preview: boolean;
   messages: any;
+  locale: LANGUAGES;
 }
 
-const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
+const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
@@ -170,6 +172,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
       },
+      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
