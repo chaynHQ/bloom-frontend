@@ -65,7 +65,7 @@ const SessionCard = (props: SessionCardProps) => {
   } as const;
 
   return (
-    <Card sx={cardStyle} key={session.id}>
+    <Card sx={cardStyle}>
       <CardActionArea
         href={`/${session.full_slug}`}
         aria-label={`${t('navigateToSession')} ${session.name}`}

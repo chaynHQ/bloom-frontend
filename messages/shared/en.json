@@ -20,6 +20,9 @@
       "completed": "Completed",
       "notStarted": "Not started"
     },
+    "meetTheTeam": {
+      "expandTeamMember": "Expand bio for {name}"
+    },
     "404": {
       "title": "404 - Page not found",
       "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",

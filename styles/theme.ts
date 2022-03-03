@@ -58,6 +58,12 @@ let theme = createTheme({
         fontSize: '1.125rem',
       },
     },
+    body2: {
+      fontSize: '0.875rem',
+      '@media (min-width:1200px)': {
+        fontSize: '1rem',
+      },
+    },
   },
 });
 
@@ -78,6 +84,10 @@ theme = createTheme(theme, {
           paddingTop: 50,
           paddingBottom: 50,
 
+          [theme.breakpoints.up('md')]: {
+            paddingLeft: '5% !important',
+            paddingRight: '5% !important',
+          },
           [theme.breakpoints.up('lg')]: {
             paddingTop: 80,
             paddingBottom: 80,

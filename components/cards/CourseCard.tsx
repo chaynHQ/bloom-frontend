@@ -31,6 +31,12 @@ const cardContentStyle = {
   minHeight: { xs: 124, md: 136 },
 } as const;
 
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 80, md: 120 },
+  height: { xs: 80, md: 120 },
+} as const;
+
 const collapseContentStyle = {
   padding: { xs: 2, md: 3 },
   paddingTop: { xs: 0, md: 0 },
@@ -62,21 +68,22 @@ const CourseCard = (props: CourseCardProps) => {
   };
 
   return (
-    <Card sx={cardStyle} key={course.id}>
+    <Card sx={cardStyle}>
       <CardActionArea
         href={`/${course.full_slug}`}
         aria-label={`${t('navigateToCourse')} ${course.content.name}`}
       >
         <CardContent sx={cardContentStyle}>
-          <Image
-            alt={course.content.image.alt}
-            src={course.content.image.filename}
-            width={100}
-            height={100}
-            objectFit="contain"
-          />
+          <Box sx={imageContainerStyle}>
+            <Image
+              alt={course.content.image.alt}
+              src={course.content.image.filename}
+              layout="fill"
+              objectFit="contain"
+            />
+          </Box>
           <Box flex={1}>
-            <Typography key={course.slug} component="h3" variant="h3">
+            <Typography component="h3" variant="h3">
               {course.content.name}
             </Typography>
             {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
