@@ -47,11 +47,12 @@ const languageRowStyles = {
 
 interface TeamMemberCardProps {
   teamMember: any;
+  alwaysOpen?: boolean;
 }
 
 const TeamMemberCard = (props: TeamMemberCardProps) => {
-  const { teamMember } = props;
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const { teamMember, alwaysOpen = false } = props;
+  const [expanded, setExpanded] = useState<boolean>(alwaysOpen);
   const t = useTranslations('Shared.meetTheTeam');
 
   const handleExpandClick = () => {
@@ -68,6 +69,7 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
       <CardActionArea
         onClick={handleExpandClick}
         aria-label={`${t.rich('expandTeamMember', { name: teamMember.name })}`}
+        disabled={alwaysOpen}
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={imageContainerStyle}>
@@ -91,22 +93,14 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
                 </Typography>
               </Box>
             </Box>
-            <Box style={expandArrowStyle}>
-              <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
-            </Box>
+            {!alwaysOpen && (
+              <Box style={expandArrowStyle}>
+                <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
+              </Box>
+            )}
           </Box>
         </CardContent>
       </CardActionArea>
-      {/* <CardActions sx={cardActionsStyle}>
-        <IconButton
-          sx={{ marginLeft: 'auto' }}
-          aria-label={`${t.rich('expandTeamMember', { name: teamMember.name })}`}
-          onClick={handleExpandClick}
-          size="small"
-        >
-          <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
-        </IconButton>
-      </CardActions> */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
           <Typography paragraph>{teamMember.bio}</Typography>

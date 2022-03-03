@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -18,11 +19,20 @@ const coreContainerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
+const supportingContainerStyle = {
+  backgroundColor: 'primary.light',
+} as const;
+
 const cardColumnStyle = {
   ...columnStyle,
   justifyContent: 'flex-start',
   width: { xs: '100%', sm: 'calc(50% - 1rem)' },
   gap: { xs: 0, sm: 2, md: 4 },
+} as const;
+
+const cardColumnRowStyle = {
+  ...rowStyle,
+  marginTop: { xs: 2, md: 5 },
 } as const;
 
 interface Props {
@@ -38,7 +48,6 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
-  console.log(story);
   const headerProps = {
     title: story.content.title,
     introduction: story.content.description,
@@ -64,20 +73,93 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={coreContainerStyle}>
-        <Box sx={rowStyle}>
+        <Typography variant="h2" component="h2">
+          {story.content.core_team_title}
+        </Typography>
+        {story.content.core_team_description && (
+          <Typography maxWidth={650}>{story.content.core_team_description}</Typography>
+        )}
+        <Box sx={cardColumnRowStyle}>
           <Box sx={cardColumnStyle}>
             {story.content.core_team_members.map((teamMember: any, index: number) => {
               if (index % 2 === 1) return;
               return (
-                <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
+                <>
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member2`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member3`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                </>
               );
             })}
           </Box>
           <Box sx={cardColumnStyle}>
             {story.content.core_team_members.map((teamMember: any, index: number) => {
-              if (index % 2 === 0) return;
+              // TODO: change this back to === 0
+              if (index % 2 === 1) return;
               return (
-                <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
+                <>
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member4`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                  <TeamMemberCard
+                    key={`${teamMember.name}_team_member5`}
+                    teamMember={teamMember}
+                    alwaysOpen={true}
+                  />
+                </>
+              );
+            })}
+          </Box>
+        </Box>
+      </Container>
+      <Container sx={supportingContainerStyle}>
+        <Typography variant="h2" component="h2">
+          {story.content.supporting_team_title}
+        </Typography>
+        {story.content.supporting_team_description && (
+          <Typography maxWidth={650}>{story.content.supporting_team_description}</Typography>
+        )}
+        <Box sx={cardColumnRowStyle}>
+          <Box sx={cardColumnStyle}>
+            {story.content.supporting_team_members.map((teamMember: any, index: number) => {
+              if (index % 2 === 1) return;
+              return (
+                <>
+                  <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
+                  <TeamMemberCard key={`${teamMember.name}_team_member4`} teamMember={teamMember} />
+                  <TeamMemberCard key={`${teamMember.name}_team_member5`} teamMember={teamMember} />
+                </>
+              );
+            })}
+          </Box>
+          <Box sx={cardColumnStyle}>
+            {story.content.supporting_team_members.map((teamMember: any, index: number) => {
+              if (index % 2 === 1) return;
+              return (
+                <>
+                  <TeamMemberCard key={`${teamMember.name}_team_member`} teamMember={teamMember} />
+                  <TeamMemberCard key={`${teamMember.name}_team_member4`} teamMember={teamMember} />
+                  <TeamMemberCard key={`${teamMember.name}_team_member5`} teamMember={teamMember} />
+                </>
               );
             })}
           </Box>
