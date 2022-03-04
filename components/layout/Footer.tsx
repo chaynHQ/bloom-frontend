@@ -76,7 +76,6 @@ const Footer = () => {
 
     partnerAccesses.forEach((partnerAccess) => {
       if (!partnersList.find((p) => p.name === partnerAccess.partner.name)) {
-        console.log(1);
         const partnerContentResult = getPartnerContent(partnerAccess.partner.name);
         if (partnerContentResult) partnersList.push(partnerContentResult);
       }
