@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+ul > li::marker {
+  color: #ea0050;
+}
+
+ol > li::marker {
+  color: #ea0050;
+  font-weight: bold;
+}

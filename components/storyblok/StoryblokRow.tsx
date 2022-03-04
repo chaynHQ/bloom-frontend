@@ -37,6 +37,12 @@ const StoryblokRow = (props: StoryblokRowProps) => {
           : vertical_alignment === 'bottom'
           ? 'flex-end'
           : 'flex-start',
+      textAlign:
+        horizontal_alignment === 'center'
+          ? 'center'
+          : horizontal_alignment === 'right'
+          ? 'right'
+          : 'left',
     }),
   } as const;
 

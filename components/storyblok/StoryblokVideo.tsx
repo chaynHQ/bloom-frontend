@@ -27,9 +27,9 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
     width:
       size === 'extra-small'
-        ? { xs: '20%', sm: '12.5%', md: '10%' }
+        ? { xs: '15%', sm: '12.5%', md: '10%' }
         : size === 'small'
-        ? { xs: '30%', sm: '25%' }
+        ? { xs: '30%', md: '25%' }
         : size === 'medium'
         ? { xs: '40%', md: '50%' }
         : size === 'large'
