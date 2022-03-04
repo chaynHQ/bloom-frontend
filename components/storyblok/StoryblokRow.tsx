@@ -24,6 +24,12 @@ const StoryblokRow = (props: StoryblokRowProps) => {
     marginY: { xs: 4, md: 6 },
     gap: { xs: mobileGap * 2, md: desktopGap * 2 },
     ...rowStyle,
+    textAlign:
+      horizontal_alignment === 'center'
+        ? 'center'
+        : horizontal_alignment === 'right'
+        ? 'right'
+        : 'left',
     ...(horizontal_alignment && {
       justifyContent:
         horizontal_alignment === 'center'
@@ -31,18 +37,14 @@ const StoryblokRow = (props: StoryblokRowProps) => {
           : horizontal_alignment === 'right'
           ? 'flex-end'
           : 'flex-start',
+    }),
+    ...(vertical_alignment && {
       alignItems:
         vertical_alignment === 'center'
           ? 'center'
           : vertical_alignment === 'bottom'
           ? 'flex-end'
           : 'flex-start',
-      textAlign:
-        horizontal_alignment === 'center'
-          ? 'center'
-          : horizontal_alignment === 'right'
-          ? 'right'
-          : 'left',
     }),
   } as const;
 
