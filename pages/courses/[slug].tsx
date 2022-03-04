@@ -8,35 +8,26 @@ import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
-import CourseIntroduction from '../../components/CourseIntroduction';
-import Header from '../../components/Header';
-import Link from '../../components/Link';
-import SessionCard from '../../components/SessionCard';
+import SessionCard from '../../components/cards/SessionCard';
+import Link from '../../components/common/Link';
+import Header from '../../components/layout/Header';
+import CourseIntroduction from '../../components/video/CourseIntroduction';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { columnStyle, rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-
-interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  messages: any;
-  locale: LANGUAGES;
-}
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
 const accessContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   height: '100vh',
-  justifyContent: 'center',
 } as const;
 
 const sessionsContainerStyle = {
@@ -44,10 +35,8 @@ const sessionsContainerStyle = {
 } as const;
 
 const cardsContainerStyle = {
-  display: 'flex',
+  ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
   gap: 4,
 } as const;
 
@@ -57,6 +46,14 @@ const imageContainerStyle = {
   height: { xs: 150, md: 210 },
   marginBottom: 4,
 } as const;
+
+interface Props {
+  story: StoryData;
+  preview: boolean;
+  sbParams: StoriesParams;
+  messages: any;
+  locale: LANGUAGES;
+}
 
 const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');
@@ -91,9 +88,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
       }
     });
 
-    const userCourse = courses.find(function (course: Course) {
-      return course.storyblokId === story.id;
-    });
+    const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
 
     if (userCourse) {
       let courseSessionsStarted: Array<number> = [];
@@ -144,7 +139,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
         <Typography variant="h2" component="h2" mb={2}>
           {t('accessGuard.title')}
         </Typography>
-        <Typography variant="body1" component="p" mb={2}>
+        <Typography mb={2}>
           {t.rich('accessGuard.introduction', {
             contactLink: (children) => <Link href="/courses">{children}</Link>,
           })}

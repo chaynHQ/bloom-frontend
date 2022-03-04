@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -7,48 +7,38 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
-import CourseCard from '../../components/CourseCard';
-import Header from '../../components/Header';
+import CourseCard from '../../components/cards/CourseCard';
+import LoadingContainer from '../../components/common/LoadingContainer';
+import Header from '../../components/layout/Header';
 import Storyblok from '../../config/storyblok';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
+import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-
-interface Props {
-  stories: StoryData[];
-  preview: boolean;
-  messages: any;
-}
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 6 },
 } as const;
 
-const cardsContainerStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-} as const;
-
 const cardColumnStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
+  ...columnStyle,
+  justifyContent: 'flex-start',
+  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  maxWidth: 520,
   gap: { xs: 0, sm: 2, md: 4 },
 } as const;
 
-const loadingContainerStyle = {
-  display: 'flex',
-  height: '100vh',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
+interface Props {
+  stories: StoryData[];
+  preview: boolean;
+  messages: any;
+  locale: LANGUAGES;
+}
 
-const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
+const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
@@ -57,8 +47,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
   const t = useTranslations('Courses');
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
+    title: t('title'),
+    introduction: t('introduction'),
     imageSrc: illustrationPerson3Pink,
     imageAlt: 'alt.personSitting',
   };
@@ -126,17 +116,13 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages }) => {
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
-          <Box sx={loadingContainerStyle}>
-            <CircularProgress color="error" />
-          </Box>
+          <LoadingContainer />
         ) : loadedCourses.length === 0 ? (
           <Box>
-            <Typography component="p" variant="body1">
-              {t('noCourses')}
-            </Typography>
+            <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Box sx={cardsContainerStyle}>
+          <Box sx={rowStyle}>
             <Box sx={cardColumnStyle}>
               {loadedCourses.map((course, index) => {
                 if (index % 2 === 1) return;
@@ -186,6 +172,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
       },
+      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

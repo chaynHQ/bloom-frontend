@@ -16,12 +16,12 @@ import { render } from 'storyblok-rich-text-react-renderer';
 import { useCompleteSessionMutation, useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
-import CrispButton from '../../../components/CrispButton';
-import Header from '../../../components/Header';
-import Link from '../../../components/Link';
-import SessionContentCard from '../../../components/SessionContentCard';
-import Video from '../../../components/Video';
-import VideoTranscriptModal from '../../../components/VideoTranscriptModal';
+import SessionContentCard from '../../../components/cards/SessionContentCard';
+import Link from '../../../components/common/Link';
+import CrispButton from '../../../components/crisp/CrispButton';
+import Header from '../../../components/layout/Header';
+import Video from '../../../components/video/Video';
+import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
 import rollbar from '../../../config/rollbar';
 import Storyblok, { useStoryblok } from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
@@ -38,32 +38,23 @@ import {
 } from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
+import { columnStyle } from '../../../styles/common';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
-
-interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  messages: any;
-  locale: LANGUAGES;
-}
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
 const cardColumnStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   alignItems: 'center',
   gap: { xs: 2, md: 3 },
 } as const;
 
 const dotsStyle = {
+  ...columnStyle,
   color: 'primary.dark',
-  display: 'flex',
-  flexDirection: 'column',
   gap: { xs: 1, md: 1.25 },
 } as const;
 
@@ -82,6 +73,14 @@ const errorStyle = {
   marginTop: 2,
   fontWeight: 600,
 } as const;
+
+interface Props {
+  story: StoryData;
+  preview: boolean;
+  sbParams: StoriesParams;
+  messages: any;
+  locale: LANGUAGES;
+}
 
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Courses');
@@ -128,9 +127,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       }
     });
 
-    const liveAccess = partnerAccesses.find(function (partnerAccess) {
-      return partnerAccess.featureLiveChat === true;
-    });
+    const liveAccess = partnerAccesses.find(
+      (partnerAccess) => partnerAccess.featureLiveChat === true,
+    );
     if (liveAccess) setLiveChatAccess(true);
   }, [partnerAccesses, story.content.course.content.included_for_partners]);
 
@@ -141,14 +140,14 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
       });
     });
 
-    const userCourse = courses.find(function (course: Course) {
-      return Number(course.storyblokId) === story.content.course.id;
-    });
+    const userCourse = courses.find(
+      (course: Course) => Number(course.storyblokId) === story.content.course.id,
+    );
 
     if (userCourse) {
-      const userSession = userCourse.sessions.find(function (session: Session) {
-        return Number(session.storyblokId) === story.id;
-      });
+      const userSession = userCourse.sessions.find(
+        (session: Session) => Number(session.storyblokId) === story.id,
+      );
 
       if (userSession) {
         userSession.completed
@@ -381,11 +380,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
                   </>
                 )}
 
-                {error && (
-                  <Typography sx={errorStyle} variant="body1">
-                    {error}
-                  </Typography>
-                )}
+                {error && <Typography sx={errorStyle}>{error}</Typography>}
               </Box>
             )}
           </Container>

@@ -20,19 +20,21 @@
       "completed": "Completed",
       "notStarted": "Not started"
     },
+    "meetTheTeam": {
+      "expandTeamMember": "Expand bio for {name}"
+    },
     "404": {
       "title": "404 - Page not found",
-      "description": "This page could not be found. Check the url or go back to the",
-      "authenticatedRedirect": "courses page",
-      "unauthenticatedRedirect": "welcome page",
-      "goBack": "Back to"
+      "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
+      "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
+      "authenticatedRedirectButton": "Back to courses page",
+      "unauthenticatedRedirectButton": "Back to welcome page"
     },
     "500": {
       "title": "500 - Internal error",
       "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
-      "authenticatedRedirect": "courses page",
-      "unauthenticatedRedirect": "welcome page",
-      "goBack": "Back to"
+      "authenticatedRedirectButton": "Back to courses page",
+      "unauthenticatedRedirectButton": "Back to welcome page"
     },
     "alt": {
       "bloomLogo": "Bloom logo",

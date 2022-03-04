@@ -4,19 +4,19 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import { RootState } from '../app/store';
-import Link from '../components/Link';
+import Link from '../components/common/Link';
+import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
+import { columnStyle } from '../styles/common';
 
 const Custom500: NextPage = () => {
   const t = useTranslations('Shared');
   const { user } = useTypedSelector((state: RootState) => state);
 
   const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
+    ...columnStyle,
     height: '100vh',
-    justifyContent: 'center',
     alignItems: 'flex-start',
   } as const;
 
@@ -24,9 +24,13 @@ const Custom500: NextPage = () => {
     position: 'relative',
     width: { xs: 180, md: 260 },
     height: { xs: 180, md: 260 },
-    ml: { xs: -3, md: -6 },
-    mb: 2,
+    marginLeft: { xs: -3, md: -6 },
+    marginBottom: 2,
   } as const;
+
+  if (user.loading) {
+    return <LoadingContainer />;
+  }
 
   return (
     <Container sx={containerStyle}>
@@ -34,20 +38,17 @@ const Custom500: NextPage = () => {
         <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
       </Box>
       <Typography variant="h1" component="h1">
-        {t.rich('500.title')}
+        {t('500.title')}
       </Typography>
-      <Typography variant="body1" component="p">
-        {t.rich('500.description')}
-      </Typography>
+      <Typography>{t('500.description')}</Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.id ? '/courses' : '/welcome'}
+        href={user.token ? '/courses' : '/welcome'}
       >
-        {t.rich('500.goBack')}{' '}
-        {user.id ? t('500.authenticatedRedirect') : t('500.unauthenticatedRedirect')}
+        {user.token ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );

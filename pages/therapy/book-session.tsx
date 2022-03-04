@@ -10,9 +10,9 @@ import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
-import Faqs from '../../components/Faqs';
-import Header from '../../components/Header';
-import ImageTextGrid, { ImageTextItem } from '../../components/ImageTextGrid';
+import ImageTextGrid, { ImageTextItem } from '../../components/common/ImageTextGrid';
+import Header from '../../components/layout/Header';
+import Faqs from '../../components/storyblok/Faqs';
 import { getSimplybookWidgetConfig } from '../../config/simplybook';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
@@ -25,6 +25,28 @@ import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+  textAlign: 'center',
+  ...rowStyle,
+} as const;
+
+const ctaContent = {
+  flex: 1,
+  textAlign: 'left',
+  marginTop: 4,
+} as const;
+
+const faqsContainerStyle = {
+  maxWidth: '680px !important',
+  margin: 'auto',
+} as const;
+
+const bookingButtonStyle = {
+  minWidth: 200,
+  marginY: 4,
+} as const;
 
 const steps: Array<ImageTextItem> = [
   {
@@ -60,9 +82,10 @@ const BookSession: NextPage = () => {
   const eventUserData = getEventUserData({ user, partnerAccesses });
 
   useEffect(() => {
-    let partnerAccess = partnerAccesses.find(function (partnerAccess) {
-      return partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0;
-    });
+    let partnerAccess = partnerAccesses.find(
+      (partnerAccess) =>
+        partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0,
+    );
     if (partnerAccess) {
       setHasTherapyRemaining(true);
     } else {
@@ -84,35 +107,11 @@ const BookSession: NextPage = () => {
   }, []);
 
   const headerProps = {
-    title: t.rich('title'),
+    title: t('title'),
     introduction: t.rich('introduction', { partnerName: partnerAccess?.partner?.name }),
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  } as const;
-
-  const ctaContent = {
-    flex: 1,
-    textAlign: 'left',
-    marginTop: 4,
-  } as const;
-
-  const faqsContainerStyle = {
-    maxWidth: '680px !important',
-    margin: 'auto',
-  } as const;
-
-  const bookingButtonStyle = {
-    minWidth: 200,
-    marginY: 4,
-  } as const;
 
   const openWidget = () => {
     logEvent(THERAPY_BOOKING_OPENED, eventUserData);
@@ -133,12 +132,12 @@ const BookSession: NextPage = () => {
       />
       <Container sx={containerStyle}>
         <Box sx={ctaContent}>
-          <Typography variant="body1" component="p">
+          <Typography>
             {hasTherapyRemaining
               ? t.rich('therapySessionsRemaining', {
                   strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,
                 })
-              : t.rich('noTherapySessionsRemaining')}
+              : t('noTherapySessionsRemaining')}
           </Typography>
           {hasTherapyRemaining && (
             <Button
@@ -148,7 +147,7 @@ const BookSession: NextPage = () => {
               size="large"
               onClick={openWidget}
             >
-              {t.rich('bookingButton')}
+              {t('bookingButton')}
             </Button>
           )}
         </Box>
@@ -157,10 +156,10 @@ const BookSession: NextPage = () => {
 
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t.rich('faqHeader')}
+          {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
         </Box>
 
         <Box sx={faqsContainerStyle}>
@@ -178,7 +177,7 @@ const BookSession: NextPage = () => {
               size="large"
               onClick={openWidget}
             >
-              {t.rich('bookingButton')}
+              {t('bookingButton')}
             </Button>
           )}
         </Box>

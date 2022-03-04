@@ -1,9 +1,9 @@
-import { CircularProgress, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { hotjar } from 'react-hotjar';
 import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
+import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
@@ -17,12 +17,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(false);
   const [getUser] = useGetUserMutation();
 
-  const loadingContainerStyle = {
-    display: 'flex',
-    height: '100vh',
-    justifyContent: 'center',
-    alignItems: 'center',
-  } as const;
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
@@ -69,11 +63,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   }, [getUser, router, user, loading]);
 
   if (!verified) {
-    return (
-      <Container sx={loadingContainerStyle}>
-        <CircularProgress color="error" />
-      </Container>
-    );
+    return <LoadingContainer />;
   }
 
   return <>{children}</>;

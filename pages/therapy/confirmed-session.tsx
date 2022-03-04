@@ -8,9 +8,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
-import Faqs from '../../components/Faqs';
-import Header from '../../components/Header';
-import Link from '../../components/Link';
+import Link from '../../components/common/Link';
+import Header from '../../components/layout/Header';
+import Faqs from '../../components/storyblok/Faqs';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
@@ -47,8 +47,8 @@ const ConfirmedSession: NextPage = () => {
   }, []);
 
   const headerProps = {
-    title: t.rich('confirmation.title'),
-    introduction: t.rich('confirmation.introduction'),
+    title: t('confirmation.title'),
+    introduction: t('confirmation.introduction'),
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
@@ -74,10 +74,8 @@ const ConfirmedSession: NextPage = () => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Typography variant="body1" component="p">
-          {t.rich('confirmation.returnDescription')}
-        </Typography>
-        <Typography variant="body1" component="p">
+        <Typography>{t('confirmation.returnDescription')}</Typography>
+        <Typography>
           {t.rich('confirmation.bookmarkDescription', {
             bookingLink: (children) => (
               <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>
@@ -87,10 +85,10 @@ const ConfirmedSession: NextPage = () => {
       </Container>
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t.rich('faqHeader')}
+          {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
         </Box>
         <Box sx={faqsContainerStyle}>
           <Faqs

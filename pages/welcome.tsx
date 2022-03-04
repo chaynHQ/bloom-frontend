@@ -12,9 +12,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import CodeForm from '../components/CodeForm';
-import Link from '../components/Link';
-import PartnerHeader from '../components/PartnerHeader';
+import Link from '../components/common/Link';
+import CodeForm from '../components/forms/CodeForm';
+import PartnerHeader from '../components/layout/PartnerHeader';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../public/illustration_leaf_mix.svg';
@@ -28,12 +28,6 @@ const headerProps = {
   imageSrc: illustrationBloomHeadYellow,
   imageAlt: 'alt.bloomHead',
 };
-
-const rowContainerStyle = {
-  ...rowStyle,
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
-} as const;
 
 const textContainerStyle = {
   maxWidth: 600,
@@ -95,7 +89,7 @@ const Welcome: NextPage = () => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
-      <Container sx={{ ...rowContainerStyle, backgroundColor: 'primary.light' }}>
+      <Container sx={{ ...rowStyle, backgroundColor: 'primary.light' }}>
         <Box sx={textContainerStyle}>
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
@@ -104,31 +98,27 @@ const Welcome: NextPage = () => {
         <Card sx={rowItem}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('getStarted')}
+              {t('getStarted')}
             </Typography>
-            <Typography variant="body1" component="p">
-              {t.rich('accessIntroduction')}
-            </Typography>
+            <Typography>{t('accessIntroduction')}</Typography>
 
             <CodeForm codeParam={codeParam} partnerParam={partnerParam} />
           </CardContent>
         </Card>
       </Container>
-      <Container sx={rowContainerStyle}>
+      <Container sx={rowStyle}>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.personSitting')} src={illustrationPerson5Yellow} />
+          <Image alt={tS('alt.personSitting')} src={illustrationPerson5Yellow} />
         </Box>
         <Box sx={rowItem}>
           <Typography variant="h2" component="h2">
-            {t.rich('programTitle')}
+            {t('programTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
-            {t.rich('programIntroduction')}
-          </Typography>
+          <Typography>{t('programIntroduction')}</Typography>
         </Box>
       </Container>
       <Container sx={{ backgroundColor: 'common.white' }}>
-        <Typography sx={resourcesStyle} variant="body1" component="p">
+        <Typography sx={resourcesStyle}>
           {t.rich('resourcesIntroduction', {
             resourcesLink: (children) => (
               <Link target={'_blank'} href="https://www.chayn.co/bumble-resources">
@@ -138,15 +128,15 @@ const Welcome: NextPage = () => {
           })}
         </Typography>
       </Container>
-      <Container sx={{ ...rowContainerStyle, backgroundColor: 'secondary.light' }}>
+      <Container sx={{ ...rowStyle, backgroundColor: 'secondary.light' }}>
         <Box sx={{ ...rowItem, mb: { xs: 8, md: 0 } }}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} />
+            <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} />
           </Box>
           <Typography variant="h2" component="h2">
-            {t.rich('bloomTitle')}
+            {t('bloomTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
+          <Typography>
             {t.rich('bloomIntroduction', {
               bloomLink: (children) => <Link href="https://chayn.co/">{children}</Link>,
             })}
@@ -159,17 +149,17 @@ const Welcome: NextPage = () => {
             component={Link}
             href={registerUrl}
           >
-            {t.rich('getStarted')}
+            {t('getStarted')}
           </Button>
         </Box>
         <Box sx={rowItem}>
           <Box sx={smallImageContainerStyle}>
-            <Image alt={tS.raw('alt.leafMixBee')} src={illustrationLeafMixBee} />
+            <Image alt={tS('alt.leafMixBee')} src={illustrationLeafMixBee} />
           </Box>
           <Typography variant="h2" component="h2">
-            {t.rich('bumbleTitle')}
+            {t('bumbleTitle')}
           </Typography>
-          <Typography variant="body1" component="p">
+          <Typography>
             {t.rich('bumbleIntroduction', {
               bumbleLink: (children) => (
                 <Link href="https://bumble.com/?pid=press&c=press-release">{children}</Link>

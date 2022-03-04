@@ -6,8 +6,8 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { RootState } from '../../app/store';
-import CreateAccessCodeForm from '../../components/CreateAccessCodeForm';
-import AdminHeader from '../../components/PartnerAdminHeader';
+import CreateAccessCodeForm from '../../components/forms/CreateAccessCodeForm';
+import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
@@ -17,8 +17,6 @@ import logEvent from '../../utils/logEvent';
 const containerStyle = {
   backgroundColor: 'secondary.light',
   ...rowStyle,
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
 } as const;
 
 const cardStyle = {
@@ -30,8 +28,8 @@ const CreateAccessCode: NextPage = () => {
   const { partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
+    title: t('title'),
+    introduction: t('introduction'),
     partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
     partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
   };
@@ -55,11 +53,9 @@ const CreateAccessCode: NextPage = () => {
         <Card sx={cardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('title')}
+              {t('title')}
             </Typography>
-            <Typography variant="body1" component="p" mb={2}>
-              {t.rich('introduction')}
-            </Typography>
+            <Typography mb={2}>{t('introduction')}</Typography>
 
             <CreateAccessCodeForm partnerAdmin={partnerAdmin} />
           </CardContent>

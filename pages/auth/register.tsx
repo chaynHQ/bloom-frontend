@@ -13,14 +13,37 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import Link from '../../components/Link';
-import PartnerHeader from '../../components/PartnerHeader';
-import RegisterForm from '../../components/RegisterForm';
+import Link from '../../components/common/Link';
+import RegisterForm from '../../components/forms/RegisterForm';
+import PartnerHeader from '../../components/layout/PartnerHeader';
 import { getAllPartnersContent, getPartnerContent, Partner } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+
+const containerStyle = {
+  ...rowStyle,
+  backgroundColor: 'primary.light',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const formContainerStyle = {
+  width: { xs: '100%', sm: '70%', md: '45%' },
+  alignSelf: 'flex-start',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 120, md: 160 },
+  height: { xs: 70, md: 80 },
+  marginBottom: 3,
+  marginTop: { xs: 0, md: 2 },
+} as const;
 
 const Register: NextPage = () => {
   const t = useTranslations('Auth');
@@ -53,36 +76,11 @@ const Register: NextPage = () => {
     imageAlt: 'alt.bloomHead',
   };
 
-  const containerStyle = {
-    ...rowStyle,
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    backgroundColor: 'primary.light',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const formContainerStyle = {
-    width: { xs: '100%', sm: '70%', md: '45%' },
-    alignSelf: 'flex-start',
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 120, md: 160 },
-    height: { xs: 70, md: 80 },
-    marginBottom: 3,
-    marginTop: { xs: 0, md: 2 },
-  } as const;
-
   const ExtraContent = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
         <Typography variant="h3" component="h3">
           {t('register.moreInfoTitle')}
@@ -138,11 +136,9 @@ const Register: NextPage = () => {
           <Card>
             <CardContent>
               <Typography variant="h2" component="h2">
-                {t.rich('register.title')}
+                {t('register.title')}
               </Typography>
-              <Typography variant="body1" component="p">
-                {t.rich('register.description')}
-              </Typography>
+              <Typography>{t('register.description')}</Typography>
 
               <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
 

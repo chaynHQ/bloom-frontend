@@ -10,14 +10,37 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from '../../components/Link';
-import LoginForm from '../../components/LoginForm';
-import PartnerHeader from '../../components/PartnerHeader';
+import Link from '../../components/common/Link';
+import LoginForm from '../../components/forms/LoginForm';
+import PartnerHeader from '../../components/layout/PartnerHeader';
 import { getAllPartnersContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+
+const containerStyle = {
+  ...rowStyle,
+  backgroundColor: 'primary.light',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const formCardStyle = {
+  width: { xs: '100%', sm: '70%', md: '45%' },
+  alignSelf: 'flex-start',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 120, md: 160 },
+  height: { xs: 70, md: 80 },
+  marginBottom: 3,
+  marginTop: { xs: 0, md: 2 },
+} as const;
 
 const Login: NextPage = () => {
   const t = useTranslations('Auth');
@@ -32,38 +55,13 @@ const Login: NextPage = () => {
     imageAlt: 'alt.bloomHead',
   };
 
-  const containerStyle = {
-    ...rowStyle,
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    backgroundColor: 'primary.light',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const formCardStyle = {
-    width: { xs: '100%', sm: '70%', md: '45%' },
-    alignSelf: 'flex-start',
-  } as const;
-
-  const imageContainerStyle = {
-    position: 'relative',
-    width: { xs: 120, md: 160 },
-    height: { xs: 70, md: 80 },
-    marginBottom: 3,
-    marginTop: { xs: 0, md: 2 },
-  } as const;
-
   const allPartnersContent = getAllPartnersContent();
 
   const ExtraContent = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS.raw('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
         <Typography variant="h3" component="h3">
           {t('login.newUserTitle')}
@@ -105,14 +103,12 @@ const Login: NextPage = () => {
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('login.title')}
+              {t('login.title')}
             </Typography>
-            <Typography variant="body1" component="p">
-              {t.rich('login.description')}
-            </Typography>
+            <Typography>{t('login.description')}</Typography>
 
             <LoginForm />
-            <Typography variant="body1" component="p" textAlign="center">
+            <Typography textAlign="center">
               {t.rich('login.resetPasswordLink', {
                 resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
               })}

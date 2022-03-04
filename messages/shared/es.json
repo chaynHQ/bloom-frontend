@@ -20,19 +20,21 @@
       "completed": "Completed",
       "notStarted": "Not started"
     },
+    "meetTheTeam": {
+      "expandTeamMember": "Expand bio for {name}"
+    },
     "404": {
       "title": "404 - Página no encontrada",
-      "description": "No se pudo encontrar la página. Revisa la url o vuelve a la",
-      "authenticatedRedirect": "página de cursos",
-      "unauthenticatedRedirect": "página de bienvenida",
-      "goBack": "Regresar a la"
+      "authenticatedDescription": "No se pudo encontrar la página. Revisa la url o vuelve a la página de cursos",
+      "unauthenticatedDescription": "TNo se pudo encontrar la página. Revisa la url o vuelve a la página de bienvenida",
+      "authenticatedRedirectButton": "Regresar a la página de cursos",
+      "unauthenticatedRedirectButton": "Regresar a la página de bienvenida"
     },
     "500": {
       "title": "500 - Error interno",
       "description": "Hmm, algo no va bien. Por favor, vuelve atrás e inténtalo de nuevo. Envíanos un mensaje a través del formulario de contacto si el error persiste.",
-      "authenticatedRedirect": "página de cursos",
-      "unauthenticatedRedirect": "página de bienvenida",
-      "goBack": "Regresar a la"
+      "authenticatedRedirectButton": "Regresar a la página de cursos",
+      "unauthenticatedRedirectButton": "Regresar a la página de bienvenida"
     },
     "alt": {
       "bloomLogo": "Bloom logo",

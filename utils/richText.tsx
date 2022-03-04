@@ -1,13 +1,34 @@
 import { Typography } from '@mui/material';
-import { MARK_LINK } from 'storyblok-rich-text-react-renderer';
-import Link from '../components/Link';
-import StoryblokImage from '../components/StoryblokImage';
-import StoryblokVideo from '../components/StoryblokVideo';
+import { ReactNode } from 'react';
+import {
+  MARK_LINK,
+  NODE_HEADING,
+  NODE_PARAGRAPH,
+  RenderOptions,
+} from 'storyblok-rich-text-react-renderer';
+import Link from '../components/common/Link';
+import StoryblokImage from '../components/storyblok/StoryblokImage';
+import StoryblokRow from '../components/storyblok/StoryblokRow';
+import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
-export const RichTextOptions = {
+export const RichTextOptions: RenderOptions = {
   blokResolvers: {
     ['image']: (props: any) => <StoryblokImage {...props} />,
     ['video']: (props: any) => <StoryblokVideo {...props} />,
+    ['row']: (props: any) => <StoryblokRow {...props} />,
+  },
+  nodeResolvers: {
+    [NODE_PARAGRAPH]: (children: ReactNode | null) => (
+      <Typography maxWidth={650}>{children}</Typography>
+    ),
+    [NODE_HEADING]: (children: ReactNode | null, { level }) => {
+      const headerLevel = level === 1 ? 'h1' : level === 2 ? 'h2' : level === 3 ? 'h3' : 'h4';
+      return (
+        <Typography variant={headerLevel} component={headerLevel} maxWidth={650}>
+          {children}
+        </Typography>
+      );
+    },
   },
   markResolvers: {
     [MARK_LINK]: (children: any, props: any) => {
