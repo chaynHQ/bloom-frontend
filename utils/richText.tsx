@@ -19,7 +19,9 @@ export const RichTextOptions: RenderOptions = {
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
-      <Typography maxWidth={650}>{children}</Typography>
+      <Typography maxWidth={650} paragraph>
+        {children}
+      </Typography>
     ),
     [NODE_HEADING]: (children: ReactNode | null, { level }) => {
       const headerLevel = level === 1 ? 'h1' : level === 2 ? 'h2' : level === 3 ? 'h3' : 'h4';
