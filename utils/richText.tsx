@@ -8,6 +8,7 @@ import {
 } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/common/Link';
 import StoryblokImage from '../components/storyblok/StoryblokImage';
+import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
@@ -16,6 +17,7 @@ export const RichTextOptions: RenderOptions = {
     ['image']: (props: any) => <StoryblokImage {...props} />,
     ['video']: (props: any) => <StoryblokVideo {...props} />,
     ['row']: (props: any) => <StoryblokRow {...props} />,
+    ['quote']: (props: any) => <StoryblokQuote {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
