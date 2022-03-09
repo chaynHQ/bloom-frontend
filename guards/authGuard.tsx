@@ -9,6 +9,7 @@ import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants
 import { useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
+import generateReturnQuery from './generateReturnQuery';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -32,7 +33,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        router.replace('/auth/login');
+        router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
       }
     }
 
@@ -51,7 +52,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
 
     if (!user.token) {
-      router.replace('/auth/login');
+      router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
       return;
     }
 
