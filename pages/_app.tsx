@@ -15,12 +15,12 @@ import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import { auth } from '../config/firebase';
+import { AuthGuard } from '../guards/authGuard';
+import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
+import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
 import { useAppDispatch } from '../hooks/store';
 import '../styles/globals.css';
 import theme from '../styles/theme';
-import { AuthGuard } from '../utils/authGuard';
-import { PartnerAdminGuard } from '../utils/partnerAdminGuard';
-import { TherapyAccessGuard } from '../utils/therapyAccessGuard';
 
 // For SSG compatibility with MUI
 // Client-side emotion cache, shared for the whole session of the user in the browser.
