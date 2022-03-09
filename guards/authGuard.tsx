@@ -8,8 +8,8 @@ import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
+import generateReturnQuery from '../utils/generateReturnQuery';
 import logEvent, { getEventUserData } from '../utils/logEvent';
-import generateReturnQuery from './generateReturnQuery';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
