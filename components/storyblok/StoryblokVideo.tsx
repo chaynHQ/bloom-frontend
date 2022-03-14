@@ -27,13 +27,13 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
     width:
       size === 'extra-small'
-        ? { xs: '15%', sm: '12.5%', md: '10%' }
+        ? { xs: 80, md: 120 }
         : size === 'small'
-        ? { xs: '30%', md: '25%' }
+        ? { xs: 140, md: 180 }
         : size === 'medium'
-        ? { xs: '40%', md: '50%' }
+        ? { xs: 200, md: 250 }
         : size === 'large'
-        ? { xs: '60%', md: '75%' }
+        ? { xs: 400, md: 480 }
         : '100%',
     marginY:
       size === 'extra-small'
@@ -47,6 +47,10 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
         : 6,
     marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
     marginRight: alignment === 'center' ? 'auto' : 0,
+
+    '&:only-child': {
+      marginY: 0,
+    },
   } as const;
 
   return (

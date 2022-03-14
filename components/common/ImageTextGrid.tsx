@@ -34,6 +34,10 @@ const imageContainerStyle = {
   height: 100,
   marginY: 3,
   marginX: 'auto',
+
+  '&:only-child': {
+    marginY: 0,
+  },
 } as const;
 
 const ImageTextGrid = (props: ImageTextGridProps) => {

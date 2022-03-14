@@ -16,12 +16,11 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
   const columnsLength = columns.length;
   const desktopGap =
-    columnsLength === 5 ? 1 : columnsLength === 4 ? 1.5 : columnsLength === 3 ? 2 : 3; // in rem
+    columnsLength === 5 ? 1 : columnsLength === 4 ? 1.5 : columnsLength === 3 ? 3 : 5; // in rem
   const mobileGap = 1.25; // in rem
 
   const rowStyles = {
     width: '100%',
-    marginY: { xs: 4, md: 6 },
     gap: { xs: mobileGap * 2, md: desktopGap * 2 },
     ...rowStyle,
     textAlign:
@@ -72,8 +71,8 @@ const StoryblokRow = (props: StoryblokRowProps) => {
               ? { xs: '100%', md: getDesktopWidth(60) }
               : column.width === 'extra-large'
               ? { xs: '100%', md: getDesktopWidth(80) }
-              : 'auto',
-          ...(!column.width && { flex: 1 }),
+              : { xs: `100%`, md: 'auto' },
+          ...(!column.width && { flex: { md: 1 } }),
         };
         return (
           <Box sx={columnStyles} key={`row_column_${index}`}>
