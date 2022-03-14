@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withPWA = require('next-pwa');
+
+module.exports = withPWA({
   reactStrictMode: true,
   publicRuntimeConfig: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
@@ -19,6 +22,10 @@ module.exports = {
     defaultLocale: 'en',
     localeDetection: false,
   },
+  pwa: {
+    dest: 'public',
+    skipWaiting: true,
+  },
   async redirects() {
     return [
       {
@@ -28,4 +35,4 @@ module.exports = {
       },
     ];
   },
-};
+});
