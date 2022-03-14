@@ -72,8 +72,7 @@ const Login: NextPage = () => {
 
         {allPartnersContent?.map((partner) => (
           <Typography key={`${partner.name}-link`} mt={0.5}>
-            {/* <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}> */}
-            <Link mt="1rem !important" href={`/welcome`}>
+            <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}>
               {t('aboutBloomFor')} {partner.name}
             </Link>
           </Typography>

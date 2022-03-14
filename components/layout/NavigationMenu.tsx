@@ -41,7 +41,7 @@ const NavigationMenu = () => {
 
   useEffect(() => {
     let links: Array<NavigationItem> = [
-      { title: t('about'), href: '/welcome' },
+      { title: t('about'), href: '/' },
       { title: t('courses'), href: '/courses' },
     ];
 

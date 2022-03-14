@@ -88,8 +88,12 @@ const Register: NextPage = () => {
         {partnerContent ? (
           // Show only the partner's welcome page link
           <>
-            {/* <Link mt="1rem !important" href={`/welcome/${partnerContent.name.toLowerCase()}`}> */}
-            <Link mt="1rem !important" href={`/welcome${codeParam && '?code=' + codeParam}`}>
+            <Link
+              mt="1rem !important"
+              href={`/welcome/${partnerContent.name.toLowerCase()}${
+                codeParam && '?code=' + codeParam
+              }`}
+            >
               {t('aboutBloomFor')} {partnerContent.name}
             </Link>
           </>
@@ -102,8 +106,12 @@ const Register: NextPage = () => {
 
             {allPartnersContent?.map((partner) => (
               <Typography key={`${partner.name}-link`} mt={0.5}>
-                {/* <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}> */}
-                <Link mt="1rem !important" href={`/welcome${codeParam && '?code=' + codeParam}`}>
+                <Link
+                  mt="1rem !important"
+                  href={`/welcome/${partner.name.toLowerCase()}${
+                    codeParam && '?code=' + codeParam
+                  }`}
+                >
                   {t('aboutBloomFor')} {partner.name}
                 </Link>
               </Typography>

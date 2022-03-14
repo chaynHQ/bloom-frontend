@@ -1,19 +1,10 @@
 {
   "Welcome": {
-    "title": "Bievenidx a Bloom",
-    "introduction": "Bumble has partnered with Bloom to provide resources to sexual assault and relationship abuse survivors within the global Bumble community through a free online trauma support program.",
-    "programTitle": "About the program",
-    "programIntroduction": "Everyone’s healing journey is different. When we experience trauma due to sexual assault and relationship abuse, we may need support. Bumble partnered with Bloom to create a free, curated, online trauma support program for survivors. This program has been developed based on feedback from the global Bumble and Chayn community.",
-    "bumbleTitle": "About Bumble",
-    "bumbleIntroduction": "<bumbleLink>Bumble</bumbleLink>, the women-first dating and networking app, connects people across dating (Bumble Date), friendship (Bumble BFF), and professional networking (Bumble Bizz). Bumble is built on the importance of equitable relationships, which are crucial to a healthy, happy life.",
-    "bloomTitle": "About Bloom",
-    "bloomIntroduction": "<bloomLink>Bloom</bloomLink> informs and empowers survivors, by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices, to help us heal from trauma.",
-    "resourcesIntroduction": "If you don’t have an access code from Bumble, you can still use our <resourcesLink>selection of resources</resourcesLink> for recovery and healing after abuse or assault, curated by Bloom especially for Bumble users.",
     "getStarted": "Get Started",
-    "accessIntroduction": "Enter the access code you received from Bumble to begin your Bloom journey.",
+    "accessIntroduction": "Enter the access code you received from {partnerName} to begin your Bloom journey.",
 
     "form": {
-      "codeLabel": "Bumble access code"
+      "codeLabel": "{partnerName} access code"
     }
   }
 }
