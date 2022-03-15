@@ -127,25 +127,35 @@ yarn build
 
 ## Key concepts
 
+### Public Bloom
+
+Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy or permanent 1-1 chat. Public Bloom also offers _live_ courses, whereby for a period of time, users also have access to 1-1 crisp chat and the option to join a whatsapp/telegram group for regular messages related to the live course.
+
 ### Partner access and multi tenancy
 
-Bloom as a service has `Partners` which offer their users a Bloom `PartnerAccess` with additional features.
+Alongside _public_ Bloom, we also have `Partners` (e.g. Bumble) which offer their users a Bloom `PartnerAccess` with additional features to public Bloom. The additional features include therapy, 1-1 chat and extra courses. A `PartnerAccess` is created by a `PartnerAdmin` and has a unique code for the user to apply when registering for an account, or afterwards on the `/apply-code` page. See [database schemas](https://github.com/chaynHQ/bloom-backend#database-models) for more details.
 
-A user can have 0 or many partners and the app dynamically handles this. Partner branding and tags are applied across the app and some pages are custom to the partner e.g. `/welcome/[partnerName]`.
+A user can have 0 (public) or many partners and the app dynamically handles this. Partner branding and tags are applied across the app (e.g. in the footer) and some pages are custom to the partner e.g. `/welcome/[partnerName]`.
 
 ### Features
 
-**Bloom courses** include a series of sessions with steps for the user to complete (watch video, complete activity, optional bonus content). The sessions can be marked as complete by the user. Courses available are dependent on the user's partners and their selected courses.
+**Bloom courses** include a series of sessions with steps for the user to complete, i.e. watch a video, complete an activity, optional bonus content. The sessions can be marked as complete by the user. Courses available are dependent on the user's partners and their selected courses.
 
 **Bloom therapy** is available to some users dependent on their partner access, with a number of therapy sessions available to book via the integrated Simplybook booking widget. Therapy is offered in multiple languages and currently users can select their preferred language and therapist. Webhooks are triggered by zapier when a booking is created/cancelled, to update the user's available therapy sessions remaining in the database.
 
-**Bloom live chat** is available to some users dependent on their partner access, sending Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with live chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
+**Bloom 1-1 chat** is available to some users dependent on their partner access, sending Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with 1-1 chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
 
 ### User types
 
-A **User** is someone who uses the app for the features mentioned above. A user can have 0 or many partner access records with different features enabled by different partners.
+There are several user types with different features enabled - [guards](guards) are used to check and block access to pages based on the user data in state.
 
-A **Partner admin user** is a team member of a partner who uses the app to complete Bloom admin tasks such as creating a new partner access code. Partner admin pages are under `/partner-admin` and act as a sub site.
+**User** - a standard user for the features mentioned above. A user can be a _public_ user only OR have partner access(es) with extra features enabled by different partners.
+
+**Partner admin user** - a partner team member who uses the app to complete Bloom admin tasks such as creating new partner access codes. Partner admin pages are under `/partner-admin` and act as a sub site.
+
+### State management - Redux Toolkit
+
+RTK is used to store state, mostly related to the user and populated by backend api calls. The `user/me` endpoint populates the `User`, `Courses`, `PartnerAccess` and `ParterAdmin` state on login or app refresh, to be used across the app to manage access and features displayed. State is also updated following actions/apis calls - we use [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) to fetch and cache data into state, see `app/api.ts`. The state slices generally copy the [database schemas](https://github.com/chaynHQ/bloom-backend#database-models). Note the `Courses` slice does not act as a cache for storing retrieved storyblok courses, instead it stores the user's courses progress, i.e. the backend `CourseUser` table.
 
 ### Internationalisation
 
@@ -155,7 +165,21 @@ Integrations are chosen with internationalisation as a priority, with Crisp and 
 
 ### Storyblok CMS
 
-Content is delivered by Storyblok, a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. Dynamic component based pages can be created for info pages e.g. `/about`, which are handled by our [DynamicComponent.tsx](components/DynamicComponent.tsx). Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages e.g. [/courses/[slug].tsx](pages//courses/[slug].tsx). Courses and Sessions are Storyblok Content Types with defined schemas that can then be processed in the custom pages.
+Content is delivered by [Storyblok](https://www.storyblok.com/), a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. . Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages and components e.g. [/courses/[slug].tsx](pages/courses/[slug].tsx).
+
+**Courses structure**
+
+The storyblok courses folder/page structure was based around url paths and the need for weeks/sessions to be nested inside a course. The pattern is Courses (folder) -> Course name (folder) -> Course overview (root page) + Session (pages). This allows us to group and order sessions under the relevant course, with the url path `courses/course-name/session-name`. The order of pages in Storyblok matters as it's used to order sessions within a week.
+
+Course and Session are Storyblok _content types_ with defined schemas that can then be processed in the custom pages, e.g. `story.content.field_name`. Course includes a `weeks` field that links/relates to the sessions in each week of the course. Session includes a `Course` field that links/relates back to the course - it's not ideal to include this field but it makes it easy to load the course data with the session directly. The middle `weeks` relationship between Courses and Sessions added some complexity that discouraged Storyblok's recommended patterns, e.g. having Courses and Sessions as top level folders, rather than nesting folders that contain several content types.
+
+**Dynamic components**
+
+Storyblok components allow the team to add richtext, images, videos, page sections, rows etc, using our custom schemas that include fields for styles e.g. the alignment or color of the content. These Storyblok components are then then mapped to our React components, e.g. [StoryblokRow.tsx](components/storyblok/StoryblokRow.tsx) [StoryblokImage.tsx](components/Storyblok/StoryblokImage.tsx), either in a custom page where we expect the field/component, or a dynamic page.
+
+**Dynamic pages**
+
+Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) and [DynamicComponent.tsx](components/DynamicComponent.tsx) render the components on the page.
 
 ## Git flow and deployment
 

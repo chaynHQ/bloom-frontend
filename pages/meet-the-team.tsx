@@ -62,8 +62,6 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
     });
   }, []);
 
-  console.log(story);
-
   return (
     <Box>
       <Head>

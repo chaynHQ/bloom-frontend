@@ -7,8 +7,9 @@ import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
 import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
-import { getErrorMessage } from './errorMessage';
-import logEvent, { getEventUserData } from './logEvent';
+import { getErrorMessage } from '../utils/errorMessage';
+import generateReturnQuery from '../utils/generateReturnQuery';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -32,7 +33,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        router.replace('/auth/login');
+        router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
       }
     }
 
@@ -51,7 +52,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
 
     if (!user.token) {
-      router.replace('/auth/login');
+      router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
       return;
     }
 
