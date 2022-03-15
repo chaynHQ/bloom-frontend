@@ -34,12 +34,14 @@ let theme = createTheme({
     h2: {
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '1.875rem',
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: '1rem',
     },
     h3: {
-      fontSize: '1.5rem',
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '1.375rem',
       marginBottom: '1rem',
+      lineHeight: 1.4,
     },
     h4: {
       fontSize: '1rem',
@@ -49,6 +51,18 @@ let theme = createTheme({
       fontSize: '1.375rem',
       fontFamily: 'Montserrat, sans-serif',
       fontStyle: 'italic',
+    },
+    body1: {
+      fontSize: '1rem',
+      '@media (min-width:1200px)': {
+        fontSize: '1.125rem',
+      },
+    },
+    body2: {
+      fontSize: '0.875rem',
+      '@media (min-width:1200px)': {
+        fontSize: '1rem',
+      },
     },
   },
 });
@@ -70,6 +84,10 @@ theme = createTheme(theme, {
           paddingTop: 50,
           paddingBottom: 50,
 
+          [theme.breakpoints.up('md')]: {
+            paddingLeft: '5% !important',
+            paddingRight: '5% !important',
+          },
           [theme.breakpoints.up('lg')]: {
             paddingTop: 80,
             paddingBottom: 80,
@@ -83,14 +101,22 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           color: 'inherit',
-          textDecorationColor: theme.palette.primary.dark,
+          textDecorationColor: 'inherit',
+
+          '&:hover': {
+            textDecorationColor: theme.palette.primary.dark,
+          },
+
+          '&.MuiLink-button.MuiTypography-body1': {
+            paddingBottom: '3px',
+          },
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          fontWeight: 'bolder',
+          fontWeight: 'bold',
           borderRadius: '100px',
           textTransform: 'unset',
           paddingLeft: 24,
@@ -102,6 +128,14 @@ theme = createTheme(theme, {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.dark,
             opacity: 0.1,
+          },
+          '@media (min-width:900px)': {
+            '&.MuiButton-sizeMedium': {
+              fontSize: '1rem',
+            },
+            '&.MuiButton-sizeLarge': {
+              fontSize: '1.125rem',
+            },
           },
         },
         outlinedPrimary: {
@@ -190,18 +224,25 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: 20,
+          padding: 24,
+          paddingTop: 30,
 
-          ':last-child': {
-            padding: 20,
-          },
           [theme.breakpoints.up('md')]: {
             padding: 40,
-
-            ':last-child': {
-              padding: 40,
-            },
           },
+        },
+      },
+    },
+    MuiCardActionArea: {
+      styleOverrides: {
+        root: {
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.primary.main,
+            opacity: 0.2,
+          },
+        },
+        focusHighlight: {
+          backgroundColor: theme.palette.primary.dark,
         },
       },
     },

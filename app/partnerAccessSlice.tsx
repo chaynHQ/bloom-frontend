@@ -1,49 +1,61 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getPartnerContent, Partner } from '../constants/partners';
 import { api } from './api';
 import type { RootState } from './store';
 
 export interface PartnerAccess {
-  id: string | null;
-  activatedAt: Date | null;
-  featureLiveChat: boolean | null;
-  featureTherapy: boolean | null;
-  accessCode: string | null;
-  therapySessionsRemaining: number | null;
-  therapySessionsRedeemed: number | null;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  activatedAt: Date;
+  featureLiveChat: boolean;
+  featureTherapy: boolean;
+  accessCode: string;
+  therapySessionsRemaining: number;
+  therapySessionsRedeemed: number;
+  partner: Partner;
 }
 
-const initialState: PartnerAccess = {
-  id: null,
-  activatedAt: null,
-  featureLiveChat: null,
-  featureTherapy: null,
-  accessCode: null,
-  therapySessionsRemaining: null,
-  therapySessionsRedeemed: null,
+export interface PartnerAccesses extends Array<PartnerAccess> {}
+
+const initialState: PartnerAccesses = [];
+
+const mergeUserPartnerState = (partnerAccesses: PartnerAccess[]) => {
+  return partnerAccesses.map((partnerAccess) => {
+    if (partnerAccess.partner) {
+      let newPartnerAccess: PartnerAccess = {
+        ...partnerAccess,
+      };
+      newPartnerAccess.partner = Object.assign(
+        {},
+        newPartnerAccess.partner,
+        getPartnerContent(partnerAccess.partner.name), // populate state with static values
+      );
+      return newPartnerAccess;
+    }
+    return partnerAccess;
+  });
 };
 
 const slice = createSlice({
-  name: 'partnerAccess',
+  name: 'partnerAccesses',
   initialState: initialState,
   reducers: {
-    clearPartnerAccessSlice: (state) => {
+    clearPartnerAccessesSlice: (state) => {
       state = initialState;
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.addPartnerAccess.matchFulfilled, (state, { payload }) => {
-      state = payload;
-    });
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return payload.partnerAccess;
+      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
     });
   },
 });
 
 const { actions, reducer } = slice;
-export const { clearPartnerAccessSlice } = actions;
-export const selectPartnerAccess = (state: RootState) => state.partnerAccess;
+export const { clearPartnerAccessesSlice } = actions;
+export const selectPartnerAccesses = (state: RootState) => state.partnerAccesses;
 export default reducer;

@@ -4,22 +4,22 @@ import Container from '@mui/material/Container';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
-import Header from '../components/Header';
-import Link from '../components/Link';
-import illustrationTeaPeach from '../public/illustration_tea_peach.png';
+import Link from '../components/common/Link';
+import Header from '../components/layout/Header';
+import illustrationPerson3Pink from '../public/illustration_person3_pink.svg';
 
 const Home: NextPage = () => {
   const t = useTranslations('Index');
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction', {
+    title: t('title'),
+    introduction: t('introduction', {
       nextLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
       reduxLink: (children) => <Link href="https://redux.js.org/">{children}</Link>,
       muiLink: (children) => <Link href="https://mui.com/">{children}</Link>,
     }),
-    imageSrc: illustrationTeaPeach,
-    imageAlt: 'alt.personTea',
+    imageSrc: illustrationPerson3Pink,
+    imageAlt: 'alt.personSitting',
   };
 
   return (
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           component={Link}
           href="https://nextjs.org/docs"
         >
-          {t.rich('nextDocs')}
+          {t('nextDocs')}
         </Button>
         <Box sx={{ bgcolor: 'primary.main', height: '2.5rem', mt: 2.5 }}></Box>
         <Box sx={{ bgcolor: 'primary.light', height: '2.5rem' }}></Box>

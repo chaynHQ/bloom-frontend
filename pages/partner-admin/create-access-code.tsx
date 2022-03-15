@@ -5,38 +5,38 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import CreateAccessCodeForm from '../../components/CreateAccessCodeForm';
-import AdminHeader from '../../components/PartnerAdminHeader';
+import { RootState } from '../../app/store';
+import CreateAccessCodeForm from '../../components/forms/CreateAccessCodeForm';
+import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
-import bumbleLogo from '../../public/bumble_logo.svg';
+import { useTypedSelector } from '../../hooks/store';
+import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent from '../../utils/logEvent';
 
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+  ...rowStyle,
+} as const;
+
+const cardStyle = {
+  width: { xs: '100%', md: '60%' },
+} as const;
+
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
+  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
-    partnerLogoSrc: bumbleLogo,
-    partnerLogoAlt: 'alt.bumbleLogo',
+    title: t('title'),
+    introduction: t('introduction'),
+    partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
+    partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
   };
 
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  } as const;
-
-  const cardStyle = {
-    width: { xs: '100%', md: '60%' },
-  } as const;
-
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: 'bumble' });
-    console.log('CREATE_PARTNER_ACCESS_VIEWED');
-  }, []);
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: partnerAdmin.partner?.name });
+  });
 
   return (
     <Box>
@@ -53,13 +53,11 @@ const CreateAccessCode: NextPage = () => {
         <Card sx={cardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('title')}
+              {t('title')}
             </Typography>
-            <Typography variant="body1" component="p" mb={2}>
-              {t.rich('introduction')}
-            </Typography>
+            <Typography mb={2}>{t('introduction')}</Typography>
 
-            <CreateAccessCodeForm />
+            <CreateAccessCodeForm partnerAdmin={partnerAdmin} />
           </CardContent>
         </Card>
       </Container>

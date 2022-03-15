@@ -5,27 +5,20 @@ export const logEvent = (event: string, params?: {}) => {
   analytics?.logEvent(event, params!);
 };
 
-export const getEventUserData = (data: GetUserResponse) => {
-  const userData = {
-    createdAt: data.user.createdAt,
-    updatedAt: data.user.updatedAt,
-    languageDefault: data.user.languageDefault,
+export const getEventUserData = (data: Partial<GetUserResponse>) => {
+  return {
+    registered_at: data.user?.createdAt,
+    partner_access: data.partnerAccesses?.map((partnerAccess) => {
+      return {
+        partner_name: partnerAccess.partner.name,
+        feature_live_chat: partnerAccess.featureLiveChat,
+        feature_therapy: partnerAccess.featureTherapy,
+        therapy_sessions_remaining: partnerAccess.therapySessionsRemaining,
+        therapy_sessions_redeemed: partnerAccess.therapySessionsRedeemed,
+        activated_at: partnerAccess.activatedAt,
+      };
+    }),
   };
-
-  if (data.partnerAccess) {
-    const userPartnerData = {
-      ...userData,
-      partner: data.partner.name,
-      partner_activated_at: data.partnerAccess.activatedAt,
-      feature_live_chat: data.partnerAccess.featureLiveChat,
-      feature_therapy: data.partnerAccess.featureTherapy,
-      therapy_sessions_remaining: data.partnerAccess.therapySessionsRemaining,
-      therapy_sessions_redeemed: data.partnerAccess.therapySessionsRedeemed,
-    };
-    return userPartnerData;
-  }
-
-  return userData;
 };
 
 export default logEvent;

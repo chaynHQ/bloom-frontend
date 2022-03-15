@@ -1,15 +1,17 @@
 {
   "Navigation": {
-    "menu": "Menú de navegación",
-    "menuOpen": "Abrir el menú de navegación",
-    "menuClose": "Cerrar el menú de navegación",
-    "languageMenu": "Menú de idiomas",
+    "menu": "Navigation menu",
+    "menuOpen": "Open navigation menu",
+    "menuClose": "Close navigation menu",
+    "languageMenu": "Language menu",
     "bloomLogo": "Bloom logo",
-    "home": "Inicio",
-    "about": "Conócenos",
-    "immediateHelp": "Ayuda inmediata",
+    "logout": "Cerrar sesión",
+    "userMenu": "User menu",
+    "home": "Home",
+    "about": "Sobre Bloom",
+    "immediateHelp": "Immediate help",
     "therapy": "Terapia",
     "courses": "Cursos",
-    "account": "Mi cuenta"
+    "account": "Account"
   }
 }

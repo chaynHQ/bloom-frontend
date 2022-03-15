@@ -8,10 +8,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
-import Faqs from '../../components/Faqs';
-import Header from '../../components/Header';
-import ImageTextGrid, { ImageTextItem } from '../../components/ImageTextGrid';
+import ImageTextGrid, { ImageTextItem } from '../../components/common/ImageTextGrid';
+import Header from '../../components/layout/Header';
+import Faqs from '../../components/storyblok/Faqs';
+import { getSimplybookWidgetConfig } from '../../config/simplybook';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
@@ -20,9 +22,31 @@ import illustrationChooseTherapist from '../../public/illustration_choose_therap
 import illustrationConfidential from '../../public/illustration_confidential.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import illustrationTeaPeach from '../../public/illustration_tea_peach.png';
+import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+
+const containerStyle = {
+  backgroundColor: 'secondary.light',
+  textAlign: 'center',
+  ...rowStyle,
+} as const;
+
+const ctaContent = {
+  flex: 1,
+  textAlign: 'left',
+  marginTop: 4,
+} as const;
+
+const faqsContainerStyle = {
+  maxWidth: '680px !important',
+  margin: 'auto',
+} as const;
+
+const bookingButtonStyle = {
+  minWidth: 200,
+  marginY: 4,
+} as const;
 
 const steps: Array<ImageTextItem> = [
   {
@@ -50,76 +74,44 @@ const steps: Array<ImageTextItem> = [
 const BookSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
+  const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
+  const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccess, partnerAdmin, partner } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccess, partnerAdmin, partner });
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses });
+
+  useEffect(() => {
+    let partnerAccess = partnerAccesses.find(
+      (partnerAccess) =>
+        partnerAccess.featureTherapy === true && partnerAccess.therapySessionsRemaining > 0,
+    );
+    if (partnerAccess) {
+      setHasTherapyRemaining(true);
+    } else {
+      // existing therapy access has no remaining sessions, return access that was last redeemed
+      const redeemedAccesses = partnerAccesses.filter(
+        (partnerAccess) =>
+          !!partnerAccess.featureTherapy && partnerAccess.therapySessionsRedeemed > 0,
+      );
+      partnerAccess = redeemedAccesses[redeemedAccesses.length - 1];
+    }
+
+    if (partnerAccess?.partner.name) {
+      setPartnerAccess(partnerAccess);
+    }
+  }, [setPartnerAccess, partnerAccesses]);
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
-  }, [eventUserData]);
-
-  const widgetConfig = {
-    widget_type: 'iframe',
-    url: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
-    theme: 'dainty',
-    theme_settings: {
-      timeline_show_end_time: '1',
-      timeline_hide_unavailable: '1',
-      hide_past_days: '0',
-      sb_base_color: '#F3D6D8',
-      secondary_color: '#FFBFA4',
-      sb_text_color: '#757575',
-      display_item_mode: 'block',
-      body_bg_color: '#FDF3EF',
-      sb_background_image: '',
-      sb_review_image: '',
-      dark_font_color: '#424242',
-      light_font_color: '#ffffff',
-      sb_company_label_color: '#ffffff',
-      sb_cancellation_color: '#EA0050',
-      hide_img_mode: '0',
-    },
-    timeline: 'modern',
-    datepicker: 'top_calendar',
-    is_rtl: false,
-    app_config: {
-      allow_switch_to_ada: 0,
-      predefined: {
-        client: {
-          name: user.name,
-          email: user.email,
-        },
-      },
-    },
-  } as const;
+  }, []);
 
   const headerProps = {
-    title: t.rich('title'),
-    introduction: t.rich('introduction'),
-    imageSrc: illustrationTeaPeach,
+    title: t('title'),
+    introduction: t.rich('introduction', { partnerName: partnerAccess?.partner?.name }),
+    imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
-
-  const containerStyle = {
-    backgroundColor: 'secondary.light',
-    textAlign: 'center',
-    ...rowStyle,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  } as const;
-
-  const faqsContainerStyle = {
-    maxWidth: '680px !important',
-    margin: 'auto',
-  } as const;
-
-  const bookingButtonStyle = {
-    minWidth: { xs: '100%', sm: 200 },
-    marginY: 4,
-  } as const;
 
   const openWidget = () => {
     logEvent(THERAPY_BOOKING_OPENED, eventUserData);
@@ -139,49 +131,55 @@ const BookSession: NextPage = () => {
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={containerStyle}>
-        <Box mt={4} textAlign="left">
-          <Typography variant="body1" component="p">
-            {t.rich('bookingDescription1', {
-              strongText: () => <strong>{partnerAccess.therapySessionsRemaining}</strong>,
-            })}
+        <Box sx={ctaContent}>
+          <Typography>
+            {hasTherapyRemaining
+              ? t.rich('therapySessionsRemaining', {
+                  strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,
+                })
+              : t('noTherapySessionsRemaining')}
           </Typography>
-          <Button
-            sx={bookingButtonStyle}
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={openWidget}
-          >
-            {t.rich('bookingButton')}
-          </Button>
+          {hasTherapyRemaining && (
+            <Button
+              sx={bookingButtonStyle}
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={openWidget}
+            >
+              {t('bookingButton')}
+            </Button>
+          )}
         </Box>
         <ImageTextGrid items={steps} translations="Therapy.steps" />
       </Container>
 
       <Container>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t.rich('faqHeader')}
+          {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image
-            alt={tS.raw('alt.partialLeavesRose')}
-            src={illustrationLeafMix}
-            width={100}
-            height={100}
-          />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
         </Box>
 
         <Box sx={faqsContainerStyle}>
-          <Faqs faqList={therapyFaqs} translations="Therapy.faqs" />
-          <Button
-            sx={bookingButtonStyle}
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={openWidget}
-          >
-            {t.rich('bookingButton')}
-          </Button>
+          <Faqs
+            faqList={therapyFaqs}
+            translations="Therapy.faqs"
+            partner={partnerAccess?.partner}
+            eventUserData={eventUserData}
+          />
+          {hasTherapyRemaining && (
+            <Button
+              sx={bookingButtonStyle}
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={openWidget}
+            >
+              {t('bookingButton')}
+            </Button>
+          )}
         </Box>
       </Container>
 
@@ -190,7 +188,7 @@ const BookSession: NextPage = () => {
           id="widget-js"
           src="//widget.simplybook.it/v2/widget/widget.js"
           onLoad={() => {
-            new (window as any).SimplybookWidget(widgetConfig);
+            new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
           }}
         />
       )}

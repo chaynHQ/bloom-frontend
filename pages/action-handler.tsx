@@ -1,6 +1,6 @@
-import { CircularProgress, Container } from '@mui/material';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import LoadingContainer from '../components/common/LoadingContainer';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {
@@ -14,13 +14,7 @@ const ActionHandler: NextPage = () => {
       router.replace('/404');
     }
   }
-  return (
-    <Container
-      sx={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}
-    >
-      <CircularProgress color="error" />
-    </Container>
-  );
+  return <LoadingContainer />;
 };
 
 export default ActionHandler;

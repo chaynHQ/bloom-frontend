@@ -7,12 +7,25 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import Link from '../../components/Link';
-import PartnerHeader from '../../components/PartnerHeader';
-import { EmailForm, PasswordForm } from '../../components/ResetPasswordForm';
-import bloomBumbleLogo from '../../public/bloom_bumble_logo.svg';
+import { EmailForm, PasswordForm } from '../../components/forms/ResetPasswordForm';
+import PartnerHeader from '../../components/layout/PartnerHeader';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+
+const containerStyle = {
+  ...rowStyle,
+  backgroundColor: 'primary.light',
+} as const;
+
+const textContainerStyle = {
+  maxWidth: 600,
+  width: { xs: '100%', md: '45%' },
+} as const;
+
+const formCardStyle = {
+  width: { xs: '100%', sm: '70%', md: '45%' },
+} as const;
 
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
@@ -24,27 +37,11 @@ const ResetPassword: NextPage = () => {
     : undefined;
 
   const headerProps = {
-    partnerLogoSrc: bloomBumbleLogo,
-    partnerLogoAlt: 'alt.bloomBumbleLogo',
+    partnerLogoSrc: welcomeToBloom,
+    partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomLogo',
+    imageAlt: 'alt.bloomHead',
   };
-
-  const containerStyle = {
-    ...rowStyle,
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    backgroundColor: 'primary.light',
-  } as const;
-
-  const textContainerStyle = {
-    maxWidth: 600,
-    width: { xs: '100%', md: '45%' },
-  } as const;
-
-  const formCardStyle = {
-    width: { xs: '100%', md: '45%' },
-  } as const;
 
   return (
     <Box>
@@ -59,12 +56,11 @@ const ResetPassword: NextPage = () => {
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
           </Typography>
-          <Link href="/welcome">{t.rich('bloomBumbleLink')}</Link>
         </Box>
         <Card sx={formCardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t.rich('resetPassword.title')}
+              {t('resetPassword.title')}
             </Typography>
             {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
           </CardContent>
