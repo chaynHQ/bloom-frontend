@@ -44,7 +44,7 @@
       "title": "All booked",
       "introduction": "Your therapy session is booked in. Look out for an email from 'Bloom', which will remind you of the time and date and provide a video call link. For any reason, if you can't make the session, the same email includes a link to book again.",
       "returnDescription": "After your therapy session, come back to Bloom to book your next one.",
-      "bookmarkDescription": "You may want to bookmark <bookingLink>bloom-therapy.chayn.co</bookingLink> so you can find us again later."
+      "bookmarkDescription": "You may want to bookmark <bookingLink>bloom.chayn.co</bookingLink> so you can find us again later."
     },
     "accessGuard": {
       "title": "Therapy not available",
