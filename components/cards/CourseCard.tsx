@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { rowStyle } from '../../styles/common';
+import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
@@ -70,6 +71,7 @@ const CourseCard = (props: CourseCardProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea
+        component={Link}
         href={`/${course.full_slug}`}
         aria-label={`${t('navigateToCourse')} ${course.content.name}`}
       >
