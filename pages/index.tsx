@@ -9,13 +9,14 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import PartnerHeader from '../components/layout/PartnerHeader';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../config/storyblok';
 import { LANGUAGES } from '../constants/enums';
+import { useTypedSelector } from '../hooks/store';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../public/welcome_to_bloom.svg';
 import { rowStyle } from '../styles/common';
@@ -27,6 +28,7 @@ const textContainerStyle = {
 
 const rowItem = {
   width: { xs: '100%', sm: '60%', md: '45%' },
+  height: '100%',
 } as const;
 
 interface Props {
@@ -40,7 +42,7 @@ interface Props {
 const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Welcome');
   const router = useRouter();
-  const [codeParam, setCodeParam] = useState<string>('');
+  const { user } = useTypedSelector((state: RootState) => state);
 
   story = useStoryblok(story, preview, sbParams, locale);
 
@@ -50,11 +52,6 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
-
-  useEffect(() => {
-    const { code } = router.query;
-    if (code) setCodeParam(code + '');
-  }, [setCodeParam, router.query]);
 
   return (
     <Box>
@@ -75,20 +72,41 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
         </Box>
         <Card sx={rowItem}>
           <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('getStarted')}
-            </Typography>
-            <Typography>{t('publicIntroduction')}</Typography>
-            <Button
-              sx={{ mt: 3 }}
-              variant="contained"
-              fullWidth
-              component={Link}
-              color="secondary"
-              href="/auth/register"
-            >
-              {t('getStarted')}
-            </Button>
+            {user.token ? (
+              <>
+                <Typography variant="h2" component="h2">
+                  {t('continueCourses')}
+                </Typography>
+                <Typography>{t('continueCoursesDescription')}</Typography>
+                <Button
+                  sx={{ mt: 3 }}
+                  variant="contained"
+                  fullWidth
+                  component={Link}
+                  color="secondary"
+                  href="/courses"
+                >
+                  {t('goToCourses')}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Typography variant="h2" component="h2">
+                  {t('getStarted')}
+                </Typography>
+                <Typography>{t('publicIntroduction')}</Typography>
+                <Button
+                  sx={{ mt: 3 }}
+                  variant="contained"
+                  fullWidth
+                  component={Link}
+                  color="secondary"
+                  href="/auth/register"
+                >
+                  {t('getStarted')}
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
       </Container>
