@@ -10,9 +10,19 @@ interface StoryblokButtonProps {
 
 const StoryblokButton = (props: StoryblokButtonProps) => {
   const { text, color = 'secondary.main', link } = props;
+
+  if (!link || !link.cached_url) return <></>;
+
   const buttonStyle = {
     marginY: 2,
-    backgroundColor: color === 'background.default' ? 'secondary.main' : color,
+    backgroundColor:
+      color === 'background.default'
+        ? 'secondary.main'
+        : color === 'primary.light'
+        ? 'primary.main'
+        : color === 'secondary.light'
+        ? 'secondary.main'
+        : color,
     color: color === 'primary.dark' ? 'common.white' : 'text.primary',
   } as const;
 
