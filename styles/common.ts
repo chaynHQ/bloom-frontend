@@ -16,11 +16,11 @@ export const richtextContentStyle = {
     marginY: 0,
   },
 
-  '&:first-child': {
+  '&:first-of-type': {
     marginTop: 0,
   },
 
-  '&:last-child': {
+  '&:last-of-type': {
     marginBottom: 0,
   },
 } as const;

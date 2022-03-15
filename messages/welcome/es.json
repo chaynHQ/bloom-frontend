@@ -2,6 +2,7 @@
   "Welcome": {
     "getStarted": "Get Started",
     "accessIntroduction": "Enter the access code you received from {partnerName} to begin your Bloom journey.",
+    "publicIntroduction": "Create an account with Bloom to get started with our courses, or first find out more about Bloom below.",
 
     "form": {
       "codeLabel": "{partnerName} access code"
