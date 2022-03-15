@@ -36,14 +36,17 @@ interface NavigationItem {
 
 const NavigationMenu = () => {
   const t = useTranslations('Navigation');
-  const { partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
 
   useEffect(() => {
-    let links: Array<NavigationItem> = [
-      { title: t('about'), href: '/' },
-      { title: t('courses'), href: '/courses' },
-    ];
+    let links: Array<NavigationItem> = [{ title: t('about'), href: '/' }];
+
+    if (user.token) {
+      links.push({ title: t('courses'), href: '/courses' });
+    } else {
+      links.push({ title: t('login'), href: '/auth/login' });
+    }
 
     const therapyAccess = partnerAccesses.find(
       (partnerAccess) => partnerAccess.featureTherapy === true,
