@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { rowStyle } from '../../styles/common';
+import { richtextContentStyle, rowStyle } from '../../styles/common';
 
 export interface ImageTextItem {
   text: string;
@@ -35,9 +35,7 @@ const imageContainerStyle = {
   marginY: 3,
   marginX: 'auto',
 
-  '&:only-child': {
-    marginY: 0,
-  },
+  ...richtextContentStyle,
 } as const;
 
 const ImageTextGrid = (props: ImageTextGridProps) => {

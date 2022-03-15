@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
@@ -17,6 +16,7 @@ import StoryblokPageSection from '../../components/storyblok/StoryblokPageSectio
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
 import { getPartnerContent } from '../../constants/partners';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
@@ -39,7 +39,6 @@ interface Props {
 
 const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Welcome');
-  const theme = useTheme();
   const router = useRouter();
   const [codeParam, setCodeParam] = useState<string>('');
 
@@ -47,9 +46,9 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
   const partnerContent = getPartnerContent(story.slug);
 
   const headerProps = {
-    partnerLogoSrc: partnerContent.partnershipLogo,
-    partnerLogoAlt: partnerContent.partnershipLogoAlt,
-    imageSrc: partnerContent.bloomGirlIllustration,
+    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
+    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
+    imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
 
@@ -64,8 +63,8 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
         <title>{story.content.title}</title>
       </Head>
       <PartnerHeader
-        partnerLogoSrc={headerProps.partnerLogoSrc || welcomeToBloom}
-        partnerLogoAlt={headerProps.partnerLogoAlt || 'alt.welcomeToBloom'}
+        partnerLogoSrc={headerProps.partnerLogoSrc}
+        partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />

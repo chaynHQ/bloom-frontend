@@ -81,16 +81,16 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           maxWidth: '100% !important',
-          paddingTop: 50,
-          paddingBottom: 50,
+          paddingTop: 60,
+          paddingBottom: 60,
 
           [theme.breakpoints.up('md')]: {
             paddingLeft: '5% !important',
             paddingRight: '5% !important',
           },
           [theme.breakpoints.up('lg')]: {
-            paddingTop: 80,
-            paddingBottom: 80,
+            paddingTop: 100,
+            paddingBottom: 100,
             paddingLeft: 'calc((100vw - 1000px) / 2) !important',
             paddingRight: 'calc((100vw - 1000px) / 2) !important',
           },

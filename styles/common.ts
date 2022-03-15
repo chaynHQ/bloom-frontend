@@ -10,3 +10,17 @@ export const columnStyle = {
   flexDirection: 'column',
   justifyContent: 'center',
 } as const;
+
+export const richtextContentStyle = {
+  '&:only-child': {
+    marginY: 0,
+  },
+
+  '&:first-child': {
+    marginTop: 0,
+  },
+
+  '&:last-child': {
+    marginBottom: 0,
+  },
+} as const;

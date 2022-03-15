@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import Image from 'next/image';
+import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokImageProps {
   image: { filename: string; alt: string };
@@ -10,7 +11,7 @@ interface StoryblokImageProps {
 const StoryblokImage = (props: StoryblokImageProps) => {
   const { image, size = 'extra-large', alignment = 'left' } = props;
 
-  if (!image) return <></>;
+  if (!image || !image.filename) return <></>;
 
   const imageContainerStyle = {
     width:
@@ -47,6 +48,8 @@ const StoryblokImage = (props: StoryblokImageProps) => {
       position: 'relative !important',
       height: 'unset !important',
     },
+
+    ...richtextContentStyle,
   } as const;
 
   return (

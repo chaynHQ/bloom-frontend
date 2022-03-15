@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import ReactPlayer from 'react-player';
+import { richtextContentStyle } from '../../styles/common';
 
 const videoContainerStyle = {
   position: 'relative',
@@ -48,9 +49,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
     marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
     marginRight: alignment === 'center' ? 'auto' : 0,
 
-    '&:only-child': {
-      marginY: 0,
-    },
+    ...richtextContentStyle,
   } as const;
 
   return (

@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import { Richtext } from 'storyblok-js-client';
+import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokQuoteProps {
   text: Richtext;
@@ -51,6 +52,7 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
         position: 'relative',
       },
     },
+    ...richtextContentStyle,
   } as const;
 
   return (
