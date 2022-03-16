@@ -70,7 +70,7 @@ const NavigationMenu = () => {
       links.push({ title: t('therapy'), href: '/therapy/book-session' });
     }
     setNavigationLinks(links);
-  }, [partnerAccesses, t]);
+  }, [partnerAccesses, t, user.token, partnerAdmin]);
 
   return (
     <List sx={listStyle}>
