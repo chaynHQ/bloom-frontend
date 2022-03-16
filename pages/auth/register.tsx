@@ -152,7 +152,7 @@ const Register: NextPage = () => {
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {
                   policiesLink: (children) => (
-                    <Link href="https://chayn.notion.site/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43">
+                    <Link href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1">
                       {children}
                     </Link>
                   ),
