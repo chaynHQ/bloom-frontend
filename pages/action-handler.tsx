@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetStaticPropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import LoadingContainer from '../components/common/LoadingContainer';
 
@@ -16,5 +16,16 @@ const ActionHandler: NextPage = () => {
   }
   return <LoadingContainer />;
 };
+
+export function getStaticProps({ locale }: GetStaticPropsContext) {
+  return {
+    props: {
+      messages: {
+        ...require(`../messages/shared/${locale}.json`),
+        ...require(`../messages/navigation/${locale}.json`),
+      },
+    },
+  };
+}
 
 export default ActionHandler;
