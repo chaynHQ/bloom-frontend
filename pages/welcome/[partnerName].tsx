@@ -4,22 +4,25 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import type { NextPage } from 'next';
+import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../app/store';
-import Link from '../components/common/Link';
-import PartnerHeader from '../components/layout/PartnerHeader';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
-import { useTypedSelector } from '../hooks/store';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../public/welcome_to_bloom.svg';
-import { rowStyle } from '../styles/common';
+import { RootState } from '../../app/store';
+import Link from '../../components/common/Link';
+import CodeForm from '../../components/forms/CodeForm';
+import PartnerHeader from '../../components/layout/PartnerHeader';
+import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
+import Storyblok, { useStoryblok } from '../../config/storyblok';
+import { LANGUAGES } from '../../constants/enums';
+import { getPartnerContent } from '../../constants/partners';
+import { useTypedSelector } from '../../hooks/store';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
+import { rowStyle } from '../../styles/common';
 
 const textContainerStyle = {
   maxWidth: 600,
@@ -28,7 +31,6 @@ const textContainerStyle = {
 
 const rowItem = {
   width: { xs: '100%', sm: '60%', md: '45%' },
-  height: '100%',
 } as const;
 
 interface Props {
@@ -42,16 +44,23 @@ interface Props {
 const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Welcome');
   const router = useRouter();
+  const [codeParam, setCodeParam] = useState<string>('');
   const { user } = useTypedSelector((state: RootState) => state);
 
   story = useStoryblok(story, preview, sbParams, locale);
+  const partnerContent = getPartnerContent(story.slug);
 
   const headerProps = {
-    partnerLogoSrc: welcomeToBloom,
-    partnerLogoAlt: 'alt.welcomeToBloom',
-    imageSrc: illustrationBloomHeadYellow,
+    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
+    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
+    imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
+
+  useEffect(() => {
+    const { code } = router.query;
+    if (code) setCodeParam(code + '');
+  }, [setCodeParam, router.query]);
 
   return (
     <Box>
@@ -94,17 +103,11 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
                 <Typography variant="h2" component="h2">
                   {t('getStarted')}
                 </Typography>
-                <Typography>{t('publicIntroduction')}</Typography>
-                <Button
-                  sx={{ mt: 3 }}
-                  variant="contained"
-                  fullWidth
-                  component={Link}
-                  color="secondary"
-                  href="/auth/register"
-                >
-                  {t('getStarted')}
-                </Button>
+                <Typography>
+                  {t.rich('accessIntroduction', { partnerName: partnerContent.name })}
+                </Typography>
+
+                <CodeForm codeParam={codeParam} partnerParam={partnerContent.name} />
               </>
             )}
           </CardContent>
@@ -124,25 +127,50 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
+  const partnerName = params?.partnerName;
+
   const sbParams = {
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
   };
 
-  let { data } = await Storyblok.get(`cdn/stories/welcome`, sbParams);
+  let { data } = await Storyblok.get(`cdn/stories/welcome/${partnerName}`, sbParams);
 
   return {
     props: {
       story: data ? data.story : null,
       preview,
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/welcome/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/welcome/${locale}.json`),
       },
       locale,
     },
     revalidate: 3600, // revalidate every hour
+  };
+}
+
+export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+  let { data } = await Storyblok.get('cdn/links/?starts_with=welcome/');
+
+  let paths: any = [];
+  Object.keys(data.links).forEach((linkKey) => {
+    // get array for slug because of catch all
+    const slug = data.links[linkKey].slug;
+    let splittedSlug = slug.split('/');
+
+    if (locales) {
+      // create additional languages
+      for (const locale of locales) {
+        paths.push({ params: { slug: splittedSlug[1] }, locale });
+      }
+    }
+  });
+
+  return {
+    paths: paths,
+    fallback: false,
   };
 }
 

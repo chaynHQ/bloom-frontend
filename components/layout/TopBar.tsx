@@ -48,11 +48,11 @@ const TopBar = () => {
   return (
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
-        {isSmallScreen && user.token && <NavigationDrawer />}
+        {isSmallScreen && <NavigationDrawer />}
         <Link href={homepage} aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
-        {!isSmallScreen && user.token && <NavigationMenu />}
+        {!isSmallScreen && <NavigationMenu />}
         {user.token && <UserMenu />}
         {/* <LanguageMenu /> */}
       </Container>

@@ -7,10 +7,13 @@ import {
   RenderOptions,
 } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/common/Link';
+import StoryblokButton from '../components/storyblok/StoryblokButton';
+import StoryblokCard from '../components/storyblok/StoryblokCard';
 import StoryblokImage from '../components/storyblok/StoryblokImage';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
+import { richtextContentStyle } from '../styles/common';
 
 export const RichTextOptions: RenderOptions = {
   blokResolvers: {
@@ -18,10 +21,12 @@ export const RichTextOptions: RenderOptions = {
     ['video']: (props: any) => <StoryblokVideo {...props} />,
     ['row']: (props: any) => <StoryblokRow {...props} />,
     ['quote']: (props: any) => <StoryblokQuote {...props} />,
+    ['card']: (props: any) => <StoryblokCard {...props} />,
+    ['button']: (props: any) => <StoryblokButton {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
-      <Typography maxWidth={650} paragraph>
+      <Typography maxWidth={650} sx={richtextContentStyle} paragraph>
         {children}
       </Typography>
     ),
@@ -40,19 +45,12 @@ export const RichTextOptions: RenderOptions = {
       if (linktype === 'email') {
         return <a href={`mailto:${href}`}>{children}</a>;
       }
-      if (href?.match(/^(https?:)?\/\//)) {
-        // External links: map to <a>
-        return (
-          <a href={href} target={target}>
-            {children}
-          </a>
-        );
-      }
+
       // Internal links: map to <Link>
       if (href)
         return (
-          <Link href={href}>
-            <a>{children}</a>
+          <Link href={href} target={href?.match(/^(https?:)?\/\//) && '_blank'}>
+            {children}
           </Link>
         );
       else return <Typography>{children}</Typography>;

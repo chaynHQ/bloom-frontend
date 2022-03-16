@@ -135,7 +135,7 @@ Anyone can come directly to the site and register as a _public_ Bloom user with 
 
 Alongside _public_ Bloom, we also have `Partners` (e.g. Bumble) which offer their users a Bloom `PartnerAccess` with additional features to public Bloom. The additional features include therapy, 1-1 chat and extra courses. A `PartnerAccess` is created by a `PartnerAdmin` and has a unique code for the user to apply when registering for an account, or afterwards on the `/apply-code` page. See [database schemas](https://github.com/chaynHQ/bloom-backend#database-models) for more details.
 
-A user can have 0 (public) or many partners and the app dynamically handles this. Partner branding and tags are applied across the app (e.g. in the footer) and some pages are custom to the partner e.g. `/welcome/[partnerName]`.
+A user can have 0 (public) or many partners and the app dynamically handles this. Partner branding and tags are applied across the app (e.g. in the footer) and some pages are custom to the partner e.g. [welcome/[partnerName].tsx](pages/welcome/[partnerName].tsx).
 
 ### Features
 
@@ -183,11 +183,11 @@ Dynamic pages allow the team to create new content pages in Storyblok e.g. `/abo
 
 ## Git flow and deployment
 
-Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. Squash and merge feature/bug branches into `develop`.
+Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. **Squash and merge** feature/bug branches into `develop`.
 
-When changes are ready to be deployed to staging, merge `develop` into `staging`. This will trigger an automatic deployment to the production app by Heroku.
+When changes are ready to be deployed to staging, in Github create a PR to merge `develop` into `staging`. This should be a **merge** (not squashed). The merge will trigger an automatic deployment to the staging app by Heroku.
 
-When changes have been tested in staging, merge `staging` into `main`. This will trigger an automatic deployment to the production app by Heroku.
+When changes have been tested in staging, merge `staging` into `main`, following the same steps as above. This will trigger an automatic deployment to the production app by Heroku.
 
 **New environment variables must be added to Heroku before release.**
 
