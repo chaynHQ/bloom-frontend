@@ -403,6 +403,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     ...extraSbParams,
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
+    language: locale,
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}/${sessionSlug}/`, sbParams);

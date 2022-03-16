@@ -158,6 +158,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => 
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
   let sbParams = {
+    language: locale,
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
     starts_with: 'courses/',
