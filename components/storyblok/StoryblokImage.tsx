@@ -16,9 +16,9 @@ const StoryblokImage = (props: StoryblokImageProps) => {
   const imageContainerStyle = {
     width:
       size === 'extra-small'
-        ? { xs: 80, md: 120 }
+        ? { xs: 40, md: 80 }
         : size === 'small'
-        ? { xs: 140, md: 180 }
+        ? { xs: 120, md: 160 }
         : size === 'medium'
         ? { xs: 200, md: 250 }
         : size === 'large'

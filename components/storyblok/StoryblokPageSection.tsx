@@ -25,6 +25,9 @@ const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
         alignment === 'center' ? 'center' : alignment === 'right' ? 'flex-end' : 'flex-start',
     }),
     textAlign: alignment === 'center' ? 'center' : alignment === 'right' ? 'right' : 'left',
+    ...(alignment === 'center' && {
+      ' p': { marginX: 'auto' },
+    }),
   } as const;
 
   return <Container sx={containerStyle}>{render(content, RichTextOptions)}</Container>;
