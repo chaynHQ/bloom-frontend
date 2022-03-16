@@ -8,7 +8,6 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { RootState } from '../app/store';
 import Link from '../components/common/Link';
@@ -39,9 +38,8 @@ interface Props {
   locale: LANGUAGES;
 }
 
-const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const Index: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Welcome');
-  const router = useRouter();
   const { user } = useTypedSelector((state: RootState) => state);
 
   story = useStoryblok(story, preview, sbParams, locale);
@@ -127,14 +125,16 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
+    language: locale,
   };
 
-  let { data } = await Storyblok.get(`cdn/stories/welcome`, sbParams);
+  let { data } = await Storyblok.get(`cdn/stories/home`, sbParams);
 
   return {
     props: {
       story: data ? data.story : null,
       preview,
+      sbParams,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
@@ -146,4 +146,4 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   };
 }
 
-export default Welcome;
+export default Index;

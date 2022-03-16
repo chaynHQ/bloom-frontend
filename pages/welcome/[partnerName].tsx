@@ -132,6 +132,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     version: preview ? 'draft' : 'published',
     cv: preview ? Date.now() : 0,
+    language: locale,
   };
 
   let { data } = await Storyblok.get(`cdn/stories/welcome/${partnerName}`, sbParams);
@@ -163,7 +164,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     if (locales) {
       // create additional languages
       for (const locale of locales) {
-        paths.push({ params: { slug: splittedSlug[1] }, locale });
+        paths.push({ params: { partnerName: splittedSlug[1] }, locale });
       }
     }
   });
