@@ -94,14 +94,14 @@ const Register: NextPage = () => {
                 codeParam && '?code=' + codeParam
               }`}
             >
-              {t('aboutBloomFor')} {partnerContent.name}
+              {t('getStartedWith')} {partnerContent.name}
             </Link>
           </>
         ) : (
           // Show the public bloom and all other partner's welcome page links
           <>
             <Typography>
-              <Link href="/welcome">{t('aboutBloom')}</Link>
+              <Link href="/">{t('getStartedBloom')}</Link>
             </Typography>
 
             {allPartnersContent?.map((partner) => (
@@ -112,7 +112,7 @@ const Register: NextPage = () => {
                     codeParam && '?code=' + codeParam
                   }`}
                 >
-                  {t('aboutBloomFor')} {partner.name}
+                  {t.rich('getStartedWith', { partnerName: partner.name })}
                 </Link>
               </Typography>
             ))}
@@ -146,7 +146,6 @@ const Register: NextPage = () => {
               <Typography variant="h2" component="h2">
                 {t('register.title')}
               </Typography>
-              <Typography>{t('register.description')}</Typography>
 
               <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
 
