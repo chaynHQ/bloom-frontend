@@ -46,7 +46,7 @@ export default function UserMenu() {
 
   const logout = async () => {
     await clearStore();
-    auth.signOut();
+    await auth.signOut();
     router.push('/auth/login');
   };
 

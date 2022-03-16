@@ -169,7 +169,9 @@ const Footer = () => {
 
       <Box sx={descriptionContainerStyle}>
         <Typography sx={{ mb: 1 }}>{tS('footer.chaynDescription')}</Typography>
-        <Link href="#">{tS('footer.policies')}</Link>
+        <Link href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1">
+          {tS('footer.policies')}
+        </Link>
       </Box>
     </Container>
   );

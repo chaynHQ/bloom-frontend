@@ -78,7 +78,7 @@ const SessionCard = (props: SessionCardProps) => {
                 {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
               </Box>
             )}
-            <Typography component="h3" variant="h3">
+            <Typography flex={1} component="h3" variant="h3">
               {session.content.name}
             </Typography>
           </Box>

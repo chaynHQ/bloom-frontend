@@ -67,13 +67,13 @@ const Login: NextPage = () => {
           {t('login.newUserTitle')}
         </Typography>
         <Typography>
-          <Link href="/welcome">{t('aboutBloom')}</Link>
+          <Link href="/">{t('getStartedBloom')}</Link>
         </Typography>
 
         {allPartnersContent?.map((partner) => (
           <Typography key={`${partner.name}-link`} mt={0.5}>
             <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}>
-              {t('aboutBloomFor')} {partner.name}
+              {t.rich('getStartedWith', { partnerName: partner.name })}
             </Link>
           </Typography>
         ))}
@@ -104,7 +104,6 @@ const Login: NextPage = () => {
             <Typography variant="h2" component="h2">
               {t('login.title')}
             </Typography>
-            <Typography>{t('login.description')}</Typography>
 
             <LoginForm />
             <Typography textAlign="center">
