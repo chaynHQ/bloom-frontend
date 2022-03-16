@@ -31,17 +31,17 @@ const textContainerStyle = {
 
 const rowItem = {
   width: { xs: '100%', sm: '60%', md: '45%' },
+  height: '100%',
 } as const;
 
 interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
   const router = useRouter();
   const [codeParam, setCodeParam] = useState<string>('');

@@ -5,7 +5,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { StoryData, StoryParams } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
@@ -34,11 +34,11 @@ const cardColumnStyle = {
 interface Props {
   stories: StoryData[];
   preview: boolean;
-  messages: any;
+  sbParams: StoryParams;
   locale: LANGUAGES;
 }
 
-const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => {
+const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
@@ -176,6 +176,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     props: {
       stories: data ? data.stories : null,
       preview,
+      sbParams,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),

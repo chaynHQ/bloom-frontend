@@ -78,13 +78,12 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
-  story = useStoryblok(story, preview, sbParams, messages);
+  story = useStoryblok(story, preview, sbParams, locale);
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);

@@ -34,11 +34,10 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const Index: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
   const { user } = useTypedSelector((state: RootState) => state);
 

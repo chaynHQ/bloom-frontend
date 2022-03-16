@@ -51,11 +51,10 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
