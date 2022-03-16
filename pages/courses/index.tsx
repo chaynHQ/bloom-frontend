@@ -42,7 +42,9 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => 
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
-  const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, courses, partnerAdmin } = useTypedSelector(
+    (state: RootState) => state,
+  );
   const eventUserData = getEventUserData({ user, partnerAccesses });
   const t = useTranslations('Courses');
 
@@ -60,12 +62,13 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => 
   }, []);
 
   useEffect(() => {
-    if (partnerAccesses.length === 0) {
+    if (partnerAdmin && partnerAdmin.partner) {
+      const partnerName = partnerAdmin.partner.name;
       const coursesWithAccess = stories.filter((course) =>
-        course.content.included_for_partners.includes('Public'),
+        course.content.included_for_partners.includes(partnerName),
       );
       setLoadedCourses(coursesWithAccess);
-    } else {
+    } else if (partnerAccesses.length > 0) {
       let userPartners: Array<string> = [];
 
       partnerAccesses.map((partnerAccess) => {
@@ -76,6 +79,11 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => 
 
       const coursesWithAccess = stories.filter((course) =>
         userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
+      );
+      setLoadedCourses(coursesWithAccess);
+    } else {
+      const coursesWithAccess = stories.filter((course) =>
+        course.content.included_for_partners.includes('Public'),
       );
       setLoadedCourses(coursesWithAccess);
     }

@@ -36,11 +36,25 @@ interface NavigationItem {
 
 const NavigationMenu = () => {
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
 
   useEffect(() => {
-    let links: Array<NavigationItem> = [{ title: t('about'), href: '/' }];
+    let links: Array<NavigationItem> = [];
+
+    if (partnerAdmin && partnerAdmin.partner) {
+      const partnerName = partnerAdmin.partner.name.toLocaleLowerCase();
+      links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
+      links.push({
+        title: t('about'),
+        href: `/welcome/${partnerName}`,
+      });
+    } else {
+      links.push({
+        title: t('about'),
+        href: '/',
+      });
+    }
 
     if (user.token) {
       links.push({ title: t('courses'), href: '/courses' });
