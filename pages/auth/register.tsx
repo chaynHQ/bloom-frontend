@@ -88,23 +88,31 @@ const Register: NextPage = () => {
         {partnerContent ? (
           // Show only the partner's welcome page link
           <>
-            {/* <Link mt="1rem !important" href={`/welcome/${partnerContent.name.toLowerCase()}`}> */}
-            <Link mt="1rem !important" href={`/welcome${codeParam && '?code=' + codeParam}`}>
-              {t('aboutBloomFor')} {partnerContent.name}
+            <Link
+              mt="1rem !important"
+              href={`/welcome/${partnerContent.name.toLowerCase()}${
+                codeParam && '?code=' + codeParam
+              }`}
+            >
+              {t('getStartedWith')} {partnerContent.name}
             </Link>
           </>
         ) : (
           // Show the public bloom and all other partner's welcome page links
           <>
             <Typography>
-              <Link href="/welcome">{t('aboutBloom')}</Link>
+              <Link href="/">{t('getStartedBloom')}</Link>
             </Typography>
 
             {allPartnersContent?.map((partner) => (
               <Typography key={`${partner.name}-link`} mt={0.5}>
-                {/* <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}> */}
-                <Link mt="1rem !important" href={`/welcome${codeParam && '?code=' + codeParam}`}>
-                  {t('aboutBloomFor')} {partner.name}
+                <Link
+                  mt="1rem !important"
+                  href={`/welcome/${partner.name.toLowerCase()}${
+                    codeParam && '?code=' + codeParam
+                  }`}
+                >
+                  {t.rich('getStartedWith', { partnerName: partner.name })}
                 </Link>
               </Typography>
             ))}
@@ -138,14 +146,13 @@ const Register: NextPage = () => {
               <Typography variant="h2" component="h2">
                 {t('register.title')}
               </Typography>
-              <Typography>{t('register.description')}</Typography>
 
               <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
 
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {
                   policiesLink: (children) => (
-                    <Link href="https://chayn.notion.site/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43">
+                    <Link href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1">
                       {children}
                     </Link>
                   ),

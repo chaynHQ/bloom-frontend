@@ -43,7 +43,9 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
     useAddPartnerAccessMutation();
 
-  const welcomeURL = `${process.env.NEXT_PUBLIC_BASE_URL}/welcome?code=${partnerAccessCode}`;
+  const welcomeURL = `${
+    process.env.NEXT_PUBLIC_BASE_URL
+  }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}?code=${partnerAccessCode}`;
 
   const submitHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

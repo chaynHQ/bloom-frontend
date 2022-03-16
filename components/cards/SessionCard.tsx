@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { rowStyle } from '../../styles/common';
+import Link from '../common/Link';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -67,6 +68,7 @@ const SessionCard = (props: SessionCardProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea
+        component={Link}
         href={`/${session.full_slug}`}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
@@ -78,7 +80,7 @@ const SessionCard = (props: SessionCardProps) => {
                 {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
               </Box>
             )}
-            <Typography component="h3" variant="h3">
+            <Typography flex={1} component="h3" variant="h3">
               {session.content.name}
             </Typography>
           </Box>

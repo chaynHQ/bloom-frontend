@@ -48,7 +48,7 @@ const Custom404: NextPage = () => {
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.token ? '/courses' : '/welcome'}
+        href={user.token ? '/courses' : '/login'}
       >
         {user.token ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
       </Button>

@@ -1,19 +1,17 @@
 {
   "Auth": {
     "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
-    "aboutBloom": "About Bloom",
-    "aboutBloomFor": "About Bloom for",
+    "getStartedBloom": "About Bloom",
+    "getStartedWith": "About Bloom for",
     "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
     "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
     "login": {
       "title": "Welcome back",
-      "description": "Sign in to access Bloom",
       "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>",
       "newUserTitle": "New to Bloom?"
     },
     "register": {
       "title": "Create account",
-      "description": "Create your account to access Bloom.",
       "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
       "moreInfoTitle": "Find out more"
     },

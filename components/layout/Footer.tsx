@@ -57,29 +57,31 @@ const Footer = () => {
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
 
+  const addUniquePartner = (partnersList: Partner[], partnerName: string) => {
+    if (!partnersList.find((p) => p.name === partnerName)) {
+      const partnerContentResult = getPartnerContent(partnerName);
+      if (partnerContentResult) partnersList.push(partnerContentResult);
+    }
+  };
+
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses }));
     let partnersList: Partner[] = [getPartnerContent('public')];
 
+    partnerAccesses.forEach((partnerAccess) => {
+      addUniquePartner(partnersList, partnerAccess.partner.name);
+    });
+
     const { partner } = router.query;
 
     if (partner) {
-      const partnerContentResult = getPartnerContent(partner + '');
-      if (partnerContentResult) partnersList.push(partnerContentResult);
+      addUniquePartner(partnersList, partner + '');
     }
 
-    // TODO: remove when welcome page is driven by storyblok
-    if (router.pathname === '/welcome') {
-      const partnerContentResult = getPartnerContent('bumble');
-      if (partnerContentResult) partnersList.push(partnerContentResult);
+    if (router.pathname.includes('/welcome')) {
+      const partnerName = router.asPath.split('/')[2].split('?')[0];
+      addUniquePartner(partnersList, partnerName);
     }
-
-    partnerAccesses.forEach((partnerAccess) => {
-      if (!partnersList.find((p) => p.name === partnerAccess.partner.name)) {
-        const partnerContentResult = getPartnerContent(partnerAccess.partner.name);
-        if (partnerContentResult) partnersList.push(partnerContentResult);
-      }
-    });
 
     setPartners(partnersList);
   }, [partnerAccesses, user, router]);
@@ -167,7 +169,9 @@ const Footer = () => {
 
       <Box sx={descriptionContainerStyle}>
         <Typography sx={{ mb: 1 }}>{tS('footer.chaynDescription')}</Typography>
-        <Link href="#">{tS('footer.policies')}</Link>
+        <Link href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1">
+          {tS('footer.policies')}
+        </Link>
       </Box>
     </Container>
   );
