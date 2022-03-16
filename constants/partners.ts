@@ -10,7 +10,7 @@ export interface Partner {
   logoAlt: string;
   partnershipLogo?: StaticImageData;
   partnershipLogoAlt?: string;
-  bloomGirlIllustration: StaticImageData;
+  bloomGirlIllustration?: StaticImageData;
   website: string;
   footerLine1: string;
   footerLine2: string;
@@ -25,7 +25,6 @@ export const publicContent: Partner = {
   name: 'Bloom',
   logo: bloomLogo,
   logoAlt: 'alt.bloomLogo',
-  bloomGirlIllustration: illustrationBloomHeadYellow,
   website: 'https://chayn.co',
   footerLine1: 'footer.bloomLine1',
   footerLine2: 'footer.bloomLine2',

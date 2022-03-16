@@ -19,13 +19,4 @@ module.exports = {
     defaultLocale: 'en',
     localeDetection: false,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/therapy/book-session',
-        permanent: false,
-      },
-    ];
-  },
 };

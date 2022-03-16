@@ -33,3 +33,12 @@ export enum VIDEO_TYPES {
   COURSE_INTRO = 'COURSE_INTRO',
   SESSION = 'SESSION',
 }
+
+export enum STORYBLOK_COLORS {
+  PRIMARY_LIGHT = 'primary.light',
+  PRIMARY_DARK = 'primary.dark',
+  SECONDARY_LIGHT = 'secondary.light',
+  SECONDARY_DARK = 'secondary.dark',
+  COMMON_WHITE = 'common.white',
+  BACKGROUND_DEFAULT = 'background.default',
+}

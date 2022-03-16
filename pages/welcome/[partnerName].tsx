@@ -1,8 +1,8 @@
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
@@ -11,12 +11,16 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { RootState } from '../../app/store';
+import Link from '../../components/common/Link';
 import CodeForm from '../../components/forms/CodeForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
 import { getPartnerContent } from '../../constants/partners';
+import { useTypedSelector } from '../../hooks/store';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
@@ -39,17 +43,17 @@ interface Props {
 
 const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
   const t = useTranslations('Welcome');
-  const theme = useTheme();
   const router = useRouter();
   const [codeParam, setCodeParam] = useState<string>('');
+  const { user } = useTypedSelector((state: RootState) => state);
 
   story = useStoryblok(story, preview, sbParams, locale);
   const partnerContent = getPartnerContent(story.slug);
 
   const headerProps = {
-    partnerLogoSrc: partnerContent.partnershipLogo,
-    partnerLogoAlt: partnerContent.partnershipLogoAlt,
-    imageSrc: partnerContent.bloomGirlIllustration,
+    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
+    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
+    imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
 
@@ -64,8 +68,8 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
         <title>{story.content.title}</title>
       </Head>
       <PartnerHeader
-        partnerLogoSrc={headerProps.partnerLogoSrc || welcomeToBloom}
-        partnerLogoAlt={headerProps.partnerLogoAlt || 'alt.welcomeToBloom'}
+        partnerLogoSrc={headerProps.partnerLogoSrc}
+        partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
@@ -77,14 +81,35 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, messages, locale }
         </Box>
         <Card sx={rowItem}>
           <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('getStarted')}
-            </Typography>
-            <Typography>
-              {t.rich('accessIntroduction', { partnerName: partnerContent.name })}
-            </Typography>
+            {user.token ? (
+              <>
+                <Typography variant="h2" component="h2">
+                  {t('continueCourses')}
+                </Typography>
+                <Typography>{t('continueCoursesDescription')}</Typography>
+                <Button
+                  sx={{ mt: 3 }}
+                  variant="contained"
+                  fullWidth
+                  component={Link}
+                  color="secondary"
+                  href="/courses"
+                >
+                  {t('goToCourses')}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Typography variant="h2" component="h2">
+                  {t('getStarted')}
+                </Typography>
+                <Typography>
+                  {t.rich('accessIntroduction', { partnerName: partnerContent.name })}
+                </Typography>
 
-            <CodeForm codeParam={codeParam} partnerParam={partnerContent.name} />
+                <CodeForm codeParam={codeParam} partnerParam={partnerContent.name} />
+              </>
+            )}
           </CardContent>
         </Card>
       </Container>

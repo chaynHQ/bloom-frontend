@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { rowStyle } from '../../styles/common';
+import { richtextContentStyle, rowStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
 
 interface StoryblokRowProps {
@@ -14,14 +14,9 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
   if (!columns) return <></>;
 
-  const columnsLength = columns.length;
-  const desktopGap =
-    columnsLength === 5 ? 1 : columnsLength === 4 ? 1.5 : columnsLength === 3 ? 3 : 5; // in rem
-  const mobileGap = 1.25; // in rem
-
   const rowStyles = {
     width: '100%',
-    gap: { xs: mobileGap * 2, md: desktopGap * 2 },
+    gap: { xs: 10 / columns.length, md: 16 / columns.length },
     ...rowStyle,
     textAlign:
       horizontal_alignment === 'center'
@@ -45,13 +40,8 @@ const StoryblokRow = (props: StoryblokRowProps) => {
           ? 'flex-end'
           : 'flex-start',
     }),
+    ...richtextContentStyle,
   } as const;
-
-  const getDesktopWidth = (widthPercentage: number) => {
-    return `calc(${widthPercentage}% - ${
-      desktopGap * (widthPercentage / 100) * (columnsLength - 1) // remove gap width from raw percentage
-    }rem)`;
-  };
 
   return (
     <Box sx={rowStyles}>
@@ -60,17 +50,17 @@ const StoryblokRow = (props: StoryblokRowProps) => {
           width:
             column.width === 'extra-small'
               ? {
-                  xs: `calc(50% - ${mobileGap}rem)`,
-                  md: getDesktopWidth(20),
+                  xs: `20%`,
+                  md: '5%',
                 }
               : column.width === 'small'
-              ? { xs: '100%', md: getDesktopWidth(40) }
+              ? { xs: '100%', md: '20%' }
               : column.width === 'medium'
-              ? { xs: '100%', md: getDesktopWidth(50) }
+              ? { xs: '100%', md: '40%' }
               : column.width === 'large'
-              ? { xs: '100%', md: getDesktopWidth(60) }
+              ? { xs: '100%', md: '60%' }
               : column.width === 'extra-large'
-              ? { xs: '100%', md: getDesktopWidth(80) }
+              ? { xs: '100%', md: '80%' }
               : { xs: `100%`, md: 'auto' },
           ...(!column.width && { flex: { md: 1 } }),
         };

@@ -1,11 +1,12 @@
 import { Container } from '@mui/material';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { STORYBLOK_COLORS } from '../../constants/enums';
 import { columnStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
 
 interface StoryblokPageSectionProps {
   content: AnalyserNode;
-  color: string;
+  color: STORYBLOK_COLORS;
   alignment: string;
 }
 
