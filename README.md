@@ -183,11 +183,11 @@ Dynamic pages allow the team to create new content pages in Storyblok e.g. `/abo
 
 ## Git flow and deployment
 
-Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. Squash and merge feature/bug branches into `develop`.
+Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. **Squash and merge** feature/bug branches into `develop`.
 
-When changes are ready to be deployed to staging, merge `develop` into `staging`. This will trigger an automatic deployment to the production app by Heroku.
+When changes are ready to be deployed to staging, in Github create a PR to merge `develop` into `staging`. This should be a **merge** (not squashed). The merge will trigger an automatic deployment to the staging app by Heroku.
 
-When changes have been tested in staging, merge `staging` into `main`. This will trigger an automatic deployment to the production app by Heroku.
+When changes have been tested in staging, merge `staging` into `main`, following the same steps as above. This will trigger an automatic deployment to the production app by Heroku.
 
 **New environment variables must be added to Heroku before release.**
 
