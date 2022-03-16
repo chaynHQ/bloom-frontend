@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import StoryblokClient from 'storyblok-js-client';
+import StoryblokClient, { StoryParams } from 'storyblok-js-client';
 import { LANGUAGES } from '../constants/enums';
 
 const Storyblok = new StoryblokClient({
@@ -10,7 +10,12 @@ const Storyblok = new StoryblokClient({
   },
 });
 
-export function useStoryblok(originalStory: any, preview: boolean, params: {}, locale: LANGUAGES) {
+export function useStoryblok(
+  originalStory: any,
+  preview: boolean,
+  params: StoryParams,
+  locale: LANGUAGES,
+) {
   let [story, setStory] = useState(originalStory);
 
   // adds the events for updating the visual editor
@@ -28,12 +33,14 @@ export function useStoryblok(originalStory: any, preview: boolean, params: {}, l
       storyblokInstance.on(['change', 'published'], () => location.reload());
 
       // live update the story on input events
-      // doesnt currently work when using resolve_relations
-      // storyblokInstance.on('input', (event: any) => {
-      //   if (story && event.story._uid === story._uid) {
-      //     setStory(event.story);
-      //   }
-      // });
+      storyblokInstance.on('input', (event: any) => {
+        // doesnt currently work when using resolve_relations
+        if (!params || !params.resolve_relations) {
+          if (story && event.story._uid === story._uid) {
+            setStory(event.story);
+          }
+        }
+      });
 
       storyblokInstance.on('enterEditmode', (event: any) => {
         // loading the draft version on initial enter of editor

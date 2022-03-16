@@ -46,7 +46,7 @@ const Custom500: NextPage = () => {
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.token ? '/courses' : '/welcome'}
+        href={user.token ? '/courses' : '/login'}
       >
         {user.token ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}
       </Button>

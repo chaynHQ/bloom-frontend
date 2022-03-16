@@ -68,10 +68,10 @@ const LoginForm = () => {
           const returnUrl =
             typeof router.query.return_url === 'string' ? router.query.return_url : null;
 
-          if (returnUrl) {
-            router.push(returnUrl);
-          } else if (userResponse.data.partnerAdmin?.id) {
+          if (userResponse.data.partnerAdmin?.id) {
             router.push('/partner-admin/create-access-code');
+          } else if (returnUrl) {
+            router.push(returnUrl);
           } else {
             router.push('/courses');
           }

@@ -1,6 +1,7 @@
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
+import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 
 export interface Partner {
   id?: string;
@@ -9,6 +10,7 @@ export interface Partner {
   logoAlt: string;
   partnershipLogo?: StaticImageData;
   partnershipLogoAlt?: string;
+  bloomGirlIllustration?: StaticImageData;
   website: string;
   footerLine1: string;
   footerLine2: string;
@@ -38,6 +40,7 @@ export const bumbleContent: Partner = {
   logoAlt: 'alt.bumbleLogo',
   partnershipLogo: bloomBumbleLogo,
   partnershipLogoAlt: 'alt.bloomBumbleLogo',
+  bloomGirlIllustration: illustrationBloomHeadYellow,
   website: 'https://bumble.com',
   footerLine1: 'footer.bumbleLine1',
   footerLine2: 'footer.bumbleLine2',

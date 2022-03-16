@@ -29,7 +29,9 @@ const CodeForm = (props: CodeFormProps) => {
   const submitHandler = () => {
     router.push({
       pathname: '/auth/register',
-      query: partnerParam ? { partner: partnerParam, ...(codeInput && { code: codeInput }) } : {},
+      query: partnerParam
+        ? { partner: partnerParam.toLocaleLowerCase(), ...(codeInput && { code: codeInput }) }
+        : {},
     });
   };
 
@@ -40,7 +42,7 @@ const CodeForm = (props: CodeFormProps) => {
           id="accessCode"
           value={codeInput}
           onChange={(e) => setCodeInput(e.target.value)}
-          label={t('form.codeLabel')}
+          label={t.rich('form.codeLabel', { partnerName: partnerParam })}
           variant="standard"
           fullWidth
         />
