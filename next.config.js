@@ -26,13 +26,4 @@ module.exports = withPWA({
     dest: 'public',
     skipWaiting: true,
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/therapy/book-session',
-        permanent: false,
-      },
-    ];
-  },
 });
