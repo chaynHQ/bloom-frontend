@@ -13,7 +13,7 @@ const listStyle = {
   marginLeft: { xs: 0, md: 'auto' },
   marginRight: { xs: 0, md: 2 },
   flexDirection: { xs: 'column', md: 'row' },
-  gap: 2,
+  gap: { xs: 2, md: 1 },
 } as const;
 
 const listItemTextStyle = {
