@@ -29,9 +29,8 @@ const headerContainerStyles = {
   alignItems: 'end',
   minHeight: { xs: 220, lg: 360 },
   paddingTop: {
-    xs: '6rem !important',
+    xs: '7rem !important',
     sm: '8rem !important',
-    md: '6rem !important',
     lg: '7.5rem !important',
   },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
@@ -51,11 +50,10 @@ const textContainerStyle = {
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
   maxWidth: { xs: '100%', sm: '55%', md: '65%' },
-  minHeight: { xs: 180, md: 240 },
 } as const;
 
 const childrenContentStyle = {
-  marginBottom: 2,
+  marginBottom: 4,
 } as const;
 
 const textContentStyle = {
@@ -76,7 +74,7 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        <Box sx={childrenContentStyle}>{children}</Box>
+        {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1">
             {title}

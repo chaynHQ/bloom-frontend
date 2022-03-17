@@ -20,8 +20,8 @@ const drawerContainerStyle = {
 
 const logoContainerStyle = {
   position: 'relative',
-  width: 80,
-  height: 48,
+  width: 120,
+  height: 60,
   marginLeft: 2,
 } as const;
 
@@ -75,10 +75,10 @@ const NavigationDrawer = () => {
             size="large"
             sx={closeButtonStyle}
           ></Button>
-          <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
+          <Link href="/" mb={2} aria-label={t('home')} sx={logoContainerStyle}>
             <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
           </Link>
-          <NavigationMenu />
+          <NavigationMenu setAnchorEl={setAnchorEl} />
         </Container>
       </Drawer>
     </Box>
