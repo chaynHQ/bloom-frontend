@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -158,7 +158,16 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
-      />
+      >
+        <Button
+          variant="outlined"
+          href="/courses"
+          size="small"
+          // startIcon={<ChatBubbleOutlineIcon color="error" />}
+        >
+          Back to courses
+        </Button>
+      </Header>
       <Container sx={containerStyle}>
         {story.content.coming_soon && (
           <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>

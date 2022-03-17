@@ -26,13 +26,13 @@ const cardStyle = {
 
 const cardContentStyle = {
   padding: { xs: 2, md: 3 },
-  paddingBottom: { xs: 1, md: 1 },
+  paddingBottom: '0.5rem !important',
 } as const;
 
 const collapseContentStyle = {
   padding: { xs: 2, md: 3 },
   paddingTop: { xs: 0, md: 0 },
-  paddingBottom: { xs: 1, md: 1 },
+  paddingBottom: '0.5rem !important',
 } as const;
 
 const cardActionsStyle = {
@@ -44,6 +44,14 @@ const cardContentRowStyles = {
   ...rowStyle,
   justifyContent: 'flex-start',
   gap: 1.5,
+} as const;
+
+const cardActionStyle = {
+  '&:hover': {
+    borderBottom: '2px solid grey',
+    borderBottomColor: 'primary.main',
+    marginBottom: '-2px',
+  },
 } as const;
 
 interface SessionCardProps {
@@ -68,6 +76,7 @@ const SessionCard = (props: SessionCardProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea
+        sx={cardActionStyle}
         component={Link}
         href={`/${session.full_slug}`}
         aria-label={`${t('navigateToSession')} ${session.name}`}

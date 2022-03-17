@@ -14,7 +14,7 @@ let theme = createTheme({
       dark: '#FF976A',
     },
     background: {
-      default: '#FDF3EF',
+      default: '#FEF6F2',
     },
     error: {
       main: '#EA0050',
@@ -84,7 +84,9 @@ theme = createTheme(theme, {
           paddingTop: 60,
           paddingBottom: 60,
 
-          [theme.breakpoints.up('md')]: {
+          [theme.breakpoints.up('sm')]: {
+            paddingTop: 80,
+            paddingBottom: 80,
             paddingLeft: '5% !important',
             paddingRight: '5% !important',
           },
@@ -166,6 +168,22 @@ theme = createTheme(theme, {
             backgroundColor: theme.palette.secondary.light,
             borderColor: theme.palette.secondary.dark,
           },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: theme.palette.primary.main,
+          },
+          '& .MuiTouchRipple-root span': {
+            backgroundColor: theme.palette.primary.main,
+            opacity: 0.2,
+          },
+        },
+        focusHighlight: {
+          backgroundColor: lighten(theme.palette.primary.main, 0.2),
         },
       },
     },

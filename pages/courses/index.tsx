@@ -20,15 +20,16 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
-  paddingTop: { xs: 2, sm: 6 },
+  paddingY: { xs: 4, sm: 6, md: 8 },
 } as const;
 
 const cardColumnStyle = {
   ...columnStyle,
   justifyContent: 'flex-start',
+  margin: { xs: 'auto', md: '0' },
   width: { xs: '100%', md: 'calc(50% - 1rem)' },
   maxWidth: 520,
-  gap: { xs: 0, sm: 2, md: 4 },
+  gap: { xs: 0, md: 4 },
 } as const;
 
 interface Props {
@@ -101,7 +102,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, stories, courses]);
+  }, [partnerAccesses, partnerAdmin, stories, courses]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
