@@ -13,7 +13,7 @@ export const getSimplybookWidgetConfig = (user?: User) => {
       secondary_color: '#FFBFA4',
       sb_text_color: '#757575',
       display_item_mode: 'block',
-      body_bg_color: '#FDF3EF',
+      body_bg_color: '#FFF8F4',
       sb_background_image: '',
       sb_review_image: '',
       dark_font_color: '#424242',

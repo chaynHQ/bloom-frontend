@@ -16,7 +16,7 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
   const rowStyles = {
     width: '100%',
-    gap: { xs: 10 / columns.length, md: 16 / columns.length },
+    gap: { xs: 3, sm: 8 / columns.length, md: 10 / columns.length, lg: 16 / columns.length },
     ...rowStyle,
     textAlign:
       horizontal_alignment === 'center'

@@ -32,6 +32,7 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
     blockquote: {
       fontSize: { xs: `${fontSize.xs}rem`, md: `${fontSize.md}rem` },
       lineHeight: `calc(${fontSize.md} * 1.75rem)`,
+      marginX: 0,
 
       '&:before': {
         content: 'open-quote',

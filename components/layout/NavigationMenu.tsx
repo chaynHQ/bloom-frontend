@@ -3,7 +3,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import { useTypedSelector } from '../../hooks/store';
 import Link from '../common/Link';
@@ -13,10 +13,13 @@ const listStyle = {
   marginLeft: { xs: 0, md: 'auto' },
   marginRight: { xs: 0, md: 2 },
   flexDirection: { xs: 'column', md: 'row' },
+  gap: { xs: 2, md: 1 },
 } as const;
 
-const listItemStyle = {
-  width: 'auto',
+const listItemTextStyle = {
+  span: {
+    fontSize: 18,
+  },
 } as const;
 
 const listButtonStyle = {
@@ -34,7 +37,12 @@ interface NavigationItem {
   href: string;
 }
 
-const NavigationMenu = () => {
+interface NavigationMenuProps {
+  setAnchorEl?: Dispatch<SetStateAction<null | HTMLElement>>;
+}
+
+const NavigationMenu = (props: NavigationMenuProps) => {
+  const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
@@ -73,11 +81,11 @@ const NavigationMenu = () => {
   }, [partnerAccesses, t, user.token, partnerAdmin]);
 
   return (
-    <List sx={listStyle}>
+    <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
       {navigationLinks.map((link) => (
-        <ListItem sx={listItemStyle} key={link.title} disablePadding>
+        <ListItem key={link.title} disablePadding>
           <ListItemButton sx={listButtonStyle} component={Link} href={link.href}>
-            <ListItemText primary={link.title} />
+            <ListItemText sx={listItemTextStyle} primary={link.title} />
           </ListItemButton>
         </ListItem>
       ))}

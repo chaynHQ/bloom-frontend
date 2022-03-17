@@ -55,7 +55,7 @@ const Footer = () => {
   const [partners, setPartners] = useState<Partner[] | null>(null);
   const router = useRouter();
 
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const addUniquePartner = (partnersList: Partner[], partnerName: string) => {
     if (!partnersList.find((p) => p.name === partnerName)) {
@@ -67,6 +67,10 @@ const Footer = () => {
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses }));
     let partnersList: Partner[] = [getPartnerContent('public')];
+
+    if (partnerAdmin && partnerAdmin.partner) {
+      addUniquePartner(partnersList, partnerAdmin.partner.name);
+    }
 
     partnerAccesses.forEach((partnerAccess) => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
