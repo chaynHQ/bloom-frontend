@@ -51,17 +51,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
     let links: Array<NavigationItem> = [];
 
     if (partnerAdmin && partnerAdmin.partner) {
-      const partnerName = partnerAdmin.partner.name.toLocaleLowerCase();
       links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
-      links.push({
-        title: t('about'),
-        href: `/welcome/${partnerName}`,
-      });
-    } else {
-      links.push({
-        title: t('about'),
-        href: '/',
-      });
     }
 
     if (user.token) {
