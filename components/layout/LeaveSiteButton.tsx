@@ -9,7 +9,7 @@ const containerStyles = {
   position: 'fixed',
   textAlign: 'right',
   right: { xs: 16, lg: 80 },
-  top: { xs: 15, md: 25 },
+  top: { xs: 15, sm: 30, md: 15 },
   zIndex: 100,
 } as const;
 

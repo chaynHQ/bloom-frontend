@@ -17,7 +17,6 @@ import { useCompleteSessionMutation, useStartSessionMutation } from '../../../ap
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
-import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
 import Video from '../../../components/video/Video';
@@ -78,13 +77,12 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
-  story = useStoryblok(story, preview, sbParams, messages);
+  story = useStoryblok(story, preview, sbParams, locale);
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
@@ -258,14 +256,16 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, messages, lo
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress}
           >
-            <Typography>
-              <Link href={`/courses`}>{t('courses')}</Link> /{' '}
-              <Link href={`/${story.content.course.full_slug}`}>
-                {story.content.course.content.name}
-              </Link>
-            </Typography>
+            <Button variant="outlined" href="/courses" size="small">
+              Courses
+            </Button>
 
-            <Typography mt={0.5}>
+            <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
+
+            <Button variant="outlined" href={`/${story.content.course.full_slug}`} size="small">
+              {story.content.course.content.name}
+            </Button>
+            <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">
               {weekString} - {t('session')} {story.position / 10 - 1}
             </Typography>
           </Header>
