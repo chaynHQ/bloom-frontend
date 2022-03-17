@@ -256,12 +256,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress}
           >
-            <Button
-              variant="outlined"
-              href="/courses"
-              size="small"
-              // startIcon={<ChatBubbleOutlineIcon color="error" />}
-            >
+            <Button variant="outlined" href="/courses" size="small">
               Courses
             </Button>
 
@@ -270,7 +265,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
             <Button variant="outlined" href={`/${story.content.course.full_slug}`} size="small">
               {story.content.course.content.name}
             </Button>
-            <Typography mt={1.5} ml={3} variant="body2">
+            <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">
               {weekString} - {t('session')} {story.position / 10 - 1}
             </Typography>
           </Header>

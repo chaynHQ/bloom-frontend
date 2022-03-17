@@ -159,12 +159,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
       >
-        <Button
-          variant="outlined"
-          href="/courses"
-          size="small"
-          // startIcon={<ChatBubbleOutlineIcon color="error" />}
-        >
+        <Button variant="outlined" href="/courses" size="small">
           Back to courses
         </Button>
       </Header>
