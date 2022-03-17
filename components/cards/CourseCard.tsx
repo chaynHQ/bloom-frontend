@@ -28,8 +28,16 @@ const cardContentStyle = {
   ...rowStyle,
   gap: 2,
   padding: { xs: 2, md: 3 },
-  paddingBottom: { xs: 1, md: 1 },
+  paddingBottom: '0.5rem !important',
   minHeight: { xs: 124, md: 136 },
+} as const;
+
+const cardActionStyle = {
+  '&:hover': {
+    borderBottom: '2px solid grey',
+    borderBottomColor: 'primary.main',
+    marginBottom: '-2px',
+  },
 } as const;
 
 const imageContainerStyle = {
@@ -41,7 +49,7 @@ const imageContainerStyle = {
 const collapseContentStyle = {
   padding: { xs: 2, md: 3 },
   paddingTop: { xs: 0, md: 0 },
-  paddingBottom: { xs: 1, md: 1 },
+  paddingBottom: '0.5rem !important',
 } as const;
 
 const cardActionsStyle = {
@@ -71,6 +79,7 @@ const CourseCard = (props: CourseCardProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea
+        sx={cardActionStyle}
         component={Link}
         href={`/${course.full_slug}`}
         aria-label={`${t('navigateToCourse')} ${course.content.name}`}

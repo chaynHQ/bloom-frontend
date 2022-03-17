@@ -4,7 +4,8 @@ import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { RootState } from '../app/store';
 import TeamMemberCard from '../components/cards/TeamMemberCard';
 import Header from '../components/layout/Header';
@@ -15,6 +16,7 @@ import { MEET_THE_TEAM_VIEWED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import { columnStyle, rowStyle } from '../styles/common';
 import logEvent, { getEventUserData } from '../utils/logEvent';
+import { RichTextOptions } from '../utils/richText';
 
 const coreContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -39,12 +41,12 @@ const cardColumnRowStyle = {
 interface Props {
   story: StoryData;
   preview: boolean;
-  messages: any;
+  sbParams: StoriesParams;
   locale: LANGUAGES;
 }
 
-const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
-  story = useStoryblok(story, preview, {}, locale);
+const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
+  story = useStoryblok(story, preview, sbParams, locale);
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses });
@@ -128,7 +130,9 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, messages, locale }) => {
           {story.content.supporting_team_title}
         </Typography>
         {story.content.supporting_team_description && (
-          <Typography maxWidth={650}>{story.content.supporting_team_description}</Typography>
+          <Box maxWidth={650}>
+            {render(story.content.supporting_team_description, RichTextOptions)}
+          </Box>
         )}
         <Box sx={cardColumnRowStyle}>
           <Box sx={cardColumnStyle}>
@@ -174,6 +178,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     props: {
       story: data ? data.story : null,
       preview,
+      sbParams,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),

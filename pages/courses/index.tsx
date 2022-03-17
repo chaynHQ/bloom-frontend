@@ -5,7 +5,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
+import { StoryData, StoryParams } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
@@ -20,25 +20,26 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
-  paddingTop: { xs: 2, sm: 6 },
+  paddingY: { xs: 4, sm: 6, md: 8 },
 } as const;
 
 const cardColumnStyle = {
   ...columnStyle,
   justifyContent: 'flex-start',
+  margin: { xs: 'auto', md: '0' },
   width: { xs: '100%', md: 'calc(50% - 1rem)' },
   maxWidth: 520,
-  gap: { xs: 0, sm: 2, md: 4 },
+  gap: { xs: 0, md: 4 },
 } as const;
 
 interface Props {
   stories: StoryData[];
   preview: boolean;
-  messages: any;
+  sbParams: StoryParams;
   locale: LANGUAGES;
 }
 
-const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => {
+const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
@@ -101,7 +102,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, messages, locale }) => 
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, stories, courses]);
+  }, [partnerAccesses, partnerAdmin, stories, courses]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
@@ -176,6 +177,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     props: {
       stories: data ? data.stories : null,
       preview,
+      sbParams,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),

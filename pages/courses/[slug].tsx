@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -51,11 +51,10 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
@@ -159,7 +158,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, messages, l
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
-      />
+      >
+        <Button variant="outlined" href="/courses" size="small">
+          Back to courses
+        </Button>
+      </Header>
       <Container sx={containerStyle}>
         {story.content.coming_soon && (
           <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>

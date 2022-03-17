@@ -9,6 +9,7 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import PartnerHeader from '../components/layout/PartnerHeader';
@@ -19,10 +20,21 @@ import { useTypedSelector } from '../hooks/store';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../public/welcome_to_bloom.svg';
 import { rowStyle } from '../styles/common';
+import { RichTextOptions } from '../utils/richText';
 
-const textContainerStyle = {
+const introContainerStyle = {
   maxWidth: 600,
   width: { xs: '100%', md: '45%' },
+  fontSize: '1.375rem',
+  fontFamily: 'Montserrat, sans-serif',
+  fontStyle: 'italic',
+  lineHeight: 1.75,
+  'p, a, span': {
+    fontSize: '1.375rem',
+    fontFamily: 'Montserrat, sans-serif',
+    fontStyle: 'italic',
+    lineHeight: 1.75,
+  },
 } as const;
 
 const rowItem = {
@@ -34,11 +46,10 @@ interface Props {
   story: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
-  messages: any;
   locale: LANGUAGES;
 }
 
-const Index: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) => {
+const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
   const { user } = useTypedSelector((state: RootState) => state);
 
@@ -63,11 +74,7 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, messages, locale }) 
         imageAlt={headerProps.imageAlt}
       />
       <Container sx={{ ...rowStyle, backgroundColor: 'primary.light' }}>
-        <Box sx={textContainerStyle}>
-          <Typography pb={2} variant="subtitle1" component="p">
-            {story.content.introduction}
-          </Typography>
-        </Box>
+        <Box sx={introContainerStyle}>{render(story.content.introduction, RichTextOptions)}</Box>
         <Card sx={rowItem}>
           <CardContent>
             {user.token ? (

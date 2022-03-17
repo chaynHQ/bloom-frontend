@@ -27,15 +27,20 @@ interface HeaderProps {
 const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
-  minHeight: { xs: 220, md: 410 },
-  paddingTop: { xs: '7rem !important', md: '8.5rem !important' },
+  minHeight: { xs: 220, lg: 360 },
+  paddingTop: {
+    xs: '7rem !important',
+    sm: '8rem !important',
+    lg: '7.5rem !important',
+  },
+  paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 180, md: 240 },
-  height: { xs: 180, md: 240 },
+  width: { xs: 180, sm: 200, lg: 220 },
+  height: { xs: 180, sm: 200, lg: 220 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: 'auto', md: 0 },
 } as const;
@@ -43,13 +48,12 @@ const imageContainerStyle = {
 const textContainerStyle = {
   ...columnStyle,
   justifyContent: 'space-between',
-  width: { xs: '100%', md: 'auto' },
-  maxWidth: { xs: '100%', md: '65%' },
-  minHeight: { xs: 180, md: 240 },
+  width: { xs: '100%', sm: 'auto' },
+  maxWidth: { xs: '100%', sm: '55%', md: '65%' },
 } as const;
 
 const childrenContentStyle = {
-  marginBottom: 2,
+  marginBottom: 4,
 } as const;
 
 const textContentStyle = {
@@ -70,7 +74,7 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={textContainerStyle}>
-        <Box sx={childrenContentStyle}>{children}</Box>
+        {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1">
             {title}

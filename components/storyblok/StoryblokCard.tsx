@@ -16,6 +16,12 @@ const StoryblokCard = (props: StoryblokCardProps) => {
 
   if (!image || !image.filename) return <></>;
 
+  const cardStyle = {
+    '&:first-child': {
+      marginTop: 0,
+    },
+  } as const;
+
   const cardContentStyle = {
     display: 'flex',
     flexDirection:
@@ -33,7 +39,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   } as const;
 
   return (
-    <Card>
+    <Card sx={cardStyle}>
       <CardContent sx={cardContentStyle}>
         {image && image.filename && (
           <Box sx={imageContainerStyle}>

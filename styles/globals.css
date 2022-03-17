@@ -19,6 +19,17 @@ ul > li::marker {
   color: #ea0050;
 }
 
+ul,
+ol {
+  padding-left: 2rem;
+}
+
+ul > li,
+ol > li {
+  padding-left: 0.5rem;
+  margin-bottom: 0.325rem;
+}
+
 ol > li::marker {
   color: #ea0050;
   font-weight: bold;
