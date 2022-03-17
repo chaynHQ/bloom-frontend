@@ -38,7 +38,7 @@ interface NavigationItem {
 }
 
 interface NavigationMenuProps {
-  setAnchorEl: Dispatch<SetStateAction<null | HTMLElement>>;
+  setAnchorEl?: Dispatch<SetStateAction<null | HTMLElement>>;
 }
 
 const NavigationMenu = (props: NavigationMenuProps) => {
@@ -81,7 +81,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   }, [partnerAccesses, t, user.token, partnerAdmin]);
 
   return (
-    <List sx={listStyle} onClick={() => setAnchorEl(null)}>
+    <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
       {navigationLinks.map((link) => (
         <ListItem key={link.title} disablePadding>
           <ListItemButton sx={listButtonStyle} component={Link} href={link.href}>
