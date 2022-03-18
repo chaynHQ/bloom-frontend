@@ -33,7 +33,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
+        router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       }
     }
 
@@ -52,7 +52,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
 
     if (!user.token) {
-      router.replace(`/auth/login${generateReturnQuery(router.pathname)}`);
+      router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       return;
     }
 
