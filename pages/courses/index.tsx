@@ -161,7 +161,6 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
   let sbParams = {
     language: locale,
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     starts_with: 'courses/',
     sort_by: 'position:desc',
     filter_query: {

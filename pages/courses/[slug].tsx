@@ -210,7 +210,6 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     ...extraSbParams,
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
   };
 

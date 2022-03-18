@@ -131,7 +131,6 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const sbParams = {
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
   };
 

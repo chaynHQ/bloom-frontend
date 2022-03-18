@@ -168,7 +168,6 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
   let sbParams = {
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
   };
 
