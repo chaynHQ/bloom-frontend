@@ -146,6 +146,10 @@ theme = createTheme(theme, {
         },
         containedPrimary: {
           borderColor: 'transparent',
+          '&.Mui-disabled': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.grey[800],
+          },
         },
         containedSecondary: {
           borderColor: 'transparent',
@@ -155,6 +159,10 @@ theme = createTheme(theme, {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.secondary.dark,
             opacity: 0.1,
+          },
+          '&.Mui-disabled': {
+            backgroundColor: theme.palette.secondary.main,
+            color: `${theme.palette.common.white} !important`,
           },
         },
         outlinedSecondary: {
@@ -167,6 +175,17 @@ theme = createTheme(theme, {
           '&:hover': {
             backgroundColor: theme.palette.secondary.light,
             borderColor: theme.palette.secondary.dark,
+          },
+        },
+        containedError: {
+          backgroundColor: theme.palette.primary.dark,
+          color: theme.palette.common.white,
+          '&:hover': {
+            backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+          },
+          '&.Mui-disabled': {
+            backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+            color: `${theme.palette.common.white} !important`,
           },
         },
       },

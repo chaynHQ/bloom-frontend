@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { Box, lighten } from '@mui/system';
+import { Box } from '@mui/system';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
@@ -11,15 +11,6 @@ const containerStyles = {
   right: { xs: 16, lg: 80 },
   top: { xs: 15, sm: 30, md: 15 },
   zIndex: 100,
-} as const;
-
-const buttonStyle = {
-  backgroundColor: 'primary.dark',
-  color: 'common.white',
-
-  '&:hover': {
-    backgroundColor: lighten('#EA0050', 0.3),
-  },
 } as const;
 
 const LeaveSiteButton = () => {
@@ -35,7 +26,7 @@ const LeaveSiteButton = () => {
 
   return (
     <Box sx={containerStyles}>
-      <Button color="primary" onClick={hideSite} sx={buttonStyle}>
+      <Button onClick={hideSite} disabled variant="contained" color="error">
         {tS('leaveSiteButton')}
       </Button>
     </Box>
