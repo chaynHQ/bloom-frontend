@@ -60,6 +60,7 @@ export const EmailForm = () => {
           onChange={(e) => setEmailInput(e.target.value)}
           label={t('emailLabel')}
           variant="standard"
+          type="email"
           fullWidth
           required
         />
