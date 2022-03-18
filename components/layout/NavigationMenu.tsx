@@ -50,23 +50,26 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (partnerAdmin && partnerAdmin.partner) {
-      links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
+    if (!user.loading) {
+      if (partnerAdmin && partnerAdmin.partner) {
+        links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
+      }
+
+      if (user.token) {
+        links.push({ title: t('courses'), href: '/courses' });
+      } else {
+        links.push({ title: t('login'), href: '/auth/login' });
+      }
+
+      const therapyAccess = partnerAccesses.find(
+        (partnerAccess) => partnerAccess.featureTherapy === true,
+      );
+
+      if (!!therapyAccess) {
+        links.push({ title: t('therapy'), href: '/therapy/book-session' });
+      }
     }
 
-    if (user.token) {
-      links.push({ title: t('courses'), href: '/courses' });
-    } else {
-      links.push({ title: t('login'), href: '/auth/login' });
-    }
-
-    const therapyAccess = partnerAccesses.find(
-      (partnerAccess) => partnerAccess.featureTherapy === true,
-    );
-
-    if (!!therapyAccess) {
-      links.push({ title: t('therapy'), href: '/therapy/book-session' });
-    }
     setNavigationLinks(links);
   }, [partnerAccesses, t, user, partnerAdmin]);
 

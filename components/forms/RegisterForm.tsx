@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../../app/api';
-import { setUserToken } from '../../app/userSlice';
+import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
@@ -173,8 +173,10 @@ const RegisterForm = (props: RegisterFormProps) => {
 
     try {
       partnerContent && (await validateAccessCode());
+      dispatch(setUserLoading(true));
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
+      dispatch(setUserLoading(false));
       router.push('/courses');
     } catch {
       // errors handled in each function
