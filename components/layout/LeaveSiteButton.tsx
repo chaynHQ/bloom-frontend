@@ -26,7 +26,7 @@ const LeaveSiteButton = () => {
 
   return (
     <Box sx={containerStyles}>
-      <Button onClick={hideSite} disabled variant="contained" color="error">
+      <Button onClick={hideSite} variant="contained" color="error">
         {tS('leaveSiteButton')}
       </Button>
     </Box>

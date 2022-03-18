@@ -31,7 +31,7 @@ const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const router = useRouter();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
