@@ -10,10 +10,6 @@ import { faqItem } from '../../constants/faqs';
 import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
-const containerStyle = {
-  width: '100%',
-  maxWidth: 650,
-} as const;
 interface StoryblokFaqsProps {
   faqs: Array<faqItem>;
 }
@@ -29,7 +25,7 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
     };
 
   return (
-    <Box sx={containerStyle}>
+    <Box>
       {faqs.map((faq, i) => (
         <Accordion key={`panel${i}`} onChange={handleChange(faq.title)}>
           <AccordionSummary
