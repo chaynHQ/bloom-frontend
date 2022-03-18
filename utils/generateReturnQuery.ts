@@ -1,3 +1,5 @@
 export default function generateReturnUrlQuery(pathname: string) {
-  return `?return_url=${encodeURIComponent(pathname)}`;
+  return pathname.indexOf('/courses/') > -1
+    ? `?return_url=${encodeURIComponent('/courses')}`
+    : `?return_url=${encodeURIComponent(pathname)}`;
 }
