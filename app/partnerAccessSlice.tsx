@@ -42,7 +42,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     clearPartnerAccessesSlice: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
   extraReducers: (builder) => {

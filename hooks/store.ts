@@ -9,8 +9,8 @@ export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const clearStore = async () => {
-  clearPartnerAccessesSlice();
-  clearPartnerAdminSlice();
-  clearCoursesSlice();
-  clearUserSlice();
+  await clearPartnerAccessesSlice();
+  await clearPartnerAdminSlice();
+  await clearCoursesSlice();
+  await clearUserSlice();
 };

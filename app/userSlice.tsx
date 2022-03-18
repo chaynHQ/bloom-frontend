@@ -36,7 +36,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     clearUserSlice: (state) => {
-      state = initialState;
+      return initialState;
     },
     setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
