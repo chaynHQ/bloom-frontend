@@ -24,7 +24,7 @@ export const RichTextOptions: RenderOptions = {
     ['quote']: (props: any) => <StoryblokQuote {...props} />,
     ['card']: (props: any) => <StoryblokCard {...props} />,
     ['button']: (props: any) => <StoryblokButton {...props} />,
-    ['faqs']: (props: any) => <StoryblokFaqs {...props} />,
+    ['faq_list']: (props: any) => <StoryblokFaqs {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
