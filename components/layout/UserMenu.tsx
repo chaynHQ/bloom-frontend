@@ -6,8 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { api } from '../../app/api';
+import { clearCoursesSlice } from '../../app/coursesSlice';
+import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
+import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
+import { clearUserSlice } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
-import { clearStore } from '../../hooks/store';
+import { useAppDispatch } from '../../hooks/store';
 
 const menuButtonStyle = {
   color: 'text.primary',
@@ -33,6 +38,7 @@ const buttonStyle = {
 export default function UserMenu() {
   const router = useRouter();
   const t = useTranslations('Navigation');
+  const dispatch: any = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -45,8 +51,15 @@ export default function UserMenu() {
   };
 
   const logout = async () => {
-    await clearStore();
+    // clear all state
+    await dispatch(clearPartnerAccessesSlice());
+    await dispatch(clearPartnerAdminSlice());
+    await dispatch(clearCoursesSlice());
+    await dispatch(clearUserSlice());
+    await dispatch(api.util.resetApiState());
+    // sign out of firebase
     await auth.signOut();
+
     router.push('/auth/login');
   };
 

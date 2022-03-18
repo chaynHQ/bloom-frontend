@@ -68,7 +68,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       links.push({ title: t('therapy'), href: '/therapy/book-session' });
     }
     setNavigationLinks(links);
-  }, [partnerAccesses, t, user.token, partnerAdmin]);
+  }, [partnerAccesses, t, user, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
