@@ -13,7 +13,9 @@
     "register": {
       "title": "Create account",
       "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
-      "moreInfoTitle": "Find out more"
+      "moreInfo": "More on <welcomeLink>how Bloom works</welcomeLink>.",
+      "partnershipsTitle": "Our partnerships",
+      "partnershipsDescription": "If you're coming to Bloom from one of our partners, click their logo below."
     },
     "resetPassword": {
       "title": "Reset your password"
