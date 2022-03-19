@@ -48,7 +48,7 @@
     },
     "accessGuard": {
       "title": "Terapia no disponible",
-      "introduction\r": "Tu cuenta de Bloom no incluye acceso a sesiones de terapia. Si esto no parece correcto, <contactLink>envíale un mensaje al equipo de Bloom</contactLink>."
+      "introduction": "Tu cuenta de Bloom no incluye acceso a sesiones de terapia. Si esto no parece correcto, <contactLink>envíale un mensaje al equipo de Bloom</contactLink>."
     }
   }
 }

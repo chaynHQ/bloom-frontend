@@ -31,6 +31,5 @@
     "errors": {
       "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."
     }
-  },
-  "\r": "\r\n"
+  }
 }

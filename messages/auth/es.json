@@ -44,7 +44,7 @@
         "weakPassword": "Tu contraseña necesita ser un poquito más larga, así será más segura.",
         "emailAlreadyInUse": "Este email ya está registrado en Bloom. Ve al <loginLink>inicio de sesión</loginLink> para continuar.",
         "invalidCode": "Este link de recuperación de contraseña no es válido. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez.",
-        "expiredCode\r": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez\r\n"
+        "expiredCode": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez."
       }
     }
   }
