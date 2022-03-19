@@ -1,3 +1,4 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -105,6 +106,8 @@ interface PasswordFormProps {
 
 export const PasswordForm = (props: PasswordFormProps) => {
   const { codeParam } = props;
+
+  const [loading, setLoading] = useState<boolean>(false);
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [formError, setFormError] = useState<
     | string
@@ -115,13 +118,16 @@ export const PasswordForm = (props: PasswordFormProps) => {
   const [formSuccess, setFormSuccess] = useState<boolean>(false);
 
   const t = useTranslations('Auth.form');
-  const resetPasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     auth
       .confirmPasswordReset(codeParam, passwordInput)
       .then(() => {
         setFormSuccess(true);
+        setLoading(false);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -145,6 +151,8 @@ export const PasswordForm = (props: PasswordFormProps) => {
             }),
           );
         }
+        setLoading(false);
+        throw error;
       });
   };
 
@@ -169,7 +177,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
   return (
     <Box>
       <Typography mb={2}>{t('resetPasswordStep2')}</Typography>
-      <form autoComplete="off" onSubmit={resetPasswordSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           id="password"
           onChange={(e) => setPasswordInput(e.target.value)}
@@ -184,16 +192,16 @@ export const PasswordForm = (props: PasswordFormProps) => {
             {formError}
           </Typography>
         )}
-
-        <Button
+        <LoadingButton
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"
           type="submit"
+          loading={loading}
         >
-          {codeParam ? t('resetPasswordSubmit') : t('resetPasswordSubmit')}
-        </Button>
+          {t('resetPasswordSubmit')}
+        </LoadingButton>
       </form>
     </Box>
   );

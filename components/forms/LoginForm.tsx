@@ -1,6 +1,6 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -31,6 +31,7 @@ const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const router = useRouter();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -43,6 +44,7 @@ const LoginForm = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     setFormError('');
     logEvent(LOGIN_REQUEST);
 
@@ -77,6 +79,7 @@ const LoginForm = () => {
           } else {
             router.push('/courses');
           }
+          setLoading(false);
         }
         if ('error' in userResponse) {
           const errorMessage = getErrorMessage(userResponse.error);
@@ -91,6 +94,7 @@ const LoginForm = () => {
             }),
           );
           dispatch(setUserLoading(false));
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -106,6 +110,8 @@ const LoginForm = () => {
         if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
           setFormError(t('firebase.authError'));
         }
+        setLoading(false);
+        throw error;
       });
   };
 
@@ -136,15 +142,16 @@ const LoginForm = () => {
           </Typography>
         )}
 
-        <Button
+        <LoadingButton
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"
           type="submit"
+          loading={loading}
         >
           {t('loginSubmit')}
-        </Button>
+        </LoadingButton>
       </form>
     </Box>
   );

@@ -1,3 +1,4 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
   FormControl,
   FormControlLabel,
@@ -32,6 +33,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   const { partnerAdmin } = props;
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedTier, setSelectedTier] = useState<PARTNER_ACCESS_FEATURES | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
@@ -47,8 +49,9 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
     process.env.NEXT_PUBLIC_BASE_URL
   }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}?code=${partnerAccessCode}`;
 
-  const submitHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!selectedTier) {
       setFormError(t('form.errors.featureRequired'));
@@ -95,9 +98,11 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       rollbar.error('User register create user error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
+      setLoading(false);
       throw error;
     }
 
+    setLoading(false);
     setFormSubmitSuccess(true);
   };
 
@@ -129,7 +134,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           welcomeURL: (children) => <Link href={welcomeURL}>{welcomeURL}</Link>,
         })}
       </Typography>
-      <Typography>
+      <Typography mt={2}>
         {t.rich('resultCode', {
           partnerAccessCode: (children) => <strong>{partnerAccessCode}</strong>,
         })}
@@ -140,7 +145,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
   );
 
   const Form = () => (
-    <form autoComplete="off">
+    <form autoComplete="off" onSubmit={submitHandler}>
       <FormControl fullWidth component="fieldset">
         <FormLabel component="legend">{t('form.featuresLabel')}</FormLabel>
         <RadioGroup
@@ -172,9 +177,16 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           {formError}
         </Typography>
       )}
-      <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={submitHandler}>
+
+      <LoadingButton
+        sx={{ mt: 3 }}
+        variant="contained"
+        color="secondary"
+        type="submit"
+        loading={loading}
+      >
         {t('title')}
-      </Button>
+      </LoadingButton>
     </form>
   );
 
