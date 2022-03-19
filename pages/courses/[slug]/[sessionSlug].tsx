@@ -282,6 +282,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                       titleIcon={SlowMotionVideoIcon}
                       eventPrefix="SESSION_VIDEO"
                       eventData={eventData}
+                      initialExpanded={true}
                     >
                       <Typography mb={3}>
                         {t.rich('sessionDetail.videoDescription', {
