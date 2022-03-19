@@ -50,7 +50,11 @@ const Faqs = (props: FaqsProps) => {
               {t.rich(faq.body, {
                 partnerName: partnerName,
                 ...(faq.link && {
-                  faqLink: (children) => <Link href={faq.link ? faq.link : '#'}>{children}</Link>,
+                  faqLink: (children) => (
+                    <Link href={faq.link ? faq.link : '#'} target="_blank">
+                      {children}
+                    </Link>
+                  ),
                 }),
               })}
             </Typography>
