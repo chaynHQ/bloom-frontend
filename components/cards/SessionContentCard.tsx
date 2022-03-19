@@ -25,6 +25,7 @@ interface SessionContentCardProps {
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
   titleIconSize?: number;
   richtextContent?: boolean;
+  initialExpanded?: boolean;
   eventPrefix: string;
   eventData: {};
 }
@@ -36,13 +37,14 @@ const SessionContentCard = (props: SessionContentCardProps) => {
     titleIcon,
     titleIconSize = 28,
     richtextContent = false,
+    initialExpanded = false,
     eventPrefix,
     eventData,
   } = props;
   const t = useTranslations('Courses');
   const TitleIcon = titleIcon;
   eventPrefix;
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(initialExpanded);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
