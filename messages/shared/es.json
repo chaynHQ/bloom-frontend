@@ -1,57 +1,55 @@
 {
   "Shared": {
-    "bloom": "Bloom",
-    "leaveSiteButton": "Salir del sitio",
-    "footer": {
-      "chaynDescription": "Bloom is brought to you by Chayn, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
-      "bloomLine1": "Built by CHAYN CIO.",
-      "bloomLine2": "UK Charity Number: 1196098",
-      "bumbleLine1": "In partnership with",
-      "bumbleLine2": "BUMBLE HOLDING LTD",
-      "policies": "Our policies"
-    },
-    "videoTranscript": {
-      "title": "Video transcript",
-      "description": "Read the transcript for video - ",
-      "closeModal": "Close transcript"
-    },
-    "progressStatus": {
-      "started": "Started",
-      "completed": "Completed",
-      "notStarted": "Not started"
-    },
-    "meetTheTeam": {
-      "expandTeamMember": "Expand bio for {name}"
-    },
     "404": {
       "title": "404 - Página no encontrada",
-      "authenticatedDescription": "No se pudo encontrar la página. Revisa la url o vuelve a la página de cursos",
-      "unauthenticatedDescription": "TNo se pudo encontrar la página. Revisa la url o vuelve a la página de bienvenida",
+      "authenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de cursos.",
+      "unauthenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de inicio.",
       "authenticatedRedirectButton": "Regresar a la página de cursos",
-      "unauthenticatedRedirectButton": "Regresar a la página de bienvenida"
+      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
     },
     "500": {
-      "title": "500 - Error interno",
-      "description": "Hmm, algo no va bien. Por favor, vuelve atrás e inténtalo de nuevo. Envíanos un mensaje a través del formulario de contacto si el error persiste.",
+      "title": "500 - error interno",
+      "description": "Mmm, algo salió mal. Por favor regresa y vuélvelo a intentar. Escríbenos a través del formulario de contacto si el error continúa.",
       "authenticatedRedirectButton": "Regresar a la página de cursos",
-      "unauthenticatedRedirectButton": "Regresar a la página de bienvenida"
+      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
     },
+    "bloom": "Bloom",
+    "leaveSiteButton": "Salir de este sitio",
+    "footer": {
+      "chaynDescription": "Bloom es traído por Chayn, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
+      "bloomLine1": "Construído por CHAYN CIO.",
+      "bloomLine2": "Número de Caridad del RU: 1196098",
+      "bumbleLine1": "En asociación con",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "policies": "Nuestras políticas"
+    },
+    "videoTranscript": {
+      "title": "Transcripción del video",
+      "description": "Lee la transcripción del video -",
+      "closeModal": "Cerrar transcripción"
+    },
+    "progressStatus": {
+      "started": "Empezado",
+      "completed": "Completo",
+      "notStarted": "Sin empezar"
+    },
+    "meetTheTeam": { "expandTeamMember": "Expandir biografía para {name}" },
     "alt": {
-      "bloomLogo": "Bloom logo",
-      "bumbleLogo": "Bumble logo",
-      "bloomBumbleLogo": "Bloom for Bumble logo",
-      "welcomeToBloom": "Welcome to Bloom",
-      "tiktokLogo": "Tiktok logo",
-      "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
-      "beehive": "Illustration of a bee hive",
-      "leafMix": "Illustration of two leaves joined with a rose",
-      "leafMixBee": "Illustration of two leaves with a bee hovering above",
-      "personTea": "Illustration of a person sitting, holding a tea",
-      "personSitting": "Illustration of a person sitting",
-      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
-      "dateSelector": "Illustration of a calendar with a heart in the middle",
-      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
-      "confidential": "Illustration of a document with a lock in the corner"
+      "bloomLogo": "Logo de Bloom",
+      "bumbleLogo": "Logo de Bumble",
+      "bloomBumbleLogo": "Logo de Bloom para Bumble",
+      "welcomeToBloom": "Te damos la bienvenida a Bloom",
+      "tiktokLogo": "Logo de Tiktok",
+      "bloomHead": "Ilustración de la cara y hombros de una persona, con hojas grandes y flores floreciendo arriba de éstas",
+      "beehive": "Ilustración de una colmena",
+      "leafMix": "Ilustración de dos hojas unidas por una rosa",
+      "leafMixBee": "Ilustración de dos hojas con una abeja volando encima",
+      "personTea": "Ilustración de una persona sentada, sosteniendo una taza de té",
+      "personSitting": "Ilustración de una persona sentada",
+      "chooseTherapist": "Ilustración de una persona de perfil, con una flor",
+      "dateSelector": "Ilustración de un calendario con un corazón en el centro",
+      "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
+      "confidential": "Ilustración de un documento con un candado en una esquina"
     }
   }
 }
