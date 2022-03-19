@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../../app/api';
-import { setUserToken } from '../../app/userSlice';
+import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import {
@@ -51,6 +51,7 @@ const LoginForm = () => {
       .then(async (userCredential) => {
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_USER_REQUEST);
+        dispatch(setUserLoading(true));
 
         const token = await userCredential.user?.getIdToken();
 
@@ -67,6 +68,7 @@ const LoginForm = () => {
           // because a query value can be an array
           const returnUrl =
             typeof router.query.return_url === 'string' ? router.query.return_url : null;
+          dispatch(setUserLoading(false));
 
           if (userResponse.data.partnerAdmin?.id) {
             router.push('/partner-admin/create-access-code');
@@ -88,6 +90,7 @@ const LoginForm = () => {
               ),
             }),
           );
+          dispatch(setUserLoading(false));
         }
       })
       .catch((error) => {
