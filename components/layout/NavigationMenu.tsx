@@ -10,10 +10,16 @@ import Link from '../common/Link';
 
 const listStyle = {
   display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },
+  height: '100%',
   marginLeft: { xs: 0, md: 'auto' },
   marginRight: { xs: 0, md: 2 },
-  flexDirection: { xs: 'column', md: 'row' },
   gap: { xs: 2, md: 1 },
+} as const;
+
+const listItemStyle = {
+  width: 'auto',
+  mb: 0,
 } as const;
 
 const listItemTextStyle = {
@@ -35,6 +41,7 @@ const listButtonStyle = {
 interface NavigationItem {
   title: string;
   href: string;
+  target?: string;
 }
 
 interface NavigationMenuProps {
@@ -68,6 +75,14 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       if (!!therapyAccess) {
         links.push({ title: t('therapy'), href: '/therapy/book-session' });
       }
+
+      if (!partnerAdmin.partner) {
+        links.push({
+          title: t('immediateHelp'),
+          href: 'https://www.chayn.co/help',
+          target: '_blank',
+        });
+      }
     }
 
     setNavigationLinks(links);
@@ -76,8 +91,13 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
       {navigationLinks.map((link) => (
-        <ListItem key={link.title} disablePadding sx={{ mb: 0 }}>
-          <ListItemButton sx={listButtonStyle} component={Link} href={link.href}>
+        <ListItem sx={listItemStyle} key={link.title} disablePadding>
+          <ListItemButton
+            sx={listButtonStyle}
+            component={Link}
+            href={link.href}
+            target={link.target || '_self'}
+          >
             <ListItemText sx={listItemTextStyle} primary={link.title} />
           </ListItemButton>
         </ListItem>
