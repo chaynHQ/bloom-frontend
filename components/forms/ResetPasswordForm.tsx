@@ -152,6 +152,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           );
         }
         setLoading(false);
+        throw error;
       });
   };
 
@@ -198,9 +199,8 @@ export const PasswordForm = (props: PasswordFormProps) => {
           color="secondary"
           type="submit"
           loading={loading}
-          loadingPosition="end"
         >
-          {codeParam ? t('resetPasswordSubmit') : t('resetPasswordSubmit')}
+          {t('resetPasswordSubmit')}
         </LoadingButton>
       </form>
     </Box>

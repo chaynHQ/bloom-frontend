@@ -255,7 +255,6 @@ const RegisterForm = (props: RegisterFormProps) => {
           color="secondary"
           type="submit"
           loading={loading}
-          loadingPosition="end"
         >
           {t('registerSubmit')}
         </LoadingButton>

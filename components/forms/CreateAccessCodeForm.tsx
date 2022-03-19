@@ -98,6 +98,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       rollbar.error('User register create user error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
+      setLoading(false);
       throw error;
     }
 
@@ -133,7 +134,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
           welcomeURL: (children) => <Link href={welcomeURL}>{welcomeURL}</Link>,
         })}
       </Typography>
-      <Typography>
+      <Typography mt={2}>
         {t.rich('resultCode', {
           partnerAccessCode: (children) => <strong>{partnerAccessCode}</strong>,
         })}
@@ -183,7 +184,6 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         color="secondary"
         type="submit"
         loading={loading}
-        loadingPosition="end"
       >
         {t('title')}
       </LoadingButton>

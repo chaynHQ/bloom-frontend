@@ -79,6 +79,7 @@ const LoginForm = () => {
           } else {
             router.push('/courses');
           }
+          setLoading(false);
         }
         if ('error' in userResponse) {
           const errorMessage = getErrorMessage(userResponse.error);
@@ -93,8 +94,8 @@ const LoginForm = () => {
             }),
           );
           dispatch(setUserLoading(false));
+          setLoading(false);
         }
-        setLoading(false);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -110,6 +111,7 @@ const LoginForm = () => {
           setFormError(t('firebase.authError'));
         }
         setLoading(false);
+        throw error;
       });
   };
 
@@ -147,7 +149,6 @@ const LoginForm = () => {
           color="secondary"
           type="submit"
           loading={loading}
-          loadingPosition="end"
         >
           {t('loginSubmit')}
         </LoadingButton>

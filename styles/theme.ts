@@ -147,7 +147,7 @@ theme = createTheme(theme, {
         containedPrimary: {
           borderColor: 'transparent',
           '&.Mui-disabled': {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: lighten(theme.palette.primary.main, 0.2),
             color: theme.palette.grey[800],
           },
         },
@@ -161,8 +161,8 @@ theme = createTheme(theme, {
             opacity: 0.1,
           },
           '&.Mui-disabled': {
-            backgroundColor: theme.palette.secondary.main,
-            color: `${theme.palette.common.white} !important`,
+            backgroundColor: lighten(theme.palette.secondary.main, 0.2),
+            color: theme.palette.grey[800],
           },
         },
         outlinedSecondary: {
