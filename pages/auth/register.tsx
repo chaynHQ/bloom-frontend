@@ -32,8 +32,13 @@ const textContainerStyle = {
   width: { xs: '100%', md: '45%' },
 } as const;
 
-const formContainerStyle = {
+const cardContainerStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
+  alignSelf: 'flex-start',
+} as const;
+
+const publicCardStyle = {
+  width: { xs: '100%', sm: 'auto' },
   alignSelf: 'flex-start',
 } as const;
 
@@ -43,6 +48,14 @@ const imageContainerStyle = {
   height: { xs: 70, md: 80 },
   marginBottom: 3,
   marginTop: { xs: 0, md: 2 },
+} as const;
+
+const logoContainerStyle = {
+  display: 'block',
+  position: 'relative',
+  flex: 1,
+  height: 48,
+  maxWidth: 200,
 } as const;
 
 const Register: NextPage = () => {
@@ -82,12 +95,12 @@ const Register: NextPage = () => {
         <Box sx={imageContainerStyle}>
           <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
         </Box>
-        <Typography variant="h3" component="h3">
-          {t('register.moreInfoTitle')}
-        </Typography>
         {partnerContent ? (
           // Show only the partner's welcome page link
           <>
+            <Typography variant="h3" component="h3">
+              {t('register.moreInfoTitle')}
+            </Typography>
             <Link
               mt="1rem !important"
               href={`/welcome/${partnerContent.name.toLowerCase()}${
@@ -100,22 +113,36 @@ const Register: NextPage = () => {
         ) : (
           // Show the public bloom and all other partner's welcome page links
           <>
-            <Typography>
-              <Link href="/">{t('getStartedBloom')}</Link>
-            </Typography>
-
-            {allPartnersContent?.map((partner) => (
-              <Typography key={`${partner.name}-link`} mt={0.5}>
-                <Link
-                  mt="1rem !important"
-                  href={`/welcome/${partner.name.toLowerCase()}${
-                    codeParam && '?code=' + codeParam
-                  }`}
-                >
-                  {t.rich('getStartedWith', { partnerName: partner.name })}
-                </Link>
-              </Typography>
-            ))}
+            <Card sx={publicCardStyle}>
+              <CardContent>
+                <Typography variant="h3" component="h3">
+                  Our partnerships
+                </Typography>
+                <Typography>
+                  If you&apos;re coming to Bloom from one of our partners, click their logo below.
+                </Typography>
+                <Box sx={{ ...rowStyle, gap: 4 }}>
+                  {allPartnersContent?.map((partner) => (
+                    <Link
+                      sx={logoContainerStyle}
+                      key={`${partner.name}-link`}
+                      aria-label={tS(partner.logoAlt)}
+                      mt="1rem !important"
+                      href={`/welcome/${partner.name.toLowerCase()}${
+                        codeParam && '?code=' + codeParam
+                      }`}
+                    >
+                      <Image
+                        alt={tS(partner.logoAlt)}
+                        src={partner.logo}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </Link>
+                  ))}
+                </Box>
+              </CardContent>
+            </Card>
           </>
         )}
       </>
@@ -140,7 +167,7 @@ const Register: NextPage = () => {
           </Typography>
           {!isSmallScreen && <ExtraContent />}
         </Box>
-        <Box sx={formContainerStyle}>
+        <Box sx={cardContainerStyle}>
           <Card>
             <CardContent>
               <Typography variant="h2" component="h2">
