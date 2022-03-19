@@ -208,6 +208,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           onChange={(e) => setEmailInput(e.target.value)}
           label={t('emailLabel')}
           variant="standard"
+          type="email"
           fullWidth
           required
         />
