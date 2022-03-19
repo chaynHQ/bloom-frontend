@@ -76,7 +76,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
       {navigationLinks.map((link) => (
-        <ListItem key={link.title} disablePadding>
+        <ListItem key={link.title} disablePadding sx={{ mb: 0 }}>
           <ListItemButton sx={listButtonStyle} component={Link} href={link.href}>
             <ListItemText sx={listItemTextStyle} primary={link.title} />
           </ListItemButton>
