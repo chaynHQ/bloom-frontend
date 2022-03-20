@@ -17,6 +17,7 @@ import { useCompleteSessionMutation, useStartSessionMutation } from '../../../ap
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
+import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
 import Video from '../../../components/video/Video';
@@ -256,13 +257,18 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress}
           >
-            <Button variant="outlined" href="/courses" size="small">
+            <Button variant="outlined" href="/courses" size="small" component={Link}>
               Courses
             </Button>
 
             <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
-            <Button variant="outlined" href={`/${story.content.course.full_slug}`} size="small">
+            <Button
+              variant="outlined"
+              href={`/${story.content.course.full_slug}`}
+              size="small"
+              component={Link}
+            >
               {story.content.course.content.name}
             </Button>
             <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">

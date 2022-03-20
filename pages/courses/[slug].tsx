@@ -159,7 +159,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
       >
-        <Button variant="outlined" href="/courses" size="small">
+        <Button variant="outlined" href="/courses" size="small" component={Link}>
           Back to courses
         </Button>
       </Header>
