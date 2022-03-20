@@ -209,13 +209,17 @@ theme = createTheme(theme, {
     MuiMenu: {
       styleOverrides: {
         root: {
-          top: 10,
+          top: 4,
+
+          [theme.breakpoints.up('sm')]: {
+            top: 12,
+          },
         },
         paper: {
           borderRadius: 14,
         },
         list: {
-          padding: 10,
+          padding: 6,
         },
       },
     },
