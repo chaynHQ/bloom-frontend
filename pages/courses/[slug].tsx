@@ -18,6 +18,7 @@ import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -73,20 +74,10 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_name: story.content.name,
     course_storyblok_id: story.id,
   };
+
   const courseComingSoon: boolean = story.content.coming_soon;
-
-  const courseLiveSoon: boolean =
-    story.content.live_start_date &&
-    (Date.parse(story.content.live_start_date) > Date.now() ||
-      (Date.parse(story.content.live_end_date) > Date.now() && courseComingSoon)) && // catch for late release
-    story.content.live_soon_content;
-
-  const courseLiveNow: boolean =
-    !courseComingSoon && // catch for late release
-    story.content.live_start_date &&
-    Date.parse(story.content.live_start_date) < Date.now() &&
-    Date.parse(story.content.live_end_date) > Date.now() &&
-    story.content.live_now_content;
+  const courseLiveSoon: boolean = courseIsLiveSoon(story.content);
+  const courseLiveNow: boolean = courseIsLiveNow(story.content);
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
