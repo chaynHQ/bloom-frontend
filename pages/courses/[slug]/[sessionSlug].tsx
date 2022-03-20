@@ -87,7 +87,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   story = useStoryblok(story, preview, sbParams, locale);
   const course = story.content.course.content;
 
-  const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
@@ -104,6 +106,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const courseComingSoon: boolean = course.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(course);
   const courseLiveNow: boolean = courseIsLiveNow(course);
+  // only show live content to public users
+  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const eventData = {
     ...eventUserData,
@@ -139,8 +143,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     const liveAccess = partnerAccesses.find(
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
-    if (liveAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, course.included_for_partners]);
+
+    if (liveAccess || (liveCourseAccess && courseLiveNow)) setLiveChatAccess(true);
+  }, [partnerAccesses, course.included_for_partners, courseLiveNow]);
 
   useEffect(() => {
     course.weeks.map((week: any) => {

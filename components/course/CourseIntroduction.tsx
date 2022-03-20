@@ -29,11 +29,12 @@ interface CourseIntroductionProps {
   course: StoryData;
   courseLiveSoon: boolean;
   courseLiveNow: boolean;
+  liveCourseAccess: boolean;
   eventData: {};
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
-  const { course, courseLiveSoon, courseLiveNow, eventData } = props;
+  const { course, courseLiveSoon, courseLiveNow, liveCourseAccess, eventData } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
 
   const t = useTranslations('Courses');
@@ -89,14 +90,14 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           openTranscriptModal={openTranscriptModal}
         />
         {/* Video position switches column depending on if live content shown */}
-        {(courseLiveSoon || courseLiveNow) && <IntroductionVideo />}
+        {liveCourseAccess && (courseLiveSoon || courseLiveNow) && <IntroductionVideo />}
       </Box>
-      {courseLiveSoon ? (
+      {liveCourseAccess && courseLiveSoon ? (
         <Box flex={1}>
           <CourseStatusHeader status="liveSoon" />
           {render(course.content.live_soon_content, RichTextOptions)}
         </Box>
-      ) : courseLiveNow ? (
+      ) : liveCourseAccess && courseLiveNow ? (
         <Box flex={1}>
           <CourseStatusHeader status="liveNow" />
           {render(course.content.live_now_content, RichTextOptions)}

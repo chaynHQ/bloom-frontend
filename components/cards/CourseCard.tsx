@@ -69,10 +69,11 @@ const statusRowStyle = {
 interface CourseCardProps {
   course: StoryData;
   courseProgress: PROGRESS_STATUS | null;
+  liveCourseAccess: boolean;
 }
 
 const CourseCard = (props: CourseCardProps) => {
-  const { course, courseProgress } = props;
+  const { course, courseProgress, liveCourseAccess } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
   const router = useRouter();
@@ -114,13 +115,13 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
-        {courseComingSoon && !courseLiveSoon && (
+        {courseComingSoon && (!courseLiveSoon || !liveCourseAccess) && (
           <Box sx={statusRowStyle}>
             <PendingOutlined color="error" />
             <Typography>{t('comingSoon')}</Typography>
           </Box>
         )}
-        {courseLiveSoon && (
+        {courseLiveSoon && liveCourseAccess && (
           <Box sx={statusRowStyle}>
             <Event color="error" />
             <Typography>
@@ -130,7 +131,7 @@ const CourseCard = (props: CourseCardProps) => {
             </Typography>
           </Box>
         )}
-        {courseLiveNow && (
+        {courseLiveNow && liveCourseAccess && (
           <Box sx={statusRowStyle}>
             <Event color="error" />
             <Typography>

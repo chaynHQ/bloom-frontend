@@ -62,7 +62,9 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   story = useStoryblok(story, preview, sbParams, locale);
 
-  const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -74,6 +76,8 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   const courseComingSoon: boolean = story.content.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(story.content);
   const courseLiveNow: boolean = courseIsLiveNow(story.content);
+  // only show live content to public users
+  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const eventData = {
     ...eventUserData,
@@ -176,7 +180,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
       <Container sx={containerStyle}>
         {courseComingSoon ? (
           <>
-            {courseLiveSoon ? (
+            {liveCourseAccess && courseLiveSoon ? (
               <Box maxWidth={700}>
                 <CourseStatusHeader status="liveSoon" />
                 {render(story.content.live_soon_content, RichTextOptions)}
@@ -196,6 +200,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                 eventData={eventData}
                 courseLiveSoon={courseLiveSoon}
                 courseLiveNow={courseLiveNow}
+                liveCourseAccess={liveCourseAccess}
               />
             )}
             <Box sx={sessionsContainerStyle}>
