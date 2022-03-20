@@ -9,6 +9,9 @@
     "expandSummary": "Expand summary for",
     "navigateToSession": "Navigate to session -",
     "navigateToCourse": "Navigate to course -",
+    "liveFrom": "Live from {date}",
+    "liveUntil": "Live until {date}",
+    "comingSoon": "Coming soon",
     "noCourses": "There are no courses to display right now. If this doesn't seem right, try again later or contact the Bloom team.",
     "courseDetail": {
       "introductionTitle": "Course introduction",

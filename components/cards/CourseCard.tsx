@@ -1,4 +1,4 @@
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Event, KeyboardArrowDown, PendingOutlined } from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
@@ -11,10 +11,13 @@ import {
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import { rowStyle } from '../../styles/common';
+import { iconTextRowStyle, rowStyle } from '../../styles/common';
+import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
+import { formatDateToString } from '../../utils/dateTime';
 import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -57,10 +60,11 @@ const cardActionsStyle = {
   alignItems: 'end',
 } as const;
 
-const rowStyles = {
-  ...rowStyle,
-  gap: 1.5,
-} as const;
+const statusRowStyle = {
+  ...iconTextRowStyle,
+  marginTop: 0,
+  marginLeft: 1,
+};
 
 interface CourseCardProps {
   course: StoryData;
@@ -71,6 +75,12 @@ const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
+  const router = useRouter();
+  const locale = router.locale || 'en';
+
+  const courseComingSoon: boolean = course.content.coming_soon;
+  const courseLiveSoon: boolean = courseIsLiveSoon(course.content);
+  const courseLiveNow: boolean = courseIsLiveNow(course.content);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -104,13 +114,40 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
+        {courseComingSoon && !courseLiveSoon && (
+          <Box sx={statusRowStyle}>
+            <PendingOutlined color="error" />
+            <Typography>{t('comingSoon')}</Typography>
+          </Box>
+        )}
+        {courseLiveSoon && (
+          <Box sx={statusRowStyle}>
+            <Event color="error" />
+            <Typography>
+              {t.rich('liveFrom', {
+                date: formatDateToString(course.content.live_start_date, locale),
+              })}
+            </Typography>
+          </Box>
+        )}
+        {courseLiveNow && (
+          <Box sx={statusRowStyle}>
+            <Event color="error" />
+            <Typography>
+              {t.rich('liveUntil', {
+                date: formatDateToString(course.content.live_end_date, locale),
+              })}
+            </Typography>
+          </Box>
+        )}
+
         <IconButton
           sx={{ marginLeft: 'auto' }}
           aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"
         >
-          <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
+          <KeyboardArrowDown color="error"></KeyboardArrowDown>
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
