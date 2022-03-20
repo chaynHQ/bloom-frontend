@@ -11,8 +11,9 @@ import {
 import { rowStyle } from '../../styles/common';
 import { logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-import Video from './Video';
-import VideoTranscriptModal from './VideoTranscriptModal';
+import Video from '../video/Video';
+import VideoTranscriptModal from '../video/VideoTranscriptModal';
+import CourseStatusHeader from './CourseStatusHeader';
 
 const containerStyle = {
   ...rowStyle,
@@ -91,9 +92,15 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
         {(courseLiveSoon || courseLiveNow) && <IntroductionVideo />}
       </Box>
       {courseLiveSoon ? (
-        <Box flex={1}>{render(course.content.live_soon_content, RichTextOptions)}</Box>
+        <Box flex={1}>
+          <CourseStatusHeader status="liveSoon" />
+          {render(course.content.live_soon_content, RichTextOptions)}
+        </Box>
       ) : courseLiveNow ? (
-        <Box flex={1}>{render(course.content.live_now_content, RichTextOptions)}</Box>
+        <Box flex={1}>
+          <CourseStatusHeader status="liveNow" />
+          {render(course.content.live_now_content, RichTextOptions)}
+        </Box>
       ) : (
         <IntroductionVideo />
       )}

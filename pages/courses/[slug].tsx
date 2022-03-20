@@ -10,8 +10,9 @@ import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import SessionCard from '../../components/cards/SessionCard';
 import Link from '../../components/common/Link';
+import CourseIntroduction from '../../components/course/CourseIntroduction';
+import CourseStatusHeader from '../../components/course/CourseStatusHeader';
 import Header from '../../components/layout/Header';
-import CourseIntroduction from '../../components/video/CourseIntroduction';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
@@ -172,9 +173,15 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         {courseComingSoon ? (
           <>
             {courseLiveSoon ? (
-              <Box maxWidth={700}>{render(story.content.live_soon_content, RichTextOptions)}</Box>
+              <Box maxWidth={700}>
+                <CourseStatusHeader status="liveSoon" />
+                {render(story.content.live_soon_content, RichTextOptions)}
+              </Box>
             ) : (
-              <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
+              <Box maxWidth={700}>
+                <CourseStatusHeader status="comingSoon" />
+                {render(story.content.coming_soon_content, RichTextOptions)}
+              </Box>
             )}
           </>
         ) : (

@@ -11,6 +11,8 @@
     "navigateToCourse": "Navegar al curso -",
     "liveFrom": "Live from {date}",
     "liveUntil": "Live until {date}",
+    "liveSoon": "Live soon",
+    "liveNow": "Live now",
     "comingSoon": "Coming soon",
     "noCourses": "En este momento no hay cursos para mostrar. Si esto no parece correcto, inténtalo de nuevo más tarde, o contacta al equipo de Bloom.",
     "courseDetail": {
