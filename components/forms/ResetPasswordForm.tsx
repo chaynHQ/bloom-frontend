@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { auth } from '../../config/firebase';
@@ -24,12 +25,17 @@ export const EmailForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
+  const router = useRouter();
   const t = useTranslations('Auth.form');
 
   const sendResetEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError('');
     logEvent(RESET_PASSWORD_REQUEST);
+
+    if (router.locale) {
+      auth.languageCode = router.locale;
+    }
 
     auth
       .sendPasswordResetEmail(emailInput)
