@@ -73,6 +73,20 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_name: story.content.name,
     course_storyblok_id: story.id,
   };
+  const courseComingSoon: boolean = story.content.coming_soon;
+
+  const courseLiveSoon: boolean =
+    story.content.live_start_date &&
+    (Date.parse(story.content.live_start_date) > Date.now() ||
+      (Date.parse(story.content.live_end_date) > Date.now() && courseComingSoon)) && // catch for late release
+    story.content.live_soon_content;
+
+  const courseLiveNow: boolean =
+    !courseComingSoon && // catch for late release
+    story.content.live_start_date &&
+    Date.parse(story.content.live_start_date) < Date.now() &&
+    Date.parse(story.content.live_end_date) > Date.now() &&
+    story.content.live_now_content;
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
@@ -164,12 +178,24 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         </Button>
       </Header>
       <Container sx={containerStyle}>
-        {story.content.coming_soon && (
-          <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
-        )}
-        {!story.content.coming_soon && (
+        {courseComingSoon ? (
           <>
-            {story.content.video && <CourseIntroduction course={story} eventData={eventData} />}
+            {courseLiveSoon ? (
+              <Box maxWidth={700}>{render(story.content.live_soon_content, RichTextOptions)}</Box>
+            ) : (
+              <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
+            )}
+          </>
+        ) : (
+          <>
+            {story.content.video && (
+              <CourseIntroduction
+                course={story}
+                eventData={eventData}
+                courseLiveSoon={courseLiveSoon}
+                courseLiveNow={courseLiveNow}
+              />
+            )}
             <Box sx={sessionsContainerStyle}>
               {story.content.weeks.map((week: any) => {
                 return (
