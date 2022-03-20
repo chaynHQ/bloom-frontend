@@ -37,7 +37,7 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
 
   const t = useTranslations('Courses');
-  console.log('courseLiveSoon', courseLiveSoon, 'courseLiveNow', courseLiveNow);
+
   useEffect(() => {
     if (openTranscriptModal === null) {
       return;

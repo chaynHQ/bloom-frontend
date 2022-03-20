@@ -39,6 +39,7 @@ import {
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../../styles/common';
+import { courseIsLiveNow, courseIsLiveSoon } from '../../../utils/courseLiveStatus';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
@@ -84,6 +85,7 @@ interface Props {
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
   story = useStoryblok(story, preview, sbParams, locale);
+  const course = story.content.course.content;
 
   const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
@@ -99,13 +101,21 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
 
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const courseComingSoon: boolean = course.coming_soon;
+  const courseLiveSoon: boolean = courseIsLiveSoon(course);
+  const courseLiveNow: boolean = courseIsLiveNow(course);
+
   const eventData = {
     ...eventUserData,
     session_name: story.content.name,
     session_storyblok_id: story.id,
-    course_name: story.content.course.content.name,
+    course_name: course.name,
     course_storyblok_id: story.content.course.id,
+    course_coming_soon: courseComingSoon,
+    course_live_soon: courseLiveSoon,
+    course_live_now: courseLiveNow,
   };
+
   const headerProps = {
     title: story.content.name,
     introduction: story.content.description,
@@ -114,7 +124,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   };
 
   useEffect(() => {
-    const coursePartners = story.content.course.content.included_for_partners;
+    const coursePartners = course.included_for_partners;
 
     if (partnerAccesses.length === 0 && coursePartners.includes('Public')) {
       setIncorrectAccess(false);
@@ -130,10 +140,10 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
     if (liveAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, story.content.course.content.included_for_partners]);
+  }, [partnerAccesses, course.included_for_partners]);
 
   useEffect(() => {
-    story.content.course.content.weeks.map((week: any) => {
+    course.weeks.map((week: any) => {
       week.sessions.map((session: any) => {
         session === story.uuid && setWeekString(week.name);
       });
@@ -269,7 +279,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
               size="small"
               component={Link}
             >
-              {story.content.course.content.name}
+              {course.name}
             </Button>
             <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">
               {weekString} - {t('session')} {story.position / 10 - 1}

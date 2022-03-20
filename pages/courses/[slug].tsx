@@ -70,15 +70,19 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
   const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
   const eventUserData = getEventUserData({ user, partnerAccesses });
-  const eventData = {
-    ...eventUserData,
-    course_name: story.content.name,
-    course_storyblok_id: story.id,
-  };
 
   const courseComingSoon: boolean = story.content.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(story.content);
   const courseLiveNow: boolean = courseIsLiveNow(story.content);
+
+  const eventData = {
+    ...eventUserData,
+    course_name: story.content.name,
+    course_storyblok_id: story.id,
+    course_coming_soon: courseComingSoon,
+    course_live_soon: courseLiveSoon,
+    course_live_now: courseLiveNow,
+  };
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
