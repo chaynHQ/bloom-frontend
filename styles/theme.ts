@@ -208,11 +208,14 @@ theme = createTheme(theme, {
     },
     MuiMenu: {
       styleOverrides: {
+        root: {
+          top: 10,
+        },
         paper: {
           borderRadius: 14,
         },
         list: {
-          padding: 6,
+          padding: 10,
         },
       },
     },
@@ -228,11 +231,21 @@ theme = createTheme(theme, {
             borderColor: theme.palette.primary.main,
           },
 
-          '& a': {
-            display: 'block',
+          '& button, & a': {
+            display: 'flex',
+            justifyContent: 'flex-start',
             width: '100%',
-            padding: '6px 10px',
-            textAlign: 'center',
+            paddingX: 6,
+            paddingY: 12,
+            color: theme.palette.text.primary,
+            fontWeight: 400,
+
+            ':hover': { backgroundColor: theme.palette.background.default },
+
+            '& .MuiTouchRipple-root span': {
+              backgroundColor: theme.palette.primary.main,
+              opacity: 0.2,
+            },
           },
         },
       },
@@ -240,6 +253,7 @@ theme = createTheme(theme, {
     MuiListItemButton: {
       styleOverrides: {
         root: {
+          paddingY: 4,
           '&:hover': {
             backgroundColor: theme.palette.background.default,
           },

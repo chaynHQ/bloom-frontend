@@ -24,7 +24,7 @@ const listItemStyle = {
 
 const listItemTextStyle = {
   span: {
-    fontSize: 18,
+    fontSize: 16,
   },
 } as const;
 
@@ -32,6 +32,8 @@ const listButtonStyle = {
   borderRadius: 20,
   color: 'text.primary',
   fontFamily: 'Monterrat, sans-serif',
+  paddingY: 0.5,
+
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
