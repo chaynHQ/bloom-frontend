@@ -20,7 +20,7 @@ module.exports = withPWA({
   i18n: {
     locales: ['en', 'es'],
     defaultLocale: 'en',
-    localeDetection: false,
+    localeDetection: true,
   },
   pwa: {
     dest: 'public',
