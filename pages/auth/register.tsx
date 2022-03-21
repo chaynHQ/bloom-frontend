@@ -18,7 +18,7 @@ import RegisterForm from '../../components/forms/RegisterForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { getAllPartnersContent, getPartnerContent, Partner } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
+import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 
@@ -32,17 +32,36 @@ const textContainerStyle = {
   width: { xs: '100%', md: '45%' },
 } as const;
 
-const formContainerStyle = {
+const cardContainerStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
+  alignSelf: 'flex-start',
+} as const;
+
+const publicCardStyle = {
+  width: { xs: '100%', sm: 'auto' },
   alignSelf: 'flex-start',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 120, md: 160 },
-  height: { xs: 70, md: 80 },
+  width: { xs: 140, md: 160 },
+  height: { xs: 80, md: 80 },
   marginBottom: 3,
   marginTop: { xs: 0, md: 2 },
+} as const;
+
+const logoContainerStyle = {
+  display: 'block',
+  position: 'relative',
+  flex: 1,
+  height: 48,
+  maxWidth: 165,
+} as const;
+
+const logosContainerStyle = {
+  ...rowStyle,
+  gap: 4,
+  justifyContent: 'flex-start',
 } as const;
 
 const Register: NextPage = () => {
@@ -80,42 +99,54 @@ const Register: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+          <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} layout="fill" />
         </Box>
-        <Typography variant="h3" component="h3">
-          {t('register.moreInfoTitle')}
-        </Typography>
         {partnerContent ? (
           // Show only the partner's welcome page link
-          <>
-            <Link
-              mt="1rem !important"
-              href={`/welcome/${partnerContent.name.toLowerCase()}${
-                codeParam && '?code=' + codeParam
-              }`}
-            >
-              {t('getStartedWith')} {partnerContent.name}
-            </Link>
-          </>
-        ) : (
-          // Show the public bloom and all other partner's welcome page links
-          <>
-            <Typography>
-              <Link href="/">{t('getStartedBloom')}</Link>
-            </Typography>
-
-            {allPartnersContent?.map((partner) => (
-              <Typography key={`${partner.name}-link`} mt={0.5}>
+          <Typography mt="2rem !important">
+            {t.rich('register.moreInfo', {
+              welcomeLink: (children) => (
                 <Link
-                  mt="1rem !important"
-                  href={`/welcome/${partner.name.toLowerCase()}${
+                  href={`/welcome/${partnerContent.name.toLowerCase()}${
                     codeParam && '?code=' + codeParam
                   }`}
                 >
-                  {t.rich('getStartedWith', { partnerName: partner.name })}
+                  {children}
                 </Link>
-              </Typography>
-            ))}
+              ),
+            })}
+          </Typography>
+        ) : (
+          // Show the public bloom and all other partner's welcome page links
+          <>
+            <Card sx={publicCardStyle}>
+              <CardContent>
+                <Typography variant="h3" component="h3">
+                  {t('register.partnershipsTitle')}
+                </Typography>
+                <Typography>{t('register.partnershipsDescription')}</Typography>
+                <Box sx={logosContainerStyle}>
+                  {allPartnersContent?.map((partner) => (
+                    <Link
+                      sx={logoContainerStyle}
+                      key={`${partner.name}-link`}
+                      aria-label={tS(partner.logoAlt)}
+                      mt="1rem !important"
+                      href={`/welcome/${partner.name.toLowerCase()}${
+                        codeParam && '?code=' + codeParam
+                      }`}
+                    >
+                      <Image
+                        alt={tS(partner.logoAlt)}
+                        src={partner.logo}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </Link>
+                  ))}
+                </Box>
+              </CardContent>
+            </Card>
           </>
         )}
       </>
@@ -140,7 +171,7 @@ const Register: NextPage = () => {
           </Typography>
           {!isSmallScreen && <ExtraContent />}
         </Box>
-        <Box sx={formContainerStyle}>
+        <Box sx={cardContainerStyle}>
           <Card>
             <CardContent>
               <Typography variant="h2" component="h2">
