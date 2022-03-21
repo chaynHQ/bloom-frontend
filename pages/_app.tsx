@@ -43,7 +43,7 @@ function MyApp(props: MyAppProps) {
 
   const dispatch: any = useAppDispatch();
   const router = useRouter();
-  const pathname = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
+  const pathname = router.asPath.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_ENV === 'staging') {
@@ -65,7 +65,17 @@ function MyApp(props: MyAppProps) {
   // Adds required permissions guard to pages, redirecting where required permissions are missing
   // New pages will default to requiring authenticated and public pages must be added to the array below
   const ComponentWithGuard = () => {
-    const publicPaths = ['', 'index', 'welcome', 'auth', 'action-handler', '404', '500'];
+    const publicPaths = [
+      '',
+      'index',
+      'welcome',
+      'auth',
+      'action-handler',
+      '404',
+      '500',
+      'faqs',
+      'meet-the-team',
+    ];
     const component = <Component {...pageProps} />;
     let children = null;
 

@@ -11,6 +11,7 @@ import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
+import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
 import UserMenu from './UserMenu';
@@ -23,9 +24,9 @@ const appBarStyle = {
 const appBarContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
+  alignContent: 'center',
   height: { xs: 48, sm: 64 },
-  paddingTop: '0 !important',
-  paddingBottom: '0 !important',
+  padding: '0 !important',
 } as const;
 
 const logoContainerStyle = {
@@ -52,7 +53,7 @@ const TopBar = () => {
         </Link>
         {!isSmallScreen && <NavigationMenu />}
         {user.token && <UserMenu />}
-        {/* <LanguageMenu /> */}
+        <LanguageMenu />
       </Container>
     </AppBar>
   );

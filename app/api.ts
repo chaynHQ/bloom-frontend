@@ -96,6 +96,15 @@ export const api = createApi({
         };
       },
     }),
+    assignPartnerAccess: builder.mutation<PartnerAccess, { partnerAccessCode: string }>({
+      query(body) {
+        return {
+          url: 'partner-access/assign',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
     addPartnerAccess: builder.mutation<PartnerAccess, Partial<PartnerAccess>>({
       query(body) {
         return {
@@ -129,6 +138,7 @@ export const api = createApi({
 export const {
   useGetUserMutation,
   useAddUserMutation,
+  useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,
   useCompleteSessionMutation,

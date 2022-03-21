@@ -1,6 +1,6 @@
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useAddUserMutation, useValidateCodeMutation } from '../../app/api';
-import { setUserToken } from '../../app/userSlice';
+import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
@@ -42,6 +42,7 @@ interface RegisterFormProps {
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerContent } = props;
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>('');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
@@ -92,9 +93,11 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerContent?.name, message: error });
+        setLoading(false);
         throw error;
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerContent?.name, message: error });
+      setLoading(false);
       throw error;
     }
     logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerContent?.name });
@@ -131,6 +134,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             }),
           );
         }
+        setLoading(false);
         throw error;
       });
     return firebaseUser;
@@ -163,19 +167,25 @@ const RegisterForm = (props: RegisterFormProps) => {
           ),
         }),
       );
+      setLoading(false);
+
       throw error;
     }
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     setFormError('');
 
     try {
       partnerContent && (await validateAccessCode());
+      dispatch(setUserLoading(true));
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
+      dispatch(setUserLoading(false));
       router.push('/courses');
+      setLoading(false);
     } catch {
       // errors handled in each function
     }
@@ -208,6 +218,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           onChange={(e) => setEmailInput(e.target.value)}
           label={t('emailLabel')}
           variant="standard"
+          type="email"
           fullWidth
           required
         />
@@ -237,16 +248,16 @@ const RegisterForm = (props: RegisterFormProps) => {
           />
         </FormControl>
 
-        <Button
+        <LoadingButton
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           fullWidth
-          disabled={createIsLoading || validateIsLoading}
           color="secondary"
           type="submit"
+          loading={loading}
         >
           {t('registerSubmit')}
-        </Button>
+        </LoadingButton>
       </form>
     </Box>
   );

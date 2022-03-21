@@ -37,7 +37,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     clearPartnerAdminSlice: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
   extraReducers: (builder) => {

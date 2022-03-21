@@ -68,7 +68,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     clearCoursesSlice: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
   extraReducers: (builder) => {

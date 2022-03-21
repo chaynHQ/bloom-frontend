@@ -1,6 +1,9 @@
+import badooLogo from '../public/badoo_logo.svg';
+import bloomBadooLogo from '../public/bloom_badoo_logo.svg';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
+import illustrationBloomHeadPurple from '../public/illustration_bloom_head_purple.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 
 export interface Partner {
@@ -49,6 +52,22 @@ export const bumbleContent: Partner = {
   tiktok: 'https://www.tiktok.com/@bumble',
 };
 
+export const badooContent: Partner = {
+  name: 'Badoo',
+  logo: badooLogo,
+  logoAlt: 'alt.badooLogo',
+  partnershipLogo: bloomBadooLogo,
+  partnershipLogoAlt: 'alt.bloomBadooLogo',
+  bloomGirlIllustration: illustrationBloomHeadPurple,
+  website: 'https://badoo.com',
+  footerLine1: 'footer.badooLine1',
+  footerLine2: 'footer.badooLine2',
+  facebook: 'https://www.facebook.com/badoo/',
+  instagram: 'https://www.instagram.com/badoo/',
+  youtube: 'https://www.youtube.com/c/badoo',
+  tiktok: 'https://twitter.com/Badoo',
+};
+
 export const getPartnerContent = (partnerName: string) => {
   const partner = partnerName.toLowerCase();
   if (partner === 'bumble') return bumbleContent;
@@ -56,5 +75,5 @@ export const getPartnerContent = (partnerName: string) => {
 };
 
 export const getAllPartnersContent = () => {
-  return [bumbleContent];
+  return [bumbleContent, badooContent];
 };

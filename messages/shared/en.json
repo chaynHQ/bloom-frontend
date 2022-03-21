@@ -8,6 +8,8 @@
       "bloomLine2": "UK Charity Number: 1196098",
       "bumbleLine1": "In partnership with",
       "bumbleLine2": "BUMBLE HOLDING LTD",
+      "badooLine1": "In partnership with",
+      "badooLine2": "BADOO LTD",
       "policies": "Our policies"
     },
     "videoTranscript": {
@@ -39,13 +41,16 @@
     "alt": {
       "bloomLogo": "Bloom logo",
       "bumbleLogo": "Bumble logo",
-      "bloomBumbleLogo": "Bloom for Bumble logo",
+      "bloomBumbleLogo": "Bloom in partnership with Bumble logo",
+      "badooLogo": "Badoo logo",
+      "bloomBadooLogo": "Bloom in partnership with Badoo logo",
       "welcomeToBloom": "Welcome to Bloom",
       "tiktokLogo": "Tiktok logo",
       "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
       "beehive": "Illustration of a bee hive",
       "leafMix": "Illustration of two leaves joined with a rose",
       "leafMixBee": "Illustration of two leaves with a bee hovering above",
+      "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
       "personTea": "Illustration of a person sitting, holding a tea",
       "personSitting": "Illustration of a person sitting",
       "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",

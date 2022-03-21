@@ -17,6 +17,7 @@ import { useCompleteSessionMutation, useStartSessionMutation } from '../../../ap
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
+import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
 import Video from '../../../components/video/Video';
@@ -256,13 +257,18 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress}
           >
-            <Button variant="outlined" href="/courses" size="small">
+            <Button variant="outlined" href="/courses" size="small" component={Link}>
               Courses
             </Button>
 
             <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
-            <Button variant="outlined" href={`/${story.content.course.full_slug}`} size="small">
+            <Button
+              variant="outlined"
+              href={`/${story.content.course.full_slug}`}
+              size="small"
+              component={Link}
+            >
               {story.content.course.content.name}
             </Button>
             <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">
@@ -282,6 +288,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                       titleIcon={SlowMotionVideoIcon}
                       eventPrefix="SESSION_VIDEO"
                       eventData={eventData}
+                      initialExpanded={true}
                     >
                       <Typography mb={3}>
                         {t.rich('sessionDetail.videoDescription', {
@@ -395,15 +402,11 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   let sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
 
-  const extraSbParams = {
-    resolve_relations: 'Session.course',
-  };
-
   const sbParams = {
-    ...extraSbParams,
+    resolve_relations: 'Session.course',
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}/${sessionSlug}/`, sbParams);
@@ -412,7 +415,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams: extraSbParams,
+      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),
