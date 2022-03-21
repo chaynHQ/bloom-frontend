@@ -53,7 +53,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     version: preview ? 'draft' : 'published',
     language: locale,
-    ...(preview && { cv: Date.now() }),
+    // ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
@@ -62,7 +62,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams: JSON.stringify(sbParams),
+      sbParams: sbParams,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
