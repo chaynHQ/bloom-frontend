@@ -402,15 +402,11 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   let sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
 
-  const extraSbParams = {
-    resolve_relations: 'Session.course',
-  };
-
   const sbParams = {
-    ...extraSbParams,
+    resolve_relations: 'Session.course',
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}/${sessionSlug}/`, sbParams);
@@ -419,7 +415,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams: extraSbParams,
+      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),

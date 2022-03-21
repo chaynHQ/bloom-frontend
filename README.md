@@ -165,7 +165,7 @@ Integrations are chosen with internationalisation as a priority, with Crisp and 
 
 ### Storyblok CMS
 
-Content is delivered by [Storyblok](https://www.storyblok.com/), a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. . Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages and components e.g. [/courses/[slug].tsx](pages/courses/[slug].tsx).
+Content is delivered by [Storyblok](https://www.storyblok.com/), a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. Some pages are fully flexible, using [pages/[slug].tsx](/pages/[slug].tsx) to dynamically render components. Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages and components e.g. [/courses/[slug].tsx](pages/courses/[slug].tsx).
 
 **Courses structure**
 
@@ -179,7 +179,8 @@ Storyblok components allow the team to add richtext, images, videos, page sectio
 
 **Dynamic pages**
 
-Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) and [DynamicComponent.tsx](components/DynamicComponent.tsx) render the components on the page.
+Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work*. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) allows new pages to be added, with an infinite number of [StoryblokPageSection.tsx](components/storyblok/StoryblokPageSection.tsx) with nested components. [DynamicComponent.tsx](components/storyblok/DynamicComponent.tsx) can also be used to dynamically render components on a page, where the storyblok field is of type `blocks` and we don't know which blocks to expect.
+*Note: If a page is to be public/unauthenticated, it must be added to `publicPaths` in [\_app.tsx](pages/_app.tsx).
 
 ## Git flow and deployment
 

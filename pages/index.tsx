@@ -131,8 +131,8 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const sbParams = {
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/home`, sbParams);
@@ -141,7 +141,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams,
+      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
