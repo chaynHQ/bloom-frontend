@@ -21,11 +21,12 @@ interface StoryblokFaqsProps {
 const StoryblokFaqs = (props: StoryblokFaqsProps) => {
   const { faqs } = props;
 
-  const handleChange = (faqTitle: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    if (isExpanded) {
-      logEvent(FAQ_OPENED, { faqTitle: faqTitle });
-    }
-  };
+  const handleChange =
+    (faqTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+      if (isExpanded) {
+        logEvent(FAQ_OPENED, { faqTitle: faqTitle });
+      }
+    };
 
   return (
     <Box sx={containerStyle}>
