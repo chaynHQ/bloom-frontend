@@ -1,19 +1,20 @@
 {
   "Navigation": {
-    "menu": "Navigation menu",
-    "menuOpen": "Open navigation menu",
-    "menuClose": "Close navigation menu",
-    "languageMenu": "Language menu",
-    "bloomLogo": "Bloom logo",
-    "login": "Log in",
+    "menu": "Menú de navegación",
+    "menuOpen": "Abrir menú de navegación",
+    "menuClose": "Cerrar menú de navegación",
+    "languageMenu": "Menú de Idioma",
+    "bloomLogo": "Logo de Bloom",
+    "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
-    "userMenu": "User menu",
-    "home": "Home",
+    "userMenu": "Menú de configuración de usuario",
+    "home": "Inicio",
     "admin": "Admin",
-    "about": "Sobre Bloom",
-    "immediateHelp": "Immediate help",
+    "about": "Acerca de Bloom",
+    "immediateHelp": "Ayuda inmediata",
     "therapy": "Terapia",
     "courses": "Cursos",
-    "account": "Account"
+    "applyCode": "Apply a code",
+    "account": "Cuenta"
   }
 }

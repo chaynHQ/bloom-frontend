@@ -1,0 +1,31 @@
+{
+  "Account": {
+    "applyCode": {
+      "title": "Apply a code",
+      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
+      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
+      "descriptionLine2": "You can add codes from more than one partner.",
+      "partnershipsTitle": "Our partners",
+      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
+      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "formSuccess": {
+        "success": "A Bumble code was applied to your account!",
+        "successLine2": "Your Bumble access enables the following:",
+        "liveChat": "1-1 chat with the Bloom team",
+        "therapy": "{therapySessionsRemaining} therapy sessions",
+        "courses": "Self-guided courses"
+      },
+      "form": {
+        "codeLabel": "Access code",
+        "submitLabel": "Apply code",
+        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "codeErrors": {
+          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+          "expired": "This code has expired. Get in touch with the partner's team.",
+          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner's team.",
+          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+        }
+      }
+    }
+  }
+}

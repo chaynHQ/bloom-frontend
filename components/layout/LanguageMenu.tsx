@@ -8,7 +8,26 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import Link from '../common/Link';
 
-const linkStyle = { fontSize: 14 } as const;
+const menuItemStyle = {
+  ':hover': { backgroundColor: 'transparent' },
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'transparent',
+  },
+} as const;
+
+const buttonStyle = {
+  gap: 1,
+  paddingX: 1.5,
+  fontWeight: 400,
+
+  ':hover': { backgroundColor: 'background.default' },
+
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
+  '& .MuiButton-startIcon': { mx: 0 },
+} as const;
 
 export default function LanguageMenu() {
   const router = useRouter();
@@ -37,6 +56,7 @@ export default function LanguageMenu() {
         onClick={handleClick}
         startIcon={<LanguageIcon />}
         size="medium"
+        sx={buttonStyle}
       >
         {locale?.toUpperCase()}
       </Button>
@@ -54,10 +74,10 @@ export default function LanguageMenu() {
           .map((language) => {
             const languageUppercase = language.toUpperCase();
             return (
-              <MenuItem key={language}>
-                <Link sx={linkStyle} href="/" locale={language} unstyled>
+              <MenuItem key={language} sx={menuItemStyle}>
+                <Button component={Link} href="/" locale={language}>
                   {languageUppercase}
-                </Link>
+                </Button>
               </MenuItem>
             );
           })}

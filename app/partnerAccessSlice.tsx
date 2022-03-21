@@ -42,7 +42,7 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     clearPartnerAccessesSlice: (state) => {
-      state = initialState;
+      return initialState;
     },
   },
   extraReducers: (builder) => {
@@ -51,6 +51,9 @@ const slice = createSlice({
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
+    });
+    builder.addMatcher(api.endpoints.assignPartnerAccess.matchFulfilled, (state, { payload }) => {
+      if (payload.id) return state.concat(mergeUserPartnerState([payload]));
     });
   },
 });

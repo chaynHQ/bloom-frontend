@@ -16,8 +16,10 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.4",
+    "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.0.2",
     "@reduxjs/toolkit": "^1.6.1",
+    "@storyblok/storyblok-editable": "^1.0.0",
     "axios": "^0.24.0",
     "firebase": "^9.5.0",
     "next": "11.1.2",
@@ -31,8 +33,7 @@
     "react-redux": "^7.2.5",
     "rollbar": "^2.24.0",
     "storyblok-js-client": "^4.2.0",
-    "storyblok-rich-text-react-renderer": "^2.5.2",
-    "@storyblok/storyblok-editable": "^1.0.0"
+    "storyblok-rich-text-react-renderer": "^2.5.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",

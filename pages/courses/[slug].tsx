@@ -159,7 +159,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         translatedImageAlt={headerProps.translatedImageAlt}
         progressStatus={courseProgress!}
       >
-        <Button variant="outlined" href="/courses" size="small">
+        <Button variant="outlined" href="/courses" size="small" component={Link}>
           Back to courses
         </Button>
       </Header>
@@ -203,15 +203,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const extraSbParams = {
-    resolve_relations: 'week.sessions',
-  };
-
   const sbParams = {
-    ...extraSbParams,
+    resolve_relations: 'week.sessions',
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}`, sbParams);
@@ -220,7 +216,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams: extraSbParams,
+      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),

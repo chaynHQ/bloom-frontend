@@ -23,9 +23,9 @@ const appBarStyle = {
 const appBarContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
+  alignContent: 'center',
   height: { xs: 48, sm: 64 },
-  paddingTop: '0 !important',
-  paddingBottom: '0 !important',
+  padding: '0 !important',
 } as const;
 
 const logoContainerStyle = {

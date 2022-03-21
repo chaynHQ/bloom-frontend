@@ -10,12 +10,12 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
-interface CodeFormProps {
+interface WelcomeCodeFormProps {
   codeParam: string;
   partnerParam: string;
 }
 
-const CodeForm = (props: CodeFormProps) => {
+const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
 
@@ -26,7 +26,7 @@ const CodeForm = (props: CodeFormProps) => {
     setCodeInput(codeParam);
   }, [codeParam]);
 
-  const submitHandler = () => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     router.push({
       pathname: '/auth/register',
       query: partnerParam
@@ -37,7 +37,7 @@ const CodeForm = (props: CodeFormProps) => {
 
   return (
     <Box sx={containerStyle}>
-      <form autoComplete="off">
+      <form autoComplete="off" onSubmit={submitHandler}>
         <TextField
           id="accessCode"
           value={codeInput}
@@ -46,13 +46,7 @@ const CodeForm = (props: CodeFormProps) => {
           variant="standard"
           fullWidth
         />
-        <Button
-          sx={{ mt: 2 }}
-          variant="contained"
-          fullWidth
-          color="secondary"
-          onClick={submitHandler}
-        >
+        <Button sx={{ mt: 2 }} variant="contained" fullWidth color="secondary" type="submit">
           {t('getStarted')}
         </Button>
       </form>
@@ -60,4 +54,4 @@ const CodeForm = (props: CodeFormProps) => {
   );
 };
 
-export default CodeForm;
+export default WelcomeCodeForm;
