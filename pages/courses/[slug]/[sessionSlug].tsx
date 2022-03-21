@@ -144,8 +144,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
 
-    if (liveAccess || (liveCourseAccess && courseLiveNow)) setLiveChatAccess(true);
-  }, [partnerAccesses, course.included_for_partners, courseLiveNow]);
+    if (liveAccess || liveCourseAccess) setLiveChatAccess(true);
+  }, [partnerAccesses, course.included_for_partners, liveCourseAccess]);
 
   useEffect(() => {
     course.weeks.map((week: any) => {
