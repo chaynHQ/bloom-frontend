@@ -203,14 +203,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const extraSbParams = {
-    resolve_relations: 'week.sessions',
-  };
-
   const sbParams = {
-    ...extraSbParams,
+    resolve_relations: 'week.sessions',
     version: preview ? 'draft' : 'published',
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/${slug}`, sbParams);
@@ -219,7 +216,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       story: data ? data.story : null,
       preview,
-      sbParams: extraSbParams,
+      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
