@@ -53,7 +53,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     version: preview ? 'draft' : 'published',
     language: locale,
-    cv: preview ? Date.now() : null,
+    cv: preview ? Date.now() : 0,
   };
 
   let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
