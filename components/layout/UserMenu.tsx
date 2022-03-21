@@ -1,4 +1,4 @@
-import { Logout, Person } from '@mui/icons-material';
+import { AddCircleOutline, Logout, Person } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -13,15 +13,7 @@ import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
 import { clearUserSlice } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import { useAppDispatch } from '../../hooks/store';
-
-const menuButtonStyle = {
-  color: 'text.primary',
-  ':hover': { backgroundColor: 'background.default' },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
-  },
-} as const;
+import Link from '../common/Link';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -31,7 +23,16 @@ const menuItemStyle = {
 } as const;
 
 const buttonStyle = {
-  ...menuButtonStyle,
+  paddingX: 1.5,
+  height: 40,
+  fontWeight: 400,
+
+  ':hover': { backgroundColor: 'background.default' },
+
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
   '& .MuiButton-startIcon': { mx: 0 },
 } as const;
 
@@ -75,18 +76,23 @@ export default function UserMenu() {
         startIcon={<Person />}
         size="medium"
         sx={buttonStyle}
-      ></Button>
+      />
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         elevation={1}
         MenuListProps={{
-          id: 'language-menu',
+          id: 'user-menu',
         }}
       >
         <MenuItem sx={menuItemStyle}>
-          <Button sx={menuButtonStyle} onClick={logout} startIcon={<Logout />}>
+          <Button component={Link} href={'/account/apply-a-code'} startIcon={<AddCircleOutline />}>
+            {t('applyCode')}
+          </Button>
+        </MenuItem>
+        <MenuItem sx={menuItemStyle}>
+          <Button onClick={logout} startIcon={<Logout />}>
             {t('logout')}
           </Button>
         </MenuItem>

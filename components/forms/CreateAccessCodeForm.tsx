@@ -95,7 +95,7 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         ...eventData,
         error: errorMessage,
       });
-      rollbar.error('User register create user error', error);
+      rollbar.error('Create partner access code error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
       setLoading(false);

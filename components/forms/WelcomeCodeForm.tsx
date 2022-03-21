@@ -10,12 +10,12 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
-interface CodeFormProps {
+interface WelcomeCodeFormProps {
   codeParam: string;
   partnerParam: string;
 }
 
-const CodeForm = (props: CodeFormProps) => {
+const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
 
@@ -54,4 +54,4 @@ const CodeForm = (props: CodeFormProps) => {
   );
 };
 
-export default CodeForm;
+export default WelcomeCodeForm;

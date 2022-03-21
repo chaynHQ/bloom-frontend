@@ -14,7 +14,7 @@ import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
-import CodeForm from '../../components/forms/CodeForm';
+import WelcomeCodeForm from '../../components/forms/WelcomeCodeForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
@@ -115,7 +115,7 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
                   {t.rich('accessIntroduction', { partnerName: partnerContent.name })}
                 </Typography>
 
-                <CodeForm codeParam={codeParam} partnerParam={partnerContent.name} />
+                <WelcomeCodeForm codeParam={codeParam} partnerParam={partnerContent.name} />
               </>
             )}
           </CardContent>
