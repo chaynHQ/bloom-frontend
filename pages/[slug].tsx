@@ -57,7 +57,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   };
 
   let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
-  console.log(sbParams);
+
   return {
     props: {
       story: data ? data.story : null,
