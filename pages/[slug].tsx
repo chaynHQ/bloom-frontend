@@ -53,6 +53,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const sbParams = {
     version: preview ? 'draft' : 'published',
     language: locale,
+    ...(preview && { cv: Date.now() }),
   };
 
   let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
@@ -76,6 +77,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let { data } = await Storyblok.get('cdn/links/');
 
   const excludePaths: string[] = ['home', 'welcome', 'meet-the-team', 'courses'];
+
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
     if (data.links[linkKey].is_folder) {
