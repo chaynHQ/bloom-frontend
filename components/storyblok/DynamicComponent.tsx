@@ -11,7 +11,7 @@ import StoryblokVideo from './StoryblokVideo';
 
 interface Component {
   name: string;
-  component: any;
+  component: (props: any) => JSX.Element;
 }
 
 const components: Component[] = [
