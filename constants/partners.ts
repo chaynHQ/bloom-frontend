@@ -71,6 +71,7 @@ export const badooContent: Partner = {
 export const getPartnerContent = (partnerName: string) => {
   const partner = partnerName.toLowerCase();
   if (partner === 'bumble') return bumbleContent;
+  if (partner === 'badoo') return badooContent;
   return publicContent;
 };
 
