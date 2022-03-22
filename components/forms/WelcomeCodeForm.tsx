@@ -29,9 +29,9 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     router.push({
       pathname: '/auth/register',
-      query: partnerParam
-        ? { partner: partnerParam.toLocaleLowerCase(), ...(codeInput && { code: codeInput }) }
-        : {},
+      ...(partnerParam && {
+        query: { partner: partnerParam.toLocaleLowerCase(), ...(codeInput && { code: codeInput }) },
+      }),
     });
   };
 
