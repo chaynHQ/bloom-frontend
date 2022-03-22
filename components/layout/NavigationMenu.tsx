@@ -64,26 +64,25 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
       }
 
-      if (user.token) {
-        links.push({ title: t('courses'), href: '/courses' });
-      } else {
-        links.push({ title: t('login'), href: '/auth/login' });
-      }
-
-      const therapyAccess = partnerAccesses.find(
-        (partnerAccess) => partnerAccess.featureTherapy === true,
-      );
-
-      if (!!therapyAccess) {
-        links.push({ title: t('therapy'), href: '/therapy/book-session' });
-      }
-
       if (!partnerAdmin.partner) {
         links.push({
           title: t('immediateHelp'),
           href: 'https://www.chayn.co/help',
           target: '_blank',
         });
+      }
+
+      if (user.token) {
+        links.push({ title: t('courses'), href: '/courses' });
+        const therapyAccess = partnerAccesses.find(
+          (partnerAccess) => partnerAccess.featureTherapy === true,
+        );
+
+        if (!!therapyAccess) {
+          links.push({ title: t('therapy'), href: '/therapy/book-session' });
+        }
+      } else {
+        links.push({ title: t('login'), href: '/auth/login' });
       }
     }
 
