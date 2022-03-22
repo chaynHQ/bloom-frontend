@@ -285,8 +285,8 @@ theme = createTheme(theme, {
           [theme.breakpoints.up('md')]: {
             padding: 40,
 
-            '&:last-of-type': {
-              paddingBottom: 40,
+            ':last-child': {
+              paddingBottom: 32,
             },
           },
         },

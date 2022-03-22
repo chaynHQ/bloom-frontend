@@ -24,6 +24,25 @@ ol {
   padding-left: 2rem;
 }
 
+p:only-child,
+ol:only-child,
+ul:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+p:first-of-type,
+ol:first-of-type,
+ul:first-of-type {
+  margin-top: 0;
+}
+
+p:last-of-type,
+ol:last-of-type,
+li:last-of-type {
+  margin-bottom: 0;
+}
+
 ul > li,
 ol > li {
   padding-left: 0.5rem;
