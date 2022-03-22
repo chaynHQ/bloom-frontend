@@ -1,4 +1,4 @@
-import { Event, KeyboardArrowDown, PendingOutlined } from '@mui/icons-material';
+import { Circle, Event, KeyboardArrowDown, PendingOutlined } from '@mui/icons-material';
 import {
   Card,
   CardActionArea,
@@ -133,7 +133,7 @@ const CourseCard = (props: CourseCardProps) => {
         )}
         {courseLiveNow && liveCourseAccess && (
           <Box sx={statusRowStyle}>
-            <Event color="error" />
+            <Circle color="error" />
             <Typography>
               {t.rich('liveUntil', {
                 date: formatDateToString(course.content.live_end_date, locale),

@@ -1,4 +1,4 @@
-import { Event, PendingOutlined } from '@mui/icons-material';
+import { Circle, Event, PendingOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
@@ -14,7 +14,13 @@ const CourseStatusHeader = (props: CourseStatusHeaderProps) => {
   const t = useTranslations('Courses');
 
   const icon =
-    status === 'comingSoon' ? <PendingOutlined color="error" /> : <Event color="error" />;
+    status === 'comingSoon' ? (
+      <PendingOutlined color="error" />
+    ) : status === 'liveSoon' ? (
+      <Event color="error" />
+    ) : (
+      <Circle color="error" />
+    );
 
   return (
     <Box sx={iconTextRowStyle} mb={2}>
