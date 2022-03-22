@@ -1,18 +1,5 @@
 {
   "Shared": {
-    "404": {
-      "title": "404 - Página no encontrada",
-      "authenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de cursos.",
-      "unauthenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de inicio.",
-      "authenticatedRedirectButton": "Regresar a la página de cursos",
-      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
-    },
-    "500": {
-      "title": "500 - error interno",
-      "description": "Mmm, algo salió mal. Por favor regresa y vuélvelo a intentar. Escríbenos a través del formulario de contacto si el error continúa.",
-      "authenticatedRedirectButton": "Regresar a la página de cursos",
-      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
-    },
     "bloom": "Bloom",
     "leaveSiteButton": "Salir de este sitio",
     "footer": {
@@ -36,10 +23,25 @@
       "notStarted": "Sin empezar"
     },
     "meetTheTeam": { "expandTeamMember": "Expandir biografía para {name}" },
+    "404": {
+      "title": "404 - Página no encontrada",
+      "authenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de cursos.",
+      "unauthenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de inicio.",
+      "authenticatedRedirectButton": "Regresar a la página de cursos",
+      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
+    },
+    "500": {
+      "title": "500 - error interno",
+      "description": "Mmm, algo salió mal. Por favor regresa y vuélvelo a intentar. Escríbenos a través del formulario de contacto si el error continúa.",
+      "authenticatedRedirectButton": "Regresar a la página de cursos",
+      "unauthenticatedRedirectButton": "Regresar a la página de inicio"
+    },
     "alt": {
       "bloomLogo": "Logo de Bloom",
       "bumbleLogo": "Logo de Bumble",
       "bloomBumbleLogo": "Logo de Bloom para Bumble",
+      "badooLogo": "Logo de Badoo",
+      "bloomBadooLogo": "Logo de Bloom para Badoo",
       "welcomeToBloom": "Te damos la bienvenida a Bloom",
       "tiktokLogo": "Logo de Tiktok",
       "bloomHead": "Ilustración de la cara y hombros de una persona, con hojas grandes y flores floreciendo arriba de éstas",
