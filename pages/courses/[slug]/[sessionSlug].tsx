@@ -103,6 +103,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     ...eventUserData,
     session_name: story.content.name,
     session_storyblok_id: story.id,
+    session_progress: sessionProgress,
     course_name: story.content.course.content.name,
     course_storyblok_id: story.content.course.id,
   };

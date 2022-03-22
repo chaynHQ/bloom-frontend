@@ -72,6 +72,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     ...eventUserData,
     course_name: story.content.name,
     course_storyblok_id: story.id,
+    course_progress: courseProgress,
   };
 
   useEffect(() => {
