@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
@@ -41,14 +41,24 @@ const TopBar = () => {
   const theme = useTheme();
   const router = useRouter();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+
+  useEffect(() => {
+    if (partnerAdmin && partnerAdmin.partner) {
+      setWelcomeUrl(`/welcome/${partnerAdmin.partner.name.toLowerCase()}`);
+    }
+    if (partnerAccesses.length > 0) {
+      setWelcomeUrl(`/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`);
+    }
+  }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
 
   return (
     <AppBar sx={appBarStyle} elevation={0}>
       <Container sx={appBarContainerStyles}>
         {isSmallScreen && <NavigationDrawer />}
-        <Link href="/" aria-label={t('home')} sx={logoContainerStyle}>
+        <Link href={welcomeUrl} aria-label={t('home')} sx={logoContainerStyle}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
         </Link>
         {!isSmallScreen && <NavigationMenu />}
