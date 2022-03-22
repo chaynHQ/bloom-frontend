@@ -2,6 +2,7 @@ import { GetUserResponse } from '../app/api';
 import { analytics } from '../config/firebase';
 
 export const logEvent = (event: string, params?: {}) => {
+  console.log(event, params);
   analytics?.logEvent(event, params!);
 };
 
@@ -37,7 +38,7 @@ export const getEventUserData = (data: Partial<GetUserResponse>) => {
           return total + pa.therapySessionsRedeemed;
         }, 0)
       : 0,
-    partner_activated_at: data.partnerAccesses ? data.partnerAccesses[0].activatedAt : null,
+    partner_activated_at: data.partnerAccesses ? data.partnerAccesses[0]?.activatedAt : null,
   };
 };
 
