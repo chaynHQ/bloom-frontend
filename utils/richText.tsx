@@ -14,7 +14,6 @@ import StoryblokImage from '../components/storyblok/StoryblokImage';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
-import { richtextContentStyle } from '../styles/common';
 
 export const RichTextOptions: RenderOptions = {
   blokResolvers: {
@@ -28,7 +27,7 @@ export const RichTextOptions: RenderOptions = {
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
-      <Typography maxWidth={650} sx={richtextContentStyle} paragraph>
+      <Typography maxWidth={650} paragraph>
         {children}
       </Typography>
     ),

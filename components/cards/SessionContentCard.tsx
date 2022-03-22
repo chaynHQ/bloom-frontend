@@ -57,7 +57,7 @@ const SessionContentCard = (props: SessionContentCardProps) => {
   } as const;
 
   const contentContainerStyle = {
-    paddingY: richtextContent ? '1rem !important' : '2rem !important',
+    paddingY: '2rem !important',
   } as const;
 
   const titleContainerStyle = {
