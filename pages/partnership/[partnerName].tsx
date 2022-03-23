@@ -2,8 +2,12 @@ import Box from '@mui/material/Box';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
+import PartnerHeader from '../../components/layout/PartnerHeader';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
+import { getPartnerContent } from '../../constants/partners';
+import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 
 interface Props {
   story: StoryData;
@@ -16,6 +20,14 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   // TODO translations
 
   story = useStoryblok(story, preview, sbParams, locale);
+  const partnerContent = getPartnerContent(story.slug);
+
+  const headerProps = {
+    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
+    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
+    imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
+    imageAlt: 'alt.bloomHead',
+  };
 
   // TODO add in authenticated & partner affiliated access
   // TODO add in actual story content
@@ -24,6 +36,12 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
       <Head>
         <title>{story.content.title}</title>
       </Head>
+      <PartnerHeader
+        partnerLogoSrc={headerProps.partnerLogoSrc}
+        partnerLogoAlt={headerProps.partnerLogoAlt}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
     </Box>
   );
 };
