@@ -3,6 +3,7 @@ import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import PartnerHeader from '../../components/layout/PartnerHeader';
+import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
 import { getPartnerContent } from '../../constants/partners';
@@ -30,7 +31,6 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   };
 
   // TODO add in authenticated & partner affiliated access
-  // TODO add in actual story content
   return (
     <Box>
       <Head>
@@ -42,6 +42,15 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
+      {story.content.page_sections?.length > 0 &&
+        story.content.page_sections.map((section: any, index: number) => (
+          <StoryblokPageSection
+            key={`page_section_${index}`}
+            content={section.content}
+            alignment={section.alignment}
+            color={section.color}
+          />
+        ))}
     </Box>
   );
 };
