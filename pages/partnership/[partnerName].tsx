@@ -3,6 +3,7 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -52,54 +53,58 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     imageAlt: 'alt.bloomHead',
   };
 
-  // TODO useEffect for partnerAccess?
-
+  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
 
-  const hasPartnerAccess = partnerAccesses.find(
-    (partnerAccess) => partnerAccess.partner.name === partnerName,
-  );
+  useEffect(() => {
+    // TODO pull out this function - used multiple places
+    const hasPartnerAccess = !!partnerAccesses.find(
+      (partnerAccess) => partnerAccess.partner.name.toLowerCase() === partnerName,
+    );
 
-  if (hasPartnerAccess) {
-    // can view partnership content
+    setIncorrectAccess(!hasPartnerAccess);
+  }, [partnerName, partnerAccesses]);
+
+  // if user doesn't have partner access, display alternate message
+  if (incorrectAccess) {
     return (
-      <Box>
-        <Head>
-          <title>{story.content.title}</title>
-        </Head>
-        <PartnerHeader
-          partnerLogoSrc={headerProps.partnerLogoSrc}
-          partnerLogoAlt={headerProps.partnerLogoAlt}
-          imageSrc={headerProps.imageSrc}
-          imageAlt={headerProps.imageAlt}
-        />
-        {story.content.page_sections?.length > 0 &&
-          story.content.page_sections.map((section: any, index: number) => (
-            <StoryblokPageSection
-              key={`page_section_${index}`}
-              content={section.content}
-              alignment={section.alignment}
-              color={section.color}
-            />
-          ))}
-      </Box>
+      // TODO pull out access guard message component
+      <Container sx={accessContainerStyle}>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={'alt.personTea'}
+            src={illustrationPerson4Peach}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+        {/* TODO add message  */}
+      </Container>
     );
   }
 
-  // if user doesn't have partner access, display alternate message
+  // If user can view partnership content, show information
   return (
-    // TODO pull out access guard message component
-    <Container sx={accessContainerStyle}>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={'alt.personTea'}
-          src={illustrationPerson4Peach}
-          layout="fill"
-          objectFit="contain"
-        />
-      </Box>
-      {/* TODO add message  */}
-    </Container>
+    <Box>
+      <Head>
+        <title>{story.content.title}</title>
+      </Head>
+      <PartnerHeader
+        partnerLogoSrc={headerProps.partnerLogoSrc}
+        partnerLogoAlt={headerProps.partnerLogoAlt}
+        imageSrc={headerProps.imageSrc}
+        imageAlt={headerProps.imageAlt}
+      />
+      {story.content.page_sections?.length > 0 &&
+        story.content.page_sections.map((section: any, index: number) => (
+          <StoryblokPageSection
+            key={`page_section_${index}`}
+            content={section.content}
+            alignment={section.alignment}
+            color={section.color}
+          />
+        ))}
+    </Box>
   );
 };
 
