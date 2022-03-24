@@ -11,6 +11,14 @@ export const columnStyle = {
   justifyContent: 'center',
 } as const;
 
+export const iconTextRowStyle = {
+  ...rowStyle,
+  gap: 1.5,
+  marginTop: 2,
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+} as const;
+
 export const richtextContentStyle = {
   '&:only-child': {
     marginY: 0,

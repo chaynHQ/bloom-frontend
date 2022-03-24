@@ -10,14 +10,16 @@ import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import SessionCard from '../../components/cards/SessionCard';
 import Link from '../../components/common/Link';
+import CourseIntroduction from '../../components/course/CourseIntroduction';
+import CourseStatusHeader from '../../components/course/CourseStatusHeader';
 import Header from '../../components/layout/Header';
-import CourseIntroduction from '../../components/video/CourseIntroduction';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -60,7 +62,9 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   story = useStoryblok(story, preview, sbParams, locale);
 
-  const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -68,10 +72,20 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
   const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
   const eventUserData = getEventUserData({ user, partnerAccesses });
+
+  const courseComingSoon: boolean = story.content.coming_soon;
+  const courseLiveSoon: boolean = courseIsLiveSoon(story.content);
+  const courseLiveNow: boolean = courseIsLiveNow(story.content);
+  // only show live content to public users
+  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
+
   const eventData = {
     ...eventUserData,
     course_name: story.content.name,
     course_storyblok_id: story.id,
+    course_coming_soon: courseComingSoon,
+    course_live_soon: courseLiveSoon,
+    course_live_now: courseLiveNow,
     course_progress: courseProgress,
   };
 
@@ -165,12 +179,31 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         </Button>
       </Header>
       <Container sx={containerStyle}>
-        {story.content.coming_soon && (
-          <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
-        )}
-        {!story.content.coming_soon && (
+        {courseComingSoon ? (
           <>
-            {story.content.video && <CourseIntroduction course={story} eventData={eventData} />}
+            {liveCourseAccess && courseLiveSoon ? (
+              <Box maxWidth={700}>
+                <CourseStatusHeader status="liveSoon" />
+                {render(story.content.live_soon_content, RichTextOptions)}
+              </Box>
+            ) : (
+              <Box maxWidth={700}>
+                <CourseStatusHeader status="comingSoon" />
+                {render(story.content.coming_soon_content, RichTextOptions)}
+              </Box>
+            )}
+          </>
+        ) : (
+          <>
+            {story.content.video && (
+              <CourseIntroduction
+                course={story}
+                eventData={eventData}
+                courseLiveSoon={courseLiveSoon}
+                courseLiveNow={courseLiveNow}
+                liveCourseAccess={liveCourseAccess}
+              />
+            )}
             <Box sx={sessionsContainerStyle}>
               {story.content.weeks.map((week: any) => {
                 return (
