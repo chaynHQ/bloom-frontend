@@ -4,7 +4,7 @@
     "accessIntroduction": "Ingresa el código de acceso que recibiste de {partnerName} para empezar tu recorrido con Bloom.",
     "publicIntroduction": "Crea una cuenta con Bloom para empezar con nuestros cursos, o primero averigua más acerca de Bloom a continuación.",
     "continueCourses": "Continua con Bloom",
-    "continueCoursesDescription": "Empieza un nuevo curso de Bloom o continua con uno nuevo.",
+    "continueCoursesDescription": "Continua donde lo habías dejado.",
     "goToCourses": "Ir a cursos",
     "form": { "codeLabel": "Código de acceso de {partnerName}" }
   }
