@@ -86,6 +86,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_coming_soon: courseComingSoon,
     course_live_soon: courseLiveSoon,
     course_live_now: courseLiveNow,
+    course_progress: courseProgress,
   };
 
   useEffect(() => {

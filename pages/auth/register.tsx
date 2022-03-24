@@ -191,11 +191,6 @@ const Register: NextPage = () => {
               </Typography>
             </CardContent>
           </Card>
-          <Typography mt={3} textAlign="center">
-            {t.rich('register.loginRedirect', {
-              loginLink: (children) => <Link href="/auth/login">{children}</Link>,
-            })}
-          </Typography>
         </Box>
       </Container>
       {isSmallScreen && (

@@ -113,7 +113,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     ...eventUserData,
     session_name: story.content.name,
     session_storyblok_id: story.id,
-    course_name: course.name,
+    session_progress: sessionProgress,
+    course_name: story.content.course.content.name,
     course_storyblok_id: story.content.course.id,
     course_coming_soon: courseComingSoon,
     course_live_soon: courseLiveSoon,
@@ -323,7 +324,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                         setVideoStarted={setVideoStarted}
                         eventData={eventData}
                         eventPrefix="SESSION"
-                        containerStyles={{ mx: 'auto', mb: 2 }}
+                        containerStyles={{ mx: 'auto', my: 2 }}
                       />
                       <VideoTranscriptModal
                         videoName={story.content.name}

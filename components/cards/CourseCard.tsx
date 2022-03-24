@@ -52,7 +52,6 @@ const imageContainerStyle = {
 const collapseContentStyle = {
   padding: { xs: 2, md: 3 },
   paddingTop: { xs: 0, md: 0 },
-  paddingBottom: '0.5rem !important',
 } as const;
 
 const cardActionsStyle = {
