@@ -49,32 +49,31 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   // TODO translations
 
   story = useStoryblok(story, preview, sbParams, locale);
-
   const partnerName = story.slug;
-
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const [partnerAccessAllowed, setPartnerAccessAllowed] = useState<boolean>(false);
 
   useEffect(() => {
     const access = hasPartnerAccess(partnerAccesses, partnerName);
-
-    setIncorrectAccess(!access);
+    setPartnerAccessAllowed(access);
   }, [partnerName, partnerAccesses]);
 
-  // If user doesn't have partner access, display alternate message
-  if (incorrectAccess) return showIncorrectAccessView();
+  // User can view partnership page
+  if (partnerAccessAllowed) {
+    const partnerContent = getPartnerContent(partnerName);
+    return showPartnershipView(story, partnerContent);
+  }
 
-  // User can view partnership content
-  const partnerContent = getPartnerContent(partnerName);
-  return showPartnershipView(story, partnerContent);
+  // If user doesn't have partner access, display alternate message
+  return showContentUnavailableView();
 };
 
 const hasPartnerAccess = (accesses: PartnerAccesses, partnerName: string) => {
   return !!accesses.find((access) => access.partner.name.toLowerCase() === partnerName);
 };
 
-const showIncorrectAccessView = () => {
-  // TODO pull out access guard message component
+const showContentUnavailableView = () => {
+  // TODO pull out content unavailable (i.e. guard) message component
   return (
     <Container sx={accessContainerStyle}>
       <Box sx={imageContainerStyle}>
