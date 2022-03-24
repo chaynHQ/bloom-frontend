@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryblokComponent, StoryData } from 'storyblok-js-client';
+import { PartnerAccesses } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
@@ -55,22 +56,21 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
 
   useEffect(() => {
-    // TODO pull out this function - used multiple places
-    const hasPartnerAccess = !!partnerAccesses.find(
-      (partnerAccess) => partnerAccess.partner.name.toLowerCase() === partnerName,
-    );
+    const access = hasPartnerAccess(partnerAccesses, partnerName);
 
-    setIncorrectAccess(!hasPartnerAccess);
+    setIncorrectAccess(!access);
   }, [partnerName, partnerAccesses]);
 
   // If user doesn't have partner access, display alternate message
-  if (incorrectAccess) {
-    return showIncorrectAccessView();
-  } else {
-    // User can view partnership content
-    const partnerContent = getPartnerContent(partnerName);
-    return showPartnershipView(story, partnerContent);
-  }
+  if (incorrectAccess) return showIncorrectAccessView();
+
+  // User can view partnership content
+  const partnerContent = getPartnerContent(partnerName);
+  return showPartnershipView(story, partnerContent);
+};
+
+const hasPartnerAccess = (accesses: PartnerAccesses, partnerName: string) => {
+  return !!accesses.find((access) => access.partner.name.toLowerCase() === partnerName);
 };
 
 const showIncorrectAccessView = () => {
