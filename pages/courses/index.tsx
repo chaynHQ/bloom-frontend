@@ -43,10 +43,11 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
-  const { user, partnerAccesses, courses, partnerAdmin } = useTypedSelector(
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
     (state: RootState) => state,
   );
   const eventUserData = getEventUserData({ user, partnerAccesses });
+  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
   const t = useTranslations('Courses');
 
   const headerProps = {
@@ -137,7 +138,12 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
                 if (index % 2 === 1) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
-                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    courseProgress={courseProgress}
+                    liveCourseAccess={liveCourseAccess}
+                  />
                 );
               })}
             </Box>
@@ -146,7 +152,12 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
                 if (index % 2 === 0) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
-                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    courseProgress={courseProgress}
+                    liveCourseAccess={liveCourseAccess}
+                  />
                 );
               })}
             </Box>

@@ -1,29 +1,29 @@
 {
   "Account": {
     "applyCode": {
-      "title": "Apply a code",
-      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
-      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
-      "descriptionLine2": "You can add codes from more than one partner.",
-      "partnershipsTitle": "Our partners",
-      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
-      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "title": "Aplica un código",
+      "introduction": "Bloom trabaja con socios para apoyar la sanación de sobrevivientes de abuso alrededor del mundo.",
+      "description": "Si has recibido un código de acceso de parte de uno de nuestros socios, lo puedes agregar aquí para recibir apoyo específico de su programa",
+      "descriptionLine2": "Puedes agregar códigos de más de un socio",
+      "partnershipsTitle": "Nuestros socios",
+      "partnershipsDescription": "Lee más acerca de nuestros socios, haciendo click en su logo",
+      "formIntroduction": "Ingresa el código de acceso que recibiste de un socio de Bloom",
       "formSuccess": {
-        "success": "A Bumble code was applied to your account!",
-        "successLine2": "Your Bumble access enables the following:",
-        "liveChat": "1-1 chat with the Bloom team",
-        "therapy": "{therapySessionsRemaining} therapy sessions",
-        "courses": "Self-guided courses"
+        "success": "¡Un código de Bumble se ha agregado a tu cuenta!",
+        "successLine2": "Tu acceso de Bumble te permite lo siguiente:",
+        "liveChat": "Chat 1-1 con el equipo de Bloom",
+        "therapy": "{therapySessionsRemaining} sesiones de terapia",
+        "courses": "Cursos autoguiados"
       },
       "form": {
-        "codeLabel": "Access code",
-        "submitLabel": "Apply code",
-        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "codeLabel": "Código de acceso",
+        "submitLabel": "Aplica el código",
+        "assignPartnerAccessError": "Hubo un error aplicando el código a tu cuenta. Inténtalo de nuevo más tarde y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si todavía te está saliendo este error.",
         "codeErrors": {
-          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-          "expired": "This code has expired. Get in touch with the partner's team.",
-          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner's team.",
-          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+          "internal": "Hubo un error validando tu código de acceso. Inténtalo de nuevo más tarde y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si todavía te está saliendo este error.",
+          "expired": "Este código ha vencido. Ponte en contacto con el equipo del socio",
+          "invalid": "Tu código parece no ser válido. Revisa si tienes errores tipográficos o ponte en contacto con el equipo del socio.",
+          "alreadyInUse": "Este código ya ha sido usado. Si crees que esto es un error, ponte en contacto con el equipo del socio."
         }
       }
     }
