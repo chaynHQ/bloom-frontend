@@ -4,13 +4,13 @@ import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { StoriesParams, StoryblokComponent, StoryData } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
-import { getPartnerContent } from '../../constants/partners';
+import { getPartnerContent, Partner } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
@@ -37,21 +37,19 @@ const imageContainerStyle = {
   marginBottom: 4,
 } as const;
 
+// TODO pull out
+type StoryBlokData = StoryData<
+  StoryblokComponent<string> & {
+    [index: string]: any;
+  }
+>;
+
 const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   // TODO translations
 
   story = useStoryblok(story, preview, sbParams, locale);
 
   const partnerName = story.slug;
-  const partnerContent = getPartnerContent(partnerName);
-
-  // TODO reduce duplication: pull out content
-  const headerProps = {
-    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
-    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
-    imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomHead',
-  };
 
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
@@ -65,35 +63,44 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     setIncorrectAccess(!hasPartnerAccess);
   }, [partnerName, partnerAccesses]);
 
-  // if user doesn't have partner access, display alternate message
+  // If user doesn't have partner access, display alternate message
   if (incorrectAccess) {
-    return (
-      // TODO pull out access guard message component
-      <Container sx={accessContainerStyle}>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={'alt.personTea'}
-            src={illustrationPerson4Peach}
-            layout="fill"
-            objectFit="contain"
-          />
-        </Box>
-        {/* TODO add message  */}
-      </Container>
-    );
+    return showIncorrectAccessView();
+  } else {
+    // User can view partnership content
+    const partnerContent = getPartnerContent(partnerName);
+    return showPartnershipView(story, partnerContent);
   }
+};
 
-  // If user can view partnership content, show information
+const showIncorrectAccessView = () => {
+  // TODO pull out access guard message component
+  return (
+    <Container sx={accessContainerStyle}>
+      <Box sx={imageContainerStyle}>
+        <Image
+          alt={'alt.personTea'}
+          src={illustrationPerson4Peach}
+          layout="fill"
+          objectFit="contain"
+        />
+      </Box>
+      {/* TODO add message  */}
+    </Container>
+  );
+};
+
+const showPartnershipView = (story: StoryBlokData, partnerContent: Partner) => {
   return (
     <Box>
       <Head>
         <title>{story.content.title}</title>
       </Head>
       <PartnerHeader
-        partnerLogoSrc={headerProps.partnerLogoSrc}
-        partnerLogoAlt={headerProps.partnerLogoAlt}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
+        partnerLogoSrc={partnerContent.partnershipLogo || welcomeToBloom}
+        partnerLogoAlt={partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom'}
+        imageSrc={partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow}
+        imageAlt={'alt.bloomHead'}
       />
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
