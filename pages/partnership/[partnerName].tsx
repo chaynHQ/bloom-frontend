@@ -1,12 +1,11 @@
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryblokComponent, StoryData } from 'storyblok-js-client';
 import { PartnerAccesses } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
+import { ContentUnavailable } from '../../components/common/ContentUnavailable';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
@@ -14,9 +13,7 @@ import { LANGUAGES } from '../../constants/enums';
 import { getPartnerContent, Partner } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { columnStyle } from '../../styles/common';
 
 interface Props {
   story: StoryData;
@@ -24,19 +21,6 @@ interface Props {
   sbParams: StoriesParams;
   locale: LANGUAGES;
 }
-
-// TODO pull out shared stylings
-const accessContainerStyle = {
-  ...columnStyle,
-  height: '100vh',
-} as const;
-
-const imageContainerStyle = {
-  position: 'relative',
-  width: { xs: 150, md: 210 },
-  height: { xs: 150, md: 210 },
-  marginBottom: 4,
-} as const;
 
 // TODO pull out
 type StoryBlokData = StoryData<
@@ -60,33 +44,15 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 
   // User can view partnership page
   if (partnerAccessAllowed) {
-    const partnerContent = getPartnerContent(partnerName);
-    return showPartnershipView(story, partnerContent);
+    return showPartnershipView(story, getPartnerContent(partnerName));
   }
 
-  // If user doesn't have partner access, display alternate message
-  return showContentUnavailableView();
+  // User doesn't have access
+  return <ContentUnavailable />;
 };
 
 const hasPartnerAccess = (accesses: PartnerAccesses, partnerName: string) => {
   return !!accesses.find((access) => access.partner.name.toLowerCase() === partnerName);
-};
-
-const showContentUnavailableView = () => {
-  // TODO pull out content unavailable (i.e. guard) message component
-  return (
-    <Container sx={accessContainerStyle}>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={'alt.personTea'}
-          src={illustrationPerson4Peach}
-          layout="fill"
-          objectFit="contain"
-        />
-      </Box>
-      {/* TODO add message  */}
-    </Container>
-  );
 };
 
 const showPartnershipView = (story: StoryBlokData, partnerContent: Partner) => {
