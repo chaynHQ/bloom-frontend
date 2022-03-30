@@ -50,7 +50,7 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     return showPartnershipView(configuredStory, getPartnerContent(partnerName));
   }
 
-  // User doesn't have access
+  // User doesn't have partner access
   return (
     <ContentUnavailable
       title={t('accessGuard.title')}
