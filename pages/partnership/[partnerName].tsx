@@ -32,10 +32,11 @@ type StoryBlokData = StoryData<
 const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   // TODO translations
 
-  story = useStoryblok(story, preview, sbParams, locale);
-  const partnerName = story.slug;
   const { partnerAccesses } = useTypedSelector((state: RootState) => state);
   const [partnerAccessAllowed, setPartnerAccessAllowed] = useState<boolean>(false);
+
+  const partnerName = story.slug;
+  const configuredStory = useStoryblok(story, preview, sbParams, locale);
 
   useEffect(() => {
     const access = hasPartnerAccess(partnerAccesses, partnerName);
@@ -44,7 +45,7 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 
   // User can view partnership page
   if (partnerAccessAllowed) {
-    return showPartnershipView(story, getPartnerContent(partnerName));
+    return showPartnershipView(configuredStory, getPartnerContent(partnerName));
   }
 
   // User doesn't have access
