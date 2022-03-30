@@ -13,6 +13,7 @@ import StoryblokFaqs from '../components/storyblok/StoryblokFaqs';
 import StoryblokImage from '../components/storyblok/StoryblokImage';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
+import StoryblokStatement from '../components/storyblok/StoryblokStatement';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
 export const RichTextOptions: RenderOptions = {
@@ -24,6 +25,7 @@ export const RichTextOptions: RenderOptions = {
     ['card']: (props: any) => <StoryblokCard {...props} />,
     ['button']: (props: any) => <StoryblokButton {...props} />,
     ['faq_list']: (props: any) => <StoryblokFaqs {...props} />,
+    ['statement']: (props: any) => <StoryblokStatement {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
