@@ -1,4 +1,3 @@
-import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import { Richtext } from 'storyblok-js-client';
 import { richtextContentStyle } from '../../styles/common';
@@ -25,23 +24,23 @@ const StoryblokStatement = (props: StoryblokStatementProps) => {
       : { xs: 1.125, md: 1.25 }; // default / medium
 
   const containerStyle = {
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'italic',
+    maxWidth: 600,
     marginY: { xs: 2, md: 4 },
-    maxWidth: 700,
-    Typography: {
+    marginX: 0,
+    text: {
+      fontFamily: 'Montserrat, sans-serif',
+      fontStyle: 'italic',
+
       fontSize: { xs: `${fontSize.xs}rem`, md: `${fontSize.md}rem` },
       lineHeight: `calc(${fontSize.md} * 1.70rem)`,
-      marginX: 0,
+      letterSpacing: '0.02rem',
     },
     ...richtextContentStyle,
   } as const;
 
   return (
     <Box sx={containerStyle}>
-      {/**TODO add max width? */}
-      {/**TODO add paragraph? */}
-      <Typography>{text}</Typography>
+      <text>{text}</text>
     </Box>
   );
 };
