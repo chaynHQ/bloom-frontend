@@ -5,7 +5,9 @@ import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { RichTextOptions } from '../../utils/richText';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -104,7 +106,7 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
           <Typography variant="body2" mb={0} paragraph>
-            {teamMember.bio}
+            {render(teamMember.bio, RichTextOptions)}
           </Typography>
         </CardContent>
       </Collapse>
