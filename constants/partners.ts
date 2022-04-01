@@ -8,7 +8,7 @@ import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yello
 
 export interface Partner {
   id?: string;
-  name: string;
+  name: string; // rename to display name to show value is intended for display and can be upper case
   logo: StaticImageData;
   logoAlt: string;
   partnershipLogo?: StaticImageData;

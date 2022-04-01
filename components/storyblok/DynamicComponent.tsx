@@ -7,6 +7,7 @@ import StoryblokImage from './StoryblokImage';
 import StoryblokPageSection from './StoryblokPageSection';
 import StoryblokQuote from './StoryblokQuote';
 import StoryblokRow from './StoryblokRow';
+import StoryblokStatement from './StoryblokStatement';
 import StoryblokVideo from './StoryblokVideo';
 
 interface Component {
@@ -23,6 +24,7 @@ const components: Component[] = [
   { name: 'card', component: StoryblokCard },
   { name: 'button', component: StoryblokButton },
   { name: 'faqs', component: StoryblokFaqs },
+  { name: 'statement', component: StoryblokStatement },
 ];
 
 interface DynamicComponentProps {

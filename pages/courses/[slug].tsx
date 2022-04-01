@@ -141,6 +141,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   if (incorrectAccess) {
     return (
+      // TODO (170322-1604) Use new content unavailable component here
       <Container sx={accessContainerStyle}>
         <Box sx={imageContainerStyle}>
           <Image
