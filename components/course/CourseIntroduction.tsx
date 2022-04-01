@@ -3,27 +3,38 @@ import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
+import { render } from 'storyblok-rich-text-react-renderer';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
 } from '../../constants/events';
 import { rowStyle } from '../../styles/common';
 import { logEvent } from '../../utils/logEvent';
-import Video from './Video';
-import VideoTranscriptModal from './VideoTranscriptModal';
+import { RichTextOptions } from '../../utils/richText';
+import Video from '../video/Video';
+import VideoTranscriptModal from '../video/VideoTranscriptModal';
+import CourseStatusHeader from './CourseStatusHeader';
+
+const containerStyle = {
+  ...rowStyle,
+  gap: 5,
+} as const;
 
 const introductionContainerStyle = {
-  ...rowStyle,
-  gap: 4,
+  maxWidth: '50%',
+  flex: 1,
 } as const;
 
 interface CourseIntroductionProps {
   course: StoryData;
+  courseLiveSoon: boolean;
+  courseLiveNow: boolean;
+  liveCourseAccess: boolean;
   eventData: {};
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
-  const { course, eventData } = props;
+  const { course, courseLiveSoon, courseLiveNow, liveCourseAccess, eventData } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
 
   const t = useTranslations('Courses');
@@ -42,15 +53,24 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
         course_name: course.content.name,
       },
     );
-  }, [openTranscriptModal]);
+  }, [openTranscriptModal, course, eventData]);
+
+  const IntroductionVideo = () => (
+    <Video
+      url={course.content.video.url}
+      eventData={eventData}
+      eventPrefix="COURSE_INTRO"
+      containerStyles={{ width: { xs: '100%' }, flex: 1 }}
+    />
+  );
 
   return (
-    <Box sx={introductionContainerStyle}>
-      <Box maxWidth={400}>
+    <Box sx={containerStyle}>
+      <Box sx={introductionContainerStyle}>
         <Typography component="h2" variant="h2">
           {t('courseDetail.introductionTitle')}
         </Typography>
-        <Typography>
+        <Typography mb={4}>
           {t.rich('courseDetail.introductionDescription', {
             transcriptLink: (children) => (
               <MuiLink
@@ -69,13 +89,22 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />
+        {/* Video position switches column depending on if live content shown */}
+        {liveCourseAccess && (courseLiveSoon || courseLiveNow) && <IntroductionVideo />}
       </Box>
-      <Video
-        url={course.content.video.url}
-        eventData={eventData}
-        eventPrefix="COURSE_INTRO"
-        containerStyles={{ width: { xs: '100%', sm: '70%', md: '55%' } }}
-      />
+      {liveCourseAccess && courseLiveSoon ? (
+        <Box flex={1}>
+          <CourseStatusHeader status="liveSoon" />
+          {render(course.content.live_soon_content, RichTextOptions)}
+        </Box>
+      ) : liveCourseAccess && courseLiveNow ? (
+        <Box flex={1}>
+          <CourseStatusHeader status="liveNow" />
+          {render(course.content.live_now_content, RichTextOptions)}
+        </Box>
+      ) : (
+        <IntroductionVideo />
+      )}
     </Box>
   );
 };

@@ -4,15 +4,7 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import { rowStyle } from '../../styles/common';
-
-const rowStyles = {
-  ...rowStyle,
-  gap: 1.5,
-  marginTop: 2,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-} as const;
+import { iconTextRowStyle } from '../../styles/common';
 
 interface ProgressStatusProps {
   status: PROGRESS_STATUS;
@@ -24,7 +16,7 @@ const ProgressStatus = (props: ProgressStatusProps) => {
 
   if (status === PROGRESS_STATUS.STARTED) {
     return (
-      <Box sx={rowStyles}>
+      <Box sx={iconTextRowStyle}>
         <DonutLargeIcon color="error" />
         <Typography>{tS('started')}</Typography>
       </Box>
@@ -32,7 +24,7 @@ const ProgressStatus = (props: ProgressStatusProps) => {
   }
   if (status === PROGRESS_STATUS.COMPLETED) {
     return (
-      <Box sx={rowStyles}>
+      <Box sx={iconTextRowStyle}>
         <CheckCircleIcon color="error" />
         <Typography>{tS('completed')}</Typography>
       </Box>

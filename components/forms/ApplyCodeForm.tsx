@@ -54,7 +54,7 @@ const ApplyCodeForm = () => {
 
     if ('data' in partnerAccessResponse) {
       const eventData = {
-        partner: partnerAccessResponse.data.partner?.name,
+        new_partner: partnerAccessResponse.data.partner?.name,
         feature_courses: true,
         feature_live_chat: partnerAccessResponse.data.featureLiveChat,
         feature_therapy: partnerAccessResponse.data.featureTherapy,
