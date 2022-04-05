@@ -64,6 +64,8 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
       }
 
+      links.push({ title: t('meetTheTeam'), href: '/meet-the-team' });
+
       if (!partnerAdmin.partner) {
         links.push({
           title: t('immediateHelp'),
