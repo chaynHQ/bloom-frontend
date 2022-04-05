@@ -79,7 +79,7 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
               alt={teamMember.image.alt}
               src={teamMember.image.filename}
               layout="fill"
-              objectFit="contain"
+              objectFit="cover"
             />
           </Box>
           <Box sx={cardHeaderStyle}>
