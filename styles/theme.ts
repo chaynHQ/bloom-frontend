@@ -312,6 +312,33 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          marginBottom: 18,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          fontSize: 16,
+          marginTop: '0.5rem !important',
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: theme.palette.background.default,
+        },
+        option: {
+          '&.Mui-focused': {
+            backgroundColor: `${theme.palette.secondary.light} !important`,
+          },
+        },
+      },
+    },
     MuiRadio: {
       styleOverrides: {
         root: {
@@ -338,8 +365,11 @@ theme = createTheme(theme, {
     MuiInputLabel: {
       styleOverrides: {
         root: {
+          top: -4,
+
           '&.Mui-focused': {
             color: theme.palette.text.primary,
+            transform: 'translate(0, -1.5px) scale(0.875) !important',
           },
         },
       },
@@ -347,11 +377,14 @@ theme = createTheme(theme, {
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          marginBottom: 8,
+          top: -4,
 
           '&.Mui-focused': {
             color: theme.palette.common.black,
           },
+        },
+        filled: {
+          transform: 'translate(0, -1.5px) scale(0.875) !important',
         },
       },
     },
