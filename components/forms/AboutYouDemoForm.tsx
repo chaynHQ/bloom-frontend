@@ -12,13 +12,19 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import rollbar from '../../config/rollbar';
 import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
-import { ABOUT_YOU_DEMO_REQUEST } from '../../constants/events';
+import {
+  ABOUT_YOU_DEMO_ERROR,
+  ABOUT_YOU_DEMO_REQUEST,
+  ABOUT_YOU_DEMO_SUCCESS,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -75,35 +81,39 @@ const AboutYouDemoForm = () => {
 
     logEvent(ABOUT_YOU_DEMO_REQUEST, eventUserData);
 
-    const data = {
+    const formData = {
+      date: new Date().toISOString(),
+      user_id: user.id,
       gender: genderInput,
       neurodivergent: neurodivergentInput,
       home_country: homeInput,
       current_country: countryInput,
       age: ageInput,
-      ...eventUserData,
+      ...eventUserData, // add user data
     };
 
-    console.log(data);
-    router.query.q = 'a';
-    router.push(router);
+    // post to zapier webhook with the form + user data
+    // the zap accepts the data and creates a new row in the google sheet
+    axios
+      .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+      .post('https://hooks.zapier.com/hooks/catch/2912612/b8e5dya/', formData)
+      .then(function (response) {
+        logEvent(ABOUT_YOU_DEMO_SUCCESS, eventUserData);
 
-    // if ('success') {
-    //   logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, { ...eventUserData, ...eventData });
-    //   setLoading(false);
-    // }
-
-    // if ('error') {
-    //   const error = getErrorMessage(error);
-
-    //     rollbar.error('Assign partner access error', error);
-    //     logEvent(ASSIGN_NEW_PARTNER_ACCESS_ERROR, {
-    //       ...eventUserData,
-    //       message: error,
-    //     });
-    //     setLoading(false);
-    //     throw error;
-    // }
+        // append `?q=a` to the url to reload the page and show the setA form instead
+        router.query.q = 'a';
+        router.push(router);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        rollbar.error('Send zapier webhook about you demo form data error', error);
+        logEvent(ABOUT_YOU_DEMO_ERROR, {
+          ...eventUserData,
+          message: error,
+        });
+        setLoading(false);
+        throw error;
+      });
   };
 
   return (
