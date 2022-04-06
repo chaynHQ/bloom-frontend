@@ -17,6 +17,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
+import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -73,7 +74,7 @@ const AboutYouSetAForm = () => {
 
     const formData = {
       date: new Date().toISOString(),
-      user_id: user.id,
+      user_id: user.id && hashString(user.id),
       hopes: hopesInput,
       ...eventUserData, // add user data
     };

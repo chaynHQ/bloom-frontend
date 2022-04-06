@@ -27,6 +27,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
+import { hashString } from '../../utils/hashString';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const rowStyles = {
@@ -83,7 +84,7 @@ const AboutYouDemoForm = () => {
 
     const formData = {
       date: new Date().toISOString(),
-      user_id: user.id,
+      user_id: user.id && hashString(user.id),
       gender: genderInput,
       neurodivergent: neurodivergentInput,
       home_country: homeInput,
