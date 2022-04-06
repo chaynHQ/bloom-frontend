@@ -43,7 +43,12 @@ function MyApp(props: MyAppProps) {
 
   const dispatch: any = useAppDispatch();
   const router = useRouter();
-  const pathname = router.asPath.split('/')[1]; // e.g. courses | therapy | partner-admin
+
+  // Example:
+  // The url http://bloom.chayn.co/auth/register?example=true will have a pathname of /auth/register
+  // This pathname split with a '/' separator will produce the array ['', 'auth', 'register']
+  // The second array entry is pulled out as the pathHead and will be 'auth'
+  const pathHead = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_ENV === 'staging') {
@@ -65,7 +70,7 @@ function MyApp(props: MyAppProps) {
   // Adds required permissions guard to pages, redirecting where required permissions are missing
   // New pages will default to requiring authenticated and public pages must be added to the array below
   const ComponentWithGuard = () => {
-    const publicPaths = [
+    const publicPathHeads = [
       '',
       'index',
       'welcome',
@@ -79,13 +84,13 @@ function MyApp(props: MyAppProps) {
     const component = <Component {...pageProps} />;
     let children = null;
 
-    if (publicPaths.includes(pathname)) {
+    if (publicPathHeads.includes(pathHead)) {
       return component;
     }
-    if (pathname === 'therapy') {
+    if (pathHead === 'therapy') {
       children = <TherapyAccessGuard>{component}</TherapyAccessGuard>;
     }
-    if (pathname === 'partner-admin') {
+    if (pathHead === 'partner-admin') {
       children = <PartnerAdminGuard>{component}</PartnerAdminGuard>;
     }
 
@@ -102,7 +107,7 @@ function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
-          {pathname !== 'partner-admin' && <LeaveSiteButton />}
+          {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <ComponentWithGuard />
           <Footer />
         </ThemeProvider>
