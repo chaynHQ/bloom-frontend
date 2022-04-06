@@ -19,7 +19,7 @@ import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import { ABOUT_YOU_DEMO_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { rowStyle } from '../../styles/common';
+import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const rowStyles = {
@@ -30,6 +30,12 @@ const rowStyles = {
     marginLeft: 0.25,
   },
 } as const;
+
+const actionsStyle = {
+  ...rowStyle,
+  justifyContent: 'flex-end',
+  marginTop: 2,
+};
 
 const AboutYouDemoForm = () => {
   const t = useTranslations('Account.aboutYou.demoForm');
@@ -77,6 +83,10 @@ const AboutYouDemoForm = () => {
       ...getEventUserData({ user, partnerAccesses }),
     };
 
+    console.log(data);
+    router.query.q = 'a';
+    router.push(router);
+
     // if ('success') {
     //   logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, { ...eventUserData, ...eventData });
     //   setLoading(false);
@@ -106,7 +116,8 @@ const AboutYouDemoForm = () => {
           variant="standard"
           fullWidth
           required
-          sx={{ marginBottom: 4 }}
+          InputLabelProps={{ shrink: true }}
+          sx={staticFieldLabelStyle}
         />
 
         <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ marginBottom: 3 }}>
@@ -141,7 +152,8 @@ const AboutYouDemoForm = () => {
               label={t('homeLabel')}
               variant="standard"
               helperText={t('homeHelpText')}
-              sx={{ marginBottom: 4 }}
+              InputLabelProps={{ shrink: true }}
+              sx={staticFieldLabelStyle}
             />
           )}
         />
@@ -159,7 +171,8 @@ const AboutYouDemoForm = () => {
               label={t('countryLabel')}
               variant="standard"
               helperText={t('countryHelpText')}
-              sx={{ marginBottom: 4 }}
+              InputLabelProps={{ shrink: true }}
+              sx={staticFieldLabelStyle}
             />
           )}
         />
@@ -192,15 +205,11 @@ const AboutYouDemoForm = () => {
             {formError}
           </Typography>
         )}
-        <LoadingButton
-          sx={{ mt: 2 }}
-          variant="contained"
-          color="secondary"
-          type="submit"
-          loading={loading}
-        >
-          {t('submitLabel')}
-        </LoadingButton>
+        <Box sx={actionsStyle}>
+          <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+            {t('submitLabel')}
+          </LoadingButton>
+        </Box>
       </form>
     </Box>
   );

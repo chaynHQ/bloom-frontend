@@ -365,7 +365,7 @@ theme = createTheme(theme, {
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          top: -4,
+          color: theme.palette.grey[800],
 
           '&.Mui-focused': {
             color: theme.palette.text.primary,
@@ -378,6 +378,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           top: -4,
+          color: theme.palette.grey[800],
 
           '&.Mui-focused': {
             color: theme.palette.common.black,

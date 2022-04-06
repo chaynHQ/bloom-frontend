@@ -12,17 +12,14 @@ import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import { ABOUT_YOU_DEMO_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { rowStyle } from '../../styles/common';
+import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
-const rowStyles = {
+const actionsStyle = {
   ...rowStyle,
-  justifyContent: 'flex-start',
-
-  '> label': {
-    marginLeft: 0.25,
-  },
-} as const;
+  justifyContent: 'flex-end',
+  marginTop: 2,
+};
 
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
@@ -70,6 +67,9 @@ const AboutYouSetAForm = () => {
       ...getEventUserData({ user, partnerAccesses }),
     };
 
+    console.log(data);
+    router.push('/courses');
+
     // if ('success') {
     //   logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, { ...eventUserData, ...eventData });
     //   setLoading(false);
@@ -105,15 +105,14 @@ const AboutYouSetAForm = () => {
           required
           multiline
           rows={3}
-          sx={{ marginBottom: 4, '> .MuiInputLabel-root': { whiteSpace: 'pre-wrap' } }}
+          InputLabelProps={{ shrink: true }}
+          sx={staticFieldLabelStyle}
         />
         <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important">{t('scaleDescriptionLine2')}</Typography>
         {[1, 2, 3, 4, 5, 6, 7, 8].map((x) => (
           <FormControl key={`question-${x}`} fullWidth>
-            <Typography mb="0.5rem !important" fontStyle="italic" color="grey.800">
-              {t(`scaleLabels.${x}`)}
-            </Typography>
+            <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${x}`)}</Typography>
             <Slider
               aria-label={t(`scaleLabels.${x}`)}
               defaultValue={3}
@@ -133,15 +132,11 @@ const AboutYouSetAForm = () => {
             {formError}
           </Typography>
         )}
-        <LoadingButton
-          sx={{ mt: 2 }}
-          variant="contained"
-          color="secondary"
-          type="submit"
-          loading={loading}
-        >
-          {t('submitLabel')}
-        </LoadingButton>
+        <Box sx={actionsStyle}>
+          <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+            {t('submitLabel')}
+          </LoadingButton>
+        </Box>
       </form>
     </Box>
   );

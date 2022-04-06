@@ -8,7 +8,6 @@ import {
 } from './formatPartnerAccesses';
 
 export const logEvent = (event: string, params?: {}) => {
-  console.log(event, params);
   analytics?.logEvent(event, params!);
 };
 
