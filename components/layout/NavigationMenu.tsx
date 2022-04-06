@@ -13,8 +13,8 @@ const listStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
   marginLeft: { xs: 0, md: 'auto' },
-  marginRight: { xs: 0, md: 2 },
-  gap: { xs: 2, md: 1 },
+  marginRight: { xs: 0, md: 0.5 },
+  gap: { xs: 2, md: 0 },
 } as const;
 
 const listItemStyle = {

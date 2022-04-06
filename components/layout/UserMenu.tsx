@@ -23,7 +23,8 @@ const menuItemStyle = {
 } as const;
 
 const buttonStyle = {
-  paddingX: 1.5,
+  paddingX: 1,
+  minWidth: { xs: 40, md: 64 },
   height: 40,
   fontWeight: 400,
 
