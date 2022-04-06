@@ -34,6 +34,8 @@ const AboutYouSetAForm = () => {
   const [scale5Input, setScale5Input] = useState<number>(3);
   const [scale6Input, setScale6Input] = useState<number>(3);
   const [scale7Input, setScale7Input] = useState<number>(3);
+  const [scale8Input, setScale8Input] = useState<number>(3);
+  const [scale9Input, setScale9Input] = useState<number>(3);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -49,6 +51,8 @@ const AboutYouSetAForm = () => {
     { name: 'Q5', inputState: scale5Input, inputStateSetter: setScale5Input },
     { name: 'Q6', inputState: scale6Input, inputStateSetter: setScale6Input },
     { name: 'Q7', inputState: scale7Input, inputStateSetter: setScale7Input },
+    { name: 'Q8', inputState: scale8Input, inputStateSetter: setScale8Input },
+    { name: 'Q9', inputState: scale9Input, inputStateSetter: setScale9Input },
   ];
 
   useEffect(() => {
