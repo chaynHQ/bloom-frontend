@@ -4,11 +4,17 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
-import { ABOUT_YOU_DEMO_REQUEST } from '../../constants/events';
+import rollbar from '../../config/rollbar';
+import {
+  ABOUT_YOU_SETA_ERROR,
+  ABOUT_YOU_SETA_REQUEST,
+  ABOUT_YOU_SETA_SUCCESS,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import { ScaleFieldItem } from '../../utils/interfaces';
@@ -63,35 +69,40 @@ const AboutYouSetAForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(ABOUT_YOU_DEMO_REQUEST, eventUserData);
+    logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
 
-    const data = {
-      ...eventUserData,
+    const formData = {
+      date: new Date().toISOString(),
+      user_id: user.id,
+      hopes: hopesInput,
+      ...eventUserData, // add user data
     };
 
     scaleQuestions.forEach((question) => {
-      data[question.name] = question.inputState;
+      formData[question.name.toLowerCase()] = question.inputState;
     });
 
-    console.log(data);
-    router.push('/courses');
+    // post to zapier webhook with the form + user data
+    // the zap accepts the data and creates a new row in the google sheet
+    // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
+    axios
+      .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+      .post('https://hooks.zapier.com/hooks/catch/2912612/b8exb8q/', formData)
+      .then(function (response) {
+        logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
 
-    // if ('success') {
-    //   logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, { ...eventUserData, ...eventData });
-    //   setLoading(false);
-    // }
-
-    // if ('error') {
-    //   const error = getErrorMessage(error);
-
-    //     rollbar.error('Assign partner access error', error);
-    //     logEvent(ASSIGN_NEW_PARTNER_ACCESS_ERROR, {
-    //       ...eventUserData,
-    //       message: error,
-    //     });
-    //     setLoading(false);
-    //     throw error;
-    // }
+        router.push('/courses');
+        setLoading(false);
+      })
+      .catch(function (error) {
+        rollbar.error('Send zapier webhook about you demo form data error', error);
+        logEvent(ABOUT_YOU_SETA_ERROR, {
+          ...eventUserData,
+          message: error,
+        });
+        setLoading(false);
+        throw error;
+      });
   };
 
   function valuetext(value: number) {

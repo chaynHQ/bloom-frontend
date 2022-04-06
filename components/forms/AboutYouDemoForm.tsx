@@ -94,6 +94,7 @@ const AboutYouDemoForm = () => {
 
     // post to zapier webhook with the form + user data
     // the zap accepts the data and creates a new row in the google sheet
+    // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
     axios
       .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
       .post('https://hooks.zapier.com/hooks/catch/2912612/b8e5dya/', formData)
