@@ -64,6 +64,10 @@ const dotStyle = {
   height: { xs: 8, md: 10 },
 } as const;
 
+const sessionSubtitleStyle = {
+  marginTop: '0.75rem !important',
+} as const;
+
 const crispButtonContainerStyle = {
   paddingTop: 2.5,
   paddingBottom: 1,
@@ -287,7 +291,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
             >
               {course.name}
             </Button>
-            <Typography mt={1.5} sx={{ marginLeft: { md: 3 } }} variant="body2">
+            <Typography sx={sessionSubtitleStyle} variant="body2">
               {weekString} - {t('session')} {story.position / 10 - 1}
             </Typography>
           </Header>
