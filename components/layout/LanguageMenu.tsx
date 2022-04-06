@@ -16,8 +16,10 @@ const menuItemStyle = {
 } as const;
 
 const buttonStyle = {
-  gap: 1,
-  paddingX: 1.5,
+  height: 40,
+  minWidth: { xs: 40, md: 64 },
+  paddingX: 1,
+  gap: 0.75,
   fontWeight: 400,
 
   ':hover': { backgroundColor: 'background.default' },
@@ -26,7 +28,7 @@ const buttonStyle = {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  '& .MuiButton-startIcon': { mx: 0 },
+  '& .MuiButton-startIcon': { display: { xs: 'none', md: 'inline-flex' }, mx: 0 },
 } as const;
 
 export default function LanguageMenu() {
