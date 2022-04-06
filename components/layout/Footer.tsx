@@ -33,13 +33,17 @@ const logoContainerStyle = {
 } as const;
 
 const descriptionContainerStyle = {
-  width: { xs: '100%', md: '45%' },
+  flex: 1,
+  minWidth: 200,
+  marginTop: { xs: 3, md: 0 },
 } as const;
 
-const brandContainerStyle = {
-  minWidth: '225px',
-  marginRight: 1,
-  marginBottom: { xs: 4, md: 0 },
+const partnersContainerStyle = {
+  ...rowStyle,
+  justifyContent: 'flex-start',
+  gap: { xs: 4, md: 3, lg: 5 },
+  maxWidth: { md: '55%' },
+  '> div': { minWidth: '220px' },
 } as const;
 
 const socialsContainerStyle = {
@@ -92,85 +96,86 @@ const Footer = () => {
 
   return (
     <Container sx={footerContainerStyle}>
-      {partners?.map((partner) => {
-        const socialLinkEvent =
-          partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
+      <Box sx={partnersContainerStyle}>
+        {partners?.map((partner) => {
+          const socialLinkEvent =
+            partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
 
-        return (
-          <Box key={`${partner.name}_footer`} sx={brandContainerStyle}>
-            <Link href={partner.website} sx={logoContainerStyle}>
-              <Image alt={tS(partner.logoAlt)} src={partner.logo} />
-            </Link>
-            <Typography variant="body2" component="p">
-              {tS(partner.footerLine1)}
-            </Typography>
-            <Typography variant="body2" component="p">
-              {tS(partner.footerLine2)}
-            </Typography>
-            <Box sx={socialsContainerStyle}>
-              {partner.facebook && (
-                <IconButton
-                  aria-label="Facebook"
-                  href={partner.facebook}
-                  onClick={() =>
-                    logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Facebook' })
-                  }
-                >
-                  <FacebookIcon />
-                </IconButton>
-              )}
-              {partner.instagram && (
-                <IconButton
-                  aria-label="Instagram"
-                  href={partner.instagram}
-                  onClick={() =>
-                    logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Instagram' })
-                  }
-                >
-                  <InstagramIcon />
-                </IconButton>
-              )}
-              {partner.twitter && (
-                <IconButton
-                  aria-label="Twitter"
-                  href={partner.twitter}
-                  onClick={() =>
-                    logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
-                  }
-                >
-                  <TwitterIcon />
-                </IconButton>
-              )}
-              {partner.youtube && (
-                <IconButton
-                  aria-label="Youtube"
-                  href={partner.youtube}
-                  onClick={() =>
-                    logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
-                  }
-                >
-                  <YoutubeIcon />
-                </IconButton>
-              )}
-              {partner.tiktok && (
-                <IconButton
-                  aria-label="Tiktok"
-                  href={partner.tiktok}
-                  onClick={() =>
-                    logEvent(socialLinkEvent, {
-                      ...eventUserData,
-                      social_account: 'Tiktok',
-                    })
-                  }
-                >
-                  <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} />
-                </IconButton>
-              )}
+          return (
+            <Box key={`${partner.name}_footer`}>
+              <Link href={partner.website} sx={logoContainerStyle}>
+                <Image alt={tS(partner.logoAlt)} src={partner.logo} />
+              </Link>
+              <Typography variant="body2" component="p">
+                {tS(partner.footerLine1)}
+              </Typography>
+              <Typography variant="body2" component="p">
+                {tS(partner.footerLine2)}
+              </Typography>
+              <Box sx={socialsContainerStyle}>
+                {partner.facebook && (
+                  <IconButton
+                    aria-label="Facebook"
+                    href={partner.facebook}
+                    onClick={() =>
+                      logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Facebook' })
+                    }
+                  >
+                    <FacebookIcon />
+                  </IconButton>
+                )}
+                {partner.instagram && (
+                  <IconButton
+                    aria-label="Instagram"
+                    href={partner.instagram}
+                    onClick={() =>
+                      logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Instagram' })
+                    }
+                  >
+                    <InstagramIcon />
+                  </IconButton>
+                )}
+                {partner.twitter && (
+                  <IconButton
+                    aria-label="Twitter"
+                    href={partner.twitter}
+                    onClick={() =>
+                      logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
+                    }
+                  >
+                    <TwitterIcon />
+                  </IconButton>
+                )}
+                {partner.youtube && (
+                  <IconButton
+                    aria-label="Youtube"
+                    href={partner.youtube}
+                    onClick={() =>
+                      logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
+                    }
+                  >
+                    <YoutubeIcon />
+                  </IconButton>
+                )}
+                {partner.tiktok && (
+                  <IconButton
+                    aria-label="Tiktok"
+                    href={partner.tiktok}
+                    onClick={() =>
+                      logEvent(socialLinkEvent, {
+                        ...eventUserData,
+                        social_account: 'Tiktok',
+                      })
+                    }
+                  >
+                    <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} />
+                  </IconButton>
+                )}
+              </Box>
             </Box>
-          </Box>
-        );
-      })}
-
+          );
+        })}
+      </Box>
       <Box sx={descriptionContainerStyle}>
         <Typography sx={{ mb: 1 }}>{tS('footer.chaynDescription')}</Typography>
         <Link href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1">
