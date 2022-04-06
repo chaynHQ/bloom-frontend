@@ -8,11 +8,10 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
-import { enCountries, esCountries } from '../../constants/countries';
-import { LANGUAGES } from '../../constants/enums';
 import { ABOUT_YOU_DEMO_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
+import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const actionsStyle = {
@@ -27,12 +26,14 @@ const AboutYouSetAForm = () => {
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [genderInput, setGenderInput] = useState<string>('');
-  const [neurodivergentInput, setNeurodivergentInput] = useState<string>('');
-  const [homeInput, setHomeInput] = useState<string>('');
-  const [countryInput, setCountryInput] = useState<string>('');
-  const [ageInput, setAgeInput] = useState<string>('');
-  const [countryList, setCountryList] = useState<Array<{ code: string; label: string }>>([]);
+  const [hopesInput, setHopesInput] = useState<string>('');
+  const [scale1Input, setScale1Input] = useState<number>(3);
+  const [scale2Input, setScale2Input] = useState<number>(3);
+  const [scale3Input, setScale3Input] = useState<number>(3);
+  const [scale4Input, setScale4Input] = useState<number>(3);
+  const [scale5Input, setScale5Input] = useState<number>(3);
+  const [scale6Input, setScale6Input] = useState<number>(3);
+  const [scale7Input, setScale7Input] = useState<number>(3);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -40,13 +41,15 @@ const AboutYouSetAForm = () => {
   >();
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
 
-  useEffect(() => {
-    if (router.locale === LANGUAGES.es) {
-      setCountryList(esCountries);
-    } else {
-      setCountryList(enCountries);
-    }
-  }, [router.locale]);
+  const scaleQuestions: ScaleFieldItem[] = [
+    { name: '1', inputState: scale1Input, inputStateSetter: setScale1Input },
+    { name: '2', inputState: scale2Input, inputStateSetter: setScale2Input },
+    { name: '3', inputState: scale3Input, inputStateSetter: setScale3Input },
+    { name: '4', inputState: scale4Input, inputStateSetter: setScale4Input },
+    { name: '5', inputState: scale5Input, inputStateSetter: setScale5Input },
+    { name: '6', inputState: scale6Input, inputStateSetter: setScale6Input },
+    { name: '7', inputState: scale7Input, inputStateSetter: setScale7Input },
+  ];
 
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses }));
@@ -59,13 +62,12 @@ const AboutYouSetAForm = () => {
     logEvent(ABOUT_YOU_DEMO_REQUEST, eventUserData);
 
     const data = {
-      gender: genderInput,
-      neurodivergent: neurodivergentInput,
-      home_country: homeInput,
-      current_country: countryInput,
-      age: ageInput,
-      ...getEventUserData({ user, partnerAccesses }),
+      ...eventUserData,
     };
+
+    scaleQuestions.forEach((question) => {
+      data[question.name] = question.inputState;
+    });
 
     console.log(data);
     router.push('/courses');
@@ -98,8 +100,8 @@ const AboutYouSetAForm = () => {
         <TextField
           id="hopes"
           label={t.rich('hopesLabel')}
-          onChange={(e) => setGenderInput(e.target.value)}
-          value={genderInput}
+          onChange={(e) => setHopesInput(e.target.value)}
+          value={hopesInput}
           variant="standard"
           fullWidth
           required
@@ -110,12 +112,13 @@ const AboutYouSetAForm = () => {
         />
         <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important">{t('scaleDescriptionLine2')}</Typography>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((x) => (
-          <FormControl key={`question-${x}`} fullWidth>
-            <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${x}`)}</Typography>
+        {scaleQuestions.map((question) => (
+          <FormControl key={`question-${question.name}`} fullWidth>
+            <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${question.name}`)}</Typography>
             <Slider
-              aria-label={t(`scaleLabels.${x}`)}
-              defaultValue={3}
+              aria-label={t(`scaleLabels.${question.name}`)}
+              value={question.inputState}
+              onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}
               valueLabelDisplay="auto"
               step={1}
