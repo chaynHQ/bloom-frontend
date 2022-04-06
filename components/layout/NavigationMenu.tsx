@@ -13,8 +13,8 @@ const listStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
   marginLeft: { xs: 0, md: 'auto' },
-  marginRight: { xs: 0, md: 2 },
-  gap: { xs: 2, md: 1 },
+  marginRight: { xs: 0, md: 0.5 },
+  gap: { xs: 2, md: 0 },
 } as const;
 
 const listItemStyle = {
@@ -63,6 +63,8 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
       }
+
+      links.push({ title: t('meetTheTeam'), href: '/meet-the-team' });
 
       if (!partnerAdmin.partner) {
         links.push({
