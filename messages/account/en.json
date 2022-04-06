@@ -37,7 +37,9 @@
       "goToCourses": "Skip to courses",
       "demoForm": {
         "genderLabel": "What is your gender identity?",
+        "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
         "neurodivergentLabel": "Do you identify as neurodivergent?",
+        "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
         "neurodivergentLabels": {
           "1": "Yes",
           "2": "No",
@@ -61,7 +63,7 @@
         "codeErrors": {}
       },
       "setAForm": {
-        "scaleDescriptionLine1": "As a new user, we’d like to understand how you’re coping at the moment with a few agree/disagree statements. Asking this helps us to measure the impact that using Bloom has for survivors.",
+        "scaleDescriptionLine1": "As a new user, we’d like to understand how you’re coping at the moment with a few agree/disagree statements. Asking this helps us to measure the impact that using Bloom has for survivors. Please rate your level of agreement with the following statements:",
         "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
         "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
         "scaleLabels": {

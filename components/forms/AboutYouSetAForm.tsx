@@ -115,7 +115,9 @@ const AboutYouSetAForm = () => {
           sx={staticFieldLabelStyle}
         />
         <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
-        <Typography mb="1.5rem !important">{t('scaleDescriptionLine2')}</Typography>
+        <Typography mb="1.5rem !important" fontWeight="600">
+          {t('scaleDescriptionLine2')}
+        </Typography>
         {scaleQuestions.map((question) => (
           <FormControl key={`question-${question.name}`} fullWidth>
             <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${question.name}`)}</Typography>

@@ -4,6 +4,7 @@ import {
   Autocomplete,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -111,6 +112,7 @@ const AboutYouDemoForm = () => {
         <TextField
           id="gender"
           label={t.rich('genderLabel')}
+          helperText={t('genderHelpText')}
           onChange={(e) => setGenderInput(e.target.value)}
           value={genderInput}
           variant="standard"
@@ -120,13 +122,7 @@ const AboutYouDemoForm = () => {
           sx={staticFieldLabelStyle}
         />
 
-        <FormControl
-          required
-          fullWidth
-          component="fieldset"
-          id="neurodivergent"
-          sx={{ marginBottom: 3 }}
-        >
+        <FormControl required fullWidth component="fieldset" id="neurodivergent" sx={{ mb: 4 }}>
           <FormLabel component="legend">{t('neurodivergentLabel')}</FormLabel>
           <RadioGroup
             sx={rowStyles}
@@ -151,6 +147,9 @@ const AboutYouDemoForm = () => {
               label={t('neurodivergentLabels.3')}
             />
           </RadioGroup>
+          <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
+            {t('neurodivergentHelpText')}
+          </FormHelperText>
         </FormControl>
 
         <Autocomplete
