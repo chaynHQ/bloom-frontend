@@ -27,16 +27,20 @@ export const joinedFeatureTherapy = (
     .join(', ');
 };
 
-export const totalTherapyRemaining = (partnerAccesses: PartnerAccess[] | undefined): number => {
-  if (!partnerAccesses) return 0;
+export const totalTherapyRemaining = (
+  partnerAccesses: PartnerAccess[] | undefined,
+): number | null => {
+  if (!partnerAccesses) return null;
   return partnerAccesses.reduce(function (total, pa) {
     // return the sum with previous value
     return total + pa.therapySessionsRemaining;
   }, 0);
 };
 
-export const totalTherapyRedeemed = (partnerAccesses: PartnerAccess[] | undefined): number => {
-  if (!partnerAccesses) return 0;
+export const totalTherapyRedeemed = (
+  partnerAccesses: PartnerAccess[] | undefined,
+): number | null => {
+  if (!partnerAccesses) return null;
   return partnerAccesses.reduce(function (total, pa) {
     // return the sum with previous value
     return total + pa.therapySessionsRedeemed;

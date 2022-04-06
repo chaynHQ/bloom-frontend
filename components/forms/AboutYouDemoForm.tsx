@@ -80,7 +80,7 @@ const AboutYouDemoForm = () => {
       home_country: homeInput,
       current_country: countryInput,
       age: ageInput,
-      ...getEventUserData({ user, partnerAccesses }),
+      ...eventUserData,
     };
 
     console.log(data);
@@ -120,7 +120,13 @@ const AboutYouDemoForm = () => {
           sx={staticFieldLabelStyle}
         />
 
-        <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ marginBottom: 3 }}>
+        <FormControl
+          required
+          fullWidth
+          component="fieldset"
+          id="neurodivergent"
+          sx={{ marginBottom: 3 }}
+        >
           <FormLabel component="legend">{t('neurodivergentLabel')}</FormLabel>
           <RadioGroup
             sx={rowStyles}
@@ -129,11 +135,19 @@ const AboutYouDemoForm = () => {
             onChange={(e) => setNeurodivergentInput(e.target.value)}
             value={neurodivergentInput}
           >
-            <FormControlLabel value="Yes" control={<Radio />} label={t('neurodivergentLabels.1')} />
-            <FormControlLabel value="No" control={<Radio />} label={t('neurodivergentLabels.2')} />
+            <FormControlLabel
+              value="Yes"
+              control={<Radio required />}
+              label={t('neurodivergentLabels.1')}
+            />
+            <FormControlLabel
+              value="No"
+              control={<Radio required />}
+              label={t('neurodivergentLabels.2')}
+            />
             <FormControlLabel
               value="Not sure"
-              control={<Radio />}
+              control={<Radio required />}
               label={t('neurodivergentLabels.3')}
             />
           </RadioGroup>
@@ -143,12 +157,15 @@ const AboutYouDemoForm = () => {
           disablePortal
           id="home"
           options={countryList}
+          inputValue={homeInput}
+          onInputChange={(event: any, newValue: string | null) => {
+            setHomeInput(newValue || '');
+          }}
           popupIcon={<KeyboardArrowDown />}
           renderInput={(params) => (
             <TextField
               {...params}
-              onChange={(e) => setHomeInput(e.target.value)}
-              value={homeInput}
+              required
               label={t('homeLabel')}
               variant="standard"
               helperText={t('homeHelpText')}
@@ -162,12 +179,15 @@ const AboutYouDemoForm = () => {
           disablePortal
           id="country"
           options={countryList}
+          inputValue={countryInput}
+          onInputChange={(event: any, newValue: string | null) => {
+            setCountryInput(newValue || '');
+          }}
           popupIcon={<KeyboardArrowDown />}
           renderInput={(params) => (
             <TextField
               {...params}
-              onChange={(e) => setCountryInput(e.target.value)}
-              value={countryInput}
+              required
               label={t('countryLabel')}
               variant="standard"
               helperText={t('countryHelpText')}
@@ -186,15 +206,19 @@ const AboutYouDemoForm = () => {
             onChange={(e) => setAgeInput(e.target.value)}
             value={ageInput}
           >
-            <FormControlLabel value="Under 16" control={<Radio />} label={t('ageLabels.1')} />
-            <FormControlLabel value="16-25" control={<Radio />} label={t('ageLabels.2')} />
-            <FormControlLabel value="25-35" control={<Radio />} label={t('ageLabels.3')} />
-            <FormControlLabel value="35-45" control={<Radio />} label={t('ageLabels.4')} />
-            <FormControlLabel value="45-55" control={<Radio />} label={t('ageLabels.5')} />
-            <FormControlLabel value="55+" control={<Radio />} label={t('ageLabels.6')} />
+            <FormControlLabel
+              value="Under 16"
+              control={<Radio required />}
+              label={t('ageLabels.1')}
+            />
+            <FormControlLabel value="16-25" control={<Radio required />} label={t('ageLabels.2')} />
+            <FormControlLabel value="25-35" control={<Radio required />} label={t('ageLabels.3')} />
+            <FormControlLabel value="35-45" control={<Radio required />} label={t('ageLabels.4')} />
+            <FormControlLabel value="45-55" control={<Radio required />} label={t('ageLabels.5')} />
+            <FormControlLabel value="55+" control={<Radio required />} label={t('ageLabels.6')} />
             <FormControlLabel
               value="Prefer not to say"
-              control={<Radio />}
+              control={<Radio required />}
               label={t('ageLabels.7')}
             />
           </RadioGroup>
