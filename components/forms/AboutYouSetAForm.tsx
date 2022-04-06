@@ -42,13 +42,13 @@ const AboutYouSetAForm = () => {
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
 
   const scaleQuestions: ScaleFieldItem[] = [
-    { name: '1', inputState: scale1Input, inputStateSetter: setScale1Input },
-    { name: '2', inputState: scale2Input, inputStateSetter: setScale2Input },
-    { name: '3', inputState: scale3Input, inputStateSetter: setScale3Input },
-    { name: '4', inputState: scale4Input, inputStateSetter: setScale4Input },
-    { name: '5', inputState: scale5Input, inputStateSetter: setScale5Input },
-    { name: '6', inputState: scale6Input, inputStateSetter: setScale6Input },
-    { name: '7', inputState: scale7Input, inputStateSetter: setScale7Input },
+    { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
+    { name: 'Q2', inputState: scale2Input, inputStateSetter: setScale2Input },
+    { name: 'Q3', inputState: scale3Input, inputStateSetter: setScale3Input },
+    { name: 'Q4', inputState: scale4Input, inputStateSetter: setScale4Input },
+    { name: 'Q5', inputState: scale5Input, inputStateSetter: setScale5Input },
+    { name: 'Q6', inputState: scale6Input, inputStateSetter: setScale6Input },
+    { name: 'Q7', inputState: scale7Input, inputStateSetter: setScale7Input },
   ];
 
   useEffect(() => {

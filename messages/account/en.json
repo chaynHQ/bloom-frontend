@@ -65,14 +65,14 @@
         "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
         "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
         "scaleLabels": {
-          "1": "I understand that what makes make me feel safe or threatened is unique to me",
-          "2": "I know that some coping mechanisms aren’t healthy, and may harm me",
-          "3": "I’m aware that there are healthy techniques for feeling better that I can try out",
-          "4": "I know that it takes time, energy and patience to heal from trauma",
-          "5": "I’m committed to giving myself the attention that I need to heal",
-          "6": "I have found the things that make me feel good, and make time for them in my routine",
-          "7": "I understand that part of healing from trauma is dealing with triggers",
-          "8": "I can anticipate and cope with triggering moments, places or times of year"
+          "Q1": "I understand that what makes make me feel safe or threatened is unique to me",
+          "Q2": "I know that some coping mechanisms aren’t healthy, and may harm me",
+          "Q3": "I’m aware that there are healthy techniques for feeling better that I can try out",
+          "Q4": "I know that it takes time, energy and patience to heal from trauma",
+          "Q5": "I’m committed to giving myself the attention that I need to heal",
+          "Q6": "I have found the things that make me feel good, and make time for them in my routine",
+          "Q7": "I understand that part of healing from trauma is dealing with triggers",
+          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
         },
         "submitLabel": "Complete"
       }
