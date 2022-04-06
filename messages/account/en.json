@@ -31,6 +31,9 @@
       "title": "About you",
       "header": "Help us understand",
       "description": "These questions help us understand who is using Bloom and what kinds of support they need from us.",
+      "titleA": "What you want from Bloom",
+      "descriptionALine1": "Thank you for your answers so far!",
+      "descriptionALine2": "These last questions help us understanding what you're hoping to get out of Bloom, so we know what to focus on.",
       "goToCourses": "Skip to courses",
       "demoForm": {
         "genderLabel": "What is your gender identity?",
@@ -56,6 +59,22 @@
         },
         "submitLabel": "Submit",
         "codeErrors": {}
+      },
+      "setAForm": {
+        "scaleDescriptionLine1": "As a new user, we’d like to understand how you’re coping at the moment with a few agree/disagree statements. Asking this helps us to measure the impact that using Bloom has for survivors.",
+        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
+        "scaleLabels": {
+          "1": "I understand that what makes make me feel safe or threatened is unique to me",
+          "2": "I know that some coping mechanisms aren’t healthy, and may harm me",
+          "3": "I’m aware that there are healthy techniques for feeling better that I can try out",
+          "4": "I know that it takes time, energy and patience to heal from trauma",
+          "5": "I’m committed to giving myself the attention that I need to heal",
+          "6": "I have found the things that make me feel good, and make time for them in my routine",
+          "7": "I understand that part of healing from trauma is dealing with triggers",
+          "8": "I can anticipate and cope with triggering moments, places or times of year"
+        },
+        "submitLabel": "Complete"
       }
     }
   }

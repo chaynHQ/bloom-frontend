@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import AboutYouDemoForm from '../../components/forms/AboutYouDemoForm';
-import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
+import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { ABOUT_YOU_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -80,14 +80,15 @@ const AboutYou: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('header')}
           </Typography>
-          {!questionSetParam ? (
-            <Typography variant="body1" component="p">
-              {t('description')}
-            </Typography>
+          {questionSetParam === 'a' ? (
+            <>
+              <Typography>
+                <strong>{t('descriptionALine1')}</strong>
+              </Typography>
+              <Typography>{t('descriptionALine2')}</Typography>
+            </>
           ) : (
-            <Typography variant="body1" component="p">
-              {t('description')}
-            </Typography>
+            <Typography>{t('description')}</Typography>
           )}
           <Button
             sx={{ mt: 3 }}
@@ -102,9 +103,9 @@ const AboutYou: NextPage = () => {
             <Card>
               <CardContent>
                 <Typography variant="h2" component="h2">
-                  {t('title')}
+                  {questionSetParam === 'a' ? t('titleA') : t('title')}
                 </Typography>
-                {!questionSetParam ? <AboutYouDemoForm /> : <ApplyCodeForm />}
+                {questionSetParam === 'a' ? <AboutYouSetAForm /> : <AboutYouDemoForm />}
               </CardContent>
             </Card>
           </Box>
