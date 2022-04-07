@@ -86,24 +86,26 @@ const AboutYouSetAForm = () => {
     // post to zapier webhook with the form + user data
     // the zap accepts the data and creates a new row in the google sheet
     // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
-    axios
-      .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
-      .post('https://hooks.zapier.com/hooks/catch/2912612/b8exb8q/', formData)
-      .then(function (response) {
-        logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
+    if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM) {
+      axios
+        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+        .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
+        .then(function (response) {
+          logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
 
-        router.push('/courses');
-        setLoading(false);
-      })
-      .catch(function (error) {
-        rollbar.error('Send zapier webhook about you demo form data error', error);
-        logEvent(ABOUT_YOU_SETA_ERROR, {
-          ...eventUserData,
-          message: error,
+          router.push('/courses');
+          setLoading(false);
+        })
+        .catch(function (error) {
+          rollbar.error('Send zapier webhook about you demo form data error', error);
+          logEvent(ABOUT_YOU_SETA_ERROR, {
+            ...eventUserData,
+            message: error,
+          });
+          setLoading(false);
+          throw error;
         });
-        setLoading(false);
-        throw error;
-      });
+    }
   };
 
   function valuetext(value: number) {
