@@ -376,17 +376,15 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                   <>
                     <Dots />
                     <SessionContentCard
-                      title={t('sessionDetail.chatTitle')}
+                      title={t('sessionDetail.chat.title')}
                       titleIcon={ChatBubbleOutlineIcon}
                       titleIconSize={24}
                       eventPrefix="SESSION_CHAT"
                       eventData={eventData}
                     >
-                      <Typography paragraph>{t('sessionDetail.chatDescription')}</Typography>
+                      <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
                       {/** TODO translations */}
-                      <Typography paragraph>
-                        Find out more about how our online chat works:
-                      </Typography>
+                      <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
                       <Video
                         eventPrefix="SESSION_REFLECT_VIDEO"
                         eventData={eventData}
@@ -422,7 +420,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                         <CrispButton
                           email={user.email}
                           eventData={eventData}
-                          buttonText={t('sessionDetail.startChatButton')}
+                          buttonText={t('sessionDetail.chat.startButton')}
                         />
                       </Box>
                     </SessionContentCard>

@@ -24,9 +24,12 @@
       "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
-      "chatTitle": "Reflect with us",
-      "chatDescription": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
-      "startChatButton": "Start a chat",
+      "chat": {
+        "title": "Reflect with us",
+        "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
+        "videoIntro": "Find out more about how our online chat works:",
+        "startButton": "Start a chat"
+      },
       "sessionComplete": "Session complete"
     },
     "accessGuard": {
