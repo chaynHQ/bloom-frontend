@@ -69,7 +69,7 @@ const sessionSubtitleStyle = {
 } as const;
 
 const crispButtonContainerStyle = {
-  paddingTop: 2.5,
+  paddingTop: 4,
   paddingBottom: 1,
   display: 'flex',
 } as const;

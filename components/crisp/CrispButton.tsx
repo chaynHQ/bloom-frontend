@@ -39,6 +39,7 @@ const CrispButton = (props: CrispButtonProps) => {
   return (
     <Button
       sx={crispButtonStyle}
+      size="large"
       variant="contained"
       onClick={openChatWidget}
       startIcon={<ChatBubbleOutlineIcon color="error" />}
