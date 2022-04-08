@@ -25,5 +25,6 @@ module.exports = withPWA({
   pwa: {
     dest: 'public',
     skipWaiting: true,
+    disable: process.env.NEXT_PUBLIC_ENV === 'local' ? true : false,
   },
 });
