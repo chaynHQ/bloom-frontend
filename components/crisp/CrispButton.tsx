@@ -10,6 +10,10 @@ interface CrispButtonProps {
   eventData: {};
 }
 
+const crispButtonStyle = {
+  margin: 'auto',
+} as const;
+
 const CrispButton = (props: CrispButtonProps) => {
   const { buttonText, email, eventData } = props;
 
@@ -34,6 +38,7 @@ const CrispButton = (props: CrispButtonProps) => {
 
   return (
     <Button
+      sx={crispButtonStyle}
       variant="contained"
       onClick={openChatWidget}
       startIcon={<ChatBubbleOutlineIcon color="error" />}

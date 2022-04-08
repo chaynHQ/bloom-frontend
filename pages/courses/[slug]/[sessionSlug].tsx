@@ -71,6 +71,7 @@ const sessionSubtitleStyle = {
 const crispButtonContainerStyle = {
   paddingTop: 2.5,
   paddingBottom: 1,
+  display: 'flex',
 } as const;
 
 const errorStyle = {
@@ -381,7 +382,42 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                       eventPrefix="SESSION_CHAT"
                       eventData={eventData}
                     >
-                      <Typography>{t('sessionDetail.chatDescription')}</Typography>
+                      <Typography paragraph>{t('sessionDetail.chatDescription')}</Typography>
+                      {/** TODO translations */}
+                      <Typography paragraph>
+                        Find out more about how our online chat works:
+                      </Typography>
+                      <Video
+                        eventPrefix="SESSION_REFLECT_VIDEO"
+                        eventData={eventData}
+                        url={'https://youtu.be/p7i39Z0XQ54'}
+                        containerStyles={{ mx: 'auto', my: 2 }}
+                      ></Video>
+                      <p>
+                        <ul>
+                          <li>
+                            Your messages are private and secure, they’re only ever seen by the
+                            Bloom team and you remain anonymous.
+                          </li>
+                          <li>
+                            Your messages are private and secure, they’re only ever seen by the
+                            Bloom team and you remain anonymous.
+                          </li>
+                          <li>
+                            We are always available in English or Spanish, but members of our team
+                            also speak French, Italian, Hindi, Arabic, and Bangla; we’d be happy to
+                            arrange for you to speak with them.
+                          </li>
+                          <li>
+                            If you’re going through an active legal case, consider what you share
+                            with us as this can sometimes affect your case.
+                          </li>
+                          <li>
+                            If you’re in imminent threat or harm, please go to ‘Immediate help’ in
+                            the menu to find the right service to support you.
+                          </li>
+                        </ul>
+                      </p>
                       <Box sx={crispButtonContainerStyle}>
                         <CrispButton
                           email={user.email}
