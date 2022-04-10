@@ -59,7 +59,6 @@ const AboutYouSetAForm = () => {
     { name: 'Q6', inputState: scale6Input, inputStateSetter: setScale6Input },
     { name: 'Q7', inputState: scale7Input, inputStateSetter: setScale7Input },
     { name: 'Q8', inputState: scale8Input, inputStateSetter: setScale8Input },
-    { name: 'Q9', inputState: scale9Input, inputStateSetter: setScale9Input },
   ];
 
   useEffect(() => {
