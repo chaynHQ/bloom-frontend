@@ -385,10 +385,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                       eventData={eventData}
                     >
                       <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
-                      {/** TODO translations */}
                       <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
                       <Video
-                        eventPrefix="SESSION_REFLECT_VIDEO" // TODO change to chat
+                        eventPrefix="SESSION_CHAT_VIDEO"
                         eventData={eventData}
                         url={t('sessionDetail.chat.videoLink')}
                         containerStyles={{ mx: 'auto', my: 2 }}
