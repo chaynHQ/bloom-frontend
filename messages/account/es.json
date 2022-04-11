@@ -1,31 +1,39 @@
 {
-  "Account": {
-    "applyCode": {
-      "title": "Aplica un código",
-      "introduction": "Bloom trabaja con socios para apoyar la sanación de sobrevivientes de abuso alrededor del mundo.",
-      "description": "Si has recibido un código de acceso de parte de uno de nuestros socios, lo puedes agregar aquí para recibir apoyo específico de su programa",
-      "descriptionLine2": "Puedes agregar códigos de más de un socio",
-      "partnershipsTitle": "Nuestros socios",
-      "partnershipsDescription": "Lee más acerca de nuestros socios, haciendo click en su logo",
-      "formIntroduction": "Ingresa el código de acceso que recibiste de un socio de Bloom",
-      "formSuccess": {
-        "success": "¡Un código de Bumble se ha agregado a tu cuenta!",
-        "successLine2": "Tu acceso de Bumble te permite lo siguiente:",
-        "liveChat": "Chat 1-1 con el equipo de Bloom",
-        "therapy": "{therapySessionsRemaining} sesiones de terapia",
-        "courses": "Cursos autoguiados"
-      },
-      "form": {
-        "codeLabel": "Código de acceso",
-        "submitLabel": "Aplica el código",
-        "assignPartnerAccessError": "Hubo un error aplicando el código a tu cuenta. Inténtalo de nuevo más tarde y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si todavía te está saliendo este error.",
-        "codeErrors": {
-          "internal": "Hubo un error validando tu código de acceso. Inténtalo de nuevo más tarde y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si todavía te está saliendo este error.",
-          "expired": "Este código ha vencido. Ponte en contacto con el equipo del socio",
-          "invalid": "Tu código parece no ser válido. Revisa si tienes errores tipográficos o ponte en contacto con el equipo del socio.",
-          "alreadyInUse": "Este código ya ha sido usado. Si crees que esto es un error, ponte en contacto con el equipo del socio."
-        }
-      }
-    }
+  "title": "Acerca de ti",
+  "header": "Ayúdanos a entender",
+  "description": "Estas preguntas nos ayudan a entender quién está usando Bloom y qué tipo de apoyo necesitan de nosotros.",
+  "titleA": "Lo que quieres de Bloom",
+  "descriptionALine1": "¡Gracias por estas respuestas!",
+  "descriptionALine2": "Estas últimas preguntas nos ayudan a entender lo que tú esperas recibir de Bloom, así nosotros sabremos en qué enfocarnos.",
+  "goToCourses": "Saltar e ir a cursos",
+  "demoForm": {
+    "genderLabel": "¿Cuál es tu identidad de género?",
+    "genderHelpText": "Bloom fue pensado para identidades de género diversas, sabiendo que cada quién experimenta la violencia de género de una manera diferente. Al compartir tu género nos estás ayudando a entender para quién estamos diseñando.",
+    "neurodivergentLabel": "Te identificas como neurodivergente?",
+    "neurodivergentHelpText": "Diseñamos nuestros servicios para ser inclusivos, así que escuchar los comentarios de personas neurodivergentes nos ayuda.",
+    "neurodivergentLabels": {
+      "1": "Si",
+      "2": "No",
+      "3": "No estoy seguro"
+    },
+    "homeLabel": "¿Dónde creciste o qué lugar consideras tu hogar?",
+    "homeHelpText": "Como somos un grupo diverso, entendemos la importancia de comprender los matices culturales y apreciamos diferentes enfoques hacia la sanación. Esto nos ayuda a saber para quién estamos diseñando.",
+    "countryLabel": "¿En qué país vives en este momento?",
+    "countryHelpText": "Esto nos ayuda a entender desde dónde las personas sobrevivientes están accediendo a nuestros servicios.",
+    "ageLabel": "¿Cuál es tu grupo de edad?",
+    "ageLabels": {
+      "1": "Menor de 16",
+      "2": "16-25",
+      "3": "25-35",
+      "4": "35-45",
+      "5": "45-55",
+      "6": "55+",
+      "7": "Prefiero no decir"
+    },
+    "submitLabel": "Enviar",
+    "codeErrors": {}
+  },
+  "setAForm": {
+    "scaleDescriptionLine1": "Como usuario nuevo, nos gustaría entender cómo estás afrontando la situación, respondiendo si estás de acuerdo con estas afirmaciones. Preguntar esto nos ayuda a medir el impacto que el uso de Bloom tiene sobre las personas sobrevivientes. Por favor, califica el nivel en el que estés de acuerdo con las siguientes"
   }
 }
