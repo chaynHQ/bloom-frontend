@@ -22,6 +22,7 @@ import Link from '../common/Link';
 
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');
+  const tS = useTranslations('Shared');
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [codeInput, setCodeInput] = useState<string>('');
@@ -81,9 +82,7 @@ const ApplyCodeForm = () => {
       } else {
         setFormError(
           t.rich('form.codeErrors.internal', {
-            contactLink: (children) => (
-              <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-            ),
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
         rollbar.error('Assign partner access error', partnerAccessResponse.error);

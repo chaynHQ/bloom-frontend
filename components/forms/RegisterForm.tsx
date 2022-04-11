@@ -58,6 +58,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Auth.form');
+  const tS = useTranslations('Shared');
   const router = useRouter();
 
   useEffect(() => {
@@ -86,9 +87,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       } else {
         setFormError(
           t.rich('codeErrors.internal', {
-            contactLink: (children) => (
-              <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-            ),
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
@@ -162,9 +161,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
       setFormError(
         t.rich('createUserError', {
-          contactLink: (children) => (
-            <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-          ),
+          contactLink: (children) => <Link href={tc('feedbackTypeform')}>{children}</Link>,
         }),
       );
       setLoading(false);

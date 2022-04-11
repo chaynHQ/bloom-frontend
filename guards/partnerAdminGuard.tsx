@@ -43,9 +43,7 @@ export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
         </Typography>
         <Typography mb={2}>
           {t.rich('introduction', {
-            contactLink: (children) => (
-              <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-            ),
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           })}
         </Typography>
       </Container>

@@ -39,6 +39,7 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const configuredStory = useStoryblok(story, preview, sbParams, locale);
 
   const t = useTranslations('Partnership');
+  const tS = useTranslations('Shared');
 
   useEffect(() => {
     const access = hasPartnerAccess(partnerAccesses, partnerName);
@@ -55,10 +56,7 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     <ContentUnavailable
       title={t('accessGuard.title')}
       message={t.rich('accessGuard.introduction', {
-        contactLink: (children) => (
-          // TODO extract typeform link
-          <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-        ),
+        contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
       })}
     />
   );
