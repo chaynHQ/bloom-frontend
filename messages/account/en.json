@@ -45,6 +45,8 @@
           "2": "No",
           "3": "Not sure"
         },
+        "raceEthnNatnLabel": "How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.",
+        "raceEthnNatnHelpText": "We know that people's experiences of race and ethnicity vary widely based on where they live, so write what you feel best describes you personally.",
         "homeLabel": "Where did you grow up or what place feels like home?",
         "homeHelpText": "As a diverse team, we understand the importance of understanding cultural nuances and appreciating different approaches to healing. This helps us know who we’re designing for.",
         "countryLabel": "What country do you live in right now?",
