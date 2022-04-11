@@ -28,6 +28,13 @@
         "title": "Reflect with us",
         "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
         "videoIntro": "Find out more about how our online chat works:",
+        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "detailIntro": "Remember:",
+        "detailPrivacy": "Your messages are private and secure, they’re only ever seen by the Bloom team and you remain anonymous.",
+        "detailTimezone": "We work across many different timezones, so you should get a response from us within 6 hours, and it won’t be longer than 24 hours.",
+        "detailLanguage": "We are always available in English or Spanish, but members of our team also speak French, Italian, Hindi, Arabic, and Bangla; we’d be happy to arrange for you to speak with them.",
+        "detailLegal": "If you’re going through an active legal case, consider what you share with us as this can sometimes affect your case.",
+        "detailImmediateHelp": "If you’re in imminent threat or harm, please go to ‘Immediate help’ in the menu to find the right service to support you.",
         "startButton": "Start a chat"
       },
       "sessionComplete": "Session complete"

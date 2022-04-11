@@ -80,6 +80,8 @@ const errorStyle = {
   fontWeight: 600,
 } as const;
 
+const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
+
 interface Props {
   story: StoryData;
   preview: boolean;
@@ -386,36 +388,23 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                       {/** TODO translations */}
                       <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
                       <Video
-                        eventPrefix="SESSION_REFLECT_VIDEO"
+                        eventPrefix="SESSION_REFLECT_VIDEO" // TODO change to chat
                         eventData={eventData}
-                        url={'https://youtu.be/p7i39Z0XQ54'}
+                        url={t('sessionDetail.chat.videoLink')}
                         containerStyles={{ mx: 'auto', my: 2 }}
                       ></Video>
-                      <p>
+                      <Box sx={chatDetailIntroStyle}>
+                        <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
+                      </Box>
+                      <Box>
                         <ul>
-                          <li>
-                            Your messages are private and secure, they’re only ever seen by the
-                            Bloom team and you remain anonymous.
-                          </li>
-                          <li>
-                            Your messages are private and secure, they’re only ever seen by the
-                            Bloom team and you remain anonymous.
-                          </li>
-                          <li>
-                            We are always available in English or Spanish, but members of our team
-                            also speak French, Italian, Hindi, Arabic, and Bangla; we’d be happy to
-                            arrange for you to speak with them.
-                          </li>
-                          <li>
-                            If you’re going through an active legal case, consider what you share
-                            with us as this can sometimes affect your case.
-                          </li>
-                          <li>
-                            If you’re in imminent threat or harm, please go to ‘Immediate help’ in
-                            the menu to find the right service to support you.
-                          </li>
+                          <li>{t('sessionDetail.chat.detailPrivacy')}</li>
+                          <li>{t('sessionDetail.chat.detailTimezone')}</li>
+                          <li>{t('sessionDetail.chat.detailLanguage')}</li>
+                          <li>{t('sessionDetail.chat.detailLegal')}</li>
+                          <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
                         </ul>
-                      </p>
+                      </Box>
                       <Box sx={crispButtonContainerStyle}>
                         <CrispButton
                           email={user.email}
