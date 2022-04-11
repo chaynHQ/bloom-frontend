@@ -69,8 +69,9 @@ const sessionSubtitleStyle = {
 } as const;
 
 const crispButtonContainerStyle = {
-  paddingTop: 2.5,
+  paddingTop: 4,
   paddingBottom: 1,
+  display: 'flex',
 } as const;
 
 const errorStyle = {
@@ -78,6 +79,8 @@ const errorStyle = {
   marginTop: 2,
   fontWeight: 600,
 } as const;
+
+const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 interface Props {
   story: StoryData;
@@ -375,18 +378,37 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                   <>
                     <Dots />
                     <SessionContentCard
-                      title={t('sessionDetail.chatTitle')}
+                      title={t('sessionDetail.chat.title')}
                       titleIcon={ChatBubbleOutlineIcon}
                       titleIconSize={24}
                       eventPrefix="SESSION_CHAT"
                       eventData={eventData}
                     >
-                      <Typography>{t('sessionDetail.chatDescription')}</Typography>
+                      <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
+                      <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
+                      <Video
+                        eventPrefix="SESSION_CHAT_VIDEO"
+                        eventData={eventData}
+                        url={t('sessionDetail.chat.videoLink')}
+                        containerStyles={{ mx: 'auto', my: 2 }}
+                      ></Video>
+                      <Box sx={chatDetailIntroStyle}>
+                        <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
+                      </Box>
+                      <Box>
+                        <ul>
+                          <li>{t('sessionDetail.chat.detailPrivacy')}</li>
+                          <li>{t('sessionDetail.chat.detailTimezone')}</li>
+                          <li>{t('sessionDetail.chat.detailLanguage')}</li>
+                          <li>{t('sessionDetail.chat.detailLegal')}</li>
+                          <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
+                        </ul>
+                      </Box>
                       <Box sx={crispButtonContainerStyle}>
                         <CrispButton
                           email={user.email}
                           eventData={eventData}
-                          buttonText={t('sessionDetail.startChatButton')}
+                          buttonText={t('sessionDetail.chat.startButton')}
                         />
                       </Box>
                     </SessionContentCard>

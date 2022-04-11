@@ -24,9 +24,19 @@
       "videoDescription": "Mira el video o lee la <transcriptLink>transcripción del video</transcriptLink>.",
       "activityTitle": "Actividad",
       "bonusTitle": "Contenido extra",
-      "chatTitle": "Reflexiona con nosotres",
-      "chatDescription": "Si deseas compartir tus reflexiones sobre esta sesión, o hay algo sobre lo que quisieras charlar, el equipo de Bloom está aquí para escucharte.",
-      "startChatButton": "Empieza un chat",
+      "chat": {
+        "title": "Reflexiona con nosotres",
+        "description": "Si quieres compartir tus reflexiones sobre esta sesión, al equipo de Bloom le encantaría escuchar tus comentarios.",
+        "videoIntro": "Entérate de cómo funciona nuestro chat en línea:",
+        "videoLink": "https://youtu.be/ISmqaNJTPE8",
+        "detailIntro": "Recuerda:",
+        "detailPrivacy": "Tus mensajes son privados y seguros, solo serán vistos por el equipo de Bloom y permanecerán completamente anónimos.",
+        "detailTimezone": "Trabajamos en varias zonas horarias diferentes, así que seguramente recibirás una respuesta del equipo dentro de 6 horas o 24 horas como máximo.",
+        "detailLanguage": "Siempre estamos disponibles en inglés o español, pero los miembros de nuestro equipo también hablan francés, italiano, hindi, árabe y bangla; nos alegraría comunicarte con uno de ellos.",
+        "detailLegal": "Si tienes un caso legal abierto, considera lo que compartes con nosotros, ya que en algunas ocasiones, esto puede afectar tu caso.",
+        "detailImmediateHelp": "Si estás en peligro inminente de amenaza o daño, por favor ve a ‘Ayuda inmediata’ en el menú, para encontrar el servicio de apoyo adecuado para ti.",
+        "startButton": "Empieza un chat"
+      },
       "sessionComplete": "Sesión completa"
     },
     "accessGuard": {
