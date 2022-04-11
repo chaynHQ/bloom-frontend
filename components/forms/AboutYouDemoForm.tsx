@@ -53,7 +53,7 @@ const AboutYouDemoForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [genderInput, setGenderInput] = useState<string>('');
   const [neurodivergentInput, setNeurodivergentInput] = useState<string>('');
-  const [homeInput, setHomeInput] = useState<string>('');
+  const [raceEthnNatn, setRaceEthnNatn] = useState<string>('');
   const [countryInput, setCountryInput] = useState<string>('');
   const [ageInput, setAgeInput] = useState<string>('');
   const [countryList, setCountryList] = useState<Array<{ code: string; label: string }>>([]);
@@ -87,7 +87,7 @@ const AboutYouDemoForm = () => {
       user_id: user.id && hashString(user.id),
       gender: genderInput,
       neurodivergent: neurodivergentInput,
-      home_country: homeInput,
+      race_ethn_natn: raceEthnNatn,
       current_country: countryInput,
       age: ageInput,
       ...eventUserData, // add user data
@@ -166,26 +166,17 @@ const AboutYouDemoForm = () => {
           </FormHelperText>
         </FormControl>
 
-        <Autocomplete
-          disablePortal
-          id="home"
-          options={countryList}
-          inputValue={homeInput}
-          onInputChange={(event: any, newValue: string | null) => {
-            setHomeInput(newValue || '');
-          }}
-          popupIcon={<KeyboardArrowDown />}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              required
-              label={t('homeLabel')}
-              variant="standard"
-              helperText={t('homeHelpText')}
-              InputLabelProps={{ shrink: true }}
-              sx={staticFieldLabelStyle}
-            />
-          )}
+        <TextField
+          id="raceEthnNatn"
+          label={t.rich('raceEthnNatnLabel')}
+          helperText={t('raceEthnNatnHelpText')}
+          onChange={(e) => setRaceEthnNatn(e.target.value)}
+          value={raceEthnNatn}
+          variant="standard"
+          fullWidth
+          required
+          InputLabelProps={{ shrink: true }}
+          sx={staticFieldLabelStyle}
         />
 
         <Autocomplete
