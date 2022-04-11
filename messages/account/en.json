@@ -38,7 +38,7 @@
       "demoForm": {
         "genderLabel": "What is your gender identity?",
         "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
-        "neurodivergentLabel": "Do you identify as neurodivergent?",
+        "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
         "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
         "neurodivergentLabels": {
           "1": "Yes",
