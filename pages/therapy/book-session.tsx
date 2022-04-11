@@ -164,7 +164,7 @@ const BookSession: NextPage = () => {
 
         <Box sx={faqsContainerStyle}>
           <Faqs
-            faqList={therapyFaqs}
+            faqList={therapyFaqs(tS('feedbackTypeform'))}
             translations="Therapy.faqs"
             partner={partnerAccess?.partner}
             eventUserData={eventUserData}

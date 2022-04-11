@@ -29,6 +29,7 @@ const containerStyle = {
 
 const LoginForm = () => {
   const t = useTranslations('Auth.form');
+  const tS = useTranslations('Shared');
   const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -88,9 +89,7 @@ const LoginForm = () => {
 
           setFormError(
             t.rich('getUserError', {
-              contactLink: (children) => (
-                <Link href="https://chayn.typeform.com/to/OY9Wdk4h">{children}</Link>
-              ),
+              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
             }),
           );
           dispatch(setUserLoading(false));
