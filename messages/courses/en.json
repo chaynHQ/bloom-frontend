@@ -45,6 +45,7 @@
     },
     "errors": {
       "completeSessionError": "There was an error marking this session as complete. Try again a little later."
-    }
+    },
+    "backToCourses": "Back to courses"
   }
 }
