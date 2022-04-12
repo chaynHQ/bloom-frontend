@@ -161,7 +161,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
       setFormError(
         t.rich('createUserError', {
-          contactLink: (children) => <Link href={tc('feedbackTypeform')}>{children}</Link>,
+          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
         }),
       );
       setLoading(false);
