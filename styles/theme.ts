@@ -312,6 +312,33 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          marginBottom: 18,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          fontSize: 16,
+          marginTop: '0.5rem !important',
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: theme.palette.background.default,
+        },
+        option: {
+          '&.Mui-focused': {
+            backgroundColor: `${theme.palette.secondary.light} !important`,
+          },
+        },
+      },
+    },
     MuiRadio: {
       styleOverrides: {
         root: {
@@ -338,8 +365,11 @@ theme = createTheme(theme, {
     MuiInputLabel: {
       styleOverrides: {
         root: {
+          color: theme.palette.grey[800],
+
           '&.Mui-focused': {
             color: theme.palette.text.primary,
+            transform: 'translate(0, -1.5px) scale(0.875) !important',
           },
         },
       },
@@ -347,11 +377,15 @@ theme = createTheme(theme, {
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          marginBottom: 8,
+          top: -4,
+          color: theme.palette.grey[800],
 
           '&.Mui-focused': {
             color: theme.palette.common.black,
           },
+        },
+        filled: {
+          transform: 'translate(0, -1.5px) scale(0.875) !important',
         },
       },
     },
@@ -368,6 +402,36 @@ theme = createTheme(theme, {
             },
             '+ .MuiFormControlLabel-label': {
               fontSize: theme.typography.body2.fontSize,
+            },
+          },
+        },
+      },
+    },
+    MuiSlider: {
+      styleOverrides: {
+        root: {
+          '& .MuiSlider-valueLabel': {
+            lineHeight: 1.2,
+            fontSize: 12,
+            background: 'unset',
+            padding: 0,
+            width: 32,
+            height: 32,
+            borderRadius: '50% 50% 50% 0',
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.text.primary,
+            transformOrigin: 'bottom left',
+            transform: 'rotate(45deg) scale(0)',
+            '&:before': { display: 'none' },
+            '&.MuiSlider-valueLabel': {
+              top: '-22px',
+              right: '-34px',
+            },
+            '&.MuiSlider-valueLabelOpen': {
+              transform: 'rotate(45deg) scale(1)',
+            },
+            '& > *': {
+              transform: 'rotate(-45deg)',
             },
           },
         },

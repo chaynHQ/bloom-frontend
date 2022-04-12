@@ -11,20 +11,20 @@ const headerContainerStyles = {
   backgroundColor: 'common.white',
   paddingBottom: { xs: 0, md: 0 },
   paddingTop: { xs: 6, md: 8 },
-  minHeight: { xs: 270, sm: 320, md: 360, lg: 375 },
+  minHeight: { xs: 270, sm: 300, md: 320, lg: 340 },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 160, sm: 200, md: 230, lg: 255 },
-  height: { xs: 160, sm: 200, md: 230, lg: 255 },
+  width: { xs: 160, sm: 180, md: 200, lg: 220 },
+  height: { xs: 160, sm: 180, md: 200, lg: 220 },
   marginRight: { sm: 2, md: 3, lg: 2 },
 } as const;
 
 const logoContainerStyle = {
   position: 'relative',
-  width: { xs: 160, sm: 200, md: 230, lg: 255 },
-  height: { xs: 160, sm: 200, md: 230, lg: 255 },
+  width: { xs: 160, sm: 180, md: 200, lg: 220 },
+  height: { xs: 160, sm: 180, md: 200, lg: 220 },
   marginTop: { xs: 4, lg: 0 },
 } as const;
 
