@@ -5,7 +5,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-  Typography,
+  Typography
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,7 +19,7 @@ import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
-  CREATE_PARTNER_ACCESS_SUCCESS,
+  CREATE_PARTNER_ACCESS_SUCCESS
 } from '../../constants/events';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent from '../../utils/logEvent';
@@ -173,13 +173,12 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       </FormControl>
 
       {formError && (
-        <Typography color="error.main" mt={2}>
+        <Typography color="error.main">
           {formError}
         </Typography>
       )}
 
       <LoadingButton
-        sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         type="submit"

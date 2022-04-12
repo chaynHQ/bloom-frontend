@@ -46,7 +46,7 @@ const logosContainerStyle = {
   justifyContent: 'flex-start',
 } as const;
 
-const ConfirmedSession: NextPage = () => {
+const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
@@ -144,4 +144,4 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
   };
 }
 
-export default ConfirmedSession;
+export default ApplyACode;

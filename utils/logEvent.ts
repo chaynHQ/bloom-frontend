@@ -1,43 +1,24 @@
 import { GetUserResponse } from '../app/api';
 import { analytics } from '../config/firebase';
+import {
+  joinedFeatureLiveChat,
+  joinedFeatureTherapy,
+  joinedPartners,
+  totalTherapyRemaining,
+} from './formatPartnerAccesses';
 
 export const logEvent = (event: string, params?: {}) => {
-  console.log(event, params);
   analytics?.logEvent(event, params!);
 };
 
 export const getEventUserData = (data: Partial<GetUserResponse>) => {
   return {
     registered_at: data.user?.createdAt,
-    partner: data.partnerAccesses
-      ? data.partnerAccesses.map((pa) => pa.partner.name).join(', ')
-      : 'none',
-    partner_live_chat: data.partnerAccesses
-      ? data.partnerAccesses
-          .map((pa) => {
-            if (pa.featureLiveChat) return pa.partner.name;
-          })
-          .join(', ')
-      : 'none',
-    partner_therapy: data.partnerAccesses
-      ? data.partnerAccesses
-          .map((pa) => {
-            if (pa.featureTherapy) return pa.partner.name;
-          })
-          .join(', ')
-      : 'none',
-    partner_therapy_remaining: data.partnerAccesses
-      ? data.partnerAccesses.reduce(function (total, pa) {
-          // return the sum with previous value
-          return total + pa.therapySessionsRemaining;
-        }, 0)
-      : 0,
-    partner_therapy_redeemed: data.partnerAccesses
-      ? data.partnerAccesses.reduce(function (total, pa) {
-          // return the sum with previous value
-          return total + pa.therapySessionsRedeemed;
-        }, 0)
-      : 0,
+    partner: joinedPartners(data.partnerAccesses),
+    partner_live_chat: joinedFeatureLiveChat(data.partnerAccesses),
+    partner_therapy: joinedFeatureTherapy(data.partnerAccesses),
+    partner_therapy_remaining: totalTherapyRemaining(data.partnerAccesses),
+    partner_therapy_redeemed: totalTherapyRemaining(data.partnerAccesses),
     partner_activated_at: data.partnerAccesses ? data.partnerAccesses[0]?.activatedAt : null,
   };
 };

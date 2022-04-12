@@ -184,7 +184,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       const firebaseUser = await createFirebaseUser();
       await createUserRecord(firebaseUser!);
       dispatch(setUserLoading(false));
-      router.push('/courses');
+      router.push('/account/about-you');
       setLoading(false);
     } catch {
       // errors handled in each function
