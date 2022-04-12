@@ -176,7 +176,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
         progressStatus={courseProgress!}
       >
         <Button variant="outlined" href="/courses" size="small" component={Link}>
-          Back to courses
+          {t('backToCourses')}
         </Button>
       </Header>
       <Container sx={containerStyle}>
