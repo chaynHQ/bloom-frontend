@@ -1,39 +1,83 @@
 {
-  "title": "Acerca de ti",
-  "header": "Ayúdanos a entender",
-  "description": "Estas preguntas nos ayudan a entender quién está usando Bloom y qué tipo de apoyo necesitan de nosotros.",
-  "titleA": "Lo que quieres de Bloom",
-  "descriptionALine1": "¡Gracias por estas respuestas!",
-  "descriptionALine2": "Estas últimas preguntas nos ayudan a entender lo que tú esperas recibir de Bloom, así nosotros sabremos en qué enfocarnos.",
-  "goToCourses": "Saltar e ir a cursos",
-  "demoForm": {
-    "genderLabel": "¿Cuál es tu identidad de género?",
-    "genderHelpText": "Bloom fue pensado para identidades de género diversas, sabiendo que cada quién experimenta la violencia de género de una manera diferente. Al compartir tu género nos estás ayudando a entender para quién estamos diseñando.",
-    "neurodivergentLabel": "Te identificas como neurodivergente?",
-    "neurodivergentHelpText": "Diseñamos nuestros servicios para ser inclusivos, así que escuchar los comentarios de personas neurodivergentes nos ayuda.",
-    "neurodivergentLabels": {
-      "1": "Si",
-      "2": "No",
-      "3": "No estoy seguro"
+  "Account": {
+    "applyCode": {
+      "title": "Apply a code",
+      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
+      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
+      "descriptionLine2": "You can add codes from more than one partner.",
+      "partnershipsTitle": "Our partners",
+      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
+      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "formSuccess": {
+        "success": "A Bumble code was applied to your account!",
+        "successLine2": "Your Bumble access enables the following:",
+        "liveChat": "1-1 chat with the Bloom team",
+        "therapy": "{therapySessionsRemaining} therapy sessions",
+        "courses": "Self-guided courses"
+      },
+      "form": {
+        "codeLabel": "Access code",
+        "submitLabel": "Apply code",
+        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "codeErrors": {
+          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+          "expired": "This code has expired. Get in touch with the partner's team.",
+          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner's team.",
+          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+        }
+      }
     },
-    "raceEthnNatnLabel": "¿Cómo describiría su raza, etnia y nacionalidad? Por ejemplo, hispano blanco mexicano o indio tamil.",
-    "raceEthnNatnHelpText": "Sabemos que las experiencias de las personas con respecto a la raza y el origen étnico varían mucho en función de su lugar de residencia, así que escribe lo que crees que mejor te describe personalmente.",
-    "countryLabel": "¿En qué país vives en este momento?",
-    "countryHelpText": "Esto nos ayuda a entender desde dónde las personas sobrevivientes están accediendo a nuestros servicios.",
-    "ageLabel": "¿Cuál es tu grupo de edad?",
-    "ageLabels": {
-      "1": "Menor de 16",
-      "2": "16-25",
-      "3": "25-35",
-      "4": "35-45",
-      "5": "45-55",
-      "6": "55+",
-      "7": "Prefiero no decir"
+    "aboutYou": {
+      "title": "Acerca de ti",
+      "header": "Ayúdanos a entender",
+      "description": "Estas preguntas nos ayudan a entender quién está usando Bloom y qué tipo de apoyo necesitan de nosotros.",
+      "titleA": "Lo que quieres de Bloom",
+      "descriptionALine1": "¡Gracias por tus respuestas!",
+      "descriptionALine2": "Como eres un usuario nuevo, nos gustaría saber cómo te encuentras antes de usar nuestros servicios. Estas preguntas nos ayudan a medir el impacto que tiene Bloom sobre las personas sobrevivientes que lo usan, y nos ayuda a enfocarnos en las cosas correctas.",
+      "goToCourses": "Saltar e ir a cursos",
+      "demoForm": {
+        "genderLabel": "¿Cuál es tu identidad de género?",
+        "genderHelpText": "Bloom fue pensado para personas con identidades de género diversas, sabiendo que cada quién experimenta la violencia de género de una manera diferente. Al compartir tu género, nos estás ayudando a entender para quién estamos diseñando.",
+        "neurodivergentLabel": "Te identificas como neurodivergente?",
+        "neurodivergentHelpText": "Diseñamos nuestros servicios para ser inclusivos, así que escuchar los comentarios de personas neurodivergentes nos ayuda.",
+        "neurodivergentLabels": {
+          "1": "Si",
+          "2": "No",
+          "3": "No estoy seguro"
+        },
+        "homeLabel": "¿Dónde creciste o qué lugar consideras tu hogar?",
+        "homeHelpText": "Como somos un grupo diverso, entendemos la importancia de comprender los matices culturales y apreciamos diferentes enfoques hacia la sanación. Esto nos ayuda a saber para quién estamos diseñando.",
+        "countryLabel": "¿En qué país vives en este momento?",
+        "countryHelpText": "Esto nos ayuda a entender desde dónde las personas sobrevivientes están accediendo a nuestros servicios.",
+        "ageLabel": "¿Cuál es tu grupo de edad?",
+        "ageLabels": {
+          "1": "Menor de 16",
+          "2": "16-25",
+          "3": "25-35",
+          "4": "35-45",
+          "5": "45-55",
+          "6": "55+",
+          "7": "Prefiero no decir"
+        },
+        "submitLabel": "Enviar",
+        "codeErrors": {}
+      }
     },
-    "submitLabel": "Enviar",
-    "codeErrors": {}
-  },
-  "setAForm": {
-    "scaleDescriptionLine1": "Como usuario nuevo, nos gustaría entender cómo estás afrontando la situación, respondiendo si estás de acuerdo con estas afirmaciones. Preguntar esto nos ayuda a medir el impacto que el uso de Bloom tiene sobre las personas sobrevivientes. Por favor, califica el nivel en el que estés de acuerdo con las siguientes"
+    "setAForm": {
+      "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
+      "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
+      "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?",
+      "scaleLabels": {
+        "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
+        "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
+        "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
+        "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
+        "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
+        "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
+        "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
+        "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+      },
+      "submitLabel": "Completo"
+    }
   }
 }
