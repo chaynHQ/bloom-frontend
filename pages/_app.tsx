@@ -80,6 +80,7 @@ function MyApp(props: MyAppProps) {
       '500',
       'faqs',
       'meet-the-team',
+      'partnership',
     ];
     const component = <Component {...pageProps} />;
     let children = null;
