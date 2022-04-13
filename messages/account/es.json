@@ -45,8 +45,8 @@
           "2": "No",
           "3": "No estoy seguro"
         },
-        "raceEthnNatnLabel": "¿Cómo describiría su raza, etnia y nacionalidad? Por ejemplo, hispano blanco mexicano o indio tamil.",
-        "raceEthnNatnHelpText": "Sabemos que las experiencias de las personas con respecto a la raza y el origen étnico varían mucho en función de su lugar de residencia, así que escribe lo que crees que mejor te describe personalmente.",
+        "raceEthnNatnLabel": "¿Cómo describirías tu raza, etnia y nacionalidad? Por ejemplo, hispano, blanco, mexicano, o indio tamil.",
+        "raceEthnNatnHelpText": "Sabemos que las experiencias de raza y etnicidad que tienen las personas, pueden variar dependiendo de donde viven, así que escribe lo que sientas que mejor te describe.",
         "homeLabel": "¿Dónde creciste o qué lugar consideras tu hogar?",
         "homeHelpText": "Como somos un grupo diverso, entendemos la importancia de comprender los matices culturales y apreciamos diferentes enfoques hacia la sanación. Esto nos ayuda a saber para quién estamos diseñando.",
         "countryLabel": "¿En qué país vives en este momento?",
