@@ -41,7 +41,6 @@ const AboutYou: NextPage = () => {
   const router = useRouter();
 
   const t = useTranslations('Account.aboutYou');
-  const tS = useTranslations('Shared');
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
 
