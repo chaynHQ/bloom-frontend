@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watch",
-    "start:heroku": "NODE_OPTIONS='--max_old_space_size=460' next start -p $PORT"
+    "start:heroku": "NODE_OPTIONS='--max_old_space_size=460 --inspect' next start -p $PORT"
   },
   "dependencies": {
     "@emotion/cache": "^11.4.0",
