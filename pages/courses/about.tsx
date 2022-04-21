@@ -8,7 +8,7 @@ import StoryblokPageSection from '../../components/storyblok/StoryblokPageSectio
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
 import { ABOUT_COURSES_VIEWED } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
+import { logEvent } from '../../utils/logEvent';
 
 interface Props {
   story: StoryData;
@@ -28,7 +28,7 @@ const CourseAbout: NextPage<Props> = ({ story: storyProps, preview, sbParams, lo
   };
 
   useEffect(() => {
-    logEvent(ABOUT_COURSES_VIEWED, {});
+    logEvent(ABOUT_COURSES_VIEWED);
   }, []);
 
   return (
@@ -55,18 +55,17 @@ const CourseAbout: NextPage<Props> = ({ story: storyProps, preview, sbParams, lo
   );
 };
 
-export async function getStaticProps({ locale, preview }: GetStaticPropsContext) {
+export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
   const sbParams = {
     version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
+    ...(preview && { cv: Date.now() }),
     language: locale,
   };
 
   let { data } = await Storyblok.get(`cdn/stories/courses/about`, sbParams);
-
   return {
     props: {
-      story: data ? data.story : null,
+      story: data && data?.story ? data.story : null,
       preview,
       sbParams: JSON.stringify(sbParams),
       messages: {
