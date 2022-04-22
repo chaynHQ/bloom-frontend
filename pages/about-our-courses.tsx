@@ -3,22 +3,22 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import Header from '../../components/layout/Header';
-import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../../config/storyblok';
-import { LANGUAGES } from '../../constants/enums';
-import { ABOUT_COURSES_VIEWED } from '../../constants/events';
-import { logEvent } from '../../utils/logEvent';
+import Header from '../components/layout/Header';
+import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
+import Storyblok, { useStoryblok } from '../config/storyblok';
+import { LANGUAGES } from '../constants/enums';
+import { ABOUT_COURSES_VIEWED } from '../constants/events';
+import logEvent from '../utils/logEvent';
 
 interface Props {
-  story: StoryData;
+  storyData: StoryData;
   preview: boolean;
   sbParams: StoriesParams;
   locale: LANGUAGES;
 }
 
-const CourseAbout: NextPage<Props> = ({ story: storyProps, preview, sbParams, locale }) => {
-  const story = useStoryblok(storyProps, preview, sbParams, locale);
+const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) => {
+  const story = useStoryblok(storyData, preview, sbParams, locale);
 
   const headerProps = {
     title: story.content.title,
@@ -29,7 +29,7 @@ const CourseAbout: NextPage<Props> = ({ story: storyProps, preview, sbParams, lo
 
   useEffect(() => {
     logEvent(ABOUT_COURSES_VIEWED);
-  }, []);
+  });
 
   return (
     <Box>
@@ -62,15 +62,15 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     language: locale,
   };
 
-  let { data } = await Storyblok.get(`cdn/stories/courses/about`, sbParams);
+  let { data } = await Storyblok.get(`cdn/stories/about-our-courses`, sbParams);
   return {
     props: {
-      story: data && data?.story ? data.story : null,
+      storyData: data && data?.story ? data.story : null,
       preview,
       sbParams: JSON.stringify(sbParams),
       messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../messages/shared/${locale}.json`),
+        ...require(`../messages/navigation/${locale}.json`),
       },
       locale,
     },
