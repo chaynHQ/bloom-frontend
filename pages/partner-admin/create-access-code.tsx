@@ -55,8 +55,15 @@ const CreateAccessCode: NextPage = () => {
             <Typography variant="h2" component="h2">
               {t('title')}
             </Typography>
-            <Typography mb={2}>{t('introduction')}</Typography>
-
+            <Typography
+              sx={{
+                '&:last-of-type': {
+                  marginBottom: '1em',
+                },
+              }}
+            >
+              {t('introduction')}
+            </Typography>
             <CreateAccessCodeForm partnerAdmin={partnerAdmin} />
           </CardContent>
         </Card>
