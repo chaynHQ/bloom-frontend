@@ -74,7 +74,6 @@ export default function LanguageMenu() {
         {locales
           ?.filter((language) => language !== locale)
           .map((language) => {
-            console.log(router.pathname);
             const languageUppercase = language.toUpperCase();
             return (
               <MenuItem key={language} sx={menuItemStyle}>
