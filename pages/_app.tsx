@@ -81,6 +81,7 @@ function MyApp(props: MyAppProps) {
       'faqs',
       'meet-the-team',
       'partnership',
+      'about-our-courses',
     ];
     const component = <Component {...pageProps} />;
     let children = null;

@@ -76,7 +76,13 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let { data } = await Storyblok.get('cdn/links/');
 
-  const excludePaths: string[] = ['home', 'welcome', 'meet-the-team', 'courses'];
+  const excludePaths: string[] = [
+    'home',
+    'welcome',
+    'meet-the-team',
+    'courses',
+    'about-our-courses',
+  ];
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
