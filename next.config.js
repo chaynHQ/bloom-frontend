@@ -27,4 +27,18 @@ module.exports = withPWA({
     skipWaiting: true,
     disable: process.env.NEXT_PUBLIC_ENV === 'local' ? true : false,
   },
+  async redirects() {
+    return [
+      {
+        source: '/welcome',
+        destination: '/courses',
+        permanent: false,
+      },
+      {
+        source: '/login',
+        destination: '/courses',
+        permanent: false,
+      },
+    ];
+  },
 });
