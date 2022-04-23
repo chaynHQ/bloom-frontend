@@ -102,7 +102,7 @@ const Footer = () => {
             partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
 
           return (
-            <Box pr="20px" key={`${partner.name}_footer`}>
+            <Box pr="2em" key={`${partner.name}_footer`}>
               <Link href={partner.website} sx={logoContainerStyle}>
                 <Image alt={tS(partner.logoAlt)} src={partner.logo} />
               </Link>
