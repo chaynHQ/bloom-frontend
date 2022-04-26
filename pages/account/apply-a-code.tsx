@@ -46,6 +46,10 @@ const logosContainerStyle = {
   justifyContent: 'flex-start',
 } as const;
 
+const partnerCardStyle = {
+  marginY: { xs: 2, md: 3 },
+} as const;
+
 const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
@@ -89,7 +93,7 @@ const ApplyACode: NextPage = () => {
           <Typography mt={2} mb={4} variant="subtitle1" component="p">
             {t('applyCode.descriptionLine2')}
           </Typography>
-          <Card>
+          <Card sx={partnerCardStyle}>
             <CardContent>
               <Typography variant="h3" component="h3">
                 {t('applyCode.partnershipsTitle')}
