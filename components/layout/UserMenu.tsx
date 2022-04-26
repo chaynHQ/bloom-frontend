@@ -10,9 +10,10 @@ import { api } from '../../app/api';
 import { clearCoursesSlice } from '../../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
+import { RootState } from '../../app/store';
 import { clearUserSlice } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
-import { useAppDispatch } from '../../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import Link from '../common/Link';
 
 const menuItemStyle = {
@@ -43,6 +44,8 @@ export default function UserMenu() {
   const dispatch: any = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -87,11 +90,17 @@ export default function UserMenu() {
           id: 'user-menu',
         }}
       >
-        <MenuItem sx={menuItemStyle}>
-          <Button component={Link} href={'/account/apply-a-code'} startIcon={<AddCircleOutline />}>
-            {t('applyCode')}
-          </Button>
-        </MenuItem>
+        {!(partnerAdmin && partnerAdmin.partner) && (
+          <MenuItem sx={menuItemStyle}>
+            <Button
+              component={Link}
+              href={'/account/apply-a-code'}
+              startIcon={<AddCircleOutline />}
+            >
+              {t('applyCode')}
+            </Button>
+          </MenuItem>
+        )}
         <MenuItem sx={menuItemStyle}>
           <Button onClick={logout} startIcon={<Logout />}>
             {t('logout')}
