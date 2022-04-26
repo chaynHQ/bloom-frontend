@@ -62,7 +62,7 @@ const Footer = () => {
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const addUniquePartner = (partnersList: Partner[], partnerName: string) => {
-    if (!partnersList.find((p) => p.name === partnerName)) {
+    if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
       const partnerContentResult = getPartnerContent(partnerName);
       if (partnerContentResult) partnersList.push(partnerContentResult);
     }
