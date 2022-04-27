@@ -1,0 +1,9 @@
+{
+  "fileServerFolder": "tests/cypress",
+  "integrationFolder": "tests/cypress/integration",
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "login_path": "auth/login",
+    "reset-password-path": "auth/reset-password"
+  }
+}
