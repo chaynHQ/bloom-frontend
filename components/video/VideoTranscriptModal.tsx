@@ -34,6 +34,11 @@ const closeModalStyle = {
   borderBottomLeftRadius: 20,
 } as const;
 
+const transcriptDescriptionStyle = {
+  '&:last-of-type': {
+    marginBottom: '1em',
+  },
+};
 interface TranscriptModalProps {
   videoName: string;
   content: Richtext;
@@ -66,7 +71,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
           <Typography id="modal-title" component="h2" variant="h2">
             {tS('videoTranscript.title')}
           </Typography>
-          <Typography id="modal-description" fontStyle="italic">
+          <Typography id="modal-description" fontStyle="italic" sx={transcriptDescriptionStyle}>
             {tS('videoTranscript.description')}
             {videoName}
           </Typography>
