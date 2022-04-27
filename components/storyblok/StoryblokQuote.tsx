@@ -53,12 +53,17 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
         position: 'relative',
       },
     },
+    cite: {
+      fontStyle: 'normal',
+      fontSize: `${fontSize.xs}rem)`,
+    },
     ...richtextContentStyle,
   } as const;
 
   return (
     <Box sx={containerStyle}>
       <blockquote>{text}</blockquote>
+      <cite>~ Survivor</cite>
     </Box>
   );
 };
