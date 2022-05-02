@@ -41,4 +41,16 @@ module.exports = withPWA({
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/welcome/(b|B)(a|A)(d|D)(o|O)(o|O)',
+        destination: '/welcome/badoo',
+      },
+      {
+        source: '/welcome/(b|B)(u|U)(m|M)(b|B)(l|L)(e|E)',
+        destination: '/welcome/bumble',
+      },
+    ];
+  },
 });
