@@ -1,0 +1,51 @@
+{
+  "Courses": {
+    "title": "Our courses",
+    "introduction": "Bloom courses offer tailored information, tools, and affirming words to help us cope with trauma. They encourage us to learn, reflect, and process what we’ve been through and how it may have affected us–all in a safe and empowering space.",
+    "session": "Session",
+    "course": "Course",
+    "courses": "Courses",
+    "expand": "Expand",
+    "expandSummary": "Expand summary for",
+    "navigateToSession": "Navigate to session -",
+    "navigateToCourse": "Navigate to course -",
+    "liveFrom": "Live from {date}",
+    "liveUntil": "Live until {date}",
+    "liveSoon": "Live soon",
+    "liveNow": "Live now",
+    "comingSoon": "Coming soon",
+    "noCourses": "There are no courses to display right now. If this doesn't seem right, try again later or contact the Bloom team.",
+    "courseDetail": {
+      "introductionTitle": "Course introduction",
+      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>."
+    },
+    "sessionDetail": {
+      "videoTitle": "Video",
+      "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
+      "activityTitle": "Activity",
+      "bonusTitle": "Bonus content",
+      "chat": {
+        "title": "Reflect with us",
+        "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
+        "videoIntro": "Find out more about how our online chat works:",
+        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "detailIntro": "Remember:",
+        "detailPrivacy": "Your messages are private and secure, they’re only ever seen by the Bloom team and you remain anonymous.",
+        "detailTimezone": "We work across many different timezones, so you should get a response from us within 6 hours, and it won’t be longer than 24 hours.",
+        "detailLanguage": "We are always available in English or Spanish, but members of our team also speak French, Italian, Hindi, Arabic, and Bangla; we’d be happy to arrange for you to speak with them.",
+        "detailLegal": "If you’re going through an active legal case, consider what you share with us as this can sometimes affect your case.",
+        "detailImmediateHelp": "If you’re in imminent threat or harm, please go to ‘Immediate help’ in the menu to find the right service to support you.",
+        "startButton": "Start a chat"
+      },
+      "sessionComplete": "Session complete"
+    },
+    "accessGuard": {
+      "title": "Course content not available",
+      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
+    },
+    "errors": {
+      "completeSessionError": "There was an error marking this session as complete. Try again a little later."
+    },
+    "backToCourses": "Back to courses"
+  }
+}

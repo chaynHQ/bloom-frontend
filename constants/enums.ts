@@ -1,6 +1,7 @@
 export enum LANGUAGES {
   en = 'en',
   es = 'es',
+  hi = 'hi',
 }
 
 export enum PARTNER_ACCESS_FEATURES {
