@@ -65,7 +65,7 @@
       "setAForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
         "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?\n\n",
+        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
         "scaleLabels": {
           "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
           "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
