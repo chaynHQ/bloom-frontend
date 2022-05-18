@@ -105,7 +105,7 @@ export const CREATE_PARTNER_ACCESS_ERROR = 'CREATE_PARTNER_ACCESS_ERROR';
 
 // Deprecated
 
-// TODO add replacement
+// Replaced by "GET_LOGIN_USER_XXX" and "GET_AUTH_USER_XXX"
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_ERROR = 'GET_USER_ERROR';
