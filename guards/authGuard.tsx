@@ -5,7 +5,14 @@ import { useGetUserMutation } from '../app/api';
 import { RootState } from '../app/store';
 import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
-import { GET_USER_ERROR, GET_USER_REQUEST, GET_USER_SUCCESS } from '../constants/events';
+import {
+  GET_AUTH_USER_ERROR,
+  GET_AUTH_USER_REQUEST,
+  GET_AUTH_USER_SUCCESS,
+  GET_USER_ERROR,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+} from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import generateReturnQuery from '../utils/generateReturnQuery';
@@ -21,16 +28,21 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
     async function callGetUser() {
-      logEvent(GET_USER_REQUEST);
+      logEvent(GET_USER_REQUEST); // deprecated event
+      logEvent(GET_AUTH_USER_REQUEST);
+
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {
-        logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+        logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) }); // deprecated event
+        logEvent(GET_AUTH_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+
         setVerified(true);
       } else {
         if ('error' in userResponse) {
           rollbar.error('Auth guard get user error', userResponse.error);
-          logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) });
+          logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
+          logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
         router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
