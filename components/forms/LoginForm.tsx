@@ -11,6 +11,9 @@ import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import {
+  GET_LOGIN_USER_ERROR,
+  GET_LOGIN_USER_REQUEST,
+  GET_LOGIN_USER_SUCCESS,
   GET_USER_ERROR,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -53,7 +56,8 @@ const LoginForm = () => {
       .signInWithEmailAndPassword(emailInput, passwordInput)
       .then(async (userCredential) => {
         logEvent(LOGIN_SUCCESS);
-        logEvent(GET_USER_REQUEST);
+        logEvent(GET_USER_REQUEST); // deprecated event
+        logEvent(GET_LOGIN_USER_REQUEST);
         dispatch(setUserLoading(true));
 
         const token = await userCredential.user?.getIdToken();
@@ -65,7 +69,8 @@ const LoginForm = () => {
         const userResponse = await getUser('');
 
         if ('data' in userResponse) {
-          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) }); // deprecated event
+          logEvent(GET_LOGIN_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
 
           // Checking if the query type is a string to keep typescript happy
           // because a query value can be an array
@@ -84,7 +89,8 @@ const LoginForm = () => {
         }
         if ('error' in userResponse) {
           const errorMessage = getErrorMessage(userResponse.error);
-          logEvent(GET_USER_ERROR, { message: errorMessage });
+          logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
+          logEvent(GET_LOGIN_USER_ERROR, { message: errorMessage });
           rollbar.error('User login get user error', userResponse.error);
 
           setFormError(
