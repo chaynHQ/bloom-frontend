@@ -77,6 +77,38 @@
           "Q8": "I can anticipate and cope with triggering moments, places or times of year"
         },
         "submitLabel": "Complete"
+      },
+      "setBForm": {
+        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
+        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
+        "scaleLabels": {
+          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
+          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
+          "Q3": "I know that it takes time, energy and patience to heal",
+          "Q4": "I’m committed to giving myself the attention that I need to heal",
+          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
+          "Q6": "I understand that part of healing from trauma is dealing with triggers",
+          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
+          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+        },
+        "submitLabel": "Complete"
+      },
+      "setCForm": {
+        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
+        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
+        "scaleLabels": {
+          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
+          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
+          "Q3": "I know that it takes time, energy and patience to heal",
+          "Q4": "I’m committed to giving myself the attention that I need to heal",
+          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
+          "Q6": "I understand that part of healing from trauma is dealing with triggers",
+          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
+          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+        },
+        "submitLabel": "Complete"
       }
     }
   }
