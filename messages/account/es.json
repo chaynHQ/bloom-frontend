@@ -80,6 +80,38 @@
         "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
       },
       "submitLabel": "Completo"
+    },
+    "setBForm": {
+      "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
+      "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
+      "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?",
+      "scaleLabels": {
+        "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
+        "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
+        "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
+        "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
+        "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
+        "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
+        "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
+        "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+      },
+      "submitLabel": "Completo"
+    },
+    "setCForm": {
+      "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
+      "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
+      "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?",
+      "scaleLabels": {
+        "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
+        "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
+        "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
+        "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
+        "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
+        "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
+        "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
+        "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+      },
+      "submitLabel": "Completo"
     }
   }
 }
