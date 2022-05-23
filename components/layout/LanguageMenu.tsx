@@ -46,8 +46,6 @@ export default function LanguageMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(router.asPath);
-  console.log(router.pathname);
 
   return (
     <Box>
