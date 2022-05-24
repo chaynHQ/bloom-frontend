@@ -1,4 +1,4 @@
-name: Bloom CI Pipeline
+name: Pull Request on Develop Pipeline
 
 on:
   push:
@@ -32,6 +32,10 @@ jobs:
 
       - name: Run linting
         run: yarn lint
+
+      # TODO - some tests!
+      # - name: Run tests
+      #   run: yarn test
 
       - name: Build app
         run: yarn build
