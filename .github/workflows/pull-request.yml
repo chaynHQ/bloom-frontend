@@ -1,10 +1,10 @@
-name: Bloom CI Pipeline
+name: Pull request on develop and main
 
 on:
   push:
-    branches: [develop, staging, main]
+    branches: [develop, main]
   pull_request:
-    branches: [develop, staging, main]
+    branches: [develop, main]
 
 jobs:
   build:
