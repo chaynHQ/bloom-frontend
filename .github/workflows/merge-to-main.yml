@@ -5,9 +5,8 @@ on:
     branches:
       - main
 
-# when the end to end tests exist you need to add them here
 jobs:
-  deploy:
+  deploy-to-prod:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
