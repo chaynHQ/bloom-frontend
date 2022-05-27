@@ -29,7 +29,7 @@ jobs:
             github.rest.issues.addLabels({
               owner,
               repo,
-              labels: [ 'automated pr']
+              labels: [ 'automated pr', 'deploy-to-staging']
             });
   deploy-to-staging:
     runs-on: ubuntu-latest
