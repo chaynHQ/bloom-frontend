@@ -7,7 +7,7 @@ on:
 
 # when the end to end tests exist you need to add them here
 jobs:
-  create-pull-request:
+  create-pr-to-main:
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
@@ -31,7 +31,7 @@ jobs:
               repo,
               labels: [ 'automated pr']
             });
-  deploy:
+  deploy-to-staging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
