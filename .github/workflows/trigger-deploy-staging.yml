@@ -3,7 +3,7 @@ name: Deploy to staging
 on: workflow_dispatch
 
 jobs:
-  build:
+  deploy-to-staging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
