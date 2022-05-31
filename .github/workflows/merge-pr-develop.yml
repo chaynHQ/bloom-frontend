@@ -26,11 +26,6 @@ jobs:
                 '[actions/github-script](https://github.com/actions/github-script).'
               ].join('\n')
             });
-            github.rest.issues.addLabels({
-              owner,
-              repo,
-              labels: [ 'automated pr']
-            });
   deploy-to-staging:
     runs-on: ubuntu-latest
     steps:
