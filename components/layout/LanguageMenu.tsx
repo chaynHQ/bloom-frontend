@@ -77,7 +77,7 @@ export default function LanguageMenu() {
             const languageUppercase = language.toUpperCase();
             return (
               <MenuItem key={language} sx={menuItemStyle}>
-                <Button component={Link} href={router.pathname} locale={language}>
+                <Button component={Link} href={router.asPath} locale={language}>
                   {languageUppercase}
                 </Button>
               </MenuItem>

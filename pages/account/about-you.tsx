@@ -11,6 +11,8 @@ import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import AboutYouDemoForm from '../../components/forms/AboutYouDemoForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
+import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
+import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { ABOUT_YOU_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -36,8 +38,18 @@ const formContainerStyle = {
   textAlign: 'left',
 } as const;
 
+const getForm = (formLabel: string) => {
+  const formMap: { [key: string]: JSX.Element } = {
+    default: <AboutYouDemoForm />,
+    a: <AboutYouSetAForm />,
+    b: <AboutYouSetBForm />,
+    c: <AboutYouSetCForm />,
+  };
+  return formMap[formLabel];
+};
+
 const AboutYou: NextPage = () => {
-  const [questionSetParam, setQuestionSetParam] = useState<string>('');
+  const [questionSetParam, setQuestionSetParam] = useState<string>('default');
   const router = useRouter();
 
   const t = useTranslations('Account.aboutYou');
@@ -47,7 +59,11 @@ const AboutYou: NextPage = () => {
   useEffect(() => {
     const { q } = router.query;
 
-    if (q) setQuestionSetParam(q + '');
+    if (q) {
+      setQuestionSetParam(q + '');
+    } else {
+      setQuestionSetParam('default');
+    }
   }, [router.query]);
 
   useEffect(() => {
@@ -79,15 +95,15 @@ const AboutYou: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('header')}
           </Typography>
-          {questionSetParam === 'a' ? (
+          {questionSetParam === 'default' ? ( // TODO this might need to change if there are different descriptions for different forms
+            <Typography>{t('description')}</Typography>
+          ) : (
             <>
               <Typography>
                 <strong>{t('descriptionALine1')}</strong>
               </Typography>
               <Typography>{t('descriptionALine2')}</Typography>
             </>
-          ) : (
-            <Typography>{t('description')}</Typography>
           )}
           <Button
             sx={{ mt: 3 }}
@@ -102,9 +118,11 @@ const AboutYou: NextPage = () => {
             <Card>
               <CardContent>
                 <Typography variant="h2" component="h2">
-                  {questionSetParam === 'a' ? t('titleA') : t('title')}
+                  {
+                    questionSetParam === 'default' ? t('title') : t('titleA') // TODO this might need to change if there are different descriptions for different forms
+                  }
                 </Typography>
-                {questionSetParam === 'a' ? <AboutYouSetAForm /> : <AboutYouDemoForm />}
+                {getForm(questionSetParam)}
               </CardContent>
             </Card>
           </Box>
