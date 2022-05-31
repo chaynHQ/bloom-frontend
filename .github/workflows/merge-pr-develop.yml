@@ -15,14 +15,14 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
-            const pullRequests = await github.rest.pulls.list({
+            const pullRequestResponse = await github.rest.pulls.list({
               owner,
               repo,
               base: 'main'
             });
 
-            console.log(pullRequests); // TODO remove once we know this is working and why
-            if (pullRequests.length === 0) {
+            console.log(pullRequestResponse); // TODO remove once we know this is working and why
+            if (pullRequestResponse.status === 200 && pullRequestResponse.data.length === 0) {
               const result = await github.rest.pulls.create({
                 title: 'Merge Develop onto Main',
                 owner,
