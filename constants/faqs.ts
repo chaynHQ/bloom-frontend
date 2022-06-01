@@ -2,6 +2,7 @@ export interface faqItem {
   title: string;
   body: string;
   link?: string;
+  list?: string[];
 }
 
 export const therapyFaqs: (link: string) => Array<faqItem> = (link) => [
@@ -58,6 +59,20 @@ export const therapyFaqs: (link: string) => Array<faqItem> = (link) => [
   {
     title: 'faqTitle12',
     body: 'faqBody12',
+    list: [
+      'faqList12Item1',
+      'faqList12Item2',
+      'faqList12Item3',
+      'faqList12Item4',
+      'faqList12Item5',
+      'faqList12Item6',
+      'faqList12Item7',
+      'faqList12Item8',
+    ],
+  },
+  {
+    title: 'faqTitle13',
+    body: 'faqBody13',
     link,
   },
 ];
