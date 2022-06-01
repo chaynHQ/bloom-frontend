@@ -59,6 +59,12 @@ const Faqs = (props: FaqsProps) => {
                 }),
               })}
             </Typography>
+            {faq.list &&
+              faq.list.map((item) => (
+                <Typography key={item} component="li">
+                  {t.rich(item)}
+                </Typography>
+              ))}
           </AccordionDetails>
         </Accordion>
       ))}

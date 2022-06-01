@@ -37,8 +37,18 @@
       "faqBody10": "Sí. Lo que converses con tu terapeuta es estrictamente entre tu terapeuta y tú. En ningún momento {partnerName} tendrá acceso a esta información.",
       "faqTitle11": "¿El apoyo al que yo accedo es privado?",
       "faqBody11": "Sí. Bloom es un programa dirigido por la organización de caridad mundial Chayn. La cantidad de sesiones de terapia a las que accedas será información estrictamente confidencial. Chayn no comparte esta ni ninguna información personal con {partnerName} ni con ningún tercero.",
-      "faqTitle12": "Quiero dar mi opinión",
-      "faqBody12": "Bloom te quiere ofrecer un programa de apoyo para el trauma, para cubrir las necesidades de los usuarios de {partnerName}. Si tienes algún comentario, idea o sugerencia para ayudarnos a mejorar, por favor envíalo a través de este <faqLink>formulario de contacto</faqLink>. ¡Muchas gracias!"
+      "faqTitle12": "Limitation of Liability",
+      "faqBody12": "By taking part in therapy sessions you are entering into agreement with the therapist for the services they will provide as an independent practitioner. This waiver of liability includes any risk of attending therapist sessions and engaging in therapy.  Please see the detail below:",
+      "faqList12Item1": "Users attending online therapy sessions will understand that these services are not offered as a substitute for clinical mental health care or medical care and are not intended to diagnose, treat or cure any mental health or medical conditions. You should also understand that the therapist you have chosen to work with is not acting as a medical professional.",
+      "faqList12Item2": "You will understand and agree that you are fully responsible for your own well-being during your therapy sessions, and subsequently, your choices and decisions.",
+      "faqList12Item3": "You will understand that as a practice therapists may take notes for their own records. Only the practitioners working with you will see your notes. This will always be done in a confidential way respecting your privacy and integrity.",
+      "faqList12Item4": "You will also understand that all comments and ideas offered by a therapist are solely for the purpose of aiding you in your recovery journey. Your therapist will inform you before you begin therapy of any safeguarding policies they have in place that could result in the sharing of information about you in order to ensure your safety.",
+      "faqList12Item5": "You will have read and understood our Privacy Policy (https://www.notion.so/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43).",
+      "faqList12Item6": "You will have understood that the use of technology is not always secure and accept the risks of confidentiality in the use of email, text, phone, video call and other technology.",
+      "faqList12Item7": "You hereby release, waive, acquit and forever discharge your therapist, Bumble, Chayn from every claim, suit action, demand or right to compensation for damages claimed or that you may have arising out of your own acts or omissions or acts and omissions of your Therapist as a result of any advice given otherwise resulting from the therapeutic relationship contemplated by this agreement. You further declare and represent that no promise, inducement or agreement not expressed in this agreement has been made.",
+      "faqList12Item8": "Your therapist reserves the right to refuse access to their services. For all international clients all therapy and counselling services are undertaken in accordance with the laws of the practitioner’s own country and any disputes will be subject to that country’s law.",
+      "faqTitle13": "Quiero dar mi opinión",
+      "faqBody13": "Bloom te quiere ofrecer un programa de apoyo para el trauma, para cubrir las necesidades de los usuarios de {partnerName}. Si tienes algún comentario, idea o sugerencia para ayudarnos a mejorar, por favor envíalo a través de este <faqLink>formulario de contacto</faqLink>. ¡Muchas gracias!"
     },
     "confirmation": {
       "title": "¡Tu reserva está hecha!",
