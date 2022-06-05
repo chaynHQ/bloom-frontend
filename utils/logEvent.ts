@@ -6,6 +6,7 @@ import {
   joinedPartners,
   totalTherapyRemaining,
 } from './formatPartnerAccesses';
+import { getAccountType } from './getAccountType';
 
 export const logEvent = (event: string, params?: {}) => {
   analytics?.logEvent(event, params!);
@@ -13,6 +14,7 @@ export const logEvent = (event: string, params?: {}) => {
 
 export const getEventUserData = (data: Partial<GetUserResponse>) => {
   return {
+    account_type: getAccountType(data.partnerAdmin, data.partnerAccesses),
     registered_at: data.user?.createdAt,
     partner: joinedPartners(data.partnerAccesses),
     partner_live_chat: joinedFeatureLiveChat(data.partnerAccesses),
