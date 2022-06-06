@@ -1,22 +1,15 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
-import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
-import {
-  ABOUT_YOU_SETA_ERROR,
-  ABOUT_YOU_SETA_REQUEST,
-  ABOUT_YOU_SETA_SUCCESS,
-} from '../../constants/events';
+import { ABOUT_YOU_SETC_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
+import { rowStyle, scaleTitleStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -29,6 +22,8 @@ const actionsStyle = {
 
 const AboutYouSetCForm = () => {
   const t = useTranslations('Account.aboutYou.setCForm');
+  const tSetA = useTranslations('Account.aboutYou.setAForm');
+
   const router = useRouter();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
@@ -42,7 +37,20 @@ const AboutYouSetCForm = () => {
   const [scale6Input, setScale6Input] = useState<number>(3);
   const [scale7Input, setScale7Input] = useState<number>(3);
   const [scale8Input, setScale8Input] = useState<number>(3);
-  const [scale9Input, setScale9Input] = useState<number>(3);
+  const [sinceBloomScale1Input, setSinceBloomScale1Input] = useState<number>(3);
+  const [sinceBloomScale2Input, setSinceBloomScale2Input] = useState<number>(3);
+  const [sinceBloomScale3Input, setSinceBloomScale3Input] = useState<number>(3);
+  const [sinceBloomScale4Input, setSinceBloomScale4Input] = useState<number>(3);
+  const [sinceBloomScale5Input, setSinceBloomScale5Input] = useState<number>(3);
+  const [sinceBloomScale6Input, setSinceBloomScale6Input] = useState<number>(3);
+  const [sinceBloomScale7Input, setSinceBloomScale7Input] = useState<number>(3);
+  const [sinceBloomScale8Input, setSinceBloomScale8Input] = useState<number>(3);
+  const [sinceBloomScale9Input, setSinceBloomScale9Input] = useState<number>(3);
+  const [sinceBloomScale10Input, setSinceBloomScale10Input] = useState<number>(3);
+  const [sinceBloomScale11Input, setSinceBloomScale11Input] = useState<number>(3);
+  const [sinceBloomScale12Input, setSinceBloomScale12Input] = useState<number>(3);
+  const [sinceBloomScale13Input, setSinceBloomScale13Input] = useState<number>(3);
+
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -61,6 +69,38 @@ const AboutYouSetCForm = () => {
     { name: 'Q8', inputState: scale8Input, inputStateSetter: setScale8Input },
   ];
 
+  const sinceBloomScaleQuestions: ScaleFieldItem[] = [
+    { name: 'Q1', inputState: sinceBloomScale1Input, inputStateSetter: setSinceBloomScale1Input },
+    { name: 'Q2', inputState: sinceBloomScale2Input, inputStateSetter: setSinceBloomScale2Input },
+    { name: 'Q3', inputState: sinceBloomScale3Input, inputStateSetter: setSinceBloomScale3Input },
+    { name: 'Q4', inputState: sinceBloomScale4Input, inputStateSetter: setSinceBloomScale4Input },
+    { name: 'Q5', inputState: sinceBloomScale5Input, inputStateSetter: setSinceBloomScale5Input },
+    { name: 'Q6', inputState: sinceBloomScale6Input, inputStateSetter: setSinceBloomScale6Input },
+    { name: 'Q7', inputState: sinceBloomScale7Input, inputStateSetter: setSinceBloomScale7Input },
+    { name: 'Q8', inputState: sinceBloomScale8Input, inputStateSetter: setSinceBloomScale8Input },
+    { name: 'Q9', inputState: sinceBloomScale9Input, inputStateSetter: setSinceBloomScale9Input },
+    {
+      name: 'Q10',
+      inputState: sinceBloomScale10Input,
+      inputStateSetter: setSinceBloomScale10Input,
+    },
+    {
+      name: 'Q11',
+      inputState: sinceBloomScale11Input,
+      inputStateSetter: setSinceBloomScale11Input,
+    },
+    {
+      name: 'Q12',
+      inputState: sinceBloomScale12Input,
+      inputStateSetter: setSinceBloomScale12Input,
+    },
+    {
+      name: 'Q13',
+      inputState: sinceBloomScale13Input,
+      inputStateSetter: setSinceBloomScale13Input,
+    },
+  ];
+
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses }));
   }, [user, partnerAccesses]);
@@ -68,43 +108,38 @@ const AboutYouSetCForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-
-    logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
-
+    logEvent(ABOUT_YOU_SETC_REQUEST, eventUserData);
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
       hopes: hopesInput,
       ...eventUserData, // add user data
     };
-
     scaleQuestions.forEach((question) => {
       formData[question.name.toLowerCase()] = question.inputState;
     });
-
-    // post to zapier webhook with the form + user data
-    // the zap accepts the data and creates a new row in the google sheet
-    // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
-    if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM) {
-      axios
-        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
-        .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
-        .then(function (response) {
-          logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
-
-          router.push('/courses');
-          setLoading(false);
-        })
-        .catch(function (error) {
-          rollbar.error('Send zapier webhook about you demo form data error', error);
-          logEvent(ABOUT_YOU_SETA_ERROR, {
-            ...eventUserData,
-            message: error,
-          });
-          setLoading(false);
-          throw error;
-        });
-    }
+    //   // post to zapier webhook with the form + user data
+    //   // the zap accepts the data and creates a new row in the google sheet
+    //   // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
+    //   if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM) {
+    //     axios
+    //       .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+    //       .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
+    //       .then(function (response) {
+    //         logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
+    //         router.push('/courses');
+    //         setLoading(false);
+    //       })
+    //       .catch(function (error) {
+    //         rollbar.error('Send zapier webhook about you demo form data error', error);
+    //         logEvent(ABOUT_YOU_SETA_ERROR, {
+    //           ...eventUserData,
+    //           message: error,
+    //         });
+    //         setLoading(false);
+    //         throw error;
+    //       });
+    //   }
   };
 
   function valuetext(value: number) {
@@ -114,28 +149,42 @@ const AboutYouSetCForm = () => {
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <TextField
-          id="hopes"
-          label={t.rich('hopesLabel')}
-          onChange={(e) => setHopesInput(e.target.value)}
-          value={hopesInput}
-          variant="standard"
-          fullWidth
-          required
-          multiline
-          rows={3}
-          InputLabelProps={{ shrink: true }}
-          sx={staticFieldLabelStyle}
-        />
         <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
           {t('scaleDescriptionLine2')}
         </Typography>
         {scaleQuestions.map((question) => (
           <FormControl key={`question-${question.name}`} fullWidth>
-            <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${question.name}`)}</Typography>
+            <Typography sx={scaleTitleStyle}>{tSetA(`scaleLabels.${question.name}`)}</Typography>
             <Slider
-              aria-label={t(`scaleLabels.${question.name}`)}
+              aria-label={tSetA(`scaleLabels.${question.name}`)}
+              value={question.inputState}
+              onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
+              getAriaValueText={valuetext}
+              valueLabelDisplay="auto"
+              step={1}
+              marks
+              min={1}
+              max={10}
+              color="secondary"
+            />
+          </FormControl>
+        ))}
+        <Divider sx={{ marginTop: 2, marginBottom: 4 }} />
+        <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
+        <Typography mb="1.5rem !important" fontWeight="600">
+          {t('scaleDescriptionLine2')}
+        </Typography>
+        <Typography mb="1.5rem !important" fontWeight="600">
+          {t('sinceBloomLabel')}
+        </Typography>
+        {sinceBloomScaleQuestions.map((question) => (
+          <FormControl key={`since-bloom-question-${question.name}`} fullWidth>
+            <Typography sx={scaleTitleStyle}>
+              {t(`sinceBloomScaleLabels.${question.name}`)}
+            </Typography>
+            <Slider
+              aria-label={tSetA(`sinceBloomScaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}

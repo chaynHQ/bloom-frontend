@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
-import AboutYouDemoForm from '../../components/forms/AboutYouDemoForm';
+import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
 import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
@@ -40,7 +40,7 @@ const formContainerStyle = {
 
 const getForm = (formLabel: string) => {
   const formMap: { [key: string]: JSX.Element } = {
-    default: <AboutYouDemoForm />,
+    default: <AboutYouDemographicForm />,
     a: <AboutYouSetAForm />,
     b: <AboutYouSetBForm />,
     c: <AboutYouSetCForm />,
@@ -95,15 +95,18 @@ const AboutYou: NextPage = () => {
           <Typography variant="h2" component="h2">
             {t('header')}
           </Typography>
-          {questionSetParam === 'default' ? ( // TODO this might need to change if there are different descriptions for different forms
-            <Typography>{t('description')}</Typography>
-          ) : (
+
+          {questionSetParam === 'default' && <Typography>{t('description')}</Typography>}
+          {questionSetParam === 'a' && (
             <>
               <Typography>
                 <strong>{t('descriptionALine1')}</strong>
               </Typography>
               <Typography>{t('descriptionALine2')}</Typography>
             </>
+          )}
+          {(questionSetParam === 'b' || questionSetParam === 'c') && (
+            <Typography>{t('setBAndCDescription')}</Typography>
           )}
           <Button
             sx={{ mt: 3 }}
@@ -118,9 +121,8 @@ const AboutYou: NextPage = () => {
             <Card>
               <CardContent>
                 <Typography variant="h2" component="h2">
-                  {
-                    questionSetParam === 'default' ? t('title') : t('titleA') // TODO this might need to change if there are different descriptions for different forms
-                  }
+                  {questionSetParam === 'a' && t('titleA')}
+                  {questionSetParam === 'default' && t('title')}
                 </Typography>
                 {getForm(questionSetParam)}
               </CardContent>
