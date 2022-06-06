@@ -21,7 +21,7 @@ jobs:
               base: 'main'
             });
 
-            console.log(pullRequestResponse); // TODO remove once we know this is working and why
+            console.log(pullRequestResponse);
             if (pullRequestResponse.status === 200 && pullRequestResponse.data.length === 0) {
               const result = await github.rest.pulls.create({
                 title: 'Merge Develop onto Main',
@@ -34,6 +34,7 @@ jobs:
                   '[actions/github-script](https://github.com/actions/github-script).'
                 ].join('\n')
               });
+              console.log(result);
             }
   deploy-to-staging:
     runs-on: ubuntu-latest
