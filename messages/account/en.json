@@ -34,8 +34,9 @@
       "titleA": "What you want from Bloom",
       "descriptionALine1": "Thank you for your answers so far!",
       "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
+      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
       "goToCourses": "Skip to courses",
-      "demoForm": {
+      "demographicForm": {
         "genderLabel": "What is your gender identity?",
         "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
         "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
@@ -80,33 +81,37 @@
       },
       "setBForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
-        "scaleLabels": {
-          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
-          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
-          "Q3": "I know that it takes time, energy and patience to heal",
-          "Q4": "I’m committed to giving myself the attention that I need to heal",
-          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
-          "Q6": "I understand that part of healing from trauma is dealing with triggers",
-          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
-          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+        "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
+        "bloomHelpLabel": "Bloom has helped me to:",
+        "bloomHelpedMeScaleLabels": {
+          "Q1": "Learn that there are many different types of abuse",
+          "Q2": "Learn about what toxic behaviours are",
+          "Q3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
+          "Q4": "Feel validated - knowing the things I’ve been through are not okay",
+          "Q5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
+          "Q6": "Feel encouraged - knowing there are others out there like me",
+          "Q7": "Identify as a survivor"
         },
         "submitLabel": "Complete"
       },
       "setCForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
-        "scaleLabels": {
-          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
-          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
-          "Q3": "I know that it takes time, energy and patience to heal",
-          "Q4": "I’m committed to giving myself the attention that I need to heal",
-          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
-          "Q6": "I understand that part of healing from trauma is dealing with triggers",
-          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
-          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+        "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
+        "sinceBloomLabel": "Since using Bloom:",
+        "sinceBloomScaleLabels": {
+          "Q1": "I feel that I can live with my traumatic experience",
+          "Q2": "I feel worthy of love, and deserving of being looked after",
+          "Q3": "I feel more able to imagine, dream and make good things happen for myself",
+          "Q4": "I feel confident that if I want a relationship, I can find a healthy partner",
+          "Q5": "I feel I can trust myself to make good choices",
+          "Q6": "I feel interested to learn about the wider context of misogyny and inequality",
+          "Q7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
+          "Q8": "I know how to spot future red flags, and behaviour that might harm me",
+          "Q9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
+          "Q10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
+          "Q11": "I would happily share Bloom with a friend going through something similar",
+          "Q12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
+          "Q13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
         },
         "submitLabel": "Complete"
       }

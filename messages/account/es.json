@@ -34,8 +34,9 @@
       "titleA": "Lo que quieres de Bloom",
       "descriptionALine1": "¡Gracias por tus respuestas!",
       "descriptionALine2": "Como eres un usuario nuevo, nos gustaría saber cómo te encuentras antes de usar nuestros servicios. Estas preguntas nos ayudan a medir el impacto que tiene Bloom sobre las personas sobrevivientes que lo usan, y nos ayuda a enfocarnos en las cosas correctas.",
+      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
       "goToCourses": "Saltar e ir a cursos",
-      "demoForm": {
+      "demographicForm": {
         "genderLabel": "¿Cuál es tu identidad de género?",
         "genderHelpText": "Bloom fue pensado para personas con identidades de género diversas, sabiendo que cada quién experimenta la violencia de género de una manera diferente. Al compartir tu género, nos estás ayudando a entender para quién estamos diseñando.",
         "neurodivergentLabel": "Te identificas como neurodivergente?",
@@ -82,36 +83,40 @@
       "submitLabel": "Completo"
     },
     "setBForm": {
-      "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
-      "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
-      "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?",
-      "scaleLabels": {
-        "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
-        "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
-        "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
-        "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
-        "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
-        "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
-        "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
-        "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+      "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
+      "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
+      "bloomHelpLabel": "Bloom has helped me to:",
+      "bloomHelpedMeScaleLabels": {
+        "Q1": "Learn that there are many different types of abuse",
+        "Q2": "Learn about what toxic behaviours are",
+        "Q3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
+        "Q4": "Feel validated - knowing the things I’ve been through are not okay",
+        "Q5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
+        "Q6": "Feel encouraged - knowing there are others out there like me",
+        "Q7": "Identify as a survivor"
       },
-      "submitLabel": "Completo"
+      "submitLabel": "Complete"
     },
     "setCForm": {
-      "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
-      "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
-      "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?",
-      "scaleLabels": {
-        "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
-        "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
-        "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
-        "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
-        "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
-        "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
-        "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
-        "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+      "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
+      "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
+      "sinceBloomLabel": "Since using Bloom:",
+      "sinceBloomScaleLabels": {
+        "Q1": "I feel that I can live with my traumatic experience",
+        "Q2": "I feel worthy of love, and deserving of being looked after",
+        "Q3": "I feel more able to imagine, dream and make good things happen for myself",
+        "Q4": "I feel confident that if I want a relationship, I can find a healthy partner",
+        "Q5": "I feel I can trust myself to make good choices",
+        "Q6": "I feel interested to learn about the wider context of misogyny and inequality",
+        "Q7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
+        "Q8": "I know how to spot future red flags, and behaviour that might harm me",
+        "Q9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
+        "Q10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
+        "Q11": "I would happily share Bloom with a friend going through something similar",
+        "Q12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
+        "Q13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
       },
-      "submitLabel": "Completo"
+      "submitLabel": "Complete"
     }
   }
 }
