@@ -45,8 +45,8 @@ const actionsStyle = {
   marginTop: 2,
 };
 
-const AboutYouDemoForm = () => {
-  const t = useTranslations('Account.aboutYou.demoForm');
+const AboutYouDemographicForm = () => {
+  const t = useTranslations('Account.aboutYou.demographicForm');
   const router = useRouter();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
@@ -243,4 +243,4 @@ const AboutYouDemoForm = () => {
   );
 };
 
-export default AboutYouDemoForm;
+export default AboutYouDemographicForm;
