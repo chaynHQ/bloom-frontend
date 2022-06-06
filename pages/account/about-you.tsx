@@ -2,6 +2,7 @@ import { Button, Card, CardContent } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -48,6 +49,9 @@ const getForm = (formLabel: string) => {
   };
   return formMap[formLabel];
 };
+enum formTriggers {
+  sessionFour = 'session-four',
+}
 
 const AboutYou: NextPage = () => {
   const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
@@ -56,16 +60,19 @@ const AboutYou: NextPage = () => {
   const t = useTranslations('Account.aboutYou');
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { q, trigger, return_url } = router.query;
 
   useEffect(() => {
-    const { q } = router.query;
-
     if (q) {
       setQuestionSetParam(q + '');
     } else {
       setQuestionSetParam(SURVEY_FORMS.default);
     }
-  }, [router.query]);
+
+    if (trigger === formTriggers.sessionFour) {
+      Cookies.set('sessionFourSurveySeen', 'true');
+    }
+  }, [q, trigger]);
 
   useEffect(() => {
     const eventUserData = getEventUserData({ user, partnerAccesses });
@@ -114,7 +121,7 @@ const AboutYou: NextPage = () => {
             variant="contained"
             component={Link}
             color="secondary"
-            href="/courses"
+            href={typeof return_url === 'string' ? return_url : '/courses'}
           >
             {t('goToCourses')}
           </Button>

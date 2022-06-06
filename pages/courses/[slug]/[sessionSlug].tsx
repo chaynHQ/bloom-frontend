@@ -7,9 +7,11 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Button, Link as MuiLink, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Cookies from 'js-cookie';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -40,6 +42,7 @@ import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../../utils/courseLiveStatus';
+import { generateReturnUrlParam } from '../../../utils/generateReturnQuery';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
@@ -91,6 +94,7 @@ interface Props {
 
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
+  const router = useRouter();
   story = useStoryblok(story, preview, sbParams, locale);
   const course = story.content.course.content;
 
@@ -116,6 +120,15 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   // only show live content to public users
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
 
+  const numberCoursesCompleted = courses.reduce((acc, curr) => {
+    if (curr.completed) {
+      return acc + 1;
+    }
+    return acc;
+  }, 0);
+
+  const numberSessionsStarted = courses.flatMap((c) => c.sessions).length;
+
   const eventData = {
     ...eventUserData,
     session_name: story.content.name,
@@ -134,6 +147,23 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
+
+  useEffect(() => {
+    const session4SurveySeenCookie = Cookies.get('sessionFourSurveySeen');
+    if (
+      session4SurveySeenCookie !== 'true' &&
+      numberCoursesCompleted === 0 &&
+      numberSessionsStarted === 4
+    ) {
+      const returnUrl = generateReturnUrlParam(router.asPath);
+      // Randomise whether b or c survey comes up
+      if (Math.round(Math.random()) === 0) {
+        router.push(`/account/about-you?q=b&trigger=session-four&${returnUrl}`);
+      } else {
+        router.push(`/account/about-you?q=c&trigger=session-four&${returnUrl}`);
+      }
+    }
+  });
 
   useEffect(() => {
     const coursePartners = course.included_for_partners;
