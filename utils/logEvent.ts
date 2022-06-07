@@ -16,7 +16,7 @@ export const getEventUserData = (data: Partial<GetUserResponse>) => {
   return {
     account_type: getAccountType(data.partnerAdmin, data.partnerAccesses),
     registered_at: data.user?.createdAt,
-    partner: joinedPartners(data.partnerAccesses),
+    partner: joinedPartners(data.partnerAccesses, data.partnerAdmin),
     partner_live_chat: joinedFeatureLiveChat(data.partnerAccesses),
     partner_therapy: joinedFeatureTherapy(data.partnerAccesses),
     partner_therapy_remaining: totalTherapyRemaining(data.partnerAccesses),
