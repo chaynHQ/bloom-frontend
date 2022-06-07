@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test:watch": "jest --watch",
     "start:heroku": "NODE_OPTIONS='--max_old_space_size=460' next start -p $PORT"
   },
@@ -56,6 +56,7 @@
   },
   "resolutions": {
     "minimist": "^1.2.6",
-    "follow-redirects": "^1.14.9"
+    "follow-redirects": "^1.14.9",
+    "jest-environment-jsdom": "27.2.4"
   }
 }

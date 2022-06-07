@@ -5514,7 +5514,7 @@ jest-each@^27.2.4:
     jest-util "^27.2.4"
     pretty-format "^27.2.4"
 
-jest-environment-jsdom@^27.2.4:
+jest-environment-jsdom@27.2.4, jest-environment-jsdom@^27.2.4:
   version "27.2.4"
   resolved "https://registry.yarnpkg.com/jest-environment-jsdom/-/jest-environment-jsdom-27.2.4.tgz#39ae80bbb8675306bfaf0440be1e5f877554539a"
   integrity sha512-X70pTXFSypD7AIzKT1mLnDi5hP9w9mdTRcOGOmoDoBrNyNEg4rYm6d4LQWFLc9ps1VnMuDOkFSG0wjSNYGjkng==

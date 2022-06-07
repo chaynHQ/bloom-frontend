@@ -12,7 +12,7 @@ import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -25,7 +25,8 @@ const cardStyle = {
 
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses });
 
   const headerProps = {
     title: t('title'),
@@ -35,8 +36,8 @@ const CreateAccessCode: NextPage = () => {
   };
 
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { partner: partnerAdmin.partner?.name });
-  });
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { ...eventUserData });
+  }, []);
 
   return (
     <Box>

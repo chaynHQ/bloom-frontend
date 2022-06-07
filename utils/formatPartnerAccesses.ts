@@ -1,9 +1,24 @@
 import { PartnerAccess } from '../app/partnerAccessSlice';
+import { PartnerAdmin } from '../app/partnerAdminSlice';
 
-export const joinedPartners = (partnerAccesses: PartnerAccess[] | undefined): string | null => {
-  if (!partnerAccesses) return null;
+export const joinedPartners = (
+  partnerAccesses: PartnerAccess[] | undefined,
+  partnerAdmin: PartnerAdmin | undefined,
+): string | null => {
+  if (!partnerAccesses && !partnerAdmin) return null;
 
-  return partnerAccesses.map((pa) => pa.partner.name).join(', ');
+  const partnerAdminName = partnerAdmin?.partner?.name;
+  const partnerAccessNames = partnerAccesses?.map((pa) => pa.partner.name).sort();
+
+  const partnerArray = [
+    ...(partnerAdminName ? [partnerAdminName] : []),
+    ...(partnerAccessNames ? partnerAccessNames : []),
+  ]
+    .filter((element, index, array) => array.indexOf(element) === index) // ensures array is unique
+    .sort()
+    .join(', ');
+
+  return partnerArray.length > 0 ? partnerArray : null;
 };
 
 export const joinedFeatureLiveChat = (
