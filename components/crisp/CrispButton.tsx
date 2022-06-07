@@ -18,14 +18,21 @@ const CrispButton = (props: CrispButtonProps) => {
   const { buttonText, email, eventData } = props;
 
   useEffect(() => {
-    (window as any).$crisp = [];
+    if (!(window as any).$crisp) {
+      (window as any).$crisp = [];
+    }
     (window as any).CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
     (() => {
-      const d = document;
-      const s = d.createElement('script');
-      s.src = 'https://client.crisp.chat/l.js';
-      s.async = true;
-      d.getElementsByTagName('body')[0].appendChild(s);
+      const crispScriptUrl = 'https://client.crisp.chat/l.js';
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const scriptExists = scripts.flatMap((s) => s.src).includes(crispScriptUrl);
+      if (!scriptExists) {
+        const d = document;
+        const s = d.createElement('script');
+        s.src = 'https://client.crisp.chat/l.js';
+        s.async = true;
+        d.getElementsByTagName('body')[0].appendChild(s);
+      }
 
       email && (window as any).$crisp.push(['set', 'user:email', [email]]);
     })();
