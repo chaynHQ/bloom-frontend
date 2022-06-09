@@ -50,3 +50,7 @@ export enum SURVEY_FORMS {
   b = 'b',
   c = 'c',
 }
+
+export enum FORM_TRIGGERS {
+  sessionFour = 'session-four',
+}

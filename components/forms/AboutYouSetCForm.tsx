@@ -3,11 +3,19 @@ import { Divider, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
+import axios from 'axios';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import rollbar from '../../config/rollbar';
 import { DEFAULT_SCALE_START } from '../../constants/common';
-import { ABOUT_YOU_SETC_REQUEST } from '../../constants/events';
+import { FORM_TRIGGERS } from '../../constants/enums';
+import {
+  ABOUT_YOU_SETC_ERROR,
+  ABOUT_YOU_SETC_REQUEST,
+  ABOUT_YOU_SETC_SUCCESS,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
@@ -20,8 +28,15 @@ const actionsStyle = {
   marginTop: 2,
 };
 
-const AboutYouSetCForm = () => {
+const AboutYouSetCForm = ({
+  trigger,
+  returnUrl,
+}: {
+  trigger?: FORM_TRIGGERS;
+  returnUrl?: string;
+}) => {
   const t = useTranslations('Account.aboutYou.setCForm');
+  const router = useRouter();
   const tBase = useTranslations('Account.aboutYou.baseForm');
 
   const [eventUserData, setEventUserData] = useState<any>(null);
@@ -67,32 +82,32 @@ const AboutYouSetCForm = () => {
   ];
 
   const sinceBloomScaleQuestions: ScaleFieldItem[] = [
-    { name: 'Q1', inputState: sinceBloomScale1Input, inputStateSetter: setSinceBloomScale1Input },
-    { name: 'Q2', inputState: sinceBloomScale2Input, inputStateSetter: setSinceBloomScale2Input },
-    { name: 'Q3', inputState: sinceBloomScale3Input, inputStateSetter: setSinceBloomScale3Input },
-    { name: 'Q4', inputState: sinceBloomScale4Input, inputStateSetter: setSinceBloomScale4Input },
-    { name: 'Q5', inputState: sinceBloomScale5Input, inputStateSetter: setSinceBloomScale5Input },
-    { name: 'Q6', inputState: sinceBloomScale6Input, inputStateSetter: setSinceBloomScale6Input },
-    { name: 'Q7', inputState: sinceBloomScale7Input, inputStateSetter: setSinceBloomScale7Input },
-    { name: 'Q8', inputState: sinceBloomScale8Input, inputStateSetter: setSinceBloomScale8Input },
-    { name: 'Q9', inputState: sinceBloomScale9Input, inputStateSetter: setSinceBloomScale9Input },
+    { name: 'sbQ1', inputState: sinceBloomScale1Input, inputStateSetter: setSinceBloomScale1Input },
+    { name: 'sbQ2', inputState: sinceBloomScale2Input, inputStateSetter: setSinceBloomScale2Input },
+    { name: 'sbQ3', inputState: sinceBloomScale3Input, inputStateSetter: setSinceBloomScale3Input },
+    { name: 'sbQ4', inputState: sinceBloomScale4Input, inputStateSetter: setSinceBloomScale4Input },
+    { name: 'sbQ5', inputState: sinceBloomScale5Input, inputStateSetter: setSinceBloomScale5Input },
+    { name: 'sbQ6', inputState: sinceBloomScale6Input, inputStateSetter: setSinceBloomScale6Input },
+    { name: 'sbQ7', inputState: sinceBloomScale7Input, inputStateSetter: setSinceBloomScale7Input },
+    { name: 'sbQ8', inputState: sinceBloomScale8Input, inputStateSetter: setSinceBloomScale8Input },
+    { name: 'sbQ9', inputState: sinceBloomScale9Input, inputStateSetter: setSinceBloomScale9Input },
     {
-      name: 'Q10',
+      name: 'sbQ10',
       inputState: sinceBloomScale10Input,
       inputStateSetter: setSinceBloomScale10Input,
     },
     {
-      name: 'Q11',
+      name: 'sbQ11',
       inputState: sinceBloomScale11Input,
       inputStateSetter: setSinceBloomScale11Input,
     },
     {
-      name: 'Q12',
+      name: 'sbQ12',
       inputState: sinceBloomScale12Input,
       inputStateSetter: setSinceBloomScale12Input,
     },
     {
-      name: 'Q13',
+      name: 'sbQ13',
       inputState: sinceBloomScale13Input,
       inputStateSetter: setSinceBloomScale13Input,
     },
@@ -109,33 +124,44 @@ const AboutYouSetCForm = () => {
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
-      ...eventUserData, // add user data
+      trigger: trigger,
+      ...eventUserData,
+      ...scaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
+        return {
+          ...acc,
+          [curr.name.toLowerCase()]: curr.inputState,
+        };
+      }, {}),
+      ...sinceBloomScaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
+        return {
+          ...acc,
+          [curr.name.toLowerCase()]: curr.inputState,
+        };
+      }, {}),
     };
-    scaleQuestions.forEach((question) => {
-      formData[question.name.toLowerCase()] = question.inputState;
-    });
-    //   // post to zapier webhook with the form + user data
-    //   // the zap accepts the data and creates a new row in the google sheet
-    //   // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
-    //   if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM) {
-    //     axios
-    //       .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
-    //       .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
-    //       .then(function (response) {
-    //         logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
-    //         router.push('/courses');
-    //         setLoading(false);
-    //       })
-    //       .catch(function (error) {
-    //         rollbar.error('Send zapier webhook about you demo form data error', error);
-    //         logEvent(ABOUT_YOU_SETA_ERROR, {
-    //           ...eventUserData,
-    //           message: error,
-    //         });
-    //         setLoading(false);
-    //         throw error;
-    //       });
-    //   }
+
+    // post to zapier webhook with the form + user data
+    // the zap accepts the data and creates a new row in the google sheet
+    // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
+    if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETC_FORM) {
+      axios
+        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+        .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETC_FORM, formData)
+        .then(function (response) {
+          logEvent(ABOUT_YOU_SETC_SUCCESS, eventUserData);
+          router.push(returnUrl || '/courses');
+          setLoading(false);
+        })
+        .catch(function (error) {
+          rollbar.error('Send zapier webhook about you demo form data error', error);
+          logEvent(ABOUT_YOU_SETC_ERROR, {
+            ...eventUserData,
+            message: error,
+          });
+          setLoading(false);
+          throw error;
+        });
+    }
   };
 
   function valuetext(value: number) {
