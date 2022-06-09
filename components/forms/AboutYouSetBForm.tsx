@@ -128,7 +128,6 @@ const AboutYouSetBForm = ({
     setLoading(true);
 
     logEvent(ABOUT_YOU_SETB_REQUEST, eventUserData);
-    console.log(new Date().toISOString());
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
