@@ -15,7 +15,7 @@ import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
 import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
-import { SURVEY_FORMS } from '../../constants/enums';
+import { FORM_TRIGGERS, SURVEY_FORMS } from '../../constants/enums';
 import { ABOUT_YOU_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
@@ -40,18 +40,19 @@ const formContainerStyle = {
   textAlign: 'left',
 } as const;
 
-const getForm = (formLabel: string) => {
+const getForm = (
+  formLabel: string,
+  trigger: FORM_TRIGGERS | undefined,
+  returnUrl: string | undefined,
+) => {
   const formMap: { [key: string]: JSX.Element } = {
     default: <AboutYouDemographicForm />,
     a: <AboutYouSetAForm />,
-    b: <AboutYouSetBForm />,
-    c: <AboutYouSetCForm />,
+    b: <AboutYouSetBForm trigger={trigger} returnUrl={returnUrl} />,
+    c: <AboutYouSetCForm trigger={trigger} returnUrl={returnUrl} />,
   };
   return formMap[formLabel];
 };
-enum formTriggers {
-  sessionFour = 'session-four',
-}
 
 const AboutYou: NextPage = () => {
   const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
@@ -61,6 +62,11 @@ const AboutYou: NextPage = () => {
 
   const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
   const { q, trigger, return_url } = router.query;
+  const formTrigger =
+    typeof trigger === 'string' && trigger in FORM_TRIGGERS
+      ? (trigger as FORM_TRIGGERS)
+      : undefined;
+  const returnUrl = typeof return_url === 'string' ? return_url : undefined;
 
   useEffect(() => {
     if (q) {
@@ -69,7 +75,7 @@ const AboutYou: NextPage = () => {
       setQuestionSetParam(SURVEY_FORMS.default);
     }
 
-    if (trigger === formTriggers.sessionFour) {
+    if (trigger === FORM_TRIGGERS.sessionFour) {
       Cookies.set('sessionFourSurveySeen', 'true');
     }
   }, [q, trigger]);
@@ -132,7 +138,7 @@ const AboutYou: NextPage = () => {
                   {questionSetParam === SURVEY_FORMS.a && t('titleA')}
                   {questionSetParam === SURVEY_FORMS.default && t('title')}
                 </Typography>
-                {getForm(questionSetParam)}
+                {getForm(questionSetParam, formTrigger, returnUrl)}
               </CardContent>
             </Card>
           </Box>

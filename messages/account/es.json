@@ -87,31 +87,31 @@
     "setBForm": {
       "bloomHelpLabel": "Bloom has helped me to:",
       "bloomHelpedMeScaleLabels": {
-        "Q1": "Learn that there are many different types of abuse",
-        "Q2": "Learn about what toxic behaviours are",
-        "Q3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
-        "Q4": "Feel validated - knowing the things I’ve been through are not okay",
-        "Q5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
-        "Q6": "Feel encouraged - knowing there are others out there like me",
-        "Q7": "Identify as a survivor"
+        "bhmQ1": "Learn that there are many different types of abuse",
+        "bhmQ2": "Learn about what toxic behaviours are",
+        "bhmQ3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
+        "bhmQ4": "Feel validated - knowing the things I’ve been through are not okay",
+        "bhmQ5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
+        "bhmQ6": "Feel encouraged - knowing there are others out there like me",
+        "bhmQ7": "Identify as a survivor"
       }
     },
     "setCForm": {
       "sinceBloomLabel": "Since using Bloom:",
       "sinceBloomScaleLabels": {
-        "Q1": "I feel that I can live with my traumatic experience",
-        "Q2": "I feel worthy of love, and deserving of being looked after",
-        "Q3": "I feel more able to imagine, dream and make good things happen for myself",
-        "Q4": "I feel confident that if I want a relationship, I can find a healthy partner",
-        "Q5": "I feel I can trust myself to make good choices",
-        "Q6": "I feel interested to learn about the wider context of misogyny and inequality",
-        "Q7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
-        "Q8": "I know how to spot future red flags, and behaviour that might harm me",
-        "Q9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
-        "Q10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
-        "Q11": "I would happily share Bloom with a friend going through something similar",
-        "Q12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
-        "Q13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
+        "sbQ1": "I feel that I can live with my traumatic experience",
+        "sbQ2": "I feel worthy of love, and deserving of being looked after",
+        "sbQ3": "I feel more able to imagine, dream and make good things happen for myself",
+        "sbQ4": "I feel confident that if I want a relationship, I can find a healthy partner",
+        "sbQ5": "I feel I can trust myself to make good choices",
+        "sbQ6": "I feel interested to learn about the wider context of misogyny and inequality",
+        "sbQ7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
+        "sbQ8": "I know how to spot future red flags, and behaviour that might harm me",
+        "sbQ9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
+        "sbQ10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
+        "sbQ11": "I would happily share Bloom with a friend going through something similar",
+        "sbQ12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
+        "sbQ13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
       }
     }
   }

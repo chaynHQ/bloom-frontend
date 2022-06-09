@@ -3,12 +3,19 @@ import { Divider, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
+import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import rollbar from '../../config/rollbar';
 import { DEFAULT_SCALE_START } from '../../constants/common';
-import { ABOUT_YOU_SETB_REQUEST } from '../../constants/events';
+import { FORM_TRIGGERS } from '../../constants/enums';
+import {
+  ABOUT_YOU_SETB_ERROR,
+  ABOUT_YOU_SETB_REQUEST,
+  ABOUT_YOU_SETB_SUCCESS,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
@@ -21,7 +28,13 @@ const actionsStyle = {
   marginTop: 2,
 };
 
-const AboutYouSetBForm = () => {
+const AboutYouSetBForm = ({
+  trigger,
+  returnUrl,
+}: {
+  trigger?: FORM_TRIGGERS;
+  returnUrl?: string;
+}) => {
   const t = useTranslations('Account.aboutYou.setBForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
 
@@ -60,37 +73,37 @@ const AboutYouSetBForm = () => {
 
   const bloomHelpedMeScaleQuestions: ScaleFieldItem[] = [
     {
-      name: 'Q1',
+      name: 'bhmQ1',
       inputState: bloomHelpedMeScale1Input,
       inputStateSetter: setBloomHelpedMeScale1Input,
     },
     {
-      name: 'Q2',
+      name: 'bhmQ2',
       inputState: bloomHelpedMeScale2Input,
       inputStateSetter: setBloomHelpedMeScale2Input,
     },
     {
-      name: 'Q3',
+      name: 'bhmQ3',
       inputState: bloomHelpedMeScale3Input,
       inputStateSetter: setBloomHelpedMeScale3Input,
     },
     {
-      name: 'Q4',
+      name: 'bhmQ4',
       inputState: bloomHelpedMeScale4Input,
       inputStateSetter: setBloomHelpedMeScale4Input,
     },
     {
-      name: 'Q5',
+      name: 'bhmQ5',
       inputState: bloomHelpedMeScale5Input,
       inputStateSetter: setBloomHelpedMeScale5Input,
     },
     {
-      name: 'Q6',
+      name: 'bhmQ6',
       inputState: bloomHelpedMeScale6Input,
       inputStateSetter: setBloomHelpedMeScale6Input,
     },
     {
-      name: 'Q7',
+      name: 'bhmQ7',
       inputState: bloomHelpedMeScale7Input,
       inputStateSetter: setBloomHelpedMeScale7Input,
     },
@@ -115,45 +128,50 @@ const AboutYouSetBForm = () => {
     setLoading(true);
 
     logEvent(ABOUT_YOU_SETB_REQUEST, eventUserData);
-
+    console.log(new Date().toISOString());
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
       ...eventUserData,
+      trigger,
+      ...scaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
+        return {
+          ...acc,
+          [curr.name.toLowerCase()]: curr.inputState,
+        };
+      }, {}),
+      ...bloomHelpedMeScaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
+        return {
+          ...acc,
+          [curr.name.toLowerCase()]: curr.inputState,
+        };
+      }, {}),
     };
-
-    scaleQuestions.forEach((question) => {
-      formData[question.name.toLowerCase()] = question.inputState;
-    });
-
-    bloomHelpedMeScaleQuestions.forEach((question) => {
-      formData[question.name.toLowerCase()] = question.inputState;
-    });
 
     // post to zapier webhook with the form + user data
     // the zap accepts the data and creates a new row in the google sheet
     // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
 
-    // if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETB_FORM) {
-    //   axios
-    //     .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
-    //     .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETB_FORM, formData)
-    //     .then(function (response) {
-    //       logEvent(ABOUT_YOU_SETB_SUCCESS, eventUserData);
+    if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETB_FORM) {
+      axios
+        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+        .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETB_FORM, formData)
+        .then(function (response) {
+          logEvent(ABOUT_YOU_SETB_SUCCESS, eventUserData);
 
-    //       router.push('/courses');
-    //       setLoading(false);
-    //     })
-    //     .catch(function (error) {
-    //       rollbar.error('Send zapier webhook about you demo form data error', error);
-    //       logEvent(ABOUT_YOU_SETB_ERROR, {
-    //         ...eventUserData,
-    //         message: error,
-    //       });
-    //       setLoading(false);
-    //       throw error;
-    //     });
-    // }
+          router.push(returnUrl || '/courses');
+          setLoading(false);
+        })
+        .catch(function (error) {
+          rollbar.error('Send zapier webhook about you demo form data error', error);
+          logEvent(ABOUT_YOU_SETB_ERROR, {
+            ...eventUserData,
+            message: error,
+          });
+          setLoading(false);
+          throw error;
+        });
+    }
   };
 
   function valuetext(value: number) {
