@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import Slider from '@mui/material/Slider';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import { DEFAULT_SCALE_START } from '../../constants/common';
 import { ABOUT_YOU_SETC_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
@@ -22,34 +22,31 @@ const actionsStyle = {
 
 const AboutYouSetCForm = () => {
   const t = useTranslations('Account.aboutYou.setCForm');
-  const tSetA = useTranslations('Account.aboutYou.setAForm');
-
-  const router = useRouter();
+  const tBase = useTranslations('Account.aboutYou.baseForm');
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [hopesInput, setHopesInput] = useState<string>('');
-  const [scale1Input, setScale1Input] = useState<number>(3);
-  const [scale2Input, setScale2Input] = useState<number>(3);
-  const [scale3Input, setScale3Input] = useState<number>(3);
-  const [scale4Input, setScale4Input] = useState<number>(3);
-  const [scale5Input, setScale5Input] = useState<number>(3);
-  const [scale6Input, setScale6Input] = useState<number>(3);
-  const [scale7Input, setScale7Input] = useState<number>(3);
-  const [scale8Input, setScale8Input] = useState<number>(3);
-  const [sinceBloomScale1Input, setSinceBloomScale1Input] = useState<number>(3);
-  const [sinceBloomScale2Input, setSinceBloomScale2Input] = useState<number>(3);
-  const [sinceBloomScale3Input, setSinceBloomScale3Input] = useState<number>(3);
-  const [sinceBloomScale4Input, setSinceBloomScale4Input] = useState<number>(3);
-  const [sinceBloomScale5Input, setSinceBloomScale5Input] = useState<number>(3);
-  const [sinceBloomScale6Input, setSinceBloomScale6Input] = useState<number>(3);
-  const [sinceBloomScale7Input, setSinceBloomScale7Input] = useState<number>(3);
-  const [sinceBloomScale8Input, setSinceBloomScale8Input] = useState<number>(3);
-  const [sinceBloomScale9Input, setSinceBloomScale9Input] = useState<number>(3);
-  const [sinceBloomScale10Input, setSinceBloomScale10Input] = useState<number>(3);
-  const [sinceBloomScale11Input, setSinceBloomScale11Input] = useState<number>(3);
-  const [sinceBloomScale12Input, setSinceBloomScale12Input] = useState<number>(3);
-  const [sinceBloomScale13Input, setSinceBloomScale13Input] = useState<number>(3);
+  const [scale1Input, setScale1Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale2Input, setScale2Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale3Input, setScale3Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale4Input, setScale4Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale5Input, setScale5Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale6Input, setScale6Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale7Input, setScale7Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale8Input, setScale8Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale1Input, setSinceBloomScale1Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale2Input, setSinceBloomScale2Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale3Input, setSinceBloomScale3Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale4Input, setSinceBloomScale4Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale5Input, setSinceBloomScale5Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale6Input, setSinceBloomScale6Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale7Input, setSinceBloomScale7Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale8Input, setSinceBloomScale8Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale9Input, setSinceBloomScale9Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale10Input, setSinceBloomScale10Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale11Input, setSinceBloomScale11Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale12Input, setSinceBloomScale12Input] = useState<number>(DEFAULT_SCALE_START);
+  const [sinceBloomScale13Input, setSinceBloomScale13Input] = useState<number>(DEFAULT_SCALE_START);
 
   const [formError, setFormError] = useState<
     | string
@@ -112,7 +109,6 @@ const AboutYouSetCForm = () => {
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
-      hopes: hopesInput,
       ...eventUserData, // add user data
     };
     scaleQuestions.forEach((question) => {
@@ -149,15 +145,15 @@ const AboutYouSetCForm = () => {
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
+        <Typography mb={1}>{tBase('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
-          {t('scaleDescriptionLine2')}
+          {tBase('scaleDescriptionLine2')}
         </Typography>
         {scaleQuestions.map((question) => (
           <FormControl key={`question-${question.name}`} fullWidth>
-            <Typography sx={scaleTitleStyle}>{tSetA(`scaleLabels.${question.name}`)}</Typography>
+            <Typography sx={scaleTitleStyle}>{tBase(`scaleLabels.${question.name}`)}</Typography>
             <Slider
-              aria-label={tSetA(`scaleLabels.${question.name}`)}
+              aria-label={tBase(`scaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}
@@ -171,9 +167,9 @@ const AboutYouSetCForm = () => {
           </FormControl>
         ))}
         <Divider sx={{ marginTop: 2, marginBottom: 4 }} />
-        <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
+        <Typography mb={1}>{tBase('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
-          {t('scaleDescriptionLine2')}
+          {tBase('scaleDescriptionLine2')}
         </Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
           {t('sinceBloomLabel')}
@@ -184,7 +180,7 @@ const AboutYouSetCForm = () => {
               {t(`sinceBloomScaleLabels.${question.name}`)}
             </Typography>
             <Slider
-              aria-label={tSetA(`sinceBloomScaleLabels.${question.name}`)}
+              aria-label={tBase(`sinceBloomScaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}
@@ -205,7 +201,7 @@ const AboutYouSetCForm = () => {
         )}
         <Box sx={actionsStyle}>
           <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
-            {t('submitLabel')}
+            {tBase('submitLabel')}
           </LoadingButton>
         </Box>
       </form>

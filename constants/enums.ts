@@ -43,3 +43,10 @@ export enum STORYBLOK_COLORS {
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
 }
+
+export enum SURVEY_FORMS {
+  default = 'default',
+  a = 'a',
+  b = 'b',
+  c = 'c',
+}

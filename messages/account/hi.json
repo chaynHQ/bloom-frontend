@@ -63,10 +63,9 @@
         "submitLabel": "Submit",
         "codeErrors": {}
       },
-      "setAForm": {
+      "baseForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
         "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?",
         "scaleLabels": {
           "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
           "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
@@ -79,9 +78,10 @@
         },
         "submitLabel": "Complete"
       },
+      "setAForm": {
+        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?"
+      },
       "setBForm": {
-        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
         "bloomHelpLabel": "Bloom has helped me to:",
         "bloomHelpedMeScaleLabels": {
           "Q1": "Learn that there are many different types of abuse",
@@ -91,12 +91,9 @@
           "Q5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
           "Q6": "Feel encouraged - knowing there are others out there like me",
           "Q7": "Identify as a survivor"
-        },
-        "submitLabel": "Complete"
+        }
       },
       "setCForm": {
-        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = I don’t agree at all, 5 =  I strongly agree",
         "sinceBloomLabel": "Since using Bloom:",
         "sinceBloomScaleLabels": {
           "Q1": "I feel that I can live with my traumatic experience",
@@ -112,8 +109,7 @@
           "Q11": "I would happily share Bloom with a friend going through something similar",
           "Q12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
           "Q13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
-        },
-        "submitLabel": "Complete"
+        }
       }
     }
   }

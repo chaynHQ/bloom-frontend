@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import { DEFAULT_SCALE_START } from '../../constants/common';
 import { ABOUT_YOU_SETB_REQUEST } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
@@ -22,27 +23,34 @@ const actionsStyle = {
 
 const AboutYouSetBForm = () => {
   const t = useTranslations('Account.aboutYou.setBForm');
-  const tSetA = useTranslations('Account.aboutYou.setAForm');
+  const tBase = useTranslations('Account.aboutYou.baseForm');
 
   const router = useRouter();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [scale1Input, setScale1Input] = useState<number>(3);
-  const [scale2Input, setScale2Input] = useState<number>(3);
-  const [scale3Input, setScale3Input] = useState<number>(3);
-  const [scale4Input, setScale4Input] = useState<number>(3);
-  const [scale5Input, setScale5Input] = useState<number>(3);
-  const [scale6Input, setScale6Input] = useState<number>(3);
-  const [scale7Input, setScale7Input] = useState<number>(3);
-  const [scale8Input, setScale8Input] = useState<number>(3);
-  const [bloomHelpedMeScale1Input, setBloomHelpedMeScale1Input] = useState<number>(3);
-  const [bloomHelpedMeScale2Input, setBloomHelpedMeScale2Input] = useState<number>(3);
-  const [bloomHelpedMeScale3Input, setBloomHelpedMeScale3Input] = useState<number>(3);
-  const [bloomHelpedMeScale4Input, setBloomHelpedMeScale4Input] = useState<number>(3);
-  const [bloomHelpedMeScale5Input, setBloomHelpedMeScale5Input] = useState<number>(3);
-  const [bloomHelpedMeScale6Input, setBloomHelpedMeScale6Input] = useState<number>(3);
-  const [bloomHelpedMeScale7Input, setBloomHelpedMeScale7Input] = useState<number>(3);
+  const [scale1Input, setScale1Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale2Input, setScale2Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale3Input, setScale3Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale4Input, setScale4Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale5Input, setScale5Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale6Input, setScale6Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale7Input, setScale7Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale8Input, setScale8Input] = useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale1Input, setBloomHelpedMeScale1Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale2Input, setBloomHelpedMeScale2Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale3Input, setBloomHelpedMeScale3Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale4Input, setBloomHelpedMeScale4Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale5Input, setBloomHelpedMeScale5Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale6Input, setBloomHelpedMeScale6Input] =
+    useState<number>(DEFAULT_SCALE_START);
+  const [bloomHelpedMeScale7Input, setBloomHelpedMeScale7Input] =
+    useState<number>(DEFAULT_SCALE_START);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -111,7 +119,7 @@ const AboutYouSetBForm = () => {
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
-      ...eventUserData, // add user data
+      ...eventUserData,
     };
 
     scaleQuestions.forEach((question) => {
@@ -155,9 +163,9 @@ const AboutYouSetBForm = () => {
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
+        <Typography mb={1}>{tBase('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
-          {t('scaleDescriptionLine2')}
+          {tBase('scaleDescriptionLine2')}
         </Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
           {t('bloomHelpLabel')}
@@ -183,16 +191,16 @@ const AboutYouSetBForm = () => {
         ))}
         <Divider sx={{ marginTop: 2, marginBottom: 4 }} />
         <Typography mb={1} fontWeight="600">
-          {t('scaleDescriptionLine1')}
+          {tBase('scaleDescriptionLine1')}
         </Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
-          {t('scaleDescriptionLine2')}
+          {tBase('scaleDescriptionLine2')}
         </Typography>
         {scaleQuestions.map((question) => (
           <FormControl key={`question-${question.name}`} fullWidth>
-            <Typography sx={scaleTitleStyle}>{tSetA(`scaleLabels.${question.name}`)}</Typography>
+            <Typography sx={scaleTitleStyle}>{tBase(`scaleLabels.${question.name}`)}</Typography>
             <Slider
-              aria-label={tSetA(`scaleLabels.${question.name}`)}
+              aria-label={tBase(`scaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}
@@ -213,7 +221,7 @@ const AboutYouSetBForm = () => {
         )}
         <Box sx={actionsStyle}>
           <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
-            {t('submitLabel')}
+            {tBase('submitLabel')}
           </LoadingButton>
         </Box>
       </form>
