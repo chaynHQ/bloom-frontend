@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
+import { DEFAULT_SCALE_START } from '../../constants/common';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -29,20 +30,21 @@ const actionsStyle = {
 
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
+  const tBase = useTranslations('Account.aboutYou.baseForm');
+
   const router = useRouter();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [hopesInput, setHopesInput] = useState<string>('');
-  const [scale1Input, setScale1Input] = useState<number>(3);
-  const [scale2Input, setScale2Input] = useState<number>(3);
-  const [scale3Input, setScale3Input] = useState<number>(3);
-  const [scale4Input, setScale4Input] = useState<number>(3);
-  const [scale5Input, setScale5Input] = useState<number>(3);
-  const [scale6Input, setScale6Input] = useState<number>(3);
-  const [scale7Input, setScale7Input] = useState<number>(3);
-  const [scale8Input, setScale8Input] = useState<number>(3);
-  const [scale9Input, setScale9Input] = useState<number>(3);
+  const [scale1Input, setScale1Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale2Input, setScale2Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale3Input, setScale3Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale4Input, setScale4Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale5Input, setScale5Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale6Input, setScale6Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale7Input, setScale7Input] = useState<number>(DEFAULT_SCALE_START);
+  const [scale8Input, setScale8Input] = useState<number>(DEFAULT_SCALE_START);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -127,15 +129,15 @@ const AboutYouSetAForm = () => {
           InputLabelProps={{ shrink: true }}
           sx={staticFieldLabelStyle}
         />
-        <Typography mb={1}>{t('scaleDescriptionLine1')}</Typography>
+        <Typography mb={1}>{tBase('scaleDescriptionLine1')}</Typography>
         <Typography mb="1.5rem !important" fontWeight="600">
-          {t('scaleDescriptionLine2')}
+          {tBase('scaleDescriptionLine2')}
         </Typography>
         {scaleQuestions.map((question) => (
           <FormControl key={`question-${question.name}`} fullWidth>
-            <Typography sx={scaleTitleStyle}>{t(`scaleLabels.${question.name}`)}</Typography>
+            <Typography sx={scaleTitleStyle}>{tBase(`scaleLabels.${question.name}`)}</Typography>
             <Slider
-              aria-label={t(`scaleLabels.${question.name}`)}
+              aria-label={tBase(`scaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}
@@ -156,7 +158,7 @@ const AboutYouSetAForm = () => {
         )}
         <Box sx={actionsStyle}>
           <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
-            {t('submitLabel')}
+            {tBase('submitLabel')}
           </LoadingButton>
         </Box>
       </form>

@@ -14,6 +14,7 @@ import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
 import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
+import { SURVEY_FORMS } from '../../constants/enums';
 import { ABOUT_YOU_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
@@ -49,7 +50,7 @@ const getForm = (formLabel: string) => {
 };
 
 const AboutYou: NextPage = () => {
-  const [questionSetParam, setQuestionSetParam] = useState<string>('default');
+  const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
   const router = useRouter();
 
   const t = useTranslations('Account.aboutYou');
@@ -62,7 +63,7 @@ const AboutYou: NextPage = () => {
     if (q) {
       setQuestionSetParam(q + '');
     } else {
-      setQuestionSetParam('default');
+      setQuestionSetParam(SURVEY_FORMS.default);
     }
   }, [router.query]);
 
@@ -96,8 +97,8 @@ const AboutYou: NextPage = () => {
             {t('header')}
           </Typography>
 
-          {questionSetParam === 'default' && <Typography>{t('description')}</Typography>}
-          {questionSetParam === 'a' && (
+          {questionSetParam === SURVEY_FORMS.default && <Typography>{t('description')}</Typography>}
+          {questionSetParam === SURVEY_FORMS.a && (
             <>
               <Typography>
                 <strong>{t('descriptionALine1')}</strong>
@@ -105,7 +106,7 @@ const AboutYou: NextPage = () => {
               <Typography>{t('descriptionALine2')}</Typography>
             </>
           )}
-          {(questionSetParam === 'b' || questionSetParam === 'c') && (
+          {(questionSetParam === SURVEY_FORMS.b || questionSetParam === SURVEY_FORMS.c) && (
             <Typography>{t('setBAndCDescription')}</Typography>
           )}
           <Button
@@ -121,8 +122,8 @@ const AboutYou: NextPage = () => {
             <Card>
               <CardContent>
                 <Typography variant="h2" component="h2">
-                  {questionSetParam === 'a' && t('titleA')}
-                  {questionSetParam === 'default' && t('title')}
+                  {questionSetParam === SURVEY_FORMS.a && t('titleA')}
+                  {questionSetParam === SURVEY_FORMS.default && t('title')}
                 </Typography>
                 {getForm(questionSetParam)}
               </CardContent>
