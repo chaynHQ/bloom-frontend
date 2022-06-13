@@ -244,7 +244,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       const error = startSessionResponse.error;
 
       logEvent(SESSION_STARTED_ERROR, eventData);
-      rollbar.error('Session complete error', error);
+      rollbar.error('Session started error', error);
 
       throw error;
     }
