@@ -48,7 +48,7 @@ export const EmailForm = () => {
         const errorMessage = error.message;
 
         logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        rollbar.error('User reset password firebase error', error);
+        rollbar.error('User send reset password email firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -140,7 +140,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
         const errorMessage = error.message;
 
         logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        rollbar.error('User reset password firebase error', error);
+        rollbar.error('User confirm reset password firebase error', error);
 
         if (errorCode === 'auth/weak-password') {
           setFormError(t('firebase.weakPassword'));
