@@ -34,7 +34,7 @@
       "titleA": "Lo que quieres de Bloom",
       "descriptionALine1": "¡Gracias por tus respuestas!",
       "descriptionALine2": "Como eres un usuario nuevo, nos gustaría saber cómo te encuentras antes de usar nuestros servicios. Estas preguntas nos ayudan a medir el impacto que tiene Bloom sobre las personas sobrevivientes que lo usan, y nos ayuda a enfocarnos en las cosas correctas.",
-      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
+      "setBAndCDescription": "Como persona usuaria de Bloom, queremos entender cómo te encuentras ahora que has usado nuestros servicios. El recoger esta información nos ayuda a medir el impacto que el uso de Bloom tiene en las personas sobrevivientes, y nos ayuda a enforcarnos en las cosas acertadas.",
       "goToCourses": "Saltar e ir a cursos",
       "demographicForm": {
         "genderLabel": "¿Cuál es tu identidad de género?",
@@ -84,33 +84,33 @@
         "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?"
       },
       "setBForm": {
-        "bloomHelpLabel": "Bloom has helped me to:",
+        "bloomHelpLabel": "Bloom me ha ayudado a:",
         "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Learn that there are many different types of abuse",
-          "bhmQ2": "Learn about what toxic behaviours are",
-          "bhmQ3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
-          "bhmQ4": "Feel validated - knowing the things I’ve been through are not okay",
-          "bhmQ5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
-          "bhmQ6": "Feel encouraged - knowing there are others out there like me",
-          "bhmQ7": "Identify as a survivor"
+          "bhmQ1": "Aprender que hay muchos tipos de abuso",
+          "bhmQ2": "Aprender qué son las relaciones tóxicas",
+          "bhmQ3": "Aprender acerca de la prevalencia de diferentes tipos de opresión y control en nuestra cultura y cómo esto lleva al abuso",
+          "bhmQ4": "Sentir validación; saber que las cosas que me han pasado no están bien",
+          "bhmQ5": "Sentir que, sin importar lo haya sabido o no en el momento, no tengo la culpa de lo que me sucedió",
+          "bhmQ6": "Sentir ánimo; sabiendo que hay otras personas allá afuera que son como yo",
+          "bhmQ7": "Identificarme como una persona sobreviviente"
         }
       },
       "setCForm": {
-        "sinceBloomLabel": "Since using Bloom:",
+        "sinceBloomLabel": "Desde que estoy usando Bloom:",
         "sinceBloomScaleLabels": {
-          "sbQ1": "I feel that I can live with my traumatic experience",
-          "sbQ2": "I feel worthy of love, and deserving of being looked after",
-          "sbQ3": "I feel more able to imagine, dream and make good things happen for myself",
-          "sbQ4": "I feel confident that if I want a relationship, I can find a healthy partner",
-          "sbQ5": "I feel I can trust myself to make good choices",
-          "sbQ6": "I feel interested to learn about the wider context of misogyny and inequality",
-          "sbQ7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
-          "sbQ8": "I know how to spot future red flags, and behaviour that might harm me",
-          "sbQ9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
-          "sbQ10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
-          "sbQ11": "I would happily share Bloom with a friend going through something similar",
-          "sbQ12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
-          "sbQ13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
+          "sbQ1": "Siento que puedo vivir con mi experiencia traumática",
+          "sbQ2": "Siento que merezco amor y que me cuiden",
+          "sbQ3": "Me siento mas capaz de imaginar, soñar y de hacer que cosas buenas me sucedan ",
+          "sbQ4": "Me siento con más seguridad de encontrar una pareja saludable, en caso de querer una relación",
+          "sbQ5": "Siento que puedo confiar en mí para tomar buenas decisiones",
+          "sbQ6": "Siento que me interesa aprender más sobre el contexto de la misoginia y la desigualdad",
+          "sbQ7": "Me interesan los cursos acerca de cosas que todavía no he experimentado, pero que me pueden suceder",
+          "sbQ8": "Sé reconocer banderas rojas/señales de alerta y comportamientos que me puedan hacer daño",
+          "sbQ9": "He encontrado otros pasos hacia la sanación que quiero explorar (p. ej. terapia, recursos de organizaciones locales)",
+          "sbQ10": "Siento que puedo pedir y recibir ayuda de otras personas (amigos, familia, terapeutas, policía y organizaciones)",
+          "sbQ11": "Compartiría Bloom con amigos que están pasando por algo similar",
+          "sbQ12": "Siento que puedo contar mi historia a otras personas y que conectar y compartir mi experiencia puede ayudarles a sanar también",
+          "sbQ13": "Ser parte de una comunidad de sobrevivientes es una cosa poderosa para mi y para otras personas, aunque quisiéramos que lo que nos conecta no fueran nuestras experiencias de abuso"
         }
       }
     }
