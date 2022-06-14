@@ -163,7 +163,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
         router.push(`/account/about-you?q=c&trigger=session-four&${returnUrl}`);
       }
     }
-  });
+  }, []);
 
   useEffect(() => {
     const coursePartners = course.included_for_partners;
