@@ -69,7 +69,7 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses }));
+    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
     let partnersList: Partner[] = [getPartnerContent('public')];
 
     if (partnerAdmin && partnerAdmin.partner) {
@@ -92,7 +92,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, user, router]);
+  }, [partnerAccesses, user, router, partnerAdmin]);
 
   return (
     <Container sx={footerContainerStyle}>

@@ -60,7 +60,7 @@ const AboutYou: NextPage = () => {
 
   const t = useTranslations('Account.aboutYou');
 
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const { q, trigger, return_url } = router.query;
   const formTrigger =
     typeof trigger === 'string' && trigger in FORM_TRIGGERS
@@ -81,7 +81,7 @@ const AboutYou: NextPage = () => {
   }, [q, trigger]);
 
   useEffect(() => {
-    const eventUserData = getEventUserData({ user, partnerAccesses });
+    const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
   }, []);

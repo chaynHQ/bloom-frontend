@@ -62,7 +62,7 @@ const AboutYouDemographicForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   useEffect(() => {
     if (router.locale === LANGUAGES.es) {
@@ -73,8 +73,8 @@ const AboutYouDemographicForm = () => {
   }, [router.locale]);
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses }));
-  }, [user, partnerAccesses]);
+    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
+  }, [user, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
