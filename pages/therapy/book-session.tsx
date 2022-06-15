@@ -78,8 +78,8 @@ const BookSession: NextPage = () => {
   const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
     let partnerAccess = partnerAccesses.find(

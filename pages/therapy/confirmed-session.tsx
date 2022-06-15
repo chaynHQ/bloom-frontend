@@ -22,8 +22,8 @@ const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
 
   useEffect(() => {

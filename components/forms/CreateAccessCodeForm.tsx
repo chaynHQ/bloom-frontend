@@ -5,7 +5,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-  Typography
+  Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -13,24 +13,22 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../../app/api';
-import { PartnerAdmin } from '../../app/partnerAdminSlice';
+import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
-  CREATE_PARTNER_ACCESS_SUCCESS
+  CREATE_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
-interface CreateAccessCodeFormProps {
-  partnerAdmin: PartnerAdmin;
-}
-
-const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
-  const { partnerAdmin } = props;
+const CreateAccessCodeForm = () => {
+  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
@@ -66,11 +64,11 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
       selectedTier === PARTNER_ACCESS_FEATURES.THERAPY ? 6 : 0;
 
     const eventData = {
-      partner: partnerAdmin.partner?.name,
       feature_courses: true,
       feature_live_chat: includeLiveChat,
       feature_therapy: includeTherapy,
       therapy_sessions_remaining: therapySessionsRemaining,
+      ...eventUserData,
     };
 
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
@@ -172,18 +170,9 @@ const CreateAccessCodeForm = (props: CreateAccessCodeFormProps) => {
         </RadioGroup>
       </FormControl>
 
-      {formError && (
-        <Typography color="error.main">
-          {formError}
-        </Typography>
-      )}
+      {formError && <Typography color="error.main">{formError}</Typography>}
 
-      <LoadingButton
-        variant="contained"
-        color="secondary"
-        type="submit"
-        loading={loading}
-      >
+      <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
       </LoadingButton>
     </form>

@@ -50,7 +50,7 @@ const AboutYouSetAForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -64,8 +64,8 @@ const AboutYouSetAForm = () => {
   ];
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses }));
-  }, [user, partnerAccesses]);
+    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
+  }, [user, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

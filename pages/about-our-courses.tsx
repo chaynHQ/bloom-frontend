@@ -21,8 +21,8 @@ interface Props {
 
 const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) => {
   const story = useStoryblok(storyData, preview, sbParams, locale);
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const headerProps = {
     title: story.content.title,

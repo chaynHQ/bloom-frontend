@@ -69,7 +69,7 @@ const AboutYouSetBForm = ({
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const bloomHelpedMeScaleQuestions: ScaleFieldItem[] = [
     {
@@ -120,8 +120,8 @@ const AboutYouSetBForm = ({
   ];
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses }));
-  }, [user, partnerAccesses]);
+    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
+  }, [user, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

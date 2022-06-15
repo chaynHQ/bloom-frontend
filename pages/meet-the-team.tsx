@@ -48,8 +48,8 @@ interface Props {
 const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   story = useStoryblok(story, preview, sbParams, locale);
 
-  const { user, partnerAccesses, courses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const headerProps = {
     title: story.content.title,

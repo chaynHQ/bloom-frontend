@@ -113,7 +113,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [completeSession, { isLoading: completeSessionIsLoading }] = useCompleteSessionMutation();
   const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
 
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const courseComingSoon: boolean = course.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(course);
   const courseLiveNow: boolean = courseIsLiveNow(course);

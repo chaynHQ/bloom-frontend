@@ -26,7 +26,7 @@ const cardStyle = {
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const headerProps = {
     title: t('title'),
@@ -65,7 +65,7 @@ const CreateAccessCode: NextPage = () => {
             >
               {t('introduction')}
             </Typography>
-            <CreateAccessCodeForm partnerAdmin={partnerAdmin} />
+            <CreateAccessCodeForm />
           </CardContent>
         </Card>
       </Container>

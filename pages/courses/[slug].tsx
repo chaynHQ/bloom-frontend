@@ -71,7 +71,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   );
   const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
   const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const courseComingSoon: boolean = story.content.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(story.content);

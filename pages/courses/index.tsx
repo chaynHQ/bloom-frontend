@@ -46,7 +46,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
   const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
     (state: RootState) => state,
   );
-  const eventUserData = getEventUserData({ user, partnerAccesses });
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
   const t = useTranslations('Courses');
 
