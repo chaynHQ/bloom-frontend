@@ -13,7 +13,7 @@ export const getAccountType = (
 ): AccountType => {
   // TODO We do not have the data for whether someone is a super admin yet
   // this would be great to implement
-  if (partnerAdmin) {
+  if (partnerAdmin?.id) {
     return AccountType.partnerAdmin;
   }
   if (partnerAccesses && partnerAccesses.length > 0) {
