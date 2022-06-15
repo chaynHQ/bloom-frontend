@@ -1,7 +1,9 @@
 import { PartnerAccess, PartnerAccesses } from '../app/partnerAccessSlice';
 import { PartnerAdmin } from '../app/partnerAdminSlice';
 import { AccountType, getAccountType } from './getAccountType';
-const partnerAdmin = {} as PartnerAdmin;
+const partnerAdminEmpty = { id: null } as PartnerAdmin;
+const partnerAdmin = { id: 'id' } as PartnerAdmin;
+
 const partnerAccesses = [{} as PartnerAccess] as PartnerAccesses;
 
 describe('getAccountType', () => {
@@ -16,5 +18,8 @@ describe('getAccountType', () => {
   });
   it('should return partnerAdmin  if both partnerAdmin and connected to partner', () => {
     expect(getAccountType(partnerAdmin, partnerAccesses)).toBe(AccountType.partnerAdmin);
+  });
+  it('should return publicUser if partnerAdmi id = null', () => {
+    expect(getAccountType(partnerAdminEmpty, undefined)).toBe(AccountType.publicUser);
   });
 });
