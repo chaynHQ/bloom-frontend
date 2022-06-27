@@ -16,7 +16,11 @@ import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
 import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { FORM_TRIGGERS, SURVEY_FORMS } from '../../constants/enums';
-import { ABOUT_YOU_VIEWED } from '../../constants/events';
+import {
+  ABOUT_YOU_VIEWED,
+  SESSION_4_SURVEY_SKIPPED,
+  SIGNUP_SURVEY_SKIPPED,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -58,6 +62,7 @@ const AboutYou: NextPage = () => {
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const { q, trigger, return_url } = router.query;
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
     if (q) {
@@ -72,8 +77,6 @@ const AboutYou: NextPage = () => {
   }, [q, trigger]);
 
   useEffect(() => {
-    const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
-
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
   }, []);
 
@@ -116,6 +119,13 @@ const AboutYou: NextPage = () => {
           <Button
             sx={{ mt: 3 }}
             variant="contained"
+            onClick={() => {
+              if (trigger === FORM_TRIGGERS.sessionFour) {
+                logEvent(SESSION_4_SURVEY_SKIPPED, eventUserData);
+              } else {
+                logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
+              }
+            }}
             component={Link}
             color="secondary"
             href={typeof return_url === 'string' ? return_url : '/courses'}
