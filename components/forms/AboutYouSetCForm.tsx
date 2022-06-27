@@ -15,6 +15,7 @@ import {
   ABOUT_YOU_SETC_ERROR,
   ABOUT_YOU_SETC_REQUEST,
   ABOUT_YOU_SETC_SUCCESS,
+  SESSION_4_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
@@ -125,7 +126,7 @@ const AboutYouSetCForm = () => {
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
-      trigger: trigger,
+      trigger,
       ...eventUserData,
       ...scaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
         return {
@@ -150,6 +151,9 @@ const AboutYouSetCForm = () => {
         .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETC_FORM, formData)
         .then(function (response) {
           logEvent(ABOUT_YOU_SETC_SUCCESS, eventUserData);
+          if (trigger === FORM_TRIGGERS.sessionFour) {
+            logEvent(SESSION_4_SURVEY_COMPLETED, eventUserData);
+          }
           router.push(returnUrl || '/courses');
           setLoading(false);
         })

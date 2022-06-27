@@ -15,6 +15,7 @@ import {
   ABOUT_YOU_SETB_ERROR,
   ABOUT_YOU_SETB_REQUEST,
   ABOUT_YOU_SETB_SUCCESS,
+  SESSION_4_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
@@ -158,6 +159,9 @@ const AboutYouSetBForm = () => {
         .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETB_FORM, formData)
         .then(function (response) {
           logEvent(ABOUT_YOU_SETB_SUCCESS, eventUserData);
+          if (trigger === FORM_TRIGGERS.sessionFour) {
+            logEvent(SESSION_4_SURVEY_COMPLETED, eventUserData);
+          }
 
           router.push(returnUrl || '/courses');
           setLoading(false);
