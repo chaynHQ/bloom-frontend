@@ -28,16 +28,17 @@ const actionsStyle = {
   marginTop: 2,
 };
 
-const AboutYouSetCForm = ({
-  trigger,
-  returnUrl,
-}: {
-  trigger?: FORM_TRIGGERS;
-  returnUrl?: string;
-}) => {
+const AboutYouSetCForm = () => {
   const t = useTranslations('Account.aboutYou.setCForm');
   const router = useRouter();
   const tBase = useTranslations('Account.aboutYou.baseForm');
+  const { trigger, return_url } = router.query;
+  // Annoying type cast but it seemed the best solution stackoverflow.com/questions/43804805/check-if-value-exists-in-enum-in-typescript
+  const formTrigger =
+    typeof trigger === 'string' && Object.values(FORM_TRIGGERS).includes(trigger as FORM_TRIGGERS) // super annoying type cast
+      ? (trigger as FORM_TRIGGERS)
+      : undefined;
+  const returnUrl = typeof return_url === 'string' ? return_url : undefined;
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
