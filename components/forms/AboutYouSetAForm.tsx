@@ -15,6 +15,7 @@ import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
   ABOUT_YOU_SETA_SUCCESS,
+  SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
@@ -93,6 +94,7 @@ const AboutYouSetAForm = () => {
         .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
         .then(function (response) {
           logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
+          logEvent(SIGNUP_SURVEY_COMPLETED, eventUserData);
 
           router.push('/courses');
           setLoading(false);

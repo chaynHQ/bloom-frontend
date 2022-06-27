@@ -40,16 +40,12 @@ const formContainerStyle = {
   textAlign: 'left',
 } as const;
 
-const getForm = (
-  formLabel: string,
-  trigger: FORM_TRIGGERS | undefined,
-  returnUrl: string | undefined,
-) => {
+const getForm = (formLabel: string) => {
   const formMap: { [key: string]: JSX.Element } = {
     default: <AboutYouDemographicForm />,
     a: <AboutYouSetAForm />,
-    b: <AboutYouSetBForm trigger={trigger} returnUrl={returnUrl} />,
-    c: <AboutYouSetCForm trigger={trigger} returnUrl={returnUrl} />,
+    b: <AboutYouSetBForm />,
+    c: <AboutYouSetCForm />,
   };
   return formMap[formLabel];
 };
@@ -62,11 +58,6 @@ const AboutYou: NextPage = () => {
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const { q, trigger, return_url } = router.query;
-  const formTrigger =
-    typeof trigger === 'string' && trigger in FORM_TRIGGERS
-      ? (trigger as FORM_TRIGGERS)
-      : undefined;
-  const returnUrl = typeof return_url === 'string' ? return_url : undefined;
 
   useEffect(() => {
     if (q) {
@@ -138,7 +129,7 @@ const AboutYou: NextPage = () => {
                   {questionSetParam === SURVEY_FORMS.a && t('titleA')}
                   {questionSetParam === SURVEY_FORMS.default && t('title')}
                 </Typography>
-                {getForm(questionSetParam, formTrigger, returnUrl)}
+                {getForm(questionSetParam)}
               </CardContent>
             </Card>
           </Box>
