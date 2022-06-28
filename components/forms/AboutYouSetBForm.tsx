@@ -19,6 +19,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
+import { isEnumValue } from '../../utils/enumUtils';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -35,9 +36,8 @@ const AboutYouSetBForm = () => {
 
   const router = useRouter();
   const { trigger, return_url } = router.query;
-  // Annoying type cast but it seemed the best solution stackoverflow.com/questions/43804805/check-if-value-exists-in-enum-in-typescript
   const formTrigger =
-    typeof trigger === 'string' && Object.values(FORM_TRIGGERS).includes(trigger as FORM_TRIGGERS) // super annoying type cast
+    typeof trigger === 'string' && isEnumValue(FORM_TRIGGERS, trigger)
       ? (trigger as FORM_TRIGGERS)
       : undefined;
   const returnUrl = typeof return_url === 'string' ? return_url : undefined;
@@ -134,7 +134,7 @@ const AboutYouSetBForm = () => {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
       ...eventUserData,
-      trigger,
+      trigger: formTrigger,
       ...scaleQuestions.reduce<{ [key: string]: string | number }>((acc, curr) => {
         return {
           ...acc,
