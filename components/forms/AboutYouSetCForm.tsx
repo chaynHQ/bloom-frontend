@@ -20,6 +20,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
 import { isEnumValue } from '../../utils/enumUtils';
+import { getCourseData } from '../../utils/getCourseData';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -70,7 +71,9 @@ const AboutYouSetCForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -140,6 +143,7 @@ const AboutYouSetCForm = () => {
           [curr.name.toLowerCase()]: curr.inputState,
         };
       }, {}),
+      ...getCourseData(courses),
     };
 
     // post to zapier webhook with the form + user data
@@ -211,7 +215,7 @@ const AboutYouSetCForm = () => {
               {t(`sinceBloomScaleLabels.${question.name}`)}
             </Typography>
             <Slider
-              aria-label={tBase(`sinceBloomScaleLabels.${question.name}`)}
+              aria-label={t(`sinceBloomScaleLabels.${question.name}`)}
               value={question.inputState}
               onChange={(e, newValue) => question.inputStateSetter(newValue as number)}
               getAriaValueText={valuetext}

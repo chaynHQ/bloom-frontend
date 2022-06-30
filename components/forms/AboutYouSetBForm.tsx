@@ -20,6 +20,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, scaleTitleStyle } from '../../styles/common';
 import { isEnumValue } from '../../utils/enumUtils';
+import { getCourseData } from '../../utils/getCourseData';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -71,7 +72,9 @@ const AboutYouSetBForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
 
   const bloomHelpedMeScaleQuestions: ScaleFieldItem[] = [
     {
@@ -147,6 +150,7 @@ const AboutYouSetBForm = () => {
           [curr.name.toLowerCase()]: curr.inputState,
         };
       }, {}),
+      ...getCourseData(courses),
     };
 
     // post to zapier webhook with the form + user data
