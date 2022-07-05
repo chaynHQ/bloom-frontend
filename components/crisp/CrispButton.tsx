@@ -1,5 +1,6 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Button } from '@mui/material';
+import Script from 'next/script';
 import { useEffect } from 'react';
 import { SESSION_CRISP_CHAT_OPENED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
@@ -18,41 +19,48 @@ const CrispButton = (props: CrispButtonProps) => {
   const { buttonText, email, eventData } = props;
 
   useEffect(() => {
-    if (!(window as any).$crisp) {
-      (window as any).$crisp = [];
-    }
-    (window as any).CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
     (() => {
-      const crispScriptUrl = 'https://client.crisp.chat/l.js';
-      const scripts = Array.from(document.getElementsByTagName('script'));
-      const scriptExists = scripts.flatMap((s) => s.src).includes(crispScriptUrl);
-      if (!scriptExists) {
-        const d = document;
-        const s = d.createElement('script');
-        s.src = 'https://client.crisp.chat/l.js';
-        s.async = true;
-        d.getElementsByTagName('body')[0].appendChild(s);
+      if (email && (window as any).$crisp) {
+        (window as any).$crisp.push(['set', 'user:email', [email]]);
       }
-
-      email && (window as any).$crisp.push(['set', 'user:email', [email]]);
     })();
-  }, [email]);
+  }, [(window as any).$crisp, email]);
 
   const openChatWidget = () => {
     (window as any).$crisp.push(['do', 'chat:open']);
     logEvent(SESSION_CRISP_CHAT_OPENED, eventData);
   };
+  const crispScriptUrl = 'https://client.crisp.chat/l.js';
 
   return (
-    <Button
-      sx={crispButtonStyle}
-      size="large"
-      variant="contained"
-      onClick={openChatWidget}
-      startIcon={<ChatBubbleOutlineIcon color="error" />}
-    >
-      {buttonText}
-    </Button>
+    <>
+      <Script
+        id="crisp-widget"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.$crisp=[];
+            window.CRISP_WEBSITE_ID="${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}";
+            (function(){
+              const d = document;
+              const s = d.createElement("script");
+              s.src = "${crispScriptUrl}";
+              s.async = 1;
+              d.getElementsByTagName("head")[0].appendChild(s);
+            })();`,
+        }}
+      />
+      ;
+      <Button
+        sx={crispButtonStyle}
+        size="large"
+        variant="contained"
+        onClick={openChatWidget}
+        startIcon={<ChatBubbleOutlineIcon color="error" />}
+      >
+        {buttonText}
+      </Button>
+    </>
   );
 };
 
