@@ -2,7 +2,11 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Button } from '@mui/material';
 import Script from 'next/script';
 import { useEffect } from 'react';
-import { SESSION_CRISP_CHAT_OPENED } from '../../constants/events';
+import {
+  SESSION_CRISP_CHAT_INITIATED,
+  SESSION_CRISP_CHAT_MESSAGE_SENT,
+  SESSION_CRISP_CHAT_OPENED,
+} from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 
 interface CrispButtonProps {
@@ -22,6 +26,20 @@ const CrispButton = (props: CrispButtonProps) => {
     (() => {
       if (email && (window as any).$crisp) {
         (window as any).$crisp.push(['set', 'user:email', [email]]);
+        (window as any).$crisp.push([
+          'on',
+          'chat:initiated',
+          () => {
+            logEvent(SESSION_CRISP_CHAT_INITIATED, eventData);
+          },
+        ]);
+        (window as any).$crisp.push([
+          'on',
+          'message:sent',
+          () => {
+            logEvent(SESSION_CRISP_CHAT_MESSAGE_SENT, eventData);
+          },
+        ]);
       }
     })();
   }, [(window as any).$crisp, email]);
