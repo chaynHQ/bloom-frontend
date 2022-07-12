@@ -8,10 +8,10 @@ const imageAltContent =
 const OpenGraphMetadata = () => {
   return (
     <Head>
-      <meta property="og:title" content="Bloom" key="title" />
-      <meta property="og:description" content={descriptionContent} key="description" />
-      <meta property="og:image" content="/bloom_socials_preview.png"></meta>
-      <meta property="og:image:alt" content={imageAltContent}></meta>
+      <meta property="og:title" content="Bloom" key="og-title" />
+      <meta property="og:description" content={descriptionContent} key="og-description" />
+      <meta property="og:image" content="/bloom_socials_preview.png" key="og-image"></meta>
+      <meta property="og:image:alt" content={imageAltContent} key="og-image-alt"></meta>
     </Head>
   );
 };
