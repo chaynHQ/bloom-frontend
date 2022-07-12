@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { wrapper } from '../app/store';
 import { setUserLoading, setUserToken } from '../app/userSlice';
+import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
@@ -105,6 +106,7 @@ function MyApp(props: MyAppProps) {
         <Head>
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <OpenGraphMetadata />
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
