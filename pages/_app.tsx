@@ -106,8 +106,8 @@ function MyApp(props: MyAppProps) {
         <Head>
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <OpenGraphMetadata />
         </Head>
+        <OpenGraphMetadata />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
