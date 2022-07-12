@@ -15,9 +15,9 @@ const OpenGraphMetadata = () => {
       <meta property="og:description" content={descriptionContent} key="og-description" />
       <meta property="og:image" content={imageContent} key="og-image"></meta>
       <meta property="og:image:alt" content={imageAltContent} key="og-image-alt"></meta>
-      <meta property="twitter:card" content="summary_large_image" key="twitter-card"></meta>
+      <meta name="twitter:card" content="summary_large_image" key="twitter-card"></meta>
       <meta
-        property="twitter:description"
+        name="twitter:description"
         content={twitterDescriptionContent}
         key="twitter-desc"
       ></meta>
