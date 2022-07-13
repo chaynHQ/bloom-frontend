@@ -18,7 +18,7 @@ module.exports = withPWA({
     domains: ['a.storyblok.com'],
   },
   i18n: {
-    locales: ['en', 'es', 'hi'],
+    locales: ['en', 'es', 'hi', 'fr'],
     defaultLocale: 'en',
     localeDetection: true,
   },
