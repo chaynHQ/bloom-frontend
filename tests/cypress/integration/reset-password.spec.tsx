@@ -1,3 +1,5 @@
+import { MailSlurp } from 'mailslurp-client';
+
 describe('Reset password', () => {
   it('should navigate to the reset password page', () => {
     // Start from the home page
@@ -16,5 +18,38 @@ describe('Reset password', () => {
 
     // The new page should contain an h2 with "Reset your password"
     cy.get('h2').contains('Reset your password');
+  });
+
+  it('should see resend-link button after typing known email', () => {
+    cy.visit(Cypress.env('reset-password-path'));
+
+    cy.get('[id=email]').type(`${Cypress.env('reset-pwd-confirm-email')}{enter}`);
+    cy.get('p', { timeout: 5000 }).should(
+      'contain',
+      'Check your emails for a reset link from Bloom.',
+    );
+    cy.get('button[type="submit"]').contains('Resend email');
+  });
+
+  it('should receive email when known email submitted for password reset', async () => {
+    const mailslurp = new MailSlurp({ apiKey: Cypress.env('mail-slurp-api-key') });
+
+    const inboxId = Cypress.env('inbox-id');
+    const email = Cypress.env('reset-pwd-content-email');
+
+    // Retrieve inbox
+    const inbox = await mailslurp.getInbox(inboxId);
+
+    // Reset password
+    cy.visit(Cypress.env('reset-password-path'));
+    cy.get('[id=email]').type(`${email}{enter}`);
+    cy.get('p', { timeout: 3000 })
+      // check that front-end confirms an email has been sent
+      .should('contain', 'Check your emails for a reset link from Bloom.')
+      .then(async () => {
+        // wait for email
+        const latestEmail = await mailslurp.waitForLatestEmail(inbox.id, 5000);
+        expect(latestEmail.subject).contains('Reset');
+      });
   });
 });
