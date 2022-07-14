@@ -1,7 +1,7 @@
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { RootState } from '../../app/store';
-import { CHAT_INITIATED, CHAT_MESSAGE_SENT, CHAT_OPENED } from '../../constants/events';
+import { CHAT_MESSAGE_SENT, CHAT_STARTED, FIRST_CHAT_STARTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -18,33 +18,37 @@ const CrispScript = () => {
         if ((window as any).$crisp.is('chat:hidden')) {
           (window as any).$crisp.push(['do', 'chat:show']);
         }
-
-        (window as any).$crisp.push([
-          'on',
-          'chat:initiated',
-          () => {
-            logEvent(CHAT_INITIATED, eventData);
-          },
-        ]);
-        (window as any).$crisp.push([
-          'on',
-          'message:sent',
-          () => {
-            logEvent(CHAT_MESSAGE_SENT, eventData);
-          },
-        ]);
-        (window as any).$crisp.push([
-          'on',
-          'chat:opened',
-          () => {
-            logEvent(CHAT_OPENED, eventData);
-          },
-        ]);
       } else if ((window as any).$crisp.is('chat:visible')) {
         (window as any).$crisp.push(['do', 'chat:hide']);
       }
     }
-  }, [user.email]);
+  });
+
+  useEffect(() => {
+    if ((window as any).$crisp && (window as any).$crisp.push) {
+      (window as any).$crisp.push([
+        'on',
+        'chat:initiated',
+        () => {
+          logEvent(FIRST_CHAT_STARTED, eventData);
+        },
+      ]);
+      (window as any).$crisp.push([
+        'on',
+        'message:sent',
+        () => {
+          logEvent(CHAT_MESSAGE_SENT, eventData);
+        },
+      ]);
+      (window as any).$crisp.push([
+        'on',
+        'chat:opened',
+        () => {
+          logEvent(CHAT_STARTED, eventData);
+        },
+      ]);
+    }
+  }, []);
 
   const crispScriptUrl = 'https://client.crisp.chat/l.js';
 
