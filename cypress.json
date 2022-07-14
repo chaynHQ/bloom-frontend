@@ -1,5 +1,6 @@
 {
   "fileServerFolder": "tests/cypress",
+  "pluginsFile": "tests/cypress/config/plugins",
   "integrationFolder": "tests/cypress/integration",
   "baseUrl": "http://localhost:3000",
   "env": {
