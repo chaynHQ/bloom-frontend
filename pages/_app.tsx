@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { wrapper } from '../app/store';
 import { setUserLoading, setUserToken } from '../app/userSlice';
+import CrispScript from '../components/crisp/CrispScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
@@ -108,6 +109,7 @@ function MyApp(props: MyAppProps) {
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <OpenGraphMetadata />
+        <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
