@@ -11,10 +11,13 @@ const CrispScript = () => {
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
-    (() => {
-      if (user.email && (window as any).$crisp) {
+    if ((window as any).$crisp && (window as any).$crisp.is) {
+      if (user.email) {
         (window as any).$crisp.push(['set', 'user:email', [user.email]]);
-        (window as any).$crisp.push(['do', 'chat:show']);
+
+        if ((window as any).$crisp.is('chat:hidden')) {
+          (window as any).$crisp.push(['do', 'chat:show']);
+        }
 
         (window as any).$crisp.push([
           'on',
@@ -37,10 +40,10 @@ const CrispScript = () => {
             logEvent(CHAT_OPENED, eventData);
           },
         ]);
-      } else if ((window as any).$crisp) {
+      } else if ((window as any).$crisp.is('chat:visible')) {
         (window as any).$crisp.push(['do', 'chat:hide']);
       }
-    })();
+    }
   }, [user.email]);
 
   const crispScriptUrl = 'https://client.crisp.chat/l.js';
