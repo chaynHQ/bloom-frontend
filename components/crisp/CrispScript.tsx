@@ -34,7 +34,7 @@ const CrispScript = () => {
           },
         ]);
         (window as any).$crisp.push([
-          'do',
+          'on',
           'chat:open',
           () => {
             logEvent(CHAT_OPENED, eventData);
