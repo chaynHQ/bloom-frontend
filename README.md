@@ -182,6 +182,14 @@ Storyblok components allow the team to add richtext, images, videos, page sectio
 Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work*. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) allows new pages to be added, with an infinite number of [StoryblokPageSection.tsx](components/storyblok/StoryblokPageSection.tsx) with nested components. [DynamicComponent.tsx](components/storyblok/DynamicComponent.tsx) can also be used to dynamically render components on a page, where the storyblok field is of type `blocks` and we don't know which blocks to expect.
 *Note: If a page is to be public/unauthenticated, it must be added to `publicPaths` in [\_app.tsx](pages/_app.tsx).
 
+**Cypress**
+
+Currently, integration tests are set up to be run locally. To do this, create a local `cypress.env.json` file, ask the team for the environment variables to run Cypress tests and paste them into the file.
+
+These variables will include two emails which will be used to test the `reset-password` flow. To successfully run the tests, two users need to be created in the local database.
+
+To run the tests, use the command `yarn cypress`. This will open a screen with the tests - click on the test of choice.
+
 ## Git flow and deployment
 
 Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. **Squash and merge** feature/bug branches into `develop`.
