@@ -1,8 +1,8 @@
 {
   "Partnership": {
     "accessGuard": {
-      "title": "Partnership content not available",
-      "introduction": "Your Bloom account does not include access to the partnership page. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+      "title": "Contenu de partenariat indisponible",
+      "introduction": "Votre compte Bloom ne comprend pas l'accès à la page de partenariat. Pour y remédier <contactLink>contactez l'équipe Bloom</contactLink>."
     }
   }
 }
