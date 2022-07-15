@@ -11,21 +11,11 @@ const CrispScript = () => {
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
-    if ((window as any).$crisp && (window as any).$crisp.is) {
-      if (user.email) {
-        (window as any).$crisp.push(['set', 'user:email', [user.email]]);
-
-        if ((window as any).$crisp.is('chat:hidden')) {
-          (window as any).$crisp.push(['do', 'chat:show']);
-        }
-      } else if ((window as any).$crisp.is('chat:visible')) {
-        (window as any).$crisp.push(['do', 'chat:hide']);
-      }
-    }
-  });
-
-  useEffect(() => {
     if ((window as any).$crisp && (window as any).$crisp.push) {
+      if (process.env.NEXT_PUBLIC_ENV === 'production') {
+        (window as any).$crisp.push(['safe', true]);
+      }
+      (window as any).$crisp.push(['do', 'chat:hide']);
       (window as any).$crisp.push([
         'on',
         'chat:initiated',
@@ -49,6 +39,24 @@ const CrispScript = () => {
       ]);
     }
   }, []);
+
+  useEffect(() => {
+    if ((window as any).$crisp && (window as any).$crisp.is) {
+      if (user.email) {
+        (window as any).$crisp.push(['set', 'user:email', [user.email]]);
+
+        if ((window as any).$crisp.is('chat:hidden')) {
+          (window as any).$crisp.push(['do', 'chat:show']);
+        }
+      } else if ((window as any).$crisp.is('chat:visible')) {
+        (window as any).$crisp.push(['do', 'chat:hide']);
+
+        if ((window as any).$crisp.get('user:email')) {
+          (window as any).$crisp.push(['do', 'session:reset']);
+        }
+      }
+    }
+  });
 
   const crispScriptUrl = 'https://client.crisp.chat/l.js';
 
