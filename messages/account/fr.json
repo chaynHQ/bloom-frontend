@@ -1,114 +1,114 @@
 {
   "Account": {
     "applyCode": {
-      "title": "Apply a code",
-      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
-      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
-      "descriptionLine2": "You can add codes from more than one partner.",
-      "partnershipsTitle": "Our partners",
-      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
-      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "title": "Appliquer un code",
+      "introduction": "Bloom travaille avec des partenaires pour soutenir la guérison des personnes survivantes d'agressions sexuelles dans le monde entier.",
+      "description": "Si vous avez reçu un code d'accès de l'un de nos partenaires, vous pouvez l'ajouter ici pour recevoir un soutien spécifique à son programme.",
+      "descriptionLine2": "Vous pouvez ajouter des codes de plusieurs partenaires.",
+      "partnershipsTitle": "Nos partenaires",
+      "partnershipsDescription": "Pour en savoir plus sur nos partenaires, cliquez sur leur logo.",
+      "formIntroduction": "Saisissez le code d'accès que vous avez reçu du partenaire Bloom.",
       "formSuccess": {
-        "success": "A Bumble code was applied to your account!",
-        "successLine2": "Your Bumble access enables the following:",
-        "liveChat": "1-1 chat with the Bloom team",
-        "therapy": "{therapySessionsRemaining} therapy sessions",
-        "courses": "Self-guided courses"
+        "success": "Un code Bumble a été appliqué à votre compte !",
+        "successLine2": "Votre code Bumble vous permet d'accéder au contenu suivant :",
+        "liveChat": "Chat 1-1 avec l'équipe Bloom ",
+        "therapy": "{therapySessionsRemaining} sessions de thérapie",
+        "courses": "Cours auto-guidés"
       },
       "form": {
-        "codeLabel": "Access code",
-        "submitLabel": "Apply code",
-        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "codeLabel": "Code d'accès",
+        "submitLabel": "Appliquer le code",
+        "assignPartnerAccessError": "Une erreur s'est produite lors de l'application du code à votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
         "codeErrors": {
-          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-          "expired": "This code has expired. Get in touch with the partner's team.",
-          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner.",
-          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+          "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
+          "expired": "Ce code n'est plus valable. Veuillez prendre contact avec le partenaire.",
+          "invalid": "Votre code d'accès semble être invalide. Vérifiez les erreurs de frappe ou contactez le partenaire.",
+          "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez le partenaire."
         }
       }
     },
     "aboutYou": {
-      "title": "About you",
-      "header": "Help us understand",
-      "description": "These questions help us understand who is using Bloom and what kinds of support they need from us.",
-      "titleA": "What you want from Bloom",
-      "descriptionALine1": "Thank you for your answers so far!",
-      "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
-      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
-      "goToCourses": "Skip to courses",
+      "title": "À propos de vous",
+      "header": "Aidez-nous à compendre",
+      "description": "Ces questions nous aident à mieux cerner les personnes qui utilisent Bloom et le type de soutien que nous pouvons leur apporter.",
+      "titleA": "Ce que vous attendez de Bloom",
+      "descriptionALine1": "Merci pour vos réponses !",
+      "descriptionALine2": "En tant que nouvel utilisateur·rice, nous aimerions connaître votre état d'esprit avant l'utilisation de nos services. Cela nous aide à mesurer l'impact de Bloom sur vous en tant que personnes survivantes et à nous concentrer sur les éléments positifs.",
+      "setBAndCDescription": "En tant que nouvel utilisateur·rice, nous aimerions connaître votre état d'esprit après l'utilisation de nos services. Cela nous aide à mesurer l'impact de Bloom sur vous en tant que personnes survivantes et à nous concentrer sur les éléments positifs.",
+      "goToCourses": "Ignorer et passer aux cours",
       "demographicForm": {
-        "genderLabel": "What is your gender identity?",
-        "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
-        "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
-        "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
+        "genderLabel": "Quelle est votre identité de genre ?",
+        "genderHelpText": "Bloom s'adresse à des personnes de différentes identités de genre, sachant que la violence sexiste est vécue différemment selon la personne. En indiquant votre sexe, vous nous aiderez à comprendre à qui nous nous adressons.",
+        "neurodivergentLabel": "Vous décririez-vous comme une personne neuro-divergente ?",
+        "neurodivergentHelpText": "Nos services sont conçus en accord avec la notion d'inclusivité, nous encourageons donc vivement les personnes neurodivergentes à laisser leurs commentaires.",
         "neurodivergentLabels": {
-          "1": "Yes",
-          "2": "No",
-          "3": "Not sure"
+          "1": "Oui",
+          "2": "Non",
+          "3": "Je ne sais pas"
         },
-        "raceEthnNatnLabel": "How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.",
-        "raceEthnNatnHelpText": "We know that people's experiences of race and ethnicity vary widely based on where they live, so write what you feel best describes you personally.",
-        "countryLabel": "What country do you live in right now?",
-        "countryHelpText": "This will help us understand where survivors are accessing our services from.",
-        "ageLabel": "What is your age group?",
+        "raceEthnNatnLabel": "Comment décririez-vous votre race, votre ethnie et votre nationalité ? Par exemple, Blanc, Hispanique, Mexicain ou Indien tamoul.",
+        "raceEthnNatnHelpText": "Nous savons que les expériences en matière de race et d'ethnicité varient largement en fonction de l'endroit où l'on vit, dites ce qui, selon vous, vous décrit le mieux.",
+        "countryLabel": "Dans quel pays vivez-vous actuellement ?",
+        "countryHelpText": "Ceci nous aidera à connaître l'endroit à partir duquel les personnes survivantes accèdent à nos services.",
+        "ageLabel": "Quelle est votre groupe d'âge  ?",
         "ageLabels": {
-          "1": "Under 16",
-          "2": "16-25",
-          "3": "25-35",
-          "4": "35-45",
-          "5": "45-55",
-          "6": "55+",
-          "7": "Prefer not to say"
+          "1": "Moins de 16 ans",
+          "2": "16 à 25 ans",
+          "3": "25 à 35 ans",
+          "4": "35 à 45 ans",
+          "5": "45 à 55 ans",
+          "6": "55 ans et plus",
+          "7": "Je préfère ne pas répondre"
         },
-        "submitLabel": "Submit",
+        "submitLabel": "Envoyer",
         "codeErrors": {}
       },
       "baseForm": {
-        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "scaleDescriptionLine1": "Veuillez indiquer votre niveau d'accord avec les énoncés suivants :",
+        "scaleDescriptionLine2": "1 = Pas du tout d'accord, 10 = Totalement d'accord",
         "scaleLabels": {
-          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
-          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
-          "Q3": "I know that it takes time, energy and patience to heal",
-          "Q4": "I’m committed to giving myself the attention that I need to heal",
-          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
-          "Q6": "I understand that part of healing from trauma is dealing with triggers",
-          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
-          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+          "Q1": "Je réalise à quel point le traumatisme vécu a affecté mon esprit, mon corps et mes émotions",
+          "Q2": "Je sais que les mécanismes de défense ne constituent pas une aide à long terme, et que se sentir attiré·e par eux peut être une réponse normale à un traumatisme. ",
+          "Q3": "Je sais qu'il faut du temps, de l'énergie et de la patience pour guérir",
+          "Q4": "Je m'engage à me donner toute l'attention dont j'ai besoin pour guérir.",
+          "Q5": "J'ai trouvé des éléments qui contribue à mon bien-être et je leur accorde du temps dans ma routine.",
+          "Q6": "Je comprends que la guérison d'un traumatisme consiste en partie à gérer les déclencheurs",
+          "Q7": "Je comprends que tout ce qui me fait me sentir en sécurité ou en danger m'est propre",
+          "Q8": "Je peux anticiper et affronter des moments, des périodes ou des lieux déclencheurs."
         },
-        "submitLabel": "Complete"
+        "submitLabel": "Veuillez compléter"
       },
       "setAForm": {
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?"
+        "hopesLabel": "Quelle chose espérez-vous que Bloom vous aide à comprendre ou à faire ?"
       },
       "setBForm": {
-        "bloomHelpLabel": "Bloom has helped me to:",
+        "bloomHelpLabel": "Bloom m'a aidé à :",
         "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Learn that there are many different types of abuse",
-          "bhmQ2": "Learn about what toxic behaviours are",
-          "bhmQ3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
-          "bhmQ4": "Feel validated - knowing the things I’ve been through are not okay",
-          "bhmQ5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
-          "bhmQ6": "Feel encouraged - knowing there are others out there like me",
-          "bhmQ7": "Identify as a survivor"
+          "bhmQ1": "Connaître les différentes formes de violences sexuelles",
+          "bhmQ2": "Savoir reconnaître les comportements toxiques",
+          "bhmQ3": "Savoir reconnaître la prévalence de différents types d'oppression et de contrôle dans notre culture, et comment cela conduit à l'agression.",
+          "bhmQ4": "Se sentir soutenu·e - savoir que ce que j'ai subi n'est pas acceptable.",
+          "bhmQ5": "Sentir que peu importe ce que j'ai fait ou pas ou ce que j'ignorais au moment de l'agression, je ne suis pas responsable de ce qui m'est arrivé·e.",
+          "bhmQ6": "Se sentir encouragé·e - savoir que d'autres ont vécu la même expérience ",
+          "bhmQ7": "M'identifier en tant que personne survivante"
         }
       },
       "setCForm": {
-        "sinceBloomLabel": "Since using Bloom:",
+        "sinceBloomLabel": "Depuis que j'ai recours à Bloom :",
         "sinceBloomScaleLabels": {
-          "sbQ1": "I feel that I can live with my traumatic experience",
-          "sbQ2": "I feel worthy of love, and deserving of being looked after",
-          "sbQ3": "I feel more able to imagine, dream and make good things happen for myself",
-          "sbQ4": "I feel confident that if I want a relationship, I can find a healthy partner",
-          "sbQ5": "I feel I can trust myself to make good choices",
-          "sbQ6": "I feel interested to learn about the wider context of misogyny and inequality",
-          "sbQ7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
-          "sbQ8": "I know how to spot future red flags, and behaviour that might harm me",
-          "sbQ9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
-          "sbQ10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
-          "sbQ11": "I would happily share Bloom with a friend going through something similar",
-          "sbQ12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
-          "sbQ13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
+          "sbQ1": "Je sens que je peux vivre avec mon traumatisme.",
+          "sbQ2": "Je me sens digne d'amour, et je mérite que l'on s'occupe de moi.",
+          "sbQ3": "Je sens que je suis plus à mesure d'imaginer, de rêver et de permettre que de bonnes choses m'arrivent.",
+          "sbQ4": "Je suis convaincu·e que si je veux une relation, je peux trouver un·e partenaire sain·e.",
+          "sbQ5": "Je sens que je peux me faire confiance pour faire les bons choix.",
+          "sbQ6": "J'ai envie d'en savoir plus sur le vaste contexte de la misogynie et de l'inégalité.",
+          "sbQ7": "Je suis intéressé·e par les cours qui abordent des des choses que je n'ai pas vécues mais que je pourrais rencontrer.",
+          "sbQ8": "Je sais à présent comment repérer les signaux d'alarme et les comportements qui pourraient me nuire.",
+          "sbQ9": "J'ai découvert d'autres moyens de guérison que j'ai l'intention d'explorer (p. ex. thérapie, organisations caritatives locales).",
+          "sbQ10": "Je sens que je peux demander et obtenir de l'aide des autres (ami·es, famille, thérapeutes, police ou associations caritatives).",
+          "sbQ11": "Je parlerais sans hésitation de Bloom à une personne proche qui traverse une situation similaire.",
+          "sbQ12": "J'ai le sentiment que je peux confier mon histoire à d'autres personnes et que le fait de communiquer et de partager mon expérience peut les aider à guérir à leur tour.",
+          "sbQ13": "Faire partie d'une communauté de personnes survivantes a énormément de sens pour moi et pour d'autres, même s'il aurait été préférable d'être lié·es par autre chose que nos expériences traumatiques."
         }
       }
     }
