@@ -1,62 +1,62 @@
 {
   "Shared": {
     "bloom": "Bloom",
-    "leaveSiteButton": "Leave this site",
+    "leaveSiteButton": "Sortir du site",
     "footer": {
-      "chaynDescription": "Bloom is brought to you by Chayn, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
-      "bloomLine1": "Built by CHAYN CIO.",
-      "bloomLine2": "UK Charity Number: 1196098",
-      "bumbleLine1": "In partnership with",
+      "chaynDescription": "Bloom vous est présenté par Chayn, une organisation mondiale à but non lucratif, dirigée par des personnes survivantes et des sympathisant·es du monde entier. Elle crée des ressources pour soutenir la guérison des personnes survivantes aux violences sexistes.",
+      "bloomLine1": "Elaboré par CHAYN CIO.",
+      "bloomLine2": "Numéro d'organisme de bienfaisance britannique : 1196098",
+      "bumbleLine1": "En partenariat avec",
       "bumbleLine2": "BUMBLE HOLDING LTD",
-      "badooLine1": "In partnership with",
+      "badooLine1": "En partenariat avec",
       "badooLine2": "BADOO LTD",
-      "policies": "Our policies"
+      "policies": "Notre politique"
     },
     "videoTranscript": {
-      "title": "Video transcript",
-      "description": "Read the transcript for video - ",
-      "closeModal": "Close transcript"
+      "title": "Transcription de la vidéo",
+      "description": "Lire la transcription de la vidéo- ",
+      "closeModal": "Arrêter la transcription"
     },
     "progressStatus": {
-      "started": "Started",
-      "completed": "Completed",
-      "notStarted": "Not started"
+      "started": "Démarré",
+      "completed": "Complet",
+      "notStarted": "Pas encore démarré"
     },
     "meetTheTeam": {
-      "expandTeamMember": "Expand bio for {name}"
+      "expandTeamMember": "Ouvrir la biographie pour {name}"
     },
     "404": {
-      "title": "404 - Page not found",
-      "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
-      "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "404 - Page introuvable",
+      "authenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URLou retournez à la page des cours.",
+      "unauthenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URL ou retournez à la page d'accueil.",
+      "authenticatedRedirectButton": "Retour à la page des cours.",
+      "unauthenticatedRedirectButton": "Retour à la page d'accueil"
     },
     "500": {
-      "title": "500 - Internal error",
-      "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "500 - erreur interne",
+      "description": "Oups, une erreur s'est produite. Veuillez revenir en arrière et réessayer. Si l'erreur persiste, contactez-nous via le formulaire de contact.",
+      "authenticatedRedirectButton": "Retour à la page des cours",
+      "unauthenticatedRedirectButton": "Retour à la page d'accueil"
     },
     "alt": {
-      "bloomLogo": "Bloom logo",
-      "bumbleLogo": "Bumble logo",
-      "bloomBumbleLogo": "Bloom in partnership with Bumble logo",
-      "badooLogo": "Badoo logo",
-      "bloomBadooLogo": "Bloom in partnership with Badoo logo",
-      "welcomeToBloom": "Welcome to Bloom",
-      "tiktokLogo": "Tiktok logo",
-      "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
-      "beehive": "Illustration of a bee hive",
-      "leafMix": "Illustration of two leaves joined with a rose",
-      "leafMixBee": "Illustration of two leaves with a bee hovering above",
-      "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
-      "personTea": "Illustration of a person sitting, holding a tea",
-      "personSitting": "Illustration of a person sitting",
-      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
-      "dateSelector": "Illustration of a calendar with a heart in the middle",
-      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
-      "confidential": "Illustration of a document with a lock in the corner"
+      "bloomLogo": "Logo de Bloom ",
+      "bumbleLogo": "Logo de Bumble",
+      "bloomBumbleLogo": "Logo du partenariat de Bloom avec Bumble",
+      "badooLogo": "Logo de Badoo",
+      "bloomBadooLogo": "Logo du partenariat de Bloom avec Badoo",
+      "welcomeToBloom": "Bienvenue à Bloom",
+      "tiktokLogo": "Logo de Tiktok ",
+      "bloomHead": "Illustration du visage et des épaules d'une personne, avec de grandes feuilles et des fleurs qui fleurissent au-dessus d'elle.",
+      "beehive": "Illustration d'une ruche",
+      "leafMix": "Illustration de deux feuilles jointes avec une rose",
+      "leafMixBee": "Illustration de deux feuilles avec une abeille qui vole par dessus.",
+      "leafMixDots": "Illustration de trois feuilles avec une fleur au milieu, et des points sortant de la fleur.",
+      "personTea": "Illustration d'une personne assise, tenant une tasse de thé.",
+      "personSitting": "Illustration d'une personne assise",
+      "chooseTherapist": "Illustration du profil latéral du visage d'une personne, avec une fleur.",
+      "dateSelector": "Illustration d'un calendrier avec un cœur au milieu",
+      "change": "Illustration d'un cycle - trois soleils dans un cercle avec des flèches entre eux",
+      "confidential": "Illustration d'un document avec un cadenas dans un coin"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h"
   }

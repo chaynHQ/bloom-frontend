@@ -1,13 +1,13 @@
 {
   "Welcome": {
-    "getStarted": "Get started",
-    "accessIntroduction": "Enter the access code you received from {partnerName} to begin your Bloom journey.",
-    "publicIntroduction": "Create an account with Bloom to get started with our courses, or first find out more about Bloom below.",
-    "continueCourses": "Continue to Bloom",
-    "continueCoursesDescription": "Pick up where you left off.",
-    "goToCourses": "Go to courses",
+    "getStarted": "Démarrer",
+    "accessIntroduction": "Saisissez le code d'accès que vous avez reçu de {partnerName} pour commencer votre voyage sur Bloom.",
+    "publicIntroduction": "Créez un compte avec Bloom pour commencer à suivre nos cours, ou informez-vous d'abord sur Bloom ci-dessous.",
+    "continueCourses": "Continuer avec Bloom",
+    "continueCoursesDescription": "Reprenez là où vous en étiez.",
+    "goToCourses": "Accéder aux cours",
     "form": {
-      "codeLabel": "{partnerName} access code"
+      "codeLabel": "{partnerName} code d'accès"
     }
   }
 }

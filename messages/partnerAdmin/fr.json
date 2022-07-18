@@ -1,28 +1,28 @@
 {
   "PartnerAdmin": {
     "createAccessCode": {
-      "title": "Create access code",
-      "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
-      "courseAccess": "Access to courses only",
-      "liveChatAccess": "Access to courses and 1:1 chat",
-      "therapyAccess": "Access to courses, 1:1 chat and six therapy sessions",
-      "resultLink": "Please tell the user to go to <welcomeURL></welcomeURL>.",
-      "resultCode": "They can register using their email address and the access code <partnerAccessCode></partnerAccessCode>",
+      "title": "Créer un code d'accès",
+      "introduction": "Utilisez ce formulaire pour créer un code d'accès chaque fois que vous souhaitez donner l'accès à Bloom à une personne.",
+      "courseAccess": "Accès aux cours uniquement",
+      "liveChatAccess": "Accès au cours et chat 1:1 ",
+      "therapyAccess": "Accès au cours, chat 1:1 et six sessions de thérapies",
+      "resultLink": "L'utilisateur·rice doit de rendre sur <welcomeURL></welcomeURL>.",
+      "resultCode": "L'inscription se fait en utilisant son adresse électronique et le code d'accès <partnerAccessCode></partnerAccessCode>.",
       "form": {
-        "featuresLabel": "Select support type offered to this user",
-        "featureCoursesLabel": "Courses only",
-        "featureLiveChatLabel": "Courses and 1:1 chat",
-        "featureTherapyLabel": "Courses, 1:1 chat and six therapy sessions",
-        "reset": "Create another code",
+        "featuresLabel": "Sélectionnez le type de support pour cet utilisateur",
+        "featureCoursesLabel": "Cours uniquement",
+        "featureLiveChatLabel": "Cours et chat 1:1 ",
+        "featureTherapyLabel": "Cours, chat 1:1 et six sessions de thérapie ",
+        "reset": "Créer un autre code",
         "errors": {
-          "createPartnerAccessError": "There was an error creating the access code. Try again or message the Bloom team.",
-          "featureRequired": "Select a support type before creating an access code"
+          "createPartnerAccessError": "Une erreur s'est produite lors de la création du code d'accès. Réessayez ou contactez l'équipe Bloom.",
+          "featureRequired": "Sélectionnez un type de support avant de créer un code d'accès"
         }
       }
     },
     "accessGuard": {
-      "title": "Access required",
-      "introduction": "Your account does not include access to partner pages. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+      "title": "Accès requis",
+      "introduction": "Votre compte ne comprend pas l'accès aux pages partenaires. Pour y remédier, <contactLink>contactez l'équipe Bloom</contactLink>."
     }
   }
 }
