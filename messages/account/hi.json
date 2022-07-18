@@ -1,11 +1,10 @@
 {
   "Account": {
     "applyCode": {
-      "title": "एक कोड लागू करें",
-      "introduction": "ब्लूम दुनिया भर में दुर्व्यवहार से बचे लोगों के लिए उपचार का समर्थन करने के लिए भागीदारों के साथ काम करता है।",
+      "title": "Apply a code",
+      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
       "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
       "descriptionLine2": "You can add codes from more than one partner.",
-      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
       "partnershipsTitle": "Our partners",
       "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
       "formIntroduction": "Enter the access code you received from a Bloom partner.",
@@ -35,6 +34,7 @@
       "titleA": "What you want from Bloom",
       "descriptionALine1": "Thank you for your answers so far!",
       "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
+      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
       "goToCourses": "Skip to courses",
       "demographicForm": {
         "genderLabel": "What is your gender identity?",
