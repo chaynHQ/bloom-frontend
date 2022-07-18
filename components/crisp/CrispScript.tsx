@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import { CHAT_MESSAGE_SENT, CHAT_STARTED, FIRST_CHAT_STARTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -9,6 +9,18 @@ const CrispScript = () => {
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const [showLiveChat, setShowLiveChat] = useState<boolean>(false);
+
+  useEffect(() => {
+    const liveAccess = partnerAccesses.find(
+      (partnerAccess) => partnerAccess.featureLiveChat === true,
+    );
+    if (user.email && liveAccess) {
+      setShowLiveChat(true);
+    } else {
+      setShowLiveChat(false);
+    }
+  }, [user, partnerAccesses]);
 
   useEffect(() => {
     if ((window as any).$crisp && (window as any).$crisp.push) {
@@ -42,21 +54,15 @@ const CrispScript = () => {
 
   useEffect(() => {
     if ((window as any).$crisp && (window as any).$crisp.is) {
-      if (user.email) {
+      if (showLiveChat) {
         (window as any).$crisp.push(['set', 'user:email', [user.email]]);
-
-        if ((window as any).$crisp.is('chat:hidden')) {
-          (window as any).$crisp.push(['do', 'chat:show']);
-        }
-      } else if ((window as any).$crisp.is('chat:visible')) {
+        (window as any).$crisp.push(['do', 'chat:show']);
+      } else {
         (window as any).$crisp.push(['do', 'chat:hide']);
-
-        if ((window as any).$crisp.get('user:email')) {
-          (window as any).$crisp.push(['do', 'session:reset']);
-        }
+        (window as any).$crisp.push(['do', 'session:reset']);
       }
     }
-  });
+  }, [showLiveChat, user]);
 
   const crispScriptUrl = 'https://client.crisp.chat/l.js';
 
