@@ -15,6 +15,7 @@ export interface User {
   partnerAccessCode: string | null;
   languageDefault: LANGUAGES;
   contactPermission: boolean;
+  crispTokenId: string | null;
 }
 
 const initialState: User = {
@@ -29,6 +30,7 @@ const initialState: User = {
   partnerAccessCode: null,
   languageDefault: LANGUAGES.en,
   contactPermission: false,
+  crispTokenId: null,
 };
 
 const slice = createSlice({
