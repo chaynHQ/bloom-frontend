@@ -43,6 +43,8 @@ const CrispScript = () => {
         ? true
         : partnerAccesses.find((partnerAccess) => partnerAccess.featureLiveChat === true);
     if (user.email && hasLiveAccess) {
+      (window as any).CRISP_TOKEN_ID = user.crispTokenId;
+      (window as any).$crisp.push(['do', 'session:reset']);
       (window as any).$crisp.push(['set', 'user:email', [user.email]]);
       (window as any).$crisp.push(['do', 'chat:show']);
     } else {
