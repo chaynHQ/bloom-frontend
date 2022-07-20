@@ -182,13 +182,32 @@ Storyblok components allow the team to add richtext, images, videos, page sectio
 Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work*. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) allows new pages to be added, with an infinite number of [StoryblokPageSection.tsx](components/storyblok/StoryblokPageSection.tsx) with nested components. [DynamicComponent.tsx](components/storyblok/DynamicComponent.tsx) can also be used to dynamically render components on a page, where the storyblok field is of type `blocks` and we don't know which blocks to expect.
 *Note: If a page is to be public/unauthenticated, it must be added to `publicPaths` in [\_app.tsx](pages/_app.tsx).
 
-**Cypress**
+## Cypress
 
-Currently, integration tests are set up to be run locally. To do this, create a local `cypress.env.json` file, ask the team for the environment variables to run Cypress tests and paste them into the file.
+Currently, integration tests are set up to be run locally with Chrome.
 
-These variables will include two emails which will be used to test the `reset-password` flow. To successfully run the tests, two users need to be created in the local database.
+**Setup**
 
-To run the tests, use the command `yarn cypress`. This will open a screen with the tests - click on the test of choice.
+First create a local `cypress.env.json` file (this file is in .gitignore and will be ignore by git). Next, ask the team for the environment variables to run Cypress tests and paste them into the file.
+
+These variables will include two emails which are required to test the `reset-password` flow. To successfully run the tests, two users with the given emails will need to be created in the local database.
+
+The easiest way to add these users is through the local front end. To do this, start the local bloom backend and the local bloom front end. Then create two _public_ users with the given emails.
+
+The environment is now ready to run the tests.
+
+**Running the tests locally**
+
+To run the tests, follow the instructions below:
+
+1. Ensure both local bloom backend and local bloom front-end are up and running
+2. Ensure the local database contains users with emails matching those in the `cypress.env.json` file
+3. Ensure Chrome is available on your local machine
+4. Run the command `yarn cypress` on your terminal
+5. Cypress will now open a new screen displaying the available test (this may take upto a minute the first the command runs)
+6. Click on the test you'd like to run. This will open another Chrome window and the chosen test will now run.
+
+The above option will run the tests against a visible browser. To run a head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`. The headless cypress runs will be faster as the browser elements are not visible.
 
 ## Git flow and deployment
 
