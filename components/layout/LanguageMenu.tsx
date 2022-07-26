@@ -72,7 +72,7 @@ export default function LanguageMenu() {
         }}
       >
         {locales
-          ?.filter((language) => language !== locale && language !== 'hi') // todo remove patch when translations complete
+          ?.filter((language) => language !== locale && language !== 'hi' && language !== 'fr') // todo remove patch when translations complete
           .map((language) => {
             const languageUppercase = language.toUpperCase();
             return (
