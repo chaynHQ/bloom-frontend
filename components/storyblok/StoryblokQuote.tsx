@@ -1,4 +1,5 @@
 import { Box } from '@mui/system';
+import { useTranslations } from 'next-intl';
 import { Richtext } from 'storyblok-js-client';
 import { richtextContentStyle } from '../../styles/common';
 
@@ -10,6 +11,7 @@ interface StoryblokQuoteProps {
 
 const StoryblokQuote = (props: StoryblokQuoteProps) => {
   const { text, text_size, icon_color = 'primary.dark' } = props;
+  const tS = useTranslations('Shared');
 
   if (!text) return <></>;
 
@@ -63,7 +65,7 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
   return (
     <Box sx={containerStyle}>
       <blockquote>{text}</blockquote>
-      <cite>~ Survivor</cite>
+      <cite>~ {tS('survivor')}</cite>
     </Box>
   );
 };
