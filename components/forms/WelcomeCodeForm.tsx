@@ -5,6 +5,10 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { RootState } from '../../app/store';
+import { generatePartnerPromoGetStartedEvent } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   marginY: 3,
@@ -18,6 +22,8 @@ interface WelcomeCodeFormProps {
 const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [codeInput, setCodeInput] = useState<string>('');
   const router = useRouter();
@@ -47,7 +53,16 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
           variant="standard"
           fullWidth
         />
-        <Button sx={{ mt: 2 }} variant="contained" fullWidth color="secondary" type="submit">
+        <Button
+          onClick={() => {
+            logEvent(generatePartnerPromoGetStartedEvent(partnerParam), eventUserData);
+          }}
+          sx={{ mt: 2 }}
+          variant="contained"
+          fullWidth
+          color="secondary"
+          type="submit"
+        >
           {t('getStarted')}
         </Button>
       </form>

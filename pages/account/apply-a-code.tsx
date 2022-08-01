@@ -54,7 +54,7 @@ const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const [allPartnersContent, setAllPartnersContent] = useState<Partner[]>([]);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const ApplyACode: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    const eventUserData = getEventUserData({ user, partnerAccesses });
+    const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
     logEvent(ASSIGN_NEW_PARTNER_VIEWED, eventUserData);
   }, []);

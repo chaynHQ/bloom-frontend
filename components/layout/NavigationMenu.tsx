@@ -5,7 +5,16 @@ import ListItemText from '@mui/material/ListItemText';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import {
+  HEADER_ADMIN_CLICKED,
+  HEADER_COURSES_CLICKED,
+  HEADER_IMMEDIATE_HELP_CLICKED,
+  HEADER_LOGIN_CLICKED,
+  HEADER_OUR_BLOOM_TEAM_CLICKED,
+  HEADER_THERAPY_CLICKED,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const listStyle = {
@@ -44,6 +53,7 @@ interface NavigationItem {
   title: string;
   href: string;
   target?: string;
+  event: string;
 }
 
 interface NavigationMenuProps {
@@ -54,6 +64,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
 
   useEffect(() => {
@@ -61,30 +72,43 @@ const NavigationMenu = (props: NavigationMenuProps) => {
 
     if (!user.loading) {
       if (partnerAdmin && partnerAdmin.partner) {
-        links.push({ title: t('admin'), href: '/partner-admin/create-access-code' });
+        links.push({
+          title: t('admin'),
+          href: '/partner-admin/create-access-code',
+          event: HEADER_ADMIN_CLICKED,
+        });
       }
 
-      links.push({ title: t('meetTheTeam'), href: '/meet-the-team' });
+      links.push({
+        title: t('meetTheTeam'),
+        href: '/meet-the-team',
+        event: HEADER_OUR_BLOOM_TEAM_CLICKED,
+      });
 
       if (!partnerAdmin.partner) {
         links.push({
           title: t('immediateHelp'),
           href: 'https://www.chayn.co/help',
           target: '_blank',
+          event: HEADER_IMMEDIATE_HELP_CLICKED,
         });
       }
 
       if (user.token) {
-        links.push({ title: t('courses'), href: '/courses' });
+        links.push({ title: t('courses'), href: '/courses', event: HEADER_COURSES_CLICKED });
         const therapyAccess = partnerAccesses.find(
           (partnerAccess) => partnerAccess.featureTherapy === true,
         );
 
         if (!!therapyAccess) {
-          links.push({ title: t('therapy'), href: '/therapy/book-session' });
+          links.push({
+            title: t('therapy'),
+            href: '/therapy/book-session',
+            event: HEADER_THERAPY_CLICKED,
+          });
         }
       } else {
-        links.push({ title: t('login'), href: '/auth/login' });
+        links.push({ title: t('login'), href: '/auth/login', event: HEADER_LOGIN_CLICKED });
       }
     }
 
@@ -100,6 +124,9 @@ const NavigationMenu = (props: NavigationMenuProps) => {
             component={Link}
             href={link.href}
             target={link.target || '_self'}
+            onClick={() => {
+              logEvent(link.event, eventUserData);
+            }}
           >
             <ListItemText sx={listItemTextStyle} primary={link.title} />
           </ListItemButton>

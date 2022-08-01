@@ -10,14 +10,22 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import LoginForm from '../../components/forms/LoginForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
+import {
+  generateGetStartedPartnerEvent,
+  GET_STARTED_WITH_BLOOM_CLICKED,
+  RESET_PASSWORD_HERE_CLICKED,
+} from '../../constants/events';
 import { getAllPartnersContent } from '../../constants/partners';
+import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -47,6 +55,8 @@ const Login: NextPage = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
@@ -67,12 +77,25 @@ const Login: NextPage = () => {
           {t('login.newUserTitle')}
         </Typography>
         <Typography>
-          <Link href="/">{t('getStartedBloom')}</Link>
+          <Link
+            onClick={() => {
+              logEvent(GET_STARTED_WITH_BLOOM_CLICKED, eventUserData);
+            }}
+            href="/"
+          >
+            {t('getStartedBloom')}
+          </Link>
         </Typography>
 
         {allPartnersContent?.map((partner) => (
           <Typography key={`${partner.name}-link`} mt={0.5}>
-            <Link mt="1rem !important" href={`/welcome/${partner.name.toLowerCase()}`}>
+            <Link
+              mt="1rem !important"
+              href={`/welcome/${partner.name.toLowerCase()}`}
+              onClick={() => {
+                logEvent(generateGetStartedPartnerEvent(partner.name), eventUserData);
+              }}
+            >
               {t.rich('getStartedWith', { partnerName: partner.name })}
             </Link>
           </Typography>
@@ -108,7 +131,16 @@ const Login: NextPage = () => {
             <LoginForm />
             <Typography textAlign="center">
               {t.rich('login.resetPasswordLink', {
-                resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+                resetLink: (children) => (
+                  <Link
+                    onClick={() => {
+                      logEvent(RESET_PASSWORD_HERE_CLICKED, eventUserData);
+                    }}
+                    href="/auth/reset-password"
+                  >
+                    {children}
+                  </Link>
+                ),
               })}
             </Typography>
           </CardContent>

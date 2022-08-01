@@ -13,7 +13,9 @@ import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
 import { RootState } from '../../app/store';
 import { clearUserSlice } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
+import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const menuItemStyle = {
@@ -42,13 +44,15 @@ export default function UserMenu() {
   const router = useRouter();
   const t = useTranslations('Navigation');
   const dispatch: any = useAppDispatch();
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    logEvent(HEADER_ACCOUNT_ICON_CLICKED, eventUserData);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -96,6 +100,9 @@ export default function UserMenu() {
               component={Link}
               href={'/account/apply-a-code'}
               startIcon={<AddCircleOutline />}
+              onClick={() => {
+                logEvent(HEADER_APPLY_A_CODE_CLICKED, eventUserData);
+              }}
             >
               {t('applyCode')}
             </Button>
