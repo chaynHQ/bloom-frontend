@@ -19,11 +19,13 @@ import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
+import { generatePartnerPromoGoToCoursesEvent } from '../../constants/events';
 import { getPartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
 const introContainerStyle = {
@@ -57,8 +59,8 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
   const router = useRouter();
   const [codeParam, setCodeParam] = useState<string>('');
-  const { user } = useTypedSelector((state: RootState) => state);
-
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   story = useStoryblok(story, preview, sbParams, locale);
   const partnerContent = getPartnerContent(story.slug);
 
@@ -101,6 +103,12 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
                   fullWidth
                   component={Link}
                   color="secondary"
+                  onClick={() => {
+                    logEvent(
+                      generatePartnerPromoGoToCoursesEvent(partnerContent.name),
+                      eventUserData,
+                    );
+                  }}
                   href="/courses"
                 >
                   {t('goToCourses')}

@@ -16,10 +16,12 @@ import PartnerHeader from '../components/layout/PartnerHeader';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../config/storyblok';
 import { LANGUAGES } from '../constants/enums';
+import { PROMO_GET_STARTED_CLICKED, PROMO_GO_TO_COURSES_CLICKED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../public/welcome_to_bloom.svg';
 import { rowStyle } from '../styles/common';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 import { RichTextOptions } from '../utils/richText';
 
 const introContainerStyle = {
@@ -51,7 +53,8 @@ interface Props {
 
 const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
-  const { user } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   story = useStoryblok(story, preview, sbParams, locale);
 
@@ -90,6 +93,9 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
                   component={Link}
                   color="secondary"
                   href="/courses"
+                  onClick={() => {
+                    logEvent(PROMO_GO_TO_COURSES_CLICKED, eventUserData);
+                  }}
                 >
                   {t('goToCourses')}
                 </Button>
@@ -106,6 +112,9 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
                   fullWidth
                   component={Link}
                   color="secondary"
+                  onClick={() => {
+                    logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
+                  }}
                   href="/auth/register"
                 >
                   {t('getStarted')}
