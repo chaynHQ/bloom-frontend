@@ -13,14 +13,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import RegisterForm from '../../components/forms/RegisterForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
+import { generatePartnershipPromoLogoClick } from '../../constants/events';
 import { getAllPartnersContent, getPartnerContent, Partner } from '../../constants/partners';
+import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -70,6 +74,8 @@ const Register: NextPage = () => {
   const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [codeParam, setCodeParam] = useState<string>('');
   const [partnerContent, setPartnerContent] = useState<Partner | null>(null);
@@ -132,6 +138,9 @@ const Register: NextPage = () => {
                       key={`${partner.name}-link`}
                       aria-label={tS(partner.logoAlt)}
                       mt="1rem !important"
+                      onClick={() =>
+                        logEvent(generatePartnershipPromoLogoClick(partner.name), eventUserData)
+                      }
                       href={`/welcome/${partner.name.toLowerCase()}${
                         codeParam && '?code=' + codeParam
                       }`}

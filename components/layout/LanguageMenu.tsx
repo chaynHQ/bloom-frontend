@@ -6,6 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { RootState } from '../../app/store';
+import { HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const menuItemStyle = {
@@ -36,11 +40,14 @@ export default function LanguageMenu() {
   const locale = router.locale;
   const locales = router.locales;
   const t = useTranslations('Navigation');
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    logEvent(HEADER_LANGUAGE_MENU_CLICKED, eventUserData);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {

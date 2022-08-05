@@ -7,8 +7,15 @@ import Drawer from '@mui/material/Drawer';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
+import { RootState } from '../../app/store';
+import {
+  HEADER_NAVIGATION_MENU_CLOSED,
+  HEADER_NAVIGATION_MENU_OPENED,
+} from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { columnStyle } from '../../styles/common';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 import NavigationMenu from './NavigationMenu';
 
@@ -46,12 +53,16 @@ const NavigationDrawer = () => {
   const open = Boolean(anchorEl);
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    logEvent(HEADER_NAVIGATION_MENU_OPENED, eventUserData);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    logEvent(HEADER_NAVIGATION_MENU_CLOSED, eventUserData);
   };
 
   return (
