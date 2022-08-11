@@ -43,7 +43,7 @@ describe('hasAccessToPage', () => {
     });
   });
   describe('if courses are for partner and public users', () => {
-    it('a public user should not have access', () => {
+    it('a public user should have access', () => {
       expect(hasAccessToPage(['Bumble', 'Public'], [], emptyPartnerAdmin)).toEqual(true);
     });
     it('a partner user should have access', () => {

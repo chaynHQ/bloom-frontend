@@ -7,12 +7,15 @@ const hasAccessToPage = (
   partnerAdmin: PartnerAdmin,
 ) => {
   const isPublicUser = (partnerAccesses !== null && partnerAccesses.length) === 0;
+  // determine if public user has access
   if (isPublicUser && partnersWithAccess.includes('Public')) {
     return true;
   }
+  // determine if partner admin has access
   if (partnerAdmin.partner?.name && partnersWithAccess.includes(partnerAdmin.partner?.name)) {
     return true;
   }
+  // determine if partner user has access
   const isPartnerUserWithAccess = partnerAccesses.reduce<boolean>(
     (hasAccessAlready, partnerAccess) => {
       if (hasAccessAlready) return hasAccessAlready;
@@ -23,7 +26,7 @@ const hasAccessToPage = (
     },
     false,
   );
-  return isPartnerUserWithAccess || false;
+  return isPartnerUserWithAccess;
 };
 
 export default hasAccessToPage;
