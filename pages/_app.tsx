@@ -12,6 +12,7 @@ import { wrapper } from '../app/store';
 import { setUserLoading, setUserToken } from '../app/userSlice';
 import CrispScript from '../components/crisp/CrispScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
+import Consent from '../components/layout/consent';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
@@ -116,6 +117,7 @@ function MyApp(props: MyAppProps) {
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <ComponentWithGuard />
           <Footer />
+          <Consent />
         </ThemeProvider>
       </CacheProvider>
     </NextIntlProvider>

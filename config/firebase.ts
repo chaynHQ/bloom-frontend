@@ -2,6 +2,7 @@
 import 'firebase/compat/analytics';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import Cookies from 'js-cookie';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,5 +22,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export const analytics = typeof window !== 'undefined' ? firebase.analytics() : null;
+export const analytics =
+  typeof window !== 'undefined' && Cookies.get('analyticsConsent') === 'true'
+    ? firebase.analytics()
+    : null;
 export const auth = firebase.auth();
