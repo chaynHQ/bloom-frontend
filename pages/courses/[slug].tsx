@@ -20,6 +20,7 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
+import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -91,16 +92,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
-
-    if (partnerAccesses.length === 0 && storyPartners.includes('Public')) {
-      setIncorrectAccess(false);
-    }
-
-    partnerAccesses.map((partnerAccess) => {
-      if (storyPartners.includes(partnerAccess.partner.name)) {
-        setIncorrectAccess(false);
-      }
-    });
+    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
 
     const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
 

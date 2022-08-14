@@ -43,6 +43,7 @@ import illustrationPerson4Peach from '../../../public/illustration_person4_peach
 import { columnStyle } from '../../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../../utils/courseLiveStatus';
 import { generateReturnUrlParam } from '../../../utils/generateReturnQuery';
+import hasAccessToPage from '../../../utils/hasAccessToPage';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
@@ -167,23 +168,14 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
 
   useEffect(() => {
     const coursePartners = course.included_for_partners;
-
-    if (partnerAccesses.length === 0 && coursePartners.includes('Public')) {
-      setIncorrectAccess(false);
-    }
-
-    partnerAccesses.map((partnerAccess) => {
-      if (coursePartners.includes(partnerAccess.partner.name)) {
-        setIncorrectAccess(false);
-      }
-    });
+    setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
 
     const liveAccess = partnerAccesses.find(
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
 
     if (liveAccess || liveCourseAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, course.included_for_partners, liveCourseAccess]);
+  }, [partnerAccesses, course.included_for_partners, liveCourseAccess, partnerAdmin]);
 
   useEffect(() => {
     course.weeks.map((week: any) => {
