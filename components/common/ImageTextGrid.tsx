@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
 
 export interface ImageTextItem {
