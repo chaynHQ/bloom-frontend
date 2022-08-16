@@ -62,6 +62,13 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           url={video.url}
           controls
           modestbranding={1}
+          config={{
+            youtube: {
+              embedOptions: {
+                host: 'https://www.youtube-nocookie.com',
+              },
+            },
+          }}
         />
       </Box>
     </Box>
