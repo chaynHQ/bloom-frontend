@@ -1,3 +1,4 @@
+import { StaticImageData } from 'next/image';
 import badooLogo from '../public/badoo_logo.svg';
 import bloomBadooLogo from '../public/bloom_badoo_logo.svg';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';

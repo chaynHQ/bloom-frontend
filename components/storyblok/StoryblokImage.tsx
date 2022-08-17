@@ -38,7 +38,7 @@ const StoryblokImage = (props: StoryblokImageProps) => {
     marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
     marginRight: alignment === 'center' ? 'auto' : 0,
 
-    '> div': {
+    '> span': {
       position: 'unset !important',
     },
 

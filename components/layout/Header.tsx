@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
