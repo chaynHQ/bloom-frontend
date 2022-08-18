@@ -13,7 +13,7 @@ const Consent = () => {
       onAccept={() => {
         console.log('sending gtag consent');
         (window as any).gtag('consent', 'update', {
-          ad_storage: 'granted',
+          ad_storage: 'denied',
           analytics_storage: 'granted',
         });
       }}
