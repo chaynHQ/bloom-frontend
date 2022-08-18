@@ -11,7 +11,6 @@ const Consent = () => {
       buttonStyle={{ color: '#4e503b', fontSize: '13px' }}
       expires={365}
       onAccept={() => {
-        console.log('sending gtag consent');
         (window as any).gtag('consent', 'update', {
           ad_storage: 'denied',
           analytics_storage: 'granted',
