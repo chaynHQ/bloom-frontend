@@ -51,7 +51,18 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
 
     ...richtextContentStyle,
   } as const;
-
+  const extraConfig =
+    video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
+      ? {
+          config: {
+            youtube: {
+              embedOptions: {
+                host: 'https://www.youtube-nocookie.com',
+              },
+            },
+          },
+        }
+      : {};
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
@@ -62,6 +73,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           url={video.url}
           controls
           modestbranding={1}
+          {...extraConfig}
         />
       </Box>
     </Box>
