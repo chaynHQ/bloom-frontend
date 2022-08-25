@@ -54,9 +54,16 @@
       "chooseTherapist": "Ilustración de una persona de perfil, con una flor",
       "dateSelector": "Ilustración de un calendario con un corazón en el centro",
       "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
-      "confidential": "Ilustración de un documento con un candado en una esquina"
+      "confidential": "Ilustración de un documento con un candado en una esquina",
+      "cookieCat": "Illustration of a resting cat with a cookie"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/smGSjlCo",
-    "survivor": "Sobreviviente"
+    "survivor": "Sobreviviente",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Please allow analytics cookies so we can improve bloom. Read more in our ",
+      "cookieConsentPolicy": "cookie policy",
+      "acceptLabel": "Accept Cookies",
+      "declineLabel": "Reject Cookies"
+    }
   }
 }
