@@ -56,9 +56,16 @@
       "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
       "dateSelector": "Illustration of a calendar with a heart in the middle",
       "change": "Illustration of a cycle - three suns in a circle with arrows between them",
-      "confidential": "Illustration of a document with a lock in the corner"
+      "confidential": "Illustration of a document with a lock in the corner",
+      "cookieCat": "Illustration of a resting cat with a cookie"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "Survivor"
+    "survivor": "Survivor",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Please allow analytics cookies so we can improve bloom. Read more in our ",
+      "cookieConsentPolicy": "cookie policy",
+      "acceptLabel": "Accept Cookies",
+      "declineLabel": "Reject Cookies"
+    }
   }
 }

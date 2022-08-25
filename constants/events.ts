@@ -159,3 +159,6 @@ export const generatePartnerPromoGoToCoursesEvent = (partner: string) =>
 // HOME PAGE EVENTS
 export const PROMO_GO_TO_COURSES_CLICKED = 'PROMO_GO_TO_COURSES_CLICKED';
 export const PROMO_GET_STARTED_CLICKED = 'PROMO_GET_STARTED_CLICKED';
+
+export const COOKIES_ACCEPTED = 'COOKIES_ACCEPTED';
+export const COOKIES_REJECTED = 'COOKIES_REJECTED';

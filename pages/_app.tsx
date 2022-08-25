@@ -13,7 +13,7 @@ import { setUserLoading, setUserToken } from '../app/userSlice';
 import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
-import Consent from '../components/layout/consent';
+import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';

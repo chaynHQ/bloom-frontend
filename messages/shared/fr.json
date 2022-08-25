@@ -56,9 +56,16 @@
       "chooseTherapist": "Illustration du profil latéral du visage d'une personne, avec une fleur.",
       "dateSelector": "Illustration d'un calendrier avec un cœur au milieu",
       "change": "Illustration d'un cycle - trois soleils dans un cercle avec des flèches entre eux",
-      "confidential": "Illustration d'un document avec un cadenas dans un coin"
+      "confidential": "Illustration d'un document avec un cadenas dans un coin",
+      "cookieCat": "Illustration of a resting cat with a cookie"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "Survivant·e"
+    "survivor": "Survivant·e",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Please allow analytics cookies so we can improve bloom. Read more in our ",
+      "cookieConsentPolicy": "cookie policy",
+      "acceptLabel": "Accept Cookies",
+      "declineLabel": "Reject Cookies"
+    }
   }
 }

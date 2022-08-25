@@ -10,7 +10,6 @@
 
 # cypress
 cypress.env.json
-cypress/
 
 # next.js
 /.next/
