@@ -1,5 +1,4 @@
 import { GetUserResponse } from '../app/api';
-import { analytics } from '../config/firebase';
 import {
   joinedFeatureLiveChat,
   joinedFeatureTherapy,
@@ -9,7 +8,7 @@ import {
 import { getAccountType } from './getAccountType';
 
 export const logEvent = (event: string, params?: {}) => {
-  analytics?.logEvent(event, params!);
+  (window as any).gtag('event', event, { method: 'Google', ...params });
 };
 
 export const getEventUserData = (data: Partial<GetUserResponse>) => {
