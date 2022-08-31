@@ -49,18 +49,18 @@ const Consent = (props: {}) => {
   };
 
   const handleDecline = () => {
-    logEvent(COOKIES_REJECTED, eventUserData);
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'denied',
     });
+    logEvent(COOKIES_REJECTED, eventUserData);
   };
   const handleAccept = () => {
-    logEvent(COOKIES_ACCEPTED, eventUserData);
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'granted',
     });
+    logEvent(COOKIES_ACCEPTED, eventUserData);
   };
 
   return (
@@ -106,7 +106,10 @@ const Consent = (props: {}) => {
         }}
       >
         {tS('cookieConsent.cookieConsentExplainer')}
-        <Link href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a">
+        <Link
+          target="_blank"
+          href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
+        >
           {tS('cookieConsent.cookieConsentPolicy')}
         </Link>
       </Box>
