@@ -55,3 +55,9 @@ export enum SURVEY_FORMS {
 export enum FORM_TRIGGERS {
   sessionFour = 'session-four',
 }
+
+export enum ENVIRONMENT {
+  PRODUCTION = 'production',
+  LOCAL = 'local',
+  STAGING = 'staging',
+}
