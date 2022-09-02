@@ -64,6 +64,7 @@ export const EmailForm = () => {
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
         <TextField
           id="email"
+          inputProps={{ 'qa-id': 'passwordResetEmailInput' }}
           onChange={(e) => setEmailInput(e.target.value)}
           label={t('emailLabel')}
           variant="standard"
@@ -84,6 +85,7 @@ export const EmailForm = () => {
             fullWidth
             color="secondary"
             type="submit"
+            qa-id="passwordResetEmailButton"
           >
             {t('resetPasswordSubmit')}
           </Button>
