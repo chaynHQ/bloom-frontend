@@ -3,22 +3,22 @@ describe('Cookie consent', () => {
     // Start from the home page
     cy.visit('/');
     // Click on cookie consent
-    cy.get('[qaId="cookieConsentAcceptButton"]').click();
+    cy.get('[qa-id="cookieConsentAcceptButton"]').click();
     // Cookie should be set
     cy.wait;
     cy.getCookie('analyticsConsent', { timeout: 5000 }).should('have.property', 'value', 'true');
 
     // Banner should have disappeared
-    cy.get('[qaId="cookieConsentAcceptButton"]').should('not.exist');
+    cy.get('[qa-id="cookieConsentAcceptButton"]').should('not.exist');
   });
   it('cookie should be false if user consents', () => {
     // Start from the home page
     cy.visit('/');
     // Click on cookie consent
-    cy.get('[qaId="cookieConsentDeclineButton"]').click();
+    cy.get('[qa-id="cookieConsentDeclineButton"]').click();
     // Cookie should be set
     cy.getCookie('analyticsConsent', { timeout: 5000 }).should('have.property', 'value', 'false');
     // Banner should have disappeared
-    cy.get('[qaId="cookieConsentAcceptButton"]').should('not.exist');
+    cy.get('[qa-id="cookieConsentAcceptButton"]').should('not.exist');
   });
 });
