@@ -8,7 +8,7 @@ name: Cypress Tests
 
 # when the end to end tests exist you need to add them here
 jobs:
- cypress-run:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
