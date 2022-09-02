@@ -4,9 +4,7 @@ on:
   push:
     branches:
       - develop
-name: Cypress Tests
 
-# when the end to end tests exist you need to add them here
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -24,7 +22,6 @@ jobs:
           spec: tests/cypress/**/*.spec.tsx
           command: yarn cypress:headless
 
-  
   create-pr-to-main:
     runs-on: ubuntu-latest
     steps:
