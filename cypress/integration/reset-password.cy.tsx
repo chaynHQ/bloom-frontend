@@ -22,11 +22,10 @@ describe('Reset password', () => {
 
   it('should see resend-link button after typing known email', () => {
     cy.visit(Cypress.env('reset-password-path'));
+    cy.wait(1000); // Waiting for dom to rerender as the email input was detaching
+    cy.get('[qa-id=passwordResetEmailInput]').type(`${Cypress.env('reset-pwd-confirm-email')}`);
+    cy.get('[qa-id=passwordResetEmailButton]').click();
 
-    cy.get('[qa-id=passwordResetEmailInput]').click();
-    cy.get('[qa-id=passwordResetEmailInput]')
-      .focus()
-      .type(`${Cypress.env('reset-pwd-confirm-email')}{enter}`);
     cy.get('p', { timeout: 5000 }).should(
       'contain',
       'Check your emails for a reset link from Bloom.',
