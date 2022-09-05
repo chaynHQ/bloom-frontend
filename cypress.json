@@ -5,6 +5,8 @@
   "baseUrl": "http://localhost:3000",
   "env": {
     "login_path": "auth/login",
-    "reset-password-path": "auth/reset-password"
+    "reset-password-path": "auth/reset-password",
+    "video": false,
+    "reset-pwd-confirm-email": "test@test.com"
   }
 }
