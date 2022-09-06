@@ -1,11 +1,11 @@
 {
   "Welcome": {
-    "getStarted": "Get started",
-    "accessIntroduction": "Enter the access code you received from {partnerName} to begin your Bloom journey.",
-    "publicIntroduction": "Create an account with Bloom to get started with our courses, or first find out more about Bloom below.",
-    "continueCourses": "Continue to Bloom",
-    "continueCoursesDescription": "Pick up where you left off.",
-    "goToCourses": "Go to courses",
+    "getStarted": "Shuru kariye",
+    "accessIntroduction": "Apna Bloom ka safar shuru karne ke liye {partnerName} dwara diya gaya access code daaliye.  ",
+    "publicIntroduction": "Bloom ke courses shuru karne ke liye humare saath account banaiye ya fir pehle Bloom ke bare mein aur janiye. ",
+    "continueCourses": "Bloom par jaiye",
+    "continueCoursesDescription": "Jahan se aapne choda tha, vahan se shuru kariye",
+    "goToCourses": "Courses pe jaiye",
     "form": {
       "codeLabel": "{partnerName} access code"
     }

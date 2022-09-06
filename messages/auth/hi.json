@@ -1,53 +1,53 @@
 {
   "Auth": {
-    "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
-    "getStartedBloom": "Get started with Bloom",
-    "getStartedWith": "Get started with a {partnerName} code",
-    "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
-    "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
+    "introduction": "Bloom apne remote courses ke madhyam se survivors ko jankaari deta hai aur empower karta hai. Inn courses mein trauma, gender-based hinsa aur therapeutic takneekein shaamil hai taki survivors trauma se heal ho paye.",
+    "getStartedBloom": "Bloom ke saath shuruat karte hain",
+    "getStartedWith": "{partnerName} code ke saath shuru karte hain",
+    "loginLink": "Aapke paas pehle se he account hai? <loginLink>Login kariye</loginLink>",
+    "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <policiesLink>Sevao ki Sharte aur Privacy Policy</policiesLink> sweekaar kar rahe hain.",
     "login": {
-      "title": "Welcome back",
-      "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>",
-      "newUserTitle": "New to Bloom?"
+      "title": "Vapas se swagat hai",
+      "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here</resetLink>",
+      "newUserTitle": "Bloom pe naye hain?"
     },
     "register": {
-      "title": "Create account",
-      "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
-      "moreInfo": "More on <welcomeLink>how Bloom works</welcomeLink>.",
-      "partnershipsTitle": "Our partnerships",
-      "partnershipsDescription": "If you're coming to Bloom from one of our partners, click their logo below."
+      "title": "Account banaiye",
+      "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in</loginLink>",
+      "moreInfo": "Aur jaankari hai <welcomeLink>Bloom kese kaam karta hai</welcomeLink>.",
+      "partnershipsTitle": "Hamari partnerships",
+      "partnershipsDescription": "Agar aap Bloom par hamare kisi partner se aa rahe hain, toh unke logo kar click kariye. "
     },
     "resetPassword": {
-      "title": "Reset your password"
+      "title": "Password reset kariye"
     },
     "form": {
       "codeLabel": "access code",
-      "nameLabel": "First name/nickname",
+      "nameLabel": "Pehla naam/Apnaam",
       "emailLabel": "Email",
       "passwordLabel": "Password",
-      "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",
-      "registerSubmit": "Create account",
-      "resetPasswordStep1": "We'll send you an email to begin resetting your password.",
-      "resetPasswordStep2": "Almost there! You can now set your new password.",
-      "resetPasswordSubmit": "Reset password",
-      "resendPasswordSubmit": "Resend email",
-      "resetPasswordSent": "Check your emails for a reset link from Bloom. Didn't receive one? Check your junk folder or resend the email.",
-      "passwordResetSuccess": "Your password has been reset! You can now continue to login with your new password.",
+      "contactPermissionLabel": "Kya hum Bloom ko behtar banane ke bare mein feedback ke liye aapko email kar sakte hain?",
+      "registerSubmit": " Account Banao",
+      "resetPasswordStep1": "Hum aapko ek email bhejenge taki aap apna password reset kar sakein. ",
+      "resetPasswordStep2": "Bas aap anth tak pahuchne wale hain! Ab aap apna naya password set kar sakte hain. ",
+      "resetPasswordSubmit": "Password reset kariye",
+      "resendPasswordSubmit": "Email dubara bhejein.",
+      "resetPasswordSent": "Bloom ke reset link ke liye apna email check kariye. Aapko email nahi mila? Apna junk folder check kariye ya fir email resend kariye. ",
+      "passwordResetSuccess": "Aapka password reset ho gaya hai! Ab aap apne naye password ke saath log in karna jari rakh sakte hain.",
       "loginSubmit": "Login",
-      "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-      "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "createUserError": "Aapka account set up karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+      "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. ",
       "codeErrors": {
-        "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "expired": "This code has expired. Get in touch with the {partnerName} team.",
-        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the {partnerName} team.",
-        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
+        "internal": "Aapke access code ko validate karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+        "expired": "Yeh code expire ho chuka hai. {partnerName} team sampark karein.",
+        "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir {partnerName} team se sampark karein.",
+        "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh {partnerName} ki team se sampark karein. "
       },
       "firebase": {
-        "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
-        "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
-        "weakPassword": "Your password needs to be a little longer, so it's more secure.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
-        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
+        "authError": "Humein uss email aur password ke combination ka koi account nahi mila. Apna email aur password check keejiye. ",
+        "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
+        "weakPassword": "Aapke password ko thoda aur lamba hone ki zaroorat hai taki vo aur surakshit ho.",
+        "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login</loginLink> par jaiye jaari rakhne ke liye.",
+        "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya</resetLink> aur fir prayas kariya. ",
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
       }
     }
