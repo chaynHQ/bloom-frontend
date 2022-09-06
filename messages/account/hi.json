@@ -1,114 +1,114 @@
 {
   "Account": {
     "applyCode": {
-      "title": "एक कोड लागू करें",
-      "introduction": "ब्लूम दुनिया भर में दुर्व्यवहार से बचे लोगों के लिए उपचार का समर्थन करने के लिए भागीदारों के साथ काम करता है।",
-      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
-      "descriptionLine2": "You can add codes from more than one partner.",
-      "setBAndCDescription": "As a Bloom user, we'd like to understand how you're doing now that you’ve been using our services. Gathering this information helps us to measure the impact that using Bloom is having for survivors, and in turn helps us to focus on the right things.",
-      "partnershipsTitle": "Our partners",
-      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
-      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "title": "Code laagu karein",
+      "introduction": "Bloom partners ke saath kaam karta hai tak duniya bhar ke survivors ki healing mein sahyog kar sake.",
+      "description": "Yadi aapko hamare kisi partner se access code mila hai toh aap usse add kar sakte hain taki aapko programme specific sahayata mil sake.",
+      "descriptionLine2": "Aap ek se adhik partner ke code jod sakte hain.",
+      "setBAndCDescription": "Kyuki aap Bloom istelmaal kar rahe hain, hum janna chahte hain ki aap kese hain, ab jab aap hamari sevaiye istemaal kar rahe hain. Yeh jaankari ikhattat karne se hum measure kar pate hain ki Bloom ka survivors par kya impact hai, aur yeh jaankari humein sahi cheezon par focus karne mein madad karti hai. ",
+      "partnershipsTitle": "Hamare partners",
+      "partnershipsDescription": "Hamari partnerships ke bare mein aur jaanne ke liye unke logo par click kariye.",
+      "formIntroduction": "Bloom partner se mila access code daaliye.",
       "formSuccess": {
-        "success": "A Bumble code was applied to your account!",
-        "successLine2": "Your Bumble access enables the following:",
-        "liveChat": "1-1 chat with the Bloom team",
+        "success": "Appke account par ek Bumble code laga gaya hai!",
+        "successLine2": "Aapka Bumble access neeche di gai cheezon saksham karta hai:",
+        "liveChat": "Bloom team ke saath 1-on-1 chat",
         "therapy": "{therapySessionsRemaining} therapy sessions",
-        "courses": "Self-guided courses"
+        "courses": "Swa-nirdeshit courses"
       },
       "form": {
         "codeLabel": "Access code",
-        "submitLabel": "Apply code",
-        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "submitLabel": "Code lagaiye",
+        "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
         "codeErrors": {
-          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-          "expired": "This code has expired. Get in touch with the partner's team.",
-          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner.",
-          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+          "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
+          "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
+          "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
+          "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. "
         }
       }
     },
     "aboutYou": {
-      "title": "About you",
-      "header": "Help us understand",
-      "description": "These questions help us understand who is using Bloom and what kinds of support they need from us.",
-      "titleA": "What you want from Bloom",
-      "descriptionALine1": "Thank you for your answers so far!",
-      "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
-      "goToCourses": "Skip to courses",
+      "title": "Aapke bare mein",
+      "header": "Humein samjhne mein madar kariye",
+      "description": "Yeh sawal humein samjhne mein madad karte hain ki kaun Bloom istemaal kar raha hai aur unhe humse kis tarha ki support chahiye. ",
+      "titleA": "Aapko Bloom se kya chahiye",
+      "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
+      "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
+      "goToCourses": "Skip karke courses par jayein",
       "demographicForm": {
-        "genderLabel": "What is your gender identity?",
-        "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
-        "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
-        "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
+        "genderLabel": "Aapki gender identity kya hai?",
+        "genderHelpText": "Bloom bana hai kai tarah ki gender identities wale logon ke liye, hum jaante hain ki sabka gender based violence ka experience alag hota hai. Agar aap humein apna gender batate hain toh humein aur achi madad milegi yeh samjhne mein ki hum kiske liye design kar rahe hain.",
+        "neurodivergentLabel": "Kya aap apne aapko neuro-divergent ke roop mein describe karenge?",
+        "neurodivergentHelpText": "Hum apni sevaon ko ese deisgn karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
         "neurodivergentLabels": {
-          "1": "Yes",
-          "2": "No",
-          "3": "Not sure"
+          "1": "Haan",
+          "2": "Nahi",
+          "3": "Nishchit nahin\n"
         },
-        "raceEthnNatnLabel": "How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.",
-        "raceEthnNatnHelpText": "We know that people's experiences of race and ethnicity vary widely based on where they live, so write what you feel best describes you personally.",
-        "countryLabel": "What country do you live in right now?",
-        "countryHelpText": "This will help us understand where survivors are accessing our services from.",
-        "ageLabel": "What is your age group?",
+        "raceEthnNatnLabel": "Aapki race, ethnicity and nationality kya hai? E.g., White Hispanic Mexican, or Tamil Indian.",
+        "raceEthnNatnHelpText": "Hum jaante hain ki sab logon ka unki race aur ethnicity ke sath experience alag hota hai jo depend karta hai ki vo kahan rehte hain. Toh aap vo likhiye jo sabse achi tarha se aapko describe karta hai.",
+        "countryLabel": "Aap kaunse desh mein abhi reh rahe hain?",
+        "countryHelpText": "Yeh samjhne mein humein madad karega ki survivors services kahan se le rahe hain",
+        "ageLabel": "Apka age group kya hai?",
         "ageLabels": {
-          "1": "Under 16",
+          "1": "16 ke neeche",
           "2": "16-25",
           "3": "25-35",
           "4": "35-45",
           "5": "45-55",
           "6": "55+",
-          "7": "Prefer not to say"
+          "7": "Na bata pasand karungi"
         },
         "submitLabel": "Submit",
         "codeErrors": {}
       },
       "baseForm": {
-        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",
+        "scaleDescriptionLine2": "1 = Poori tarha asehmat, 10 = Poori tarha sehmat",
         "scaleLabels": {
-          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
-          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
-          "Q3": "I know that it takes time, energy and patience to heal",
+          "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
+          "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un comping mechanisms ki taraf akarshit hona ek normal trauma response hai",
+          "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
           "Q4": "I’m committed to giving myself the attention that I need to heal",
-          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
-          "Q6": "I understand that part of healing from trauma is dealing with triggers",
-          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
-          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+          "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
+          "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
+          "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mereliye unique hai",
+          "Q8": "Mein pehle he samjh jati hoon jab mere triggering moments, jagahein ya waqt aasakte ho aur unke saath cope karparti hoon."
         },
-        "submitLabel": "Complete"
+        "submitLabel": "Poora ho gaya"
       },
       "setAForm": {
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?"
+        "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
       },
       "setBForm": {
-        "bloomHelpLabel": "Bloom has helped me to:",
+        "bloomHelpLabel": "Bloom ne meri madad kari hai:",
         "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Learn that there are many different types of abuse",
-          "bhmQ2": "Learn about what toxic behaviours are",
-          "bhmQ3": "Learn about the prevalence of different types of oppression and control in our culture, and how that leads to abuse",
-          "bhmQ4": "Feel validated - knowing the things I’ve been through are not okay",
-          "bhmQ5": "Feel that no matter what I did or didn’t know or do at the time, I’m not at fault for what happened to me",
-          "bhmQ6": "Feel encouraged - knowing there are others out there like me",
-          "bhmQ7": "Identify as a survivor"
+          "bhmQ1": "Janiye ki kai alag alag tarha ke abuse hote hain",
+          "bhmQ2": "Janiye ki toxic vyavhaar kya hote hain",
+          "bhmQ3": "Janiye ki kese humare culture mein kai alag alag tareeke ke oppression aur control hote hai jo abuse ki oor je jati hai.",
+          "bhmQ4": "Validated mehsoos karein - yeh jaan na ki jin cheezoon se mein guzri/gurzra hu vo theek nahi tha. ",
+          "bhmQ5": "Yeh janna ki uss waqt mene jo bhi kiya ya nahi kiya,  mere saath jo bhi hua meri galti nahi thi.",
+          "bhmQ6": "Protsahit mehsoos karna - yeh jaanke ko mere jaise aur bhi log hain",
+          "bhmQ7": "Khud ko ek survivor samjhte hain"
         }
       },
       "setCForm": {
-        "sinceBloomLabel": "Since using Bloom:",
+        "sinceBloomLabel": "Bloom ka istemaal karne ke baad se:",
         "sinceBloomScaleLabels": {
-          "sbQ1": "I feel that I can live with my traumatic experience",
-          "sbQ2": "I feel worthy of love, and deserving of being looked after",
-          "sbQ3": "I feel more able to imagine, dream and make good things happen for myself",
-          "sbQ4": "I feel confident that if I want a relationship, I can find a healthy partner",
-          "sbQ5": "I feel I can trust myself to make good choices",
-          "sbQ6": "I feel interested to learn about the wider context of misogyny and inequality",
-          "sbQ7": "I’m interested in the courses about things that I haven’t experienced but I may encounter",
-          "sbQ8": "I know how to spot future red flags, and behaviour that might harm me",
-          "sbQ9": "I’ve found other steps to healing that I plan to explore (e.g. therapy, local charity resources)",
-          "sbQ10": "I feel I can ask for and get help from others (friends, family, therapists, police or charities)",
-          "sbQ11": "I would happily share Bloom with a friend going through something similar",
-          "sbQ12": "I feel I can trust other people with my story, and that connecting and sharing my experience might help them to heal too",
-          "sbQ13": "Being part of a community of survivors is a powerful thing for myself and others, even though we wish that it wasn’t abusive experiences that connect us"
+          "sbQ1": "Mujhe lagta hai ki mein apne traumatic experience ke saath reh sakti/sakta hoon.",
+          "sbQ2": "Mein pyaar aur dekhbhaal ke layak aur worthy mehsoos karti/karta hoon.",
+          "sbQ3": "Mein apne liye kalpna karne, sapne dekhne aur achi cheezein karne mein adhik saksham mehsoos karti/karta hoon",
+          "sbQ4": "Mujhe vishwas hai ki agar mujhe relationship chahiye toh mujhe ek healthy saathi mil sakta/sakti hai.",
+          "sbQ5": "Mujhe lagta hai ki mein achi choices banane ke liye khud par vishwas kar sakti hoon.",
+          "sbQ6": "Mujhe misogyny aur inequality ko gehrai mein jaanne mein dilchaspi hai.",
+          "sbQ7": "Mujhe unn courses mein dichaspi hain jo unn cheezo ke bare mein baat karte jinhe mene anubhav nahi kiya hai lekin mera samna ho sakta hai.",
+          "sbQ8": "Mein bhavishya ke red flags dekh sakti/sakta hoon aur vo hanikarak vyavhaar bhi jo mujhe nuksaan pahucha sakte hain. ",
+          "sbQ9": "Mujhe doosre healing ke tareeke mile hain jo mein explore karna chahti hoon (jaise ki therapy, local charity resources)",
+          "sbQ10": "Mujhe lagta hai ki mein doosron se madad maang sakti hoon aur unse mada le sakti hoon ( jaise dost, parivar, therapists, police or charities)",
+          "sbQ11": "Mein khush-khushi Bloom ko ek ese dost ke sath share karsakti hoon jo meri tarah similar stithi mein hoon. ",
+          "sbQ12": "Mujhe lagta hai ki mein doosre logon ko apni kahani ke saath trust kar sakti/sakta hoon, mere experience share karne se unki healing mein bhi madad ho sakti hai. ",
+          "sbQ13": "Survivors ki community ka hissa banna mere liye aur doosron ke liye ek shaktishaali baat hai, bhale he hum chahte ki yeh abusive experience na ho jo humein jodta ho. "
         }
       }
     }
