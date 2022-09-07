@@ -3,8 +3,12 @@ import { render } from 'storyblok-rich-text-react-renderer';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
 
+type StoryblokColumn = {
+  width: number;
+  content: any;
+};
 interface StoryblokRowProps {
-  columns: any;
+  columns: StoryblokColumn | StoryblokColumn[];
   horizontal_alignment: string;
   vertical_alignment: string;
 }
@@ -12,11 +16,18 @@ interface StoryblokRowProps {
 const StoryblokRow = (props: StoryblokRowProps) => {
   const { columns, horizontal_alignment, vertical_alignment } = props;
 
-  if (!columns) return <></>;
+  const columnArray = Array.isArray(columns) ? columns : [columns];
+
+  if (!columnArray) return <></>;
 
   const rowStyles = {
     width: '100%',
-    gap: { xs: 3, sm: 8 / columns.length, md: 10 / columns.length, lg: 16 / columns.length },
+    gap: {
+      xs: 3,
+      sm: 8 / columnArray.length,
+      md: 10 / columnArray.length,
+      lg: 16 / columnArray.length,
+    },
     ...rowStyle,
     textAlign:
       horizontal_alignment === 'center'
@@ -45,7 +56,7 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
   return (
     <Box sx={rowStyles}>
-      {columns.map((column: any, index: number) => {
+      {columnArray.map((column: any, index: number) => {
         const columnStyles = {
           width:
             column.width === 'extra-small'
