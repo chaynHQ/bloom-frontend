@@ -1,51 +1,51 @@
 {
   "Courses": {
-    "title": "Our courses",
-    "introduction": "Bloom courses offer tailored information, tools, and affirming words to help us cope with trauma. They encourage us to learn, reflect, and process what we’ve been through and how it may have affected us–all in a safe and empowering space.",
+    "title": "Humare courses",
+    "introduction": "Bloom ke courses humein trauma se nipatne ke liye tailored jankaari, takneekein aur positive shabd dete hain. Vo humein ek surakshit aur empowering space dete hain jahan humein seekhne, pratibimb (reflect) karne aur process karne mein protsahit kiya jata hai. ",
     "session": "Session",
     "course": "Course",
     "courses": "Courses",
-    "expand": "Expand",
-    "expandSummary": "Expand summary for",
-    "navigateToSession": "Navigate to session -",
-    "navigateToCourse": "Navigate to course -",
-    "liveFrom": "Live from {date}",
-    "liveUntil": "Live until {date}",
-    "liveSoon": "Live soon",
-    "liveNow": "Live now",
-    "comingSoon": "Coming soon",
-    "noCourses": "There are no courses to display right now. If this doesn't seem right, try again later or contact the Bloom team.",
+    "expand": "Vistaar karein",
+    "expandSummary": "Summary vistaar karein",
+    "navigateToSession": "Session par leke jaiye",
+    "navigateToCourse": "Course pe leke jaiye",
+    "liveFrom": "Live hoga {date} ko",
+    "liveUntil": "{date} tak live rahega",
+    "liveSoon": "Jald he live hoga",
+    "liveNow": "Live hogaya hai",
+    "comingSoon": "Jald he aa raha hai",
+    "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
     "courseDetail": {
-      "introductionTitle": "Course introduction",
-      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>."
+      "introductionTitle": "Course ka introduction",
+      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye. "
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
+      "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript</transcriptLink> padh lijiye.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
       "chat": {
-        "title": "Reflect with us",
-        "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
-        "videoIntro": "Find out more about how our online chat works:",
+        "title": "Humare saath soch vichaar kariye",
+        "description": "Yadi aap iss sessions par apne vichaar share karna chahte hai toh Bloom team apne sunna pasand karegi!",
+        "videoIntro": "Humari online chat kese kaam karti hai, iske bare mein aur jaanein:",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
-        "detailIntro": "Remember:",
-        "detailPrivacy": "Your messages are private and secure, they’re only ever seen by the Bloom team and you remain anonymous.",
-        "detailTimezone": "We work across many different timezones, so you should get a response from us within 6 hours, and it won’t be longer than 24 hours.",
-        "detailLanguage": "We are always available in English or Spanish, but members of our team also speak French, Italian, Hindi, Arabic, and Bangla; we’d be happy to arrange for you to speak with them.",
-        "detailLegal": "If you’re going through an active legal case, consider what you share with us as this can sometimes affect your case.",
-        "detailImmediateHelp": "If you’re in imminent threat or harm, please go to ‘Immediate help’ in the menu to find the right service to support you.",
-        "startButton": "Start a chat"
+        "detailIntro": "Yaad rakhiye:",
+        "detailPrivacy": "Aapke messages niji aur surakshit hai, vo keval Bloom team dwara dekhe jate hain aur aap gumnaan rehte hain. ",
+        "detailTimezone": "Hum kai alag-alag timezones mein kaam karte hain, isliye aapko humse 6 ghanto ke andar response milna chahiye, aur samay 24 ghanton se adhik nahi hoga. ",
+        "detailLanguage": "Hum humesha Anghrezi aur Spanish mein uplabdh hain, lekin humari team ke sadasya French, Italian, Hindi, Arabic aur Bangla bhi bolte hain. Humein aapke liye unke saath baat karne ki vyvastha karne mein khushi hogi. ",
+        "detailLegal": "Yadi aap ek sakriya kanooni mamle se guzar rahe hain, toh vichaar karein ki aap hamare saath kya share karte hain kyuki yeh kabhi-kabhi aapke mamle ko prabhavit kar sakta hai. ",
+        "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
+        "startButton": "Chat shuru karein"
       },
-      "sessionComplete": "Session complete"
+      "sessionComplete": "Session poora hua"
     },
     "accessGuard": {
-      "title": "Course content not available",
-      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
+      "title": "Yeh course content uplabhd nahi hai.",
+      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
     },
     "errors": {
-      "completeSessionError": "There was an error marking this session as complete. Try again a little later."
+      "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
-    "backToCourses": "Back to courses"
+    "backToCourses": "Courses par vapas jayein."
   }
 }

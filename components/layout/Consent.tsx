@@ -80,13 +80,13 @@ const Consent = (props: {}) => {
         size: 'medium',
         variant: 'contained',
         display: 'block',
-        qaId: 'cookieConsentAcceptButton',
+        'qa-id': 'cookieConsentAcceptButton',
         sx: acceptButtonStyle,
       }}
       customDeclineButtonProps={{
         size: 'small',
         variant: 'text',
-        qaId: 'cookieConsentDeclineButton',
+        'qa-id': 'cookieConsentDeclineButton',
         sx: declineButtonStyle,
       }}
       ariaAcceptLabel={tS('cookieConsent.acceptLabel')}

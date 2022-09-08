@@ -1,21 +1,21 @@
 {
   "Navigation": {
     "menu": "Navigation menu",
-    "menuOpen": "Open navigation menu",
-    "menuClose": "Close navigation menu",
-    "languageMenu": "Language menu",
-    "bloomLogo": "Bloom logo",
+    "menuOpen": "Navigation menu kholo",
+    "menuClose": "navigation menu band karo",
+    "languageMenu": "Bhasha ka menu",
+    "bloomLogo": "Bloom ka logo",
     "login": "Log in",
     "logout": "Log out",
-    "userMenu": "User settings menu",
-    "home": "Home",
+    "userMenu": "Upyogkarta settings menu",
+    "home": "Ghar",
     "admin": "Admin",
-    "about": "About",
-    "meetTheTeam": "Our Bloom team",
-    "immediateHelp": "Immediate help",
+    "about": "Bloom ke bare mein",
+    "meetTheTeam": "Humari Bloom team",
+    "immediateHelp": "Tatkaal sahayata",
     "therapy": "Therapy",
     "courses": "Courses",
-    "applyCode": "Apply a code",
+    "applyCode": "Code apply kariye",
     "account": "Account"
   }
 }
