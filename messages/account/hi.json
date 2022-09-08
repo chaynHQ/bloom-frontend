@@ -5,7 +5,6 @@
       "introduction": "Bloom partners ke saath kaam karta hai tak duniya bhar ke survivors ki healing mein sahyog kar sake.",
       "description": "Yadi aapko hamare kisi partner se access code mila hai toh aap usse add kar sakte hain taki aapko programme specific sahayata mil sake.",
       "descriptionLine2": "Aap ek se adhik partner ke code jod sakte hain.",
-      "setBAndCDescription": "Kyuki aap Bloom istelmaal kar rahe hain, hum janna chahte hain ki aap kese hain, ab jab aap hamari sevaiye istemaal kar rahe hain. Yeh jaankari ikhattat karne se hum measure kar pate hain ki Bloom ka survivors par kya impact hai, aur yeh jaankari humein sahi cheezon par focus karne mein madad karti hai. ",
       "partnershipsTitle": "Hamare partners",
       "partnershipsDescription": "Hamari partnerships ke bare mein aur jaanne ke liye unke logo par click kariye.",
       "formIntroduction": "Bloom partner se mila access code daaliye.",
@@ -35,6 +34,7 @@
       "titleA": "Aapko Bloom se kya chahiye",
       "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
       "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
+      "setBAndCDescription": "Kyuki aap Bloom istelmaal kar rahe hain, hum janna chahte hain ki aap kese hain, ab jab aap hamari sevaiye istemaal kar rahe hain. Yeh jaankari ikhattat karne se hum measure kar pate hain ki Bloom ka survivors par kya impact hai, aur yeh jaankari humein sahi cheezon par focus karne mein madad karti hai. ",
       "goToCourses": "Skip karke courses par jayein",
       "demographicForm": {
         "genderLabel": "Aapki gender identity kya hai?",
