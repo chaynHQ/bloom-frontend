@@ -38,6 +38,12 @@ interface Props {
   sbParams: StoryParams;
   locale: LANGUAGES;
 }
+const coursesNotYetFinished = [
+  'fr/courses/healing-from-sexual-trauma/',
+  'fr/courses/dating-boundaries-and-relationships/',
+  'hi/courses/dating-boundaries-and-relationships/',
+  'hi/courses/society-patriarchy-and-sexual-trauma/',
+];
 
 const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => {
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
@@ -112,7 +118,10 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
       ? PROGRESS_STATUS.COMPLETED
       : null;
   };
-
+  // TODO remove this when hindi and french courses are fixed
+  const filteredLoadedCourses = loadedCourses?.filter(
+    (course) => coursesNotYetFinished.indexOf(course.full_slug) === -1,
+  );
   return (
     <Box>
       <Head>
@@ -134,7 +143,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
         ) : (
           <Box sx={rowStyle}>
             <Box sx={cardColumnStyle}>
-              {loadedCourses.map((course, index) => {
+              {filteredLoadedCourses?.map((course, index) => {
                 if (index % 2 === 1) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
@@ -148,7 +157,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
               })}
             </Box>
             <Box sx={cardColumnStyle}>
-              {loadedCourses.map((course, index) => {
+              {filteredLoadedCourses?.map((course, index) => {
                 if (index % 2 === 0) return;
                 const courseProgress = getCourseProgress(course.id);
                 return (
