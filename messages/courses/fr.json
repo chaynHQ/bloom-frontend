@@ -17,7 +17,7 @@
     "noCourses": "Il n'y a pas de cours disponible pour le moment. Réessayez plus tard ou contactez l'équipe Bloom.",
     "courseDetail": {
       "introductionTitle": "Début du cours",
-      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptionLink>transcription de la vidéo</transcriptionLink>."
+      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>."
     },
     "sessionDetail": {
       "videoTitle": "Vidéo",
