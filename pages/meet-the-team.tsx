@@ -1,6 +1,5 @@
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -86,9 +85,12 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         <Typography variant="h2" component="h2">
           {story.content.core_team_title}
         </Typography>
-        {story.content.core_team_description && (
-          <Typography maxWidth={650}>{story.content.core_team_description}</Typography>
-        )}
+        {story.content.core_team_description &&
+          // this was clearly expecting a string in the code but it was causing an error because an object was coming through from storyblok.
+          // This is a patch to help with release but should be readdressed
+          typeof story.content.core_team_description === 'string' && (
+            <Typography maxWidth={650}>{story.content.core_team_description}</Typography>
+          )}
         <Box sx={cardColumnRowStyle}>
           <Box sx={cardColumnStyle}>
             {story.content.core_team_members.map((teamMember: any, index: number) => {
