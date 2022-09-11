@@ -209,6 +209,24 @@ To run the tests, follow the instructions below:
 
 The above option will run the tests against a visible browser. To run a head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`. The headless cypress runs will be faster as the browser elements are not visible.
 
+**Running the https proxy**
+You need to run a https proxy for the storyblok preview.
+
+```bash
+// Install mkcert for creating a valid certificate (Mac OS):
+
+          $ brew install mkcert
+          $ mkcert -install
+          $ mkcert localhost
+
+// Then install and run the proxy
+
+          $ npm install -g local-ssl-proxy
+          $ local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem
+
+// https is now running on port 3010 and forwarding requests to http 3000
+```
+
 ## Git flow and deployment
 
 Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. **Squash and merge** feature/bug branches into `develop`.

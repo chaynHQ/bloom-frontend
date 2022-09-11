@@ -12,6 +12,35 @@ interface StoryblokRowProps {
   horizontal_alignment: string;
   vertical_alignment: string;
 }
+const columnStyles = (width: string | undefined) => ({
+  width:
+    width === 'extra-small'
+      ? {
+          xs: `20%`,
+          md: '5%',
+        }
+      : width === 'small'
+      ? { xs: '100%', md: '20%' }
+      : width === 'medium'
+      ? { xs: '100%', md: '40%' }
+      : width === 'large'
+      ? { xs: '100%', md: '60%' }
+      : width === 'extra-large'
+      ? { xs: '100%', md: '80%' }
+      : { xs: `100%`, md: 'auto' },
+  ...(!width && { flex: { md: 1 } }),
+});
+
+const getGap = (noColumns: number) => {
+  return {
+    gap: {
+      xs: 3,
+      sm: 8 / noColumns,
+      md: 10 / noColumns,
+      lg: 16 / noColumns,
+    },
+  };
+};
 
 const StoryblokRow = (props: StoryblokRowProps) => {
   const { columns, horizontal_alignment, vertical_alignment } = props;
@@ -22,12 +51,6 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
   const rowStyles = {
     width: '100%',
-    gap: {
-      xs: 3,
-      sm: 8 / columnArray.length,
-      md: 10 / columnArray.length,
-      lg: 16 / columnArray.length,
-    },
     ...rowStyle,
     textAlign:
       horizontal_alignment === 'center'
@@ -54,33 +77,40 @@ const StoryblokRow = (props: StoryblokRowProps) => {
     ...richtextContentStyle,
   } as const;
 
-  return (
-    <Box sx={rowStyles}>
-      {columnArray.map((column: any, index: number) => {
-        const columnStyles = {
-          width:
-            column.width === 'extra-small'
-              ? {
-                  xs: `20%`,
-                  md: '5%',
-                }
-              : column.width === 'small'
-              ? { xs: '100%', md: '20%' }
-              : column.width === 'medium'
-              ? { xs: '100%', md: '40%' }
-              : column.width === 'large'
-              ? { xs: '100%', md: '60%' }
-              : column.width === 'extra-large'
-              ? { xs: '100%', md: '80%' }
-              : { xs: `100%`, md: 'auto' },
-          ...(!column.width && { flex: { md: 1 } }),
-        };
+  let numberOfColumns = 0;
+  const renderedColumns = columnArray.map((col: any, index: number) => {
+    // Sometimes col.content is an array and sometimes it isn't
+    const contentIsObject = !Array.isArray(col.content);
+    if (contentIsObject) {
+      numberOfColumns++;
+      return renderColumn(col.content, col.width, index);
+    }
+    return col.content.map((column: any, index2: number) => {
+      // The render function from  storyblok-rich-text-react-renderer' expects an object that has a .type and .content
+      // property. For some reason the type blok doesn't have that and it was not rendering it.
+      if (column.type === 'blok') {
+        let numberColumnsInBlock = 0;
+        numberOfColumns++;
+
+        const renderedBlokColumns = column.attrs.body.map((el: any) => {
+          numberColumnsInBlock++;
+          return renderColumn(el.content, el.width, index2);
+        });
         return (
-          <Box sx={columnStyles} key={`row_column_${index}`}>
-            {render(column.content, RichTextOptions)}
-          </Box>
+          <Box sx={{ ...rowStyles, ...getGap(numberColumnsInBlock) }}>{renderedBlokColumns}</Box>
         );
-      })}
+      }
+      numberOfColumns++;
+      return renderColumn(column, column.width, index2);
+    });
+  });
+  return <Box sx={{ ...rowStyles, ...getGap(numberOfColumns) }}>{renderedColumns}</Box>;
+};
+
+const renderColumn = (content: any, width: string, index: number) => {
+  return (
+    <Box sx={columnStyles(width)} key={`row_column_${index}`}>
+      {render(content, RichTextOptions)}
     </Box>
   );
 };
