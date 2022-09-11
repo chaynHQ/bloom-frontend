@@ -41,8 +41,12 @@ interface Props {
 const coursesNotYetFinished = [
   'fr/courses/healing-from-sexual-trauma/',
   'fr/courses/dating-boundaries-and-relationships/',
+  'fr/courses/recovering-from-toxic-and-abusive-relationships/',
+  'fr/courses/reclaiming-resilience-in-your-trauma-story/',
   'hi/courses/dating-boundaries-and-relationships/',
   'hi/courses/society-patriarchy-and-sexual-trauma/',
+  'hi/courses/recovering-from-toxic-and-abusive-relationships/',
+  'hi/courses/reclaiming-resilience-in-your-trauma-story/',
 ];
 
 const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => {
