@@ -53,7 +53,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       # The following github action installs dependencies, caches them correctly
-      # and then run the Cypress tests
+      # and then runs the Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.0
         with:
@@ -63,6 +63,8 @@ jobs:
           spec: cypress/**/*.cy.tsx
           headed: false # false indicates the cypress run will be headless
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          config-file: cypress.config.ts
           env: login_path="auth/login",reset-password-path="auth/reset-password", mail-slurp-api-key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox-id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset-pwd-content-email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset-pwd-confirm-email="test@test.com"
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
