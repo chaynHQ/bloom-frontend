@@ -66,7 +66,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           config-file: cypress.config.ts
-          env: login_path="auth/login",reset-password-path="auth/reset-password", mail-slurp-api-key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox-id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset-pwd-content-email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset-pwd-confirm-email="test@test.com"
+          env: baseUrl="http://localhost:3000",login_path="auth/login",reset-password-path="auth/reset-password", mail-slurp-api-key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox-id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset-pwd-content-email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset-pwd-confirm-email="test@test.com"
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
