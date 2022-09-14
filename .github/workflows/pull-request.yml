@@ -59,7 +59,7 @@ jobs:
         with:
           build: yarn build
           start: yarn start
-          browser: chrome
+          browser: firefox
           spec: cypress/**/*.cy.tsx
           headed: false # false indicates the cypress run will be headless
           wait-on: 'http://localhost:3000'
