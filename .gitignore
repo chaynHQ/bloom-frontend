@@ -47,4 +47,4 @@ yarn-error.log*
 .vercel
 
 # scratch files 
-sandbox/
+/sandbox
