@@ -47,6 +47,8 @@ jobs:
         run: yarn test
 
   ## TODO: move to merge-pr-develop.yml once action is working
+  ## TODO: set up cache (link: https://nextjs.org/docs/advanced-features/ci-build-caching)
+  # TODO: rotate secrets and move to github
   cypress-run:
     runs-on: ubuntu-latest
     steps:
@@ -60,7 +62,6 @@ jobs:
           record: true
           build: yarn build
           start: yarn start
-          command: cypress run --record --key=cac79846-68ba-40e5-9fc5-22b4f793faf7
           browser: firefox
           spec: cypress/**/*.cy.tsx
           headed: false # false indicates the cypress run will be headless
@@ -69,6 +70,7 @@ jobs:
           config-file: cypress.config.ts
           env: baseUrl="http://localhost:3000",login_path="auth/login",reset-password-path="auth/reset-password", mail-slurp-api-key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox-id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset-pwd-content-email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset-pwd-confirm-email="test@test.com"
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
