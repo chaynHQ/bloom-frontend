@@ -18,7 +18,7 @@ jobs:
           branch: 'develop'
 
   cypress-run:
-    name: Cypress e2e tets
+    name: Cypress e2e tests
     needs: deploy-to-staging
     runs-on: ubuntu-latest
     steps:
