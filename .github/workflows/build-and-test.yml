@@ -1,4 +1,4 @@
-name: Checks on PRs to develop & main
+name: Build & test # on both PRs and push to develop/main
 
 on:
   push:
@@ -40,8 +40,5 @@ jobs:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
-          CYPRESS_mail_slurp_api_key: ${{secrets.MAIL_SLURP_API_KEY}}
-          CYPRESS_inbox_id: ${{secrets.MAILBOX_INBOX_ID}}
-          CYPRESS_reset_pwd_content_email: ${{secrets.RESET_PWD_CONTENT_EMAIL}}
       - name: Test app
         run: yarn test
