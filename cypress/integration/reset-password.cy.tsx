@@ -14,16 +14,16 @@ describe('Reset password', () => {
     // Find a link with an href attribute containing "reset-password" and click it
     cy.get('a[href*="reset-password"]').click();
 
-    cy.url().should('include', Cypress.env('reset-password-path'));
+    cy.url().should('include', Cypress.env('reset_password_path'));
 
     // The new page should contain an h2 with "Reset your password"
     cy.get('h2').contains('Reset your password');
   });
 
   it('should see resend-link button after typing known email', () => {
-    cy.visit(Cypress.env('reset-password-path'));
+    cy.visit(Cypress.env('reset_password_path'));
     cy.wait(1000); // Waiting for dom to rerender as the email input was detaching
-    cy.get('[qa-id=passwordResetEmailInput]').type(`${Cypress.env('reset-pwd-confirm-email')}`);
+    cy.get('[qa-id=passwordResetEmailInput]').type(`${Cypress.env('reset_pwd_confirm_email')}`);
     cy.get('[qa-id=passwordResetEmailButton]').click();
 
     cy.get('p', { timeout: 5000 }).should(
@@ -34,16 +34,16 @@ describe('Reset password', () => {
   });
 
   it('should receive email when known email submitted for password reset', async () => {
-    const mailslurp = new MailSlurp({ apiKey: Cypress.env('mail-slurp-api-key') });
+    const mailslurp = new MailSlurp({ apiKey: Cypress.env('mail_slurp_api_key') });
 
-    const inboxId = Cypress.env('inbox-id');
-    const email = Cypress.env('reset-pwd-content-email');
+    const inboxId = Cypress.env('inbox_id');
+    const email = Cypress.env('reset_pwd_content_email');
 
     // Retrieve inbox
     const inbox = await mailslurp.getInbox(inboxId);
 
     // Reset password
-    cy.visit(Cypress.env('reset-password-path'));
+    cy.visit(Cypress.env('reset_password_path'));
     cy.get('[qa-id=passwordResetEmailInput]').focus().type(`${email}{enter}`);
     cy.get('p', { timeout: 3000 })
       // check that front-end confirms an email has been sent
