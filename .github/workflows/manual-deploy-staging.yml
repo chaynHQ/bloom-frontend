@@ -1,15 +1,15 @@
-name: Deploy to prod
+name: Manual deploy to staging
 
 on: workflow_dispatch
 
 jobs:
-  deploy-to-prod:
+  deploy-to-staging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_PROD_APP}} #Must be unique in Heroku
+          heroku_app_name: ${{secrets.HEROKU_STAGING_APP}} #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          branch: 'main'
+          branch: 'develop'
