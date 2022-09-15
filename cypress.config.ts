@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
-  projectId: '78qysm',
+  projectId: 'to91wg',
   fileServerFolder: 'cypress',
   env: {
     login_path: 'auth/login',
