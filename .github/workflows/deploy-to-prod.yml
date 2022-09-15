@@ -1,4 +1,4 @@
-name: Merge onto Main Pipeline
+name: Deploy to prod
 
 on:
   push:

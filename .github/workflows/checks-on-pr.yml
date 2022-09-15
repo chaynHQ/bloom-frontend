@@ -1,4 +1,4 @@
-name: Pull request on develop and main
+name: Checks on PRs to develop & main
 
 on:
   push:
