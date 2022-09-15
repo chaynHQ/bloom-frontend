@@ -1,5 +1,4 @@
 name: Deploy to staging
-# TODO rename file to deploy to staging
 
 on:
   push:
