@@ -43,6 +43,7 @@ jobs:
       - name: Test app
         run: yarn test
   deploy-to-staging:
+    name: Deploy to staging
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
@@ -85,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-pr-to-main:
-    name: Create PR to deploy to production
+    name: Create PR to main
     needs: cypress-run
     runs-on: ubuntu-latest
     steps:
