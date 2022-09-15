@@ -40,9 +40,9 @@ jobs:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
-          CYPRESS_mail-slurp-api-key: ${{secrets.MAIL_SLURP_API_KEY}}
-          CYPRESS_inbox-id: ${{secrets.MAILBOX_INBOX_ID}}
-          CYPRESS_reset-pwd-content-email: ${{secrets.RESET_PWD_CONTENT_EMAIL}}
+          CYPRESS_mail_slurp_api_key: ${{secrets.MAIL_SLURP_API_KEY}}
+          CYPRESS_inbox_id: ${{secrets.MAILBOX_INBOX_ID}}
+          CYPRESS_reset_pwd_content_email: ${{secrets.RESET_PWD_CONTENT_EMAIL}}
       - name: Test app
         run: yarn test
 
@@ -69,7 +69,7 @@ jobs:
   #         wait-on: 'http://localhost:3000'
   #         wait-on-timeout: 180
   #         config-file: cypress.config.ts
-  #         env: login_path="auth/login",reset-password-path="auth/reset-password", mail-slurp-api-key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox-id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset-pwd-content-email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset-pwd-confirm-email="test@test.com"
+  #         env: login_path="auth/login",reset_password_path="auth/reset-password", mail_slurp_api_key="bde69db8499813f157cfaba1d127a676e34a8a5228a12cc0d82ed62d64937073",inbox_id="f7ac78a8-71da-4a8d-ad10-aa565bd05a66",reset_pwd_content_email="f7ac78a8-71da-4a8d-ad10-aa565bd05a66@mailslurp.com",reset_pwd_confirm_email="test@test.com"
   #       env:
   #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
