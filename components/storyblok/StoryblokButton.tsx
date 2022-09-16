@@ -2,10 +2,13 @@ import { Button } from '@mui/material';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import Link from '../common/Link';
 
+interface StoryblokLink {
+  cached_url: string;
+}
 interface StoryblokButtonProps {
   text: string;
   color: STORYBLOK_COLORS;
-  link: any;
+  link: StoryblokLink;
 }
 
 const StoryblokButton = (props: StoryblokButtonProps) => {

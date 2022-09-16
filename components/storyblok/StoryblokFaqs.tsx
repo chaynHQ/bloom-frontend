@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { FAQ_OPENED } from '../../constants/events';
-import { faqItem } from '../../constants/faqs';
+import { FaqItem } from '../../constants/faqs';
 import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -15,7 +15,7 @@ const containerStyle = {
   maxWidth: 650,
 } as const;
 interface StoryblokFaqsProps {
-  faqs: Array<faqItem>;
+  faqs: Array<FaqItem>;
 }
 
 const StoryblokFaqs = (props: StoryblokFaqsProps) => {
