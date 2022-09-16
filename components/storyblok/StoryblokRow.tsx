@@ -1,4 +1,5 @@
 import { Box } from '@mui/system';
+import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
@@ -7,8 +8,14 @@ type StoryblokColumn = {
   width: number;
   content: any;
 };
+type StoryblokBlok = {
+  type: 'blok';
+  attrs: {
+    body: [StoryblokColumn];
+  };
+};
 interface StoryblokRowProps {
-  columns: StoryblokColumn | StoryblokColumn[];
+  columns: StoryblokColumn | StoryblokColumn[] | Richtext;
   horizontal_alignment: string;
   vertical_alignment: string;
 }
@@ -78,30 +85,35 @@ const StoryblokRow = (props: StoryblokRowProps) => {
   } as const;
 
   let numberOfColumns = 0;
-  const renderedColumns = columnArray.map((col: any, index: number) => {
+  const renderedColumns = columnArray.map((col, index) => {
     // Sometimes col.content is an array and sometimes it isn't
     const contentIsObject = !Array.isArray(col.content);
     if (contentIsObject) {
+      const storyblokColumn = col as StoryblokColumn;
       numberOfColumns++;
-      return renderColumn(col.content, col.width, index);
+      return renderColumn(storyblokColumn.content, storyblokColumn.width.toString(), index);
     }
-    return col.content.map((column: any, index2: number) => {
+    return col.content.map((richTextContent: StoryblokBlok | StoryblokColumn, index2: number) => {
       // The render function from  storyblok-rich-text-react-renderer' expects an object that has a .type and .content
       // property. For some reason the type blok doesn't have that and it was not rendering it.
-      if (column.type === 'blok') {
+      if ('type' in richTextContent && richTextContent.type === 'blok') {
         let numberColumnsInBlock = 0;
         numberOfColumns++;
 
-        const renderedBlokColumns = column.attrs.body.map((el: any) => {
+        const renderedBlokColumns = richTextContent.attrs.body.map((el: StoryblokColumn) => {
           numberColumnsInBlock++;
-          return renderColumn(el.content, el.width, index2);
+          return renderColumn(el.content, el.width.toString(), index2);
         });
         return (
           <Box sx={{ ...rowStyles, ...getGap(numberColumnsInBlock) }}>{renderedBlokColumns}</Box>
         );
       }
       numberOfColumns++;
-      return renderColumn(column, column.width, index2);
+      return 'width' in richTextContent ? (
+        renderColumn(richTextContent, richTextContent.width.toString(), index2)
+      ) : (
+        <></>
+      );
     });
   });
   return <Box sx={{ ...rowStyles, ...getGap(numberOfColumns) }}>{renderedColumns}</Box>;
