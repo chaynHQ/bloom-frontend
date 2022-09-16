@@ -13,5 +13,6 @@
     "prettier": {
       "singleQuote": true
     }
-  }
+  },
+  "cSpell.words": ["STORYBLOK"]
 }

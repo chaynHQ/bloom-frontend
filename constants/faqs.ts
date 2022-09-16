@@ -1,11 +1,11 @@
-export interface faqItem {
+export interface FaqItem {
   title: string;
   body: string;
   link?: string;
   list?: string[];
 }
 
-export const therapyFaqs: (link: string) => Array<faqItem> = (link) => [
+export const therapyFaqs: (link: string) => Array<FaqItem> = (link) => [
   {
     title: 'faqTitle0',
     body: 'faqBody0',
