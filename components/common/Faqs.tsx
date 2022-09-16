@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import { THERAPY_FAQ_OPENED } from '../../constants/events';
-import { faqItem } from '../../constants/faqs';
+import { FaqItem } from '../../constants/faqs';
 import { Partner } from '../../constants/partners';
 import logEvent from '../../utils/logEvent';
 import Link from './Link';
 
 interface FaqsProps {
   translations: string;
-  faqList: Array<faqItem>;
+  faqList: Array<FaqItem>;
   partner?: Partner | null;
   eventUserData: any;
 }
