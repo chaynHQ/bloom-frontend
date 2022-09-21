@@ -1,9 +1,6 @@
-name: Merge onto Main Pipeline
+name: Manual deploy to prod
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   deploy-to-prod:

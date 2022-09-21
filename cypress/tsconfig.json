@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["cypress"]
+    "types": ["cypress"],
+    "baseUrl": "."
   },
   "include": ["**/*.tsx"]
 }

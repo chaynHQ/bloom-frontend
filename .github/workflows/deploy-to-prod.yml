@@ -1,13 +1,13 @@
-name: Pull request on develop and main
+name: Deploy to prod
 
 on:
   push:
-    branches: [develop, main]
-  pull_request:
-    branches: [develop, main]
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-test:
+    name: Build & test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -40,8 +40,16 @@ jobs:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
-          CYPRESS_mail-slurp-api-key: ${{secrets.MAIL_SLURP_API_KEY}}
-          CYPRESS_inbox-id: ${{secrets.MAILBOX_INBOX_ID}}
-          CYPRESS_reset-pwd-content-email: ${{secrets.RESET_PWD_CONTENT_EMAIL}}
       - name: Test app
         run: yarn test
+  deploy-to-prod:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PROD_APP}} # Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          branch: 'main'

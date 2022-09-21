@@ -1,11 +1,12 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  projectId: 'to91wg',
   fileServerFolder: 'cypress',
   env: {
     login_path: 'auth/login',
-    'reset-password-path': 'auth/reset-password',
-    'reset-pwd-confirm-email': 'test@test.com',
+    reset_password_path: 'auth/reset-password',
+    reset_pwd_confirm_email: 'test@test.com',
   },
   e2e: {
     // We've imported your old cypress plugins here.
