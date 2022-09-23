@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { EmailForm, PasswordForm } from '../../components/forms/ResetPasswordForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -45,6 +46,9 @@ const ResetPassword: NextPage = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{t('resetPassword.title')}</title>
+      </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
