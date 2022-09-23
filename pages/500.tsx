@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { GetStaticPropsContext, NextPage } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import { RootState } from '../app/store';
@@ -34,6 +35,9 @@ const Custom500: NextPage = () => {
 
   return (
     <Container sx={containerStyle}>
+      <Head>
+        <title>{t('500.title')}</title>
+      </Head>
       <Box sx={imageContainerStyle}>
         <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
       </Box>
