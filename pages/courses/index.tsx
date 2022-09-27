@@ -207,3 +207,5 @@ const getEnabledCourses = (courseStories: StoryData[]): StoryData[] => {
   // If the user navigates to the URL, they may still be able to access the course.
   return courseStories.filter((course) => !FeatureFlag.getDisabledCourses().has(course.full_slug));
 };
+
+export default CourseList;
