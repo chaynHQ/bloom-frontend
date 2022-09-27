@@ -7,13 +7,13 @@ describe('featureFlag', () => {
   it('should return disabled courses when environment variable set', () => {
     process.env.FF_DISABLED_COURSES = [disabledCourse1, disabledCourse2].join(',');
 
-    expect(FeatureFlag.getDisabledCourses()).toContain(disabledCourse1);
-    expect(FeatureFlag.getDisabledCourses()).toContain(disabledCourse2);
+    expect(Array.from(FeatureFlag.getDisabledCourses())).toContain(disabledCourse1);
+    expect(Array.from(FeatureFlag.getDisabledCourses())).toContain(disabledCourse2);
   });
 
   it('should return empty array when environment variable not', () => {
     process.env.FF_DISABLED_COURSES = '';
 
-    expect(FeatureFlag.getDisabledCourses().length).toEqual(0);
+    expect(FeatureFlag.getDisabledCourses().size).toEqual(0);
   });
 });
