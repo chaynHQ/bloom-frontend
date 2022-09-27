@@ -187,7 +187,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
 
   return {
     props: {
-      stories: data ? getEnabledStories(data.stories) : null,
+      stories: data ? getEnabledCourses(data.stories) : null,
       preview,
       sbParams: JSON.stringify(sbParams),
       messages: {
@@ -200,26 +200,10 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     revalidate: 3600, // revalidate every hour
   };
 }
-// TODO rename to courses
+
 // TODO remove this when hindi and french courses are fixed
-const getEnabledStories = (stories: StoryData[]): StoryData[] => {
+const getEnabledCourses = (courseStories: StoryData[]): StoryData[] => {
   // Note that this filter only removes the course from the courses page for the user.
   // If the user navigates to the URL, they may still be able to access the course.
-  console.log(
-    '>> stories',
-    stories.map((story) => story.full_slug),
-  );
-  const filteredStories = stories.filter(
-    (course) => !FeatureFlag.getDisabledCourses().has(course.full_slug),
-  );
-  console.log(
-    '>> filtered stories',
-    filteredStories.map((story) => story.full_slug),
-  );
-
-  console.log('>> disabled courses', FeatureFlag.getDisabledCourses());
-
-  return filteredStories;
+  return courseStories.filter((course) => !FeatureFlag.getDisabledCourses().has(course.full_slug));
 };
-
-export default CourseList;
