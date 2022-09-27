@@ -200,13 +200,26 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     revalidate: 3600, // revalidate every hour
   };
 }
+// TODO rename to courses
 // TODO remove this when hindi and french courses are fixed
 const getEnabledStories = (stories: StoryData[]): StoryData[] => {
   // Note that this filter only removes the course from the courses page for the user.
   // If the user navigates to the URL, they may still be able to access the course.
-  return stories.filter(
-    (course) => FeatureFlag.getDisabledCourses().indexOf(course.full_slug) === -1,
+  console.log(
+    '>> stories',
+    stories.map((story) => story.full_slug),
   );
+  const filteredStories = stories.filter(
+    (course) => !FeatureFlag.getDisabledCourses().has(course.full_slug),
+  );
+  console.log(
+    '>> filtered stories',
+    filteredStories.map((story) => story.full_slug),
+  );
+
+  console.log('>> disabled courses', FeatureFlag.getDisabledCourses());
+
+  return filteredStories;
 };
 
 export default CourseList;
