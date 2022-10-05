@@ -1,7 +1,7 @@
 {
   "Index": {
-    "title": "Welcome to Bloom",
-    "introduction": "Starter <nextLink>Next.js</nextLink>, <reduxLink>Redux</reduxLink> and <muiLink>MUI</muiLink> project",
-    "nextDocs": "Next.js docs"
+    "title": "Boas vindas ao Bloom",
+    "introduction": "Começar <nextLink>Next.js</nextLink>, <reduxLink>Redux</reduxLink> e <muiLink>MUI</muiLink> projeto",
+    "nextDocs": "Next.js documentos"
   }
 }
