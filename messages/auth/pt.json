@@ -1,54 +1,54 @@
 {
   "Auth": {
-    "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
-    "getStartedBloom": "Get started with Bloom",
-    "getStartedWith": "Get started with a {partnerName} code",
-    "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
-    "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
+    "introduction": "Bloom informa, capacita e participa do empoderamento de pessoas sobreviventes oferecendo cursos remotos que combinam reflexões sobre trauma e violência baseada em gênero com práticas terapêuticas para ajudar no processo de recuperação de traumas.",
+    "getStartedBloom": "Iniciar com o Bloom",
+    "getStartedWith": "Começar com um código {partnerName}",
+    "loginLink": "Já tem uma conta? <loginLink>Go to login</loginLink>",
+    "terms": "Ao continuar, você indica que aceita nossos <policiesLink>Termos de Serviço e Política de Privacidade</policiesLink>",
     "login": {
-      "title": "Welcome back",
-      "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>",
-      "newUserTitle": "New to Bloom?"
+      "title": "Boas-vindas outra vez",
+      "resetPasswordLink": "Esqueceu a senha? <resetLink>Reset here</resetLink>",
+      "newUserTitle": "Primeira vez no Bloom?"
     },
     "register": {
-      "title": "Create account",
-      "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
-      "moreInfo": "More on <welcomeLink>how Bloom works</welcomeLink>.",
-      "partnershipsTitle": "Our partnerships",
-      "partnershipsDescription": "If you're coming to Bloom from one of our partners, click their logo below."
+      "title": "Criar uma conta",
+      "loginRedirect": "Já tem uma conta? <loginLink>Log in</loginLink>",
+      "moreInfo": "Mais sobre <welcomeLink>como funciona o Bloom</welcomeLink>.",
+      "partnershipsTitle": "Nossas parcerias",
+      "partnershipsDescription": "Se você chegou no Bloom por meio de uma de nossas parcerias, clique no logotipo abaixo."
     },
     "resetPassword": {
-      "title": "Reset your password"
+      "title": "Recuperar a senha"
     },
     "form": {
-      "codeLabel": "access code",
-      "nameLabel": "First name/nickname",
-      "emailLabel": "Email",
-      "passwordLabel": "Password",
-      "contactPermissionLabel": "Can we email you for feedback on how to improve Bloom?",
-      "registerSubmit": "Create account",
-      "resetPasswordStep1": "We'll send you an email to begin resetting your password.",
-      "resetPasswordStep2": "Almost there! You can now set your new password.",
-      "resetPasswordSubmit": "Reset password",
-      "resendPasswordSubmit": "Resend email",
-      "resetPasswordSent": "Check your emails for a reset link from Bloom. Didn't receive one? Check your junk folder or resend the email.",
-      "passwordResetSuccess": "Your password has been reset! You can now continue to login with your new password.",
+      "codeLabel": "Código de acesso",
+      "nameLabel": "Nome/apelido",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Senha",
+      "contactPermissionLabel": "Podemos enviar um e-mail para saber sua opinião sobre como melhorar o Bloom?",
+      "registerSubmit": "Criar uma conta",
+      "resetPasswordStep1": "Enviaremos um e-mail para você começar a redefinir sua senha.",
+      "resetPasswordStep2": "Estamos quase lá! Agora você pode definir sua nova senha.",
+      "resetPasswordSubmit": "Recuperar a senha",
+      "resendPasswordSubmit": "Reenviar e-mail",
+      "resetPasswordSent": "Enviamos para seu e-mail cadastrado um link de redefinição de senha do Bloom. Não recebeu o e-mail? Verifique na sua caixa de spam ou reenvie o e-mail.",
+      "passwordResetSuccess": "Sua senha foi alterada! Agora você pode se conectar com sua nova senha.",
       "loginSubmit": "Login",
-      "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-      "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "createUserError": "Ocorreu um erro ao configurar sua conta. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o erro persistir.",
+      "getUserError": "Ocorreu um erro ao tentar recuperar sua conta. Por favor, tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o erro persistir.",
       "codeErrors": {
-        "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "expired": "This code has expired. Get in touch with the {partnerName} team.",
-        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the {partnerName} team.",
-        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
+        "internal": "Ocorreu um erro ao validar seu código de acesso. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o problema persistir.",
+        "expired": "Este código expirou. Entre em contato com a equipe de {partnerName}.",
+        "invalid": "Seu código de acesso parece ser inválido. Verifique se há erros de digitação ou entre em contato com a equipe de {partnerName}.",
+        "alreadyInUse": "Este código já foi utilizado. Se você acha que houve um engano, entre em contato com a equipe de {partnerName}."
       },
       "firebase": {
-        "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
-        "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
-        "weakPassword": "Your password needs to be a little longer, so it's more secure.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
-        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
-        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
+        "authError": "Não foi possível encontrar uma conta para essa combinação de e-mail e senha. Verifique se seu e-mail e senha estão corretos.",
+        "invalidEmail": "Seu e-mail parece estar inválido. Por favor, corrija os erros de digitação para continuar.",
+        "weakPassword": "Sua senha precisa ser um pouco mais longa para ser mais segura.",
+        "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
+        "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
+        "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente."
       }
     }
   }

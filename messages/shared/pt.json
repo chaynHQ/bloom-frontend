@@ -1,16 +1,16 @@
 {
   "Shared": {
     "bloom": "Bloom",
-    "leaveSiteButton": "Leave this site",
+    "leaveSiteButton": "Sair deste site",
     "footer": {
-      "chaynDescription": "Bloom is brought to you by Chayn, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
-      "bloomLine1": "Built by CHAYN CIO.",
-      "bloomLine2": "UK Charity Number: 1196098",
-      "bumbleLine1": "In partnership with",
+      "chaynDescription": "O Bloom é oferecido a você pela Chayn, uma organização global sem fins lucrativos, administrada por pessoas sobreviventes e aliadas de todo o mundo, que cria recursos para apoiar no processo de recuperação de sobreviventes de violência baseada em gênero.",
+      "bloomLine1": "Criado por CHAYN CIO.",
+      "bloomLine2": "Número de caridade no Reino Unido: 1196098",
+      "bumbleLine1": "Em parceria com",
       "bumbleLine2": "BUMBLE HOLDING LTD",
-      "badooLine1": "In partnership with",
+      "badooLine1": "Em parceria com ",
       "badooLine2": "BADOO LTD",
-      "policies": "Our policies"
+      "policies": "Nossas políticas"
     },
     "videoTranscript": {
       "title": "Video transcript",
@@ -19,53 +19,53 @@
     },
     "progressStatus": {
       "started": "Started",
-      "completed": "Completed",
+      "completed": "Finalizado",
       "notStarted": "Not started"
     },
     "meetTheTeam": {
-      "expandTeamMember": "Expand bio for {name}"
+      "expandTeamMember": "Expandir a biografia para {name}"
     },
     "404": {
-      "title": "404 - Page not found",
-      "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
-      "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "404 - Página não encontrada",
+      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
+      "unauthenticatedDescription": "Página não encontrada. Verifique a  url ou volte à página inicial.",
+      "authenticatedRedirectButton": "Retornar à página de cursos",
+      "unauthenticatedRedirectButton": "Voltar à página inicial"
     },
     "500": {
-      "title": "500 - Internal error",
-      "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "500 - Erro interno",
+      "description": "Ooops, algo deu errado aí. Por favor, volte e tente novamente. Entre em contato através do formulário de contato se o erro persistir.",
+      "authenticatedRedirectButton": "Voltar à página de cursos",
+      "unauthenticatedRedirectButton": "Voltar à página inicial"
     },
     "alt": {
-      "bloomLogo": "Bloom logo",
-      "bumbleLogo": "Bumble logo",
-      "bloomBumbleLogo": "Bloom in partnership with Bumble logo",
-      "badooLogo": "Badoo logo",
-      "bloomBadooLogo": "Bloom in partnership with Badoo logo",
-      "welcomeToBloom": "Welcome to Bloom",
-      "tiktokLogo": "Tiktok logo",
-      "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
-      "beehive": "Illustration of a bee hive",
-      "leafMix": "Illustration of two leaves joined with a rose",
-      "leafMixBee": "Illustration of two leaves with a bee hovering above",
-      "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
-      "personTea": "Illustration of a person sitting, holding a tea",
-      "personSitting": "Illustration of a person sitting",
-      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
-      "dateSelector": "Illustration of a calendar with a heart in the middle",
-      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
-      "confidential": "Illustration of a document with a lock in the corner",
-      "cookieCat": "Illustration of a resting cat with a cookie"
+      "bloomLogo": "Logotipo do Bloom",
+      "bumbleLogo": "Logotipo do Bumble",
+      "bloomBumbleLogo": "Logotipo da parceria entre Bloom e Bumble",
+      "badooLogo": "Logotipo de Badoo",
+      "bloomBadooLogo": "Logotipo da parceria entre Bloom e Badoo",
+      "welcomeToBloom": "Boas-vindas ao Bloom",
+      "tiktokLogo": "Logotipo do Tiktok",
+      "bloomHead": "Ilustração do rosto e ombros de uma pessoa, com grandes folhas e flores desabrochando acima delas",
+      "beehive": "Ilustração de uma colmeia",
+      "leafMix": "Ilustração de duas folhas unidas com uma rosa",
+      "leafMixBee": "Ilustração de duas folhas com uma abelha voando acima",
+      "leafMixDots": "Ilustração de 3 folhas com uma flor no meio e pontos saindo da flor.",
+      "personTea": "Ilustração de uma pessoa sentada, segurando uma xícara de chá",
+      "personSitting": "Ilustração de uma pessoa sentada",
+      "chooseTherapist": "Ilustração do rosto de uma pessoa de perfil, com uma flor",
+      "dateSelector": "Ilustração de um calendário com um coração no meio",
+      "change": "Ilustração de um ciclo- três sóis em um círculo com flechas entre eles",
+      "confidential": "Ilustração de um documento com um cadeado em um dos cantos",
+      "cookieCat": "Ilustração de um gato descansando com um biscoito"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Survivor",
     "cookieConsent": {
-      "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
-      "cookieConsentPolicy": "cookie policy",
-      "acceptLabel": "Accept Cookies",
-      "declineLabel": "Reject Cookies"
+      "cookieConsentExplainer": "Por favor, permita que cookies de análise sejam habilitados para que possamos melhorar o Bloom. Leia mais em nossa",
+      "cookieConsentPolicy": "Política de cookies",
+      "acceptLabel": "Aceitar Cookies",
+      "declineLabel": "Rejeitar Cookies"
     }
   }
 }
