@@ -3,22 +3,14 @@ import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
+import { StoryblokBlok, StoryblokColumn } from './StoryblokTypes';
 
-type StoryblokColumn = {
-  width: number;
-  content: any;
-};
-type StoryblokBlok = {
-  type: 'blok';
-  attrs: {
-    body: [StoryblokColumn];
-  };
-};
 interface StoryblokRowProps {
   columns: StoryblokColumn | StoryblokColumn[] | Richtext;
   horizontal_alignment: string;
   vertical_alignment: string;
 }
+
 const columnStyles = (width: string | undefined) => ({
   width:
     width === 'extra-small'
