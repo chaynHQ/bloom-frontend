@@ -16,13 +16,13 @@ import { StoryblokColumn } from './StoryblokTypes';
  * See link for more detail (https://www.notion.so/chayn/Create-new-parallel-StoryblokRowBlockOnly-b9ff8aeffdbe4180a48002927899c187).
  */
 
-interface StoryblokRowBlockOnlyProps {
+interface StoryblokRowColumnBlockProps {
   columns: StoryblokColumn[];
   horizontal_alignment: string;
   vertical_alignment: string;
 }
 
-const StoryblokRow = (props: StoryblokRowBlockOnlyProps) => {
+const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
   const { columns, horizontal_alignment, vertical_alignment } = props;
 
   if (!columns) return <></>;
@@ -87,4 +87,4 @@ const StoryblokRow = (props: StoryblokRowBlockOnlyProps) => {
   );
 };
 
-export default StoryblokRow;
+export default StoryblokRowColumnBlock;
