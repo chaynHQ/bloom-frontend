@@ -77,11 +77,13 @@ NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=
 NEXT_PUBLIC_HOTJAR_ID=
 ```
 
-**When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
+If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
 
-#### Environment variables
+**NB: When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
 
-This is a brief guide to environment variables that need more background. (redo)
+### Environment variables
+
+This is a brief explanation for environment variables that need more background.
 
 - FF_DISABLED_COURSES: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
 
