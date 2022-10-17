@@ -1,0 +1,28 @@
+{
+  "PartnerAdmin": {
+    "createAccessCode": {
+      "title": "Criar um código de acesso ",
+      "introduction": "Use este formulário para criar um código de acesso sempre que quiser dar acesso ao Bloom a alguém.",
+      "courseAccess": "Acesso apenas aos cursos",
+      "liveChatAccess": "Acesso aos cursos e chat 1:1",
+      "therapyAccess": "Acesso aos cursos, chat 1:1 e seis sessões de terapia",
+      "resultLink": "Por favor, informar a quem utiliza o serviço que  vá para <welcomeURL></welcomeURL>.",
+      "resultCode": "Registrar-se usando seu endereço de e-mail e o código de acesso <partnerAccessCode></partnerAccessCode>",
+      "form": {
+        "featuresLabel": "Selecionar um tipo de apoio oferecido a esse perfil de participante",
+        "featureCoursesLabel": "Apenas cursos",
+        "featureLiveChatLabel": "Cursos e chat 1:1",
+        "featureTherapyLabel": "Cursos, chat 1:1 e seis sessões de terapia",
+        "reset": "Criar outro código",
+        "errors": {
+          "createPartnerAccessError": "Ocorreu um erro ao criar o código de acesso. Tente novamente ou mande uma mensagem para a equipe Bloom.",
+          "featureRequired": "Selecione um tipo de suporte antes de criar um código de acesso"
+        }
+      }
+    },
+    "accessGuard": {
+      "title": "Acesso necessário",
+      "introduction": "Sua conta não inclui acesso a páginas de parcerias. Se isso não parecer certo, <contactLink>envie uma mensagem para a equipe Bloom</contactLink>."
+    }
+  }
+}

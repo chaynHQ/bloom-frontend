@@ -1,0 +1,71 @@
+{
+  "Shared": {
+    "bloom": "Bloom",
+    "leaveSiteButton": "Sair deste site",
+    "footer": {
+      "chaynDescription": "O Bloom é oferecido a você pela Chayn, uma organização global sem fins lucrativos, administrada por pessoas sobreviventes e aliadas de todo o mundo, que cria recursos para apoiar no processo de recuperação de sobreviventes de violência baseada em gênero.",
+      "bloomLine1": "Criado por CHAYN CIO.",
+      "bloomLine2": "Número de caridade no Reino Unido: 1196098",
+      "bumbleLine1": "Em parceria com",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "badooLine1": "Em parceria com ",
+      "badooLine2": "BADOO LTD",
+      "policies": "Nossas políticas"
+    },
+    "videoTranscript": {
+      "title": "Video transcript",
+      "description": "Read the transcript for video - ",
+      "closeModal": "Close transcript"
+    },
+    "progressStatus": {
+      "started": "Started",
+      "completed": "Finalizado",
+      "notStarted": "Not started"
+    },
+    "meetTheTeam": {
+      "expandTeamMember": "Expandir a biografia para {name}"
+    },
+    "404": {
+      "title": "404 - Página não encontrada",
+      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
+      "unauthenticatedDescription": "Página não encontrada. Verifique a  url ou volte à página inicial.",
+      "authenticatedRedirectButton": "Retornar à página de cursos",
+      "unauthenticatedRedirectButton": "Voltar à página inicial"
+    },
+    "500": {
+      "title": "500 - Erro interno",
+      "description": "Ooops, algo deu errado aí. Por favor, volte e tente novamente. Entre em contato através do formulário de contato se o erro persistir.",
+      "authenticatedRedirectButton": "Voltar à página de cursos",
+      "unauthenticatedRedirectButton": "Voltar à página inicial"
+    },
+    "alt": {
+      "bloomLogo": "Logotipo do Bloom",
+      "bumbleLogo": "Logotipo do Bumble",
+      "bloomBumbleLogo": "Logotipo da parceria entre Bloom e Bumble",
+      "badooLogo": "Logotipo de Badoo",
+      "bloomBadooLogo": "Logotipo da parceria entre Bloom e Badoo",
+      "welcomeToBloom": "Boas-vindas ao Bloom",
+      "tiktokLogo": "Logotipo do Tiktok",
+      "bloomHead": "Ilustração do rosto e ombros de uma pessoa, com grandes folhas e flores desabrochando acima delas",
+      "beehive": "Ilustração de uma colmeia",
+      "leafMix": "Ilustração de duas folhas unidas com uma rosa",
+      "leafMixBee": "Ilustração de duas folhas com uma abelha voando acima",
+      "leafMixDots": "Ilustração de 3 folhas com uma flor no meio e pontos saindo da flor.",
+      "personTea": "Ilustração de uma pessoa sentada, segurando uma xícara de chá",
+      "personSitting": "Ilustração de uma pessoa sentada",
+      "chooseTherapist": "Ilustração do rosto de uma pessoa de perfil, com uma flor",
+      "dateSelector": "Ilustração de um calendário com um coração no meio",
+      "change": "Ilustração de um ciclo- três sóis em um círculo com flechas entre eles",
+      "confidential": "Ilustração de um documento com um cadeado em um dos cantos",
+      "cookieCat": "Ilustração de um gato descansando com um biscoito"
+    },
+    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
+    "survivor": "Survivor",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Por favor, permita que cookies de análise sejam habilitados para que possamos melhorar o Bloom. Leia mais em nossa",
+      "cookieConsentPolicy": "Política de cookies",
+      "acceptLabel": "Aceitar Cookies",
+      "declineLabel": "Rejeitar Cookies"
+    }
+  }
+}

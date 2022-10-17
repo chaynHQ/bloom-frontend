@@ -1,0 +1,21 @@
+{
+  "Navigation": {
+    "menu": "Menu de navegação",
+    "menuOpen": "Abrir menu de navegação",
+    "menuClose": "Fechar menu de navegação",
+    "languageMenu": "Menu de idiomas",
+    "bloomLogo": "Logotipo do Bloom",
+    "login": "Iniciar sessão",
+    "logout": "Desconectar-se",
+    "userMenu": "Menu de configuração de perfil de participante",
+    "home": "Início",
+    "admin": "Admin",
+    "about": "Sobre",
+    "meetTheTeam": "Nossa equipe do Bloom",
+    "immediateHelp": "Ajuda Imediata",
+    "therapy": "Terapia",
+    "courses": "Cursos",
+    "applyCode": "Aplicar um código",
+    "account": "Conta"
+  }
+}

@@ -7,6 +7,7 @@ import StoryblokImage from './StoryblokImage';
 import StoryblokPageSection from './StoryblokPageSection';
 import StoryblokQuote from './StoryblokQuote';
 import StoryblokRow from './StoryblokRow';
+import StoryblokRowColumnBlock from './StoryblokRowColumnBlock';
 import StoryblokStatement from './StoryblokStatement';
 import StoryblokVideo from './StoryblokVideo';
 
@@ -20,6 +21,7 @@ const components: Component[] = [
   { name: 'image', component: StoryblokImage },
   { name: 'video', component: StoryblokVideo },
   { name: 'row', component: StoryblokRow },
+  { name: 'row_new', component: StoryblokRowColumnBlock },
   { name: 'quote', component: StoryblokQuote },
   { name: 'card', component: StoryblokCard },
   { name: 'button', component: StoryblokButton },

@@ -1,0 +1,55 @@
+{
+  "Auth": {
+    "introduction": "Bloom informa, capacita e participa do empoderamento de pessoas sobreviventes oferecendo cursos remotos que combinam reflexões sobre trauma e violência baseada em gênero com práticas terapêuticas para ajudar no processo de recuperação de traumas.",
+    "getStartedBloom": "Iniciar com o Bloom",
+    "getStartedWith": "Começar com um código {partnerName}",
+    "loginLink": "Já tem uma conta? <loginLink>Go to login</loginLink>",
+    "terms": "Ao continuar, você indica que aceita nossos <policiesLink>Termos de Serviço e Política de Privacidade</policiesLink>",
+    "login": {
+      "title": "Boas-vindas outra vez",
+      "resetPasswordLink": "Esqueceu a senha? <resetLink>Reset here</resetLink>",
+      "newUserTitle": "Primeira vez no Bloom?"
+    },
+    "register": {
+      "title": "Criar uma conta",
+      "loginRedirect": "Já tem uma conta? <loginLink>Log in</loginLink>",
+      "moreInfo": "Mais sobre <welcomeLink>como funciona o Bloom</welcomeLink>.",
+      "partnershipsTitle": "Nossas parcerias",
+      "partnershipsDescription": "Se você chegou no Bloom por meio de uma de nossas parcerias, clique no logotipo abaixo."
+    },
+    "resetPassword": {
+      "title": "Recuperar a senha"
+    },
+    "form": {
+      "codeLabel": "Código de acesso",
+      "nameLabel": "Nome/apelido",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Senha",
+      "contactPermissionLabel": "Podemos enviar um e-mail para saber sua opinião sobre como melhorar o Bloom?",
+      "registerSubmit": "Criar uma conta",
+      "resetPasswordStep1": "Enviaremos um e-mail para você começar a redefinir sua senha.",
+      "resetPasswordStep2": "Estamos quase lá! Agora você pode definir sua nova senha.",
+      "resetPasswordSubmit": "Recuperar a senha",
+      "resendPasswordSubmit": "Reenviar e-mail",
+      "resetPasswordSent": "Enviamos para seu e-mail cadastrado um link de redefinição de senha do Bloom. Não recebeu o e-mail? Verifique na sua caixa de spam ou reenvie o e-mail.",
+      "passwordResetSuccess": "Sua senha foi alterada! Agora você pode se conectar com sua nova senha.",
+      "loginSubmit": "Login",
+      "createUserError": "Ocorreu um erro ao configurar sua conta. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o erro persistir.",
+      "getUserError": "Ocorreu um erro ao tentar recuperar sua conta. Por favor, tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o erro persistir.",
+      "codeErrors": {
+        "internal": "Ocorreu um erro ao validar seu código de acesso. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o problema persistir.",
+        "expired": "Este código expirou. Entre em contato com a equipe de {partnerName}.",
+        "invalid": "Seu código de acesso parece ser inválido. Verifique se há erros de digitação ou entre em contato com a equipe de {partnerName}.",
+        "alreadyInUse": "Este código já foi utilizado. Se você acha que houve um engano, entre em contato com a equipe de {partnerName}."
+      },
+      "firebase": {
+        "authError": "Não foi possível encontrar uma conta para essa combinação de e-mail e senha. Verifique se seu e-mail e senha estão corretos.",
+        "invalidEmail": "Seu e-mail parece estar inválido. Por favor, corrija os erros de digitação para continuar.",
+        "weakPassword": "Sua senha precisa ser um pouco mais longa para ser mais segura.",
+        "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
+        "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
+        "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente."
+      }
+    }
+  }
+}

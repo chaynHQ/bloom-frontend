@@ -1,0 +1,64 @@
+{
+  "Therapy": {
+    "title": "Agende uma sessão de terapia",
+    "introduction": "{partnerName} fez uma parceria com a Bloom para oferecer suporte gratuito e confidencial. Bloom conecta você a uma pessoa terapeuta da sua escolha que pode oferecer suporte personalizado. Você terá acesso a seis sessões de uma hora.",
+    "bookingButton": "Begin booking",
+    "therapySessionsRemaining": "Você tem <strongText>4</strongText> sessões de terapia disponíveis para serem agendadas.",
+    "noTherapySessionsRemaining": "No momento, você não tem mais sessões para agendar. ",
+    "steps": {
+      "step1": "Escolha entre as opções disponíveis de terapeutas multilíngues, que passaram por uma cuidadosa seleção.",
+      "step2": "Escolha a data e hora que melhor funcionar para você. Todas as sessões são virtuais.",
+      "step3": "Se você mudar de ideia, poderá suspender as sessões ou trocar de profissional a qualquer momento. ",
+      "step4": "Tudo o que você compartilhar, permanecerá estritamente confidencial entre você a pessoa que te acompanha como terapeuta."
+    },
+    "faqHeader": "Mais sobre a terapia",
+    "faqs": {
+      "faqTitle0": "Para quem é este programa?",
+      "faqBody0": "O programa está disponível para qualquer pessoa que utilize {partnerName} que denuncie abuso ou agressão sexual a {partnerName}, independentemente de sua origem, raça, idade, deficiência, religião ou crença, sexualidade, identidade ou expressão de gênero ou circunstâncias de vida - estamos aqui para você.",
+      "faqTitle1": "Tenho que pagar pela terapia?",
+      "faqBody1": "Por meio desse programa, o Bloom oferece uma variedade de serviços para quem utiliza {partnerName} que estão no processo de recuperação de suas experiências de abuso ou agressão sexual. Isso inclui acesso gratuito à biblioteca autoguiada de recursos do Bloom, criada por pessoas sobreviventes e terapeutas informadas sobre traumas, e oportunidades para conversar em um chat interativo 1:1 com quem facilitou o curso. Para aquelas pessoas que utilizam {partnerName} e que tiveram experiências profundamente traumáticas, seis sessões de terapia de 50 minutos serão fornecidas gratuitamente.",
+      "faqTitle2": "Quantas sessões de terapia tenho direito?",
+      "faqBody2": "Para as pessoas que utilizam {partnerName} e que tiveram experiências profundamente traumáticas, seis sessões de terapia de 50 minutos serão fornecidas gratuitamente.",
+      "faqTitle3": "Quanto tempo tenho para agendar minhas sessões de terapia?",
+      "faqBody3": "Você pode escolher com que frequência deseja fazer suas sessões, seja uma vez por semana ou uma vez por mês. É recomendável que você converse com a pessoa que te acompanha como terapeuta para decidir o que funciona melhor para você. Por favor, reserve sua primeira sessão dentro de três meses após o recebimento do seu código de acesso.",
+      "faqTitle4": "Posso fazer as sessões presencialmente?",
+      "faqBody4": "Todas as sessões serão realizadas online através de videochamadas. O Bloom é especializado em suporte digital e remoto. As pessoas terapeutas são escolhidas pela experiência e habilidade para tirar o melhor proveito de uma sessão online.",
+      "faqTitle5": "O que acontece se não posso participar da minha sessão de terapia?",
+      "faqBody5": "Use o link em seu e-mail de confirmação para reagendar sua sessão de terapia com o máximo de antecedência possível. Cancelar com menos de 48 horas antes da sessão pode contar como sessão de terapia realizada, portanto, tente reagendá-las com antecedência.",
+      "faqTitle6": "O que fazer se eu não encontrar um horário disponível para agendar a sessão de terapia?",
+      "faqBody6": "A parceria Bloom com {partnerName} e o programa de suporte está nos estágios iniciais e isso significa que talvez ainda não tenhamos uma equipe completa de terapeutas disponível. Deveríamos ter disponibilidade na maioria dos fusos horários para atender às suas necessidades. Se você não conseguir encontrar terapeuta disponível ou um horário que funcione, informe-nos através do nosso <faqLink>formulário de contato</faqLink>. Isso nos ajudará a resolver quaisquer lacunas ou dificuldades no acesso.",
+      "faqTitle7": "E se eu não criar uma boa conexão com a pessoa terapeuta?",
+      "faqBody7": "Somos seres humanos, então não se preocupe se você não sentir que criou uma conexão com a pessoa terapeuta com quem falou. Você pode reservar sua(s) sessão(ões) restante(s) com outra pessoa diferente.",
+      "faqTitle8": "O que acontece quando as minhas seis sessões terminam?",
+      "faqBody8": "Converse com a pessoa terapeuta sobre quais são suas necessidades e se ela acha que você poderia se beneficiar de mais sessões. Quem é  terapeuta no Bloom pode compartilhar sua lista de preços com você, e você pode decidir se quer continuar a terapia com essa pessoa.",
+      "faqTitle9": "Eu não fui à sessão, mas a plataforma me mostra que tenho uma sessão a menos.",
+      "faqBody9": "As pessoas terapeutas reservam vagas para você, por isso queremos respeitar o tempo delas. Se você não compareceu à sua sessão de terapia ou cancelou/remarcou com menos de 48 horas de antecedência, infelizmente, isso pode contar como uma de suas sessões. Se você acha que há qualquer erro, envie uma mensagem através do nosso <faqLink>formulário de contato</faqLink>.",
+      "faqTitle10": "O que falo durante as sessões de terapia é privado?",
+      "faqBody10": "Sim. Tudo o que você discutir com qualquer terapeuta permanecerá estritamente confidencial entre vocês. Em nenhum momento {partnerName} terá acesso a essas informações.",
+      "faqTitle11": "O apoio que tenho acesso é confidencial?",
+      "faqBody11": "Sim. Bloom é um programa administrado pela organização de caridade global Chayn. Qualquer informação sobre quantas sessões de terapia você acessa permanecerá estritamente privada. Chayn não compartilha esta ou qualquer informação pessoal com {partnerName} ou terceiros.",
+      "faqTitle12": "Limitação de Responsabilidade",
+      "faqBody12": "Ao participar das sessões de terapia, você concorda os serviços que a pessoa terapeuta fornecerá como profissional independente. Esta isenção de responsabilidade inclui qualquer risco de participar das sessões de terapia. Por favor, leia os detalhes abaixo:",
+      "faqList12Item1": "Quem participa das sessões de terapia on-line compreende que esses serviços não são oferecidos como substitutos de cuidados clínicos de saúde mental ou cuidados médicos e não se destinam a diagnosticar, tratar ou curar quaisquer condições médicas ou de saúde mental. Você também deve entender que a pessoa terapeuta com quem você escolheu trabalhar não está atuando como um profissional da medicina.",
+      "faqList12Item2": "Você entenderá e concordará que é totalmente responsável por seu próprio bem-estar durante suas sessões de terapia e, posteriormente, por suas escolhas e decisões.",
+      "faqList12Item3": "Você entenderá que, como profissional, as pessoas terapeutas podem tomar notas para seus próprios registros. Apenas quem trabalha com você terá acesso às anotações. Isso sempre será feito de forma confidencial, respeitando sua privacidade e integridade.",
+      "faqList12Item4": "Você também entenderá que todos os comentários e ideias oferecidos pela pessoa terapeuta são apenas para lhe ajudar em sua jornada de recuperação. A pessoa que irá lhe acompanhar como terapeuta vai lhe informar antes de iniciar a terapia sobre quaisquer políticas de proteção que possam resultar na quebra de sigilo para garantir sua segurança.",
+      "faqList12Item5": "Você deverá ler e entender nossa Política de Privacidade (https://www.notion.so/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43).",
+      "faqList12Item6": "Você entende que o uso da tecnologia nem sempre é seguro e aceita os riscos de confidencialidade no uso de e-mail, texto, telefone, videochamada e outras tecnologias.",
+      "faqList12Item7": "Pela presente, você libera, renuncia, absolve e isenta para sempre seu terapeuta, Bumble, Chayn de qualquer reclamação, ação judicial, demanda ou direito a indenização por danos ou prejuízos que você possa ter decorrentes de seus próprios atos ou omissões, ou atos e omissões do terapeuta como resultado de qualquer conselho que surja da relação terapêutica contemplada por este acordo. Ainda, você também declara que nenhuma promessa, incentivo ou acordo não expresso neste acordo foi feito.",
+      "faqList12Item8": "As pessoas terapeutas parceiras reservam-se o direito de recusar o acesso aos seus serviços. Para todos os clientes internacionais, todos os serviços de terapia e aconselhamento são realizados de acordo com as leis do país da pessoa profissional e quaisquer disputas estarão sujeitas à lei desse país.",
+      "faqTitle13": "Quero deixar minha opinião",
+      "faqBody13": "Bloom quer oferecer um programa de apoio ao trauma que atenda às necessidades de quem utiliza  {partnerName}. Se você tiver comentários, ideias ou sugestões para nos ajudar a melhorar, informe-nos por meio deste <faqLink>formulário de contato</faqLink>. Nosso sincero agradecimento!"
+    },
+    "confirmation": {
+      "title": "Agendamento confirmado!",
+      "introduction": "Sua sessão de terapia está agendada. Sabemos que pode ser difícil dar esse passo, então, lhe parabenizamos por essa decisão. Aguarde um e-mail do 'Bloom'. Enviaremos a hora, data e link da videochamada. Se você não puder fazer a sessão, o mesmo e-mail inclui um link para reagendá-la.",
+      "returnDescription": "Após sua sessão de terapia, retorne à página do Bloom para agendar a próxima.",
+      "bookmarkDescription": "Forgetting URLs is easy! Bookmark this page to keep us close: <bookingLink>bloom.chayn.co</bookingLink>"
+    },
+    "accessGuard": {
+      "title": "Therapy not available",
+      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+    }
+  }
+}

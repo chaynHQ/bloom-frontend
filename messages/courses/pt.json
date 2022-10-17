@@ -1,0 +1,51 @@
+{
+  "Courses": {
+    "title": "Nossos cursos",
+    "introduction": "Os cursos Bloom oferecem informações personalizadas, ferramentas e palavras afirmativas para nos ajudar a lidar com o trauma. Elas nos encorajam a aprender, refletir e processar o que passamos e como isso pode ter nos afetado – tudo em um espaço seguro e que promove o empoderamento",
+    "session": "Sessão",
+    "course": "Curso",
+    "courses": "Cursos",
+    "expand": "Expandir",
+    "expandSummary": "Expandir o resumo de",
+    "navigateToSession": "Ir à sessão -",
+    "navigateToCourse": "Ir ao curso -",
+    "liveFrom": "Ao vivo desde {date}",
+    "liveUntil": "Ao vivo até {date}",
+    "liveSoon": "Live soon",
+    "liveNow": "Ao vivo agora",
+    "comingSoon": "Coming soon",
+    "noCourses": "Não há cursos para serem exibidos no momento. Se isso não parecer certo, tente novamente mais tarde ou entre em contato com a equipe do Bloom.",
+    "courseDetail": {
+      "introductionTitle": "Introdução ao curso",
+      "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>."
+    },
+    "sessionDetail": {
+      "videoTitle": "Vídeo",
+      "videoDescription": "Assita ao vídeo ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>.",
+      "activityTitle": "Atividade",
+      "bonusTitle": "Conteúdo Extra",
+      "chat": {
+        "title": "Reflita conosco",
+        "description": "Se você quiser compartilhar suas reflexões sobre esta sessão, a equipe Bloom adoraria ouvir você!",
+        "videoIntro": "Saiba mais sobre como funciona nosso chat online:",
+        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "detailIntro": "Lembre-se:",
+        "detailPrivacy": "Suas mensagens são privadas e sigilosas, elas só são vistas pela equipe Bloom e você permanece no anonimato.",
+        "detailTimezone": "Trabalhamos em muitos e diferentes fusos horários, portanto, você deve receber uma resposta nossa dentro de 6 horas ou em até 24 horas.",
+        "detailLanguage": "Estamos sempre disponíveis em inglês ou espanhol, mas as pessoas de nossa equipe também falam francês, italiano, hindi, árabe e bangla; ficaremos felizes em organizar uma conversa para que você consiga falar com nossa equipe.",
+        "detailLegal": "Se você tiver um processo legal aberto, considere o que você compartilha conosco. Pode serque isso afete seu caso.",
+        "detailImmediateHelp": "Se você estiver sob ameaça ou perigo iminente, vá para 'Ajuda imediata' no menu para encontrar o serviço de apoio adequado.",
+        "startButton": "Iniciar uma conversa"
+      },
+      "sessionComplete": "Sessão completa"
+    },
+    "accessGuard": {
+      "title": "Conteúdo do curso não disponível",
+      "introduction": "Sua conta Bloom não inclui o acesso ao conteúdo do curso solicitado. Volte para seus <contactLink>cursos</contactLink>."
+    },
+    "errors": {
+      "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."
+    },
+    "backToCourses": "Voltar para Cursos"
+  }
+}

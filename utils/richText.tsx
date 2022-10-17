@@ -13,6 +13,7 @@ import StoryblokFaqs from '../components/storyblok/StoryblokFaqs';
 import StoryblokImage from '../components/storyblok/StoryblokImage';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
+import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
@@ -21,6 +22,7 @@ export const RichTextOptions: RenderOptions = {
     ['image']: (props: any) => <StoryblokImage {...props} />,
     ['video']: (props: any) => <StoryblokVideo {...props} />,
     ['row']: (props: any) => <StoryblokRow {...props} />,
+    ['row_new']: (props: any) => <StoryblokRowColumnBlock {...props} />,
     ['quote']: (props: any) => <StoryblokQuote {...props} />,
     ['card']: (props: any) => <StoryblokCard {...props} />,
     ['button']: (props: any) => <StoryblokButton {...props} />,

@@ -1,0 +1,13 @@
+{
+  "Welcome": {
+    "getStarted": "Começar",
+    "accessIntroduction": "Digite o código de acesso que você recebeu de {partnerName} para iniciar sua jornada com o Bloom.",
+    "publicIntroduction": "Crie uma conta com o Bloom para iniciar nossos cursos, ou primeiro saiba mais sobre o Bloom abaixo.",
+    "continueCourses": "Continue com Bloom",
+    "continueCoursesDescription": "Continue de onde parou. ",
+    "goToCourses": "Ir para cursos",
+    "form": {
+      "codeLabel": "Código de acesso de {partnerName} "
+    }
+  }
+}
