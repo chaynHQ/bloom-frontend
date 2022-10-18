@@ -55,14 +55,14 @@
       "dateSelector": "Ilustración de un calendario con un corazón en el centro",
       "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
       "confidential": "Ilustración de un documento con un candado en una esquina",
-      "cookieCat": "Illustration of a resting cat with a cookie"
+      "cookieCat": "Ilustración de un gato descansando con una galleta"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/smGSjlCo",
     "survivor": "Sobreviviente",
     "cookieConsent": {
       "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
-      "cookieConsentPolicy": "cookie policy",
-      "acceptLabel": "Accept Cookies",
+      "cookieConsentPolicy": "política de cookies",
+      "acceptLabel": "Aceptar Cookies",
       "declineLabel": "Reject Cookies"
     }
   }
