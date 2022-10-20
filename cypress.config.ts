@@ -12,7 +12,8 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/config/plugins')(on, config);
+      require('@cypress/code-coverage/task')(on, config);
+      return config;
     },
     specPattern: 'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     baseUrl: 'http://localhost:3000',

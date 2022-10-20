@@ -14,6 +14,7 @@
 
 # cypress
 cypress.env.json
+instrumented
 
 # next.js
 /.next/
