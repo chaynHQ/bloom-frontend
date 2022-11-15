@@ -11,7 +11,7 @@ export interface Session {
   slug: string;
   storyblokId: number;
   status: STORYBLOK_STORY_STATUS;
-  completed: string;
+  completed: boolean;
 }
 
 export interface Course {
