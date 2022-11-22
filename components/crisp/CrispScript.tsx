@@ -49,7 +49,6 @@ const CrispScript = () => {
       (window as any).CRISP_TOKEN_ID = user.crispTokenId;
       (window as any).$crisp.push(['do', 'session:reset']);
       (window as any).$crisp.push(['set', 'user:email', [user.email]]);
-      (window as any).$crisp.push(['set', 'user:email', [user.email]]);
       const segments =
         partnerAccesses.length > 0
           ? partnerAccesses.map((pa) => pa.partner.name.toLowerCase())
@@ -58,7 +57,7 @@ const CrispScript = () => {
       (window as any).$crisp.push([
         'set',
         'session:data',
-        createCrispProfileData(user, partnerAccesses, courses),
+        [createCrispProfileData(partnerAccesses, courses)],
       ]);
 
       (window as any).$crisp.push(['do', 'chat:show']);
