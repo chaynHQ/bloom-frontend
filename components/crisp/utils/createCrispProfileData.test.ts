@@ -14,7 +14,7 @@ const user = {
 } as User;
 const partnerAccess = {
   featureLiveChat: true,
-  featureTherapy: false,
+  featureTherapy: true,
   therapySessionsRedeemed: 5,
   therapySessionsRemaining: 5,
   id: 'string',
@@ -58,34 +58,34 @@ const course = {
 describe('createCrispProfileData', () => {
   describe('createCrispProfileData should return correctly ', () => {
     it('when supplied with user with no partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData(user, [], [])).toEqual({
-        feature_live_chat: false,
-        feature_therapy: false,
-        partners: '',
-        therapy_sessions_redeemed: 0,
-        therapy_sessions_remaining: 0,
-      });
+      expect(createCrispProfileData([], [])).toEqual([
+        ['partners', ''],
+        ['feature_live_chat', true],
+        ['feature_therapy', false],
+        ['therapy_sessions_remaining', 0],
+        ['therapy_sessions_redeemed', 0],
+      ]);
     });
     it('when supplied with user with two partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData(user, [partnerAccess, partnerAccess], [])).toEqual({
-        feature_live_chat: true,
-        feature_therapy: false,
-        therapy_sessions_redeemed: 10,
-        therapy_sessions_remaining: 10,
-        partners: 'partner; partner',
-      });
+      expect(createCrispProfileData([partnerAccess, partnerAccess], [])).toEqual([
+        ['partners', 'partner; partner'],
+        ['feature_live_chat', true],
+        ['feature_therapy', true],
+        ['therapy_sessions_remaining', 10],
+        ['therapy_sessions_redeemed', 10],
+      ]);
     });
     it('when supplied with user with a course , it should return correctly', () => {
-      expect(createCrispProfileData(user, [partnerAccess, partnerAccess], [course])).toEqual({
-        feature_live_chat: true,
-        feature_therapy: false,
-        therapy_sessions_redeemed: 10,
-        therapy_sessions_remaining: 10,
-        partners: 'partner; partner',
-        course_c1_sessions_completed: 'Session 2',
-        course_c1_sessions_started: 'Session 1; Session 3',
-        course_c1_status: 'Started',
-      });
+      expect(createCrispProfileData([], [course])).toEqual([
+        ['partners', ''],
+        ['feature_live_chat', true],
+        ['feature_therapy', false],
+        ['therapy_sessions_remaining', 0],
+        ['therapy_sessions_redeemed', 0],
+        ['course_c1_status', 'Started'],
+        ['course_c1_sessions_started', 'Session 1; Session 3'],
+        ['course_c1_sessions_completed', 'Session 2'],
+      ]);
     });
   });
 });
