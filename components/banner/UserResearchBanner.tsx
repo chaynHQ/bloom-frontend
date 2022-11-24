@@ -4,7 +4,9 @@ import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import Stack from '@mui/material/Stack';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import React from 'react';
+import { FeatureFlag } from '../../config/featureFlag';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -22,7 +24,15 @@ const USER_RESEARCH_FORM_LINK =
 export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
 
-  return (
+  const router = useRouter();
+
+  const isCoursesPage = router.pathname.includes('courses');
+  const isBannerNotInteracted = userResearchBannerNotInteracted();
+  const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
+
+  const showBanner = isBannerFeatureEnabled && isCoursesPage && isBannerNotInteracted;
+
+  return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Collapse in={open}>
         <Alert
@@ -63,9 +73,9 @@ export default function UserResearchBanner() {
         </Alert>
       </Collapse>
     </Stack>
-  );
+  ) : null;
 }
 
-export const userResearchBannerInteracted = () => {
-  return Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
+const userResearchBannerNotInteracted = () => {
+  return !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
 };

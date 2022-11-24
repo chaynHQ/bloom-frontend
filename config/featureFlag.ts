@@ -9,6 +9,7 @@ export namespace FeatureFlag {
   };
 
   export const isUserResearchBannerEnabled = () => {
-    return Boolean(process.env.FF_USER_RESEARCH_BANNER);
+    console.log('BANNER env', process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER);
+    return Boolean(process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER);
   };
 }

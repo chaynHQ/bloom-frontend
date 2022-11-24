@@ -91,7 +91,7 @@ In terms of use, the variable could be used to disable a course when it has not 
 
 If multiple courses need to be disabled, the slugs will need to be separated by commas.
 
-- FF_USER_RESEARCH_BANNER: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
+- NEXT_PUBLIC_FF_USER_RESEARCH_BANNER: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 ### Run locally
 
