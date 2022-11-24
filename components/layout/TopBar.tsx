@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
+import { FeatureFlag } from '../../config/featureFlag';
 import { HEADER_HOME_LOGO_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
@@ -104,7 +105,7 @@ const TopBar = () => {
 const shouldShowResearchBanner = (pathname: string) => {
   const isCoursesPage = pathname.includes('courses');
   const isBannerInteracted = userResearchBannerInteracted();
-  const isBannerFeatureEnabled = true; // TODO feature flag
+  const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
 
   return isBannerFeatureEnabled && isCoursesPage && !isBannerInteracted;
 };

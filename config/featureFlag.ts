@@ -7,4 +7,8 @@ export namespace FeatureFlag {
 
     return new Set<string>(disabledCourses);
   };
+
+  export const isUserResearchBannerEnabled = () => {
+    return Boolean(process.env.FF_USER_RESEARCH_BANNER);
+  };
 }
