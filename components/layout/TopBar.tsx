@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import { HEADER_HOME_LOGO_CLICKED } from '../../constants/events';
@@ -12,6 +13,7 @@ import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import UserResearchBanner from '../banner/UserResearchBanner';
 import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
@@ -41,6 +43,7 @@ const logoContainerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
+  const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
@@ -58,26 +61,29 @@ const TopBar = () => {
   }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
 
   return (
-    <AppBar sx={appBarStyle} elevation={0}>
-      <Container sx={appBarContainerStyles}>
-        {isSmallScreen && <NavigationDrawer />}
-        <Link
-          href={welcomeUrl}
-          aria-label={t('home')}
-          sx={logoContainerStyle}
-          onClick={() => {
-            logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
-          }}
-        >
-          <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
-        </Link>
-        {!isSmallScreen && <NavigationMenu />}
-        <Box sx={rowStyle}>
-          {user.token && <UserMenu />}
-          <LanguageMenu />
-        </Box>
-      </Container>
-    </AppBar>
+    <>
+      <AppBar sx={appBarStyle} elevation={0}>
+        <Container sx={appBarContainerStyles}>
+          {isSmallScreen && <NavigationDrawer />}
+          <Link
+            href={welcomeUrl}
+            aria-label={t('home')}
+            sx={logoContainerStyle}
+            onClick={() => {
+              logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
+            }}
+          >
+            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+          </Link>
+          {!isSmallScreen && <NavigationMenu />}
+          <Box sx={rowStyle}>
+            {user.token && <UserMenu />}
+            <LanguageMenu />
+          </Box>
+        </Container>
+      </AppBar>
+      <UserResearchBanner />
+    </>
   );
 };
 
