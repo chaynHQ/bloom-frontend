@@ -14,6 +14,9 @@ const alertStyle = {
   boxShadow: 1,
   borderRadius: 0.6,
   padding: 2,
+  '@media (max-width: 500px)': {
+    paddingTop: 4,
+  },
   'flex-direction': 'column',
 };
 
@@ -76,6 +79,6 @@ export default function UserResearchBanner() {
   ) : null;
 }
 
-const userResearchBannerNotInteracted = () => {
+export const userResearchBannerNotInteracted = () => {
   return !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
 };

@@ -13,7 +13,6 @@ import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import UserResearchBanner from '../banner/UserResearchBanner';
 import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
@@ -82,7 +81,6 @@ const TopBar = () => {
           </Box>
         </Container>
       </AppBar>
-      <UserResearchBanner />
     </>
   );
 };
