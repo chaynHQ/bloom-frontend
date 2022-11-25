@@ -13,7 +13,6 @@ import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import UserResearchBanner from '../banner/UserResearchBanner';
 import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
@@ -22,7 +21,7 @@ import UserMenu from './UserMenu';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
-  '+ div': { marginTop: { xs: 6, md: 8 } },
+  // '+ div': { marginTop: { xs: 6, md: 8 } },
 } as const;
 
 const appBarContainerStyles = {
@@ -61,29 +60,26 @@ const TopBar = () => {
   }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
 
   return (
-    <>
-      <AppBar sx={appBarStyle} elevation={0}>
-        <Container sx={appBarContainerStyles}>
-          {isSmallScreen && <NavigationDrawer />}
-          <Link
-            href={welcomeUrl}
-            aria-label={t('home')}
-            sx={logoContainerStyle}
-            onClick={() => {
-              logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
-            }}
-          >
-            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
-          </Link>
-          {!isSmallScreen && <NavigationMenu />}
-          <Box sx={rowStyle}>
-            {user.token && <UserMenu />}
-            <LanguageMenu />
-          </Box>
-        </Container>
-      </AppBar>
-      <UserResearchBanner />
-    </>
+    <AppBar sx={appBarStyle} elevation={0}>
+      <Container sx={appBarContainerStyles}>
+        {isSmallScreen && <NavigationDrawer />}
+        <Link
+          href={welcomeUrl}
+          aria-label={t('home')}
+          sx={logoContainerStyle}
+          onClick={() => {
+            logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
+          }}
+        >
+          <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+        </Link>
+        {!isSmallScreen && <NavigationMenu />}
+        <Box sx={rowStyle}>
+          {user.token && <UserMenu />}
+          <LanguageMenu />
+        </Box>
+      </Container>
+    </AppBar>
   );
 };
 

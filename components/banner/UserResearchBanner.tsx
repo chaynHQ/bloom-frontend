@@ -14,7 +14,12 @@ const alertStyle = {
   boxShadow: 1,
   borderRadius: 0.6,
   padding: 2,
+  paddingTop: 3,
   'flex-direction': 'column',
+  '@media (max-width: 450px)': {
+    // Adds padding when Leave this site overlaps
+    paddingTop: '3rem !important',
+  },
 };
 
 const USER_RESEARCH_BANNER_INTERACTED = 'user_research_banner_interacted';
@@ -33,7 +38,13 @@ export default function UserResearchBanner() {
   const showBanner = isBannerFeatureEnabled && isCoursesPage && isBannerNotInteracted;
 
   return showBanner ? (
-    <Stack sx={{ width: '100%' }} spacing={2}>
+    <Stack
+      sx={{
+        width: '100%',
+      }}
+      spacing={2}
+      marginTop={0}
+    >
       <Collapse in={open}>
         <Alert
           icon={false}

@@ -10,9 +10,11 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { wrapper } from '../app/store';
 import { setUserLoading, setUserToken } from '../app/userSlice';
+import UserResearchBanner from '../components/banner/UserResearchBanner';
 import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
+import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
@@ -116,7 +118,9 @@ function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
+          <AppBarSpacer />
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
+          <UserResearchBanner />
           <ComponentWithGuard />
           <Footer />
           <Consent />
