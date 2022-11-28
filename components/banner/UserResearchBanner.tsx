@@ -6,7 +6,9 @@ import Stack from '@mui/material/Stack';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { RootState } from '../../app/store';
 import { FeatureFlag } from '../../config/featureFlag';
+import { useTypedSelector } from '../../hooks/store';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -23,6 +25,9 @@ const USER_RESEARCH_FORM_LINK =
 
 export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
+
+  const { user } = useTypedSelector((state: RootState) => state);
+  const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
 
   const router = useRouter();
   const isCoursesPage = router.pathname.includes('courses');
@@ -43,7 +48,7 @@ export default function UserResearchBanner() {
                 color="inherit"
                 size="medium"
                 onClick={() => {
-                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+                  Cookies.set(userBannerCookieKey, 'true');
                   setOpen(false);
 
                   window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
@@ -55,7 +60,7 @@ export default function UserResearchBanner() {
                 color="inherit"
                 size="medium"
                 onClick={() => {
-                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+                  Cookies.set(userBannerCookieKey, 'true');
                   setOpen(false);
                 }}
               >
