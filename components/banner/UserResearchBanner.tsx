@@ -31,7 +31,7 @@ export default function UserResearchBanner() {
 
   const router = useRouter();
   const isCoursesPage = router.pathname.includes('courses');
-  const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
+  const isBannerNotInteracted = !Boolean(Cookies.get(userBannerCookieKey));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
 
   const showBanner = isBannerFeatureEnabled && isCoursesPage && isBannerNotInteracted;
