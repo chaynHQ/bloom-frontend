@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { RootState } from '../../app/store';
 import { FeatureFlag } from '../../config/featureFlag';
+import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -26,10 +28,12 @@ const USER_RESEARCH_FORM_LINK =
 export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
 
-  const { user } = useTypedSelector((state: RootState) => state);
-  const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+
+  const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const router = useRouter();
+  const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
   const isCoursesPage = router.pathname.includes('courses');
   const isBannerNotInteracted = !Boolean(Cookies.get(userBannerCookieKey));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
@@ -49,6 +53,8 @@ export default function UserResearchBanner() {
                 size="medium"
                 onClick={() => {
                   Cookies.set(userBannerCookieKey, 'true');
+                  logEvent(USER_BANNER_INTERESTED, eventData);
+
                   setOpen(false);
 
                   window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
@@ -61,6 +67,8 @@ export default function UserResearchBanner() {
                 size="medium"
                 onClick={() => {
                   Cookies.set(userBannerCookieKey, 'true');
+                  logEvent(USER_BANNER_DISMISSED, eventData);
+
                   setOpen(false);
                 }}
               >
