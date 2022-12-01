@@ -55,7 +55,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     if (user.id) {
       // User already authenticated and loaded
-      if (process.env.NEXT_PUBLIC_ENV === 'staging') {
+      if (process.env.NEXT_PUBLIC_ENV !== 'local') {
         hotjar.identify('USER_ID', { userProperty: user.id });
       }
 
