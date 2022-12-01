@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import Stack from '@mui/material/Stack';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { RootState } from '../../app/store';
 import { FeatureFlag } from '../../config/featureFlag';
@@ -30,11 +31,16 @@ export default function UserResearchBanner() {
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
+  const router = useRouter();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isPublicUser = partnerAccesses.length === 0;
+  const isTargetPage = !(
+    router.pathname.includes('auth') || router.pathname.includes('partnerName')
+  );
 
-  const showBanner = isBannerFeatureEnabled && isPublicUser && isBannerNotInteracted;
+  const showBanner =
+    isBannerFeatureEnabled && isPublicUser && isTargetPage && isBannerNotInteracted;
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Collapse in={open}>
