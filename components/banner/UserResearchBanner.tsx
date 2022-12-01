@@ -36,8 +36,9 @@ export default function UserResearchBanner() {
   const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
   const isBannerNotInteracted = !Boolean(Cookies.get(userBannerCookieKey));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
+  const isPublicUser = partnerAccesses.length === 0;
 
-  const showBanner = isBannerFeatureEnabled && isBannerNotInteracted;
+  const showBanner = isBannerFeatureEnabled && isPublicUser && isBannerNotInteracted;
 
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
