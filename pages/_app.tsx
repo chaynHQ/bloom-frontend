@@ -55,7 +55,7 @@ function MyApp(props: MyAppProps) {
   const pathHead = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_ENV === 'staging') {
+    if (process.env.NEXT_PUBLIC_ENV !== 'local') {
       hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
     }
 
