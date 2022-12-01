@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { RootState } from '../../app/store';
-import { HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
+import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -84,7 +84,14 @@ export default function LanguageMenu() {
             const languageUppercase = language.toUpperCase();
             return (
               <MenuItem key={language} sx={menuItemStyle}>
-                <Button component={Link} href={router.asPath} locale={language}>
+                <Button
+                  component={Link}
+                  href={router.asPath}
+                  locale={language}
+                  onClick={() => {
+                    logEvent(generateLanguageMenuEvent(language), eventUserData);
+                  }}
+                >
                   {languageUppercase}
                 </Button>
               </MenuItem>
