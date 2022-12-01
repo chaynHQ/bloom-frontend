@@ -28,11 +28,9 @@ export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
-  const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
-  const isBannerNotInteracted = !Boolean(Cookies.get(userBannerCookieKey));
+  const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isPublicUser = partnerAccesses.length === 0;
 
@@ -49,7 +47,7 @@ export default function UserResearchBanner() {
                 color="inherit"
                 size="medium"
                 onClick={() => {
-                  Cookies.set(userBannerCookieKey, 'true');
+                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
                   logEvent(USER_BANNER_INTERESTED, eventData);
 
                   setOpen(false);
@@ -63,7 +61,7 @@ export default function UserResearchBanner() {
                 color="inherit"
                 size="medium"
                 onClick={() => {
-                  Cookies.set(userBannerCookieKey, 'true');
+                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
                   logEvent(USER_BANNER_DISMISSED, eventData);
 
                   setOpen(false);
