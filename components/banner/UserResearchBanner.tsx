@@ -78,10 +78,10 @@ export default function UserResearchBanner() {
           }
         >
           <AlertTitle>
-            <strong>Take part in paid Bloom research</strong>
+            <strong>Take part in Bloom research for $75</strong>
           </AlertTitle>
-          We’re looking to speak to Bloom users. In this paid research, you’ll test out some new
-          designs and give us your feedback. Find out more details and register your interest below!
+          By testing out new designs and giving us feedback, you can help us make Bloom better and
+          reach more survivors.
         </Alert>
       </Collapse>
     </Stack>
