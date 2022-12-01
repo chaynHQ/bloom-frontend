@@ -146,7 +146,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       name: nameInput,
       email: emailInput,
       contactPermission: contactPermissionInput,
-      languageDefault: LANGUAGES.en,
+      signUpLanguage: router.locale as LANGUAGES,
     });
 
     if ('data' in userResponse && userResponse.data.user.id) {
