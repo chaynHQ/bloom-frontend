@@ -35,6 +35,7 @@ export default function UserResearchBanner() {
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
+
   const isTargetPage = !(
     router.pathname.includes('auth') || router.pathname.includes('partnerName')
   );
