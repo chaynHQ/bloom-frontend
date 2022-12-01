@@ -34,11 +34,10 @@ export default function UserResearchBanner() {
 
   const router = useRouter();
   const userBannerCookieKey = `${USER_RESEARCH_BANNER_INTERACTED}-${user.id?.slice(0, 6)}`;
-  const isCoursesPage = router.pathname.includes('courses');
   const isBannerNotInteracted = !Boolean(Cookies.get(userBannerCookieKey));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
 
-  const showBanner = isBannerFeatureEnabled && isCoursesPage && isBannerNotInteracted;
+  const showBanner = isBannerFeatureEnabled && isBannerNotInteracted;
 
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
