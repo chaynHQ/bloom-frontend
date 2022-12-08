@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { RootState } from '../../app/store';
@@ -10,6 +11,8 @@ const CrispScript = () => {
   const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
     (state: RootState) => state,
   );
+  const router = useRouter();
+  const locale = router.locale;
 
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
@@ -75,6 +78,9 @@ const CrispScript = () => {
       dangerouslySetInnerHTML={{
         __html: `
             window.$crisp=[];
+            CRISP_RUNTIME_CONFIG = {
+              locale : ${router.locale ? `"${router.locale}"` : 'en'}
+            };
             window.CRISP_WEBSITE_ID="${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}";
             (function(){
               const d = document;
