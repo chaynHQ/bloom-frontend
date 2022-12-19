@@ -3,6 +3,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
@@ -66,11 +67,16 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
+  const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
     if (!user.loading) {
+      if (user.token && router.pathname === '/auth/login') {
+        router.push('/courses');
+      }
+
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
@@ -113,7 +119,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
     }
 
     setNavigationLinks(links);
-  }, [partnerAccesses, t, user, partnerAdmin]);
+  }, [partnerAccesses, t, user, partnerAdmin, router]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
