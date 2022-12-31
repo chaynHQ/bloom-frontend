@@ -83,6 +83,9 @@ export const api = createApi({
     getPartner: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
+    getPartners: builder.query<Partner[], undefined>({
+      query: () => ({ url: `partner` }),
+    }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
       | { error: { data: { statusCode: number; message: string } } },
@@ -132,6 +135,18 @@ export const api = createApi({
         };
       },
     }),
+    addPartnerAdmin: builder.mutation<
+      PartnerAdmin,
+      { partnerId: string; name: string; email: string }
+    >({
+      query(body) {
+        return {
+          url: 'partner-admin/create-user',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -143,4 +158,6 @@ export const {
   useStartSessionMutation,
   useCompleteSessionMutation,
   useValidateCodeMutation,
+  useGetPartnersQuery,
+  useAddPartnerAdminMutation,
 } = api;
