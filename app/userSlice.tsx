@@ -16,6 +16,7 @@ export interface User {
   contactPermission: boolean;
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
+  isSuperAdmin: boolean;
 }
 
 const initialState: User = {
@@ -31,6 +32,7 @@ const initialState: User = {
   contactPermission: false,
   crispTokenId: null,
   signUpLanguage: null,
+  isSuperAdmin: false,
 };
 
 const slice = createSlice({

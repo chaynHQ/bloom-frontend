@@ -5,6 +5,7 @@ import { api } from './api';
 import coursesReducer from './coursesSlice';
 import partnerAccessesReducer from './partnerAccessSlice';
 import partnerAdminReducer from './partnerAdminSlice';
+import partnersReducer from './partnersSlice';
 import userReducer from './userSlice';
 
 const initStore = () =>
@@ -15,6 +16,7 @@ const initStore = () =>
       courses: coursesReducer,
       partnerAccesses: partnerAccessesReducer,
       partnerAdmin: partnerAdminReducer,
+      partners: partnersReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
