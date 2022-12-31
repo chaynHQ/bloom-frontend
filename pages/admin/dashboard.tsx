@@ -69,7 +69,7 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/partnerAdmin/${locale}.json`),
-        ...require(`../../messages/Admin/${locale}.json`),
+        ...require(`../../messages/admin/${locale}.json`),
       },
     },
   };
