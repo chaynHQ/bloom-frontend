@@ -46,7 +46,8 @@ const CreatePartnerAdminForm = () => {
 
     logEvent(CREATE_PARTNER_ADMIN_REQUEST, eventUserData);
     if (email == null || name == null) {
-      console.log('error');
+      setFormError('Make sure you have supplied email address and name');
+      setLoading(false);
       return;
     }
     const partnerAdminResponse = await addPartnerAdmin({
@@ -67,9 +68,9 @@ const CreatePartnerAdminForm = () => {
         ...eventUserData,
         error: errorMessage,
       });
-      rollbar.error('Create partner admin code error', error);
+      rollbar.error(t('error') + errorMessage);
 
-      setFormError(t('createPartnerAdminError') + error);
+      setFormError(t('error') + errorMessage);
       setLoading(false);
       return;
     }
