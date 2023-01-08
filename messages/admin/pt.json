@@ -9,10 +9,10 @@
       "title": "Create a partner admin",
       "partnerNameLabel": "Partner name",
       "submit": "Create partner admin",
-      "successDescription": "They will need to use the 'Forgot password' flow to choose a password and be able to login",
+      "successDescription": "Partner Admin created! Email them to say they have an account and will need to use the 'Forgot password' flow to choose a password and be able to login for the first time.",
       "emailAddressLabel": "Email address",
-      "nameLabel": "name",
-      "reset": "Reset form",
+      "nameLabel": "Name",
+      "reset": "Create another admin",
       "error": "Error creating partner admin: "
     }
   }
