@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-const withPWA = require('next-pwa');
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  skipWaiting: true,
+  disable: process.env.NEXT_PUBLIC_ENV === 'local' ? true : false,
+});
 
 module.exports = withPWA({
   reactStrictMode: true,
@@ -23,11 +27,6 @@ module.exports = withPWA({
     locales: ['en', 'es', 'hi', 'fr', 'pt'],
     defaultLocale: 'en',
     localeDetection: true,
-  },
-  pwa: {
-    dest: 'public',
-    skipWaiting: true,
-    disable: true,
   },
   async redirects() {
     return [
