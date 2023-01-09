@@ -21,6 +21,7 @@ import createEmotionCache from '../config/emotionCache';
 import { auth } from '../config/firebase';
 import { AuthGuard } from '../guards/authGuard';
 import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
+import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
 import { useAppDispatch } from '../hooks/store';
 import '../styles/globals.css';
@@ -55,7 +56,7 @@ function MyApp(props: MyAppProps) {
   const pathHead = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_ENV === 'staging') {
+    if (process.env.NEXT_PUBLIC_ENV !== 'local') {
       hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
     }
 
@@ -98,6 +99,9 @@ function MyApp(props: MyAppProps) {
     }
     if (pathHead === 'partner-admin') {
       children = <PartnerAdminGuard>{component}</PartnerAdminGuard>;
+    }
+    if (pathHead === 'admin') {
+      children = <SuperAdminGuard>{component}</SuperAdminGuard>;
     }
 
     return <AuthGuard>{children || component}</AuthGuard>;

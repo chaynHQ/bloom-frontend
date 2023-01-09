@@ -2,6 +2,8 @@
 
 Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events.
 
+If you'd like to help Bloom by tackling any of our open Github issues, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call. 
+
 ## Get involved
 
 Bloom is created by Chayn, global nonprofit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence. There are lots of ways to get involved, from joining our volunteer team to [donating](https://www.paypal.me/chaynhq) or supporting us on social media.
@@ -77,17 +79,21 @@ NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=
 NEXT_PUBLIC_HOTJAR_ID=
 ```
 
-**When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
+If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
 
-#### Environment variables
+**NB: When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
 
-This is a brief guide to environment variables that need more background. (redo)
+### Environment variables
+
+This is a brief explanation for environment variables that need more background.
 
 - FF_DISABLED_COURSES: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
 
 In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom.
 
 If multiple courses need to be disabled, the slugs will need to be separated by commas.
+
+- NEXT_PUBLIC_FF_USER_RESEARCH_BANNER: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 ### Run locally
 

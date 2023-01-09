@@ -6,6 +6,7 @@ import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
+import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
 
 interface HeaderProps {
@@ -31,11 +32,11 @@ const headerContainerStyles = {
   paddingTop: {
     xs: '7rem !important',
     sm: '8rem !important',
-    lg: '7.5rem !important',
+    lg: '8rem !important',
   },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
-} as const;
+};
 
 const imageContainerStyle = {
   position: 'relative',
@@ -73,6 +74,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
+      <UserResearchBanner />
       <Box sx={textContainerStyle}>
         {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>

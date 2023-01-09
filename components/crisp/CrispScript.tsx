@@ -1,12 +1,18 @@
+import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { RootState } from '../../app/store';
 import { CHAT_MESSAGE_SENT, CHAT_STARTED, FIRST_CHAT_STARTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { createCrispProfileData } from './utils/createCrispProfileData';
 
 const CrispScript = () => {
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
+    (state: RootState) => state,
+  );
+  const router = useRouter();
+  const locale = router.locale;
 
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
@@ -46,6 +52,17 @@ const CrispScript = () => {
       (window as any).CRISP_TOKEN_ID = user.crispTokenId;
       (window as any).$crisp.push(['do', 'session:reset']);
       (window as any).$crisp.push(['set', 'user:email', [user.email]]);
+      const segments =
+        partnerAccesses.length > 0
+          ? partnerAccesses.map((pa) => pa.partner.name.toLowerCase())
+          : ['public'];
+      (window as any).$crisp.push(['set', 'session:segments', [segments]]);
+      (window as any).$crisp.push([
+        'set',
+        'session:data',
+        [createCrispProfileData(partnerAccesses, courses)],
+      ]);
+
       (window as any).$crisp.push(['do', 'chat:show']);
     } else {
       (window as any).$crisp.push(['do', 'chat:hide']);
@@ -61,6 +78,9 @@ const CrispScript = () => {
       dangerouslySetInnerHTML={{
         __html: `
             window.$crisp=[];
+            CRISP_RUNTIME_CONFIG = {
+              locale : ${router.locale ? `"${router.locale}"` : 'en'}
+            };
             window.CRISP_WEBSITE_ID="${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}";
             (function(){
               const d = document;

@@ -13,9 +13,10 @@ export interface User {
   name: string | null;
   email: string | null;
   partnerAccessCode: string | null;
-  languageDefault: LANGUAGES;
   contactPermission: boolean;
   crispTokenId: string | null;
+  signUpLanguage: LANGUAGES | null;
+  isSuperAdmin: boolean;
 }
 
 const initialState: User = {
@@ -28,9 +29,10 @@ const initialState: User = {
   name: null,
   email: null,
   partnerAccessCode: null,
-  languageDefault: LANGUAGES.en,
   contactPermission: false,
   crispTokenId: null,
+  signUpLanguage: null,
+  isSuperAdmin: false,
 };
 
 const slice = createSlice({

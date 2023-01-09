@@ -14,12 +14,12 @@ interface PartnerAdminHeaderProps {
     | string
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  introduction:
+  introduction?:
     | string
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  partnerLogoSrc: StaticImageData;
-  partnerLogoAlt: string;
+  partnerLogoSrc?: StaticImageData;
+  partnerLogoAlt?: string;
 }
 
 const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
@@ -32,7 +32,9 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
       <Typography variant="h2" component="h2" fontSize="1.25rem !important">
         Admin console
       </Typography>
-      <Image alt={tS(partnerLogoAlt)} src={partnerLogoSrc} width="200px" />
+      {partnerLogoAlt && partnerLogoSrc && (
+        <Image alt={tS(partnerLogoAlt)} src={partnerLogoSrc} width="200px" />
+      )}
     </Container>
   );
 };
