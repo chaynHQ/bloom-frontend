@@ -9,6 +9,6 @@ export namespace FeatureFlag {
   };
 
   export const isUserResearchBannerEnabled = () => {
-    return Boolean(process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER);
+    return process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER?.toLowerCase() === 'true';
   };
 }
