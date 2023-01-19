@@ -119,7 +119,8 @@ const NavigationMenu = (props: NavigationMenuProps) => {
     }
 
     setNavigationLinks(links);
-  }, [partnerAccesses, t, user, partnerAdmin, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [partnerAccesses, t, user, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
