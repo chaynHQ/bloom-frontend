@@ -12,7 +12,7 @@ import Link from '../../components/common/Link';
 import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
 import Header from '../../components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';
-import { getAllPartnersContent, Partner } from '../../constants/partners';
+import { getAllPartnersContent, PartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
@@ -55,7 +55,7 @@ const ApplyACode: NextPage = () => {
   const tS = useTranslations('Shared');
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const [allPartnersContent, setAllPartnersContent] = useState<Partner[]>([]);
+  const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
 
   useEffect(() => {
     setAllPartnersContent(getAllPartnersContent());

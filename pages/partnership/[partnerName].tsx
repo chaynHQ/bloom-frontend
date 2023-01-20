@@ -7,7 +7,7 @@ import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
-import { getPartnerContent } from '../../constants/partners';
+import { getPartnerContent, PartnerContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 
