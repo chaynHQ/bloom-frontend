@@ -80,7 +80,7 @@ export const api = createApi({
         };
       },
     }),
-    getPartner: builder.query<Partner, string>({
+    getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
     getPartners: builder.query<Partner[], undefined>({
@@ -159,5 +159,6 @@ export const {
   useCompleteSessionMutation,
   useValidateCodeMutation,
   useGetPartnersQuery,
+  useGetPartnerByNameQuery,
   useAddPartnerAdminMutation,
 } = api;

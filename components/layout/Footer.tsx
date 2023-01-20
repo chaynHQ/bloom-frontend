@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
-import { getPartnerContent, Partner } from '../../constants/partners';
+import { getPartnerContent, PartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import tiktokLogo from '../../public/tiktok.svg';
 import { rowStyle } from '../../styles/common';
@@ -61,7 +61,7 @@ const Footer = () => {
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
-  const addUniquePartner = (partnersList: Partner[], partnerName: string) => {
+  const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
     if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
       const partnerContentResult = getPartnerContent(partnerName);
       if (partnerContentResult) partnersList.push(partnerContentResult);
@@ -70,7 +70,7 @@ const Footer = () => {
 
   useEffect(() => {
     setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
-    let partnersList: Partner[] = [getPartnerContent('public')];
+    let partnersList: PartnerContent[] = [getPartnerContent('public')];
 
     if (partnerAdmin && partnerAdmin.partner) {
       addUniquePartner(partnersList, partnerAdmin.partner.name);

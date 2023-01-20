@@ -7,7 +7,7 @@ import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
-import { getPartnerContent, Partner } from '../../constants/partners';
+import { getPartnerContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 
@@ -35,7 +35,7 @@ const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   return showPartnershipView(configuredStory, getPartnerContent(partnerName));
 };
 //
-const showPartnershipView = (story: StoryBlokData, partnerContent: Partner) => {
+const showPartnershipView = (story: StoryBlokData, partnerContent: PartnerContent) => {
   return (
     <Box>
       <Head>

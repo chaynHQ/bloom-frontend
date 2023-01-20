@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getPartnerContent, Partner } from '../constants/partners';
+import { getPartnerContent, PartnerContent } from '../constants/partners';
 import { api } from './api';
+import { Partner } from './partnersSlice';
 import type { RootState } from './store';
 
 export interface PartnerAccess {
@@ -13,7 +14,7 @@ export interface PartnerAccess {
   accessCode: string;
   therapySessionsRemaining: number;
   therapySessionsRedeemed: number;
-  partner: Partner;
+  partner: PartnerContent & Partner; // Note static import of partner as well as db
 }
 
 export interface PartnerAccesses extends Array<PartnerAccess> {}

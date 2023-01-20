@@ -24,7 +24,7 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
-import { Partner } from '../../constants/partners';
+import { PartnerContent } from '../../constants/partners';
 import { useAppDispatch } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -36,7 +36,7 @@ const containerStyle = {
 
 interface RegisterFormProps {
   codeParam: string;
-  partnerContent: Partner | null;
+  partnerContent: PartnerContent | null;
 }
 
 const RegisterForm = (props: RegisterFormProps) => {
