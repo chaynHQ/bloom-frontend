@@ -56,7 +56,7 @@ const socialsContainerStyle = {
 const Footer = () => {
   const tS = useTranslations('Shared');
   const [eventUserData, setEventUserData] = useState<any>(null);
-  const [partners, setPartners] = useState<Partner[] | null>(null);
+  const [partners, setPartners] = useState<PartnerContent[] | null>(null);
   const router = useRouter();
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
