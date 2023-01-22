@@ -11,4 +11,8 @@ export namespace FeatureFlag {
   export const isUserResearchBannerEnabled = () => {
     return Boolean(process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER);
   };
+
+  export const isInMaintenanceMode = () => {
+    return Boolean(process.env.NEXT_PUBLIC_MAINTENANCE_MODE);
+  };
 }
