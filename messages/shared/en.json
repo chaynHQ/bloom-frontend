@@ -38,6 +38,10 @@
       "authenticatedRedirectButton": "Back to courses page",
       "unauthenticatedRedirectButton": "Back to welcome page"
     },
+    "maintenance": {
+      "title": "Maintenance",
+      "description": "Sorry, we're down for scheduled maintenance right meow."
+    },
     "alt": {
       "bloomLogo": "Bloom logo",
       "bumbleLogo": "Bumble logo",
