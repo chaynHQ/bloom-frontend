@@ -8,11 +8,10 @@ import { RootState } from '../app/store';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import bloomMeow from '../public/bloom_meow.png';
-import { scaleTitleStyle } from '../styles/common';
+import { scaleTitleStyle, columnStyle } from '../styles/common';
 
 const containerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
+  ...columnStyle,
   height: '100vh',
   alignItems: 'center',
   textAlign: 'center',
@@ -21,14 +20,14 @@ const containerStyle = {
 const imageContainerStyle = {
   position: 'relative',
   width: { xs: 180, md: 200 },
-  height: { xs: 180, md: 350 },
+  height: { xs: 300, md: 350 },
   marginBottom: 3,
 } as const;
 
 const textContainerStyle = {
   ...scaleTitleStyle,
   lineHeight: 1.5,
-  maxWidth: { xs: 180, md: '70%' },
+  maxWidth: { xs: '100%', md: '70%' },
 } as const;
 
 const Maintenance: NextPage = () => {
