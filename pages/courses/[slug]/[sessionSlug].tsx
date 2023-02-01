@@ -266,6 +266,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const completeSessionAction = async () => {
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
+    // This rollbar log is out in to investigate this error: https://rollbar.com/chayn/Bloom/items/590/?utm_campaign=new_item_message&utm_medium=slack&utm_source=rollbar-notification
+    // It can be taken out once the cause of the above error is fixed.
+    if (!story) {
+      rollbar.error(`Cannot set session as complete - story variable is undefined`);
+    }
+
     const completeSessionResponse = await completeSession({
       storyblokId: story.id,
     });
