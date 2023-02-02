@@ -1,23 +1,23 @@
 import { PartnerAccess } from '../app/partnerAccessSlice';
 import { PartnerAdmin } from '../app/partnerAdminSlice';
-import { Partner } from '../constants/partners';
+import { PartnerContent } from '../constants/partners';
 import { joinedPartners } from './formatPartnerAccesses';
 
 const partnerAccessBase = {
   partner: {
     name: 'Bzzz',
-  } as Partner,
+  } as PartnerContent,
 } as PartnerAccess;
 const partnerAccess1 = {
   partner: {
     name: 'Moo',
-  } as Partner,
+  } as PartnerContent,
 } as PartnerAccess;
 
 const partnerAdmin = {
   partner: {
     name: 'Baa',
-  } as Partner,
+  } as PartnerContent,
 } as PartnerAdmin;
 
 describe('formatPartnerAccess', () => {

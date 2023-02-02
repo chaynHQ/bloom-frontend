@@ -7,11 +7,11 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { auth } from '../config/firebase';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
-import { Partner } from '../constants/partners';
 import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
+import { Partner } from './partnersSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
 
@@ -80,7 +80,7 @@ export const api = createApi({
         };
       },
     }),
-    getPartner: builder.query<Partner, string>({
+    getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
     getPartners: builder.query<Partner[], undefined>({
@@ -159,5 +159,6 @@ export const {
   useCompleteSessionMutation,
   useValidateCodeMutation,
   useGetPartnersQuery,
+  useGetPartnerByNameQuery,
   useAddPartnerAdminMutation,
 } = api;
