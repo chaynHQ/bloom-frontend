@@ -11,7 +11,7 @@ import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
-import { Partner } from './partnersSlice';
+import { Partner, PartnerFeature } from './partnersSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
 
@@ -85,6 +85,9 @@ export const api = createApi({
     }),
     getPartners: builder.query<Partner[], undefined>({
       query: () => ({ url: `partner` }),
+    }),
+    getAutomaticAccessCodeFeatureForPartner: builder.query<PartnerFeature, string>({
+      query: (name) => ({ url: `/partner-feature/automatic-access-code/${name}` }),
     }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
@@ -161,4 +164,5 @@ export const {
   useGetPartnersQuery,
   useGetPartnerByNameQuery,
   useAddPartnerAdminMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
 } = api;

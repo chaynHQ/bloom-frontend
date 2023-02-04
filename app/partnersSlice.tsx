@@ -8,10 +8,11 @@ export interface Feature {
   id: string;
 }
 export interface PartnerFeature {
-  name: string;
-  id: string;
-  active: boolean;
+  partnerFeatureId: string;
+  partnerId: string;
+  featureId: string;
   feature: Feature;
+  active: boolean;
 }
 export interface Partner {
   id: string;
@@ -56,6 +57,31 @@ const slice = createSlice({
         return partners.concat(payload);
       }
     });
+    builder.addMatcher(
+      api.endpoints.getAutomaticAccessCodeFeatureForPartner.matchFulfilled,
+      (state, { payload, meta }) => {
+        if (payload) {
+          const partnerMatch = state.find((p) => p.id !== payload.partnerId);
+          if (partnerMatch) {
+            const newState = state.filter((p) => p.id !== payload.partnerId);
+            const partnerFeatures = partnerMatch.partnerFeature.filter(
+              (pf) => pf.partnerFeatureId === payload.partnerFeatureId,
+            );
+            return newState.concat({
+              ...partnerMatch,
+              partnerFeature: partnerFeatures.concat(payload),
+            });
+          }
+          const partnerName = meta.arg.originalArgs;
+          // ensure list of partners is unique
+          return state.concat({
+            id: payload.partnerId,
+            name: partnerName,
+            partnerFeature: [payload],
+          });
+        }
+      },
+    );
   },
 });
 
