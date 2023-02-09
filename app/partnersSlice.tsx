@@ -61,7 +61,7 @@ const slice = createSlice({
       api.endpoints.getAutomaticAccessCodeFeatureForPartner.matchFulfilled,
       (state, { payload, meta }) => {
         if (payload) {
-          const partnerMatch = state.find((p) => p.id !== payload.partnerId);
+          const partnerMatch = state.find((p) => p.id === payload.partnerId);
           if (partnerMatch) {
             const newState = state.filter((p) => p.id !== payload.partnerId);
             const partnerFeatures = partnerMatch.partnerFeature.filter(
