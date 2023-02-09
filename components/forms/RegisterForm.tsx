@@ -5,7 +5,6 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
-import firebase from 'firebase/compat/app';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -16,8 +15,10 @@ import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
+  GET_LOGIN_USER_REQUEST,
+  GET_USER_REQUEST,
+  LOGIN_SUCCESS,
   REGISTER_ERROR,
-  REGISTER_FIREBASE_ERROR,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
@@ -34,6 +35,11 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
+enum REGISTER_ERRORS {
+  EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
+  WEAK_PASSWORD = 'WEAK_PASSWORD',
+  INVALID_EMAIL = 'INVALID_EMAIL',
+}
 interface RegisterFormProps {
   codeParam: string;
   partnerContent: PartnerContent | null;
@@ -102,68 +108,65 @@ const RegisterForm = (props: RegisterFormProps) => {
     logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerContent?.name });
   };
 
-  const createFirebaseUser = async () => {
-    const firebaseUser = await auth
-      .createUserWithEmailAndPassword(emailInput, passwordInput)
-      .then(async (userCredential) => {
-        if (userCredential.user) {
-          await dispatch(setUserToken(userCredential.user.refreshToken));
-        }
-        return userCredential.user;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        logEvent(REGISTER_FIREBASE_ERROR, { partner: partnerContent?.name, message: errorMessage });
-
-        if (errorCode === 'auth/invalid-email') {
-          setFormError(t('firebase.invalidEmail'));
-        }
-        if (errorCode === 'auth/weak-password') {
-          setFormError(t('firebase.weakPassword'));
-        }
-        if (errorCode === 'auth/email-already-in-use') {
-          setFormError(
-            t.rich('firebase.emailAlreadyInUse', {
-              loginLink: (children) => (
-                <strong>
-                  <Link href="/auth/login">{children}</Link>
-                </strong>
-              ),
-            }),
-          );
-        }
-        setLoading(false);
-        throw error;
-      });
-    return firebaseUser;
-  };
-
-  const createUserRecord = async (firebaseUser: firebase.User) => {
+  const createUserRecord = async () => {
     const userResponse = await createUser({
-      firebaseUid: firebaseUser?.uid,
       partnerAccessCode: codeInput,
       name: nameInput,
       email: emailInput,
+      password: passwordInput,
       contactPermission: contactPermissionInput,
       signUpLanguage: router.locale as LANGUAGES,
     });
 
     if ('data' in userResponse && userResponse.data.user.id) {
       logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(emailInput, passwordInput);
+        logEvent(LOGIN_SUCCESS);
+        logEvent(GET_USER_REQUEST); // deprecated event
+        logEvent(GET_LOGIN_USER_REQUEST);
+        const token = await userCredential.user?.getIdToken();
+        if (token) {
+          await dispatch(setUserToken(token));
+          setLoading(false);
+          router.push('/courses');
+        }
+      } catch (err) {
+        setFormError(
+          t.rich('createUserError', {
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
+      }
     }
 
     if ('error' in userResponse) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
+      if (errorMessage === REGISTER_ERRORS.EMAIL_ALREADY_EXISTS) {
+        setFormError(
+          t.rich('firebase.emailAlreadyInUse', {
+            loginLink: (children) => (
+              <strong>
+                <Link href="/auth/login">{children}</Link>
+              </strong>
+            ),
+          }),
+        );
+      } else if (errorMessage === REGISTER_ERRORS.WEAK_PASSWORD) {
+        setFormError(t('firebase.weakPassword'));
+      } else if (errorMessage === REGISTER_ERRORS.INVALID_EMAIL) {
+        setFormError(t('firebase.invalidEmail'));
+      } else {
+        setFormError(
+          t.rich('createUserError', {
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
+      }
       logEvent(REGISTER_ERROR, { partner: partnerContent?.name, message: errorMessage });
       rollbar.error('User register create user error', error);
 
-      setFormError(
-        t.rich('createUserError', {
-          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-        }),
-      );
       setLoading(false);
 
       throw error;
@@ -178,8 +181,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     try {
       partnerContent && (await validateAccessCode());
       dispatch(setUserLoading(true));
-      const firebaseUser = await createFirebaseUser();
-      await createUserRecord(firebaseUser!);
+      await createUserRecord();
       dispatch(setUserLoading(false));
       router.push('/account/about-you');
       setLoading(false);
