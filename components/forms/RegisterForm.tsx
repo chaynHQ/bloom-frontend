@@ -15,6 +15,11 @@ import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
+  CREATE_USER_EMAIL_ALREADY_EXISTS,
+  CREATE_USER_INVALID_EMAIL,
+  CREATE_USER_WEAK_PASSWORD,
+} from '../../constants/errors';
+import {
   GET_LOGIN_USER_REQUEST,
   GET_USER_REQUEST,
   LOGIN_SUCCESS,
@@ -35,11 +40,6 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
-enum REGISTER_ERRORS {
-  EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
-  WEAK_PASSWORD = 'WEAK_PASSWORD',
-  INVALID_EMAIL = 'INVALID_EMAIL',
-}
 interface RegisterFormProps {
   codeParam: string;
   partnerContent: PartnerContent | null;
@@ -143,7 +143,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     if ('error' in userResponse) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
-      if (errorMessage === REGISTER_ERRORS.EMAIL_ALREADY_EXISTS) {
+      if (errorMessage === CREATE_USER_EMAIL_ALREADY_EXISTS) {
         setFormError(
           t.rich('firebase.emailAlreadyInUse', {
             loginLink: (children) => (
@@ -153,9 +153,9 @@ const RegisterForm = (props: RegisterFormProps) => {
             ),
           }),
         );
-      } else if (errorMessage === REGISTER_ERRORS.WEAK_PASSWORD) {
+      } else if (errorMessage === CREATE_USER_WEAK_PASSWORD) {
         setFormError(t('firebase.weakPassword'));
-      } else if (errorMessage === REGISTER_ERRORS.INVALID_EMAIL) {
+      } else if (errorMessage === CREATE_USER_INVALID_EMAIL) {
         setFormError(t('firebase.invalidEmail'));
       } else {
         setFormError(
