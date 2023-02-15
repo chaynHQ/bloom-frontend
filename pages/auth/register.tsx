@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
-import RegisterForm from '../../components/forms/RegisterForm';
+import RegisterForm, { PartnerRegisterForm } from '../../components/forms/RegisterForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '../../constants/events';
 import { getAllPartnersContent, getPartnerContent, PartnerContent } from '../../constants/partners';
@@ -186,7 +186,11 @@ const Register: NextPage = () => {
                 {t('register.title')}
               </Typography>
 
-              <RegisterForm codeParam={codeParam} partnerContent={partnerContent} />
+              {partnerContent ? (
+                <PartnerRegisterForm partnerName={partnerContent.name} codeParam={codeParam} />
+              ) : (
+                <RegisterForm />
+              )}
 
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {

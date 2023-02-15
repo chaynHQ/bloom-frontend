@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useGetAutomaticAccessCodeFeatureForPartnerQuery } from '../../app/api';
 import { RootState } from '../../app/store';
 import { generatePartnerPromoGetStartedEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -27,8 +26,6 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
     (state: RootState) => state,
   );
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
-  useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerParam);
-  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
 
   const [codeInput, setCodeInput] = useState<string>('');
   const router = useRouter();
@@ -36,18 +33,6 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   useEffect(() => {
     setCodeInput(codeParam);
   }, [codeParam]);
-
-  useEffect(() => {
-    const partner = partners.find((p) => p.name.toLowerCase() === partnerParam.toLowerCase());
-    if (partner) {
-      const hasAutomaticAccessFeature = partner.partnerFeature.reduce(
-        (hasFeature, pf) =>
-          hasFeature || (pf.feature.name === 'AUTOMATIC_ACCESS_CODE' && pf.active),
-        false,
-      );
-      setAccessCodeRequired(!hasAutomaticAccessFeature);
-    }
-  }, [partners, partnerParam]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,6 +55,7 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
           variant="standard"
           fullWidth
         />
+
         <Button
           onClick={() => {
             logEvent(generatePartnerPromoGetStartedEvent(partnerParam), eventUserData);

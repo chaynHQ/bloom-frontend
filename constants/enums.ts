@@ -62,3 +62,7 @@ export enum ENVIRONMENT {
   LOCAL = 'local',
   STAGING = 'staging',
 }
+
+export enum FEATURES {
+  AUTOMATIC_ACCESS_CODE = 'AUTOMATIC_ACCESS_CODE',
+}
