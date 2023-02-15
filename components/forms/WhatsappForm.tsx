@@ -5,7 +5,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useSubscribeToWhatsappMutation } from '../../app/api';
+import { useSubscribeToWhatsappMutation, useUnsubscribeFromWhatsappMutation } from '../../app/api';
 import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
@@ -13,6 +13,9 @@ import {
   WHATSAPP_SUBSCRIBE_ERROR,
   WHATSAPP_SUBSCRIBE_REQUEST,
   WHATSAPP_SUBSCRIBE_SUCCESS,
+  WHATSAPP_UNSUBSCRIBE_ERROR,
+  WHATSAPP_UNSUBSCRIBE_REQUEST,
+  WHATSAPP_UNSUBSCRIBE_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
@@ -28,11 +31,13 @@ const WhatsappForm = () => {
   const tS = useTranslations('Shared');
 
   const [phonenumber, setPhonenumber] = useState<string>('');
+  const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [hasActiveSubscription, setHasActiveSubscription] = useState<boolean>(false);
   const [formError, setFormError] = useState<TextNode>();
 
   const [subscribeToWhatsapp] = useSubscribeToWhatsappMutation();
+  const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 
   const { user } = useTypedSelector((state: RootState) => state);
 
@@ -42,6 +47,7 @@ const WhatsappForm = () => {
       // This subscription's info is a phone number and is used to populate the state.
       setHasActiveSubscription(true);
       setPhonenumber(user.activeSubscriptions[0].subscriptionInfo!);
+      setSubscriptionId(user.activeSubscriptions[0].id!);
     } else {
       setHasActiveSubscription(false);
     }
@@ -70,13 +76,13 @@ const WhatsappForm = () => {
 
       if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
         setFormError(
-          t.rich('errors.alreadyExists', {
+          t.rich('subscribe-errors.alreadyExists', {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
       } else {
         setFormError(
-          t.rich('errors.internal', {
+          t.rich('subscribe-errors.internal', {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
@@ -84,6 +90,39 @@ const WhatsappForm = () => {
 
       rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
       logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
+      setLoading(false);
+
+      throw error;
+    }
+  };
+
+  const unsubscribeHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormError('');
+    setLoading(true);
+    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST);
+
+    const unsubscribeResponse = await unsubscribeFromWhatsapp({
+      id: subscriptionId,
+      cancelledAt: new Date(),
+    });
+
+    if ('data' in unsubscribeResponse) {
+      setLoading(false);
+      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS);
+    }
+
+    if ('error' in unsubscribeResponse) {
+      const error = getErrorMessage(unsubscribeResponse.error);
+
+      setFormError(
+        t.rich('unsubscribe-errors.internal', {
+          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+        }),
+      );
+
+      rollbar.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
+      logEvent(WHATSAPP_UNSUBSCRIBE_ERROR, { message: error });
       setLoading(false);
 
       throw error;
@@ -107,7 +146,7 @@ const WhatsappForm = () => {
             {t('unsubscribe-title')}
           </Typography>
           <Box sx={containerStyle}>
-            <form autoComplete="off" onSubmit={subscribeHandler}>
+            <form autoComplete="off" onSubmit={unsubscribeHandler}>
               <TextField
                 key="phonenumber-unsubscribe"
                 label={t('phonenumber')}
