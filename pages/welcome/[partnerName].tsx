@@ -29,6 +29,7 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -116,12 +117,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   useEffect(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
     if (partnerData) {
-      const hasAutomaticAccessFeature = partnerData.partnerFeature.reduce(
-        (hasFeature, pf) =>
-          hasFeature || (pf.feature.name === 'AUTOMATIC_ACCESS_CODE' && pf.active),
-        false,
-      );
-      setAccessCodeRequired(!hasAutomaticAccessFeature);
+      setAccessCodeRequired(!hasAutomaticAccessFeature(partnerData));
     }
   }, [partners, partnerName]);
 

@@ -37,6 +37,7 @@ import {
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
+import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -288,12 +289,7 @@ export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterF
   useEffect(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
     if (partnerData) {
-      const hasAutomaticAccessFeature = partnerData.partnerFeature.reduce(
-        (hasFeature, pf) =>
-          hasFeature || (pf.feature.name === 'AUTOMATIC_ACCESS_CODE' && pf.active),
-        false,
-      );
-      setAccessCodeRequired(!hasAutomaticAccessFeature);
+      setAccessCodeRequired(!hasAutomaticAccessFeature(partnerData));
       setPartnerId(partnerData.id);
     }
   }, [partners, partnerName]);
