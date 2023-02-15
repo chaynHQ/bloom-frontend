@@ -9,7 +9,7 @@ import { columnStyle, rowStyle } from '../../styles/common';
 import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
 
-interface HeaderProps {
+export interface HeaderProps {
   title:
     | string
     | React.ReactNodeArray

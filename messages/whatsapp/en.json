@@ -1,0 +1,20 @@
+{
+  "Whatsapp": {
+    "steps": {
+      "step1": "We send affirmational messages direct to your Whatsapp.",
+      "step2": "The messages are sent twice a week, on Tuesdays and Saturdays.",
+      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
+    },
+    "form": {
+      "subscribe-title": "Subscribe to affirmations",
+      "subscribe": "Subscribe",
+      "phonenumber": "Phone number",
+      "unsubscribe-title": "Manage your subscription",
+      "unsubscribe": "Unsubscribe",
+      "errors": {
+        "internal": "There was an error creating your Whatsapp subscription. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
+      }
+    }
+  }
+}
