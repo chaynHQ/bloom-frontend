@@ -9,7 +9,12 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useAddUserMutation, useValidateCodeMutation } from '../../app/api';
+import {
+  useAddUserMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useValidateCodeMutation,
+} from '../../app/api';
+import { RootState } from '../../app/store';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
 import rollbar from '../../config/rollbar';
@@ -30,8 +35,7 @@ import {
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
-import { PartnerContent } from '../../constants/partners';
-import { useAppDispatch } from '../../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -41,12 +45,14 @@ const containerStyle = {
 } as const;
 
 interface RegisterFormProps {
-  codeParam: string;
-  partnerContent: PartnerContent | null;
+  codeParam?: string;
+  partnerName?: string;
+  partnerId?: string;
+  accessCodeRequired?: boolean;
 }
 
 const RegisterForm = (props: RegisterFormProps) => {
-  const { codeParam, partnerContent } = props;
+  const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>('');
@@ -68,11 +74,13 @@ const RegisterForm = (props: RegisterFormProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    setCodeInput(codeParam);
+    if (codeParam) {
+      setCodeInput(codeParam);
+    }
   }, [codeParam]);
 
   const validateAccessCode = async () => {
-    logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: partnerContent?.name });
+    logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: partnerName });
 
     const validateCodeResponse = await validateCode({
       partnerAccessCode: codeInput,
@@ -82,14 +90,14 @@ const RegisterForm = (props: RegisterFormProps) => {
       const error = getErrorMessage(validateCodeResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
-        setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerContent?.name }));
+        setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerName }));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
-        setFormError(t('codeErrors.expired', { partnerName: partnerContent?.name }));
+        setFormError(t('codeErrors.expired', { partnerName: partnerName }));
       } else if (
         error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||
         PARTNER_ACCESS_CODE_STATUS.INVALID_CODE
       ) {
-        setFormError(t('codeErrors.invalid', { partnerName: partnerContent?.name }));
+        setFormError(t('codeErrors.invalid', { partnerName: partnerName }));
       } else {
         setFormError(
           t.rich('codeErrors.internal', {
@@ -97,15 +105,15 @@ const RegisterForm = (props: RegisterFormProps) => {
           }),
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
-        logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerContent?.name, message: error });
+        logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
         setLoading(false);
         throw error;
       }
-      logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerContent?.name, message: error });
+      logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
       setLoading(false);
       throw error;
     }
-    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerContent?.name });
+    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
   };
 
   const createUserRecord = async () => {
@@ -116,6 +124,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       password: passwordInput,
       contactPermission: contactPermissionInput,
       signUpLanguage: router.locale as LANGUAGES,
+      partnerId: partnerId,
     });
 
     if ('data' in userResponse && userResponse.data.user.id) {
@@ -137,12 +146,14 @@ const RegisterForm = (props: RegisterFormProps) => {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
+        setLoading(false);
       }
     }
 
     if ('error' in userResponse) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
+      logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
       if (errorMessage === CREATE_USER_EMAIL_ALREADY_EXISTS) {
         setFormError(
           t.rich('firebase.emailAlreadyInUse', {
@@ -164,7 +175,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           }),
         );
       }
-      logEvent(REGISTER_ERROR, { partner: partnerContent?.name, message: errorMessage });
+      logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
       rollbar.error('User register create user error', error);
 
       setLoading(false);
@@ -179,7 +190,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     setFormError('');
 
     try {
-      partnerContent && (await validateAccessCode());
+      partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
       await createUserRecord();
       dispatch(setUserLoading(false));
@@ -193,15 +204,15 @@ const RegisterForm = (props: RegisterFormProps) => {
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        {partnerContent && (
+        {partnerName && accessCodeRequired && (
           <TextField
             id="partnerAccessCode"
             onChange={(e) => setCodeInput(e.target.value)}
             value={codeInput}
-            label={`${partnerContent.name} ${t('codeLabel')}`}
+            label={`${partnerName} ${t('codeLabel')}`}
             variant="standard"
             fullWidth
-            required={!!partnerContent}
+            required={!!partnerName}
           />
         )}
         <TextField
@@ -259,6 +270,41 @@ const RegisterForm = (props: RegisterFormProps) => {
         </LoadingButton>
       </form>
     </Box>
+  );
+};
+
+interface PartnerRegisterFormProps {
+  codeParam: string;
+  partnerName: string;
+}
+
+export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
+  const { partners } = useTypedSelector((state: RootState) => state);
+  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
+  const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
+
+  useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
+
+  useEffect(() => {
+    const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
+    if (partnerData) {
+      const hasAutomaticAccessFeature = partnerData.partnerFeature.reduce(
+        (hasFeature, pf) =>
+          hasFeature || (pf.feature.name === 'AUTOMATIC_ACCESS_CODE' && pf.active),
+        false,
+      );
+      setAccessCodeRequired(!hasAutomaticAccessFeature);
+      setPartnerId(partnerData.id);
+    }
+  }, [partners, partnerName]);
+
+  return (
+    <RegisterForm
+      partnerName={partnerName}
+      partnerId={!accessCodeRequired ? partnerId : undefined}
+      codeParam={codeParam}
+      accessCodeRequired={accessCodeRequired}
+    />
   );
 };
 

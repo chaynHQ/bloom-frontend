@@ -71,7 +71,10 @@ export const api = createApi({
         };
       },
     }),
-    addUser: builder.mutation<GetUserResponse, Partial<User> & { password: string }>({
+    addUser: builder.mutation<
+      GetUserResponse,
+      Partial<User> & { partnerId?: string; password: string }
+    >({
       query(body) {
         return {
           url: 'user',
