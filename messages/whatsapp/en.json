@@ -11,9 +11,12 @@
       "phonenumber": "Phone number",
       "unsubscribe-title": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
-      "errors": {
-        "internal": "There was an error creating your Whatsapp subscription. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "subscribe-errors": {
+        "internal": "There was an error subscribing to Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
         "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
+      },
+      "unsubscribe-errors": {
+        "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       }
     }
   }
