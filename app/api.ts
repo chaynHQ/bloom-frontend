@@ -26,6 +26,11 @@ export interface SessionActionPayload {
   storyblokId: number;
 }
 
+interface WhatsappUnsubscribePayload {
+  cancelledAt: Date;
+  id: string;
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: (headers, { getState }) => {
@@ -171,7 +176,13 @@ export const api = createApi({
         };
       },
     }),
-    // TODO add unsubscribe
+    unsubscribeFromWhatsapp: builder.mutation<Subscription, WhatsappUnsubscribePayload>({
+      query: ({ id, cancelledAt }) => ({
+        url: `subscription-user/whatsapp/${id}`,
+        method: 'PATCH',
+        body: { cancelledAt },
+      }),
+    }),
   }),
 });
 
@@ -188,4 +199,5 @@ export const {
   useAddPartnerAdminMutation,
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useSubscribeToWhatsappMutation,
+  useUnsubscribeFromWhatsappMutation,
 } = api;
