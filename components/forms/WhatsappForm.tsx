@@ -3,6 +3,7 @@ import { Card, CardContent, Link, TextField, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import { useTranslations } from 'next-intl';
+import { phone } from 'phone';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSubscribeToWhatsappMutation, useUnsubscribeFromWhatsappMutation } from '../../app/api';
@@ -21,7 +22,6 @@ import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
 import logEvent from '../../utils/logEvent';
-
 const containerStyle = {
   marginY: 3,
 } as const;
@@ -59,40 +59,47 @@ const WhatsappForm = () => {
     setLoading(true);
     logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
 
-    const sanitizedNumber = phonenumber.replace(/\s/g, '');
-    setPhonenumber(sanitizedNumber);
+    const { isValid, validatedNumber } = validateNumber(phonenumber);
 
-    const subscribeResponse = await subscribeToWhatsapp({
-      subscriptionInfo: sanitizedNumber,
-    });
-
-    if ('data' in subscribeResponse) {
+    if (!isValid) {
+      setFormError(t('subscribeErrors.invalidNumber'));
       setLoading(false);
-      logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
-    }
+      return;
+    } else {
+      setPhonenumber(validatedNumber);
 
-    if ('error' in subscribeResponse) {
-      const error = getErrorMessage(subscribeResponse.error);
+      const subscribeResponse = await subscribeToWhatsapp({
+        subscriptionInfo: validatedNumber,
+      });
 
-      if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
-        setFormError(
-          t.rich('subscribe-errors.alreadyExists', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-          }),
-        );
-      } else {
-        setFormError(
-          t.rich('subscribe-errors.internal', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-          }),
-        );
+      if ('data' in subscribeResponse) {
+        setLoading(false);
+        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
       }
 
-      rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
-      logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
-      setLoading(false);
+      if ('error' in subscribeResponse) {
+        const error = getErrorMessage(subscribeResponse.error);
 
-      throw error;
+        if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
+          setFormError(
+            t.rich('subscribeErrors.alreadyExists', {
+              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            }),
+          );
+        } else {
+          setFormError(
+            t.rich('subscribeErrors.internal', {
+              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            }),
+          );
+        }
+
+        rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
+        logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
+        setLoading(false);
+
+        throw error;
+      }
     }
   };
 
@@ -116,7 +123,7 @@ const WhatsappForm = () => {
       const error = getErrorMessage(unsubscribeResponse.error);
 
       setFormError(
-        t.rich('unsubscribe-errors.internal', {
+        t.rich('unsubscribeErrors.internal', {
           contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
         }),
       );
@@ -143,7 +150,7 @@ const WhatsappForm = () => {
       <Card>
         <CardContent>
           <Typography variant="h2" component="h2">
-            {t('unsubscribe-title')}
+            {t('unsubscribeTitle')}
           </Typography>
           <Box sx={containerStyle}>
             <form autoComplete="off" onSubmit={unsubscribeHandler}>
@@ -182,7 +189,7 @@ const WhatsappForm = () => {
     <Card>
       <CardContent>
         <Typography variant="h2" component="h2">
-          {t('subscribe-title')}
+          {t('subscribeTitle')}
         </Typography>
         <Box sx={containerStyle}>
           <form autoComplete="off" onSubmit={subscribeHandler}>
@@ -211,6 +218,28 @@ const WhatsappForm = () => {
       </CardContent>
     </Card>
   );
+};
+
+const validateNumber = (phonenumber: string): ValidNumber | InvalidNumber => {
+  const sanitisedNumber = phonenumber.replace(/\s/g, '');
+
+  const validationResult = phone(sanitisedNumber);
+
+  if (validationResult.isValid) {
+    return { validatedNumber: validationResult.phoneNumber, isValid: true };
+  } else {
+    return { validatedNumber: undefined, isValid: false };
+  }
+};
+
+type ValidNumber = {
+  isValid: true;
+  validatedNumber: string;
+};
+
+type InvalidNumber = {
+  isValid: false;
+  validatedNumber: undefined;
 };
 
 export default WhatsappForm;

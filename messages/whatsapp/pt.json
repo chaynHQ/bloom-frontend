@@ -6,16 +6,17 @@
       "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
     },
     "form": {
-      "subscribe-title": "Subscribe to affirmations",
+      "subscribeTitle": "Subscribe to affirmations",
       "subscribe": "Subscribe",
       "phonenumber": "Phone number",
-      "unsubscribe-title": "Manage your subscription",
+      "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
-      "subscribe-errors": {
+      "subscribeErrors": {
+        "invalidNumber": "Your phone number appears to be invalid. Please fix any errors and try again.",
         "internal": "There was an error subscribing to Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
         "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
       },
-      "unsubscribe-errors": {
+      "unsubscribeErrors": {
         "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       }
     }
