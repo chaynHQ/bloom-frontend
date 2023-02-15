@@ -13,13 +13,14 @@ import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
 import { RootState } from './store';
-import { User } from './userSlice';
+import { Subscription, Subscriptions, User } from './userSlice';
 
 export interface GetUserResponse {
   user: User;
   partnerAccesses: PartnerAccesses;
   partnerAdmin: PartnerAdmin;
   courses: Courses;
+  subscriptions: Subscriptions;
 }
 export interface SessionActionPayload {
   storyblokId: number;
@@ -161,6 +162,16 @@ export const api = createApi({
         };
       },
     }),
+    subscribeToWhatsapp: builder.mutation<Subscription, { subscriptionInfo: string }>({
+      query(body) {
+        return {
+          url: 'subscription-user/whatsapp',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    // TODO add unsubscribe
   }),
 });
 
@@ -176,4 +187,5 @@ export const {
   useGetPartnerByNameQuery,
   useAddPartnerAdminMutation,
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useSubscribeToWhatsappMutation,
 } = api;
