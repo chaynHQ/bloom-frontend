@@ -59,9 +59,9 @@ const WhatsappForm = () => {
     setLoading(true);
     logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
 
-    const { isValid, validatedNumber } = validateNumber(phonenumber);
+    const validatedNumber = validateNumber(phonenumber);
 
-    if (!isValid) {
+    if (validatedNumber === undefined) {
       setFormError(t('subscribeErrors.invalidNumber'));
       setLoading(false);
       return;
@@ -220,26 +220,16 @@ const WhatsappForm = () => {
   );
 };
 
-const validateNumber = (phonenumber: string): ValidNumber | InvalidNumber => {
+const validateNumber = (phonenumber: string): string | undefined => {
   const sanitisedNumber = phonenumber.replace(/\s/g, '');
 
   const validationResult = phone(sanitisedNumber);
 
   if (validationResult.isValid) {
-    return { validatedNumber: validationResult.phoneNumber, isValid: true };
+    return validationResult.phoneNumber;
   } else {
-    return { validatedNumber: undefined, isValid: false };
+    return undefined;
   }
-};
-
-type ValidNumber = {
-  isValid: true;
-  validatedNumber: string;
-};
-
-type InvalidNumber = {
-  isValid: false;
-  validatedNumber: undefined;
 };
 
 export default WhatsappForm;
