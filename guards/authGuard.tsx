@@ -1,8 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { hotjar } from 'react-hotjar';
-import { useGetUserMutation } from '../app/api';
+import { api, useGetUserMutation } from '../app/api';
+import { clearCoursesSlice } from '../app/coursesSlice';
+import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
+import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
+import { clearUserSlice } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
 import {
@@ -13,13 +17,15 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
 } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import generateReturnQuery from '../utils/generateReturnQuery';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
+  const dispatch: any = useAppDispatch();
+
   const { user } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,6 +50,12 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
           logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
+        await dispatch(clearPartnerAccessesSlice());
+        await dispatch(clearPartnerAdminSlice());
+        await dispatch(clearCoursesSlice());
+        await dispatch(clearUserSlice());
+        await dispatch(api.util.resetApiState());
+        setLoading(false);
 
         router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       }
