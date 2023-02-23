@@ -7,11 +7,11 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { auth } from '../config/firebase';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
-import { Partner } from '../constants/partners';
 import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
+import { Partner, PartnerFeature } from './partnersSlice';
 import { RootState } from './store';
 import { User } from './userSlice';
 
@@ -71,7 +71,10 @@ export const api = createApi({
         };
       },
     }),
-    addUser: builder.mutation<GetUserResponse, Partial<User>>({
+    addUser: builder.mutation<
+      GetUserResponse,
+      Partial<User> & { partnerId?: string; password: string }
+    >({
       query(body) {
         return {
           url: 'user',
@@ -80,11 +83,14 @@ export const api = createApi({
         };
       },
     }),
-    getPartner: builder.query<Partner, string>({
+    getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
     getPartners: builder.query<Partner[], undefined>({
       query: () => ({ url: `partner` }),
+    }),
+    getAutomaticAccessCodeFeatureForPartner: builder.query<PartnerFeature, string>({
+      query: (name) => ({ url: `/partner-feature/automatic-access-code/${name}` }),
     }),
     validateCode: builder.mutation<
       | { status: PARTNER_ACCESS_CODE_STATUS }
@@ -159,5 +165,7 @@ export const {
   useCompleteSessionMutation,
   useValidateCodeMutation,
   useGetPartnersQuery,
+  useGetPartnerByNameQuery,
   useAddPartnerAdminMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
 } = api;

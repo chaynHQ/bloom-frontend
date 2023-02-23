@@ -7,14 +7,14 @@ import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import { THERAPY_FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';
-import { Partner } from '../../constants/partners';
+import { PartnerContent } from '../../constants/partners';
 import logEvent from '../../utils/logEvent';
 import Link from './Link';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<FaqItem>;
-  partner?: Partner | null;
+  partner?: PartnerContent | null;
   eventUserData: any;
 }
 

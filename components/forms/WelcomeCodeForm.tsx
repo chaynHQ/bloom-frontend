@@ -22,7 +22,9 @@ interface WelcomeCodeFormProps {
 const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin, partners } = useTypedSelector(
+    (state: RootState) => state,
+  );
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [codeInput, setCodeInput] = useState<string>('');
@@ -53,6 +55,7 @@ const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
           variant="standard"
           fullWidth
         />
+
         <Button
           onClick={() => {
             logEvent(generatePartnerPromoGetStartedEvent(partnerParam), eventUserData);

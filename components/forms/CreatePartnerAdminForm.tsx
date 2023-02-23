@@ -118,7 +118,7 @@ const CreatePartnerAdminForm = () => {
         required
         value={selectedPartner}
       >
-        {partners.partners.map((option, index) => (
+        {partners.map((option, index) => (
           <MenuItem key={`partner-name-${index}`} value={option.id}>
             {option.name}
           </MenuItem>

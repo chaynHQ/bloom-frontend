@@ -7,7 +7,7 @@ import bumbleLogo from '../public/bumble_logo.svg';
 import illustrationBloomHeadPurple from '../public/illustration_bloom_head_purple.svg';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 
-export interface Partner {
+export interface PartnerContent {
   id?: string;
   name: string; // rename to display name to show value is intended for display and can be upper case
   logo: StaticImageData;
@@ -25,7 +25,7 @@ export interface Partner {
   tiktok?: string;
 }
 
-export const publicContent: Partner = {
+export const publicContent: PartnerContent = {
   name: 'Bloom',
   logo: bloomLogo,
   logoAlt: 'alt.bloomLogo',
@@ -38,7 +38,7 @@ export const publicContent: Partner = {
   youtube: 'https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg',
 };
 
-export const bumbleContent: Partner = {
+export const bumbleContent: PartnerContent = {
   name: 'Bumble',
   logo: bumbleLogo,
   logoAlt: 'alt.bumbleLogo',
@@ -53,7 +53,7 @@ export const bumbleContent: Partner = {
   tiktok: 'https://www.tiktok.com/@bumble',
 };
 
-export const badooContent: Partner = {
+export const badooContent: PartnerContent = {
   name: 'Badoo',
   logo: badooLogo,
   logoAlt: 'alt.badooLogo',

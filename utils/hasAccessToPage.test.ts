@@ -1,6 +1,6 @@
 import { PartnerAccess } from '../app/partnerAccessSlice';
 import { PartnerAdmin } from '../app/partnerAdminSlice';
-import { Partner } from '../constants/partners';
+import { PartnerContent } from '../constants/partners';
 import hasAccessToPage from './hasAccessToPage';
 
 const emptyPartnerAdmin: PartnerAdmin = {
@@ -10,7 +10,7 @@ const emptyPartnerAdmin: PartnerAdmin = {
   updatedAt: null,
 };
 const partnerAdmin: PartnerAdmin = {
-  partner: { name: 'Bumble' } as Partner,
+  partner: { name: 'Bumble' } as PartnerContent,
   id: null,
   createdAt: null,
   updatedAt: null,
@@ -19,7 +19,7 @@ const partnerAccess = {
   id: '1',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'Bumble' } as Partner,
+  partner: { name: 'Bumble' } as PartnerContent,
 } as PartnerAccess;
 
 describe('hasAccessToPage', () => {

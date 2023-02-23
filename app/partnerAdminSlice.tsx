@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getPartnerContent, Partner } from '../constants/partners';
+import { getPartnerContent, PartnerContent } from '../constants/partners';
 import { api, GetUserResponse } from './api';
 import type { RootState } from './store';
 
@@ -7,7 +7,7 @@ export interface PartnerAdmin {
   id: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  partner: Partner | null;
+  partner: PartnerContent | null;
 }
 
 const initialState: PartnerAdmin = {
@@ -25,7 +25,9 @@ const mergeUserPartnerAdminState = (state: PartnerAdmin, payload: GetUserRespons
     partnerAdmin.partner = Object.assign(
       {},
       partnerAdmin.partner,
-      getPartnerContent(payload.partnerAdmin.partner.name), // populate state with static values
+      // This uses hard coded date from frontend rather than from backend.
+      // in future we can get live data from backend
+      getPartnerContent(payload.partnerAdmin.partner.name),
     );
     return partnerAdmin;
   }
