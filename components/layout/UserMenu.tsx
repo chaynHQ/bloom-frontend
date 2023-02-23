@@ -79,6 +79,7 @@ export default function UserMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         aria-label={t('userMenu')}
+        id="user-menu-button"
         color="inherit"
         onClick={handleClick}
         startIcon={<Person />}
@@ -109,7 +110,7 @@ export default function UserMenu() {
           </MenuItem>
         )}
         <MenuItem sx={menuItemStyle}>
-          <Button onClick={logout} startIcon={<Logout />}>
+          <Button id="logout-button" onClick={logout} startIcon={<Logout />}>
             {t('logout')}
           </Button>
         </MenuItem>

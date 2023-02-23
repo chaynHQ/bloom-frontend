@@ -129,7 +129,11 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography>
         {t.rich('resultLink', {
-          welcomeURL: (children) => <Link href={welcomeURL}>{welcomeURL}</Link>,
+          welcomeURL: (children) => (
+            <Link id="access-code-url" href={welcomeURL}>
+              {welcomeURL}
+            </Link>
+          ),
         })}
       </Typography>
       <Typography mt={2}>
