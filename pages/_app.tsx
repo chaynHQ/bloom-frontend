@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
+import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
 import { setUserLoading, setUserToken } from '../app/userSlice';
 import CrispScript from '../components/crisp/CrispScript';
@@ -130,4 +131,20 @@ function MyApp(props: MyAppProps) {
   );
 }
 
-export default wrapper.withRedux(MyApp);
+function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      if ((window as any).Cypress) {
+        (window as any).store = store;
+      }
+    }
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <MyApp Component={Component} {...props} />
+    </Provider>
+  );
+}
+export default AppReduxWrapper;
