@@ -7,6 +7,7 @@ export default defineConfig({
     login_path: 'auth/login',
     reset_password_path: 'auth/reset-password',
     reset_pwd_confirm_email: 'test@test.com',
+    api_url: 'http://localhost:35001/api/v1',
   },
   e2e: {
     // We've imported your old cypress plugins here.
@@ -16,5 +17,6 @@ export default defineConfig({
     },
     specPattern: 'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
     baseUrl: 'http://localhost:3000',
+    supportFile: 'cypress/support/index.js',
   },
 });
