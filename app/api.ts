@@ -83,6 +83,14 @@ export const api = createApi({
         };
       },
     }),
+    deleteUser: builder.mutation<string, Partial<User>>({
+      query() {
+        return {
+          url: `user`,
+          method: 'DELETE',
+        };
+      },
+    }),
     getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
