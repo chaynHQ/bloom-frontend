@@ -51,7 +51,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run cypress
-        uses: cypress-io/github-action@v4.2.0
+        uses: cypress-io/github-action@v5.0.9
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx
