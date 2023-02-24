@@ -200,7 +200,7 @@ Dynamic pages allow the team to create new content pages in Storyblok e.g. `/abo
 
 ## Cypress
 
-See [Cypress.md](CYPRESS.md) for set up instructions for cypress
+See [CYPRESS.md](CYPRESS.md) for set up instructions for cypress
 
 **Running the https proxy**
 You need to run a https proxy for the storyblok preview.

@@ -1,13 +1,3 @@
-before(() => {
-  //Delete all cypress test users before cypress test runs
-  cy.visit('/');
-  cy.logInWithEmailAndPassword(
-    Cypress.env('super_admin_user'),
-    Cypress.env('super_admin_password'),
-  );
-  cy.deleteAllCypressUsers();
-  cy.logout();
-});
 describe('Home page', () => {
   it('should render', () => {
     cy.visit('/');
