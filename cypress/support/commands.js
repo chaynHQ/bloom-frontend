@@ -95,6 +95,7 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
       },
     });
   });
+  cy.wait(2000);
 });
 
 Cypress.Commands.add('cleanUpTestState', () => {
