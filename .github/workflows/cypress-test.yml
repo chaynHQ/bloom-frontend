@@ -6,6 +6,9 @@ on:
   pull_request:
     branches:
       - 'run-cypress-tests/**'
+  push:
+    branches:
+      - 'run-cypress-tests/**'
   workflow_dispatch:
 
 jobs:
