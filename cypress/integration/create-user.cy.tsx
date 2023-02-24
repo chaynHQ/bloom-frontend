@@ -11,6 +11,7 @@ describe('Create User', () => {
     cy.visit('/');
     cy.wait(2000);
     cy.get('h2', { timeout: 2000 }).contains('Get started').should('exist');
+    // TODO - workout why #primary-get-started-button works locallly and headless but not in github actions
     cy.get('a[href="/auth/register"]', { timeout: 5000 }).first().click({ force: true });
     cy.wait(2000);
     cy.get('h2', { timeout: 5000 }).should('contain', 'Create account');
