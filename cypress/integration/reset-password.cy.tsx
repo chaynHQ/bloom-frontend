@@ -1,6 +1,9 @@
 import { MailSlurp } from 'mailslurp-client';
 
 describe('Reset password', () => {
+  before(() => {
+    cy.cleanUpTestState();
+  });
   it('should navigate to the reset password page', () => {
     // Start from the home page
     cy.visit('/');

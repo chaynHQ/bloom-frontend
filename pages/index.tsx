@@ -107,6 +107,7 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
                 </Typography>
                 <Typography>{t('publicIntroduction')}</Typography>
                 <Button
+                  id="primary-get-started-button"
                   sx={{ mt: 3 }}
                   variant="contained"
                   fullWidth

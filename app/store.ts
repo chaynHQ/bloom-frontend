@@ -7,8 +7,9 @@ import partnerAccessesReducer from './partnerAccessSlice';
 import partnerAdminReducer from './partnerAdminSlice';
 import partnersReducer from './partnersSlice';
 import userReducer from './userSlice';
+let store: ReturnType<typeof configStore>;
 
-const initStore = () =>
+const configStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
@@ -21,9 +22,13 @@ const initStore = () =>
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
 
-export type AppStore = ReturnType<typeof initStore>;
+export const makeStore = () => {
+  store = configStore();
+  return store;
+};
+
+export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action>;
-export type AppDispatch = ReturnType<AppStore['dispatch']>;
 
-export const wrapper = createWrapper<AppStore>(initStore);
+export const wrapper = createWrapper<AppStore>(makeStore);
