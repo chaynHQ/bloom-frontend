@@ -9,6 +9,7 @@ describe('Create User', () => {
   it('User should be able to create user', () => {
     // Start from the home page
     cy.visit('/');
+    cy.wait(2000);
     cy.get('h2', { timeout: 2000 }).contains('Get started').should('exist');
     cy.get('#primary-get-started-button').click({ force: true });
     cy.wait(2000);
