@@ -9,7 +9,6 @@ export default defineConfig({
     login_path: 'auth/login',
     reset_password_path: 'auth/reset-password',
     reset_pwd_confirm_email: 'test@test.com',
-    api_url: 'http://localhost:35001/api/v1',
     ...process.env,
   },
   e2e: {
