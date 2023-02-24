@@ -11,7 +11,9 @@ describe('Create User', () => {
     cy.visit('/');
     cy.wait(2000);
     cy.get('h2', { timeout: 2000 }).contains('Get started').should('exist');
-    cy.get('#primary-get-started-button', { timeout: 5000 }).click({ force: true });
+    cy.get('#primary-get-started-button', { timeout: 5000 })
+      .scrollIntoView()
+      .click({ force: true });
     cy.wait(2000);
     cy.get('h2', { timeout: 5000 }).should('contain', 'Create account');
     cy.get('#name', { timeout: 5000 }).type('Cypress test');
