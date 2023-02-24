@@ -1,4 +1,6 @@
 import { defineConfig } from 'cypress';
+import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config({ path: '.env.local' });
 
 export default defineConfig({
   projectId: 'to91wg',
@@ -8,6 +10,7 @@ export default defineConfig({
     reset_password_path: 'auth/reset-password',
     reset_pwd_confirm_email: 'test@test.com',
     api_url: 'http://localhost:35001/api/v1',
+    ...process.env,
   },
   e2e: {
     // We've imported your old cypress plugins here.
