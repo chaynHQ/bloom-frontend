@@ -8,6 +8,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSubscribeToWhatsappMutation, useUnsubscribeFromWhatsappMutation } from '../../app/api';
 import { RootState } from '../../app/store';
+import { Subscription } from '../../app/userSlice';
 import rollbar from '../../config/rollbar';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
 import {
@@ -42,12 +43,12 @@ const WhatsappForm = () => {
   const { user } = useTypedSelector((state: RootState) => state);
 
   useEffect(() => {
-    if (user.activeSubscriptions && user.activeSubscriptions.length > 0) {
-      // Note that as currently the user can only have one active subscription (which is whatsapp), the first subscription will be a whatsapp subscription.
-      // This subscription's info is a phone number and is used to populate the state.
+    const activeWhatsappSubscription = findWhatsappSubscription(user.activeSubscriptions);
+
+    if (activeWhatsappSubscription) {
       setHasActiveSubscription(true);
-      setPhonenumber(user.activeSubscriptions[0].subscriptionInfo!);
-      setSubscriptionId(user.activeSubscriptions[0].id!);
+      setPhonenumber(activeWhatsappSubscription.subscriptionInfo!);
+      setSubscriptionId(activeWhatsappSubscription.id!);
     } else {
       setHasActiveSubscription(false);
     }
@@ -230,6 +231,14 @@ const validateNumber = (phonenumber: string): string | undefined => {
   } else {
     return undefined;
   }
+};
+
+const findWhatsappSubscription = (subs: Subscription[] | null): Subscription | undefined => {
+  if (subs && subs.length > 0) {
+    return subs.find((sub) => sub.subscriptionName === 'whatsapp');
+  }
+
+  return undefined;
 };
 
 export default WhatsappForm;

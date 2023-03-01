@@ -75,25 +75,19 @@ const slice = createSlice({
       return Object.assign({}, state, payload.user, { activeSubscriptions });
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
-      /**
-       * Note that currently there is only one type of subscription available i.e. whatsapp.
-       * On top of that, only one whatsapp subscription is allowed per user.
-       * Taken together, this means a user can only have one active subscription at any time so the previous state
-       * does not need to be taken into account.
-       *
-       * The following code will need to change if other types of subscriptions are added. */
-      return Object.assign({}, state, { activeSubscriptions: [payload] });
+      state.activeSubscriptions
+        ? state.activeSubscriptions.push(payload)
+        : (state.activeSubscriptions = [payload]);
+
+      return state;
     });
     builder.addMatcher(
       api.endpoints.unsubscribeFromWhatsapp.matchFulfilled,
       (state, { payload }) => {
-        /**
-         * Note that currently there is only one type of subscription available i.e. whatsapp.
-         * On top of that, only one whatsapp subscription is allowed per user.
-         * Taken together, this means once a user has unsubscribed from whatsapp, a user will have no other active subscriptions.
-         *
-         * The following code will need to change if other types of subscriptions are added. */
-        return Object.assign({}, state, { activeSubscriptions: [] });
+        // Remove the subscription that matches the id of the payload. This will be the unsubscribed subscription.
+        state.activeSubscriptions?.filter((subscription) => subscription.id != payload.id);
+
+        return state;
       },
     );
   },
