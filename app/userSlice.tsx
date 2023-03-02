@@ -17,7 +17,7 @@ export interface User {
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
-  activeSubscriptions: Subscription[] | null;
+  activeSubscriptions: ActiveSubscription[];
 }
 
 export interface Subscription {
@@ -27,6 +27,10 @@ export interface Subscription {
   createdAt: Date | null;
   cancelledAt: Date | null;
   id: string | null;
+}
+
+export interface ActiveSubscription extends Subscription {
+  cancelledAt: null;
 }
 
 export interface Subscriptions extends Array<Subscription> {}
@@ -45,7 +49,7 @@ const initialState: User = {
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
-  activeSubscriptions: null,
+  activeSubscriptions: [],
 };
 
 const slice = createSlice({
@@ -75,29 +79,33 @@ const slice = createSlice({
       return Object.assign({}, state, payload.user, { activeSubscriptions });
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
-      state.activeSubscriptions
-        ? state.activeSubscriptions.push(payload)
-        : (state.activeSubscriptions = [payload]);
+      if (isSubscriptionActive(payload)) {
+        state.activeSubscriptions.push(payload);
+      }
 
       return state;
     });
     builder.addMatcher(
       api.endpoints.unsubscribeFromWhatsapp.matchFulfilled,
       (state, { payload }) => {
-        // Remove the subscription that matches the id of the payload. This will be the unsubscribed subscription.
-        state.activeSubscriptions?.filter((subscription) => subscription.id != payload.id);
-
+        state.activeSubscriptions = state.activeSubscriptions.filter(
+          (subscription) => subscription.id != payload.id,
+        );
         return state;
       },
     );
   },
 });
 
-const getActiveSubscriptions = (payload: GetUserResponse) => {
+const getActiveSubscriptions = (payload: GetUserResponse): ActiveSubscription[] => {
   if (payload.subscriptions && payload.subscriptions.length > 0) {
-    return payload.subscriptions.filter((subs) => subs.cancelledAt === null);
+    return payload.subscriptions.filter(isSubscriptionActive);
   }
-  return null;
+  return [];
+};
+
+const isSubscriptionActive = (subscription: Subscription): subscription is ActiveSubscription => {
+  return subscription.cancelledAt === null;
 };
 
 const { actions, reducer } = slice;
