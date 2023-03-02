@@ -2,19 +2,24 @@ import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
+import { RootState } from '../../app/store';
 import ImageTextColumn from '../../components/common/ImageTextColumn';
 import { ImageTextItem } from '../../components/common/ImageTextGrid';
-import WhatsappForm from '../../components/forms/WhatsappForm';
+import WhatsappSubscribeForm from '../../components/forms/WhatsappSubscribeForm';
+import WhatsappUnsubscribeForm from '../../components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '../../components/layout/Header';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
+import { useTypedSelector } from '../../hooks/store';
 import illustrationChange from '../../public/illustration_change.svg';
 import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 
 import { rowStyle } from '../../styles/common';
+import { hasWhatsappSubscription } from '../../utils/whatsappUtils';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -60,6 +65,14 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
 
   const t = useTranslations('Whatsapp');
 
+  const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
+
+  const { user } = useTypedSelector((state: RootState) => state);
+
+  useEffect(() => {
+    setHasActiveWhatsappSub(hasWhatsappSubscription(user.activeSubscriptions));
+  }, [user.activeSubscriptions]);
+
   const headerProps: HeaderProps = {
     title: configuredStory.content.title,
     introduction: configuredStory.content.description,
@@ -77,7 +90,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
             <ImageTextColumn items={steps} translations="Whatsapp.steps" />
           </Box>
           <Box sx={formContainerStyle}>
-            <WhatsappForm />
+            {hasActiveWhatsappSub ? <WhatsappUnsubscribeForm /> : <WhatsappSubscribeForm />}
           </Box>
         </Container>
         {configuredStory.content.page_sections?.length > 0 &&
