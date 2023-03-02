@@ -143,8 +143,6 @@ const WhatsappForm = () => {
     setPhonenumber(value);
   };
 
-  // TODO verify phone numbers
-
   if (hasActiveSubscription) {
     // If the user has an active subscription, show view to manage subscription i.e. unsubscribe
     return (
