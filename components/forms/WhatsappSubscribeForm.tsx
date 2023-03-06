@@ -7,6 +7,7 @@ import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
 import { useSubscribeToWhatsappMutation } from '../../app/api';
+import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
 import {
@@ -14,9 +15,11 @@ import {
   WHATSAPP_SUBSCRIBE_REQUEST,
   WHATSAPP_SUBSCRIBE_SUCCESS,
 } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
-import logEvent from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+
 const containerStyle = {
   marginY: 3,
 } as const;
@@ -24,6 +27,9 @@ const containerStyle = {
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const tS = useTranslations('Shared');
+
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const [phonenumber, setPhonenumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +41,7 @@ const WhatsappSubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
+    logEvent(WHATSAPP_SUBSCRIBE_REQUEST, eventData);
 
     const validatedNumber = validateNumber(phonenumber);
 
@@ -50,7 +56,7 @@ const WhatsappSubscribeForm = () => {
 
       if ('data' in subscribeResponse) {
         setLoading(false);
-        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
+        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS, eventData);
       }
 
       if ('error' in subscribeResponse) {
