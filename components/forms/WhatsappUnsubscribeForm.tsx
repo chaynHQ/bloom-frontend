@@ -15,7 +15,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
-import logEvent from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { findWhatsappSubscription } from '../../utils/whatsappUtils';
 const containerStyle = {
   marginY: 3,
@@ -32,7 +32,8 @@ const WhatsappUnsubscribeForm = () => {
 
   const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
     const activeWhatsappSubscription = findWhatsappSubscription(user.activeSubscriptions);
@@ -46,7 +47,7 @@ const WhatsappUnsubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST);
+    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST, eventData);
 
     const unsubscribeResponse = await unsubscribeFromWhatsapp({
       id: subscriptionId,
@@ -55,7 +56,7 @@ const WhatsappUnsubscribeForm = () => {
 
     if ('data' in unsubscribeResponse) {
       setLoading(false);
-      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS);
+      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS, eventData);
     }
 
     if ('error' in unsubscribeResponse) {
