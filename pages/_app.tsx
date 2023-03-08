@@ -22,6 +22,7 @@ import createEmotionCache from '../config/emotionCache';
 import { auth } from '../config/firebase';
 import { AuthGuard } from '../guards/authGuard';
 import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
+import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
 import { useAppDispatch } from '../hooks/store';
@@ -93,7 +94,7 @@ function MyApp(props: MyAppProps) {
     let children = null;
 
     if (publicPathHeads.includes(pathHead)) {
-      return component;
+      return <PublicPageDataWrapper>{component}</PublicPageDataWrapper>;
     }
     if (pathHead === 'therapy') {
       children = <TherapyAccessGuard>{component}</TherapyAccessGuard>;
