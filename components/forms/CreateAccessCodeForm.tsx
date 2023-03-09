@@ -56,16 +56,13 @@ const CreateAccessCodeForm = () => {
       return;
     }
 
-    const includeLiveChat =
-      selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT ||
-      selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
     const includeTherapy = selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
     const therapySessionsRemaining: number =
       selectedTier === PARTNER_ACCESS_FEATURES.THERAPY ? 6 : 0;
 
     const eventData = {
       feature_courses: true,
-      feature_live_chat: includeLiveChat,
+      feature_live_chat: true,
       feature_therapy: includeTherapy,
       therapy_sessions_remaining: therapySessionsRemaining,
       ...eventUserData,
@@ -74,7 +71,7 @@ const CreateAccessCodeForm = () => {
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
 
     const partnerAccessResponse = await addPartnerAccess({
-      featureLiveChat: includeLiveChat,
+      featureLiveChat: true,
       featureTherapy: includeTherapy,
       therapySessionsRemaining: therapySessionsRemaining,
       therapySessionsRedeemed: 0,
@@ -121,11 +118,7 @@ const CreateAccessCodeForm = () => {
   const FormSuccess = () => (
     <Box>
       <Typography variant="h3" component="h3" mb={1}>
-        {selectedTier === PARTNER_ACCESS_FEATURES.COURSES
-          ? t('courseAccess')
-          : selectedTier === PARTNER_ACCESS_FEATURES.LIVE_CHAT
-          ? t('liveChatAccess')
-          : t('therapyAccess')}
+        {t('therapyAccess')}
       </Typography>
       <Typography>
         {t.rich('resultLink', {
@@ -156,16 +149,6 @@ const CreateAccessCodeForm = () => {
           value={selectedTier}
           onChange={(e) => setSelectedTier(e.target.value as PARTNER_ACCESS_FEATURES)}
         >
-          <FormControlLabel
-            value={PARTNER_ACCESS_FEATURES.COURSES}
-            control={<Radio />}
-            label={t('form.featureCoursesLabel')}
-          />
-          <FormControlLabel
-            value={PARTNER_ACCESS_FEATURES.LIVE_CHAT}
-            control={<Radio />}
-            label={t('form.featureLiveChatLabel')}
-          />
           <FormControlLabel
             value={PARTNER_ACCESS_FEATURES.THERAPY}
             control={<Radio />}

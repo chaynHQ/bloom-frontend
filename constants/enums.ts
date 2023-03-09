@@ -7,8 +7,6 @@ export enum LANGUAGES {
 }
 
 export enum PARTNER_ACCESS_FEATURES {
-  COURSES = 'courses',
-  LIVE_CHAT = 'live chat',
   THERAPY = 'therapy',
 }
 
