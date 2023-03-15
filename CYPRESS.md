@@ -9,8 +9,13 @@ Currently, integration tests are set up to be run locally with Chrome. When cypr
 
 - Create a public user through the UI
 - In the database in `bloom-backend` you will need to set "isSuperAdmin" column to true for the user you created.
-- There are 2 ways of data seeding with users. 1 is via a script in the bloom-scripts repo. Or 2 creating users through the UI.
+- There are 2 ways of data seeding with users. 1 is via a script in the bloom-scripts repo. Or 2 creating users through the UI (recommended).
 
+  ### Creating users with the UI (Recommended)
+
+  - create a public user through the UI by navigating to the '/' home page and following instrcutions.
+  - To create partner admin users, log in as the super admin you created. Go to /admin/dashboard and create 1 bumble user and 1 badoo user. Make sure the emails are aliases of your own email. For example, if my email was 'test@chayn.co', I need to make accounts with emails `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`.
+  
   ### Creating users with a script
 
   - You will need to pull the [bloom-scripts repo](https://github.com/chaynHQ/bloom-scripts). This repo contains scripts for data seeding public and partner admin users. Note that you can also perform
@@ -24,11 +29,6 @@ Currently, integration tests are set up to be run locally with Chrome. When cypr
     - CYPRESS_TEMPLATE_EMAIL - this needs to be your email because you will need to reset passwords in the UI. To be able to reset passwords, you need the reset email to go into your inbox. The script will generate alias email addresses for all the Cypress template users. For example - my email is `test@chayn.co`. The accounts that will be created will be under `test+publicuser@chayn.co`, `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`.
     - CYPRESS_TEMPLATE_PASSWORD - this will be the password for all test accounts created.
     - run the script with `npm run setup-cypress`.
-
-  ### Creating users with the UI (Recommended)
-
-  - create a public user through the UI by navigating to the '/' home page and following instrcutions.
-  - To create partner admin users, log in as the super admin you created. Go to /admin/dashboard and create 1 bumble user and 1 badoo user. Make sure the emails are aliases of your own email. For example, if my email was 'test@chayn.co', I need to make accounts with emails `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`.
 
 ### Adding data to the env
 
