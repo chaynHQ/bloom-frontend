@@ -1,12 +1,12 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "We send affirmational messages direct to your Whatsapp.",
-      "step2": "The messages are sent twice a week, on Tuesdays and Saturdays.",
+      "step1": "We send messages to your Whatsapp number.",
+      "step2": "The messages are sent twice a week, on Wednesdays and Sundays.",
       "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
     },
     "form": {
-      "subscribeTitle": "Subscribe to affirmations",
+      "subscribeTitle": "Subscribe to Notes from Bloom",
       "subscribe": "Subscribe",
       "phonenumber": "Phone number",
       "unsubscribeTitle": "Manage your subscription",
