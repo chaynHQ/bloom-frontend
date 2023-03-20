@@ -10,11 +10,6 @@ const headerContainerStyles = {
   alignItems: 'end',
   backgroundColor: 'common.white',
   paddingBottom: { xs: 0, md: 0 },
-  paddingTop: {
-    xs: '7rem',
-    sm: '8rem',
-    lg: '8rem',
-  },
   minHeight: { xs: 270, sm: 300, md: 320, lg: 340 },
 } as const;
 

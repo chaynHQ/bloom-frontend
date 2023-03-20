@@ -29,11 +29,6 @@ const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
   minHeight: { xs: 220, lg: 360 },
-  paddingTop: {
-    xs: '7rem !important',
-    sm: '8rem !important',
-    lg: '8rem !important',
-  },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
 };
