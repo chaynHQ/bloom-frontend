@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTranslations } from 'next-intl';
-import * as React from 'react';
 import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 
@@ -9,7 +8,7 @@ const containerStyles = {
   position: 'fixed',
   textAlign: 'right',
   right: { xs: 16, lg: 80 },
-  top: { xs: 15, sm: 30, md: 15 },
+  top: { xs: 60, sm: 80, lg: 90 },
   zIndex: 100,
 } as const;
 

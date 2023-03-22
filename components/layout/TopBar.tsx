@@ -21,7 +21,6 @@ import UserMenu from './UserMenu';
 
 const appBarStyle = {
   bgcolor: 'primary.light',
-  '+ div': { marginTop: { xs: 6, md: 8 } },
 } as const;
 
 const appBarContainerStyles = {
