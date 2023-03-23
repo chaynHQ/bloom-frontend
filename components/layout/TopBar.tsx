@@ -17,6 +17,7 @@ import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
+import SecondaryNav from './SecondaryNav';
 import UserMenu from './UserMenu';
 
 const appBarStyle = {
@@ -79,6 +80,7 @@ const TopBar = () => {
             <LanguageMenu />
           </Box>
         </Container>
+        {!isSmallScreen && user.token && <SecondaryNav currentPage={router.pathname} />}
       </AppBar>
     </>
   );
