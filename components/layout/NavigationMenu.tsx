@@ -8,11 +8,9 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
   HEADER_ADMIN_CLICKED,
-  HEADER_COURSES_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
   HEADER_LOGIN_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
-  HEADER_THERAPY_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -100,20 +98,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         });
       }
 
-      if (user.token) {
-        links.push({ title: t('courses'), href: '/courses', event: HEADER_COURSES_CLICKED });
-        const therapyAccess = partnerAccesses.find(
-          (partnerAccess) => partnerAccess.featureTherapy === true,
-        );
-
-        if (!!therapyAccess) {
-          links.push({
-            title: t('therapy'),
-            href: '/therapy/book-session',
-            event: HEADER_THERAPY_CLICKED,
-          });
-        }
-      } else {
+      if (!user.token) {
         links.push({ title: t('login'), href: '/auth/login', event: HEADER_LOGIN_CLICKED });
       }
     }
