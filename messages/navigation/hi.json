@@ -16,6 +16,13 @@
     "therapy": "Therapy",
     "courses": "Courses",
     "applyCode": "Code apply kariye",
-    "account": "Account"
+    "account": "Account",
+    "secondaryNavigationMenu": "Secondary navigation menu",
+    "notes": "Notes",
+    "alt": {
+      "therapyIcon": "Therapy icon",
+      "courseIcon": "Course icon",
+      "notesIcon": "Notes from Bloom icon"
+    }
   }
 }
