@@ -11,19 +11,19 @@ import Video from '../../components/video/Video';
 import { LANGUAGES } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import chatIconWithBackground from '../../public/chat_icon_with_background.svg';
+import { columnStyle } from '../../styles/common';
 
-import { rowStyle } from '../../styles/common';
 import { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
-  textAlign: 'center',
-  ...rowStyle,
 } as const;
 
-const infoBoxStyle = {
-  maxWidth: 400,
-};
+const cardColumnStyle = {
+  ...columnStyle,
+  alignItems: 'center',
+  gap: { xs: 2, md: 3 },
+} as const;
 
 const formContainerStyle = {
   width: { xs: '100%', sm: '70%', md: '47%' },
@@ -60,7 +60,7 @@ const Chat: NextPage<Props> = () => {
       <Box>
         <Header {...headerProps} />
         <Container sx={containerStyle}>
-          <Box sx={infoBoxStyle}>
+          <Box sx={cardColumnStyle}>
             <SessionContentCard
               title={t('sessionDetail.chat.title')}
               titleIcon={ChatBubbleOutlineIcon}
