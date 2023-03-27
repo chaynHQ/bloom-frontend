@@ -41,15 +41,14 @@ const crispButtonContainerStyle = {
 } as const;
 const Chat: NextPage<Props> = () => {
   const t = useTranslations('Courses');
-
+  const tH = useTranslations('ChatHeader');
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps: HeaderProps = {
-    title: '1-1 Chat',
-    introduction:
-      'Our 1-1 chat service means you can chat with our Bloom team of survivors and allies who are experienced in supporting one another. We’re here for you to share your reflections, feelings and questions as you work through our Bloom courses.',
+    title: tH('title'),
+    introduction: tH('introduction'),
     imageSrc: chatIconWithBackground,
-    translatedImageAlt: 'image',
+    translatedImageAlt: tH('chatIconAlt'),
   };
 
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
@@ -110,6 +109,7 @@ export function getStaticProps({ locale }: GetStaticPropsContext) {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
+        ...require(`../../messages/chat/${locale}.json`),
       },
     },
   };
