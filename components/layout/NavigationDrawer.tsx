@@ -17,7 +17,7 @@ import bloomLogo from '../../public/bloom_logo.svg';
 import { columnStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
-import NavigationMenu from './NavigationMenu';
+import NavigationDrawerLinks from './NavigationDrawerLinks';
 
 const drawerContainerStyle = {
   ...columnStyle,
@@ -89,7 +89,7 @@ const NavigationDrawer = () => {
           <Link href="/" mb={2} aria-label={t('home')} sx={logoContainerStyle}>
             <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
           </Link>
-          <NavigationMenu setAnchorEl={setAnchorEl} />
+          <NavigationDrawerLinks setAnchorEl={setAnchorEl} />
         </Container>
       </Drawer>
     </Box>
