@@ -1,14 +1,14 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "We send affirmational messages direct to your Whatsapp.",
-      "step2": "The messages are sent twice a week, on Tuesdays and Saturdays.",
-      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
+      "step1": "Nous envoyons des messages à votre numéro Whatsapp.",
+      "step2": "Les messages sont envoyés deux fois par semaine, le mercredi et le dimanche.",
+      "step3": "Si vous changez d'avis, vous pouvez vous désinscrire ou vous réinscrire à tout moment."
     },
     "form": {
-      "subscribeTitle": "Subscribe to affirmations",
+      "subscribeTitle": "S'abonner pour recevoir les Notes de Bloom",
       "subscribe": "Subscribe",
-      "phonenumber": "Phone number",
+      "phonenumber": "Numéro de téléphone",
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
