@@ -29,7 +29,7 @@ export interface HeaderProps {
 
 const headerContainerStyles = {
   ...rowStyle,
-  alignItems: 'end',
+  alignItems: 'center',
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
