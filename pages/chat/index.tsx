@@ -66,6 +66,7 @@ const Chat: NextPage<Props> = () => {
               titleIconSize={24}
               eventPrefix="SESSION_CHAT"
               eventData={eventUserData}
+              initialExpanded={true}
             >
               <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
               <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
