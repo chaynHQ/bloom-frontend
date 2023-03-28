@@ -4,8 +4,10 @@ import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { RichTextOptions } from '../../utils/richText';
 import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -27,7 +29,7 @@ export interface HeaderProps {
 
 const headerContainerStyles = {
   ...rowStyle,
-  alignItems: 'end',
+  alignItems: 'center',
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
@@ -76,7 +78,7 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          <Typography>{introduction}</Typography>
+          <>{render(introduction, RichTextOptions)}</>
         </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>
