@@ -1,7 +1,11 @@
 {
-  "ChatHeader": {
+  "Chat": {
     "title": "1-1 Chat",
     "introduction": "Our 1-1 chat service means you can chat with our Bloom team of survivors and allies who are experienced in supporting one another. We’re here for you to share your reflections, feelings and questions as you work through our Bloom courses.",
-    "chatIconAlt": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines."
+    "chatIconAlt": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines.",
+    "detailIntro": "Here are some important things for you to know before we start:",
+    "detailImmediateHelp": "If you’re at risk of imminent harm right now, please go to ‘Immediate help’ in the menu at the top of the website. There you can find options for services that could support you.",
+    "detailPrivacy": "Your messages are kept private and secure by the Bloom team.",
+    "detailSafeguarding": "We will only ever share information you give us if you or a person in your care is in need of urgent medical attention, and you are unable to call emergency services yourself. We will always discuss this with you before we seek support on your behalf. For more about this, you can read our Safeguarding Policy here."
   }
 }

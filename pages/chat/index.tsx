@@ -41,14 +41,14 @@ const crispButtonContainerStyle = {
 } as const;
 const Chat: NextPage<Props> = () => {
   const t = useTranslations('Courses');
-  const tH = useTranslations('ChatHeader');
+  const tC = useTranslations('Chat');
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
 
   const headerProps: HeaderProps = {
-    title: tH('title'),
-    introduction: tH('introduction'),
+    title: tC('title'),
+    introduction: tC('introduction'),
     imageSrc: chatIconWithBackground,
-    translatedImageAlt: tH('chatIconAlt'),
+    translatedImageAlt: tC('chatIconAlt'),
   };
 
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
@@ -64,28 +64,26 @@ const Chat: NextPage<Props> = () => {
               title={t('sessionDetail.chat.title')}
               titleIcon={ChatBubbleOutlineIcon}
               titleIconSize={24}
-              eventPrefix="SESSION_CHAT"
+              eventPrefix="CHAT_ACCORDION"
               eventData={eventUserData}
               initialExpanded={true}
             >
               <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
               <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
               <Video
-                eventPrefix="SESSION_CHAT_VIDEO"
+                eventPrefix="CHAT_INTRO_VIDEO"
                 eventData={eventUserData}
                 url={t('sessionDetail.chat.videoLink')}
                 containerStyles={{ mx: 'auto', my: 2 }}
               ></Video>
               <Box sx={chatDetailIntroStyle}>
-                <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
+                <Typography>{tC('detailIntro')}</Typography>
               </Box>
               <Box>
                 <ul>
-                  <li>{t('sessionDetail.chat.detailPrivacy')}</li>
-                  <li>{t('sessionDetail.chat.detailTimezone')}</li>
-                  <li>{t('sessionDetail.chat.detailLanguage')}</li>
-                  <li>{t('sessionDetail.chat.detailLegal')}</li>
-                  <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
+                  <li>{tC('detailImmediateHelp')}</li>
+                  <li>{tC('detailPrivacy')}</li>
+                  <li>{tC('detailSafeguarding')}</li>
                 </ul>
               </Box>
               <Box sx={crispButtonContainerStyle}>
