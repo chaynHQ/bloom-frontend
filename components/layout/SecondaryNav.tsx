@@ -25,6 +25,7 @@ interface LinkTabProps {
   icon?: string | React.ReactElement;
   ariaLabel?: string;
   event: string;
+  qaId?: string;
 }
 
 interface SecondaryNavIconType {
@@ -60,6 +61,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       ariaLabel: t('courses'),
       href: '/courses',
       event: SECONDARY_HEADER_COURSES_CLICKED,
+      qaId: 'secondary-nav-courses-button',
     },
     {
       label: t('chat'),
@@ -74,6 +76,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       ariaLabel: t('notes'),
       href: '/subscription/whatsapp',
       event: SECONDARY_HEADER_NOTES_CLICKED,
+      qaId: 'secondary-nav-notes-button',
     },
   ];
 
@@ -84,6 +87,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
         ariaLabel: t('therapy'),
         href: '/therapy/book-session',
         event: SECONDARY_HEADER_THERAPY_CLICKED,
+        qaId: 'secondary-nav-therapy-button',
       })
     : publicLinks;
   const tabIndex = allLinks.map<string>((link) => link.href).indexOf(router.pathname);
@@ -98,10 +102,12 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
         '& a.Mui-selected': { backgroundColor: 'primary.light', color: 'text.primary' },
       }} // the colour is a custom colour
       variant="fullWidth"
+      qa-id="secondary-nav"
     >
       {allLinks.map((linkData) => {
         return (
           <Tab
+            qa-id={linkData.qaId}
             key={linkData.label}
             component={NextLinkComposed}
             icon={linkData.icon}

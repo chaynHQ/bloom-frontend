@@ -61,10 +61,11 @@ const TopBar = () => {
 
   return (
     <>
-      <AppBar sx={appBarStyle} elevation={0}>
+      <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
         <Container sx={appBarContainerStyles}>
           {isSmallScreen && <NavigationDrawer />}
           <Link
+            qa-id="home-logo-link"
             href={welcomeUrl}
             aria-label={t('home')}
             sx={logoContainerStyle}

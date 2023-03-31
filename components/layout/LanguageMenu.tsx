@@ -57,6 +57,7 @@ export default function LanguageMenu() {
   return (
     <Box>
       <Button
+        qa-id="language-menu-button"
         aria-controls="language-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
