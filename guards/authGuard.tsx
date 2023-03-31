@@ -6,7 +6,7 @@ import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
-import { clearUserSlice } from '../app/userSlice';
+import { clearUserSlice, setUserLoading } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 import rollbar from '../config/rollbar';
 import {
@@ -36,7 +36,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     async function callGetUser() {
       logEvent(GET_USER_REQUEST); // deprecated event
       logEvent(GET_AUTH_USER_REQUEST);
-
+      setUserLoading(true);
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {

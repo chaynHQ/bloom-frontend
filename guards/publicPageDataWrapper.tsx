@@ -5,7 +5,7 @@ import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
-import { clearUserSlice } from '../app/userSlice';
+import { clearUserSlice, setUserLoading } from '../app/userSlice';
 import rollbar from '../config/rollbar';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
@@ -37,7 +37,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
   useEffect(() => {
     async function callGetUser() {
       setLoading(true);
-
+      setUserLoading(true);
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {
