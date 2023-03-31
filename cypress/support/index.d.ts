@@ -12,6 +12,18 @@ declare namespace Cypress {
       therapySessionsRemaining: number;
       therapySessionsRedeemed: number;
     }): Chainable<any>;
+    createUser({
+      codeInput,
+      emailInput,
+      passwordInput,
+      partnerId,
+    }: {
+      codeInput?: string;
+      emailInput: string;
+      passwordInput?: string;
+      partnerId?: string;
+    }): Chainable<Element>;
+
     deleteUser(email: string): Chainable<Element>;
     deleteAccessCode(): Chainable<Element>;
     getAccessCode(): Chainable<Element>;
