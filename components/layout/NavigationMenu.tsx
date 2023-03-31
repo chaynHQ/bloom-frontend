@@ -53,6 +53,7 @@ interface NavigationItem {
   href: string;
   target?: string;
   event: string;
+  qaId?: string;
 }
 
 interface NavigationMenuProps {
@@ -80,6 +81,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           title: t('admin'),
           href: '/partner-admin/create-access-code',
           event: HEADER_ADMIN_CLICKED,
+          qaId: 'partner-admin-menu-button',
         });
       }
 
@@ -87,11 +89,13 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         title: t('meetTheTeam'),
         href: '/meet-the-team',
         event: HEADER_OUR_BLOOM_TEAM_CLICKED,
+        qaId: 'meet-team-menu-button',
       });
 
       if (!partnerAdmin.partner) {
         links.push({
           title: t('immediateHelp'),
+          qaId: 'immediate-help-menu-button',
           href: 'https://www.chayn.co/help',
           target: '_blank',
           event: HEADER_IMMEDIATE_HELP_CLICKED,
@@ -99,7 +103,12 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       }
 
       if (!user.token) {
-        links.push({ title: t('login'), href: '/auth/login', event: HEADER_LOGIN_CLICKED });
+        links.push({
+          title: t('login'),
+          href: '/auth/login',
+          event: HEADER_LOGIN_CLICKED,
+          qaId: 'login-menu-button',
+        });
       }
     }
 
@@ -115,6 +124,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
             sx={listButtonStyle}
             component={Link}
             href={link.href}
+            qa-id={link.qaId}
             target={link.target || '_self'}
             onClick={() => {
               logEvent(link.event, eventUserData);

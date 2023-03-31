@@ -84,6 +84,21 @@ Cypress.Commands.add('deleteUser', () => {
     }
   });
 });
+Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, partnerId }) => {
+  cy.request({
+    url: `${Cypress.env('api_url')}/user`,
+    method: 'POST',
+    body: {
+      partnerAccessCode: codeInput,
+      name: 'Cypress test user',
+      email: emailInput,
+      password: passwordInput,
+      contactPermission: true,
+      signUpLanguage: 'en',
+      partnerId: partnerId,
+    },
+  });
+});
 
 Cypress.Commands.add('deleteAllCypressUsers', () => {
   cy.getAccessToken().then((token) => {
