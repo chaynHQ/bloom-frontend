@@ -36,7 +36,7 @@ export interface ActiveSubscription extends Subscription {
 export interface Subscriptions extends Array<Subscription> {}
 
 const initialState: User = {
-  loading: true,
+  loading: false,
   token: null,
   id: null,
   createdAt: null,
