@@ -7,10 +7,14 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
-  HEADER_ADMIN_CLICKED,
-  HEADER_IMMEDIATE_HELP_CLICKED,
+  DRAWER_ADMIN_CLICKED,
+  DRAWER_COURSES_CLICKED,
+  DRAWER_IMMEDIATE_HELP_CLICKED,
+  DRAWER_LOGIN_CLICKED,
+  DRAWER_NOTES_CLICKED,
+  DRAWER_OUR_BLOOM_TEAM_CLICKED,
+  DRAWER_THERAPY_CLICKED,
   HEADER_LOGIN_CLICKED,
-  HEADER_OUR_BLOOM_TEAM_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -79,14 +83,14 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         links.push({
           title: t('admin'),
           href: '/partner-admin/create-access-code',
-          event: HEADER_ADMIN_CLICKED,
+          event: DRAWER_ADMIN_CLICKED,
         });
       }
 
       links.push({
         title: t('meetTheTeam'),
         href: '/meet-the-team',
-        event: HEADER_OUR_BLOOM_TEAM_CLICKED,
+        event: DRAWER_OUR_BLOOM_TEAM_CLICKED,
       });
 
       if (!partnerAdmin.partner) {
@@ -94,12 +98,32 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           title: t('immediateHelp'),
           href: 'https://www.chayn.co/help',
           target: '_blank',
-          event: HEADER_IMMEDIATE_HELP_CLICKED,
+          event: DRAWER_IMMEDIATE_HELP_CLICKED,
         });
       }
 
-      if (!user.token) {
-        links.push({ title: t('login'), href: '/auth/login', event: HEADER_LOGIN_CLICKED });
+      // TODO bring in translations so that "notes" is translated
+      if (user.token) {
+        links.push({ title: t('courses'), href: '/courses', event: DRAWER_COURSES_CLICKED });
+        links.push({
+          title: t('notes'),
+          href: '/subscription/whatsapp',
+          event: DRAWER_NOTES_CLICKED,
+        });
+
+        const therapyAccess = partnerAccesses.find(
+          (partnerAccess) => partnerAccess.featureTherapy === true,
+        );
+
+        if (!!therapyAccess) {
+          links.push({
+            title: t('therapy'),
+            href: '/therapy/book-session',
+            event: DRAWER_THERAPY_CLICKED,
+          });
+        }
+      } else {
+        links.push({ title: t('login'), href: '/auth/login', event: DRAWER_LOGIN_CLICKED });
       }
     }
 

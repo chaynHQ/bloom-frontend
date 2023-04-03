@@ -1,5 +1,14 @@
 import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles';
 
+// If you want to declare custom colours that aren't officially in the palette, add them here
+declare module '@mui/material/styles' {
+  interface Palette {
+    palePrimaryLight: string;
+  }
+  interface PaletteOptions {
+    palePrimaryLight?: string;
+  }
+}
 // Create a theme instance.
 let theme = createTheme({
   palette: {
@@ -19,6 +28,7 @@ let theme = createTheme({
     error: {
       main: '#EA0050',
     },
+    palePrimaryLight: '#F9eded',
   },
   shape: {
     borderRadius: 20,

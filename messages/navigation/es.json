@@ -16,6 +16,13 @@
     "therapy": "Terapia",
     "courses": "Cursos",
     "applyCode": "Aplicar un código",
-    "account": "Cuenta"
+    "account": "Cuenta",
+    "secondaryNavigationMenu": "Secondary navigation menu",
+    "notes": "Notas",
+    "alt": {
+      "therapyIcon": "Therapy icon",
+      "courseIcon": "Course icon",
+      "notesIcon": "Notes from Bloom icon"
+    }
   }
 }
