@@ -8,7 +8,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
   DRAWER_ADMIN_CLICKED,
-  DRAWER_CHAT_CLICKED,
   DRAWER_COURSES_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
@@ -105,11 +104,11 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       // TODO bring in translations so that "notes" is translated
       if (user.token) {
         links.push({ title: t('courses'), href: '/courses', event: DRAWER_COURSES_CLICKED });
-        links.push({
-          title: t('chat'),
-          href: '/chat',
-          event: DRAWER_CHAT_CLICKED,
-        });
+        // links.push({
+        //   title: t('chat'),
+        //   href: '/chat',
+        //   event: DRAWER_CHAT_CLICKED,
+        // });
         links.push({
           title: t('notes'),
           href: '/subscription/whatsapp',
