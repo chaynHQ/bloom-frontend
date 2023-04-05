@@ -14,7 +14,6 @@ import {
   DRAWER_NOTES_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
   DRAWER_THERAPY_CLICKED,
-  HEADER_LOGIN_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -105,6 +104,11 @@ const NavigationMenu = (props: NavigationMenuProps) => {
       // TODO bring in translations so that "notes" is translated
       if (user.token) {
         links.push({ title: t('courses'), href: '/courses', event: DRAWER_COURSES_CLICKED });
+        // links.push({
+        //   title: t('chat'),
+        //   href: '/chat',
+        //   event: DRAWER_CHAT_CLICKED,
+        // });
         links.push({
           title: t('notes'),
           href: '/subscription/whatsapp',

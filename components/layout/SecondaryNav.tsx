@@ -59,6 +59,13 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       href: '/courses',
       event: SECONDARY_HEADER_COURSES_CLICKED,
     },
+    // {
+    //   label: t('chat'),
+    //   icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
+    //   ariaLabel: t('chat'),
+    //   href: '/chat',
+    //   event: SECONDARY_HEADER_CHAT_CLICKED,
+    // },
     {
       label: t('notes'),
       icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,

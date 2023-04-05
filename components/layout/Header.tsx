@@ -25,6 +25,7 @@ export interface HeaderProps {
   translatedImageAlt?: string;
   progressStatus?: PROGRESS_STATUS;
   children?: any;
+  cta?: any;
 }
 
 const headerContainerStyles = {
@@ -34,6 +35,11 @@ const headerContainerStyles = {
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
 };
+
+const ctaContainerStyle = {
+  ...columnStyle,
+  width: { xs: '100%', sm: 'auto' },
+} as const;
 
 const imageContainerStyle = {
   position: 'relative',
@@ -59,8 +65,16 @@ const textContentStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, progressStatus, children } =
-    props;
+  const {
+    title,
+    introduction,
+    imageAlt,
+    translatedImageAlt,
+    imageSrc,
+    progressStatus,
+    children,
+    cta,
+  } = props;
 
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt
@@ -85,6 +99,7 @@ const Header = (props: HeaderProps) => {
       <Box sx={imageContainerStyle}>
         <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
       </Box>
+      {cta && <Box sx={ctaContainerStyle}>{cta}</Box>}
     </Container>
   );
 };
