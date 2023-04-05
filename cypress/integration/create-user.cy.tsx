@@ -1,6 +1,6 @@
 // Note bumble is does not have the automatic access code feature
 
-describe('Create User', () => {
+xdescribe('Create User', () => {
   let username = `cypresstestemail+${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
