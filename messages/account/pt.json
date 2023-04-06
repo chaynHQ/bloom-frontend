@@ -79,36 +79,6 @@
       },
       "setAForm": {
         "hopesLabel": "O que você espera que o Bloom te ajude a entender ou fazer?"
-      },
-      "setBForm": {
-        "bloomHelpLabel": "Bloom me ajudou a:",
-        "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Aprender que existem diferentes tipos de abuso",
-          "bhmQ2": "Aprender o que são relações tóxicas",
-          "bhmQ3": "Aprender sobre a prevalência de diferentes tipos de opressão e controle em nossa cultura e como isso leva ao abuso",
-          "bhmQ4": "Sentir validação - saber que aquilo que passei não é aceitável",
-          "bhmQ5": "Sentir que, não importa o que eu sabia ou não no momento, não tenho culpa por aquilo que aconteceu ",
-          "bhmQ6": "Encorajamento - saber que existem outras pessoas como eu ",
-          "bhmQ7": "Identificar-me como pessoa sobrevivente"
-        }
-      },
-      "setCForm": {
-        "sinceBloomLabel": "Desde que uso o Bloom:",
-        "sinceBloomScaleLabels": {
-          "sbQ1": "Sinto que posso viver com minha experiência traumática",
-          "sbQ2": "Sinto que mereço amor e receber cuidado",
-          "sbQ3": "Sinto-me capaz de imaginar, sonhar e de permitir que coisas boas aconteçam para mim",
-          "sbQ4": "Tenho confiança de que, se eu quiser um relacionamento amoroso, posso encontrar uma parceria saudável",
-          "sbQ5": "Sinto que posso confiar em mim para fazer boas escolhas",
-          "sbQ6": "Sinto interesse em aprender mais sobre o amplo contexto da misoginia e desigualdade",
-          "sbQ7": "Me interesso por cursos sobre coisas que ainda não vivi, mas que poderei experienciar",
-          "sbQ8": "Sei reconhecer alertas vermelhos ou sinais de perigo e comportamentos que podem me prejudicar ",
-          "sbQ9": "Encontrei possíveis caminhos no processo de recuperação que pretendo explorar (por exemplo, terapia, recursos de organizações locais)",
-          "sbQ10": "Sinto que posso pedir e receber ajuda de outras pessoas (amizades, família, terapeutas, polícia e outras organizações de apoio)",
-          "sbQ11": "Eu compartilharia o Bloom com pessoas amigas que passam por algo parecido",
-          "sbQ12": "Sinto que posso contar minha história a outras pessoas e que conectar e compartilhar minha experiência pode ajudá-las em seus processos de recuperação também. ",
-          "sbQ13": "Fazer parte de uma comunidade de pessoas sobreviventes é algo muito importante e poderoso para mim e para outras pessoas, mesmo que quiséssemos que a nossa conexão não fosse pelas experiências de abuso"
-        }
       }
     }
   }
