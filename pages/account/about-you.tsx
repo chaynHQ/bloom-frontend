@@ -2,7 +2,6 @@ import { Button, Card, CardContent } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -12,15 +11,9 @@ import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
-import AboutYouSetBForm from '../../components/forms/AboutYouSetBForm';
-import AboutYouSetCForm from '../../components/forms/AboutYouSetCForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
-import { FORM_TRIGGERS, SURVEY_FORMS } from '../../constants/enums';
-import {
-  ABOUT_YOU_VIEWED,
-  SESSION_4_SURVEY_SKIPPED,
-  SIGNUP_SURVEY_SKIPPED,
-} from '../../constants/events';
+import { SURVEY_FORMS } from '../../constants/enums';
+import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -48,8 +41,6 @@ const getForm = (formLabel: string) => {
   const formMap: { [key: string]: JSX.Element } = {
     default: <AboutYouDemographicForm />,
     a: <AboutYouSetAForm />,
-    b: <AboutYouSetBForm />,
-    c: <AboutYouSetCForm />,
   };
   return formMap[formLabel];
 };
@@ -61,7 +52,7 @@ const AboutYou: NextPage = () => {
   const t = useTranslations('Account.aboutYou');
 
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const { q, trigger, return_url } = router.query;
+  const { q, return_url } = router.query;
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   useEffect(() => {
@@ -70,11 +61,7 @@ const AboutYou: NextPage = () => {
     } else {
       setQuestionSetParam(SURVEY_FORMS.default);
     }
-
-    if (trigger === FORM_TRIGGERS.sessionFour) {
-      Cookies.set('sessionFourSurveySeen', 'true');
-    }
-  }, [q, trigger]);
+  }, [q]);
 
   useEffect(() => {
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
@@ -113,18 +100,11 @@ const AboutYou: NextPage = () => {
               <Typography>{t('descriptionALine2')}</Typography>
             </>
           )}
-          {(questionSetParam === SURVEY_FORMS.b || questionSetParam === SURVEY_FORMS.c) && (
-            <Typography>{t('setBAndCDescription')}</Typography>
-          )}
           <Button
             sx={{ mt: 3 }}
             variant="contained"
             onClick={() => {
-              if (trigger === FORM_TRIGGERS.sessionFour) {
-                logEvent(SESSION_4_SURVEY_SKIPPED, eventUserData);
-              } else {
-                logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
-              }
+              logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
             }}
             component={Link}
             color="secondary"
