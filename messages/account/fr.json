@@ -34,7 +34,6 @@
       "titleA": "Ce que vous attendez de Bloom",
       "descriptionALine1": "Merci pour vos réponses !",
       "descriptionALine2": "En tant que nouvel utilisateur·rice, nous aimerions connaître votre état d'esprit avant l'utilisation de nos services. Cela nous aide à mesurer l'impact de Bloom sur vous en tant que personnes survivantes et à nous concentrer sur les éléments positifs.",
-      "setBAndCDescription": "En tant que nouvel utilisateur·rice, nous aimerions connaître votre état d'esprit après l'utilisation de nos services. Cela nous aide à mesurer l'impact de Bloom sur vous en tant que personnes survivantes et à nous concentrer sur les éléments positifs.",
       "goToCourses": "Ignorer et passer aux cours",
       "demographicForm": {
         "genderLabel": "Quelle est votre identité de genre ?",
@@ -80,36 +79,6 @@
       },
       "setAForm": {
         "hopesLabel": "Quelle chose espérez-vous que Bloom vous aide à comprendre ou à faire ?"
-      },
-      "setBForm": {
-        "bloomHelpLabel": "Bloom m'a aidé à :",
-        "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Connaître les différentes formes de violences sexuelles",
-          "bhmQ2": "Savoir reconnaître les comportements toxiques",
-          "bhmQ3": "Savoir reconnaître la prévalence de différents types d'oppression et de contrôle dans notre culture, et comment cela conduit à l'agression.",
-          "bhmQ4": "Se sentir soutenu·e - savoir que ce que j'ai subi n'est pas acceptable.",
-          "bhmQ5": "Sentir que peu importe ce que j'ai fait ou pas ou ce que j'ignorais au moment de l'agression, je ne suis pas responsable de ce qui m'est arrivé·e.",
-          "bhmQ6": "Se sentir encouragé·e - savoir que d'autres ont vécu la même expérience ",
-          "bhmQ7": "M'identifier en tant que personne survivante"
-        }
-      },
-      "setCForm": {
-        "sinceBloomLabel": "Depuis que j'ai recours à Bloom :",
-        "sinceBloomScaleLabels": {
-          "sbQ1": "Je sens que je peux vivre avec mon traumatisme.",
-          "sbQ2": "Je me sens digne d'amour, et je mérite que l'on s'occupe de moi.",
-          "sbQ3": "Je sens que je suis plus à mesure d'imaginer, de rêver et de permettre que de bonnes choses m'arrivent.",
-          "sbQ4": "Je suis convaincu·e que si je veux une relation, je peux trouver un·e partenaire sain·e.",
-          "sbQ5": "Je sens que je peux me faire confiance pour faire les bons choix.",
-          "sbQ6": "J'ai envie d'en savoir plus sur le vaste contexte de la misogynie et de l'inégalité.",
-          "sbQ7": "Je suis intéressé·e par les cours qui abordent des des choses que je n'ai pas vécues mais que je pourrais rencontrer.",
-          "sbQ8": "Je sais à présent comment repérer les signaux d'alarme et les comportements qui pourraient me nuire.",
-          "sbQ9": "J'ai découvert d'autres moyens de guérison que j'ai l'intention d'explorer (p. ex. thérapie, organisations caritatives locales).",
-          "sbQ10": "Je sens que je peux demander et obtenir de l'aide des autres (ami·es, famille, thérapeutes, police ou associations caritatives).",
-          "sbQ11": "Je parlerais sans hésitation de Bloom à une personne proche qui traverse une situation similaire.",
-          "sbQ12": "J'ai le sentiment que je peux confier mon histoire à d'autres personnes et que le fait de communiquer et de partager mon expérience peut les aider à guérir à leur tour.",
-          "sbQ13": "Faire partie d'une communauté de personnes survivantes a énormément de sens pour moi et pour d'autres, même s'il aurait été préférable d'être lié·es par autre chose que nos expériences traumatiques."
-        }
       }
     }
   }
