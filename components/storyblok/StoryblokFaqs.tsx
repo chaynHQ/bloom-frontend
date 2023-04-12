@@ -51,7 +51,9 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
             aria-controls={`panel${i}-content`}
             id={`panel${i}-header`}
           >
-            <Typography component="h3">{render(faq.title, RichTextOptions)}</Typography>
+            <Typography component="h3" textAlign="left">
+              {render(faq.title, RichTextOptions)}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails sx={accordionDetail}>
             {render(faq.body, RichTextOptions)}

@@ -7,11 +7,13 @@ import therapyIcon from '../../public/therapy_icon.svg';
 import { useTranslations } from 'next-intl';
 import { RootState } from '../../app/store';
 import {
+  SECONDARY_HEADER_CHAT_CLICKED,
   SECONDARY_HEADER_COURSES_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import chatIcon from '../../public/chat_icon.svg';
 import courseIcon from '../../public/course_icon.svg';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -59,13 +61,13 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       href: '/courses',
       event: SECONDARY_HEADER_COURSES_CLICKED,
     },
-    // {
-    //   label: t('chat'),
-    //   icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
-    //   ariaLabel: t('chat'),
-    //   href: '/chat',
-    //   event: SECONDARY_HEADER_CHAT_CLICKED,
-    // },
+    {
+      label: t('chat'),
+      icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
+      ariaLabel: t('chat'),
+      href: '/chat',
+      event: SECONDARY_HEADER_CHAT_CLICKED,
+    },
     {
       label: t('notes'),
       icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,
