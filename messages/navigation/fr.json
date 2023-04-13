@@ -20,10 +20,10 @@
     "secondaryNavigationMenu": "Secondary navigation menu",
     "notes": "Notes",
     "alt": {
-      "therapyIcon": "An illustration of a head with flower",
-      "courseIcon": "An illustration of a play icon, a triangle point to the right. In front there is a small sun",
-      "notesIcon": "An illustration of a mobile phone with a heart in the centre",
-      "chatIcon": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines."
+      "therapyIcon": "Illustration d'une tête avec une fleur",
+      "courseIcon": "Illustration d'une icône de lecture, un triangle pointant vers la droite. Un petit soleil se trouve à l'avant",
+      "notesIcon": "Illustration d'un téléphone portable avec un cœur au centre",
+      "chatIcon": "Deux bulles se croisent sur un fond rose. La première contient un cœur rose. La seconde a des lignes droites."
     },
     "chat": "Chat"
   }

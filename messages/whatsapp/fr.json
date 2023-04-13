@@ -12,9 +12,9 @@
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
-        "invalidNumber": "Your phone number appears to be invalid. Please fix any errors and try again.",
-        "internal": "There was an error subscribing to Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
+        "invalidNumber": "Votre numéro de téléphone n'est pas valide. Veuillez corriger les erreurs éventuelles et réessayer.",
+        "internal": "Une erreur s'est produite lors de l'inscription à Whatsapp. Réessayez plus tard et <contactLink> contactez l'équipe Bloom</contactLink> si vous obtenez toujours cette erreur.",
+        "alreadyExists": "Un abonnement whatsapp existe déjà pour votre utilisateur. Veuillez envoyer un message <contactLink> à l'équipe Bloom</contactLink> si vous pensez qu'il s'agit d'une erreur."
       },
       "unsubscribeErrors": {
         "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
