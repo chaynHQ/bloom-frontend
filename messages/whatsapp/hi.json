@@ -12,9 +12,9 @@
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
-        "invalidNumber": "Your phone number appears to be invalid. Please fix any errors and try again.",
-        "internal": "There was an error subscribing to Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
+        "invalidNumber": "Apka phone number amaanya prateet hota hai. appears to be invalid. Kriya jo bhi error hai usko theek karein aur firse prayas kariye. ",
+        "internal": "Whatsapp ko subscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye</contactLink>.",
+        "alreadyExists": "Apke user ke liye whatsapp subscription pehle se he ho rakha hai. Yadi yeh ek galti hai, toh kripya <contactLink>Bloom team ko message kariye</contactLink>."
       },
       "unsubscribeErrors": {
         "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."

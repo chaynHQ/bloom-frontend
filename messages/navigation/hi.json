@@ -20,10 +20,10 @@
     "secondaryNavigationMenu": "Secondary navigation menu",
     "notes": "Notes",
     "alt": {
-      "therapyIcon": "An illustration of a head with flower",
-      "courseIcon": "An illustration of a play icon, a triangle point to the right. In front there is a small sun",
-      "notesIcon": "An illustration of a mobile phone with a heart in the centre",
-      "chatIcon": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines."
+      "therapyIcon": "Ek chitra jismein sir pe phool hai",
+      "courseIcon": "Ek chitra hai jismein play karne wale button ka icon, ek tikon jo seedhi taraf point kar raha hai. Uske aage ek chota suraj hai",
+      "notesIcon": "Ek chitra hai jismein mobile phone ke andar beech mein ek dil bana hua hai",
+      "chatIcon": "Do speech bubbles gulabi background ke peeche mil rahe hain. Pehle wale mein ek gulabi dil hai. Doosre wale mein seedhi liney hain."
     },
     "chat": "Chat"
   }
