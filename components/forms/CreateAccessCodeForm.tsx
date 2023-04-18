@@ -45,7 +45,7 @@ const CreateAccessCodeForm = () => {
 
   const welcomeURL = `${
     process.env.NEXT_PUBLIC_BASE_URL
-  }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}?code=${partnerAccessCode}`;
+  }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
