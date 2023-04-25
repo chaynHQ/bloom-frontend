@@ -75,6 +75,7 @@ export default function UserMenu() {
   return (
     <Box>
       <Button
+        qa-id="user-menu-button"
         aria-controls="user-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
