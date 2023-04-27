@@ -10,6 +10,8 @@
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "En asociación con",
       "badooLine2": "BADOO LTD",
+      "fruitzLine1": "En asociación con",
+      "fruitzLine2": "FRUITZ LTD",
       "policies": "Nuestras políticas"
     },
     "videoTranscript": {
@@ -55,7 +57,9 @@
       "dateSelector": "Ilustración de un calendario con un corazón en el centro",
       "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
       "confidential": "Ilustración de un documento con un candado en una esquina",
-      "cookieCat": "Ilustración de un gato descansando con una galleta"
+      "cookieCat": "Ilustración de un gato descansando con una galleta",
+      "fruitzLogo": "Logo de Fruitz",
+      "bloomFruitzLogo": "Logo de Bloom para Fruitz"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/smGSjlCo",
     "survivor": "Sobreviviente",
