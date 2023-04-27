@@ -46,6 +46,10 @@ module.exports = {
         source: '/welcome/(b|B)(u|U)(m|M)(b|B)(l|L)(e|E)',
         destination: '/welcome/bumble',
       },
+      {
+        source: '/welcome/(f|F)(r|R)(u|U)(i|I)(t|T)(z|Z)',
+        destination: '/welcome/fruitz',
+      },
     ];
   },
 };
