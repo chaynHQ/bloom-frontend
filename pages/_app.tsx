@@ -66,6 +66,7 @@ function MyApp(props: MyAppProps) {
     // Add listener for new firebase auth token, updating it in state to be used in request headers
     // Required for restoring user state following app reload or revisiting site
     auth.onIdTokenChanged(async function (user) {
+      dispatch(setUserLoading(true));
       const token = await user?.getIdToken();
 
       if (token) {
