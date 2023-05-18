@@ -72,10 +72,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
     let links: Array<NavigationItem> = [];
 
     if (!user.loading) {
-      if (user.token && router.pathname === '/auth/login') {
-        router.push('/courses');
-      }
-
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
