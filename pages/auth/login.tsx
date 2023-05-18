@@ -10,6 +10,8 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import LoginForm from '../../components/forms/LoginForm';
@@ -57,6 +59,7 @@ const Login: NextPage = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const router = useRouter();
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
@@ -66,6 +69,12 @@ const Login: NextPage = () => {
   };
 
   const allPartnersContent = getAllPartnersContent();
+
+  useEffect(() => {
+    if (user.token) {
+      router.push('/courses'); // Redirect if the user is on the login page but is alredy logged in
+    }
+  }, [user.token]);
 
   const ExtraContent = () => {
     return (
