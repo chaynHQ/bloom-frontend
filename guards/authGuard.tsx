@@ -8,6 +8,7 @@ import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
 import { clearUserSlice, setUserLoading } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
+import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
 import {
   GET_AUTH_USER_ERROR,
@@ -30,6 +31,13 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const [getUser] = useGetUserMutation();
+  const [firebaseUserUpdated, setfirebaseUserUpdated] = useState(false);
+
+  useEffect(() => {
+    auth.onIdTokenChanged(async function (_) {
+      setfirebaseUserUpdated(true);
+    });
+  }, []);
 
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
@@ -61,7 +69,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       }
     }
 
-    if (loading || user.loading) {
+    if (loading || user.loading || !firebaseUserUpdated) {
       return;
     }
 
@@ -85,7 +93,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     setLoading(true);
     callGetUser();
     setLoading(false);
-  }, [getUser, router, user, loading]);
+  }, [user, loading, firebaseUserUpdated]);
 
   if (!verified) {
     return <LoadingContainer />;
