@@ -39,11 +39,13 @@ const descriptionContainerStyle = {
 } as const;
 
 const partnersContainerStyle = {
-  ...rowStyle,
+  display: 'flex',
+  flexDirection: 'row',
   justifyContent: 'flex-start',
   gap: { xs: 4, md: 3, lg: 5 },
   maxWidth: { md: '55%' },
   '> div': { minWidth: '220px' },
+  flexWrap: 'nowrap',
 } as const;
 
 const socialsContainerStyle = {
@@ -86,7 +88,7 @@ const Footer = () => {
       addUniquePartner(partnersList, partner + '');
     }
 
-    if (router.pathname.includes('/welcome')) {
+    if (router.pathname.includes('/welcome') || router.pathname.includes('/partnership')) {
       const partnerName = router.asPath.split('/')[2].split('?')[0];
       addUniquePartner(partnersList, partnerName);
     }

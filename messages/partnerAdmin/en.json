@@ -6,7 +6,7 @@
       "courseAccess": "Access to courses only",
       "liveChatAccess": "Access to courses and 1:1 chat",
       "therapyAccess": "Access to courses, 1:1 chat and six therapy sessions",
-      "resultLink": "Please tell the user to go to <welcomeURL></welcomeURL> where they can register using their email address.",
+      "resultLink": "Please tell the user to go to the relevant link where they can register using their email address.",
       "resultCode": "Once registered, they can click on the account icon, choose the `Apply a code` option and use the following code: <partnerAccessCode></partnerAccessCode>",
       "form": {
         "featuresLabel": "Select support type offered to this user",
