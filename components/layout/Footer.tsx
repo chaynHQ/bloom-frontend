@@ -39,11 +39,13 @@ const descriptionContainerStyle = {
 } as const;
 
 const partnersContainerStyle = {
-  ...rowStyle,
+  display: 'flex',
+  flexDirection: 'row',
   justifyContent: 'flex-start',
   gap: { xs: 4, md: 3, lg: 5 },
   maxWidth: { md: '55%' },
   '> div': { minWidth: '220px' },
+  flexWrap: 'nowrap',
 } as const;
 
 const socialsContainerStyle = {
