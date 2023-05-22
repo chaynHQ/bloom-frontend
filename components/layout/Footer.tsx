@@ -86,7 +86,7 @@ const Footer = () => {
       addUniquePartner(partnersList, partner + '');
     }
 
-    if (router.pathname.includes('/welcome')) {
+    if (router.pathname.includes('/welcome') || router.pathname.includes('/partnership')) {
       const partnerName = router.asPath.split('/')[2].split('?')[0];
       addUniquePartner(partnersList, partnerName);
     }
