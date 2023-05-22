@@ -94,9 +94,9 @@ const Register: NextPage = () => {
   }, [router.query]);
 
   const headerProps = {
-    partnerLogoSrc: (partnerContent && partnerContent.partnershipLogo) || welcomeToBloom,
+    partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,
     partnerLogoAlt: 'alt.welcomeToBloom',
-    imageSrc: illustrationBloomHeadYellow,
+    imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
 
