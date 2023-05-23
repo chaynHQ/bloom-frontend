@@ -83,9 +83,9 @@ export const fruitzContent: PartnerContent = {
   website: 'https://fruitz.io',
   footerLine1: 'footer.fruitzLine1',
   footerLine2: 'footer.fruitzLine2',
-  instagram: 'https//www.instagram.com/fruitz_app/',
+  instagram: 'https://www.instagram.com/fruitz_app/',
   youtube: 'https://www.youtube.com/channel/UCvfMffckjzOZtYIDeTuZq2w',
-  tiktok: '//www.tiktok.com/@fruitz_app',
+  tiktok: 'https://www.tiktok.com/@fruitz_app',
 };
 
 export const getPartnerContent = (partnerName: string) => {
