@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { Course } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
-import IbaSessionCard from '../../../components/cards/IbaSessionCard';
+import SessionCard from '../../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../../components/common/ContentUnavailable';
 import Link from '../../../components/common/Link';
 import CourseIntroduction from '../../../components/course/CourseIntroduction';
@@ -159,10 +159,11 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                     {week.sessions.map((session: any) => {
                       const sessionProgress = getSessionProgress(session.id);
                       return (
-                        <IbaSessionCard
+                        <SessionCard
                           key={session.id}
                           session={session}
                           sessionProgress={sessionProgress}
+                          sessionSubtitle={session.content.subtitle}
                         />
                       );
                     })}

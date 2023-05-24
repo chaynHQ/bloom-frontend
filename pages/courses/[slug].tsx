@@ -207,11 +207,14 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                     <Box sx={cardsContainerStyle}>
                       {week.sessions.map((session: any) => {
                         const sessionProgress = getSessionProgress(session.id);
+                        const position = `${t('session')} ${session.position / 10 - 1}`;
+
                         return (
                           <SessionCard
                             key={session.id}
                             session={session}
                             sessionProgress={sessionProgress}
+                            sessionSubtitle={position}
                           />
                         );
                       })}

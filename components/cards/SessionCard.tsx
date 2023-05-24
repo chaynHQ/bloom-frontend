@@ -56,10 +56,11 @@ const cardActionStyle = {
 interface SessionCardProps {
   session: StoryData;
   sessionProgress: PROGRESS_STATUS;
+  sessionSubtitle: string;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionProgress } = props;
+  const { session, sessionProgress, sessionSubtitle } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const t = useTranslations('Courses');
@@ -92,9 +93,7 @@ const SessionCard = (props: SessionCardProps) => {
               {session.content.name}
             </Typography>
           </Box>
-          <Typography color="grey.700">
-            {t('session')} {session.position / 10 - 1}
-          </Typography>
+          <Typography color="grey.700">{sessionSubtitle}</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
