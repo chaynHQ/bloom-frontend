@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../styles/common';
@@ -24,11 +25,13 @@ interface ContentUnavailableProps {
 }
 
 export const ContentUnavailable = ({ title, message }: ContentUnavailableProps) => {
+  const t = useTranslations('Shared');
+
   return (
     <Container sx={accessContainerStyle}>
       <Box sx={imageContainerStyle}>
         <Image
-          alt={'alt.personTea'}
+          alt={t('alt.personTea')}
           src={illustrationPerson4Peach}
           layout="fill"
           objectFit="contain"
