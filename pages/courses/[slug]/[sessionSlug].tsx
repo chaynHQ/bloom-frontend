@@ -484,7 +484,11 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (data.links[linkKey].is_startpage || data.links[linkKey].is_folder) {
+    if (
+      data.links[linkKey].is_startpage ||
+      data.links[linkKey].is_folder ||
+      isAlternativelyHandledSession(data.links[linkKey].slug)
+    ) {
       return;
     }
 
@@ -505,5 +509,9 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
+
+const isAlternativelyHandledSession = (slug: string) => {
+  return slug.includes('/image-based-abuse/');
+};
 
 export default SessionDetail;
