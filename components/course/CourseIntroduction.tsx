@@ -27,14 +27,20 @@ const introductionContainerStyle = {
 
 interface CourseIntroductionProps {
   course: StoryData;
-  courseLiveSoon: boolean;
-  courseLiveNow: boolean;
-  liveCourseAccess: boolean;
+  courseLiveSoon?: boolean;
+  courseLiveNow?: boolean;
+  liveCourseAccess?: boolean;
   eventData: {};
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
-  const { course, courseLiveSoon, courseLiveNow, liveCourseAccess, eventData } = props;
+  const {
+    course,
+    courseLiveSoon = false,
+    courseLiveNow = false,
+    liveCourseAccess = false,
+    eventData,
+  } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
 
   const t = useTranslations('Courses');
