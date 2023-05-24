@@ -260,7 +260,10 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (!data.links[linkKey].is_startpage) {
+    if (
+      !data.links[linkKey].is_startpage ||
+      isAlternativelyHandledCourse(data.links[linkKey].slug)
+    ) {
       return;
     }
 
@@ -281,5 +284,9 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
+
+const isAlternativelyHandledCourse = (slug: string) => {
+  return slug.includes('/image-based-abuse/');
+};
 
 export default CourseOverview;
