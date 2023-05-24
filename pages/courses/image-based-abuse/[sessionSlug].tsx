@@ -1,5 +1,4 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleIcon from '@mui/icons-material/Circle';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -12,24 +11,22 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { useCompleteSessionMutation, useStartSessionMutation } from '../../../app/api';
+import { useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
 import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
-import GridBonusContent from '../../../components/session/GridBonusContent';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
+import GridBonusContent from '../../../components/session/GridBonusContent';
+import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
 import rollbar from '../../../config/rollbar';
 import Storyblok, { useStoryblok } from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import {
-  SESSION_COMPLETE_ERROR,
-  SESSION_COMPLETE_REQUEST,
-  SESSION_COMPLETE_SUCCESS,
   SESSION_STARTED_ERROR,
   SESSION_STARTED_REQUEST,
   SESSION_STARTED_SUCCESS,
@@ -79,12 +76,6 @@ const crispButtonContainerStyle = {
   display: 'flex',
 } as const;
 
-const errorStyle = {
-  color: 'primary.dark',
-  marginTop: 2,
-  fontWeight: 600,
-} as const;
-
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 interface Props {
@@ -107,11 +98,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-  const [error, setError] = useState<string | null>(null);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [weekString, setWeekString] = useState<string>('');
-  const [completeSession] = useCompleteSessionMutation();
   const [startSession] = useStartSessionMutation();
 
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
@@ -221,29 +210,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
   }, []);
-
-  const completeSessionAction = async () => {
-    logEvent(SESSION_COMPLETE_REQUEST, eventData);
-
-    const completeSessionResponse = await completeSession({
-      storyblokId: story.id,
-    });
-
-    if ('data' in completeSessionResponse) {
-      logEvent(SESSION_COMPLETE_SUCCESS, eventData);
-      window.scrollTo(0, 0);
-    }
-
-    if ('error' in completeSessionResponse) {
-      const error = completeSessionResponse.error;
-
-      logEvent(SESSION_COMPLETE_ERROR, eventData);
-      rollbar.error('Session complete error', error);
-
-      setError(t('errors.completeSessionError'));
-      throw error;
-    }
-  };
 
   return (
     <Box>
@@ -377,21 +343,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                 </>
               )}
               {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-                <>
-                  <Dots />
-                  <Button
-                    color="secondary"
-                    size="large"
-                    variant="contained"
-                    onClick={completeSessionAction}
-                    startIcon={<CheckCircleIcon color="error" />}
-                  >
-                    {t('sessionDetail.sessionComplete')}
-                  </Button>
-                </>
+                <SessionCompleteButton story={story} eventData={eventData} />
               )}
-
-              {error && <Typography sx={errorStyle}>{error}</Typography>}
             </Box>
           </Box>
         </Box>
