@@ -1,5 +1,3 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Card,
@@ -14,9 +12,9 @@ import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
-import { PROGRESS_STATUS } from '../../constants/enums';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
+import { SessionProgressDisplay } from '../session/SessionProgressDisplay';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -55,12 +53,12 @@ const cardActionStyle = {
 
 interface SessionCardProps {
   session: StoryData;
-  sessionProgress: PROGRESS_STATUS;
   sessionSubtitle: string;
+  storyblokCourseId: number;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionProgress, sessionSubtitle } = props;
+  const { session, sessionSubtitle, storyblokCourseId } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const t = useTranslations('Courses');
@@ -83,12 +81,7 @@ const SessionCard = (props: SessionCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={cardContentRowStyles}>
-            {sessionProgress !== PROGRESS_STATUS.NOT_STARTED && (
-              <Box mt={0.5}>
-                {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
-                {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
-              </Box>
-            )}
+            <SessionProgressDisplay session={session} storyblokCourseId={storyblokCourseId} />
             <Typography flex={1} component="h3" variant="h3">
               {session.content.name}
             </Typography>
