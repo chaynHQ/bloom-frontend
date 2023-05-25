@@ -162,8 +162,8 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                         <SessionCard
                           key={session.id}
                           session={session}
-                          sessionProgress={sessionProgress}
                           sessionSubtitle={session.content.subtitle}
+                          storyblokCourseId={story.id}
                         />
                       );
                     })}
