@@ -1,6 +1,5 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import CircleIcon from '@mui/icons-material/Circle';
-import LinkIcon from '@mui/icons-material/Link';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Button, Link as MuiLink, Typography } from '@mui/material';
@@ -9,7 +8,6 @@ import Container from '@mui/material/Container';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -17,9 +15,11 @@ import { useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
+import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
+import GridBonusContent from '../../../components/session/GridBonusContent';
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
@@ -37,13 +37,16 @@ import {
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../../styles/common';
-import { courseIsLiveNow, courseIsLiveSoon } from '../../../utils/courseLiveStatus';
 import hasAccessToPage from '../../../utils/hasAccessToPage';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
+  paddingLeft: { xs: 4, sm: 6 },
+  paddingRight: { xs: 4, sm: 6 },
+  paddingTop: { xs: 6, sm: 8, lg: 10 },
+  paddingBottom: { xs: 6, sm: 8, lg: 10 },
 } as const;
 
 const cardColumnStyle = {
@@ -84,7 +87,6 @@ interface Props {
 
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
-  const router = useRouter();
   story = useStoryblok(story, preview, sbParams, locale);
   const course = story.content.course.content;
 
@@ -99,23 +101,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [weekString, setWeekString] = useState<string>('');
-  const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
+  const [startSession] = useStartSessionMutation();
 
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
-  const courseComingSoon: boolean = course.coming_soon;
-  const courseLiveSoon: boolean = courseIsLiveSoon(course);
-  const courseLiveNow: boolean = courseIsLiveNow(course);
-  // only show live content to public users
-  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
-
-  const numberCoursesCompleted = courses.reduce((acc, curr) => {
-    if (curr.completed) {
-      return acc + 1;
-    }
-    return acc;
-  }, 0);
-
-  const numberSessionsStarted = courses.flatMap((c) => c.sessions).length;
 
   const eventData = {
     ...eventUserData,
@@ -124,9 +112,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     session_progress: sessionProgress,
     course_name: story.content.course.content.name,
     course_storyblok_id: story.content.course.id,
-    course_coming_soon: courseComingSoon,
-    course_live_soon: courseLiveSoon,
-    course_live_now: courseLiveNow,
   };
 
   const headerProps = {
@@ -136,6 +121,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     imageAlt: 'alt.personTea',
   };
 
+  // TODO refactor chat access logic
   useEffect(() => {
     const coursePartners = course.included_for_partners;
     setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
@@ -144,9 +130,10 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
 
-    if (liveAccess || liveCourseAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, course.included_for_partners, liveCourseAccess, partnerAdmin]);
+    if (liveAccess) setLiveChatAccess(true);
+  }, [partnerAccesses, course.included_for_partners, partnerAdmin]);
 
+  // TODO refactor session completion logic
   useEffect(() => {
     course.weeks.map((week: any) => {
       week.sessions.map((session: any) => {
@@ -224,15 +211,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     logEvent(SESSION_VIEWED, eventData);
   }, []);
 
-  const Dots = () => {
-    return (
-      <Box sx={dotsStyle}>
-        <CircleIcon sx={dotStyle} />
-        <CircleIcon sx={dotStyle} />
-      </Box>
-    );
-  };
-
   return (
     <Box>
       <Head>
@@ -264,131 +242,111 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
               {course.name}
             </Button>
             <Typography sx={sessionSubtitleStyle} variant="body2">
-              {weekString} - {t('session')} {story.position / 10 - 1}
+              {weekString} - {story.content.subtitle}
             </Typography>
           </Header>
-          <Container sx={containerStyle}>
-            {story.content.coming_soon && (
-              <Box maxWidth={700}>{render(story.content.coming_soon_content, RichTextOptions)}</Box>
-            )}
-            {!story.content.coming_soon && (
-              <Box sx={cardColumnStyle}>
-                {story.content.video && (
-                  <>
-                    <SessionContentCard
-                      title={t('sessionDetail.videoTitle')}
-                      titleIcon={SlowMotionVideoIcon}
-                      eventPrefix="SESSION_VIDEO"
+          <Box sx={containerStyle}>
+            <Box sx={cardColumnStyle}>
+              {story.content.video && (
+                <>
+                  <SessionContentCard
+                    title={t('sessionDetail.videoTitle')}
+                    titleIcon={SlowMotionVideoIcon}
+                    eventPrefix="SESSION_VIDEO"
+                    eventData={eventData}
+                    initialExpanded={true}
+                  >
+                    <Typography mb={3}>
+                      {t.rich('sessionDetail.videoDescription', {
+                        transcriptLink: (children) => (
+                          <MuiLink
+                            component="button"
+                            variant="body1"
+                            onClick={() => setOpenTranscriptModal(true)}
+                          >
+                            {children}
+                          </MuiLink>
+                        ),
+                      })}
+                    </Typography>
+                    <Video
+                      url={story.content.video.url}
+                      setVideoStarted={setVideoStarted}
                       eventData={eventData}
-                      initialExpanded={true}
-                    >
-                      <Typography mb={3}>
-                        {t.rich('sessionDetail.videoDescription', {
-                          transcriptLink: (children) => (
-                            <MuiLink
-                              component="button"
-                              variant="body1"
-                              onClick={() => setOpenTranscriptModal(true)}
-                            >
-                              {children}
-                            </MuiLink>
-                          ),
-                        })}
-                      </Typography>
-                      <Video
-                        url={story.content.video.url}
-                        setVideoStarted={setVideoStarted}
-                        eventData={eventData}
-                        eventPrefix="SESSION"
-                        containerStyles={{ mx: 'auto', my: 2 }}
-                      />
-                      <VideoTranscriptModal
-                        videoName={story.content.name}
-                        content={story.content.video_transcript}
-                        setOpenTranscriptModal={setOpenTranscriptModal}
-                        openTranscriptModal={openTranscriptModal}
-                      />
-                    </SessionContentCard>
-                  </>
-                )}
-                {story.content.activity.content &&
-                  (story.content.activity.content?.length > 1 ||
-                    story.content.activity.content[0].content) && (
-                    <>
-                      <Dots />
-                      <SessionContentCard
-                        title={t('sessionDetail.activityTitle')}
-                        titleIcon={StarBorderIcon}
-                        richtextContent
-                        eventPrefix="SESSION_ACTIVITY"
-                        eventData={eventData}
-                      >
-                        <>{render(story.content.activity, RichTextOptions)}</>
-                      </SessionContentCard>
-                    </>
-                  )}
-                {story.content.bonus.content &&
-                  (story.content.bonus.content?.length > 1 ||
-                    story.content.bonus.content[0].content) && (
-                    <>
-                      <Dots />
-                      <SessionContentCard
-                        title={t('sessionDetail.bonusTitle')}
-                        titleIcon={LinkIcon}
-                        richtextContent
-                        eventPrefix="SESSION_BONUS_CONTENT"
-                        eventData={eventData}
-                      >
-                        <>{render(story.content.bonus, RichTextOptions)}</>
-                      </SessionContentCard>
-                    </>
-                  )}
-                {liveChatAccess && (
+                      eventPrefix="SESSION"
+                      containerStyles={{ mx: 'auto', my: 2 }}
+                    />
+                    <VideoTranscriptModal
+                      videoName={story.content.name}
+                      content={story.content.video_transcript}
+                      setOpenTranscriptModal={setOpenTranscriptModal}
+                      openTranscriptModal={openTranscriptModal}
+                    />
+                  </SessionContentCard>
+                </>
+              )}
+              {story.content.activity.content &&
+                (story.content.activity.content?.length > 1 ||
+                  story.content.activity.content[0].content) && (
                   <>
                     <Dots />
                     <SessionContentCard
-                      title={t('sessionDetail.chat.title')}
-                      titleIcon={ChatBubbleOutlineIcon}
-                      titleIconSize={24}
-                      eventPrefix="SESSION_CHAT"
+                      title={t('sessionDetail.activityTitle')}
+                      titleIcon={StarBorderIcon}
+                      richtextContent
+                      eventPrefix="SESSION_ACTIVITY"
                       eventData={eventData}
                     >
-                      <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
-                      <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
-                      <Video
-                        eventPrefix="SESSION_CHAT_VIDEO"
-                        eventData={eventData}
-                        url={t('sessionDetail.chat.videoLink')}
-                        containerStyles={{ mx: 'auto', my: 2 }}
-                      ></Video>
-                      <Box sx={chatDetailIntroStyle}>
-                        <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
-                      </Box>
-                      <Box>
-                        <ul>
-                          <li>{t('sessionDetail.chat.detailPrivacy')}</li>
-                          <li>{t('sessionDetail.chat.detailTimezone')}</li>
-                          <li>{t('sessionDetail.chat.detailLanguage')}</li>
-                          <li>{t('sessionDetail.chat.detailLegal')}</li>
-                          <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
-                        </ul>
-                      </Box>
-                      <Box sx={crispButtonContainerStyle}>
-                        <CrispButton
-                          email={user.email}
-                          eventData={eventData}
-                          buttonText={t('sessionDetail.chat.startButton')}
-                        />
-                      </Box>
+                      <>{render(story.content.activity, RichTextOptions)}</>
                     </SessionContentCard>
                   </>
                 )}
-                {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-                  <SessionCompleteButton story={story} eventData={eventData} />
-                )}
-              </Box>
-            )}
-          </Container>
+              {story.content.bonus && <GridBonusContent story={story} eventData={eventData} />}
+              {liveChatAccess && (
+                <>
+                  <Dots />
+                  <SessionContentCard
+                    title={t('sessionDetail.chat.title')}
+                    titleIcon={ChatBubbleOutlineIcon}
+                    titleIconSize={24}
+                    eventPrefix="SESSION_CHAT"
+                    eventData={eventData}
+                  >
+                    <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
+                    <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
+                    <Video
+                      eventPrefix="SESSION_CHAT_VIDEO"
+                      eventData={eventData}
+                      url={t('sessionDetail.chat.videoLink')}
+                      containerStyles={{ mx: 'auto', my: 2 }}
+                    ></Video>
+                    <Box sx={chatDetailIntroStyle}>
+                      <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
+                    </Box>
+                    <Box>
+                      <ul>
+                        <li>{t('sessionDetail.chat.detailPrivacy')}</li>
+                        <li>{t('sessionDetail.chat.detailTimezone')}</li>
+                        <li>{t('sessionDetail.chat.detailLanguage')}</li>
+                        <li>{t('sessionDetail.chat.detailLegal')}</li>
+                        <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
+                      </ul>
+                    </Box>
+                    <Box sx={crispButtonContainerStyle}>
+                      <CrispButton
+                        email={user.email}
+                        eventData={eventData}
+                        buttonText={t('sessionDetail.chat.startButton')}
+                      />
+                    </Box>
+                  </SessionContentCard>
+                </>
+              )}
+              {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
+                <SessionCompleteButton story={story} eventData={eventData} />
+              )}
+            </Box>
+          </Box>
         </Box>
       )}
     </Box>
@@ -396,18 +354,20 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  let slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
   let sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
 
   const sbParams = {
-    resolve_relations: 'Session.course',
+    resolve_relations: 'session_iba.course',
     version: preview ? 'draft' : 'published',
     language: locale,
     ...(preview && { cv: Date.now() }),
   };
 
-  let { data } = await Storyblok.get(`cdn/stories/courses/${slug}/${sessionSlug}/`, sbParams);
+  let { data } = await Storyblok.get(
+    `cdn/stories/courses/image-based-abuse/${sessionSlug}/`,
+    sbParams,
+  );
 
   return {
     props: {
@@ -427,15 +387,11 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/');
+  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/image-based-abuse');
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (
-      data.links[linkKey].is_startpage ||
-      data.links[linkKey].is_folder ||
-      isAlternativelyHandledSession(data.links[linkKey].slug)
-    ) {
+    if (data.links[linkKey].is_startpage || data.links[linkKey].is_folder) {
       return;
     }
 
@@ -456,9 +412,5 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
-
-const isAlternativelyHandledSession = (slug: string) => {
-  return slug.includes('/image-based-abuse/');
-};
 
 export default SessionDetail;

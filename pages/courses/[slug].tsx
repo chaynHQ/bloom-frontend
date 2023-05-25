@@ -207,11 +207,14 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                     <Box sx={cardsContainerStyle}>
                       {week.sessions.map((session: any) => {
                         const sessionProgress = getSessionProgress(session.id);
+                        const position = `${t('session')} ${session.position / 10 - 1}`;
+
                         return (
                           <SessionCard
                             key={session.id}
                             session={session}
                             sessionProgress={sessionProgress}
+                            sessionSubtitle={position}
                           />
                         );
                       })}
@@ -260,7 +263,10 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (!data.links[linkKey].is_startpage) {
+    if (
+      !data.links[linkKey].is_startpage ||
+      isAlternativelyHandledCourse(data.links[linkKey].slug)
+    ) {
       return;
     }
 
@@ -281,5 +287,9 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
+
+const isAlternativelyHandledCourse = (slug: string) => {
+  return slug.includes('/image-based-abuse/');
+};
 
 export default CourseOverview;
