@@ -65,8 +65,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-  const [sessionsStarted, setSessionsStarted] = useState<Array<number>>([]);
-  const [sessionsCompleted, setSessionsCompleted] = useState<Array<number>>([]);
+
   const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
   const eventData = {
@@ -76,7 +75,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_progress: courseProgress,
   };
 
-  // TODO refactor session progress logic
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
     setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
@@ -84,18 +82,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
 
     if (userCourse) {
-      let courseSessionsStarted: Array<number> = [];
-      let courseSessionsCompleted: Array<number> = [];
-      userCourse.sessions?.map((session) => {
-        if (session.completed) {
-          courseSessionsCompleted.push(Number(session.storyblokId));
-        } else {
-          courseSessionsStarted.push(Number(session.storyblokId));
-        }
-      });
       setCourseProgress(userCourse.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED);
-      setSessionsStarted(courseSessionsStarted);
-      setSessionsCompleted(courseSessionsCompleted);
     }
   }, [partnerAccesses, story, courses, courseProgress]);
 
@@ -108,14 +95,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     introduction: story.content.description,
     imageSrc: story.content.image_with_background?.filename,
     translatedImageAlt: story.content.image_with_background?.alt,
-  };
-
-  const getSessionProgress = (sessionId: number) => {
-    return sessionsStarted.includes(sessionId)
-      ? PROGRESS_STATUS.STARTED
-      : sessionsCompleted.includes(sessionId)
-      ? PROGRESS_STATUS.COMPLETED
-      : PROGRESS_STATUS.NOT_STARTED;
   };
 
   if (incorrectAccess) {
@@ -157,13 +136,12 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                   </Typography>
                   <Box sx={cardsContainerStyle}>
                     {week.sessions.map((session: any) => {
-                      const sessionProgress = getSessionProgress(session.id);
                       return (
                         <SessionCard
                           key={session.id}
                           session={session}
-                          sessionProgress={sessionProgress}
                           sessionSubtitle={session.content.subtitle}
+                          storyblokCourseId={story.id}
                         />
                       );
                     })}
