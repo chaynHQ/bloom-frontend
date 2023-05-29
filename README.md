@@ -145,7 +145,7 @@ yarn build
 
 ### Public Bloom
 
-Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy or permanent 1-1 chat. Public Bloom also offers _live_ courses, whereby for a period of time, users also have access to 1-1 crisp chat and the option to join a whatsapp/telegram group for regular messages related to the live course.
+Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy. 
 
 ### Partner access and multi tenancy
 
@@ -159,7 +159,9 @@ A user can have 0 (public) or many partners and the app dynamically handles this
 
 **Bloom therapy** is available to some users dependent on their partner access, with a number of therapy sessions available to book via the integrated Simplybook booking widget. Therapy is offered in multiple languages and currently users can select their preferred language and therapist. Webhooks are triggered by zapier when a booking is created/cancelled, to update the user's available therapy sessions remaining in the database.
 
-**Bloom 1-1 chat** is available to some users dependent on their partner access, sending Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with 1-1 chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
+**Bloom 1-1 chat** is currently available to all users. Users can send Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with 1-1 chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
+
+**Notes from Bloom** is currently available all users. Users can sign up for whatsapp messages twice a week. Message content can range from affirmational quotes, videos or snapshot of course content. Respond.io is used to hold contact information and to schedule messages. Contact information is also held in the database. As there was not the budget to use the Respond.io plan which allows for a direct integration, a Zapier workaround is used where bloom backend triggers a Zapier webhook which will then add / delete a contact from respond.io.
 
 ### User types
 
@@ -168,6 +170,8 @@ There are several user types with different features enabled - [guards](guards) 
 **User** - a standard user for the features mentioned above. A user can be a _public_ user only OR have partner access(es) with extra features enabled by different partners.
 
 **Partner admin user** - a partner team member who uses the app to complete Bloom admin tasks such as creating new partner access codes. Partner admin pages are under `/partner-admin` and act as a sub site.
+
+**Super admin user** - this is a chayn user who can create partner admins. Super admins can view this dashboard via `admin/dashboard`.
 
 ### State management - Redux Toolkit
 
@@ -188,6 +192,8 @@ Content is delivered by [Storyblok](https://www.storyblok.com/), a headless CMS 
 The storyblok courses folder/page structure was based around url paths and the need for weeks/sessions to be nested inside a course. The pattern is Courses (folder) -> Course name (folder) -> Course overview (root page) + Session (pages). This allows us to group and order sessions under the relevant course, with the url path `courses/course-name/session-name`. The order of pages in Storyblok matters as it's used to order sessions within a week.
 
 Course and Session are Storyblok _content types_ with defined schemas that can then be processed in the custom pages, e.g. `story.content.field_name`. Course includes a `weeks` field that links/relates to the sessions in each week of the course. Session includes a `Course` field that links/relates back to the course - it's not ideal to include this field but it makes it easy to load the course data with the session directly. The middle `weeks` relationship between Courses and Sessions added some complexity that discouraged Storyblok's recommended patterns, e.g. having Courses and Sessions as top level folders, rather than nesting folders that contain several content types.
+
+The image based abuse course has its own specific course and session page as this course required a different structure with multiple bonus content blocks. 
 
 **Dynamic components**
 
