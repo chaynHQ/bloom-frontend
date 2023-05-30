@@ -1,36 +1,30 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import SessionCard from '../../components/cards/SessionCard';
+import { ContentUnavailable } from '../../components/common/ContentUnavailable';
 import Link from '../../components/common/Link';
+import CourseHeader from '../../components/course/CourseHeader';
 import CourseIntroduction from '../../components/course/CourseIntroduction';
 import CourseStatusHeader from '../../components/course/CourseStatusHeader';
-import Header from '../../components/layout/Header';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { columnStyle, rowStyle } from '../../styles/common';
+import { rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
+import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
-} as const;
-
-const accessContainerStyle = {
-  ...columnStyle,
-  height: '100vh',
 } as const;
 
 const sessionsContainerStyle = {
@@ -43,13 +37,6 @@ const cardsContainerStyle = {
   gap: 4,
 } as const;
 
-const imageContainerStyle = {
-  position: 'relative',
-  width: { xs: 150, md: 210 },
-  height: { xs: 150, md: 210 },
-  marginBottom: 4,
-} as const;
-
 interface Props {
   story: StoryData;
   preview: boolean;
@@ -59,7 +46,6 @@ interface Props {
 
 const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
-  const tS = useTranslations('Shared');
 
   story = useStoryblok(story, preview, sbParams, locale);
 
@@ -91,47 +77,26 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
+
     setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+  }, [partnerAccesses, story.content.included_for_partners, partnerAdmin]);
 
-    const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
-
-    if (userCourse) {
-      setCourseProgress(userCourse.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED);
-    }
-  }, [partnerAccesses, story, courses, courseProgress]);
+  useEffect(() => {
+    setCourseProgress(determineCourseProgress(courses, story.id));
+  }, [courses, story.id]);
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-  const headerProps = {
-    title: story.content.name,
-    introduction: story.content.description,
-    imageSrc: story.content.image_with_background?.filename,
-    translatedImageAlt: story.content.image_with_background?.alt,
-  };
-
   if (incorrectAccess) {
     return (
-      // TODO (170322-1604) Use new content unavailable component here
-      <Container sx={accessContainerStyle}>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={tS('alt.personTea')}
-            src={illustrationPerson4Peach}
-            layout="fill"
-            objectFit="contain"
-          />
-        </Box>
-        <Typography variant="h2" component="h2" mb={2}>
-          {t('accessGuard.title')}
-        </Typography>
-        <Typography mb={2}>
-          {t.rich('accessGuard.introduction', {
-            contactLink: (children) => <Link href="/courses">{children}</Link>,
-          })}
-        </Typography>
-      </Container>
+      <ContentUnavailable
+        title={t('accessGuard.title')}
+        message={t.rich('accessGuard.introduction', {
+          contactLink: (children) => <Link href="/courses">{children}</Link>,
+        })}
+      />
     );
   }
 
@@ -140,17 +105,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
       <Head>
         <title>{story.content.name}</title>
       </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
-        progressStatus={courseProgress!}
-      >
-        <Button variant="outlined" href="/courses" size="small" component={Link}>
-          {t('backToCourses')}
-        </Button>
-      </Header>
+      <CourseHeader story={story} eventData={eventData} courseProgress={courseProgress} />
       <Container sx={containerStyle}>
         {courseComingSoon ? (
           <>
