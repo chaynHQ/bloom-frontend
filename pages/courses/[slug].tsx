@@ -27,11 +27,6 @@ const containerStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
-const accessContainerStyle = {
-  ...columnStyle,
-  height: '100vh',
-} as const;
-
 const sessionsContainerStyle = {
   marginTop: 6,
 } as const;
@@ -42,12 +37,6 @@ const cardsContainerStyle = {
   gap: 4,
 } as const;
 
-const imageContainerStyle = {
-  position: 'relative',
-  width: { xs: 150, md: 210 },
-  height: { xs: 150, md: 210 },
-  marginBottom: 4,
-} as const;
 
 interface Props {
   story: StoryData;
