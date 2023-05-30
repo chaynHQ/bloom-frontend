@@ -2,13 +2,13 @@ import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import SessionCard from '../../components/cards/SessionCard';
+import { ContentUnavailable } from '../../components/common/ContentUnavailable';
 import Link from '../../components/common/Link';
 import CourseHeader from '../../components/course/CourseHeader';
 import CourseIntroduction from '../../components/course/CourseIntroduction';
@@ -17,7 +17,6 @@ import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import hasAccessToPage from '../../utils/hasAccessToPage';
@@ -59,7 +58,6 @@ interface Props {
 
 const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
-  const tS = useTranslations('Shared');
 
   story = useStoryblok(story, preview, sbParams, locale);
 
@@ -106,25 +104,12 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   if (incorrectAccess) {
     return (
-      // TODO (170322-1604) Use new content unavailable component here
-      <Container sx={accessContainerStyle}>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={tS('alt.personTea')}
-            src={illustrationPerson4Peach}
-            layout="fill"
-            objectFit="contain"
-          />
-        </Box>
-        <Typography variant="h2" component="h2" mb={2}>
-          {t('accessGuard.title')}
-        </Typography>
-        <Typography mb={2}>
-          {t.rich('accessGuard.introduction', {
-            contactLink: (children) => <Link href="/courses">{children}</Link>,
-          })}
-        </Typography>
-      </Container>
+      <ContentUnavailable
+        title={t('accessGuard.title')}
+        message={t.rich('accessGuard.introduction', {
+          contactLink: (children) => <Link href="/courses">{children}</Link>,
+        })}
+      />
     );
   }
 
