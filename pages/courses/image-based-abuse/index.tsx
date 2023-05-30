@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -9,8 +9,8 @@ import { RootState } from '../../../app/store';
 import SessionCard from '../../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../../components/common/ContentUnavailable';
 import Link from '../../../components/common/Link';
+import CourseHeader from '../../../components/course/CourseHeader';
 import CourseIntroduction from '../../../components/course/CourseIntroduction';
-import Header from '../../../components/layout/Header';
 import Storyblok, { useStoryblok } from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../../constants/events';
@@ -90,12 +90,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-  const headerProps = {
-    title: story.content.name,
-    introduction: story.content.description,
-    imageSrc: story.content.image_with_background?.filename,
-    translatedImageAlt: story.content.image_with_background?.alt,
-  };
 
   if (incorrectAccess) {
     return (
@@ -113,17 +107,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
       <Head>
         <title>{story.content.name}</title>
       </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
-        progressStatus={courseProgress!}
-      >
-        <Button variant="outlined" href="/courses" size="small" component={Link}>
-          {t('backToCourses')}
-        </Button>
-      </Header>
+      <CourseHeader story={story} eventData={eventData} courseProgress={courseProgress} />
       <Container sx={containerStyle}>
         <>
           {story.content.video && <CourseIntroduction course={story} eventData={eventData} />}
