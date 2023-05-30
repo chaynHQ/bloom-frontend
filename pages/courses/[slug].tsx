@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
 import SessionCard from '../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../components/common/ContentUnavailable';
@@ -17,8 +16,9 @@ import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { columnStyle, rowStyle } from '../../styles/common';
+import { rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
+import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
@@ -36,7 +36,6 @@ const cardsContainerStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   gap: 4,
 } as const;
-
 
 interface Props {
   story: StoryData;
@@ -78,14 +77,13 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   useEffect(() => {
     const storyPartners = story.content.included_for_partners;
+
     setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+  }, [partnerAccesses, story.content.included_for_partners, partnerAdmin]);
 
-    const userCourse = courses.find((course: Course) => course.storyblokId === story.id);
-
-    if (userCourse) {
-      setCourseProgress(userCourse.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED);
-    }
-  }, [partnerAccesses, story, courses, courseProgress]);
+  useEffect(() => {
+    setCourseProgress(determineCourseProgress(courses, story.id));
+  }, [courses, story.id]);
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
