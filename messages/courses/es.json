@@ -17,7 +17,7 @@
     "noCourses": "En este momento no hay cursos para mostrar. Si esto no parece correcto, inténtalo de nuevo más tarde, o contacta al equipo de Bloom.",
     "courseDetail": {
       "introductionTitle": "Introducción al curso",
-      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>."
+      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Video",
