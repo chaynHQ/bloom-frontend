@@ -17,7 +17,7 @@
     "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",
-      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye. "
+      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
     },
     "sessionDetail": {
       "videoTitle": "Video",
