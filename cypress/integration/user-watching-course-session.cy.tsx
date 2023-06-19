@@ -15,7 +15,7 @@ describe('A logged in user should be able to watch a course session and complete
   it('Should go to the courses page and select a course', () => {
     cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
 
-    cy.visit('/courses'); //navigate to courses
+    cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist').click(); //navigate to courses
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
       timeout: 4000,
