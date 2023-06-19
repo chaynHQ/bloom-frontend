@@ -79,6 +79,8 @@ jobs:
           CYPRESS_badoo_partner_admin_password: ${{secrets.CYPRESS_TEST_ACCOUNT_PASSWORD}}
           CYPRESS_super_admin_email: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
           CYPRESS_super_admin_password: ${{secrets.CYPRESS_TEST_ACCOUNT_PASSWORD}}
+          CYPRESS_public_email: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
+          CYPRESS_public_password: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_api_url: ${{secrets.CYPRESS_BLOOM_BACKEND_API_URL}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
