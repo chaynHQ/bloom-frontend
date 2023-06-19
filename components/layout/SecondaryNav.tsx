@@ -69,6 +69,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       ariaLabel: t('chat'),
       href: '/chat',
       event: SECONDARY_HEADER_CHAT_CLICKED,
+      qaId: 'secondary-nav-chat-button',
     },
     {
       label: t('notes'),
