@@ -71,7 +71,7 @@ Cypress.Commands.add('createAccessCode', (accessCode) => {
 
 Cypress.Commands.add('deleteUser', () => {
   cy.getAuthEmail().then((email) => {
-    if (email && email.indexOf('cypress') > 0) {
+    if (email && email.indexOf('cypress') >= 0) {
       cy.getAccessToken().then((token) => {
         cy.request({
           url: `${Cypress.env('api_url')}/user`,
@@ -82,18 +82,6 @@ Cypress.Commands.add('deleteUser', () => {
         });
       });
     }
-  });
-});
-
-Cypress.Commands.add('deleteUserByEmail', (email) => {
-  cy.getAccessToken().then((token) => {
-    cy.request({
-      url: `${Cypress.env('api_url')}/user`,
-      method: 'DELETE',
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
   });
 });
 
@@ -187,7 +175,8 @@ const attachCustomCommands = (Cypress, { auth }) => {
     });
   });
 
-  //Function to grab iframe needs some work. At the moment it can't see the inner content
+  //Function to grab iframe needs some work. At the moment it can't see the inner content.
+  //This will help with test to watch session videos
   Cypress.Commands.add('getIframeBody', () => {
     return (
       cy
