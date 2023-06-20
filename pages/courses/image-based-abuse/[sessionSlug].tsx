@@ -19,7 +19,7 @@ import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
-import MultipleBonusContent from '../../../components/session/GridBonusContent';
+import MultipleBonusContent from '../../../components/session/MultipleBonusContent';
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
