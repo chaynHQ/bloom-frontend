@@ -24,14 +24,13 @@ export const bonusGridRowStyle = {
   width: '100%',
 } as const;
 
-interface GridBonusContentProps {
+interface MultipleBonusContentProps {
   story: StoryData;
   eventData: { [index: string]: any };
 }
 
 // TODO rename this file to MultipleBonusContent
-// TODO rename this component and props to MultipleBonusContent...
-const GridBonusContent = (props: GridBonusContentProps) => {
+const MultipleBonusContent = (props: MultipleBonusContentProps) => {
   const { story, eventData } = props;
 
   const t = useTranslations('Courses');
@@ -59,4 +58,4 @@ const GridBonusContent = (props: GridBonusContentProps) => {
   );
 };
 
-export default GridBonusContent;
+export default MultipleBonusContent;

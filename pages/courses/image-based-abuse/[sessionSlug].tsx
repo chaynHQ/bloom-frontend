@@ -19,7 +19,7 @@ import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
-import GridBonusContent from '../../../components/session/GridBonusContent';
+import MultipleBonusContent from '../../../components/session/GridBonusContent';
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
@@ -301,7 +301,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                     </SessionContentCard>
                   </>
                 )}
-              {story.content.bonus && <GridBonusContent story={story} eventData={eventData} />}
+              {story.content.bonus && <MultipleBonusContent story={story} eventData={eventData} />}
               {liveChatAccess && (
                 <>
                   <Dots />
