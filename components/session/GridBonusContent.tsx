@@ -1,5 +1,4 @@
 import LinkIcon from '@mui/icons-material/Link';
-import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -30,70 +29,34 @@ interface GridBonusContentProps {
   eventData: { [index: string]: any };
 }
 
+// TODO rename this file to MultipleBonusContent
+// TODO rename this component and props to MultipleBonusContent...
 const GridBonusContent = (props: GridBonusContentProps) => {
   const { story, eventData } = props;
 
   const t = useTranslations('Courses');
 
+  // TODO remove log
+  console.log('>>> bonus', story);
+
+  // TODO remove index
   return (
     <>
-      {story.content.bonus &&
-        story.content.bonus.length === 1 &&
-        displayCentralBonusContent(story.content.bonus[0].content)}
-
-      {story.content.bonus &&
-        story.content.bonus.length > 1 &&
-        displayGridBonusContent(story.content.bonus)}
-    </>
-  );
-
-  function displayCentralBonusContent(bonusBlock: any, index?: number) {
-    return (
-      <>
-        <Dots />
-        {displayBonusContent(bonusBlock, index)}
-      </>
-    );
-  }
-
-  function displayGridBonusContent(bonusBlocks: any[]) {
-    return (
-      <>
-        <Dots />
-        <Box sx={bonusGridRowStyle}>
-          <Box sx={bonusGridColumnStyle}>
-            {bonusBlocks?.map((bonusBlock, index) => {
-              if (index % 2 === 1) return;
-
-              return displayBonusContent(bonusBlock.content, index);
-            })}
-          </Box>
-          <Box sx={bonusGridColumnStyle}>
-            {bonusBlocks?.map((bonusBlock, index) => {
-              if (index % 2 === 0) return;
-              return displayBonusContent(bonusBlock.content, index);
-            })}
-          </Box>
-        </Box>
-      </>
-    );
-  }
-
-  function displayBonusContent(bonusBlock: any, index?: number) {
-    return (
-      <>
+      <Dots />
+      {story.content.bonus.map((bonus: any, index: number) => (
         <SessionContentCard
+          key={bonus._uid}
           title={t('sessionDetail.bonusTitle') + index}
           titleIcon={LinkIcon}
           richtextContent
           eventPrefix="SESSION_BONUS_CONTENT"
           eventData={eventData}
         >
-          <>{render(bonusBlock, RichTextOptions)}</>
+          <>{render(bonus.content, RichTextOptions)}</>
         </SessionContentCard>
-      </>
-    );
-  }
+      ))}
+    </>
+  );
 };
 
 export default GridBonusContent;
