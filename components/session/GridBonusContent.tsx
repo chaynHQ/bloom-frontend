@@ -35,17 +35,14 @@ const MultipleBonusContent = (props: MultipleBonusContentProps) => {
 
   const t = useTranslations('Courses');
 
-  // TODO remove log
-  console.log('>>> bonus', story);
 
-  // TODO remove index
   return (
     <>
       <Dots />
-      {story.content.bonus.map((bonus: any, index: number) => (
+      {story.content.bonus.map((bonus: any) => (
         <SessionContentCard
           key={bonus._uid}
-          title={t('sessionDetail.bonusTitle') + index}
+          title={t('sessionDetail.bonusTitle') }
           titleIcon={LinkIcon}
           richtextContent
           eventPrefix="SESSION_BONUS_CONTENT"
