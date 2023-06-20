@@ -12,7 +12,6 @@ interface MultipleBonusContentProps {
   eventData: { [index: string]: any };
 }
 
-// TODO rename this file to MultipleBonusContent
 const MultipleBonusContent = (props: MultipleBonusContentProps) => {
   const { story, eventData } = props;
 
