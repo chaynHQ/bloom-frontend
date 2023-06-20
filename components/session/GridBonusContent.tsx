@@ -6,6 +6,7 @@ import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
 
+// TODO add documentation on when this component is used i.e. which storyblok component it renders
 interface MultipleBonusContentProps {
   story: StoryData;
   eventData: { [index: string]: any };
