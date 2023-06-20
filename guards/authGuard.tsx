@@ -69,7 +69,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
       }
     }
 
-    if (loading || user.loading || !firebaseUserUpdated || !user.firebaseUpdateApplied) {
+    if (loading || user.loading || !user.firebaseUpdateApplied) {
       return;
     }
 
