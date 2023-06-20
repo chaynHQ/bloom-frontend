@@ -2,27 +2,9 @@ import LinkIcon from '@mui/icons-material/Link';
 import { useTranslations } from 'next-intl';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { columnStyle } from '../../styles/common';
 import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
-
-const bonusGridColumnStyle = {
-  ...columnStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 2,
-  width: { xs: '100%', sm: '100%', md: 700 },
-} as const;
-
-export const bonusGridRowStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  gap: 2,
-  width: '100%',
-} as const;
 
 interface MultipleBonusContentProps {
   story: StoryData;
@@ -35,14 +17,13 @@ const MultipleBonusContent = (props: MultipleBonusContentProps) => {
 
   const t = useTranslations('Courses');
 
-
   return (
     <>
       <Dots />
       {story.content.bonus.map((bonus: any) => (
         <SessionContentCard
           key={bonus._uid}
-          title={t('sessionDetail.bonusTitle') }
+          title={t('sessionDetail.bonusTitle')}
           titleIcon={LinkIcon}
           richtextContent
           eventPrefix="SESSION_BONUS_CONTENT"
