@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
-import { setUserLoading, setUserToken } from '../app/userSlice';
+import { setUserFirebaseUpdateApplied, setUserLoading, setUserToken } from '../app/userSlice';
 import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
@@ -71,6 +71,7 @@ function MyApp(props: MyAppProps) {
 
       if (token) {
         await dispatch(setUserToken(token));
+        dispatch(setUserFirebaseUpdateApplied(true));
       }
       dispatch(setUserLoading(false));
     });
