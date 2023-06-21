@@ -24,7 +24,7 @@ declare namespace Cypress {
       partnerId?: string;
     }): Chainable<Element>;
 
-    deleteUser(email: string): Chainable<Element>;
+    deleteUser(): Chainable<Element>;
     deleteAccessCode(): Chainable<Element>;
     getAccessCode(): Chainable<Element>;
     getAuthEmail(): Chainable<Element>;
