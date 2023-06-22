@@ -71,7 +71,7 @@ Cypress.Commands.add('createAccessCode', (accessCode) => {
 
 Cypress.Commands.add('deleteUser', () => {
   cy.getAuthEmail().then((email) => {
-    if (email && email.indexOf('cypress') > 0) {
+    if (email && email.indexOf('cypress') >= 0) {
       cy.getAccessToken().then((token) => {
         cy.request({
           url: `${Cypress.env('api_url')}/user`,
@@ -84,6 +84,7 @@ Cypress.Commands.add('deleteUser', () => {
     }
   });
 });
+
 Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, partnerId }) => {
   cy.request({
     url: `${Cypress.env('api_url')}/user`,
@@ -172,6 +173,21 @@ const attachCustomCommands = (Cypress, { auth }) => {
         const result = win.store.dispatch({ type: 'user/clearUserSlice' });
       }
     });
+  });
+
+  //Function to grab iframe needs some work. At the moment it can't see the inner content.
+  //This will help with test to watch session videos
+  Cypress.Commands.add('getIframeBody', () => {
+    return (
+      cy
+        .get('iframe')
+        .its('0.contentDocument')
+        .should('exist')
+        // automatically retries until body is loaded
+        .its('body')
+        .should('not.be.undefined')
+        .then(cy.wrap)
+    );
   });
 };
 

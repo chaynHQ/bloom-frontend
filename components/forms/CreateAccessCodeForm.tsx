@@ -53,6 +53,7 @@ const CreateAccessCodeForm = () => {
 
     if (!selectedTier) {
       setFormError(t('form.errors.featureRequired'));
+      setLoading(false);
       return;
     }
 
