@@ -104,6 +104,7 @@ export default function UserMenu() {
               startIcon={<AddCircleOutline />}
               onClick={() => {
                 logEvent(HEADER_APPLY_A_CODE_CLICKED, eventUserData);
+                handleClose();
               }}
             >
               {t('applyCode')}
