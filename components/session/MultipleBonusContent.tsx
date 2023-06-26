@@ -1,7 +1,7 @@
 import LinkIcon from '@mui/icons-material/Link';
 import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import SessionDetail from '../../pages/courses/image-based-abuse/[sessionSlug]';
+import SessionDetail from '../../pages/courses/image-based-abuse-and-rebuilding-ourselves/[sessionSlug]';
 import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
