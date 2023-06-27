@@ -365,7 +365,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   };
 
   let { data } = await Storyblok.get(
-    `cdn/stories/courses/image-based-abuse/${sessionSlug}/`,
+    `cdn/stories/courses/image-based-abuse-and-rebuilding-ourselves/${sessionSlug}/`,
     sbParams,
   );
 
@@ -387,7 +387,9 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/image-based-abuse');
+  let { data } = await Storyblok.get(
+    'cdn/links/?starts_with=courses/image-based-abuse-and-rebuilding-ourselves/',
+  );
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
