@@ -132,7 +132,7 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography mt={2}>
         {t.rich('resultCode', {
-          partnerAccessCode: (children) => <strong>{partnerAccessCode}</strong>,
+          partnerAccessCode: (children) => <strong id="access-code">{partnerAccessCode}</strong>,
         })}
       </Typography>
 
