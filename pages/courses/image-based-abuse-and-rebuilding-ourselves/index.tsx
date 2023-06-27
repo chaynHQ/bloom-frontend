@@ -77,7 +77,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-
   if (incorrectAccess) {
     return (
       <ContentUnavailable
@@ -135,7 +134,10 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     ...(preview && { cv: Date.now() }),
   };
 
-  let { data } = await Storyblok.get(`cdn/stories/courses/image-based-abuse/`, sbParams);
+  let { data } = await Storyblok.get(
+    `cdn/stories/courses/image-based-abuse-and-rebuilding-ourselves/`,
+    sbParams,
+  );
   return {
     props: {
       story: data ? data.story : null,

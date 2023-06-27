@@ -223,7 +223,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 }
 
 const isAlternativelyHandledCourse = (slug: string) => {
-  return slug.includes('/image-based-abuse/');
+  return slug.includes('/image-based-abuse-and-rebuilding-ourselves/');
 };
 
 export default CourseOverview;

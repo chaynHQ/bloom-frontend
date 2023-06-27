@@ -458,7 +458,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 }
 
 const isAlternativelyHandledSession = (slug: string) => {
-  return slug.includes('/image-based-abuse/');
+  return slug.includes('/image-based-abuse-and-rebuilding-ourselves/');
 };
 
 export default SessionDetail;
