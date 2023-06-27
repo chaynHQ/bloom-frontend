@@ -135,7 +135,11 @@ const BookSession: NextPage = () => {
           <Typography>
             {hasTherapyRemaining
               ? t.rich('therapySessionsRemaining', {
-                  strongText: () => <strong>{partnerAccess?.therapySessionsRemaining}</strong>,
+                  strongText: () => (
+                    <strong id="therapy-sessions-remaining">
+                      {partnerAccess?.therapySessionsRemaining}
+                    </strong>
+                  ),
                 })
               : t('noTherapySessionsRemaining')}
           </Typography>
