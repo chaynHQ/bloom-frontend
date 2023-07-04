@@ -14,30 +14,26 @@ describe('Therapy Usage', () => {
         Cypress.env('bumble_partner_admin_password'),
       );
     });
+
     it('Navigate to the admin page and create the access code', () => {
       cy.visit('/');
       cy.get(`[qa-id=partner-admin-menu-button]`).should('exist').click(); //Find admin button and click
-      cy.get('input[type="radio"').should('exist').check('therapy'); //select radio button on form
-      cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
-      cy.get('#access-code')
-        .should('exist') //wait for result to exist in dom then get the access code
-        .then(function ($elem) {
-          //get the access code
-          accessCode = $elem.text();
-        });
+      cy.uiCreateAccessCode().then((res) => {
+        accessCode = res;
+      });
     });
   });
 
   describe('A new partner user should be able to apply the access code', () => {
     before(() => {
       cy.createUser({
-        //create bumble test user
+        //create test user
         emailInput: newUserEmail,
         passwordInput: password,
-        partnerId: '3323df46-a006-4fed-9160-f1901b1037ee',
       });
       cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
     });
+
     it('Log in as new bumble user and apply code', () => {
       cy.visit('/welcome/bumble');
       cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
@@ -55,6 +51,15 @@ describe('Therapy Usage', () => {
       cy.get('#therapy-sessions-remaining').should('have.text', '6'); //check number of therapy sessions is 6
       cy.get('button').contains('Begin booking').should('exist').click(); //begin booking
       cy.get('iframe[title="Booking widget"]').should('exist'); //check it worked
+    });
+
+    after(() => {
+      //delete access code after use to clean up. Decided to clean up after test as we do not have a way to indicate which access codes are for test cases later on
+      cy.logInWithEmailAndPassword(
+        Cypress.env('super_admin_email'),
+        Cypress.env('super_admin_password'),
+      );
+      cy.deleteAccessCode(accessCode);
     });
   });
 });
