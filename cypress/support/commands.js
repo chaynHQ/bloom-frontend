@@ -48,12 +48,14 @@ Cypress.Commands.add('uiLogout', (e) => {
 
 // TODO maybe delete  this helper - keeping for now but could potentially not be useful
 Cypress.Commands.add('uiCreateAccessCode', () => {
-  cy.visit('/partner-admin/create-access-code');
-  cy.wait(1000);
-  cy.get('span').contains('Courses, 1:1 chat and six therapy sessions').click();
-  cy.get('button[type="submit"]').contains('Create access code').click();
-  cy.wait(1000);
-  return cy.get('#access-code-url').invoke('attr', 'href');
+  cy.get('input[type="radio"').should('exist').check('therapy'); //select radio button on form
+  cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
+  cy.get('#access-code')
+    .should('exist') //wait for result to exist in dom then get the access code
+    .then(function ($elem) {
+      //get the access code
+      return $elem.text();
+    });
 });
 
 Cypress.Commands.add('createAccessCode', (accessCode) => {
@@ -105,6 +107,19 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
       url: `${Cypress.env('api_url')}/user/cypress`,
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+  });
+  cy.wait(2000);
+});
+
+Cypress.Commands.add('deleteAccessCode', (accessCode) => {
+  cy.getAccessToken().then((token) => {
+    cy.request({
+      url: `${Cypress.env('api_url')}/partner-access/cypress/${accessCode}`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,

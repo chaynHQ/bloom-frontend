@@ -25,7 +25,8 @@ declare namespace Cypress {
     }): Chainable<Element>;
 
     deleteUser(): Chainable<Element>;
-    deleteAccessCode(): Chainable<Element>;
+    uiCreateAccessCode(): Chainable<any>;
+    deleteAccessCode(accessCode: string): Chainable<Element>;
     getAccessCode(): Chainable<Element>;
     getAuthEmail(): Chainable<Element>;
     clearUserState(): Chainable<Element>;
