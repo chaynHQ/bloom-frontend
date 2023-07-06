@@ -49,3 +49,4 @@ describe('A logged in user should be able to navigate to a course session and co
     cy.logout();
   });
 });
+//trigger workflow test
