@@ -13,7 +13,7 @@ interface Props {
   sbParams: StoriesParams;
   locale: LANGUAGES;
 }
-
+console.log('blah');
 const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   story = useStoryblok(story, preview, sbParams, locale);
 
