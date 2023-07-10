@@ -64,7 +64,7 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
-
+  console.log('blah');
   return (
     <Box>
       <Head>
