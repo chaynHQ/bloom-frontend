@@ -116,10 +116,10 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
   cy.wait(2000);
 });
 
-Cypress.Commands.add('deleteAccessCode', (accessCode) => {
+Cypress.Commands.add('deleteCypressAccessCodes', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
-      url: `${Cypress.env('api_url')}/partner-access/cypress/${accessCode}`,
+      url: `${Cypress.env('api_url')}/partner-access/cypress`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
