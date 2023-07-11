@@ -59,7 +59,6 @@ describe('Therapy Usage', () => {
         Cypress.env('super_admin_email'),
         Cypress.env('super_admin_password'),
       );
-      cy.deleteAccessCode(accessCode);
     });
   });
 });

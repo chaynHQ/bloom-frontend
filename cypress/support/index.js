@@ -8,6 +8,7 @@ before(() => {
     Cypress.env('super_admin_email'),
     Cypress.env('super_admin_password'),
   );
+  cy.deleteCypressAccessCodes();
   cy.deleteAllCypressUsers();
   cy.logout();
 });
