@@ -7,6 +7,8 @@ import {
   RenderOptions,
 } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/common/Link';
+import StoryblokAccordion from '../components/storyblok/StoryblokAccordion';
+import StoryblokAudio from '../components/storyblok/StoryblokAudio';
 import StoryblokButton from '../components/storyblok/StoryblokButton';
 import StoryblokCard from '../components/storyblok/StoryblokCard';
 import StoryblokFaqs from '../components/storyblok/StoryblokFaqs';
@@ -21,6 +23,7 @@ export const RichTextOptions: RenderOptions = {
   blokResolvers: {
     ['image']: (props: any) => <StoryblokImage {...props} />,
     ['video']: (props: any) => <StoryblokVideo {...props} />,
+    ['audio']: (props: any) => <StoryblokAudio {...props} />,
     ['row']: (props: any) => <StoryblokRow {...props} />,
     ['row_new']: (props: any) => <StoryblokRowColumnBlock {...props} />,
     ['quote']: (props: any) => <StoryblokQuote {...props} />,
@@ -28,6 +31,7 @@ export const RichTextOptions: RenderOptions = {
     ['button']: (props: any) => <StoryblokButton {...props} />,
     ['faq_list']: (props: any) => <StoryblokFaqs {...props} />,
     ['statement']: (props: any) => <StoryblokStatement {...props} />,
+    ['accordion']: (props: any) => <StoryblokAccordion {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
