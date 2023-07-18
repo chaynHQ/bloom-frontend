@@ -58,7 +58,9 @@ jobs:
           spec: cypress/**/*.cy.tsx
           headed: false
           record: true # send results to cypress dashboard
-          start: yarn start
+          start: |
+            yarn build
+            yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
         env:
