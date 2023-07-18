@@ -6,7 +6,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { ReactNode } from 'react';
+import { NODE_PARAGRAPH, render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
@@ -39,7 +40,6 @@ interface StoryblokAccordionProps {
   accordion_items: Array<StoryblokAccordionItemProps>;
   theme: 'primary' | 'secondary';
 }
-
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const { accordion_items, theme } = props;
 
@@ -62,18 +62,25 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
               <Icon
                 sx={{
                   position: 'relative',
-                  fontSize: 24,
+                  fontSize: 32,
                   marginBottom: 0,
-                  marginRight: 1,
+                  marginRight: 2,
                 }}
               >
                 <Image alt={ai.icon.alt} src={ai.icon.filename} layout="fill" objectFit="contain" />
               </Icon>
             )}
 
-            <Typography component="h3" textAlign="left">
-              {render(ai.title, RichTextOptions)}
-            </Typography>
+            {render(ai.title, {
+              nodeResolvers: {
+                // Overriding default rendering of the text paragraph component
+                [NODE_PARAGRAPH]: (children: ReactNode | null) => (
+                  <Typography sx={{ marginBottom: 0 }} component="h3" variant="h3" textAlign="left">
+                    {children}
+                  </Typography>
+                ),
+              },
+            })}
           </AccordionSummary>
           <AccordionDetails sx={accordionDetail}>
             {render(ai.body, RichTextOptions)}
