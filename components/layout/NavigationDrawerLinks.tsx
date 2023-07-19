@@ -92,7 +92,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         title: t('meetTheTeam'),
         href: '/meet-the-team',
         event: DRAWER_OUR_BLOOM_TEAM_CLICKED,
-        qaid: 'team-link',
       });
 
       if (!partnerAdmin.partner) {

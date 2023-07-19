@@ -4,6 +4,6 @@ describe('Home page', () => {
     cy.get('p', { timeout: 5000 }).contains(
       'Learn and heal from trauma in a private, supportive space.',
     );
-    cy.get(`[qa-id=team-link]`).should('exist'); //test branch code
+    cy.get(`[qa-id=team-menu-button]`).should('exist'); //test branch code
   });
 });
