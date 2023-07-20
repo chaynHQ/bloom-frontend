@@ -113,7 +113,7 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
       },
     });
   });
-  cy.wait(2000);
+  // removed wait for run to complete as it is slowing the test down
 });
 
 Cypress.Commands.add('deleteCypressAccessCodes', () => {
@@ -126,7 +126,7 @@ Cypress.Commands.add('deleteCypressAccessCodes', () => {
       },
     });
   });
-  cy.wait(2000);
+  // removed wait for run to complete as it is slowing the test down
 });
 
 Cypress.Commands.add('cleanUpTestState', () => {

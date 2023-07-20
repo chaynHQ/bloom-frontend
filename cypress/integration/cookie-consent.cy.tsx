@@ -6,7 +6,7 @@ describe('Cookie consent', () => {
     cy.get('[qa-id="cookieConsentAcceptButton"]').click();
     // Cookie should be set
     cy.wait;
-    cy.getCookie('analyticsConsent', { timeout: 5000 }).should('have.property', 'value', 'true');
+    cy.getCookie('analyticsConsent').should('have.property', 'value', 'true');
 
     // Banner should have disappeared
     cy.get('[qa-id="cookieConsentAcceptButton"]').should('not.exist');
@@ -17,7 +17,7 @@ describe('Cookie consent', () => {
     // Click on cookie consent
     cy.get('[qa-id="cookieConsentDeclineButton"]').click();
     // Cookie should be set
-    cy.getCookie('analyticsConsent', { timeout: 5000 }).should('have.property', 'value', 'false');
+    cy.getCookie('analyticsConsent').should('have.property', 'value', 'false');
     // Banner should have disappeared
     cy.get('[qa-id="cookieConsentAcceptButton"]').should('not.exist');
   });
