@@ -56,6 +56,7 @@ jobs:
       fail-fast: false
       matrix:
         # run 3 copies of the current job in parallel
+        # this will automatically load balance
         containers: [1, 2, 3]
     steps:
       - name: Checkout
