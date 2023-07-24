@@ -160,6 +160,3 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
 };
 
 export default SecondaryNav;
-function isGroundingAndActivitiesEnabled() {
-  throw new Error('Function not implemented.');
-}
