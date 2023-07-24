@@ -7,9 +7,11 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
+  DRAWER_ACTIVITIES_CLICKED,
   DRAWER_ADMIN_CLICKED,
   DRAWER_CHAT_CLICKED,
   DRAWER_COURSES_CLICKED,
+  DRAWER_GROUNDING_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
   DRAWER_NOTES_CLICKED,
@@ -108,6 +110,16 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           title: t('chat'),
           href: '/chat',
           event: DRAWER_CHAT_CLICKED,
+        });
+        links.push({
+          title: t('activities'),
+          href: '/activities',
+          event: DRAWER_ACTIVITIES_CLICKED,
+        });
+        links.push({
+          title: t('grounding'),
+          href: '/grounding',
+          event: DRAWER_GROUNDING_CLICKED,
         });
         links.push({
           title: t('notes'),
