@@ -23,8 +23,12 @@
       "therapyIcon": "An illustration of a head with flower",
       "courseIcon": "An illustration of a play icon, a triangle point to the right. In front there is a small sun",
       "notesIcon": "An illustration of a mobile phone with a heart in the centre",
-      "chatIcon": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines."
+      "chatIcon": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines.",
+      "activitiesIcon": "A book with a small yellow fire on its cover.",
+      "groundingIcon": "A twig with small pink flowers."
     },
-    "chat": "Chat"
+    "chat": "Chat",
+    "grounding": "Grounding",
+    "activities": "Activities"
   }
 }

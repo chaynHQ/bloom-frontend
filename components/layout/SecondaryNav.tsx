@@ -7,14 +7,20 @@ import therapyIcon from '../../public/therapy_icon.svg';
 import { useTranslations } from 'next-intl';
 import { RootState } from '../../app/store';
 import {
+  SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
   SECONDARY_HEADER_COURSES_CLICKED,
+  SECONDARY_HEADER_GROUNDING_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import activitiesIcon from '../../public/activities_icon.svg';
 import chatIcon from '../../public/chat_icon.svg';
 import courseIcon from '../../public/course_icon.svg';
+import groundingIcon from '../../public/grounding_icon.svg';
+
+import { FeatureFlag } from '../../config/featureFlag';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { NextLinkComposed } from '../common/Link';
@@ -71,6 +77,28 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       event: SECONDARY_HEADER_CHAT_CLICKED,
       qaId: 'secondary-nav-chat-button',
     },
+
+    ...(FeatureFlag.isGroundingAndActivitiesEnabled()
+      ? [
+          {
+            label: t('activities'),
+            icon: <SecondaryNavIcon src={activitiesIcon} alt={t('alt.activities')} />,
+            ariaLabel: t('activities'),
+            href: '/activities',
+            event: SECONDARY_HEADER_ACTIVITIES_CLICKED,
+            qaId: 'secondary-nav-activities-button',
+          },
+          {
+            label: t('grounding'),
+            icon: <SecondaryNavIcon src={groundingIcon} alt={t('alt.grounding')} />,
+            ariaLabel: t('grounding'),
+            href: '/grounding',
+            event: SECONDARY_HEADER_GROUNDING_CLICKED,
+            qaId: 'secondary-nav-grounding-button',
+          },
+        ]
+      : []),
+
     {
       label: t('notes'),
       icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,
@@ -132,3 +160,6 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
 };
 
 export default SecondaryNav;
+function isGroundingAndActivitiesEnabled() {
+  throw new Error('Function not implemented.');
+}
