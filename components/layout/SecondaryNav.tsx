@@ -82,7 +82,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       ? [
           {
             label: t('activities'),
-            icon: <SecondaryNavIcon src={activitiesIcon} alt={t('alt.activities')} />,
+            icon: <SecondaryNavIcon src={activitiesIcon} alt={t('alt.activitiesIcon')} />,
             ariaLabel: t('activities'),
             href: '/activities',
             event: SECONDARY_HEADER_ACTIVITIES_CLICKED,
@@ -90,7 +90,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
           },
           {
             label: t('grounding'),
-            icon: <SecondaryNavIcon src={groundingIcon} alt={t('alt.grounding')} />,
+            icon: <SecondaryNavIcon src={groundingIcon} alt={t('alt.groundingIcon')} />,
             ariaLabel: t('grounding'),
             href: '/grounding',
             event: SECONDARY_HEADER_GROUNDING_CLICKED,
@@ -119,7 +119,8 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
         qaId: 'secondary-nav-therapy-button',
       })
     : publicLinks;
-  const tabIndex = allLinks.map<string>((link) => link.href).indexOf(router.pathname);
+
+  const tabIndex = allLinks.map<string>((link) => link.href).indexOf(router.asPath);
 
   return (
     <Tabs
