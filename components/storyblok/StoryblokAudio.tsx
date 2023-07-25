@@ -20,6 +20,7 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
     maxWidth: '400px',
     marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
     marginRight: alignment === 'center' ? 'auto' : 0,
+    marginBottom: 4,
   } as const;
 
   return (
