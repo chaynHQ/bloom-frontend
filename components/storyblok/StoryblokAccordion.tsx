@@ -13,7 +13,7 @@ import { RichTextOptions } from '../../utils/richText';
 
 const containerStyle = {
   width: '100%',
-  maxWidth: 650,
+  maxWidth: 800,
   marginBottom: 5,
 } as const;
 
@@ -70,7 +70,12 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
               </Icon>
             )}
             {
-              <Typography sx={{ marginBottom: 0 }} component="h3" variant="h3" textAlign="left">
+              <Typography
+                sx={{ marginBottom: 0, maxWidth: 800 }}
+                component="h3"
+                variant="h3"
+                textAlign="left"
+              >
                 {render(ai.title)}
               </Typography>
             }
