@@ -1,7 +1,9 @@
 import { Typography } from '@mui/material';
+import { nameToEmoji } from 'gemoji';
 import { ReactNode } from 'react';
 import {
   MARK_LINK,
+  NODE_EMOJI,
   NODE_HEADING,
   NODE_PARAGRAPH,
   RenderOptions,
@@ -47,6 +49,11 @@ export const RichTextOptions: RenderOptions = {
         </Typography>
       );
     },
+    [NODE_EMOJI]: (children: ReactNode | null, { name }) => (
+      <span className="emoji" role="img" aria-label={name} aria-hidden={name ? 'false' : 'true'}>
+        {name && nameToEmoji[name]}
+      </span>
+    ),
   },
   markResolvers: {
     [MARK_LINK]: (children: any, props: any) => {
