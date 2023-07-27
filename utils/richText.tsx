@@ -49,11 +49,12 @@ export const RichTextOptions: RenderOptions = {
         </Typography>
       );
     },
-    [NODE_EMOJI]: (children: ReactNode | null, { name }) => (
-      <span className="emoji" role="img" aria-label={name} aria-hidden={name ? 'false' : 'true'}>
-        {name && nameToEmoji[name]}
-      </span>
-    ),
+    [NODE_EMOJI]: (children: ReactNode | null, { name }) =>
+      name && nameToEmoji[name] ? (
+        <span className="emoji" role="img" aria-label={name} aria-hidden={false}>
+          {name && nameToEmoji[name]}
+        </span>
+      ) : null, // The return value is Element | null
   },
   markResolvers: {
     [MARK_LINK]: (children: any, props: any) => {
