@@ -7,6 +7,7 @@ declare module '@mui/material/styles' {
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
+    paleSecondaryLight?: string;
   }
 }
 // Create a theme instance.
@@ -29,6 +30,7 @@ let theme = createTheme({
       main: '#EA0050',
     },
     palePrimaryLight: '#F9eded',
+    paleSecondaryLight: '#FFF8F4',
   },
   shape: {
     borderRadius: 20,
