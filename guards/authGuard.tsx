@@ -60,8 +60,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       }
     }
-
-    if (loading || user.loading || !user.firebaseUpdateApplied) {
+    if (loading || user.loading || (!user.firebaseUpdateApplied && user.id)) {
       return;
     }
 
