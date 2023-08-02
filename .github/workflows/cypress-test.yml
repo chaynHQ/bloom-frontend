@@ -66,7 +66,8 @@ jobs:
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx
-          headed: false
+          headed: true
+          no-exit: true
           record: true # send results to cypress dashboard
           parallel: true
           start: yarn dev
