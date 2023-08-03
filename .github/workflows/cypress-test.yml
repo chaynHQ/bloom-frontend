@@ -58,6 +58,7 @@ jobs:
           spec: cypress/**/*.cy.tsx
           headed: false
           record: true # send results to cypress dashboard
+          parallel: true
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
