@@ -66,10 +66,8 @@ jobs:
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx
-          headed: true
-          no-exit: true
+          headed: false
           record: true # send results to cypress dashboard
-          parallel: true
           start: yarn dev
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
