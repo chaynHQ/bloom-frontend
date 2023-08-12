@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
-import { setUserFirebaseUpdateApplied, setUserLoading, setUserToken } from '../app/userSlice';
+import { setUserFirebaseTokenLoading, setUserToken } from '../app/userSlice';
 import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
@@ -66,14 +66,13 @@ function MyApp(props: MyAppProps) {
     // Add listener for new firebase auth token, updating it in state to be used in request headers
     // Required for restoring user state following app reload or revisiting site
     auth.onIdTokenChanged(async function (user) {
-      dispatch(setUserLoading(true));
+      dispatch(setUserFirebaseTokenLoading(true));
       const token = await user?.getIdToken();
 
       if (token) {
         await dispatch(setUserToken(token));
-        dispatch(setUserFirebaseUpdateApplied(true));
       }
-      dispatch(setUserLoading(false));
+      dispatch(setUserFirebaseTokenLoading(false));
     });
   }, [dispatch]);
 
