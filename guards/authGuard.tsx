@@ -70,14 +70,17 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     // If auth guard loading state is true, i.e. it has checked
     // or the getUser request has started but not finished
-    if (loading || user.loading) {
+    // or the firebase token is being fetched
+    if (loading || user.loading || user.firebaseTokenLoading) {
       return;
     }
 
-    // You get past here in 2 states:
-    // 1. in the first instance of page load when the authguard has not yet been set to loading at the end of this useEffect
+    // You get past here in 3 states:
+    // 1. When a user is logged out so we never send the getUser request
+    // and the loading/ userloading/ firebaseToken Loading state is never triggered
+    // 2. when a user is logged in, the firebase token has returned, the authguard has not yet been set to loading, at the end of this useEffect
     // and the get user request hasn't been started.
-    // 2. In the second instance, you would get here because the getUser request has been called (i.e. loading is false)
+    // 3. When the getUser request has been called (i.e. loading is false)
     // and the getUser request has completed (user.loading is false)
 
     // If the User state has already been populated and ID from the backend has been given set verified as true
