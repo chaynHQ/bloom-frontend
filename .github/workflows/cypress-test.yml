@@ -56,7 +56,7 @@ jobs:
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx
-          headed: false
+          headed: true
           record: true # send results to cypress dashboard
           start: yarn dev
           wait-on: 'http://localhost:3000'
