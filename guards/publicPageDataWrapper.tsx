@@ -70,6 +70,8 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
           rollbar.error('LoadUserDataIfAvailable: get user error', userResponse.error);
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
+
+        auth.signOut();
         await dispatch(clearPartnerAccessesSlice());
         await dispatch(clearPartnerAdminSlice());
         await dispatch(clearCoursesSlice());

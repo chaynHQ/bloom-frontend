@@ -94,6 +94,8 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
+
+      auth.signOut();
       await dispatch(clearPartnerAccessesSlice());
       await dispatch(clearPartnerAdminSlice());
       await dispatch(clearCoursesSlice());

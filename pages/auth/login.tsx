@@ -71,8 +71,9 @@ const Login: NextPage = () => {
   const allPartnersContent = getAllPartnersContent();
 
   useEffect(() => {
-    if (user.token) {
-      router.push('/courses'); // Redirect if the user is on the login page but is alredy logged in
+    // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
+    if (user.token && user.id) {
+      router.push('/courses');
     }
   }, [user.token]);
 
