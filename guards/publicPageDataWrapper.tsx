@@ -5,7 +5,13 @@ import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
-import { clearUserSlice, setUserLoading } from '../app/userSlice';
+import {
+  clearUserSlice,
+  setAuthStateLoading,
+  setUserLoading,
+  setUserToken,
+} from '../app/userSlice';
+import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
@@ -34,6 +40,23 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
 
   const [getUser] = useGetUserMutation();
 
+  // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (authState) => {
+      if (!authState) {
+        dispatch(setAuthStateLoading(false));
+        setLoading(false);
+        return;
+      }
+      // authState.getIdToken Returns a JSON Web Token (JWT) used to identify the user to a Firebase service.
+      // Returns the current token if it has not expired. Otherwise, this will refresh the token and return a new one.
+      const authToken = await authState.getIdToken();
+      dispatch(setUserToken(authToken));
+      dispatch(setAuthStateLoading(false));
+    });
+    return () => unsubscribe();
+  }, []);
+
   useEffect(() => {
     async function callGetUser() {
       setLoading(true);
@@ -47,6 +70,8 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
           rollbar.error('LoadUserDataIfAvailable: get user error', userResponse.error);
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
+
+        auth.signOut();
         await dispatch(clearPartnerAccessesSlice());
         await dispatch(clearPartnerAdminSlice());
         await dispatch(clearCoursesSlice());

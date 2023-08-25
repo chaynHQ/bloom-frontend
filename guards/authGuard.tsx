@@ -6,9 +6,15 @@ import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
 import { RootState } from '../app/store';
-import { clearUserSlice, setUserLoading } from '../app/userSlice';
+import {
+  clearUserSlice,
+  setAuthStateLoading,
+  setUserLoading,
+  setUserToken,
+} from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 
+import { auth } from '../config/firebase';
 import rollbar from '../config/rollbar';
 import {
   GET_AUTH_USER_ERROR,
@@ -29,8 +35,42 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   const { user } = useTypedSelector((state: RootState) => state);
   const [verified, setVerified] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [getUser] = useGetUserMutation();
+
+  // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (authState) => {
+      if (!authState) {
+        dispatch(setAuthStateLoading(false));
+        setLoading(false);
+        return;
+      }
+      // authState.getIdToken Returns a JSON Web Token (JWT) used to identify the user to a Firebase service.
+      // Returns the current token if it has not expired. Otherwise, this will refresh the token and return a new one.
+      const authToken = await authState.getIdToken();
+      dispatch(setUserToken(authToken));
+      dispatch(setAuthStateLoading(false));
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // 2. Add ongoing event listener to check for token changes
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_ENV !== 'local') {
+      hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
+    }
+
+    // Add listener for new firebase auth token, updating it in state to be used in request headers
+    // Required for restoring user state following app reload or revisiting site
+
+    auth.onIdTokenChanged(async function (user) {
+      const token = await user?.getIdToken();
+      if (token) {
+        await dispatch(setUserToken(token));
+      }
+    });
+  }, []);
 
   // Function to get User details from the backend api
   async function callGetUser() {
@@ -54,6 +94,8 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
+
+      auth.signOut();
       await dispatch(clearPartnerAccessesSlice());
       await dispatch(clearPartnerAdminSlice());
       await dispatch(clearCoursesSlice());
@@ -65,13 +107,14 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
   }
 
+  // 3. get user information from the backend
   useEffect(() => {
     // Only called where a firebase token exist but user data not loaded, e.g. app reload
 
     // If auth guard loading state is true, i.e. it has checked
     // or the getUser request has started but not finished
     // or the firebase token is being fetched
-    if (loading || user.loading || user.firebaseTokenLoading) {
+    if (user.loading || user.authStateLoading) {
       return;
     }
 
@@ -90,19 +133,20 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         hotjar.identify('USER_ID', { userProperty: user.id });
       }
       setVerified(true);
+      setLoading(false);
       return;
     }
 
     // If the user state does not have a token at all (i.e. is null) and the page is not been set a loading
     // redirect to the log in page
-    if (!user.token) {
+    if (!user.token && !user.authStateLoading) {
+      setLoading(false);
       router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       return;
     }
 
     // User firebase token exists but user data doesn't, so reload user data
     // Handles restoring user data on app reload or revisiting the site
-    setLoading(true);
     callGetUser();
     setLoading(false);
   }, [user, loading]);
