@@ -18,7 +18,7 @@ export interface User {
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
   activeSubscriptions: ActiveSubscription[];
-  firebaseTokenLoading: boolean;
+  authStateLoading: boolean;
 }
 
 export interface Subscription {
@@ -51,7 +51,7 @@ const initialState: User = {
   signUpLanguage: null,
   isSuperAdmin: false,
   activeSubscriptions: [],
-  firebaseTokenLoading: false,
+  authStateLoading: true,
 };
 
 const slice = createSlice({
@@ -67,8 +67,8 @@ const slice = createSlice({
     setUserLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setUserFirebaseTokenLoading(state, action: PayloadAction<boolean>) {
-      state.firebaseTokenLoading = action.payload;
+    setAuthStateLoading(state, action: PayloadAction<boolean>) {
+      state.authStateLoading = action.payload;
     },
   },
 
@@ -114,7 +114,6 @@ const isSubscriptionActive = (subscription: Subscription): subscription is Activ
 };
 
 const { actions, reducer } = slice;
-export const { clearUserSlice, setUserToken, setUserLoading, setUserFirebaseTokenLoading } =
-  actions;
+export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading } = actions;
 export const selectCurrentUser = (state: RootState) => state.user;
 export default reducer;
