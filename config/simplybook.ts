@@ -33,6 +33,9 @@ export const getSimplybookWidgetConfig = (user?: User) => {
             name: user.name,
             email: user.email,
           },
+          fields: {
+            b3b2455c79e69e6baf6e8c1fcf34b691: user.id,
+          }
         },
       }),
     },
