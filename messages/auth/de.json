@@ -1,0 +1,55 @@
+{
+  "Auth": {
+    "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
+    "getStartedBloom": "Get started with Bloom",
+    "getStartedWith": "Get started with a {partnerName} code",
+    "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
+    "terms": "By continuing, you are indicating that you accept our <policiesLink>Terms of Service and Privacy Policy</policiesLink>",
+    "login": {
+      "title": "Welcome back",
+      "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>",
+      "newUserTitle": "New to Bloom?"
+    },
+    "register": {
+      "title": "Create account",
+      "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
+      "moreInfo": "More on <welcomeLink>how Bloom works</welcomeLink>.",
+      "partnershipsTitle": "Our partnerships",
+      "partnershipsDescription": "If you're coming to Bloom from one of our partners, click their logo below."
+    },
+    "resetPassword": {
+      "title": "Reset your password"
+    },
+    "form": {
+      "codeLabel": "access code",
+      "nameLabel": "First name/nickname",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "contactPermissionLabel": "Join our community of survivors sharing their thoughts on Bloom",
+      "registerSubmit": "Create account",
+      "resetPasswordStep1": "We'll send you an email to begin resetting your password.",
+      "resetPasswordStep2": "Almost there! You can now set your new password.",
+      "resetPasswordSubmit": "Reset password",
+      "resendPasswordSubmit": "Resend email",
+      "resetPasswordSent": "Check your emails for a reset link from Bloom. Didn't receive one? Check your junk folder or resend the email.",
+      "passwordResetSuccess": "Your password has been reset! You can now continue to login with your new password.",
+      "loginSubmit": "Login",
+      "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "codeErrors": {
+        "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "expired": "This code has expired. Get in touch with the {partnerName} team.",
+        "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the {partnerName} team.",
+        "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
+      },
+      "firebase": {
+        "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
+        "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
+        "weakPassword": "Your password needs to be a little longer, so it's more secure.",
+        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
+        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
+      }
+    }
+  }
+}
