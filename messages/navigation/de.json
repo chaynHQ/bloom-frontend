@@ -1,0 +1,34 @@
+{
+  "Navigation": {
+    "menu": "Navigation menu",
+    "menuOpen": "Open navigation menu",
+    "menuClose": "Close navigation menu",
+    "languageMenu": "Language menu",
+    "bloomLogo": "Bloom logo",
+    "login": "Log in",
+    "logout": "Log out",
+    "userMenu": "User settings menu",
+    "home": "Home",
+    "admin": "Admin",
+    "about": "About",
+    "meetTheTeam": "Our Bloom team",
+    "immediateHelp": "Immediate help",
+    "therapy": "Therapy",
+    "courses": "Courses",
+    "applyCode": "Apply a code",
+    "account": "Account",
+    "secondaryNavigationMenu": "Secondary navigation menu",
+    "notes": "Notes",
+    "alt": {
+      "therapyIcon": "An illustration of a head with flower",
+      "courseIcon": "An illustration of a play icon, a triangle point to the right. In front there is a small sun",
+      "notesIcon": "An illustration of a mobile phone with a heart in the centre",
+      "chatIcon": "Two speech bubbles intersecting against a pink background. The first has a pink heart inside it. The second has straight lines.",
+      "activitiesIcon": "A book with a small yellow fire on its cover.",
+      "groundingIcon": "A twig with small pink flowers."
+    },
+    "chat": "Chat",
+    "grounding": "Grounding",
+    "activities": "Activities"
+  }
+}

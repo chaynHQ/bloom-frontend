@@ -1,5 +1,11 @@
 import { User } from '../app/userSlice';
 
+// Simplybook hardcodes additional field IDs
+const userIdFieldId =
+  process.env.NEXT_PUBLIC_ENV === 'production'
+    ? '86a541b6d059de75eaba4e18a288cd24'
+    : 'b3b2455c79e69e6baf6e8c1fcf34b691';
+
 export const getSimplybookWidgetConfig = (user?: User) => {
   return {
     widget_type: 'iframe',
@@ -32,6 +38,9 @@ export const getSimplybookWidgetConfig = (user?: User) => {
           client: {
             name: user.name,
             email: user.email,
+          },
+          fields: {
+            [userIdFieldId]: user.id,
           },
         },
       }),
