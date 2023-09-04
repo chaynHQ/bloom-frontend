@@ -14,4 +14,7 @@ export namespace FeatureFlag {
   export const isGroundingAndActivitiesEnabled = () => {
     return process.env.NEXT_PUBLIC_ENV !== 'production';
   };
+  export const isGermanEnabled = () => {
+    return process.env.NEXT_PUBLIC_ENV !== 'production';
+  };
 }
