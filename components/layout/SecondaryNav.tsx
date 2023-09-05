@@ -20,7 +20,6 @@ import chatIcon from '../../public/chat_icon.svg';
 import courseIcon from '../../public/course_icon.svg';
 import groundingIcon from '../../public/grounding_icon.svg';
 
-import { FeatureFlag } from '../../config/featureFlag';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { NextLinkComposed } from '../common/Link';
@@ -78,27 +77,22 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       qaId: 'secondary-nav-chat-button',
     },
 
-    ...(FeatureFlag.isGroundingAndActivitiesEnabled()
-      ? [
-          {
-            label: t('activities'),
-            icon: <SecondaryNavIcon src={activitiesIcon} alt={t('alt.activitiesIcon')} />,
-            ariaLabel: t('activities'),
-            href: '/activities',
-            event: SECONDARY_HEADER_ACTIVITIES_CLICKED,
-            qaId: 'secondary-nav-activities-button',
-          },
-          {
-            label: t('grounding'),
-            icon: <SecondaryNavIcon src={groundingIcon} alt={t('alt.groundingIcon')} />,
-            ariaLabel: t('grounding'),
-            href: '/grounding',
-            event: SECONDARY_HEADER_GROUNDING_CLICKED,
-            qaId: 'secondary-nav-grounding-button',
-          },
-        ]
-      : []),
-
+    {
+      label: t('activities'),
+      icon: <SecondaryNavIcon src={activitiesIcon} alt={t('alt.activitiesIcon')} />,
+      ariaLabel: t('activities'),
+      href: '/activities',
+      event: SECONDARY_HEADER_ACTIVITIES_CLICKED,
+      qaId: 'secondary-nav-activities-button',
+    },
+    {
+      label: t('grounding'),
+      icon: <SecondaryNavIcon src={groundingIcon} alt={t('alt.groundingIcon')} />,
+      ariaLabel: t('grounding'),
+      href: '/grounding',
+      event: SECONDARY_HEADER_GROUNDING_CLICKED,
+      qaId: 'secondary-nav-grounding-button',
+    },
     {
       label: t('notes'),
       icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,
