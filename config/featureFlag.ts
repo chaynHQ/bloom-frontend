@@ -11,9 +11,6 @@ export namespace FeatureFlag {
   export const isUserResearchBannerEnabled = () => {
     return process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER?.toLowerCase() === 'true';
   };
-  export const isGroundingAndActivitiesEnabled = () => {
-    return process.env.NEXT_PUBLIC_ENV !== 'production';
-  };
   export const isGermanEnabled = () => {
     return process.env.NEXT_PUBLIC_ENV !== 'production';
   };
