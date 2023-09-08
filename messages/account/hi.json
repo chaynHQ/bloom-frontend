@@ -79,18 +79,6 @@
       },
       "setAForm": {
         "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
-      },
-      "setBForm": {
-        "bloomHelpLabel": "Bloom ne meri madad kari hai:",
-        "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Janiye ki kai alag alag tarha ke abuse hote hain",
-          "bhmQ2": "Janiye ki toxic vyavhaar kya hote hain",
-          "bhmQ3": "Janiye ki kese humare culture mein kai alag alag tareeke ke oppression aur control hote hai jo abuse ki oor je jati hai.",
-          "bhmQ4": "Validated mehsoos karein - yeh jaan na ki jin cheezoon se mein guzri/gurzra hu vo theek nahi tha. ",
-          "bhmQ5": "Yeh janna ki uss waqt mene jo bhi kiya ya nahi kiya,  mere saath jo bhi hua meri galti nahi thi.",
-          "bhmQ6": "Protsahit mehsoos karna - yeh jaanke ko mere jaise aur bhi log hain",
-          "bhmQ7": "Khud ko ek survivor samjhte hain"
-        }
       }
     }
   }
