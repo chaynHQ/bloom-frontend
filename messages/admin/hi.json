@@ -14,6 +14,15 @@
       "nameLabel": "Name",
       "reset": "Create another admin’",
       "error": "Error creating partner admin: "
+    },
+    "updateTherapy": {
+      "title": "Update user therapy sessions",
+      "emailLabel": "User email",
+      "sessionsLabel": "Number of therapy sessions",
+      "submit": "Update user therapy sessions",
+      "successDescription": "User therapy sessions updated!",
+      "error": "Error updating therapy sessions: ",
+      "reset": "Update another user"
     }
   }
 }

@@ -56,6 +56,12 @@ const slice = createSlice({
     builder.addMatcher(api.endpoints.assignPartnerAccess.matchFulfilled, (state, { payload }) => {
       if (payload.id) return state.concat(mergeUserPartnerState([payload]));
     });
+    builder.addMatcher(
+      api.endpoints.getUsersWithPartnerAccessCodes.matchFulfilled,
+      (state, { payload }) => {
+        return payload;
+      },
+    );
   },
 });
 

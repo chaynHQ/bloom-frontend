@@ -183,6 +183,22 @@ export const api = createApi({
         body: { cancelledAt },
       }),
     }),
+    getUsersWithPartnerAccessCodes: builder.query({
+      query(body) {
+        return {
+          url: 'partner-access/users',
+          method: 'GET',
+          body,
+        };
+      },
+    }),
+    updateAccessCodeTherapySessionCount: builder.mutation<string, { partnerAccessCode: string, therapySessions: string }>({
+      query: ({ partnerAccessCode, therapySessions }) => ({
+        url: `partner-access/users`,
+        method: 'PUT',
+        body: { partnerAccessCode, therapySessions },
+      }),
+    }),
   }),
 });
 
@@ -200,4 +216,6 @@ export const {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
+  useGetUsersWithPartnerAccessCodesQuery,
+  useUpdateAccessCodeTherapySessionCountMutation,
 } = api;
