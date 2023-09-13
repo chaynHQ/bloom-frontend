@@ -108,15 +108,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   // only show live content to public users
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
 
-  const numberCoursesCompleted = courses.reduce((acc, curr) => {
-    if (curr.completed) {
-      return acc + 1;
-    }
-    return acc;
-  }, 0);
-
-  const numberSessionsStarted = courses.flatMap((c) => c.sessions).length;
-
   const eventData = {
     ...eventUserData,
     session_name: story.content.name,

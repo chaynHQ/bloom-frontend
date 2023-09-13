@@ -2,7 +2,7 @@
   "Therapy": {
     "title": "Agende uma sessão de terapia",
     "introduction": "{partnerName} fez uma parceria com a Bloom para oferecer suporte gratuito e confidencial. Bloom conecta você a uma pessoa terapeuta da sua escolha que pode oferecer suporte personalizado. Você terá acesso a seis sessões de uma hora.",
-    "bookingButton": "Begin booking",
+    "bookingButton": "Comece a agendar",
     "therapySessionsRemaining": "Você tem <strongText>4</strongText> sessões de terapia disponíveis para serem agendadas.",
     "noTherapySessionsRemaining": "No momento, você não tem mais sessões para agendar. ",
     "steps": {

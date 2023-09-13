@@ -69,7 +69,7 @@
           "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
           "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un comping mechanisms ki taraf akarshit hona ek normal trauma response hai",
           "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
-          "Q4": "I’m committed to giving myself the attention that I need to heal",
+          "Q4": "Mein apne aapko vo poora dhyaan doongi jo mujhe theek hone aur heal hone ke liye chahiye.",
           "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
           "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
           "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mereliye unique hai",
@@ -79,18 +79,6 @@
       },
       "setAForm": {
         "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
-      },
-      "setBForm": {
-        "bloomHelpLabel": "Bloom ne meri madad kari hai:",
-        "bloomHelpedMeScaleLabels": {
-          "bhmQ1": "Janiye ki kai alag alag tarha ke abuse hote hain",
-          "bhmQ2": "Janiye ki toxic vyavhaar kya hote hain",
-          "bhmQ3": "Janiye ki kese humare culture mein kai alag alag tareeke ke oppression aur control hote hai jo abuse ki oor je jati hai.",
-          "bhmQ4": "Validated mehsoos karein - yeh jaan na ki jin cheezoon se mein guzri/gurzra hu vo theek nahi tha. ",
-          "bhmQ5": "Yeh janna ki uss waqt mene jo bhi kiya ya nahi kiya,  mere saath jo bhi hua meri galti nahi thi.",
-          "bhmQ6": "Protsahit mehsoos karna - yeh jaanke ko mere jaise aur bhi log hain",
-          "bhmQ7": "Khud ko ek survivor samjhte hain"
-        }
       }
     }
   }
