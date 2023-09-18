@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { hotjar } from 'react-hotjar';
@@ -128,8 +129,8 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     // If the User state has already been populated and ID from the backend has been given set verified as true
     if (user.id) {
-      if (process.env.NEXT_PUBLIC_ENV !== 'local') {
-        // TODO check consent of cookies before sending
+      // Check users analytics consent before sending user data
+      if (process.env.NEXT_PUBLIC_ENV !== 'local' && Cookies.get('analyticsConsent') === 'true') {
         hotjar.identify('USER_ID', { userProperty: user.id });
       }
       setVerified(true);
