@@ -18,7 +18,7 @@ Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
 
 # Bloom Frontend
 
-[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml)
+[![Bloom Frontend CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-prod.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-prod.yml)
 
 **Currently in active development**
 
