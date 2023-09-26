@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { richtextContentStyle } from '../../styles/common';
 
 const audioContainerStyle = {
