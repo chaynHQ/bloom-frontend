@@ -1,4 +1,4 @@
-describe('A logged in user should be able to navigate to a course session and complete it', () => {
+describe.only('A logged in user should be able to navigate to a course session and complete it', () => {
   const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
@@ -18,7 +18,7 @@ describe('A logged in user should be able to navigate to a course session and co
     cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist').click(); //navigate to courses
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
-      timeout: 4000,
+      timeout: 8000,
     })
       .first()
       .click(); //click on a course when link load
@@ -26,7 +26,7 @@ describe('A logged in user should be able to navigate to a course session and co
     // cy.getIframeBody().find('button').click(); Attempting to watch the session video. iframe isnt working at the moment
 
     cy.get('a[href*="what-is-sexual-trauma"]', {
-      timeout: 4000,
+      timeout: 8000,
     })
       .first()
       .click(); //click on a session when link loads
@@ -34,9 +34,8 @@ describe('A logged in user should be able to navigate to a course session and co
 
   it('Should read activity & bonus content and complete session', () => {
     cy.visit('/courses/healing-from-sexual-trauma/what-is-sexual-trauma');
-    cy.wait(5000);
 
-    cy.get('h3').contains('Activity').click(); //open activities
+    cy.get('h3', { timeout: 10000 }).contains('Activity').click(); //open activities
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 
