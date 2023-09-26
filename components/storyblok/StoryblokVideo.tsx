@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { richtextContentStyle } from '../../styles/common';
 
 const videoContainerStyle = {
@@ -70,6 +70,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           style={videoStyle}
           width="100%"
           height="100%"
+          light={true}
           url={video.url}
           controls
           modestbranding={1}

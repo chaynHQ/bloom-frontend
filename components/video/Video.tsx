@@ -1,9 +1,8 @@
 import { Theme } from '@mui/material';
 import Box from '@mui/material/Box';
 import { SxProps } from '@mui/system';
-import * as React from 'react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player/lazy';
 import logEvent from '../../utils/logEvent';
 
 const videoContainerStyle = {
@@ -77,6 +76,7 @@ const Video = (props: VideoProps) => {
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           ref={player}
+          light={true}
           onDuration={(duration) => setVideoDuration(duration)}
           onStart={videoStarted}
           onPause={() => videoPausedOrPlayed(false)}
