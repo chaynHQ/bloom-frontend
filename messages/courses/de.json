@@ -1,51 +1,51 @@
 {
   "Courses": {
-    "title": "Our courses",
-    "introduction": "Bloom courses offer tailored information, tools, and affirming words to help us cope with trauma. They encourage us to learn, reflect, and process what we’ve been through and how it may have affected us–all in a safe and empowering space.",
+    "title": "Unsere Kurse",
+    "introduction": "Die Bloom-Kurse bieten Informationen, Hilfsmittel und bestärkende Worte an, die spezifisch darauf angepasst sind, Traumata zu bewältigen. Sie ermutigen uns zu lernen und zu reflektieren und das, was wir erlebt haben einschließlich der Auswirkungen, die das auf uns hatte, in einem sicheren und ermutigendem Rahmen zu verarbeiten. ",
     "session": "Session",
-    "course": "Course",
-    "courses": "Courses",
-    "expand": "Expand",
-    "expandSummary": "Expand summary for",
-    "navigateToSession": "Navigate to session -",
-    "navigateToCourse": "Navigate to course -",
-    "liveFrom": "Live from {date}",
-    "liveUntil": "Live until {date}",
-    "liveSoon": "Live soon",
-    "liveNow": "Live now",
-    "comingSoon": "Coming soon",
-    "noCourses": "There are no courses to display right now. If this doesn't seem right, try again later or contact the Bloom team.",
+    "course": "Kurs",
+    "courses": "Kurse",
+    "expand": "Erweitern",
+    "expandSummary": "Zusammenfassung erweitern für",
+    "navigateToSession": "Zur Session navigieren -",
+    "navigateToCourse": "Zum Kurs navigieren -",
+    "liveFrom": "Live ab {date}",
+    "liveUntil": "Live bis {date}",
+    "liveSoon": "Demnächst live",
+    "liveNow": "Jetzt live",
+    "comingSoon": "Demnächst",
+    "noCourses": "Zur Zeit sind keine Kurse verfügbar. Falls Dir das nicht richtig erscheint, kontaktiere das Bloom-Team.",
     "courseDetail": {
-      "introductionTitle": "Course introduction",
-      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>"
+      "introductionTitle": "Einführung in den Kurs",
+      "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript</transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
-      "activityTitle": "Activity",
-      "bonusTitle": "Bonus content",
+      "videoDescription": "Schau das Video an oder lies das <transcriptLink>Videotranskript</transcriptLink>.",
+      "activityTitle": "Übung",
+      "bonusTitle": "Bonusinhalte",
       "chat": {
-        "title": "Reflect with us",
-        "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
-        "videoIntro": "Find out more about how our online chat works:",
+        "title": "Reflektiere mit uns",
+        "description": "Wenn Du Deine Überlegungen zu dieser Session mit uns teilen möchtest - das Bloom-Team freut sich, von Dir zu hören. ",
+        "videoIntro": "Erfahre mehr darüber, wie unser Online-Chat funktioniert",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
-        "detailIntro": "Remember:",
-        "detailPrivacy": "Your messages are private and secure, they’re only ever seen by the Bloom team and you remain anonymous.",
-        "detailTimezone": "We work across many different timezones, so you should get a response from us within 6 hours, and it won’t be longer than 24 hours.",
-        "detailLanguage": "We are always available in English, French, Hindi, Portuguese or Spanish, but members of our team also speak Arabic, and Bangla; we’d be happy to arrange for you to speak with them.",
-        "detailLegal": "If you’re going through an active legal case, consider what you share with us as this can sometimes affect your case.",
-        "detailImmediateHelp": "If you’re in imminent threat or harm, please go to ‘Immediate help’ in the menu to find the right service to support you.",
-        "startButton": "Start a chat"
+        "detailIntro": "Denk dran:",
+        "detailPrivacy": "Deine Nachrichten sind privat und sicher. Sie werden nur vom Bloom-Team gesehen und Du bleibst anonym. ",
+        "detailTimezone": "Wir arbeiten in vielen verschiedenen Zeitzonen, daher solltest Du innerhalb von 6 Stunden eine Antwort von uns erhalten, und es wird nicht länger als 24 Stunden dauern. ",
+        "detailLanguage": "Wir sind immer auf Deutsch und Englisch erreichbar, aber unser Team spricht auch Französisch, Hindi, Portugiesisch, Spanisch, Arabisch und Bangla - wir arrangieren gerne ein Gespräch für Dich. ",
+        "detailLegal": "Falls Du Dich in einem laufenden Gerichtsverfahren befindest, denk bitte darüber nach, was Du mit uns teilst, da dies manchmal Auswirkungen auf Dein Verfahren haben kann. ",
+        "detailImmediateHelp": "Falls Du akut bedroht wirst oder in Gefahr bist, geh bitte im Menü zu \"Soforthilfe\", um die richtige Ansprechstelle zu finden. ",
+        "startButton": "Chat starten"
       },
-      "sessionComplete": "Session complete"
+      "sessionComplete": "Session abgeschlossen"
     },
     "accessGuard": {
-      "title": "Course content not available",
-      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
+      "title": "Kursinhalte nicht verfügbar",
+      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen</contactLink>."
     },
     "errors": {
-      "completeSessionError": "There was an error marking this session as complete. Try again a little later."
+      "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
-    "backToCourses": "Back to courses"
+    "backToCourses": "Zurück zu Kursen"
   }
 }
