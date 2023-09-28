@@ -1,75 +1,75 @@
 {
   "Shared": {
     "bloom": "Bloom",
-    "leaveSiteButton": "Leave this site",
+    "leaveSiteButton": "Seite verlassen",
     "footer": {
-      "chaynDescription": "Bloom is brought to you by Chayn, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
-      "bloomLine1": "Built by CHAYN CIO.",
-      "bloomLine2": "UK Charity Number: 1196098",
-      "bumbleLine1": "In partnership with",
+      "chaynDescription": "Bloom wird Dir präsentiert von Chayn, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird, und für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
+      "bloomLine1": "Entwickelt von CHAYN CIO.",
+      "bloomLine2": "UK Charity Nummer: 1196098",
+      "bumbleLine1": "In Kooperation mit",
       "bumbleLine2": "BUMBLE HOLDING LTD",
-      "badooLine1": "In partnership with",
+      "badooLine1": "In Kooperation mit",
       "badooLine2": "BADOO LTD",
-      "fruitzLine1": "In partnership with",
+      "fruitzLine1": "In Kooperation mit",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Our policies"
+      "policies": "Unsere Richtlinien"
     },
     "videoTranscript": {
-      "title": "Video transcript",
-      "description": "Read the transcript for video - ",
-      "closeModal": "Close transcript"
+      "title": "Video-Transcript",
+      "description": "Lies das Transkript vom Video - ",
+      "closeModal": "Transkript schließen"
     },
     "progressStatus": {
-      "started": "Started",
-      "completed": "Completed",
-      "notStarted": "Not started"
+      "started": "Angefangen",
+      "completed": "Abgeschlossen",
+      "notStarted": "Noch nicht begonnen"
     },
     "meetTheTeam": {
-      "expandTeamMember": "Expand bio for {name}"
+      "expandTeamMember": "Bio für {name} erweitern"
     },
     "404": {
-      "title": "404 - Page not found",
-      "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
-      "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "404 - Seite nicht gefunden",
+      "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",
+      "unauthenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück auf die Startseite.",
+      "authenticatedRedirectButton": "Zurück zur Kursseite",
+      "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },
     "500": {
-      "title": "500 - Internal error",
-      "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
+      "title": "500 - Interner Fehler",
+      "description": "Hmm, da ist etwas schief gelaufen. Bitte gehe zurück und versuche es erneut. Kontaktiere uns über das Kontaktformular, wenn der Fehler weiterhin besteht. ",
+      "authenticatedRedirectButton": "Zurück zur Kursseite",
+      "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },
     "alt": {
-      "bloomLogo": "Bloom logo",
-      "bumbleLogo": "Bumble logo",
-      "bloomBumbleLogo": "Bloom in partnership with Bumble logo",
-      "badooLogo": "Badoo logo",
-      "bloomBadooLogo": "Bloom in partnership with Badoo logo",
-      "welcomeToBloom": "Welcome to Bloom",
-      "tiktokLogo": "Tiktok logo",
-      "bloomHead": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
-      "beehive": "Illustration of a bee hive",
-      "leafMix": "Illustration of two leaves joined with a rose",
-      "leafMixBee": "Illustration of two leaves with a bee hovering above",
-      "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
-      "personTea": "Illustration of a person sitting, holding a tea",
-      "personSitting": "Illustration of a person sitting",
-      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
-      "dateSelector": "Illustration of a calendar with a heart in the middle",
-      "change": "Illustration of a cycle - three suns in a circle with arrows between them",
-      "confidential": "Illustration of a document with a lock in the corner",
-      "cookieCat": "Illustration of a resting cat with a cookie",
-      "fruitzLogo": "Fruitz logo",
-      "bloomFruitzLogo": "Bloom in partnership with Fruitz logo"
+      "bloomLogo": "Bloom Logo",
+      "bumbleLogo": "Bumble Logo",
+      "bloomBumbleLogo": "Bloom in Kooperation mit Bumble Logo",
+      "badooLogo": "Badoo Logo",
+      "bloomBadooLogo": "Bloom in Kooperation mit Badoo Logo",
+      "welcomeToBloom": "Willkommen bei Bloom",
+      "tiktokLogo": "Tiktok Logo",
+      "bloomHead": "Illustration des Gesichts und der Schultern einer Person, mit großen Blättern und blühenden Blumen über ihnen",
+      "beehive": "Illustration eines Bienenstocks",
+      "leafMix": "Illustration von zwei Blättern, die durch eine Rose verbunden werden",
+      "leafMixBee": "Illustration von zwei Blättern über deinen eine Biene schwebt",
+      "leafMixDots": "Illustration von 3 Blättern mit einer Blume in der Mitte und Punkten, die aus der der Blume fliegen. ",
+      "personTea": "Illustration einer sitzenden Person, die eine Tasse Tee hält",
+      "personSitting": "Illustration einer sitzenden Person",
+      "chooseTherapist": "Illustration eines Gesichts im Seitenprofil, mit einer Blume",
+      "dateSelector": "Illustration eines Kalenders mit einem Herz in der Mitte",
+      "change": "Illustration eines Zyklus - drei Sonnen im Kreis mit Pfeilen zwischen ihnen",
+      "confidential": "Illustration eines Dokuments mit einem Schloss in der Ecke",
+      "cookieCat": "Illustration einer ruhenden Katze mit einem Keks",
+      "fruitzLogo": "Fruitz Logo",
+      "bloomFruitzLogo": "Bloom in Kooperation mit Fruitz Logo"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "Survivor",
+    "survivor": "Überlebende:r",
     "cookieConsent": {
-      "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
-      "cookieConsentPolicy": "cookie policy",
-      "acceptLabel": "Accept Cookies",
-      "declineLabel": "Reject Cookies"
+      "cookieConsentExplainer": "Bitte erlaube analytische Cookies, damit wir Bloom verbessern können. Lies mehr darüber in",
+      "cookieConsentPolicy": "Cookie-Richtlinie",
+      "acceptLabel": "Cookies akzeptieren",
+      "declineLabel": "Cookies ablehnen"
     }
   }
 }
