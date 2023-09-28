@@ -1,84 +1,84 @@
 {
   "Account": {
     "applyCode": {
-      "title": "Apply a code",
-      "introduction": "Bloom works with partners to support healing for survivors of abuse around the world.",
-      "description": "If you've received an access code from one of our partners, you can add it here to receive support specific to their programme.",
-      "descriptionLine2": "You can add codes from more than one partner.",
-      "partnershipsTitle": "Our partners",
-      "partnershipsDescription": "Read more about our partnerships by clicking on their logo.",
-      "formIntroduction": "Enter the access code you received from a Bloom partner.",
+      "title": "Einen Code anwenden",
+      "introduction": "Bloom arbeitet mit Partnerorganisationen zusammen, um Überlebende auf der ganzen Welt bei der Heilung zu unterstützen.",
+      "description": "Wenn Du einen Zugangscode von eine unserer Partnerorganisationen bekommen hast, kannst Du ihn hier angeben, um spezifische Unterstützung für deren Programm zu erhalten. ",
+      "descriptionLine2": "Du kannst Zugangscodes von mehr als einer Partnerorganisation angeben.",
+      "partnershipsTitle": "Unsere Partnerorganisationen",
+      "partnershipsDescription": "Erfahre mehr über unsere Partnerschaften, indem du auf das Logo der jeweiligen Organisation klickst.",
+      "formIntroduction": "Gib den Zugangscode an, den Du von einer Partnerorganisation von Bloom erhalten hast. ",
       "formSuccess": {
-        "success": "A Bumble code was applied to your account!",
-        "successLine2": "Your Bumble access enables the following:",
-        "liveChat": "1-1 chat with the Bloom team",
-        "therapy": "{therapySessionsRemaining} therapy sessions",
-        "courses": "Self-guided courses"
+        "success": "Ein Bumble-Code wurde auf Dein Konto angewendet!",
+        "successLine2": "Dein Bumble-Zugang ermöglicht Folgendes:",
+        "liveChat": "1-1 Chat mit dem Bloom-Team",
+        "therapy": "{therapySessionsRemaining} Therapie Sitzungen",
+        "courses": "Selbstgeführte Kurse"
       },
       "form": {
-        "codeLabel": "Access code",
-        "submitLabel": "Apply code",
-        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "codeLabel": "Zugangscode",
+        "submitLabel": "Code anwenden",
+        "assignPartnerAccessError": "Es ist ein Fehler bei der Eingabe des Zugangscodes in Deinem Konto aufgetreten. Versuch es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
         "codeErrors": {
-          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-          "expired": "This code has expired. Get in touch with the partner's team.",
-          "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner.",
-          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+          "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
+          "expired": "Dieser Code ist abgelaufen. Kontaktiere bitte das Team der Partnerorganisation. ",
+          "invalid": "Dein Zugangscode scheint ungültig zu sein. Überprüfe auf Tippfehler oder setz Dich mit der Partnerorganisation in Verbindung. ",
+          "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. "
         }
       }
     },
     "aboutYou": {
-      "title": "About you",
-      "header": "Help us understand",
-      "description": "These questions help us understand who is using Bloom and what kinds of support they need from us.",
-      "titleA": "What you want from Bloom",
-      "descriptionALine1": "Thank you for your answers so far!",
-      "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
-      "goToCourses": "Skip to courses",
+      "title": "Über Dich",
+      "header": "Hilf uns, zu verstehen",
+      "description": "Diese Fragen helfen uns zu verstehen, wer Bloom nutzt, und welche Art von Unterstützung sie von uns brauchen. ",
+      "titleA": "Was Du von Bloom erwartest",
+      "descriptionALine1": "Vielen Dank für Deine bisherigen Antworten!",
+      "descriptionALine2": "Von Dir als neue:r Nutzer:in möchten wir gerne wissen, wie es Dir geht, bevor du unser Angebot nutzt. Das hilft uns dabei, die Wirksamkeit von Bloom für Überlebende besser zu verstehen, damit wir uns auf die richtigen Aspekte fokussieren können. ",
+      "goToCourses": "Zu den Kursen springen",
       "demographicForm": {
-        "genderLabel": "What is your gender identity?",
-        "genderHelpText": "We are built for people with a range of gender identities, knowing that each experiences gender based violence differently. Sharing your gender will help us understand who we are designing for.",
-        "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
-        "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
+        "genderLabel": "Was ist Deine Geschlechtsidentität?",
+        "genderHelpText": "Bloom ist für Menschen mit diversen Geschlechteridentitäten konzipiert, da wir wissen, dass Erfahrungen von geschlechtsspezifischer Gewalt variieren. Die Angabe Deiner Geschlechtsidentität hilft uns, zu verstehen, für wen wir das Angebot entwickeln. ",
+        "neurodivergentLabel": "Würdest Du Dich selbst als neurodivergent bezeichnen?",
+        "neurodivergentHelpText": "Wir gestalten unser Angebot inklusiv. Deshalb ist es hilfreich, wenn wir Feedback von neurodivergenten Menschen erhalten. ",
         "neurodivergentLabels": {
-          "1": "Yes",
-          "2": "No",
-          "3": "Not sure"
+          "1": "Ja",
+          "2": "Nein",
+          "3": "Nicht sicher"
         },
-        "raceEthnNatnLabel": "How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.",
-        "raceEthnNatnHelpText": "We know that people's experiences of race and ethnicity vary widely based on where they live, so write what you feel best describes you personally.",
-        "countryLabel": "What country do you live in right now?",
-        "countryHelpText": "This will help us understand where survivors are accessing our services from.",
-        "ageLabel": "What is your age group?",
+        "raceEthnNatnLabel": "Wie würdest du deine ethnische Zugehörigkeit und Nationalität beschreiben? Z.B. Weiß lateinamerikanisch und aus Mexiko oder Tamil aus Indien. ",
+        "raceEthnNatnHelpText": "Wir wissen, dass die Erfahrungen von Menschen bezüglich Rassifizierung und Ethnizität sehr unterschiedlich sein können, je nachdem, wo sie leben. Schreibe, was auf Dich persönlich am Besten zutrifft. ",
+        "countryLabel": "In welchem Land lebst Du zur Zeit?",
+        "countryHelpText": "Dies hilft uns zu verstehen, von wo aus Überlebende unser Angebot nutzen",
+        "ageLabel": "Was ist Deine Altersgruppe?",
         "ageLabels": {
-          "1": "Under 16",
+          "1": "Unter 16",
           "2": "16-25",
           "3": "25-35",
           "4": "35-45",
           "5": "45-55",
           "6": "55+",
-          "7": "Prefer not to say"
+          "7": "Lieber nicht sagen"
         },
-        "submitLabel": "Submit",
+        "submitLabel": "Absenden",
         "codeErrors": {}
       },
       "baseForm": {
-        "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
-        "scaleDescriptionLine2": "1 = strongly disagree, 10 = strongly agree",
+        "scaleDescriptionLine1": "Bitte bewerte, inwieweit Du folgenden Aussagen zustimmst:",
+        "scaleDescriptionLine2": "1 = stimme überhaupt nicht zu, 10 = stimme voll und ganz zu",
         "scaleLabels": {
-          "Q1": "I understand how the trauma I experienced has affected my mind, body and emotions",
-          "Q2": "I know that there are coping mechanisms that don’t help me in the long term, and that feeling drawn to these can be a normal response to trauma ",
-          "Q3": "I know that it takes time, energy and patience to heal",
-          "Q4": "I’m committed to giving myself the attention that I need to heal",
-          "Q5": "I have found the things that make me feel good, and make time for them in my routine",
-          "Q6": "I understand that part of healing from trauma is dealing with triggers",
-          "Q7": "I understand that what makes make me feel safe or threatened is unique to me",
-          "Q8": "I can anticipate and cope with triggering moments, places or times of year"
+          "Q1": "Ich verstehe, inwiefern das Trauma, das ich erlebt habe, meine Psyche, meinen Körper und meine Emotionen beeinflusst hat",
+          "Q2": "Ich weiß, dass es Bewältigungsstrategien gibt, die mir langfristig nicht helfen, und dass es eine normale Reaktion auf ein Trauma sein kann, sich zu diesen hingezogen zu fühlen",
+          "Q3": "Ich weiß, dass es Zeit, Energie und Geduld braucht, um zu heilen",
+          "Q4": "Ich bin entschlossen, mir selbst die Aufmerksamkeit zu schenken, die ich zum Heilen brauche",
+          "Q5": "Ich habe Dinge gefunden, die mir ein gutes Gefühl geben, und nehme mir Zeit dafür in meinem Tagesablauf",
+          "Q6": "Ich verstehe, dass zur Heilung eines Traumas auch der Umgang mit Triggern gehört",
+          "Q7": "Ich verstehe, dass es individuell ist, was mir ein sicheres oder bedrohliches Gefühl gibt",
+          "Q8": "Ich kann triggernde Momente, Orte oder Zeitpunkte im Jahr vorhersehen und damit umgehen"
         },
-        "submitLabel": "Complete"
+        "submitLabel": "Vollständig"
       },
       "setAForm": {
-        "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?"
+        "hopesLabel": "Was ist eine Sache, die du hoffst, durch Bloom verstehen oder tun zu können?"
       }
     }
   }

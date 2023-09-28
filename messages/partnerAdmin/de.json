@@ -1,28 +1,28 @@
 {
   "PartnerAdmin": {
     "createAccessCode": {
-      "title": "Create access code",
-      "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
-      "courseAccess": "Access to courses only",
-      "liveChatAccess": "Access to courses and 1:1 chat",
-      "therapyAccess": "Access to courses, 1:1 chat and six therapy sessions",
-      "resultLink": "Please tell the user to go to the relevant link where they can register using their email address.",
-      "resultCode": "Once registered, they can click on the account icon, choose the `Apply a code` option and use the following code: <partnerAccessCode></partnerAccessCode>",
+      "title": "Zugangscode erstellen",
+      "introduction": "Benutze jedes Mal diese Formular, wenn du einen Zugangscode erstellen willst um einer Person einen Zugang zu Bloom zu geben.",
+      "courseAccess": "Zugang nur zu den Kursen",
+      "liveChatAccess": "Zugang zu Kursen und 1:1 Chat",
+      "therapyAccess": "Zugang zu Kursen, 1:1 Chat und sechs Therapie Sessions.",
+      "resultLink": "Bitte weise die User darauf hin, dass sie sich über den entsprechenden Link mit ihrer Email-Adresse anmelden können. ",
+      "resultCode": "Nach der Registrierung, können sie auf das Konto-Symbol klicken und die Option \"Code anwenden\" auswählen und folgenden Code verwenden: <partnerAccessCode></partnerAccessCode>",
       "form": {
-        "featuresLabel": "Select support type offered to this user",
-        "featureCoursesLabel": "Courses only",
-        "featureLiveChatLabel": "Courses and 1:1 chat",
-        "featureTherapyLabel": "Courses, 1:1 chat and six therapy sessions",
-        "reset": "Create another code",
+        "featuresLabel": "Wähle die Art der Unterstützung für diesen User",
+        "featureCoursesLabel": "Nur Kurse",
+        "featureLiveChatLabel": "Kurse und 1:1 Chat",
+        "featureTherapyLabel": "Kurse, 1:1 Chat und sechs Therapie Sitzungen",
+        "reset": "Weiteren Code erstellen",
         "errors": {
-          "createPartnerAccessError": "There was an error creating the access code. Try again or message the Bloom team.",
-          "featureRequired": "Select a support type before creating an access code"
+          "createPartnerAccessError": "Beim Erstellen des Zugangscodes ist ein Fehler aufgetreten. Versuche es erneut oder kontaktiere das Bloom-Team.",
+          "featureRequired": "Wähle vor Erstellen eines Zugangscodes eine Unterstützungsart aus"
         }
       }
     },
     "accessGuard": {
-      "title": "Access required",
-      "introduction": "Your account does not include access to partner pages. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+      "title": "Zugriffsrechte erforderlich",
+      "introduction": "Dein Konto beinhaltet keinen Zugriff zu den Seiten der Partnerorganisationen. Sollte Dir das nicht richtig erscheinen, <contactLink>kontaktiere das Bloom-Team</contactLink>."
     }
   }
 }

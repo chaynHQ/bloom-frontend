@@ -1,23 +1,23 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "We send messages to your Whatsapp number.",
-      "step2": "The messages are sent twice a week, on Wednesdays and Sundays.",
-      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
+      "step1": "Wir schicken Nachrichten an Deine WhatsApp-Nummer. ",
+      "step2": "Die Nachrichten werden zweimal pro Woche verschickt, mittwochs und sonntags. ",
+      "step3": "Wenn Du Deine Meinung änderst, kannst Du Dich jederzeit abmelden oder neu anmelden. "
     },
     "form": {
-      "subscribeTitle": "Subscribe to Notes from Bloom",
-      "subscribe": "Subscribe",
-      "phonenumber": "Phone number",
-      "unsubscribeTitle": "Manage your subscription",
-      "unsubscribe": "Unsubscribe",
+      "subscribeTitle": "Notes von Bloom abonnieren",
+      "subscribe": "Abonnieren",
+      "phonenumber": "Telefonnummer",
+      "unsubscribeTitle": "Abonnement verwalten",
+      "unsubscribe": "Abmelden",
       "subscribeErrors": {
-        "invalidNumber": "Your phone number appears to be invalid. Please fix any errors and try again.",
-        "internal": "There was an error subscribing to Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-        "alreadyExists": "A whatsapp subscription already exists for your user. Please <contactLink>message the Bloom team</contactLink> if you think this is an error."
+        "invalidNumber": "Deine Telefonnummer scheint ungültig zu sein. Bitte behebe alle Fehler und versuche es erneut. ",
+        "internal": "Es ist ein Fehler beim abonnieren von WhatsApp aufgetreten. Versuch es später nochmal und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt. ",
+        "alreadyExists": "Für dieses Konto existiert bereits ein WhatsApp Abonnement. Bitte <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn Du glaubst, hier liegt ein Fehler vor. "
       },
       "unsubscribeErrors": {
-        "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "internal": "Es ist ein Fehler beim Abmelden von WhatsApp aufgetreten. Versuch es später erneut und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt. "
       }
     }
   }
