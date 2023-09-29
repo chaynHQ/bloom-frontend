@@ -1,19 +1,19 @@
 {
   "Admin": {
-    "title": "Admin dashboard",
+    "title": "Admin Dashboard",
     "accessGuard": {
-      "title": "Access required",
-      "introduction": "Your account does not include access to these pages."
+      "title": "Zugriffsrechte erforderlich",
+      "introduction": "Dein Konto beinhaltet keinen Zugriff auf diese Seiten."
     },
     "createPartnerAdmin": {
-      "title": "Create a partner admin",
-      "partnerNameLabel": "Partner name",
-      "submit": "Create partner admin",
-      "successDescription": "Partner Admin created! Email them to say they have an account and will need to use the 'Forgot password' flow to choose a password and be able to login for the first time.",
-      "emailAddressLabel": "Email address",
+      "title": "Partnerschafts-Admin anlegen",
+      "partnerNameLabel": "Partnerorganisation",
+      "submit": "Partnerschafts-Admin anlegen",
+      "successDescription": "Partnerschafts-Admin erstellt! Informiere per Mail darüber, dass das Konto erstellt wurde und beim der ersten Anmeldung die \"Passwort vergessen\" Funktion ausgewählt werden muss, um ein eigenes Passwort zu wählen. ",
+      "emailAddressLabel": "Email-Adresse",
       "nameLabel": "Name",
-      "reset": "Create another admin’",
-      "error": "Error creating partner admin: "
+      "reset": "Weiteren Admin anlegen'",
+      "error": "Fehler beim Anlegen eines Partnerschafts-Admins"
     }
   }
 }
