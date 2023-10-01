@@ -1,12 +1,12 @@
 # Bloom
 
-Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events.
-
-If you'd like to help Bloom by tackling any of our open Github issues, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call.
+Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events. 💖
 
 ## Get involved
 
-Bloom is created by Chayn, global nonprofit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence. If contributing to digital public goods interThere are lots of ways to get involved, you can apply to join our volunteer team using [this form](https://docs.google.com/forms/d/1ndS90H-riziKALUFu2CAtp3BRi4RkDXroZtXv-Y4QJ8/edit?usp=sharing), [consider donating](https://www.paypal.me/chaynhq), make an open-source contribution here on GitHub, and support us on social media:
+If you would like to help Bloom and receive special access to our organization and volunteer opportunities, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), making an open-source contribution here on GitHub, and supporting us on social media! 
+
+Our social medias:
 
 Website - [Chayn](https://www.chayn.co/)
 
@@ -15,6 +15,8 @@ Twitter - [@ChaynHQ](https://twitter.com/ChaynHQ)
 Instagram - [@chaynhq](https://www.instagram.com/chaynhq/)
 
 Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
+
+LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
 
 # Bloom Frontend
 
