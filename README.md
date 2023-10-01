@@ -6,7 +6,7 @@ If you'd like to help Bloom by tackling any of our open Github issues, please ge
 
 ## Get involved
 
-Bloom is created by Chayn, global nonprofit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence. There are lots of ways to get involved, from joining our volunteer team to [donating](https://www.paypal.me/chaynhq) or supporting us on social media.
+Bloom is created by Chayn, global nonprofit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence. If contributing to digital public goods interThere are lots of ways to get involved, you can apply to join our volunteer team using [this form](https://docs.google.com/forms/d/1ndS90H-riziKALUFu2CAtp3BRi4RkDXroZtXv-Y4QJ8/edit?usp=sharing), [consider donating](https://www.paypal.me/chaynhq), make an open-source contribution here on GitHub, and support us on social media:
 
 Website - [Chayn](https://www.chayn.co/)
 
@@ -18,7 +18,7 @@ Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
 
 # Bloom Frontend
 
-[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml)
+[![Bloom Frontend CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-prod.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-prod.yml)
 
 **Currently in active development**
 
@@ -36,8 +36,6 @@ Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
 - [Rollbar](https://rollbar.com/) - Error reporting
 - [Heroku](https://heroku.com/) - Build, deploy and operate staging and production apps
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
-
-See [integrations](##Integrations) for more details
 
 ## Local development
 
@@ -58,7 +56,10 @@ yarn
 
 ### Create .env.local file
 
-Include the following environment variables in a .env.local file
+Include the following environment variables in a .env.local file.
+
+You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth), [Simplybook](https://simplybook.me/en/), [Crisp](https://crisp.chat/en/), and [Storyblok](https://www.storyblok.com/).
+If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
 
 ```bash
 NEXT_PUBLIC_ENV=local
@@ -75,13 +76,14 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL=
 NEXT_PUBLIC_CRISP_WEBSITE_ID=
-NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=
-NEXT_PUBLIC_HOTJAR_ID=
+NEXT_PUBLIC_STORYBLOK_TOKEN=
+
+NEXT_PUBLIC_HOTJAR_ID= # OPTIONAL // for UX analytics
+NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # OPTIONAL // for user data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL // for user data form webhooks
 ```
 
-If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
-
-**NB: When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
+**NB: When adding a new environment variable, it may also need to be added the [ci.yml](ci.yml) file**
 
 ### Environment variables
 
@@ -105,16 +107,16 @@ yarn dev
 
 Go to [http://localhost:3000](http://localhost:3000)
 
-### Run unit tests
+### Run tests
 
 ```bash
-yarn test:unit
+yarn test
 ```
 
 To have your unit tests running in the background as you change code:
 
 ```bash
-yarn test:unit:watch
+yarn test:watch
 ```
 
 ### Formatting and linting
@@ -145,7 +147,7 @@ yarn build
 
 ### Public Bloom
 
-Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy. 
+Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy.
 
 ### Partner access and multi tenancy
 
@@ -193,7 +195,7 @@ The storyblok courses folder/page structure was based around url paths and the n
 
 Course and Session are Storyblok _content types_ with defined schemas that can then be processed in the custom pages, e.g. `story.content.field_name`. Course includes a `weeks` field that links/relates to the sessions in each week of the course. Session includes a `Course` field that links/relates back to the course - it's not ideal to include this field but it makes it easy to load the course data with the session directly. The middle `weeks` relationship between Courses and Sessions added some complexity that discouraged Storyblok's recommended patterns, e.g. having Courses and Sessions as top level folders, rather than nesting folders that contain several content types.
 
-The image based abuse course has its own specific course and session page as this course required a different structure with multiple bonus content blocks. 
+The image based abuse course has its own specific course and session page as this course required a different structure with multiple bonus content blocks.
 
 **Dynamic components**
 
