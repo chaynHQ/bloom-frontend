@@ -41,6 +41,8 @@ LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
 
 ## Local development
 
+To make a contribution, please read our Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md)
+
 ### Prerequisites
 
 - NodeJS v16.x
