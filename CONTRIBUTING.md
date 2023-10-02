@@ -66,7 +66,7 @@ Just no spamming (such as unwanted, minor documentation and HTML/CSS changes) pl
 
    - Write brief comments explaining your code changes.
    - Keep commits small, remember a PR can have multiple commits!
-   - Check that your tests pass.
+   - Check that your tests pass. **Note: Some tests may need to be ran multiple times before they pass, thank you for your patience as we are upgrading our app's performance.**
    - Run our linters to ensure uniform code formatting.
    - Ensure that no secret tokens are being pushed to GitHub! Files containing secrets should be listed in `.gitignore`
    - Write a [meaningful commit message](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/).
