@@ -50,7 +50,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   extraOptions,
 ) => {
   let result = await baseQuery(args, api, extraOptions);
-
   if (result.error && result.error.status === 401) {
     // force reset token
     const token = await auth.currentUser?.getIdToken(true);
@@ -74,6 +73,15 @@ export const api = createApi({
           url: 'user/me',
           method: 'POST',
           body,
+        };
+      },
+    }),
+    getUsers: builder.query({
+      query(params: { searchCriteria: string }) {
+        return {
+          url: 'user',
+          method: 'GET',
+          params,
         };
       },
     }),
@@ -183,6 +191,24 @@ export const api = createApi({
         body: { cancelledAt },
       }),
     }),
+    getUsersWithPartnerAccessCodes: builder.query({
+      query(body) {
+        return {
+          url: 'partner-access/users',
+          method: 'GET',
+          params: body,
+        };
+      },
+    }),
+    updatePartnerAccess: builder.mutation<string, { id: string; therapySessionsRemaining: number }>(
+      {
+        query: ({ id, therapySessionsRemaining }) => ({
+          url: `partner-access/${id}`,
+          method: 'PATCH',
+          body: { therapySessionsRemaining },
+        }),
+      },
+    ),
   }),
 });
 
@@ -200,4 +226,6 @@ export const {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
+  useGetUsersWithPartnerAccessCodesQuery,
+  useUpdatePartnerAccessMutation,
 } = api;

@@ -12,8 +12,18 @@
       "successDescription": "Partnerschafts-Admin erstellt! Informiere per Mail darüber, dass das Konto erstellt wurde und beim der ersten Anmeldung die \"Passwort vergessen\" Funktion ausgewählt werden muss, um ein eigenes Passwort zu wählen. ",
       "emailAddressLabel": "Email-Adresse",
       "nameLabel": "Name",
-      "reset": "Weiteren Admin anlegen'",
-      "error": "Fehler beim Anlegen eines Partnerschafts-Admins"
+      "reset": "Weiteren Admin anlegen",
+      "error": "Fehler beim Anlegen eines Partnerschafts-Admins: "
+    },
+    "updateTherapy": {
+      "title": "Update therapy sessions",
+      "emailLabel": "Type a user's email address",
+      "therapySessionsRedeemed": "Number of therapy sessions redeemed",
+      "therapySessionsTotal": "Total number of therapy sessions",
+      "submit": "Update therapy sessions",
+      "successDescription": "User therapy sessions updated!",
+      "error": "Error updating therapy sessions: ",
+      "reset": "Update another user"
     }
   }
 }
