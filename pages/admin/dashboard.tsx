@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import { RootState } from '../../app/store';
 import CreatePartnerAdminForm from '../../components/forms/CreatePartnerAdminForm';
+import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -20,6 +21,7 @@ const containerStyle = {
 
 const cardStyle = {
   width: { xs: '100%', md: '60%' },
+  margin: { xs: '10px' },
 } as const;
 
 const Dashboard: NextPage = () => {
@@ -55,6 +57,21 @@ const Dashboard: NextPage = () => {
               }}
             ></Typography>
             <CreatePartnerAdminForm />
+          </CardContent>
+        </Card>
+        <Card sx={cardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t('updateTherapy.title')}
+            </Typography>
+            <Typography
+              sx={{
+                '&:last-of-type': {
+                  marginBottom: '1em',
+                },
+              }}
+            ></Typography>
+            <UpdateTherapyAdminForm />
           </CardContent>
         </Card>
       </Container>
