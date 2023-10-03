@@ -217,6 +217,5 @@ export const {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
-  useGetUsersWithPartnerAccessCodesQuery,
   useUpdatePartnerAccessMutation,
 } = api;
