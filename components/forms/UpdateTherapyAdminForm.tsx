@@ -64,6 +64,7 @@ const UpdateTherapyAdminForm = () => {
           {
             searchCriteria: JSON.stringify(searchCritiera),
           },
+          // We don't want this request cached as a user might use this request to check their updates have worked on the form
           { forceRefetch: true },
         ),
       );

@@ -191,15 +191,6 @@ export const api = createApi({
         body: { cancelledAt },
       }),
     }),
-    getUsersWithPartnerAccessCodes: builder.query({
-      query(body) {
-        return {
-          url: 'partner-access/users',
-          method: 'GET',
-          params: body,
-        };
-      },
-    }),
     updatePartnerAccess: builder.mutation<string, { id: string; therapySessionsRemaining: number }>(
       {
         query: ({ id, therapySessionsRemaining }) => ({

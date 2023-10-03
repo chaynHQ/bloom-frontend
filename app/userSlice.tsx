@@ -21,7 +21,8 @@ export interface User {
   activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
 }
-// GetUserDto is what
+
+// GetUserDto is the response format of the Get User endpoint
 export interface GetUserDto {
   user: {
     id: string;
