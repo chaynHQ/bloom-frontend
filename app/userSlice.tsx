@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
+import { PartnerAccesses } from './partnerAccessSlice';
 import type { RootState } from './store';
 
 export interface User {
@@ -19,6 +20,24 @@ export interface User {
   isSuperAdmin: boolean;
   activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
+}
+
+// GetUserDto is the response format of the Get User endpoint
+export interface GetUserDto {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
+    firebaseUid?: string | null;
+    contactPermission?: boolean;
+    crispTokenId?: string | null;
+    signUpLanguage?: LANGUAGES | null;
+    isSuperAdmin?: boolean;
+    activeSubscriptions?: ActiveSubscription[];
+  };
+  partnerAccesses: PartnerAccesses;
 }
 
 export interface Subscription {

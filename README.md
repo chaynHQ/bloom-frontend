@@ -1,12 +1,12 @@
 # Bloom
 
-Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events.
-
-If you'd like to help Bloom by tackling any of our open Github issues, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call.
+Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events. 💖
 
 ## Get involved
 
-Bloom is created by Chayn, global nonprofit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence. There are lots of ways to get involved, from joining our volunteer team to [donating](https://www.paypal.me/chaynhq) or supporting us on social media.
+If you would like to help Bloom and receive special access to our organization and volunteer opportunities, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), making an open-source contribution here on GitHub, and supporting us on social media! 
+
+Our social medias:
 
 Website - [Chayn](https://www.chayn.co/)
 
@@ -16,9 +16,11 @@ Instagram - [@chaynhq](https://www.instagram.com/chaynhq/)
 
 Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
 
+LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
+
 # Bloom Frontend
 
-[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/ci.yml)
+[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml)
 
 **Currently in active development**
 
@@ -37,9 +39,9 @@ Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
 - [Heroku](https://heroku.com/) - Build, deploy and operate staging and production apps
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
 
-See [integrations](##Integrations) for more details
-
 ## Local development
+
+To make a contribution, please read our Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 ### Prerequisites
 
@@ -58,7 +60,10 @@ yarn
 
 ### Create .env.local file
 
-Include the following environment variables in a .env.local file
+Include the following environment variables in a .env.local file.
+
+You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth), [Simplybook](https://simplybook.me/en/), [Crisp](https://crisp.chat/en/), and [Storyblok](https://www.storyblok.com/).
+If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
 
 ```bash
 NEXT_PUBLIC_ENV=local
@@ -75,13 +80,14 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL=
 NEXT_PUBLIC_CRISP_WEBSITE_ID=
-NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN=
-NEXT_PUBLIC_HOTJAR_ID=
+NEXT_PUBLIC_STORYBLOK_TOKEN=
+
+NEXT_PUBLIC_HOTJAR_ID= # OPTIONAL // for UX analytics
+NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # OPTIONAL // for user data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL // for user data form webhooks
 ```
 
-If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
-
-**NB: When adding a new environment variable, it may also need to be added to github secrets and the [ci.yml](ci.yml) file**
+**NB: When adding a new environment variable, it may also need to be added the [ci.yml](ci.yml) file**
 
 ### Environment variables
 
@@ -105,16 +111,16 @@ yarn dev
 
 Go to [http://localhost:3000](http://localhost:3000)
 
-### Run unit tests
+### Run tests
 
 ```bash
-yarn test:unit
+yarn test
 ```
 
 To have your unit tests running in the background as you change code:
 
 ```bash
-yarn test:unit:watch
+yarn test:watch
 ```
 
 ### Formatting and linting
@@ -140,69 +146,6 @@ For testing the production build. This will be run automatically during deployme
 ```bash
 yarn build
 ```
-
-## Key concepts
-
-### Public Bloom
-
-Anyone can come directly to the site and register as a _public_ Bloom user with access to selected courses. Self guided/static courses can be completed at any time by a public user, without any extra features e.g. therapy. 
-
-### Partner access and multi tenancy
-
-Alongside _public_ Bloom, we also have `Partners` (e.g. Bumble) which offer their users a Bloom `PartnerAccess` with additional features to public Bloom. The additional features include therapy, 1-1 chat and extra courses. A `PartnerAccess` is created by a `PartnerAdmin` and has a unique code for the user to apply when registering for an account, or afterwards on the `/apply-code` page. See [database schemas](https://github.com/chaynHQ/bloom-backend#database-models) for more details.
-
-A user can have 0 (public) or many partners and the app dynamically handles this. Partner branding and tags are applied across the app (e.g. in the footer) and some pages are custom to the partner e.g. [welcome/[partnerName].tsx](pages/welcome/[partnerName].tsx).
-
-### Features
-
-**Bloom courses** include a series of sessions with steps for the user to complete, i.e. watch a video, complete an activity, optional bonus content. The sessions can be marked as complete by the user. Courses available are dependent on the user's partners and their selected courses.
-
-**Bloom therapy** is available to some users dependent on their partner access, with a number of therapy sessions available to book via the integrated Simplybook booking widget. Therapy is offered in multiple languages and currently users can select their preferred language and therapist. Webhooks are triggered by zapier when a booking is created/cancelled, to update the user's available therapy sessions remaining in the database.
-
-**Bloom 1-1 chat** is currently available to all users. Users can send Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with 1-1 chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
-
-**Notes from Bloom** is currently available all users. Users can sign up for whatsapp messages twice a week. Message content can range from affirmational quotes, videos or snapshot of course content. Respond.io is used to hold contact information and to schedule messages. Contact information is also held in the database. As there was not the budget to use the Respond.io plan which allows for a direct integration, a Zapier workaround is used where bloom backend triggers a Zapier webhook which will then add / delete a contact from respond.io.
-
-### User types
-
-There are several user types with different features enabled - [guards](guards) are used to check and block access to pages based on the user data in state.
-
-**User** - a standard user for the features mentioned above. A user can be a _public_ user only OR have partner access(es) with extra features enabled by different partners.
-
-**Partner admin user** - a partner team member who uses the app to complete Bloom admin tasks such as creating new partner access codes. Partner admin pages are under `/partner-admin` and act as a sub site.
-
-**Super admin user** - this is a chayn user who can create partner admins. Super admins can view this dashboard via `admin/dashboard`.
-
-### State management - Redux Toolkit
-
-RTK is used to store state, mostly related to the user and populated by backend api calls. The `user/me` endpoint populates the `User`, `Courses`, `PartnerAccess` and `ParterAdmin` state on login or app refresh, to be used across the app to manage access and features displayed. State is also updated following actions/apis calls - we use [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) to fetch and cache data into state, see `app/api.ts`. The state slices generally copy the [database schemas](https://github.com/chaynHQ/bloom-backend#database-models). Note the `Courses` slice does not act as a cache for storing retrieved storyblok courses, instead it stores the user's courses progress, i.e. the backend `CourseUser` table.
-
-### Internationalisation
-
-Multiple languages are supported across the app. For static text, all strings are wrapped and translated using [next-intl](https://github.com/amannn/next-intl). For CMS Storyblok content, each field in a story or bloks is translatable and is returned based on the requested locale. Next.js supports i18n routing and Storyblok has an extension to support translated routes, however this is not currently used.
-
-Integrations are chosen with internationalisation as a priority, with Crisp and Simplybook supporting multiple timezones and languages.
-
-### Storyblok CMS
-
-Content is delivered by [Storyblok](https://www.storyblok.com/), a headless CMS that allows the team to edit and preview content as it would appear in the app, before publishing changes. Some pages are fully flexible, using [pages/[slug].tsx](/pages/[slug].tsx) to dynamically render components. Stricter pages such as Course and Session pages, or pages with a mix of custom functionality and changing content, are handled in custom pages and components e.g. [/courses/[slug].tsx](pages/courses/[slug].tsx).
-
-**Courses structure**
-
-The storyblok courses folder/page structure was based around url paths and the need for weeks/sessions to be nested inside a course. The pattern is Courses (folder) -> Course name (folder) -> Course overview (root page) + Session (pages). This allows us to group and order sessions under the relevant course, with the url path `courses/course-name/session-name`. The order of pages in Storyblok matters as it's used to order sessions within a week.
-
-Course and Session are Storyblok _content types_ with defined schemas that can then be processed in the custom pages, e.g. `story.content.field_name`. Course includes a `weeks` field that links/relates to the sessions in each week of the course. Session includes a `Course` field that links/relates back to the course - it's not ideal to include this field but it makes it easy to load the course data with the session directly. The middle `weeks` relationship between Courses and Sessions added some complexity that discouraged Storyblok's recommended patterns, e.g. having Courses and Sessions as top level folders, rather than nesting folders that contain several content types.
-
-The image based abuse course has its own specific course and session page as this course required a different structure with multiple bonus content blocks. 
-
-**Dynamic components**
-
-Storyblok components allow the team to add richtext, images, videos, page sections, rows etc, using our custom schemas that include fields for styles e.g. the alignment or color of the content. These Storyblok components are then then mapped to our React components, e.g. [StoryblokRow.tsx](components/storyblok/StoryblokRow.tsx) [StoryblokImage.tsx](components/Storyblok/StoryblokImage.tsx), either in a custom page where we expect the field/component, or a dynamic page.
-
-**Dynamic pages**
-
-Dynamic pages allow the team to create new content pages in Storyblok e.g. `/about-topic`, without requiring developer work*. Our top level dynamic route [[slug].tsx](pages/[slug].tsx) allows new pages to be added, with an infinite number of [StoryblokPageSection.tsx](components/storyblok/StoryblokPageSection.tsx) with nested components. [DynamicComponent.tsx](components/storyblok/DynamicComponent.tsx) can also be used to dynamically render components on a page, where the storyblok field is of type `blocks` and we don't know which blocks to expect.
-*Note: If a page is to be public/unauthenticated, it must be added to `publicPaths` in [\_app.tsx](pages/_app.tsx).
 
 ## Cypress
 
