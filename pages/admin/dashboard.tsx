@@ -55,7 +55,9 @@ const Dashboard: NextPage = () => {
                   marginBottom: '1em',
                 },
               }}
-            ></Typography>
+            >
+              {t('createPartnerAdmin.description')}
+            </Typography>
             <CreatePartnerAdminForm />
           </CardContent>
         </Card>

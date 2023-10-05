@@ -1,18 +1,19 @@
 {
   "Admin": {
-    "title": "Admin dashboard",
+    "title": "Superadmin dashboard",
     "accessGuard": {
       "title": "Access required",
       "introduction": "Your account does not include access to these pages."
     },
     "createPartnerAdmin": {
-      "title": "Create a partner admin",
-      "partnerNameLabel": "Partner name",
-      "submit": "Create partner admin",
+      "title": "Create an admin account",
+      "description": "Admin accounts are able to generate therapy codes",
+      "partnerNameLabel": "Select the partner",
+      "submit": "Create admin account",
       "successDescription": "Partner Admin created! Email them to say they have an account and will need to use the 'Forgot password' flow to choose a password and be able to login for the first time.",
       "emailAddressLabel": "Email address",
       "nameLabel": "Name",
-      "reset": "Create another admin’",
+      "reset": "Create another admin",
       "error": "Error creating partner admin: "
     },
     "updateTherapy": {
