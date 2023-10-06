@@ -4,7 +4,7 @@ Bloom is a remote trauma support service from Chayn, a global charity supporting
 
 ## Get involved
 
-If you would like to help Bloom and receive special access to our organization and volunteer opportunities, please get in touch with us to express your interest in volunteering via [this form](https://forms.gle/qXfDdPgJxYwvMmVP7). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), making an open-source contribution here on GitHub, and supporting us on social media! 
+If you would like to help Chayn and receive special access to our organization and volunteer opportunities, please [visit our Getting Involved page](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), making an open-source contribution here on GitHub, and supporting us on social media! 
 
 Our social medias:
 
