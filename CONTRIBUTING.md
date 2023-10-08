@@ -6,7 +6,7 @@ We ❤️ our volunteers!
 
 While Chayn is hybrid between paid staff and volunteers now, we cherish our volunteers for helping to create Chayn and keep us going! We hope to give back more than our contributors give. Please do not hesitate to give us feedback, so we can learn how to make this experience better for you. 😊 You can include feedback in your pull request, GitHub issues / discussions, or [this anonymous form](https://forms.gle/17GQpeHc4G1Mgdf3A).
 
-**This guide below assumes you are an open-source contributor and NOT an official Chayn volunteer that has already completed the onboarding process. If you would like to become an official tech volunteer with Chayn, please [visit our Getting Involved page](https://www.notion.so/chayn/Get-involved-423c067536f3426a88005de68f0cab19?pvs=4). As an official Chayn volunteer, you will receive professional onboarding onto our platforms and more opportunities to volunteer outside of GitHub contributions!**
+**This guide below assumes you are an open-source contributor and NOT an official Chayn volunteer that has already completed the onboarding process. If you would like to become an official tech volunteer with Chayn, please [visit our Getting Involved Guide](https://www.notion.so/chayn/Get-involved-423c067536f3426a88005de68f0cab19?pvs=4). As an official Chayn volunteer, you will receive professional onboarding onto our platforms and more opportunities to volunteer outside of GitHub contributions!**
 
 Next, let's get started... 🎉
 
@@ -32,6 +32,8 @@ Just no spamming (such as unwanted, minor documentation and HTML/CSS changes) pl
 ## The Contribution Process:
 
 1. **Read the README and Code of Conduct:** To get an overview of the project, please read the project's [README](/README.md). Contributing means you have agreed to our [Code of Conduct](/CODE_OF_CONDUCT.md).
+
+   **Note: If you are making no-code changes in the README or any other markdown / text files, it may not be required to follow all of these steps. Instead, you may edit these files and make your changes directly in GitHub and submit a PR without setting up the environment variables and without requiring tests to pass in your fork.**
 
 2. **Create an issue or be assigned to an existing issue:**
 
