@@ -20,6 +20,8 @@ LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
 
 # Bloom Frontend
 
+[For a more detailed explanation of this project's key concepts and architecture, please visit the /docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs)
+
 [![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml)
 
 **Currently in active development**
