@@ -55,16 +55,18 @@ Just no spamming (such as unwanted, minor documentation and HTML/CSS changes) pl
 
      - We suggest starting with a `good first issue` to get comfortable with the codebase before moving on.
 
-   **Feel free to ask clarifying questions in the issues discussions at any point during your contribution! We are happy to help!**
+   **Please feel free to ask clarifying questions in the issues discussions at any point during your contribution!**
 
 3. **Fork the repo and create a new branch for your PR!**
 
-4. **Report progress and update your fork as needed:**
+    Please use a meaningful branch name, such as docs/add-social-links or feature/new-form. Look at the issue's labels for an idea on how to name your branch.
+
+5. **Report progress and update your fork as needed:**
 
    - If your issue is more complex, feel free to report your progress by commenting on the issue or ticking off checkboxes in the issue description!
    - If the original base repo is updated, it is recommended that you sync your fork with the base repo in order to prevent merge conflicts.
 
-5. **Commit and push your changes to your branch:**
+6. **Commit and push your changes to your branch:**
 
    - Write brief comments explaining your code changes.
    - Keep commits small, remember a PR can have multiple commits!
@@ -73,10 +75,10 @@ Just no spamming (such as unwanted, minor documentation and HTML/CSS changes) pl
    - Ensure that no secret tokens are being pushed to GitHub! Files containing secrets should be listed in `.gitignore`
    - Write a [meaningful commit message](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/).
 
-6. **Submit your PR:**
+7. **Submit your PR:**
 
    - Make sure to link your corresponding issue in your PR's description!
-   - Include detailed and concise explainations of the changes you made.
+   - Include detailed and concise explanations of the changes you made.
    - Include images in the description, if applicable.
    - Enable the checkbox to [allow maintainer edits](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so a maintainer can update the branch for a merge.
    - Be available for discussions that may arise and to make [suggested changes](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/incorporating-feedback-in-your-pull-request) that may be required before merging.
