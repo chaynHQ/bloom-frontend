@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { RootState } from '../../app/store';
-import { FeatureFlag } from '../../config/featureFlag';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -82,10 +81,6 @@ export default function LanguageMenu() {
       >
         {locales
           ?.filter((language) => language !== locale)
-          // TODO when German is ready for release, delete the german language filter
-          .filter((language) => {
-            return language === 'de' ? FeatureFlag.isGermanEnabled() : true;
-          })
           .map((language) => {
             const languageUppercase = language.toUpperCase();
             return (
