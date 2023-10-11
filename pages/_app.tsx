@@ -15,6 +15,7 @@ import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
+import HotjarStaticNPS from '../components/layout/HotjarStaticNPS';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
@@ -23,7 +24,9 @@ import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
+import '../styles/_hotjar.css';
 import '../styles/globals.css';
+import '../styles/hotjar.css';
 import theme from '../styles/theme';
 
 // For SSG compatibility with MUI
@@ -105,6 +108,7 @@ function MyApp(props: MyAppProps) {
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <ComponentWithGuard />
           <Footer />
+          <HotjarStaticNPS />
           <Consent />
         </ThemeProvider>
       </CacheProvider>
