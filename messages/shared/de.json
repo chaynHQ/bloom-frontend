@@ -3,7 +3,7 @@
     "bloom": "Bloom",
     "leaveSiteButton": "Seite verlassen",
     "footer": {
-      "chaynDescription": "Bloom wird Dir präsentiert von Chayn, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird, und für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
+      "chaynDescription": "Bloom wird Dir präsentiert von Chayn, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird und die für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
       "bloomLine1": "Entwickelt von CHAYN CIO.",
       "bloomLine2": "UK Charity Nummer: 1196098",
       "bumbleLine1": "In Kooperation mit",
@@ -66,7 +66,7 @@
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Überlebende:r",
     "cookieConsent": {
-      "cookieConsentExplainer": "Bitte erlaube analytische Cookies, damit wir Bloom verbessern können. Lies mehr darüber in",
+      "cookieConsentExplainer": "Bitte erlaube analytische Cookies, damit wir Bloom verbessern können. Lies mehr darüber in unserer",
       "cookieConsentPolicy": "Cookie-Richtlinie",
       "acceptLabel": "Cookies akzeptieren",
       "declineLabel": "Cookies ablehnen"
