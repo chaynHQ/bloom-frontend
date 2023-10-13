@@ -105,8 +105,8 @@ const Footer = () => {
 
           return (
             <Box pr="2em" key={`${partner.name}_footer`}>
-              <Link href={partner.website} sx={logoContainerStyle}>
-                <Image alt={tS(partner.logoAlt)} src={partner.logo} />
+              <Link href={partner.website} sx={logoContainerStyle} position="relative">
+                <Image fill={true} alt={tS(partner.logoAlt)} src={partner.logo} />
               </Link>
               <Typography variant="body2" component="p">
                 {tS(partner.footerLine1)}
