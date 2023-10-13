@@ -948,6 +948,14 @@
     "@formatjs/intl-localematcher" "0.2.21"
     tslib "^2.1.0"
 
+"@formatjs/ecma402-abstract@^1.11.4":
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.17.2.tgz#d197c6e26b9fd96ff7ba3b3a0cc2f25f1f2dcac3"
+  integrity sha512-k2mTh0m+IV1HRdU0xXM617tSQTi53tVR2muvYOsBeYcUgEAyxV1FOC7Qj279th3fBVQ+Dj6muvNJZcHSPNdbKg==
+  dependencies:
+    "@formatjs/intl-localematcher" "0.4.2"
+    tslib "^2.4.0"
+
 "@formatjs/fast-memoize@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@formatjs/fast-memoize/-/fast-memoize-1.2.0.tgz#1123bfcc5d21d761f15d8b1c32d10e1b6530355d"
@@ -978,6 +986,20 @@
   integrity sha512-JTJeLiNwexN4Gy0cMxoUPvJbKhXdnSuo5jPrDafEZpnDWlJ5VDYta8zUVVozO/pwzEmFVHEUpgiEDj+39L4oMg==
   dependencies:
     tslib "^2.1.0"
+
+"@formatjs/intl-localematcher@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.4.2.tgz#7e6e596dbaf2f0c5a7c22da5a01d5c55f4c37e9a"
+  integrity sha512-BGdtJFmaNJy5An/Zan4OId/yR9Ih1OojFjcduX/xOvq798OgWSyDtd6Qd5jqJXwJs1ipe4Fxu9+cshic5Ox2tA==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/intl-localematcher@^0.2.32":
+  version "0.2.32"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.2.32.tgz#00d4d307cd7d514b298e15a11a369b86c8933ec1"
+  integrity sha512-k/MEBstff4sttohyEpXxCmC3MqbUn9VvHGlZ8fauLzkbwXmVrEeyzS+4uhrvAk9DWU9/7otYWxyDox4nT/KVLQ==
+  dependencies:
+    tslib "^2.4.0"
 
 "@grpc/grpc-js@^1.3.2":
   version "1.4.4"
@@ -4955,12 +4977,19 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next-intl@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-2.0.5.tgz#af9d8247284bddc4fcd58755bf18bc604c45f0c6"
-  integrity sha512-5oY4kPDARPI4HkeTGGvPXVHB7FIWD8boEGiUwrQn2VHQdeNvbo7K5N3tX92BAz2yeYRxMo6/Gola+hJo9ZoqzQ==
+negotiator@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
+  integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
+
+next-intl@^2.20.0:
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-2.20.2.tgz#c7045fb9f5d915d01661cd81896db1e21c50d549"
+  integrity sha512-28IarFfRzuOjPo6fjAY2RMWVdeejuvzW7jzwVnBfHU6EB0GYwQPWIq1G5YK4gWb44R6dqnjjVDqphWrLwKE+Vw==
   dependencies:
-    use-intl "^2.0.5"
+    "@formatjs/intl-localematcher" "^0.2.32"
+    negotiator "^0.6.3"
+    use-intl "^2.20.2"
 
 next-redux-wrapper@^8.1.0:
   version "8.1.0"
@@ -6544,11 +6573,12 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-intl@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-2.0.5.tgz#436febab07dc3985be83be495e6cd64bfc0d62a5"
-  integrity sha512-akFJE2ElSxguSPRwnwk+Xj/f1Dv7i3i87UL9f9mspDeBzyNYU9iyyZHu6Nw+GFQXpHVuCXA5lBUANw03PiDyig==
+use-intl@^2.20.2:
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-2.20.2.tgz#f57c3ed83ad86ffe30f6c3af41236396363e2b37"
+  integrity sha512-Mvd16M2nAlXcOqm17jWCK69DmsSgn4h9dgvcZ6UbYAzdJQiuu5TFBVxd1f3xRRs2qXb94/E2j/1AcqzmN9TMtg==
   dependencies:
+    "@formatjs/ecma402-abstract" "^1.11.4"
     intl-messageformat "^9.3.18"
 
 use-sync-external-store@^1.0.0:
