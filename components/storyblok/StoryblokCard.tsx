@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@mui/material';
 import { Box } from '@mui/system';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';

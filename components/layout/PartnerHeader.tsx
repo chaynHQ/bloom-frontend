@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/legacy/image';
 import { rowStyle } from '../../styles/common';
 import UserResearchBanner from '../banner/UserResearchBanner';
 
