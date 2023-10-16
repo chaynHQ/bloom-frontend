@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
@@ -105,7 +105,7 @@ const Footer = () => {
 
           return (
             <Box pr="2em" key={`${partner.name}_footer`}>
-              <Link href={partner.website} sx={logoContainerStyle}>
+              <Link href={partner.website} sx={logoContainerStyle} position="relative">
                 <Image alt={tS(partner.logoAlt)} src={partner.logo} />
               </Link>
               <Typography variant="body2" component="p">

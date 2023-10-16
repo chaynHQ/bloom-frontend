@@ -30,12 +30,11 @@ const http = require('http');
 
 Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
-  cy.wait(2000);
-  cy.get('input[type="email"]', { timeout: 2000 }).click().type(email);
+  cy.wait(4000);
+  cy.get('input[type="email"]', { timeout: 10000 }).click().type(email);
   cy.get('#password').type(password);
   cy.get('button[type="submit"]').contains('Login').click();
-  cy.wait(1000);
-  cy.get('#password').should('not.exist');
+  cy.get('#password', { timeout: 10000 }).should('not.exist');
 });
 
 Cypress.Commands.add('uiLogout', (e) => {

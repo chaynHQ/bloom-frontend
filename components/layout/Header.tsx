@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/legacy/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
@@ -77,11 +77,7 @@ const Header = (props: HeaderProps) => {
   } = props;
 
   const tS = useTranslations('Shared');
-  const imageAltText = translatedImageAlt
-    ? translatedImageAlt
-    : imageAlt
-    ? tS(imageAlt)
-    : undefined;
+  const imageAltText = translatedImageAlt ? translatedImageAlt : imageAlt ? tS(imageAlt) : '';
 
   return (
     <Container sx={headerContainerStyles}>
