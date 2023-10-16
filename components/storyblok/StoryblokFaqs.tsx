@@ -4,7 +4,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';

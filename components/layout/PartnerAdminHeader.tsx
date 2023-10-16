@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/legacy/image';
 import * as React from 'react';
 
 const headerContainerStyles = {

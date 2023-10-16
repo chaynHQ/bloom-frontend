@@ -9,7 +9,7 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
