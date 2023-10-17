@@ -1,0 +1,137 @@
+/* Hotjar CUSTOM styles to override default hotjar CSS */
+
+._hj-Pbej5__styles__resetStyles * {
+  font-family: 'Open Sans', 'hotjar', 'sans-serif' !important;
+}
+
+._hj-PZjqr__styles__surveyBranding {
+  display: none !important;
+}
+
+._hj-widget-container ._hj-5vKq2__styles__surveyContainer._hj-IOc2u__styles__positionFixed {
+  width: 30rem;
+  max-width: 100vw;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+._hj-widget-container ._hj-kWRoL__styles__openStateToggle {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  height: 1.25rem;
+  top: -1.25rem;
+  right: 2rem;
+}
+
+._hj-widget-container ._hj-8Lgv6__styles__surveyActions {
+  min-height: unset !important;
+}
+
+._hj-widget-container ._hj-XpAaA__styles__surveyFooter {
+  border: none;
+  justify-content: center;
+}
+
+._hj-widget-container._hj-widget-theme-light ._hj-S9XKO__styles__surveyTitle,
+._hj-widget-container._hj-widget-theme-light ._hj-S9XKO__styles__surveyTitle > span {
+  font-weight: 500 !important;
+  font-size: 1rem;
+  line-height: 1.4 !important;
+}
+
+/* Primary button styles */
+
+._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton {
+  background: #ffbfa4 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  border: 1px solid #ffbfa4 !important;
+  border-radius: 100rem;
+  min-width: 5rem !important;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton:hover {
+  background: rgb(255, 203, 182) !important;
+}
+
+._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton:focus {
+  background: rgb(255, 203, 182) !important;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton[disabled] {
+  border-color: transparent !important;
+}
+._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton[disabled]:hover {
+  background: #f1f2f6 !important;
+}
+
+/* Input styles */
+
+._hj-widget-container ._hj-P-UNr__styles__inputField._hj-Wk\+wZ__styles__light {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+._hj-widget-container ._hj-P-UNr__styles__inputField._hj-Wk\+wZ__styles__light:hover {
+  border-color: #ffbfa4 !important;
+}
+
+._hj-widget-container ._hj-P-UNr__styles__inputField:focus {
+  outline: none !important;
+  border-color: #ffbfa4 !important;
+}
+
+/* Scales styles */
+
+._hj-widget-container ._hj-ILZpN__styles__scaleLabels {
+  padding-top: 0.5rem;
+}
+
+._hj-widget-container ._hj-CvVSY__styles__scaleOption span {
+  background: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2rem;
+  height: 2.125rem;
+  width: 2.125rem;
+  color: #ea0050;
+}
+
+._hj-widget-container ._hj-CvVSY__styles__scaleOption span:hover {
+  border-color: rgba(0, 0, 0, 0.28) !important;
+}
+
+._hj-widget-container ._hj-CvVSY__styles__scaleOption:focus-within span {
+  outline: none !important;
+  border-color: #ff976a !important;
+  border-width: 1.5px;
+}
+
+/* Thank you page styles */
+
+._hj-widget-container ._hj-tHiZi__styles__finalStep {
+  padding: 0.75rem 0.5rem 0 !important;
+}
+
+._hj-widget-container ._hj-2JZDx__styles__thankYouMessage._hj-iinO7__styles__withConsent {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 400 !important;
+}
+
+._hj-widget-container ._hj-cK\+L-__styles__consentMessage._hj-N21Xh__styles__light,
+._hj_feedback_container ._hj-cK\+L-__styles__consentMessage._hj-N21Xh__styles__light {
+  margin-bottom: 1.25rem;
+  color: #000000 !important;
+  font-size: 0.875rem;
+}
+
+._hj-cK\+L-__styles__consentMessage + div button:first-of-type {
+  background-color: transparent !important;
+  margin-right: 0.5rem;
+  box-shadow: none !important;
+}
+
+._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
+  padding: 0.5rem 0 1rem;
+}
