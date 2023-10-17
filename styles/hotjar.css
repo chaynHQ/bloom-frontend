@@ -1,6 +1,6 @@
 /* Hotjar CUSTOM styles to override default hotjar CSS */
 
-._hj-Pbej5__styles__resetStyles * {
+._hj-widget-container ._hj-Pbej5__styles__resetStyles * {
   font-family: 'Open Sans', 'hotjar', 'sans-serif' !important;
 }
 
@@ -51,7 +51,7 @@
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-XpAaA__styles__surveyFooter button {
   background: #ffbfa4 !important;
   color: #000000 !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   border: 1px solid #ffbfa4 !important;
   border-radius: 100rem !important;
   min-width: 5rem !important;
@@ -171,16 +171,14 @@
 ._hj-widget-container
   ._hj-s3UIi__styles__globalStyles
   ._hj-cK\+L-__styles__consentMessage
-  + div
-  button:first-of-type {
+  ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton,
+._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton {
   background-color: transparent !important;
   margin-right: 0.5rem !important;
   box-shadow: none !important;
+  border-color: #ffbfa4 !important;
 }
 
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  ._hj-s3UIi__styles__globalStyles
-  ._hj-hTm4\+__styles__answersContentWrapper {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
   padding: 0.5rem 0 1rem !important;
 }
