@@ -15,7 +15,6 @@ import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
-import HotjarStaticNPS from '../components/layout/HotjarStaticNPS';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
@@ -108,7 +107,6 @@ function MyApp(props: MyAppProps) {
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <ComponentWithGuard />
           <Footer />
-          <HotjarStaticNPS />
           <Consent />
         </ThemeProvider>
       </CacheProvider>
