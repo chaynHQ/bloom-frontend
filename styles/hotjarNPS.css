@@ -178,30 +178,23 @@
 
 ._hj-widget-container
   ._hj-s3UIi__styles__globalStyles
-  ._hj-cK\+L-__styles__consentMessage._hj-N21Xh__styles__light
   ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  ._hj_feedback_container
-  ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton {
+._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton {
   background-color: transparent !important;
+  color: #000000 !important;
   margin-right: 0 !important;
   box-shadow: none !important;
   border-color: #ffbfa4 !important;
+  border: 1px solid #ffbfa4 !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton:hover,
+._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton:hover {
+  box-shadow: none !important;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
   padding: 0.5rem 0 1rem !important;
-}
-
-._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0x3__styles__consentButton i,
-._hj-widget-container ._hj_feedback_container ._hj-B\+0x3__styles__consentButton i {
-  height: 20px;
-}
-
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  ._hj-B\+0x3__styles__consentButton
-  ._hj-dk3Fb__styles__iconX:before {
-  font-size: 1rem;
 }
