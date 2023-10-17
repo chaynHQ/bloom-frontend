@@ -24,7 +24,7 @@ import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
 import '../styles/globals.css';
-import '../styles/hotjar.css';
+import '../styles/hotjarNPS.css';
 import theme from '../styles/theme';
 
 // For SSG compatibility with MUI
