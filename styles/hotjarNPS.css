@@ -176,9 +176,7 @@
   font-size: 0.875rem !important;
 }
 
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton,
+._hj-widget-container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton,
 ._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton {
   background-color: transparent !important;
   color: #000000 !important;
