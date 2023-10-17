@@ -53,7 +53,7 @@ const UpdateTherapyAdminForm = () => {
       setAutocompleteSearchQueryIsLoading(true);
       const searchCritiera = {
         email: autocompleteSearchQuery,
-        partnerAccess: { userId: 'IS NOT NULL' },
+        partnerAccess: { featureTherapy: true },
         include: ['partnerAccess'],
         fields: ['partnerAccess'],
         limit: '10',
@@ -108,31 +108,37 @@ const UpdateTherapyAdminForm = () => {
       return;
     }
 
-    const partnerAccessCode = therapySessionUserData.partnerAccesses[0];
+    const partnerAccessCode = therapySessionUserData.partnerAccesses.find(
+      (pa) => pa.featureTherapy,
+    );
 
-    const updateTherapyResponse = await updateTherapySessions({
-      id: partnerAccessCode.id,
-      therapySessionsRemaining:
-        partnerAccessCode.therapySessionsRemaining + therapySessionAdjustmentValue,
-    });
-
-    if ('error' in updateTherapyResponse) {
-      const error = updateTherapyResponse.error;
-      const errorMessage = getErrorMessage(error);
-
-      logEvent(UPDATE_THERAPY_SESSIONS_ERROR, {
-        ...eventUserData,
-        error: errorMessage,
+    if (partnerAccessCode) {
+      const updateTherapyResponse = await updateTherapySessions({
+        id: partnerAccessCode.id,
+        therapySessionsRemaining:
+          partnerAccessCode.therapySessionsRemaining + therapySessionAdjustmentValue,
       });
-      rollbar.error(t('error') + errorMessage);
 
-      setFormError(t('error') + errorMessage);
+      if ('error' in updateTherapyResponse) {
+        const error = updateTherapyResponse.error;
+        const errorMessage = getErrorMessage(error);
+
+        logEvent(UPDATE_THERAPY_SESSIONS_ERROR, {
+          ...eventUserData,
+          error: errorMessage,
+        });
+        rollbar.error(t('error') + errorMessage);
+
+        setFormError(t('error') + errorMessage);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
-      return;
+      setFormSubmitSuccess(true);
+    } else {
+      setFormError('Error - User has no therapy access');
+      setLoading(false);
     }
-
-    setLoading(false);
-    setFormSubmitSuccess(true);
   };
 
   const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
