@@ -53,7 +53,7 @@ const UpdateTherapyAdminForm = () => {
       setAutocompleteSearchQueryIsLoading(true);
       const searchCritiera = {
         email: autocompleteSearchQuery,
-        partnerAccess: { featureTherapy: true },
+        partnerAccess: { featureTherapy: true, active: true },
         include: ['partnerAccess'],
         fields: ['partnerAccess'],
         limit: '10',
