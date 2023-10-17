@@ -2,9 +2,9 @@
 
 Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events. 💖
 
-## Get involved
+## Get Involved
 
-If you would like to help Chayn and receive special access to our organization and volunteer opportunities, please [visit our Getting Involved guide](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), starring this repo and making an open-source contribution here on GitHub, and supporting us on social media! 
+If you would like to help Chayn and receive special access to our organization and volunteer opportunities, please [visit our Getting Involved guide](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), starring this repo and making an open-source contribution here on GitHub, and supporting us on social media!
 
 Our social medias:
 
@@ -20,13 +20,22 @@ LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
 
 # Bloom Frontend
 
-[For a more detailed explanation of this project's key concepts and architecture, please visit the /docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs)
+For a more detailed explanation of this project's key concepts and architecture, please visit the [/docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs)
 
 [![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml)
 
 **Currently in active development**
 
-## Technologies used
+## How to Contribute
+
+To make a contribution, please follow these steps:
+
+1. Read our Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md).
+2. Before submitting a PR, please follow the [Git Flow and Deployment directions](#git-flow-and-deployment) at the end of this file.
+
+Happy coding! ⭐
+
+### Technologies Used
 
 - [React](https://reactjs.org/) - JavaScript library for building component based user interfaces
 - [Next.js](https://nextjs.org/) - React framework for hybrid static & server rendering, file-system routing and more
@@ -41,10 +50,6 @@ LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
 - [Heroku](https://heroku.com/) - Build, deploy and operate staging and production apps
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
 
-## Local development
-
-To make a contribution, please read our Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md)
-
 ### Prerequisites
 
 - NodeJS v16.x
@@ -52,7 +57,8 @@ To make a contribution, please read our Contributing Guidelines in [CONTRIBUTING
 
 ### Run local backend
 
-See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions
+See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions.
+You will need to run this in the background for the frontend to be functional.
 
 ### Install dependencies
 
@@ -64,10 +70,11 @@ yarn
 
 Include the following environment variables in a .env.local file.
 
-You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth), [Simplybook](https://simplybook.me/en/), [Crisp](https://crisp.chat/en/), and [Storyblok](https://www.storyblok.com/).
-If you're a volunteer loading up the front-end, please get in touch with the team for access the environment variables.
+You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth) and [Storyblok](https://www.storyblok.com/).
 
-```bash
+If you're an official Chayn volunteer loading up the front-end, please get in touch with the team for access to the environment variables.
+
+```
 NEXT_PUBLIC_ENV=local
 NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1/
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
@@ -80,28 +87,26 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 
-NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL=
-NEXT_PUBLIC_CRISP_WEBSITE_ID=
 NEXT_PUBLIC_STORYBLOK_TOKEN=
 
-NEXT_PUBLIC_HOTJAR_ID= # OPTIONAL // for UX analytics
-NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # OPTIONAL // for user data form webhooks
-NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL // for user data form webhooks
+NEXT_PUBLIC_CRISP_WEBSITE_ID= # OPTIONAL for user messaging
+NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # OPTIONAL for booking session forms
+NEXT_PUBLIC_HOTJAR_ID= # OPTIONAL for UX analytics
+NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # OPTIONAL for user data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL for user data form webhooks
 ```
 
 **NB: When adding a new environment variable, it may also need to be added the [ci.yml](ci.yml) file**
 
-### Environment variables
+### Additional Environment variables
 
-This is a brief explanation for environment variables that need more background.
+These additional environment variables are optional:
 
-- FF_DISABLED_COURSES: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
+- `FF_DISABLED_COURSES`: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
 
-In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom.
+  In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom. If multiple courses need to be disabled, the slugs will need to be separated by commas.
 
-If multiple courses need to be disabled, the slugs will need to be separated by commas.
-
-- NEXT_PUBLIC_FF_USER_RESEARCH_BANNER: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
+- `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 ### Run locally
 
@@ -149,9 +154,9 @@ For testing the production build. This will be run automatically during deployme
 yarn build
 ```
 
-## Cypress
+## Cypress Testing
 
-See [CYPRESS.md](CYPRESS.md) for set up instructions for cypress
+See [CYPRESS.md](CYPRESS.md) for set up instructions for cypress tests.
 
 **Running the https proxy**
 You need to run a https proxy for the storyblok preview.
@@ -183,5 +188,8 @@ When changes have been tested in staging, merge `staging` into `main`, following
 
 ## License
 
-Bloom and all of Chayn's projects are open source.
-The core tech stack included here is open source however some external integrations used in the project require subscriptions.
+This project uses the [MIT License](/LICENCE.md).
+
+Bloom and all of Chayn's projects are open-source.
+
+While the core tech stack included here is open-source, some external integrations used in this project require subscriptions.
