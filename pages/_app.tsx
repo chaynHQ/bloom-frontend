@@ -23,7 +23,6 @@ import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
-import '../styles/_hotjar.css';
 import '../styles/globals.css';
 import '../styles/hotjar.css';
 import theme from '../styles/theme';
