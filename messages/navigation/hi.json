@@ -18,7 +18,7 @@
     "applyCode": "Code apply kariye",
     "account": "Account",
     "secondaryNavigationMenu": "Secondary navigation menu",
-    "notes": "Notas",
+    "notes": "Messages",
     "alt": {
       "therapyIcon": "Ek chitra jismein sir pe phool hai",
       "courseIcon": "Ek chitra hai jismein play karne wale button ka icon, ek tikon jo seedhi taraf point kar raha hai. Uske aage ek chota suraj hai",
@@ -28,7 +28,7 @@
       "groundingIcon": "A twig with small pink flowers."
     },
     "chat": "Chat",
-    "grounding": "Aterramento",
-    "activities": "Atividades"
+    "grounding": "Stirtha",
+    "activities": "Activities"
   }
 }
