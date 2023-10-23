@@ -36,8 +36,9 @@
       "descriptionALine2": "Como você tem uma nova conta, gostaríamos de saber como você está antes de utilizar nossos serviços. Essas perguntas nos ajudam a medir o impacto que nosso curso Bloom tem na vida das pessoas sobreviventes que o utilizam e nos ajuda a manter o foco no que é mais importante.",
       "goToCourses": "Ir para os cursos",
       "demographicForm": {
-        "genderLabel": "Qual é a sua identidade de gênero?",
-        "genderHelpText": "O curso Bloom foi desenvolvido para pessoas de diversas identidades de gênero e sabe que cada uma experimenta a violência baseada em gênero de maneira diferente. Compartilhar seu gênero nos ajudará a entender para quem desenvolvemos o curso.",
+        "genderLabel": "Por favor, selecione uma ou mais opções que reflitam sua identidade de gênero",
+        "genderHelpText": "Estamos fazendo essa pergunta para entender melhor como nossos usuários se identificam, com o objetivo de projetar recursos ainda mais inclusivos e afirmativos em relação ao gênero. Você pode selecionar 'Prefiro não responder'.",
+        "genderOptions": "Mulher;Homem;Não-binário;Transgênero;Intersexo;Dois-espíritos ou espíritos duplos;Não conformidade de gênero;Outro (por favor, especifique);Prefiro não responder",
         "neurodivergentLabel": "Você se identifica como uma pessoa neurodivergente?",
         "neurodivergentHelpText": "Construímos nossos serviços para que sejam inclusivos. Então, receber avaliações e comentários de pessoas neurodivergentes nos ajuda. ",
         "neurodivergentLabels": {

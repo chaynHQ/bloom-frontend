@@ -36,8 +36,9 @@
       "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
       "goToCourses": "Skip karke courses par jayein",
       "demographicForm": {
-        "genderLabel": "Aapki gender identity kya hai?",
-        "genderHelpText": "Bloom bana hai kai tarah ki gender identities wale logon ke liye, hum jaante hain ki sabka gender based violence ka experience alag hota hai. Agar aap humein apna gender batate hain toh humein aur achi madad milegi yeh samjhne mein ki hum kiske liye design kar rahe hain.",
+        "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
+        "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
+        "genderOptions": "Mahila;Purush;Gaer Avidhari (Non Binary);Kinnar;Intersex;Do-bhawan;Anya (kripya darshaiye);Likhiye;Batana pasand nahi karte",
         "neurodivergentLabel": "Kya aap apne aapko neuro-divergent ke roop mein describe karenge?",
         "neurodivergentHelpText": "Hum apni sevaon ko ese deisgn karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
         "neurodivergentLabels": {
