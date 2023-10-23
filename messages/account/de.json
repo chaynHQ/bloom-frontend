@@ -36,8 +36,9 @@
       "descriptionALine2": "Von Dir als neue:r Nutzer:in möchten wir gerne wissen, wie es Dir geht, bevor du unser Angebot nutzt. Das hilft uns dabei, die Wirksamkeit von Bloom für Überlebende besser zu verstehen, damit wir uns auf die richtigen Aspekte fokussieren können. ",
       "goToCourses": "Zu den Kursen springen",
       "demographicForm": {
-        "genderLabel": "Was ist Deine Geschlechtsidentität?",
-        "genderHelpText": "Bloom ist für Menschen mit diversen Geschlechteridentitäten konzipiert, da wir wissen, dass Erfahrungen von geschlechtsspezifischer Gewalt variieren. Die Angabe Deiner Geschlechtsidentität hilft uns, zu verstehen, für wen wir das Angebot entwickeln. ",
+        "genderLabel": "Bitte wähle die Kategorie(n) aus, die deine Geschlechtsidentität widerspiegelt oder widerspiegeln. Du kannst auch mehrere Antworten auswählen.",
+        "genderHelpText": "Wir fragen das, um besser zu verstehen, wie sich Nutzer*innen geschlechtlich identifizieren, mit dem Ziel Angebote anzubieten, die inklusiver sind und Nutzer*innen mehr in ihrem Geschlecht bekräftigen. Du kannst auch „Das möchte ich nicht sagen” als Antwort auswählen.",
+        "genderOptions": "Frau;Mann;Nicht-binär;Transgender;Intersex;Two-spirit;Geschlechtlich non-konform;Anderes (bitte gib hier den Namen an);Das möchte ich nicht sagen",
         "neurodivergentLabel": "Würdest Du Dich selbst als neurodivergent bezeichnen?",
         "neurodivergentHelpText": "Wir gestalten unser Angebot inklusiv. Deshalb ist es hilfreich, wenn wir Feedback von neurodivergenten Menschen erhalten. ",
         "neurodivergentLabels": {
