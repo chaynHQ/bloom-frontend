@@ -101,7 +101,7 @@
   ._hj-s3UIi__styles__globalStyles
   ._hj-XpAaA__styles__surveyFooter
   button[disabled]:hover {
-  background: #f1f2f6 !important;
+  background: rgb(255, 203, 182) !important;
 }
 
 /* Input styles */
