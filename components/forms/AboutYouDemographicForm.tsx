@@ -145,7 +145,7 @@ const AboutYouDemographicForm = () => {
               sx={staticFieldLabelStyle}
               variant="standard"
               label={t('genderLabel')}
-              required
+              required={genderInput.length === 0} // required doesn't play nicely with an array value. It is expecting a string
             />
           )}
         />
