@@ -40,7 +40,7 @@
         "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
         "genderOptions": "Mahila;Purush;Gaer Avidhari (Non Binary);Kinnar;Intersex;Do-bhawan;Anya (kripya darshaiye);Likhiye;Batana pasand nahi karte",
         "neurodivergentLabel": "Kya aap apne aapko neuro-divergent ke roop mein describe karenge?",
-        "neurodivergentHelpText": "Hum apni sevaon ko ese deisgn karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
+        "neurodivergentHelpText": "Hum apni sevaon ko ese design karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
         "neurodivergentLabels": {
           "1": "Haan",
           "2": "Nahi",
@@ -68,15 +68,15 @@
         "scaleDescriptionLine2": "1 = Poori tarha asehmat, 10 = Poori tarha sehmat",
         "scaleLabels": {
           "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
-          "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un comping mechanisms ki taraf akarshit hona ek normal trauma response hai",
+          "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un coping mechanisms ki taraf akarshit hona ek normal trauma response hai",
           "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
           "Q4": "Mein apne aapko vo poora dhyaan doongi jo mujhe theek hone aur heal hone ke liye chahiye.",
           "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
           "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
-          "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mereliye unique hai",
+          "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mere liye unique hai",
           "Q8": "Mein pehle he samjh jati hoon jab mere triggering moments, jagahein ya waqt aasakte ho aur unke saath cope karparti hoon."
         },
-        "submitLabel": "Poora ho gaya"
+        "submitLabel": "Submit"
       },
       "setAForm": {
         "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
