@@ -23,8 +23,8 @@ import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
+import '../public/hotjarNPS.css';
 import '../styles/globals.css';
-import '../styles/hotjarNPS.css';
 import theme from '../styles/theme';
 
 // For SSG compatibility with MUI

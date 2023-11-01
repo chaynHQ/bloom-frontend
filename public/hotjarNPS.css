@@ -101,7 +101,7 @@
   ._hj-s3UIi__styles__globalStyles
   ._hj-XpAaA__styles__surveyFooter
   button[disabled]:hover {
-  background: #f1f2f6 !important;
+  background: rgb(255, 203, 182) !important;
 }
 
 /* Input styles */
@@ -197,4 +197,9 @@
   background: rgb(255, 203, 182) !important;
   color: #000000 !important;
   box-shadow: none !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0X3__styles__consentButton i, ._hj_feedback_container ._hj-B\+0X3__styles__consentButton i {
+  font-size: 15px !important;
+  height: 17px !important;
 }
