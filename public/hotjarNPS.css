@@ -54,6 +54,10 @@
   line-height: 1.4 !important;
 }
 
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
+  padding: 0.5rem 0 1rem !important;
+}
+
 /* Primary button styles */
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton,
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-XpAaA__styles__surveyFooter button {
@@ -97,7 +101,7 @@
   ._hj-s3UIi__styles__globalStyles
   ._hj-XpAaA__styles__surveyFooter
   button[disabled]:hover {
-  background: #f1f2f6 !important;
+  background: rgb(255, 203, 182) !important;
 }
 
 /* Input styles */
@@ -176,8 +180,9 @@
   font-size: 0.875rem !important;
 }
 
-._hj-widget-container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton,
-._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton {
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-SU8LU__styles__primaryButton._hj-oxtSd__styles__declineButton {
   background-color: transparent !important;
   color: #000000 !important;
   margin-right: 0 !important;
@@ -188,11 +193,13 @@
 
 ._hj-widget-container
   ._hj-s3UIi__styles__globalStyles
-  ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton:hover,
-._hj_feedback_container ._hj-B\+0x3__styles__consentButton._hj-oxtSd__styles__declineButton:hover {
+  ._hj-SU8LU__styles__primaryButton._hj-oxtSd__styles__declineButton:hover {
+  background: rgb(255, 203, 182) !important;
+  color: #000000 !important;
   box-shadow: none !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
-  padding: 0.5rem 0 1rem !important;
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0X3__styles__consentButton i, ._hj_feedback_container ._hj-B\+0X3__styles__consentButton i {
+  font-size: 15px !important;
+  height: 17px !important;
 }
