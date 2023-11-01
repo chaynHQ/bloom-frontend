@@ -1,7 +1,11 @@
-function generateSiteMap(courses: any) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
+import { getStaticPaths } from './courses/[slug]/[sessionSlug]';
+
+async function generateSiteMap({ locales }: any) {
+    /* get url paths for dynamically generated courses using getStaticPaths */
+    const courses = (await getStaticPaths({ locales })).paths 
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        <!--Manually setting static URLs-->
         <url>
             <loc>https://bloom.chayn.co</loc>
         </url>
@@ -17,12 +21,11 @@ function generateSiteMap(courses: any) {
         <url>
             <loc>https://bloom.chayn.co/therapy/confirmed-session</loc>
         </url>
-        /* mapping courses dynamically.  */
         ${courses
-          .map(({ slug }: any) => {
+          .map((course: any) => {
             return `
                     <url>
-                        <loc>${`https://bloom.chayn.co/courses/${slug}`}</loc>
+                        <loc>${`https://bloom.chayn.co/courses/${course.params.slug}/${course.params.sessionSlug}`}</loc>
                     </url>
                 `;
           })
@@ -36,13 +39,9 @@ function SiteMap() {
   return null;
 }
 
-export async function getServerSideProps({ res }: any) {
-  // We make an API call to gather the URLs for our site
-  const request = await fetch('https://bloom.chayn.co/courses');
-  const courses = await request.json();
-
-  // We generate the XML sitemap with the posts data
-  const sitemap = generateSiteMap(courses);
+export async function getServerSideProps({ locales, res }: any) {
+  // We generate the XML sitemap with the courses data
+  const sitemap = await generateSiteMap({ locales });
 
   res.setHeader('Content-Type', 'text/xml');
   // we send the XML to the browser
