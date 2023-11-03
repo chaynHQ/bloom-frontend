@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Drawer from '@mui/material/Drawer';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import * as React from 'react';
 import { RootState } from '../../app/store';
 import {

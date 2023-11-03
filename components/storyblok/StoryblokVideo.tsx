@@ -1,6 +1,8 @@
 import { Box } from '@mui/system';
-import ReactPlayer from 'react-player';
+import dynamic from 'next/dynamic';
 import { richtextContentStyle } from '../../styles/common';
+// See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
+const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
 const videoContainerStyle = {
   position: 'relative',
@@ -70,6 +72,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           style={videoStyle}
           width="100%"
           height="100%"
+          light={true}
           url={video.url}
           controls
           modestbranding={1}

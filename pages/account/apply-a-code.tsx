@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';

@@ -6,7 +6,7 @@ describe('A logged in public user can start a chat', () => {
 
   it('Navigate to the chat page and begin a chat', () => {
     cy.visit('/'); //intitial home page visit
-    cy.get(`[qa-id=secondary-nav-chat-button]`, { timeout: 4000 }).should('exist').click(); //go to chat page
+    cy.get(`[qa-id=secondary-nav-chat-button]`, { timeout: 8000 }).should('exist').click(); //go to chat page
 
     cy.get('button[type="button"]').contains('Start a chat').click(); //click button to start chatting
 

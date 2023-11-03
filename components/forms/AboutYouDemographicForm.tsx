@@ -2,6 +2,7 @@ import { KeyboardArrowDown } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
+  Chip,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -15,7 +16,7 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
 import { enCountries, esCountries } from '../../constants/countries';
@@ -51,7 +52,7 @@ const AboutYouDemographicForm = () => {
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [genderInput, setGenderInput] = useState<string>('');
+  const [genderInput, setGenderInput] = useState<Array<string>>([]);
   const [neurodivergentInput, setNeurodivergentInput] = useState<string>('');
   const [raceEthnNatn, setRaceEthnNatn] = useState<string>('');
   const [countryInput, setCountryInput] = useState<string>('');
@@ -85,7 +86,8 @@ const AboutYouDemographicForm = () => {
     const formData = {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
-      gender: genderInput,
+      // Sort alphabetically the gender inputs and the make it into a string for the form
+      gender: genderInput.map((gender)=>gender.toLowerCase()).sort().join(','),
       neurodivergent: neurodivergentInput,
       race_ethn_natn: raceEthnNatn,
       current_country: countryInput,
@@ -120,22 +122,33 @@ const AboutYouDemographicForm = () => {
     }
   };
 
+  const genderOptions = useMemo(() => t('genderOptions').split(';'), []);
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <TextField
+        <Autocomplete
           id="gender"
-          label={t.rich('genderLabel')}
-          helperText={t('genderHelpText')}
-          onChange={(e) => setGenderInput(e.target.value)}
+          multiple
           value={genderInput}
-          variant="standard"
+          options={genderOptions.map((option) => option)}
+          freeSolo
+          onChange={(e, value) => setGenderInput(value)}
+          renderTags={(value: readonly string[]) =>
+            value.map((option: string, index: number) => <Chip color="secondary" sx={{marginBottom: 0.5, marginRight: 0.5}} label={option} key={index} />)
+          }
           fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-          sx={staticFieldLabelStyle}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              helperText={t('genderHelpText')}
+              InputLabelProps={{ shrink: true }}
+              sx={staticFieldLabelStyle}
+              variant="standard"
+              label={t('genderLabel')}
+              required={genderInput.length === 0} // required doesn't play nicely with an array value. It is expecting a string
+            />
+          )}
         />
-
         <FormControl required fullWidth component="fieldset" id="neurodivergent" sx={{ mb: 4 }}>
           <FormLabel component="legend">{t('neurodivergentLabel')}</FormLabel>
           <RadioGroup
