@@ -2,7 +2,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 // Import the functions you need from the SDKs you need
-import { NextIntlProvider } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -23,6 +23,7 @@ import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
 import { SuperAdminGuard } from '../guards/superAdminGuard';
 import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
+import '../public/hotjarNPS.css';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 
@@ -89,7 +90,7 @@ function MyApp(props: MyAppProps) {
   };
 
   return (
-    <NextIntlProvider messages={pageProps.messages}>
+    <NextIntlClientProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
         <Head>
           <title>Bloom</title>
@@ -108,7 +109,7 @@ function MyApp(props: MyAppProps) {
           <Consent />
         </ThemeProvider>
       </CacheProvider>
-    </NextIntlProvider>
+    </NextIntlClientProvider>
   );
 }
 

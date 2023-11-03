@@ -1,7 +1,7 @@
 import { alpha, Box, Button, useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
 import { RootState } from '../../app/store';

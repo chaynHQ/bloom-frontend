@@ -1,19 +1,30 @@
 {
   "Admin": {
-    "title": "Admin Dashboard",
+    "title": "Superadmin dashboard",
     "accessGuard": {
-      "title": "Zugriffsrechte erforderlich",
-      "introduction": "Dein Konto beinhaltet keinen Zugriff auf diese Seiten."
+      "title": "Access required",
+      "introduction": "Your account does not include access to these pages."
     },
     "createPartnerAdmin": {
-      "title": "Partnerschafts-Admin anlegen",
-      "partnerNameLabel": "Partnerorganisation",
-      "submit": "Partnerschafts-Admin anlegen",
-      "successDescription": "Partnerschafts-Admin erstellt! Informiere per Mail darüber, dass das Konto erstellt wurde und beim der ersten Anmeldung die \"Passwort vergessen\" Funktion ausgewählt werden muss, um ein eigenes Passwort zu wählen. ",
-      "emailAddressLabel": "Email-Adresse",
+      "title": "Create an admin account",
+      "description": "Admin accounts are able to generate therapy codes",
+      "partnerNameLabel": "Select the partner",
+      "submit": "Create admin account",
+      "successDescription": "Partner Admin created! Email them to say they have an account and will need to use the 'Forgot password' flow to choose a password and be able to login for the first time.",
+      "emailAddressLabel": "Email address",
       "nameLabel": "Name",
-      "reset": "Weiteren Admin anlegen'",
-      "error": "Fehler beim Anlegen eines Partnerschafts-Admins"
+      "reset": "Create another admin",
+      "error": "Error creating partner admin: "
+    },
+    "updateTherapy": {
+      "title": "Update therapy sessions",
+      "emailLabel": "Type a user's email address",
+      "therapySessionsRedeemed": "Number of therapy sessions redeemed",
+      "therapySessionsTotal": "Total number of therapy sessions",
+      "submit": "Update therapy sessions",
+      "successDescription": "User therapy sessions updated!",
+      "error": "Error updating therapy sessions: ",
+      "reset": "Update another user"
     }
   }
 }
