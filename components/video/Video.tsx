@@ -1,10 +1,12 @@
-import { Theme } from '@mui/material';
+import { debounce, Theme } from '@mui/material';
 import Box from '@mui/material/Box';
 import { SxProps } from '@mui/system';
-import * as React from 'react';
+import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import ReactPlayer from 'react-player/youtube';
+import { OnProgressProps } from 'react-player/base';
 import logEvent from '../../utils/logEvent';
+// See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
+const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
 const videoContainerStyle = {
   position: 'relative',
@@ -28,8 +30,9 @@ interface VideoProps {
 const Video = (props: VideoProps) => {
   const { url, eventData, eventPrefix, containerStyles, setVideoStarted } = props;
   const [videoDuration, setVideoDuration] = useState<number>(0);
-  const player = useRef<ReactPlayer>(null);
+  const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
 
+  const player = useRef<typeof ReactPlayer>(null);
   const videoStarted = () => {
     setVideoStarted && setVideoStarted(true);
     if (player.current) {
@@ -48,13 +51,12 @@ const Video = (props: VideoProps) => {
 
   const videoPausedOrPlayed = (played: boolean) => {
     if (player.current) {
-      const currentTime = Math.round(player.current.getCurrentTime());
-      const playedPercentage = Math.round((currentTime / videoDuration) * 100);
+      const playedPercentage = Math.round((videoTimePlayed / videoDuration) * 100);
 
       logEvent(played ? `${eventPrefix}_VIDEO_PLAYED` : `${eventPrefix}_VIDEO_PAUSED`, {
         ...eventData,
         video_duration: videoDuration,
-        video_current_time: currentTime,
+        video_current_time: videoTimePlayed,
         video_current_percentage: playedPercentage,
       });
 
@@ -66,6 +68,12 @@ const Video = (props: VideoProps) => {
       }
     }
   };
+  const handleProgress: ((state: OnProgressProps) => void) | undefined = debounce(
+    (state: OnProgressProps) => {
+      setVideoTimePlayed(state.playedSeconds);
+    },
+    300,
+  );
 
   const containerStyle = {
     ...containerStyles,
@@ -77,11 +85,13 @@ const Video = (props: VideoProps) => {
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           ref={player}
+          light={true}
           onDuration={(duration) => setVideoDuration(duration)}
           onStart={videoStarted}
           onPause={() => videoPausedOrPlayed(false)}
           onPlay={() => videoPausedOrPlayed(true)}
           onEnded={videoEnded}
+          onProgress={handleProgress}
           style={videoStyle}
           width="100%"
           height="100%"
