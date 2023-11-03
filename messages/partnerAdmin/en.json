@@ -1,7 +1,7 @@
 {
   "PartnerAdmin": {
     "createAccessCode": {
-      "title": "Create access code",
+      "title": "Create access codes",
       "introduction": "Use this form to create an access code every time you want to give someone access to Bloom.",
       "courseAccess": "Access to courses only",
       "liveChatAccess": "Access to courses and 1:1 chat",

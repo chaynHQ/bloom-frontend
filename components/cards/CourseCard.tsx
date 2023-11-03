@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';

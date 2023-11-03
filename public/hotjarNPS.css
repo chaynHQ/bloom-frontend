@@ -1,0 +1,205 @@
+/* Hotjar CUSTOM styles to override default hotjar CSS */
+
+._hj-widget-container ._hj-Pbej5__styles__resetStyles * {
+  font-family: 'Open Sans', 'hotjar', 'sans-serif' !important;
+}
+
+._hj-PZjqr__styles__surveyBranding {
+  display: none !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-5vKq2__styles__surveyContainer._hj-5vKq2__styles__surveyContainer {
+  width: 30rem !important;
+  max-width: 100vw;
+  border-radius: 1.25rem !important;
+  padding: 1.5rem !important;
+}
+
+@media (min-width: 480px) {
+  ._hj-widget-container
+    ._hj-s3UIi__styles__globalStyles
+    ._hj-5vKq2__styles__surveyContainer._hj-5vKq2__styles__surveyContainer {
+    bottom: 1.5rem;
+  }
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-kWRoL__styles__openStateToggle {
+  border-top-left-radius: 0.75rem !important;
+  border-top-right-radius: 0.75rem !important;
+  height: 1.25rem !important;
+  top: -1.25rem !important;
+  right: 2rem !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-8Lgv6__styles__surveyActions {
+  min-height: unset !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-XpAaA__styles__surveyFooter {
+  border: none !important;
+  justify-content: center !important;
+}
+
+._hj-widget-container._hj-widget-theme-light
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-S9XKO__styles__surveyTitle,
+._hj-widget-container._hj-widget-theme-light
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-S9XKO__styles__surveyTitle
+  > span {
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-hTm4\+__styles__answersContentWrapper {
+  padding: 0.5rem 0 1rem !important;
+}
+
+/* Primary button styles */
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-XpAaA__styles__surveyFooter button {
+  background: #ffbfa4 !important;
+  color: #000000 !important;
+  font-weight: 500 !important;
+  border: 1px solid #ffbfa4 !important;
+  border-radius: 100rem !important;
+  min-width: 5rem !important;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton:hover,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-XpAaA__styles__surveyFooter
+  button:hover {
+  background: rgb(255, 203, 182) !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton:focus,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-XpAaA__styles__surveyFooter
+  button:focus {
+  background: rgb(255, 203, 182) !important;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-SU8LU__styles__primaryButton[disabled],
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-XpAaA__styles__surveyFooter
+  button[disabled] {
+  border-color: transparent !important;
+}
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-SU8LU__styles__primaryButton[disabled]:hover,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-XpAaA__styles__surveyFooter
+  button[disabled]:hover {
+  background: rgb(255, 203, 182) !important;
+}
+
+/* Input styles */
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-P-UNr__styles__inputField._hj-Wk\+wZ__styles__light {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-P-UNr__styles__inputField._hj-Wk\+wZ__styles__light:hover {
+  border-color: #ffbfa4 !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-P-UNr__styles__inputField:focus {
+  outline: none !important;
+  border-color: #ffbfa4 !important;
+}
+
+/* Scales styles */
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-ILZpN__styles__scaleLabels {
+  padding-top: 0.5rem !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-CvVSY__styles__scaleOption span,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-CvVSY__styles__scaleOption._hj-V57HW__styles__selected
+  span {
+  background: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 2rem !important;
+  height: 2.125rem !important;
+  width: 2.125rem !important;
+  color: #ea0050 !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-CvVSY__styles__scaleOption span:hover {
+  border-color: rgba(0, 0, 0, 0.28) !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-CvVSY__styles__scaleOption:focus-within
+  span {
+  outline: none !important;
+  border-color: #ff976a !important;
+  border-width: 1.5px !important;
+}
+
+/* Thank you page styles */
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-tHiZi__styles__finalStep {
+  padding: 0.75rem 0.5rem 0 !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-2JZDx__styles__thankYouMessage._hj-iinO7__styles__withConsent {
+  margin-bottom: 0.75rem !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-cK\+L-__styles__consentMessage._hj-N21Xh__styles__light,
+._hj-widget-container
+  ._hj_feedback_container
+  ._hj-cK\+L-__styles__consentMessage._hj-N21Xh__styles__light {
+  margin-bottom: 0 !important;
+  color: #000000 !important;
+  font-size: 0.875rem !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-SU8LU__styles__primaryButton._hj-oxtSd__styles__declineButton {
+  background-color: transparent !important;
+  color: #000000 !important;
+  margin-right: 0 !important;
+  box-shadow: none !important;
+  border-color: #ffbfa4 !important;
+  border: 1px solid #ffbfa4 !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  ._hj-SU8LU__styles__primaryButton._hj-oxtSd__styles__declineButton:hover {
+  background: rgb(255, 203, 182) !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0X3__styles__consentButton i, ._hj_feedback_container ._hj-B\+0X3__styles__consentButton i {
+  font-size: 15px !important;
+  height: 17px !important;
+}
