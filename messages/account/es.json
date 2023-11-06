@@ -39,7 +39,7 @@
         "genderLabel": "Por favor elige una o más opciones que reflejen tu identidad de género",
         "genderHelpText": "Hacemos esta pregunta para entender mejor cómo se identifican nuestres usuaries, con la perspectiva de diseñar recursos aún más inclusivos y con perspectiva de género. Puedes elegir la opción 'Prefiero no responder'.",
         "genderOptions": "Mujer;Hombre;Género no binario;Transgénero;Intersexual;Dos espíritus;Género no conforme;Otro (por favor, explícalo);Prefiero no responder",
-        "neurodivergentLabel": "Te identificas como neurodivergente?",
+        "neurodivergentLabel": "¿Te identificas como neurodivergente?",
         "neurodivergentHelpText": "Diseñamos nuestros servicios para ser inclusivos, así que escuchar los comentarios de personas neurodivergentes nos ayuda.",
         "neurodivergentLabels": {
           "1": "Si",
@@ -68,12 +68,12 @@
         "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
         "scaleLabels": {
           "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
-          "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraído a estos puede ser una respuesta normal al trauma",
+          "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraíde a estos puede ser una respuesta normal al trauma",
           "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
-          "Q4": "Estoy comprometido a darme la atención que necesito para sanar",
+          "Q4": "Estoy me siento comprometide a darme la atención que necesito para sanar",
           "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
           "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
-          "Q7": "Entiendo que hay cosas que me hacen sentir seguro o amenazado exclusivamente a mi",
+          "Q7": "Entiendo que hay cosas que me hacen sentir segure o amenazade exclusivamente a mi",
           "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
         },
         "submitLabel": "Completo"
