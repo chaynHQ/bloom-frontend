@@ -1,7 +1,7 @@
 /* Hotjar CUSTOM styles to override default hotjar CSS */
 
 ._hj-widget-container ._hj-Pbej5__styles__resetStyles * {
-  font-family: 'Open Sans', 'hotjar', 'sans-serif' !important;
+  font-family: 'Open Sans', 'Nunito', 'roboto', 'hotjar', 'sans-serif' !important;
 }
 
 ._hj-PZjqr__styles__surveyBranding {
