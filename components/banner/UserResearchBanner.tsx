@@ -23,7 +23,7 @@ const alertStyle = {
 
 const USER_RESEARCH_BANNER_INTERACTED = 'user_research_banner_interacted';
 const USER_RESEARCH_FORM_LINK =
-  'https://docs.google.com/forms/d/e/1FAIpQLSe0RFpeiqi-PGGUvMcW3esFzzfyg55aAD2E07NT1JuvA5tMFw/viewform';
+  'https://docs.google.com/forms/d/e/1FAIpQLSfBwYdXRKDX_IKtcShgYvNu835BqtI5PbIC-GrmBBVIZDpQgw/viewform?usp=sf_link';
 
 export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
@@ -34,14 +34,15 @@ export default function UserResearchBanner() {
   const router = useRouter();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
-  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
+  // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
+  const isBadooUser = partnerAccesses.find((pa)=>{return pa.partner.name.toLowerCase() === 'badoo'})
 
   const isTargetPage = !(
     router.pathname.includes('auth') || router.pathname.includes('partnerName')
   );
 
   const showBanner =
-    isBannerFeatureEnabled && isPublicUser && isTargetPage && isBannerNotInteracted;
+    isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Collapse in={open}>
