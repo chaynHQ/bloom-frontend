@@ -7,7 +7,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   if (environments.includes(currentEnv) && req.headers.get('x-forwarded-proto') !== 'https') {
     const hostname = req.headers.get('host') || req.nextUrl.hostname;
-    return NextResponse.redirect(`https://${hostname}${req.nextUrl.pathname}`, 301);
+    const locale = req.nextUrl.locale === 'en' ? '' : `/${req.nextUrl.locale}`
+    return NextResponse.redirect(`https://${hostname}${locale}${req.nextUrl.pathname}`, 301);
   }
   return NextResponse.next();
 }
