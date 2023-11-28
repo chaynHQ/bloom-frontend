@@ -211,7 +211,7 @@ You need to run a https proxy for the storyblok preview.
 
 ### Merge and Deployment flow
 
-1. When a pull request is approved, **squash and merge** the pull request into `develop`. Merging a pull request into `develop` will trigger a deployment to the [staging preview url](https://bloom-frontend-git-develop-chaynhq.vercel.app/). A new pull request `Merge Develop onto Main` will be automatically created when `develop` is ahead of `main`, to prompt a merge to production - note it can take 10-15 minutes for this pull request to appear and Github Actions to complete
+1. When a pull request is approved, **squash and merge** the pull request into `develop`. Merging a pull request into `develop` will trigger a deployment to the [staging preview url](https://bloom-frontend-git-develop-chaynhq.vercel.app/). A new pull request `Merge Develop onto Main` will be automatically created when `develop` is ahead of `main`
 
 2. This new `Merge Develop onto Main` pull request will be aligned to the [staging preview url](https://bloom-frontend-git-develop-chaynhq.vercel.app/) and should be retested where multiple changes have been made - this may not be required where changes are unrelated and were all tested individually
 
