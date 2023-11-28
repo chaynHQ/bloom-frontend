@@ -78,7 +78,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
           ...(!column.width && { flex: { md: 1 } }),
         };
         return (
-          <Box sx={columnStyles} key={`row_column_${index}`}>
+          <Box sx={columnStyles} key={`row_column_${index}_${Math.random()*100}`}>
             {render(column.content, RichTextOptions)}
           </Box>
         );
