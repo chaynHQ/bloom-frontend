@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
-import { DEFAULT_SCALE_START } from '../../constants/common';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
