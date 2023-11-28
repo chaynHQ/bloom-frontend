@@ -11,8 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run --headless true --browser chrome",
-    "start:heroku": "NODE_OPTIONS='--max_old_space_size=460' next start -p $PORT"
+    "cypress:headless": "cypress run --headless true --browser chrome"
   },
   "dependencies": {
     "@emotion/cache": "^11.4.0",
