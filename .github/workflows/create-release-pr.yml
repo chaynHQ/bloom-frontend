@@ -30,8 +30,8 @@ jobs:
                 base: 'main',
                 body: [
                   'This PR was auto-generated - see create-release-pr.yml and ',
-                  '[actions/github-script](https://github.com/actions/github-script).'
-                  'Merging this PR will trigger an automatic deployment to production.',
+                  '[actions/github-script](https://github.com/actions/github-script).',
+                  'Merging this PR will trigger an automatic deployment to production.'
                 ].join('\n')
               });
             }
