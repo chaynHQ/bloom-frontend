@@ -11,7 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run --headless true --browser chrome",
+    "cypress:headless": "cypress run --headless true --browser chrome"
   },
   "dependencies": {
     "@emotion/cache": "^11.4.0",
