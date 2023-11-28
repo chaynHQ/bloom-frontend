@@ -1,0 +1,37 @@
+name: Create release PR
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  create-pr-to-main:
+    name: Create release PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const pullRequestResponse = await github.rest.pulls.list({
+              owner,
+              repo,
+              base: 'main'
+            });
+
+            if (pullRequestResponse.status === 200 && pullRequestResponse.data.length === 0) {
+              const result = await github.rest.pulls.create({
+                title: 'Merge Develop onto Main',
+                owner,
+                repo,
+                head: 'develop',
+                base: 'main',
+                body: [
+                  'This PR was auto-generated - see create-release-pr.yml and ',
+                  '[actions/github-script](https://github.com/actions/github-script).',
+                  'Merging this PR will trigger an automatic deployment to production.'
+                ].join('\n')
+              });
+            }
