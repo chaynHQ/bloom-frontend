@@ -17,7 +17,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   if (!image || !image.filename) return <></>;
 
   const cardStyle = {
-    '&:first-child': {
+    '&:first-of-type': {
       marginTop: 0,
     },
   } as const;

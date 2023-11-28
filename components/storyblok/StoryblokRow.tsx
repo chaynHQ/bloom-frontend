@@ -113,7 +113,7 @@ const StoryblokRow = (props: StoryblokRowProps) => {
 
 const renderColumn = (content: any, width: string, index: number) => {
   return (
-    <Box sx={columnStyles(width)} key={`row_column_${index}`}>
+    <Box sx={columnStyles(width)} key={`row_column_${index}_${Math.random()*100}`}>
       {render(content, RichTextOptions)}
     </Box>
   );
