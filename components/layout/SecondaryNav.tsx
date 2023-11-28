@@ -114,11 +114,12 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       })
     : publicLinks;
 
-  const tabIndex = allLinks.map<string>((link) => link.href).indexOf(router.asPath);
+  const tabIndex = allLinks.findIndex(link => link.href === router.asPath);
+  const tabValue = tabIndex === -1 ? false : tabIndex;
 
   return (
     <Tabs
-      value={tabIndex}
+      value={tabValue}
       aria-label={t('secondaryNavigationMenu')}
       sx={{
         backgroundColor: theme.palette.palePrimaryLight,

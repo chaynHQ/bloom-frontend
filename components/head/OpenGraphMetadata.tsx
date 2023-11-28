@@ -1,10 +1,11 @@
 import Head from 'next/head';
+import { BASE_URL } from '../../constants/common';
 
 const descriptionContent =
   "Learn and heal from trauma in a private, supportive space. Our courses are written and checked by survivors, allies, mental health support workers and therapists from around the world. Healing from trauma can be isolating. We're here for you.";
 const twitterDescriptionContent =
   'A global tech nonprofit empowering women & marginalised genders facing abuse. Feminist, Survivor-led, Intersectional.';
-const imageContent = `${process.env.NEXT_PUBLIC_BASE_URL}bloom_socials_preview.png`;
+const imageContent = `${BASE_URL}/bloom_socials_preview.png`;
 const imageAltContent =
   'An cartoon drawing of a person with almost shoulder length hair against a pink background. They have flowers and leaves coming out of their head. The word "Bloom" hovers above the person.';
 

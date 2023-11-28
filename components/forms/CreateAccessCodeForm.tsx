@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../../app/api';
 import { RootState } from '../../app/store';
 import rollbar from '../../config/rollbar';
+import { BASE_URL } from '../../constants/common';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
@@ -43,9 +44,7 @@ const CreateAccessCodeForm = () => {
   const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
     useAddPartnerAccessMutation();
 
-  const welcomeURL = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
+  const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
