@@ -8,7 +8,6 @@ on:
 jobs:
   create-pr-to-main:
     name: Create release PR
-    needs: cypress-run
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
