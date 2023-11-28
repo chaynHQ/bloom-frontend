@@ -29,6 +29,8 @@ const actionsStyle = {
   marginTop: 2,
 };
 
+const DEFAULT_SCALE_START = 3;
+
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
