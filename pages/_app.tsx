@@ -2,6 +2,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 // Import the functions you need from the SDKs you need
+import { Analytics } from '@vercel/analytics/react';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -107,6 +108,8 @@ function MyApp(props: MyAppProps) {
           <ComponentWithGuard />
           <Footer />
           <Consent />
+          {/* Vercel analytics */}
+          <Analytics /> 
         </ThemeProvider>
       </CacheProvider>
     </NextIntlClientProvider>
