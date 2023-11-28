@@ -11,6 +11,7 @@ import { RootState } from '../../app/store';
 import Faqs from '../../components/common/Faqs';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
+import { BASE_URL } from '../../constants/common';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
@@ -78,7 +79,7 @@ const ConfirmedSession: NextPage = () => {
         <Typography>
           {t.rich('confirmation.bookmarkDescription', {
             bookingLink: (children) => (
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/`}>{children}</Link>
+              <Link href={`${BASE_URL}/`}>{children}</Link>
             ),
           })}
         </Typography>
