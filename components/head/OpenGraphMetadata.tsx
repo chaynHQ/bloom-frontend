@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { BASE_URL } from '../../constants/common';
+import theme from '../../styles/theme';
 
 const descriptionContent =
   "Learn and heal from trauma in a private, supportive space. Our courses are written and checked by survivors, allies, mental health support workers and therapists from around the world. Healing from trauma can be isolating. We're here for you.";
@@ -22,6 +23,10 @@ const OpenGraphMetadata = () => {
         content={twitterDescriptionContent}
         key="twitter-desc"
       ></meta>
+      {/** PWA specific tags **/}
+      <link rel="manifest" href="/manifest.json" />
+      <link rel="apple-touch-icon" href="/icons/apple/icon-120x120.png"></link>
+      <meta name="theme-color" content={theme.palette.primary.main} />
     </Head>
   );
 };
