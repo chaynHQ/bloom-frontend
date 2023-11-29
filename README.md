@@ -26,7 +26,7 @@ For a more detailed explanation of this project's key concepts and architecture,
 
 **Currently in active development**
 
-## How to Contribute
+# How to Contribute
 
 Before making a contribution, please follow these steps:
 
@@ -35,7 +35,7 @@ Before making a contribution, please follow these steps:
 
 Happy coding! ⭐
 
-### Technologies Used
+## Technologies Used
 
 - [React](https://reactjs.org/) - JavaScript library for building component based user interfaces
 - [Next.js](https://nextjs.org/) - React framework for hybrid static & server rendering, file-system routing and more
@@ -50,21 +50,54 @@ Happy coding! ⭐
 - [Rollbar](https://rollbar.com/) - Error reporting
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
 
-### Prerequisites
+## Prerequisites
 
 - NodeJS v16.x
 - Yarn v1.x
 
-### Run local backend
+## Local Development:
+
+### Run Local Backend
 
 See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions.
 You will need to run this in the background for the frontend to be functional.
 
-### Setup Vercel
+### Configure Environment Variables
+If you are an official Chayn volunteer or staff member, you can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-If you're an official Chayn volunteer loading up the front-end, please get in touch with the team for access to the environment variables. If you have access to Vercel as a staff member, follow the instructions below.
+If you are an outside volunteer, please create a `env.local` file and populate it with the variables below:
 
-Environment variables are set in Vercel and can be imported using the Vercel CLI - see [environment variables](#environment-variables).
+You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth) and [Storyblok](https://www.storyblok.com/).
+
+```
+NEXT_PUBLIC_ENV=local
+NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1/
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+
+NEXT_PUBLIC_STORYBLOK_TOKEN=
+
+NEXT_PUBLIC_CRISP_WEBSITE_ID= # OPTIONAL for user messaging
+NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # OPTIONAL for booking session forms
+NEXT_PUBLIC_HOTJAR_ID= # OPTIONAL for UX analytics
+NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # OPTIONAL for user data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL for user data form webhooks
+```
+
+
+#### Vercel Environment Variable Import:
+
+For official Chayn volunteers and staff only -- if you have access to Vercel as a staff member, follow the instructions below. If you do not have access, please proceed past this section.
+
+Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables). These environment variables can be imported using the Vercel CLI.
+
 Download and login to the Vercel CLI:
 
 ```bash
@@ -91,13 +124,32 @@ Download the local environment variables files from Vercel:
 vercel env pull .env.local
 ```
 
-### Install dependencies
+#### Creating New Environment Variables:
+
+When creating new environment variables, for use in production, they must be added to Vercel before release. Please tag staff in your issue if creating new environment variables for production. Additionally, new environment variables that are required for the app to build and pass tests must be added to GitHub Secrets and workflows.
+
+Note: Environment variables that are exposed to the client/browser must be prefixed with `NEXT_PUBLIC_` - see [next.js docs](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser).
+
+#### Additional Environment Variables:
+
+These additional environment variables are optional:
+
+- `FF_DISABLED_COURSES`: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
+
+  In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom. If multiple courses need to be disabled, the slugs will need to be separated by commas.
+
+- `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
+
+### Install Dependencies
+After configuring your environment variables, it's time to install dependencies and run the app.
+
+First, to install dependencies, run:
 
 ```bash
 yarn
 ```
 
-### Run locally
+### Run Locally
 
 Start the app in development mode (with hot-code reloading, error reporting, etc.):
 
@@ -107,7 +159,7 @@ yarn dev
 
 Go to [http://localhost:3000](http://localhost:3000)
 
-### Run tests
+### Run Tests
 
 ```bash
 yarn test
@@ -119,7 +171,7 @@ To have your unit tests running in the background as you change code:
 yarn test:watch
 ```
 
-### Formatting and linting
+### Formatting and Linting
 
 ```bash
 yarn lint
@@ -135,41 +187,13 @@ Formatting and linting is provided by ESLint and Prettier (see the relevant conf
 
 Workspace settings for VSCode are included for consistent linting and formatting.
 
-### Build the app for production
+### Build for Production
 
 For testing the production build. This will be run automatically during [deployments](#git-flow-and-deployment).
 
 ```bash
 yarn build
 ```
-
-## Environment Variables
-
-Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables).
-
-The development `.env.local` file is autogenerated and downloaded using the Vercel CLI. Add new environment variables in the Vercel console and replace your local.env with an updated one by running:
-
-```bash
-vercel env pull .env.local
-```
-
-### Creating new environment variables
-
-Note that new environment variables must be added to Vercel before release to production. Please tag staff in your issue if creating new environment variables.
-
-Environment variables that are required for the app to build and pass tests must be added to [Github secrets](https://github.com/transition-zero/feo-frontend/settings/secrets/actions) and in the [ci.yml](ci.yml) file.
-
-Environment variables that are exposed to the client/browser must be prefixed with `NEXT_PUBLIC_` - see [next.js docs](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)
-
-### Additional environment variables
-
-These additional environment variables are optional:
-
-- `FF_DISABLED_COURSES`: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
-
-  In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom. If multiple courses need to be disabled, the slugs will need to be separated by commas.
-
-- `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 ## Cypress Testing
 
@@ -193,23 +217,20 @@ You need to run a https proxy for the storyblok preview.
 // https is now running on port 3010 and forwarding requests to http 3000
 ```
 
-## Git Flows and Deployments
+## Git Flow and Deployment
 
 **The develop branch is our source of truth, not main.**
 
 ### Directions for Contributors
 
-1. Fork the repo and create a new branch from the `develop` base branch
+1. Follow the Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md). 
+2. Fork the repo and create a new branch from the `develop` base branch.
+3. Run the app on the new branch, complete your work testing on http://localhost:3000, and commit.
+4. Go to Github and open a pull request for the branch - the branch should be automatically based off of the `develop` branch. Creating a pull request will trigger GitHub Actions to automatically run build and linting tasks. A [vercel preview url](https://vercel.com/docs/deployments/preview-deployments) will also be created, to act as a staging environment for this branch
+5. Test the new branch on the vercel preview url, and ensure all new changes working as expected
+6. Request a code review from a staff member who will manage the merge and deployment flow (see below)
 
-2. Run the app on the new branch, complete your work testing on http://localhost:3000, and commit
-
-3. Go to Github and open a pull request for the branch - the branch should be automatically based off of the `develop` branch. Creating a pull request will trigger GitHub Actions to automatically run build and linting tasks. A [vercel preview url](https://vercel.com/docs/deployments/preview-deployments) will also be created, to act as a staging environment for this branch
-
-4. Test the new branch on the vercel preview url, and ensure all new changes working as expected
-
-5. Request a code review from a staff member who will manage the merge and deployment flow (see below)
-
-### Merge and Deployment flow
+### Merge and Deployment Flow
 
 1. When a pull request is approved, **squash and merge** the pull request into `develop`. Merging a pull request into `develop` will trigger a deployment to the [staging preview url](https://bloom-frontend-git-develop-chaynhq.vercel.app/). A new pull request `Merge Develop onto Main` will be automatically created when `develop` is ahead of `main`
 
@@ -217,11 +238,13 @@ You need to run a https proxy for the storyblok preview.
 
 3. When changes are ready to be released to production, **merge** the new `Merge Develop onto Main` pull request. This will merge `develop` into `main` and trigger an automatic deployment to production via the Github <-> Vercel integration which aligns to the `main` branch
 
-### Using the staging and preview urls
+### Using the Staging and Preview URLSs:
 
-Production url: https://bloom.chayn.co
-Staging preview url: https://bloom-frontend-git-develop-chaynhq.vercel.app/
-Example branch preview url: https://bloom-frontend-git-vercel-branch-name-chaynhq.vercel.app/
+- Production url: https://bloom.chayn.co
+
+- Staging preview url: https://bloom-frontend-git-develop-chaynhq.vercel.app/
+
+- Example branch preview url: https://bloom-frontend-git-vercel-branch-name-chaynhq.vercel.app/
 
 Using the preview urls means that your usage/testing doesn’t impact our metrics. For example, if you signed up for a new account for testing on the live site, then we would count that as one more user who signed up. To prevent testing data mixing with user data, the preview urls usage data is not tracked.
 
