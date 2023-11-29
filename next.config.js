@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
+
+module.exports = withPWA({
   reactStrictMode: true,
   publicRuntimeConfig: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
@@ -52,4 +56,4 @@ module.exports = {
       },
     ];
   },
-};
+});
