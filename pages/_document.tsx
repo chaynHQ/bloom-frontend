@@ -2,7 +2,6 @@ import { Partytown } from '@builder.io/partytown/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
-import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import HotjarScript from '../components/head/HotjarScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
@@ -21,7 +20,6 @@ export default class MyDocument extends Document {
           <Partytown debug={true} forward={['dataLayer.push']} />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
-          <CrispScript />
           <HotjarScript />
         </Head>
         <body>

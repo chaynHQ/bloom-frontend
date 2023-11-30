@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
+import CrispScript from '../components/crisp/CrispScript';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
@@ -100,6 +101,7 @@ function MyApp(props: MyAppProps) {
   return (
     <NextIntlClientProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
+        <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
