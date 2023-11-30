@@ -2,7 +2,8 @@ name: Cypress release tests
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -10,19 +11,17 @@ jobs:
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-latest
-    outputs:
-      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
     steps:
       - name: Wait for Vercel preview deployment to be ready
-        uses: patrickedqvist/wait-for-vercel-preview@master
-        id: waitForVercelPreviewDeployment
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercelDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 120
 
   cypress-run:
     name: Cypress e2e tests
-    needs: build
+    needs: wait-for-vercel-deployment
     runs-on: ubuntu-latest
     strategy:
       # when one test fails, DO NOT cancel the other
