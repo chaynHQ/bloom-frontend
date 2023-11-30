@@ -5,14 +5,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Analytics } from '@vercel/analytics/react';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
-import CrispScript from '../components/crisp/CrispScript';
-import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
@@ -104,13 +100,6 @@ function MyApp(props: MyAppProps) {
   return (
     <NextIntlClientProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
-        <Head>
-          <title>Bloom</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <GoogleTagManagerScript />
-        <OpenGraphMetadata />
-        <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
