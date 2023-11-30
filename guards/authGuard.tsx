@@ -1,7 +1,5 @@
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { hotjar } from 'react-hotjar';
 import { api, useGetUserMutation } from '../app/api';
 import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
@@ -58,10 +56,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   // 2. Add ongoing event listener to check for token changes
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_ENV !== 'local') {
-      hotjar.initialize(Number(process.env.NEXT_PUBLIC_HOTJAR_ID), 6);
-    }
-
     // Add listener for new firebase auth token, updating it in state to be used in request headers
     // Required for restoring user state following app reload or revisiting site
 
@@ -129,10 +123,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     // If the User state has already been populated and ID from the backend has been given set verified as true
     if (user.id) {
-      // Check users analytics consent before sending user data
-      if (process.env.NEXT_PUBLIC_ENV !== 'local' && Cookies.get('analyticsConsent') === 'true') {
-        hotjar.identify('USER_ID', { userProperty: user.id });
-      }
       setVerified(true);
       setLoading(false);
       return;
