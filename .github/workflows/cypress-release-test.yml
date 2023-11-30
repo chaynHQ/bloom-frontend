@@ -17,7 +17,8 @@ jobs:
         id: waitForVercelDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 120
+          max_timeout: 1000
+          check_interval: 5
 
   cypress-run:
     name: Cypress e2e tests
