@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Analytics } from '@vercel/analytics/react';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -101,6 +102,10 @@ function MyApp(props: MyAppProps) {
   return (
     <NextIntlClientProvider messages={pageProps.messages}>
       <CacheProvider value={emotionCache}>
+        <Head>
+          <title>Bloom</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />

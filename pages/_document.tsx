@@ -16,7 +16,6 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
             rel="stylesheet"
           />
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
           <Partytown debug={true} forward={['dataLayer.push']} />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />

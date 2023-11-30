@@ -74,7 +74,6 @@ const CrispScript = () => {
   return (
     <Script
       id="crisp-widget"
-      type="text/partytown"
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
