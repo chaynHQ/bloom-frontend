@@ -1,6 +1,8 @@
 import Script from 'next/script';
 
 const HotjarScript = () => {
+  if (process.env.NEXT_PUBLIC_ENV === 'local') return <></>
+  
   return (
     <Script
       id="hotjar"
