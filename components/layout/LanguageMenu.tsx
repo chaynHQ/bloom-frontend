@@ -19,20 +19,29 @@ const menuItemStyle = {
   },
 } as const;
 
+const languageMap: { [key: string]: string } = {
+  en: 'English',
+  hi: 'Hindi',
+  pt: 'Português',
+  es: 'Español',
+  de: 'Deutsch',
+  fr: 'Français',
+};
+
 const buttonStyle = {
   height: 40,
   minWidth: { xs: 40, md: 64 },
   paddingX: 1,
   gap: 0.75,
   fontWeight: 400,
-
-  ':hover': { backgroundColor: 'background.default' },
+  color: 'common.white',
+  ':hover': { backgroundColor: 'primary.light', color: 'primary.dark' },
 
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  '& .MuiButton-startIcon': { display: { xs: 'none', md: 'inline-flex' }, mx: 0 },
+  '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
 } as const;
 
 export default function LanguageMenu() {
@@ -68,7 +77,7 @@ export default function LanguageMenu() {
         size="medium"
         sx={buttonStyle}
       >
-        {locale?.toUpperCase()}
+        {languageMap[locale ? locale : 'en']}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -82,7 +91,7 @@ export default function LanguageMenu() {
         {locales
           ?.filter((language) => language !== locale)
           .map((language) => {
-            const languageUppercase = language.toUpperCase();
+            const languageLabel = languageMap[language];
             return (
               <MenuItem key={language} sx={menuItemStyle}>
                 <Button
@@ -93,7 +102,7 @@ export default function LanguageMenu() {
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
                   }}
                 >
-                  {languageUppercase}
+                  {languageLabel}
                 </Button>
               </MenuItem>
             );
