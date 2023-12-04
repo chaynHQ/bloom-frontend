@@ -1,6 +1,6 @@
 /* Hotjar CUSTOM styles to override default hotjar CSS */
 
-._hj-widget-container ._hj-Pbej5__styles__resetStyles * {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt * {
   font-family: 'Open Sans', 'Nunito', 'roboto', 'hotjar', 'sans-serif' !important;
 }
 
@@ -8,9 +8,7 @@
   display: none !important;
 }
 
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  ._hj-5vKq2__styles__surveyContainer._hj-5vKq2__styles__surveyContainer {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt.css-sf3vvt {
   width: 30rem !important;
   max-width: 100vw;
   border-radius: 1.25rem !important;
@@ -18,9 +16,7 @@
 }
 
 @media (min-width: 480px) {
-  ._hj-widget-container
-    ._hj-s3UIi__styles__globalStyles
-    ._hj-5vKq2__styles__surveyContainer._hj-5vKq2__styles__surveyContainer {
+  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt.css-sf3vvt {
     bottom: 1.5rem;
   }
 }
@@ -199,7 +195,8 @@
   box-shadow: none !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0X3__styles__consentButton i, ._hj_feedback_container ._hj-B\+0X3__styles__consentButton i {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles ._hj-B\+0x3__styles__consentButton i,
+._hj_feedback_container ._hj-B\+0x3__styles__consentButton i {
   font-size: 15px !important;
   height: 17px !important;
 }
