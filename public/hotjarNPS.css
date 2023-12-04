@@ -2,9 +2,17 @@
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt *,
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles p,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xfwja.css-1xfwja.css-1xfwja p,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-zxqk8.css-zxqk8,
 ._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
   .css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp {
   font-family: 'Open Sans', 'Nunito', 'roboto', 'hotjar', 'sans-serif' !important;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles a {
+  text-decoration: underline !important;
+  color: #000000;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt.css-sf3vvt {
@@ -53,10 +61,20 @@
 }
 
 /* Consent decline button */
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8 {
-  background-color: none;
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-zxqk8.css-zxqk8 {
+  background-color: unset !important;
+  box-shadow: unset !important;
+  color: #000000;
+}
+
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xfwja.css-1xfwja.css-1xfwja div,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-vr45vp.css-vr45vp {
+  margin-bottom: 0 !important;
+}
+
+/* Collapse popover button */
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1ftaqxs.css-1ftaqxs {
+  margin-bottom: 0 !important;
 }
 
 /* Input styles */
@@ -84,17 +102,21 @@
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-webkit-slider-thumb {
-  background: #ff976a !important;
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-moz-range-thumb,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-webkit-slider-thumb,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-16xwhi1.css-16xwhi1.css-16xwhi1::-moz-range-thumb,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-16xwhi1.css-16xwhi1.css-16xwhi1::-webkit-slider-thumb {
+  background-color: #ff976a !important;
   outline: none !important;
 }
 
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']:hover::-moz-range-thumb,
 ._hj-widget-container
   ._hj-s3UIi__styles__globalStyles
-  input[type='range' i]:hover::-moz-range-thumb,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  input[type='range' i]:hover::-webkit-slider-thumb {
+  input[type='range']:hover::-webkit-slider-thumb {
   border: 1px solid #ff976a !important;
 }
