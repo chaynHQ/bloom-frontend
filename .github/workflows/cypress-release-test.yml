@@ -1,12 +1,30 @@
 name: Cypress release tests
 
 on:
-  deployment_status:
+  pull_request:
+    branches:
+      - main
 
 jobs:
+  # vercel will redeploy the develop/staging app on creating a PR to main
+  # wait for new deployment to complete before running tests
+  wait-for-vercel-deployment:
+    name: Wait for vercel deployment
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercelDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1000
+          check_interval: 5
+
   cypress-run:
     name: Cypress e2e tests
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/develop'
+    needs: wait-for-vercel-deployment
     runs-on: ubuntu-latest
     strategy:
       # when one test fails, DO NOT cancel the other
@@ -40,7 +58,7 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
-          CYPRESS_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
           CYPRESS_mail_slurp_api_key: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
           CYPRESS_inbox_id: ${{secrets.CYPRESS_INBOX_ID}}
           CYPRESS_reset_pwd_content_email: ${{secrets.CYPRESS_RESET_PWD_CONTENT_EMAIL}}
