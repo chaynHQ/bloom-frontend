@@ -29,8 +29,8 @@ const listStyle = {
   backgroundColor: 'primary.light',
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
-  marginLeft: { xs: 0, md: 'auto' },
-  marginRight: { xs: 0, md: 0.5 },
+  marginY: 0,
+  paddingX: { xs: 0, sm: '5%' },
   pb: 30,
 } as const;
 

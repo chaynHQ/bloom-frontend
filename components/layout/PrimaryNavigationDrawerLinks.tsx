@@ -21,9 +21,9 @@ const listStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
-  ml: { xs: 0, md: 0.5 },
-  mr: { xs: 0, md: 0.5 },
+  marginY: 0,
   paddingY: 4,
+  paddingX: { xs: 0, sm: '5%' },
   gap: { xs: 1, md: 0 },
 } as const;
 
