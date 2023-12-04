@@ -1,11 +1,9 @@
 name: Cypress release tests
 
-# TODO: FIX 401 issue on wait-for-vercel-preview and uncomment lines below
-
-# on:
-#   pull_request:
-#     branches:
-#       - main
+on:
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -23,6 +21,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1000
           check_interval: 5
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
   cypress-run:
     name: Cypress e2e tests
