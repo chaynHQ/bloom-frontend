@@ -9,7 +9,6 @@ import { RootState } from '../../app/store';
 import {
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
-  HEADER_LOGIN_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -20,7 +19,7 @@ const listStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
-  marginLeft: { xs: 0, md: 'auto' },
+  marginLeft: { xs: 0, md: 0.5 },
   marginRight: { xs: 0, md: 0.5 },
   gap: { xs: 2, md: 0 },
 } as const;
@@ -38,13 +37,16 @@ const listItemTextStyle = {
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'text.primary',
+  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
   paddingY: 0.5,
 
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
+  },
+  ':hover': {
+    color: 'primary.dark',
   },
 } as const;
 
@@ -95,15 +97,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           href: 'https://www.chayn.co/help',
           target: '_blank',
           event: HEADER_IMMEDIATE_HELP_CLICKED,
-        });
-      }
-
-      if (!user.token) {
-        links.push({
-          title: t('login'),
-          href: '/auth/login',
-          event: HEADER_LOGIN_CLICKED,
-          qaId: 'login-menu-button',
         });
       }
     }

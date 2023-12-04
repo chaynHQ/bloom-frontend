@@ -30,9 +30,8 @@ const buttonStyle = {
   minWidth: { xs: 40, md: 64 },
   height: 40,
   fontWeight: 400,
-
-  ':hover': { backgroundColor: 'background.default' },
-
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
