@@ -114,14 +114,16 @@
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-.css-1r1mdmx.css-1r1mdmx.css-1r1mdmx::-webkit-slider-thumb {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-webkit-slider-thumb {
   appearance: none;
   background-color: #ff976a !important;
-  outline: none !important;
+  outline: unset !important;
+  margin-left: -1px;
 }
 
-.css-1r1mdmx.css-1r1mdmx.css-1r1mdmx::-moz-range-thumb {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb {
   appearance: none;
   background-color: #ff976a !important;
-  outline: none !important;
+  outline: unset !important;
+  margin-left: -1px;
 }
