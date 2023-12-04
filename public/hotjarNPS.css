@@ -69,6 +69,13 @@
   color: #000000 !important;
   background-color: unset !important;
   box-shadow: unset !important;
+  font-weight: 400 !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8:hover:enabled {
+  color: #000000 !important;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xfwja.css-1xfwja.css-1xfwja div,
@@ -102,12 +109,12 @@
 
 /* Scales styles */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i] {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range'] {
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-input[type='range' i]::-moz-range-thumb,
-input[type='range' i]::-webkit-slider-thumb,
+input[type='range']::-moz-range-thumb,
+input[type='range']::-webkit-slider-thumb,
 .css-fi5477.css-fi5477.css-fi5477::-moz-range-thumb,
 .css-fi5477.css-fi5477.css-fi5477::-webkit-slider-thumb {
   background-color: #ff976a !important;
