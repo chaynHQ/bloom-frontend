@@ -1,52 +1,30 @@
-name: Cypress tests # on both PRs and push to develop/main
+name: Cypress release tests
 
-# Trigger is like this because I want a way to select which branches to run cypress tests.
-# Can change to something better in the future
 on:
-  push:
+  pull_request:
     branches:
-      - 'run-cypress-tests/**'
-      - 'dependabot/**'
-  workflow_dispatch:
+      - main
 
 jobs:
-  build:
-    name: Build
+  # vercel will redeploy the develop/staging app on creating a PR to main
+  # wait for new deployment to complete before running tests
+  wait-for-vercel-deployment:
+    name: Wait for vercel deployment
     runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercelDeployment
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Use NodeJs
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1000
+          check_interval: 5
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --non-interactive
-
-      - name: Run linting
-        run: yarn lint
-
-      - name: Build app
-        run: yarn build
-        env:
-          NEXT_PUBLIC_ROLLBAR_ENV: CI
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
-          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
   cypress-run:
     name: Cypress e2e tests
-    needs: build
+    needs: wait-for-vercel-deployment
     runs-on: ubuntu-latest
     strategy:
       # when one test fails, DO NOT cancel the other
@@ -80,7 +58,7 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
-          CYPRESS_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
           CYPRESS_mail_slurp_api_key: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
           CYPRESS_inbox_id: ${{secrets.CYPRESS_INBOX_ID}}
           CYPRESS_reset_pwd_content_email: ${{secrets.CYPRESS_RESET_PWD_CONTENT_EMAIL}}

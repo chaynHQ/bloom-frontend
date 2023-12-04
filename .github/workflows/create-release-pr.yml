@@ -7,7 +7,7 @@ on:
 
 jobs:
   create-pr-to-main:
-    name: Create release PR
+    name: Create release PR to main
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
