@@ -24,8 +24,11 @@
 
 /* Primary button styles */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button'] {
-  background: #ffbfa4 !important;
+._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button'],
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp {
+  background-color: #ffbfa4 !important;
   color: #000000 !important;
   font-weight: 500 !important;
   box-shadow: #ffbfa4 0px 0px 0px 1px inset !important;
@@ -36,24 +39,37 @@
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button']:hover,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button']:focus {
-  background: rgb(255, 203, 182) !important;
+._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button']:focus,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp:hover,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp:focus {
+  background-color: rgb(255, 203, 182) !important;
+}
+
+/* Consent decline button */
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8.css-zxqk8 {
+  background-color: none;
 }
 
 /* Input styles */
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text'],
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='textarea'] {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus {
   border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text']:hover,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='textarea']:hover {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus:hover {
   border-color: #ffbfa4 !important;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text']:focus,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='textarea']:focus {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus {
   outline: none !important;
   border-color: #ffbfa4 !important;
   box-shadow: none !important;
@@ -67,5 +83,5 @@
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-moz-range-thumb,
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-webkit-slider-thumb {
-  background: #ff976a;
+  background: #ff976a !important;
 }
