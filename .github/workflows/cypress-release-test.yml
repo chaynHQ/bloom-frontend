@@ -3,7 +3,7 @@ name: Cypress release tests
 on:
   deployment_status:
     branches:
-      - develop
+      - main
 
 jobs:
   cypress-run:
