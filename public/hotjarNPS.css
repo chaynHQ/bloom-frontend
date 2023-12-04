@@ -113,8 +113,6 @@
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-input[type='range']::-moz-range-thumb,
-input[type='range']::-webkit-slider-thumb,
 .css-fi5477.css-fi5477.css-fi5477::-moz-range-thumb,
 .css-fi5477.css-fi5477.css-fi5477::-webkit-slider-thumb {
   background-color: #ff976a !important;
