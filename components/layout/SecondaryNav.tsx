@@ -20,6 +20,7 @@ import chatIcon from '../../public/chat_icon.svg';
 import courseIcon from '../../public/course_icon.svg';
 import groundingIcon from '../../public/grounding_icon.svg';
 
+import { HTMLAttributes } from 'react';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { NextLinkComposed } from '../common/Link';
@@ -37,7 +38,7 @@ interface SecondaryNavIconType {
   alt: string;
   src: string;
 }
-const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
+export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
   <Icon
     sx={{
       position: 'relative',
@@ -114,7 +115,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       })
     : publicLinks;
 
-  const tabIndex = allLinks.findIndex(link => link.href === router.asPath);
+  const tabIndex = allLinks.findIndex((link) => link.href === router.asPath);
   const tabValue = tabIndex === -1 ? false : tabIndex;
 
   return (
@@ -123,11 +124,20 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       aria-label={t('secondaryNavigationMenu')}
       sx={{
         backgroundColor: theme.palette.palePrimaryLight,
-        boxShadow: 'inset 1px 1px 1px 1px rgba(0, 0, 0, 0.1)', // Note custom inset shadow used once
-        '& a.Mui-selected': { backgroundColor: 'primary.light', color: 'text.primary' },
-      }} // the colour is a custom colour
+        '& a.Mui-selected': {
+          color: 'text.secondary',
+        },
+      }}
       variant="fullWidth"
       qa-id="secondary-nav"
+      // Weird type errors for this prop
+      TabIndicatorProps={
+        {
+          sx: {
+            backgroundColor: 'primary.dark',
+          },
+        } as Partial<HTMLAttributes<HTMLDivElement>>
+      }
     >
       {allLinks.map((linkData) => {
         return (
@@ -139,8 +149,10 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
             sx={{
               textTransform: 'none',
               fontSize: theme.typography.body1.fontSize,
-              '& .material-icons ': { marginBottom: 0 },
+              fontWeight: 600,
+              '& .material-icons ': { marginBottom: 0, mr: 1.5 },
               padding: 0.25,
+              flexDirection: 'row',
             }}
             aria-label={linkData.ariaLabel}
             label={linkData.label}

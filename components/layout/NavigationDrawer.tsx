@@ -2,10 +2,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import Drawer from '@mui/material/Drawer';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
 import * as React from 'react';
 import { RootState } from '../../app/store';
 import {
@@ -13,17 +11,9 @@ import {
   HEADER_NAVIGATION_MENU_OPENED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import bloomLogo from '../../public/bloom_logo.svg';
-import { columnStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
-import NavigationDrawerLinks from './NavigationDrawerLinks';
-
-const drawerContainerStyle = {
-  ...columnStyle,
-  width: '70vw',
-  paddingTop: 2,
-} as const;
+import PrimaryNavigationDrawerLinks from './PrimaryNavigationDrawerLinks';
+import SecondaryNavigationDrawerLinks from './SecondaryNavigationDrawerLinks';
 
 const logoContainerStyle = {
   position: 'relative',
@@ -33,8 +23,8 @@ const logoContainerStyle = {
 } as const;
 
 const buttonStyle = {
-  color: 'text.primary',
-  ':hover': { backgroundColor: 'background.default' },
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
   '& .MuiButton-startIcon': { marginX: -2 },
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
@@ -67,30 +57,38 @@ const NavigationDrawer = () => {
 
   return (
     <Box>
-      <Button
-        aria-controls="navigation-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        aria-label={t('menuOpen')}
-        onClick={handleClick}
-        startIcon={<MenuIcon />}
-        size="large"
-        sx={buttonStyle}
-      ></Button>
-      <Drawer open={open} onClose={handleClose}>
-        <Container sx={drawerContainerStyle}>
-          <Button
-            aria-label={t('menuClose')}
-            onClick={handleClose}
-            startIcon={<CloseIcon />}
-            size="large"
-            sx={closeButtonStyle}
-          ></Button>
-          <Link href="/" mb={2} aria-label={t('home')} sx={logoContainerStyle}>
-            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
-          </Link>
-          <NavigationDrawerLinks setAnchorEl={setAnchorEl} />
-        </Container>
+      {open ? (
+        <Button
+          aria-label={t('menuClose')}
+          onClick={handleClose}
+          startIcon={<CloseIcon />}
+          size="large"
+          sx={closeButtonStyle}
+        ></Button>
+      ) : (
+        <Button
+          aria-controls="navigation-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          aria-label={t('menuOpen')}
+          onClick={handleClick}
+          startIcon={<MenuIcon />}
+          size="large"
+          sx={buttonStyle}
+        ></Button>
+      )}
+      <Drawer
+        hideBackdrop={false}
+        PaperProps={{
+          sx: { backgroundColor: 'primary.dark', color: 'common.white', top: { xs: 48, sm: 64 } },
+        }}
+        sx={{ width: '100%', top: { xs: 48, sm: 64 } }}
+        anchor="top"
+        open={open}
+        onClose={handleClose}
+      >
+        <PrimaryNavigationDrawerLinks setAnchorEl={setAnchorEl} />
+        <SecondaryNavigationDrawerLinks setAnchorEl={setAnchorEl} />
       </Drawer>
     </Box>
   );
