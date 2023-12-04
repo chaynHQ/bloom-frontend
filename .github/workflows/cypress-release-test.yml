@@ -2,13 +2,11 @@ name: Cypress release tests
 
 on:
   deployment_status:
-    branches:
-      - main
 
 jobs:
   cypress-run:
     name: Cypress e2e tests
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     strategy:
       # when one test fails, DO NOT cancel the other
