@@ -1,11 +1,14 @@
 /* Hotjar CUSTOM styles to override default hotjar CSS */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt * {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt *,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles p,
+._hj-widget-container
+  .css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp.css-lhe9wp {
   font-family: 'Open Sans', 'Nunito', 'roboto', 'hotjar', 'sans-serif' !important;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt.css-sf3vvt {
-  width: 30rem !important;
+  width: 26rem !important;
   max-width: 100vw;
   border-radius: 1.25rem !important;
   padding: 1.5rem !important;
@@ -77,11 +80,21 @@
 
 /* Scales styles */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range'] {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i] {
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-moz-range-thumb,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range']::-webkit-slider-thumb {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-webkit-slider-thumb {
   background: #ff976a !important;
+  outline: none !important;
+}
+
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  input[type='range' i]:hover::-moz-range-thumb,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  input[type='range' i]:hover::-webkit-slider-thumb {
+  border: 1px solid #ff976a !important;
 }
