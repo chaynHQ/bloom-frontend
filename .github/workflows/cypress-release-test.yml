@@ -1,7 +1,5 @@
 name: Cypress release tests
 
-# TODO: FIX 401 issue on wait-for-vercel-preview and uncomment lines below
-
 on:
   deployment_status:
     branches:
