@@ -109,12 +109,20 @@
 
 /* Scales styles */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range'] {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i] {
+  appearance: none;
   background: rgba(0, 0, 0, 0.1) !important;
 }
 
-::-moz-range-thumb,
-::-webkit-slider-thumb {
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-webkit-slider-thumb,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-fi5477.css-fi5477.css-fi5477::-webkit-slider-thumb,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb,
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-fi5477.css-fi5477.css-fi5477::-moz-range-thumb {
+  appearance: none;
   background-color: #ff976a !important;
   outline: none !important;
 }
