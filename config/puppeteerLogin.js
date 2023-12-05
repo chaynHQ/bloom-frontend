@@ -9,10 +9,7 @@ module.exports = async (browser, context) => {
   await page.waitForSelector('input[type="email"]', { visible: true });
   await page.type('input[type="email"]', process.env.USER_EMAIL);
   await page.type('input[type="password"]', process.env.USER_PASSWORD);
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'networkidle0' }),
-    page.click('.MuiLoadingButton-root'),
-  ]);
+  await Promise.all([page.waitForNavigation(), page.click('[type="submit"]')]);
   // close session for next run
   await page.close();
 };
