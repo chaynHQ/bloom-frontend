@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
 export default async function login() {
   const browser = await puppeteer.launch();
