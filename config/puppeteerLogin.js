@@ -1,11 +1,6 @@
-const puppeteer = require('puppeteer');
-
-const login = async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
+const login = async (page, url) => {
   // Navigate the page to a URL
-  await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app');
+  await page.goto(url);
 
   const emailInput = await page.$('input[type="email"]');
   await emailInput.type(process.env.USER_EMAIL);
@@ -16,6 +11,9 @@ const login = async () => {
   await browser.close();
 };
 
-module.exports = async () => {
-  await login();
+module.exports = async (browser) => {
+  const page = await browser.newPage();
+  const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app';
+
+  await login(page, url);
 };
