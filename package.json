@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run partytown && next build",
+    "build": "yarn run partytown && next build",
     "partytown": "partytown copylib public/~partytown",
     "start": "next start",
     "https:proxy": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",

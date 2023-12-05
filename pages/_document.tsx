@@ -19,7 +19,9 @@ export default class MyDocument extends Document {
           <Partytown debug={true} forward={['dataLayer.push']} />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
-          <HotjarScript />
+          {process.env.NEXT_PUBLIC_ENV === 'local' && (
+            <HotjarScript />
+          )}
         </Head>
         <body>
           <Main />
