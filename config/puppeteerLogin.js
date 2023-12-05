@@ -7,8 +7,7 @@ const login = async (page, url) => {
   const passwordInput = await page.$('input[type="password"]');
   await passwordInput.type(process.env.USER_PASSWORD);
   await Promise.all([page.$eval('form', (form) => form.submit()), page.waitForNavigation()]);
-
-  await browser.close();
+  await page.close();
 };
 
 module.exports = async (browser) => {
@@ -16,4 +15,5 @@ module.exports = async (browser) => {
   const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login';
 
   await login(page, url);
+  await browser.close();
 };
