@@ -15,5 +15,4 @@ module.exports = async (browser) => {
   const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login';
 
   await login(page, url);
-  await browser.close();
 };
