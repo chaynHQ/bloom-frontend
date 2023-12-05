@@ -44,6 +44,7 @@ jobs:
             https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
           budgetPath: ./lighthouse_budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
+          configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
 
   lighthouse-desktop:
     runs-on: ubuntu-latest
