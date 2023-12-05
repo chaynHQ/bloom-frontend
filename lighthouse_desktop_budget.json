@@ -4,41 +4,41 @@
     "resourceSizes": [
       {
         "resourceType": "document",
-        "budget": 18
+        "budget": 20
       },
       {
         "resourceType": "total",
-        "budget": 200
+        "budget": 160
       },
       {
         "resourceType": "script",
-        "budget": 150
+        "budget": 100
       }
     ],
     "timings": [
       {
         "metric": "first-meaningful-paint",
-        "budget": 2000
+        "budget": 1800
       },
       {
         "metric": "first-contentful-paint",
-        "budget": 600
+        "budget": 1000
       },
       {
         "metric": "largest-contentful-paint",
-        "budget": 4000
+        "budget": 3000
       },
       {
         "metric": "interactive",
-        "budget": 2000
+        "budget": 3000
       },
       {
         "metric": "total-blocking-time",
-        "budget": 500
+        "budget": 800
       },
       {
         "metric": "speed-index",
-        "budget": 2000
+        "budget": 1800
       }
     ]
   }
