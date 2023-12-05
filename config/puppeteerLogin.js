@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-export default async function login() {
+const login = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -14,4 +14,8 @@ export default async function login() {
   await Promise.all([page.$eval('#login-form', (form) => form.submit()), page.waitForNavigation()]);
 
   await browser.close();
-}
+};
+
+module.exports = async () => {
+  await login();
+};
