@@ -2,16 +2,16 @@ name: Lighthouse Performance
 
 on:
   pull_request:
-    branches: [main]
+    branches: [develop, main]
 
 jobs:
   # vercel will deploy a preview branch and domain for this PR
   # wait for new deployment to complete before running lighthouse
-  # note we don't actually test on this PRs preview branch, but can
-  # assume the develop branch has also completed deploying
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
@@ -30,18 +30,19 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://bloom-frontend-git-develop-chaynhq.vercel.app
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/activities
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/chat
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/grounding
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/therapy
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships/emotional-boundaries
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/activities
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/chat
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/grounding
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/notes
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/therapy
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/dating-boundaries-and-relationships
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/recovering-from-toxic-and-abusive-relationships
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/dating-boundaries-and-relationships/emotional-boundaries
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
           budgetPath: ./lighthouse_budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
 
@@ -54,18 +55,19 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://bloom-frontend-git-develop-chaynhq.vercel.app
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/activities
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/chat
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/grounding
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/therapy
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships/emotional-boundaries
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/activities
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/chat
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/grounding
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/notes
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/therapy
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/dating-boundaries-and-relationships
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/recovering-from-toxic-and-abusive-relationships
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/dating-boundaries-and-relationships/emotional-boundaries
+            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
