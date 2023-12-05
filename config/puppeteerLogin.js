@@ -9,7 +9,7 @@ module.exports = async (browser, context) => {
   await page.waitForSelector('input[type="email"]', { visible: true });
   await page.type('input[type="email"]', process.env.USER_EMAIL);
   await page.type('input[type="password"]', process.env.USER_PASSWORD);
-  await Promise.all([page.click('button[type="submit"]'), page.waitForNavigation()]);
+  await Promise.all([page.waitForNavigation(), page.click('button[type="submit"]')]);
   // close session for next run
   await page.close();
 };
