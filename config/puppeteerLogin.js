@@ -6,6 +6,7 @@ module.exports = async (browser, context) => {
   // launch browser for LHCI
   const page = await browser.newPage();
   await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login');
+  await page.waitForSelector('input[type="email"]', { visible: true });
   const emailInput = await page.$('input[type="email"]');
   await emailInput.type(process.env.USER_EMAIL);
   const passwordInput = await page.$('input[type="password"]');
