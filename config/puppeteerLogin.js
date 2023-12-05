@@ -12,4 +12,5 @@ module.exports = async (browser, context) => {
   await page.type('input[type="password"]', process.env.USER_PASSWORD);
   await page.click('[type="submit"]');
   await page.waitForSelector('input[type="email"]', { visible: false });
+  await page.close();
 };
