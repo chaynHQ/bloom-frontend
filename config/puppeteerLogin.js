@@ -13,7 +13,7 @@ const login = async (page, url) => {
 
 module.exports = async (browser) => {
   const page = await browser.newPage();
-  const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app';
+  const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login';
 
   await login(page, url);
 };
