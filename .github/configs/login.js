@@ -5,7 +5,7 @@ import puppeteer from 'puppeteer';
   const page = await browser.newPage();
 
   // Navigate the page to a URL
-  await page.goto(VERCEL_PREVIEW_URL);
+  await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app');
 
   const emailInput = await page.$('input[type="email"]');
   await emailInput.type(process.env.USER_EMAIL);
