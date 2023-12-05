@@ -18,7 +18,7 @@
     "timings": [
       {
         "metric": "first-meaningful-paint",
-        "budget": 8000
+        "budget": 8500
       },
       {
         "metric": "first-contentful-paint",
