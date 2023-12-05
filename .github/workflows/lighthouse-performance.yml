@@ -34,7 +34,6 @@ jobs:
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/activities
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/chat
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/grounding
-            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/notes
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/therapy
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves
@@ -59,7 +58,6 @@ jobs:
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/activities
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/chat
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/grounding
-            ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/notes
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/therapy
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses
             ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}/courses/image-based-abuse-and-rebuilding-ourselves
