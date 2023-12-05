@@ -3,3 +3,4 @@ ci:
     puppeteerScript: config/puppeteerLogin.js
     settings:
       emulatedFormFactor: mobile
+      disableStorageReset: true
