@@ -122,7 +122,7 @@ const LoginForm = () => {
 
   return (
     <Box sx={containerStyle}>
-      <form id='login-form' autoComplete="off" onSubmit={submitHandler}>
+      <form id="login-form" autoComplete="off" onSubmit={submitHandler}>
         <TextField
           id="email"
           onChange={(e) => setEmailInput(e.target.value)}
