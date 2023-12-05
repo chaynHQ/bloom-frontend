@@ -1,4 +1,5 @@
 ci:
   collect:
+    puppeteerScript: lighthouse-audits/puppeteerLogin.js,
     settings:
       emulatedFormFactor: desktop
