@@ -7,7 +7,6 @@ const login = async (page, url) => {
   const passwordInput = await page.$('input[type="password"]');
   await passwordInput.type(process.env.USER_PASSWORD);
   await Promise.all([page.$eval('#login-form', (form) => form.submit()), page.waitForNavigation()]);
-  await page.close();
 };
 
 module.exports = async (browser) => {
