@@ -8,7 +8,7 @@ module.exports = async (browser, context) => {
   await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login');
   await page.type('input[type="email"]', process.env.USER_EMAIL);
   await page.type('input[type="password"]', process.env.USER_PASSWORD);
-  await page.submit('#login-form');
+  await page.click('[type="submit"]');
   await page.waitForNavigation();
   // close session for next run
   await page.close();
