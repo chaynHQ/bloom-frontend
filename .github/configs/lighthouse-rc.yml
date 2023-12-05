@@ -1,5 +1,5 @@
 ci:
   collect:
-    puppeteerScript: .github/configs/puppeteerLogin.js,
+    puppeteerScript: puppeteerLogin.js,
     settings:
       emulatedFormFactor: mobile
