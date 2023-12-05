@@ -1,18 +1,15 @@
-const login = async (page, url) => {
-  // Navigate the page to a URL
-  await page.goto(url);
-
-  const emailInput = await page.$('input[type="email"]');
-  await emailInput.type(process.env.USER_EMAIL);
-  const passwordInput = await page.$('input[type="password"]');
-  await passwordInput.type(process.env.USER_PASSWORD);
-  await Promise.all([page.$eval('#login-form', (form) => form.submit()), page.waitForNavigation()]);
-  await page.close();
-};
-
-module.exports = async (browser) => {
+/**
+ * @param {puppeteer.Browser} browser
+ * @param {{url: string, options: LHCI.CollectCommand.Options}} context
+ */
+module.exports = async (browser, context) => {
+  // launch browser for LHCI
   const page = await browser.newPage();
-  const url = 'https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login';
-
-  await login(page, url);
+  await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login');
+  await page.type('input[type="email"]', process.env.USER_EMAIL);
+  await page.type('input[type="password"]', process.env.USER_PASSWORD);
+  await page.submit('#login-form');
+  await page.waitForNavigation();
+  // close session for next run
+  await page.close();
 };
