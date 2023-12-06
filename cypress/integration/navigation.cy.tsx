@@ -11,8 +11,11 @@ describe('Navigation', () => {
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
       cy.get(`[qa-id=partner-admin-menu-button]`).should('not.exist');
-      cy.get(`[qa-id=secondary-nav]`).should('not.exist');
+      cy.get(`[qa-id=secondary-nav]`).should('exist');
       cy.get(`[qa-id=login-menu-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');
+      cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
     });
   });
   describe('A logged in public user', () => {
