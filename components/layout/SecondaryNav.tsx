@@ -127,6 +127,10 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
         '& a.Mui-selected': {
           color: 'text.secondary',
         },
+        '& a:hover': {
+          borderBottom: '2px solid',
+          borderColor: 'primary.dark',
+        },
       }}
       variant="fullWidth"
       qa-id="secondary-nav"
@@ -150,7 +154,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
               textTransform: 'none',
               fontSize: theme.typography.body1.fontSize,
               fontWeight: 600,
-              '& .material-icons ': { marginBottom: 0, mr: 1.5 },
+              '& .material-icons ': { mb: 0, mr: 1.5 },
               padding: 0.25,
               flexDirection: 'row',
             }}
