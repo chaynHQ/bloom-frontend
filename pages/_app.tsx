@@ -71,10 +71,21 @@ function MyApp(props: MyAppProps) {
       'partnership',
       'about-our-courses',
     ];
+
+    // As the subpages of courses are not public and these pages are only partially public,
+    // they are treated differently as they are not public path heads
+    const partiallyPublicPages = [
+      '/courses',
+      '/activities',
+      '/grounding',
+      '/subscription/whatsapp',
+      '/chat',
+    ];
+
     const component = <Component {...pageProps} />;
     let children = null;
 
-    if (publicPathHeads.includes(pathHead)) {
+    if (publicPathHeads.includes(pathHead) || partiallyPublicPages.includes(router.asPath)) {
       return <PublicPageDataWrapper>{component}</PublicPageDataWrapper>;
     }
     if (pathHead === 'therapy') {
@@ -109,7 +120,7 @@ function MyApp(props: MyAppProps) {
           <Footer />
           <Consent />
           {/* Vercel analytics */}
-          <Analytics /> 
+          <Analytics />
         </ThemeProvider>
       </CacheProvider>
     </NextIntlClientProvider>

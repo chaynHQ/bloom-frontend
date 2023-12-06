@@ -18,7 +18,6 @@ import rollbar from '../config/rollbar';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
-import generateReturnQuery from '../utils/generateReturnQuery';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 /**
@@ -79,8 +78,6 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
         await dispatch(clearCoursesSlice());
         await dispatch(clearUserSlice());
         await dispatch(api.util.resetApiState());
-
-        router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       }
       setLoading(false);
     }
