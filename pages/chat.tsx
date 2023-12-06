@@ -4,13 +4,13 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { RootState } from '../app/store';
+import { SignUpBanner } from '../components/banner/SignUpBanner';
 import CrispButton from '../components/crisp/CrispButton';
 import Header, { HeaderProps } from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../config/storyblok';
 import { LANGUAGES } from '../constants/enums';
 import { useTypedSelector } from '../hooks/store';
-import { rowStyle } from '../styles/common';
 import { getEventUserData } from '../utils/logEvent';
 
 interface Props {
@@ -19,18 +19,6 @@ interface Props {
   sbParams: StoriesParams;
   locale: LANGUAGES;
 }
-
-const containerStyle = {
-  backgroundColor: 'primary.light',
-  textAlign: 'center',
-  ...rowStyle,
-} as const;
-
-const crispButtonContainerStyle = {
-  paddingTop: 4,
-  paddingBottom: 1,
-  display: 'flex',
-} as const;
 
 const Chat: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   let configuredStory = useStoryblok(story, preview, sbParams, locale);
@@ -51,14 +39,17 @@ const Chat: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         <Header
           {...headerProps}
           cta={
-            <CrispButton
-              email={user.email}
-              eventData={eventUserData}
-              buttonText={t('sessionDetail.chat.startButton')}
-            />
+            user.token && (
+              <CrispButton
+                email={user.email}
+                eventData={eventUserData}
+                buttonText={t('sessionDetail.chat.startButton')}
+              />
+            )
           }
         />
-        {configuredStory.content.page_sections?.length > 0 &&
+        {user.token ? (
+          configuredStory.content.page_sections?.length > 0 &&
           configuredStory.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection
               key={`page_section_${index}`}
@@ -66,7 +57,10 @@ const Chat: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
               alignment={section.alignment}
               color={section.color}
             />
-          ))}
+          ))
+        ) : (
+          <SignUpBanner />
+        )}
       </Box>
     </>
   );

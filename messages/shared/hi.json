@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "Cookies neeti",
       "acceptLabel": "Cookies sweekaar kariye",
       "declineLabel": "Cookies asweekar karein"
+    },
+    "signUpTodayPromo": {
+      "title": "Sign up for a free account today",
+      "description1": "We provide free services to support you to heal from trauma. From our video courses and reflective activities to our 1-1 chat and WhatsApp subscription service, there's lots of different ways to engage with Bloom.",
+      "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
+      "button": "Sign up today"
     }
   }
 }
