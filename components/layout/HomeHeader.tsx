@@ -53,7 +53,7 @@ const textContainerStyle = {
   pr: { xs: 6, sm: 0 },
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
-  maxWidth: { xs: '100%', sm: '50%', md: '55%', lg: '65%' },
+  maxWidth: { xs: '100%', sm: '50%', md: '60%' },
 } as const;
 
 const textContentStyle = {
