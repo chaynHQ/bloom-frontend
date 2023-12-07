@@ -53,3 +53,18 @@ ol > li::marker {
   color: #ea0050;
   font-weight: bold;
 }
+
+/* Styling for the nuka-carousel */
+.paging-dot {
+  width: 10px;
+  height: 10px;
+}
+
+.paging-item.active {
+  fill: #ea0050 !important;
+}
+
+.slide-visible > div {
+  padding-left: 20px;
+  padding-right: 20px;
+}
