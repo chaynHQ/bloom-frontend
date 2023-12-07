@@ -169,7 +169,7 @@ theme = createTheme(theme, {
         containedSecondary: {
           borderColor: 'transparent',
           '&:hover': {
-            backgroundColor: lighten(theme.palette.secondary.main, 0.2),
+            backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
           },
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.secondary.dark,
