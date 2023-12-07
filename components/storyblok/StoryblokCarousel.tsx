@@ -82,11 +82,17 @@ const StoryblokCarousel = ({ items, theme = 'primary' }: StoryblokCarouselProps)
       }}
       renderCenterLeftControls={
         isMobileScreen
-          ? () => {}
+          ? () => {
+              return <></>;
+            }
           : ({ previousSlide }) => <PreviousButton onClick={previousSlide} />
       }
       renderCenterRightControls={
-        isMobileScreen ? () => {} : ({ nextSlide }) => <NextButton onClick={nextSlide} />
+        isMobileScreen
+          ? () => {
+              return <></>;
+            }
+          : ({ nextSlide }) => <NextButton onClick={nextSlide} />
       }
     >
       {items.map((item, index: number) => {
