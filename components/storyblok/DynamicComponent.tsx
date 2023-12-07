@@ -2,6 +2,7 @@ import { StoryblokComponent } from 'storyblok-js-client';
 import Placeholder from './Placeholder';
 import StoryblokButton from './StoryblokButton';
 import StoryblokCard from './StoryblokCard';
+import StoryblokCarousel from './StoryblokCarousel';
 import StoryblokFaqs from './StoryblokFaqs';
 import StoryblokImage from './StoryblokImage';
 import StoryblokPageSection from './StoryblokPageSection';
@@ -11,7 +12,7 @@ import StoryblokRowColumnBlock from './StoryblokRowColumnBlock';
 import StoryblokStatement from './StoryblokStatement';
 import StoryblokVideo from './StoryblokVideo';
 
-interface Component {
+export interface Component {
   name: string;
   component: (props: any) => JSX.Element;
 }
@@ -27,6 +28,7 @@ const components: Component[] = [
   { name: 'button', component: StoryblokButton },
   { name: 'faqs', component: StoryblokFaqs },
   { name: 'statement', component: StoryblokStatement },
+  { name: 'carousel', component: StoryblokCarousel },
 ];
 
 interface DynamicComponentProps {

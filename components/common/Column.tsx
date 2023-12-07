@@ -23,6 +23,8 @@ const Column = (props: ColumnProps) => {
         ? { xs: '100%', md: '60%' }
         : width === 'extra-large'
         ? { xs: '100%', md: '80%' }
+        : width === 'full-width'
+        ? { xs: `100%`, md: '100%' }
         : { xs: `100%`, md: 'auto' },
     ...(!width ? { flex: { md: 1 } } : {}),
   };
