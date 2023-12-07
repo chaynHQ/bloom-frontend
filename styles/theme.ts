@@ -168,6 +168,7 @@ theme = createTheme(theme, {
         },
         containedSecondary: {
           borderColor: 'transparent',
+          backgroundColor: theme.palette.secondary.dark,
           '&:hover': {
             backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
           },
