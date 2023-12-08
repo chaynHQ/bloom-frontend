@@ -17,6 +17,8 @@ const Column = (props: ColumnProps) => {
           }
         : width === 'small'
         ? { xs: '100%', md: '20%' }
+        : width === 'small-medium'
+        ? { xs: '100%', sm: '45%', md: '30%' }
         : width === 'medium'
         ? { xs: '100%', md: '40%' }
         : width === 'large'
