@@ -9,7 +9,7 @@ interface StoryblokButtonProps {
   text: string;
   color: STORYBLOK_COLORS;
   link: StoryblokLink;
-  size: string;
+  size: 'small' | 'medium' | 'large' | undefined;
 }
 
 const StoryblokButton = (props: StoryblokButtonProps) => {
