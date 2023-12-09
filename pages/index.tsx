@@ -65,6 +65,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
               logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
             }}
             href="/auth/register"
+            size="large"
           >
             {t('getStarted')}
           </Button>
