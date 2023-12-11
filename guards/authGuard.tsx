@@ -13,7 +13,7 @@ import {
 } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 
-import { auth } from '../config/firebase';
+import { getAuth, onAuthStateChanged, onIdTokenChanged, signOut } from 'firebase/auth';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_REQUEST,
@@ -36,20 +36,23 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const [loading, setLoading] = useState(true);
   const [getUser] = useGetUserMutation();
 
+  const auth = getAuth();
+
   // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (authState) => {
-      if (!authState) {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
         dispatch(setAuthStateLoading(false));
         setLoading(false);
         return;
       }
-      // authState.getIdToken Returns a JSON Web Token (JWT) used to identify the user to a Firebase service.
+      // user.getIdToken Returns a JSON Web Token (JWT) used to identify the user to a Firebase service.
       // Returns the current token if it has not expired. Otherwise, this will refresh the token and return a new one.
-      const authToken = await authState.getIdToken();
+      const authToken = await user.getIdToken();
       dispatch(setUserToken(authToken));
       dispatch(setAuthStateLoading(false));
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -58,7 +61,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     // Add listener for new firebase auth token, updating it in state to be used in request headers
     // Required for restoring user state following app reload or revisiting site
 
-    auth.onIdTokenChanged(async function (user) {
+    onIdTokenChanged(auth, async (user) => {
       const token = await user?.getIdToken();
       if (token) {
         await dispatch(setUserToken(token));
@@ -89,7 +92,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
 
-      auth.signOut();
+      signOut(auth);
       await dispatch(clearPartnerAccessesSlice());
       await dispatch(clearPartnerAdminSlice());
       await dispatch(clearCoursesSlice());

@@ -1,5 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Checkbox, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -11,7 +12,6 @@ import {
 } from '../../app/api';
 import { RootState } from '../../app/store';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_EMAIL_ALREADY_EXISTS,
@@ -106,7 +106,6 @@ const RegisterForm = (props: RegisterFormProps) => {
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
       setLoading(false);
-      throw error;
     }
     logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
   };
@@ -125,7 +124,8 @@ const RegisterForm = (props: RegisterFormProps) => {
     if ('data' in userResponse && userResponse.data.user.id) {
       logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
       try {
-        const userCredential = await auth.signInWithEmailAndPassword(emailInput, passwordInput);
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_USER_REQUEST); // deprecated event
         logEvent(GET_LOGIN_USER_REQUEST);
@@ -174,7 +174,6 @@ const RegisterForm = (props: RegisterFormProps) => {
       (window as any).Rollbar?.error('User register create user error', error);
 
       setLoading(false);
-
       throw error;
     }
   };
@@ -188,8 +187,8 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
       await createUserRecord();
-      dispatch(setUserLoading(false));
       router.push('/account/about-you');
+      dispatch(setUserLoading(false));
       setLoading(false);
     } catch {
       // errors handled in each function

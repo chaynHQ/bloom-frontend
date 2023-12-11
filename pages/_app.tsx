@@ -19,6 +19,7 @@ import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
+import firebase from '../config/firebase';
 import { AuthGuard } from '../guards/authGuard';
 import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
@@ -31,8 +32,8 @@ import theme from '../styles/theme';
 // For SSG compatibility with MUI
 // Client-side emotion cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
-export interface MyAppProps extends AppProps {
+firebase;
+interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
@@ -104,10 +105,10 @@ function MyApp(props: MyAppProps) {
   return (
     <ErrorBoundary>
       <NextIntlClientProvider messages={pageProps.messages} locale={router.locale}>
-          <Head>
-            <title>Bloom</title>
-            <meta name="viewport" content="initial-scale=1, width=device-width" />
-          </Head>
+        <Head>
+          <title>Bloom</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
         <CacheProvider value={emotionCache}>
           <CrispScript />
           <ThemeProvider theme={theme}>
@@ -120,7 +121,7 @@ function MyApp(props: MyAppProps) {
             <Consent />
             {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
               <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-              )}
+            )}
             {/* Vercel analytics */}
             <Analytics />
           </ThemeProvider>
