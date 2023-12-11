@@ -11,8 +11,6 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
-import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
@@ -108,8 +106,6 @@ function MyApp(props: MyAppProps) {
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
-        <GoogleTagManagerScript />
-        <OpenGraphMetadata />
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />

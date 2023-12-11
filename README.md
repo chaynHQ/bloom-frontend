@@ -52,7 +52,7 @@ Happy coding! ⭐
 
 ## Prerequisites
 
-- NodeJS v16.x
+- NodeJS 20.x
 - Yarn v1.x
 
 ## Local Development:

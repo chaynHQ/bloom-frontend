@@ -1,7 +1,5 @@
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { hotjar } from 'react-hotjar';
 import { api, useGetUserMutation } from '../app/api';
 import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
@@ -89,12 +87,6 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
     if (user.token && !user.id) {
       // User firebase token exists (i.e. user is logged in) but user data hasn't been loaded
       callGetUser();
-    }
-    if (user.id && process.env.NEXT_PUBLIC_ENV !== 'local') {
-      // Checking for analytics consent before sending userIdentifiers to hotjar
-      if (Cookies.get('analyticsConsent') === 'true') {
-        hotjar.identify('USER_ID', { userProperty: user.id });
-      }
     }
   }, [getUser, router, user]);
 
