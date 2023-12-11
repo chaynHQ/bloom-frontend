@@ -48,6 +48,7 @@
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
