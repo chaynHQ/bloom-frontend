@@ -8,7 +8,7 @@
     "form": {
       "subscribeTitle": "Subscribe kariye Notes from Bloom ke messages ke liye.",
       "subscribe": "Subscribe",
-      "phonenumber": "Phone number",
+      "phoneNumber": "Phone number",
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {

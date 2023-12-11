@@ -25,7 +25,7 @@ const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const tS = useTranslations('Shared');
 
-  const [phonenumber, setPhonenumber] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<TextNode>();
@@ -38,7 +38,7 @@ const WhatsappUnsubscribeForm = () => {
   useEffect(() => {
     const activeWhatsappSubscription = findWhatsappSubscription(user.activeSubscriptions);
     if (activeWhatsappSubscription) {
-      setPhonenumber(activeWhatsappSubscription.subscriptionInfo!);
+      setPhoneNumber(activeWhatsappSubscription.subscriptionInfo!);
       setSubscriptionId(activeWhatsappSubscription.id!);
     }
   }, [user.activeSubscriptions]);
@@ -85,12 +85,12 @@ const WhatsappUnsubscribeForm = () => {
         <Box sx={containerStyle}>
           <form autoComplete="off" onSubmit={unsubscribeHandler}>
             <TextField
-              key="phonenumber-unsubscribe"
-              label={t('phonenumber')}
+              key="phoneNumber-unsubscribe"
+              label={t('phoneNumber')}
               variant="standard"
               type="text"
-              fullWidth
-              value={phonenumber}
+              sx={{ width: '15rem' }}
+              value={phoneNumber}
               disabled
             />
             {formError && (
