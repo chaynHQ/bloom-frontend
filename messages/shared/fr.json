@@ -72,10 +72,10 @@
       "declineLabel": "Reject Cookies"
     },
     "signUpTodayPromo": {
-      "title": "Sign up for a free account today",
-      "description1": "We provide free services to support you to heal from trauma. From our video courses and reflective activities to our 1-1 chat and WhatsApp subscription service, there's lots of different ways to engage with Bloom.",
-      "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
-      "button": "Sign up today"
+      "title": "Ouvre un compte gratuit aujourd’hui",
+      "description1": "Bloom est une plateforme en ligne conçue pour vous soutenir dans votre processus de guérison après un traumatisme. Des cours vidéo et des activités réflexives à la messagerie directe avec notre équipe, il existe de nombreuses façons différentes de s'engager avec Bloom.",
+      "description2": "Inscrivez-vous ci-dessous pour accéder à l'ensemble de notre contenu et explorer tout ce que Bloom a à offrir.",
+      "button": "Démarrer"
     }
   }
 }
