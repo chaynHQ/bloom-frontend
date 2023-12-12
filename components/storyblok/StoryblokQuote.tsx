@@ -22,7 +22,7 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
         flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: 5,
+        gap: 7,
       }}
     >
       {image && (
