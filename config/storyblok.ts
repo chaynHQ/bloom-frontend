@@ -86,7 +86,7 @@ export function useStoryblok(
       // first load the bridge, then initialize the event listeners
       addBridge(initEventListeners);
     }
-  }, []);
+  });
 
   useEffect(() => {
     setStory(originalStory);

@@ -16,8 +16,7 @@ import {
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
-import { RootState } from '../../app/store';
+import { useEffect, useState } from 'react';
 import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
@@ -62,7 +61,10 @@ const AboutYouDemographicForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userId = useTypedSelector((state) => state.user.id);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   useEffect(() => {
     if (router.locale === LANGUAGES.es) {
@@ -73,8 +75,8 @@ const AboutYouDemographicForm = () => {
   }, [router.locale]);
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
-  }, [user, partnerAccesses, partnerAdmin]);
+    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
+  }, [userCreatedAt, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -84,7 +86,7 @@ const AboutYouDemographicForm = () => {
 
     const formData = {
       date: new Date().toISOString(),
-      user_id: user.id && hashString(user.id),
+      user_id: userId && hashString(userId),
       // Sort alphabetically the gender inputs and the make it into a string for the form
       gender: genderInput
         .map((gender) => gender.toLowerCase())
@@ -127,7 +129,8 @@ const AboutYouDemographicForm = () => {
     }
   };
 
-  const genderOptions = useMemo(() => t('genderOptions').split(';'), []);
+  const genderOptions = t('genderOptions').split(';');
+
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>

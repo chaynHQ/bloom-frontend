@@ -15,7 +15,6 @@ import {
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { api, useUpdatePartnerAccessMutation } from '../../app/api';
-import { RootState } from '../../app/store';
 import { GetUserDto } from '../../app/userSlice';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
@@ -23,9 +22,11 @@ import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const UpdateTherapyAdminForm = () => {
-  const { user } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  const eventUserData = getEventUserData({ user });
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const t = useTranslations('Admin.updateTherapy');
   const dispatch: any = useAppDispatch();

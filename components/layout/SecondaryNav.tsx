@@ -5,7 +5,6 @@ import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
 
 import { useTranslations } from 'next-intl';
-import { RootState } from '../../app/store';
 import {
   SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
@@ -52,8 +51,10 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
 
 const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
   const router = useRouter();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Navigation');
 
   const therapyAccess = partnerAccesses.find(

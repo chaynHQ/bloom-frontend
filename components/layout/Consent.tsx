@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
-import { RootState } from '../../app/store';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
@@ -12,8 +11,10 @@ import Link from '../common/Link';
 
 const Consent = (props: {}) => {
   const theme = useTheme();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const tS = useTranslations('Shared');
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
 

@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo_white.svg';
@@ -44,8 +43,11 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     if (partnerAdmin && partnerAdmin.partner) {
@@ -73,9 +75,9 @@ const TopBar = () => {
           </Link>
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}
-            {user.token && <UserMenu />}
+            {userToken && <UserMenu />}
             <LanguageMenu />
-            {!isSmallScreen && !user.token && (
+            {!isSmallScreen && !userToken && (
               <Button
                 variant="contained"
                 size="medium"

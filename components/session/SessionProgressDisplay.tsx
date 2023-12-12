@@ -3,7 +3,6 @@ import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Course } from '../../app/coursesSlice';
-import { RootState } from '../../app/store';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { StoryblokSessionJson } from '../../utils/helper-types/storyblok';
@@ -20,7 +19,7 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
 
-  const { courses } = useTypedSelector((state: RootState) => state);
+  const courses = useTypedSelector((state) => state.courses);
 
   useEffect(() => {
     const userCourse = courses.find((course: Course) => course.storyblokId === storyblokCourseId);

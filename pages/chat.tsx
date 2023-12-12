@@ -3,7 +3,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../app/store';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
 import CrispButton from '../components/crisp/CrispButton';
 import Header, { HeaderProps } from '../components/layout/Header';
@@ -22,15 +21,21 @@ interface Props {
 
 const Chat: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   let configuredStory = useStoryblok(story, preview, sbParams, locale);
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const t = useTranslations('Courses');
+
+  const userEmail = useTypedSelector((state) => state.user.email);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
   const headerProps: HeaderProps = {
     title: configuredStory.content.title,
     introduction: configuredStory.content.description,
     imageSrc: configuredStory.content.header_image.filename,
     translatedImageAlt: configuredStory.content.header_image.alt,
   };
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   return (
     <>
@@ -39,16 +44,16 @@ const Chat: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         <Header
           {...headerProps}
           cta={
-            user.token && (
+            userToken && (
               <CrispButton
-                email={user.email}
+                email={userEmail}
                 eventData={eventUserData}
                 buttonText={t('sessionDetail.chat.startButton')}
               />
             )
           }
         />
-        {user.token ? (
+        {userToken ? (
           configuredStory.content.page_sections?.length > 0 &&
           configuredStory.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection

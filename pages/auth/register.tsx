@@ -14,7 +14,6 @@ import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import RegisterForm, { PartnerRegisterForm } from '../../components/forms/RegisterForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -75,8 +74,10 @@ const Register: NextPage = () => {
   const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [codeParam, setCodeParam] = useState<string>('');
   const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);

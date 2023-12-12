@@ -2,7 +2,6 @@ import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { RootState } from '../../app/store';
 import { FeatureFlag } from '../../config/featureFlag';
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -24,8 +23,10 @@ const USER_RESEARCH_FORM_LINK =
 export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const router = useRouter();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
@@ -53,7 +54,7 @@ export default function UserResearchBanner() {
                 size="medium"
                 onClick={() => {
                   Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-                  logEvent(USER_BANNER_INTERESTED, eventData);
+                  logEvent(USER_BANNER_INTERESTED, eventUserData);
 
                   setOpen(false);
 
@@ -67,7 +68,7 @@ export default function UserResearchBanner() {
                 size="medium"
                 onClick={() => {
                   Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-                  logEvent(USER_BANNER_DISMISSED, eventData);
+                  logEvent(USER_BANNER_DISMISSED, eventUserData);
 
                   setOpen(false);
                 }}

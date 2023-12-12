@@ -3,7 +3,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { RootState } from '../../app/store';
 import CreateAccessCodeForm from '../../components/forms/CreateAccessCodeForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
@@ -23,8 +22,10 @@ const cardStyle = {
 
 const CreateAccessCode: NextPage = () => {
   const t = useTranslations('PartnerAdmin.createAccessCode');
-  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     title: t('title'),
@@ -35,7 +36,7 @@ const CreateAccessCode: NextPage = () => {
 
   useEffect(() => {
     logEvent(CREATE_PARTNER_ACCESS_VIEWED, { ...eventUserData });
-  }, []);
+  });
 
   return (
     <Box>

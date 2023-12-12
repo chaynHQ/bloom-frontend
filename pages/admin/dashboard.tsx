@@ -3,7 +3,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { RootState } from '../../app/store';
 import CreatePartnerAdminForm from '../../components/forms/CreatePartnerAdminForm';
 import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
@@ -24,16 +23,18 @@ const cardStyle = {
 
 const Dashboard: NextPage = () => {
   const t = useTranslations('Admin');
-  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     title: t('title'),
   };
 
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED, { ...eventUserData });
-  }, []);
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED, eventUserData);
+  });
 
   return (
     <Box>

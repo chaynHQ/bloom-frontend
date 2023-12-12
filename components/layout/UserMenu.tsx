@@ -10,7 +10,6 @@ import { api } from '../../app/api';
 import { clearCoursesSlice } from '../../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
-import { RootState } from '../../app/store';
 import { clearUserSlice } from '../../app/userSlice';
 import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
@@ -42,8 +41,10 @@ export default function UserMenu() {
   const router = useRouter();
   const t = useTranslations('Navigation');
   const dispatch: any = useAppDispatch();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

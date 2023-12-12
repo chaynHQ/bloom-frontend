@@ -105,7 +105,11 @@ function MyApp(props: MyAppProps) {
 
   return (
     <ErrorBoundary>
-      <NextIntlClientProvider messages={pageProps.messages} locale={router.locale}>
+      <NextIntlClientProvider
+        messages={pageProps.messages}
+        locale={router.locale}
+        timeZone="Europe/London"
+      >
         <Head>
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -140,7 +144,7 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
         (window as any).store = store;
       }
     }
-  }, []);
+  });
 
   return (
     <Provider store={store}>

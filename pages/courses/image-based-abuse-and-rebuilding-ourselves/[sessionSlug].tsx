@@ -11,7 +11,6 @@ import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
-import { RootState } from '../../../app/store';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
 import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
@@ -88,9 +87,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   story = useStoryblok(story, preview, sbParams, locale);
   const course = story.content.course.content;
 
-  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
-    (state: RootState) => state,
-  );
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userEmail = useTypedSelector((state) => state.user.email);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const courses = useTypedSelector((state) => state.courses);
+
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
@@ -101,7 +103,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [weekString, setWeekString] = useState<string>('');
   const [startSession] = useStartSessionMutation();
 
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = {
     ...eventUserData,
@@ -207,7 +209,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
 
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
-  }, []);
+  });
 
   return (
     <Box>
@@ -332,7 +334,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
                     </Box>
                     <Box sx={crispButtonContainerStyle}>
                       <CrispButton
-                        email={user.email}
+                        email={userEmail}
                         eventData={eventData}
                         buttonText={t('sessionDetail.chat.startButton')}
                       />

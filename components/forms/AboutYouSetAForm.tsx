@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -47,7 +46,9 @@ const AboutYouSetAForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const user = useTypedSelector((state) => state.user);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -61,8 +62,8 @@ const AboutYouSetAForm = () => {
   ];
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
-  }, [user, partnerAccesses, partnerAdmin]);
+    setEventUserData(getEventUserData(user.createdAt, partnerAccesses, partnerAdmin));
+  }, [user.createdAt, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

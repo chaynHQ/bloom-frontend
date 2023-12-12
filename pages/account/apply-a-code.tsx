@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
 import Header from '../../components/layout/Header';
@@ -51,7 +50,9 @@ const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
 
   useEffect(() => {
@@ -59,10 +60,10 @@ const ApplyACode: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+    const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
     logEvent(ASSIGN_NEW_PARTNER_VIEWED, eventUserData);
-  }, []);
+  });
 
   const headerProps = {
     title: t('applyCode.title'),

@@ -5,7 +5,6 @@ import { api, useGetUserMutation } from '../app/api';
 import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
-import { RootState } from '../app/store';
 import {
   clearUserSlice,
   setAuthStateLoading,
@@ -15,7 +14,7 @@ import {
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 
 /**
  * Function is intended to wrap around a public page (i.e. auth not required) and pull user data if available.
@@ -33,7 +32,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const user = useTypedSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
 
   const [getUser] = useGetUserMutation();
@@ -55,7 +54,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       dispatch(setAuthStateLoading(false));
     });
     return () => unsubscribe();
-  }, []);
+  });
 
   useEffect(() => {
     async function callGetUser() {
@@ -64,7 +63,9 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {
-        logEvent(GET_AUTH_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+        const eventUserData = getEventUserResponseData(userResponse.data);
+
+        logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
       } else {
         if ('error' in userResponse) {
           (window as any).Rollbar?.error(
@@ -92,7 +93,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       // User firebase token exists (i.e. user is logged in) but user data hasn't been loaded
       callGetUser();
     }
-  }, [getUser, router, user]);
+  }, [getUser, router, user, dispatch, loading]);
 
   return <>{children}</>;
 }

@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useGetAutomaticAccessCodeFeatureForPartnerQuery } from '../../app/api';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import WelcomeCodeForm from '../../components/forms/WelcomeCodeForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -56,10 +55,6 @@ interface Props {
 }
 
 const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  const t = useTranslations('Welcome');
-
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   story = useStoryblok(story, preview, sbParams, locale);
   const partnerContent = getPartnerContent(story.slug);
 
@@ -100,14 +95,19 @@ const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 
 const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   const router = useRouter();
-  const { user, partnerAccesses, partnerAdmin, partners } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const t = useTranslations('Welcome');
+
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const partners = useTypedSelector((state) => state.partners);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
   const [codeParam, setCodeParam] = useState<string>('');
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const t = useTranslations('Welcome');
+
   useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
   useEffect(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
@@ -124,7 +124,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   return (
     <Card sx={rowItem}>
       <CardContent>
-        {user.token && (
+        {userToken && (
           <>
             <Typography variant="h2" component="h2">
               {t('continueCourses')}
@@ -145,7 +145,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             </Button>
           </>
         )}
-        {!user.token && accessCodeRequired && (
+        {!userToken && accessCodeRequired && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}
@@ -154,7 +154,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             <WelcomeCodeForm codeParam={codeParam} partnerParam={partnerName} />
           </>
         )}
-        {!user.token && !accessCodeRequired && (
+        {!userToken && !accessCodeRequired && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}

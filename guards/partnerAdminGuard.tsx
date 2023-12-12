@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useTranslations } from 'use-intl';
-import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
@@ -22,11 +21,12 @@ const imageContainerStyle = {
 } as const;
 
 export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
-  const { partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const partnerAdminId = useTypedSelector((state) => state.partnerAdmin.id);
+
   const t = useTranslations('PartnerAdmin.accessGuard');
   const tS = useTranslations('Shared');
 
-  if (!partnerAdmin) {
+  if (!partnerAdminId) {
     return (
       <Container sx={containerStyle}>
         <Head>{t('title')}</Head>

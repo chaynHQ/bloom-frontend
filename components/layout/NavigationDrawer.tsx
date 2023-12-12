@@ -3,7 +3,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { RootState } from '../../app/store';
 import {
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
@@ -41,8 +40,10 @@ const NavigationDrawer = () => {
   const open = Boolean(anchorEl);
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

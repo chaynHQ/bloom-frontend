@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import { generatePartnerPromoGetStartedEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -20,10 +19,12 @@ interface WelcomeCodeFormProps {
 const WelcomeCodeForm = (props: WelcomeCodeFormProps) => {
   const { codeParam, partnerParam } = props;
   const t = useTranslations('Welcome');
-  const { user, partnerAccesses, partnerAdmin, partners } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [codeInput, setCodeInput] = useState<string>('');
   const router = useRouter();
