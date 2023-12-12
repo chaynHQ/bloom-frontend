@@ -14,6 +14,7 @@ import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
@@ -101,29 +102,31 @@ function MyApp(props: MyAppProps) {
   };
 
   return (
-    <NextIntlClientProvider messages={pageProps.messages}>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>Bloom</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <CrispScript />
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <TopBar />
-          <AppBarSpacer />
-          {pathHead !== 'partner-admin' && <LeaveSiteButton />}
-          <ComponentWithGuard />
-          <Footer />
-          <Consent />
-          {/* Vercel analytics */}
-          {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
-            <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-          )}
-          <Analytics />
-        </ThemeProvider>
-      </CacheProvider>
-    </NextIntlClientProvider>
+    <ErrorBoundary>
+      <NextIntlClientProvider messages={pageProps.messages}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <title>Bloom</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <CrispScript />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <TopBar />
+            <AppBarSpacer />
+            {pathHead !== 'partner-admin' && <LeaveSiteButton />}
+            <ComponentWithGuard />
+            <Footer />
+            <Consent />
+            {/* Vercel analytics */}
+            {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+              <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+            )}
+            <Analytics />
+          </ThemeProvider>
+        </CacheProvider>
+      </NextIntlClientProvider>
+    </ErrorBoundary>
   );
 }
 
@@ -143,4 +146,5 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
     </Provider>
   );
 }
+
 export default AppReduxWrapper;

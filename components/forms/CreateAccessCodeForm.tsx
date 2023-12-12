@@ -14,7 +14,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../../app/api';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import { BASE_URL } from '../../constants/common';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
@@ -90,7 +89,7 @@ const CreateAccessCodeForm = () => {
         ...eventData,
         error: errorMessage,
       });
-      rollbar.error('Create partner access code error', error);
+      (window as any).Rollbar?.error('Create partner access code error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
       setLoading(false);

@@ -8,7 +8,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useSubscribeToWhatsappMutation } from '../../app/api';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -76,7 +75,7 @@ const WhatsappSubscribeForm = () => {
           );
         }
 
-        rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
+        (window as any).Rollbar?.error('Whatsapp subscribe error', subscribeResponse.error);
         logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
         setLoading(false);
 

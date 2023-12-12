@@ -23,7 +23,6 @@ import MultipleBonusContent from '../../../components/session/MultipleBonusConte
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
-import rollbar from '../../../config/rollbar';
 import Storyblok, { useStoryblok } from '../../../config/storyblok';
 import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
 import {
@@ -87,6 +86,7 @@ interface Props {
 
 const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Courses');
+
   story = useStoryblok(story, preview, sbParams, locale);
   const course = story.content.course.content;
 
@@ -193,7 +193,7 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       const error = startSessionResponse.error;
 
       logEvent(SESSION_STARTED_ERROR, eventData);
-      rollbar.error('Session started error', error);
+      (window as any).Rollbar?.error('Session started error', error);
 
       throw error;
     }

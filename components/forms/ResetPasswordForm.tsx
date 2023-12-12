@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { auth } from '../../config/firebase';
-import rollbar from '../../config/rollbar';
 import {
   RESET_PASSWORD_ERROR,
   RESET_PASSWORD_REQUEST,
@@ -48,7 +47,7 @@ export const EmailForm = () => {
         const errorMessage = error.message;
 
         logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        rollbar.error('User send reset password email firebase error', error);
+        (window as any).Rollbar?.error('User send reset password email firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -142,7 +141,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
         const errorMessage = error.message;
 
         logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        rollbar.error('User confirm reset password firebase error', error);
+        (window as any).Rollbar?.error('User confirm reset password firebase error', error);
 
         if (errorCode === 'auth/weak-password') {
           setFormError(t('firebase.weakPassword'));

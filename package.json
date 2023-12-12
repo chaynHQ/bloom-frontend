@@ -41,7 +41,6 @@
     "react-dom": "18.0.0",
     "react-player": "^2.13.0",
     "react-redux": "^8.0.5",
-    "rollbar": "^2.24.0",
     "sharp": "^0.30.5",
     "storyblok-js-client": "^4.2.0",
     "storyblok-rich-text-react-renderer": "^2.9.0"

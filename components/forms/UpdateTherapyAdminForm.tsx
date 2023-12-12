@@ -17,7 +17,6 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { api, useUpdatePartnerAccessMutation } from '../../app/api';
 import { RootState } from '../../app/store';
 import { GetUserDto } from '../../app/userSlice';
-import rollbar from '../../config/rollbar';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
@@ -127,7 +126,7 @@ const UpdateTherapyAdminForm = () => {
           ...eventUserData,
           error: errorMessage,
         });
-        rollbar.error(t('error') + errorMessage);
+        (window as any).Rollbar?.error(t('error') + errorMessage);
 
         setFormError(t('error') + errorMessage);
         setLoading(false);
