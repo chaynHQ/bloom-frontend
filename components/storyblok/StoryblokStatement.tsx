@@ -40,6 +40,7 @@ const StoryblokStatement = (props: StoryblokStatementProps) => {
 
   return (
     <Box sx={containerStyle}>
+      {/* @ts-ignore */}
       <text>{text}</text>
     </Box>
   );
