@@ -1,8 +1,4 @@
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Button from '@mui/material/Button';
-import Collapse from '@mui/material/Collapse';
-import Stack from '@mui/material/Stack';
+import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -35,14 +31,15 @@ export default function UserResearchBanner() {
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
-  const isBadooUser = partnerAccesses.find((pa)=>{return pa.partner.name.toLowerCase() === 'badoo'})
+  const isBadooUser = partnerAccesses.find((pa) => {
+    return pa.partner.name.toLowerCase() === 'badoo';
+  });
 
   const isTargetPage = !(
     router.pathname.includes('auth') || router.pathname.includes('partnerName')
   );
 
-  const showBanner =
-    isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
+  const showBanner = isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Collapse in={open}>

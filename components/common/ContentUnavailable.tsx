@@ -1,6 +1,4 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';

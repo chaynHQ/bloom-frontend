@@ -1,10 +1,12 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -17,9 +19,9 @@ import Link from '../../components/common/Link';
 import LoginForm from '../../components/forms/LoginForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import {
-  generateGetStartedPartnerEvent,
   GET_STARTED_WITH_BLOOM_CLICKED,
   RESET_PASSWORD_HERE_CLICKED,
+  generateGetStartedPartnerEvent,
 } from '../../constants/events';
 import { getAllPartnersContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';

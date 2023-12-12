@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';

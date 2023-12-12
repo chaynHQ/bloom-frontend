@@ -1,8 +1,4 @@
-import { Box, Button, Theme } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';

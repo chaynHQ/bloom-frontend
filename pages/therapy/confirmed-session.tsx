@@ -1,6 +1,4 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -78,9 +76,7 @@ const ConfirmedSession: NextPage = () => {
         <Typography>{t('confirmation.returnDescription')}</Typography>
         <Typography>
           {t.rich('confirmation.bookmarkDescription', {
-            bookingLink: (children) => (
-              <Link href={`${BASE_URL}/`}>{children}</Link>
-            ),
+            bookingLink: (children) => <Link href={`${BASE_URL}/`}>{children}</Link>,
           })}
         </Typography>
       </Container>

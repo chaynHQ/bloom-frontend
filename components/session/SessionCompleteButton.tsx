@@ -1,6 +1,5 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Typography } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';

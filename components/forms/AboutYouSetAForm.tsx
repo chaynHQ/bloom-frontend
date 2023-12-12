@@ -1,9 +1,5 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
+import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';

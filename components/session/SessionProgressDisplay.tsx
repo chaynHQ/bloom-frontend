@@ -1,6 +1,6 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Course } from '../../app/coursesSlice';
 import { RootState } from '../../app/store';
