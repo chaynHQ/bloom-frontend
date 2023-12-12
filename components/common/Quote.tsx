@@ -1,5 +1,6 @@
 import { Box } from '@mui/system';
 import { useTranslations } from 'next-intl';
+import { ReactNode } from 'react';
 import { Richtext } from 'storyblok-js-client';
 import { richtextContentStyle } from '../../styles/common';
 
@@ -63,7 +64,7 @@ const Quote = (props: QuoteProps) => {
 
   return (
     <Box sx={containerStyle}>
-      <blockquote>{text}</blockquote>
+      <blockquote>{text as ReactNode}</blockquote>
     </Box>
   );
 };
