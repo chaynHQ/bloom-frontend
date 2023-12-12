@@ -30,7 +30,7 @@ import theme from '../styles/theme';
 // Client-side emotion cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
@@ -100,12 +100,12 @@ function MyApp(props: MyAppProps) {
   };
 
   return (
-    <NextIntlClientProvider messages={pageProps.messages}>
+    <NextIntlClientProvider locale={router.locale} messages={pageProps.messages}>
+      <Head>
+        <title>Bloom</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
       <CacheProvider value={emotionCache}>
-        <Head>
-          <title>Bloom</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
