@@ -1,0 +1,81 @@
+name: Lighthouse Performance
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # vercel will deploy a preview branch and domain for this PR
+  # wait for new deployment to complete before running lighthouse
+  # note we don't actually test on this PRs preview branch, but can
+  # assume the develop branch has also completed deploying
+  wait-for-vercel-deployment:
+    name: Wait for vercel deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitForVercelDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1000
+          check_interval: 5
+
+  lighthouse-mobile:
+    runs-on: ubuntu-latest
+    needs: wait-for-vercel-deployment
+    steps:
+      - uses: actions/checkout@v3
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        env:
+          USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+        with:
+          urls: |
+            https://bloom-frontend-git-develop-chaynhq.vercel.app
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/activities
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/chat
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/grounding
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/subscription/whatsapp
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/therapy/book-session
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships/emotional-boundaries
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
+          budgetPath: ./lighthouse_budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
+
+  lighthouse-desktop:
+    runs-on: ubuntu-latest
+    needs: wait-for-vercel-deployment
+    steps:
+      - uses: actions/checkout@v3
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        env:
+          USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+        with:
+          urls: |
+            https://bloom-frontend-git-develop-chaynhq.vercel.app
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/activities
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/chat
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/grounding
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/subscription/whatsapp
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/therapy/book-session
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/dating-boundaries-and-relationships/emotional-boundaries
+            https://bloom-frontend-git-develop-chaynhq.vercel.app/courses/recovering-from-toxic-and-abusive-relationships/introduction-and-what-you-should-know
+          budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
+

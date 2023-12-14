@@ -5,16 +5,6 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-/cypress/screenshots
-/cypress/videos
-/cypress/example
-
-
-# cypress
-cypress.env.json
-
 # next.js
 /.next/
 /out/
@@ -53,3 +43,13 @@ yarn-error.log*
 /public/sw.js.map
 /public/workbox-*.js
 /public/workbox-*.js.map
+
+# Cypress testing
+/coverage
+/cypress/screenshots
+/cypress/videos
+/cypress/example
+cypress.env.json
+
+# Partytown
+/public/~partytown

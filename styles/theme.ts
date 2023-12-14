@@ -4,10 +4,12 @@ import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles'
 declare module '@mui/material/styles' {
   interface Palette {
     palePrimaryLight: string;
+    bloomGradient: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
     paleSecondaryLight?: string;
+    bloomGradient?: string;
   }
 }
 // Create a theme instance.
@@ -31,6 +33,7 @@ let theme = createTheme({
     },
     palePrimaryLight: '#F9eded',
     paleSecondaryLight: '#FFF8F4',
+    bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
   },
   shape: {
     borderRadius: 20,

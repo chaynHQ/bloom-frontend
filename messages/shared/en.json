@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "cookie policy",
       "acceptLabel": "Accept Cookies",
       "declineLabel": "Reject Cookies"
+    },
+    "signUpTodayPromo": {
+      "title": "Sign up for a free account today",
+      "description1": "Bloom is an online platform to support you as you heal from trauma. From video courses and reflective activities to direct messaging with our team, there's lots of different ways to engage with Bloom.",
+      "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
+      "button": "Get started"
     }
   }
 }

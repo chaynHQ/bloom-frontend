@@ -11,8 +11,6 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
-import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
@@ -71,10 +69,21 @@ function MyApp(props: MyAppProps) {
       'partnership',
       'about-our-courses',
     ];
+
+    // As the subpages of courses are not public and these pages are only partially public,
+    // they are treated differently as they are not public path heads
+    const partiallyPublicPages = [
+      '/courses',
+      '/activities',
+      '/grounding',
+      '/subscription/whatsapp',
+      '/chat',
+    ];
+
     const component = <Component {...pageProps} />;
     let children = null;
 
-    if (publicPathHeads.includes(pathHead)) {
+    if (publicPathHeads.includes(pathHead) || partiallyPublicPages.includes(router.asPath)) {
       return <PublicPageDataWrapper>{component}</PublicPageDataWrapper>;
     }
     if (pathHead === 'therapy') {
@@ -97,8 +106,6 @@ function MyApp(props: MyAppProps) {
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
-        <GoogleTagManagerScript />
-        <OpenGraphMetadata />
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
@@ -109,7 +116,7 @@ function MyApp(props: MyAppProps) {
           <Footer />
           <Consent />
           {/* Vercel analytics */}
-          <Analytics /> 
+          <Analytics />
         </ThemeProvider>
       </CacheProvider>
     </NextIntlClientProvider>

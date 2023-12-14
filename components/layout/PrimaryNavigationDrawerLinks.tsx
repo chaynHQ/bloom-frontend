@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -7,16 +8,10 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
 import {
-  DRAWER_ACTIVITIES_CLICKED,
   DRAWER_ADMIN_CLICKED,
-  DRAWER_CHAT_CLICKED,
-  DRAWER_COURSES_CLICKED,
-  DRAWER_GROUNDING_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
-  DRAWER_NOTES_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
-  DRAWER_THERAPY_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -26,31 +21,38 @@ const listStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
-  marginLeft: { xs: 0, md: 'auto' },
-  marginRight: { xs: 0, md: 0.5 },
-  gap: { xs: 2, md: 0 },
+  marginY: 0,
+  paddingY: 4,
+  paddingX: { xs: 0, sm: '5%' },
+  gap: { xs: 1, md: 0 },
 } as const;
 
 const listItemStyle = {
   width: 'auto',
   mb: 0,
+  ml: 1,
+  mr: 1,
 } as const;
 
 const listItemTextStyle = {
   span: {
     fontSize: 16,
+    fontWeight: 600,
   },
 } as const;
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'text.primary',
+  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
-  paddingY: 0.5,
+  paddingY: 0.25,
 
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
+  },
+  ':hover': {
+    color: 'primary.dark',
   },
 } as const;
 
@@ -65,7 +67,7 @@ interface NavigationMenuProps {
   setAnchorEl?: Dispatch<SetStateAction<null | HTMLElement>>;
 }
 
-const NavigationMenu = (props: NavigationMenuProps) => {
+const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
@@ -103,44 +105,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           event: DRAWER_IMMEDIATE_HELP_CLICKED,
         });
       }
-
-      if (user.token) {
-        links.push({ title: t('courses'), href: '/courses', event: DRAWER_COURSES_CLICKED });
-        links.push({
-          title: t('chat'),
-          href: '/chat',
-          event: DRAWER_CHAT_CLICKED,
-        });
-        links.push({
-          title: t('activities'),
-          href: '/activities',
-          event: DRAWER_ACTIVITIES_CLICKED,
-        });
-        links.push({
-          title: t('grounding'),
-          href: '/grounding',
-          event: DRAWER_GROUNDING_CLICKED,
-        });
-        links.push({
-          title: t('notes'),
-          href: '/subscription/whatsapp',
-          event: DRAWER_NOTES_CLICKED,
-        });
-
-        const therapyAccess = partnerAccesses.find(
-          (partnerAccess) => partnerAccess.featureTherapy === true,
-        );
-
-        if (!!therapyAccess) {
-          links.push({
-            title: t('therapy'),
-            href: '/therapy/book-session',
-            event: DRAWER_THERAPY_CLICKED,
-          });
-        }
-      } else {
-        links.push({ title: t('login'), href: '/auth/login', event: DRAWER_LOGIN_CLICKED });
-      }
     }
 
     setNavigationLinks(links);
@@ -156,16 +120,30 @@ const NavigationMenu = (props: NavigationMenuProps) => {
             component={Link}
             href={link.href}
             target={link.target || '_self'}
-            onClick={() => {
-              logEvent(link.event, eventUserData);
-            }}
+            onClick={() => {}}
           >
             <ListItemText sx={listItemTextStyle} primary={link.title} />
           </ListItemButton>
         </ListItem>
       ))}
+      {!user.loading && !user.token && (
+        <li>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ width: 'auto', ml: 2, mt: 1 }}
+            component={Link}
+            href="/auth/login"
+            onClick={() => {
+              logEvent(DRAWER_LOGIN_CLICKED, eventUserData);
+            }}
+          >
+            {t('login')}
+          </Button>
+        </li>
+      )}
     </List>
   );
 };
 
-export default NavigationMenu;
+export default PrimaryNavigationDrawerLinks;

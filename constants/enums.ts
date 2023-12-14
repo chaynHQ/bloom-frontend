@@ -47,6 +47,7 @@ export enum STORYBLOK_COLORS {
   SECONDARY_DARK = 'secondary.dark',
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
+  BLOOM_GRADIENT = 'bloomGradient',
 }
 
 export enum SURVEY_FORMS {

@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData, StoryParams } from 'storyblok-js-client';
 import { RootState } from '../../app/store';
+import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
 import Header from '../../components/layout/Header';
@@ -105,6 +106,23 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
       setCoursesCompleted(courseCoursesCompleted);
     }
   }, [partnerAccesses, partnerAdmin, stories, courses]);
+  // Show sign up banner if user is logged out
+  if (!user.token) {
+    return (
+      <Box>
+        <Head>
+          <title>{t('title')}</title>
+        </Head>
+        <Header
+          title={headerProps.title}
+          introduction={headerProps.introduction}
+          imageSrc={headerProps.imageSrc}
+          imageAlt={headerProps.imageAlt}
+        />
+        <SignUpBanner />
+      </Box>
+    );
+  }
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)

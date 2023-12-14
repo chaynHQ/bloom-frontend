@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "Cookies neeti",
       "acceptLabel": "Cookies sweekaar kariye",
       "declineLabel": "Cookies asweekar karein"
+    },
+    "signUpTodayPromo": {
+      "title": "Aaj hi ek muft account banayein.",
+      "description1": "Bloom ek online platform hai jo aapko trauma se theek hone mein sahayata karne ke liye hai. Video courses aur reflective activities se lekar hamare team ke saath direct messaging tak, Bloom se judne ke liye kai alag tareeke hain.",
+      "description2": "Niche sign up karein taki aap hamare saare content tak pahunch sakein aur Bloom ke sab kuch ko explore karein jo offer karta hai.",
+      "button": "Shuru kariye"
     }
   }
 }
