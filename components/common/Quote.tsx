@@ -1,5 +1,5 @@
+import { useTheme } from '@mui/material';
 import { Box } from '@mui/system';
-import { useTranslations } from 'next-intl';
 import { Richtext } from 'storyblok-js-client';
 import { richtextContentStyle } from '../../styles/common';
 
@@ -11,7 +11,7 @@ interface QuoteProps {
 
 const Quote = (props: QuoteProps) => {
   const { text, textSize, iconColor = 'primary.dark' } = props;
-  const tS = useTranslations('Shared');
+  const theme = useTheme();
 
   if (!text) return <></>;
 
@@ -25,7 +25,12 @@ const Quote = (props: QuoteProps) => {
       : textSize === 'extra-large'
       ? { xs: 1.5, md: 1.75 }
       : { xs: 1.125, md: 1.25 }; // default / medium
-
+  const quotePosition =
+    textSize === 'extra-small'
+      ? { top: '-4px', left: '0' }
+      : textSize === 'small'
+      ? { top: '-8px', left: '0' }
+      : { top: '-16px', left: '-8px' }; // medium/ large/ extra large
   const containerStyle = {
     fontFamily: 'Montserrat, sans-serif',
     fontStyle: 'italic',
@@ -34,24 +39,18 @@ const Quote = (props: QuoteProps) => {
       fontSize: { xs: `${fontSize.xs}rem`, md: `${fontSize.md}rem` },
       lineHeight: `calc(${fontSize.md} * 1.75rem)`,
       marginX: 0,
-
+      position: 'relative',
       '&:before': {
         content: 'open-quote',
-        left: '-0.75rem',
-      },
-
-      '&:after': {
-        content: 'close-quote',
-        left: '0.25rem',
-      },
-
-      '&:before, &:after': {
-        display: 'inline-block',
+        display: 'block',
         verticalAlign: 'bottom',
         color: iconColor,
         fontSize: `calc(${fontSize.md} * 4rem)`,
-        top: '0.75rem',
-        position: 'relative',
+        position: 'absolute',
+        ...quotePosition,
+      },
+      '&:after': {
+        content: 'no-close-quote',
       },
     },
     cite: {
