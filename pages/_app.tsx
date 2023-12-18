@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
@@ -116,6 +117,9 @@ function MyApp(props: MyAppProps) {
           <Footer />
           <Consent />
           {/* Vercel analytics */}
+          {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+            <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+          )}
           <Analytics />
         </ThemeProvider>
       </CacheProvider>

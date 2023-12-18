@@ -2,7 +2,6 @@ import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import HotjarScript from '../components/head/HotjarScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import createEmotionCache from '../config/emotionCache';
 
@@ -17,7 +16,6 @@ export default class MyDocument extends Document {
           />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
-          <HotjarScript />
         </Head>
         <body>
           <Main />
