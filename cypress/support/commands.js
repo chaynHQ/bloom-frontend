@@ -157,10 +157,10 @@ const fbConfig = {
 const app = initializeApp(fbConfig);
 const auth = getAuth(app);
 
-const attachCustomCommands = (Cypress, { auth }) => {
+const attachCustomCommands = (Cypress, auth) => {
   let currentUser = null;
   let token = null;
-  onAuthStateChanged((auth, user) => {
+  onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     token = currentUser
       ? currentUser.getIdToken().then((t) => {
@@ -207,4 +207,4 @@ const attachCustomCommands = (Cypress, { auth }) => {
   });
 };
 
-attachCustomCommands(Cypress);
+attachCustomCommands(Cypress, auth);
