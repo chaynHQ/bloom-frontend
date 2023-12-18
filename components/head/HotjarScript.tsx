@@ -5,6 +5,7 @@ const HotjarScript = () => {
     <Script
       id="hotjar"
       strategy="afterInteractive"
+      onLoad={(e) => console.log('script loaded')}
       onError={(e) => console.log('script error:', e)}
     >
       {`
