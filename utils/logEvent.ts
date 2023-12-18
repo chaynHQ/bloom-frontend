@@ -1,3 +1,5 @@
+import { track } from '@vercel/analytics/react';
+import { getAnalytics } from 'firebase/analytics';
 import { GetUserResponse } from '../app/api';
 import {
   joinedFeatureLiveChat,
@@ -8,7 +10,13 @@ import {
 import { getAccountType } from './getAccountType';
 
 export const logEvent = (event: string, params?: {}) => {
+  // Send analytics event to firebase / Google Analytics
+  getAnalytics();
   (window as any).gtag('event', event, { method: 'Google', ...params });
+  
+  // Send analytics event to Vercel analytics
+  // Don't include params as only 2 params are available on our plan
+  track(event) 
 };
 
 export const getEventUserData = (data: Partial<GetUserResponse>) => {

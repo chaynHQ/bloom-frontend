@@ -2,6 +2,7 @@ import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
+import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -11,7 +12,6 @@ import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
 import { RootState } from '../../app/store';
 import { clearUserSlice } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
 import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -65,7 +65,8 @@ export default function UserMenu() {
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
     // sign out of firebase
-    await auth.signOut();
+    const auth = getAuth();
+    await signOut(auth);
 
     router.push('/auth/login');
   };

@@ -1,3 +1,4 @@
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { api, useGetUserMutation } from '../app/api';
@@ -11,7 +12,6 @@ import {
   setUserLoading,
   setUserToken,
 } from '../app/userSlice';
-import { auth } from '../config/firebase';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
@@ -38,9 +38,11 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
 
   const [getUser] = useGetUserMutation();
 
+  const auth = getAuth();
+
   // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (authState) => {
+    const unsubscribe = onAuthStateChanged(auth, async (authState) => {
       if (!authState) {
         dispatch(setAuthStateLoading(false));
         setLoading(false);
@@ -72,7 +74,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        auth.signOut();
+        signOut(auth);
         await dispatch(clearPartnerAccessesSlice());
         await dispatch(clearPartnerAdminSlice());
         await dispatch(clearCoursesSlice());

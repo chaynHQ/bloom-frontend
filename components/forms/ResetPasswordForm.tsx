@@ -1,10 +1,10 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { confirmPasswordReset, getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
-import { auth } from '../../config/firebase';
 import {
   RESET_PASSWORD_ERROR,
   RESET_PASSWORD_REQUEST,
@@ -29,12 +29,13 @@ export const EmailForm = () => {
     setFormError('');
     logEvent(RESET_PASSWORD_REQUEST);
 
+    const auth = getAuth();
+
     if (router.locale) {
       auth.languageCode = router.locale;
     }
 
-    auth
-      .sendPasswordResetEmail(emailInput)
+    sendPasswordResetEmail(auth, emailInput)
       .then(() => {
         logEvent(RESET_PASSWORD_SUCCESS);
         setResetEmailSent(true);
@@ -127,8 +128,9 @@ export const PasswordForm = (props: PasswordFormProps) => {
     event.preventDefault();
     setLoading(true);
 
-    auth
-      .confirmPasswordReset(codeParam, passwordInput)
+    const auth = getAuth();
+
+    confirmPasswordReset(auth, codeParam, passwordInput)
       .then(() => {
         setFormSuccess(true);
         setLoading(false);
@@ -154,9 +156,10 @@ export const PasswordForm = (props: PasswordFormProps) => {
               resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
             }),
           );
+          setLoading(false);
+          throw error;
         }
         setLoading(false);
-        throw error;
       });
   };
 

@@ -1,12 +1,12 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, TextField, Typography } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../../app/api';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -49,8 +49,9 @@ const LoginForm = () => {
     setFormError('');
     logEvent(LOGIN_REQUEST);
 
-    auth
-      .signInWithEmailAndPassword(emailInput, passwordInput)
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, emailInput, passwordInput)
       .then(async (userCredential) => {
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_USER_REQUEST); // deprecated event
@@ -113,7 +114,14 @@ const LoginForm = () => {
           setFormError(t('firebase.authError'));
         }
         setLoading(false);
-        throw error;
+
+        if (
+          errorCode !== 'auth/invalid-email' &&
+          errorCode !== 'auth/user-not-found' &&
+          errorCode !== 'auth/wrong-password'
+        ) {
+          throw error;
+        }
       });
   };
 
