@@ -7,7 +7,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../app/api';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
   CREATE_PARTNER_ADMIN_REQUEST,
@@ -68,7 +67,7 @@ const CreatePartnerAdminForm = () => {
         ...eventUserData,
         error: errorMessage,
       });
-      rollbar.error(t('error') + errorMessage);
+      (window as any).Rollbar?.error(t('error') + errorMessage);
 
       setFormError(t('error') + errorMessage);
       setLoading(false);

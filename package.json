@@ -40,7 +40,6 @@
     "react-international-phone": "^4.0.4",
     "react-player": "^2.13.0",
     "react-redux": "^8.0.5",
-    "rollbar": "^2.24.0",
     "storyblok-js-client": "^4.2.0",
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },

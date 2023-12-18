@@ -18,7 +18,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
@@ -87,7 +86,10 @@ const AboutYouDemographicForm = () => {
       date: new Date().toISOString(),
       user_id: user.id && hashString(user.id),
       // Sort alphabetically the gender inputs and the make it into a string for the form
-      gender: genderInput.map((gender)=>gender.toLowerCase()).sort().join(','),
+      gender: genderInput
+        .map((gender) => gender.toLowerCase())
+        .sort()
+        .join(','),
       neurodivergent: neurodivergentInput,
       race_ethn_natn: raceEthnNatn,
       current_country: countryInput,
@@ -111,7 +113,10 @@ const AboutYouDemographicForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          rollbar.error('Send zapier webhook about you demo form data error', error);
+          (window as any).Rollbar?.error(
+            'Send zapier webhook about you demo form data error',
+            error,
+          );
           logEvent(ABOUT_YOU_DEMO_ERROR, {
             ...eventUserData,
             message: error,
@@ -134,7 +139,14 @@ const AboutYouDemographicForm = () => {
           freeSolo
           onChange={(e, value) => setGenderInput(value)}
           renderTags={(value: readonly string[]) =>
-            value.map((option: string, index: number) => <Chip color="secondary" sx={{marginBottom: 0.5, marginRight: 0.5}} label={option} key={index} />)
+            value.map((option: string, index: number) => (
+              <Chip
+                color="secondary"
+                sx={{ marginBottom: 0.5, marginRight: 0.5 }}
+                label={option}
+                key={index}
+              />
+            ))
           }
           fullWidth
           renderInput={(params) => (

@@ -6,7 +6,6 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useUnsubscribeFromWhatsappMutation } from '../../app/api';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
@@ -68,7 +67,7 @@ const WhatsappUnsubscribeForm = () => {
         }),
       );
 
-      rollbar.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
+      (window as any).Rollbar?.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
       logEvent(WHATSAPP_UNSUBSCRIBE_ERROR, { message: error });
       setLoading(false);
 

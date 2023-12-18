@@ -3,6 +3,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
+import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
 
 export default class MyDocument extends Document {
@@ -16,6 +17,7 @@ export default class MyDocument extends Document {
           />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
+          <RollbarScript />
         </Head>
         <body>
           <Main />

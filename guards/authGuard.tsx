@@ -14,7 +14,6 @@ import {
 import LoadingContainer from '../components/common/LoadingContainer';
 
 import { auth } from '../config/firebase';
-import rollbar from '../config/rollbar';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_REQUEST,
@@ -85,7 +84,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     } else {
       // if no user exists, we clear all state and reset api and redirect to login
       if ('error' in userResponse) {
-        rollbar.error('Auth guard get user error', userResponse.error);
+        (window as any).Rollbar?.error('Auth guard get user error', userResponse.error);
         logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
