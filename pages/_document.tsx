@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
           />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
-          {process.env.NEXT_PUBLIC_ENV !== 'local' && <HotjarScript />}
+          <HotjarScript />
         </Head>
         <body>
           <Main />
