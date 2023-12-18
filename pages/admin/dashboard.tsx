@@ -1,6 +1,4 @@
-import { Card, CardContent, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

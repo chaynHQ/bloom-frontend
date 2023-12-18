@@ -32,7 +32,7 @@ import theme from '../styles/theme';
 // Client-side emotion cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
@@ -103,12 +103,12 @@ function MyApp(props: MyAppProps) {
 
   return (
     <ErrorBoundary>
-      <NextIntlClientProvider messages={pageProps.messages}>
-        <CacheProvider value={emotionCache}>
+      <NextIntlClientProvider messages={pageProps.messages} locale={router.locale}>
           <Head>
             <title>Bloom</title>
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
+        <CacheProvider value={emotionCache}>
           <CrispScript />
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -118,10 +118,10 @@ function MyApp(props: MyAppProps) {
             <ComponentWithGuard />
             <Footer />
             <Consent />
-            {/* Vercel analytics */}
             {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
               <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-            )}
+              )}
+            {/* Vercel analytics */}
             <Analytics />
           </ThemeProvider>
         </CacheProvider>

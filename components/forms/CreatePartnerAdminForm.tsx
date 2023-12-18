@@ -1,7 +1,5 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { MenuItem, TextField, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';

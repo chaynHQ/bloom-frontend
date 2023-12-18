@@ -1,10 +1,5 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import TextField from '@mui/material/TextField';
+import { Box, Checkbox, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';

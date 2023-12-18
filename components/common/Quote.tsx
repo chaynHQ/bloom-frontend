@@ -62,6 +62,7 @@ const Quote = (props: QuoteProps) => {
 
   return (
     <Box sx={containerStyle}>
+      {/* @ts-ignore */}
       <blockquote>{text}</blockquote>
     </Box>
   );

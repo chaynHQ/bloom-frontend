@@ -1,5 +1,4 @@
-import { alpha, Box, Button, useTheme } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import React from 'react';

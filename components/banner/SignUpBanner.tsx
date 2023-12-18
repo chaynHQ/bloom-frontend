@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import Column from '../common/Column';

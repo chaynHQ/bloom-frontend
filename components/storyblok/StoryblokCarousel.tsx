@@ -1,4 +1,5 @@
-import { NavigateBeforeSharp, NavigateNext } from '@mui/icons-material';
+import NavigateBeforeSharp from '@mui/icons-material/NavigateBeforeSharp';
+import NavigateNext from '@mui/icons-material/NavigateNext';
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import NukaCarousel from 'nuka-carousel';

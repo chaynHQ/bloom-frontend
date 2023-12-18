@@ -1,6 +1,7 @@
-import { Circle, Event, PendingOutlined } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import Circle from '@mui/icons-material/Circle';
+import Event from '@mui/icons-material/Event';
+import PendingOutlined from '@mui/icons-material/PendingOutlined';
+import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { iconTextRowStyle } from '../../styles/common';
 

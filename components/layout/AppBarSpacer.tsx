@@ -1,5 +1,4 @@
-import { useMediaQuery } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, useMediaQuery } from '@mui/material';
 import { RootState } from '../../app/store';
 import { useTypedSelector } from '../../hooks/store';
 import theme from '../../styles/theme';

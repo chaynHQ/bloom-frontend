@@ -1,8 +1,7 @@
-import { AddCircleOutline, Logout, Person } from '@mui/icons-material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import Logout from '@mui/icons-material/Logout';
+import Person from '@mui/icons-material/Person';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';

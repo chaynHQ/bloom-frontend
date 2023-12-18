@@ -1,6 +1,5 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Card, CardContent, Link, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Card, CardContent, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
 import * as React from 'react';

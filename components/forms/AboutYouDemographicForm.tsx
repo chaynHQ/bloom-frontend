@@ -1,7 +1,8 @@
-import { KeyboardArrowDown } from '@mui/icons-material';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
+  Box,
   Chip,
   FormControl,
   FormControlLabel,
@@ -9,10 +10,9 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  TextField,
   Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';

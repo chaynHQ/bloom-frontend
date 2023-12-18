@@ -1,9 +1,4 @@
-import { Button } from '@mui/material';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
