@@ -5,7 +5,7 @@ const HotjarScript = () => {
     <Script
       id="hotjar"
       strategy="lazyOnload"
-      onError={(e) => console.log(e)}
+      onError={(e) => console.log('script error:', e)}
       dangerouslySetInnerHTML={{
         __html: `
           (function(h,o,t,j,a,r){
