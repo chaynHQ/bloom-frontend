@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
@@ -58,7 +57,9 @@ const Footer = () => {
   const [partners, setPartners] = useState<PartnerContent[] | null>(null);
   const router = useRouter();
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
     if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
@@ -68,7 +69,7 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
+    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
     let partnersList: PartnerContent[] = [getPartnerContent('public')];
 
     if (partnerAdmin && partnerAdmin.partner) {
@@ -91,7 +92,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, user, router, partnerAdmin]);
+  }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
 
   return (
     <Container sx={footerContainerStyle}>

@@ -20,7 +20,7 @@ import {
 } from '../../constants/events';
 import { useAppDispatch } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -67,8 +67,9 @@ const LoginForm = () => {
         const userResponse = await getUser('');
 
         if ('data' in userResponse) {
-          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) }); // deprecated event
-          logEvent(GET_LOGIN_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+          const eventUserData = getEventUserResponseData(userResponse.data);
+          logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
+          logEvent(GET_LOGIN_USER_SUCCESS, eventUserData);
 
           // Checking if the query type is a string to keep typescript happy
           // because a query value can be an array

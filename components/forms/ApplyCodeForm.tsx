@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useAssignPartnerAccessMutation } from '../../app/api';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
-import { RootState } from '../../app/store';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   ASSIGN_NEW_PARTNER_ACCESS_ERROR,
@@ -32,14 +31,16 @@ const ApplyCodeForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [assignPartnerAccess, { isLoading: assignPartnerAccessIsLoading }] =
     useAssignPartnerAccessMutation();
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
-  }, [user, partnerAccesses, partnerAdmin]);
+    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
+  }, [userCreatedAt, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

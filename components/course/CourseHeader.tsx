@@ -18,7 +18,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, []);
+  });
 
   const headerProps = {
     title: story.content.name,

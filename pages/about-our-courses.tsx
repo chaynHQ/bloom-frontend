@@ -3,7 +3,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../app/store';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../config/storyblok';
@@ -21,8 +20,10 @@ interface Props {
 
 const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) => {
   const story = useStoryblok(storyData, preview, sbParams, locale);
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     title: story.content.title,
@@ -33,7 +34,7 @@ const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) 
 
   useEffect(() => {
     logEvent(ABOUT_COURSES_VIEWED, eventUserData);
-  }, []);
+  });
 
   return (
     <Box>

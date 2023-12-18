@@ -3,7 +3,6 @@ import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../app/store';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
@@ -20,7 +19,7 @@ interface Props {
 
 const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   story = useStoryblok(story, preview, sbParams, locale);
-  const { user } = useTypedSelector((state: RootState) => state);
+  const userToken = useTypedSelector((state) => state.user.token);
   const router = useRouter();
 
   const headerProps = {
@@ -41,8 +40,8 @@ const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
       />
-      {!user.token && isPartiallyPublicPage && <SignUpBanner />}
-      {user.token &&
+      {!userToken && isPartiallyPublicPage && <SignUpBanner />}
+      {userToken &&
         story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection

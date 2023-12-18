@@ -4,7 +4,6 @@ import { api, useGetUserMutation } from '../app/api';
 import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
-import { RootState } from '../app/store';
 import {
   clearUserSlice,
   setAuthStateLoading,
@@ -25,13 +24,14 @@ import {
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import generateReturnQuery from '../utils/generateReturnQuery';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const user = useTypedSelector((state) => state.user);
+
   const [verified, setVerified] = useState(false);
   const [loading, setLoading] = useState(true);
   const [getUser] = useGetUserMutation();
@@ -54,7 +54,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     });
 
     return () => unsubscribe();
-  }, []);
+  });
 
   // 2. Add ongoing event listener to check for token changes
   useEffect(() => {
@@ -67,7 +67,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         await dispatch(setUserToken(token));
       }
     });
-  }, []);
+  });
 
   // Function to get User details from the backend api
   async function callGetUser() {
@@ -80,8 +80,10 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
     // if there is a response from the /user/me endpoint, it logs success and says it is verified
     if ('data' in userResponse && userResponse.data.user.id) {
-      logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) }); // deprecated event
-      logEvent(GET_AUTH_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+      const eventUserData = getEventUserResponseData(userResponse.data);
+
+      logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
+      logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
 
       setVerified(true);
     } else {

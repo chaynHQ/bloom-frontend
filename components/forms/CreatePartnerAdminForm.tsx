@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../app/api';
-import { RootState } from '../../app/store';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
   CREATE_PARTNER_ADMIN_REQUEST,
@@ -15,10 +14,12 @@ import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const CreatePartnerAdminForm = () => {
-  const { partnerAdmin, user, partnerAccesses, partners } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const partners = useTypedSelector((state) => state.partners);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   useGetPartnersQuery(undefined);
 
   const t = useTranslations('Admin.createPartnerAdmin');

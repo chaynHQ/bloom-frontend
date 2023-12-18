@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
@@ -48,9 +47,11 @@ const AboutYou: NextPage = () => {
 
   const t = useTranslations('Account.aboutYou');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const { q, return_url } = router.query;
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     if (q) {
@@ -62,7 +63,7 @@ const AboutYou: NextPage = () => {
 
   useEffect(() => {
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
-  }, []);
+  });
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,

@@ -6,7 +6,6 @@ import Image from 'next/legacy/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
-import { RootState } from '../../app/store';
 import Faqs from '../../components/common/Faqs';
 import ImageTextGrid, { ImageTextItem } from '../../components/common/ImageTextGrid';
 import Header from '../../components/layout/Header';
@@ -75,8 +74,10 @@ const BookSession: NextPage = () => {
   const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
   const [widgetOpen, setWidgetOpen] = useState(false);
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const user = useTypedSelector((state) => state.user);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(user.createdAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     let partnerAccess = partnerAccesses.find(
@@ -101,7 +102,7 @@ const BookSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
-  }, []);
+  });
 
   const headerProps = {
     title: t('title'),

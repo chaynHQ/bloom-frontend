@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { RootState } from '../app/store';
 import TeamMemberCard from '../components/cards/TeamMemberCard';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
@@ -46,8 +45,10 @@ interface Props {
 const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   story = useStoryblok(story, preview, sbParams, locale);
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     title: story.content.title,
@@ -57,10 +58,8 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   };
 
   useEffect(() => {
-    logEvent(MEET_THE_TEAM_VIEWED, {
-      ...eventUserData,
-    });
-  }, []);
+    logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
+  });
 
   return (
     <Box>

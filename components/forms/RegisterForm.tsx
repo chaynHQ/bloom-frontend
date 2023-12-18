@@ -10,7 +10,6 @@ import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
 } from '../../app/api';
-import { RootState } from '../../app/store';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
@@ -32,7 +31,7 @@ import {
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -122,13 +121,16 @@ const RegisterForm = (props: RegisterFormProps) => {
     });
 
     if ('data' in userResponse && userResponse.data.user.id) {
-      logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
+      const eventUserData = getEventUserResponseData(userResponse.data);
+
+      logEvent(REGISTER_SUCCESS, eventUserData);
       try {
         const auth = getAuth();
         const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-        logEvent(LOGIN_SUCCESS);
-        logEvent(GET_USER_REQUEST); // deprecated event
-        logEvent(GET_LOGIN_USER_REQUEST);
+        logEvent(LOGIN_SUCCESS, eventUserData);
+        logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
+        logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+
         const token = await userCredential.user?.getIdToken();
         if (token) {
           await dispatch(setUserToken(token));
@@ -273,7 +275,7 @@ interface PartnerRegisterFormProps {
 }
 
 export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
-  const { partners } = useTypedSelector((state: RootState) => state);
+  const partners = useTypedSelector((state) => state.partners);
   const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
   const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
 

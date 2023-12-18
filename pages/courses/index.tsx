@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoryData, StoryParams } from 'storyblok-js-client';
-import { RootState } from '../../app/store';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
@@ -43,10 +42,14 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
   const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
-  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const courses = useTypedSelector((state) => state.courses);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
   const t = useTranslations('Courses');
 
@@ -58,10 +61,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
   };
 
   useEffect(() => {
-    logEvent(COURSE_LIST_VIEWED, {
-      ...eventUserData,
-    });
-  }, []);
+    logEvent(COURSE_LIST_VIEWED, eventUserData);
+  });
 
   useEffect(() => {
     if (partnerAdmin && partnerAdmin.partner) {
@@ -105,7 +106,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
     }
   }, [partnerAccesses, partnerAdmin, stories, courses]);
   // Show sign up banner if user is logged out
-  if (!user.token) {
+  if (!userToken) {
     return (
       <Box>
         <Head>

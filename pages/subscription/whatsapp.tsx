@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../../app/store';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import ImageTextColumn from '../../components/common/ImageTextColumn';
 import { ImageTextItem } from '../../components/common/ImageTextGrid';
@@ -68,11 +67,12 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
 
   const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
+  const userToken = useTypedSelector((state) => state.user.token);
 
   useEffect(() => {
-    setHasActiveWhatsappSub(hasWhatsappSubscription(user.activeSubscriptions));
-  }, [user.activeSubscriptions]);
+    setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
+  }, [userActiveSubscriptions]);
 
   const headerProps: HeaderProps = {
     title: configuredStory.content.title,
@@ -86,8 +86,8 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
       <Head>{configuredStory.content.title}</Head>
       <Box>
         <Header {...headerProps} />
-        {!user.token && <SignUpBanner />}
-        {user.token && (
+        {!userToken && <SignUpBanner />}
+        {userToken && (
           <Container sx={containerStyle}>
             <Box sx={infoBoxStyle}>
               <ImageTextColumn items={steps} translations="Whatsapp.steps" />
@@ -97,7 +97,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
             </Box>
           </Container>
         )}
-        {user.token &&
+        {userToken &&
           configuredStory.content.page_sections?.length > 0 &&
           configuredStory.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection

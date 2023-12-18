@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import PartnerHeader from '../components/layout/PartnerHeader';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
@@ -48,8 +47,12 @@ interface Props {
 
 const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const t = useTranslations('Welcome');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   story = useStoryblok(story, preview, sbParams, locale);
 
@@ -75,7 +78,7 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
         <Box sx={introContainerStyle}>{render(story.content.introduction, RichTextOptions)}</Box>
         <Card sx={rowItem}>
           <CardContent>
-            {user.token ? (
+            {userToken ? (
               <>
                 <Typography variant="h2" component="h2">
                   {t('continueCourses')}

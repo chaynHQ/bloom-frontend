@@ -1,7 +1,6 @@
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import {
   DRAWER_ACTIVITIES_CLICKED,
   DRAWER_CHAT_CLICKED,
@@ -75,8 +74,14 @@ interface NavigationMenuProps {
 const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const [navigationLinks, setNavigationLinks] = useState<Array<SecondaryNavigationItem>>([]);
 
   useEffect(() => {
@@ -113,8 +118,8 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
       },
     ];
 
-    if (!user.loading) {
-      if (user.token) {
+    if (!userLoading) {
+      if (userToken) {
         const therapyAccess = partnerAccesses.find(
           (partnerAccess) => partnerAccess.featureTherapy === true,
         );
@@ -132,7 +137,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partnerAccesses, t, user, partnerAdmin]);
+  }, [t, userLoading, userToken, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>

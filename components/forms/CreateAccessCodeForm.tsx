@@ -13,7 +13,6 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../../app/api';
-import { RootState } from '../../app/store';
 import { BASE_URL } from '../../constants/common';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
@@ -27,8 +26,10 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const CreateAccessCodeForm = () => {
-  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
