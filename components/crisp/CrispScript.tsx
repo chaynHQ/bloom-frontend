@@ -69,7 +69,7 @@ const CrispScript = () => {
     } else {
       (window as any).$crisp.push(['do', 'chat:hide']);
     }
-  });
+  }, [userEmail, partnerAccesses, userCrispTokenId, courses]);
 
   const crispScriptUrl = 'https://client.crisp.chat/l.js';
 
