@@ -4,7 +4,7 @@ const HotjarScript = () => {
   return (
     <Script
       id="hotjar"
-      strategy="worker"
+      strategy="lazyOnload"
       dangerouslySetInnerHTML={{
         __html: `
           (function(h,o,t,j,a,r){
