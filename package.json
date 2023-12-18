@@ -2,7 +2,9 @@
   "name": "bloom-frontend",
   "version": "0.1.0",
   "private": true,
-  "resolutions": {},
+  "resolutions": {
+    "@types/react": "18.2.43"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
