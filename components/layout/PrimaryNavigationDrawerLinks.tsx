@@ -1,12 +1,7 @@
-import { Button } from '@mui/material';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import {
   DRAWER_ADMIN_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
@@ -70,16 +65,22 @@ interface NavigationMenuProps {
 const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
   const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (!user.loading) {
-      if (user.token && router.pathname === '/auth/login') {
+    if (!userLoading) {
+      if (userToken && router.pathname === '/auth/login') {
         router.push('/courses');
       }
 
@@ -109,7 +110,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partnerAccesses, t, user, partnerAdmin]);
+  }, [t, userToken, userLoading, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
@@ -126,7 +127,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
           </ListItemButton>
         </ListItem>
       ))}
-      {!user.loading && !user.token && (
+      {!userLoading && !userToken && (
         <li>
           <Button
             variant="contained"

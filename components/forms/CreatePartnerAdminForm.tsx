@@ -1,13 +1,9 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { MenuItem, TextField, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../app/api';
-import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
   CREATE_PARTNER_ADMIN_REQUEST,
@@ -18,10 +14,12 @@ import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const CreatePartnerAdminForm = () => {
-  const { partnerAdmin, user, partnerAccesses, partners } = useTypedSelector(
-    (state: RootState) => state,
-  );
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const partners = useTypedSelector((state) => state.partners);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   useGetPartnersQuery(undefined);
 
   const t = useTranslations('Admin.createPartnerAdmin');
@@ -68,7 +66,7 @@ const CreatePartnerAdminForm = () => {
         ...eventUserData,
         error: errorMessage,
       });
-      rollbar.error(t('error') + errorMessage);
+      (window as any).Rollbar?.error(t('error') + errorMessage);
 
       setFormError(t('error') + errorMessage);
       setLoading(false);

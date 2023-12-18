@@ -1,13 +1,10 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
-import { RootState } from '../../app/store';
 import Faqs from '../../components/common/Faqs';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
@@ -23,8 +20,10 @@ const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ const ConfirmedSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
-  }, []);
+  });
 
   const headerProps = {
     title: t('confirmation.title'),
@@ -78,9 +77,7 @@ const ConfirmedSession: NextPage = () => {
         <Typography>{t('confirmation.returnDescription')}</Typography>
         <Typography>
           {t.rich('confirmation.bookmarkDescription', {
-            bookingLink: (children) => (
-              <Link href={`${BASE_URL}/`}>{children}</Link>
-            ),
+            bookingLink: (children) => <Link href={`${BASE_URL}/`}>{children}</Link>,
           })}
         </Typography>
       </Container>

@@ -4,7 +4,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useTranslations } from 'use-intl';
-import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
@@ -27,9 +26,10 @@ const imageContainerStyle = {
 
 const Custom404: NextPage = () => {
   const t = useTranslations('Shared');
-  const { user } = useTypedSelector((state: RootState) => state);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userLoading = useTypedSelector((state) => state.user.loading);
 
-  if (user.loading) {
+  if (userLoading) {
     return <LoadingContainer />;
   }
 
@@ -45,16 +45,16 @@ const Custom404: NextPage = () => {
         {t('404.title')}
       </Typography>
       <Typography>
-        {user.token ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
+        {userToken ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
       </Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         component={Link}
-        href={user.token ? '/courses' : '/login'}
+        href={userToken ? '/courses' : '/login'}
       >
-        {user.token ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
+        {userToken ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );

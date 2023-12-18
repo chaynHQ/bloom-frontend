@@ -1,10 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import TextField from '@mui/material/TextField';
+import { Box, Checkbox, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -14,10 +10,7 @@ import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
 } from '../../app/api';
-import { RootState } from '../../app/store';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
-import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_EMAIL_ALREADY_EXISTS,
@@ -38,7 +31,7 @@ import {
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -105,14 +98,13 @@ const RegisterForm = (props: RegisterFormProps) => {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
-        rollbar.error('Validate code error', validateCodeResponse.error);
+        (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
         setLoading(false);
         throw error;
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
       setLoading(false);
-      throw error;
     }
     logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
   };
@@ -129,12 +121,16 @@ const RegisterForm = (props: RegisterFormProps) => {
     });
 
     if ('data' in userResponse && userResponse.data.user.id) {
-      logEvent(REGISTER_SUCCESS, { ...getEventUserData(userResponse.data) });
+      const eventUserData = getEventUserResponseData(userResponse.data);
+
+      logEvent(REGISTER_SUCCESS, eventUserData);
       try {
-        const userCredential = await auth.signInWithEmailAndPassword(emailInput, passwordInput);
-        logEvent(LOGIN_SUCCESS);
-        logEvent(GET_USER_REQUEST); // deprecated event
-        logEvent(GET_LOGIN_USER_REQUEST);
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+        logEvent(LOGIN_SUCCESS, eventUserData);
+        logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
+        logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+
         const token = await userCredential.user?.getIdToken();
         if (token) {
           await dispatch(setUserToken(token));
@@ -177,10 +173,9 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
       }
       logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-      rollbar.error('User register create user error', error);
+      (window as any).Rollbar?.error('User register create user error', error);
 
       setLoading(false);
-
       throw error;
     }
   };
@@ -194,8 +189,8 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
       await createUserRecord();
-      dispatch(setUserLoading(false));
       router.push('/account/about-you');
+      dispatch(setUserLoading(false));
       setLoading(false);
     } catch {
       // errors handled in each function
@@ -280,7 +275,7 @@ interface PartnerRegisterFormProps {
 }
 
 export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
-  const { partners } = useTypedSelector((state: RootState) => state);
+  const partners = useTypedSelector((state) => state.partners);
   const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
   const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
 

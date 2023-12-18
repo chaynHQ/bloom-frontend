@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { RootState } from '../../../app/store';
 import SessionCard from '../../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../../components/common/ContentUnavailable';
 import Link from '../../../components/common/Link';
@@ -46,15 +45,17 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   story = useStoryblok(story, preview, sbParams, locale);
 
-  const { user, partnerAccesses, partnerAdmin, courses } = useTypedSelector(
-    (state: RootState) => state,
-  );
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const courses = useTypedSelector((state) => state.courses);
+
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
 
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = {
     ...eventUserData,
@@ -75,7 +76,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, []);
+  });
 
   if (incorrectAccess) {
     return (

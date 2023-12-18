@@ -1,18 +1,14 @@
-import { Card, CardContent } from '@mui/material';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
 import Header from '../../components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';
-import { getAllPartnersContent, PartnerContent } from '../../constants/partners';
+import { PartnerContent, getAllPartnersContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
@@ -54,7 +50,9 @@ const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
 
   useEffect(() => {
@@ -62,10 +60,10 @@ const ApplyACode: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+    const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
     logEvent(ASSIGN_NEW_PARTNER_VIEWED, eventUserData);
-  }, []);
+  });
 
   const headerProps = {
     title: t('applyCode.title'),

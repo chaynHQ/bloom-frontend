@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { StoryData } from 'storyblok-js-client';
@@ -18,7 +18,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, []);
+  });
 
   const headerProps = {
     title: story.content.name,

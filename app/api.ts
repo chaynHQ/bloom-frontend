@@ -5,7 +5,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { auth } from '../config/firebase';
+import { getAuth } from 'firebase/auth';
 import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
@@ -52,6 +52,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   let result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // force reset token
+    const auth = getAuth()
     const token = await auth.currentUser?.getIdToken(true);
 
     if (token) {

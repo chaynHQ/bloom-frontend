@@ -1,5 +1,4 @@
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/legacy/image';
 import * as React from 'react';

@@ -1,5 +1,4 @@
-import { Link as MuiLink, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { StoryData } from 'storyblok-js-client';

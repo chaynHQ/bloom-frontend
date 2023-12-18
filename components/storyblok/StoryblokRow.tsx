@@ -40,6 +40,7 @@ const StoryblokRow = (props: StoryblokRowProps) => {
         });
         return (
           <Row
+            key={`column_${index}_content_row_${index2}`}
             numberOfColumns={numberColumnsInBlock}
             verticalAlignment={vertical_alignment}
             horizontalAlignment={horizontal_alignment}

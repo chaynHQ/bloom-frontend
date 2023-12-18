@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useTranslations } from 'use-intl';
-import { RootState } from '../app/store';
 import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
@@ -22,7 +21,7 @@ const imageContainerStyle = {
 } as const;
 
 export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
-  const { partnerAccesses } = useTypedSelector((state: RootState) => state);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
 

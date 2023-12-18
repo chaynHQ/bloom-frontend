@@ -1,13 +1,13 @@
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { StoriesParams, StoryblokComponent, StoryData } from 'storyblok-js-client';
+import { StoriesParams, StoryData, StoryblokComponent } from 'storyblok-js-client';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import Storyblok, { useStoryblok } from '../../config/storyblok';
 import { LANGUAGES } from '../../constants/enums';
-import { getPartnerContent, PartnerContent } from '../../constants/partners';
+import { PartnerContent, getPartnerContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 

@@ -1,11 +1,7 @@
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import {
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
@@ -65,15 +61,20 @@ interface NavigationMenuProps {
 const NavigationMenu = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
   const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (!user.loading) {
+    if (!userLoading) {
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
@@ -103,7 +104,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partnerAccesses, t, user, partnerAdmin]);
+  }, [t, userLoading, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>

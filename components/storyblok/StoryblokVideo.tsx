@@ -1,8 +1,9 @@
 import { Box } from '@mui/system';
 import dynamic from 'next/dynamic';
+import { YouTubeConfig } from 'react-player/youtube';
 import { richtextContentStyle } from '../../styles/common';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
+const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
 const videoContainerStyle = {
   position: 'relative',
@@ -53,18 +54,16 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
 
     ...richtextContentStyle,
   } as const;
-  const extraConfig =
+
+  const extraConfig: YouTubeConfig =
     video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
       ? {
-          config: {
-            youtube: {
-              embedOptions: {
-                host: 'https://www.youtube-nocookie.com',
-              },
-            },
+          embedOptions: {
+            host: 'https://www.youtube-nocookie.com',
           },
         }
       : {};
+
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>

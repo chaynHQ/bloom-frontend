@@ -1,15 +1,12 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { Box, TextField, Typography } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../../app/api';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
-import rollbar from '../../config/rollbar';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -23,7 +20,7 @@ import {
 } from '../../constants/events';
 import { useAppDispatch } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -52,8 +49,9 @@ const LoginForm = () => {
     setFormError('');
     logEvent(LOGIN_REQUEST);
 
-    auth
-      .signInWithEmailAndPassword(emailInput, passwordInput)
+    const auth = getAuth();
+
+    signInWithEmailAndPassword(auth, emailInput, passwordInput)
       .then(async (userCredential) => {
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_USER_REQUEST); // deprecated event
@@ -69,8 +67,9 @@ const LoginForm = () => {
         const userResponse = await getUser('');
 
         if ('data' in userResponse) {
-          logEvent(GET_USER_SUCCESS, { ...getEventUserData(userResponse.data) }); // deprecated event
-          logEvent(GET_LOGIN_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+          const eventUserData = getEventUserResponseData(userResponse.data);
+          logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
+          logEvent(GET_LOGIN_USER_SUCCESS, eventUserData);
 
           // Checking if the query type is a string to keep typescript happy
           // because a query value can be an array
@@ -91,7 +90,7 @@ const LoginForm = () => {
           const errorMessage = getErrorMessage(userResponse.error);
           logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
           logEvent(GET_LOGIN_USER_ERROR, { message: errorMessage });
-          rollbar.error('User login get user error', userResponse.error);
+          (window as any).Rollbar?.error('User login get user error', userResponse.error);
 
           setFormError(
             t.rich('getUserError', {
@@ -107,7 +106,7 @@ const LoginForm = () => {
         const errorMessage = error.message;
 
         logEvent(LOGIN_ERROR, { message: errorCode });
-        rollbar.error('User login firebase error', error);
+        (window as any).Rollbar?.error('User login firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
@@ -116,7 +115,14 @@ const LoginForm = () => {
           setFormError(t('firebase.authError'));
         }
         setLoading(false);
-        throw error;
+
+        if (
+          errorCode !== 'auth/invalid-email' &&
+          errorCode !== 'auth/user-not-found' &&
+          errorCode !== 'auth/wrong-password'
+        ) {
+          throw error;
+        }
       });
   };
 

@@ -2,17 +2,13 @@ import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import YoutubeIcon from '@mui/icons-material/YouTube';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
-import { getPartnerContent, PartnerContent } from '../../constants/partners';
+import { PartnerContent, getPartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import tiktokLogo from '../../public/tiktok.svg';
 import { rowStyle } from '../../styles/common';
@@ -61,7 +57,9 @@ const Footer = () => {
   const [partners, setPartners] = useState<PartnerContent[] | null>(null);
   const router = useRouter();
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
     if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
@@ -71,7 +69,7 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
+    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
     let partnersList: PartnerContent[] = [getPartnerContent('public')];
 
     if (partnerAdmin && partnerAdmin.partner) {
@@ -94,7 +92,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, user, router, partnerAdmin]);
+  }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
 
   return (
     <Container sx={footerContainerStyle}>

@@ -24,8 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
 const http = require('http');
 
 Cypress.Commands.add('uiLogin', (email, password) => {
@@ -153,12 +154,13 @@ const fbConfig = {
   measurementId: Cypress.env('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID'),
 };
 
-firebase.initializeApp(fbConfig);
+const app = initializeApp(fbConfig);
+const auth = getAuth(app);
 
-const attachCustomCommands = (Cypress, { auth }) => {
+const attachCustomCommands = (Cypress, auth) => {
   let currentUser = null;
   let token = null;
-  auth().onAuthStateChanged((user) => {
+  onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     token = currentUser
       ? currentUser.getIdToken().then((t) => {
@@ -171,10 +173,10 @@ const attachCustomCommands = (Cypress, { auth }) => {
     return token ? cy.wrap(token) : undefined;
   });
   Cypress.Commands.add('logInWithEmailAndPassword', (emailInput, passwordInput) => {
-    return auth().signInWithEmailAndPassword(emailInput, passwordInput);
+    return signInWithEmailAndPassword(auth, emailInput, passwordInput);
   });
   Cypress.Commands.add('logout', () => {
-    return auth().signOut();
+    return signOut(auth);
   });
   Cypress.Commands.add('getAuthEmail', () => {
     return currentUser ? cy.wrap(currentUser.email) : undefined;
@@ -205,4 +207,4 @@ const attachCustomCommands = (Cypress, { auth }) => {
   });
 };
 
-attachCustomCommands(Cypress, firebase);
+attachCustomCommands(Cypress, auth);
