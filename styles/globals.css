@@ -68,3 +68,7 @@ ol > li::marker {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+.paging-dots-container {
+  top: 20px !important;
+}

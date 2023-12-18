@@ -1,37 +1,32 @@
-# Bloom
+# Welcome to Bloom
+
+[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml)
+
+**Currently in active development.**
 
 Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events. 💖
 
+For a more detailed explanation of this project's key concepts and architecture, please visit the [/docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs).
+
 ## Get Involved
 
-If you would like to help Chayn and receive special access to our organization and volunteer opportunities, please [visit our Getting Involved guide](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19). We'll get back to you to schedule an onboarding call. Other ways to get involved and support us are [donating](https://www.paypal.me/chaynhq), starring this repo and making an open-source contribution here on GitHub, and supporting us on social media!
+Do you want to make an impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [Getting Involved Guide](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19) to get started!
 
-Our social medias:
+Other ways you can support Chayn are [donating](https://www.paypal.me/chaynhq), starring this repository ⭐ (so we can find more contributors like you!), making an open-source contribution, and supporting us on social media!
 
-Website - [Chayn](https://www.chayn.co/)
+Find us online:
+- Website: [https://www.chayn.co/](https://www.chayn.co/)
+- Linktree: [https://linktr.ee/chayn](https://linktr.ee/chayn)
+- Twitter: [@ChaynHQ](https://twitter.com/ChaynHQ)
+- Instagram: [@chaynhq](https://www.instagram.com/chaynhq/)
+- Youtube: [Chayn Team](www.youtube.com/@chaynhq)
+- LinkedIn: [@chayn](https://www.linkedin.com/company/chayn)
 
-Twitter - [@ChaynHQ](https://twitter.com/ChaynHQ)
+# Contributing to Bloom Frontend
 
-Instagram - [@chaynhq](https://www.instagram.com/chaynhq/)
+Before making a contribution, please read our Contributing Guidelines in the [CONTRIBUTING.md](/CONTRIBUTING.md) file.
 
-Youtube - [Chayn Team](https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg)
-
-LinkedIn - [@chayn](https://www.linkedin.com/company/chayn)
-
-# Bloom Frontend
-
-For a more detailed explanation of this project's key concepts and architecture, please visit the [/docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs)
-
-[![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/deploy-to-staging.yml)
-
-**Currently in active development**
-
-# How to Contribute
-
-Before making a contribution, please follow these steps:
-
-1. Follow our Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md).
-2. Follow the [Git Flow and Deployment directions](#git-flow-and-deployment) at the end of this file.
+We ask all contributors to follow our [Contributing Guidelines](/CONTRIBUTING.md) to help Chayn developers maintain open-source best practices.
 
 Happy coding! ⭐
 
@@ -64,11 +59,19 @@ You will need to run this in the background for the frontend to be functional.
 
 ### Configure Environment Variables
 
-If you are an official Chayn volunteer or staff member, you can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
+- **For official Chayn volunteers and staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-If you are an outside volunteer, please create a `env.local` file and populate it with the variables below:
+- **For open-source contributors:** create a `env.local` file and populate it with the variables below:
 
-You will need to gather the following tokens from [Firebase](https://firebase.google.com/docs/auth) and [Storyblok](https://www.storyblok.com/).
+First, gather your own Firebase tokens. Here are resources to get started:
+- [Firebase Docs: Auth](https://firebase.google.com/docs/auth)
+- [Firebase Docs: API Keys](https://firebase.google.com/docs/projects/api-keys)
+- [Firebase Docs: Projects](https://firebase.google.com/docs/projects/learn-more#project-identifiers)
+- [Firebase Docs: Get Started with Fundamentals](https://firebase.google.com/docs/guides)
+
+Next, obtain the Storyblok token by visiting our [Tech Volunteer Guide](https://www.notion.so/chayn/Tech-volunteer-wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#84635bd9b82543ccaab4fb932ca35ebf). 
+Chayn provides a Storyblok token for contributors and is subject to change at any time. If issues arise with your Storyblok token, try checking the volunteer guide to see if the token has been updated. 
+*Note: Additional documentation found in the Tech Volunteer Guide may be outdated.*
 
 ```
 NEXT_PUBLIC_ENV=local
