@@ -1,4 +1,3 @@
-import { Partytown } from '@builder.io/partytown/react';
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
@@ -16,12 +15,9 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
             rel="stylesheet"
           />
-          <Partytown debug={true} forward={['dataLayer.push']} />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
-          {process.env.NEXT_PUBLIC_ENV === 'local' && (
-            <HotjarScript />
-          )}
+          {process.env.NEXT_PUBLIC_ENV === 'local' && <HotjarScript />}
         </Head>
         <body>
           <Main />

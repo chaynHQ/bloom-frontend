@@ -1,10 +1,10 @@
 import Script from 'next/script';
 
-const HotjarScript = () => {  
+const HotjarScript = () => {
   return (
     <Script
       id="hotjar"
-      type="text/partytown"
+      strategy="worker"
       dangerouslySetInnerHTML={{
         __html: `
           (function(h,o,t,j,a,r){
