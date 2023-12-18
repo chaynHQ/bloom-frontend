@@ -207,4 +207,4 @@ const attachCustomCommands = (Cypress, { auth }) => {
   });
 };
 
-attachCustomCommands(Cypress, firebase);
+attachCustomCommands(Cypress);
