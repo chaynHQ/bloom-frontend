@@ -33,7 +33,8 @@ import theme from '../styles/theme';
 // Client-side emotion cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 firebase;
-interface MyAppProps extends AppProps {
+
+export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
