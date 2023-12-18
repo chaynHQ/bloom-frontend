@@ -18,7 +18,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import { enCountries, esCountries } from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
@@ -114,7 +113,10 @@ const AboutYouDemographicForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          rollbar.error('Send zapier webhook about you demo form data error', error);
+          (window as any).Rollbar?.error(
+            'Send zapier webhook about you demo form data error',
+            error,
+          );
           logEvent(ABOUT_YOU_DEMO_ERROR, {
             ...eventUserData,
             message: error,

@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { useGetUserMutation } from '../../app/api';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
-import rollbar from '../../config/rollbar';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -89,7 +88,7 @@ const LoginForm = () => {
           const errorMessage = getErrorMessage(userResponse.error);
           logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
           logEvent(GET_LOGIN_USER_ERROR, { message: errorMessage });
-          rollbar.error('User login get user error', userResponse.error);
+          (window as any).Rollbar?.error('User login get user error', userResponse.error);
 
           setFormError(
             t.rich('getUserError', {
@@ -105,7 +104,7 @@ const LoginForm = () => {
         const errorMessage = error.message;
 
         logEvent(LOGIN_ERROR, { message: errorCode });
-        rollbar.error('User login firebase error', error);
+        (window as any).Rollbar?.error('User login firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));

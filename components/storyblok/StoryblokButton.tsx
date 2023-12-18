@@ -9,10 +9,11 @@ interface StoryblokButtonProps {
   text: string;
   color: STORYBLOK_COLORS;
   link: StoryblokLink;
+  size: 'small' | 'medium' | 'large' | undefined;
 }
 
 const StoryblokButton = (props: StoryblokButtonProps) => {
-  const { text, color = 'secondary.main', link } = props;
+  const { text, color = 'secondary.main', link, size = 'medium' } = props;
 
   if (!link || !link.cached_url) return <></>;
 
@@ -36,6 +37,7 @@ const StoryblokButton = (props: StoryblokButtonProps) => {
       variant="contained"
       color={color.includes('primary') ? 'primary' : 'secondary'}
       href={link.cached_url}
+      size={size}
     >
       {text}
     </Button>

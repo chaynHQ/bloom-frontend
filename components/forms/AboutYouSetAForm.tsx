@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -97,7 +96,10 @@ const AboutYouSetAForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          rollbar.error('Send zapier webhook about you demo form data error', error);
+          (window as any).Rollbar?.error(
+            'Send zapier webhook about you demo form data error',
+            error,
+          );
           logEvent(ABOUT_YOU_SETA_ERROR, {
             ...eventUserData,
             message: error,

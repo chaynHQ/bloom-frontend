@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useAssignPartnerAccessMutation } from '../../app/api';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   ASSIGN_NEW_PARTNER_ACCESS_ERROR,
@@ -13,6 +12,7 @@ import {
   ASSIGN_NEW_PARTNER_ACCESS_REQUEST,
   ASSIGN_NEW_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
+
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -83,7 +83,8 @@ const ApplyCodeForm = () => {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
-        rollbar.error('Assign partner access error', partnerAccessResponse.error);
+
+        (window as any).Rollbar?.error('Assign partner access error', partnerAccessResponse.error);
         logEvent(ASSIGN_NEW_PARTNER_ACCESS_ERROR, {
           ...eventUserData,
           message: error,

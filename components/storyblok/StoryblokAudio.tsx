@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import dynamic from 'next/dynamic';
 import { richtextContentStyle } from '../../styles/common';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
+const ReactPlayer = dynamic(() => import('react-player/file'), { ssr: false });
 
 const audioContainerStyle = {
   position: 'relative',

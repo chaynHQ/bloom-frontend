@@ -36,6 +36,9 @@ module.exports = withBundleAnalyzer(
       defaultLocale: 'en',
       localeDetection: true,
     },
+    experimental: {
+      nextScriptWorkers: true,
+    },
     async redirects() {
       return [
         {

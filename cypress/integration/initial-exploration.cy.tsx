@@ -5,14 +5,14 @@ describe('Initial exploration', () => {
       'Learn and heal from trauma in a private, supportive space.',
     );
     cy.get(`[qa-id=secondary-nav-chat-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Sign up today');
+    cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Sign up today');
+    cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-activities-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Sign up today');
+    cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-notes-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Sign up today');
+    cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-courses-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Sign up today');
+    cy.get('a', { timeout: 8000 }).contains('Get started');
   });
 });

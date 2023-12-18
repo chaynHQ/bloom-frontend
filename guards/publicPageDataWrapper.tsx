@@ -12,7 +12,6 @@ import {
   setUserToken,
 } from '../app/userSlice';
 import { auth } from '../config/firebase';
-import rollbar from '../config/rollbar';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
@@ -66,7 +65,10 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
         logEvent(GET_AUTH_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
       } else {
         if ('error' in userResponse) {
-          rollbar.error('LoadUserDataIfAvailable: get user error', userResponse.error);
+          (window as any).Rollbar?.error(
+            'LoadUserDataIfAvailable: get user error',
+            userResponse.error,
+          );
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 

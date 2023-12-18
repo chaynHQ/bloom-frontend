@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { StoryData } from 'storyblok-js-client';
 import { useCompleteSessionMutation } from '../../app/api';
-import rollbar from '../../config/rollbar';
 import {
   SESSION_COMPLETE_ERROR,
   SESSION_COMPLETE_REQUEST,
@@ -28,10 +27,11 @@ interface SessionCompleteButtonProps {
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
   const { story, eventData } = props;
 
-  const [completeSession] = useCompleteSessionMutation();
-
   const t = useTranslations('Courses');
+
   const [error, setError] = useState<string | null>(null);
+
+  const [completeSession] = useCompleteSessionMutation();
 
   const completeSessionAction = async () => {
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
@@ -49,7 +49,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
       const error = completeSessionResponse.error;
 
       logEvent(SESSION_COMPLETE_ERROR, eventData);
-      rollbar.error('Session complete error', error);
+      (window as any).Rollbar?.error('Session complete error', error);
 
       setError(t('errors.completeSessionError'));
       throw error;

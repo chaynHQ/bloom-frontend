@@ -19,6 +19,7 @@ import StoryblokImage from '../components/storyblok/StoryblokImage';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
+import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
@@ -36,6 +37,7 @@ export const RichTextOptions: RenderOptions = {
     ['statement']: (props: any) => <StoryblokStatement {...props} />,
     ['accordion']: (props: any) => <StoryblokAccordion {...props} />,
     ['carousel']: (props: any) => <StoryblokCarousel {...props} />,
+    ['spacer']: (props: any) => <StoryblokSpacer {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (

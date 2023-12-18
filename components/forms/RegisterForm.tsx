@@ -12,7 +12,6 @@ import {
 import { RootState } from '../../app/store';
 import { setUserLoading, setUserToken } from '../../app/userSlice';
 import { auth } from '../../config/firebase';
-import rollbar from '../../config/rollbar';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_EMAIL_ALREADY_EXISTS,
@@ -100,7 +99,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
-        rollbar.error('Validate code error', validateCodeResponse.error);
+        (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
         setLoading(false);
         throw error;
@@ -172,7 +171,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
       }
       logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-      rollbar.error('User register create user error', error);
+      (window as any).Rollbar?.error('User register create user error', error);
 
       setLoading(false);
 

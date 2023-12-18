@@ -7,12 +7,14 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
@@ -100,26 +102,31 @@ function MyApp(props: MyAppProps) {
   };
 
   return (
-    <NextIntlClientProvider locale={router.locale} messages={pageProps.messages}>
-      <Head>
-        <title>Bloom</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <CacheProvider value={emotionCache}>
-        <CrispScript />
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <TopBar />
-          <AppBarSpacer />
-          {pathHead !== 'partner-admin' && <LeaveSiteButton />}
-          <ComponentWithGuard />
-          <Footer />
-          <Consent />
-          {/* Vercel analytics */}
-          <Analytics />
-        </ThemeProvider>
-      </CacheProvider>
-    </NextIntlClientProvider>
+    <ErrorBoundary>
+      <NextIntlClientProvider messages={pageProps.messages} locale={router.locale}>
+          <Head>
+            <title>Bloom</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+        <CacheProvider value={emotionCache}>
+          <CrispScript />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <TopBar />
+            <AppBarSpacer />
+            {pathHead !== 'partner-admin' && <LeaveSiteButton />}
+            <ComponentWithGuard />
+            <Footer />
+            <Consent />
+            {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+              <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+              )}
+            {/* Vercel analytics */}
+            <Analytics />
+          </ThemeProvider>
+        </CacheProvider>
+      </NextIntlClientProvider>
+    </ErrorBoundary>
   );
 }
 
@@ -139,4 +146,5 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
     </Provider>
   );
 }
+
 export default AppReduxWrapper;
