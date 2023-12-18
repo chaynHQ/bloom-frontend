@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn run partytown && next build",
-    "partytown": "partytown copylib public/~partytown",
+    "build": "next build",
     "start": "next start",
     "https:proxy": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
     "lint": "next lint",
@@ -15,7 +14,6 @@
     "cypress:headless": "cypress run --headless true --browser chrome"
   },
   "dependencies": {
-    "@builder.io/partytown": "^0.8.1",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/server": "^11.4.0",
@@ -48,6 +46,7 @@
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },
   "devDependencies": {
+    "@builder.io/partytown": "^0.8.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
