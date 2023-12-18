@@ -8,7 +8,7 @@
     "form": {
       "subscribeTitle": "Inscreva-se para receber as Notas do Bloom",
       "subscribe": "Subscribe",
-      "phonenumber": "Número de telefone",
+      "phoneNumber": "Número de telefone",
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
