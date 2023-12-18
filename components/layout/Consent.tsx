@@ -1,3 +1,4 @@
+import { getAnalytics } from '@firebase/analytics';
 import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
@@ -49,6 +50,8 @@ const Consent = (props: {}) => {
   };
 
   const handleDecline = () => {
+    getAnalytics();
+
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'denied',
@@ -56,6 +59,8 @@ const Consent = (props: {}) => {
     logEvent(COOKIES_REJECTED, eventUserData);
   };
   const handleAccept = () => {
+    getAnalytics();
+
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'granted',
