@@ -1,11 +1,11 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Card, CardContent, Link, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import MuiPhoneNumber from 'material-ui-phone-number';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
+import 'react-international-phone/style.css';
 import { useSubscribeToWhatsappMutation } from '../../app/api';
 import { RootState } from '../../app/store';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
@@ -18,6 +18,7 @@ import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import PhoneInput from './PhoneInput';
 
 const containerStyle = {
   marginY: 3,
@@ -30,7 +31,7 @@ const WhatsappSubscribeForm = () => {
   const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
   const eventData = getEventUserData({ user, partnerAccesses, partnerAdmin });
 
-  const [phonenumber, setPhonenumber] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<TextNode>();
 
@@ -42,7 +43,7 @@ const WhatsappSubscribeForm = () => {
     setLoading(true);
     logEvent(WHATSAPP_SUBSCRIBE_REQUEST, eventData);
 
-    const validatedNumber = validateNumber(phonenumber);
+    const validatedNumber = validateNumber(phoneNumber);
 
     if (validatedNumber === undefined) {
       setFormError(t('subscribeErrors.invalidNumber'));
@@ -84,10 +85,10 @@ const WhatsappSubscribeForm = () => {
     }
   };
 
-  const handlePhonenumberChange = (
+  const handlePhoneNumberChange = (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string | any,
   ) => {
-    setPhonenumber(value);
+    setPhoneNumber(value);
   };
 
   return (
@@ -98,11 +99,7 @@ const WhatsappSubscribeForm = () => {
         </Typography>
         <Box sx={containerStyle}>
           <form autoComplete="off" onSubmit={subscribeHandler}>
-            <MuiPhoneNumber
-              defaultCountry={'gb'}
-              onChange={handlePhonenumberChange}
-              label={t('phonenumber')}
-            />
+            <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} />
             {formError && (
               <Typography color="error.main" mb={2}>
                 {formError}
@@ -125,8 +122,8 @@ const WhatsappSubscribeForm = () => {
   );
 };
 
-const validateNumber = (phonenumber: string): string | undefined => {
-  const sanitisedNumber = phonenumber.replace(/\s/g, '');
+const validateNumber = (phoneNumber: string): string | undefined => {
+  const sanitisedNumber = phoneNumber.replace(/\s/g, '');
 
   const validationResult = phone(sanitisedNumber);
 
