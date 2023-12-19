@@ -6,20 +6,27 @@ interface RowProps {
   numberOfColumns: number;
   horizontalAlignment: string;
   verticalAlignment: string;
+  gap?: string;
 }
 
 const Row = (props: RowProps) => {
-  const { children, horizontalAlignment, verticalAlignment, numberOfColumns } = props;
+  const { children, horizontalAlignment, verticalAlignment, numberOfColumns, gap } = props;
+  const calculatedGap =
+    gap === 'none'
+      ? 0
+      : { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns };
 
   const rowStyles = {
     width: '100%',
-    gap: { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns },
+    gap: calculatedGap,
     ...rowStyle,
     textAlign:
       horizontalAlignment === 'center'
         ? 'center'
         : horizontalAlignment === 'right'
         ? 'right'
+        : horizontalAlignment === 'mobile-left-desktop-center'
+        ? { xs: 'left', md: 'center' }
         : 'left',
     ...(horizontalAlignment && {
       justifyContent:
@@ -27,6 +34,8 @@ const Row = (props: RowProps) => {
           ? 'center'
           : horizontalAlignment === 'right'
           ? 'flex-end'
+          : horizontalAlignment === 'mobile-left-desktop-center'
+          ? { xs: 'flex-start', md: 'center' }
           : 'flex-start',
     }),
     ...(verticalAlignment && {

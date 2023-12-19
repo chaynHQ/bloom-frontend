@@ -5,16 +5,15 @@ import { Box } from '@mui/system';
 import NukaCarousel from 'nuka-carousel';
 import { StoryblokComponent } from 'storyblok-js-client';
 import { Component as DynamicComponent } from './DynamicComponent';
-import StoryblokCard from './StoryblokCard';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
-import StoryblokVideo from './StoryblokVideo';
+import StoryblokRowColumnBlock from './StoryblokRowColumnBlock';
 
 const components: DynamicComponent[] = [
   { name: 'image', component: StoryblokImage },
-  { name: 'video', component: StoryblokVideo },
   { name: 'quote', component: StoryblokQuote },
-  { name: 'card', component: StoryblokCard },
+  { name: 'row_new', component: StoryblokRowColumnBlock },
+
 ];
 
 interface StoryblokCarouselProps {

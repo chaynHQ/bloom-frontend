@@ -20,10 +20,11 @@ interface StoryblokRowColumnBlockProps {
   columns: StoryblokColumn[];
   horizontal_alignment: string;
   vertical_alignment: string;
+  gap: string;
 }
 
 const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
-  const { columns, horizontal_alignment, vertical_alignment } = props;
+  const { columns, horizontal_alignment, vertical_alignment, gap } = props;
 
   if (!columns) return <></>;
 
@@ -32,10 +33,11 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
       numberOfColumns={columns.length}
       verticalAlignment={vertical_alignment}
       horizontalAlignment={horizontal_alignment}
+      gap={gap}
     >
       {columns.map((column: any, index: number) => {
         return (
-          <Column width={column.width} key={`row_column_${index}_${Math.random() * 100}`}>
+          <Column width={column.width} horizontalAlignment={column.horizontal_alignment} key={`row_column_${index}_${Math.random() * 100}`}>
             {render(column.content, RichTextOptions)}
           </Column>
         );
