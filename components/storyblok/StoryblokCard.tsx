@@ -34,7 +34,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     padding: { xs: 2, sm: 1, md: 2, lg: 2 },
     '&:last-child': { paddingBottom: { xs: 2, sm: 2, md: 2, lg: 2 } },
     gap: { xs: 3, sm: 1, md: 1 },
-    '& h3': {
+    '& h3:only-child': {
       marginBottom: 0,
     },
   };
