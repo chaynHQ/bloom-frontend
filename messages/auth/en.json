@@ -45,6 +45,7 @@
       "firebase": {
         "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
+        "tooManyAttempts": "Too many failed login attempts, please wait a few minutes or reset your password now.",
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
         "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
         "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",

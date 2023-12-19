@@ -45,6 +45,7 @@
       "firebase": {
         "authError": "Humein uss email aur password ke combination ka koi account nahi mila. Apna email aur password check keejiye. ",
         "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
+        "tooManyAttempts": "Bahut saare viphal login prayaas, krpaya kuchh minat prateeksha karen ya apana paasavard abhee reeset karen.",
         "weakPassword": "Aapke password ko thoda aur lamba hone ki zaroorat hai taki vo aur surakshit ho.",
         "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login</loginLink> par jaiye jaari rakhne ke liye.",
         "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya</resetLink> aur fir prayas kariya. ",

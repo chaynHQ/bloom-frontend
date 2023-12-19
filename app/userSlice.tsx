@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
 import { PartnerAccesses } from './partnerAccessSlice';
-import type { RootState } from './store';
 
 export interface User {
   loading: boolean;
@@ -134,5 +133,4 @@ const isSubscriptionActive = (subscription: Subscription): subscription is Activ
 
 const { actions, reducer } = slice;
 export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading } = actions;
-export const selectCurrentUser = (state: RootState) => state.user;
 export default reducer;

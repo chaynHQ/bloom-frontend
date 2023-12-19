@@ -12,7 +12,7 @@ import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
-import { RootState } from './store';
+import { AppState } from './store';
 import { Subscription, Subscriptions, User } from './userSlice';
 
 export interface GetUserResponse {
@@ -34,7 +34,7 @@ interface WhatsappUnsubscribePayload {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: (headers, { getState }) => {
-    const user = (getState() as RootState).user;
+    const user = (getState() as AppState).user;
     const token = user.token;
 
     if (token) {
