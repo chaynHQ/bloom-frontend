@@ -60,16 +60,16 @@ export default function UserMenu() {
 
   const logout = async () => {
     // clear all state
+    // sign out of firebase
+    const auth = getAuth();
+    await signOut(auth);
     await dispatch(clearPartnerAccessesSlice());
     await dispatch(clearPartnerAdminSlice());
     await dispatch(clearCoursesSlice());
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
-    // sign out of firebase
-    const auth = getAuth();
-    await signOut(auth);
 
-    router.push('/auth/login');
+    // router.push('/auth/login');
   };
 
   return (

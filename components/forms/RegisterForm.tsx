@@ -150,7 +150,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     if ('error' in userResponse) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
-      logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
+
       if (errorMessage === CREATE_USER_EMAIL_ALREADY_EXISTS) {
         setFormError(
           t.rich('firebase.emailAlreadyInUse', {
@@ -172,11 +172,17 @@ const RegisterForm = (props: RegisterFormProps) => {
           }),
         );
       }
-      logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-      (window as any).Rollbar?.error('User register create user error', error);
 
       setLoading(false);
-      throw error;
+      if (
+        errorMessage !== CREATE_USER_EMAIL_ALREADY_EXISTS &&
+        errorMessage !== CREATE_USER_WEAK_PASSWORD &&
+        errorMessage !== CREATE_USER_INVALID_EMAIL
+      ) {
+        logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
+        (window as any).Rollbar?.error('User register create user error', error);
+        throw error;
+      }
     }
   };
 
@@ -189,7 +195,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
       await createUserRecord();
-      router.push('/account/about-you');
+      await router.push('/account/about-you');
       dispatch(setUserLoading(false));
       setLoading(false);
     } catch {
@@ -238,7 +244,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           required
         />
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography color="error.main" mb={'1rem !important'}>
             {formError}
           </Typography>
         )}

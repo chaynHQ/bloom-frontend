@@ -75,15 +75,15 @@ const LoginForm = () => {
           // because a query value can be an array
           const returnUrl =
             typeof router.query.return_url === 'string' ? router.query.return_url : null;
-          dispatch(setUserLoading(false));
 
           if (userResponse.data.partnerAdmin?.id) {
-            router.push('/partner-admin/create-access-code');
+            await router.push('/partner-admin/create-access-code');
           } else if (returnUrl) {
-            router.push(returnUrl);
+            await router.push(returnUrl);
           } else {
-            router.push('/courses');
+            await router.push('/courses');
           }
+          dispatch(setUserLoading(false));
           setLoading(false);
         }
         if ('error' in userResponse) {
@@ -105,11 +105,11 @@ const LoginForm = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        logEvent(LOGIN_ERROR, { message: errorCode });
-        (window as any).Rollbar?.error('User login firebase error', error);
-
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
+        }
+        if (errorCode === 'auth/too-many-requests') {
+          setFormError(t('firebase.tooManyAttempts'));
         }
         if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
           setFormError(t('firebase.authError'));
@@ -117,10 +117,13 @@ const LoginForm = () => {
         setLoading(false);
 
         if (
+          errorCode !== 'auth/too-many-requests' &&
           errorCode !== 'auth/invalid-email' &&
           errorCode !== 'auth/user-not-found' &&
           errorCode !== 'auth/wrong-password'
         ) {
+          logEvent(LOGIN_ERROR, { message: errorCode });
+          (window as any).Rollbar?.error('User login firebase error', error);
           throw error;
         }
       });
@@ -148,7 +151,7 @@ const LoginForm = () => {
           required
         />
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography color="error.main" mb={'1rem !important'}>
             {formError}
           </Typography>
         )}

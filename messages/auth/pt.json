@@ -45,6 +45,7 @@
       "firebase": {
         "authError": "Não foi possível encontrar uma conta para essa combinação de e-mail e senha. Verifique se seu e-mail e senha estão corretos.",
         "invalidEmail": "Seu e-mail parece estar inválido. Por favor, corrija os erros de digitação para continuar.",
+        "tooManyAttempts": "Muitas tentativas de login falharam. Aguarde alguns minutos ou redefina sua senha agora.",
         "weakPassword": "Sua senha precisa ser um pouco mais longa para ser mais segura.",
         "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
         "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
