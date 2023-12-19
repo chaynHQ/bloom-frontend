@@ -1,16 +1,9 @@
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
+import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
-import { DEFAULT_SCALE_START } from '../../constants/common';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -28,6 +21,8 @@ const actionsStyle = {
   justifyContent: 'flex-end',
   marginTop: 2,
 };
+
+const DEFAULT_SCALE_START = 3;
 
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
@@ -51,7 +46,9 @@ const AboutYouSetAForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
+  const user = useTypedSelector((state) => state.user);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -65,8 +62,8 @@ const AboutYouSetAForm = () => {
   ];
 
   useEffect(() => {
-    setEventUserData(getEventUserData({ user, partnerAccesses, partnerAdmin }));
-  }, [user, partnerAccesses, partnerAdmin]);
+    setEventUserData(getEventUserData(user.createdAt, partnerAccesses, partnerAdmin));
+  }, [user.createdAt, partnerAccesses, partnerAdmin]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -100,7 +97,10 @@ const AboutYouSetAForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          rollbar.error('Send zapier webhook about you demo form data error', error);
+          (window as any).Rollbar?.error(
+            'Send zapier webhook about you demo form data error',
+            error,
+          );
           logEvent(ABOUT_YOU_SETA_ERROR, {
             ...eventUserData,
             message: error,

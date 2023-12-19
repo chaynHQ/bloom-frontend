@@ -1,13 +1,9 @@
 import LanguageIcon from '@mui/icons-material/Language';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { RootState } from '../../app/store';
-import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
+import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -19,20 +15,29 @@ const menuItemStyle = {
   },
 } as const;
 
+const languageMap: { [key: string]: string } = {
+  en: 'English',
+  hi: 'Hindi',
+  pt: 'Português',
+  es: 'Español',
+  de: 'Deutsch',
+  fr: 'Français',
+};
+
 const buttonStyle = {
   height: 40,
   minWidth: { xs: 40, md: 64 },
   paddingX: 1,
   gap: 0.75,
   fontWeight: 400,
-
-  ':hover': { backgroundColor: 'background.default' },
+  color: 'common.white',
+  ':hover': { backgroundColor: 'primary.light', color: 'primary.dark' },
 
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  '& .MuiButton-startIcon': { display: { xs: 'none', md: 'inline-flex' }, mx: 0 },
+  '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
 } as const;
 
 export default function LanguageMenu() {
@@ -40,8 +45,10 @@ export default function LanguageMenu() {
   const locale = router.locale;
   const locales = router.locales;
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -68,7 +75,7 @@ export default function LanguageMenu() {
         size="medium"
         sx={buttonStyle}
       >
-        {locale?.toUpperCase()}
+        {languageMap[locale ? locale : 'en']}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -82,7 +89,7 @@ export default function LanguageMenu() {
         {locales
           ?.filter((language) => language !== locale)
           .map((language) => {
-            const languageUppercase = language.toUpperCase();
+            const languageLabel = languageMap[language];
             return (
               <MenuItem key={language} sx={menuItemStyle}>
                 <Button
@@ -93,7 +100,7 @@ export default function LanguageMenu() {
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
                   }}
                 >
-                  {languageUppercase}
+                  {languageLabel}
                 </Button>
               </MenuItem>
             );

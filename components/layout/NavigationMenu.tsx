@@ -1,15 +1,10 @@
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import {
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
-  HEADER_LOGIN_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -20,7 +15,7 @@ const listStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
-  marginLeft: { xs: 0, md: 'auto' },
+  marginLeft: { xs: 0, md: 0.5 },
   marginRight: { xs: 0, md: 0.5 },
   gap: { xs: 2, md: 0 },
 } as const;
@@ -38,13 +33,16 @@ const listItemTextStyle = {
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'text.primary',
+  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
   paddingY: 0.5,
 
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
+  },
+  ':hover': {
+    color: 'primary.dark',
   },
 } as const;
 
@@ -63,15 +61,20 @@ interface NavigationMenuProps {
 const NavigationMenu = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
   const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (!user.loading) {
+    if (!userLoading) {
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
@@ -97,20 +100,11 @@ const NavigationMenu = (props: NavigationMenuProps) => {
           event: HEADER_IMMEDIATE_HELP_CLICKED,
         });
       }
-
-      if (!user.token) {
-        links.push({
-          title: t('login'),
-          href: '/auth/login',
-          event: HEADER_LOGIN_CLICKED,
-          qaId: 'login-menu-button',
-        });
-      }
     }
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partnerAccesses, t, user, partnerAdmin]);
+  }, [t, userLoading, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>

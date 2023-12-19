@@ -1,7 +1,6 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle } from '../../styles/common';

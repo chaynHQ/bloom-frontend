@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "Cookie-Richtlinie",
       "acceptLabel": "Cookies akzeptieren",
       "declineLabel": "Cookies ablehnen"
+    },
+    "signUpTodayPromo": {
+      "title": "Melden Sie sich noch heute für ein kostenloses Konto an.",
+      "description1": "Bloom ist eine Online-Plattform, die Sie bei der Heilung von Traumata unterstützt. Von Videokursen und reflektierenden Aktivitäten bis hin zur direkten Kommunikation mit unserem Team gibt es viele verschiedene Möglichkeiten, sich mit Bloom zu beschäftigen.",
+      "description2": "Registrieren Sie sich unten, um Zugriff auf all unsere Inhalte zu erhalten und alles zu erkunden, was Bloom zu bieten hat.",
+      "button": "Loslegen"
     }
   }
 }

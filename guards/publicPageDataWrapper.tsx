@@ -1,25 +1,20 @@
-import Cookies from 'js-cookie';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { hotjar } from 'react-hotjar';
 import { api, useGetUserMutation } from '../app/api';
 import { clearCoursesSlice } from '../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
-import { RootState } from '../app/store';
 import {
   clearUserSlice,
   setAuthStateLoading,
   setUserLoading,
   setUserToken,
 } from '../app/userSlice';
-import { auth } from '../config/firebase';
-import rollbar from '../config/rollbar';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
-import generateReturnQuery from '../utils/generateReturnQuery';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 
 /**
  * Function is intended to wrap around a public page (i.e. auth not required) and pull user data if available.
@@ -37,14 +32,16 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
-  const { user } = useTypedSelector((state: RootState) => state);
+  const user = useTypedSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
 
   const [getUser] = useGetUserMutation();
 
+  const auth = getAuth();
+
   // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (authState) => {
+    const unsubscribe = onAuthStateChanged(auth, async (authState) => {
       if (!authState) {
         dispatch(setAuthStateLoading(false));
         setLoading(false);
@@ -57,7 +54,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       dispatch(setAuthStateLoading(false));
     });
     return () => unsubscribe();
-  }, []);
+  });
 
   useEffect(() => {
     async function callGetUser() {
@@ -66,21 +63,24 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       const userResponse = await getUser('');
 
       if ('data' in userResponse && userResponse.data.user.id) {
-        logEvent(GET_AUTH_USER_SUCCESS, { ...getEventUserData(userResponse.data) });
+        const eventUserData = getEventUserResponseData(userResponse.data);
+
+        logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
       } else {
         if ('error' in userResponse) {
-          rollbar.error('LoadUserDataIfAvailable: get user error', userResponse.error);
+          (window as any).Rollbar?.error(
+            'LoadUserDataIfAvailable: get user error',
+            userResponse.error,
+          );
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        auth.signOut();
+        signOut(auth);
         await dispatch(clearPartnerAccessesSlice());
         await dispatch(clearPartnerAdminSlice());
         await dispatch(clearCoursesSlice());
         await dispatch(clearUserSlice());
         await dispatch(api.util.resetApiState());
-
-        router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
       }
       setLoading(false);
     }
@@ -93,13 +93,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       // User firebase token exists (i.e. user is logged in) but user data hasn't been loaded
       callGetUser();
     }
-    if (user.id && process.env.NEXT_PUBLIC_ENV !== 'local') {
-      // Checking for analytics consent before sending userIdentifiers to hotjar
-      if (Cookies.get('analyticsConsent') === 'true') {
-        hotjar.identify('USER_ID', { userProperty: user.id });
-      }
-    }
-  }, [getUser, router, user]);
+  }, [getUser, router, user, dispatch, loading]);
 
   return <>{children}</>;
 }

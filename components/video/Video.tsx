@@ -1,12 +1,11 @@
-import { debounce, Theme } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Theme, debounce } from '@mui/material';
 import { SxProps } from '@mui/system';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
 import logEvent from '../../utils/logEvent';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
+const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
 const videoContainerStyle = {
   position: 'relative',

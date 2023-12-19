@@ -1,8 +1,8 @@
-import { AddCircleOutline, Logout, Person } from '@mui/icons-material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import Logout from '@mui/icons-material/Logout';
+import Person from '@mui/icons-material/Person';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
+import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -10,9 +10,7 @@ import { api } from '../../app/api';
 import { clearCoursesSlice } from '../../app/coursesSlice';
 import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
 import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
-import { RootState } from '../../app/store';
 import { clearUserSlice } from '../../app/userSlice';
-import { auth } from '../../config/firebase';
 import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -30,9 +28,8 @@ const buttonStyle = {
   minWidth: { xs: 40, md: 64 },
   height: 40,
   fontWeight: 400,
-
-  ':hover': { backgroundColor: 'background.default' },
-
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
@@ -44,8 +41,10 @@ export default function UserMenu() {
   const router = useRouter();
   const t = useTranslations('Navigation');
   const dispatch: any = useAppDispatch();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -67,7 +66,8 @@ export default function UserMenu() {
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
     // sign out of firebase
-    await auth.signOut();
+    const auth = getAuth();
+    await signOut(auth);
 
     router.push('/auth/login');
   };

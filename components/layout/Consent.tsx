@@ -1,10 +1,9 @@
-import { alpha, Box, Button, useTheme } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { getAnalytics } from '@firebase/analytics';
+import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
-import { RootState } from '../../app/store';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
@@ -13,8 +12,10 @@ import Link from '../common/Link';
 
 const Consent = (props: {}) => {
   const theme = useTheme();
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const tS = useTranslations('Shared');
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -49,6 +50,8 @@ const Consent = (props: {}) => {
   };
 
   const handleDecline = () => {
+    getAnalytics();
+
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'denied',
@@ -56,6 +59,8 @@ const Consent = (props: {}) => {
     logEvent(COOKIES_REJECTED, eventUserData);
   };
   const handleAccept = () => {
+    getAnalytics();
+
     (window as any).gtag('consent', 'update', {
       ad_storage: 'denied',
       analytics_storage: 'granted',

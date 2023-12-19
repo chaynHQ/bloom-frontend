@@ -1,5 +1,9 @@
-import { Circle, Event, KeyboardArrowDown, PendingOutlined } from '@mui/icons-material';
+import Circle from '@mui/icons-material/Circle';
+import Event from '@mui/icons-material/Event';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import PendingOutlined from '@mui/icons-material/PendingOutlined';
 import {
+  Box,
   Card,
   CardActionArea,
   CardActions,
@@ -8,7 +12,6 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';

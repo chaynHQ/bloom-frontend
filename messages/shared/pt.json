@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "Política de cookies",
       "acceptLabel": "Aceitar Cookies",
       "declineLabel": "Rejeitar Cookies"
+    },
+    "signUpTodayPromo": {
+      "title": "Inscreva-se para uma conta gratuita hoje",
+      "description1": "Bloom é uma plataforma online para te apoiar enquanto você se recupera de traumas. Desde cursos em vídeo e atividades reflexivas até a troca de mensagens diretas com nossa equipe, há muitas maneiras diferentes de interagir com o Bloom.",
+      "description2": "Inscreva-se abaixo para ter acesso a todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer!",
+      "button": "Comece"
     }
   }
 }

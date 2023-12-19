@@ -1,16 +1,11 @@
-import { Box } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
-import { HEADER_HOME_LOGO_CLICKED } from '../../constants/events';
+import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import bloomLogo from '../../public/bloom_logo.svg';
+import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -21,7 +16,8 @@ import SecondaryNav from './SecondaryNav';
 import UserMenu from './UserMenu';
 
 const appBarStyle = {
-  bgcolor: 'primary.light',
+  bgcolor: 'primary.dark',
+  zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
 } as const;
 
 const appBarContainerStyles = {
@@ -47,8 +43,11 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     if (partnerAdmin && partnerAdmin.partner) {
@@ -63,7 +62,6 @@ const TopBar = () => {
     <>
       <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
         <Container sx={appBarContainerStyles}>
-          {isSmallScreen && <NavigationDrawer />}
           <Link
             qa-id="home-logo-link"
             href={welcomeUrl}
@@ -75,13 +73,29 @@ const TopBar = () => {
           >
             <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
           </Link>
-          {!isSmallScreen && <NavigationMenu />}
-          <Box sx={rowStyle}>
-            {user.token && <UserMenu />}
+          <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
+            {!isSmallScreen && <NavigationMenu />}
+            {userToken && <UserMenu />}
             <LanguageMenu />
+            {!isSmallScreen && !userToken && (
+              <Button
+                variant="contained"
+                size="medium"
+                qa-id="login-menu-button"
+                sx={{ width: 'auto', ml: 1 }}
+                component={Link}
+                href="/auth/login"
+                onClick={() => {
+                  logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+                }}
+              >
+                {t('login')}
+              </Button>
+            )}
+            {isSmallScreen && <NavigationDrawer />}
           </Box>
         </Container>
-        {!isSmallScreen && user.token && <SecondaryNav currentPage={router.pathname} />}
+        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
       </AppBar>
     </>
   );

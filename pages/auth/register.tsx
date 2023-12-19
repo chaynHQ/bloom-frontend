@@ -1,10 +1,12 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -12,12 +14,11 @@ import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import RegisterForm, { PartnerRegisterForm } from '../../components/forms/RegisterForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '../../constants/events';
-import { getAllPartnersContent, getPartnerContent, PartnerContent } from '../../constants/partners';
+import { PartnerContent, getAllPartnersContent, getPartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
@@ -73,8 +74,10 @@ const Register: NextPage = () => {
   const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [codeParam, setCodeParam] = useState<string>('');
   const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);

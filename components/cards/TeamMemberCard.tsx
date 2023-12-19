@@ -1,7 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
-import { Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useState } from 'react';

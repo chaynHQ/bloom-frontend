@@ -1,5 +1,7 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
+  Box,
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -7,14 +9,11 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 import { useAddPartnerAccessMutation } from '../../app/api';
-import { RootState } from '../../app/store';
-import rollbar from '../../config/rollbar';
+import { BASE_URL } from '../../constants/common';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
@@ -27,8 +26,10 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const CreateAccessCodeForm = () => {
-  const { partnerAdmin, user, partnerAccesses } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,9 +44,7 @@ const CreateAccessCodeForm = () => {
   const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
     useAddPartnerAccessMutation();
 
-  const welcomeURL = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
+  const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -91,7 +90,7 @@ const CreateAccessCodeForm = () => {
         ...eventData,
         error: errorMessage,
       });
-      rollbar.error('Create partner access code error', error);
+      (window as any).Rollbar?.error('Create partner access code error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
       setLoading(false);

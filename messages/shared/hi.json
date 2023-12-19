@@ -70,6 +70,12 @@
       "cookieConsentPolicy": "Cookies neeti",
       "acceptLabel": "Cookies sweekaar kariye",
       "declineLabel": "Cookies asweekar karein"
+    },
+    "signUpTodayPromo": {
+      "title": "Free account ke liye aaj he sign up karein",
+      "description1": "Bloom ek online platform hai jo apko apke ghavon se ubharne aur heal hone mein madad karta hai. Bloom par bahut sar alag alag suvidhaye hain - \nVideo courses, vichar sambhanti activities, aur toh aur aap humari team se seedha message par baat kar sakte hain.",
+      "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
+      "button": "Shuru karte hain"
     }
   }
 }

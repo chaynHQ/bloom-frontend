@@ -1,10 +1,12 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -12,14 +14,13 @@ import Head from 'next/head';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { RootState } from '../../app/store';
 import Link from '../../components/common/Link';
 import LoginForm from '../../components/forms/LoginForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import {
-  generateGetStartedPartnerEvent,
   GET_STARTED_WITH_BLOOM_CLICKED,
   RESET_PASSWORD_HERE_CLICKED,
+  generateGetStartedPartnerEvent,
 } from '../../constants/events';
 import { getAllPartnersContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
@@ -56,10 +57,15 @@ const Login: NextPage = () => {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { user, partnerAccesses, partnerAdmin } = useTypedSelector((state: RootState) => state);
-  const eventUserData = getEventUserData({ user, partnerAccesses, partnerAdmin });
   const router = useRouter();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
@@ -72,10 +78,10 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
-    if (user.token && user.id) {
+    if (userToken && userId) {
       router.push('/courses');
     }
-  }, [user.token]);
+  });
 
   const ExtraContent = () => {
     return (
