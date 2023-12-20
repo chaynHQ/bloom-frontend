@@ -1,20 +1,20 @@
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
+import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/common/Link';
+import NoDataAvailable from '../components/common/NoDataAvailable';
 import PartnerHeader from '../components/layout/PartnerHeader';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
 import { PROMO_GET_STARTED_CLICKED, PROMO_GO_TO_COURSES_CLICKED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../public/welcome_to_bloom.svg';
 import { rowStyle } from '../styles/common';
+import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 import { RichTextOptions } from '../utils/richText';
 
@@ -39,13 +39,13 @@ const rowItem = {
 } as const;
 
 interface Props {
-  story: StoryData;
+  story: ISbStoryData | null;
   preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
 }
 
-const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
+const Index: NextPage<Props> = ({ story, preview }) => {
+  story = useStoryblokState(story);
+
   const t = useTranslations('Welcome');
 
   const userToken = useTypedSelector((state) => state.user.token);
@@ -54,14 +54,16 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  story = useStoryblok(story, preview, sbParams, locale);
-
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   return (
     <Box>
@@ -125,37 +127,25 @@ const Index: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
       </Container>
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection
-            key={`page_section_${index}`}
-            content={section.content}
-            alignment={section.alignment}
-            color={section.color}
-          />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
     </Box>
   );
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/home`, sbParams);
+export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
+  const storyblokProps = await getStoryblokPageProps('home', locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
         ...require(`../messages/welcome/${locale}.json`),
+        ...require(`../messages/courses/${locale}.json`),
+        ...require(`../messages/chat/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

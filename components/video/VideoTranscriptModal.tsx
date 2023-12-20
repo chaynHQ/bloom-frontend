@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction } from 'react';
-import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -41,7 +41,7 @@ const transcriptDescriptionStyle = {
 };
 interface TranscriptModalProps {
   videoName: string;
-  content: Richtext;
+  content: ISbRichtext;
   openTranscriptModal: boolean | null;
   setOpenTranscriptModal: Dispatch<SetStateAction<boolean | null>>;
 }

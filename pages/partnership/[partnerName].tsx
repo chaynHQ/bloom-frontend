@@ -1,41 +1,34 @@
 import { Box } from '@mui/material';
+import {
+  ISbStoriesParams,
+  ISbStoryData,
+  getStoryblokApi,
+  useStoryblokState,
+} from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { StoriesParams, StoryData, StoryblokComponent } from 'storyblok-js-client';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../../config/storyblok';
-import { LANGUAGES } from '../../constants/enums';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-// TODO pull out
-type StoryBlokData = StoryData<
-  StoryblokComponent<string> & {
-    [index: string]: any;
+const Partnership: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
+  if (!story) {
+    return <NoDataAvailable />;
   }
->;
 
-const Partnership: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
   const partnerName = story.slug;
-  const configuredStory = useStoryblok(story, preview, sbParams, locale);
+  const partnerContent: PartnerContent = getPartnerContent(partnerName);
 
-  const t = useTranslations('Partnership');
-  const tS = useTranslations('Shared');
-
-  return showPartnershipView(configuredStory, getPartnerContent(partnerName));
-};
-//
-const showPartnershipView = (story: StoryBlokData, partnerContent: PartnerContent) => {
   return (
     <Box>
       <Head>
@@ -49,12 +42,7 @@ const showPartnershipView = (story: StoryBlokData, partnerContent: PartnerConten
       />
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection
-            key={`page_section_${index}`}
-            content={section.content}
-            alignment={section.alignment}
-            color={section.color}
-          />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
     </Box>
   );
@@ -63,37 +51,37 @@ const showPartnershipView = (story: StoryBlokData, partnerContent: PartnerConten
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const partnerName = params?.partnerName;
 
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    cv: preview ? Date.now() : 0,
-    language: locale,
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/partnership/${partnerName}`, sbParams);
+  const storyblokProps = await getStoryblokPageProps(`partnership/${partnerName}`, locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
+      ...storyblokProps,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/partnership/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=partnership/');
+  let sbParams: ISbStoriesParams = {
+    published: true,
+    starts_with: 'partnership/',
+  };
+
+  const storyblokApi = getStoryblokApi();
+  let data = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
+
+  data.forEach((story: Partial<ISbStoryData>) => {
+    if (!story.slug) return;
+
     // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
-    let splittedSlug = slug.split('/');
+    let splittedSlug = story.slug.split('/');
 
     if (locales) {
       // create additional languages

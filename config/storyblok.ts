@@ -1,98 +1,48 @@
-import { useEffect, useState } from 'react';
-import StoryblokClient, { StoryParams } from 'storyblok-js-client';
-import { LANGUAGES } from '../constants/enums';
+import { apiPlugin, storyblokInit } from '@storyblok/react';
+import StoryblokAccordion from '../components/storyblok/StoryblokAccordion';
+import StoryblokAudio from '../components/storyblok/StoryblokAudio';
+import StoryblokButton from '../components/storyblok/StoryblokButton';
+import StoryblokCard from '../components/storyblok/StoryblokCard';
+import StoryblokCarousel from '../components/storyblok/StoryblokCarousel';
+import StoryblokCoursePage from '../components/storyblok/StoryblokCoursePage';
+import StoryblokFaqs from '../components/storyblok/StoryblokFaqs';
+import StoryblokImage from '../components/storyblok/StoryblokImage';
+import StoryblokMeetTheTeamPage from '../components/storyblok/StoryblokMeetTheTeamPage';
+import StoryblokPage from '../components/storyblok/StoryblokPage';
+import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
+import StoryblokQuote from '../components/storyblok/StoryblokQuote';
+import StoryblokRow from '../components/storyblok/StoryblokRow';
+import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
+import StoryblokSessionIbaPage from '../components/storyblok/StoryblokSessionIbaPage';
+import StoryblokSessionPage from '../components/storyblok/StoryblokSessionPage';
+import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
+import StoryblokStatement from '../components/storyblok/StoryblokStatement';
+import StoryblokVideo from '../components/storyblok/StoryblokVideo';
+import StoryblokWelcomePage from '../components/storyblok/StoryblokWelcomePage';
 
-const Storyblok = new StoryblokClient({
+export const storyblok = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
-  cache: {
-    clear: 'auto',
-    type: 'memory',
+  use: [apiPlugin],
+  components: {
+    image: StoryblokImage,
+    video: StoryblokVideo,
+    audio: StoryblokAudio,
+    row: StoryblokRow,
+    row_new: StoryblokRowColumnBlock,
+    quote: StoryblokQuote,
+    card: StoryblokCard,
+    button: StoryblokButton,
+    faq_list: StoryblokFaqs,
+    statement: StoryblokStatement,
+    accordion: StoryblokAccordion,
+    carousel: StoryblokCarousel,
+    spacer: StoryblokSpacer,
+    page_section: StoryblokPageSection,
+    page: StoryblokPage,
+    course: StoryblokCoursePage,
+    session: StoryblokSessionPage,
+    session_iba: StoryblokSessionIbaPage,
+    welcome: StoryblokWelcomePage,
+    meet_the_team: StoryblokMeetTheTeamPage,
   },
 });
-
-export function useStoryblok(
-  originalStory: any,
-  preview: boolean,
-  params: StoryParams,
-  locale: LANGUAGES,
-) {
-  let [story, setStory] = useState(originalStory);
-
-  // adds the events for updating the visual editor
-  // see https://www.storyblok.com/docs/guide/essentials/visual-editor#initializing-the-storyblok-js-bridge
-  function initEventListeners() {
-    const { StoryblokBridge } = window as any;
-
-    if (typeof StoryblokBridge !== 'undefined') {
-      // initialize the bridge with your token
-      const storyblokInstance = new StoryblokBridge({
-        language: locale,
-      });
-
-      // reload on Next.js page on save or publish event in the Visual Editor
-      storyblokInstance.on(['change', 'published'], () => location.reload());
-
-      // live update the story on input events
-      storyblokInstance.on('input', (event: any) => {
-        // doesnt currently work when using resolve_relations
-        if (!params || !params.resolve_relations) {
-          if (story && event.story._uid === story._uid) {
-            setStory(event.story);
-          }
-        }
-      });
-
-      storyblokInstance.on('enterEditmode', (event: any) => {
-        // loading the draft version on initial enter of editor
-        Storyblok.get(`cdn/stories/${event.storyId}`, {
-          ...params,
-          version: 'draft',
-          language: locale,
-        })
-          .then(({ data }) => {
-            if (data.story) {
-              setStory(data.story);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    }
-  }
-
-  // appends the bridge script tag to our document
-  // see https://www.storyblok.com/docs/guide/essentials/visual-editor#installing-the-storyblok-js-bridge
-  function addBridge(callback: any) {
-    // check if the script is already present
-    const existingScript = document.getElementById('storyblokBridge');
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = '//app.storyblok.com/f/storyblok-v2-latest.js';
-      script.id = 'storyblokBridge';
-      document.body.appendChild(script);
-      script.onload = () => {
-        // once the scrip is loaded, init the event listeners
-        callback();
-      };
-    } else {
-      callback();
-    }
-  }
-
-  useEffect(() => {
-    // only load inside preview mode
-    if (preview) {
-      // first load the bridge, then initialize the event listeners
-      addBridge(initEventListeners);
-    }
-  });
-
-  useEffect(() => {
-    setStory(originalStory);
-  }, [originalStory]);
-
-  return story;
-}
-
-export default Storyblok;

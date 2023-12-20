@@ -2,8 +2,8 @@ import NavigateBeforeSharp from '@mui/icons-material/NavigateBeforeSharp';
 import NavigateNext from '@mui/icons-material/NavigateNext';
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
+import { SbBlokData, storyblokEditable } from '@storyblok/react';
 import NukaCarousel from 'nuka-carousel';
-import { StoryblokComponent } from 'storyblok-js-client';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
@@ -13,11 +13,12 @@ const components: DynamicComponent[] = [
   { name: 'image', component: StoryblokImage },
   { name: 'quote', component: StoryblokQuote },
   { name: 'row_new', component: StoryblokRowColumnBlock },
-
 ];
 
 interface StoryblokCarouselProps {
-  items: Array<StoryblokComponent<string>>;
+  _uid: string;
+  _editable: string;
+  items: Array<SbBlokData>;
   theme: 'primary' | 'secondary';
 }
 const PreviousButton = ({ onClick }: { onClick: () => void }) => {
@@ -65,48 +66,52 @@ const NextButton = ({ onClick }: { onClick: () => void }) => {
     </IconButton>
   );
 };
-const StoryblokCarousel = ({ items, theme = 'primary' }: StoryblokCarouselProps) => {
+const StoryblokCarousel = (props: StoryblokCarouselProps) => {
+  const { _uid, _editable, items, theme = 'primary' } = props;
+
   const siteTheme = useTheme();
 
   const isMobileScreen = useMediaQuery(siteTheme.breakpoints.down('md'));
 
   return (
-    <NukaCarousel
-      wrapAround={true}
-      adaptiveHeight={false}
-      defaultControlsConfig={{
-        pagingDotsStyle: {
-          fill: theme === 'primary' ? '#F5E4E6' : '#FFFFFF',
-        },
-        pagingDotsContainerClassName: 'paging-dots-container',
-      }}
-      renderCenterLeftControls={
-        isMobileScreen
-          ? () => {
-              return <></>;
-            }
-          : ({ previousSlide }) => <PreviousButton onClick={previousSlide} />
-      }
-      renderCenterRightControls={
-        isMobileScreen
-          ? () => {
-              return <></>;
-            }
-          : ({ nextSlide }) => <NextButton onClick={nextSlide} />
-      }
-    >
-      {items.map((item, index: number) => {
-        const component = components.find((c) => c.name === item.component);
-        if (component) {
-          const Component = component.component;
-          return (
-            <Box sx={{}} key={index}>
-              <Component {...item} key={index} />
-            </Box>
-          );
+    <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
+      <NukaCarousel
+        wrapAround={true}
+        adaptiveHeight={false}
+        defaultControlsConfig={{
+          pagingDotsStyle: {
+            fill: theme === 'primary' ? '#F5E4E6' : '#FFFFFF',
+          },
+          pagingDotsContainerClassName: 'paging-dots-container',
+        }}
+        renderCenterLeftControls={
+          isMobileScreen
+            ? () => {
+                return <></>;
+              }
+            : ({ previousSlide }) => <PreviousButton onClick={previousSlide} />
         }
-      })}
-    </NukaCarousel>
+        renderCenterRightControls={
+          isMobileScreen
+            ? () => {
+                return <></>;
+              }
+            : ({ nextSlide }) => <NextButton onClick={nextSlide} />
+        }
+      >
+        {items.map((item, index: number) => {
+          const component = components.find((c) => c.name === item.component);
+          if (component) {
+            const Component = component.component;
+            return (
+              <Box sx={{}} key={index}>
+                <Component {...item} key={index} />
+              </Box>
+            );
+          }
+        })}
+      </NukaCarousel>
+    </Box>
   );
 };
 

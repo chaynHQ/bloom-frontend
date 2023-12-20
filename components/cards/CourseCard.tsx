@@ -12,11 +12,11 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
@@ -69,7 +69,7 @@ const statusRowStyle = {
 };
 
 interface CourseCardProps {
-  course: StoryData;
+  course: ISbStoryData;
   courseProgress: PROGRESS_STATUS | null;
   liveCourseAccess: boolean;
 }
