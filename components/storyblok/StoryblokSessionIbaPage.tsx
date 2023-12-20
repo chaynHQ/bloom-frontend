@@ -182,7 +182,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
 
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
-  });
+  }, []);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 

@@ -44,7 +44,7 @@ const ConfirmedSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     title: t('confirmation.title'),

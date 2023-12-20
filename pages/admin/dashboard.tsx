@@ -34,7 +34,7 @@ const Dashboard: NextPage = () => {
 
   useEffect(() => {
     logEvent(CREATE_PARTNER_ACCESS_VIEWED, eventUserData);
-  });
+  }, []);
 
   return (
     <Box>

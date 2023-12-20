@@ -213,7 +213,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
-  });
+  }, []);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const eventData = {

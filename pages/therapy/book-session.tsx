@@ -102,7 +102,7 @@ const BookSession: NextPage = () => {
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     title: t('title'),

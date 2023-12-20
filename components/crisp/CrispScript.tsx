@@ -43,7 +43,7 @@ const CrispScript = () => {
         logEvent(CHAT_STARTED, eventUserData);
       },
     ]);
-  });
+  }, []);
 
   useEffect(() => {
     const hasLiveAccess =

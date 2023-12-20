@@ -25,7 +25,7 @@ const CourseAbout: NextPage<Props> = ({ story }) => {
 
   useEffect(() => {
     logEvent(ABOUT_COURSES_VIEWED, eventUserData);
-  });
+  }, []);
 
   if (!story) {
     return <NoDataAvailable />;

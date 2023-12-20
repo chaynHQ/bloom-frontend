@@ -148,7 +148,7 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
         (window as any).store = store;
       }
     }
-  });
+  }, []);
 
   return (
     <Provider store={store}>

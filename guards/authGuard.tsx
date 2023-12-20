@@ -54,7 +54,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     });
 
     return () => unsubscribe();
-  });
+  }, []);
 
   // 2. Add ongoing event listener to check for token changes
   useEffect(() => {
@@ -67,7 +67,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         await dispatch(setUserToken(token));
       }
     });
-  });
+  }, []);
 
   // Function to get User details from the backend api
   async function callGetUser() {
