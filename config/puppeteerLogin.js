@@ -8,8 +8,6 @@ async function login(page) {
   await page.waitForSelector('input[type="email"]', { visible: false });
 }
 
-let counter = 1;
-
 /**
  * @param {puppeteer.Browser} browser
  * @param {{url: string, options: LHCI.CollectCommand.Options}} context
@@ -17,16 +15,11 @@ let counter = 1;
 async function setup(browser, context) {
   // launch browser for LHCI
   const page = await browser.newPage();
-  await page.setCacheEnabled(true);
 
-  if (counter === 1) {
-    await login(page);
-  } else {
-    await page.goto(context.url);
-  }
+  await login(page);
+  await page.goto(context.url);
   // close session for next run
   await page.close();
-  counter++;
 }
 
 module.exports = setup;
