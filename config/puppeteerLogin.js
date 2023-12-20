@@ -1,11 +1,11 @@
 async function login(page) {
   await page.goto('https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/login');
-  await page.waitForSelector('#email', { visible: true });
+  await page.waitForSelector('input[type="email"]', { visible: true });
 
-  await page.type('#email"', process.env.USER_EMAIL);
-  await page.type('#password', process.env.USER_PASSWORD);
+  await page.type('input[id="email"]', process.env.USER_EMAIL);
+  await page.type('input[id="password"]', process.env.USER_PASSWORD);
   await page.click('[type="submit"]');
-  await page.waitForSelector('#email', { visible: false });
+  await page.waitForSelector('input[type="email"]', { visible: false });
 }
 
 let counter = 1;
