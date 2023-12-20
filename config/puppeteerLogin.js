@@ -17,6 +17,8 @@ async function setup(browser, context) {
   const page = await browser.newPage();
 
   await login(page);
+  await page.waitForTimeout(5000);
+
   await page.goto(context.url);
   // close session for next run
   await page.close();
