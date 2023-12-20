@@ -57,6 +57,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
+    published: true,
     starts_with: 'courses/image-based-abuse-and-rebuilding-ourselves/',
   };
 

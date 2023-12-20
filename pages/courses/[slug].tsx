@@ -49,6 +49,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
+    published: true,
     starts_with: 'courses/',
     filter_query: {
       component: {
