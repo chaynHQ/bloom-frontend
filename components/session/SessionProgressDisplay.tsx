@@ -5,15 +5,14 @@ import { useEffect, useState } from 'react';
 import { Course } from '../../app/coursesSlice';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
-import { StoryblokSessionJson } from '../../utils/helper-types/storyblok';
 
 interface SessionProgressDisplayProps {
-  session: StoryblokSessionJson;
+  sessionId: number;
   storyblokCourseId: number;
 }
 
 export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
-  const { session, storyblokCourseId } = props;
+  const { sessionId, storyblokCourseId } = props;
 
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -26,7 +25,7 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
 
     if (userCourse) {
       const matchingSession = userCourse.sessions?.find(
-        (userSession) => userSession.storyblokId === session.id,
+        (userSession) => userSession.storyblokId === sessionId,
       );
 
       if (matchingSession) {
@@ -37,7 +36,7 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
         setSessionProgress(PROGRESS_STATUS.NOT_STARTED);
       }
     }
-  }, [courses, session.id, storyblokCourseId]);
+  }, [courses, sessionId, storyblokCourseId]);
 
   return (
     <>

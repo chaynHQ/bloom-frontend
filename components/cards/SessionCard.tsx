@@ -81,7 +81,7 @@ const SessionCard = (props: SessionCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={cardContentRowStyles}>
-            <SessionProgressDisplay session={session} storyblokCourseId={storyblokCourseId} />
+            <SessionProgressDisplay sessionId={session.id} storyblokCourseId={storyblokCourseId} />
             <Typography flex={1} component="h3" variant="h3">
               {session.content.name}
             </Typography>

@@ -8,46 +8,8 @@ import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import StoryblokSessionIbaPage, {
   StoryblokSessionIbaPageProps,
-} from '../../../components/storyblok/StoryblokSessionIBAPage';
-import { columnStyle } from '../../../styles/common';
+} from '../../../components/storyblok/StoryblokSessionIbaPage';
 import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
-
-const containerStyle = {
-  backgroundColor: 'secondary.light',
-  paddingLeft: { xs: 4, sm: 6 },
-  paddingRight: { xs: 4, sm: 6 },
-  paddingTop: { xs: 6, sm: 8, lg: 10 },
-  paddingBottom: { xs: 6, sm: 8, lg: 10 },
-} as const;
-
-const cardColumnStyle = {
-  ...columnStyle,
-  alignItems: 'center',
-  gap: { xs: 2, md: 3 },
-} as const;
-
-const dotsStyle = {
-  ...columnStyle,
-  color: 'primary.dark',
-  gap: { xs: 1, md: 1.25 },
-} as const;
-
-const dotStyle = {
-  width: { xs: 8, md: 10 },
-  height: { xs: 8, md: 10 },
-} as const;
-
-const sessionSubtitleStyle = {
-  marginTop: '0.75rem !important',
-} as const;
-
-const crispButtonContainerStyle = {
-  paddingTop: 4,
-  paddingBottom: 1,
-  display: 'flex',
-} as const;
-
-const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 interface Props {
   story: ISbStoryData | null;
