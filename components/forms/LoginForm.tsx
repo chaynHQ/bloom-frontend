@@ -79,7 +79,7 @@ const LoginForm = () => {
           if (userResponse.data.partnerAdmin?.id) {
             await router.push('/partner-admin/create-access-code');
           } else if (returnUrl) {
-            await router.push(returnUrl);
+            router.push(returnUrl);
           } else {
             await router.push('/courses');
           }
