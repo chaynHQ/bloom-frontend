@@ -1,6 +1,7 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useState } from 'react';
@@ -46,13 +47,20 @@ const languageRowStyles = {
   alignItems: 'center',
 } as const;
 
-interface TeamMemberCardProps {
-  teamMember: any;
+export interface StoryblokTeamMemberCardProps {
+  _uid: string;
+  _editable: string;
+  name: string;
+  role: string;
+  languages: string;
+  bio: ISbRichtext;
+  image: { filename: string; alt: string };
   alwaysOpen?: boolean;
 }
 
-const TeamMemberCard = (props: TeamMemberCardProps) => {
-  const { teamMember, alwaysOpen = false } = props;
+const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
+  const { _uid, _editable, name, role, languages, bio, image, alwaysOpen = false } = props;
+
   const [expanded, setExpanded] = useState<boolean>(alwaysOpen);
   const t = useTranslations('Shared.meetTheTeam');
 
@@ -66,31 +74,38 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
   } as const;
 
   return (
-    <Card sx={cardStyle}>
+    <Card
+      sx={cardStyle}
+      {...storyblokEditable({
+        _uid,
+        _editable,
+        name,
+        role,
+        languages,
+        bio,
+        image,
+        alwaysOpen,
+      })}
+    >
       <CardActionArea
         onClick={handleExpandClick}
-        aria-label={`${t.rich('expandTeamMember', { name: teamMember.name })}`}
+        aria-label={`${t.rich('expandTeamMember', { name: name })}`}
         disabled={alwaysOpen}
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={imageContainerStyle}>
-            <Image
-              alt={teamMember.image.alt}
-              src={teamMember.image.filename}
-              layout="fill"
-              objectFit="cover"
-            />
+            <Image alt={image.alt} src={image.filename} layout="fill" objectFit="cover" />
           </Box>
           <Box sx={cardHeaderStyle}>
             <Box flex={1}>
               <Typography component="h3" variant="h3" mb={0.5}>
-                {teamMember.name}
+                {name}
               </Typography>
-              <Typography fontStyle={'italic'}>{teamMember.role}</Typography>
+              <Typography fontStyle={'italic'}>{role}</Typography>
               <Box style={languageRowStyles}>
                 <LanguageIcon color="error" />
                 <Typography variant="body2" flex="1">
-                  {teamMember.languages}
+                  {languages}
                 </Typography>
               </Box>
             </Box>
@@ -105,7 +120,7 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
           <Typography variant="body2" mb={0} paragraph>
-            {render(teamMember.bio, RichTextOptions)}
+            {render(bio, RichTextOptions)}
           </Typography>
         </CardContent>
       </Collapse>
@@ -113,4 +128,4 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
   );
 };
 
-export default TeamMemberCard;
+export default StoryblokTeamMemberCard;

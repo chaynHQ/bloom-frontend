@@ -10,7 +10,6 @@ import {
 } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 
-import { ISbStoryData } from '@storyblok/react';
 import { Dots } from '../common/Dots';
 
 const errorStyle = {
@@ -20,12 +19,12 @@ const errorStyle = {
 } as const;
 
 interface SessionCompleteButtonProps {
-  story: ISbStoryData;
+  storyId: number;
   eventData: any;
 }
 
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
-  const { story, eventData } = props;
+  const { storyId, eventData } = props;
 
   const t = useTranslations('Courses');
 
@@ -37,7 +36,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
     const completeSessionResponse = await completeSession({
-      storyblokId: story.id,
+      storyblokId: storyId,
     });
 
     if ('data' in completeSessionResponse) {

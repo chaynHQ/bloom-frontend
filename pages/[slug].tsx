@@ -1,15 +1,7 @@
-import { Box } from '@mui/system';
 import { ISbStoryData, getStoryblokApi, useStoryblokState } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { SignUpBanner } from '../components/banner/SignUpBanner';
 import NoDataAvailable from '../components/common/NoDataAvailable';
-import Header from '../components/layout/Header';
-import StoryblokPageSection, {
-  StoryblokPageSectionProps,
-} from '../components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '../hooks/store';
+import StoryblokPage, { StoryblokPageProps } from '../components/storyblok/StoryblokPage';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 
 interface Props {
@@ -19,39 +11,11 @@ interface Props {
 const Page: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
-  const userToken = useTypedSelector((state) => state.user.token);
-  const router = useRouter();
-
   if (!story) {
     return <NoDataAvailable />;
   }
 
-  const headerProps = {
-    title: story.content.title,
-    introduction: story.content.description,
-    imageSrc: story.content.header_image?.filename,
-    translatedImageAlt: story.content.header_image?.alt,
-  };
-  const partiallyPublicPages = ['/activities', '/grounding'];
-  const isPartiallyPublicPage = partiallyPublicPages.includes(router.asPath);
-
-  return (
-    <Box>
-      <Head>{story.content.title}</Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
-      />
-      {!userToken && isPartiallyPublicPage && <SignUpBanner />}
-      {userToken &&
-        story.content.page_sections?.length > 0 &&
-        story.content.page_sections.map((section: StoryblokPageSectionProps, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
-        ))}
-    </Box>
-  );
+  return <StoryblokPage {...(story.content as StoryblokPageProps)} />;
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {

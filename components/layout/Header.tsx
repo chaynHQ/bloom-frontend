@@ -12,7 +12,7 @@ import ProgressStatus from '../common/ProgressStatus';
 export interface HeaderProps {
   title: string;
   introduction: string | ISbRichtext;
-  imageSrc: StaticImageData;
+  imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
   progressStatus?: PROGRESS_STATUS;

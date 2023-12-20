@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
@@ -9,22 +9,24 @@ import Link from '../common/Link';
 import Header from '../layout/Header';
 
 export interface CourseHeaderProps {
-  story: ISbStoryData;
+  name: string;
+  description: ISbRichtext;
+  image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
   eventData: {};
 }
 const CourseHeader = (props: CourseHeaderProps) => {
-  const { story, courseProgress, eventData } = props;
+  const { name, description, image_with_background, courseProgress, eventData } = props;
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   });
 
   const headerProps = {
-    title: story.content.name,
-    introduction: story.content.description,
-    imageSrc: story.content.image_with_background?.filename,
-    translatedImageAlt: story.content.image_with_background?.alt,
+    title: name,
+    introduction: description,
+    imageSrc: image_with_background?.filename,
+    translatedImageAlt: image_with_background?.alt,
     progressStatus: courseProgress,
   };
 

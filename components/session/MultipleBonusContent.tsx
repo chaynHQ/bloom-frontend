@@ -1,5 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
-import { ISbRichtext, ISbStoryData } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionDetail from '../../pages/courses/image-based-abuse-and-rebuilding-ourselves/[sessionSlug]';
 import { RichTextOptions } from '../../utils/richText';
@@ -11,23 +11,23 @@ import { Dots } from '../common/Dots';
  * This is currently used in the following session page: {@link SessionDetail}
  */
 
-type BonusContent = {
+export type BonusContent = {
   _uid: string;
   title: string;
   content: unknown;
 };
 interface MultipleBonusContentProps {
-  story: ISbStoryData;
+  bonus: BonusContent[];
   eventData: { [index: string]: any };
 }
 
 const MultipleBonusContent = (props: MultipleBonusContentProps) => {
-  const { story, eventData } = props;
+  const { bonus, eventData } = props;
 
   return (
     <>
       <Dots />
-      {story.content.bonus.map((bonus: BonusContent) => (
+      {bonus.map((bonus: BonusContent) => (
         <SessionContentCard
           key={bonus._uid}
           title={bonus.title}
