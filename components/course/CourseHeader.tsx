@@ -1,10 +1,7 @@
 import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
 import Link from '../common/Link';
 import Header from '../layout/Header';
 
@@ -17,10 +14,6 @@ export interface CourseHeaderProps {
 }
 const CourseHeader = (props: CourseHeaderProps) => {
   const { name, description, image_with_background, courseProgress, eventData } = props;
-
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  });
 
   const headerProps = {
     title: name,

@@ -98,7 +98,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  });
+  }, []);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 

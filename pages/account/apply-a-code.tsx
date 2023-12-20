@@ -63,7 +63,7 @@ const ApplyACode: NextPage = () => {
     const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
     logEvent(ASSIGN_NEW_PARTNER_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     title: t('applyCode.title'),

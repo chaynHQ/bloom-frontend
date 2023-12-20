@@ -76,7 +76,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
 
   useEffect(() => {
     logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     title: title,

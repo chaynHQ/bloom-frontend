@@ -54,7 +54,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
       dispatch(setAuthStateLoading(false));
     });
     return () => unsubscribe();
-  });
+  }, []);
 
   useEffect(() => {
     async function callGetUser() {
