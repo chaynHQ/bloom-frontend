@@ -2,8 +2,8 @@ import NavigateBeforeSharp from '@mui/icons-material/NavigateBeforeSharp';
 import NavigateNext from '@mui/icons-material/NavigateNext';
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
+import { SbBlokData } from '@storyblok/react';
 import NukaCarousel from 'nuka-carousel';
-import { StoryblokComponent } from 'storyblok-js-client';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
@@ -17,7 +17,7 @@ const components: DynamicComponent[] = [
 ];
 
 interface StoryblokCarouselProps {
-  items: Array<StoryblokComponent<string>>;
+  items: Array<SbBlokData>;
   theme: 'primary' | 'secondary';
 }
 const PreviousButton = ({ onClick }: { onClick: () => void }) => {

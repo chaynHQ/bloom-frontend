@@ -1,17 +1,17 @@
 import { Box, Container, Typography } from '@mui/material';
+import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import TeamMemberCard from '../components/cards/TeamMemberCard';
+import NoDataAvailable from '../components/common/NoDataAvailable';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
 import { MEET_THE_TEAM_VIEWED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import { columnStyle, rowStyle } from '../styles/common';
+import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 import { RichTextOptions } from '../utils/richText';
 
@@ -36,19 +36,24 @@ const cardColumnRowStyle = {
 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  story = useStoryblok(story, preview, sbParams, locale);
+const MeetTheTeam: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
+  useEffect(() => {
+    logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   const headerProps = {
     title: story.content.title,
@@ -56,10 +61,6 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
   };
-
-  useEffect(() => {
-    logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
-  });
 
   return (
     <Box>
@@ -166,24 +167,15 @@ const MeetTheTeam: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  let sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/meet-the-team`, sbParams);
+  const storyblokProps = await getStoryblokPageProps('meet-the-team', locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

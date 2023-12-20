@@ -106,7 +106,7 @@ const BookSession: NextPage = () => {
 
   const headerProps = {
     title: t('title'),
-    introduction: t.rich('introduction', { partnerName: partnerAccess?.partner?.name }),
+    introduction: `${t.rich('introduction', { partnerName: partnerAccess?.partner?.name })}`,
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };

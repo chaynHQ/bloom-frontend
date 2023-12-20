@@ -2,7 +2,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { useCompleteSessionMutation } from '../../app/api';
 import {
   SESSION_COMPLETE_ERROR,
@@ -11,6 +10,7 @@ import {
 } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 
+import { ISbStoryData } from '@storyblok/react';
 import { Dots } from '../common/Dots';
 
 const errorStyle = {
@@ -20,7 +20,7 @@ const errorStyle = {
 } as const;
 
 interface SessionCompleteButtonProps {
-  story: StoryData;
+  story: ISbStoryData;
   eventData: any;
 }
 

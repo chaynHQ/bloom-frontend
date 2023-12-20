@@ -3,25 +3,30 @@ import CircleIcon from '@mui/icons-material/Circle';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Button, Container, Link as MuiLink, Typography } from '@mui/material';
+import {
+  ISbStoriesParams,
+  ISbStoryData,
+  getStoryblokApi,
+  useStoryblokState,
+} from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
 import { Dots } from '../../../components/common/Dots';
 import Link from '../../../components/common/Link';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
 import MultipleBonusContent from '../../../components/session/MultipleBonusContent';
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
-import Storyblok, { useStoryblok } from '../../../config/storyblok';
-import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
+import { PROGRESS_STATUS } from '../../../constants/enums';
 import {
   SESSION_STARTED_ERROR,
   SESSION_STARTED_REQUEST,
@@ -33,6 +38,7 @@ import {
 import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../../styles/common';
+import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 import hasAccessToPage from '../../../utils/hasAccessToPage';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
@@ -75,17 +81,13 @@ const crispButtonContainerStyle = {
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  const t = useTranslations('Courses');
+const SessionDetail: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
 
-  story = useStoryblok(story, preview, sbParams, locale);
-  const course = story.content.course.content;
+  const t = useTranslations('Courses');
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmail = useTypedSelector((state) => state.user.email);
@@ -102,6 +104,77 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [weekString, setWeekString] = useState<string>('');
   const [startSession] = useStartSessionMutation();
+
+  const course = story?.content.course.content;
+
+  // TODO refactor chat access logic
+  useEffect(() => {
+    const coursePartners = course.included_for_partners;
+    setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
+
+    const liveAccess = partnerAccesses.find(
+      (partnerAccess) => partnerAccess.featureLiveChat === true,
+    );
+
+    if (liveAccess) setLiveChatAccess(true);
+  }, [partnerAccesses, course.included_for_partners, partnerAdmin]);
+
+  // TODO refactor session completion logic
+  useEffect(() => {
+    course.weeks.map((week: any) => {
+      week.sessions.map((session: any) => {
+        session === story?.uuid && setWeekString(week.name);
+      });
+    });
+
+    const userCourse = courses.find(
+      (course: Course) => Number(course.storyblokId) === story?.content.course.id,
+    );
+
+    if (userCourse) {
+      const userSession = userCourse.sessions.find(
+        (session: Session) => Number(session.storyblokId) === story?.id,
+      );
+
+      if (userSession) {
+        userSession.completed
+          ? setSessionProgress(PROGRESS_STATUS.COMPLETED)
+          : setSessionProgress(PROGRESS_STATUS.STARTED);
+      }
+    }
+  }, [courses, course.weeks, story]);
+
+  useEffect(() => {
+    if (!story || openTranscriptModal === null) return;
+
+    logEvent(
+      openTranscriptModal ? SESSION_VIDEO_TRANSCRIPT_OPENED : SESSION_VIDEO_TRANSCRIPT_CLOSED,
+      {
+        ...eventData,
+        session_name: story.content.name,
+        course_name: story.content.name,
+      },
+    );
+    if (openTranscriptModal && sessionProgress === PROGRESS_STATUS.NOT_STARTED) {
+      callStartSession();
+    }
+  }, [openTranscriptModal]);
+
+  useEffect(() => {
+    if (!videoStarted || sessionProgress !== PROGRESS_STATUS.NOT_STARTED) return;
+
+    if (videoStarted) {
+      callStartSession();
+    }
+  }, [videoStarted]);
+
+  useEffect(() => {
+    logEvent(SESSION_VIEWED, eventData);
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -121,60 +194,9 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
     imageAlt: 'alt.personTea',
   };
 
-  // TODO refactor chat access logic
-  useEffect(() => {
-    const coursePartners = course.included_for_partners;
-    setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
-
-    const liveAccess = partnerAccesses.find(
-      (partnerAccess) => partnerAccess.featureLiveChat === true,
-    );
-
-    if (liveAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, course.included_for_partners, partnerAdmin]);
-
-  // TODO refactor session completion logic
-  useEffect(() => {
-    course.weeks.map((week: any) => {
-      week.sessions.map((session: any) => {
-        session === story.uuid && setWeekString(week.name);
-      });
-    });
-
-    const userCourse = courses.find(
-      (course: Course) => Number(course.storyblokId) === story.content.course.id,
-    );
-
-    if (userCourse) {
-      const userSession = userCourse.sessions.find(
-        (session: Session) => Number(session.storyblokId) === story.id,
-      );
-
-      if (userSession) {
-        userSession.completed
-          ? setSessionProgress(PROGRESS_STATUS.COMPLETED)
-          : setSessionProgress(PROGRESS_STATUS.STARTED);
-      }
-    }
-  }, [courses, story]);
-
-  useEffect(() => {
-    if (openTranscriptModal === null) return;
-
-    logEvent(
-      openTranscriptModal ? SESSION_VIDEO_TRANSCRIPT_OPENED : SESSION_VIDEO_TRANSCRIPT_CLOSED,
-      {
-        ...eventData,
-        session_name: story.content.name,
-        course_name: story.content.name,
-      },
-    );
-    if (openTranscriptModal && sessionProgress === PROGRESS_STATUS.NOT_STARTED) {
-      callStartSession();
-    }
-  }, [openTranscriptModal]);
-
   async function callStartSession() {
+    if (!story) return;
+
     logEvent(SESSION_STARTED_REQUEST, {
       ...eventData,
       session_name: story.content.name,
@@ -198,18 +220,6 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
       throw error;
     }
   }
-
-  useEffect(() => {
-    if (!videoStarted || sessionProgress !== PROGRESS_STATUS.NOT_STARTED) return;
-
-    if (videoStarted) {
-      callStartSession();
-    }
-  }, [videoStarted]);
-
-  useEffect(() => {
-    logEvent(SESSION_VIEWED, eventData);
-  });
 
   return (
     <Box>
@@ -356,30 +366,20 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   let sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
+  const fullSlug = `courses/image-based-abuse-and-rebuilding-ourselves/${sessionSlug}`;
 
-  const sbParams = {
+  const storyblokProps = await getStoryblokPageProps(fullSlug, locale, preview, {
     resolve_relations: 'session_iba.course',
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(
-    `cdn/stories/courses/image-based-abuse-and-rebuilding-ourselves/${sessionSlug}/`,
-    sbParams,
-  );
+  });
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),
         ...require(`../../../messages/courses/${locale}.json`),
       },
-      locale,
     },
 
     revalidate: 3600, // revalidate every hour
@@ -387,18 +387,24 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get(
-    'cdn/links/?starts_with=courses/image-based-abuse-and-rebuilding-ourselves/',
-  );
+  let sbParams: ISbStoriesParams = {
+    starts_with: 'courses/image-based-abuse-and-rebuilding-ourselves/',
+  };
+
+  const storyblokApi = getStoryblokApi();
+  let sessions = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
-    if (data.links[linkKey].is_startpage || data.links[linkKey].is_folder) {
+
+  sessions.forEach((session: Partial<ISbStoryData>) => {
+    const slug = session.slug;
+    if (!slug) return;
+
+    if (session.is_startpage || session.is_folder) {
       return;
     }
 
     // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
     let splittedSlug = slug.split('/');
 
     if (locales) {

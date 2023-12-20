@@ -1,10 +1,11 @@
+import { ISbRichtext } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import { RichTextOptions } from '../../utils/richText';
 import PageSection from '../common/PageSection';
 
 interface StoryblokPageSectionProps {
-  content: AnalyserNode;
+  content: ISbRichtext;
   color: STORYBLOK_COLORS;
   alignment: string;
 }

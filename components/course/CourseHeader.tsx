@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
@@ -9,7 +9,7 @@ import Link from '../common/Link';
 import Header from '../layout/Header';
 
 export interface CourseHeaderProps {
-  story: StoryData;
+  story: ISbStoryData;
   courseProgress: PROGRESS_STATUS;
   eventData: {};
 }

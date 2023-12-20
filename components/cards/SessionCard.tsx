@@ -9,9 +9,9 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
 import { SessionProgressDisplay } from '../session/SessionProgressDisplay';
@@ -52,7 +52,7 @@ const cardActionStyle = {
 } as const;
 
 interface SessionCardProps {
-  session: StoryData;
+  session: ISbStoryData;
   sessionSubtitle: string;
   storyblokCourseId: number;
 }

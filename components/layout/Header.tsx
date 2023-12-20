@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
+import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/legacy/image';
-import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
@@ -10,14 +10,8 @@ import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
 
 export interface HeaderProps {
-  title:
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  introduction:
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  title: string;
+  introduction: string | ISbRichtext;
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -86,7 +80,11 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          <>{render(introduction, RichTextOptions)}</>
+          {typeof introduction === 'string' ? (
+            <Typography>{introduction}</Typography>
+          ) : (
+            render(introduction, RichTextOptions)
+          )}
         </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
       </Box>

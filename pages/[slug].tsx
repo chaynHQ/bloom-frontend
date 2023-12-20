@@ -1,26 +1,28 @@
 import { Box } from '@mui/system';
+import { ISbStoryData, getStoryblokApi, useStoryblokState } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
+import NoDataAvailable from '../components/common/NoDataAvailable';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
 import { useTypedSelector } from '../hooks/store';
+import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  story = useStoryblok(story, preview, sbParams, locale);
+const Page: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
   const userToken = useTypedSelector((state) => state.user.token);
   const router = useRouter();
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   const headerProps = {
     title: story.content.title,
@@ -58,31 +60,23 @@ const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  const storyblokProps = await getStoryblokPageProps(slug, locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/');
+  const storyblokApi = getStoryblokApi();
+  let { data } = await storyblokApi.get('cdn/links/');
 
   const excludePaths: string[] = [
     'home',

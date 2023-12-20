@@ -1,5 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
-import { StoryData } from 'storyblok-js-client';
+import { ISbRichtext, ISbStoryData } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionDetail from '../../pages/courses/image-based-abuse-and-rebuilding-ourselves/[sessionSlug]';
 import { RichTextOptions } from '../../utils/richText';
@@ -17,7 +17,7 @@ type BonusContent = {
   content: unknown;
 };
 interface MultipleBonusContentProps {
-  story: StoryData;
+  story: ISbStoryData;
   eventData: { [index: string]: any };
 }
 
@@ -36,7 +36,7 @@ const MultipleBonusContent = (props: MultipleBonusContentProps) => {
           eventPrefix="SESSION_BONUS_CONTENT"
           eventData={eventData}
         >
-          <>{render(bonus.content, RichTextOptions)}</>
+          <>{render(bonus.content as ISbRichtext, RichTextOptions)}</>
         </SessionContentCard>
       ))}
     </>

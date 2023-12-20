@@ -1,7 +1,7 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
@@ -25,7 +25,7 @@ const introductionContainerStyle = {
 } as const;
 
 interface CourseIntroductionProps {
-  course: StoryData;
+  course: ISbStoryData;
   courseLiveSoon?: boolean;
   courseLiveNow?: boolean;
   liveCourseAccess?: boolean;

@@ -1,10 +1,10 @@
 import { Box } from '@mui/system';
-import { Richtext } from 'storyblok-js-client';
+import { ISbRichtext } from '@storyblok/react';
 import Quote from '../common/Quote';
 import StoryblokImage from './StoryblokImage';
 
 export interface StoryblokQuoteProps {
-  text: Richtext;
+  text: ISbRichtext;
   text_size: string;
   icon_color: string;
   image?: { alt: string; filename: string };

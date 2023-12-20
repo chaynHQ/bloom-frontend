@@ -4,24 +4,28 @@ import LinkIcon from '@mui/icons-material/Link';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Button, Container, Link as MuiLink, Typography } from '@mui/material';
+import {
+  ISbStoriesParams,
+  ISbStoryData,
+  getStoryblokApi,
+  useStoryblokState,
+} from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useStartSessionMutation } from '../../../app/api';
 import { Course, Session } from '../../../app/coursesSlice';
 import SessionContentCard from '../../../components/cards/SessionContentCard';
 import Link from '../../../components/common/Link';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import CrispButton from '../../../components/crisp/CrispButton';
 import Header from '../../../components/layout/Header';
 import { SessionCompleteButton } from '../../../components/session/SessionCompleteButton';
 import Video from '../../../components/video/Video';
 import VideoTranscriptModal from '../../../components/video/VideoTranscriptModal';
-import Storyblok, { useStoryblok } from '../../../config/storyblok';
-import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
+import { PROGRESS_STATUS } from '../../../constants/enums';
 import {
   SESSION_STARTED_ERROR,
   SESSION_STARTED_REQUEST,
@@ -34,6 +38,7 @@ import { useTypedSelector } from '../../../hooks/store';
 import illustrationPerson4Peach from '../../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../../utils/courseLiveStatus';
+import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 import hasAccessToPage from '../../../utils/hasAccessToPage';
 import logEvent, { getEventUserData } from '../../../utils/logEvent';
 import { RichTextOptions } from '../../../utils/richText';
@@ -72,18 +77,13 @@ const crispButtonContainerStyle = {
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  const t = useTranslations('Courses');
-  const router = useRouter();
+const SessionDetail: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
 
-  story = useStoryblok(story, preview, sbParams, locale);
-  const course = story.content.course.content;
+  const t = useTranslations('Courses');
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmail = useTypedSelector((state) => state.user.email);
@@ -101,31 +101,12 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   const [weekString, setWeekString] = useState<string>('');
   const [startSession, { isLoading: startSessionIsLoading }] = useStartSessionMutation();
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const course = story?.content.course.content;
   const courseComingSoon: boolean = course.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(course);
   const courseLiveNow: boolean = courseIsLiveNow(course);
   // only show live content to public users
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
-
-  const eventData = {
-    ...eventUserData,
-    session_name: story.content.name,
-    session_storyblok_id: story.id,
-    session_progress: sessionProgress,
-    course_name: story.content.course.content.name,
-    course_storyblok_id: story.content.course.id,
-    course_coming_soon: courseComingSoon,
-    course_live_soon: courseLiveSoon,
-    course_live_now: courseLiveNow,
-  };
-
-  const headerProps = {
-    title: story.content.name,
-    introduction: story.content.description,
-    imageSrc: illustrationPerson4Peach,
-    imageAlt: 'alt.personTea',
-  };
 
   useEffect(() => {
     const coursePartners = course.included_for_partners;
@@ -141,17 +122,17 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   useEffect(() => {
     course.weeks.map((week: any) => {
       week.sessions.map((session: any) => {
-        session === story.uuid && setWeekString(week.name);
+        session === story?.uuid && setWeekString(week.name);
       });
     });
 
     const userCourse = courses.find(
-      (course: Course) => Number(course.storyblokId) === story.content.course.id,
+      (course: Course) => Number(course.storyblokId) === story?.content.course.id,
     );
 
     if (userCourse) {
       const userSession = userCourse.sessions.find(
-        (session: Session) => Number(session.storyblokId) === story.id,
+        (session: Session) => Number(session.storyblokId) === story?.id,
       );
 
       if (userSession) {
@@ -163,6 +144,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   }, [courses, course.weeks, story]);
 
   useEffect(() => {
+    if (!story) return;
+
     if (openTranscriptModal === null) return;
 
     logEvent(
@@ -179,6 +162,8 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   }, [openTranscriptModal]);
 
   async function callStartSession() {
+    if (!story) return;
+
     logEvent(SESSION_STARTED_REQUEST, {
       ...eventData,
       session_name: story.content.name,
@@ -214,6 +199,30 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
   });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const eventData = {
+    ...eventUserData,
+    session_name: story.content.name,
+    session_storyblok_id: story.id,
+    session_progress: sessionProgress,
+    course_name: story.content.course.content.name,
+    course_storyblok_id: story.content.course.id,
+    course_coming_soon: courseComingSoon,
+    course_live_soon: courseLiveSoon,
+    course_live_now: courseLiveNow,
+  };
+
+  const headerProps = {
+    title: story.content.name,
+    introduction: story.content.description,
+    imageSrc: illustrationPerson4Peach,
+    imageAlt: 'alt.personTea',
+  };
 
   const Dots = () => {
     return (
@@ -387,51 +396,47 @@ const SessionDetail: NextPage<Props> = ({ story, preview, sbParams, locale }) =>
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  let slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
-  let sessionSlug =
+  const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
+  const sessionSlug =
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
+  const fullSlug = `courses/${slug}/${sessionSlug}`;
 
-  const sbParams = {
+  const storyblokProps = await getStoryblokPageProps(fullSlug, locale, preview, {
     resolve_relations: 'Session.course',
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/courses/${slug}/${sessionSlug}/`, sbParams);
+  });
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),
         ...require(`../../../messages/courses/${locale}.json`),
       },
-      locale,
     },
-
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/');
+  let sbParams: ISbStoriesParams = {
+    starts_with: 'courses/',
+  };
+
+  const storyblokApi = getStoryblokApi();
+  let sessions = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
-    if (
-      data.links[linkKey].is_startpage ||
-      data.links[linkKey].is_folder ||
-      isAlternativelyHandledSession(data.links[linkKey].slug)
-    ) {
+
+  sessions.forEach((session: Partial<ISbStoryData>) => {
+    const slug = session.slug;
+    if (!slug) return;
+
+    if (session.is_startpage || session.is_folder || isAlternativelyHandledSession(slug)) {
       return;
     }
 
     // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
     let splittedSlug = slug.split('/');
 
     if (locales) {

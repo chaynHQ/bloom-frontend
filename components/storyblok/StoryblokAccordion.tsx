@@ -78,7 +78,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                 variant="h3"
                 textAlign="left"
               >
-                {render(ai.title)}
+                {ai.title}
               </Typography>
             }
           </AccordionSummary>

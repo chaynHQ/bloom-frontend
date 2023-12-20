@@ -1,4 +1,4 @@
-import { Richtext } from 'storyblok-js-client';
+import { ISbRichtext } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 import Column from '../common/Column';
@@ -6,7 +6,7 @@ import Row from '../common/Row';
 import { StoryblokBlok, StoryblokColumn } from './StoryblokTypes';
 
 interface StoryblokRowProps {
-  columns: StoryblokColumn | StoryblokColumn[] | Richtext;
+  columns: StoryblokColumn | StoryblokColumn[] | ISbRichtext;
   horizontal_alignment: string;
   vertical_alignment: string;
 }

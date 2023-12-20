@@ -1,20 +1,21 @@
 import { Box, Container, Typography } from '@mui/material';
+import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import SessionCard from '../../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../../components/common/ContentUnavailable';
 import Link from '../../../components/common/Link';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import CourseHeader from '../../../components/course/CourseHeader';
 import CourseIntroduction from '../../../components/course/CourseIntroduction';
-import Storyblok, { useStoryblok } from '../../../config/storyblok';
-import { LANGUAGES, PROGRESS_STATUS } from '../../../constants/enums';
+import { PROGRESS_STATUS } from '../../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../../constants/events';
 import { useTypedSelector } from '../../../hooks/store';
 import { rowStyle } from '../../../styles/common';
 import { determineCourseProgress } from '../../../utils/courseProgress';
+import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 import hasAccessToPage from '../../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../../utils/logEvent';
 
@@ -33,17 +34,14 @@ const cardsContainerStyle = {
 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
+const CourseOverview: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
-
-  story = useStoryblok(story, preview, sbParams, locale);
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -55,6 +53,25 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     PROGRESS_STATUS.NOT_STARTED,
   );
 
+  useEffect(() => {
+    const storyPartners = story?.content.included_for_partners;
+
+    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+  }, [partnerAccesses, story?.content.included_for_partners, partnerAdmin]);
+
+  useEffect(() => {
+    if (!story?.id) return;
+    setCourseProgress(determineCourseProgress(courses, story.id));
+  }, [courses, story?.id]);
+
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = {
@@ -63,20 +80,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_storyblok_id: story.id,
     course_progress: courseProgress,
   };
-
-  useEffect(() => {
-    const storyPartners = story.content.included_for_partners;
-
-    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
-  }, [partnerAccesses, story.content.included_for_partners, partnerAdmin]);
-
-  useEffect(() => {
-    setCourseProgress(determineCourseProgress(courses, story.id));
-  }, [courses, story.id]);
-
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  });
 
   if (incorrectAccess) {
     return (
@@ -112,7 +115,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                           key={session.id}
                           session={session}
                           sessionSubtitle={session.content.subtitle}
-                          storyblokCourseId={story.id}
+                          storyblokCourseId={(story as ISbStoryData).id}
                         />
                       );
                     })}
@@ -127,29 +130,24 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   );
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  const sbParams = {
-    resolve_relations: 'week.sessions',
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(
-    `cdn/stories/courses/image-based-abuse-and-rebuilding-ourselves/`,
-    sbParams,
+export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
+  const storyblokProps = await getStoryblokPageProps(
+    'courses/image-based-abuse-and-rebuilding-ourselves/',
+    locale,
+    preview,
+    {
+      resolve_relations: 'week.sessions',
+    },
   );
+
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../../messages/shared/${locale}.json`),
         ...require(`../../../messages/navigation/${locale}.json`),
         ...require(`../../../messages/courses/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

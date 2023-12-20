@@ -1,9 +1,7 @@
 import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
-import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import ImageTextColumn from '../../components/common/ImageTextColumn';
 import { ImageTextItem } from '../../components/common/ImageTextGrid';
@@ -11,14 +9,15 @@ import WhatsappSubscribeForm from '../../components/forms/WhatsappSubscribeForm'
 import WhatsappUnsubscribeForm from '../../components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '../../components/layout/Header';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../../config/storyblok';
-import { LANGUAGES } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationChange from '../../public/illustration_change.svg';
 import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 
+import { ISbStoryData, useStoryblokState } from '@storyblok/react';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
 import { rowStyle } from '../../styles/common';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 import { hasWhatsappSubscription } from '../../utils/whatsappUtils';
 
 const containerStyle = {
@@ -36,10 +35,7 @@ const formContainerStyle = {
 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
 const steps: Array<ImageTextItem> = [
@@ -60,10 +56,8 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  let configuredStory = useStoryblok(story, preview, sbParams, locale);
-
-  const t = useTranslations('Whatsapp');
+const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
 
   const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
@@ -74,16 +68,20 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
     setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
   }, [userActiveSubscriptions]);
 
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
   const headerProps: HeaderProps = {
-    title: configuredStory.content.title,
-    introduction: configuredStory.content.description,
-    imageSrc: configuredStory.content.header_image.filename,
-    translatedImageAlt: configuredStory.content.header_image.alt,
+    title: story.content.title,
+    introduction: story.content.description,
+    imageSrc: story.content.header_image.filename,
+    translatedImageAlt: story.content.header_image.alt,
   };
 
   return (
     <>
-      <Head>{configuredStory.content.title}</Head>
+      <Head>{story.content.title}</Head>
       <Box>
         <Header {...headerProps} />
         {!userToken && <SignUpBanner />}
@@ -98,8 +96,8 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
           </Container>
         )}
         {userToken &&
-          configuredStory.content.page_sections?.length > 0 &&
-          configuredStory.content.page_sections.map((section: any, index: number) => (
+          story.content.page_sections?.length > 0 &&
+          story.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection
               key={`page_section_${index}`}
               content={section.content}
@@ -113,25 +111,16 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story, preview, sbParams,
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  let sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/subscription/whatsapp`, sbParams);
+  const storyblokProps = await getStoryblokPageProps(`subscription/whatsapp`, locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/whatsapp/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

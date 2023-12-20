@@ -1,16 +1,15 @@
 import { Box, Container, Typography } from '@mui/material';
+import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoryData, StoryParams } from 'storyblok-js-client';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
 import Header from '../../components/layout/Header';
 import { FeatureFlag } from '../../config/featureFlag';
-import Storyblok from '../../config/storyblok';
-import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
+import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
@@ -32,14 +31,11 @@ const cardColumnStyle = {
 } as const;
 
 interface Props {
-  stories: StoryData[];
-  preview: boolean;
-  sbParams: StoryParams;
-  locale: LANGUAGES;
+  stories: ISbStoryData[];
 }
 
-const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => {
-  const [loadedCourses, setLoadedCourses] = useState<StoryData[] | null>(null);
+const CourseList: NextPage<Props> = ({ stories }) => {
+  const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
 
@@ -62,7 +58,7 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
 
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED, eventUserData);
-  });
+  }, []);
 
   useEffect(() => {
     if (partnerAdmin && partnerAdmin.partner) {
@@ -80,13 +76,13 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
         }
       });
 
-      const coursesWithAccess = stories.filter((course) =>
-        userPartners.some((partner) => course.content.included_for_partners.includes(partner)),
+      const coursesWithAccess = stories.filter((story) =>
+        userPartners.some((partner) => story.content.included_for_partners.includes(partner)),
       );
       setLoadedCourses(coursesWithAccess);
     } else {
-      const coursesWithAccess = stories.filter((course) =>
-        course.content.included_for_partners.includes('Public'),
+      const coursesWithAccess = stories.filter((story) =>
+        story.content.included_for_partners.includes('Public'),
       );
       setLoadedCourses(coursesWithAccess);
     }
@@ -127,8 +123,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
     return coursesStarted.includes(courseId)
       ? PROGRESS_STATUS.STARTED
       : coursesCompleted.includes(courseId)
-      ? PROGRESS_STATUS.COMPLETED
-      : null;
+        ? PROGRESS_STATUS.COMPLETED
+        : null;
   };
 
   return (
@@ -187,8 +183,8 @@ const CourseList: NextPage<Props> = ({ stories, preview, sbParams, locale }) => 
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  let sbParams = {
-    language: locale,
+  let sbParams: ISbStoriesParams = {
+    language: locale || 'en',
     version: preview ? 'draft' : 'published',
     starts_with: 'courses/',
     sort_by: 'position:desc',
@@ -197,29 +193,27 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
         in: 'Course',
       },
     },
-    ...(preview && { cv: Date.now() }),
   };
 
-  let { data } = await Storyblok.get('cdn/stories/', sbParams);
+  const storyblokApi = getStoryblokApi();
+
+  let { data } = await storyblokApi.get('cdn/stories/', sbParams);
 
   return {
     props: {
       stories: data ? getEnabledCourses(data.stories) : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 // TODO remove this when hindi and french courses are fixed
-const getEnabledCourses = (courseStories: StoryData[]): StoryData[] => {
+const getEnabledCourses = (courseStories: ISbStoryData[]): ISbStoryData[] => {
   // Note that this filter only removes the course from the courses page for the user.
   // If the user navigates to the URL, they may still be able to access the course.
   return courseStories.filter((course) => !FeatureFlag.getDisabledCourses().has(course.full_slug));

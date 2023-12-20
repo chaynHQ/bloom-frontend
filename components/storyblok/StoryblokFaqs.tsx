@@ -1,9 +1,9 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { ISbRichtext } from '@storyblok/react';
 import Image from 'next/legacy/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { FAQ_OPENED } from '../../constants/events';
-import { FaqItem } from '../../constants/faqs';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
@@ -17,8 +17,13 @@ const accordionDetail = {
   textAlign: 'left',
 } as const;
 
+interface StoryblokFaqItem {
+  title: ISbRichtext;
+  body: ISbRichtext;
+}
+
 interface StoryblokFaqsProps {
-  faqs: Array<FaqItem>;
+  faqs: Array<StoryblokFaqItem>;
   title: string;
 }
 
@@ -41,7 +46,10 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
         <Image alt={'alt'} src={illustrationLeafMix} width={125} height={100} />
       </Box>
       {faqs.map((faq, i) => (
-        <Accordion key={`panel${i}`} onChange={handleChange(faq.title)}>
+        <Accordion
+          key={`panel${i}`}
+          onChange={handleChange(faq.title.text || 'Error loading title')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}-content`}

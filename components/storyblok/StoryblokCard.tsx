@@ -1,13 +1,13 @@
 import { Card, CardContent } from '@mui/material';
 import { Box } from '@mui/system';
+import { ISbRichtext } from '@storyblok/react';
 import Image from 'next/legacy/image';
-import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 
 interface StoryblokCardProps {
   image: { filename: string; alt: string };
-  content: Richtext;
+  content: ISbRichtext;
   alignment: string;
   background: string;
   style: string;

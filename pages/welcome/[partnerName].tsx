@@ -1,19 +1,23 @@
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
+import {
+  ISbStoriesParams,
+  ISbStoryData,
+  getStoryblokApi,
+  useStoryblokState,
+} from '@storyblok/react';
 import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { useGetAutomaticAccessCodeFeatureForPartnerQuery } from '../../app/api';
 import Link from '../../components/common/Link';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
 import WelcomeCodeForm from '../../components/forms/WelcomeCodeForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../../config/storyblok';
-import { LANGUAGES } from '../../constants/enums';
 import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
@@ -23,6 +27,7 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
@@ -48,14 +53,16 @@ const rowItem = {
 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const Welcome: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  story = useStoryblok(story, preview, sbParams, locale);
+const Welcome: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
   const partnerContent = getPartnerContent(story.slug);
 
   const headerProps = {
@@ -182,39 +189,36 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const partnerName = params?.partnerName;
-
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/welcome/${partnerName}`, sbParams);
+  const storyblokProps = await getStoryblokPageProps(`welcome/${partnerName}`, locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/welcome/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=welcome/');
+  let sbParams: ISbStoriesParams = {
+    starts_with: 'welcome/',
+  };
+
+  const storyblokApi = getStoryblokApi();
+  let data = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
+
+  data.forEach((story: Partial<ISbStoryData>) => {
+    if (!story.slug) return;
+
     // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
-    let splittedSlug = slug.split('/');
+    let splittedSlug = story.slug.split('/');
 
     if (locales) {
       // create additional languages
@@ -225,7 +229,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   });
 
   return {
-    paths: paths,
+    paths,
     fallback: false,
   };
 }

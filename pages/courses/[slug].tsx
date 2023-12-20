@@ -1,23 +1,29 @@
 import { Box, Container, Typography } from '@mui/material';
+import {
+  ISbStoriesParams,
+  ISbStoryData,
+  getStoryblokApi,
+  useStoryblokState,
+} from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionCard from '../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../components/common/ContentUnavailable';
 import Link from '../../components/common/Link';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
 import CourseHeader from '../../components/course/CourseHeader';
 import CourseIntroduction from '../../components/course/CourseIntroduction';
 import CourseStatusHeader from '../../components/course/CourseStatusHeader';
-import Storyblok, { useStoryblok } from '../../config/storyblok';
-import { LANGUAGES, PROGRESS_STATUS } from '../../constants/enums';
+import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import { determineCourseProgress } from '../../utils/courseProgress';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
@@ -37,17 +43,13 @@ const cardsContainerStyle = {
 } as const;
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
+const CourseOverview: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
   const t = useTranslations('Courses');
-
-  story = useStoryblok(story, preview, sbParams, locale);
-
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -57,6 +59,26 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
+
+  useEffect(() => {
+    if (!story) return;
+    const storyPartners = story.content.included_for_partners;
+
+    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+  }, [partnerAccesses, story, partnerAdmin]);
+
+  useEffect(() => {
+    if (!story) return;
+    setCourseProgress(determineCourseProgress(courses, story.id));
+  }, [courses, story]);
+
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -75,20 +97,6 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
     course_live_now: courseLiveNow,
     course_progress: courseProgress,
   };
-
-  useEffect(() => {
-    const storyPartners = story.content.included_for_partners;
-
-    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
-  }, [partnerAccesses, story.content.included_for_partners, partnerAdmin]);
-
-  useEffect(() => {
-    setCourseProgress(determineCourseProgress(courses, story.id));
-  }, [courses, story.id]);
-
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  });
 
   if (incorrectAccess) {
     return (
@@ -149,7 +157,7 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
                             key={session.id}
                             session={session}
                             sessionSubtitle={position}
-                            storyblokCourseId={story.id}
+                            storyblokCourseId={(story as ISbStoryData).id}
                           />
                         );
                       })}
@@ -168,45 +176,47 @@ const CourseOverview: NextPage<Props> = ({ story, preview, sbParams, locale }) =
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const sbParams = {
+  const storyblokProps = await getStoryblokPageProps(`courses/${slug}`, locale, preview, {
     resolve_relations: 'week.sessions',
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/courses/${slug}`, sbParams);
+  });
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/?starts_with=courses/');
+  let sbParams: ISbStoriesParams = {
+    starts_with: 'courses/',
+    filter_query: {
+      component: {
+        in: 'Course',
+      },
+    },
+  };
+
+  const storyblokApi = getStoryblokApi();
+  let courses = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
-  Object.keys(data.links).forEach((linkKey) => {
-    if (
-      !data.links[linkKey].is_startpage ||
-      isAlternativelyHandledCourse(data.links[linkKey].slug)
-    ) {
+
+  courses.forEach((course: Partial<ISbStoryData>) => {
+    if (!course.slug) return;
+
+    if (!course.is_startpage || isAlternativelyHandledCourse(course.slug)) {
       return;
     }
 
     // get array for slug because of catch all
-    const slug = data.links[linkKey].slug;
+    const slug = course.slug;
     let splittedSlug = slug.split('/');
 
     if (locales) {
