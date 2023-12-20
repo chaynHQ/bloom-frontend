@@ -9,17 +9,17 @@ jobs:
   # wait for new deployment to complete before running lighthouse
   # note we don't actually test on this PRs preview branch, but can
   # assume the develop branch has also completed deploying
-  wait-for-vercel-deployment:
-    name: Wait for vercel deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait for Vercel preview deployment to be ready
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
-        id: waitForVercelDeployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 1000
-          check_interval: 5
+  # wait-for-vercel-deployment:
+  #   name: Wait for vercel deployment
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Wait for Vercel preview deployment to be ready
+  #       uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+  #       id: waitForVercelDeployment
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         max_timeout: 1000
+  #         check_interval: 5
 
   lighthouse-mobile:
     runs-on: ubuntu-latest
