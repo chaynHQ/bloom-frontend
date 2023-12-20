@@ -6,7 +6,9 @@ import { useRouter } from 'next/router';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
 import NoDataAvailable from '../components/common/NoDataAvailable';
 import Header from '../components/layout/Header';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
+import StoryblokPageSection, {
+  StoryblokPageSectionProps,
+} from '../components/storyblok/StoryblokPageSection';
 import { useTypedSelector } from '../hooks/store';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 
@@ -45,13 +47,8 @@ const Page: NextPage<Props> = ({ story }) => {
       {!userToken && isPartiallyPublicPage && <SignUpBanner />}
       {userToken &&
         story.content.page_sections?.length > 0 &&
-        story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection
-            key={`page_section_${index}`}
-            content={section.content}
-            alignment={section.alignment}
-            color={section.color}
-          />
+        story.content.page_sections.map((section: StoryblokPageSectionProps, index: number) => (
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
     </Box>
   );

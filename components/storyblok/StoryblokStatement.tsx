@@ -1,14 +1,17 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { storyblokEditable } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokStatementProps {
+  _uid: string;
+  _editable: string;
   text: string;
   text_size: string;
 }
 
 const StoryblokStatement = (props: StoryblokStatementProps) => {
-  const { text, text_size } = props;
+  const { _uid, _editable, text, text_size } = props;
 
   if (!text) return <></>;
 
@@ -39,7 +42,7 @@ const StoryblokStatement = (props: StoryblokStatementProps) => {
   } as const;
 
   return (
-    <Box sx={containerStyle}>
+    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, text, text_size })}>
       <Typography>{text}</Typography>
     </Box>
   );

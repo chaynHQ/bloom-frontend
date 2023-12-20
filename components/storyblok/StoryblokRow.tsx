@@ -1,4 +1,5 @@
-import { ISbRichtext } from '@storyblok/react';
+import { Box } from '@mui/material';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 import Column from '../common/Column';
@@ -6,13 +7,15 @@ import Row from '../common/Row';
 import { StoryblokBlok, StoryblokColumn } from './StoryblokTypes';
 
 interface StoryblokRowProps {
+  _uid: string;
+  _editable: string;
   columns: StoryblokColumn | StoryblokColumn[] | ISbRichtext;
   horizontal_alignment: string;
   vertical_alignment: string;
 }
 
 const StoryblokRow = (props: StoryblokRowProps) => {
-  const { columns, horizontal_alignment, vertical_alignment } = props;
+  const { _uid, _editable, columns, horizontal_alignment, vertical_alignment } = props;
 
   const columnArray = Array.isArray(columns) ? columns : [columns];
 
@@ -58,13 +61,17 @@ const StoryblokRow = (props: StoryblokRowProps) => {
     });
   });
   return (
-    <Row
-      numberOfColumns={numberOfColumns}
-      horizontalAlignment={horizontal_alignment}
-      verticalAlignment={vertical_alignment}
+    <Box
+      {...storyblokEditable({ _uid, _editable, columns, horizontal_alignment, vertical_alignment })}
     >
-      {renderedColumns}
-    </Row>
+      <Row
+        numberOfColumns={numberOfColumns}
+        horizontalAlignment={horizontal_alignment}
+        verticalAlignment={vertical_alignment}
+      >
+        {renderedColumns}
+      </Row>
+    </Box>
   );
 };
 

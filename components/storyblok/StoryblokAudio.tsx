@@ -1,4 +1,5 @@
 import { Box } from '@mui/system';
+import { storyblokEditable } from '@storyblok/react';
 import dynamic from 'next/dynamic';
 import { richtextContentStyle } from '../../styles/common';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
@@ -9,12 +10,14 @@ const audioContainerStyle = {
 } as const;
 
 interface StoryblokAudioProps {
+  _uid: string;
+  _editable: string;
   audio_file: { filename: string };
   alignment: string;
 }
 
 const StoryblokAudio = (props: StoryblokAudioProps) => {
-  const { audio_file, alignment = 'left' } = props;
+  const { _uid, _editable, audio_file, alignment = 'left' } = props;
   if (!audio_file) return <></>;
 
   const containerStyle = {
@@ -26,7 +29,7 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
   } as const;
 
   return (
-    <Box sx={containerStyle}>
+    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, audio_file, alignment })}>
       <Box sx={audioContainerStyle}>
         <ReactPlayer width="100%" height="50px" url={audio_file.filename} controls />
       </Box>

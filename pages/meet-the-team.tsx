@@ -74,11 +74,7 @@ const MeetTheTeam: NextPage<Props> = ({ story }) => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       {story.content.page_section_1?.length > 0 && (
-        <StoryblokPageSection
-          content={story.content.page_section_1[0].content}
-          alignment={story.content.page_section_1[0].alignment}
-          color={story.content.page_section_1[0].color}
-        />
+        <StoryblokPageSection {...story.content.page_section_1} />
       )}
       <Container sx={coreContainerStyle}>
         <Typography variant="h2" component="h2">
@@ -119,11 +115,7 @@ const MeetTheTeam: NextPage<Props> = ({ story }) => {
       </Container>
 
       {story.content.page_section_2?.length > 0 && (
-        <StoryblokPageSection
-          content={story.content.page_section_2[0].content}
-          alignment={story.content.page_section_2[0].alignment}
-          color={story.content.page_section_2[0].color}
-        />
+        <StoryblokPageSection {...story.content.page_section_2} />
       )}
 
       <Container sx={supportingContainerStyle}>
@@ -156,11 +148,7 @@ const MeetTheTeam: NextPage<Props> = ({ story }) => {
       </Container>
 
       {story.content.page_section_3?.length > 0 && (
-        <StoryblokPageSection
-          content={story.content.page_section_3[0].content}
-          alignment={story.content.page_section_3[0].alignment}
-          color={story.content.page_section_3[0].color}
-        />
+        <StoryblokPageSection {...story.content.page_section_3} />
       )}
     </Box>
   );

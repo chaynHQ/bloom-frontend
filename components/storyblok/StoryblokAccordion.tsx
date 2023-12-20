@@ -7,6 +7,7 @@ import {
   Icon,
   Typography,
 } from '@mui/material';
+import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/legacy/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED } from '../../constants/events';
@@ -33,16 +34,20 @@ const themes = {
 
 const secondaryStyling = {};
 interface StoryblokAccordionItemProps {
+  _uid: string;
+  _editable: string;
   body: any;
   title: string;
   icon: { filename: string; alt: string };
 }
 interface StoryblokAccordionProps {
+  _uid: string;
+  _editable: string;
   accordion_items: Array<StoryblokAccordionItemProps>;
   theme: 'primary' | 'secondary';
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
-  const { accordion_items, theme } = props;
+  const { _uid, _editable, accordion_items, theme } = props;
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -51,7 +56,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
       }
     };
   return (
-    <Box sx={containerStyle}>
+    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
       {accordion_items.map((ai, i) => (
         <Accordion key={`panel${i}`} onChange={handleChange(ai.title)} sx={themes[theme]}>
           <AccordionSummary

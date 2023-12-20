@@ -1,4 +1,5 @@
 import { Box } from '@mui/system';
+import { storyblokEditable } from '@storyblok/react';
 import dynamic from 'next/dynamic';
 import { YouTubeConfig } from 'react-player/youtube';
 import { richtextContentStyle } from '../../styles/common';
@@ -17,13 +18,15 @@ const videoStyle = {
 } as const;
 
 interface StoryblokVideoProps {
+  _uid: string;
+  _editable: string;
   video: { url: string };
   size: string;
   alignment: string;
 }
 
 const StoryblokVideo = (props: StoryblokVideoProps) => {
-  const { video, size = 'extra-large', alignment = 'left' } = props;
+  const { _uid, _editable, video, size = 'extra-large', alignment = 'left' } = props;
 
   if (!video) return <></>;
 
@@ -33,22 +36,22 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
       size === 'extra-small'
         ? { xs: 80, md: 120 }
         : size === 'small'
-        ? { xs: 140, md: 180 }
-        : size === 'medium'
-        ? { xs: 200, md: 250 }
-        : size === 'large'
-        ? { xs: 400, md: 480 }
-        : '100%',
+          ? { xs: 140, md: 180 }
+          : size === 'medium'
+            ? { xs: 200, md: 250 }
+            : size === 'large'
+              ? { xs: 400, md: 480 }
+              : '100%',
     marginY:
       size === 'extra-small'
         ? 2
         : size === 'small'
-        ? 3
-        : size === 'medium'
-        ? 4
-        : size === 'large'
-        ? 5
-        : 6,
+          ? 3
+          : size === 'medium'
+            ? 4
+            : size === 'large'
+              ? 5
+              : 6,
     marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
     marginRight: alignment === 'center' ? 'auto' : 0,
 
@@ -65,7 +68,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
       : {};
 
   return (
-    <Box sx={containerStyle}>
+    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, video, size, alignment })}>
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           style={videoStyle}

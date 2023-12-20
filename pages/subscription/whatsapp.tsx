@@ -98,12 +98,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
         {userToken &&
           story.content.page_sections?.length > 0 &&
           story.content.page_sections.map((section: any, index: number) => (
-            <StoryblokPageSection
-              key={`page_section_${index}`}
-              content={section.content}
-              alignment={section.alignment}
-              color={section.color}
-            />
+            <StoryblokPageSection key={`page_section_${index}`} {...section} />
           ))}
       </Box>
     </>
