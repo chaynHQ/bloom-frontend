@@ -1,88 +1,43 @@
-import { Box } from '@mui/system';
+import { ISbStoryData, getStoryblokApi, useStoryblokState } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
-import { SignUpBanner } from '../components/banner/SignUpBanner';
-import Header from '../components/layout/Header';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
-import { useTypedSelector } from '../hooks/store';
+import NoDataAvailable from '../components/common/NoDataAvailable';
+import StoryblokPage, { StoryblokPageProps } from '../components/storyblok/StoryblokPage';
+import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 
 interface Props {
-  story: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const Page: NextPage<Props> = ({ story, preview, sbParams, locale }) => {
-  story = useStoryblok(story, preview, sbParams, locale);
-  const userToken = useTypedSelector((state) => state.user.token);
-  const router = useRouter();
+const Page: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
 
-  const headerProps = {
-    title: story.content.title,
-    introduction: story.content.description,
-    imageSrc: story.content.header_image?.filename,
-    translatedImageAlt: story.content.header_image?.alt,
-  };
-  const partiallyPublicPages = ['/activities', '/grounding'];
-  const isPartiallyPublicPage = partiallyPublicPages.includes(router.asPath);
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
-  return (
-    <Box>
-      <Head>{story.content.title}</Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
-      />
-      {!userToken && isPartiallyPublicPage && <SignUpBanner />}
-      {userToken &&
-        story.content.page_sections?.length > 0 &&
-        story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection
-            key={`page_section_${index}`}
-            content={section.content}
-            alignment={section.alignment}
-            color={section.color}
-          />
-        ))}
-    </Box>
-  );
+  return <StoryblokPage {...(story.content as StoryblokPageProps)} />;
 };
 
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    language: locale,
-    ...(preview && { cv: Date.now() }),
-  };
-
-  let { data } = await Storyblok.get(`cdn/stories/${slug}`, sbParams);
+  const storyblokProps = await getStoryblokPageProps(slug, locale, preview);
 
   return {
     props: {
-      story: data ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let { data } = await Storyblok.get('cdn/links/');
+  const storyblokApi = getStoryblokApi();
+  let { data } = await storyblokApi.get('cdn/links/', { published: true });
 
   const excludePaths: string[] = [
     'home',

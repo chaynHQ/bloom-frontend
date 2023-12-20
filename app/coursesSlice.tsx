@@ -1,8 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { WritableDraft } from 'immer/dist/internal';
+import { Draft, createSlice } from '@reduxjs/toolkit';
 import { STORYBLOK_STORY_STATUS } from '../constants/enums';
 import { api } from './api';
-import type { RootState } from './store';
 import { User } from './userSlice';
 
 export interface Session {
@@ -50,7 +48,7 @@ export interface Courses extends Array<Course> {}
 
 const initialState: Courses = [];
 
-const mergeUpdatedCourse = (state: WritableDraft<Courses>, payload: Course) => {
+const mergeUpdatedCourse = (state: Draft<Courses>, payload: Course) => {
   const course = state.filter((course) => course.id === payload.id);
 
   if (course) {
@@ -89,5 +87,4 @@ const slice = createSlice({
 
 const { actions, reducer } = slice;
 export const { clearCoursesSlice } = actions;
-export const selectCourses = (state: RootState) => state.courses;
 export default reducer;

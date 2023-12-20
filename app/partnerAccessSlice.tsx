@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getPartnerContent, PartnerContent } from '../constants/partners';
 import { api } from './api';
 import { Partner } from './partnersSlice';
-import type { RootState } from './store';
 
 export interface PartnerAccess {
   id: string;
@@ -61,5 +60,4 @@ const slice = createSlice({
 
 const { actions, reducer } = slice;
 export const { clearPartnerAccessesSlice } = actions;
-export const selectPartnerAccesses = (state: RootState) => state.partnerAccesses;
 export default reducer;

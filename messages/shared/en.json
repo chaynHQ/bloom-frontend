@@ -27,6 +27,9 @@
     "meetTheTeam": {
       "expandTeamMember": "Expand bio for {name}"
     },
+    "noDataAvailable": {
+      "title": "There was an issue loading this page. Please go back and try again soon, or get in touch."
+    },
     "404": {
       "title": "404 - Page not found",
       "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",

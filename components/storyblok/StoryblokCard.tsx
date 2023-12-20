@@ -1,13 +1,15 @@
 import { Card, CardContent } from '@mui/material';
 import { Box } from '@mui/system';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Image from 'next/legacy/image';
-import { Richtext } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 
 interface StoryblokCardProps {
+  _uid: string;
+  _editable: string;
   image: { filename: string; alt: string };
-  content: Richtext;
+  content: ISbRichtext;
   alignment: string;
   background: string;
   style: string;
@@ -15,6 +17,8 @@ interface StoryblokCardProps {
 
 const StoryblokCard = (props: StoryblokCardProps) => {
   const {
+    _uid,
+    _editable,
     image,
     content,
     alignment = 'left',
@@ -34,7 +38,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     padding: { xs: 2, sm: 1, md: 2, lg: 2 },
     '&:last-child': { paddingBottom: { xs: 2, sm: 2, md: 2, lg: 2 } },
     gap: { xs: 3, sm: 1, md: 1 },
-    '& h3': {
+    '& h3:only-child': {
       marginBottom: 0,
     },
   };
@@ -63,7 +67,10 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   } as const;
 
   return (
-    <Card sx={cardStyle}>
+    <Card
+      {...storyblokEditable({ _uid, _editable, image, content, alignment, background, style })}
+      sx={cardStyle}
+    >
       <CardContent sx={cardContentStyle}>
         {image && image.filename && (
           <Box sx={imageContainerStyle}>

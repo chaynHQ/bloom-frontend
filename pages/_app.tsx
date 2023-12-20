@@ -20,6 +20,7 @@ import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import firebase from '../config/firebase';
+import { storyblok } from '../config/storyblok';
 import { AuthGuard } from '../guards/authGuard';
 import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
 import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
@@ -32,7 +33,10 @@ import theme from '../styles/theme';
 // For SSG compatibility with MUI
 // Client-side emotion cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
+// Init firebase
 firebase;
+// Init storyblok
+storyblok;
 
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -144,7 +148,7 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
         (window as any).store = store;
       }
     }
-  });
+  }, []);
 
   return (
     <Provider store={store}>

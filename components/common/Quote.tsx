@@ -1,10 +1,10 @@
 import { useTheme } from '@mui/material';
 import { Box } from '@mui/system';
-import { Richtext } from 'storyblok-js-client';
+import { ISbRichtext } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';
 
 interface QuoteProps {
-  text: Richtext | string;
+  text: ISbRichtext | string;
   textSize: string;
   iconColor: string;
 }
@@ -19,18 +19,18 @@ const Quote = (props: QuoteProps) => {
     textSize === 'extra-small'
       ? { xs: 0.875, md: 1 }
       : textSize === 'small'
-      ? { xs: 1, md: 1.125 }
-      : textSize === 'large'
-      ? { xs: 1.25, md: 1.5 }
-      : textSize === 'extra-large'
-      ? { xs: 1.5, md: 1.75 }
-      : { xs: 1.125, md: 1.25 }; // default / medium
+        ? { xs: 1, md: 1.125 }
+        : textSize === 'large'
+          ? { xs: 1.25, md: 1.5 }
+          : textSize === 'extra-large'
+            ? { xs: 1.5, md: 1.75 }
+            : { xs: 1.125, md: 1.25 }; // default / medium
   const quotePosition =
     textSize === 'extra-small'
       ? { top: '-4px', left: '0' }
       : textSize === 'small'
-      ? { top: '-8px', left: '0' }
-      : { top: '-16px', left: '-8px' }; // medium/ large/ extra large
+        ? { top: '-8px', left: '0' }
+        : { top: '-16px', left: '-8px' }; // medium/ large/ extra large
   const containerStyle = {
     fontFamily: 'Montserrat, sans-serif',
     fontStyle: 'italic',

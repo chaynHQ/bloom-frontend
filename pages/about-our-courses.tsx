@@ -1,29 +1,35 @@
 import { Box } from '@mui/material';
+import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { StoriesParams, StoryData } from 'storyblok-js-client';
+import NoDataAvailable from '../components/common/NoDataAvailable';
 import Header from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import Storyblok, { useStoryblok } from '../config/storyblok';
-import { LANGUAGES } from '../constants/enums';
 import { ABOUT_COURSES_VIEWED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
+import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 
 interface Props {
-  storyData: StoryData;
-  preview: boolean;
-  sbParams: StoriesParams;
-  locale: LANGUAGES;
+  story: ISbStoryData | null;
 }
 
-const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) => {
-  const story = useStoryblok(storyData, preview, sbParams, locale);
+const CourseAbout: NextPage<Props> = ({ story }) => {
+  story = useStoryblokState(story);
+
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
+  useEffect(() => {
+    logEvent(ABOUT_COURSES_VIEWED, eventUserData);
+  }, []);
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
 
   const headerProps = {
     title: story.content.title,
@@ -31,10 +37,6 @@ const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) 
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
   };
-
-  useEffect(() => {
-    logEvent(ABOUT_COURSES_VIEWED, eventUserData);
-  });
 
   return (
     <Box>
@@ -49,35 +51,22 @@ const CourseAbout: NextPage<Props> = ({ storyData, preview, sbParams, locale }) 
       />
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection
-            key={`page_section_${index}`}
-            content={section.content}
-            alignment={section.alignment}
-            color={section.color}
-          />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
     </Box>
   );
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const sbParams = {
-    version: preview ? 'draft' : 'published',
-    ...(preview && { cv: Date.now() }),
-    language: locale,
-  };
+  const storyblokProps = await getStoryblokPageProps('about-our-courses', locale, preview);
 
-  let { data } = await Storyblok.get(`cdn/stories/about-our-courses`, sbParams);
   return {
     props: {
-      storyData: data && data?.story ? data.story : null,
-      preview,
-      sbParams: JSON.stringify(sbParams),
+      ...storyblokProps,
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
       },
-      locale,
     },
     revalidate: 3600, // revalidate every hour
   };

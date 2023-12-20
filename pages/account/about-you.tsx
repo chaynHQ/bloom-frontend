@@ -63,7 +63,7 @@ const AboutYou: NextPage = () => {
 
   useEffect(() => {
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
-  });
+  }, []);
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,

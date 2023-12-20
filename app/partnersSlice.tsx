@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { api } from './api';
 import { PartnerAccess } from './partnerAccessSlice';
-import type { RootState } from './store';
 
 export interface Feature {
   name: string;
@@ -87,5 +86,4 @@ const slice = createSlice({
 
 const { actions, reducer } = slice;
 export const { clearPartnersSlice } = actions;
-export const selectPartners = (state: RootState) => state.partners;
 export default reducer;

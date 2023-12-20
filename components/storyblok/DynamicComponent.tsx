@@ -1,4 +1,4 @@
-import { StoryblokComponent } from 'storyblok-js-client';
+import { SbBlokData } from '@storyblok/react';
 import Placeholder from './Placeholder';
 import StoryblokButton from './StoryblokButton';
 import StoryblokCard from './StoryblokCard';
@@ -32,7 +32,7 @@ const components: Component[] = [
 ];
 
 interface DynamicComponentProps {
-  blok: StoryblokComponent<string>;
+  blok: SbBlokData;
 }
 
 const DynamicComponent = (props: DynamicComponentProps) => {
@@ -43,7 +43,8 @@ const DynamicComponent = (props: DynamicComponentProps) => {
     const Component = component.component;
     return <Component blok={blok} />;
   }
-  return <Placeholder componentName={blok.component} />;
+
+  return <Placeholder componentName={blok.component || 'unnamed'} />;
 };
 
 export default DynamicComponent;

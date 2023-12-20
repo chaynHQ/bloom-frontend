@@ -1,3 +1,5 @@
+import { Box } from '@mui/material';
+import { storyblokEditable } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 import Column from '../common/Column';
@@ -17,30 +19,49 @@ import { StoryblokColumn } from './StoryblokTypes';
  */
 
 interface StoryblokRowColumnBlockProps {
+  _uid: string;
+  _editable: string;
   columns: StoryblokColumn[];
   horizontal_alignment: string;
   vertical_alignment: string;
+  gap: string;
 }
 
 const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
-  const { columns, horizontal_alignment, vertical_alignment } = props;
+  const { _uid, _editable, columns, horizontal_alignment, vertical_alignment, gap } = props;
 
   if (!columns) return <></>;
 
   return (
-    <Row
-      numberOfColumns={columns.length}
-      verticalAlignment={vertical_alignment}
-      horizontalAlignment={horizontal_alignment}
-    >
-      {columns.map((column: any, index: number) => {
-        return (
-          <Column width={column.width} key={`row_column_${index}_${Math.random() * 100}`}>
-            {render(column.content, RichTextOptions)}
-          </Column>
-        );
+    <Box
+      {...storyblokEditable({
+        _uid,
+        _editable,
+        columns,
+        horizontal_alignment,
+        vertical_alignment,
+        gap,
       })}
-    </Row>
+    >
+      <Row
+        numberOfColumns={columns.length}
+        verticalAlignment={vertical_alignment}
+        horizontalAlignment={horizontal_alignment}
+        gap={gap}
+      >
+        {columns.map((column: any, index: number) => {
+          return (
+            <Column
+              width={column.width}
+              horizontalAlignment={column.horizontal_alignment}
+              key={`row_column_${index}_${Math.random() * 100}`}
+            >
+              {render(column.content, RichTextOptions)}
+            </Column>
+          );
+        })}
+      </Row>
+    </Box>
   );
 };
 

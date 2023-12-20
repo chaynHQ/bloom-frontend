@@ -1,7 +1,7 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { StoryData } from 'storyblok-js-client';
 import { render } from 'storyblok-rich-text-react-renderer';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
@@ -25,7 +25,11 @@ const introductionContainerStyle = {
 } as const;
 
 interface CourseIntroductionProps {
-  course: StoryData;
+  video: { url: string };
+  name: string;
+  video_transcript: ISbRichtext;
+  live_soon_content: ISbRichtext;
+  live_now_content: ISbRichtext;
   courseLiveSoon?: boolean;
   courseLiveNow?: boolean;
   liveCourseAccess?: boolean;
@@ -34,7 +38,11 @@ interface CourseIntroductionProps {
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
   const {
-    course,
+    video,
+    name,
+    video_transcript,
+    live_soon_content,
+    live_now_content,
     courseLiveSoon = false,
     courseLiveNow = false,
     liveCourseAccess = false,
@@ -55,14 +63,14 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
         : COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
       {
         ...eventData,
-        course_name: course.content.name,
+        course_name: name,
       },
     );
-  }, [openTranscriptModal, course, eventData]);
+  }, [openTranscriptModal, name, eventData]);
 
   const IntroductionVideo = () => (
     <Video
-      url={course.content.video.url}
+      url={video.url}
       eventData={eventData}
       eventPrefix="COURSE_INTRO"
       containerStyles={{ width: { xs: '100%' }, flex: 1 }}
@@ -89,8 +97,8 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           })}
         </Typography>
         <VideoTranscriptModal
-          videoName={course.content.name}
-          content={course.content.video_transcript}
+          videoName={name}
+          content={video_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />
@@ -100,12 +108,12 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
       {liveCourseAccess && courseLiveSoon ? (
         <Box flex={1}>
           <CourseStatusHeader status="liveSoon" />
-          {render(course.content.live_soon_content, RichTextOptions)}
+          {render(live_soon_content, RichTextOptions)}
         </Box>
       ) : liveCourseAccess && courseLiveNow ? (
         <Box flex={1}>
           <CourseStatusHeader status="liveNow" />
-          {render(course.content.live_now_content, RichTextOptions)}
+          {render(live_now_content, RichTextOptions)}
         </Box>
       ) : (
         <IntroductionVideo />
