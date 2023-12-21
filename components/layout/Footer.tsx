@@ -8,7 +8,7 @@ import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
+import { getPartnerContent, PartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import tiktokLogo from '../../public/tiktok.svg';
 import { rowStyle } from '../../styles/common';
@@ -38,10 +38,10 @@ const partnersContainerStyle = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-start',
-  gap: { xs: 4, md: 3, lg: 5 },
+  gap: { xs: 2, lg: 5 },
   maxWidth: { md: '55%' },
   '> div': { minWidth: '220px' },
-  flexWrap: 'nowrap',
+  flexWrap: 'wrap',
 } as const;
 
 const socialsContainerStyle = {
