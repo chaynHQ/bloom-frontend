@@ -1,0 +1,33 @@
+# This workflow manages open-source contributions, such as issues and pull requests.
+
+# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/actions/stale
+name: Mark stale issues
+
+on:
+  # Enable manual run from the Actions tab.
+  workflow_dispatch:
+  # Scheduled to run at 12:00 on every 1st of the month.
+  schedule:
+  - cron: '0 12 1 * *'
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+    - uses: actions/stale@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        remove-stale-when-updated: false
+        include-only-assigned: true
+        days-before-close: -1
+        stale-issue-label: 'stale'
+        exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte'
+        stale-issue-message: 'As per Chayn policy, after 60 days of inactivity, we will be unassigning this issue to open it back up for contributors. Please comment to be re-assigned. Thank you for interest in contributing to Chayn!'
