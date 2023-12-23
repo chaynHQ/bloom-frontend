@@ -29,5 +29,6 @@ jobs:
         include-only-assigned: true
         days-before-close: -1
         stale-issue-label: 'stale'
+        ignore-updates: true
         exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte'
         stale-issue-message: 'As per Chayn policy, after 60 days of inactivity, we will be unassigning this issue to open it back up for contributors. Please comment to be re-assigned. Thank you for interest in contributing to Chayn!'
