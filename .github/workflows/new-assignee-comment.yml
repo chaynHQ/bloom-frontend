@@ -1,0 +1,17 @@
+# This workflow comments helpful info in issues when they are assigned.
+# For more information, see:
+# https://github.com/actions/first-interaction
+
+name: New Assignee Issue Comment
+on:
+  issues:
+    types:
+      - assigned
+jobs:
+  new-assingee-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Good luck!'
