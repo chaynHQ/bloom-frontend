@@ -201,7 +201,9 @@ yarn build
 
 ## Cypress Testing
 
-See [CYPRESS.md](CYPRESS.md) for set up instructions for cypress tests.
+**Note: Open-source contributors do not need to run Cypress tests locally, these tests will run in GitHub Actions upon making a pull request.**
+If you are an official Chayn volunteer, please get in touch with the team for the Cypress test environment variables.
+See [CYPRESS.md](CYPRESS.md) for set up instructions for Cypress tests.
 
 **Running the https proxy**
 You need to run a https proxy for the storyblok preview.
