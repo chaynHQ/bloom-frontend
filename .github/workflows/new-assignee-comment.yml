@@ -19,4 +19,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
-          BODY: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Thank you and good luck! :D'
+          BODY: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Good luck!'
