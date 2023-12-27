@@ -2,6 +2,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Card, CardActions, CardContent, Collapse, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/legacy/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -57,6 +58,8 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     dropdown_button = false,
     dropdown_content,
   } = props;
+
+  const t = useTranslations('Courses');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -115,7 +118,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
           <CardActions sx={cardActionsStyle}>
             <IconButton
               sx={{ marginLeft: 'auto' }}
-              // aria-label={`${t('expandSummary')}`}
+              aria-label={`${t('expandSummary')}`}
               onClick={handleExpandClick}
               size="small"
             >
