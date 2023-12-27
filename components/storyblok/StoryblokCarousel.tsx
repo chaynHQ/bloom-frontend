@@ -4,6 +4,7 @@ import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
 import NukaCarousel from 'nuka-carousel';
+import { columnStyle } from '../../styles/common';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
@@ -20,6 +21,8 @@ interface StoryblokCarouselProps {
   _editable: string;
   items: Array<SbBlokData>;
   theme: 'primary' | 'secondary';
+  number_desktop_slides?: number;
+  number_mobile_slides?: number;
 }
 const PreviousButton = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -67,11 +70,22 @@ const NextButton = ({ onClick }: { onClick: () => void }) => {
   );
 };
 const StoryblokCarousel = (props: StoryblokCarouselProps) => {
-  const { _uid, _editable, items, theme = 'primary' } = props;
+  const {
+    _uid,
+    _editable,
+    items,
+    theme = 'primary',
+    number_mobile_slides,
+    number_desktop_slides,
+  } = props;
 
   const siteTheme = useTheme();
 
   const isMobileScreen = useMediaQuery(siteTheme.breakpoints.down('md'));
+  const mobileSlidesToShow = number_mobile_slides || 1;
+  const desktopSlidesToShow = number_desktop_slides || 1;
+  const slidesToShow = isMobileScreen ? mobileSlidesToShow : desktopSlidesToShow;
+  const hideControls = items.length <= slidesToShow;
 
   return (
     <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
@@ -84,6 +98,8 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
           },
           pagingDotsContainerClassName: 'paging-dots-container',
         }}
+        slidesToShow={isMobileScreen ? mobileSlidesToShow : desktopSlidesToShow}
+        withoutControls={hideControls}
         renderCenterLeftControls={
           isMobileScreen
             ? () => {
@@ -104,7 +120,7 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
           if (component) {
             const Component = component.component;
             return (
-              <Box sx={{}} key={index}>
+              <Box sx={columnStyle} key={index}>
                 <Component {...item} key={index} />
               </Box>
             );
