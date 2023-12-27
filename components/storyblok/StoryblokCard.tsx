@@ -1,7 +1,9 @@
-import { Card, CardContent } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Card, CardActions, CardContent, Collapse, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Image from 'next/legacy/image';
+import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -13,9 +15,37 @@ interface StoryblokCardProps {
   alignment: string;
   background: string;
   style: string;
+  dropdown_button?: boolean;
+  dropdown_content?: ISbRichtext;
 }
 
+const cardActionsStyle = {
+  position: 'absolute',
+  right: 1,
+  bottom: 0,
+} as const;
+
+const slimImageStyle = {
+  width: { xs: 80, sm: 80, md: 80 },
+  height: { xs: 80, sm: 80, md: 80 },
+  minWidth: { xs: 80, sm: 80, md: 80 },
+  minHeight: { xs: 80, sm: 80, md: 80 },
+};
+const defaultStyle = {
+  width: { xs: 80, md: 100 },
+  height: { xs: 80, md: 100 },
+  minWidth: { xs: 80, md: 100 },
+  minHeight: { xs: 80, md: 100 },
+};
+
+const cardStyle = {
+  '&:first-of-type': {
+    marginTop: 0,
+  },
+};
+
 const StoryblokCard = (props: StoryblokCardProps) => {
+  const [expanded, setExpanded] = useState<boolean>(false);
   const {
     _uid,
     _editable,
@@ -24,18 +54,21 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     alignment = 'left',
     background = 'common.white',
     style = 'default',
+    dropdown_button = false,
+    dropdown_content,
   } = props;
 
-  if (!image || !image.filename) return <></>;
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-  const cardStyle = {
-    '&:first-of-type': {
-      marginTop: 0,
-    },
+  const arrowStyle = {
+    transform: expanded ? 'rotate(180deg)' : 'none',
   } as const;
 
   const slimPadding = {
-    padding: { xs: 2, sm: 1, md: 2, lg: 2 },
+    padding: { xs: 2, sm: 2, md: 2, lg: 2 },
+    ...(dropdown_button ? { paddingRight: { xs: 2, sm: 2, md: 4, lg: 2 } } : {}),
     '&:last-child': { paddingBottom: { xs: 2, sm: 2, md: 2, lg: 2 } },
     gap: { xs: 3, sm: 1, md: 1 },
     '& h3:only-child': {
@@ -44,6 +77,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   };
 
   const cardContentStyle = {
+    ...(style == 'slim' ? slimPadding : {}),
     display: 'flex',
     flexDirection:
       alignment === 'right' ? 'row-reverse' : alignment === 'center' ? 'column' : 'row',
@@ -51,19 +85,18 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
     gap: 3,
     backgroundColor: background,
-    ...(style == 'slim' ? slimPadding : {}),
-  } as const;
-  const slimImageStyle = {
-    width: { xs: 80, sm: 80, md: 80 },
-    height: { xs: 80, sm: 80, md: 80 },
-    minWidth: { xs: 80, sm: 80, md: 80 },
-    minHeight: { xs: 80, sm: 80, md: 80 },
-  };
-  const imageContainerStyle = {
     position: 'relative',
-    width: { xs: 80, md: 100 },
-    height: { xs: 80, md: 100 },
-    ...(style == 'slim' ? slimImageStyle : {}),
+  } as const;
+
+  const imageContainerStyle = {
+    ...(style == 'slim' ? slimImageStyle : defaultStyle),
+    position: 'relative',
+  } as const;
+
+  const collapseContentStyle = {
+    backgroundColor: background,
+    textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
+    ...(style == 'slim' ? slimPadding : {}),
   } as const;
 
   return (
@@ -78,7 +111,26 @@ const StoryblokCard = (props: StoryblokCardProps) => {
           </Box>
         )}
         <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
+        {dropdown_button && (
+          <CardActions sx={cardActionsStyle}>
+            <IconButton
+              sx={{ marginLeft: 'auto' }}
+              // aria-label={`${t('expandSummary')}`}
+              onClick={handleExpandClick}
+              size="small"
+            >
+              <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
+            </IconButton>
+          </CardActions>
+        )}
       </CardContent>
+      {dropdown_button && (
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent sx={collapseContentStyle}>
+            <Typography>{render(dropdown_content, RichTextOptions)}</Typography>
+          </CardContent>
+        </Collapse>
+      )}
     </Card>
   );
 };
