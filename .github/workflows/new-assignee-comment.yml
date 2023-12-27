@@ -8,10 +8,15 @@ on:
     types:
       - assigned
 jobs:
-  new-assingee-comment:
+  add-comment:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - uses: actions/first-interaction@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Good luck!'
+      - name: Add comment
+        run: gh issue comment "$NUMBER" --body "$BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Thank you and good luck! :D'
