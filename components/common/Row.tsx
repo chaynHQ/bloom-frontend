@@ -14,7 +14,9 @@ const Row = (props: RowProps) => {
   const calculatedGap =
     gap === 'none'
       ? 0
-      : { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns };
+      : gap === 'mobile-small-desktop-default'
+        ? { xs: 2, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns }
+        : { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns };
 
   const rowStyles = {
     width: '100%',
@@ -24,27 +26,27 @@ const Row = (props: RowProps) => {
       horizontalAlignment === 'center'
         ? 'center'
         : horizontalAlignment === 'right'
-        ? 'right'
-        : horizontalAlignment === 'mobile-left-desktop-center'
-        ? { xs: 'left', md: 'center' }
-        : 'left',
+          ? 'right'
+          : horizontalAlignment === 'mobile-left-desktop-center'
+            ? { xs: 'left', md: 'center' }
+            : 'left',
     ...(horizontalAlignment && {
       justifyContent:
         horizontalAlignment === 'center'
           ? 'center'
           : horizontalAlignment === 'right'
-          ? 'flex-end'
-          : horizontalAlignment === 'mobile-left-desktop-center'
-          ? { xs: 'flex-start', md: 'center' }
-          : 'flex-start',
+            ? 'flex-end'
+            : horizontalAlignment === 'mobile-left-desktop-center'
+              ? { xs: 'flex-start', md: 'center' }
+              : 'flex-start',
     }),
     ...(verticalAlignment && {
       alignItems:
         verticalAlignment === 'center'
           ? 'center'
           : verticalAlignment === 'bottom'
-          ? 'flex-end'
-          : 'flex-start',
+            ? 'flex-end'
+            : 'flex-start',
     }),
     ...richtextContentStyle,
   } as const;
