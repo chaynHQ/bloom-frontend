@@ -1,6 +1,9 @@
 import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { STORYBLOK_COLORS } from '../../constants/enums';
+import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Column from '../common/Column';
 import Link from '../common/Link';
 import PageSection from '../common/PageSection';
@@ -10,6 +13,10 @@ interface SignUpBannerProps {}
 
 export const SignUpBanner = ({}: SignUpBannerProps) => {
   const t = useTranslations('Shared');
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   return (
     <PageSection color={STORYBLOK_COLORS.BLOOM_GRADIENT} alignment="center">
@@ -26,7 +33,15 @@ export const SignUpBanner = ({}: SignUpBannerProps) => {
           >
             {t('signUpTodayPromo.description2')}
           </Typography>
-          <Button component={Link} variant="contained" color="secondary" href={'/auth/register'}>
+          <Button
+            component={Link}
+            variant="contained"
+            color="secondary"
+            href={'/auth/register'}
+            onClick={() => {
+              logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, eventUserData);
+            }}
+          >
             {t('signUpTodayPromo.button')}
           </Button>
         </Column>
