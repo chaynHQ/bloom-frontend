@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { ISbRichtext } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';
@@ -11,7 +10,6 @@ interface QuoteProps {
 
 const Quote = (props: QuoteProps) => {
   const { text, textSize, iconColor = 'primary.dark' } = props;
-  const theme = useTheme();
 
   if (!text) return <></>;
 
@@ -27,10 +25,15 @@ const Quote = (props: QuoteProps) => {
             : { xs: 1.125, md: 1.25 }; // default / medium
   const quotePosition =
     textSize === 'extra-small'
-      ? { top: '-4px', left: '0' }
+      ? { top: '-50px', left: '0' }
       : textSize === 'small'
-        ? { top: '-8px', left: '0' }
-        : { top: '-16px', left: '-8px' }; // medium/ large/ extra large
+        ? { top: '-40px', left: '0' }
+        : { top: '-50px', left: '0' }; // medium/ large/ extra large
+  const quoteSize =
+    textSize === 'extra-small' || textSize === 'small'
+      ? { height: '20px', width: '20px' }
+      : { height: '20px', width: '30px' }; // medium/ large/ extra large
+
   const containerStyle = {
     fontFamily: 'Montserrat, sans-serif',
     fontStyle: 'italic',
@@ -41,12 +44,13 @@ const Quote = (props: QuoteProps) => {
       marginX: 0,
       position: 'relative',
       '&:before': {
-        content: 'open-quote',
+        content: 'url(/pink_quotes.svg)',
         display: 'block',
-        verticalAlign: 'bottom',
+        verticalAlign: 'top',
         color: iconColor,
         fontSize: `calc(${fontSize.md} * 4rem)`,
         position: 'absolute',
+        ...quoteSize,
         ...quotePosition,
       },
       '&:after': {

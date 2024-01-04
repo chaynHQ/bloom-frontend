@@ -1,0 +1,22 @@
+# This workflow comments helpful info in issues when they are assigned.
+# For more information, see:
+# https://github.com/actions/first-interaction
+
+name: New Assignee Issue Comment
+on:
+  issues:
+    types:
+      - assigned
+jobs:
+  add-comment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add comment
+        run: gh issue comment "$NUMBER" --body "$BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: 'Thank you for your interest in contributing to Chayn! Please carefully read the CONTRIBUTING.md file and the README.md file for guidance. Let us know if you have any questions. Good luck!'
