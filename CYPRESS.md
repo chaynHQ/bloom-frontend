@@ -6,16 +6,16 @@ Currently, integration tests are set up to be run locally with Chrome. When cypr
 
 - First create a local `cypress.env.json` file (this file is in .gitignore and will be ignore by git). Example variables are in `cypress.env.example.json`. You can ask the team for the environment variables to run Cypress tests and paste them into the file.
 - These variables require users to exist in your database that have certain permissions. Firstly you need to create a super admin user in your database.
-
-- Create a public user through the UI
-- In the database in `bloom-backend` you will need to set "isSuperAdmin" column to true for the user you created.
+- Create a public user through the UI.
+- In the database in `bloom-backend` you will need to set "isSuperAdmin" column to true for the user you created. See [BLOOM_USERS.md](/BLOOM_USERS.md) for steps on how to set up different users.
 - There are 2 ways of data seeding with users. 1 is via a script in the bloom-scripts repo. Or 2 creating users through the UI (recommended).
 
   ### Creating users with the UI (Recommended)
 
-  - create a public user through the UI by navigating to the '/' home page and following instrcutions.
-  - To create partner admin users, log in as the super admin you created. Go to /admin/dashboard and create 1 bumble user and 1 badoo user. Make sure the emails are aliases of your own email. For example, if my email was 'test@chayn.co', I need to make accounts with emails `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`.
-  
+  - ensure your `bloom-backend` is running.
+  - create a public user through the UI by navigating to the '/' home page and following instructions to create a user.
+  - To create partner admin users, log in as the super admin you created. Go to /admin/dashboard and create 1 bumble user and 1 badoo user. Make sure the emails are aliases of your own email. For example, if my email was 'test@chayn.co', I need to make accounts with emails `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`. You will need to reset the password through the UI for both of these as firebase provides a random password for you.
+
   ### Creating users with a script
 
   - You will need to pull the [bloom-scripts repo](https://github.com/chaynHQ/bloom-scripts). This repo contains scripts for data seeding public and partner admin users. Note that you can also perform
