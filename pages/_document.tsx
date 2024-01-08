@@ -3,6 +3,7 @@ import { AppType } from 'next/app';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import NewRelicScript from '../components/head/NewRelicScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
@@ -18,6 +19,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <OpenGraphMetadata />
+          <NewRelicScript />
           <GoogleTagManagerScript />
           <RollbarScript />
         </Head>
