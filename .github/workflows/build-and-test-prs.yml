@@ -3,6 +3,8 @@ name: Build & test # on both PRs and push to develop/main
 on:
   pull_request:
     branches: [develop, main]
+  push:
+    branches: [develop]
 
 jobs:
   build-and-test:

@@ -3,6 +3,8 @@ name: Cypress release tests
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [develop]
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
