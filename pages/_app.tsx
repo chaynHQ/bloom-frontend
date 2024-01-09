@@ -107,6 +107,21 @@ function MyApp(props: MyAppProps) {
     return <AuthGuard>{children || component}</AuthGuard>;
   };
 
+  useEffect(() => {
+    // Check if entry path is from a partner referral and if so, store referring partner in local storage
+    // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
+    const path = router.asPath;
+
+    if (path?.includes('/welcome/')) {
+      const referralPartner = path.split('/')[2]; // Gets "bumble" from /welcome/bumble
+
+      if (referralPartner) {
+        window.localStorage.setItem('referralPartner', referralPartner);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ErrorBoundary>
       <NextIntlClientProvider
@@ -148,6 +163,7 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
         (window as any).store = store;
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

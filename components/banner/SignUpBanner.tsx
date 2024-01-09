@@ -1,5 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -17,6 +18,15 @@ export const SignUpBanner = ({}: SignUpBannerProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const [registerPath, setRegisterPath] = useState('/auth/register');
+
+  useEffect(() => {
+    const referralPartner = window.localStorage.getItem('referralPartner');
+
+    if (referralPartner) {
+      setRegisterPath(`/auth/register?partner=${referralPartner}`);
+    }
+  }, []);
 
   return (
     <PageSection color={STORYBLOK_COLORS.BLOOM_GRADIENT} alignment="center">
@@ -37,7 +47,7 @@ export const SignUpBanner = ({}: SignUpBannerProps) => {
             component={Link}
             variant="contained"
             color="secondary"
-            href={'/auth/register'}
+            href={registerPath}
             onClick={() => {
               logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, eventUserData);
             }}
