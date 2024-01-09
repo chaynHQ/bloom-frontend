@@ -2,7 +2,7 @@
 describe('Register with access code', () => {
   let welcomeCodeLink = null;
   let welcomeCode = null;
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
+  let username = `cypresstestemail+0${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
 

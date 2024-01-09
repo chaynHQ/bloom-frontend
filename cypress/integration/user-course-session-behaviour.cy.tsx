@@ -1,5 +1,5 @@
 describe.only('A logged in user should be able to navigate to a course session and complete it', () => {
-  const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+  const newUserEmail = `cypresstestemail+0${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
   before(() => {

@@ -1,6 +1,6 @@
 // Note Bumble has automatic access code feature
 describe('Register without access code', () => {
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
+  let username = `cypresstestemail+0${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
   });
