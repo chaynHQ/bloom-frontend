@@ -15,6 +15,7 @@ Do you want to make an impact with Chayn and receive special access to our organ
 Other ways you can support Chayn are [donating](https://www.paypal.me/chaynhq), starring this repository ⭐ (so we can find more contributors like you!), making an open-source contribution, and supporting us on social media!
 
 Find us online:
+
 - Website: [https://www.chayn.co/](https://www.chayn.co/)
 - Linktree: [https://linktr.ee/chayn](https://linktr.ee/chayn)
 - Twitter: [@ChaynHQ](https://twitter.com/ChaynHQ)
@@ -43,6 +44,7 @@ Happy coding! ⭐
 - [Simplybook](https://simplybook.me/en/) - Appointment booking system used for therapy
 - [Crisp](https://crisp.chat/en/) - User messaging
 - [Rollbar](https://rollbar.com/) - Error reporting
+- [New Relic](https://newrelic.com/) - Performance monitoring
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
 
 ## Prerequisites
@@ -64,14 +66,15 @@ You will need to run this in the background for the frontend to be functional.
 - **For open-source contributors:** create a `env.local` file and populate it with the variables below:
 
 First, gather your own Firebase tokens. Here are resources to get started:
+
 - [Firebase Docs: Auth](https://firebase.google.com/docs/auth)
 - [Firebase Docs: API Keys](https://firebase.google.com/docs/projects/api-keys)
 - [Firebase Docs: Projects](https://firebase.google.com/docs/projects/learn-more#project-identifiers)
 - [Firebase Docs: Get Started with Fundamentals](https://firebase.google.com/docs/guides)
 
-Next, obtain the Storyblok token by visiting our [Tech Volunteer Guide](https://www.notion.so/chayn/Tech-volunteer-wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#84635bd9b82543ccaab4fb932ca35ebf). 
-Chayn provides a Storyblok token for contributors and is subject to change at any time. If issues arise with your Storyblok token, try checking the volunteer guide to see if the token has been updated. 
-*Note: Additional documentation found in the Tech Volunteer Guide may be outdated.*
+Next, obtain the Storyblok token by visiting our [Tech Volunteer Guide](https://www.notion.so/chayn/Tech-volunteer-wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#84635bd9b82543ccaab4fb932ca35ebf).
+Chayn provides a Storyblok token for contributors and is subject to change at any time. If issues arise with your Storyblok token, try checking the volunteer guide to see if the token has been updated.
+_Note: Additional documentation found in the Tech Volunteer Guide may be outdated._
 
 ```
 NEXT_PUBLIC_ENV=local
