@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import Link from '../components/common/Link';
 import NoDataAvailable from '../components/common/NoDataAvailable';
@@ -38,6 +39,13 @@ const rowItem = {
   height: '100%',
 } as const;
 
+const headerProps = {
+  partnerLogoSrc: welcomeToBloom,
+  partnerLogoAlt: 'alt.welcomeToBloom',
+  imageSrc: illustrationBloomHeadYellow,
+  imageAlt: 'alt.bloomHead',
+};
+
 interface Props {
   story: ISbStoryData | null;
   preview: boolean;
@@ -53,13 +61,15 @@ const Index: NextPage<Props> = ({ story, preview }) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const [registerPath, setRegisterPath] = useState('/auth/register');
 
-  const headerProps = {
-    partnerLogoSrc: welcomeToBloom,
-    partnerLogoAlt: 'alt.welcomeToBloom',
-    imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomHead',
-  };
+  useEffect(() => {
+    const referralPartner = window.localStorage.getItem('referralPartner');
+
+    if (referralPartner) {
+      setRegisterPath(`/auth/register?partner=${referralPartner}`);
+    }
+  }, []);
 
   if (!story) {
     return <NoDataAvailable />;
@@ -116,7 +126,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
                   onClick={() => {
                     logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
                   }}
-                  href="/auth/register"
+                  href={registerPath}
                 >
                   {t('getStarted')}
                 </Button>
