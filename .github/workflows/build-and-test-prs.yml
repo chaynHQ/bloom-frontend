@@ -2,7 +2,7 @@ name: Build & test # on both PRs and push to develop/main
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop]
   push:
     branches: [develop]
 

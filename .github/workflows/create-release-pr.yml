@@ -2,8 +2,7 @@ name: Create release PR
 
 on:
   push:
-    branches:
-      - develop
+    branches: [develop]
 
 jobs:
   create-pr-to-main:
