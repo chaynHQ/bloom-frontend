@@ -17,7 +17,10 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/config/plugins')(on, config);
     },
-    specPattern: 'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
+    specPattern: [
+      './cypress/integration/_beforeAll.cy.tsx',
+      'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
+    ],
     baseUrl: 'http://localhost:3000',
     supportFile: 'cypress/support/index.js',
   },
