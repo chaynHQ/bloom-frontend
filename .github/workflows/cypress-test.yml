@@ -85,11 +85,11 @@ jobs:
           CYPRESS_inbox_id: ${{secrets.CYPRESS_INBOX_ID}}
           CYPRESS_reset_pwd_content_email: ${{secrets.CYPRESS_RESET_PWD_CONTENT_EMAIL}}
           CYPRESS_bumble_partner_admin_email: ${{secrets.CYPRESS_BUMBLE_ADMIN_EMAIL}}
-          CYPRESS_bumble_partner_admin_password: ${{secrets.CYPRESS_TEST_ACCOUNT_PASSWORD}}
+          CYPRESS_bumble_partner_admin_password: ${{secrets.CYPRESS_BUMBLE_ADMIN_PASSWORD}}
           CYPRESS_badoo_partner_admin_email: ${{secrets.CYPRESS_BADOO_ADMIN_EMAIL}}
-          CYPRESS_badoo_partner_admin_password: ${{secrets.CYPRESS_TEST_ACCOUNT_PASSWORD}}
+          CYPRESS_badoo_partner_admin_password: ${{secrets.CYPRESS_BADOO_ADMIN_PASSWORD}}
           CYPRESS_super_admin_email: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
-          CYPRESS_super_admin_password: ${{secrets.CYPRESS_TEST_ACCOUNT_PASSWORD}}
+          CYPRESS_super_admin_password: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
           CYPRESS_public_email: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
           CYPRESS_public_password: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_api_url: ${{secrets.CYPRESS_BLOOM_BACKEND_API_URL}}

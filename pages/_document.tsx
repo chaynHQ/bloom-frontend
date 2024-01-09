@@ -3,9 +3,11 @@ import { AppType } from 'next/app';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import NewRelicScript from '../components/head/NewRelicScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
+import { ENVIRONMENT } from '../constants/enums';
 import { MyAppProps } from './_app';
 
 export default class MyDocument extends Document {
@@ -18,6 +20,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <OpenGraphMetadata />
+          {process.env.NEXT_PUBLIC_ENV === ENVIRONMENT.PRODUCTION && <NewRelicScript />}
           <GoogleTagManagerScript />
           <RollbarScript />
         </Head>

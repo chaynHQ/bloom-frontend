@@ -1,8 +1,8 @@
 name: Lighthouse Performance
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [develop]
 
 jobs:
   # vercel will deploy a preview branch and domain for this PR
