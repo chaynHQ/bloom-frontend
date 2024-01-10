@@ -12,12 +12,21 @@ jobs:
       # This step builds a var with the release tag value to use later
       - name: Set Release Version from Tag
         run: echo "COMMIT_REF=${{ github.ref_name }}" >> $GITHUB_ENV
-      # This step creates a new Change Tracking Marker
+      # This step creates a new Change Tracking Marker for the APM entity
       - name: New Relic Application Deployment Marker
         uses: newrelic/deployment-marker-action@v2.2.0
         with:
           apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
           region: 'US'
-          guid: ${{ secrets.NEW_RELIC_DEPLOYMENT_ENTITY_GUID }}
+          guid: ${{ secrets.NEW_RELIC_DEPLOYMENT_ENTITY_GUID_App }}
+          version: '${{ env.COMMIT_REF }}'
+          user: '${{ github.actor }}'
+      # This step creates a new Change Tracking Marker for the Browser entity
+      - name: New Relic Browser Deployment Marker
+        uses: newrelic/deployment-marker-action@v2.2.0
+        with:
+          apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
+          region: 'US'
+          guid: ${{ secrets.NEW_RELIC_DEPLOYMENT_ENTITY_GUID_Browser }}
           version: '${{ env.COMMIT_REF }}'
           user: '${{ github.actor }}'
