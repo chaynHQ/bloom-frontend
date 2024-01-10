@@ -1,16 +1,19 @@
 import createEmotionServer from '@emotion/server/create-instance';
+import newrelic from 'newrelic';
 import { AppType } from 'next/app';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import NewRelicScript from '../components/head/NewRelicScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
-import { ENVIRONMENT } from '../constants/enums';
 import { MyAppProps } from './_app';
 
-export default class MyDocument extends Document {
+type NewRelicProps = {
+  browserTimingHeader: string;
+};
+
+export default class MyDocument extends Document<NewRelicProps> {
   render() {
     return (
       <Html lang="en">
@@ -19,8 +22,11 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
             rel="stylesheet"
           />
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{ __html: this.props.browserTimingHeader }}
+          />
           <OpenGraphMetadata />
-          {process.env.NEXT_PUBLIC_ENV === ENVIRONMENT.PRODUCTION && <NewRelicScript />}
           <GoogleTagManagerScript />
           <RollbarScript />
         </Head>
@@ -74,6 +80,13 @@ MyDocument.getInitialProps = async (ctx) => {
     });
 
   const initialProps = await Document.getInitialProps(ctx);
+
+  // Set New Relic browser script
+  // See https://newrelic.com/blog/how-to-relic/nextjs-monitor-application-data
+  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+  });
+
   // This is important. It prevents Emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
   const emotionStyles = extractCriticalToChunks(initialProps.html);
@@ -88,6 +101,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   return {
     ...initialProps,
+    browserTimingHeader,
     styles: emotionStyleTags,
   };
 };
