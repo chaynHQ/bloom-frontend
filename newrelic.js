@@ -35,6 +35,7 @@ exports.config = {
      * production applications.
      */
     level: 'info',
+    filepath: '/tmp',
   },
   application_logging: {
     forwarding: {
