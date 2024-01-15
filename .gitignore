@@ -53,3 +53,6 @@ cypress.env.json
 
 # Partytown
 /public/~partytown
+
+# New Relic
+newrelic_agent.log
