@@ -34,8 +34,8 @@ exports.config = {
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: 'info',
-    filepath: '/tmp',
+    level: 'trace',
+    filepath: 'stdout',
   },
   application_logging: {
     forwarding: {
