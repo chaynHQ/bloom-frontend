@@ -18,13 +18,13 @@ export default class MyDocument extends Document<NewRelicProps> {
     return (
       <Html lang="en">
         <Head>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
-            rel="stylesheet"
-          />
           <script
             type="text/javascript"
             dangerouslySetInnerHTML={{ __html: this.props.browserTimingHeader }}
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
+            rel="stylesheet"
           />
           <OpenGraphMetadata />
           <GoogleTagManagerScript />
@@ -64,6 +64,24 @@ MyDocument.getInitialProps = async (ctx) => {
   // 3. app.render
   // 4. page.render
 
+  // Set New Relic browser script
+  // See https://newrelic.com/blog/how-to-relic/nextjs-monitor-application-data
+  const initialProps = await Document.getInitialProps(ctx);
+
+  // @ts-ignore
+  if (newrelic?.agent && !newrelic?.agent?.collector.isConnected()) {
+    await new Promise((resolve) => {
+      // @ts-ignore
+      newrelic?.agent?.on('connected', resolve);
+    });
+  }
+
+  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+    // @ts-ignore
+    allowTransactionlessInjection: true,
+  });
+
   const originalRenderPage = ctx.renderPage;
 
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
@@ -78,14 +96,6 @@ MyDocument.getInitialProps = async (ctx) => {
           return <App emotionCache={cache} {...props} />;
         },
     });
-
-  const initialProps = await Document.getInitialProps(ctx);
-
-  // Set New Relic browser script
-  // See https://newrelic.com/blog/how-to-relic/nextjs-monitor-application-data
-  const browserTimingHeader = newrelic.getBrowserTimingHeader({
-    hasToRemoveScriptWrapper: true,
-  });
 
   // This is important. It prevents Emotion to render invalid HTML.
   // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
