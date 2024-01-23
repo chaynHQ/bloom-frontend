@@ -4,41 +4,41 @@
     "resourceSizes": [
       {
         "resourceType": "document",
-        "budget": 200
+        "budget": 150
       },
       {
         "resourceType": "total",
-        "budget": 1500
+        "budget": 400
       },
       {
         "resourceType": "script",
-        "budget": 1000
+        "budget": 150
       }
     ],
     "timings": [
       {
         "metric": "first-meaningful-paint",
-        "budget": 9000
-      },
-      {
-        "metric": "first-contentful-paint",
-        "budget": 2500
-      },
-      {
-        "metric": "largest-contentful-paint",
-        "budget": 15000
-      },
-      {
-        "metric": "interactive",
-        "budget": 10000
-      },
-      {
-        "metric": "total-blocking-time",
         "budget": 1500
       },
       {
+        "metric": "first-contentful-paint",
+        "budget": 1000
+      },
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 2000
+      },
+      {
+        "metric": "interactive",
+        "budget": 2000
+      },
+      {
+        "metric": "total-blocking-time",
+        "budget": 500
+      },
+      {
         "metric": "speed-index",
-        "budget": 5500
+        "budget": 2500
       }
     ]
   }
