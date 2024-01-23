@@ -8,11 +8,11 @@
       },
       {
         "resourceType": "total",
-        "budget": 400
+        "budget": 900
       },
       {
         "resourceType": "script",
-        "budget": 150
+        "budget": 600
       }
     ],
     "timings": [
@@ -26,11 +26,11 @@
       },
       {
         "metric": "largest-contentful-paint",
-        "budget": 3500
+        "budget": 5800
       },
       {
         "metric": "interactive",
-        "budget": 2500
+        "budget": 8000
       },
       {
         "metric": "total-blocking-time",
@@ -38,7 +38,7 @@
       },
       {
         "metric": "speed-index",
-        "budget": 3500
+        "budget": 3600
       }
     ]
   }

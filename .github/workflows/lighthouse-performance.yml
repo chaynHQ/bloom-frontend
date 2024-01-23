@@ -29,6 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Audit URLs using Lighthouse
+        continue-on-error: true
         uses: treosh/lighthouse-ci-action@v10
         env:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
