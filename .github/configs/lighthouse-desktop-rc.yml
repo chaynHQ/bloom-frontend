@@ -1,5 +1,4 @@
 ci:
   collect:
-    puppeteerScript: config/puppeteerLogin.js
     settings:
       emulatedFormFactor: desktop
