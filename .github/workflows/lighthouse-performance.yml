@@ -1,8 +1,6 @@
 name: Lighthouse Performance
 
 on:
-  pull_request:
-    branches: [develop]
   push:
     branches: [develop]
 
@@ -47,11 +45,6 @@ jobs:
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
-      - name: Display report
-        uses: jackywithawhitedog/lighthouse-viewer-action@v1
-        with:
-          resultsPath: ${{ steps.lighthouse.outputs.resultsPath }}
-          lighthouseOutcome: ${{ steps.lighthouse.outcome }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -82,11 +75,6 @@ jobs:
           budgetPath: ./lighthouse_budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
-      - name: Display report
-        uses: jackywithawhitedog/lighthouse-viewer-action@v1
-        with:
-          resultsPath: ${{ steps.lighthouse.outputs.resultsPath }}
-          lighthouseOutcome: ${{ steps.lighthouse.outcome }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
