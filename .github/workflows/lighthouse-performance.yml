@@ -29,6 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Audit URLs using Lighthouse
+        id: lighthouseDesktop
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v10
         env:
@@ -55,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: desktop-lighthouse-report
-          path: ${{ steps.lighthouse.outputs.resultsPath }}
+          path: ${{ steps.lighthouseDesktop.outputs.resultsPath }}
 
   lighthouse-mobile:
     runs-on: ubuntu-latest
@@ -63,6 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Audit URLs using Lighthouse
+        id: lighthouseMobile
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v10
         env:
@@ -89,4 +91,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mobile-lighthouse-report
-          path: ${{ steps.lighthouse.outputs.resultsPath }}
+          path: ${{ steps.lighthouseMobile.outputs.resultsPath }}
