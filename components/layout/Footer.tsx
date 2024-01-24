@@ -18,32 +18,6 @@ import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
-const footerContainerStyle = {
-  backgroundColor: 'common.white',
-  paddingY: { xs: 6, md: 10 },
-} as const;
-
-const fundingContainerStyle = {
-  paddingTop: { xs: 4, md: 6 },
-  paddingBottom: { xs: 5, md: 7 },
-  backgroundColor: 'primary.dark',
-  color: 'common.white',
-} as const;
-
-const fundingLogosContainerStyle = {
-  ...rowStyle,
-  justifyContent: 'flex-start',
-  mt: 2.5,
-  gap: 4,
-} as const;
-
-const logoContainerStyle = {
-  display: 'block',
-  width: 140,
-  height: 48,
-  marginBottom: 1.5,
-} as const;
-
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
   if (totalPartners === 1) {
@@ -62,6 +36,23 @@ function getDescriptionContainerStyle(totalPartners: number) {
   };
 }
 
+const footerContainerStyle = {
+  backgroundColor: 'common.white',
+  paddingY: { xs: 6, md: 10 },
+} as const;
+
+const footerContentRowStyle = {
+  ...rowStyle,
+  gap: { xs: 6, lg: 8 },
+} as const;
+
+const logoContainerStyle = {
+  display: 'block',
+  width: 140,
+  height: 48,
+  marginBottom: 1.5,
+} as const;
+
 const partnersContainerStyle = {
   flex: 1,
   display: 'flex',
@@ -76,6 +67,20 @@ const socialsContainerStyle = {
   justifyContent: 'flex-start',
   marginTop: 1.25,
   marginLeft: -1,
+} as const;
+
+const fundingContainerStyle = {
+  paddingTop: { xs: 4, md: 6 },
+  paddingBottom: { xs: 5, md: 7 },
+  backgroundColor: 'primary.dark',
+  color: 'common.white',
+} as const;
+
+const fundingLogosContainerStyle = {
+  ...rowStyle,
+  justifyContent: 'flex-start',
+  mt: 2.5,
+  gap: 4,
 } as const;
 
 const Footer = () => {
@@ -118,20 +123,27 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerName);
     }
 
+    const referralPartner = window.localStorage.getItem('referralPartner');
+
+    if (referralPartner) {
+      addUniquePartner(partnersList, referralPartner);
+    }
+
     setPartners(partnersList);
   }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
 
   return (
     <>
       <Container sx={footerContainerStyle}>
-        <Box sx={{ width: '100%', mb: 3 }}>
+        <Box width="100%" mb={3}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} width={140} height={60} />
         </Box>
-        <Box sx={{ ...rowStyle, gap: { xs: 6, lg: 8 } }}>
+        <Box sx={footerContentRowStyle}>
           <Box sx={getDescriptionContainerStyle(partners.length)}>
             <Typography>{tS('footer.chaynDescription')}</Typography>
             <Link
-              sx={{ display: 'block', mt: 2 }}
+              display="block"
+              mt={2}
               href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
             >
               {tS('footer.policies')}
