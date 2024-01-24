@@ -4,8 +4,8 @@
     "leaveSiteButton": "Salir de este sitio",
     "footer": {
       "fundedByTitle": "Funded by",
-      "chaynDescription": "Bloom es traído por Chayn, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
-      "chaynLine1": "Construído por CHAYN CIO.",
+      "chaynDescription": "Bloom es traído por <link>Chayn</link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
+      "chaynLine1": "Construído por <bold>CHAYN</bold> CIO.",
       "chaynLine2": "Número de Caridad del RU: 1196098",
       "bumbleLine1": "En asociación con",
       "bumbleLine2": "BUMBLE HOLDING LTD",

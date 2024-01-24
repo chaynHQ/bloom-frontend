@@ -140,11 +140,20 @@ const Footer = () => {
         </Box>
         <Box sx={footerContentRowStyle}>
           <Box sx={getDescriptionContainerStyle(partners.length)}>
-            <Typography>{tS('footer.chaynDescription')}</Typography>
+            <Typography>
+              {tS.rich('footer.chaynDescription', {
+                link: (content) => (
+                  <Link href="https://www.chayn.co/" target="_blank" fontWeight={600}>
+                    {content}
+                  </Link>
+                ),
+              })}
+            </Typography>
             <Link
               display="block"
               mt={2}
               href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
+              target="_blank"
             >
               {tS('footer.policies')}
             </Link>
@@ -156,7 +165,12 @@ const Footer = () => {
 
               return (
                 <Box key={`${partner.name}_footer`}>
-                  <Link href={partner.website} sx={logoContainerStyle} position="relative">
+                  <Link
+                    href={partner.website}
+                    sx={logoContainerStyle}
+                    position="relative"
+                    target="_blank"
+                  >
                     <Image
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
@@ -166,7 +180,9 @@ const Footer = () => {
                     />
                   </Link>
                   <Typography variant="body2" component="p">
-                    {tS.rich(partner.footerLine1)}
+                    {tS.rich(partner.footerLine1, {
+                      bold: (chunks) => <b>{chunks}</b>,
+                    })}
                   </Typography>
                   <Typography variant="body2" component="p">
                     {tS(partner.footerLine2)}
@@ -174,8 +190,9 @@ const Footer = () => {
                   <Box sx={socialsContainerStyle}>
                     {partner.facebook && (
                       <IconButton
-                        aria-label="Facebook"
                         href={partner.facebook}
+                        aria-label="Facebook"
+                        target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
                             ...eventUserData,
@@ -188,8 +205,9 @@ const Footer = () => {
                     )}
                     {partner.instagram && (
                       <IconButton
-                        aria-label="Instagram"
                         href={partner.instagram}
+                        aria-label="Instagram"
+                        target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
                             ...eventUserData,
@@ -202,8 +220,9 @@ const Footer = () => {
                     )}
                     {partner.twitter && (
                       <IconButton
-                        aria-label="Twitter"
                         href={partner.twitter}
+                        aria-label="Twitter"
+                        target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
                         }
@@ -213,8 +232,9 @@ const Footer = () => {
                     )}
                     {partner.youtube && (
                       <IconButton
-                        aria-label="Youtube"
                         href={partner.youtube}
+                        aria-label="Youtube"
+                        target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
                         }
@@ -224,8 +244,9 @@ const Footer = () => {
                     )}
                     {partner.tiktok && (
                       <IconButton
-                        aria-label="Tiktok"
                         href={partner.tiktok}
+                        aria-label="Tiktok"
+                        target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
                             ...eventUserData,

@@ -128,9 +128,6 @@ function MyApp(props: MyAppProps) {
         messages={pageProps.messages}
         locale={router.locale}
         timeZone="Europe/London"
-        defaultTranslationValues={{
-          bold: (chunks) => <b>{chunks}</b>,
-        }}
       >
         <Head>
           <title>Bloom</title>
