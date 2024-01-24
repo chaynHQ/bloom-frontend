@@ -25,15 +25,17 @@ function getDescriptionContainerStyle(totalPartners: number) {
       maxWidth: 340,
       minWidth: 280,
     };
+  } else if (totalPartners === 2 || totalPartners === 3) {
+    // 2-3 partners to display, use full width for all small-mid screens
+    return {
+      maxWidth: { sm: '80%', [totalPartners === 2 ? 'md' : 'lg']: 340 },
+      minWidth: { [totalPartners === 2 ? 'md' : 'lg']: 280 },
+      marginRight: { sm: '20%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
+    };
+  } else {
+    // 4+ partners to display, use full width for all screen sizes
+    return { maxWidth: { sm: '80%' }, marginRight: { sm: '20%' } };
   }
-  if (totalPartners > 3) {
-    return { maxWidth: { sm: '78%' }, marginRight: { sm: '22%' } };
-  }
-  return {
-    maxWidth: { sm: '78%', [totalPartners === 2 ? 'md' : 'lg']: 340 },
-    minWidth: { [totalPartners === 2 ? 'md' : 'lg']: 280 },
-    marginRight: { sm: '22%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
-  };
 }
 
 const footerContainerStyle = {
