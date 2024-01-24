@@ -269,13 +269,17 @@ const Footer = () => {
           {tS('footer.fundedByTitle')}
         </Typography>
         <Box sx={fundingLogosContainerStyle}>
-          <Image alt={tS('alt.comicReliefLogo')} src={comicReliefLogo} width={88} height={64} />
-          <Image
-            alt={tS('alt.communityFundLogo')}
-            src={communityFundLogo}
-            width={170}
-            height={50}
-          />
+          <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
+            <Image alt={tS('alt.comicReliefLogo')} src={comicReliefLogo} width={88} height={64} />
+          </Link>
+          <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
+            <Image
+              alt={tS('alt.communityFundLogo')}
+              src={communityFundLogo}
+              width={170}
+              height={50}
+            />
+          </Link>
         </Box>
       </Container>
     </>
