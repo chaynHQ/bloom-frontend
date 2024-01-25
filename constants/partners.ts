@@ -3,9 +3,8 @@ import badooLogo from '../public/badoo_logo.svg';
 import bloomBadooLogo from '../public/bloom_badoo_logo.svg';
 import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
 import bloomFruitzLogo from '../public/bloom_fruitz_logo.svg';
-
-import bloomLogo from '../public/bloom_logo.svg';
 import bumbleLogo from '../public/bumble_logo.svg';
+import chaynLogo from '../public/chayn_logo.png';
 import fruitzLogo from '../public/fruitz_logo.svg';
 import illustrationBloomHeadPink from '../public/illustration_bloom_head_pink.svg';
 import illustrationBloomHeadPurple from '../public/illustration_bloom_head_purple.svg';
@@ -30,12 +29,12 @@ export interface PartnerContent {
 }
 
 export const publicContent: PartnerContent = {
-  name: 'Bloom',
-  logo: bloomLogo,
-  logoAlt: 'alt.bloomLogo',
+  name: 'Chayn',
+  logo: chaynLogo,
+  logoAlt: 'alt.chaynLogo',
   website: 'https://chayn.co',
-  footerLine1: 'footer.bloomLine1',
-  footerLine2: 'footer.bloomLine2',
+  footerLine1: 'footer.chaynLine1',
+  footerLine2: 'footer.chaynLine2',
   facebook: 'https://www.facebook.com/chayn/',
   twitter: 'https://twitter.com/ChaynHQ',
   instagram: 'https://www.instagram.com/chaynhq',

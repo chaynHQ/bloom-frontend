@@ -3,9 +3,10 @@
     "bloom": "Bloom",
     "leaveSiteButton": "Seite verlassen",
     "footer": {
-      "chaynDescription": "Bloom wird Dir präsentiert von Chayn, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird und die für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
-      "bloomLine1": "Entwickelt von CHAYN CIO.",
-      "bloomLine2": "UK Charity Nummer: 1196098",
+      "fundedByTitle": "Finanziert von",
+      "chaynDescription": "Bloom wird Dir präsentiert von <link>Chayn</link>, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird und die für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
+      "chaynLine1": "Entwickelt von <bold>CHAYN</bold> CIO.",
+      "chaynLine2": "UK Charity Nummer: 1196098",
       "bumbleLine1": "In Kooperation mit",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "In Kooperation mit",
@@ -41,11 +42,14 @@
       "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },
     "alt": {
+      "chaynLogo": "Chayn Logo",
       "bloomLogo": "Bloom Logo",
       "bumbleLogo": "Bumble Logo",
       "bloomBumbleLogo": "Bloom in Kooperation mit Bumble Logo",
       "badooLogo": "Badoo Logo",
       "bloomBadooLogo": "Bloom in Kooperation mit Badoo Logo",
+      "comicReliefLogo": "Comic Relief Logo",
+      "communityFundLogo": "Community Fund Logo",
       "welcomeToBloom": "Willkommen bei Bloom",
       "tiktokLogo": "Tiktok Logo",
       "bloomHead": "Illustration des Gesichts und der Schultern einer Person, mit großen Blättern und blühenden Blumen über ihnen",

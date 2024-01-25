@@ -3,9 +3,10 @@
     "bloom": "Bloom",
     "leaveSiteButton": "Site ko chodiye",
     "footer": {
-      "chaynDescription": "Bloom aapke liye Chayn dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
-      "bloomLine1": "CHAYN CIO. se banaya gaya",
-      "bloomLine2": "UK Charity Number: 1196098",
+      "fundedByTitle": "Vittiya Poshit Dvara",
+      "chaynDescription": "Bloom aapke liye <link>Chayn</link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
+      "chaynLine1": "<bold>CHAYN</bold> CIO. se banaya gaya",
+      "chaynLine2": "UK Charity Number: 1196098",
       "bumbleLine1": "Partnership mein",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "Partnership mein",
@@ -41,11 +42,14 @@
       "unauthenticatedRedirectButton": "Welcome page par vapis jaiye"
     },
     "alt": {
+      "chaynLogo": "Chayn logo",
       "bloomLogo": "Bloom logo",
       "bumbleLogo": "Bumble logo",
       "bloomBumbleLogo": "Bloom ki partnership Badoo logo ke saath",
       "badooLogo": "Badoo logo",
       "bloomBadooLogo": "Bloom ki partnership Badoo logo ke saath",
+      "comicReliefLogo": "Comic Relief logo",
+      "communityFundLogo": "Community Fund logo",
       "welcomeToBloom": "Bloom pe swagat hai",
       "tiktokLogo": "Tiktok logo",
       "bloomHead": "ek vyakti ke chehre aur kandho ka chitra hai, jiske upar bade patte aur fool khile hue hain",
