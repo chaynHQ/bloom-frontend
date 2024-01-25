@@ -69,7 +69,7 @@ export default function UserMenu() {
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
 
-    // router.push('/auth/login');
+    router.push('/auth/login');
   };
 
   return (

@@ -71,18 +71,6 @@ const LoginForm = () => {
           logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
           logEvent(GET_LOGIN_USER_SUCCESS, eventUserData);
 
-          // Checking if the query type is a string to keep typescript happy
-          // because a query value can be an array
-          const returnUrl =
-            typeof router.query.return_url === 'string' ? router.query.return_url : null;
-
-          if (userResponse.data.partnerAdmin?.id) {
-            await router.push('/partner-admin/create-access-code');
-          } else if (returnUrl) {
-            router.push(returnUrl);
-          } else {
-            await router.push('/courses');
-          }
           dispatch(setUserLoading(false));
           setLoading(false);
         }
