@@ -270,7 +270,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
               {weekString} - {subtitle}
             </Typography>
           </Header>
-          <Box sx={containerStyle}>
+          <Container sx={containerStyle}>
             <Box sx={cardColumnStyle}>
               {video && (
                 <>
@@ -370,7 +370,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
                 <SessionCompleteButton storyId={storyId} eventData={eventData} />
               )}
             </Box>
-          </Box>
+          </Container>
         </Box>
       )}
     </Box>

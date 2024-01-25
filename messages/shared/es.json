@@ -3,9 +3,10 @@
     "bloom": "Bloom",
     "leaveSiteButton": "Salir de este sitio",
     "footer": {
-      "chaynDescription": "Bloom es traído por Chayn, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
-      "bloomLine1": "Construído por CHAYN CIO.",
-      "bloomLine2": "Número de Caridad del RU: 1196098",
+      "fundedByTitle": "Financiado por",
+      "chaynDescription": "Bloom es traído por <link>Chayn</link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
+      "chaynLine1": "Construído por <bold>CHAYN</bold> CIO.",
+      "chaynLine2": "Número de Caridad del RU: 1196098",
       "bumbleLine1": "En asociación con",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "En asociación con",
@@ -39,11 +40,14 @@
       "unauthenticatedRedirectButton": "Regresar a la página de inicio"
     },
     "alt": {
+      "chaynLogo": "Logo de Chayn",
       "bloomLogo": "Logo de Bloom",
       "bumbleLogo": "Logo de Bumble",
       "bloomBumbleLogo": "Logo de Bloom para Bumble",
       "badooLogo": "Logo de Badoo",
       "bloomBadooLogo": "Logo de Bloom para Badoo",
+      "comicReliefLogo": "Logo de Comic Relief",
+      "communityFundLogo": "Logo de Community Fund",
       "welcomeToBloom": "Te damos la bienvenida a Bloom",
       "tiktokLogo": "Logo de Tiktok",
       "bloomHead": "Ilustración de la cara y hombros de una persona, con hojas grandes y flores floreciendo arriba de éstas",
