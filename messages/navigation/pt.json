@@ -18,7 +18,7 @@
     "applyCode": "Aplicar um código",
     "account": "Conta",
     "secondaryNavigationMenu": "Secondary navigation menu",
-    "notes": "Notes",
+    "notes": "Notas",
     "alt": {
       "therapyIcon": "Uma ilustração de uma cabeça com flor",
       "courseIcon": "Uma ilustração de um ícone de jogo, um ponto de triângulo à direita. Na frente há um pequeno sol.",
@@ -28,7 +28,7 @@
       "groundingIcon": "A twig with small pink flowers."
     },
     "chat": "Chat",
-    "grounding": "Grounding",
-    "activities": "Activities"
+    "grounding": "Aterramento",
+    "activities": "Atividades"
   }
 }
