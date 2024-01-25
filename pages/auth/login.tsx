@@ -77,8 +77,8 @@ const Login: NextPage = () => {
   const allPartnersContent = getAllPartnersContent();
 
   useEffect(() => {
-    if (!userId) return;
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
+    if (!userId) return;
     // Checking if the query type is a string to keep typescript happy
     // because a query value can be an array
     const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
