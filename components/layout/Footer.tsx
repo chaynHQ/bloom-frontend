@@ -104,7 +104,7 @@ const Footer = () => {
 
   useEffect(() => {
     setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
-    let partnersList: PartnerContent[] = [getPartnerContent('public')];
+    let partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
 
     if (partnerAdmin && partnerAdmin.partner) {
       addUniquePartner(partnersList, partnerAdmin.partner.name);
