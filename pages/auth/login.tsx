@@ -53,7 +53,7 @@ const imageContainerStyle = {
   marginTop: { xs: 0, md: 2 },
 } as const;
 
-const Login: NextPage = () => {
+const Login: NextPage = async () => {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const theme = useTheme();
@@ -78,16 +78,21 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
-    if (userToken && userId) {
-      if (partnerAdmin) {
-        router.push('/partner-admin/create-access-code');
-      } else {
-        router.push('/courses');
-      }
+    if (!userId) return;
+    // Checking if the query type is a string to keep typescript happy
+    // because a query value can be an array
+    const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
+
+    if (!!partnerAdmin?.id) {
+      router.push('/partner-admin/create-access-code');
+    } else if (!!returnUrl) {
+      router.push(returnUrl);
+    } else {
+      router.push('/courses');
     }
   });
 
-  const ExtraContent = () => {
+  const ExtraContent = async () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
