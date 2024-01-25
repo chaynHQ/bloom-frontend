@@ -53,7 +53,7 @@ const imageContainerStyle = {
   marginTop: { xs: 0, md: 2 },
 } as const;
 
-const Login: NextPage = async () => {
+const Login: NextPage = () => {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const theme = useTheme();
@@ -92,7 +92,7 @@ const Login: NextPage = async () => {
     }
   });
 
-  const ExtraContent = async () => {
+  const ExtraContent = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
