@@ -27,7 +27,7 @@ const Partnership: NextPage<Props> = ({ story }) => {
   }
 
   const partnerName = story.slug;
-  const partnerContent: PartnerContent = getPartnerContent(partnerName);
+  const partnerContent = getPartnerContent(partnerName) as PartnerContent;
 
   return (
     <Box>
