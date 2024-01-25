@@ -79,7 +79,11 @@ const Login: NextPage = () => {
   useEffect(() => {
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
     if (userToken && userId) {
-      router.push('/courses');
+      if (partnerAdmin) {
+        router.push('/partner-admin/create-access-code');
+      } else {
+        router.push('/courses');
+      }
     }
   });
 
