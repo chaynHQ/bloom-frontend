@@ -16,7 +16,7 @@ import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
 } from '../../constants/events';
-import { getPartnerContent } from '../../constants/partners';
+import { PartnerContent, getPartnerContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -58,7 +58,7 @@ export interface StoryblokWelcomePageProps {
 const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const { _uid, _editable, storySlug, title, introduction, header_image, page_sections } = props;
 
-  const partnerContent = getPartnerContent(storySlug);
+  const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
   const headerProps = {
     partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
