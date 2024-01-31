@@ -1,9 +1,7 @@
 describe('Initial exploration', () => {
   it('should be able to explore all pages', () => {
     cy.visit('/');
-    cy.get('p', { timeout: 8000 }).contains(
-      'Learn and heal from trauma in a private, supportive space.',
-    );
+    cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
     cy.get(`[qa-id=secondary-nav-chat-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
