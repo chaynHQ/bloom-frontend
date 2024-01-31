@@ -64,7 +64,11 @@ const Header = (props: HeaderProps) => {
   const { title, introduction, imageAlt, translatedImageAlt, imageSrc, children, cta } = props;
 
   const tS = useTranslations('Shared');
-  const imageAltText = translatedImageAlt ? translatedImageAlt : imageAlt ? tS(imageAlt) : '';
+  const imageAltText = translatedImageAlt
+    ? translatedImageAlt
+    : imageAlt
+      ? tS(`alt.${imageAlt}`)
+      : '';
 
   return (
     <Container sx={headerContainerStyles}>
