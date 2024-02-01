@@ -89,7 +89,7 @@ export const fruitzContent: PartnerContent = {
 
 export const getPartnerContent = (partnerName: string) => {
   const partner = partnerName.toLowerCase();
-  if (partner === 'public') return bumbleContent;
+  if (partner === 'public') return publicContent;
   if (partner === 'bumble') return bumbleContent;
   if (partner === 'badoo') return badooContent;
   if (partner === 'fruitz') return fruitzContent;
