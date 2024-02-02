@@ -143,6 +143,19 @@ Cypress.Commands.add('cleanUpTestState', () => {
   cy.wait(1000);
 });
 
+Cypress.Commands.add('visitGermanPage', (url) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'de-DE' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['de'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['de'] });
+    },
+    headers: {
+      'Accept-Language': 'de',
+    },
+  });
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
