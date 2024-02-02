@@ -34,5 +34,6 @@ declare namespace Cypress {
     logout(): Chainable<Element>;
     deleteAllCypressUsers(): Chainable<Element>;
     cleanUpTestState(): Chainable<Element>;
+    visitGermanPage(url: string): Chainable<Element>;
   }
 }
