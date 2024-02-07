@@ -83,9 +83,9 @@
       }
     },
     "disableServiceEmails": {
-      "title": "E-mails de serviço desativados",
-      "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, entre em contato com a equipe do Bloom.",
-      "error": "Ocorreu um erro ao desativar os e-mails de serviço. Tente novamente após atualizar esta página ou entre em contato com a equipe do Bloom."
+      "title": "E-mails do Bloom desativados",
+      "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, <link>entre em contato com a equipe do Bloom.</link>",
+      "error": "Ocorreu um erro ao desativar os e-mails do Bloom. Tente novamente após atualizar esta página ou <link>entre em contato com a equipe do Bloom.</link>"
     }
   }
 }

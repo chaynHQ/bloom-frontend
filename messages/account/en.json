@@ -83,9 +83,9 @@
       }
     },
     "disableServiceEmails": {
-      "title": "Service emails disabled",
-      "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please get in touch with the Bloom team.",
-      "error": "There was an error disabling service emails. Try again by refreshing this page, or get in touch with the Bloom team."
+      "title": "Bloom emails turned off",
+      "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please <link>get in touch with the Bloom team.</link>",
+      "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
     }
   }
 }

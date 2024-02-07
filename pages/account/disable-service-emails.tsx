@@ -2,8 +2,9 @@ import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { JSXElementConstructor, ReactElement, ReactNodeArray, useEffect, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
+import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -20,7 +21,9 @@ const DisableServiceEmails: NextPage = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const [error, setError] = useState<string | null>();
+  const [error, setError] = useState<
+    string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | null
+  >();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
 
   useEffect(() => {
@@ -29,14 +32,24 @@ const DisableServiceEmails: NextPage = () => {
         updateUser({ serviceEmailsPermission: false });
         logEvent(USER_DISABLED_SERVICE_EMAILS, eventUserData);
       } catch (error) {
-        setError(t('error'));
+        setError(
+          t.rich('error', {
+            link: (content) => (
+              <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
+            ),
+          }),
+        );
       }
     }
   }, []);
 
   const headerProps = {
     title: t('title'),
-    introduction: t('description'),
+    introduction: t.rich('description', {
+      link: (content) => (
+        <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
+      ),
+    }),
     imageSrc: illustrationPerson5Yellow,
     translatedImageAlt: t('imageAlt'),
   };
