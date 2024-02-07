@@ -90,7 +90,7 @@ const Login: NextPage = () => {
     } else {
       router.push('/courses');
     }
-  });
+  }, [userId, partnerAdmin?.id, router]);
 
   const ExtraContent = () => {
     return (

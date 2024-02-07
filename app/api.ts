@@ -52,7 +52,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   let result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // force reset token
-    const auth = getAuth()
+    const auth = getAuth();
     const token = await auth.currentUser?.getIdToken(true);
 
     if (token) {
@@ -97,6 +97,13 @@ export const api = createApi({
           body,
         };
       },
+    }),
+    updateUser: builder.mutation<GetUserResponse, Partial<User>>({
+      query: (body) => ({
+        url: `user`,
+        method: 'PATCH',
+        body: body,
+      }),
     }),
     deleteUser: builder.mutation<string, Partial<User>>({
       query() {
@@ -207,6 +214,7 @@ export const api = createApi({
 export const {
   useGetUserMutation,
   useAddUserMutation,
+  useUpdateUserMutation,
   useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,

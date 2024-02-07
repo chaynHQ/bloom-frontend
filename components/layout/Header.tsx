@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/legacy/image';
+import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
@@ -11,7 +12,11 @@ import ProgressStatus from '../common/ProgressStatus';
 
 export interface HeaderProps {
   title: string;
-  introduction: string | ISbRichtext;
+  introduction:
+    | string
+    | ISbRichtext
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | ReactNodeArray; // can be a string, storyblok rich text, or intl rich text
   imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -80,8 +85,15 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          {typeof introduction === 'string' ? (
-            <Typography>{introduction}</Typography>
+          {typeof introduction === 'string' || !introduction.hasOwnProperty('content') ? (
+            <Typography>
+              {
+                introduction as
+                  | string
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | ReactNodeArray
+              }
+            </Typography>
           ) : (
             render(introduction, RichTextOptions)
           )}
