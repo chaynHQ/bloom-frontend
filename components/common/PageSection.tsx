@@ -16,7 +16,7 @@ const PageSection = (props: PageSectionProps) => {
     ...(color && {
       backgroundColor: color,
       ...(color === STORYBLOK_COLORS.BLOOM_GRADIENT
-        ? { backgroundImage: theme.palette.bloomGradient }
+        ? { background: theme.palette.bloomGradient }
         : {}),
     }),
     ...(alignment && {

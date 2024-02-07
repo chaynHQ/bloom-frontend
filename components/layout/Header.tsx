@@ -31,6 +31,10 @@ const headerContainerStyles = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: '30px',
+  background: {
+    xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
+    md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
+  },
 };
 
 const ctaContainerStyle = {
