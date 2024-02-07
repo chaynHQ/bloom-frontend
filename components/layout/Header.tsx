@@ -29,9 +29,9 @@ export interface HeaderProps {
 
 const headerContainerStyle = {
   ...rowStyle,
-  alignItems: 'center',
+  alignItems: 'flex-start',
   minHeight: { xs: 220, lg: 360 },
-  paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
+  paddingBottom: { xs: '2.5rem !important', sm: '3rem !important' },
   paddingTop: { xs: '0', md: '5rem ' },
   gap: '30px',
   background: {
@@ -47,17 +47,18 @@ const ctaContainerStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 180, sm: 200, lg: 220 },
-  height: { xs: 180, sm: 200, lg: 220 },
+  width: { xs: 190, lg: 200 },
+  height: { xs: 190, lg: 200 },
   marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: 'auto', md: 0 },
+  marginRight: { xs: '1rem', md: '10%' },
+  marginTop: { sm: '5rem', md: '1.5rem' },
 } as const;
 
 const textContainerStyle = {
   ...columnStyle,
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
-  maxWidth: { xs: '100%', sm: '55%', md: '65%' },
+  maxWidth: { xs: '100%', sm: '55%', md: '48%' },
   pl: { xs: 3, sm: 0 },
   pr: { xs: 6, sm: 0 },
 } as const;
@@ -113,11 +114,11 @@ const Header = (props: HeaderProps) => {
         </IconButton>
         {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>
-          <Typography variant="h1" component="h1">
+          <Typography variant="h1" component="h1" marginBottom={{ md: '2.5rem' }}>
             {title}
           </Typography>
           {typeof introduction === 'string' || !introduction.hasOwnProperty('content') ? (
-            <Typography>
+            <Typography fontSize="1rem !important">
               {
                 introduction as
                   | string

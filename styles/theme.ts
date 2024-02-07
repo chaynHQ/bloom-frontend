@@ -44,7 +44,7 @@ let theme = createTheme({
       fontFamily: 'Montserrat, sans-serif',
       fontSize: '2.25rem',
       fontWeight: 500,
-      marginBottom: '1rem',
+      marginBottom: '1.75rem',
     },
     h2: {
       fontFamily: 'Montserrat, sans-serif',
