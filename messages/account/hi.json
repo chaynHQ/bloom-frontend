@@ -81,6 +81,11 @@
       "setAForm": {
         "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
       }
+    },
+    "disableServiceEmails": {
+      "title": "Bloom ke emails band kar diye gaye!",
+      "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.</link>",
+      "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
     }
   }
 }

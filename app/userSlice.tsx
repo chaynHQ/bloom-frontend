@@ -14,6 +14,7 @@ export interface User {
   email: string | null;
   partnerAccessCode: string | null;
   contactPermission: boolean;
+  serviceEmailsPermission: boolean;
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
@@ -31,6 +32,7 @@ export interface GetUserDto {
     updatedAt?: Date | null;
     firebaseUid?: string | null;
     contactPermission?: boolean;
+    serviceEmailsPermission?: boolean;
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
@@ -65,6 +67,7 @@ const initialState: User = {
   email: null,
   partnerAccessCode: null,
   contactPermission: false,
+  serviceEmailsPermission: true,
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
@@ -92,6 +95,11 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
+      const activeSubscriptions = getActiveSubscriptions(payload);
+
+      return Object.assign({}, state, payload.user, { activeSubscriptions });
+    });
+    builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
       const activeSubscriptions = getActiveSubscriptions(payload);
 
       return Object.assign({}, state, payload.user, { activeSubscriptions });

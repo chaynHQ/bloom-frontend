@@ -81,6 +81,11 @@
       "setAForm": {
         "hopesLabel": "What’s one thing that you’re hoping Bloom will help you to understand or do?"
       }
+    },
+    "disableServiceEmails": {
+      "title": "Bloom emails turned off",
+      "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please <link>get in touch with the Bloom team.</link>",
+      "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
     }
   }
 }

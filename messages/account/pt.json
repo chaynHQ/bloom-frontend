@@ -81,6 +81,11 @@
       "setAForm": {
         "hopesLabel": "O que você espera que o Bloom te ajude a entender ou fazer?"
       }
+    },
+    "disableServiceEmails": {
+      "title": "E-mails do Bloom desativados",
+      "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, <link>entre em contato com a equipe do Bloom.</link>",
+      "error": "Ocorreu um erro ao desativar os e-mails do Bloom. Tente novamente após atualizar esta página ou <link>entre em contato com a equipe do Bloom.</link>"
     }
   }
 }
