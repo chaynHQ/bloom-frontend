@@ -31,8 +31,8 @@ const headerContainerStyle = {
   ...rowStyle,
   alignItems: 'flex-start',
   minHeight: { xs: 220, lg: 360 },
-  paddingBottom: { xs: '2.5rem !important', sm: '3rem !important' },
-  paddingTop: { xs: '0', md: '5rem ' },
+  paddingBottom: { xs: '2.5rem !important', sm: '5rem !important' },
+  paddingTop: { xs: '0', md: '6.5rem ' },
   gap: '30px',
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
@@ -50,7 +50,7 @@ const imageContainerStyle = {
   width: { xs: 190, lg: 200 },
   height: { xs: 190, lg: 200 },
   marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: '1rem', md: '10%' },
+  marginRight: { xs: '1rem', md: '8%' },
   marginTop: { sm: '5rem', md: '1.5rem' },
 } as const;
 
