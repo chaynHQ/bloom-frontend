@@ -32,7 +32,7 @@ const headerContainerStyles = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: 1,
-  backgroundImage: theme.palette.bloomGradient,
+  background: theme.palette.bloomGradient,
 };
 
 const ctaContainerStyle = {

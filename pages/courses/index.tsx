@@ -12,7 +12,7 @@ import { FeatureFlag } from '../../config/featureFlag';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import illustrationPerson3Pink from '../../public/illustration_person3_pink.svg';
+import illustrationCourses from '../../public/illustration_courses.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -52,7 +52,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const headerProps = {
     title: t('title'),
     introduction: t('introduction'),
-    imageSrc: illustrationPerson3Pink,
+    imageSrc: illustrationCourses,
     imageAlt: 'alt.personSitting',
   };
 
