@@ -173,7 +173,6 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
       }
 
-      setLoading(false);
       if (
         errorMessage !== CREATE_USER_EMAIL_ALREADY_EXISTS &&
         errorMessage !== CREATE_USER_WEAK_PASSWORD &&
@@ -181,8 +180,13 @@ const RegisterForm = (props: RegisterFormProps) => {
       ) {
         logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
         (window as any).Rollbar?.error('User register create user error', error);
-        throw error;
+        setFormError(
+          t.rich('createUserError', {
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
       }
+      throw error;
     }
   };
 
@@ -195,11 +199,13 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
       await createUserRecord();
-      await router.push('/account/about-you');
       dispatch(setUserLoading(false));
       setLoading(false);
-    } catch {
+      await router.push('/account/about-you');
+    } catch (error) {
       // errors handled in each function
+      dispatch(setUserLoading(false));
+      setLoading(false);
     }
   };
 
