@@ -27,7 +27,7 @@ interface StoryblokCardProps {
   style: string;
   dropdown_button?: boolean;
   dropdown_content?: ISbRichtext;
-  card_link?: { url: string };
+  card_link?: { url: string; cached_url: string };
 }
 
 const cardActionsStyle = {
@@ -69,6 +69,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     dropdown_content,
     card_link,
   } = props;
+  console.log(card_link);
 
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
@@ -130,11 +131,11 @@ const StoryblokCard = (props: StoryblokCardProps) => {
       sx={cardStyle}
     >
       <Box sx={{ position: 'relative' }}>
-        {card_link?.url ? (
+        {card_link?.cached_url ? (
           <CardActionArea
             component={Link}
-            href={card_link.url}
-            aria-label={`${tS('navigateTo')} ${card_link.url}`}
+            href={card_link.cached_url}
+            aria-label={`${tS('navigateTo')} ${card_link.cached_url}`}
           >
             <CardMainContent />
           </CardActionArea>
