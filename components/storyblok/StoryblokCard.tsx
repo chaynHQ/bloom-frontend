@@ -69,7 +69,6 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     dropdown_content,
     card_link,
   } = props;
-  console.log(card_link);
 
   const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
