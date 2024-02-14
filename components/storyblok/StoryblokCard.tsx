@@ -1,5 +1,14 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Card, CardActions, CardContent, Collapse, IconButton, Typography } from '@mui/material';
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Collapse,
+  IconButton,
+  Link,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
@@ -18,12 +27,13 @@ interface StoryblokCardProps {
   style: string;
   dropdown_button?: boolean;
   dropdown_content?: ISbRichtext;
+  card_link?: { url: string };
 }
 
 const cardActionsStyle = {
   position: 'absolute',
   right: 1,
-  bottom: 0,
+  bottom: 3,
 } as const;
 
 const slimImageStyle = {
@@ -57,9 +67,11 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     style = 'default',
     dropdown_button = false,
     dropdown_content,
+    card_link,
   } = props;
 
   const t = useTranslations('Courses');
+  const tS = useTranslations('Shared');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -88,7 +100,6 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
     gap: 3,
     backgroundColor: background,
-    position: 'relative',
   } as const;
 
   const imageContainerStyle = {
@@ -102,18 +113,34 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     ...(style == 'slim' ? slimPadding : {}),
   } as const;
 
+  const CardMainContent = () => (
+    <CardContent sx={cardContentStyle}>
+      {image && image.filename && (
+        <Box sx={imageContainerStyle}>
+          <Image src={image.filename} alt={image.alt} layout="fill" className="image"></Image>
+        </Box>
+      )}
+      <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
+    </CardContent>
+  );
+
   return (
     <Card
       {...storyblokEditable({ _uid, _editable, image, content, alignment, background, style })}
       sx={cardStyle}
     >
-      <CardContent sx={cardContentStyle}>
-        {image && image.filename && (
-          <Box sx={imageContainerStyle}>
-            <Image src={image.filename} alt={image.alt} layout="fill" className="image"></Image>
-          </Box>
+      <Box sx={{ position: 'relative' }}>
+        {card_link?.url ? (
+          <CardActionArea
+            component={Link}
+            href={card_link.url}
+            aria-label={`${tS('navigateTo')} ${card_link.url}`}
+          >
+            <CardMainContent />
+          </CardActionArea>
+        ) : (
+          <CardMainContent />
         )}
-        <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
         {dropdown_button && (
           <CardActions sx={cardActionsStyle}>
             <IconButton
@@ -126,7 +153,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
             </IconButton>
           </CardActions>
         )}
-      </CardContent>
+      </Box>
       {dropdown_button && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent sx={collapseContentStyle}>
