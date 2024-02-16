@@ -40,11 +40,6 @@ const headerContainerStyle = {
   },
 };
 
-const ctaContainerStyle = {
-  ...columnStyle,
-  width: { xs: '100%', sm: 'auto' },
-} as const;
-
 const imageContainerStyle = {
   position: 'relative',
   width: { xs: 190, lg: 200 },
@@ -131,11 +126,11 @@ const Header = (props: HeaderProps) => {
           )}
         </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
+        {cta && <Box mt={4}>{cta}</Box>}
       </Box>
       <Box sx={imageContainerStyle}>
         <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
       </Box>
-      {cta && <Box sx={ctaContainerStyle}>{cta}</Box>}
     </Container>
   );
 };
