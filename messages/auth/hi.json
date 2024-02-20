@@ -13,7 +13,6 @@
     "register": {
       "title": "Account banaiye",
       "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in</loginLink>",
-      "moreInfo": "Aur jaankari hai <welcomeLink>Bloom kese kaam karta hai</welcomeLink>.",
       "partnershipsTitle": "Hamari partnerships",
       "partnershipsDescription": "Agar aap Bloom par hamare kisi partner se aa rahe hain, toh unke logo kar click kariye. "
     },

@@ -109,22 +109,7 @@ const Register: NextPage = () => {
         <Box sx={imageContainerStyle}>
           <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} layout="fill" />
         </Box>
-        {partnerContent ? (
-          // Show only the partner's welcome page link
-          <Typography mt="2rem !important">
-            {t.rich('register.moreInfo', {
-              welcomeLink: (children) => (
-                <Link
-                  href={`/welcome/${partnerContent.name.toLowerCase()}${
-                    codeParam && '?code=' + codeParam
-                  }`}
-                >
-                  {children}
-                </Link>
-              ),
-            })}
-          </Typography>
-        ) : (
+        {!partnerContent && (
           // Show the public bloom and all other partner's welcome page links
           <>
             <Card sx={publicCardStyle}>
