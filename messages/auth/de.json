@@ -13,7 +13,6 @@
     "register": {
       "title": "Konto anlegen",
       "loginRedirect": "Du hast bereits ein Konto? <loginLink>Login</loginLink>",
-      "moreInfo": "Mehr dazu <welcomeLink>wie Bloom funktioniert</welcomeLink>.",
       "partnershipsTitle": "Unsere Partnerschaften",
       "partnershipsDescription": "Wenn du über eine unserer Partnerorganisationen zu Bloom gekommen bist, klicke unten auf deren Logo. "
     },
