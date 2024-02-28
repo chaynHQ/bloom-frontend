@@ -26,6 +26,7 @@ export interface PartnerContent {
   instagram?: string;
   youtube?: string;
   tiktok?: string;
+  github?: string;
 }
 
 export const publicContent: PartnerContent = {
@@ -39,6 +40,7 @@ export const publicContent: PartnerContent = {
   twitter: 'https://twitter.com/ChaynHQ',
   instagram: 'https://www.instagram.com/chaynhq',
   youtube: 'https://www.youtube.com/channel/UC5_1Ci2SWVjmbeH8_USm-Bg',
+  github: 'https://github.com/chaynHQ',
 };
 
 export const bumbleContent: PartnerContent = {
