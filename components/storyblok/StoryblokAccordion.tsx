@@ -10,7 +10,7 @@ import {
 import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/legacy/image';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { ACCORDION_OPENED } from '../../constants/events';
+import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
@@ -53,6 +53,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       if (isExpanded) {
         logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle });
+        logEvent(generateAccordionEvent(accordionTitle), { accordionTitle: accordionTitle });
       }
     };
   return (
