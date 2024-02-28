@@ -98,6 +98,10 @@ const AboutYouDemographicForm = () => {
         genderOptionsSelected.push(matchedGenderOption.englishLabel);
       } else {
         genderFreeText.push(input.toLowerCase());
+
+        if (!genderOptionsSelected.includes('other')) {
+          genderOptionsSelected.push('other');
+        }
       }
     });
 
