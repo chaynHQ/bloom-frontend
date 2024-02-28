@@ -24,6 +24,7 @@ import {
   ABOUT_YOU_DEMO_REQUEST,
   ABOUT_YOU_DEMO_SUCCESS,
 } from '../../constants/events';
+import { genderOptions } from '../../constants/gender';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
@@ -51,6 +52,7 @@ const AboutYouDemographicForm = () => {
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [genderInput, setGenderInput] = useState<Array<string>>([]);
+  const [genderTextInput, setGenderTextInput] = useState<string>('');
   const [neurodivergentInput, setNeurodivergentInput] = useState<string>('');
   const [raceEthnNatn, setRaceEthnNatn] = useState<string>('');
   const [countryInput, setCountryInput] = useState<string>('');
@@ -84,6 +86,25 @@ const AboutYouDemographicForm = () => {
 
     logEvent(ABOUT_YOU_DEMO_REQUEST, eventUserData);
 
+    const genderOptionsSelected: string[] = [];
+    const genderFreeText: string[] = [];
+
+    genderInput.forEach((input) => {
+      const matchedGenderOption = genderOptions.find(
+        (option) => t(`genderOptions.${option.translationLabel}`) === input,
+      );
+
+      if (matchedGenderOption) {
+        genderOptionsSelected.push(matchedGenderOption.englishLabel);
+      } else {
+        genderFreeText.push(input.toLowerCase());
+
+        if (!genderOptionsSelected.includes('other')) {
+          genderOptionsSelected.push('other');
+        }
+      }
+    });
+
     const formData = {
       date: new Date().toISOString(),
       user_id: userId && hashString(userId),
@@ -92,10 +113,13 @@ const AboutYouDemographicForm = () => {
         .map((gender) => gender.toLowerCase())
         .sort()
         .join(','),
+      gender_options: genderOptionsSelected.sort().join(','),
+      gender_free_text: genderFreeText.sort().join(','),
       neurodivergent: neurodivergentInput,
       race_ethn_natn: raceEthnNatn,
       current_country: countryInput,
       age: ageInput,
+      language: router.locale as LANGUAGES,
       ...eventUserData, // add user data
     };
 
@@ -129,8 +153,6 @@ const AboutYouDemographicForm = () => {
     }
   };
 
-  const genderOptions = t('genderOptions').split(';');
-
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
@@ -138,9 +160,21 @@ const AboutYouDemographicForm = () => {
           id="gender"
           multiple
           value={genderInput}
-          options={genderOptions.map((option) => option)}
+          inputValue={genderTextInput}
+          options={genderOptions.map((option) => t(`genderOptions.${option.translationLabel}`))}
           freeSolo
-          onChange={(e, value) => setGenderInput(value)}
+          onChange={(e, value) => {
+            setGenderInput(value);
+          }}
+          onInputChange={(e, value) => {
+            setGenderTextInput(value);
+          }}
+          onBlur={(e) => {
+            if (genderTextInput) {
+              setGenderInput([...genderInput, genderTextInput]);
+              setGenderTextInput('');
+            }
+          }}
           renderTags={(value: readonly string[]) =>
             value.map((option: string, index: number) => (
               <Chip

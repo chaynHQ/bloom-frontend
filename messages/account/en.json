@@ -38,7 +38,17 @@
       "demographicForm": {
         "genderLabel": "Please select one or more options that reflect your gender identity",
         "genderHelpText": "We are asking this to better understand how our users identify, with a view to designing even more inclusive and gender-affirming resources. You can select 'Prefer not to answer'.",
-        "genderOptions": "Woman;Man;Non Binary;Transgender;Intersex;Two-spirit;Gender non conforming;Other (please state);Prefer not to answer",
+        "genderOptions": {
+          "woman": "Woman",
+          "man": "Man",
+          "nonBinary": "Non Binary",
+          "transgender": "Transgender",
+          "intersex": "Intersex",
+          "twoSpirit": "Two-spirit",
+          "genderNonConforming": "Gender non conforming",
+          "other": "Other (please state)",
+          "preferNotToAnswer": "Prefer not to answer"
+        },
         "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
         "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
         "neurodivergentLabels": {

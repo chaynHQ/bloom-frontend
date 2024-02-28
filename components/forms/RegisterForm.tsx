@@ -135,7 +135,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         if (token) {
           await dispatch(setUserToken(token));
           setLoading(false);
-          router.push('/courses');
+          return userResponse.data.user;
         }
       } catch (err) {
         setFormError(
@@ -198,10 +198,13 @@ const RegisterForm = (props: RegisterFormProps) => {
     try {
       partnerName && accessCodeRequired && (await validateAccessCode());
       dispatch(setUserLoading(true));
-      await createUserRecord();
+      const user = await createUserRecord();
       dispatch(setUserLoading(false));
       setLoading(false);
-      await router.push('/account/about-you');
+
+      if (user) {
+        await router.push('/account/about-you');
+      }
     } catch (error) {
       // errors handled in each function
       dispatch(setUserLoading(false));

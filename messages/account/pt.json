@@ -38,7 +38,17 @@
       "demographicForm": {
         "genderLabel": "Por favor, selecione uma ou mais opções que reflitam sua identidade de gênero",
         "genderHelpText": "Estamos fazendo essa pergunta para entender melhor como nossos usuários se identificam, com o objetivo de projetar recursos ainda mais inclusivos e afirmativos em relação ao gênero. Você pode selecionar 'Prefiro não responder'.",
-        "genderOptions": "Mulher;Homem;Não-binário;Transgênero;Intersexo;Dois-espíritos ou espíritos duplos;Não conformidade de gênero;Outro (por favor, especifique);Prefiro não responder",
+        "genderOptions": {
+          "woman": "Mulher",
+          "man": "Homem",
+          "nonBinary": "Não-binário",
+          "transgender": "Transgênero",
+          "intersex": "Intersexo",
+          "twoSpirit": "Dois-espíritos ou espíritos duplos",
+          "genderNonConforming": "Não conformidade de gênero",
+          "other": "Outro (por favor, especifique)",
+          "preferNotToAnswer": "Prefiro não responder"
+        },
         "neurodivergentLabel": "Você se identifica como uma pessoa neurodivergente?",
         "neurodivergentHelpText": "Construímos nossos serviços para que sejam inclusivos. Então, receber avaliações e comentários de pessoas neurodivergentes nos ajuda. ",
         "neurodivergentLabels": {

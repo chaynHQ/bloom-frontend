@@ -38,7 +38,17 @@
       "demographicForm": {
         "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
         "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
-        "genderOptions": "Mahila;Purush;Gaer Avidhari (Non Binary);Kinnar;Intersex;Do-bhawan;Anya (kripya darshaiye);Likhiye;Batana pasand nahi karte",
+        "genderOptions": {
+          "woman": "Mahila",
+          "man": "Purush",
+          "nonBinary": "Gaer Avidhari (Non Binary)",
+          "transgender": "Kinnar",
+          "intersex": "Intersex",
+          "twoSpirit": "Do-bhawan",
+          "genderNonConforming": "Non-conformité au genre",
+          "other": "Autre (à préciser)",
+          "preferNotToAnswer": "Batana pasand nahi karte"
+        },
         "neurodivergentLabel": "Kya aap apne aapko neuro-divergent ke roop mein describe karenge?",
         "neurodivergentHelpText": "Hum apni sevaon ko ese design karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
         "neurodivergentLabels": {
