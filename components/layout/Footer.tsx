@@ -1,4 +1,5 @@
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import YoutubeIcon from '@mui/icons-material/YouTube';
@@ -14,6 +15,7 @@ import bloomLogo from '../../public/bloom_logo.svg';
 import comicReliefLogo from '../../public/comic_relief_logo.png';
 import communityFundLogo from '../../public/community_fund_logo.svg';
 import tiktokLogo from '../../public/tiktok.svg';
+
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -257,6 +259,21 @@ const Footer = () => {
                         }
                       >
                         <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} />
+                      </IconButton>
+                    )}
+                    {partner.github && (
+                      <IconButton
+                        href={partner.github}
+                        aria-label="Github"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, {
+                            ...eventUserData,
+                            social_account: 'Github',
+                          })
+                        }
+                      >
+                        <GitHubIcon />
                       </IconButton>
                     )}
                   </Box>
