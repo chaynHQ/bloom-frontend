@@ -80,8 +80,13 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
         return false;
 
       child = child as React.ReactElement;
+      console.log(child);
+      console.log(child.type);
 
       const elementType = typeof child.type === 'string' ? child.type : child.type.name;
+      console.log('elementType', elementType);
+      console.log('iselementType', elementType === 'Image');
+
       return elementType === 'Image';
     });
 
