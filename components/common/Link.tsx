@@ -1,3 +1,4 @@
+import OpenInNew from '@mui/icons-material/OpenInNew';
 import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
@@ -74,11 +75,30 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
     typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
 
   if (isExternal) {
+    const hasImageElements = React.Children.toArray(other.children).find((child) => {
+      if (typeof child === 'string' || typeof child === 'number' || Array.isArray(child))
+        return false;
+
+      child = child as React.ReactElement;
+
+      return !!child.props.src && !!child.props.alt;
+    });
+
     if (unstyled) {
-      return <Anchor className={className} href={href} ref={ref} {...other} />;
+      return (
+        <Anchor className={className} href={href} ref={ref} {...other}>
+          {!hasImageElements && <OpenInNew fontSize="small" sx={{ mb: -0.5, mr: 0.3 }} />}
+          {other.children}
+        </Anchor>
+      );
     }
 
-    return <MuiLink className={className} href={href} ref={ref} {...other} />;
+    return (
+      <MuiLink className={className} href={href} ref={ref} {...other}>
+        {!hasImageElements && <OpenInNew fontSize="small" sx={{ mb: -0.5, mr: 0.3 }} />}
+        {other.children}
+      </MuiLink>
+    );
   }
 
   if (unstyled) {

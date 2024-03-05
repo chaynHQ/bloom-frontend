@@ -138,7 +138,7 @@ const Footer = () => {
 
   return (
     <>
-      <Container sx={footerContainerStyle}>
+      <Container sx={footerContainerStyle} component="footer">
         <Box width="100%" mb={3}>
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} width={140} height={60} />
         </Box>
