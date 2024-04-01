@@ -61,13 +61,15 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   }, []);
 
   useEffect(() => {
+    const referralPartner = window.localStorage.getItem('referralPartner');
+
     if (partnerAdmin && partnerAdmin.partner) {
       const partnerName = partnerAdmin.partner.name;
       const coursesWithAccess = stories.filter((course) =>
         course.content.included_for_partners.includes(partnerName),
       );
       setLoadedCourses(coursesWithAccess);
-    } else if (partnerAccesses.length > 0) {
+    } else if (partnerAccesses && partnerAccesses.length > 0) {
       let userPartners: Array<string> = [];
 
       partnerAccesses.map((partnerAccess) => {
@@ -78,6 +80,13 @@ const CourseList: NextPage<Props> = ({ stories }) => {
 
       const coursesWithAccess = stories.filter((story) =>
         userPartners.some((partner) => story.content.included_for_partners.includes(partner)),
+      );
+      setLoadedCourses(coursesWithAccess);
+    } else if (referralPartner) {
+      const coursesWithAccess = stories.filter((story) =>
+        story.content.included_for_partners.includes(
+          referralPartner.charAt(0).toUpperCase() + referralPartner.slice(1),
+        ),
       );
       setLoadedCourses(coursesWithAccess);
     } else {
@@ -114,6 +123,45 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           imageSrc={headerProps.imageSrc}
           imageAlt={headerProps.imageAlt}
         />
+        <Container sx={containerStyle}>
+          {loadedCourses === null ? (
+            <LoadingContainer />
+          ) : loadedCourses.length === 0 ? (
+            // Leaving blank instead of saying no courses are available
+            <Box></Box>
+          ) : (
+            <Box sx={rowStyle}>
+              <Box sx={cardColumnStyle}>
+                {loadedCourses?.map((course, index) => {
+                  if (index % 2 === 1) return;
+                  return (
+                    <CourseCard
+                      key={course.id}
+                      clickable={false}
+                      course={course}
+                      courseProgress={null}
+                      liveCourseAccess={false}
+                    />
+                  );
+                })}
+              </Box>
+              <Box sx={cardColumnStyle}>
+                {loadedCourses?.map((course, index) => {
+                  if (index % 2 === 0) return;
+                  return (
+                    <CourseCard
+                      key={course.id}
+                      clickable={false}
+                      course={course}
+                      courseProgress={null}
+                      liveCourseAccess={false}
+                    />
+                  );
+                })}
+              </Box>
+            </Box>
+          )}
+        </Container>
         <SignUpBanner />
       </Box>
     );
