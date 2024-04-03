@@ -72,10 +72,11 @@ interface CourseCardProps {
   course: ISbStoryData;
   courseProgress: PROGRESS_STATUS | null;
   liveCourseAccess: boolean;
+  clickable?: boolean;
 }
 
 const CourseCard = (props: CourseCardProps) => {
-  const { course, courseProgress, liveCourseAccess } = props;
+  const { course, courseProgress, liveCourseAccess, clickable = true } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
   const router = useRouter();
@@ -91,12 +92,33 @@ const CourseCard = (props: CourseCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea
-        sx={cardActionStyle}
-        component={Link}
-        href={`/${course.full_slug}`}
-        aria-label={`${t('navigateToCourse')} ${course.content.name}`}
-      >
+      {clickable ? (
+        <CardActionArea
+          sx={cardActionStyle}
+          component={Link}
+          href={`/${course.full_slug}`}
+          aria-label={`${t('navigateToCourse')} ${course.content.name}`}
+        >
+          <CardContent sx={cardContentStyle}>
+            <Box sx={imageContainerStyle}>
+              <Image
+                alt={course.content.image.alt}
+                src={course.content.image.filename}
+                layout="fill"
+                objectFit="contain"
+              />
+            </Box>
+            <Box flex={1}>
+              <Typography component="h3" variant="h3">
+                {course.content.name}
+              </Typography>
+              {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
+                <ProgressStatus status={courseProgress} />
+              )}
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      ) : (
         <CardContent sx={cardContentStyle}>
           <Box sx={imageContainerStyle}>
             <Image
@@ -115,7 +137,7 @@ const CourseCard = (props: CourseCardProps) => {
             )}
           </Box>
         </CardContent>
-      </CardActionArea>
+      )}
       <CardActions sx={cardActionsStyle}>
         {courseComingSoon && (!courseLiveSoon || !liveCourseAccess) && (
           <Box sx={statusRowStyle}>
