@@ -78,6 +78,9 @@ const ApplyCodeForm = () => {
         PARTNER_ACCESS_CODE_STATUS.INVALID_CODE
       ) {
         setFormError(t('form.codeErrors.invalid'));
+      } else if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_APPIED) {
+
+        setFormError(t('form.codeErrors.codeAlreadyApplied'));
       } else {
         setFormError(
           t.rich('form.codeErrors.internal', {
