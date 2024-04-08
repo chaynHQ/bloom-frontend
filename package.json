@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "cypress": "cypress open",
     "cypress:headless": "cypress run --headless true --browser chrome",
-    "postinstall": "husky"
+    "postinstall": "husky",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
