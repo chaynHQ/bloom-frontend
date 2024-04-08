@@ -22,8 +22,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-if(!isSupported()) {
+if (!isSupported()) {
   const analytics = getAnalytics(app);
 }
 
-export default app
+export default app;

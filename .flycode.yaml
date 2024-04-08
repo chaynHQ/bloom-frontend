@@ -1,11 +1,11 @@
-version: "0.1"
+version: '0.1'
 environments:
   - name: develop
     branch: develop
     mode: pull-request
 apps:
   - name: bloom-frontend
-    path: ""
+    path: ''
     text-resources:
       - path: messages/*/*.json
         format: nested-key-value
