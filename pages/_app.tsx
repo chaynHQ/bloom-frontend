@@ -86,6 +86,7 @@ function MyApp(props: MyAppProps) {
       '/grounding',
       '/subscription/whatsapp',
       '/chat',
+      '/account/settings',
     ];
 
     const component = <Component {...pageProps} />;
