@@ -156,6 +156,19 @@ Cypress.Commands.add('visitGermanPage', (url) => {
   });
 });
 
+Cypress.Commands.add('visitSpanishPage', (url) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'es-ES' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['es'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['es'] });
+    },
+    headers: {
+      'Accept-Language': 'es',
+    },
+  });
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
