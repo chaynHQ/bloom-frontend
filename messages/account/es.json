@@ -23,7 +23,8 @@
           "internal": "Hubo un error al validar el código a su cuenta. Vuelve a intentarlo más tarde y <contactLink>envía un mensaje al equipo de Bloom</contactLink> si sigues recibiendo este error.",
           "expired": "Éste código ha expirado. Ponerse en contacto con el socio.",
           "invalid": "Su código de acceso parece no ser válido. Verifique los errores tipográficos o póngase en contacto con el socio.",
-          "alreadyInUse": "Este código ya ha sido usado. Si cree que ha habido un error, póngase en contacto con el socio."
+          "alreadyInUse": "Este código ya ha sido usado. Si cree que ha habido un error, póngase en contacto con el socio.",
+          "alreadyApplied": "Este código ya se ha aplicado a su cuenta."
         }
       }
     },
