@@ -23,7 +23,8 @@
           "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
           "expired": "Dieser Code ist abgelaufen. Kontaktiere bitte das Team der Partnerorganisation. ",
           "invalid": "Dein Zugangscode scheint ungültig zu sein. Überprüfe auf Tippfehler oder setz Dich mit der Partnerorganisation in Verbindung. ",
-          "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. "
+          "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. ",
+          "alreadyApplied": "Dieser Code wurde bereits auf Ihr Konto angewendet."
         }
       }
     },

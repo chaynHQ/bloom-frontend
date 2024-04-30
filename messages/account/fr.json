@@ -23,7 +23,8 @@
           "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
           "expired": "Ce code n'est plus valable. Veuillez prendre contact avec le partenaire.",
           "invalid": "Votre code d'accès semble être invalide. Vérifiez les erreurs de frappe ou contactez le partenaire.",
-          "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez le partenaire."
+          "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez le partenaire.",
+          "alreadyApplied": "Ce code a déjà été appliqué à votre compte."
         }
       }
     },
