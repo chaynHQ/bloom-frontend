@@ -1,20 +1,16 @@
 # How to Contribute to Chayn ⭐
 
-First off, thank you so much for taking the time to contribute!
+Thank you for taking the time to contribute!
 
-We ❤️ our contributors!
+We ❤️ our contributors and strive to give back more than we get. Have feedback on how we can improve? Questions, insight, or other concerns? We invite you to share in our [this anonymous form](https://forms.gle/v2whmf4XX3du4Y3t9). 
 
-While Chayn is hybrid between paid staff and volunteers now, we cherish our volunteers for helping to create Chayn and keep us going! We hope to give back more than our contributors give. Please do not hesitate to give us feedback, so we can learn how to make this experience better for you. 😊 You can include feedback in your pull request, GitHub issue, or [this anonymous form](https://forms.gle/17GQpeHc4G1Mgdf3A).
-
-**This guide below assumes you are an open-source contributor and NOT an official Chayn volunteer that has already completed the onboarding process. If you would like to become an official tech volunteer with Chayn, please [visit our Getting Involved Guide](https://www.notion.so/chayn/Get-involved-423c067536f3426a88005de68f0cab19?pvs=4). As an official Chayn volunteer, you will receive professional onboarding onto our platforms and more opportunities to volunteer outside of GitHub contributions!**
-
-Next, let's get started... 🎉
+Do you want to make a greater impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [visit our Getting Involved Guide](https://www.chayn.co/get-involved) to get started! Don't forget to star this repository ⭐ so we can find more contributors like you!
 
 # Table of Contents
-- [New Contributor Guide:](#new-contributor-guide)
-  - [Prerequisites](#prerequisites)
-  - [Where Can I Get Help?](#where-can-i-get-help)
-  - [What kind of contributions does Chayn want?](#what-kind-of-contributions-does-chayn-want)
+- [Prerequisites](#prerequisites)
+- [Where Can I Get Help?](#where-can-i-get-help)
+- [What kind of contributions does Chayn want?](#what-kind-of-contributions-does-chayn-want)
+- [Chayn's Spam Policy](#chayns-spam-contribution-policy-)
 - [The Contribution Process Guide:](#the-contribution-process-guide)
   1. [Read the README and Code of Conduct](#1-read-the-readme-and-code-of-conduct)
   2. [Claim an Issue](#2-claim-an-issue)
@@ -24,13 +20,9 @@ Next, let's get started... 🎉
   6. [Push Changes to GitHub](#6-push-changes-to-github)
   7. [Make a Pull Request to Chayn](#7--make-a-pull-request-to-chayn)
 
-# New Contributor Guide
 
- **If you are experienced in making open-source contributions, please feel free to skip ahead to the [Contribution Process Guide](#the-contribution-process-guide).** 
+# Prerequisites
 
-## Prerequisites
-
- 
  If you are new to GitHub and git version control, here are some resources to help you get started:
 
 - [Getting Started with First Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
@@ -46,7 +38,7 @@ Here are prerequisites you should meet before contributing to Chayn's GitHub:
 
 **It is not required that you have experience contributing to open-source projects on GitHub!** Chayn aims to be a safe space for contributors of all skill-levels to build their skills while making an impact in digital public goods. If this is your first contribution, we recommend saving the cheatsheet linked above for future reference, learning how to navigate the GitHub and git version control docs, and in general -- *learn as you go.* The Chayn team is here to help. You got this! 💪
 
-## Where can I get help?
+# Where can I get help?
 Chayn maintainers and developers are here to help! We aim to give a safe space for contributors of all skill levels to build their skills while making an impact. 🤝
 
 You can ask Chayn team members questions at any point during your contribution in the following places on GitHub: 
@@ -57,18 +49,28 @@ You can ask Chayn team members questions at any point during your contribution i
 
 Chayn team members will respond within 3 business days.
 
-## What kind of contributions does Chayn want?
+# What kind of contributions does Chayn want?
 
 Chayn is open to all kinds of contributions, such as:
 
-- no-code (improved documentation and translations)
 - additional software tests
 - code of any kind (enhancements, new features, maintenance)
+- no-code (documenation, translations) *see spam policy below for accepted documentation changes.
 
-Just no spamming (such as unwanted, minor documentation and HTML/CSS changes) please! 🚫
+# Chayn's Spam Contribution Policy 🚫
 
-# The Contribution Process Guide:
-### The Contribution Process Outline:
+**Chayn will reject contributor pull requests if they are defined as spam or not associated with an issue.**
+All pull requests need to be associated with an issue. If you open a pull request without claiming an issue, you will be asked to create an issue for your pull request.
+
+Documentation contributions will only be accepted under these circumstances:
+- adds additional context to the developer experience, such as environment set-up.
+- describes solutions for common error handling.
+- fixes a typo.
+
+Unwanted documentation changes, such as summarizations, white space edits, or minor grammatical edits will be DENIED (unless there is evidence provided that these changes are for accessibility).
+
+# The Contribution Process Guide
+### Directions for Contributing to Chayn:
 1. [Read the README and Code of Conduct](#1-read-the-readme-and-code-of-conduct)
 2. [Claim an Issue](#2-claim-an-issue)
 3. [Fork the Repo and Create a New Branch](#3-fork-the-repo-and-create-a-new-branch)
