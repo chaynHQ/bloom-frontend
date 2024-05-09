@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
+import theme from '../../styles/theme';
 import Link from '../common/Link';
 import Header from '../layout/Header';
 
@@ -27,7 +28,13 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   return (
     <Header {...headerProps}>
-      <Button variant="outlined" href="/courses" size="small" component={Link}>
+      <Button
+        variant="outlined"
+        sx={{ background: theme.palette.background.default }}
+        href="/courses"
+        size="small"
+        component={Link}
+      >
         {t('backToCourses')}
       </Button>
     </Header>
