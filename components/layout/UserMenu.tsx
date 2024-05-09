@@ -1,5 +1,6 @@
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
+import Settings from '@mui/icons-material/Settings';
 import Person from '@mui/icons-material/Person';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
@@ -111,6 +112,16 @@ export default function UserMenu() {
             </Button>
           </MenuItem>
         )}
+        <MenuItem sx={menuItemStyle}>
+          <Button
+            component={Link}
+            href='/account/settings'
+            onClick={handleClose}
+            startIcon={<Settings />}
+          >
+            {t('accSettings')}
+          </Button>
+        </MenuItem>
         <MenuItem sx={menuItemStyle}>
           <Button id="logout-button" onClick={logout} startIcon={<Logout />}>
             {t('logout')}

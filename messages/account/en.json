@@ -97,6 +97,37 @@
       "title": "Bloom emails turned off",
       "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please <link>get in touch with the Bloom team.</link>",
       "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+    },
+    "accountSettings": {
+      "title": "Account Settings",
+      "description": "View and update your settings in bloom",
+      "form": {
+        "emailLabel": "Email",
+        "nameLabel": "Name"
+      },
+      "profile": {
+        "title":"Profile details",
+        "desc":"Update your name and email by getting in touch with the bloom team"
+      },
+      "actions": {
+        "title":"Account actions",
+        "desc":"Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
+        "button": {
+          "resetPass": "Reset password",
+          "delAcc": "Delete Account"
+        }
+      },
+      "emailPref": {
+        "title":"Email preferences",
+        "desc":"Update your email preferences here and changes will take effect immediately",
+        "button": {
+          "savePref": "Save email preferences"
+        },
+        "checkbox": {
+          "emailOnChange": "Allow bloom to send me emails about changes to my account and my feedback",
+          "emailOnCourse": "Allow bloom to send me emails when there is a new course, language or service available"
+        }
+      }
     }
   }
 }
