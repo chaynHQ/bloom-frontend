@@ -23,7 +23,8 @@
           "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
           "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
           "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
-          "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. "
+          "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. ",
+          "alreadyApplied": "Yeh code apke account me phele se hi lag chuka hai."
         }
       }
     },

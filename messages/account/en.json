@@ -23,7 +23,8 @@
           "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
           "expired": "This code has expired. Get in touch with the partner's team.",
           "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner.",
-          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team."
+          "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team.",
+          "alreadyApplied": "This code has already been applied to your account."
         }
       }
     },
