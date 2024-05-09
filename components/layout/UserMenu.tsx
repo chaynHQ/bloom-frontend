@@ -3,19 +3,14 @@ import Logout from '@mui/icons-material/Logout';
 import Settings from '@mui/icons-material/Settings';
 import Person from '@mui/icons-material/Person';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import { api } from '../../app/api';
-import { clearCoursesSlice } from '../../app/coursesSlice';
-import { clearPartnerAccessesSlice } from '../../app/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../../app/partnerAdminSlice';
-import { clearUserSlice } from '../../app/userSlice';
 import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
+import useAuth from '../../hooks/useAuth';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -39,9 +34,10 @@ const buttonStyle = {
 } as const;
 
 export default function UserMenu() {
+  const { onLogout } = useAuth()
+
   const router = useRouter();
   const t = useTranslations('Navigation');
-  const dispatch: any = useAppDispatch();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -61,14 +57,7 @@ export default function UserMenu() {
 
   const logout = async () => {
     // clear all state
-    // sign out of firebase
-    const auth = getAuth();
-    await signOut(auth);
-    await dispatch(clearPartnerAccessesSlice());
-    await dispatch(clearPartnerAdminSlice());
-    await dispatch(clearCoursesSlice());
-    await dispatch(clearUserSlice());
-    await dispatch(api.util.resetApiState());
+    await onLogout()
 
     router.push('/auth/login');
   };

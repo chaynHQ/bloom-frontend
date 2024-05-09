@@ -1,12 +1,8 @@
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { api, useGetUserMutation } from '../app/api';
-import { clearCoursesSlice } from '../app/coursesSlice';
-import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
+import { useGetUserMutation } from '../app/api';
 import {
-  clearUserSlice,
   setAuthStateLoading,
   setUserLoading,
   setUserToken,
@@ -15,6 +11,7 @@ import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events'
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
+import useAuth from '../hooks/useAuth';
 
 /**
  * Function is intended to wrap around a public page (i.e. auth not required) and pull user data if available.
@@ -29,6 +26,7 @@ import logEvent, { getEventUserResponseData } from '../utils/logEvent';
  */
 
 export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
+  const { onLogout } = useAuth()
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
@@ -75,12 +73,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        signOut(auth);
-        await dispatch(clearPartnerAccessesSlice());
-        await dispatch(clearPartnerAdminSlice());
-        await dispatch(clearCoursesSlice());
-        await dispatch(clearUserSlice());
-        await dispatch(api.util.resetApiState());
+        await onLogout()
       }
       setLoading(false);
     }
