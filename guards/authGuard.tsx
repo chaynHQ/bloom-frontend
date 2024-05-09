@@ -1,18 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { api, useGetUserMutation } from '../app/api';
-import { clearCoursesSlice } from '../app/coursesSlice';
-import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
+import { useGetUserMutation } from '../app/api';
 import {
-  clearUserSlice,
   setAuthStateLoading,
   setUserLoading,
   setUserToken,
 } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
+import useAuth from '../hooks/useAuth';
 
-import { getAuth, onAuthStateChanged, onIdTokenChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_REQUEST,
@@ -27,6 +24,7 @@ import generateReturnQuery from '../utils/generateReturnQuery';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
+  const { onLogout } = useAuth()
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
@@ -94,12 +92,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
 
-      signOut(auth);
-      await dispatch(clearPartnerAccessesSlice());
-      await dispatch(clearPartnerAdminSlice());
-      await dispatch(clearCoursesSlice());
-      await dispatch(clearUserSlice());
-      await dispatch(api.util.resetApiState());
+      await onLogout()
       setLoading(false);
 
       router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
