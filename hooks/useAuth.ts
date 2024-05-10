@@ -18,7 +18,7 @@ const useAuth = () => {
     await dispatch(clearCoursesSlice());
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
-  }, [])
+  }, [auth, dispatch])
 
   return { onLogout }
 }
