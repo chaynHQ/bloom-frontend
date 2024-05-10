@@ -1,9 +1,9 @@
-import { Box, Button, Container, Typography, useMediaQuery } from '@mui/material';
+import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { Box, Container, Typography, Card, CardContent, } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import ProfileDetailsForm from '../../components/forms/ProfileDetailsForm';
-import { JSXElementConstructor, ReactElement, ReactNodeArray, useEffect, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import Link from '../../components/common/Link';
 import { rowStyle } from '../../styles/common';
@@ -12,11 +12,6 @@ import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import {
-  useTheme,
-  Card,
-  CardContent,
-} from '@mui/material';
 import AccountActions from '../../components/account/AccountActions';
 import EmailPref from '../../components/account/EmailPref';
 
@@ -36,14 +31,12 @@ const AccountSettings: NextPage = () => {
   const userServiceEmailsPermission = useTypedSelector(
     (state) => state.user.serviceEmailsPermission,
   );
-  const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [error, setError] = useState<
-    string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | null
+    string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNode | null
   >();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
 

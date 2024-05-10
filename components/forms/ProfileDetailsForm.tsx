@@ -1,5 +1,4 @@
 import { Box, TextField, Container, Typography } from '@mui/material';
-import Link from '../common/Link';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
