@@ -97,6 +97,40 @@
       "title": "Correos de Bloom desactivados",
       "description": "Ya no recibirás correos electrónicos relacionados con Bloom. Si deseas cambiar esto más tarde, <link>ponte en contacto con el equipo de Bloom.</link>",
       "error": "Se produjo un error al desactivar los correos electrónicos de Bloom. Vuelve a intentarlo después de actualizar esta página o <link>ponte en contacto con el equipo de Bloom.</link>"
+    },
+  "accountSettings": {
+    "title": "Ajustes de Cuenta",
+    "description": "Ver y actualizar tu configuración en Bloom",
+    "form": {
+      "emailLabel": "Correo electrónico",
+      "nameLabel": "Nombre",
+      "saveProfile": "Guardar Perfil"
+    },
+    "profile": {
+      "title": "Detalles del perfil",
+      "desc": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el equipo de Bloom"
+    },
+    "actions": {
+      "title": "Acciones de la cuenta",
+      "desc": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
+      "button": {
+        "resetPass": "Restablecer contraseña",
+        "delAcc": "Eliminar cuenta"
+      }
+    },
+    "emailPref": {
+      "title": "Preferencias de correo electrónico",
+      "desc": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
+      "button": {
+        "savePref": "Guardar preferencias de correo electrónico"
+      },
+      "checkbox": {
+        "emailOnChange": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
+        "emailOnCourse": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible"
+      }
     }
   }
+  }
 }
+
+

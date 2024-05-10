@@ -97,6 +97,39 @@
       "title": "Bloom-E-Mails deaktiviert",
       "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.</link>",
       "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.</link>"
+    },
+    "accountSettings": {
+      "title": "Kontoeinstellungen",
+      "description": "Einstellungen in Bloom anzeigen und aktualisieren",
+      "form": {
+        "emailLabel": "E-Mail",
+        "nameLabel": "Name",
+        "saveProfile": "Profil speichern"
+      },
+      "profile": {
+        "title": "Profildetails",
+        "desc": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das Bloom-Team wenden"
+      },
+      "actions": {
+        "title": "Kontoaktionen",
+        "desc": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
+        "button": {
+          "resetPass": "Passwort zurücksetzen",
+          "delAcc": "Konto löschen"
+        }
+      },
+      "emailPref": {
+        "title": "E-Mail-Einstellungen",
+        "desc": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
+        "button": {
+          "savePref": "E-Mail-Einstellungen speichern"
+        },
+        "checkbox": {
+          "emailOnChange": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
+          "emailOnCourse": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
+        }
+      }
     }
   }
 }
+

@@ -97,6 +97,38 @@
       "title": "E-mails do Bloom desativados",
       "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, <link>entre em contato com a equipe do Bloom.</link>",
       "error": "Ocorreu um erro ao desativar os e-mails do Bloom. Tente novamente após atualizar esta página ou <link>entre em contato com a equipe do Bloom.</link>"
+    },
+    "accountSettings": {
+      "title": "Configurações da conta",
+      "description": "Veja e atualize suas configurações no bloom",
+      "form": {
+        "emailLabel": "E-mail",
+        "nameLabel": "Nome",
+        "saveProfile": "Salvar perfil"
+      },
+      "profile": {
+        "title": "Detalhes do perfil",
+        "desc": "Atualize seu nome e e-mail entrando em contato com a equipe do bloom"
+      },
+      "actions": {
+        "title": "Ações da conta",
+        "desc": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
+        "button": {
+          "resetPass": "Redefinir senha",
+          "delAcc": "Excluir conta"
+        }
+      },
+      "emailPref": {
+        "title": "Preferências de e-mail",
+        "desc": "Atualize suas preferências de e-mail aqui e as alterações entrarão em vigor imediatamente",
+        "button": {
+          "savePref": "Salvar preferências de e-mail"
+        },
+        "checkbox": {
+          "emailOnChange": "Permitir que o bloom me envie e-mails sobre alterações na minha conta e no meu feedback",
+          "emailOnCourse": "Permitir que o bloom me envie e-mails quando houver um novo curso, idioma ou serviço disponível"
+        }
+      }
     }
   }
 }
