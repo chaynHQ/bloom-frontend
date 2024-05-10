@@ -97,6 +97,38 @@
       "title": "E-mails de service désactivés",
       "description": "Vous ne recevrez plus d'e-mails liés à Bloom. Si vous souhaitez modifier cela ultérieurement, veuillez contacter l'équipe Bloom.",
       "error": "Une erreur s'est produite lors de la désactivation des e-mails de service. Réessayez en actualisant cette page ou contactez l'équipe Bloom."
+    },
+    "accountSettings": {
+      "title": "Paramètres du compte",
+      "description": "Afficher et mettre à jour vos paramètres dans Bloom",
+      "form": {
+        "emailLabel": "Email",
+        "nameLabel": "Nom",
+        "saveProfile": "Enregistrer le profil"
+      },
+      "profile": {
+        "title": "Détails du profil",
+        "desc": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
+      },
+      "actions": {
+        "title": "Actions du compte",
+        "desc": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
+        "button": {
+          "resetPass": "Réinitialiser le mot de passe",
+          "delAcc": "Supprimer le compte"
+        }
+      },
+      "emailPref": {
+        "title": "Préférences d'email",
+        "desc": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
+        "button": {
+          "savePref": "Enregistrer les préférences d'email"
+        },
+        "checkbox": {
+          "emailOnChange": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
+          "emailOnCourse": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
+        }
+      }
     }
   }
 }

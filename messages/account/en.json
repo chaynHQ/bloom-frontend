@@ -103,7 +103,8 @@
       "description": "View and update your settings in bloom",
       "form": {
         "emailLabel": "Email",
-        "nameLabel": "Name"
+        "nameLabel": "Name",
+        "saveProfile": "Save Profile"
       },
       "profile": {
         "title":"Profile details",

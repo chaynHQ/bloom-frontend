@@ -97,6 +97,38 @@
       "title": "Bloom ke emails band kar diye gaye!",
       "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.</link>",
       "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
+    },
+  "accountSettings": {
+    "title": "Account Settings",
+    "description": "Aapke settings ko dekhiye aur update kijiye",
+    "form": {
+      "emailLabel": "Email",
+      "nameLabel": "Naam",
+      "saveProfile": "Profile ko save kijiye"
+    },
+    "profile": {
+      "title": "Profile Details",
+      "desc": "Aapka naam aur email ko update kijiye Bloom team se sampark karein"
+    },
+    "actions": {
+      "title": "Account Actions",
+      "desc": "Aapka account delete karne se aapka naam, email address aur dekhe gaye sessions ka history permanently delete ho jayega.",
+      "button": {
+        "resetPass": "Password reset kijiye",
+        "delAcc": "Account delete kijiye"
+      }
+    },
+    "emailPref": {
+      "title": "Email Preferences",
+      "desc": "Aapke email preferences ko update kijiye aur changes immediately effective honge",
+      "button": {
+        "savePref": "Email preferences ko save kijiye"
+      },
+      "checkbox": {
+        "emailOnChange": "Bloom ko mera account ke changes aur feedback ke baare mein emails bhejne de",
+        "emailOnCourse": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de"
+      }
     }
+  }
   }
 }
