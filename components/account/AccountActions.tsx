@@ -35,7 +35,7 @@ const AccountActions = () => {
             >
               {t('actions.button.resetPass')}
             </Button>
-            <Button variant='outlined' color='error' fullWidth onClick={onDeleteModalOpen} sx={{ mt: 2, mr: 1.5, }} >
+            <Button variant='outlined' disabled color='error' fullWidth onClick={onDeleteModalOpen} sx={{ mt: 2, mr: 1.5, }} >
               {t('actions.button.delAcc')}
             </Button>
           </div>
