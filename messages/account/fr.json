@@ -115,7 +115,8 @@
         "desc": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
         "button": {
           "resetPass": "Réinitialiser le mot de passe",
-          "delAcc": "Supprimer le compte"
+          "delAcc": "Supprimer le compte",
+          "cancel": "Annuler"
         }
       },
       "emailPref": {

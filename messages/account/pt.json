@@ -115,7 +115,8 @@
         "desc": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
         "button": {
           "resetPass": "Redefinir senha",
-          "delAcc": "Excluir conta"
+          "delAcc": "Excluir conta",
+          "cancel":"Cancelar"
         }
       },
       "emailPref": {
