@@ -115,7 +115,8 @@
         "desc": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
         "button": {
           "resetPass": "Passwort zurücksetzen",
-          "delAcc": "Konto löschen"
+          "delAcc": "Konto löschen",
+          "cancel": "Abbrechen"
         }
       },
       "emailPref": {

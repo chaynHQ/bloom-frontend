@@ -115,7 +115,8 @@
       "desc": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
       "button": {
         "resetPass": "Restablecer contraseña",
-        "delAcc": "Eliminar cuenta"
+        "delAcc": "Eliminar cuenta",
+        "cancel": "Cancelar"
       }
     },
     "emailPref": {

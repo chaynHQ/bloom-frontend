@@ -45,7 +45,6 @@ const DeleteAccountModal = ({ open, onClose }: Props) => {
   }
 
   const t = useTranslations('Account.accountSettings');
-  const tS = useTranslations('Shared');
 
   return (
     <Modal
@@ -75,7 +74,7 @@ const DeleteAccountModal = ({ open, onClose }: Props) => {
               variant="contained"
               onClick={onClose}
             >
-              {tS("cancel")}
+              {t('actions.button.cancel')}
             </Button>
           </div>
         </Box>

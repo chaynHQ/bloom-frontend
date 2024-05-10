@@ -115,7 +115,8 @@
         "desc":"Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
         "button": {
           "resetPass": "Reset password",
-          "delAcc": "Delete Account"
+          "delAcc": "Delete Account",
+          "cancel": "Cancel"
         }
       },
       "emailPref": {
