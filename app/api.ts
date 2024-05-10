@@ -215,6 +215,7 @@ export const {
   useGetUserMutation,
   useAddUserMutation,
   useUpdateUserMutation,
+  useDeleteUserMutation,
   useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,
