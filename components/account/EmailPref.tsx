@@ -1,14 +1,14 @@
-import { useState, useCallback } from "react";
-import { Typography, CardContent, Card, Box } from "@mui/material"
+import { useCallback } from 'react';
+import { Typography, CardContent, Card, Box } from '@mui/material'
 import { Checkbox, FormControl, FormControlLabel, } from '@mui/material';
-import { LoadingButton } from "@mui/lab";
-import { useTranslations } from "next-intl"
-import { useUpdateUserMutation } from "../../app/api";
-import { useTypedSelector } from "../../hooks/store";
+import { LoadingButton } from '@mui/lab';
+import { useTranslations } from 'next-intl'
+import { useUpdateUserMutation } from '../../app/api';
+import { useTypedSelector } from '../../hooks/store';
 
 const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
-  marginTop: { xs: "1.5rem", sm: "5rem", md: "6rem" },
+  marginTop: { xs: '1.5rem', sm: '5rem', md: '6rem' },
   alignSelf: 'flex-start',
 } as const;
 
@@ -22,17 +22,17 @@ const EmailPref = () => {
   console.log({ cPerms, sPerms })
   //
   // {
-  //   "name": "string",
-  //   "contactPermission": true,
-  //   "serviceEmailsPermission": true
+  //   'name': 'string',
+  //   'contactPermission': true,
+  //   'serviceEmailsPermission': true
   // }
 
   const onSubmit = useCallback(async (ev: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(ev.currentTarget)
     ev.preventDefault()
 
-    const contactPermission = formData.get("cPerms") === "on"
-    const serviceEmailsPermission = formData.get("sPerms") === "on"
+    const contactPermission = formData.get('cPerms') === 'on'
+    const serviceEmailsPermission = formData.get('sPerms') === 'on'
     const payload = {
       contactPermission, serviceEmailsPermission
     }
@@ -43,19 +43,19 @@ const EmailPref = () => {
     <Card sx={formCardStyle}>
       <CardContent>
         <form onSubmit={onSubmit}>
-          <Typography variant="h2" component="h2">
+          <Typography variant='h2' component='h2'>
             {t('title')}
           </Typography>
-          <Typography fontSize="1rem !important">
+          <Typography fontSize='1rem !important'>
             {t('desc')}
           </Typography>
           <Box >
-            <FormControl sx={{ marginY: 3, display: "flex", flexDirection: "column", gap: 2, }} >
+            <FormControl sx={{ marginY: 3, display: 'flex', flexDirection: 'column', gap: 2, }} >
               <FormControlLabel
                 label={t('checkbox.emailOnChange')}
                 control={
                   <Checkbox
-                    name="cPerms"
+                    name='cPerms'
                     aria-label={t('checkbox.emailOnChange')}
                     defaultChecked={cPerms}
                   // checked={contactPerms}
@@ -67,7 +67,7 @@ const EmailPref = () => {
                 label={t('checkbox.emailOnCourse')}
                 control={
                   <Checkbox
-                    name="sPerms"
+                    name='sPerms'
                     aria-label={t('checkbox.emailOnCourse')}
                     defaultChecked={sPerms}
                   // checked={emailPerms}
@@ -79,11 +79,11 @@ const EmailPref = () => {
           </Box>
           <LoadingButton
             sx={{ mt: 2, mr: 1.5, }}
-            variant="contained"
+            variant='contained'
             fullWidth
             loading={isLoading}
-            color="secondary"
-            type="submit"
+            color='secondary'
+            type='submit'
           >
             {t('button.savePref')}
           </LoadingButton>
