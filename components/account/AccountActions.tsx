@@ -1,8 +1,8 @@
-import { Typography, CardContent, Card, Button } from "@mui/material"
-import Link from "../common/Link";
-import { useTranslations } from "next-intl"
-import DeleteAccountModal from "./DeleteAccountModal";
-import { useState } from "react";
+import { Typography, CardContent, Card, Button } from '@mui/material'
+import Link from '../common/Link';
+import { useTranslations } from 'next-intl'
+import DeleteAccountModal from './DeleteAccountModal';
+import { useState } from 'react';
 
 const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
@@ -18,20 +18,20 @@ const AccountActions = () => {
     <>
       <Card sx={formCardStyle} >
         <CardContent>
-          <Typography variant="h2" component="h2">
+          <Typography variant='h2' component='h2'>
             {t('actions.title')}
           </Typography>
-          <Typography fontSize="1rem !important">
+          <Typography fontSize='1rem !important'>
             {t('actions.desc')}
           </Typography>
-          <div style={{ display: "inline-flex", width: "100%", flexWrap: "wrap" }}>
+          <div style={{ display: 'inline-flex', width: '100%', flexWrap: 'wrap' }}>
             <Button
               sx={{ mt: 2, mr: 1.5, }}
               component={Link}
               href='/auth/reset-password'
-              variant="contained"
+              variant='contained'
               fullWidth
-              color="secondary"
+              color='secondary'
             >
               {t('actions.button.resetPass')}
             </Button>

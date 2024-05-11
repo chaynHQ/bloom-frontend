@@ -6,7 +6,7 @@ import { useTypedSelector } from '../../hooks/store';
 import { LoadingButton } from '@mui/lab';
 import { getAuth, verifyBeforeUpdateEmail } from 'firebase/auth';
 import { useUpdateUserMutation } from '../../app/api';
-import { ReactElement, JSXElementConstructor, ReactNode, useCallback } from "react"
+import { ReactElement, JSXElementConstructor, ReactNode } from 'react'
 
 const containerStyle = {
   marginY: 3,
@@ -37,8 +37,8 @@ const ProfileDetailsForm = () => {
   const name = useTypedSelector(state => state.user.name)
   const email = useTypedSelector(state => state.user.email)
 
-  const [nameInput, setNameInput] = useState<string>(name ?? "");
-  const [emailInput, setEmailInput] = useState<string>(email ?? "");
+  const [nameInput, setNameInput] = useState<string>(name ?? '');
+  const [emailInput, setEmailInput] = useState<string>(email ?? '');
 
   const tA = useTranslations('Account.accountSettings.form');
 
@@ -53,11 +53,11 @@ const ProfileDetailsForm = () => {
     }
   }
 
-  const onSubmit = useCallback(async (ev: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
     setError(null)
     onUserUpdate({ name: nameInput, email: emailInput })
-  }, [])
+  }
 
   return (
     <Box sx={containerStyle}>
