@@ -16,8 +16,8 @@ const LeaveSiteButton = () => {
 
   const hideSite = () => {
     logEvent(LEAVE_SITE_BUTTON_CLICKED);
-    window.open(tS("wikiLink"), '_newtab');
-    location.replace(tS("googleLink"));
+    window.open(tS('wikiLink'), '_newtab');
+    location.replace(tS('googleLink'));
   };
 
   return (
