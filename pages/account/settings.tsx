@@ -1,17 +1,12 @@
-import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Box, Container, Typography, Card, CardContent, } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import ProfileDetailsForm from '../../components/forms/ProfileDetailsForm';
-import { useUpdateUserMutation } from '../../app/api';
 import Link from '../../components/common/Link';
 import { rowStyle } from '../../styles/common';
 import Header from '../../components/layout/Header';
-import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 import AccountActions from '../../components/account/AccountActions';
 import EmailPref from '../../components/account/EmailPref';
 
@@ -27,35 +22,6 @@ const formCardStyle = {
 
 const AccountSettings: NextPage = () => {
   const t = useTranslations('Account.accountSettings');
-
-  const userServiceEmailsPermission = useTypedSelector(
-    (state) => state.user.serviceEmailsPermission,
-  );
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const [error, setError] = useState<
-    string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNode | null
-  >();
-  const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
-
-  useEffect(() => {
-    if (userCreatedAt && userServiceEmailsPermission === true) {
-      try {
-        updateUser({ serviceEmailsPermission: false });
-        logEvent(USER_DISABLED_SERVICE_EMAILS, eventUserData);
-      } catch (error) {
-        setError(
-          t.rich('error', {
-            link: (content) => (
-              <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
-            ),
-          }),
-        );
-      }
-    }
-  }, []);
 
   const headerProps = {
     title: t('title'),
@@ -73,21 +39,12 @@ const AccountSettings: NextPage = () => {
       <Head>
         <title>{t('title')}</title>
       </Head>
-      {error && (
-        <Container>
-          <Typography>{error}</Typography>
-        </Container>
-      )}
-      {!error && !updateUserIsLoading && (
-        <Header
-          title={headerProps.title}
-          introduction={headerProps.introduction}
-          imageSrc={headerProps.imageSrc}
-          translatedImageAlt={headerProps.translatedImageAlt}
-        />
-      )}
-
-
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        translatedImageAlt={headerProps.translatedImageAlt}
+      />
       <Container sx={containerStyle}>
         <Card sx={formCardStyle}>
           <CardContent>
