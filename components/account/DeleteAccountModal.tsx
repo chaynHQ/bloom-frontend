@@ -2,7 +2,6 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useDeleteUserMutation } from '../../app/api';
-import { useTypedSelector } from '../../hooks/store';
 import { getAuth } from 'firebase/auth'
 
 const modalStyle = {
@@ -30,7 +29,6 @@ interface Props {
 }
 
 const DeleteAccountModal = ({ open, onClose }: Props) => {
-  const userId = useTypedSelector(state => state.user.id)
   const [deleteUser, { isLoading }] = useDeleteUserMutation()
 
   const onUserDelete = () => {
