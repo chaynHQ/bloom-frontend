@@ -1,10 +1,9 @@
-import fs from 'node:fs'
-import * as path from 'path'
+const fs = require('node:fs')
+const path = require('path')
 
-const languages = ['de', 'en', 'es', 'fr', 'hi', 'pt'] as const
-type Lang = typeof languages[number]
+const languages = ['de', 'en', 'es', 'fr', 'hi', 'pt']
 
-const getKeys = (file: any, keys?: Set<string>, prefix = '') => {
+const getKeys = (file, keys, prefix = '') => {
   keys ??= new Set();
   for (const key of Object.keys(file)) {
     if (typeof file[key] === 'object') {
@@ -17,7 +16,7 @@ const getKeys = (file: any, keys?: Set<string>, prefix = '') => {
   return keys
 }
 
-const getFileByPath = (dir: string, fileName: string) => {
+const getFileByPath = (dir, fileName) => {
   const filePath = path.join(__dirname, '..', 'messages', dir, fileName);
   return require(filePath)
 }
@@ -25,13 +24,13 @@ const getFileByPath = (dir: string, fileName: string) => {
 const directories = fs.readdirSync(path.join(__dirname, '..', 'messages'));
 
 for (const directory of directories) {
-  if (languages.includes(directory as Lang)) continue;
+  if (languages.includes(directory)) continue;
 
   const files = fs.readdirSync(
     path.join(__dirname, '..', 'messages', directory)
   );
 
-  const langFiles = files.filter(file => languages.includes(file.split('.')[0] as Lang));
+  const langFiles = files.filter(file => languages.includes(file.split('.')[0]));
 
   if (langFiles.length !== languages.length) {
     console.warn(`Missing translation files for directory ${directory}:`,
@@ -39,7 +38,7 @@ for (const directory of directories) {
     continue;
   }
 
-  let expectedKeys: Set<string> = new Set();
+  let expectedKeys = new Set();
   for (const langFile of langFiles) {
     const file = getFileByPath(directory, langFile)
     const prevLen = expectedKeys.size
