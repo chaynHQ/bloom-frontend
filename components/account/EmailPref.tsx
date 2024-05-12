@@ -19,14 +19,6 @@ const EmailPref = () => {
   const cPerms = useTypedSelector(state => state.user.contactPermission)
   const sPerms = useTypedSelector(state => state.user.serviceEmailsPermission)
 
-  console.log({ cPerms, sPerms })
-  //
-  // {
-  //   'name': 'string',
-  //   'contactPermission': true,
-  //   'serviceEmailsPermission': true
-  // }
-
   const onSubmit = useCallback(async (ev: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(ev.currentTarget)
     ev.preventDefault()

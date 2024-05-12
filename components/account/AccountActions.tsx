@@ -14,6 +14,7 @@ const AccountActions = () => {
   const onDeleteModalClose = () => setIsDeleteModalOpen(false)
   const onDeleteModalOpen = () => setIsDeleteModalOpen(true)
   const t = useTranslations('Account.accountSettings');
+
   return (
     <>
       <Card sx={formCardStyle} >
