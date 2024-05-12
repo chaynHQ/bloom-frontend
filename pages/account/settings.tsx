@@ -7,7 +7,6 @@ import Link from '../../components/common/Link';
 import { rowStyle } from '../../styles/common';
 import Header from '../../components/layout/Header';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
-import AccountActions from '../../components/account/AccountActions';
 import EmailPref from '../../components/account/EmailPref';
 
 const containerStyle = {
@@ -58,7 +57,6 @@ const AccountSettings: NextPage = () => {
           </CardContent>
         </Card>
 
-        <AccountActions />
         <EmailPref />
       </Container>
     </Box>
