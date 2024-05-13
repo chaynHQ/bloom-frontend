@@ -156,6 +156,45 @@ Cypress.Commands.add('visitGermanPage', (url) => {
   });
 });
 
+Cypress.Commands.add('visitSpanishPage', (url) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'es-ES' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['es'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['es'] });
+    },
+    headers: {
+      'Accept-Language': 'es',
+    },
+  });
+});
+
+Cypress.Commands.add('visitHindiPage', (url) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'hi-IN' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['hi'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['hi'] });
+    },
+    headers: {
+      'Accept-Language': 'hi',
+    },
+  });
+});
+
+Cypress.Commands.add('visitFrenchPage', (url) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['fr'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['fr'] });
+    },
+    headers: {
+      'Accept-Language': 'fr',
+    },
+  });
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
@@ -177,8 +216,8 @@ const attachCustomCommands = (Cypress, auth) => {
     currentUser = user;
     token = currentUser
       ? currentUser.getIdToken().then((t) => {
-          token = t;
-        })
+        token = t;
+      })
       : null;
   });
 

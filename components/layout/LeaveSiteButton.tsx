@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-import { Box } from '@mui/system';
+import { Button, Box } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
@@ -13,20 +12,18 @@ const leaveThisSiteStyles = {
 } as const;
 
 const LeaveSiteButton = () => {
-  const tS = useTranslations('Shared');
+  const tS = useTranslations('Shared.leaveSite');
 
   const hideSite = () => {
     logEvent(LEAVE_SITE_BUTTON_CLICKED);
-    window.open('https://en.wikipedia.org/wiki/Main_Page', '_newtab');
-    location.replace(
-      'https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l=',
-    );
+    window.open(tS('wikiLink'), '_newtab');
+    location.replace(tS('googleLink'));
   };
 
   return (
     <Box sx={leaveThisSiteStyles}>
       <Button onClick={hideSite} variant="contained" color="error">
-        {tS('leaveSiteButton')}
+        {tS('button')}
       </Button>
     </Box>
   );

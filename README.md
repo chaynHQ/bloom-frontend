@@ -10,7 +10,7 @@ For a more detailed explanation of this project's key concepts and architecture,
 
 ## Get Involved
 
-Do you want to make an impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [Getting Involved Guide](https://chayn.notion.site/Get-involved-423c067536f3426a88005de68f0cab19) to get started!
+Do you want to make an impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [Getting Involved Guide](https://www.chayn.co/get-involved) to get started!
 
 Other ways you can support Chayn are [donating](https://www.paypal.me/chaynhq), starring this repository ⭐ (so we can find more contributors like you!), making an open-source contribution, and supporting us on social media!
 

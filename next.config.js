@@ -51,6 +51,11 @@ module.exports = withBundleAnalyzer(
           destination: '/courses',
           permanent: false,
         },
+        {
+          source: '/about-our-courses',
+          destination: '/courses',
+          permanent: false,
+        },
       ];
     },
     async rewrites() {
