@@ -203,6 +203,7 @@ Workspace [settings](.vscode/settings.json) for VSCode are included for consiste
 **Commits will be blocked if there are any formatting or linting issues**
 
 If an error is thrown when pushing a commit:
+
 - check the output logs for linting errors - fix all linting errors before committing
 - check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed
 
