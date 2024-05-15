@@ -17,7 +17,7 @@ import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { enCountries, esCountries } from '../../constants/countries';
+import countries from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
   ABOUT_YOU_DEMO_ERROR,
@@ -55,9 +55,18 @@ const AboutYouDemographicForm = () => {
   const [genderTextInput, setGenderTextInput] = useState<string>('');
   const [neurodivergentInput, setNeurodivergentInput] = useState<string>('');
   const [raceEthnNatn, setRaceEthnNatn] = useState<string>('');
-  const [countryInput, setCountryInput] = useState<string>('');
+  const [countryInput, setCountryInput] = useState<{
+    code: string;
+    label: string;
+  } | null>(null);
+  const [countryTextInput, setCountryTextInput] = useState<string>('');
   const [ageInput, setAgeInput] = useState<string>('');
-  const [countryList, setCountryList] = useState<Array<{ code: string; label: string }>>([]);
+  const [countryList, setCountryList] = useState<
+    Array<{
+      code: string;
+      label: string;
+    }>
+  >([]);
   const [formError, setFormError] = useState<
     | string
     | React.ReactNodeArray
@@ -69,10 +78,13 @@ const AboutYouDemographicForm = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   useEffect(() => {
-    if (router.locale === LANGUAGES.es) {
-      setCountryList(esCountries);
-    } else {
-      setCountryList(enCountries);
+    if (router.locale) {
+      setCountryList(
+        countries.map((c: { code: string; label: { [key: string]: string } }) => ({
+          code: c.code,
+          label: router.locale ? c.label[router.locale] : c.label.en,
+        })),
+      );
     }
   }, [router.locale]);
 
@@ -117,7 +129,7 @@ const AboutYouDemographicForm = () => {
       gender_free_text: genderFreeText.sort().join(','),
       neurodivergent: neurodivergentInput,
       race_ethn_natn: raceEthnNatn,
-      current_country: countryInput,
+      current_country: countries.find((c) => c.code === countryInput?.code)?.label.en,
       age: ageInput,
       language: router.locale as LANGUAGES,
       ...eventUserData, // add user data
@@ -236,7 +248,6 @@ const AboutYouDemographicForm = () => {
           value={raceEthnNatn}
           variant="standard"
           fullWidth
-          required
           InputLabelProps={{ shrink: true }}
           sx={staticFieldLabelStyle}
         />
@@ -245,9 +256,16 @@ const AboutYouDemographicForm = () => {
           disablePortal
           id="country"
           options={countryList}
-          inputValue={countryInput}
+          getOptionLabel={(option: { code: string; label: string }) => {
+            return option.label;
+          }}
+          inputValue={countryTextInput}
+          value={countryInput}
           onInputChange={(event: any, newValue: string | null) => {
-            setCountryInput(newValue || '');
+            setCountryTextInput(newValue || '');
+          }}
+          onChange={(e, value) => {
+            setCountryInput(value || null);
           }}
           popupIcon={<KeyboardArrowDown />}
           renderInput={(params) => (
