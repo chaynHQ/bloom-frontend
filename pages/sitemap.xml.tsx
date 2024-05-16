@@ -1,10 +1,10 @@
 import { getStaticPaths } from './courses/[slug]/[sessionSlug]';
 
 async function generateSiteMap({ locales }: any) {
-    /* get url paths for dynamically generated courses using getStaticPaths */
-    const courses = (await getStaticPaths({ locales })).paths 
+  /* get url paths for dynamically generated courses using getStaticPaths */
+  const courses = (await getStaticPaths({ locales })).paths;
 
-    return `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
             <loc>https://bloom.chayn.co</loc>
