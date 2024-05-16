@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';

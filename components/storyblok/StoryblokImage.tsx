@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { storyblokEditable } from '@storyblok/react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokImageProps {

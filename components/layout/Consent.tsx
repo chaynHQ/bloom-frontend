@@ -1,7 +1,7 @@
 import { getAnalytics } from '@firebase/analytics';
 import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';

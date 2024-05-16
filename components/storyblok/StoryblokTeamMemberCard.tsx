@@ -3,7 +3,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';
