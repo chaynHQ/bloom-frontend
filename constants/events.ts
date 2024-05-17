@@ -108,6 +108,8 @@ export const FAQ_OPENED = 'FAQ_OPENED';
 export const ACCORDION_OPENED = 'ACCORDION_OPENED';
 export const generateAccordionEvent = (title: string) =>
   `ACCORDION_${title.split(' ').join('_').toUpperCase()}`;
+export const generateStoryblokButtonEvent = (text: string) =>
+  `STORYBLOK_BUTTON_${text.split(' ').join('_').toUpperCase()}_CLICKED`;
 
 export const LEAVE_SITE_BUTTON_CLICKED = 'LEAVE_SITE_BUTTON_CLICKED';
 export const SOCIAL_LINK_CLICKED = 'SOCIAL_LINK_CLICKED';
