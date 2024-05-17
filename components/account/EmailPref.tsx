@@ -8,7 +8,6 @@ import { useTypedSelector } from '../../hooks/store';
 
 const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
-  marginTop: { xs: '1.5rem', sm: '5rem', md: '6rem' },
   alignSelf: 'flex-start',
 } as const;
 
