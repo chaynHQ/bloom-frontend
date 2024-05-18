@@ -8,10 +8,11 @@ To report a security issue, please email techcommunity@chayn.co with the followi
 2. **A short summary of the problem.** Make the impact and severity as clear as possible. For example: An unsafe deserialization vulnerability allows any unauthenticated user to execute arbitrary code on the server.
 3. Complete instructions, including specific configuration details, to **reproduce the vulnerability.**
 
-  Optional information to include if applicable:
+Optional information to include if applicable:
+
 - Propose a remediation suggestion if you have one. Make it clear that this is just a suggestion, as the maintainer might have a better idea to fix the issue.
 - Credit: List all researchers who contributed to this disclosure. If you found the vulnerability with a specific tool, you can also credit this tool.
-- Contact information for further collaboration. If the vulernerability is accepted, we will be happy to collaborate with you, and review your fix to make sure that all corner cases are covered. 
+- Contact information for further collaboration. If the vulernerability is accepted, we will be happy to collaborate with you, and review your fix to make sure that all corner cases are covered.
 
 You will receive an email from us confirming we have received your bug report.
 

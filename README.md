@@ -192,7 +192,20 @@ yarn lint:fix
 
 Formatting and linting is provided by ESLint and Prettier (see the relevant configs for details).
 
-Workspace settings for VSCode are included for consistent linting and formatting.
+**Install the VSCode extensions recommended in the [.vscode/extensions](.vscode/extensions.json) for automated formatting and linting**
+
+Workspace [settings](.vscode/settings.json) for VSCode are included for consistent linting and formatting, and can be replicated if using an alternative IDE.
+
+### Pre-commit and husky checks
+
+[Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) are set up to run formatting and linting before each commit is pushed.
+
+**Commits will be blocked if there are any formatting or linting issues**
+
+If an error is thrown when pushing a commit:
+
+- check the output logs for linting errors - fix all linting errors before committing
+- check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed
 
 ### Build for Production
 
@@ -234,7 +247,7 @@ You need to run a https proxy for the storyblok preview.
 
 1. Follow the Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md).
 2. Fork the repo and create a new branch from the `develop` base branch.
-3. Run the app on the new branch, complete your work testing on http://localhost:3000, and commit.
+3. Run the app on the new branch, complete your work testing on http://localhost:3000, and commit. Note that commits with linting errors will be blocked - see [pre-commit and husky checks](#pre-commit-and-husky-checks)
 4. Go to Github and open a pull request for the branch - the branch should be automatically based off of the `develop` branch. Creating a pull request will trigger GitHub Actions to automatically run build and linting tasks. A [vercel preview url](https://vercel.com/docs/deployments/preview-deployments) will also be created, to act as a staging environment for this branch
 5. Test the new branch on the vercel preview url, and ensure all new changes working as expected
 6. Request a code review from a staff member who will manage the merge and deployment flow (see below)
