@@ -98,6 +98,7 @@ export default function LanguageMenu() {
                   locale={language}
                   onClick={() => {
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
+                    handleClose()
                   }}
                 >
                   {languageLabel}
