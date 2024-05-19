@@ -2,7 +2,7 @@
 
 Thank you for taking the time to contribute!
 
-We ❤️ our contributors and strive to give back more than we get. Have feedback on how we can improve? Questions, insight, or other concerns? We invite you to share in our [this anonymous form](https://forms.gle/v2whmf4XX3du4Y3t9). 
+We ❤️ our contributors and strive to give back more than we get. Have feedback on how we can improve? Questions, insight, or other concerns? We invite you to share in our [this anonymous form](https://forms.gle/v2whmf4XX3du4Y3t9).
 
 Do you want to make a greater impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [visit our Getting Involved Guide](https://www.chayn.co/get-involved) to get started! Don't forget to star this repository ⭐ so we can find more contributors like you!
 
@@ -20,7 +20,6 @@ Do you want to make a greater impact with Chayn and receive special access to ou
   5. [Sync Fork if Needed](#5-sync-your-fork-if-needed)
   6. [Push Changes to GitHub](#6-push-changes-to-github)
   7. [Make a Pull Request to Chayn](#7--make-a-pull-request-to-chayn)
-
 
 # Prerequisites
 
@@ -50,7 +49,7 @@ You can ask Chayn team members questions at any point during your contribution i
 - Pull request discussions for your contribution.
 - Or, create a new issue with the `type: question / suggestion` label.
 
-Chayn team members will respond within 3 business days.
+Chayn team members usually respond within 3 business days.
 
 # What kind of contributions does Chayn want?
 
@@ -58,7 +57,7 @@ Chayn is open to all kinds of contributions, such as:
 
 - additional software tests
 - code of any kind (enhancements, new features, maintenance)
-- no-code (documenation, translations) *see spam policy below for accepted documentation changes.
+- no-code (documenation, translations) \*see spam policy below for accepted documentation changes.
 
 # Chayn's Spam Contribution Policy 🚫
 
@@ -66,6 +65,8 @@ Chayn is open to all kinds of contributions, such as:
 All pull requests need to be associated with an issue. If you open a pull request without claiming an issue, you will be asked to create an issue for your pull request.
 
 Documentation contributions will only be accepted under these circumstances:
+
+- is relevant to an open issue.
 - adds additional context to the developer experience, such as environment set-up.
 - describes solutions for common error handling.
 - fixes a typo.
@@ -75,6 +76,7 @@ Unwanted documentation changes, such as summarizations, white space edits, or mi
 # The Contribution Process Guide
 
 ### Directions for Contributing to Chayn:
+
 1. [Read the README and Code of Conduct](#1-read-the-readme-and-code-of-conduct)
 2. [Claim an Issue](#2-claim-an-issue)
 3. [Fork the Repo and Create a New Branch](#3-fork-the-repo-and-create-a-new-branch)
@@ -93,34 +95,57 @@ Contributing means you have agreed to our [Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ## 2. **Claim an Issue:**
 
-**First, please ask to be assigned an issue, this helps us keep track of contributor progress. We may deny your PR if the issue is already assigned to someone who asked.**
+To claim an issue, either create an issue to be assigned to OR ask to be assigned an existing issue.
 
-- **If creating an issue:**
-  Check that your issue doesn't already exist and follow our issue templates for creating new issues. For a detailed guide on creating issues, read this guide on GitHub: [Creating an Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue).
-- **If contributing to an existing issue:**
-  Please comment on it asking for the issue to be assigned to you.
+- If multiple people ask to be assigned before a Chayn maintainer can respond, the person who asked first will be assigned.
 
-### How to Use Issue Labels:
+- Multiple people are welcome to collaborate on a single issue.
 
-Note: all unassigned issues are available to contributors, regardless of their label.
+**Important!: All pull requests MUST be associated with a claimed issue. We may deny your pull request if it is not associated with an issue that you're assigned to. Please make sure you are assigned an issue BEFORE making your contribution.**
 
-- Scan our issue `labels` to find issues that suit you:
-  - The `good first issue` and `first-timers-friendly` labels are best for new contributors.
-  - The `help wanted` label indicates that Chayn is inviting contributors to help. While contributors can contribute to any unassigned issue, issues with this label are specifically looking for help outside of Chayn's dev team.
-  - The `complexity: obvious` label is for issues that take less than 1 day to complete, and require little to no prior experience with the codebase.
-  - The `complexity: moderate` label is for issues that may take 1-2 days to complete, and will require some knowledge of the codebase.
-  - The `complexity: advanced` is for issues that may take more time, possibly 3+ days. These will require more in-depth knowledge of the codebase.
-- We suggest starting with issues labeled `good first issue` or `complexity: obvious` to get comfortable with the codebase before moving onto more complex issues.
+### Create Issue:
 
-### How We Manage Issues:
+Have an idea for a contribution? Create your own!
+For more guidance see [GitHub Docs: Creating an Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue).
 
-- Issues can be assigned to multiple people if everyone agrees to collaborate!
-- Consider if an issue would be best broken up into multiple, smaller issues. If so, feel free to create those issues!
-- If an assigned issue is abandoned, we will unassign the issue after tagging you if we receive no response.
-- If you can no longer complete an issue you're assigned to, we understand life happens! Please comment on the issue and we will unassign you.
-- For complex issues, please report your progress in the issue discussions by tagging the issue author or Chayn maintainer who assigned you, and ticking off the checkboxes in the issue description.
+Steps to create an issue to be assigned to:
 
-🤝 **If you need more clarifying information about the issue, please tag us (issue author or Chayn maintainer who assigned the issue to you) to ask questions in the issues discussions at any point during your contribution. We are happy to help! You should hear back from us within 3 days.**
+1. Check that your issue doesn't already exist.
+2. Follow our issue templates for creating new issues.
+3. If your issue is complex, consider breaking it into multiple smaller issues.
+4. Ask to be assigned your issue in the discussion.
+
+See [What kind of contributions does Chayn want?](#what-kind-of-contributions-does-chayn-want) for contribution ideas.
+
+### Claim Existing Issue:
+
+To claim an existing issue, comment in the discussions and ask to be assigned. Ideally you should tag the issue author / Chayn team member.
+
+### How to Select Issues:
+
+Scan our issue `labels` to find issues that suit you:
+
+- The `good first issue` and `first-timers-friendly` labels are best for new contributors.
+- The `help wanted` label indicates that Chayn is inviting contributors to help. While contributors can contribute to any unassigned issue, issues with this label are specifically looking for help outside of Chayn's dev team.
+- The `complexity: beginner` label is for issues that take less than 1 day to complete, and require little to no prior experience with the codebase.
+- The `complexity: moderate` label is for issues that may take 1-2 days to complete, and will require some knowledge of the codebase.
+- The `complexity: advanced` is for issues that may take more time, possibly 3+ days. These will require more in-depth knowledge of the codebase. **Contributors are strongly encouraged to report progress while working on complex issues.**
+
+We suggest starting with issues labeled `good first issue` or `complexity: beginner` to get comfortable with the codebase before moving onto more complex issues.
+
+### Issue Limit Policies
+
+**To ensure we give a fair opportunity to everyone, Chayn maintainers may limit the number of issues you can be assigned.** This allows us to manage our open-source contributions at a sustainble pace and ensure there are always open issues for everyone.
+
+- **Only 1 issue of a specific complexity level in a single repository may be assigned to a contributor at a time.** To be assigned another, you must complete or close your previous issue. For example, a contributor can have 1 beginner issue, 1 intermediate issue, and 1 complex issue open in a single repository at a time. But they cannot have 3 beginner issues open, or 2 intermediate issues open at once in a single repository.
+- **Beginner issues may be capped** at any time to reserve for current events, such as volunteer programs or Hacktoberfest.
+
+### Abandoned Contribution Policy:
+
+We understand that life happens! **If you can no longer finish a contribution, please comment to let us know so we can swiftly reassign.**
+
+- After 60 days of no activity, your issue or pull request will be labeled `stale` and you will be prompted to respond in the discussions.
+- If there is no response, we will unassign the issue and close your pull request.
 
 ## 3. **Fork the Repo and Create a New Branch:**
 
