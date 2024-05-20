@@ -19,15 +19,15 @@ const EmailPref = () => {
   const t = useTranslations('Account.accountSettings.emailPref');
   const tA = useTranslations('Account.accountSettings');
 
-  const cPerms = useTypedSelector(state => state.user.contactPermission)
-  const sPerms = useTypedSelector(state => state.user.serviceEmailsPermission)
+  const contactPermission = useTypedSelector(state => state.user.contactPermission)
+  const servicePermission = useTypedSelector(state => state.user.serviceEmailsPermission)
 
   const onSubmit = useCallback(async (ev: React.FormEvent<HTMLFormElement>) => {
     const formData = new FormData(ev.currentTarget)
     ev.preventDefault()
 
-    const contactPermission = formData.get('cPerms') === 'on'
-    const serviceEmailsPermission = formData.get('sPerms') === 'on'
+    const contactPermission = formData.get('contactPermission') === 'on'
+    const serviceEmailsPermission = formData.get('servicePermission') === 'on'
     const payload = {
       contactPermission, serviceEmailsPermission
     }
@@ -55,9 +55,9 @@ const EmailPref = () => {
                 label={t('checkbox.emailOnChange')}
                 control={
                   <Checkbox
-                    name='cPerms'
+                    name='contactPermission'
                     aria-label={t('checkbox.emailOnChange')}
-                    defaultChecked={cPerms}
+                    defaultChecked={contactPermission}
                   />
                 }
               />
@@ -65,9 +65,9 @@ const EmailPref = () => {
                 label={t('checkbox.emailOnCourse')}
                 control={
                   <Checkbox
-                    name='sPerms'
+                    name='servicePermission'
                     aria-label={t('checkbox.emailOnCourse')}
-                    defaultChecked={sPerms}
+                    defaultChecked={servicePermission}
                   />
                 }
               />
