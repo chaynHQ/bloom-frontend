@@ -49,8 +49,6 @@ const EmailPref = () => {
                     name='cPerms'
                     aria-label={t('checkbox.emailOnChange')}
                     defaultChecked={cPerms}
-                  // checked={contactPerms}
-                  // onClick={() => setContactPerms(curr => !curr)}
                   />
                 }
               />
@@ -61,8 +59,6 @@ const EmailPref = () => {
                     name='sPerms'
                     aria-label={t('checkbox.emailOnCourse')}
                     defaultChecked={sPerms}
-                  // checked={emailPerms}
-                  // onChange={() => setEmailPerms(curr => !curr)}
                   />
                 }
               />
