@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
