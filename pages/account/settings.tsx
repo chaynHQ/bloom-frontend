@@ -1,8 +1,8 @@
-import { Box, Container, Typography, Card, CardContent, } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import ProfileDetailsForm from '../../components/forms/ProfileDetailsForm';
+import ProfileDetails from '../../components/account/ProfileDetails';
 import Link from '../../components/common/Link';
 import { rowStyle } from '../../styles/common';
 import Header from '../../components/layout/Header';
@@ -12,11 +12,6 @@ import EmailPref from '../../components/account/EmailPref';
 const containerStyle = {
   ...rowStyle,
   backgroundColor: 'secondary.light',
-} as const;
-
-const formCardStyle = {
-  width: { xs: '100%', sm: '70%', md: '45%' },
-  alignSelf: 'flex-start',
 } as const;
 
 const AccountSettings: NextPage = () => {
@@ -45,18 +40,7 @@ const AccountSettings: NextPage = () => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={containerStyle}>
-        <Card sx={formCardStyle}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('profile.title')}
-            </Typography>
-            <Typography fontSize="1rem !important">
-              {t('profile.desc')}
-            </Typography>
-            <ProfileDetailsForm />
-          </CardContent>
-        </Card>
-
+        <ProfileDetails />
         <EmailPref />
       </Container>
     </Box>
