@@ -1,5 +1,5 @@
 import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
-//
+
 // Always use BASE_URL const instead of NEXT_PUBLIC_BASE_URL
 // Dynamic vercel preview branches have random wildcard subdomains
 // so NEXT_PUBLIC_ENV doesn't work in staging/preview

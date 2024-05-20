@@ -110,6 +110,7 @@
         "title": "Detalhes do perfil",
         "description": "Atualize seu nome e e-mail entrando em contato com a equipe do bloom"
       },
+      "updateError":"Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
       "actions": {
         "title": "Ações da conta",
         "description": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
