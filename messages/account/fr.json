@@ -110,6 +110,7 @@
         "title": "Détails du profil",
         "desc": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
       },
+      "updateError":"Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {
         "title": "Actions du compte",
         "desc": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",

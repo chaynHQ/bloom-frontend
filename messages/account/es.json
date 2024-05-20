@@ -110,6 +110,7 @@
       "title": "Detalles del perfil",
       "desc": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el equipo de Bloom"
     },
+    "updateError":"Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>",
     "actions": {
       "title": "Acciones de la cuenta",
       "desc": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",

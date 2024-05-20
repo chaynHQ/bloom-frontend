@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
-import { Typography, CardContent, Card, Box } from '@mui/material'
+import { useCallback, useState } from 'react';
+import { Typography, Container, CardContent, Card, Box } from '@mui/material'
 import { Checkbox, FormControl, FormControlLabel, } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useTranslations } from 'next-intl'
 import { useUpdateUserMutation } from '../../app/api';
 import { useTypedSelector } from '../../hooks/store';
+import { ErrorDisplay } from '../../constants/common';
 
 const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
@@ -13,7 +14,10 @@ const formCardStyle = {
 
 const EmailPref = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation()
+  const [error, setError] = useState<ErrorDisplay>();
+
   const t = useTranslations('Account.accountSettings.emailPref');
+  const tA = useTranslations('Account.accountSettings');
 
   const cPerms = useTypedSelector(state => state.user.contactPermission)
   const sPerms = useTypedSelector(state => state.user.serviceEmailsPermission)
@@ -27,8 +31,13 @@ const EmailPref = () => {
     const payload = {
       contactPermission, serviceEmailsPermission
     }
-    updateUser(payload)
-  }, [updateUser])
+
+    try {
+      await updateUser(payload);
+    } catch (error) {
+      setError(tA.rich('updateError'));
+    }
+  }, [updateUser, tA])
 
   return (
     <Card sx={formCardStyle}>
@@ -40,7 +49,7 @@ const EmailPref = () => {
           <Typography fontSize='1rem !important'>
             {t('desc')}
           </Typography>
-          <Box >
+          <Box>
             <FormControl sx={{ marginY: 3, display: 'flex', flexDirection: 'column', gap: 2, }} >
               <FormControlLabel
                 label={t('checkbox.emailOnChange')}
@@ -62,6 +71,11 @@ const EmailPref = () => {
                   />
                 }
               />
+              {error && (
+                <Typography color="error.main" mb={'1rem !important'}>
+                  {error}
+                </Typography>
+              )}
             </FormControl>
           </Box>
           <LoadingButton
