@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Head from 'next/head';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';

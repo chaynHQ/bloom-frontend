@@ -40,8 +40,9 @@ describe('Therapy Usage', () => {
       cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
       cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
       cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
-      cy.get('p', {timeout: 10000}).contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
-    
+      cy.get('p', { timeout: 10000 })
+        .contains('A Bumble code was applied to your account!')
+        .should('exist'); //check form submitted successfully
     });
     it('Check therapy is available and start to book a session', () => {
       cy.visit('/welcome/bumble');

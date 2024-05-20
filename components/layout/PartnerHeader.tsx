@@ -1,6 +1,6 @@
 import { Box, Container } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import { rowStyle } from '../../styles/common';
 import UserResearchBanner from '../banner/UserResearchBanner';
 

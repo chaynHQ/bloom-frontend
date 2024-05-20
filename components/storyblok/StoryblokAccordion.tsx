@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
