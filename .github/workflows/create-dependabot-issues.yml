@@ -19,9 +19,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: ${{ github.event.pull_request.title }}
           body: |
-            Dependabot opened a pull request to update a dependency. Please review it: ${{ github.event.pull_request.html_url }}
+            ### Dependabot opened a pull request to update a dependency. Please review it: ${{ github.event.pull_request.html_url }} 
+            - [ ] Comment on this issue tagging Chayn staff (@kyleecodes) to be assigned as a reviewer on the PR.
+            - [ ] Review the pull request. See GitHub Docs below for guidance. Check the files changed, dependency review, and workflow test runs.
+            - [ ] Verify tests and happy paths are functional by cloning the dependabot branch and running locally. 
+            - [ ] If pull request does not pass tests, suggest changes or write comments in the review.
+            - [ ] When tests pass, approve changes to complete the review, then notify us in issue discussions so we can get this merged.
 
-            - [ ] View the pull request linked in this issue. Check the commits, workflow checks, and files changed.
-            - [ ] Ensure the pull request passes tests. To do this, clone the dependabot branch and run it locally on your computer. Run unit tests, integration tests, and check happy paths.
-            - [ ] If pull request does not pass tests, troubleshoot to find a solution or open another issue.
+            ### Resources
+            GitHub Docs - Reviewing Pull Requests with Dependency Updates: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request
           labels: 'dependencies'
