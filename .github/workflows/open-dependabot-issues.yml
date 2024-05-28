@@ -1,0 +1,39 @@
+name: Create Issues for Dependabot PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [develop]
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    if:  ${{ github.event.pull_request.user.login == 'dependabot[bot]' }} 
+    steps:
+    - name: Create Issue
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const issue_title = `Review Dependabot PR: ${context.payload.pull_request.title}`;
+          const issue_body = `Dependabot has opened a pull request. We need to review it: ${context.payload.pull_request.html_url}`;
+
+          // Fetch all open issues
+          const issues = await github.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open'
+          });
+
+          // Check if there's already an issue for this PR
+          const existingIssue = issues.data.find(issue => issue.title === issue_title);
+
+          // If there's no existing issue, create a new one
+          if (!existingIssue) {
+            await github.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: issue_title,
+              body: issue_body
+            });
+          }
