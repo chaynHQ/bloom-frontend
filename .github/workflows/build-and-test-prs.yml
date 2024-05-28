@@ -1,4 +1,4 @@
-name: Build & test # on both PRs and push to develop/main
+name: Build & test
 
 on:
   pull_request_target:
