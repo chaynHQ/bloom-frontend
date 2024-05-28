@@ -1,0 +1,26 @@
+name: Create Dependabot Issues # from pull requests
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }} 
+    steps:
+      - name: Create issue
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-issue'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: ${{ github.event.pull_request.title }}
+          body: |
+            Dependabot opened a pull request to update a dependency. Please review it: ${{ github.event.pull_request.html_url }}
+
+            - [ ] View the pull request linked in this issue. Check the commits, workflow checks, and files changed.
+            - [ ] Ensure the pull request passes tests. To do this, clone the dependabot branch and run it locally on your computer. Run unit tests, integration tests, and check happy paths.
+            - [ ] If pull request does not pass tests, troubleshoot to find a solution or open another issue.
+          labels: 'dependencies'
