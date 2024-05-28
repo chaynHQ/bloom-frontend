@@ -1,4 +1,4 @@
-name: Build & test 
+name: Build & test
 
 on:
   pull_request_target: # staff approval required to run on public pull requests 
