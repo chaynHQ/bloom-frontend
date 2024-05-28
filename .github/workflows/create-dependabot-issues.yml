@@ -3,6 +3,7 @@ name: Create Dependabot Issues # from pull requests
 on:
   pull_request:
     types: [opened, synchronize]
+    branches: [develop]
 
 jobs:
   create-issue:
