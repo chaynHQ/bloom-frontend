@@ -54,9 +54,11 @@ const ImageTextColumn = (props: ImageTextGridProps) => {
             <Image
               alt={tS(item.illustrationAlt)}
               src={item.illustrationSrc}
-              layout="fill"
-              objectFit="contain"
-            />
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'contain'
+              }} />
           </Box>
           <Typography sx={textStyle}>{t(item.text)}</Typography>
         </Box>

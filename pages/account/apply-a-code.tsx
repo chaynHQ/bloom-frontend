@@ -109,9 +109,11 @@ const ApplyACode: NextPage = () => {
                     <Image
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
-                      layout="fill"
-                      objectFit="contain"
-                    />
+                      fill
+                      sizes="100vw"
+                      style={{
+                        objectFit: 'contain'
+                      }} />
                   </Link>
                 ))}
               </Box>

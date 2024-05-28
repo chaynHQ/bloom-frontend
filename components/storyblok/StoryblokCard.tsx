@@ -117,7 +117,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     <CardContent sx={cardContentStyle}>
       {image && image.filename && (
         <Box sx={imageContainerStyle}>
-          <Image src={image.filename} alt={image.alt} layout="fill" className="image"></Image>
+          <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw"></Image>
         </Box>
       )}
       <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
