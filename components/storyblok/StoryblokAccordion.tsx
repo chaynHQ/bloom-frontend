@@ -74,7 +74,14 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                   marginRight: 2,
                 }}
               >
-                <Image alt={ai.icon.alt} src={ai.icon.filename} layout="fill" objectFit="contain" />
+                <Image
+                  alt={ai.icon.alt}
+                  src={ai.icon.filename}
+                  fill
+                  sizes="100vw"
+                  style={{
+                    objectFit: 'contain'
+                  }} />
               </Icon>
             )}
             {

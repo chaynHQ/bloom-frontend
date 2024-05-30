@@ -99,7 +99,14 @@ const Consent = (props: {}) => {
       flipButtons={true}
     >
       <Box width={[60, 70]} margin="auto" marginBottom={2}>
-        <Image alt={tS('alt.cookieCat')} src={IllustrationCookieCat} layout="responsive" />
+        <Image
+          alt={tS('alt.cookieCat')}
+          src={IllustrationCookieCat}
+          sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto'
+          }} />
       </Box>
       <Box
         marginBottom={2}

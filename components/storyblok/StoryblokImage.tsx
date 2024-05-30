@@ -60,7 +60,7 @@ const StoryblokImage = (props: StoryblokImageProps) => {
       {...storyblokEditable({ _uid, _editable, image, size, alignment })}
       sx={imageContainerStyle}
     >
-      <Image src={image.filename} alt={image.alt} layout="fill" className="image"></Image>
+      <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw"></Image>
     </Box>
   );
 };
