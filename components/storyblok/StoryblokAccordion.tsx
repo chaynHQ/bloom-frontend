@@ -11,7 +11,8 @@ import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
+import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
 const containerStyle = {
@@ -32,7 +33,6 @@ const themes = {
   },
 };
 
-const secondaryStyling = {};
 interface StoryblokAccordionItemProps {
   _uid: string;
   _editable: string;
@@ -48,12 +48,19 @@ interface StoryblokAccordionProps {
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const { _uid, _editable, accordion_items, theme } = props;
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       if (isExpanded) {
-        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle });
-        logEvent(generateAccordionEvent(accordionTitle), { accordionTitle: accordionTitle });
+        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle, ...eventUserData });
+        logEvent(generateAccordionEvent(accordionTitle), {
+          accordionTitle: accordionTitle,
+          ...eventUserData,
+        });
       }
     };
   return (
@@ -80,8 +87,9 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                   fill
                   sizes="100vw"
                   style={{
-                    objectFit: 'contain'
-                  }} />
+                    objectFit: 'contain',
+                  }}
+                />
               </Icon>
             )}
             {
