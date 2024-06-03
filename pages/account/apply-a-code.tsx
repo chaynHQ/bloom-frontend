@@ -2,7 +2,7 @@ import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Link from '../../components/common/Link';
 import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
@@ -109,9 +109,11 @@ const ApplyACode: NextPage = () => {
                     <Image
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
-                      layout="fill"
-                      objectFit="contain"
-                    />
+                      fill
+                      sizes="100vw"
+                      style={{
+                        objectFit: 'contain'
+                      }} />
                   </Link>
                 ))}
               </Box>

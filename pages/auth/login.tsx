@@ -11,7 +11,7 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Link from '../../components/common/Link';
@@ -93,40 +93,38 @@ const Login: NextPage = () => {
   }, [userId, partnerAdmin?.id, router]);
 
   const ExtraContent = () => {
-    return (
-      <>
-        <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
-        </Box>
-        <Typography variant="h3" component="h3">
-          {t('login.newUserTitle')}
-        </Typography>
-        <Typography>
+    return <>
+      <Box sx={imageContainerStyle}>
+        <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} fill sizes="100vw" />
+      </Box>
+      <Typography variant="h3" component="h3">
+        {t('login.newUserTitle')}
+      </Typography>
+      <Typography>
+        <Link
+          onClick={() => {
+            logEvent(GET_STARTED_WITH_BLOOM_CLICKED, eventUserData);
+          }}
+          href="/"
+        >
+          {t('getStartedBloom')}
+        </Link>
+      </Typography>
+
+      {allPartnersContent?.map((partner) => (
+        <Typography key={`${partner.name}-link`} mt={0.5}>
           <Link
+            mt="1rem !important"
+            href={`/welcome/${partner.name.toLowerCase()}`}
             onClick={() => {
-              logEvent(GET_STARTED_WITH_BLOOM_CLICKED, eventUserData);
+              logEvent(generateGetStartedPartnerEvent(partner.name), eventUserData);
             }}
-            href="/"
           >
-            {t('getStartedBloom')}
+            {t.rich('getStartedWith', { partnerName: partner.name })}
           </Link>
         </Typography>
-
-        {allPartnersContent?.map((partner) => (
-          <Typography key={`${partner.name}-link`} mt={0.5}>
-            <Link
-              mt="1rem !important"
-              href={`/welcome/${partner.name.toLowerCase()}`}
-              onClick={() => {
-                logEvent(generateGetStartedPartnerEvent(partner.name), eventUserData);
-              }}
-            >
-              {t.rich('getStartedWith', { partnerName: partner.name })}
-            </Link>
-          </Typography>
-        ))}
-      </>
-    );
+      ))}
+    </>;
   };
 
   return (

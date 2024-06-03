@@ -1,7 +1,7 @@
 import { getAnalytics } from '@firebase/analytics';
 import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
@@ -99,7 +99,14 @@ const Consent = (props: {}) => {
       flipButtons={true}
     >
       <Box width={[60, 70]} margin="auto" marginBottom={2}>
-        <Image alt={tS('alt.cookieCat')} src={IllustrationCookieCat} layout="responsive" />
+        <Image
+          alt={tS('alt.cookieCat')}
+          src={IllustrationCookieCat}
+          sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto'
+          }} />
       </Box>
       <Box
         marginBottom={2}

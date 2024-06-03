@@ -1,6 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 
 const headerContainerStyles = {
@@ -32,7 +32,14 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
         {title}
       </Typography>
       {partnerLogoAlt && partnerLogoSrc && (
-        <Image alt={tS(partnerLogoAlt)} src={partnerLogoSrc} width={200} />
+        <Image
+          alt={tS(partnerLogoAlt)}
+          src={partnerLogoSrc}
+          width={200}
+          style={{
+            maxWidth: '100%',
+            height: 'auto'
+          }} />
       )}
     </Container>
   );

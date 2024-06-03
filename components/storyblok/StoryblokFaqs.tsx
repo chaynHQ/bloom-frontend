@@ -1,7 +1,7 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { FAQ_OPENED } from '../../constants/events';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
@@ -45,7 +45,15 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
         {title}
       </Typography>
       <Box textAlign="center">
-        <Image alt={'alt'} src={illustrationLeafMix} width={125} height={100} />
+        <Image
+          alt={'alt'}
+          src={illustrationLeafMix}
+          width={125}
+          height={100}
+          style={{
+            maxWidth: '100%',
+            height: 'auto'
+          }} />
       </Box>
       {faqs.map((faq, i) => (
         <Accordion

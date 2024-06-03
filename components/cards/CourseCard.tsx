@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
@@ -104,9 +104,11 @@ const CourseCard = (props: CourseCardProps) => {
               <Image
                 alt={course.content.image.alt}
                 src={course.content.image.filename}
-                layout="fill"
-                objectFit="contain"
-              />
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: 'contain'
+                }} />
             </Box>
             <Box flex={1}>
               <Typography component="h3" variant="h3">
@@ -124,9 +126,11 @@ const CourseCard = (props: CourseCardProps) => {
             <Image
               alt={course.content.image.alt}
               src={course.content.image.filename}
-              layout="fill"
-              objectFit="contain"
-            />
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'contain'
+              }} />
           </Box>
           <Box flex={1}>
             <Typography component="h3" variant="h3">

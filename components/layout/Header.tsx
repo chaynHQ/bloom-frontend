@@ -2,7 +2,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -129,7 +129,14 @@ const Header = (props: HeaderProps) => {
         {cta && <Box mt={4}>{cta}</Box>}
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={imageAltText}
+          src={imageSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain'
+          }} />
       </Box>
     </Container>
   );

@@ -1,5 +1,5 @@
 import { Icon, Tab, Tabs } from '@mui/material';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
@@ -45,7 +45,14 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
       marginBottom: 0,
     }}
   >
-    <Image alt={alt} src={src} layout="fill" objectFit="contain" />
+    <Image
+      alt={alt}
+      src={src}
+      fill
+      sizes="100vw"
+      style={{
+        objectFit: 'contain'
+      }} />
   </Icon>
 );
 

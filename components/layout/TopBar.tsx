@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
@@ -58,47 +58,52 @@ const TopBar = () => {
     }
   }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
 
-  return (
-    <>
-      <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
-        <Container sx={appBarContainerStyles}>
-          <Link
-            qa-id="home-logo-link"
-            href={welcomeUrl}
-            aria-label={t('home')}
-            sx={logoContainerStyle}
-            onClick={() => {
-              logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
-            }}
-          >
-            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
-          </Link>
-          <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
-            {!isSmallScreen && <NavigationMenu />}
-            {userToken && <UserMenu />}
-            <LanguageMenu />
-            {!isSmallScreen && !userToken && (
-              <Button
-                variant="contained"
-                size="medium"
-                qa-id="login-menu-button"
-                sx={{ width: 'auto', ml: 1 }}
-                component={Link}
-                href="/auth/login"
-                onClick={() => {
-                  logEvent(HEADER_LOGIN_CLICKED, eventUserData);
-                }}
-              >
-                {t('login')}
-              </Button>
-            )}
-            {isSmallScreen && <NavigationDrawer />}
-          </Box>
-        </Container>
-        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
-      </AppBar>
-    </>
-  );
+  return <>
+    <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
+      <Container sx={appBarContainerStyles}>
+        <Link
+          qa-id="home-logo-link"
+          href={welcomeUrl}
+          aria-label={t('home')}
+          sx={logoContainerStyle}
+          onClick={() => {
+            logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
+          }}
+        >
+          <Image
+            alt={tS('alt.bloomLogo')}
+            src={bloomLogo}
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'contain'
+            }} />
+        </Link>
+        <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
+          {!isSmallScreen && <NavigationMenu />}
+          {userToken && <UserMenu />}
+          <LanguageMenu />
+          {!isSmallScreen && !userToken && (
+            <Button
+              variant="contained"
+              size="medium"
+              qa-id="login-menu-button"
+              sx={{ width: 'auto', ml: 1 }}
+              component={Link}
+              href="/auth/login"
+              onClick={() => {
+                logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+              }}
+            >
+              {t('login')}
+            </Button>
+          )}
+          {isSmallScreen && <NavigationDrawer />}
+        </Box>
+      </Container>
+      {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
+    </AppBar>
+  </>;
 };
 
 export default TopBar;

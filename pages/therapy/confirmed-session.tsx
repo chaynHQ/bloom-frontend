@@ -2,7 +2,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { PartnerAccess } from '../../app/partnerAccessSlice';
 import Faqs from '../../components/common/Faqs';
@@ -86,7 +86,15 @@ const ConfirmedSession: NextPage = () => {
           {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={100} height={100} />
+          <Image
+            alt={tS('alt.leafMix')}
+            src={illustrationLeafMix}
+            width={100}
+            height={100}
+            style={{
+              maxWidth: '100%',
+              height: 'auto'
+            }} />
         </Box>
         <Box sx={faqsContainerStyle}>
           <Faqs

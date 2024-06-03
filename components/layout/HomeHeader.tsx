@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/legacy/image';
+import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';
@@ -83,7 +83,14 @@ const Header = (props: HeaderProps) => {
         {cta && <Box sx={ctaContainerStyle}>{cta}</Box>}
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={imageAltText}
+          src={imageSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain'
+          }} />
       </Box>
     </Container>
   );

@@ -12,7 +12,7 @@ import {
 import { Box } from '@mui/system';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
@@ -117,7 +117,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     <CardContent sx={cardContentStyle}>
       {image && image.filename && (
         <Box sx={imageContainerStyle}>
-          <Image src={image.filename} alt={image.alt} layout="fill" className="image"></Image>
+          <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw"></Image>
         </Box>
       )}
       <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
