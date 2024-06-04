@@ -32,7 +32,14 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
         {title}
       </Typography>
       {partnerLogoAlt && partnerLogoSrc && (
-        <Image alt={tS(partnerLogoAlt)} src={partnerLogoSrc} width={200} />
+        <Image
+          alt={tS(partnerLogoAlt)}
+          src={partnerLogoSrc}
+          width={200}
+          style={{
+            maxWidth: '100%',
+            height: 'auto'
+          }} />
       )}
     </Container>
   );

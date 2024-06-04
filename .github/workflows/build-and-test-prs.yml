@@ -1,4 +1,4 @@
-name: Build & test # on PRs (including forks) and push to develop/main
+name: Build & test
 
 on:
   pull_request_target:
@@ -10,30 +10,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      # Get user permission of workflow triggering actor, return true or false
-      - name: Get Workflow Actor Permission
-        id: checkAccess
-        # Action used: https://github.com/actions-cool/check-user-permission
-        uses: actions-cool/check-user-permission@v2
-        with:
-          require: write
-          username: ${{ github.triggering_actor }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # Check user permission from previous step, exit if false
-      - name: Check Workflow Actor Permission
-        if: steps.checkAccess.outputs.require-result == 'false'
-        run: |
-          echo "${{ github.triggering_actor }} does not have permissions to run workflows on this repo."
-          echo "Current permission level is ${{ steps.checkAccess.outputs.user-permission }}"
-          echo "Job originally triggered by ${{ github.actor }}"
-          exit 1
-      # Checkout PR code
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          # This is dangerous without the first access check
-          ref: ${{  github.event.pull_request.head.sha }}
+      - uses: actions/checkout@v4
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -48,11 +25,14 @@ jobs:
       - name: Use NodeJs
         uses: actions/setup-node@v3
         with:
-          node-version: "20.x"
+          node-version: '20.x'
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile --non-interactive
+
       - name: Run linting
         run: yarn lint
+
       - name: Build app
         run: yarn build
         env:

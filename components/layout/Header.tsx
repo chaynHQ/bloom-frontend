@@ -129,7 +129,14 @@ const Header = (props: HeaderProps) => {
         {cta && <Box mt={4}>{cta}</Box>}
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={imageAltText}
+          src={imageSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain'
+          }} />
       </Box>
     </Container>
   );
