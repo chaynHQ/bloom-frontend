@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Head from 'next/head';
-import Image from "next/image";
+import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';
@@ -40,8 +40,9 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
             fill
             sizes="100vw"
             style={{
-              objectFit: "contain"
-            }} />
+              objectFit: 'contain',
+            }}
+          />
         </Box>
         <Typography variant="h2" component="h2" mb={2}>
           {t('title')}
