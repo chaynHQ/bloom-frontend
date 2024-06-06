@@ -54,8 +54,9 @@ const ImageTextGrid = (props: ImageTextGridProps) => {
               fill
               sizes="100vw"
               style={{
-                objectFit: 'contain'
-              }} />
+                objectFit: 'contain',
+              }}
+            />
           </Box>
           <Typography>{t(item.text)}</Typography>
         </Box>

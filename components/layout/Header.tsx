@@ -135,8 +135,9 @@ const Header = (props: HeaderProps) => {
           fill
           sizes="100vw"
           style={{
-            objectFit: 'contain'
-          }} />
+            objectFit: 'contain',
+          }}
+        />
       </Box>
     </Container>
   );

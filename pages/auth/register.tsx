@@ -104,53 +104,52 @@ const Register: NextPage = () => {
   };
 
   const ExtraContent = () => {
-    return <>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={tS('alt.leafMixDots')}
-          src={illustrationLeafMixDots}
-          fill
-          sizes="100vw" />
-      </Box>
-      {!partnerContent && (
-        // Show the public bloom and all other partner's welcome page links
-        <>
-          <Card sx={publicCardStyle}>
-            <CardContent>
-              <Typography variant="h3" component="h3">
-                {t('register.partnershipsTitle')}
-              </Typography>
-              <Typography>{t('register.partnershipsDescription')}</Typography>
-              <Box sx={logosContainerStyle}>
-                {allPartnersContent?.map((partner) => (
-                  <Link
-                    sx={logoContainerStyle}
-                    key={`${partner.name}-link`}
-                    aria-label={tS(partner.logoAlt)}
-                    mt="1rem !important"
-                    onClick={() =>
-                      logEvent(generatePartnershipPromoLogoClick(partner.name), eventUserData)
-                    }
-                    href={`/welcome/${partner.name.toLowerCase()}${
-                      codeParam && '?code=' + codeParam
-                    }`}
-                  >
-                    <Image
-                      alt={tS(partner.logoAlt)}
-                      src={partner.logo}
-                      fill
-                      sizes="100vw"
-                      style={{
-                        objectFit: 'contain'
-                      }} />
-                  </Link>
-                ))}
-              </Box>
-            </CardContent>
-          </Card>
-        </>
-      )}
-    </>;
+    return (
+      <>
+        <Box sx={imageContainerStyle}>
+          <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} fill sizes="100vw" />
+        </Box>
+        {!partnerContent && (
+          // Show the public bloom and all other partner's welcome page links
+          <>
+            <Card sx={publicCardStyle}>
+              <CardContent>
+                <Typography variant="h3" component="h3">
+                  {t('register.partnershipsTitle')}
+                </Typography>
+                <Typography>{t('register.partnershipsDescription')}</Typography>
+                <Box sx={logosContainerStyle}>
+                  {allPartnersContent?.map((partner) => (
+                    <Link
+                      sx={logoContainerStyle}
+                      key={`${partner.name}-link`}
+                      aria-label={tS(partner.logoAlt)}
+                      mt="1rem !important"
+                      onClick={() =>
+                        logEvent(generatePartnershipPromoLogoClick(partner.name), eventUserData)
+                      }
+                      href={`/welcome/${partner.name.toLowerCase()}${
+                        codeParam && '?code=' + codeParam
+                      }`}
+                    >
+                      <Image
+                        alt={tS(partner.logoAlt)}
+                        src={partner.logo}
+                        fill
+                        sizes="100vw"
+                        style={{
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </Link>
+                  ))}
+                </Box>
+              </CardContent>
+            </Card>
+          </>
+        )}
+      </>
+    );
   };
 
   return (

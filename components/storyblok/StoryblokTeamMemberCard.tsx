@@ -100,8 +100,9 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               fill
               sizes="100vw"
               style={{
-                objectFit: 'cover'
-              }} />
+                objectFit: 'cover',
+              }}
+            />
           </Box>
           <Box sx={cardHeaderStyle}>
             <Box flex={1}>

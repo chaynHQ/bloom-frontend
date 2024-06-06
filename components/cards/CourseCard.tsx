@@ -107,8 +107,9 @@ const CourseCard = (props: CourseCardProps) => {
                 fill
                 sizes="100vw"
                 style={{
-                  objectFit: 'contain'
-                }} />
+                  objectFit: 'contain',
+                }}
+              />
             </Box>
             <Box flex={1}>
               <Typography component="h3" variant="h3">
@@ -129,8 +130,9 @@ const CourseCard = (props: CourseCardProps) => {
               fill
               sizes="100vw"
               style={{
-                objectFit: 'contain'
-              }} />
+                objectFit: 'contain',
+              }}
+            />
           </Box>
           <Box flex={1}>
             <Typography component="h3" variant="h3">

@@ -34,8 +34,9 @@ export const ContentUnavailable = ({ title, message }: ContentUnavailableProps) 
           fill
           sizes="100vw"
           style={{
-            objectFit: 'contain'
-          }} />
+            objectFit: 'contain',
+          }}
+        />
       </Box>
       <Typography variant="h2" component="h2" mb={2}>
         {title}
