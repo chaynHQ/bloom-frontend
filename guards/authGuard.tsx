@@ -1,11 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
-import {
-  setAuthStateLoading,
-  setUserLoading,
-  setUserToken,
-} from '../app/userSlice';
+import { setAuthStateLoading, setUserLoading, setUserToken } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 import useAuth from '../hooks/useAuth';
 
@@ -24,7 +20,7 @@ import generateReturnQuery from '../utils/generateReturnQuery';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 
 export function AuthGuard({ children }: { children: JSX.Element }) {
-  const { onLogout } = useAuth()
+  const { onLogout } = useAuth();
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
@@ -92,7 +88,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
         logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
       }
 
-      await onLogout()
+      await onLogout();
       setLoading(false);
 
       router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);

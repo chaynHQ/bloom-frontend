@@ -32,9 +32,7 @@ const LoginForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNode
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');

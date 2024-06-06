@@ -1,12 +1,8 @@
-import { getAuth, onAuthStateChanged, } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetUserMutation } from '../app/api';
-import {
-  setAuthStateLoading,
-  setUserLoading,
-  setUserToken,
-} from '../app/userSlice';
+import { setAuthStateLoading, setUserLoading, setUserToken } from '../app/userSlice';
 import { GET_AUTH_USER_ERROR, GET_AUTH_USER_SUCCESS } from '../constants/events';
 import { useAppDispatch, useTypedSelector } from '../hooks/store';
 import { getErrorMessage } from '../utils/errorMessage';
@@ -26,7 +22,7 @@ import useAuth from '../hooks/useAuth';
  */
 
 export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
-  const { onLogout } = useAuth()
+  const { onLogout } = useAuth();
   const router = useRouter();
   const dispatch: any = useAppDispatch();
 
@@ -73,7 +69,7 @@ export function PublicPageDataWrapper({ children }: { children: JSX.Element }) {
           logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
         }
 
-        await onLogout()
+        await onLogout();
       }
       setLoading(false);
     }
