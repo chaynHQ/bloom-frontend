@@ -2,9 +2,9 @@
   "Shared": {
     "bloom": "Bloom",
     "leaveSite": {
-      "button":"Sortir du site",
-      "wikiLink":"https://fr.wikipedia.org/wiki/Main_Page",
-      "googleLink":"https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
+      "button": "Sortir du site",
+      "wikiLink": "https://fr.wikipedia.org/wiki/Main_Page",
+      "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
     },
     "navigateBack": "Revenir à la page précédente",
     "navigateTo": "Aller vers",

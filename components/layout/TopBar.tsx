@@ -58,52 +58,55 @@ const TopBar = () => {
     }
   }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
 
-  return <>
-    <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
-      <Container sx={appBarContainerStyles}>
-        <Link
-          qa-id="home-logo-link"
-          href={welcomeUrl}
-          aria-label={t('home')}
-          sx={logoContainerStyle}
-          onClick={() => {
-            logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
-          }}
-        >
-          <Image
-            alt={tS('alt.bloomLogo')}
-            src={bloomLogo}
-            fill
-            sizes="100vw"
-            style={{
-              objectFit: 'contain'
-            }} />
-        </Link>
-        <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
-          {!isSmallScreen && <NavigationMenu />}
-          {userToken && <UserMenu />}
-          <LanguageMenu />
-          {!isSmallScreen && !userToken && (
-            <Button
-              variant="contained"
-              size="medium"
-              qa-id="login-menu-button"
-              sx={{ width: 'auto', ml: 1 }}
-              component={Link}
-              href="/auth/login"
-              onClick={() => {
-                logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+  return (
+    <>
+      <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
+        <Container sx={appBarContainerStyles}>
+          <Link
+            qa-id="home-logo-link"
+            href={welcomeUrl}
+            aria-label={t('home')}
+            sx={logoContainerStyle}
+            onClick={() => {
+              logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
+            }}
+          >
+            <Image
+              alt={tS('alt.bloomLogo')}
+              src={bloomLogo}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'contain',
               }}
-            >
-              {t('login')}
-            </Button>
-          )}
-          {isSmallScreen && <NavigationDrawer />}
-        </Box>
-      </Container>
-      {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
-    </AppBar>
-  </>;
+            />
+          </Link>
+          <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
+            {!isSmallScreen && <NavigationMenu />}
+            {userToken && <UserMenu />}
+            <LanguageMenu />
+            {!isSmallScreen && !userToken && (
+              <Button
+                variant="contained"
+                size="medium"
+                qa-id="login-menu-button"
+                sx={{ width: 'auto', ml: 1 }}
+                component={Link}
+                href="/auth/login"
+                onClick={() => {
+                  logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+                }}
+              >
+                {t('login')}
+              </Button>
+            )}
+            {isSmallScreen && <NavigationDrawer />}
+          </Box>
+        </Container>
+        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
+      </AppBar>
+    </>
+  );
 };
 
 export default TopBar;

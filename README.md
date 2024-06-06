@@ -208,7 +208,7 @@ yarn build
 
 ## Cypress Testing
 
-We use Cypress to perform end-to-end (e2e) tests of platform. 
+We use Cypress to perform end-to-end (e2e) tests of platform.
 See [CYPRESS.md](CYPRESS.md) for set up instructions for Cypress tests.
 
 **Running the https proxy**

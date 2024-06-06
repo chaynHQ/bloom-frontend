@@ -112,8 +112,9 @@ const ApplyACode: NextPage = () => {
                       fill
                       sizes="100vw"
                       style={{
-                        objectFit: 'contain'
-                      }} />
+                        objectFit: 'contain',
+                      }}
+                    />
                   </Link>
                 ))}
               </Box>

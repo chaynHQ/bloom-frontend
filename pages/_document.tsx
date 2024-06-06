@@ -92,9 +92,9 @@ MyDocument.getInitialProps = async (ctx) => {
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: (App: React.ComponentType<React.ComponentProps<AppType> & MyAppProps>) =>
-        (function EnhanceApp(props) {
+        function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
-        }),
+        },
     });
 
   // This is important. It prevents Emotion to render invalid HTML.

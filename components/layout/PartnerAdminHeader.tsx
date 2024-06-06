@@ -38,8 +38,9 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
           width={200}
           style={{
             maxWidth: '100%',
-            height: 'auto'
-          }} />
+            height: 'auto',
+          }}
+        />
       )}
     </Container>
   );
