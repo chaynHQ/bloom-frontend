@@ -107,13 +107,13 @@
         "saveProfile": "Save Profile"
       },
       "profile": {
-        "title":"Profile details",
-        "description":"Update your name and email by getting in touch with the bloom team"
+        "title": "Profile details",
+        "description": "Update your name and email by getting in touch with the bloom team"
       },
-      "updateError":"There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>",
+      "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>",
       "actions": {
-        "title":"Account actions",
-        "description":"Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
+        "title": "Account actions",
+        "description": "Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
         "button": {
           "resetPassword": "Reset password",
           "deleteAccount": "Delete Account",
@@ -127,8 +127,8 @@
           "savePref": "Save email preferences"
         },
         "checkbox": {
-          "emailOnChange": "Allow bloom to send me emails about changes to my account and my feedback",
-          "emailOnCourse": "Allow bloom to send me emails when there is a new course, language or service available"
+          "contactPermissionLabel": "Allow bloom to send me emails about changes to my account and my feedback",
+          "serviceEmailsPermissionLabel": "Allow bloom to send me emails when there is a new course, language or service available"
         },
         "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
       }

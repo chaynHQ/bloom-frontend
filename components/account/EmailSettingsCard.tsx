@@ -1,9 +1,10 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import EmailSettingsForm from '../forms/EmailSettingsForm';
 
 const cardStyle = {
-  width: { xs: '100%', sm: '70%', md: '45%' },
-  alignSelf: 'flex-start',
+  width: { xs: '100%', md: 'auto' },
+  flex: { xs: 'auto', md: 1 },
 } as const;
 
 const EmailSettingsCard = () => {
@@ -16,6 +17,7 @@ const EmailSettingsCard = () => {
           {t('title')}
         </Typography>
         <Typography>{t('description')}</Typography>
+        <EmailSettingsForm />
       </CardContent>
     </Card>
   );

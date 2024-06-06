@@ -3,14 +3,15 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import EmailSettingsCard from '../../components/account/EmailSettingsCard';
-import ProfileSettingsCard from '../../components/account/ProfileSettingsCardCard';
-import Link from '../../components/common/Link';
+import ProfileSettingsCard from '../../components/account/ProfileSettingsCard';
 import Header from '../../components/layout/Header';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
 import { rowStyle } from '../../styles/common';
 
 const containerStyle = {
   ...rowStyle,
+  gap: 6,
+  flexWrap: { xs: 'wrap', md: 'no-wrap' },
   backgroundColor: 'secondary.light',
 } as const;
 
@@ -19,11 +20,7 @@ const AccountSettings: NextPage = () => {
 
   const headerProps = {
     title: t('title'),
-    introduction: t.rich('description', {
-      link: (content) => (
-        <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
-      ),
-    }),
+    introduction: t.rich('description'),
     imageSrc: illustrationPerson5Yellow,
     translatedImageAlt: t('imageAlt'),
   };

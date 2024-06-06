@@ -2,21 +2,21 @@ import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import ProfileSettingsForm from '../forms/ProfileSettingsForm';
 
-const formCardStyle = {
-  width: { xs: '100%', sm: '70%', md: '45%' },
-  alignSelf: 'flex-start',
+const cardStyle = {
+  width: { xs: '100%', md: 'auto' },
+  flex: { xs: 'auto', md: 1 },
 } as const;
 
 const ProfileSettingsCard = () => {
   const t = useTranslations('Account.accountSettings');
 
   return (
-    <Card sx={formCardStyle}>
+    <Card sx={cardStyle}>
       <CardContent>
         <Typography variant="h2" component="h2">
           {t('profile.title')}
         </Typography>
-        <Typography fontSize="1rem !important">{t('profile.description')}</Typography>
+        <Typography>{t('profile.description')}</Typography>
         <ProfileSettingsForm />
       </CardContent>
     </Card>

@@ -110,14 +110,14 @@
         "title": "Detalhes do perfil",
         "description": "Atualize seu nome e e-mail entrando em contato com a equipe do bloom"
       },
-      "updateError":"Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
+      "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
       "actions": {
         "title": "Ações da conta",
         "description": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
         "button": {
           "resetPassword": "Redefinir senha",
           "deleteAccount": "Excluir conta",
-          "cancel":"Cancelar"
+          "cancel": "Cancelar"
         }
       },
       "emailSettings": {
@@ -127,8 +127,8 @@
           "savePref": "Salvar preferências de e-mail"
         },
         "checkbox": {
-          "emailOnChange": "Permitir que o bloom me envie e-mails sobre alterações na minha conta e no meu feedback",
-          "emailOnCourse": "Permitir que o bloom me envie e-mails quando houver um novo curso, idioma ou serviço disponível"
+          "contactPermissionLabel": "Permitir que o bloom me envie e-mails sobre alterações na minha conta e no meu feedback",
+          "serviceEmailsPermissionLabel": "Permitir que o bloom me envie e-mails quando houver um novo curso, idioma ou serviço disponível"
         },
         "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>"
       }

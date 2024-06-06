@@ -1,7 +1,7 @@
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
-import Settings from '@mui/icons-material/Settings';
+import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
@@ -34,7 +34,7 @@ const buttonStyle = {
 } as const;
 
 export default function UserMenu() {
-  const { onLogout } = useAuth()
+  const { onLogout } = useAuth();
 
   const router = useRouter();
   const t = useTranslations('Navigation');
@@ -57,7 +57,7 @@ export default function UserMenu() {
 
   const logout = async () => {
     // clear all state
-    await onLogout()
+    await onLogout();
 
     router.push('/auth/login');
   };
@@ -104,7 +104,7 @@ export default function UserMenu() {
         <MenuItem sx={menuItemStyle}>
           <Button
             component={Link}
-            href='/account/settings'
+            href="/account/settings"
             onClick={handleClose}
             startIcon={<Settings />}
           >

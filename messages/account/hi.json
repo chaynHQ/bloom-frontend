@@ -119,7 +119,7 @@
           "deleteAccount": "Account delete kijiye",
           "cancel": "Cancel"
         }
-      },  
+      },
       "emailSettings": {
         "title": "Email Preferences",
         "description": "Aapke email preferences ko update kijiye aur changes immediately effective honge",
@@ -127,8 +127,8 @@
           "savePref": "Email preferences ko save kijiye"
         },
         "checkbox": {
-          "emailOnChange": "Bloom ko mera account ke changes aur feedback ke baare mein emails bhejne de",
-          "emailOnCourse": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de"
+          "contactPermissionLabel": "Bloom ko mera account ke changes aur feedback ke baare mein emails bhejne de",
+          "serviceEmailsPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de"
         },
         "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
       }
