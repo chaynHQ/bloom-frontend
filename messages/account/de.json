@@ -124,11 +124,11 @@
         "title": "E-Mail-Einstellungen",
         "description": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
         "button": {
-          "savePref": "E-Mail-Einstellungen speichern"
+          "submit": "E-Mail-Einstellungen speichern"
         },
         "checkbox": {
-          "contactPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
-          "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
+          "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
+          "contactPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
         },
         "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
       }

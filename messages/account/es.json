@@ -124,11 +124,11 @@
         "title": "Preferencias de correo electrónico",
         "description": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
         "button": {
-          "savePref": "Guardar preferencias de correo electrónico"
+          "submit": "Guardar preferencias de correo electrónico"
         },
         "checkbox": {
-          "contactPermissionLabel": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
-          "serviceEmailsPermissionLabel": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible"
+          "serviceEmailsPermissionLabel": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
+          "contactPermissionLabel": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible"
         },
         "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
       }

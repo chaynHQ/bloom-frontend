@@ -124,11 +124,11 @@
         "title": "Préférences d'email",
         "description": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
         "button": {
-          "savePref": "Enregistrer les préférences d'email"
+          "submit": "Enregistrer les préférences d'email"
         },
         "checkbox": {
-          "contactPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
-          "serviceEmailsPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
+          "serviceEmailsPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
+          "contactPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
         },
         "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
       }

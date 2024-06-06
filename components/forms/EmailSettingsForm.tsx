@@ -52,16 +52,6 @@ const EmailSettingsForm = () => {
     <form onSubmit={onSubmit}>
       <FormControl sx={formControlStyle}>
         <FormControlLabel
-          label={t('checkbox.contactPermissionLabel')}
-          control={
-            <Checkbox
-              name="contactPermission"
-              aria-label={t('checkbox.contactPermissionLabel')}
-              defaultChecked={contactPermission}
-            />
-          }
-        />
-        <FormControlLabel
           label={t('checkbox.serviceEmailsPermissionLabel')}
           control={
             <Checkbox
@@ -71,21 +61,31 @@ const EmailSettingsForm = () => {
             />
           }
         />
+        <FormControlLabel
+          label={t('checkbox.contactPermissionLabel')}
+          control={
+            <Checkbox
+              name="contactPermission"
+              aria-label={t('checkbox.contactPermissionLabel')}
+              defaultChecked={contactPermission}
+            />
+          }
+        />
         {error && (
-          <Typography color="error.main" mb={'1rem !important'}>
+          <Typography color="error.main" mb="1rem !important">
             {error}
           </Typography>
         )}
       </FormControl>
       <LoadingButton
-        sx={{ mt: 2, mr: 1.5 }}
+        sx={{ mt: 1 }}
         variant="contained"
         fullWidth
         loading={isLoading}
         color="secondary"
         type="submit"
       >
-        {t('button.savePref')}
+        {t('button.submit')}
       </LoadingButton>
     </form>
   );
