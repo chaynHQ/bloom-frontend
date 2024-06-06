@@ -1,8 +1,8 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { getAuth } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useDeleteUserMutation } from '../../app/api';
-import { getAuth } from 'firebase/auth'
 
 const modalStyle = {
   position: 'absolute',
@@ -23,6 +23,9 @@ const modalContentStyle = {
   paddingY: { xs: 4, sm: 6 },
 } as const;
 
+const buttonsContainerStyle = {
+ display: 'inline-flex', width: '100%', flexWrap: 'wrap', marginTop: '20px', gap: 8 
+} as const
 interface Props {
   open: boolean;
   onClose: () => void
@@ -31,15 +34,15 @@ interface Props {
 const DeleteAccountModal = ({ open, onClose }: Props) => {
   const [deleteUser, { isLoading }] = useDeleteUserMutation()
 
-  const onUserDelete = () => {
+  const onUserDelete = async () => {
     const auth = getAuth()
-    const currUser = auth.currentUser
+    const user = auth.currentUser
 
-    if (currUser === null) {
+    if (user === null) {
       return
     }
 
-    deleteUser(currUser)
+    await deleteUser(user)
   }
 
   const t = useTranslations('Account.accountSettings');
@@ -53,19 +56,19 @@ const DeleteAccountModal = ({ open, onClose }: Props) => {
       <Box sx={modalStyle}>
         <Box sx={modalContentStyle}>
           <Typography id='modal-title' component='h2' variant='h2'>
-            {t('actions.button.delAcc')} ?
+            {t('actions.button.deleteAccount')} ?
           </Typography>
           <Typography id='modal-description' fontStyle='italic'>
-            {t('actions.desc')}
+            {t('actions.description')}
           </Typography>
-          <div style={{ display: 'inline-flex', width: '100%', flexWrap: 'wrap', marginTop: '20px', gap: 8 }}>
+          <Box style={buttonsContainerStyle}>
             <LoadingButton
               color='error'
               loading={isLoading}
               onClick={() => onUserDelete()}
               variant='outlined'
             >
-              {t('actions.button.delAcc')}
+              {t('actions.button.deleteAccount')}
             </LoadingButton>
             <Button
               color='secondary'
@@ -74,7 +77,7 @@ const DeleteAccountModal = ({ open, onClose }: Props) => {
             >
               {t('actions.button.cancel')}
             </Button>
-          </div>
+          </Box>
         </Box>
       </Box>
     </Modal>

@@ -1,6 +1,5 @@
 import { Box, TextField } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import * as React from 'react';
 import { useTypedSelector } from '../../hooks/store';
 
 const containerStyle = {
@@ -11,7 +10,7 @@ const ProfileDetailsForm = () => {
   const name = useTypedSelector(state => state.user.name)
   const email = useTypedSelector(state => state.user.email)
 
-  const tA = useTranslations('Account.accountSettings.form');
+  const t = useTranslations('Account.accountSettings.form');
 
   return (
     <Box sx={containerStyle}>
@@ -20,7 +19,7 @@ const ProfileDetailsForm = () => {
           id="name"
           value={name}
           disabled
-          label={tA('nameLabel')}
+          label={t('nameLabel')}
           variant="standard"
           fullWidth
           required
@@ -29,7 +28,7 @@ const ProfileDetailsForm = () => {
           id="email"
           value={email}
           disabled
-          label={tA('emailLabel')}
+          label={t('emailLabel')}
           variant="standard"
           type="email"
           fullWidth

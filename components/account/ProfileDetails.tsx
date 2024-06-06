@@ -1,13 +1,13 @@
-import { Typography, Card, CardContent, } from '@mui/material';
-import ProfileDetailsForm from '../forms/ProfileDetailsForm';
+import { Card, CardContent, Typography, } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import ProfileDetailsForm from '../forms/ProfileDetailsForm';
 
 const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
   alignSelf: 'flex-start',
 } as const;
 
-const ProfileDetails = () => {
+const ProfileSettings = () => {
   const t = useTranslations('Account.accountSettings');
 
   return (
@@ -17,7 +17,7 @@ const ProfileDetails = () => {
           {t('profile.title')}
         </Typography>
         <Typography fontSize="1rem !important">
-          {t('profile.desc')}
+          {t('profile.description')}
         </Typography>
         <ProfileDetailsForm />
       </CardContent>
@@ -25,4 +25,4 @@ const ProfileDetails = () => {
   )
 }
 
-export default ProfileDetails
+export default ProfileSettings

@@ -108,29 +108,28 @@
       },
       "profile": {
         "title": "Détails du profil",
-        "desc": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
+        "description": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
       },
-      "updateError":"Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {
         "title": "Actions du compte",
-        "desc": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
+        "description": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
         "button": {
-          "resetPass": "Réinitialiser le mot de passe",
-          "delAcc": "Supprimer le compte",
+          "resetPassword": "Réinitialiser le mot de passe",
+          "deleteAccount": "Supprimer le compte",
           "cancel": "Annuler"
         }
       },
-      "emailPref": {
+      "emailSettings": {
         "title": "Préférences d'email",
-        "desc": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
+        "description": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
         "button": {
           "savePref": "Enregistrer les préférences d'email"
         },
         "checkbox": {
           "emailOnChange": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
           "emailOnCourse": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
-        }
-      }
+        },
+        "updateError":"Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"      }
     }
   }
 }

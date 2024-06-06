@@ -108,28 +108,28 @@
     },
     "profile": {
       "title": "Detalles del perfil",
-      "desc": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el equipo de Bloom"
+      "description": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el equipo de Bloom"
     },
-    "updateError":"Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>",
     "actions": {
       "title": "Acciones de la cuenta",
-      "desc": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
+      "description": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
       "button": {
-        "resetPass": "Restablecer contraseña",
-        "delAcc": "Eliminar cuenta",
+        "resetPassword": "Restablecer contraseña",
+        "deleteAccount": "Eliminar cuenta",
         "cancel": "Cancelar"
       }
     },
-    "emailPref": {
+    "emailSettings": {
       "title": "Preferencias de correo electrónico",
-      "desc": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
+      "description": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
       "button": {
         "savePref": "Guardar preferencias de correo electrónico"
       },
       "checkbox": {
         "emailOnChange": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
         "emailOnCourse": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible"
-      }
+      },
+      "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
     }
   }
   }

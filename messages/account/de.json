@@ -108,28 +108,28 @@
       },
       "profile": {
         "title": "Profildetails",
-        "desc": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das Bloom-Team wenden"
+        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das Bloom-Team wenden"
       },
-      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
       "actions": {
         "title": "Kontoaktionen",
-        "desc": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
+        "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
         "button": {
-          "resetPass": "Passwort zurücksetzen",
-          "delAcc": "Konto löschen",
+          "resetPassword": "Passwort zurücksetzen",
+          "deleteAccount": "Konto löschen",
           "cancel": "Abbrechen"
         }
       },
-      "emailPref": {
+      "emailSettings": {
         "title": "E-Mail-Einstellungen",
-        "desc": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
+        "description": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
         "button": {
           "savePref": "E-Mail-Einstellungen speichern"
         },
         "checkbox": {
           "emailOnChange": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
           "emailOnCourse": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
-        }
+        },
+        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
       }
     }
   }

@@ -1,4 +1,4 @@
-describe('User should be able to see his profile data in settings', () => {
+describe('Update user profile page', () => {
   const publicEmail = Cypress.env('public_email')
   const publicName = Cypress.env('public_name')
 
@@ -7,17 +7,17 @@ describe('User should be able to see his profile data in settings', () => {
     cy.logInWithEmailAndPassword(publicEmail, Cypress.env('public_password'));
   });
 
-  it('Navigate to the account settings page', () => {
+  it('Should display disabled user email and name fields with user data', () => {
     cy.visit('/account/settings');
-    cy.get('#email', { timeout: 10000 }).should('be.disabled').should('have.value', publicEmail)
-    cy.get('#name', { timeout: 10000 }).should('be.disabled').should('have.value', publicName)
+    cy.get('#email').should('be.disabled').should('have.value', publicEmail)
+    cy.get('#name').should('be.disabled').should('have.value', publicName)
     cy.wait(3000);
   });
 
-  it('Update Email Preferences', () => {
+  it('Should have marketing and service email checkbox fields and submit button', () => {
     cy.visit('/account/settings');
-    cy.get('input[name="contactPermission"]', { timeout: 10000 }).check()
-    cy.get('input[name="servicePermission"]', { timeout: 10000 }).check()
+    cy.get('input[name="contactPermission"]').check()
+    cy.get('input[name="servicePermission"]').check()
     cy.get('button[type="submit"]').contains('Save email preferences').click();
     cy.wait(3000);
   });

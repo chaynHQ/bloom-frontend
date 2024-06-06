@@ -108,28 +108,28 @@
       },
       "profile": {
         "title":"Profile details",
-        "desc":"Update your name and email by getting in touch with the bloom team"
+        "description":"Update your name and email by getting in touch with the bloom team"
       },
-      "updateError":"There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>",
       "actions": {
         "title":"Account actions",
-        "desc":"Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
+        "description":"Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
         "button": {
-          "resetPass": "Reset password",
-          "delAcc": "Delete Account",
+          "resetPassword": "Reset password",
+          "deleteAccount": "Delete Account",
           "cancel": "Cancel"
         }
       },
-      "emailPref": {
-        "title":"Email preferences",
-        "desc":"Update your email preferences here and changes will take effect immediately",
+      "emailSettings": {
+        "title": "Email preferences",
+        "description": "Update your email preferences here and changes will take effect immediately",
         "button": {
           "savePref": "Save email preferences"
         },
         "checkbox": {
           "emailOnChange": "Allow bloom to send me emails about changes to my account and my feedback",
           "emailOnCourse": "Allow bloom to send me emails when there is a new course, language or service available"
-        }
+        },
+        "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
       }
     }
   }

@@ -1,16 +1,16 @@
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
-import Settings from '@mui/icons-material/Settings';
 import Person from '@mui/icons-material/Person';
+import Settings from '@mui/icons-material/Settings';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import useAuth from '../../hooks/useAuth';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
-import useAuth from '../../hooks/useAuth';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -108,7 +108,7 @@ export default function UserMenu() {
             onClick={handleClose}
             startIcon={<Settings />}
           >
-            {t('accSettings')}
+            {t('accountSettings')}
           </Button>
         </MenuItem>
         <MenuItem sx={menuItemStyle}>

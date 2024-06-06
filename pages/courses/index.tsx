@@ -235,7 +235,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
     language: locale || 'en',
     version: preview ? 'draft' : 'published',
     starts_with: 'courses/',
-    sort_by: 'position:desc',
+    sort_by: 'position:description',
     filter_query: {
       component: {
         in: 'Course',

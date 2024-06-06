@@ -2,12 +2,12 @@ import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import ProfileDetails from '../../components/account/ProfileDetails';
+import EmailSettings from '../../components/account/EmailSettings';
+import ProfileSettings from '../../components/account/ProfileSettings';
 import Link from '../../components/common/Link';
-import { rowStyle } from '../../styles/common';
 import Header from '../../components/layout/Header';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
-import EmailPref from '../../components/account/EmailPref';
+import { rowStyle } from '../../styles/common';
 
 const containerStyle = {
   ...rowStyle,
@@ -40,8 +40,8 @@ const AccountSettings: NextPage = () => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={containerStyle}>
-        <ProfileDetails />
-        <EmailPref />
+        <ProfileSettings />
+        <EmailSettings />
       </Container>
     </Box>
   );
