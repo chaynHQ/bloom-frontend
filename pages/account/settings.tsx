@@ -5,14 +5,15 @@ import Head from 'next/head';
 import EmailSettingsCard from '../../components/account/EmailSettingsCard';
 import ProfileSettingsCard from '../../components/account/ProfileSettingsCard';
 import Header from '../../components/layout/Header';
-import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
+import phoneIllustration from '../../public/phone.svg';
 import { rowStyle } from '../../styles/common';
 
 const containerStyle = {
   ...rowStyle,
-  gap: 6,
+  gap: { xs: 2, md: 6 },
   flexWrap: { xs: 'wrap', md: 'no-wrap' },
   backgroundColor: 'secondary.light',
+  paddingTop: { xs: 3, md: 5 },
 } as const;
 
 const AccountSettings: NextPage = () => {
@@ -21,7 +22,7 @@ const AccountSettings: NextPage = () => {
   const headerProps = {
     title: t('title'),
     introduction: t.rich('description'),
-    imageSrc: illustrationPerson5Yellow,
+    imageSrc: phoneIllustration,
     translatedImageAlt: t('imageAlt'),
   };
 
