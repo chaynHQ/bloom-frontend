@@ -5,8 +5,10 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
+import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';
+import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
@@ -21,8 +23,10 @@ const formControlStyle = {
 const EmailSettingsForm = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const t = useTranslations('Account.accountSettings.emailSettings');
+  const tS = useTranslations('Shared');
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
@@ -39,13 +43,19 @@ const EmailSettingsForm = () => {
         serviceEmailsPermission,
       };
 
-      try {
-        await updateUser(payload);
-      } catch (error) {
-        setError(t.rich('updateError'));
+      const response = await updateUser(payload);
+
+      if ((response as any).data.id) {
+        setIsSuccess(true);
+      } else {
+        setError(
+          t.rich('updateError', {
+            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
       }
     },
-    [updateUser, t],
+    [updateUser, t, tS],
   );
 
   return (
@@ -60,6 +70,7 @@ const EmailSettingsForm = () => {
               defaultChecked={serviceEmailsPermission}
             />
           }
+          onInput={() => setIsSuccess(false)}
         />
         <FormControlLabel
           label={t('checkbox.contactPermissionLabel')}
@@ -70,12 +81,9 @@ const EmailSettingsForm = () => {
               defaultChecked={contactPermission}
             />
           }
+          onInput={() => setIsSuccess(false)}
         />
-        {error && (
-          <Typography color="error.main" mb="1rem !important">
-            {error}
-          </Typography>
-        )}
+        {error && <Typography color="error.main">{error}</Typography>}
       </FormControl>
       <LoadingButton
         sx={{ mt: 1 }}
@@ -84,6 +92,8 @@ const EmailSettingsForm = () => {
         loading={isLoading}
         color="secondary"
         type="submit"
+        endIcon={isSuccess ? <CheckCircleOutlined /> : undefined}
+        disabled={isSuccess}
       >
         {t('button.submit')}
       </LoadingButton>
