@@ -2,8 +2,8 @@ import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import EmailSettings from '../../components/account/EmailSettings';
-import ProfileSettings from '../../components/account/ProfileSettings';
+import EmailSettingsCard from '../../components/account/EmailSettingsCard';
+import ProfileSettingsCard from '../../components/account/ProfileSettingsCardCard';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
 import illustrationPerson5Yellow from '../../public/notes_from_bloom_icon.svg';
@@ -40,8 +40,8 @@ const AccountSettings: NextPage = () => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={containerStyle}>
-        <ProfileSettings />
-        <EmailSettings />
+        <ProfileSettingsCard />
+        <EmailSettingsCard />
       </Container>
     </Box>
   );

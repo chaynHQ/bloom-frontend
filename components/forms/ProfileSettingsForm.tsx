@@ -6,15 +6,15 @@ const containerStyle = {
   marginY: 3,
 } as const;
 
-const ProfileDetailsForm = () => {
-  const name = useTypedSelector(state => state.user.name)
-  const email = useTypedSelector(state => state.user.email)
+const ProfileSettingsForm = () => {
+  const name = useTypedSelector((state) => state.user.name);
+  const email = useTypedSelector((state) => state.user.email);
 
   const t = useTranslations('Account.accountSettings.form');
 
   return (
     <Box sx={containerStyle}>
-      <form autoComplete="off" >
+      <form autoComplete="off">
         <TextField
           id="name"
           value={name}
@@ -39,4 +39,4 @@ const ProfileDetailsForm = () => {
   );
 };
 
-export default ProfileDetailsForm;
+export default ProfileSettingsForm;
