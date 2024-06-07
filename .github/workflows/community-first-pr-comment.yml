@@ -1,0 +1,16 @@
+# This workflow comments on PRs opened by first time contributors.
+# Reminds first timer contributors to associate their PR with an issue and follow the guidelines.
+# See for more info: https://github.com/actions/first-interaction
+
+name: First Interaction PR Comment
+
+on: [pull_request]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-message: "First time contributors to Chayn: Please make sure that this PR is linked to an issue you are assigned! We will not merge contributor PRs without a linked assigned issue. Please ask to be assigned an existing issue or create your own before opening a PR. Read our Contributing Guidelines in the CONTRIBUTING.md file for more details. Thank you for your contribution!"
