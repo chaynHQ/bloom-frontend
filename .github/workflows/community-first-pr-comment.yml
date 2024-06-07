@@ -1,5 +1,6 @@
 # This workflow comments on PRs opened by first time contributors.
 # Reminds first timer contributors to associate their PR with an issue and follow the guidelines.
+# See for more info: https://github.com/actions/first-interaction
 
 name: First Interaction PR Comment
 

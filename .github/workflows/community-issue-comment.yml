@@ -1,20 +1,22 @@
 # This workflow handles issue comments.
 
-name: Issue Comments
+name: Issue Assignee Comment
 
 on:
   issues:
     types:
       - assigned
+      - labeled
 
 jobs:
-  # When issue is assigned, comment tags assignee + links to organization contributing file.
+  # When issues are assigned, a comment is posted
+  # Tags the assignee with links to helpful resources
+  # See for more info: https://github.com/actions/github-script
   assigned-comment:
     runs-on: ubuntu-latest
     steps:
       - name: Post assignee issue comment
         id: assigned-comment
-        # see for more info: https://github.com/actions/github-script
         uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
