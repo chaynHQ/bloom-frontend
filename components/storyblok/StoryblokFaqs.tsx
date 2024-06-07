@@ -52,8 +52,9 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
           height={100}
           style={{
             maxWidth: '100%',
-            height: 'auto'
-          }} />
+            height: 'auto',
+          }}
+        />
       </Box>
       {faqs.map((faq, i) => (
         <Accordion

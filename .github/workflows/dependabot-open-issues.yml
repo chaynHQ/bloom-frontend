@@ -1,0 +1,39 @@
+# This workflow opens issues for pull requests opened by dependabot.
+# See for more info: https://github.com/actions-cool/issues-helper
+
+name: Open Dependabot Issues # from pull requests
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [develop]
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    steps:
+      - name: Create issue
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-issue'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: ${{ github.event.pull_request.title }}
+          body: |
+            ### Dependabot opened a pull request to update a dependency. Please review it: ${{ github.event.pull_request.html_url }} 
+            - [ ] Comment on this issue tagging Chayn staff (@kyleecodes) to be assigned this issue.
+            - [ ] If you are a Chayn volunteer, we will assign you as a reviewer to the PR after you've accepted an invite to join this repo as a collaborator.
+            - [ ] Review the pull request. Check dependency files (such as package.json) to verify that the dependency has not already been updated.
+            - [ ] See GitHub Docs below for guidance. Check the files changed, dependency review, and workflow test runs.
+            - [ ] Upgrade the dependency. Please research it instead of simply updating the version numbers, as some upgrades may require code changes.
+            - [ ] Verify tests and happy paths are functional by cloning the dependabot branch and running locally.
+            - [ ] Next, complete the pull request review if you a volunteer, or notify us in issue discussions that you are done reviewing the PR. 
+                - If the dependency upgrade does not pass tests or breaks the app, notify us in issue discussions, or in the pull request review if you're a volunteer. You may work on the required code changes or finish the review as is.
+                - If the dependency upgrade passes tests without breaking the app, notify us in the issue discussions, or approve the pull request if you are a volunteer. Then we'll get the PR merged!
+
+            ### Resources
+            - GitHub Docs - Reviewing Pull Requests with Dependency Updates: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-dependency-changes-in-a-pull-request
+            - GitHub Docs - Reviewing Pull Requests: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
+          labels: 'dependencies'

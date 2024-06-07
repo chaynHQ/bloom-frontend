@@ -47,8 +47,9 @@ const PartnerHeader = (props: HeaderProps) => {
           fill
           sizes="100vw"
           style={{
-            objectFit: 'contain'
-          }} />
+            objectFit: 'contain',
+          }}
+        />
       </Box>
       <Box sx={imageContainerStyle}>
         <Image
@@ -57,8 +58,9 @@ const PartnerHeader = (props: HeaderProps) => {
           fill
           sizes="100vw"
           style={{
-            objectFit: 'contain'
-          }} />
+            objectFit: 'contain',
+          }}
+        />
       </Box>
     </Container>
   );
