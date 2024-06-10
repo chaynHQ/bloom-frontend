@@ -22,7 +22,8 @@ jobs:
       - uses: actions/stale@v9
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-label: "stale"
+          stale-issue-label: "stale"
+          stale-pr-label: "stale"
           days-before-stale: 30
           # disables closing issues
           days-before-issue-close: -1
