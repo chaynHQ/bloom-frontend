@@ -2,9 +2,9 @@
   "Shared": {
     "bloom": "Bloom",
     "leaveSite": {
-      "button":"Salir de este sitio",
-      "wikiLink":"https://es.wikipedia.org/wiki/Main_Page",
-      "googleLink":"https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIL3o0kdGZtpYuWmPJsdgViGguqIqQ:1715343769392&q=lindos+memes+de+animales+beb%C3%A9s&uds=ADvngMiZcBNsMUvkBJ71fvRLrjNSDfHatRp71ALRK88DdPn_U5cJfmQy0nQsEWPbgqovuuacPqaXDpAskRBpixfYX6iW7pxh7UKmo8P_5qdqeEp6lEiE-IwawftPppZcg-CprRgc_b6LVrZrXbMALYl9IWOeBKcbgImK7cQarhDvSdG1ka-WgR-plQTy7Ki1VTkYDKWs51ptDCX3ZkWjnfaO8TQi-bJMPi9j-1KjpFsf7ZbEXlGKQCW8As1Pou09vsHaDlXygxPou7aUpdouBoCcf5ugTO9ovaRgzgA3k2WbH3kREX6X-l4kQb0gQd8lEv7_lI-FduyhL91QYgrvaEwGhpF-27IuNQ&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwjKwarAiYOGAxWZUGwGHbQkCEYQtKgLegQICBAB&biw=1277&bih=659&dpr=1.5"
+      "button": "Salir de este sitio",
+      "wikiLink": "https://es.wikipedia.org/wiki/Main_Page",
+      "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIL3o0kdGZtpYuWmPJsdgViGguqIqQ:1715343769392&q=lindos+memes+de+animales+beb%C3%A9s&uds=ADvngMiZcBNsMUvkBJ71fvRLrjNSDfHatRp71ALRK88DdPn_U5cJfmQy0nQsEWPbgqovuuacPqaXDpAskRBpixfYX6iW7pxh7UKmo8P_5qdqeEp6lEiE-IwawftPppZcg-CprRgc_b6LVrZrXbMALYl9IWOeBKcbgImK7cQarhDvSdG1ka-WgR-plQTy7Ki1VTkYDKWs51ptDCX3ZkWjnfaO8TQi-bJMPi9j-1KjpFsf7ZbEXlGKQCW8As1Pou09vsHaDlXygxPou7aUpdouBoCcf5ugTO9ovaRgzgA3k2WbH3kREX6X-l4kQb0gQd8lEv7_lI-FduyhL91QYgrvaEwGhpF-27IuNQ&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwjKwarAiYOGAxWZUGwGHbQkCEYQtKgLegQICBAB&biw=1277&bih=659&dpr=1.5"
     },
     "navigateBack": "Volver a la página anterior",
     "navigateTo": "Navegar a",

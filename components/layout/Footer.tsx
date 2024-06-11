@@ -136,198 +136,205 @@ const Footer = () => {
     setPartners(partnersList);
   }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
 
-  return <>
-    <Container sx={footerContainerStyle} component="footer">
-      <Box width="100%" mb={3}>
-        <Image
-          alt={tS('alt.bloomLogo')}
-          src={bloomLogo}
-          width={140}
-          height={60}
-          style={{
-            maxWidth: '100%',
-            height: 'auto'
-          }} />
-      </Box>
-      <Box sx={footerContentRowStyle}>
-        <Box sx={getDescriptionContainerStyle(partners.length)}>
-          <Typography>
-            {tS.rich('footer.chaynDescription', {
-              link: (content) => (
-                <Link href="https://www.chayn.co/" target="_blank" fontWeight={600}>
-                  {content}
-                </Link>
-              ),
+  return (
+    <>
+      <Container sx={footerContainerStyle} component="footer">
+        <Box width="100%" mb={3}>
+          <Image
+            alt={tS('alt.bloomLogo')}
+            src={bloomLogo}
+            width={140}
+            height={60}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
+        </Box>
+        <Box sx={footerContentRowStyle}>
+          <Box sx={getDescriptionContainerStyle(partners.length)}>
+            <Typography>
+              {tS.rich('footer.chaynDescription', {
+                link: (content) => (
+                  <Link href="https://www.chayn.co/" target="_blank" fontWeight={600}>
+                    {content}
+                  </Link>
+                ),
+              })}
+            </Typography>
+            <Link
+              display="block"
+              mt={2}
+              href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
+              target="_blank"
+            >
+              {tS('footer.policies')}
+            </Link>
+          </Box>
+          <Box sx={partnersContainerStyle}>
+            {partners.map((partner) => {
+              const socialLinkEvent =
+                partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
+
+              return (
+                <Box key={`${partner.name}_footer`}>
+                  <Link
+                    href={partner.website}
+                    sx={logoContainerStyle}
+                    position="relative"
+                    target="_blank"
+                  >
+                    <Image
+                      alt={tS(partner.logoAlt)}
+                      src={partner.logo}
+                      fill
+                      sizes="100vw"
+                      style={{
+                        objectFit: 'contain',
+                        objectPosition: 'left',
+                      }}
+                    />
+                  </Link>
+                  <Typography variant="body2" component="p">
+                    {tS.rich(partner.footerLine1, {
+                      bold: (chunks) => <b>{chunks}</b>,
+                    })}
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    {tS(partner.footerLine2)}
+                  </Typography>
+                  <Box sx={socialsContainerStyle}>
+                    {partner.facebook && (
+                      <IconButton
+                        href={partner.facebook}
+                        aria-label="Facebook"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, {
+                            ...eventUserData,
+                            social_account: 'Facebook',
+                          })
+                        }
+                      >
+                        <FacebookIcon />
+                      </IconButton>
+                    )}
+                    {partner.instagram && (
+                      <IconButton
+                        href={partner.instagram}
+                        aria-label="Instagram"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, {
+                            ...eventUserData,
+                            social_account: 'Instagram',
+                          })
+                        }
+                      >
+                        <InstagramIcon />
+                      </IconButton>
+                    )}
+                    {partner.twitter && (
+                      <IconButton
+                        href={partner.twitter}
+                        aria-label="Twitter"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
+                        }
+                      >
+                        <TwitterIcon />
+                      </IconButton>
+                    )}
+                    {partner.youtube && (
+                      <IconButton
+                        href={partner.youtube}
+                        aria-label="Youtube"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
+                        }
+                      >
+                        <YoutubeIcon />
+                      </IconButton>
+                    )}
+                    {partner.tiktok && (
+                      <IconButton
+                        href={partner.tiktok}
+                        aria-label="Tiktok"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, {
+                            ...eventUserData,
+                            social_account: 'Tiktok',
+                          })
+                        }
+                      >
+                        <Image
+                          alt={tS('alt.tiktokLogo')}
+                          src={tiktokLogo}
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
+                        />
+                      </IconButton>
+                    )}
+                    {partner.github && (
+                      <IconButton
+                        href={partner.github}
+                        aria-label="Github"
+                        target="_blank"
+                        onClick={() =>
+                          logEvent(socialLinkEvent, {
+                            ...eventUserData,
+                            social_account: 'Github',
+                          })
+                        }
+                      >
+                        <GitHubIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+                </Box>
+              );
             })}
-          </Typography>
-          <Link
-            display="block"
-            mt={2}
-            href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
-            target="_blank"
-          >
-            {tS('footer.policies')}
+          </Box>
+        </Box>
+      </Container>
+      <Container sx={fundingContainerStyle}>
+        <Typography variant="h3" component="p">
+          {tS('footer.fundedByTitle')}
+        </Typography>
+        <Box sx={fundingLogosContainerStyle}>
+          <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
+            <Image
+              alt={tS('alt.comicReliefLogo')}
+              src={comicReliefLogo}
+              width={88}
+              height={64}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
+          </Link>
+          <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
+            <Image
+              alt={tS('alt.communityFundLogo')}
+              src={communityFundLogo}
+              width={170}
+              height={50}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
           </Link>
         </Box>
-        <Box sx={partnersContainerStyle}>
-          {partners.map((partner) => {
-            const socialLinkEvent =
-              partner.name === 'public' ? SOCIAL_LINK_CLICKED : PARTNER_SOCIAL_LINK_CLICKED;
-
-            return (
-              <Box key={`${partner.name}_footer`}>
-                <Link
-                  href={partner.website}
-                  sx={logoContainerStyle}
-                  position="relative"
-                  target="_blank"
-                >
-                  <Image
-                    alt={tS(partner.logoAlt)}
-                    src={partner.logo}
-                    fill
-                    sizes="100vw"
-                    style={{
-                      objectFit: 'contain',
-                      objectPosition: 'left'
-                    }} />
-                </Link>
-                <Typography variant="body2" component="p">
-                  {tS.rich(partner.footerLine1, {
-                    bold: (chunks) => <b>{chunks}</b>,
-                  })}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  {tS(partner.footerLine2)}
-                </Typography>
-                <Box sx={socialsContainerStyle}>
-                  {partner.facebook && (
-                    <IconButton
-                      href={partner.facebook}
-                      aria-label="Facebook"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, {
-                          ...eventUserData,
-                          social_account: 'Facebook',
-                        })
-                      }
-                    >
-                      <FacebookIcon />
-                    </IconButton>
-                  )}
-                  {partner.instagram && (
-                    <IconButton
-                      href={partner.instagram}
-                      aria-label="Instagram"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, {
-                          ...eventUserData,
-                          social_account: 'Instagram',
-                        })
-                      }
-                    >
-                      <InstagramIcon />
-                    </IconButton>
-                  )}
-                  {partner.twitter && (
-                    <IconButton
-                      href={partner.twitter}
-                      aria-label="Twitter"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
-                      }
-                    >
-                      <TwitterIcon />
-                    </IconButton>
-                  )}
-                  {partner.youtube && (
-                    <IconButton
-                      href={partner.youtube}
-                      aria-label="Youtube"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
-                      }
-                    >
-                      <YoutubeIcon />
-                    </IconButton>
-                  )}
-                  {partner.tiktok && (
-                    <IconButton
-                      href={partner.tiktok}
-                      aria-label="Tiktok"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, {
-                          ...eventUserData,
-                          social_account: 'Tiktok',
-                        })
-                      }
-                    >
-                      <Image
-                        alt={tS('alt.tiktokLogo')}
-                        src={tiktokLogo}
-                        style={{
-                          maxWidth: '100%',
-                          height: 'auto'
-                        }} />
-                    </IconButton>
-                  )}
-                  {partner.github && (
-                    <IconButton
-                      href={partner.github}
-                      aria-label="Github"
-                      target="_blank"
-                      onClick={() =>
-                        logEvent(socialLinkEvent, {
-                          ...eventUserData,
-                          social_account: 'Github',
-                        })
-                      }
-                    >
-                      <GitHubIcon />
-                    </IconButton>
-                  )}
-                </Box>
-              </Box>
-            );
-          })}
-        </Box>
-      </Box>
-    </Container>
-    <Container sx={fundingContainerStyle}>
-      <Typography variant="h3" component="p">
-        {tS('footer.fundedByTitle')}
-      </Typography>
-      <Box sx={fundingLogosContainerStyle}>
-        <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
-          <Image
-            alt={tS('alt.comicReliefLogo')}
-            src={comicReliefLogo}
-            width={88}
-            height={64}
-            style={{
-              maxWidth: '100%',
-              height: 'auto'
-            }} />
-        </Link>
-        <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
-          <Image
-            alt={tS('alt.communityFundLogo')}
-            src={communityFundLogo}
-            width={170}
-            height={50}
-            style={{
-              maxWidth: '100%',
-              height: 'auto'
-            }} />
-        </Link>
-      </Box>
-    </Container>
-  </>;
+      </Container>
+    </>
+  );
 };
 
 export default Footer;

@@ -216,8 +216,8 @@ const attachCustomCommands = (Cypress, auth) => {
     currentUser = user;
     token = currentUser
       ? currentUser.getIdToken().then((t) => {
-        token = t;
-      })
+          token = t;
+        })
       : null;
   });
 

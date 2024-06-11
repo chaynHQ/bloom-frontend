@@ -3,10 +3,10 @@ import { BASE_URL } from '../../constants/common';
 import theme from '../../styles/theme';
 
 const descriptionContent =
-  "Learn and heal from trauma in a private, supportive space. Our courses are written and checked by survivors, allies, mental health support workers and therapists from around the world. Healing from trauma can be isolating. We're here for you.";
+  'Join us on your healing journey. Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.';
 const twitterDescriptionContent =
-  'A global tech nonprofit empowering women & marginalised genders facing abuse. Feminist, Survivor-led, Intersectional.';
-const imageContent = `${BASE_URL}/bloom_socials_preview.png`;
+  'Join us on your healing journey. Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.';
+const imageContent = `${BASE_URL}/public/bloom_socials_preview.png`;
 const imageAltContent =
   'An cartoon drawing of a person with almost shoulder length hair against a pink background. They have flowers and leaves coming out of their head. The word "Bloom" hovers above the person.';
 

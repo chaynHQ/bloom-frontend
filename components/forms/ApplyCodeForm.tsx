@@ -73,7 +73,7 @@ const ApplyCodeForm = () => {
         setFormError(t('form.codeErrors.alreadyInUse'));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_APPLIED) {
         setFormError(t('form.codeErrors.alreadyApplied'));
-      }  else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
+      } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
         setFormError(t('form.codeErrors.expired'));
       } else if (
         error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||
