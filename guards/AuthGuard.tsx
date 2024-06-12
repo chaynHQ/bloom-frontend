@@ -5,6 +5,7 @@ import LoadingContainer from '../components/common/LoadingContainer';
 import useAuth from '../hooks/useAuth';
 import useLoadUser from '../hooks/useLoadUser';
 import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
+import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
