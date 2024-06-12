@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/router';
 import LoadingContainer from '../components/common/LoadingContainer';
-import useAuth from '../hooks/useAuth';
 import useLoadUser from '../hooks/useLoadUser';
 import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
@@ -36,7 +35,6 @@ const partiallyPublicPages = [
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
 export function AuthGuard({ children }: { children: JSX.Element }) {
-  const { onLogout } = useAuth();
   const router = useRouter();
 
   const { user, userResourceError } = useLoadUser();

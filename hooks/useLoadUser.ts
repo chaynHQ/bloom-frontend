@@ -3,47 +3,46 @@
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth';
 import { useEffect } from 'react';
-import { api, useGetUserQuery } from '../app/api';
-import { clearCoursesSlice } from '../app/coursesSlice';
-import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
-import {
-  clearUserSlice,
-  setAuthStateLoading,
-  setLoadError,
-  setUserLoading,
-  setUserToken,
-} from '../app/userSlice';
+import { useGetUserQuery } from '../app/api';
+import { setAuthStateLoading, setLoadError, setUserLoading, setUserToken } from '../app/userSlice';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_SUCCESS,
   GET_USER_ERROR,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
+  LOGOUT_FORCED,
+  LOGOUT_SUCCESS,
 } from '../constants/events';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
-import { useAppDispatch, useTypedSelector } from './store';
+import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {
   const auth = getAuth();
   const dispatch: any = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
+  const { clearState } = useStateUtils();
 
   // 1. Listen for firebase auth state or auth token updated, triggered by firebase auth loaded
   // When a user token is available, set the token in state to be used in request headers
   useEffect(() => {
-    const unsubscribe = onIdTokenChanged(auth, async (user) => {
-      const token = await user?.getIdToken();
+    const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
+      const token = await firebaseUser?.getIdToken();
       if (token) {
+        // User logged in or started a new authenticated session
         await dispatch(setUserToken(token));
         await dispatch(setUserLoading(true));
         logEvent(GET_USER_REQUEST); // deprecated event
+      } else if (!firebaseUser && user.token) {
+        // User logged out or token was removed, clear state
+        await clearState();
+        logEvent(LOGOUT_SUCCESS);
       }
       await dispatch(setAuthStateLoading(false)); // triggers step 2
     });
     return () => unsubscribe();
-  }, [auth, dispatch]);
+  }, [user.token, auth, dispatch, clearState]);
 
   // 2. Once firebase auth is complete, get the user database resource
   // skipToken prevents the API query being called unless there is a user token and the user is not already set
@@ -67,26 +66,19 @@ export default function useLoadUser() {
 
   // 3b. Handle get user error
   useEffect(() => {
-    const logoutUser = async () => {
-      signOut(auth);
-      await dispatch(clearPartnerAccessesSlice());
-      await dispatch(clearPartnerAdminSlice());
-      await dispatch(clearCoursesSlice());
-      await dispatch(clearUserSlice());
-      await dispatch(api.util.resetApiState());
-    };
-
     if (userResourceError) {
+      const errorMessage = getErrorMessage(userResourceError) || 'error';
+      signOut(auth);
+      dispatch(setLoadError(errorMessage));
+      dispatch(setUserLoading(false));
+
       (window as any).Rollbar?.error(
         'useLoadUser error: failed to get user resource -',
         userResourceError,
       );
-      const errorMessage = getErrorMessage(userResourceError) || 'error';
       logEvent(GET_AUTH_USER_ERROR, { errorMessage });
       logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
-      logoutUser();
-      dispatch(setLoadError(errorMessage));
-      dispatch(setUserLoading(false));
+      logEvent(LOGOUT_FORCED);
     }
   }, [userResourceError, dispatch, auth]);
 
