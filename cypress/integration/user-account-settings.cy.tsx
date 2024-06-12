@@ -1,4 +1,4 @@
-describe('Update user profile page', () => {
+describe('User account settings page', () => {
   const publicEmail = Cypress.env('public_email');
   const publicName = Cypress.env('public_name');
 
@@ -17,7 +17,7 @@ describe('Update user profile page', () => {
   it('Should have marketing and service email checkbox fields and submit button', () => {
     cy.visit('/account/settings');
     cy.get('input[name="contactPermission"]').check();
-    cy.get('input[name="servicePermission"]').check();
+    cy.get('input[name="serviceEmailsPermission"]').check();
     cy.get('button[type="submit"]').contains('Save email preferences').click();
     cy.wait(3000);
   });
