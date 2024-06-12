@@ -65,7 +65,7 @@ You will need to run this in the background for the frontend to be functional.
 
 - **For Chayn staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-- **For open-source contributors:** create a `env.local` file and populate it with the variables below. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token by visiting our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Tech-volunteer-wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#84635bd9b82543ccaab4fb932ca35ebf). Note: environment variables provided by Chayn are subject to change at any time, check for updates if you are experiencing problems.
+- **For open-source contributors:** create a `env.local` file and populate it with the variables below. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token by visiting our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#bf62b5dcdb43496ea16231ff1815298b). Note: environment variables provided by Chayn are subject to change at any time, check for updates if you are experiencing problems.
 
 ```
 NEXT_PUBLIC_ENV=local
