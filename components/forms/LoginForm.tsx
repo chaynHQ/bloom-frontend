@@ -2,7 +2,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, TextField, Typography } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { useGetUserMutation } from '../../app/api';
@@ -30,17 +29,14 @@ const containerStyle = {
 const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const tS = useTranslations('Shared');
-  const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
-  const [getUser, { isLoading: getUserIsLoading }] = useGetUserMutation();
+  const [getUser] = useGetUserMutation();
   const dispatch: any = useAppDispatch();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -91,7 +87,6 @@ const LoginForm = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
