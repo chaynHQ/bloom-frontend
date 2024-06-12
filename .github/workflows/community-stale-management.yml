@@ -1,0 +1,44 @@
+# This workflow labels stale issues and PRs after 30 days of inactivity.
+# Stale PRs are closed after 1 week of inactivity after labeled stale.
+# See for more info: https://github.com/actions/stale
+
+name: Mark Stale Contributions
+
+on:
+  # Enable manual run from the Actions tab so workflow can be run at any time
+  workflow_dispatch:
+  # Scheduled to run at 12:00 on every Monday
+  schedule:
+    - cron: '0 0 * * MON'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+          days-before-stale: 30
+          # disables closing issues
+          days-before-issue-close: -1
+          # close pr after 1 week no updates after stale warning
+          days-before-pr-close: 7
+          # only scan assigned issues
+          include-only-assigned: true
+          # ignore issues assigned to staff and bots
+          exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions'
+          # disable removing stale label due to irrelevant activity (like branch updates)
+          remove-stale-when-updated: false
+          # exempt dependabot prs from going stale
+          exempt-pr-labels: dependencies
+          # disable counting irrelevant activity (branch updates) towards day counter on prs.
+          ignore-pr-updates: true
+          stale-pr-message: 'As per Chayn policy, after 30 days of inactivity, we will close this PR.'
+          close-pr-message: 'This PR has been closed due to inactivity.'
+          stale-issue-message: 'As per Chayn policy, after 30 days of inactivity, we will be unassigning this issue. Please comment to stay assigned.'
