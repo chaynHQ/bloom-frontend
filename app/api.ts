@@ -68,12 +68,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getUser: builder.mutation<GetUserResponse, string>({
-      query(body) {
+    getUser: builder.query<GetUserResponse, string>({
+      query(params) {
         return {
           url: 'user/me',
-          method: 'POST',
-          body,
+          method: 'GET',
         };
       },
     }),
@@ -212,7 +211,7 @@ export const api = createApi({
 });
 
 export const {
-  useGetUserMutation,
+  useGetUserQuery,
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

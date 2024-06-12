@@ -1,143 +1,74 @@
+'use client';
+
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useGetUserMutation } from '../app/api';
-import { setAuthStateLoading, setUserLoading, setUserToken } from '../app/userSlice';
 import LoadingContainer from '../components/common/LoadingContainer';
 import useAuth from '../hooks/useAuth';
+import useLoadUser from '../hooks/useLoadUser';
+import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
+import { PartnerAdminGuard } from './PartnerAdminGuard';
+import { SuperAdminGuard } from './SuperAdminGuard';
+import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-import { getAuth, onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
-import {
-  GET_AUTH_USER_ERROR,
-  GET_AUTH_USER_REQUEST,
-  GET_AUTH_USER_SUCCESS,
-  GET_USER_ERROR,
-  GET_USER_REQUEST,
-  GET_USER_SUCCESS,
-} from '../constants/events';
-import { useAppDispatch, useTypedSelector } from '../hooks/store';
-import { getErrorMessage } from '../utils/errorMessage';
-import generateReturnQuery from '../utils/generateReturnQuery';
-import logEvent, { getEventUserResponseData } from '../utils/logEvent';
+const publicPathHeads = [
+  '',
+  'index',
+  'welcome',
+  'auth',
+  'action-handler',
+  '404',
+  '500',
+  'faqs',
+  'meet-the-team',
+  'partnership',
+  'about-our-courses',
+];
 
+// As the subpages of courses are not public and these pages are only partially public,
+// they are treated differently as they are not public path heads
+const partiallyPublicPages = [
+  '/courses',
+  '/activities',
+  '/grounding',
+  '/subscription/whatsapp',
+  '/chat',
+];
+
+// Adds required permissions guard to pages, redirecting where required permissions are missing
+// New pages will default to requiring authenticated and public pages must be added to the array above
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const { onLogout } = useAuth();
   const router = useRouter();
-  const dispatch: any = useAppDispatch();
 
-  const user = useTypedSelector((state) => state.user);
+  const { user, userResourceError } = useLoadUser();
+  const unauthenticated =
+    userResourceError || (!user.authStateLoading && !user.loading && !user.id);
 
-  const [verified, setVerified] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [getUser] = useGetUserMutation();
+  // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
+  const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
 
-  const auth = getAuth();
+  // Page does not require authenticated user, return content without guards
+  if (publicPathHeads.includes(pathHead) || partiallyPublicPages.includes(router.asPath)) {
+    return <>{children}</>;
+  }
 
-  // 1. Auth state loads and we check whether there is a user that exists and listen for a token change
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        dispatch(setAuthStateLoading(false));
-        setLoading(false);
-        return;
-      }
-      // user.getIdToken Returns a JSON Web Token (JWT) used to identify the user to a Firebase service.
-      // Returns the current token if it has not expired. Otherwise, this will refresh the token and return a new one.
-      const authToken = await user.getIdToken();
-      dispatch(setUserToken(authToken));
-      dispatch(setAuthStateLoading(false));
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // 2. Add ongoing event listener to check for token changes
-  useEffect(() => {
-    // Add listener for new firebase auth token, updating it in state to be used in request headers
-    // Required for restoring user state following app reload or revisiting site
-
-    onIdTokenChanged(auth, async (user) => {
-      const token = await user?.getIdToken();
-      if (token) {
-        await dispatch(setUserToken(token));
-      }
-    });
-  }, []);
-
-  // Function to get User details from the backend api
-  async function callGetUser() {
-    logEvent(GET_USER_REQUEST); // deprecated event
-    logEvent(GET_AUTH_USER_REQUEST);
-    setUserLoading(true);
-
-    // Gets user from the /user/me endpoint in the backend
-    const userResponse = await getUser('');
-
-    // if there is a response from the /user/me endpoint, it logs success and says it is verified
-    if ('data' in userResponse && userResponse.data.user.id) {
-      const eventUserData = getEventUserResponseData(userResponse.data);
-
-      logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
-      logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
-
-      setVerified(true);
-    } else {
-      // if no user exists, we clear all state and reset api and redirect to login
-      if ('error' in userResponse) {
-        (window as any).Rollbar?.error('Auth guard get user error', userResponse.error);
-        logEvent(GET_USER_ERROR, { message: getErrorMessage(userResponse.error) }); // deprecated event
-        logEvent(GET_AUTH_USER_ERROR, { message: getErrorMessage(userResponse.error) });
-      }
-
-      await onLogout();
-      setLoading(false);
-
-      router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
+  // Page requires authenticated user
+  if (unauthenticated) {
+    if (typeof window !== 'undefined') {
+      router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
     }
   }
 
-  // 3. get user information from the backend
-  useEffect(() => {
-    // Only called where a firebase token exist but user data not loaded, e.g. app reload
-
-    // If auth guard loading state is true, i.e. it has checked
-    // or the getUser request has started but not finished
-    // or the firebase token is being fetched
-    if (user.loading || user.authStateLoading) {
-      return;
+  if (user.id) {
+    if (pathHead === 'therapy') {
+      return <TherapyAccessGuard>{children}</TherapyAccessGuard>;
     }
-
-    // You get past here in 3 states:
-    // 1. When a user is logged out so we never send the getUser request
-    // and the loading/ userloading/ firebaseToken Loading state is never triggered
-    // 2. when a user is logged in, the firebase token has returned, the authguard has not yet been set to loading, at the end of this useEffect
-    // and the get user request hasn't been started.
-    // 3. When the getUser request has been called (i.e. loading is false)
-    // and the getUser request has completed (user.loading is false)
-
-    // If the User state has already been populated and ID from the backend has been given set verified as true
-    if (user.id) {
-      setVerified(true);
-      setLoading(false);
-      return;
+    if (pathHead === 'partner-admin') {
+      return <PartnerAdminGuard>{children}</PartnerAdminGuard>;
     }
-
-    // If the user state does not have a token at all (i.e. is null) and the page is not been set a loading
-    // redirect to the log in page
-    if (!user.token && !user.authStateLoading) {
-      setLoading(false);
-      router.replace(`/auth/login${generateReturnQuery(router.asPath)}`);
-      return;
+    if (pathHead === 'admin') {
+      return <SuperAdminGuard>{children}</SuperAdminGuard>;
     }
-
-    // User firebase token exists but user data doesn't, so reload user data
-    // Handles restoring user data on app reload or revisiting the site
-    callGetUser();
-    setLoading(false);
-  }, [user, loading]);
-
-  if (!verified) {
-    return <LoadingContainer />;
+    return <>{children}</>;
   }
-
-  return <>{children}</>;
+  return <LoadingContainer />;
 }
