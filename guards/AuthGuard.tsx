@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/router';
 import LoadingContainer from '../components/common/LoadingContainer';
+import { useTypedSelector } from '../hooks/store';
 import useLoadUser from '../hooks/useLoadUser';
 import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
@@ -36,10 +37,12 @@ const partiallyPublicPages = [
 // New pages will default to requiring authenticated and public pages must be added to the array above
 export function AuthGuard({ children }: { children: JSX.Element }) {
   const router = useRouter();
+  const userId = useTypedSelector((state) => state.user.id);
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
 
-  const { user, userResourceError } = useLoadUser();
-  const unauthenticated =
-    userResourceError || (!user.authStateLoading && !user.loading && !user.id);
+  const { userResourceError } = useLoadUser();
+  const unauthenticated = userResourceError || (!userAuthLoading && !userLoading && !userId);
 
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
@@ -56,7 +59,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     }
   }
 
-  if (user.id) {
+  if (userId) {
     if (pathHead === 'therapy') {
       return <TherapyAccessGuard>{children}</TherapyAccessGuard>;
     }
