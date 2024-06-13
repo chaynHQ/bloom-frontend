@@ -1,6 +1,7 @@
 # This workflow handles issue comments.
+# See for more info: https://github.com/actions/github-script
 
-name: Issue Assignee Comment
+name: Issue Comments
 
 on:
   issues:
@@ -11,8 +12,8 @@ on:
 jobs:
   # When issues are assigned, a comment is posted
   # Tags the assignee with links to helpful resources
-  # See for more info: https://github.com/actions/github-script
   assigned-comment:
+    if: github.event.action == 'assigned'
     runs-on: ubuntu-latest
     steps:
       - name: Post assignee issue comment
@@ -33,3 +34,23 @@ jobs:
               Support Chayn's mission? ⭐ Please star this repo to help us find more contributors like you!
               Learn more about Chayn [here](https://linktr.ee/chayn) and [explore our projects](https://org.chayn.co/projects). 🌸`
               })
+
+  # When issues are labeled as stale, a comment is posted.
+  # Tags the assignee with warning.
+  # Enables manual issue management in addition to community-stale-management.yml
+  stale-label-comment:
+    if: github.event.action == 'labeled' && github.event.label.name == 'stale'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post stale issue comment
+        id: stale-label-comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `@${context.payload.issue.assignee.login} As per Chayn policy, after 30 days of inactivity, we will be unassigning this issue. Please comment to stay assigned.`
+            })

@@ -412,6 +412,7 @@ theme = createTheme(theme, {
             color: theme.palette.text.primary,
             paddingTop: 0,
             paddingBottom: 0,
+            marginBottom: 'auto',
 
             '&.Mui-checked': {
               color: theme.palette.primary.dark,

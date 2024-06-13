@@ -52,7 +52,7 @@ const ApplyCodeForm = () => {
       partnerAccessCode: codeInput,
     });
 
-    if ('data' in partnerAccessResponse) {
+    if (partnerAccessResponse.data) {
       const eventData = {
         new_partner: partnerAccessResponse.data.partner?.name,
         feature_courses: true,
@@ -66,7 +66,7 @@ const ApplyCodeForm = () => {
       setFormSubmitSuccess(true);
     }
 
-    if ('error' in partnerAccessResponse) {
+    if (partnerAccessResponse.error) {
       const error = getErrorMessage(partnerAccessResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
