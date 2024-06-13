@@ -65,7 +65,7 @@ const LoginForm = () => {
 
     signInWithEmailAndPassword(auth, emailInput, passwordInput)
       .then(async (userCredential) => {
-        await dispatch(setAuthStateLoading(false));
+        await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_LOGIN_USER_REQUEST);
       })
