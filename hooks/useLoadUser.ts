@@ -1,6 +1,5 @@
 'use client';
 
-import { skipToken } from '@reduxjs/toolkit/query/react';
 import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useGetUserQuery } from '../app/api';
@@ -21,7 +20,8 @@ import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 export default function useLoadUser() {
   const auth = getAuth();
   const dispatch: any = useAppDispatch();
-  const user = useTypedSelector((state) => state.user);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const { clearState } = useStateUtils();
 
   // 1. Listen for firebase auth state or auth token updated, triggered by firebase auth loaded
@@ -34,7 +34,7 @@ export default function useLoadUser() {
         await dispatch(setUserToken(token));
         await dispatch(setUserLoading(true));
         logEvent(GET_USER_REQUEST); // deprecated event
-      } else if (!firebaseUser && user.token) {
+      } else if (!firebaseUser && userToken) {
         // User logged out or token was removed, clear state
         await clearState();
         logEvent(LOGOUT_SUCCESS);
@@ -42,16 +42,18 @@ export default function useLoadUser() {
       await dispatch(setAuthStateLoading(false)); // triggers step 2
     });
     return () => unsubscribe();
-  }, [user.token, auth, dispatch, clearState]);
+  }, [userToken, auth, dispatch, clearState]);
 
   // 2. Once firebase auth is complete, get the user database resource
-  // skipToken prevents the API query being called unless there is a user token and the user is not already set
+  // skip property prevents the API query being called unless there is a user token and the user is not already set
   const {
     data: userResource,
     isLoading: userResourceIsLoading,
     isSuccess: userResourceIsSuccess,
     error: userResourceError,
-  } = useGetUserQuery(user.id || !user.token || user.authStateLoading ? skipToken : '');
+  } = useGetUserQuery('', {
+    skip: !userToken || !!userAuthLoading,
+  });
 
   // 3a. Handle get user success
   useEffect(() => {
@@ -83,7 +85,6 @@ export default function useLoadUser() {
   }, [userResourceError, dispatch, auth]);
 
   return {
-    user,
     userResourceIsLoading,
     userResourceError,
   };
