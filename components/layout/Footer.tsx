@@ -140,7 +140,16 @@ const Footer = () => {
     <>
       <Container sx={footerContainerStyle} component="footer">
         <Box width="100%" mb={3}>
-          <Image alt={tS('alt.bloomLogo')} src={bloomLogo} width={140} height={60} />
+          <Image
+            alt={tS('alt.bloomLogo')}
+            src={bloomLogo}
+            width={140}
+            height={60}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         </Box>
         <Box sx={footerContentRowStyle}>
           <Box sx={getDescriptionContainerStyle(partners.length)}>
@@ -178,9 +187,12 @@ const Footer = () => {
                     <Image
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
-                      layout="fill"
-                      objectFit="contain"
-                      objectPosition="left"
+                      fill
+                      sizes="100vw"
+                      style={{
+                        objectFit: 'contain',
+                        objectPosition: 'left',
+                      }}
                     />
                   </Link>
                   <Typography variant="body2" component="p">
@@ -258,7 +270,14 @@ const Footer = () => {
                           })
                         }
                       >
-                        <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} />
+                        <Image
+                          alt={tS('alt.tiktokLogo')}
+                          src={tiktokLogo}
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
+                        />
                       </IconButton>
                     )}
                     {partner.github && (
@@ -289,7 +308,16 @@ const Footer = () => {
         </Typography>
         <Box sx={fundingLogosContainerStyle}>
           <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
-            <Image alt={tS('alt.comicReliefLogo')} src={comicReliefLogo} width={88} height={64} />
+            <Image
+              alt={tS('alt.comicReliefLogo')}
+              src={comicReliefLogo}
+              width={88}
+              height={64}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
           </Link>
           <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
             <Image
@@ -297,6 +325,10 @@ const Footer = () => {
               src={communityFundLogo}
               width={170}
               height={50}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
           </Link>
         </Box>

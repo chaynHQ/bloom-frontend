@@ -71,7 +71,15 @@ const TopBar = () => {
               logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
             }}
           >
-            <Image alt={tS('alt.bloomLogo')} src={bloomLogo} layout="fill" objectFit="contain" />
+            <Image
+              alt={tS('alt.bloomLogo')}
+              src={bloomLogo}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'contain',
+              }}
+            />
           </Link>
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}

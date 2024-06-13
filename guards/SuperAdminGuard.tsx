@@ -33,8 +33,11 @@ export function SuperAdminGuard({ children }: { children: JSX.Element }) {
           <Image
             alt={tS('alt.personTea')}
             src={illustrationPerson4Peach}
-            layout="fill"
-            objectFit="contain"
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'contain',
+            }}
           />
         </Box>
         <Typography variant="h2" component="h2" mb={2}>

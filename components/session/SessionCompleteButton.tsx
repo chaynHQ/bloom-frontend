@@ -39,12 +39,12 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
       storyblokId: storyId,
     });
 
-    if ('data' in completeSessionResponse) {
+    if (completeSessionResponse.data) {
       logEvent(SESSION_COMPLETE_SUCCESS, eventData);
       window.scrollTo(0, 0);
     }
 
-    if ('error' in completeSessionResponse) {
+    if (completeSessionResponse.error) {
       const error = completeSessionResponse.error;
 
       logEvent(SESSION_COMPLETE_ERROR, eventData);

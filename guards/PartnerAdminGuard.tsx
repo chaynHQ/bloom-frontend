@@ -20,16 +20,14 @@ const imageContainerStyle = {
   marginBottom: 4,
 } as const;
 
-export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const t = useTranslations('Therapy.accessGuard');
+export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
+  const partnerAdminId = useTypedSelector((state) => state.partnerAdmin.id);
+  const partnerAdminIsActive = useTypedSelector((state) => state.partnerAdmin.active);
+
+  const t = useTranslations('PartnerAdmin.accessGuard');
   const tS = useTranslations('Shared');
 
-  const therapyAccess = partnerAccesses.find(
-    (partnerAccess) => partnerAccess.featureTherapy === true,
-  );
-
-  if (!therapyAccess) {
+  if (!partnerAdminId || !partnerAdminIsActive) {
     return (
       <Container sx={containerStyle}>
         <Head>{t('title')}</Head>
@@ -37,8 +35,11 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
           <Image
             alt={tS('alt.personTea')}
             src={illustrationPerson4Peach}
-            layout="fill"
-            objectFit="contain"
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'contain',
+            }}
           />
         </Box>
         <Typography variant="h2" component="h2" mb={2}>

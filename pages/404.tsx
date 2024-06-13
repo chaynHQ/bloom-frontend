@@ -39,7 +39,7 @@ const Custom404: NextPage = () => {
         <title>{t('404.title')}</title>
       </Head>
       <Box sx={imageContainerStyle}>
-        <Image alt={t('alt.bloomLogo')} src={bloomHead} layout="fill" />
+        <Image alt={t('alt.bloomLogo')} src={bloomHead} fill sizes="100vw" />
       </Box>
       <Typography variant="h1" component="h1">
         {t('404.title')}
