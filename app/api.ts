@@ -6,7 +6,8 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 import { getAuth } from 'firebase/auth';
-import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
+import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
+import { EventLog } from '../constants/eventLog';
 import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
@@ -207,6 +208,15 @@ export const api = createApi({
         }),
       },
     ),
+    createEventLog: builder.mutation<EventLog, { event: EVENT_LOG_NAME }>({
+      query(body) {
+        return {
+          url: 'event-logger',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -227,4 +237,5 @@ export const {
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
+  useCreateEventLogMutation,
 } = api;
