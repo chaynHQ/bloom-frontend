@@ -91,7 +91,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerAccessCode: codeInput,
     });
 
-    if ('error' in validateCodeResponse) {
+    if (validateCodeResponse.error) {
       const error = getErrorMessage(validateCodeResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
@@ -132,7 +132,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         partnerId: partnerId,
       });
 
-      if ('data' in userResponse && userResponse.data.user.id) {
+      if (userResponse?.data && userResponse.data.user.id) {
         const eventUserData = getEventUserResponseData(userResponse.data);
 
         logEvent(REGISTER_SUCCESS, eventUserData);
@@ -151,7 +151,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         }
       }
 
-      if ('error' in userResponse) {
+      if (userResponse.error) {
         const error = userResponse.error;
         const errorMessage = getErrorMessage(error);
 

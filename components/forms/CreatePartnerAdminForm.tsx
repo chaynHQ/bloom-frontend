@@ -54,11 +54,11 @@ const CreatePartnerAdminForm = () => {
       name,
     });
 
-    if ('data' in partnerAdminResponse) {
+    if (partnerAdminResponse.data) {
       logEvent(CREATE_PARTNER_ADMIN_SUCCESS, eventUserData);
     }
 
-    if ('error' in partnerAdminResponse) {
+    if (partnerAdminResponse.error) {
       const error = partnerAdminResponse.error;
       const errorMessage = getErrorMessage(error);
 
