@@ -3,23 +3,18 @@ import { Box, TextField, Typography } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { useState } from 'react';
-import { useGetUserMutation } from '../../app/api';
-import { setUserLoading, setUserToken } from '../../app/userSlice';
+import { useEffect, useState } from 'react';
+import { setAuthStateLoading } from '../../app/userSlice';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
   GET_LOGIN_USER_SUCCESS,
-  GET_USER_ERROR,
-  GET_USER_REQUEST,
-  GET_USER_SUCCESS,
   LOGIN_ERROR,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
 } from '../../constants/events';
-import { useAppDispatch } from '../../hooks/store';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import logEvent from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -29,61 +24,50 @@ const containerStyle = {
 const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const tS = useTranslations('Shared');
+  const dispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const userId = useTypedSelector((state) => state.user.id);
+  const userLoading = useTypedSelector((state) => state.user.loading);
+  const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const userLoadError = useTypedSelector((state) => state.user.loadError);
+
   const [formError, setFormError] = useState<
     string | React.ReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
-  const [getUser] = useGetUserMutation();
-  const dispatch: any = useAppDispatch();
+
+  useEffect(() => {
+    if (userId) {
+      logEvent(GET_LOGIN_USER_SUCCESS);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (userLoadError) {
+      logEvent(GET_LOGIN_USER_ERROR, { message: userLoadError });
+
+      setFormError(
+        t.rich('getUserError', {
+          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+        }),
+      );
+    }
+  }, [userLoadError, t, tS]);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
-    setFormError('');
+    await dispatch(setAuthStateLoading(true));
+    await setFormError('');
     logEvent(LOGIN_REQUEST);
 
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, emailInput, passwordInput)
       .then(async (userCredential) => {
+        await dispatch(setAuthStateLoading(false));
         logEvent(LOGIN_SUCCESS);
-        logEvent(GET_USER_REQUEST); // deprecated event
         logEvent(GET_LOGIN_USER_REQUEST);
-        dispatch(setUserLoading(true));
-
-        const token = await userCredential.user?.getIdToken();
-
-        if (token) {
-          await dispatch(setUserToken(token));
-        }
-
-        const userResponse = await getUser('');
-
-        if ('data' in userResponse) {
-          const eventUserData = getEventUserResponseData(userResponse.data);
-          logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
-          logEvent(GET_LOGIN_USER_SUCCESS, eventUserData);
-
-          dispatch(setUserLoading(false));
-          setLoading(false);
-        }
-        if ('error' in userResponse) {
-          const errorMessage = getErrorMessage(userResponse.error);
-          logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
-          logEvent(GET_LOGIN_USER_ERROR, { message: errorMessage });
-          (window as any).Rollbar?.error('User login get user error', userResponse.error);
-
-          setFormError(
-            t.rich('getUserError', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-            }),
-          );
-          dispatch(setUserLoading(false));
-          setLoading(false);
-        }
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -97,7 +81,6 @@ const LoginForm = () => {
         if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
           setFormError(t('firebase.authError'));
         }
-        setLoading(false);
 
         if (
           errorCode !== 'auth/too-many-requests' &&
@@ -107,9 +90,10 @@ const LoginForm = () => {
         ) {
           logEvent(LOGIN_ERROR, { message: errorCode });
           (window as any).Rollbar?.error('User login firebase error', error);
-          throw error;
         }
       });
+
+    await dispatch(setAuthStateLoading(false));
   };
 
   return (
@@ -145,7 +129,7 @@ const LoginForm = () => {
           fullWidth
           color="secondary"
           type="submit"
-          loading={loading}
+          loading={userAuthLoading || userLoading}
         >
           {t('loginSubmit')}
         </LoadingButton>

@@ -5,6 +5,7 @@ import { PartnerAccesses } from './partnerAccessSlice';
 
 export interface User {
   loading: boolean;
+  loadError: string | null;
   token: string | null;
   id: string | null;
   createdAt: Date | null;
@@ -58,6 +59,7 @@ export interface Subscriptions extends Array<Subscription> {}
 
 const initialState: User = {
   loading: false,
+  loadError: null,
   token: null,
   id: null,
   createdAt: null,
@@ -90,6 +92,9 @@ const slice = createSlice({
     },
     setAuthStateLoading(state, action: PayloadAction<boolean>) {
       state.authStateLoading = action.payload;
+    },
+    setLoadError(state, action: PayloadAction<string>) {
+      state.loadError = action.payload;
     },
   },
 
@@ -140,5 +145,6 @@ const isSubscriptionActive = (subscription: Subscription): subscription is Activ
 };
 
 const { actions, reducer } = slice;
-export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading } = actions;
+export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading, setLoadError } =
+  actions;
 export default reducer;

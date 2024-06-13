@@ -3,12 +3,15 @@ import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
+import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import * as React from 'react';
-import { HEADER_ACCOUNT_ICON_CLICKED, HEADER_APPLY_A_CODE_CLICKED } from '../../constants/events';
+import {
+  HEADER_ACCOUNT_ICON_CLICKED,
+  HEADER_APPLY_A_CODE_CLICKED,
+  LOGOUT_REQUEST,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import useAuth from '../../hooks/useAuth';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -34,9 +37,6 @@ const buttonStyle = {
 } as const;
 
 export default function UserMenu() {
-  const { onLogout } = useAuth();
-
-  const router = useRouter();
   const t = useTranslations('Navigation');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -55,11 +55,11 @@ export default function UserMenu() {
     setAnchorEl(null);
   };
 
-  const logout = async () => {
-    // clear all state
-    await onLogout();
-
-    router.push('/auth/login');
+  const logout = () => {
+    logEvent(LOGOUT_REQUEST);
+    const auth = getAuth();
+    signOut(auth);
+    // logout flow is completed in useLoadUser - triggered by firebase token listener
   };
 
   return (
