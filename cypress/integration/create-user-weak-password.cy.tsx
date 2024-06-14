@@ -1,8 +1,5 @@
-import { useTranslations } from 'next-intl';
-
 describe('Create User', () => {
   let username = `cypresstestemail+${Date.now()}@chayn.co`;
-  const t = useTranslations('Auth.form');
   before(() => {
     cy.cleanUpTestState();
   });
@@ -22,7 +19,9 @@ describe('Create User', () => {
     cy.get('#password', { timeout: 10000 }).type('123');
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.wait(3000);
-    cy.get('p', { timeout: 10000 }).should('contain', t('firebase.weakPassword')
+    cy.get('p', { timeout: 10000 }).should(
+      'contain',
+      "Your password needs to be a little longer, so it's more secure.",
     );
   });
 });

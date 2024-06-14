@@ -1,9 +1,5 @@
-import { useTranslations } from 'next-intl';
-
 describe('Create User', () => {
   let username = `test@test`;
-  const t = useTranslations('Auth.form');
-
   before(() => {
     cy.cleanUpTestState();
   });
@@ -23,6 +19,9 @@ describe('Create User', () => {
     cy.get('#password', { timeout: 10000 }).type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.wait(3000);
-    cy.get('p', { timeout: 10000 }).should('contain', t('firebase.invalidEmail'));
+    cy.get('p', { timeout: 10000 }).should(
+      'contain',
+      'Your email appears to be invalid, fix any typos to continue.',
+    );
   });
 });
