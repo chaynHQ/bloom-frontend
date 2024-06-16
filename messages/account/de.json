@@ -97,6 +97,41 @@
       "title": "Bloom-E-Mails deaktiviert",
       "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.</link>",
       "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.</link>"
+    },
+    "accountSettings": {
+      "title": "Kontoeinstellungen",
+      "description": "Einstellungen in Bloom anzeigen und aktualisieren",
+      "form": {
+        "emailLabel": "E-Mail",
+        "nameLabel": "Name",
+        "saveProfile": "Profil speichern"
+      },
+      "profile": {
+        "title": "Profildetails",
+        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das Bloom-Team wenden"
+      },
+      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
+      "actions": {
+        "title": "Kontoaktionen",
+        "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
+        "button": {
+          "resetPassword": "Passwort zurücksetzen",
+          "deleteAccount": "Konto löschen",
+          "cancel": "Abbrechen"
+        }
+      },
+      "emailSettings": {
+        "title": "E-Mail-Einstellungen",
+        "description": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
+        "button": {
+          "submit": "E-Mail-Einstellungen speichern"
+        },
+        "checkbox": {
+          "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
+          "contactPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
+        },
+        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
+      }
     }
   }
 }

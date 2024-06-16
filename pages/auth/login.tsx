@@ -96,7 +96,7 @@ const Login: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} layout="fill" />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} fill sizes="100vw" />
         </Box>
         <Typography variant="h3" component="h3">
           {t('login.newUserTitle')}

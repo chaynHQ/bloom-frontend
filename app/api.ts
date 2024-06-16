@@ -6,7 +6,8 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 import { getAuth } from 'firebase/auth';
-import { PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
+import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
+import { EventLog } from '../constants/eventLog';
 import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
@@ -68,12 +69,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getUser: builder.mutation<GetUserResponse, string>({
-      query(body) {
+    getUser: builder.query<GetUserResponse, string>({
+      query(params) {
         return {
           url: 'user/me',
-          method: 'POST',
-          body,
+          method: 'GET',
         };
       },
     }),
@@ -208,13 +208,23 @@ export const api = createApi({
         }),
       },
     ),
+    createEventLog: builder.mutation<EventLog, { event: EVENT_LOG_NAME }>({
+      query(body) {
+        return {
+          url: 'event-logger',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
 export const {
-  useGetUserMutation,
+  useGetUserQuery,
   useAddUserMutation,
   useUpdateUserMutation,
+  useDeleteUserMutation,
   useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,
@@ -227,4 +237,5 @@ export const {
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
+  useCreateEventLogMutation,
 } = api;

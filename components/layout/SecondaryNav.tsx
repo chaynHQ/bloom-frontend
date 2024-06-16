@@ -45,7 +45,15 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
       marginBottom: 0,
     }}
   >
-    <Image alt={alt} src={src} layout="fill" objectFit="contain" />
+    <Image
+      alt={alt}
+      src={src}
+      fill
+      sizes="100vw"
+      style={{
+        objectFit: 'contain',
+      }}
+    />
   </Icon>
 );
 

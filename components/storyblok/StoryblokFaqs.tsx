@@ -45,7 +45,16 @@ const StoryblokFaqs = (props: StoryblokFaqsProps) => {
         {title}
       </Typography>
       <Box textAlign="center">
-        <Image alt={'alt'} src={illustrationLeafMix} width={125} height={100} />
+        <Image
+          alt={'alt'}
+          src={illustrationLeafMix}
+          width={125}
+          height={100}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </Box>
       {faqs.map((faq, i) => (
         <Accordion

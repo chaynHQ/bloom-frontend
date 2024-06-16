@@ -31,8 +31,11 @@ export const ContentUnavailable = ({ title, message }: ContentUnavailableProps) 
         <Image
           alt={t('alt.personTea')}
           src={illustrationPerson4Peach}
-          layout="fill"
-          objectFit="contain"
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain',
+          }}
         />
       </Box>
       <Typography variant="h2" component="h2" mb={2}>

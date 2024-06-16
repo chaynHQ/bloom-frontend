@@ -97,6 +97,41 @@
       "title": "Bloom emails turned off",
       "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please <link>get in touch with the Bloom team.</link>",
       "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+    },
+    "accountSettings": {
+      "title": "Account Settings",
+      "description": "View and update your settings in bloom",
+      "form": {
+        "emailLabel": "Email",
+        "nameLabel": "Name",
+        "saveProfile": "Save Profile"
+      },
+      "profile": {
+        "title": "Profile details",
+        "description": "Update your name and email by getting in touch with the bloom team"
+      },
+      "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>",
+      "actions": {
+        "title": "Account actions",
+        "description": "Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
+        "button": {
+          "resetPassword": "Reset password",
+          "deleteAccount": "Delete Account",
+          "cancel": "Cancel"
+        }
+      },
+      "emailSettings": {
+        "title": "Email preferences",
+        "description": "Update your email preferences here and changes will take effect immediately",
+        "button": {
+          "submit": "Save email preferences"
+        },
+        "checkbox": {
+          "serviceEmailsPermissionLabel": "Allow bloom to send me emails about changes to my account and my feedback",
+          "contactPermissionLabel": "Allow bloom to send me emails when there is a new course, language or service available"
+        },
+        "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+      }
     }
   }
 }
