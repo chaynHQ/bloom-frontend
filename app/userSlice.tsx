@@ -37,6 +37,7 @@ export interface GetUserDto {
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
+    isActive?: boolean;
     activeSubscriptions?: ActiveSubscription[];
   };
   partnerAccesses: PartnerAccesses;
