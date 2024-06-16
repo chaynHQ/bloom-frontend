@@ -25,6 +25,11 @@
       "successDescription": "User therapy sessions updated!",
       "error": "Error updating therapy sessions: ",
       "reset": "Update another user"
+    },
+    "updatePartner": {
+      "title": "Update partner admin",
+      "emailLabel": "Type at least 4 letters",
+      "activeAdminLabel": "Partner admin is currently active"
     }
   }
 }
