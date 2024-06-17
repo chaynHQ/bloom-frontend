@@ -4,7 +4,9 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useCreateEventLogMutation } from '../../app/api';
 import { setAuthStateLoading } from '../../app/userSlice';
+import { EVENT_LOG_NAME } from '../../constants/enums';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -37,6 +39,8 @@ const LoginForm = () => {
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
 
+  const [createEventLog] = useCreateEventLogMutation();
+
   useEffect(() => {
     if (userId) {
       logEvent(GET_LOGIN_USER_SUCCESS);
@@ -65,6 +69,7 @@ const LoginForm = () => {
 
     signInWithEmailAndPassword(auth, emailInput, passwordInput)
       .then(async (userCredential) => {
+        createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });
         await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
         logEvent(LOGIN_SUCCESS);
         logEvent(GET_LOGIN_USER_REQUEST);
