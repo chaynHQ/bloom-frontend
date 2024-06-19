@@ -108,7 +108,7 @@
       },
       "profile": {
         "title": "Détails du profil",
-        "description": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
+        "description": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe <link>Bloom</link>"
       },
       "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {

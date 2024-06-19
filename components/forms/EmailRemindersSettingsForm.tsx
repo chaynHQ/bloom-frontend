@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
@@ -33,26 +33,75 @@ const radioGroupStyle = {
     paddingY: 0.75,
   },
 } as const;
+
+interface EmailRemindersSettingsFormControlProps {
+  selectedInput: EMAIL_REMINDERS_FREQUENCY | undefined;
+  setSelectedInput: Dispatch<SetStateAction<EMAIL_REMINDERS_FREQUENCY | undefined>>;
+}
+
+export const EmailRemindersSettingsFormControl = (
+  props: EmailRemindersSettingsFormControlProps,
+) => {
+  const { selectedInput, setSelectedInput } = props;
+
+  const emailRemindersFrequency = useTypedSelector((state) => state.user.emailRemindersFrequency);
+  const t = useTranslations('Account.accountSettings.emailRemindersSettings');
+
+  return (
+    <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mt: 3, mb: 1 }}>
+      <FormLabel sx={{ mb: 0.5 }}>{t('fieldLabel')}</FormLabel>
+      <RadioGroup
+        sx={radioGroupStyle}
+        aria-label=""
+        name="email-reminders-settings"
+        onChange={(e) => setSelectedInput(e.target.value as EMAIL_REMINDERS_FREQUENCY)}
+        value={selectedInput ? selectedInput : emailRemindersFrequency}
+      >
+        <FormControlLabel
+          value={EMAIL_REMINDERS_FREQUENCY.TWO_WEEKS}
+          control={<Radio />}
+          label={t('twoWeeksLabel')}
+        />
+        <FormControlLabel
+          value={EMAIL_REMINDERS_FREQUENCY.ONE_MONTH}
+          control={<Radio />}
+          label={t('oneMonthLabel')}
+        />
+        <FormControlLabel
+          value={EMAIL_REMINDERS_FREQUENCY.TWO_MONTHS}
+          control={<Radio />}
+          label={t('twoMonthsLabel')}
+        />
+        <FormControlLabel
+          value={EMAIL_REMINDERS_FREQUENCY.NEVER}
+          control={<Radio />}
+          label={t('neverLabel')}
+        />
+      </RadioGroup>
+    </FormControl>
+  );
+};
+
 const EmailRemindersSettingsForm = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [selectedInput, setSelectedInput] = useState<EMAIL_REMINDERS_FREQUENCY>();
 
-  const emailRemindersFrequency = useTypedSelector((state) => state.user.emailRemindersFrequency);
-
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
   const tS = useTranslations('Shared');
 
-  const onInputChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedInput(event.target.value as EMAIL_REMINDERS_FREQUENCY);
-    if (isSuccess) {
-      setIsSuccess(false);
+  useEffect(() => {
+    // Reset success and error states if new input selected
+    if (selectedInput) {
+      if (isSuccess) {
+        setIsSuccess(false);
+      }
+      if (error) {
+        setError(undefined);
+      }
     }
-    if (error) {
-      setError(undefined);
-    }
-  };
+  }, [selectedInput, isSuccess, error]);
 
   const onSubmit = useCallback(
     async (ev: React.FormEvent<HTMLFormElement>) => {
@@ -80,44 +129,16 @@ const EmailRemindersSettingsForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mt: 3, mb: 1 }}>
-        <FormLabel component="legend">{t('fieldLabel')}</FormLabel>
-        <RadioGroup
-          sx={radioGroupStyle}
-          aria-label=""
-          name="email-reminders-settings"
-          onChange={(e) => onInputChanged(e)}
-          value={selectedInput ? selectedInput : emailRemindersFrequency}
-        >
-          <FormControlLabel
-            value={EMAIL_REMINDERS_FREQUENCY.TWO_WEEKS}
-            control={<Radio />}
-            label={t('twoWeeksLabel')}
-          />
-          <FormControlLabel
-            value={EMAIL_REMINDERS_FREQUENCY.ONE_MONTH}
-            control={<Radio />}
-            label={t('oneMonthLabel')}
-          />
-          <FormControlLabel
-            value={EMAIL_REMINDERS_FREQUENCY.TWO_MONTHS}
-            control={<Radio />}
-            label={t('twoMonthsLabel')}
-          />
-          <FormControlLabel
-            value={EMAIL_REMINDERS_FREQUENCY.NEVER}
-            control={<Radio />}
-            label={t('neverLabel')}
-          />
-        </RadioGroup>
-      </FormControl>
-
+      <EmailRemindersSettingsFormControl
+        selectedInput={selectedInput}
+        setSelectedInput={setSelectedInput}
+      />
       <Typography variant="body2" color={error ? 'error.main' : 'text.main'}>
         {error || t('update')}
       </Typography>
 
       <LoadingButton
-        sx={{ mt: 2 }}
+        sx={{ mt: 3 }}
         variant="contained"
         fullWidth
         loading={isLoading}

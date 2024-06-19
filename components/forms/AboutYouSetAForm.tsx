@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useUpdateUserMutation } from '../../app/api';
+import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -15,6 +17,7 @@ import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/c
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { EmailRemindersSettingsFormControl } from './EmailRemindersSettingsForm';
 
 const actionsStyle = {
   ...rowStyle,
@@ -27,12 +30,17 @@ const DEFAULT_SCALE_START = 3;
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
+  const tAccount = useTranslations('Account.accountSettings.emailRemindersSettings');
 
   const router = useRouter();
+  const [updateUser] = useUpdateUserMutation();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [hopesInput, setHopesInput] = useState<string>('');
+  const [emailRemindersSettingInput, setEmailRemindersSettingInput] = useState<
+    EMAIL_REMINDERS_FREQUENCY | undefined
+  >();
   const [scale1Input, setScale1Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale2Input, setScale2Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale3Input, setScale3Input] = useState<number>(DEFAULT_SCALE_START);
@@ -68,6 +76,12 @@ const AboutYouSetAForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+
+    if (emailRemindersSettingInput) {
+      await updateUser({
+        emailRemindersFrequency: emailRemindersSettingInput,
+      });
+    }
 
     logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
 
@@ -152,6 +166,16 @@ const AboutYouSetAForm = () => {
             />
           </FormControl>
         ))}
+
+        {/* Additional user setting for email reminders frequency */}
+        <Typography mt={3} mb={1.5}>
+          {tAccount('introduction')}
+        </Typography>
+        <Typography>{tAccount('description')}</Typography>
+        <EmailRemindersSettingsFormControl
+          selectedInput={emailRemindersSettingInput}
+          setSelectedInput={setEmailRemindersSettingInput}
+        />
 
         {formError && (
           <Typography color="error.main" mb={2}>

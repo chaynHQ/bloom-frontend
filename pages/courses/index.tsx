@@ -4,6 +4,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import { EmailRemindersSettingsBanner } from '../../components/banner/EmailRemindersSettingsBanner';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
@@ -226,6 +227,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           </Box>
         )}
       </Container>
+      <EmailRemindersSettingsBanner />
     </Box>
   );
 };
@@ -254,6 +256,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/courses/${locale}.json`),
+        ...require(`../../messages/account/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
