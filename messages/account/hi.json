@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Account Settings",
       "description": "Aapke settings ko dekhiye aur update kijiye",
+      "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
       "form": {
         "emailLabel": "Email",
         "nameLabel": "Naam",

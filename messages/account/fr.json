@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Paramètres du compte",
       "description": "Afficher et mettre à jour vos paramètres dans Bloom",
+      "imageAlt": "Illustration d'un téléphone portable avec un message contenant un cœur",
       "form": {
         "emailLabel": "Email",
         "nameLabel": "Nom",

@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Kontoeinstellungen",
       "description": "Einstellungen in Bloom anzeigen und aktualisieren",
+      "imageAlt": "Abbildung eines Mobiltelefons mit einer Nachricht, die ein Herz enthält",
       "form": {
         "emailLabel": "E-Mail",
         "nameLabel": "Name",

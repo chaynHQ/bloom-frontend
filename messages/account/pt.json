@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Configurações da conta",
       "description": "Veja e atualize suas configurações no bloom",
+      "imageAlt": "Ilustração de um celular com mensagem contendo um coração",
       "form": {
         "emailLabel": "E-mail",
         "nameLabel": "Nome",
