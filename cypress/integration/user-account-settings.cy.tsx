@@ -22,6 +22,15 @@ describe('User account settings page', () => {
     cy.wait(3000);
   });
 
+  it('Should have email reminder frequency form and load user data', () => {
+    cy.visit('/account/settings');
+    cy.get('input[name="email-reminders-settings"]')[3].should('be.checked');
+    cy.get('input[name="email-reminders-settings"]')[1].check();
+    cy.get('button[type="submit"]').contains('Save email reminders').click();
+    cy.wait(3000);
+    cy.get('input[name="email-reminders-settings"]')[1].should('be.checked');
+  });
+
   after(() => {
     cy.logout();
   });

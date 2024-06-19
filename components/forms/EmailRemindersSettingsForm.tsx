@@ -57,7 +57,7 @@ export const EmailRemindersSettingsFormControl = (
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
 
   return (
-    <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mt: 3, mb: 1 }}>
+    <FormControl fullWidth component="fieldset" id="email-reminders-settings" sx={{ mt: 3, mb: 1 }}>
       <FormLabel sx={{ mb: 0.5 }}>{t('fieldLabel')}</FormLabel>
       <RadioGroup
         sx={radioGroupStyle}
