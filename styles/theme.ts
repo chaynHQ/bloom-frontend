@@ -417,9 +417,6 @@ theme = createTheme(theme, {
             '&.Mui-checked': {
               color: theme.palette.primary.dark,
             },
-            '+ .MuiFormControlLabel-label': {
-              fontSize: theme.typography.body2.fontSize,
-            },
           },
         },
       },

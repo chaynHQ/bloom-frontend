@@ -29,6 +29,7 @@ import {
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
@@ -36,6 +37,12 @@ import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,
+} as const;
+
+const contactCheckboxStyle = {
+  '+ .MuiFormControlLabel-label': {
+    fontSize: theme.typography.body2.fontSize,
+  },
 } as const;
 
 interface RegisterFormProps {
@@ -243,6 +250,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             label={t('contactPermissionLabel')}
             control={
               <Checkbox
+                sx={contactCheckboxStyle}
                 aria-label={t('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />

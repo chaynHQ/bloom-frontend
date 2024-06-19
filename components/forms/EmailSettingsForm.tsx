@@ -1,17 +1,12 @@
-import { useTranslations } from 'next-intl';
-import { useTypedSelector } from '../../hooks/store';
-
-const containerStyle = {
-  marginY: 3,
-} as const;
-
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
+import { useTypedSelector } from '../../hooks/store';
 
 const formControlStyle = {
   marginY: 3,

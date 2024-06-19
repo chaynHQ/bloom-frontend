@@ -133,10 +133,11 @@
         "introduction": "Working through trauma can be hard, especially if doing it alone.",
         "description": "We can help you stay on top of your healing journey, with gentle reminders if you haven't signed in for a while.",
         "fieldLabel": "Get reminded:",
-        "twoWeeksLabel": "Two weeks",
-        "oneMonthLabel": "One month",
-        "twoMonthsLabel": "Two months",
+        "twoWeeksLabel": "After two weeks",
+        "oneMonthLabel": "After one month",
+        "twoMonthsLabel": "After two months",
         "neverLabel": "Never",
+        "update": "You can update this setting at any time",
         "submitLabel": "Save email reminders",
         "updateError": "There was an error updating your email reminders settings. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
       }

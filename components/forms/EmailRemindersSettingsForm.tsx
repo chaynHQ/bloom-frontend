@@ -22,6 +22,17 @@ import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
 
+const radioGroupStyle = {
+  ...rowStyle,
+  columnGap: 2,
+  label: {
+    minWidth: '50%',
+    marginRight: 0,
+  },
+  '.MuiRadio-root': {
+    paddingY: 0.75,
+  },
+} as const;
 const EmailRemindersSettingsForm = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
@@ -69,10 +80,10 @@ const EmailRemindersSettingsForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mt: 3 }}>
+      <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mt: 3, mb: 1 }}>
         <FormLabel component="legend">{t('fieldLabel')}</FormLabel>
         <RadioGroup
-          sx={rowStyle}
+          sx={radioGroupStyle}
           aria-label=""
           name="email-reminders-settings"
           onChange={(e) => onInputChanged(e)}
@@ -100,13 +111,13 @@ const EmailRemindersSettingsForm = () => {
           />
         </RadioGroup>
       </FormControl>
-      {error && (
-        <Typography color="error.main" mb={2}>
-          {error}
-        </Typography>
-      )}
+
+      <Typography variant="body2" color={error ? 'error.main' : 'text.main'}>
+        {error || t('update')}
+      </Typography>
+
       <LoadingButton
-        sx={{ mt: 1 }}
+        sx={{ mt: 2 }}
         variant="contained"
         fullWidth
         loading={isLoading}
