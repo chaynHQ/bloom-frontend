@@ -123,14 +123,22 @@
       "emailSettings": {
         "title": "Email preferences",
         "description": "Update your email preferences here and changes will take effect immediately",
-        "button": {
-          "submit": "Save email preferences"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Allow bloom to send me emails about changes to my account and my feedback",
-          "contactPermissionLabel": "Allow bloom to send me emails when there is a new course, language or service available"
-        },
+        "submitLabel": "Save email preferences",
+        "serviceEmailsPermissionLabel": "Allow bloom to send me emails about changes to my account and my feedback",
+        "contactPermissionLabel": "Allow bloom to send me emails when there is a new course, language or service available",
         "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Email reminders",
+        "introduction": "Working through trauma can be hard, especially if doing it alone.",
+        "description": "We can help you stay on top of your healing journey, with gentle reminders if you haven't signed in for a while.",
+        "fieldLabel": "Get reminded:",
+        "twoWeeksLabel": "Two weeks",
+        "oneMonthLabel": "One month",
+        "twoMonthsLabel": "Two months",
+        "neverLabel": "Never",
+        "submitLabel": "Save email reminders",
+        "updateError": "There was an error updating your email reminders settings. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
       }
     }
   }

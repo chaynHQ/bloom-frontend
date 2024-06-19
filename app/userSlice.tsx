@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LANGUAGES } from '../constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
 import { PartnerAccesses } from './partnerAccessSlice';
 
@@ -16,6 +16,7 @@ export interface User {
   partnerAccessCode: string | null;
   contactPermission: boolean;
   serviceEmailsPermission: boolean;
+  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY;
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
@@ -34,6 +35,7 @@ export interface GetUserDto {
     firebaseUid?: string | null;
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
+    emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY;
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
@@ -70,6 +72,7 @@ const initialState: User = {
   partnerAccessCode: null,
   contactPermission: false,
   serviceEmailsPermission: true,
+  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY.NEVER,
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
@@ -105,9 +108,7 @@ const slice = createSlice({
       return Object.assign({}, state, payload.user, { activeSubscriptions });
     });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       const activeSubscriptions = getActiveSubscriptions(payload);
