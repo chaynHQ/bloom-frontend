@@ -16,7 +16,7 @@ export interface User {
   partnerAccessCode: string | null;
   contactPermission: boolean;
   serviceEmailsPermission: boolean;
-  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY;
+  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
@@ -35,7 +35,7 @@ export interface GetUserDto {
     firebaseUid?: string | null;
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
-    emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY;
+    emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
@@ -72,7 +72,7 @@ const initialState: User = {
   partnerAccessCode: null,
   contactPermission: false,
   serviceEmailsPermission: true,
-  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY.NEVER,
+  emailRemindersFrequency: null,
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,

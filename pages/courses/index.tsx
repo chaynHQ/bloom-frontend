@@ -10,7 +10,7 @@ import CourseCard from '../../components/cards/CourseCard';
 import LoadingContainer from '../../components/common/LoadingContainer';
 import Header from '../../components/layout/Header';
 import { FeatureFlag } from '../../config/featureFlag';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
@@ -39,9 +39,13 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
+  const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userToken = useTypedSelector((state) => state.user.token);
+  const userEmailRemindersFrequency = useTypedSelector(
+    (state) => state.user.emailRemindersFrequency,
+  );
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -60,6 +64,15 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED, eventUserData);
   }, []);
+
+  useEffect(() => {
+    if (
+      userEmailRemindersFrequency &&
+      userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER
+    ) {
+      setShowEmailRemindersBanner(true);
+    }
+  }, [userEmailRemindersFrequency]);
 
   useEffect(() => {
     const referralPartner = window.localStorage.getItem('referralPartner');
@@ -227,7 +240,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           </Box>
         )}
       </Container>
-      <EmailRemindersSettingsBanner />
+      {!!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );
 };
