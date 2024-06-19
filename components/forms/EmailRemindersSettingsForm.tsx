@@ -19,8 +19,17 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'reac
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
+import {
+  EMAIL_REMINDERS_SET_ERROR,
+  EMAIL_REMINDERS_SET_REQUEST,
+  EMAIL_REMINDERS_SET_SUCCESS,
+  EMAIL_REMINDERS_UNSET_ERROR,
+  EMAIL_REMINDERS_UNSET_REQUEST,
+  EMAIL_REMINDERS_UNSET_SUCCESS,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
+import logEvent from '../../utils/logEvent';
 
 const radioGroupStyle = {
   ...rowStyle,
@@ -109,6 +118,11 @@ const EmailRemindersSettingsForm = () => {
 
       if (!selectedInput) return;
 
+      const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
+      logEvent(setOn ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST, {
+        frequency: selectedInput,
+      });
+
       const response = await updateUser({
         emailRemindersFrequency: selectedInput,
       });
@@ -116,12 +130,16 @@ const EmailRemindersSettingsForm = () => {
       if ((response as any).data.id) {
         setIsSuccess(true);
         setSelectedInput(undefined);
+        logEvent(setOn ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS, {
+          frequency: selectedInput,
+        });
       } else {
         setError(
           t.rich('updateError', {
             link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
+        logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR);
       }
     },
     [updateUser, selectedInput, t, tS],

@@ -10,6 +10,8 @@ import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
   ABOUT_YOU_SETA_SUCCESS,
+  EMAIL_REMINDERS_SET_SUCCESS,
+  EMAIL_REMINDERS_UNSET_SUCCESS,
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -81,6 +83,12 @@ const AboutYouSetAForm = () => {
       await updateUser({
         emailRemindersFrequency: emailRemindersSettingInput,
       });
+      logEvent(
+        emailRemindersSettingInput !== EMAIL_REMINDERS_FREQUENCY.NEVER
+          ? EMAIL_REMINDERS_SET_SUCCESS
+          : EMAIL_REMINDERS_UNSET_SUCCESS,
+        { ...eventUserData, frequency: emailRemindersSettingInput },
+      );
     }
 
     logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
