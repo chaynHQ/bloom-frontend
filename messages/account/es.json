@@ -123,14 +123,23 @@
       "emailSettings": {
         "title": "Preferencias de correo electrónico",
         "description": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
-        "button": {
-          "submit": "Guardar preferencias de correo electrónico"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
-          "contactPermissionLabel": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible"
-        },
+        "submitLabel": "Guardar preferencias de correo electrónico",
+        "serviceEmailsPermissionLabel": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
+        "contactPermissionLabel": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible",
         "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Recordatorios por correo electrónico",
+        "introduction": "Superar un trauma puede ser difícil, especialmente si lo haces solo.",
+        "description": "Podemos ayudarte a mantenerte en tu camino de recuperación con recordatorios amables si no has iniciado sesión en un tiempo.",
+        "fieldLabel": "Recibir recordatorios:",
+        "twoWeeksLabel": "Después de dos semanas",
+        "oneMonthLabel": "Después de un mes",
+        "twoMonthsLabel": "Después de dos meses",
+        "neverLabel": "Nunca",
+        "update": "Puedes actualizar esta configuración en cualquier momento",
+        "submitLabel": "Guardar recordatorios por correo electrónico",
+        "updateError": "Se produjo un error al actualizar la configuración de recordatorios por correo electrónico. Inténtalo nuevamente actualizando esta página o <link>poniéndote en contacto con el equipo de Bloom.</link>"
       }
     }
   }

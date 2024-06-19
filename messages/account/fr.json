@@ -123,14 +123,23 @@
       "emailSettings": {
         "title": "Préférences d'email",
         "description": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
-        "button": {
-          "submit": "Enregistrer les préférences d'email"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
-          "contactPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
-        },
+        "submitLabel": "Enregistrer les préférences d'email",
+        "serviceEmailsPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
+        "contactPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible",
         "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Rappels par e-mail",
+        "introduction": "Travailler sur un traumatisme peut être difficile, surtout si vous le faites seul.",
+        "description": "Nous pouvons vous aider à rester sur la voie de votre guérison, avec des rappels doux si vous ne vous êtes pas connecté depuis un certain temps.",
+        "fieldLabel": "Se faire rappeler :",
+        "twoWeeksLabel": "Après deux semaines",
+        "oneMonthLabel": "Après un mois",
+        "twoMonthsLabel": "Après deux mois",
+        "neverLabel": "Jamais",
+        "update": "Vous pouvez mettre à jour ce paramètre à tout moment",
+        "submitLabel": "Enregistrer les rappels par e-mail",
+        "updateError": "Une erreur s'est produite lors de la mise à jour de vos paramètres de rappels par e-mail. Veuillez réessayer en actualisant cette page ou en <link>contactant l'équipe Bloom.</link>"
       }
     }
   }

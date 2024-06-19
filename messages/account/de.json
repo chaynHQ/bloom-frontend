@@ -123,14 +123,23 @@
       "emailSettings": {
         "title": "E-Mail-Einstellungen",
         "description": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
-        "button": {
-          "submit": "E-Mail-Einstellungen speichern"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
-          "contactPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist."
-        },
+        "submitLabel": "E-Mail-Einstellungen speichern",
+        "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
+        "contactPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist.",
         "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "E-Mail-Erinnerungen",
+        "introduction": "Die Verarbeitung von Traumata kann schwierig sein, besonders wenn man es alleine macht.",
+        "description": "Wir können Ihnen helfen, auf Ihrem Heilungsweg zu bleiben, mit sanften Erinnerungen, wenn Sie sich eine Weile nicht angemeldet haben.",
+        "fieldLabel": "Erinnert werden:",
+        "twoWeeksLabel": "Nach zwei Wochen",
+        "oneMonthLabel": "Nach einem Monat",
+        "twoMonthsLabel": "Nach zwei Monaten",
+        "neverLabel": "Nie",
+        "update": "Sie können diese Einstellung jederzeit aktualisieren",
+        "submitLabel": "E-Mail-Erinnerungen speichern",
+        "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.</link>"
       }
     }
   }
