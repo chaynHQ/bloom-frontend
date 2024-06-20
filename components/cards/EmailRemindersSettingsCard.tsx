@@ -16,7 +16,6 @@ const EmailRemindersSettingsCard = () => {
         <Typography variant="h2" component="h2">
           {t('title')}
         </Typography>
-        <Typography mb={1.5}>{t('introduction')}</Typography>
         <Typography>{t('description')}</Typography>
         <EmailRemindersSettingsForm />
       </CardContent>

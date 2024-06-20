@@ -154,15 +154,20 @@ const EmailRemindersSettingsForm = () => {
     [updateUser, selectedInput, router.pathname, eventUserData, t, tS],
   );
 
+  const showUpdateLaterMessage = router.pathname !== '/account/settings' && !error;
+
   return (
     <form onSubmit={onSubmit}>
       <EmailRemindersSettingsFormControl
         selectedInput={selectedInput}
         setSelectedInput={setSelectedInput}
       />
-      <Typography variant="body2" color={error ? 'error.main' : 'text.main'}>
-        {error || t('update')}
-      </Typography>
+      {error && (
+        <Typography variant="body2" color={'error.main'}>
+          {error}
+        </Typography>
+      )}
+      {showUpdateLaterMessage && <Typography variant="body2">{t('update')}</Typography>}
 
       <LoadingButton
         sx={{ mt: 3 }}

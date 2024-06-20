@@ -187,16 +187,18 @@ const AboutYouSetAForm = () => {
         ))}
 
         {/* Additional user setting for email reminders frequency */}
-        <Typography mt={3} mb={1.5}>
-          {tAccount('introduction')}
-        </Typography>
-        <Typography>{tAccount('description')}</Typography>
-        {}
         {isPublicUser && (
-          <EmailRemindersSettingsFormControl
-            selectedInput={emailRemindersSettingInput}
-            setSelectedInput={setEmailRemindersSettingInput}
-          />
+          <>
+            <Typography mt={3} mb={1.5}>
+              {tAccount('introduction')}
+            </Typography>
+            <Typography>{tAccount('description')}</Typography>
+            <EmailRemindersSettingsFormControl
+              selectedInput={emailRemindersSettingInput}
+              setSelectedInput={setEmailRemindersSettingInput}
+            />
+            <Typography variant="body2">{tAccount('update')}</Typography>
+          </>
         )}
 
         {formError && (
