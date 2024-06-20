@@ -49,6 +49,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
+  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
@@ -240,7 +241,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           </Box>
         )}
       </Container>
-      {!!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      {!!showEmailRemindersBanner && isPublicUser && <EmailRemindersSettingsBanner />}
     </Box>
   );
 };

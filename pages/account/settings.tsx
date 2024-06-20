@@ -6,6 +6,7 @@ import EmailRemindersSettingsCard from '../../components/cards/EmailRemindersSet
 import EmailSettingsCard from '../../components/cards/EmailSettingsCard';
 import ProfileSettingsCard from '../../components/cards/ProfileSettingsCard';
 import Header from '../../components/layout/Header';
+import { useTypedSelector } from '../../hooks/store';
 import phoneIllustration from '../../public/phone.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
 
@@ -26,6 +27,9 @@ const columnContainerStyle = {
 
 const AccountSettings: NextPage = () => {
   const t = useTranslations('Account.accountSettings');
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const headerProps = {
     title: t('title'),
@@ -46,13 +50,15 @@ const AccountSettings: NextPage = () => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={rowContainerStyle}>
-        <Box sx={columnContainerStyle}>
+        <Box sx={isPublicUser ? columnContainerStyle : rowContainerStyle}>
           <ProfileSettingsCard />
           <EmailSettingsCard />
         </Box>
-        <Box sx={columnContainerStyle}>
-          <EmailRemindersSettingsCard />
-        </Box>
+        {isPublicUser && (
+          <Box sx={columnContainerStyle}>
+            <EmailRemindersSettingsCard />
+          </Box>
+        )}
       </Container>
     </Box>
   );

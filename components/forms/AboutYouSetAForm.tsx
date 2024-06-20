@@ -59,6 +59,7 @@ const AboutYouSetAForm = () => {
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -180,10 +181,13 @@ const AboutYouSetAForm = () => {
           {tAccount('introduction')}
         </Typography>
         <Typography>{tAccount('description')}</Typography>
-        <EmailRemindersSettingsFormControl
-          selectedInput={emailRemindersSettingInput}
-          setSelectedInput={setEmailRemindersSettingInput}
-        />
+        {}
+        {isPublicUser && (
+          <EmailRemindersSettingsFormControl
+            selectedInput={emailRemindersSettingInput}
+            setSelectedInput={setEmailRemindersSettingInput}
+          />
+        )}
 
         {formError && (
           <Typography color="error.main" mb={2}>
