@@ -18,7 +18,7 @@ export const logEvent = (event: string, params?: {}) => {
 
   // Send analytics event to Vercel analytics
   // Don't include params as only 2 params are available on our plan
-  track(event);
+  track(event, params);
 };
 
 export const getEventUserData = (
