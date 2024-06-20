@@ -7,6 +7,7 @@ var _rollbarConfig = {
   accessToken: "${process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN}",
   captureUncaught: true,
   captureUnhandledRejections: true,
+  captureIP: "anonymize",
   payload: {
     environment: "${process.env.NEXT_PUBLIC_ENV}",
     client: {

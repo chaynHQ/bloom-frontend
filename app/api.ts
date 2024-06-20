@@ -8,13 +8,12 @@ import {
 import { getAuth } from 'firebase/auth';
 import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import { EventLog } from '../constants/eventLog';
-import { delay } from '../utils/delay';
 import { Course, Courses } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
 import { AppState } from './store';
-import { Subscription, Subscriptions, User } from './userSlice';
+import { setUserToken, Subscription, Subscriptions, User } from './userSlice';
 
 export interface GetUserResponse {
   user: User;
@@ -57,8 +56,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
     const token = await auth.currentUser?.getIdToken(true);
 
     if (token) {
-      // allow time for new token to update in state
-      await delay(200);
+      await api.dispatch(setUserToken(token));
       // retry the initial query
       result = await baseQuery(args, api, extraOptions);
     }
