@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
@@ -97,6 +98,7 @@ const EmailRemindersSettingsForm = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [selectedInput, setSelectedInput] = useState<EMAIL_REMINDERS_FREQUENCY>();
 
+  const router = useRouter();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
   const tS = useTranslations('Shared');
 
@@ -121,6 +123,7 @@ const EmailRemindersSettingsForm = () => {
       const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
       logEvent(setOn ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST, {
         frequency: selectedInput,
+        url: router.pathname,
       });
 
       const response = await updateUser({
@@ -132,6 +135,7 @@ const EmailRemindersSettingsForm = () => {
         setSelectedInput(undefined);
         logEvent(setOn ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS, {
           frequency: selectedInput,
+          url: router.pathname,
         });
       } else {
         setError(
@@ -142,7 +146,7 @@ const EmailRemindersSettingsForm = () => {
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR);
       }
     },
-    [updateUser, selectedInput, t, tS],
+    [updateUser, selectedInput, router.pathname, t, tS],
   );
 
   return (

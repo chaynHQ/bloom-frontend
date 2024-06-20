@@ -10,7 +10,9 @@ import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
   ABOUT_YOU_SETA_SUCCESS,
+  EMAIL_REMINDERS_SET_REQUEST,
   EMAIL_REMINDERS_SET_SUCCESS,
+  EMAIL_REMINDERS_UNSET_REQUEST,
   EMAIL_REMINDERS_UNSET_SUCCESS,
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
@@ -81,14 +83,22 @@ const AboutYouSetAForm = () => {
     setLoading(true);
 
     if (emailRemindersSettingInput) {
+      const isEmailRemindersSet = emailRemindersSettingInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
+      const emailRemindersEventData = {
+        ...eventUserData,
+        frequency: emailRemindersSettingInput,
+        url: router.pathname,
+      };
+      logEvent(
+        isEmailRemindersSet ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST,
+        emailRemindersEventData,
+      );
       await updateUser({
         emailRemindersFrequency: emailRemindersSettingInput,
       });
       logEvent(
-        emailRemindersSettingInput !== EMAIL_REMINDERS_FREQUENCY.NEVER
-          ? EMAIL_REMINDERS_SET_SUCCESS
-          : EMAIL_REMINDERS_UNSET_SUCCESS,
-        { ...eventUserData, frequency: emailRemindersSettingInput },
+        isEmailRemindersSet ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS,
+        emailRemindersEventData,
       );
     }
 
