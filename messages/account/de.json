@@ -109,7 +109,7 @@
       },
       "profile": {
         "title": "Profildetails",
-        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das <link>Bloom-Team</link> wenden"
+        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das <link>Bloom-Team</link> wenden. Dies sind die einzigen persönlichen Daten, die in Ihrem Profil gespeichert sind."
       },
       "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
       "actions": {
@@ -123,10 +123,10 @@
       },
       "emailSettings": {
         "title": "E-Mail-Einstellungen",
-        "description": "Aktualisieren Sie hier Ihre E-Mail-Einstellungen. Änderungen werden sofort wirksam.",
+        "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:", // Changed to match new English structure
+        "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
+        "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
         "submitLabel": "E-Mail-Einstellungen speichern",
-        "serviceEmailsPermissionLabel": "Bloom darf mir E-Mails über Änderungen an meinem Konto und meinem Feedback senden.",
-        "contactPermissionLabel": "Bloom darf mir E-Mails senden, wenn ein neuer Kurs, eine neue Sprache oder ein neuer Dienst verfügbar ist.",
         "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
       },
       "emailRemindersSettings": {

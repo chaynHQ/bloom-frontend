@@ -109,7 +109,7 @@
       },
       "profile": {
         "title": "Profile details",
-        "description": "Update your name and email by getting in touch with the <link>bloom team</link>"
+        "description": "Update your name and email by getting in touch with the <link>bloom team</link>. This is the only personal information stored on your profile."
       },
       "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or get in touch with the <link>Bloom team.</link>",
       "actions": {
@@ -123,10 +123,10 @@
       },
       "emailSettings": {
         "title": "Email preferences",
-        "description": "Update your email preferences here and changes will take effect immediately",
+        "description": "Let us know if we can send you emails:",
         "submitLabel": "Save email preferences",
-        "serviceEmailsPermissionLabel": "Allow bloom to send me emails about changes to my account and my feedback",
-        "contactPermissionLabel": "Allow bloom to send me emails when there is a new course, language or service available",
+        "serviceEmailsPermissionLabel": "About your services or changes to your account",
+        "contactPermissionLabel": "When there is a new course, service or language available",
         "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
       },
       "emailRemindersSettings": {

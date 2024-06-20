@@ -109,7 +109,7 @@
       },
       "profile": {
         "title": "Profile Details",
-        "description": "Aapka naam aur email ko update kijiye <link>Bloom team</link> se sampark karein"
+        "description": "Aapka naam aur email ko update kijiye <link>Bloom team</link> se sampark karein. Yeh aapki profile par stored sirf do hi personal information hain."
       },
       "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
       "actions": {
@@ -123,9 +123,9 @@
       },
       "emailSettings": {
         "title": "Email Preferences",
-        "description": "Aapke email preferences ko update kijiye aur changes immediately effective honge",
+        "description": "Humein bataein ki kya hum aapko email bhej sakte hain:",
         "submitLabel": "Email preferences ko save kijiye",
-        "serviceEmailsPermissionLabel": "Bloom ko mera account ke changes aur feedback ke baare mein emails bhejne de",
+        "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
         "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
         "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
       },

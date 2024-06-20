@@ -109,7 +109,7 @@
       },
       "profile": {
         "title": "Detalles del perfil",
-        "description": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el <link>equipo de Bloom</link>"
+        "description": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el <link>equipo de Bloom</link>. Esta es la única información personal almacenada en tu perfil."
       },
       "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>",
       "actions": {
@@ -123,10 +123,10 @@
       },
       "emailSettings": {
         "title": "Preferencias de correo electrónico",
-        "description": "Actualiza tus preferencias de correo electrónico aquí y los cambios entrarán en vigencia de inmediato",
+        "description": "Avísanos si podemos enviarte correos electrónicos:",
+        "serviceEmailsPermissionLabel": "Sobre tus servicios o cambios en tu cuenta",
+        "contactPermissionLabel": "Cuando haya un nuevo curso, servicio o idioma disponible",
         "submitLabel": "Guardar preferencias de correo electrónico",
-        "serviceEmailsPermissionLabel": "Permitir que Bloom me envíe correos electrónicos sobre los cambios en mi cuenta y mis comentarios",
-        "contactPermissionLabel": "Permitir que Bloom me envíe correos electrónicos cuando haya un nuevo curso, idioma o servicio disponible",
         "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
       },
       "emailRemindersSettings": {
