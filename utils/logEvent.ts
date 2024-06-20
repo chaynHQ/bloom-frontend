@@ -29,12 +29,14 @@ export const getEventUserData = (
   return {
     account_type: getAccountType(partnerAdmin, partnerAccesses),
     registered_at: userCreatedAt,
-    partner: joinedPartners(partnerAccesses, partnerAdmin),
-    partner_live_chat: joinedFeatureLiveChat(partnerAccesses),
-    partner_therapy: joinedFeatureTherapy(partnerAccesses),
-    partner_therapy_remaining: totalTherapyRemaining(partnerAccesses),
-    partner_therapy_redeemed: totalTherapyRemaining(partnerAccesses),
-    partner_activated_at: partnerAccesses ? partnerAccesses[0]?.activatedAt : null,
+    ...(partnerAccesses.length > 0 && {
+      partner: joinedPartners(partnerAccesses, partnerAdmin),
+      partner_live_chat: joinedFeatureLiveChat(partnerAccesses),
+      partner_therapy: joinedFeatureTherapy(partnerAccesses),
+      partner_therapy_remaining: totalTherapyRemaining(partnerAccesses),
+      partner_therapy_redeemed: totalTherapyRemaining(partnerAccesses),
+      partner_activated_at: partnerAccesses ? partnerAccesses[0]?.activatedAt : null,
+    }),
   };
 };
 
