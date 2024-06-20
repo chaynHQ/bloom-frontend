@@ -87,7 +87,7 @@ const AboutYouSetAForm = () => {
       const emailRemindersEventData = {
         ...eventUserData,
         frequency: emailRemindersSettingInput,
-        url: router.pathname,
+        origin_url: router.pathname,
       };
       logEvent(
         isEmailRemindersSet ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST,

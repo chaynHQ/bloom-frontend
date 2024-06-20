@@ -30,7 +30,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const radioGroupStyle = {
   ...rowStyle,
@@ -98,6 +98,11 @@ const EmailRemindersSettingsForm = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [selectedInput, setSelectedInput] = useState<EMAIL_REMINDERS_FREQUENCY>();
 
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const router = useRouter();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
   const tS = useTranslations('Shared');
@@ -120,11 +125,14 @@ const EmailRemindersSettingsForm = () => {
 
       if (!selectedInput) return;
 
-      const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
-      logEvent(setOn ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST, {
+      const eventData = {
+        ...eventUserData,
         frequency: selectedInput,
-        url: router.pathname,
-      });
+        origin_url: router.pathname,
+      };
+
+      const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
+      logEvent(setOn ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST, eventData);
 
       const response = await updateUser({
         emailRemindersFrequency: selectedInput,
@@ -133,20 +141,17 @@ const EmailRemindersSettingsForm = () => {
       if ((response as any).data.id) {
         setIsSuccess(true);
         setSelectedInput(undefined);
-        logEvent(setOn ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS, {
-          frequency: selectedInput,
-          url: router.pathname,
-        });
+        logEvent(setOn ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS, eventData);
       } else {
         setError(
           t.rich('updateError', {
             link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
-        logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR);
+        logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);
       }
     },
-    [updateUser, selectedInput, router.pathname, t, tS],
+    [updateUser, selectedInput, router.pathname, eventUserData, t, tS],
   );
 
   return (
