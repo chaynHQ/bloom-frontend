@@ -1,17 +1,12 @@
-import { useTranslations } from 'next-intl';
-import { useTypedSelector } from '../../hooks/store';
-
-const containerStyle = {
-  marginY: 3,
-} as const;
-
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
+import { useTypedSelector } from '../../hooks/store';
 
 const formControlStyle = {
   marginY: 3,
@@ -62,22 +57,22 @@ const EmailSettingsForm = () => {
     <form onSubmit={onSubmit}>
       <FormControl sx={formControlStyle}>
         <FormControlLabel
-          label={t('checkbox.serviceEmailsPermissionLabel')}
+          label={t('serviceEmailsPermissionLabel')}
           control={
             <Checkbox
               name="serviceEmailsPermission"
-              aria-label={t('checkbox.serviceEmailsPermissionLabel')}
+              aria-label={t('serviceEmailsPermissionLabel')}
               defaultChecked={serviceEmailsPermission}
             />
           }
           onInput={() => setIsSuccess(false)}
         />
         <FormControlLabel
-          label={t('checkbox.contactPermissionLabel')}
+          label={t('contactPermissionLabel')}
           control={
             <Checkbox
               name="contactPermission"
-              aria-label={t('checkbox.contactPermissionLabel')}
+              aria-label={t('contactPermissionLabel')}
               defaultChecked={contactPermission}
             />
           }
@@ -95,7 +90,7 @@ const EmailSettingsForm = () => {
         endIcon={isSuccess ? <CheckCircleOutlined /> : undefined}
         disabled={isSuccess}
       >
-        {t('button.submit')}
+        {t('submitLabel')}
       </LoadingButton>
     </form>
   );
