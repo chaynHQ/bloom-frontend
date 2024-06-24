@@ -61,7 +61,6 @@ const Login: NextPage = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const userToken = useTypedSelector((state) => state.user.token);
-  const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -78,7 +77,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
-    if (!userId) return;
+    if (!userToken) return;
     // Checking if the query type is a string to keep typescript happy
     // because a query value can be an array
     const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
@@ -90,7 +89,7 @@ const Login: NextPage = () => {
     } else {
       router.push('/courses');
     }
-  }, [userId, partnerAdmin?.id, router]);
+  }, [userToken, partnerAdmin?.id, router]);
 
   const ExtraContent = () => {
     return (
