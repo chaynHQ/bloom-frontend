@@ -123,7 +123,7 @@
       },
       "emailSettings": {
         "title": "E-Mail-Einstellungen",
-        "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:", // Changed to match new English structure
+        "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
         "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
         "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
         "submitLabel": "E-Mail-Einstellungen speichern",
