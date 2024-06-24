@@ -12,7 +12,7 @@ const imageAltContent =
 
 const OpenGraphMetadata = () => {
   return (
-    <Head>
+    <>
       <meta property="og:title" content="Welcome to Bloom" key="og-title" />
       <meta property="og:description" content={descriptionContent} key="og-description" />
       <meta property="og:image" content={imageContent} key="og-image"></meta>
@@ -27,7 +27,7 @@ const OpenGraphMetadata = () => {
       <link rel="manifest" href="/manifest.json" />
       <link rel="apple-touch-icon" href="/icons/apple/icon-120x120.png"></link>
       <meta name="theme-color" content={theme.palette.primary.main} />
-    </Head>
+    </>
   );
 };
 
