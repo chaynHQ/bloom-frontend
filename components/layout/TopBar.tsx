@@ -43,7 +43,7 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -83,9 +83,9 @@ const TopBar = () => {
           </Link>
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}
-            {userToken && <UserMenu />}
+            {userId && <UserMenu />}
             <LanguageMenu />
-            {!isSmallScreen && !userToken && (
+            {!isSmallScreen && !userId && (
               <Button
                 variant="contained"
                 size="medium"
