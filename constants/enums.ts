@@ -7,6 +7,13 @@ export enum LANGUAGES {
   de = 'de',
 }
 
+export enum EMAIL_REMINDERS_FREQUENCY {
+  TWO_WEEKS = 'TWO_WEEKS',
+  ONE_MONTH = 'ONE_MONTH',
+  TWO_MONTHS = 'TWO_MONTHS',
+  NEVER = 'NEVER',
+}
+
 export enum PARTNER_ACCESS_FEATURES {
   THERAPY = 'therapy',
 }
@@ -66,4 +73,10 @@ export enum ENVIRONMENT {
 
 export enum FEATURES {
   AUTOMATIC_ACCESS_CODE = 'AUTOMATIC_ACCESS_CODE',
+}
+
+export enum EVENT_LOG_NAME {
+  CHAT_MESSAGE_SENT = 'CHAT_MESSAGE_SENT',
+  LOGGED_IN = 'LOGGED_IN',
+  LOGGED_OUT = 'LOGGED_OUT',
 }

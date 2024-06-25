@@ -2,22 +2,34 @@ import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import EmailSettingsCard from '../../components/account/EmailSettingsCard';
-import ProfileSettingsCard from '../../components/account/ProfileSettingsCard';
+import EmailRemindersSettingsCard from '../../components/cards/EmailRemindersSettingsCard';
+import EmailSettingsCard from '../../components/cards/EmailSettingsCard';
+import ProfileSettingsCard from '../../components/cards/ProfileSettingsCard';
 import Header from '../../components/layout/Header';
+import { useTypedSelector } from '../../hooks/store';
 import phoneIllustration from '../../public/phone.svg';
-import { rowStyle } from '../../styles/common';
+import { columnStyle, rowStyle } from '../../styles/common';
 
-const containerStyle = {
+const rowContainerStyle = {
   ...rowStyle,
   gap: { xs: 2, md: 6 },
-  flexWrap: { xs: 'wrap', md: 'no-wrap' },
-  backgroundColor: 'secondary.light',
+  flexWrap: { xs: 'wrap', md: 'nowrap' },
+  maxWidth: '100%',
   paddingTop: { xs: 3, md: 5 },
+} as const;
+
+const columnContainerStyle = {
+  ...columnStyle,
+  width: '100%',
+  gap: { xs: 2, md: 6 },
+  marginBottom: 'auto',
 } as const;
 
 const AccountSettings: NextPage = () => {
   const t = useTranslations('Account.accountSettings');
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const headerProps = {
     title: t('title'),
@@ -27,7 +39,7 @@ const AccountSettings: NextPage = () => {
   };
 
   return (
-    <Box>
+    <Box bgcolor={'secondary.light'}>
       <Head>
         <title>{t('title')}</title>
       </Head>
@@ -37,9 +49,16 @@ const AccountSettings: NextPage = () => {
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
       />
-      <Container sx={containerStyle}>
-        <ProfileSettingsCard />
-        <EmailSettingsCard />
+      <Container sx={rowContainerStyle}>
+        <Box sx={isPublicUser ? columnContainerStyle : rowContainerStyle}>
+          <ProfileSettingsCard />
+          <EmailSettingsCard />
+        </Box>
+        {isPublicUser && (
+          <Box sx={columnContainerStyle}>
+            <EmailRemindersSettingsCard />
+          </Box>
+        )}
       </Container>
     </Box>
   );

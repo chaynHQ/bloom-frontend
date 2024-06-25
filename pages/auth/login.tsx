@@ -60,7 +60,6 @@ const Login: NextPage = () => {
   const router = useRouter();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const userToken = useTypedSelector((state) => state.user.token);
   const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -83,7 +82,7 @@ const Login: NextPage = () => {
     // because a query value can be an array
     const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
 
-    if (!!partnerAdmin?.id) {
+    if (partnerAdmin?.id) {
       router.push('/partner-admin/create-access-code');
     } else if (!!returnUrl) {
       router.push(returnUrl);

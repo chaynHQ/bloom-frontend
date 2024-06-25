@@ -2,8 +2,9 @@
 
 import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth';
 import { useEffect } from 'react';
-import { useGetUserQuery } from '../app/api';
+import { useCreateEventLogMutation, useGetUserQuery } from '../app/api';
 import { setAuthStateLoading, setLoadError, setUserLoading, setUserToken } from '../app/userSlice';
+import { EVENT_LOG_NAME } from '../constants/enums';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_SUCCESS,
@@ -23,6 +24,7 @@ export default function useLoadUser() {
   const userToken = useTypedSelector((state) => state.user.token);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const { clearState } = useStateUtils();
+  const [createEventLog] = useCreateEventLogMutation();
 
   // 1. Listen for firebase auth state or auth token updated, triggered by firebase auth loaded
   // When a user token is available, set the token in state to be used in request headers
@@ -30,19 +32,20 @@ export default function useLoadUser() {
     const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
       const token = await firebaseUser?.getIdToken();
       if (token) {
-        // User logged in or started a new authenticated session
+        // User logged in or started a new authenticated session - state changes trigger call to get user record
         await dispatch(setUserToken(token));
         await dispatch(setUserLoading(true));
         logEvent(GET_USER_REQUEST); // deprecated event
       } else if (!firebaseUser && userToken) {
         // User logged out or token was removed, clear state
-        await clearState();
+        createEventLog({ event: EVENT_LOG_NAME.LOGGED_OUT });
         logEvent(LOGOUT_SUCCESS);
+        await clearState();
       }
       await dispatch(setAuthStateLoading(false)); // triggers step 2
     });
     return () => unsubscribe();
-  }, [userToken, auth, dispatch, clearState]);
+  }, [userToken, auth, dispatch, clearState, createEventLog]);
 
   // 2. Once firebase auth is complete, get the user database resource
   // skip property prevents the API query being called unless there is a user token and the user is not already set

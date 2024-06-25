@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Configurações da conta",
       "description": "Veja e atualize suas configurações no bloom",
+      "imageAlt": "Ilustração de um celular com mensagem contendo um coração",
       "form": {
         "emailLabel": "E-mail",
         "nameLabel": "Nome",
@@ -108,7 +109,7 @@
       },
       "profile": {
         "title": "Detalhes do perfil",
-        "description": "Atualize seu nome e e-mail entrando em contato com a equipe do bloom"
+        "description": "Atualize seu nome e e-mail entrando em contato com a <link>equipe do Bloom</link>. Esta é a única informação pessoal armazenada em seu perfil."
       },
       "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
       "actions": {
@@ -122,15 +123,24 @@
       },
       "emailSettings": {
         "title": "Preferências de e-mail",
-        "description": "Atualize suas preferências de e-mail aqui e as alterações entrarão em vigor imediatamente",
-        "button": {
-          "submit": "Salvar preferências de e-mail"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Permitir que o bloom me envie e-mails sobre alterações na minha conta e no meu feedback",
-          "contactPermissionLabel": "Permitir que o bloom me envie e-mails quando houver um novo curso, idioma ou serviço disponível"
-        },
+        "description": "Informe-nos se podemos enviar e-mails para você:",
+        "submitLabel": "Salvar preferências de e-mail",
+        "serviceEmailsPermissionLabel": "Sobre seus serviços ou alterações em sua conta",
+        "contactPermissionLabel": "Quando houver um novo curso, serviço ou idioma disponível",
         "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Lembretes por e-mail",
+        "introduction": "Superar traumas pode ser difícil, especialmente se estiver sozinho(a).",
+        "description": "Podemos ajudá-lo(a) a se manter no caminho da sua recuperação com lembretes gentis caso você não faça login por um tempo.",
+        "fieldLabel": "Ser lembrado(a):",
+        "twoWeeksLabel": "Após duas semanas",
+        "oneMonthLabel": "Após um mês",
+        "twoMonthsLabel": "Após dois meses",
+        "neverLabel": "Nunca",
+        "update": "Você pode atualizar esta configuração a qualquer momento",
+        "submitLabel": "Salvar lembretes por e-mail",
+        "updateError": "Ocorreu um erro ao atualizar suas configurações de lembretes por e-mail. Tente novamente atualizando esta página ou <link> entrando em contato com a equipe do Bloom. </link>"
       }
     }
   }

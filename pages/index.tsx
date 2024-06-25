@@ -24,7 +24,6 @@ const Index: NextPage<Props> = ({ story, preview }) => {
 
   const t = useTranslations('Welcome');
 
-  const userToken = useTypedSelector((state) => state.user.token);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -64,7 +63,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
             onClick={() => {
               logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
             }}
-            href="/auth/register"
+            href={registerPath}
             size="large"
           >
             {t('getStarted')}

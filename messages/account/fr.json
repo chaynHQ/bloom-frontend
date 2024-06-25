@@ -101,6 +101,7 @@
     "accountSettings": {
       "title": "Paramètres du compte",
       "description": "Afficher et mettre à jour vos paramètres dans Bloom",
+      "imageAlt": "Illustration d'un téléphone portable avec un message contenant un cœur",
       "form": {
         "emailLabel": "Email",
         "nameLabel": "Nom",
@@ -108,7 +109,7 @@
       },
       "profile": {
         "title": "Détails du profil",
-        "description": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe Bloom"
+        "description": "Mettez à jour votre nom et votre adresse e-mail en contactant l'équipe <link>Bloom</link>. Ce sont les seules informations personnelles stockées sur votre profil."
       },
       "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {
@@ -122,15 +123,24 @@
       },
       "emailSettings": {
         "title": "Préférences d'email",
-        "description": "Mettez à jour vos préférences d'email ici et les modifications prendront effet immédiatement",
-        "button": {
-          "submit": "Enregistrer les préférences d'email"
-        },
-        "checkbox": {
-          "serviceEmailsPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails sur les modifications apportées à mon compte et à mes commentaires",
-          "contactPermissionLabel": "Autoriser Bloom à m'envoyer des e-mails lorsqu'un nouveau cours, une nouvelle langue ou un nouveau service est disponible"
-        },
+        "description": "Faites-nous savoir si nous pouvons vous envoyer des e-mails:",
+        "serviceEmailsPermissionLabel": "Concernant vos services ou les modifications apportées à votre compte",
+        "contactPermissionLabel": "Lorsqu'un nouveau cours, un nouveau service ou une nouvelle langue est disponible",
+        "submitLabel": "Enregistrer les préférences d'email",
         "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Rappels par e-mail",
+        "introduction": "Travailler sur un traumatisme peut être difficile, surtout si vous le faites seul.",
+        "description": "Nous pouvons vous aider à rester sur la voie de votre guérison, avec des rappels doux si vous ne vous êtes pas connecté depuis un certain temps.",
+        "fieldLabel": "Se faire rappeler :",
+        "twoWeeksLabel": "Après deux semaines",
+        "oneMonthLabel": "Après un mois",
+        "twoMonthsLabel": "Après deux mois",
+        "neverLabel": "Jamais",
+        "update": "Vous pouvez mettre à jour ce paramètre à tout moment",
+        "submitLabel": "Enregistrer les rappels par e-mail",
+        "updateError": "Une erreur s'est produite lors de la mise à jour de vos paramètres de rappels par e-mail. Veuillez réessayer en actualisant cette page ou en <link>contactant l'équipe Bloom.</link>"
       }
     }
   }
