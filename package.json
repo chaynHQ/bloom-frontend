@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "resolutions": {
-    "@types/react": "18.2.43",
+    "@types/react": "18.3.3",
     "redux": "^5.0.0"
   },
   "scripts": {
@@ -46,7 +46,7 @@
     "nextjs-hotjar": "^1.2.0",
     "nuka-carousel": "^7.0.0",
     "phone": "^3.1.33",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-cookie-consent": "^8.0.1",
     "react-dom": "18.0.0",
     "react-international-phone": "^4.0.4",
@@ -62,7 +62,7 @@
     "@types/jest": "^27.0.2",
     "@types/js-cookie": "^3.0.2",
     "@types/newrelic": "^9.14.3",
-    "@types/react": "18.2.43",
+    "@types/react": "18.3.3",
     "babel-jest": "^27.2.4",
     "cypress": "^13.2.0",
     "dotenv": "^16.0.3",
