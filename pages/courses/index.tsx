@@ -42,7 +42,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
@@ -126,7 +126,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
     }
   }, [partnerAccesses, partnerAdmin, stories, courses]);
   // Show sign up banner if user is logged out
-  if (!userToken) {
+  if (!userId) {
     return (
       <Box>
         <Head>

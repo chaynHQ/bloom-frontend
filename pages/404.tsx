@@ -26,7 +26,7 @@ const imageContainerStyle = {
 
 const Custom404: NextPage = () => {
   const t = useTranslations('Shared');
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
 
   if (userLoading) {
@@ -45,16 +45,16 @@ const Custom404: NextPage = () => {
         {t('404.title')}
       </Typography>
       <Typography>
-        {userToken ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
+        {userId ? t('404.authenticatedDescription') : t('404.unauthenticatedDescription')}
       </Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
         component={Link}
-        href={userToken ? '/courses' : '/login'}
+        href={userId ? '/courses' : '/login'}
       >
-        {userToken ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
+        {userId ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );

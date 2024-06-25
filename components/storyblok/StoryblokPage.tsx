@@ -19,7 +19,7 @@ export interface StoryblokPageProps {
 const StoryblokPage = (props: StoryblokPageProps) => {
   const { _uid, _editable, title, description, header_image, page_sections } = props;
 
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const router = useRouter();
 
   const headerProps = {
@@ -43,8 +43,8 @@ const StoryblokPage = (props: StoryblokPageProps) => {
           imageSrc={headerProps.imageSrc}
           translatedImageAlt={headerProps.translatedImageAlt}
         />
-        {!userToken && isPartiallyPublicPage && <SignUpBanner />}
-        {userToken &&
+        {!userId && isPartiallyPublicPage && <SignUpBanner />}
+        {userId &&
           page_sections?.length > 0 &&
           page_sections.map((section: StoryblokPageSectionProps, index: number) => (
             <StoryblokPageSection key={`page_section_${index}`} {...section} />
