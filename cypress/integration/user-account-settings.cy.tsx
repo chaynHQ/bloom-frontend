@@ -29,6 +29,8 @@ describe('User account settings page', () => {
     cy.get('button[type="submit"]').contains('Save email reminders').click();
     cy.wait(3000);
     cy.get('input[name="email-reminders-settings"]').eq(1).should('be.checked');
+    cy.get('input[name="email-reminders-settings"]').eq(3).check();
+    cy.get('button[type="submit"]').contains('Save email reminders').click();
   });
 
   after(() => {

@@ -3,6 +3,7 @@ import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import theme from '../../styles/theme';
+import { EventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 import Header from '../layout/Header';
 
@@ -11,7 +12,7 @@ export interface CourseHeaderProps {
   description: ISbRichtext;
   image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
-  eventData: {};
+  eventData: EventUserData;
 }
 const CourseHeader = (props: CourseHeaderProps) => {
   const { name, description, image_with_background, courseProgress, eventData } = props;
