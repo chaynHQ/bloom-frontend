@@ -36,7 +36,7 @@ export const getEventUserData = (
   userCreatedAt: Date | null,
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
-): EventUserData | undefined => {
+): EventUserData => {
   try {
     return {
       account_type: getAccountType(partnerAdmin, partnerAccesses),
@@ -52,6 +52,7 @@ export const getEventUserData = (
     };
   } catch (error) {
     console.error('getEventUserData error:', error);
+    return {};
   }
 };
 
