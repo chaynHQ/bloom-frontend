@@ -1,13 +1,14 @@
 name: Build & test
 
 on:
-  pull_request_target:
+  pull_request_target: # staff approval required to run on public pull requests 
     types: [opened, synchronize]
   push:
     branches: [develop]
 
 jobs:
   build-and-test:
+    name: Build & test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,3 +43,4 @@ jobs:
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
       - name: Test app
         run: yarn test
+        
