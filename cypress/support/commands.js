@@ -216,16 +216,24 @@ const attachCustomCommands = (Cypress, auth) => {
     currentUser = user;
     token = currentUser
       ? currentUser.getIdToken().then((t) => {
-        token = t;
-      })
+          token = t;
+        })
       : null;
   });
 
   Cypress.Commands.add('getAccessToken', () => {
     return token ? cy.wrap(token) : undefined;
   });
-  Cypress.Commands.add('logInWithEmailAndPassword', (emailInput, passwordInput) => {
-    return signInWithEmailAndPassword(auth, emailInput, passwordInput);
+  Cypress.Commands.add('logInWithEmailAndPassword', async (emailInput, passwordInput) => {
+    const user = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+    cy.window().then(async (window) => {
+      // @ts-ignore
+      if (window.store) {
+        // @ts-ignore
+        window.store.dispatch({ type: 'user/setAuthStateLoading', action: false }); // important - triggers getUser in useLoadUser
+      }
+    });
+    return user;
   });
   Cypress.Commands.add('logout', () => {
     return signOut(auth);
@@ -234,11 +242,11 @@ const attachCustomCommands = (Cypress, auth) => {
     return currentUser ? cy.wrap(currentUser.email) : undefined;
   });
   Cypress.Commands.add('clearUserState', () => {
-    cy.window().then((win) => {
+    cy.window().then((window) => {
       // @ts-ignore
-      if (win.store) {
+      if (window.store) {
         // @ts-ignore
-        const result = win.store.dispatch({ type: 'user/clearUserSlice' });
+        const result = window.store.dispatch({ type: 'user/clearUserSlice' });
       }
     });
   });

@@ -10,10 +10,10 @@ import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
 } from '../../app/api';
-import { setUserLoading, setUserToken } from '../../app/userSlice';
+import { setUserLoading } from '../../app/userSlice';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
-  CREATE_USER_EMAIL_ALREADY_EXISTS,
+  CREATE_USER_ALREADY_EXISTS,
   CREATE_USER_INVALID_EMAIL,
   CREATE_USER_WEAK_PASSWORD,
 } from '../../constants/errors';
@@ -29,6 +29,7 @@ import {
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
@@ -36,6 +37,12 @@ import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,
+} as const;
+
+const contactCheckboxStyle = {
+  '+ .MuiFormControlLabel-label': {
+    fontSize: theme.typography.body2.fontSize,
+  },
 } as const;
 
 interface RegisterFormProps {
@@ -47,6 +54,8 @@ interface RegisterFormProps {
 
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
+  const userId = useTypedSelector((state) => state.user.id);
+  const userLoading = useTypedSelector((state) => state.user.loading);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>('');
@@ -60,8 +69,8 @@ const RegisterForm = (props: RegisterFormProps) => {
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
-  const [createUser, { isLoading: createIsLoading }] = useAddUserMutation();
-  const [validateCode, { isLoading: validateIsLoading }] = useValidateCodeMutation();
+  const [createUser] = useAddUserMutation();
+  const [validateCode] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Auth.form');
   const tS = useTranslations('Shared');
@@ -73,6 +82,15 @@ const RegisterForm = (props: RegisterFormProps) => {
     }
   }, [codeParam]);
 
+  useEffect(() => {
+    // Redirects in 2 scenarios:
+    // if user registration is successful and user loading is complete in useLoadUser
+    // if user lands on register page but is already signed in
+    if (userId) {
+      router.push('/account/about-you');
+    }
+  }, [userId, router]);
+
   const validateAccessCode = async () => {
     logEvent(VALIDATE_ACCESS_CODE_REQUEST, { partner: partnerName });
 
@@ -80,7 +98,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerAccessCode: codeInput,
     });
 
-    if ('error' in validateCodeResponse) {
+    if (validateCodeResponse.error) {
       const error = getErrorMessage(validateCodeResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
@@ -100,16 +118,16 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
         (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
-        setLoading(false);
-        throw error;
+        return;
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
-      setLoading(false);
+    } else {
+      logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
     }
-    logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
   };
 
   const createUserRecord = async () => {
+    await dispatch(setUserLoading(true));
     const userResponse = await createUser({
       partnerAccessCode: codeInput,
       name: nameInput,
@@ -120,38 +138,31 @@ const RegisterForm = (props: RegisterFormProps) => {
       partnerId: partnerId,
     });
 
-    if ('data' in userResponse && userResponse.data.user.id) {
+    if (userResponse?.data && userResponse.data.user.id) {
       const eventUserData = getEventUserResponseData(userResponse.data);
 
       logEvent(REGISTER_SUCCESS, eventUserData);
       try {
         const auth = getAuth();
-        const userCredential = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+        await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+
         logEvent(LOGIN_SUCCESS, eventUserData);
         logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
         logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
-
-        const token = await userCredential.user?.getIdToken();
-        if (token) {
-          await dispatch(setUserToken(token));
-          setLoading(false);
-          return userResponse.data.user;
-        }
       } catch (err) {
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           }),
         );
-        setLoading(false);
       }
     }
 
-    if ('error' in userResponse) {
+    if (userResponse.error) {
       const error = userResponse.error;
       const errorMessage = getErrorMessage(error);
 
-      if (errorMessage === CREATE_USER_EMAIL_ALREADY_EXISTS) {
+      if (errorMessage === CREATE_USER_ALREADY_EXISTS) {
         setFormError(
           t.rich('firebase.emailAlreadyInUse', {
             loginLink: (children) => (
@@ -166,18 +177,6 @@ const RegisterForm = (props: RegisterFormProps) => {
       } else if (errorMessage === CREATE_USER_INVALID_EMAIL) {
         setFormError(t('firebase.invalidEmail'));
       } else {
-        setFormError(
-          t.rich('createUserError', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-          }),
-        );
-      }
-
-      if (
-        errorMessage !== CREATE_USER_EMAIL_ALREADY_EXISTS &&
-        errorMessage !== CREATE_USER_WEAK_PASSWORD &&
-        errorMessage !== CREATE_USER_INVALID_EMAIL
-      ) {
         logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
         (window as any).Rollbar?.error('User register create user error', error);
         setFormError(
@@ -186,7 +185,6 @@ const RegisterForm = (props: RegisterFormProps) => {
           }),
         );
       }
-      throw error;
     }
   };
 
@@ -195,21 +193,9 @@ const RegisterForm = (props: RegisterFormProps) => {
     setLoading(true);
     setFormError('');
 
-    try {
-      partnerName && accessCodeRequired && (await validateAccessCode());
-      dispatch(setUserLoading(true));
-      const user = await createUserRecord();
-      dispatch(setUserLoading(false));
-      setLoading(false);
-
-      if (user) {
-        await router.push('/account/about-you');
-      }
-    } catch (error) {
-      // errors handled in each function
-      dispatch(setUserLoading(false));
-      setLoading(false);
-    }
+    partnerName && accessCodeRequired && (await validateAccessCode());
+    await createUserRecord();
+    setLoading(false);
   };
 
   return (
@@ -262,6 +248,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             label={t('contactPermissionLabel')}
             control={
               <Checkbox
+                sx={contactCheckboxStyle}
                 aria-label={t('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />
@@ -275,7 +262,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           fullWidth
           color="secondary"
           type="submit"
-          loading={loading}
+          loading={loading || userLoading}
         >
           {t('registerSubmit')}
         </LoadingButton>

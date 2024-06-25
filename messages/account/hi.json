@@ -97,6 +97,51 @@
       "title": "Bloom ke emails band kar diye gaye!",
       "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.</link>",
       "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
+    },
+    "accountSettings": {
+      "title": "Account Settings",
+      "description": "Aapke settings ko dekhiye aur update kijiye",
+      "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
+      "form": {
+        "emailLabel": "Email",
+        "nameLabel": "Naam",
+        "saveProfile": "Profile ko save kijiye"
+      },
+      "profile": {
+        "title": "Profile Details",
+        "description": "Aapka naam aur email ko update kijiye <link>Bloom team</link> se sampark karein. Yeh aapki profile par stored sirf do hi personal information hain."
+      },
+      "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
+      "actions": {
+        "title": "Account Actions",
+        "description": "Aapka account delete karne se aapka naam, email address aur dekhe gaye sessions ka history permanently delete ho jayega.",
+        "button": {
+          "resetPassword": "Password reset kijiye",
+          "deleteAccount": "Account delete kijiye",
+          "cancel": "Cancel"
+        }
+      },
+      "emailSettings": {
+        "title": "Email Preferences",
+        "description": "Humein bataein ki kya hum aapko email bhej sakte hain:",
+        "submitLabel": "Email preferences ko save kijiye",
+        "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
+        "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
+        "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Email Reminders",
+        "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
+        "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
+        "fieldLabel": "Yaad dilaya jaaye:",
+        "twoWeeksLabel": "Do saptah baad",
+        "oneMonthLabel": "Ek mahine ke baad",
+        "twoMonthsLabel": "Do mahine baad",
+        "neverLabel": "Kabhi nahi",
+        "update": "Aap is setting ko kabhi bhi update kar sakte hain",
+        "submitLabel": "Email Reminders Save karen",
+        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।</link>"
+      }
     }
   }
 }

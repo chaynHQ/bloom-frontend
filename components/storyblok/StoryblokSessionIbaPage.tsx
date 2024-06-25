@@ -214,11 +214,11 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
       storyblokId: storyId,
     });
 
-    if ('data' in startSessionResponse) {
+    if (startSessionResponse.data) {
       logEvent(SESSION_STARTED_SUCCESS, eventData);
     }
 
-    if ('error' in startSessionResponse) {
+    if (startSessionResponse.error) {
       const error = startSessionResponse.error;
 
       logEvent(SESSION_STARTED_ERROR, eventData);

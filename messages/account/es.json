@@ -97,6 +97,51 @@
       "title": "Correos de Bloom desactivados",
       "description": "Ya no recibirás correos electrónicos relacionados con Bloom. Si deseas cambiar esto más tarde, <link>ponte en contacto con el equipo de Bloom.</link>",
       "error": "Se produjo un error al desactivar los correos electrónicos de Bloom. Vuelve a intentarlo después de actualizar esta página o <link>ponte en contacto con el equipo de Bloom.</link>"
+    },
+    "accountSettings": {
+      "title": "Ajustes de Cuenta",
+      "description": "Ver y actualizar tu configuración en Bloom",
+      "imageAlt": "Ilustración de un teléfono móvil con un mensaje que contiene un corazón",
+      "form": {
+        "emailLabel": "Correo electrónico",
+        "nameLabel": "Nombre",
+        "saveProfile": "Guardar Perfil"
+      },
+      "profile": {
+        "title": "Detalles del perfil",
+        "description": "Actualiza tu nombre y correo electrónico poniéndote en contacto con el <link>equipo de Bloom</link>. Esta es la única información personal almacenada en tu perfil."
+      },
+      "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>",
+      "actions": {
+        "title": "Acciones de la cuenta",
+        "description": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
+        "button": {
+          "resetPassword": "Restablecer contraseña",
+          "deleteAccount": "Eliminar cuenta",
+          "cancel": "Cancelar"
+        }
+      },
+      "emailSettings": {
+        "title": "Preferencias de correo electrónico",
+        "description": "Avísanos si podemos enviarte correos electrónicos:",
+        "serviceEmailsPermissionLabel": "Sobre tus servicios o cambios en tu cuenta",
+        "contactPermissionLabel": "Cuando haya un nuevo curso, servicio o idioma disponible",
+        "submitLabel": "Guardar preferencias de correo electrónico",
+        "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "Recordatorios por correo electrónico",
+        "introduction": "Superar un trauma puede ser difícil, especialmente si lo haces solo.",
+        "description": "Podemos ayudarte a mantenerte en tu camino de recuperación con recordatorios amables si no has iniciado sesión en un tiempo.",
+        "fieldLabel": "Recibir recordatorios:",
+        "twoWeeksLabel": "Después de dos semanas",
+        "oneMonthLabel": "Después de un mes",
+        "twoMonthsLabel": "Después de dos meses",
+        "neverLabel": "Nunca",
+        "update": "Puedes actualizar esta configuración en cualquier momento",
+        "submitLabel": "Guardar recordatorios por correo electrónico",
+        "updateError": "Se produjo un error al actualizar la configuración de recordatorios por correo electrónico. Inténtalo nuevamente actualizando esta página o <link>poniéndote en contacto con el equipo de Bloom.</link>"
+      }
     }
   }
 }

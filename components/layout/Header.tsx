@@ -46,14 +46,14 @@ const imageContainerStyle = {
   height: { xs: 190, lg: 200 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: '1rem', md: '8%' },
-  marginTop: { sm: '5rem', md: '1.5rem' },
+  marginTop: { sm: '5rem', md: 0 },
 } as const;
 
 const textContainerStyle = {
   ...columnStyle,
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
-  maxWidth: { xs: '100%', sm: '55%', md: '48%' },
+  maxWidth: { xs: '100%', sm: '60%', md: '55%' },
   pl: { xs: 3, sm: 0 },
   pr: { xs: 6, sm: 0 },
 } as const;
@@ -129,7 +129,15 @@ const Header = (props: HeaderProps) => {
         {cta && <Box mt={4}>{cta}</Box>}
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={imageAltText} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={imageAltText}
+          src={imageSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
       </Box>
     </Container>
   );

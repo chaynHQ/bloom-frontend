@@ -12,13 +12,6 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 import PrimaryNavigationDrawerLinks from './PrimaryNavigationDrawerLinks';
 import SecondaryNavigationDrawerLinks from './SecondaryNavigationDrawerLinks';
 
-const logoContainerStyle = {
-  position: 'relative',
-  width: 120,
-  height: 60,
-  marginLeft: 2,
-} as const;
-
 const buttonStyle = {
   color: 'common.white',
   ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
@@ -39,7 +32,6 @@ const NavigationDrawer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const t = useTranslations('Navigation');
-  const tS = useTranslations('Shared');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -79,7 +71,7 @@ const NavigationDrawer = () => {
       <Drawer
         hideBackdrop={false}
         PaperProps={{
-          sx: { backgroundColor: 'primary.dark', color: 'common.white', top: { xs: 48, sm: 64 } },
+          sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
         }}
         sx={{ width: '100%', top: { xs: 48, sm: 64 } }}
         anchor="top"

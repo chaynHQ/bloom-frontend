@@ -27,6 +27,7 @@ const listItemStyle = {
   mb: 0,
   ml: 1,
   mr: 1,
+  color: 'common.white',
 } as const;
 
 const listItemTextStyle = {
@@ -38,7 +39,6 @@ const listItemTextStyle = {
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
   paddingY: 0.25,
 
@@ -47,8 +47,15 @@ const listButtonStyle = {
     opacity: 0.2,
   },
   ':hover': {
-    color: 'primary.dark',
+    backgroundColor: 'unset !important',
   },
+} as const;
+
+const loginButtonStyle = {
+  width: 'auto',
+  ml: 2,
+  mt: 1,
+  color: 'text.main !important',
 } as const;
 
 interface NavigationItem {
@@ -67,7 +74,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const t = useTranslations('Navigation');
 
   const userLoading = useTypedSelector((state) => state.user.loading);
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -79,11 +86,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (!userLoading) {
-      if (userToken && router.pathname === '/auth/login') {
-        router.push('/courses');
-      }
-
+    if (!userLoading && userId) {
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
@@ -110,7 +113,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, userToken, userLoading, partnerAccesses, partnerAdmin]);
+  }, [t, userId, userLoading, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
@@ -127,12 +130,12 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
           </ListItemButton>
         </ListItem>
       ))}
-      {!userLoading && !userToken && (
+      {!userLoading && !userId && (
         <li>
           <Button
             variant="contained"
             size="large"
-            sx={{ width: 'auto', ml: 2, mt: 1 }}
+            sx={loginButtonStyle}
             component={Link}
             href="/auth/login"
             onClick={() => {

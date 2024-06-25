@@ -119,7 +119,7 @@ const UpdateTherapyAdminForm = () => {
           partnerAccessCode.therapySessionsRemaining + therapySessionAdjustmentValue,
       });
 
-      if ('error' in updateTherapyResponse) {
+      if (updateTherapyResponse.error) {
         const error = updateTherapyResponse.error;
         const errorMessage = getErrorMessage(error);
 

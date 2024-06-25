@@ -102,7 +102,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   const router = useRouter();
 
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -130,7 +130,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   return (
     <Card sx={rowItem}>
       <CardContent>
-        {userToken && (
+        {userId && (
           <>
             <Typography variant="h2" component="h2">
               {t('continueCourses')}
@@ -151,7 +151,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             </Button>
           </>
         )}
-        {!userToken && accessCodeRequired && (
+        {!userId && accessCodeRequired && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}
@@ -160,7 +160,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             <WelcomeCodeForm codeParam={codeParam} partnerParam={partnerName} />
           </>
         )}
-        {!userToken && !accessCodeRequired && (
+        {!userId && !accessCodeRequired && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}
