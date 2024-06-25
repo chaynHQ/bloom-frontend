@@ -26,18 +26,22 @@ export const getEventUserData = (
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
 ) => {
-  return {
-    account_type: getAccountType(partnerAdmin, partnerAccesses),
-    registered_at: userCreatedAt,
-    ...(partnerAccesses.length > 0 && {
-      partner: joinedPartners(partnerAccesses, partnerAdmin),
-      partner_live_chat: joinedFeatureLiveChat(partnerAccesses),
-      partner_therapy: joinedFeatureTherapy(partnerAccesses),
-      partner_therapy_remaining: totalTherapyRemaining(partnerAccesses),
-      partner_therapy_redeemed: totalTherapyRemaining(partnerAccesses),
-      partner_activated_at: partnerAccesses ? partnerAccesses[0]?.activatedAt : null,
-    }),
-  };
+  try {
+    return {
+      account_type: getAccountType(partnerAdmin, partnerAccesses),
+      registered_at: userCreatedAt,
+      ...(partnerAccesses?.length > 0 && {
+        partner: joinedPartners(partnerAccesses, partnerAdmin),
+        partner_live_chat: joinedFeatureLiveChat(partnerAccesses),
+        partner_therapy: joinedFeatureTherapy(partnerAccesses),
+        partner_therapy_remaining: totalTherapyRemaining(partnerAccesses),
+        partner_therapy_redeemed: totalTherapyRemaining(partnerAccesses),
+        partner_activated_at: partnerAccesses ? partnerAccesses[0]?.activatedAt : null,
+      }),
+    };
+  } catch (error) {
+    console.error('getEventUserData error:', error);
+  }
 };
 
 export const getEventUserResponseData = (userResponse: GetUserResponse) => {
