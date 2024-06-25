@@ -5,7 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useAddUserMutation, useValidateCodeMutation } from '../../app/api';
+import {
+  useAddUserMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useValidateCodeMutation,
+} from '../../app/api';
 import { setUserLoading } from '../../app/userSlice';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
@@ -27,6 +31,7 @@ import {
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
+import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -271,6 +276,29 @@ interface PartnerRegisterFormProps {
   partnerName: string;
 }
 
-export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {};
+export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
+  const partners = useTypedSelector((state) => state.partners);
+  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
+  const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
+
+  useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
+
+  useEffect(() => {
+    const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
+    if (partnerData) {
+      setAccessCodeRequired(!hasAutomaticAccessFeature(partnerData));
+      setPartnerId(partnerData.id);
+    }
+  }, [partners, partnerName]);
+
+  return (
+    <RegisterForm
+      partnerName={partnerName}
+      partnerId={!accessCodeRequired ? partnerId : undefined}
+      codeParam={codeParam}
+      accessCodeRequired={accessCodeRequired}
+    />
+  );
+};
 
 export default RegisterForm;
