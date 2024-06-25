@@ -54,12 +54,12 @@ const WhatsappSubscribeForm = () => {
         subscriptionInfo: validatedNumber,
       });
 
-      if ('data' in subscribeResponse) {
+      if (subscribeResponse.data) {
         setLoading(false);
         logEvent(WHATSAPP_SUBSCRIBE_SUCCESS, eventUserData);
       }
 
-      if ('error' in subscribeResponse) {
+      if (subscribeResponse.error) {
         const error = getErrorMessage(subscribeResponse.error);
 
         if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {

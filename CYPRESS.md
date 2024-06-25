@@ -4,8 +4,10 @@ Currently, integration tests are set up to be run locally with Chrome. When cypr
 
 ## Setup
 
-- First create a local `cypress.env.json` file (this file is in .gitignore and will be ignore by git). Example variables are in `cypress.env.example.json`. You can ask the team for the environment variables to run Cypress tests and paste them into the file.
-- These variables require users to exist in your database that have certain permissions. Firstly you need to create a super admin user in your database.
+First, create a local `cypress.env.json` file (this file is in .gitignore and will be ignore by git). Example variables are in `cypress.env.example.json`. Some of these variables can be configured by following directions in our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#1e51da106e1a484baf1429a04be71388). The other variables are login credentials for users that must exist in your local database with certain permissions.
+
+To configure the login credential variables in your database, first you need to create a super admin user in your database:
+
 - Create a public user through the UI.
 - In the database in `bloom-backend` you will need to set "isSuperAdmin" column to true for the user you created. See [BLOOM_USERS.md](/BLOOM_USERS.md) for steps on how to set up different users.
 - There are 2 ways of data seeding with users. 1 is via a script in the bloom-scripts repo. Or 2 creating users through the UI (recommended).

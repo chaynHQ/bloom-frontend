@@ -107,7 +107,7 @@ const Register: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} layout="fill" />
+          <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} fill sizes="100vw" />
         </Box>
         {!partnerContent && (
           // Show the public bloom and all other partner's welcome page links
@@ -135,8 +135,11 @@ const Register: NextPage = () => {
                       <Image
                         alt={tS(partner.logoAlt)}
                         src={partner.logo}
-                        layout="fill"
-                        objectFit="contain"
+                        fill
+                        sizes="100vw"
+                        style={{
+                          objectFit: 'contain',
+                        }}
                       />
                     </Link>
                   ))}

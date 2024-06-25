@@ -41,10 +41,26 @@ const PartnerHeader = (props: HeaderProps) => {
     <Container sx={headerContainerStyles}>
       <UserResearchBanner />
       <Box sx={logoContainerStyle}>
-        <Image alt={tS(partnerLogoAlt)} src={partnerLogoSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={tS(partnerLogoAlt)}
+          src={partnerLogoSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
       </Box>
       <Box sx={imageContainerStyle}>
-        <Image alt={tS(imageAlt)} src={imageSrc} layout="fill" objectFit="contain" />
+        <Image
+          alt={tS(imageAlt)}
+          src={imageSrc}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
       </Box>
     </Container>
   );

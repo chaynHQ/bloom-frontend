@@ -77,7 +77,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userLoading = useTypedSelector((state) => state.user.loading);
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
@@ -118,26 +118,24 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
       },
     ];
 
-    if (!userLoading) {
-      if (userToken) {
-        const therapyAccess = partnerAccesses.find(
-          (partnerAccess) => partnerAccess.featureTherapy === true,
-        );
+    if (!userLoading && userId) {
+      const therapyAccess = partnerAccesses.find(
+        (partnerAccess) => partnerAccess.featureTherapy === true,
+      );
 
-        if (!!therapyAccess) {
-          links.push({
-            label: t('therapy'),
-            href: '/therapy/book-session',
-            event: DRAWER_THERAPY_CLICKED,
-            icon: <SecondaryNavIcon src={therapyIcon} alt={t('alt.therapyIcon')} />,
-          });
-        }
+      if (!!therapyAccess) {
+        links.push({
+          label: t('therapy'),
+          href: '/therapy/book-session',
+          event: DRAWER_THERAPY_CLICKED,
+          icon: <SecondaryNavIcon src={therapyIcon} alt={t('alt.therapyIcon')} />,
+        });
       }
     }
 
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, userLoading, userToken, partnerAccesses, partnerAdmin]);
+  }, [t, userLoading, userId, partnerAccesses, partnerAdmin]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>

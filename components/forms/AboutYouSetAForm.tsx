@@ -4,10 +4,16 @@ import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useUpdateUserMutation } from '../../app/api';
+import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
   ABOUT_YOU_SETA_SUCCESS,
+  EMAIL_REMINDERS_SET_REQUEST,
+  EMAIL_REMINDERS_SET_SUCCESS,
+  EMAIL_REMINDERS_UNSET_REQUEST,
+  EMAIL_REMINDERS_UNSET_SUCCESS,
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -15,6 +21,7 @@ import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/c
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { EmailRemindersSettingsFormControl } from './EmailRemindersSettingsForm';
 
 const actionsStyle = {
   ...rowStyle,
@@ -27,12 +34,17 @@ const DEFAULT_SCALE_START = 3;
 const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
+  const tAccount = useTranslations('Account.accountSettings.emailRemindersSettings');
 
   const router = useRouter();
+  const [updateUser] = useUpdateUserMutation();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [hopesInput, setHopesInput] = useState<string>('');
+  const [emailRemindersSettingInput, setEmailRemindersSettingInput] = useState<
+    EMAIL_REMINDERS_FREQUENCY | undefined
+  >();
   const [scale1Input, setScale1Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale2Input, setScale2Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale3Input, setScale3Input] = useState<number>(DEFAULT_SCALE_START);
@@ -49,6 +61,7 @@ const AboutYouSetAForm = () => {
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -68,6 +81,26 @@ const AboutYouSetAForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+
+    if (emailRemindersSettingInput) {
+      const isEmailRemindersSet = emailRemindersSettingInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
+      const emailRemindersEventData = {
+        ...eventUserData,
+        frequency: emailRemindersSettingInput,
+        origin_url: router.pathname,
+      };
+      logEvent(
+        isEmailRemindersSet ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST,
+        emailRemindersEventData,
+      );
+      await updateUser({
+        emailRemindersFrequency: emailRemindersSettingInput,
+      });
+      logEvent(
+        isEmailRemindersSet ? EMAIL_REMINDERS_SET_SUCCESS : EMAIL_REMINDERS_UNSET_SUCCESS,
+        emailRemindersEventData,
+      );
+    }
 
     logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
 
@@ -152,6 +185,21 @@ const AboutYouSetAForm = () => {
             />
           </FormControl>
         ))}
+
+        {/* Additional user setting for email reminders frequency */}
+        {isPublicUser && (
+          <>
+            <Typography mt={3} mb={1.5}>
+              {tAccount('introduction')}
+            </Typography>
+            <Typography>{tAccount('description')}</Typography>
+            <EmailRemindersSettingsFormControl
+              selectedInput={emailRemindersSettingInput}
+              setSelectedInput={setEmailRemindersSettingInput}
+            />
+            <Typography variant="body2">{tAccount('update')}</Typography>
+          </>
+        )}
 
         {formError && (
           <Typography color="error.main" mb={2}>

@@ -3,7 +3,7 @@ import { SxProps } from '@mui/system';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
-import logEvent from '../../utils/logEvent';
+import logEvent, { EventUserData } from '../../utils/logEvent';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
@@ -20,7 +20,7 @@ const videoStyle = {
 
 interface VideoProps {
   url: string;
-  eventData: {};
+  eventData: EventUserData;
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;

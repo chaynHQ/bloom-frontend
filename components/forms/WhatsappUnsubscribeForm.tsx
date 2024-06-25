@@ -54,12 +54,12 @@ const WhatsappUnsubscribeForm = () => {
       cancelledAt: new Date(),
     });
 
-    if ('data' in unsubscribeResponse) {
+    if (unsubscribeResponse.data) {
       setLoading(false);
       logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS, eventUserData);
     }
 
-    if ('error' in unsubscribeResponse) {
+    if (unsubscribeResponse.error) {
       const error = getErrorMessage(unsubscribeResponse.error);
 
       setFormError(

@@ -46,6 +46,8 @@ Happy coding! ⭐
 - [Rollbar](https://rollbar.com/) - Error reporting
 - [New Relic](https://newrelic.com/) - Performance monitoring
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
+- [Jest](https://jestjs.io/) - Unit testing.
+- [Cypress](https://www.cypress.io/) - End-to-end testing.
 
 ## Prerequisites
 
@@ -61,20 +63,9 @@ You will need to run this in the background for the frontend to be functional.
 
 ### Configure Environment Variables
 
-- **For official Chayn volunteers and staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
+- **For Chayn staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-- **For open-source contributors:** create a `env.local` file and populate it with the variables below:
-
-First, gather your own Firebase tokens. Here are resources to get started:
-
-- [Firebase Docs: Auth](https://firebase.google.com/docs/auth)
-- [Firebase Docs: API Keys](https://firebase.google.com/docs/projects/api-keys)
-- [Firebase Docs: Projects](https://firebase.google.com/docs/projects/learn-more#project-identifiers)
-- [Firebase Docs: Get Started with Fundamentals](https://firebase.google.com/docs/guides)
-
-Next, obtain the Storyblok token by visiting our [Tech Volunteer Guide](https://www.notion.so/chayn/Tech-volunteer-wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#84635bd9b82543ccaab4fb932ca35ebf).
-Chayn provides a Storyblok token for contributors and is subject to change at any time. If issues arise with your Storyblok token, try checking the volunteer guide to see if the token has been updated.
-_Note: Additional documentation found in the Tech Volunteer Guide may be outdated._
+- **For open-source contributors:** create a `env.local` file and populate it with the variables below. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token by visiting our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#bf62b5dcdb43496ea16231ff1815298b). Note: environment variables provided by Chayn are subject to change at any time, check for updates if you are experiencing problems.
 
 ```
 NEXT_PUBLIC_ENV=local
@@ -87,9 +78,9 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID= # must enable Google Anayltics in Firebase project
 
-NEXT_PUBLIC_STORYBLOK_TOKEN=
+NEXT_PUBLIC_STORYBLOK_TOKEN= # links content to the frontend
 
 NEXT_PUBLIC_CRISP_WEBSITE_ID= # OPTIONAL for user messaging
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # OPTIONAL for booking session forms
@@ -100,7 +91,7 @@ NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # OPTIONAL for user data form webhooks
 
 #### Vercel Environment Variable Import:
 
-For official Chayn volunteers and staff only -- if you have access to Vercel as a staff member, follow the instructions below. If you do not have access, please proceed past this section.
+For Chayn staff only -- if you have access to Vercel as a staff member, follow the instructions below. If you do not have access, please proceed past this section.
 
 Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables). These environment variables can be imported using the Vercel CLI.
 
@@ -217,8 +208,7 @@ yarn build
 
 ## Cypress Testing
 
-**Note: Open-source contributors do not need to run Cypress tests locally, these tests will run in GitHub Actions upon making a pull request.**
-If you are an official Chayn volunteer, please get in touch with the team for the Cypress test environment variables.
+We use Cypress to perform end-to-end (e2e) tests of platform.
 See [CYPRESS.md](CYPRESS.md) for set up instructions for Cypress tests.
 
 **Running the https proxy**

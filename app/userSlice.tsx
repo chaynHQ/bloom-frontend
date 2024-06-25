@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LANGUAGES } from '../constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
 import { PartnerAccesses } from './partnerAccessSlice';
 
 export interface User {
   loading: boolean;
+  loadError: string | null;
   token: string | null;
   id: string | null;
   createdAt: Date | null;
@@ -15,6 +16,7 @@ export interface User {
   partnerAccessCode: string | null;
   contactPermission: boolean;
   serviceEmailsPermission: boolean;
+  emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
@@ -33,6 +35,7 @@ export interface GetUserDto {
     firebaseUid?: string | null;
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
+    emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
@@ -58,6 +61,7 @@ export interface Subscriptions extends Array<Subscription> {}
 
 const initialState: User = {
   loading: false,
+  loadError: null,
   token: null,
   id: null,
   createdAt: null,
@@ -68,6 +72,7 @@ const initialState: User = {
   partnerAccessCode: null,
   contactPermission: false,
   serviceEmailsPermission: true,
+  emailRemindersFrequency: null,
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
@@ -91,6 +96,9 @@ const slice = createSlice({
     setAuthStateLoading(state, action: PayloadAction<boolean>) {
       state.authStateLoading = action.payload;
     },
+    setLoadError(state, action: PayloadAction<string>) {
+      state.loadError = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -100,9 +108,7 @@ const slice = createSlice({
       return Object.assign({}, state, payload.user, { activeSubscriptions });
     });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       const activeSubscriptions = getActiveSubscriptions(payload);
@@ -140,5 +146,6 @@ const isSubscriptionActive = (subscription: Subscription): subscription is Activ
 };
 
 const { actions, reducer } = slice;
-export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading } = actions;
+export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading, setLoadError } =
+  actions;
 export default reducer;

@@ -62,7 +62,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
   const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
 
   useEffect(() => {
     setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
@@ -84,8 +84,8 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
       <Head>{story.content.title}</Head>
       <Box>
         <Header {...headerProps} />
-        {!userToken && <SignUpBanner />}
-        {userToken && (
+        {!userId && <SignUpBanner />}
+        {userId && (
           <Container sx={containerStyle}>
             <Box sx={infoBoxStyle}>
               <ImageTextColumn items={steps} translations="Whatsapp.steps" />
@@ -95,7 +95,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
             </Box>
           </Container>
         )}
-        {userToken &&
+        {userId &&
           story.content.page_sections?.length > 0 &&
           story.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection key={`page_section_${index}`} {...section} />

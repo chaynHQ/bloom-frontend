@@ -94,7 +94,15 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={imageContainerStyle}>
-            <Image alt={image.alt} src={image.filename} layout="fill" objectFit="cover" />
+            <Image
+              alt={image.alt}
+              src={image.filename}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'cover',
+              }}
+            />
           </Box>
           <Box sx={cardHeaderStyle}>
             <Box flex={1}>

@@ -77,12 +77,12 @@ const CreateAccessCodeForm = () => {
       therapySessionsRedeemed: 0,
     });
 
-    if ('data' in partnerAccessResponse) {
+    if (partnerAccessResponse.data) {
       logEvent(CREATE_PARTNER_ACCESS_SUCCESS, eventData);
       setPartnerAccessCode(partnerAccessResponse.data.accessCode);
     }
 
-    if ('error' in partnerAccessResponse) {
+    if (partnerAccessResponse.error) {
       const error = partnerAccessResponse.error;
       const errorMessage = getErrorMessage(error);
 

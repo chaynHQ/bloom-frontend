@@ -42,7 +42,7 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
     >
       {image && (
         <Box sx={imageContainerStyle}>
-          <Image src={image.filename} alt={image.alt} layout="fill" className="image" />
+          <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw" />
         </Box>
       )}
       <Quote text={text} textSize={text_size} iconColor={icon_color} />

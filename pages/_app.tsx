@@ -3,10 +3,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 // Import the functions you need from the SDKs you need
 import { Analytics } from '@vercel/analytics/react';
+import { NextComponentType } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -21,11 +23,7 @@ import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
 import firebase from '../config/firebase';
 import { storyblok } from '../config/storyblok';
-import { AuthGuard } from '../guards/authGuard';
-import { PartnerAdminGuard } from '../guards/partnerAdminGuard';
-import { PublicPageDataWrapper } from '../guards/publicPageDataWrapper';
-import { SuperAdminGuard } from '../guards/superAdminGuard';
-import { TherapyAccessGuard } from '../guards/therapyAccessGuard';
+import { AuthGuard } from '../guards/AuthGuard';
 import '../public/hotjarNPS.css';
 import '../styles/globals.css';
 import theme from '../styles/theme';
@@ -48,64 +46,15 @@ function MyApp(props: MyAppProps) {
     emotionCache = clientSideEmotionCache,
     pageProps,
   }: {
-    Component: any;
+    Component: NextComponentType<NextPageContext<any>, any, any>;
     emotionCache?: EmotionCache;
     pageProps: any;
   } = props;
 
   const router = useRouter();
 
-  // Example:
-  // The url http://bloom.chayn.co/auth/register?example=true will have a pathname of /auth/register
-  // This pathname split with a '/' separator will produce the array ['', 'auth', 'register']
-  // The second array entry is pulled out as the pathHead and will be 'auth'
-  const pathHead = router.pathname.split('/')[1]; // e.g. courses | therapy | partner-admin
-
-  // Adds required permissions guard to pages, redirecting where required permissions are missing
-  // New pages will default to requiring authenticated and public pages must be added to the array below
-  const ComponentWithGuard = () => {
-    const publicPathHeads = [
-      '',
-      'index',
-      'welcome',
-      'auth',
-      'action-handler',
-      '404',
-      '500',
-      'faqs',
-      'meet-the-team',
-      'partnership',
-      'about-our-courses',
-    ];
-
-    // As the subpages of courses are not public and these pages are only partially public,
-    // they are treated differently as they are not public path heads
-    const partiallyPublicPages = [
-      '/courses',
-      '/activities',
-      '/grounding',
-      '/subscription/whatsapp',
-      '/chat',
-    ];
-
-    const component = <Component {...pageProps} />;
-    let children = null;
-
-    if (publicPathHeads.includes(pathHead) || partiallyPublicPages.includes(router.asPath)) {
-      return <PublicPageDataWrapper>{component}</PublicPageDataWrapper>;
-    }
-    if (pathHead === 'therapy') {
-      children = <TherapyAccessGuard>{component}</TherapyAccessGuard>;
-    }
-    if (pathHead === 'partner-admin') {
-      children = <PartnerAdminGuard>{component}</PartnerAdminGuard>;
-    }
-    if (pathHead === 'admin') {
-      children = <SuperAdminGuard>{component}</SuperAdminGuard>;
-    }
-
-    return <AuthGuard>{children || component}</AuthGuard>;
-  };
+  // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
+  const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
 
   useEffect(() => {
     // Check if entry path is from a partner referral and if so, store referring partner in local storage
@@ -140,7 +89,9 @@ function MyApp(props: MyAppProps) {
             <TopBar />
             <AppBarSpacer />
             {pathHead !== 'partner-admin' && <LeaveSiteButton />}
-            <ComponentWithGuard />
+            <AuthGuard>
+              <Component {...pageProps} />
+            </AuthGuard>
             <Footer />
             <Consent />
             {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (

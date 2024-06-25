@@ -52,7 +52,7 @@ const ApplyCodeForm = () => {
       partnerAccessCode: codeInput,
     });
 
-    if ('data' in partnerAccessResponse) {
+    if (partnerAccessResponse.data) {
       const eventData = {
         new_partner: partnerAccessResponse.data.partner?.name,
         feature_courses: true,
@@ -66,14 +66,14 @@ const ApplyCodeForm = () => {
       setFormSubmitSuccess(true);
     }
 
-    if ('error' in partnerAccessResponse) {
+    if (partnerAccessResponse.error) {
       const error = getErrorMessage(partnerAccessResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
         setFormError(t('form.codeErrors.alreadyInUse'));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_APPLIED) {
         setFormError(t('form.codeErrors.alreadyApplied'));
-      }  else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
+      } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
         setFormError(t('form.codeErrors.expired'));
       } else if (
         error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||

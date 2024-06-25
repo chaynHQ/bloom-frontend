@@ -2,6 +2,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import { ISbRichtext } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionDetail from '../../pages/courses/image-based-abuse-and-rebuilding-ourselves/[sessionSlug]';
+import { EventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
@@ -18,7 +19,7 @@ export type BonusContent = {
 };
 interface MultipleBonusContentProps {
   bonus: BonusContent[];
-  eventData: { [index: string]: any };
+  eventData: EventUserData;
 }
 
 const MultipleBonusContent = (props: MultipleBonusContentProps) => {

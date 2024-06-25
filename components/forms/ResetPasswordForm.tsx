@@ -42,16 +42,14 @@ export const EmailForm = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-
-        logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        (window as any).Rollbar?.error('User send reset password email firebase error', error);
 
         if (errorCode === 'auth/invalid-email') {
           setFormError(t('firebase.invalidEmail'));
-        }
-        if (errorCode === 'auth/user-not-found') {
+        } else if (errorCode === 'auth/user-not-found') {
           setFormError(t('firebase.authError'));
+        } else {
+          logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
+          (window as any).Rollbar?.error('User send reset password email firebase error', error);
         }
       });
   };

@@ -97,6 +97,51 @@
       "title": "Bloom-E-Mails deaktiviert",
       "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.</link>",
       "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.</link>"
+    },
+    "accountSettings": {
+      "title": "Kontoeinstellungen",
+      "description": "Einstellungen in Bloom anzeigen und aktualisieren",
+      "imageAlt": "Abbildung eines Mobiltelefons mit einer Nachricht, die ein Herz enthält",
+      "form": {
+        "emailLabel": "E-Mail",
+        "nameLabel": "Name",
+        "saveProfile": "Profil speichern"
+      },
+      "profile": {
+        "title": "Profildetails",
+        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das <link>Bloom-Team</link> wenden. Dies sind die einzigen persönlichen Daten, die in Ihrem Profil gespeichert sind."
+      },
+      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
+      "actions": {
+        "title": "Kontoaktionen",
+        "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
+        "button": {
+          "resetPassword": "Passwort zurücksetzen",
+          "deleteAccount": "Konto löschen",
+          "cancel": "Abbrechen"
+        }
+      },
+      "emailSettings": {
+        "title": "E-Mail-Einstellungen",
+        "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
+        "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
+        "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
+        "submitLabel": "E-Mail-Einstellungen speichern",
+        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "E-Mail-Erinnerungen",
+        "introduction": "Die Verarbeitung von Traumata kann schwierig sein, besonders wenn man es alleine macht.",
+        "description": "Wir können Ihnen helfen, auf Ihrem Heilungsweg zu bleiben, mit sanften Erinnerungen, wenn Sie sich eine Weile nicht angemeldet haben.",
+        "fieldLabel": "Erinnert werden:",
+        "twoWeeksLabel": "Nach zwei Wochen",
+        "oneMonthLabel": "Nach einem Monat",
+        "twoMonthsLabel": "Nach zwei Monaten",
+        "neverLabel": "Nie",
+        "update": "Sie können diese Einstellung jederzeit aktualisieren",
+        "submitLabel": "E-Mail-Erinnerungen speichern",
+        "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.</link>"
+      }
     }
   }
 }

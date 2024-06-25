@@ -4,6 +4,7 @@ import { api, GetUserResponse } from './api';
 
 export interface PartnerAdmin {
   id: string | null;
+  active: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
   partner: PartnerContent | null;
@@ -11,6 +12,7 @@ export interface PartnerAdmin {
 
 const initialState: PartnerAdmin = {
   id: null,
+  active: null,
   createdAt: null,
   updatedAt: null,
   partner: null,

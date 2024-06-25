@@ -11,7 +11,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
+import logEvent, { EventUserData } from '../../utils/logEvent';
 
 const cardStyle = {
   width: { xs: '100%', md: 700 },
@@ -27,7 +27,7 @@ interface SessionContentCardProps {
   richtextContent?: boolean;
   initialExpanded?: boolean;
   eventPrefix: string;
-  eventData: {};
+  eventData: EventUserData;
 }
 
 const SessionContentCard = (props: SessionContentCardProps) => {

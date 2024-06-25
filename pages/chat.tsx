@@ -22,7 +22,7 @@ const Chat: NextPage<Props> = ({ story }) => {
   const t = useTranslations('Courses');
 
   const userEmail = useTypedSelector((state) => state.user.email);
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -46,7 +46,7 @@ const Chat: NextPage<Props> = ({ story }) => {
         <Header
           {...headerProps}
           cta={
-            userToken && (
+            userId && (
               <CrispButton
                 email={userEmail}
                 eventData={eventUserData}
@@ -55,7 +55,7 @@ const Chat: NextPage<Props> = ({ story }) => {
             )
           }
         />
-        {userToken ? (
+        {userId ? (
           story.content.page_sections?.length > 0 &&
           story.content.page_sections.map((section: any, index: number) => (
             <StoryblokPageSection key={`page_section_${index}`} {...section} />

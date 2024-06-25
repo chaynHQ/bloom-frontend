@@ -135,7 +135,7 @@ We suggest starting with issues labeled `good first issue` or `complexity: begin
 
 ### Issue Limit Policies
 
-**To ensure we give a fair opportunity to everyone, Chayn maintainers may limit the number of issues you can be assigned.** This allows us to manage our open-source contributions at a sustainble pace and ensure there are always open issues for everyone.
+**To ensure we give a fair opportunity to everyone, Chayn maintainers may limit the number of issues you can be assigned.** This allows us to manage our open-source contributions at a sustainable pace and ensure there are always open issues for everyone.
 
 - **Only 1 issue of a specific complexity level in a single repository may be assigned to a contributor at a time.** To be assigned another, you must complete or close your previous issue. For example, a contributor can have 1 beginner issue, 1 intermediate issue, and 1 complex issue open in a single repository at a time. But they cannot have 3 beginner issues open, or 2 intermediate issues open at once in a single repository.
 - **Beginner issues may be capped** at any time to reserve for current events, such as volunteer programs or Hacktoberfest.

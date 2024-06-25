@@ -1,0 +1,22 @@
+# This workflow enables dependency scans on pull requests.
+# When changes in dependencies are detected, it will raise an error
+# if any vulnerabilities or invalid licenses are introduced.
+# See for more info: https://github.com/actions/dependency-review-action
+
+name: 'Dependency Review'
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+      - name: 'Dependency Review'
+        uses: actions/dependency-review-action@v4
+        with:
+          # fails when moderate vulnerabilities are deteched
+          fail-on-severity: moderate

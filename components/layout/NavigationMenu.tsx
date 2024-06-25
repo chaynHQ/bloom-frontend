@@ -18,6 +18,7 @@ const listStyle = {
   marginLeft: { xs: 0, md: 0.5 },
   marginRight: { xs: 0, md: 0.5 },
   gap: { xs: 2, md: 0 },
+  color: 'common.white',
 } as const;
 
 const listItemStyle = {
@@ -33,7 +34,6 @@ const listItemTextStyle = {
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
   paddingY: 0.5,
 
