@@ -8,7 +8,7 @@ import {
   SESSION_COMPLETE_REQUEST,
   SESSION_COMPLETE_SUCCESS,
 } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
+import logEvent, { EventUserData } from '../../utils/logEvent';
 
 import { Dots } from '../common/Dots';
 
@@ -20,7 +20,7 @@ const errorStyle = {
 
 interface SessionCompleteButtonProps {
   storyId: number;
-  eventData: any;
+  eventData: EventUserData;
 }
 
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {

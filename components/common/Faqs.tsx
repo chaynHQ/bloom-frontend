@@ -5,14 +5,14 @@ import { useTranslations } from 'next-intl';
 import { THERAPY_FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';
 import { PartnerContent } from '../../constants/partners';
-import logEvent from '../../utils/logEvent';
+import logEvent, { EventUserData } from '../../utils/logEvent';
 import Link from './Link';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<FaqItem>;
   partner?: PartnerContent | null;
-  eventUserData: any;
+  eventUserData: EventUserData;
 }
 
 // TO BE REMOVED IF THERAPY FAQS ARE MOVED TO STORYBLOK, use StoryblokFaqs.tsx instead.

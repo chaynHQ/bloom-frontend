@@ -9,7 +9,18 @@ import {
   joinedPartners,
   totalTherapyRemaining,
 } from './formatPartnerAccesses';
-import { getAccountType } from './getAccountType';
+import { AccountType, getAccountType } from './getAccountType';
+
+export interface EventUserData {
+  account_type?: AccountType | null;
+  partner?: string | null;
+  partner_live_chat?: string | null;
+  partner_therapy?: string | null;
+  partner_therapy_remaining?: number | null;
+  partner_therapy_redeemed?: number | null;
+  partner_activated_at?: string | Date | null;
+  registered_at?: string | Date | null;
+}
 
 export const logEvent = (event: string, params?: {}) => {
   // Send analytics event to firebase / Google Analytics
@@ -25,7 +36,7 @@ export const getEventUserData = (
   userCreatedAt: Date | null,
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
-) => {
+): EventUserData | undefined => {
   try {
     return {
       account_type: getAccountType(partnerAdmin, partnerAccesses),
