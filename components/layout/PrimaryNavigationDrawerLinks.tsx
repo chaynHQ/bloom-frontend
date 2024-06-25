@@ -27,6 +27,7 @@ const listItemStyle = {
   mb: 0,
   ml: 1,
   mr: 1,
+  color: 'common.white',
 } as const;
 
 const listItemTextStyle = {
@@ -38,7 +39,6 @@ const listItemTextStyle = {
 
 const listButtonStyle = {
   borderRadius: 20,
-  color: 'common.white',
   fontFamily: 'Monterrat, sans-serif',
   paddingY: 0.25,
 
@@ -49,6 +49,12 @@ const listButtonStyle = {
   ':hover': {
     color: 'primary.dark',
   },
+} as const;
+
+const loginButtonStyle = {
+  width: 'auto',
+  ml: 2,
+  mt: 1,
 } as const;
 
 interface NavigationItem {
@@ -132,7 +138,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
           <Button
             variant="contained"
             size="large"
-            sx={{ width: 'auto', ml: 2, mt: 1 }}
+            sx={loginButtonStyle}
             component={Link}
             href="/auth/login"
             onClick={() => {
