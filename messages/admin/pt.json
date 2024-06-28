@@ -29,7 +29,11 @@
     "updatePartner": {
       "title": "Update partner admin",
       "emailLabel": "Type at least 4 letters",
-      "activeAdminLabel": "Partner admin is currently active"
+      "activeAdminLabel": "Partner admin is currently active",
+      "successDescription": "Partner admin updated!",
+      "formError": "Make sure you have selected a partner user",
+      "error": "Error updating partner admin: ",
+      "reset": "Update another partner admin"
     }
   }
 }
