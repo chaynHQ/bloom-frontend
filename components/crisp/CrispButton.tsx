@@ -1,12 +1,12 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Button } from '@mui/material';
 import { SESSION_CHAT_BUTTON_CLICKED } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
+import logEvent, { EventUserData } from '../../utils/logEvent';
 
 interface CrispButtonProps {
   buttonText: string;
   email: string | null;
-  eventData: {};
+  eventData: EventUserData;
 }
 
 const crispButtonStyle = {

@@ -12,7 +12,7 @@ import { columnStyle } from '../styles/common';
 
 const Custom500: NextPage = () => {
   const t = useTranslations('Shared');
-  const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
 
   const containerStyle = {
@@ -50,9 +50,9 @@ const Custom500: NextPage = () => {
         variant="contained"
         color="secondary"
         component={Link}
-        href={userToken ? '/courses' : '/login'}
+        href={userId ? '/courses' : '/login'}
       >
-        {userToken ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}
+        {userId ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}
       </Button>
     </Container>
   );

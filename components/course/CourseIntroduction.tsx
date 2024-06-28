@@ -8,7 +8,7 @@ import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
 } from '../../constants/events';
 import { rowStyle } from '../../styles/common';
-import { logEvent } from '../../utils/logEvent';
+import { EventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import Video from '../video/Video';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';
@@ -33,7 +33,7 @@ interface CourseIntroductionProps {
   courseLiveSoon?: boolean;
   courseLiveNow?: boolean;
   liveCourseAccess?: boolean;
-  eventData: {};
+  eventData: EventUserData;
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {

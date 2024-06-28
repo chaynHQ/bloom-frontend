@@ -7,6 +7,13 @@ export enum LANGUAGES {
   de = 'de',
 }
 
+export enum EMAIL_REMINDERS_FREQUENCY {
+  TWO_WEEKS = 'TWO_WEEKS',
+  ONE_MONTH = 'ONE_MONTH',
+  TWO_MONTHS = 'TWO_MONTHS',
+  NEVER = 'NEVER',
+}
+
 export enum PARTNER_ACCESS_FEATURES {
   THERAPY = 'therapy',
 }

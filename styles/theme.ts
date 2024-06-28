@@ -138,6 +138,7 @@ theme = createTheme(theme, {
           textTransform: 'unset',
           paddingLeft: 24,
           paddingRight: 24,
+          maxWidth: '25rem',
 
           '&:hover': {
             backgroundColor: lighten(theme.palette.primary.main, 0.1),
@@ -416,9 +417,6 @@ theme = createTheme(theme, {
 
             '&.Mui-checked': {
               color: theme.palette.primary.dark,
-            },
-            '+ .MuiFormControlLabel-label': {
-              fontSize: theme.typography.body2.fontSize,
             },
           },
         },

@@ -29,6 +29,7 @@ import {
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
@@ -36,6 +37,12 @@ import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,
+} as const;
+
+const contactCheckboxStyle = {
+  '+ .MuiFormControlLabel-label': {
+    fontSize: theme.typography.body2.fontSize,
+  },
 } as const;
 
 interface RegisterFormProps {
@@ -121,66 +128,64 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const createUserRecord = async () => {
     await dispatch(setUserLoading(true));
-    try {
-      const userResponse = await createUser({
-        partnerAccessCode: codeInput,
-        name: nameInput,
-        email: emailInput,
-        password: passwordInput,
-        contactPermission: contactPermissionInput,
-        signUpLanguage: router.locale as LANGUAGES,
-        partnerId: partnerId,
-      });
+    const userResponse = await createUser({
+      partnerAccessCode: codeInput,
+      name: nameInput,
+      email: emailInput,
+      password: passwordInput,
+      contactPermission: contactPermissionInput,
+      signUpLanguage: router.locale as LANGUAGES,
+      partnerId: partnerId,
+    });
 
-      if (userResponse?.data && userResponse.data.user.id) {
-        const eventUserData = getEventUserResponseData(userResponse.data);
+    if (userResponse?.data && userResponse.data.user.id) {
+      const eventUserData = getEventUserResponseData(userResponse.data);
 
-        logEvent(REGISTER_SUCCESS, eventUserData);
-        try {
-          const auth = getAuth();
-          await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-          logEvent(LOGIN_SUCCESS, eventUserData);
-          logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
-          logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
-        } catch (err) {
-          setFormError(
-            t.rich('createUserError', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-            }),
-          );
-        }
+      logEvent(REGISTER_SUCCESS, eventUserData);
+      try {
+        const auth = getAuth();
+        await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+
+        logEvent(LOGIN_SUCCESS, eventUserData);
+        logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
+        logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+      } catch (err) {
+        setFormError(
+          t.rich('createUserError', {
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
       }
+    }
 
-      if (userResponse.error) {
-        const error = userResponse.error;
-        const errorMessage = getErrorMessage(error);
+    if (userResponse.error) {
+      const error = userResponse.error;
+      const errorMessage = getErrorMessage(error);
 
-        if (errorMessage === CREATE_USER_ALREADY_EXISTS) {
-          setFormError(
-            t.rich('firebase.emailAlreadyInUse', {
-              loginLink: (children) => (
-                <strong>
-                  <Link href="/auth/login">{children}</Link>
-                </strong>
-              ),
-            }),
-          );
-        } else if (errorMessage === CREATE_USER_WEAK_PASSWORD) {
-          setFormError(t('firebase.weakPassword'));
-        } else if (errorMessage === CREATE_USER_INVALID_EMAIL) {
-          setFormError(t('firebase.invalidEmail'));
-        } else {
-          logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-          (window as any).Rollbar?.error('User register create user error', error);
-          setFormError(
-            t.rich('createUserError', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
-            }),
-          );
-        }
+      if (errorMessage === CREATE_USER_ALREADY_EXISTS) {
+        setFormError(
+          t.rich('firebase.emailAlreadyInUse', {
+            loginLink: (children) => (
+              <strong>
+                <Link href="/auth/login">{children}</Link>
+              </strong>
+            ),
+          }),
+        );
+      } else if (errorMessage === CREATE_USER_WEAK_PASSWORD) {
+        setFormError(t('firebase.weakPassword'));
+      } else if (errorMessage === CREATE_USER_INVALID_EMAIL) {
+        setFormError(t('firebase.invalidEmail'));
+      } else {
+        logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
+        (window as any).Rollbar?.error('User register create user error', error);
+        setFormError(
+          t.rich('createUserError', {
+            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          }),
+        );
       }
-    } catch (error) {}
-    await dispatch(setUserLoading(false));
+    }
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -243,6 +248,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             label={t('contactPermissionLabel')}
             control={
               <Checkbox
+                sx={contactCheckboxStyle}
                 aria-label={t('contactPermissionLabel')}
                 onChange={(e) => setContactPermissionInput(e.target.value === 'true')}
               />
