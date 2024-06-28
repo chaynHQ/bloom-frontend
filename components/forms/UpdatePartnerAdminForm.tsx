@@ -1,19 +1,31 @@
 import {
   Autocomplete,
+  Box,
+  Button,
   Checkbox,
   debounce,
   FormControl,
   FormControlLabel,
   TextField,
+  Typography,
 } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { GetUserDto } from '../../app/userSlice';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslations } from 'next-intl';
-import { api } from '../../app/api';
-import { useAppDispatch } from '../../hooks/store';
+import { api, useUpdatePartnerAdminMutation } from '../../app/api';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '../../constants/events';
+import { getErrorMessage } from '../../utils/errorMessage';
 
 const UpdatePartnerAdminForm = () => {
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
   const t = useTranslations('Admin.updatePartner');
   const dispatch: any = useAppDispatch();
 
@@ -25,12 +37,19 @@ const UpdatePartnerAdminForm = () => {
   const [autocompleteOptions, setAutocompleteOptions] = useState<Array<GetUserDto>>([]);
 
   const [partnerUserData, setPartnerUserData] = useState<GetUserDto | null>(null);
+  const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
+  const [formError, setFormError] = useState<
+    | string
+    | React.ReactNodeArray
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  >();
   useEffect(() => {
     async function getUserData() {
       setAutocompleteSearchQueryIsLoading(true);
       const searchCriteria = {
         email: autocompleteSearchQuery,
         partnerAdmin: { partnerAdminId: 'IS NOT NULL' },
+        include: ['partnerAdmin'],
         limit: '10',
       };
 
@@ -68,17 +87,67 @@ const UpdatePartnerAdminForm = () => {
     return option.user.email;
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('submit');
-    event.preventDefault();
-    // TODO: Implement the update logic
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  const [updateUserData, { isLoading }] = useUpdatePartnerAdminMutation();
+
+  const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (partnerUserData === null) {
+      setFormError(t('formError'));
+      return;
+    }
+    setPartnerUserData({
+      ...partnerUserData,
+      partnerAdmin: { ...partnerUserData.partnerAdmin, active: e.target.checked },
+    });
   };
 
-  return (
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    logEvent(UPDATE_PARTNER_ADMIN, eventUserData);
+
+    if (
+      partnerUserData === null ||
+      partnerUserData.partnerAdmin.id === null ||
+      partnerUserData.partnerAdmin.active === null
+    ) {
+      setFormError(t('formError'));
+      setLoading(false);
+      return;
+    }
+
+    const updateResponse = await updateUserData({
+      id: partnerUserData.partnerAdmin.id,
+      active: partnerUserData.partnerAdmin.active,
+    });
+
+    if (updateResponse.error) {
+      const error = updateResponse.error;
+      const errorMessage = getErrorMessage(error);
+
+      logEvent(UPDATE_PARTNER_ADMIN_ERROR, {
+        ...eventUserData,
+        errorMessage,
+      });
+      (window as any).Rollbar?.error(t('error') + errorMessage);
+      setFormError(t('error') + errorMessage);
+    } else {
+      setFormSubmitSuccess(true);
+    }
+
+    setLoading(false);
+  };
+
+  const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setFormSubmitSuccess(false);
+    setPartnerUserData(null);
+    setAutocompleteInputValue(null);
+    setAutocompleteSearchQuery('');
+    setAutocompleteOptions([]);
+  };
+
+  return !formSubmitSuccess ? (
     <form autoComplete="off" onSubmit={submitHandler}>
       <Autocomplete
         value={autocompleteInputValue}
@@ -99,18 +168,13 @@ const UpdatePartnerAdminForm = () => {
           />
         )}
       />
-      {partnerUserData && (
+      {partnerUserData?.partnerAdmin && (
         <FormControl>
           <FormControlLabel
             control={
               <Checkbox
-                checked={partnerUserData.user.isActive}
-                onChange={(e) =>
-                  setPartnerUserData({
-                    ...partnerUserData,
-                    user: { ...partnerUserData.user, isActive: e.target.checked },
-                  })
-                }
+                checked={!!partnerUserData.partnerAdmin.active}
+                onChange={onCheckboxChange}
               />
             }
             label={t('activeAdminLabel')}
@@ -118,12 +182,21 @@ const UpdatePartnerAdminForm = () => {
         </FormControl>
       )}
 
-      {/*  TODO: error message here */}
+      {formError && <Typography color="error.main">{formError}</Typography>}
 
       <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
       </LoadingButton>
     </form>
+  ) : (
+    <Box>
+      <Typography>{t('successDescription')}</Typography>
+      <Box>
+        <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
+          {t('reset')}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
