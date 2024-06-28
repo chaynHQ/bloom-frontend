@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
 import { PartnerAccesses } from './partnerAccessSlice';
+import { PartnerAdmin } from './partnerAdminSlice';
 
 export interface User {
   loading: boolean;
@@ -37,10 +38,10 @@ export interface GetUserDto {
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
-    isActive?: boolean;
     activeSubscriptions?: ActiveSubscription[];
   };
   partnerAccesses: PartnerAccesses;
+  partnerAdmin: PartnerAdmin;
 }
 
 export interface Subscription {
