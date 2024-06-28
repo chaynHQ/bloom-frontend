@@ -141,6 +141,7 @@ const UpdatePartnerAdminForm = () => {
   const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setFormSubmitSuccess(false);
+    setFormError('');
     setPartnerUserData(null);
     setAutocompleteInputValue(null);
     setAutocompleteSearchQuery('');
