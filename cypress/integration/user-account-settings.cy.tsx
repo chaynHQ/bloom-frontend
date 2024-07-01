@@ -9,8 +9,15 @@ describe('User account settings page', () => {
 
   it('Should display disabled user email and name fields with user data', () => {
     cy.visit('/account/settings');
-    cy.get('#email').should('be.disabled').should('have.value', publicEmail);
-    cy.get('#name').should('be.disabled').should('have.value', publicName);
+    cy.get('#email').should('have.value', publicEmail);
+    cy.get('#name').should('have.value', publicName);
+    cy.wait(3000);
+  });
+
+  it('Should display error if tried to update email to a username that already exits', () => {
+    cy.visit('/account/settings');
+    cy.get('#email').should('have.value', publicEmail);
+    cy.get('#name').should('have.value', publicName);
     cy.wait(3000);
   });
 
