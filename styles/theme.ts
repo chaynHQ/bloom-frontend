@@ -130,6 +130,25 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          h2: {
+            backgroundColor: theme.palette.background.paper,
+          },
+          '.MuiDialogActions-root': {
+            backgroundColor: theme.palette.background.paper,
+          },
+          button: {
+            color: '#000000',
+            fontSize: '1.125rem',
+            '&:hover': {
+              backgroundColor: lighten(theme.palette.secondary.main, 0.1),
+            },
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
