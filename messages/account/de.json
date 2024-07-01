@@ -102,14 +102,15 @@
       "title": "Kontoeinstellungen",
       "description": "Einstellungen in Bloom anzeigen und aktualisieren",
       "imageAlt": "Abbildung eines Mobiltelefons mit einer Nachricht, die ein Herz enthält",
-      "form": {
-        "emailLabel": "E-Mail",
-        "nameLabel": "Name",
-        "saveProfile": "Profil speichern"
-      },
-      "profile": {
+      "profileSettings": {
         "title": "Profildetails",
-        "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse, indem Sie sich an das <link>Bloom-Team</link> wenden. Dies sind die einzigen persönlichen Daten, die in Ihrem Profil gespeichert sind."
+        "description": "Aktualisieren Sie hier Ihren Namen und Ihre E-Mail-Adresse. Dies sind die einzigen persönlichen Informationen, die in Ihrem Profil gespeichert werden.",
+        "nameLabel": "Name",
+        "emailLabel": "E-Mail",
+        "submitLabel": "Profil speichern",
+        "emailAlreadyInUseError": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet. Bitte versuchen Sie es erneut",
+        "confirmDialogueTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
+        "confirmDialogueCancel": "Stornieren"
       },
       "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
       "actions": {

@@ -129,6 +129,7 @@ const LoginForm = () => {
         )}
 
         <LoadingButton
+          id="login-submit"
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
           fullWidth
