@@ -2,6 +2,7 @@ import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import AccountActionsCard from '../../components/cards/AccountActionsCard';
 import EmailRemindersSettingsCard from '../../components/cards/EmailRemindersSettingsCard';
 import EmailSettingsCard from '../../components/cards/EmailSettingsCard';
 import ProfileSettingsCard from '../../components/cards/ProfileSettingsCard';
@@ -54,11 +55,10 @@ const AccountSettings: NextPage = () => {
           <ProfileSettingsCard />
           <EmailSettingsCard />
         </Box>
-        {isPublicUser && (
-          <Box sx={columnContainerStyle}>
-            <EmailRemindersSettingsCard />
-          </Box>
-        )}
+        <Box sx={columnContainerStyle}>
+          <AccountActionsCard />
+          {isPublicUser && <EmailRemindersSettingsCard />}
+        </Box>
       </Container>
     </Box>
   );
