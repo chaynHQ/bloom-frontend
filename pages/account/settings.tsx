@@ -51,7 +51,7 @@ const AccountSettings: NextPage = () => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       <Container sx={rowContainerStyle}>
-        <Box sx={isPublicUser ? columnContainerStyle : rowContainerStyle}>
+        <Box sx={columnContainerStyle}>
           <ProfileSettingsCard />
           <EmailSettingsCard />
         </Box>
