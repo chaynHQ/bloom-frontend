@@ -9,8 +9,7 @@ import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
-import generateReturnUrlQuery from '../../utils/generateReturnQuery';
-import ConfirmEmailUpdateModal from './ConfirmEmailUpdateDialogue';
+import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {
   marginY: 3,
@@ -23,7 +22,6 @@ const ProfileSettingsForm = () => {
   const [error, setError] = useState<ErrorDisplay>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [confirmationRequired, setIsConfirmationRequired] = useState<boolean>(false);
-  const [confirmationGiven, setIsConfirmationGiven] = useState<boolean>(false);
   const [emailInput, setEmailInput] = useState<string | null>(email);
   const [nameInput, setNameInput] = useState<string | null>(name);
 
@@ -49,7 +47,6 @@ const ProfileSettingsForm = () => {
       if (payload.email) {
         const auth = getAuth();
         signOut(auth);
-        router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
       }
     } else if ((response as any)?.error?.data?.message === UPDATE_USER_ALREADY_EXISTS) {
       setError(t('profileSettings.emailAlreadyInUseError'));
@@ -61,7 +58,6 @@ const ProfileSettingsForm = () => {
       );
     }
     setIsConfirmationRequired(false);
-    setIsConfirmationGiven(false);
   };
 
   const onSubmit = async (ev?: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +65,7 @@ const ProfileSettingsForm = () => {
 
     const payload = generatePayload(emailInput, nameInput);
 
-    if (payload.email && !confirmationGiven) {
+    if (payload.email) {
       setIsConfirmationRequired(true);
     } else {
       callUpdateUser(payload);
@@ -78,12 +74,10 @@ const ProfileSettingsForm = () => {
 
   const confirmHandler = (confirmed: boolean) => {
     if (confirmed) {
-      setIsConfirmationGiven(true);
       setIsConfirmationRequired(false);
       callUpdateUser(generatePayload(emailInput, nameInput));
     } else {
       setIsConfirmationRequired(false);
-      setIsConfirmationGiven(false);
     }
   };
 
@@ -125,7 +119,13 @@ const ProfileSettingsForm = () => {
         >
           {t('profileSettings.submitLabel')}
         </LoadingButton>
-        <ConfirmEmailUpdateModal isOpen={confirmationRequired} onConfirm={confirmHandler} />
+        <ConfirmDialog
+          title={t('profileSettings.confirmDialogTitle')}
+          cancelLabel={t('profileSettings.confirmDialogCancel')}
+          submitLabel={t('profileSettings.submitLabel')}
+          isOpen={confirmationRequired}
+          onConfirm={confirmHandler}
+        />
       </form>
     </Box>
   );
