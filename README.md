@@ -171,6 +171,8 @@ yarn test:watch
 
 ### Formatting and Linting
 
+Strongly recommended to run linting and formatting before every commit:
+
 ```bash
 yarn lint
 ```
@@ -186,17 +188,6 @@ Formatting and linting is provided by ESLint and Prettier (see the relevant conf
 **Install the VSCode extensions recommended in the [.vscode/extensions](.vscode/extensions.json) for automated formatting and linting**
 
 Workspace [settings](.vscode/settings.json) for VSCode are included for consistent linting and formatting, and can be replicated if using an alternative IDE.
-
-### Pre-commit and husky checks
-
-[Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) are set up to run formatting and linting before each commit is pushed.
-
-**Commits will be blocked if there are any formatting or linting issues**
-
-If an error is thrown when pushing a commit:
-
-- check the output logs for linting errors - fix all linting errors before committing
-- check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed
 
 ### Build for Production
 
