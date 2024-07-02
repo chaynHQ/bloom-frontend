@@ -21,7 +21,7 @@ describe('User account settings page', () => {
       .clear()
       .type(Cypress.env('public_email') as string);
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
-    cy.get('#confirm-profile-settings-submit', { timeout: 10000 }).click();
+    cy.get('#confirm-dialog-submit', { timeout: 10000 }).click();
     cy.get('p', { timeout: 10000 })
       .contains('This email is already in use by another account, please try again')
       .should('be.visible');
@@ -32,7 +32,7 @@ describe('User account settings page', () => {
     cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 }).clear().type(newEmail);
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
-    cy.get('#confirm-profile-settings-submit', { timeout: 10000 }).click();
+    cy.get('#confirm-dialog-submit', { timeout: 10000 }).click();
     cy.url({ timeout: 10000 }).should('include', '/auth/login');
     cy.get('#email').type(newEmail);
     cy.get('#password').type(password);

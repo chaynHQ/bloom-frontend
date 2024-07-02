@@ -109,8 +109,8 @@
         "emailLabel": "Correo electrónico",
         "submitLabel": "Guardar Perfil",
         "emailAlreadyInUseError": "Este correo electrónico ya está siendo utilizado por otra cuenta, inténtalo de nuevo.",
-        "confirmDialogueTitle": "Cuando cambie su correo electrónico, deberá iniciar sesión nuevamente. ¿Desea continuar?",
-        "confirmDialogueCancel": "Cancelar"
+        "confirmDialogTitle": "Cuando cambie su correo electrónico, deberá iniciar sesión nuevamente. ¿Desea continuar?",
+        "confirmDialogCancel": "Cancelar"
       },
       "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>",
       "actions": {
@@ -118,9 +118,12 @@
         "description": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
         "button": {
           "resetPassword": "Restablecer contraseña",
-          "deleteAccount": "Eliminar cuenta",
-          "cancel": "Cancelar"
-        }
+          "deleteAccount": "Eliminar cuenta"
+        },
+        "confirmDialogCancel": "Cancelar",
+        "resetPasswordConfirmDialogTitle": "Cuando actualice su contraseña, deberá iniciar sesión nuevamente. ¿Desea continuar?",
+        "deleteAccountConfirmDialogTitle": "Confirma que deseas eliminar tu cuenta",
+        "deleteAccountConfirmDialogDescription": "Esto eliminará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema."
       },
       "emailSettings": {
         "title": "Preferencias de correo electrónico",

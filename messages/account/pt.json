@@ -109,8 +109,8 @@
         "emailLabel": "E-mail",
         "submitLabel": "Salvar perfil",
         "emailAlreadyInUseError": "Este e-mail já está em uso por outra conta. Tente novamente",
-        "confirmDialogueTitle": "Ao alterar seu e-mail, você precisará fazer login novamente. Você deseja continuar?",
-        "confirmDialogueCancel": "Cancelar"
+        "confirmDialogTitle": "Ao alterar seu e-mail, você precisará fazer login novamente. Você deseja continuar?",
+        "confirmDialogCancel": "Cancelar"
       },
       "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
       "actions": {
@@ -118,9 +118,12 @@
         "description": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
         "button": {
           "resetPassword": "Redefinir senha",
-          "deleteAccount": "Excluir conta",
-          "cancel": "Cancelar"
-        }
+          "deleteAccount": "Excluir conta"
+        },
+        "confirmDialogCancel": "Cancelar",
+        "resetPasswordConfirmDialogTitle": "Ao atualizar sua senha, você precisará fazer login novamente. Você deseja continuar?",
+        "deleteAccountConfirmDialogTitle": "Confirme que deseja excluir sua conta",
+        "deleteAccountConfirmDialogDescription": "Isso significa que sua conta ficará imediatamente inativa e não poderá ser recuperada. Você não terá acesso a nenhum recurso do Bloom ou ao seu histórico de uso. Eliminaremos seu endereço de e-mail e quaisquer dados pessoais de nossos registros."
       },
       "emailSettings": {
         "title": "Preferências de e-mail",

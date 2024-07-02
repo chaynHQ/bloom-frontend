@@ -109,8 +109,8 @@
         "emailLabel": "E-Mail",
         "submitLabel": "Profil speichern",
         "emailAlreadyInUseError": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet. Bitte versuchen Sie es erneut",
-        "confirmDialogueTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
-        "confirmDialogueCancel": "Stornieren"
+        "confirmDialogTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
+        "confirmDialogCancel": "Stornieren"
       },
       "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
       "actions": {
@@ -118,9 +118,12 @@
         "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
         "button": {
           "resetPassword": "Passwort zurücksetzen",
-          "deleteAccount": "Konto löschen",
-          "cancel": "Abbrechen"
-        }
+          "deleteAccount": "Konto löschen"
+        },
+        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
+        "confirmDialogCancel": "Stornieren",
+        "deleteAccountConfirmDialogTitle": "Bitte bestätigen Sie, dass Sie Ihr Konto löschen möchten",
+        "deleteAccountConfirmDialogDescription": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht."
       },
       "emailSettings": {
         "title": "E-Mail-Einstellungen",

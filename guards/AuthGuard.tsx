@@ -55,7 +55,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   // Page requires authenticated user
   if (unauthenticated) {
     if (typeof window !== 'undefined') {
-      router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
+      router.push(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
     }
   }
 

@@ -109,8 +109,8 @@
         "emailLabel": "Email",
         "submitLabel": "Update profile",
         "emailAlreadyInUseError": "This email is already in use by another account, please try again",
-        "confirmDialogueTitle": "When you change your email, you will need to log in again. Do you wish to proceed?",
-        "confirmDialogueCancel": "Cancel"
+        "confirmDialogTitle": "When you change your email, you will need to log in again. Do you wish to proceed?",
+        "confirmDialogCancel": "Cancel"
       },
       "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or get in touch with the <link>Bloom team.</link>",
       "actions": {
@@ -118,9 +118,12 @@
         "description": "Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
         "button": {
           "resetPassword": "Reset password",
-          "deleteAccount": "Delete Account",
-          "cancel": "Cancel"
-        }
+          "deleteAccount": "Delete Account"
+        },
+        "confirmDialogCancel": "Go back",
+        "resetPasswordConfirmDialogTitle": "When you update your password, you will need to log in again. Do you wish to proceed?",
+        "deleteAccountConfirmDialogTitle": "Please confirm you want to delete your account",
+        "deleteAccountConfirmDialogDescription": "This means your account will immediately become inactive and cannot be recovered. You won’t have access to any Bloom features or your usage history. We’ll erase your email address and any personal data from our records."
       },
       "emailSettings": {
         "title": "Email preferences",
