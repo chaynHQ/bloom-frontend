@@ -139,6 +139,9 @@ theme = createTheme(theme, {
           '.MuiDialogActions-root': {
             backgroundColor: theme.palette.background.paper,
           },
+          '.MuiDialogContent-root': {
+            backgroundColor: theme.palette.background.paper,
+          },
           button: {
             color: '#000000',
             fontSize: '1.125rem',
