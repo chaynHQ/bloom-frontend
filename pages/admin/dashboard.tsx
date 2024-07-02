@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import CreatePartnerAdminForm from '../../components/forms/CreatePartnerAdminForm';
 import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
+import UpdatePartnerAdminForm from '../../components/forms/UpdatePartnerAdminForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -73,6 +74,14 @@ const Dashboard: NextPage = () => {
               }}
             ></Typography>
             <UpdateTherapyAdminForm />
+          </CardContent>
+        </Card>
+        <Card sx={cardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t('updatePartner.title')}
+            </Typography>
+            <UpdatePartnerAdminForm />
           </CardContent>
         </Card>
       </Container>
