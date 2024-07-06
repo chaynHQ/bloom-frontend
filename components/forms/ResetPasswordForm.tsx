@@ -1,6 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { confirmPasswordReset, getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { confirmPasswordReset, getAuth, sendPasswordResetEmail, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -130,6 +130,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
 
     confirmPasswordReset(auth, codeParam, passwordInput)
       .then(() => {
+        if (auth.currentUser) signOut(auth);
         setFormSuccess(true);
         setLoading(false);
       })

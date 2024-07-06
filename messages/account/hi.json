@@ -102,14 +102,15 @@
       "title": "Account Settings",
       "description": "Aapke settings ko dekhiye aur update kijiye",
       "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
-      "form": {
-        "emailLabel": "Email",
+      "profileSettings": {
+        "title": "Profile details",
+        "description": "Yahaan apana naam aur eemel apadet karen. yah aapakee profail mein sangraheet ekamaatr vyaktigat jaanakaaree hai.",
         "nameLabel": "Naam",
-        "saveProfile": "Profile ko save kijiye"
-      },
-      "profile": {
-        "title": "Profile Details",
-        "description": "Aapka naam aur email ko update kijiye <link>Bloom team</link> se sampark karein. Yeh aapki profile par stored sirf do hi personal information hain."
+        "emailLabel": "Email",
+        "submitLabel": "Profile ko save kijiye",
+        "emailAlreadyInUseError": "Yah eemel pahale se hee kisee any khaate dvaara upayog mein hai, krpaya punah prayaas karen",
+        "confirmDialogTitle": "jab aap apana eemel badalate hain, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+        "confirmDialogCancel": "Cancel"
       },
       "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
       "actions": {
@@ -117,9 +118,12 @@
         "description": "Aapka account delete karne se aapka naam, email address aur dekhe gaye sessions ka history permanently delete ho jayega.",
         "button": {
           "resetPassword": "Password reset kijiye",
-          "deleteAccount": "Account delete kijiye",
-          "cancel": "Cancel"
-        }
+          "deleteAccount": "Account delete kijiye"
+        },
+        "confirmDialogCancel": "Cancel",
+        "resetPasswordConfirmDialogTitle": "jab aap apana password update karenge, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+        "deleteAccountConfirmDialogTitle": "kya aap sach mein apana account delete karna chaahate hain?",
+        "deleteAccountConfirmDialogDescription": "yah aapake naam, eemel pata aur dekhe gaye sessions ka history hamesha ke liye delete kar dega."
       },
       "emailSettings": {
         "title": "Email Preferences",

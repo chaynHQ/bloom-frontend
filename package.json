@@ -51,7 +51,7 @@
     "react-dom": "18.0.0",
     "react-international-phone": "^4.0.4",
     "react-player": "^2.13.0",
-    "react-redux": "^9.0.4",
+    "react-redux": "^9.1.2",
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },
   "devDependencies": {
