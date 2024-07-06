@@ -90,7 +90,7 @@ const UpdatePartnerAdminForm = () => {
   const [updateUserData, { isLoading }] = useUpdatePartnerAdminMutation();
 
   const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (partnerUserData === null) {
+    if (partnerUserData === null || !partnerUserData.partnerAdmin) {
       setFormError(t('formError'));
       return;
     }
@@ -108,6 +108,7 @@ const UpdatePartnerAdminForm = () => {
 
     if (
       partnerUserData === null ||
+      !partnerUserData.partnerAdmin ||
       partnerUserData.partnerAdmin.id === null ||
       partnerUserData.partnerAdmin.active === null
     ) {

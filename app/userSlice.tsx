@@ -43,7 +43,7 @@ export interface GetUserDto {
     activeSubscriptions?: ActiveSubscription[];
   };
   partnerAccesses: PartnerAccesses;
-  partnerAdmin: PartnerAdmin;
+  partnerAdmin?: PartnerAdmin;
 }
 
 export interface Subscription {
