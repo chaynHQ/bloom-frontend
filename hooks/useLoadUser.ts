@@ -1,7 +1,7 @@
 'use client';
 
 import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useCreateEventLogMutation, useGetUserQuery } from '../app/api';
 import { setAuthStateLoading, setLoadError, setUserLoading, setUserToken } from '../app/userSlice';
 import { EVENT_LOG_NAME } from '../constants/enums';
@@ -25,10 +25,7 @@ export default function useLoadUser() {
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const { clearState } = useStateUtils();
   const [createEventLog] = useCreateEventLogMutation();
-  const [isInvalidUserResourceResponse, setIsInvalidUserResourceResponse] =
-    useState<boolean>(false);
 
-  const invalidUserResourceError = 'Invalid user resource success response';
   // 1. Listen for firebase auth state or auth token updated, triggered by firebase auth loaded
   // When a user token is available, set the token in state to be used in request headers
   useEffect(() => {
@@ -63,11 +60,7 @@ export default function useLoadUser() {
 
   // 3a. Handle get user success
   useEffect(() => {
-    if (userResourceIsSuccess) {
-      if (!userResource.user?.id) {
-        setIsInvalidUserResourceResponse(true);
-        return;
-      }
+    if (userResourceIsSuccess && userResource.user.id) {
       dispatch(setUserLoading(false));
 
       const eventUserData = getEventUserResponseData(userResource);
@@ -78,10 +71,9 @@ export default function useLoadUser() {
 
   // 3b. Handle get user error
   useEffect(() => {
-    if (userResourceError || isInvalidUserResourceResponse) {
-      const errorMessage = userResourceError
-        ? getErrorMessage(userResourceError) || 'error'
-        : invalidUserResourceError;
+    if (userResourceError) {
+      const errorMessage = getErrorMessage(userResourceError) || 'error';
+
       signOut(auth);
       dispatch(setLoadError(errorMessage));
       dispatch(setUserLoading(false));
@@ -94,14 +86,10 @@ export default function useLoadUser() {
       logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
       logEvent(LOGOUT_FORCED);
     }
-  }, [userResourceError, isInvalidUserResourceResponse, dispatch, auth]);
+  }, [userResourceError, dispatch, auth]);
 
   return {
     userResourceIsLoading,
-    userResourceError: userResourceError
-      ? getErrorMessage(userResourceError)
-      : isInvalidUserResourceResponse
-        ? invalidUserResourceError
-        : undefined,
+    userResourceError: userResourceError,
   };
 }
