@@ -42,7 +42,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
 
   const { userResourceError } = useLoadUser();
-  const unauthenticated = userResourceError || (!userAuthLoading && !userLoading && !userId);
+  const authenticated = !userResourceError && userId && !userAuthLoading && !userLoading;
 
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
@@ -53,7 +53,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   }
 
   // Page requires authenticated user
-  if (unauthenticated) {
+  if (!authenticated) {
     if (typeof window !== 'undefined') {
       router.push(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
     }
