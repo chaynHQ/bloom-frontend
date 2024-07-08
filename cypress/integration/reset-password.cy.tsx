@@ -27,7 +27,7 @@ describe('Reset password', () => {
     cy.visit(Cypress.env('reset_password_path'));
     cy.get('[qa-id=passwordResetEmailInput]').type(`${Cypress.env('reset_pwd_confirm_email')}`);
     cy.get('[qa-id=passwordResetEmailButton]').click();
-    cy.wait(2000);
+    cy.wait(3000);
 
     cy.get('p').should('contain', 'Check your emails for a reset link from Bloom.');
     cy.get('button[type="submit"]').contains('Resend email');

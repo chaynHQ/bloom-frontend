@@ -9,9 +9,6 @@ describe('Create User', () => {
   it('User should be able to create user', () => {
     // Start from the home page
     cy.visit('/');
-    // TODO put the correct home page check below when it is published
-    // cy.get('h2',).contains('Get started').should('exist');
-    // TODO - workout why #primary-get-started-button works locallly and headless but not in github actions
     cy.get('a[href="/auth/register"]').first().click({ force: true });
     cy.get('h2').should('contain', 'Create account');
     cy.get('#name').type('Cypress test');
