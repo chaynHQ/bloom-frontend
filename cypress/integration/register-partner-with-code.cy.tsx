@@ -26,6 +26,7 @@ describe('Register with access code', () => {
   it('Access code input should be on form', () => {
     // Start from the home page
     cy.visit(welcomeCodeLink);
+    cy.wait(2000);
     // The new page should contain an h2 with "Reset your password"
     cy.get('p').contains(
       'Enter the access code you received from Badoo to begin your Bloom journey.',
