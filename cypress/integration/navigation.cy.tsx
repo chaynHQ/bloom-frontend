@@ -51,7 +51,6 @@ describe('Navigation', () => {
         Cypress.env('bumble_partner_admin_email'),
         Cypress.env('bumble_partner_admin_password'),
       );
-      cy.wait(2000);
 
       cy.createAccessCode({
         featureLiveChat: true,
@@ -97,7 +96,6 @@ describe('Navigation', () => {
         Cypress.env('badoo_partner_admin_email'),
         Cypress.env('badoo_partner_admin_password'),
       );
-      cy.wait(2000);
 
       cy.createAccessCode({
         featureLiveChat: true,

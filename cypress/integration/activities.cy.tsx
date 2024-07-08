@@ -8,8 +8,7 @@ describe('A logged in user should be able to navigate to activities and do an ex
     cy.get(`[qa-id=secondary-nav-activities-button]`, { timeout: 10000 })
       .should('exist')
       .click()
-      .click(); //navigate to activities - double clicking just in case
-    cy.wait(2000); // wait to ensure the page has rendered and the auth checks have resolved
+      .click(); //navigate to activities - double clicking just in case // wait to ensure the page has rendered and the auth checks have resolved
     // Default timeout is 4 seconds so extended to 8 to avoid racy tests
     cy.get('h3', { timeout: 8000 }).contains('Thought diaries').should('exist').click(); //check click first  exercise exists and open it
 

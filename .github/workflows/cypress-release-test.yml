@@ -2,7 +2,7 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**]
+    branches: [develop, remove-test-delays, dependabot/**]
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main

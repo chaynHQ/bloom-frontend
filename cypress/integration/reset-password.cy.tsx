@@ -25,7 +25,6 @@ describe('Reset password', () => {
 
   it('should see resend-link button after typing known email', () => {
     cy.visit(Cypress.env('reset_password_path'));
-    cy.wait(1000); // Waiting for dom to rerender as the email input was detaching
     cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).type(
       `${Cypress.env('reset_pwd_confirm_email')}`,
     );

@@ -31,7 +31,6 @@ const http = require('http');
 
 Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
-  cy.wait(4000);
   cy.get('input[type="email"]', { timeout: 10000 }).click().type(email);
   cy.get('#password').type(password);
   cy.get('button[type="submit"]').contains('Login').click();
@@ -40,10 +39,7 @@ Cypress.Commands.add('uiLogin', (email, password) => {
 
 Cypress.Commands.add('uiLogout', (e) => {
   cy.get('#user-menu-button').click({ force: true });
-  cy.wait(1000);
-
   cy.get('#logout-button').click({ force: true });
-  cy.wait(1000);
 });
 
 // TODO maybe delete  this helper - keeping for now but could potentially not be useful
@@ -113,7 +109,6 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
       },
     });
   });
-  cy.wait(2000);
 });
 
 Cypress.Commands.add('deleteCypressAccessCodes', () => {
@@ -126,7 +121,6 @@ Cypress.Commands.add('deleteCypressAccessCodes', () => {
       },
     });
   });
-  cy.wait(2000);
 });
 
 Cypress.Commands.add('cleanUpTestState', () => {
@@ -140,7 +134,6 @@ Cypress.Commands.add('cleanUpTestState', () => {
   cy.clearAllCookies();
   cy.clearAllLocalStorage();
   cy.clearAllSessionStorage();
-  cy.wait(1000);
 });
 
 Cypress.Commands.add('visitGermanPage', (url) => {
