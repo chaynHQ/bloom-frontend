@@ -17,7 +17,9 @@ describe('User account settings page', () => {
 
   it('Should display error if email alreadyInuse', () => {
     cy.visit('/account/settings');
-    cy.get('#email', { timeout: 10000 }).clear().type('tech@chayn.co');
+    cy.get('#email', { timeout: 10000 })
+      .clear()
+      .type(Cypress.env('public_email') as string);
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
     cy.get('#confirm-dialog-submit', { timeout: 10000 }).click();
     cy.get('p', { timeout: 10000 })
@@ -26,7 +28,7 @@ describe('User account settings page', () => {
   });
 
   it('Should successfully change email', () => {
-    const newEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
+    const newEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 }).clear().type(newEmail);
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
