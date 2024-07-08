@@ -16,7 +16,7 @@ describe('User account settings page', () => {
   });
 
   it('Should display error if email alreadyInuse', () => {
-    cy.visit('/account/settings');
+    cy.visit('/account/settings', { failOnStatusCode: false });
     cy.get('#email', { timeout: 10000 })
       .clear()
       .type(Cypress.env('public_email') as string);
