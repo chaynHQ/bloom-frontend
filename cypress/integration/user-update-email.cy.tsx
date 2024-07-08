@@ -2,7 +2,7 @@ describe('User account settings page', () => {
   let username = `cypresstestemail+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
-  beforeEach(() => {
+  before(() => {
     cy.cleanUpTestState();
     cy.createUser({ emailInput: username, passwordInput: password });
     cy.logInWithEmailAndPassword(username, password);
@@ -16,7 +16,7 @@ describe('User account settings page', () => {
   });
 
   it('Should display error if email alreadyInuse', () => {
-    cy.visit('/account/settings', { failOnStatusCode: false });
+    cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 })
       .clear()
       .type(Cypress.env('public_email') as string);
