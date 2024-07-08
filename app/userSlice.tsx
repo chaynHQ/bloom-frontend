@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '../constants/enums';
 import { api, GetUserResponse } from './api';
 import { PartnerAccesses } from './partnerAccessSlice';
+import { PartnerAdmin } from './partnerAdminSlice';
 
 export interface User {
   loading: boolean;
@@ -42,6 +43,7 @@ export interface GetUserDto {
     activeSubscriptions?: ActiveSubscription[];
   };
   partnerAccesses: PartnerAccesses;
+  partnerAdmin?: PartnerAdmin;
 }
 
 export interface Subscription {
