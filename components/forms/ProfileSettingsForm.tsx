@@ -88,7 +88,10 @@ const ProfileSettingsForm = () => {
           variant="standard"
           fullWidth
           required
-          onChange={(ev) => setNameInput(ev.target.value)}
+          onChange={(ev) => {
+            setNameInput(ev.target.value);
+            setIsSuccess(false);
+          }}
         />
         <TextField
           id="email"
@@ -99,7 +102,10 @@ const ProfileSettingsForm = () => {
           type="email"
           fullWidth
           required
-          onChange={(ev) => setEmailInput(ev.target.value)}
+          onChange={(ev) => {
+            setEmailInput(ev.target.value);
+            setIsSuccess(false);
+          }}
         />
         {error && <Typography color="error.main">{error}</Typography>}
         <LoadingButton
