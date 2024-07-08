@@ -15,27 +15,19 @@ describe.only('A logged in user should be able to navigate to a course session a
   it('Should go to courses page and select a course & session', () => {
     cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
 
-    cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 8000 }).should('exist').click(); //navigate to courses
+    cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist').click(); //navigate to courses
 
-    cy.get('a[href*="healing-from-sexual-trauma"]', {
-      timeout: 8000,
-    })
-      .first()
-      .click(); //click on a course when link load
+    cy.get('a[href*="healing-from-sexual-trauma"]').first().click(); //click on a course when link load
 
     // cy.getIframeBody().find('button').click(); Attempting to watch the session video. iframe isnt working at the moment
 
-    cy.get('a[href*="what-is-sexual-trauma"]', {
-      timeout: 8000,
-    })
-      .first()
-      .click(); //click on a session when link loads
+    cy.get('a[href*="what-is-sexual-trauma"]').first().click(); //click on a session when link loads
   });
 
   it('Should read activity & bonus content and complete session', () => {
     cy.visit('/courses/healing-from-sexual-trauma/what-is-sexual-trauma');
 
-    cy.get('h3', { timeout: 10000 }).contains('Activity').click(); //open activities
+    cy.get('h3').contains('Activity').click(); //open activities
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 

@@ -8,7 +8,7 @@ describe('A partner admin should be directed to admin ', () => {
       Cypress.env('bumble_partner_admin_email'),
       Cypress.env('bumble_partner_admin_password'),
     );
-    cy.get('[qa-id=partner-admin-menu-button]', { timeout: 10000 }).should('exist');
+    cy.get('[qa-id=partner-admin-menu-button]').should('exist');
 
     cy.get('h2').contains('Create access code').should('exist'); // We should be redirected to the create access code page
   });

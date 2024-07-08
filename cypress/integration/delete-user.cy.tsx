@@ -8,10 +8,8 @@ describe('Delete User', () => {
   });
   it(`should be able to delete user from accounts settings page`, () => {
     cy.visit('/account/settings');
-    cy.get('#delete-account-button', { timeout: 10000 })
-      .should('contain.text', 'Delete Account')
-      .click();
-    cy.get('#confirm-dialog-submit', { timeout: 10000 }).click();
-    cy.url({ timeout: 10000 }).should('include', '/');
+    cy.get('#delete-account-button').should('contain.text', 'Delete Account').click();
+    cy.get('#confirm-dialog-submit').click();
+    cy.url().should('include', '/');
   });
 });

@@ -27,19 +27,19 @@ describe('Register with access code', () => {
     // Start from the home page
     cy.visit(welcomeCodeLink);
     // The new page should contain an h2 with "Reset your password"
-    cy.get('p', { timeout: 8000 }).contains(
+    cy.get('p').contains(
       'Enter the access code you received from Badoo to begin your Bloom journey.',
     );
     cy.get('#accessCode')
       .invoke('val')
       .then((val) => expect(val).equals(welcomeCode));
     cy.get('button[type="submit"]').contains('Get started').click(); // waiting for dom to rerender
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('h2').should('contain', 'Create account');
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
+    cy.get('h2').should('contain', 'Help us understand');
   });
   after(() => {
     cy.logout();

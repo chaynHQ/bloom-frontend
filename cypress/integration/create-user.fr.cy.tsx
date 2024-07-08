@@ -7,16 +7,14 @@ describe('Create User', () => {
   it('User should be able to create user', () => {
     // Start from the home page
     cy.visitFrenchPage('/');
-    cy.get('h1', { timeout: 8000 })
-      .contains('Rejoins-nous sur ton chemin de guérison')
-      .should('exist');
-    cy.get('a[href="/fr/auth/register"]', { timeout: 5000 }).first().click({ force: true });
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Créer un compte');
-    cy.get('#name', { timeout: 8000 }).type('Cypress test');
-    cy.get('#email', { timeout: 8000 }).type(username);
-    cy.get('#password', { timeout: 8000 }).type('testpassword');
+    cy.get('h1').contains('Rejoins-nous sur ton chemin de guérison').should('exist');
+    cy.get('a[href="/fr/auth/register"]').first().click({ force: true });
+    cy.get('h2').should('contain', 'Créer un compte');
+    cy.get('#name').type('Cypress test');
+    cy.get('#email').type(username);
+    cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Créer un compte').click();
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Aidez-nous à compendre');
+    cy.get('h2').should('contain', 'Aidez-nous à compendre');
   });
 
   after(() => {

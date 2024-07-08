@@ -6,7 +6,7 @@ describe('Navigation', () => {
   describe('A non-logged in user', () => {
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
-      cy.get(`[qa-id=home-logo-link]`, { timeout: 8000 }).should('exist');
+      cy.get(`[qa-id=home-logo-link]`).should('exist');
       cy.get(`[qa-id=user-menu-button]`).should('not.exist');
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
@@ -25,7 +25,7 @@ describe('Navigation', () => {
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
-      cy.get(`[qa-id=home-logo-link]`, { timeout: 8000 }).should('exist');
+      cy.get(`[qa-id=home-logo-link]`).should('exist');
       cy.get(`[qa-id=user-menu-button]`).should('exist');
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
@@ -70,7 +70,7 @@ describe('Navigation', () => {
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
-      cy.get(`[qa-id=home-logo-link]`, { timeout: 8000 }).should('exist');
+      cy.get(`[qa-id=home-logo-link]`).should('exist');
       cy.get(`[qa-id=user-menu-button]`).should('exist');
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
@@ -115,7 +115,7 @@ describe('Navigation', () => {
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
-      cy.get(`[qa-id=home-logo-link]`, { timeout: 8000 }).should('exist');
+      cy.get(`[qa-id=home-logo-link]`).should('exist');
       cy.get(`[qa-id=user-menu-button]`).should('exist');
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
@@ -142,7 +142,7 @@ describe('Navigation', () => {
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
-      cy.get(`[qa-id=home-logo-link]`, { timeout: 8000 }).should('exist');
+      cy.get(`[qa-id=home-logo-link]`).should('exist');
       cy.get(`[qa-id=user-menu-button]`).should('exist');
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
