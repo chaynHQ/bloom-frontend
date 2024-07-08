@@ -8,14 +8,7 @@ describe('User account settings page', () => {
     cy.logInWithEmailAndPassword(username, password);
   });
 
-  it('Should display disabled update name successfully', () => {
-    cy.visit('/account/settings');
-    cy.get('#name', { timeout: 10000 }).clear().type('Updated name');
-    cy.get('#profile-settings-submit', { timeout: 10000 }).click();
-    cy.get(`[data-testid='CheckCircleOutlinedIcon']`, { timeout: 10000 }).should('be.visible');
-  });
-
-  it('Should display error if email alreadyInuse', () => {
+  it('Should display error if attempting to update email to existing email in use', () => {
     cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 })
       .clear()
@@ -27,7 +20,14 @@ describe('User account settings page', () => {
       .should('be.visible');
   });
 
-  it('Should successfully change email', () => {
+  it('Should successfully update name', () => {
+    cy.visit('/account/settings');
+    cy.get('#name', { timeout: 10000 }).clear().type('Updated name');
+    cy.get('#profile-settings-submit', { timeout: 10000 }).click();
+    cy.get(`[data-testid='CheckCircleOutlinedIcon']`, { timeout: 10000 }).should('be.visible');
+  });
+
+  it('Should successfully update email', () => {
     const newEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 }).clear().type(newEmail);
