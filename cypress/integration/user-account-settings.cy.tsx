@@ -24,6 +24,7 @@ describe('User account settings page', () => {
     cy.get('input[name="contactPermission"]').check();
     cy.get('input[name="serviceEmailsPermission"]').check();
     cy.get('button[type="submit"]').contains('Save email preferences').click();
+    cy.wait(2000);
   });
 
   it('Should have email reminder frequency form and load user data', () => {
