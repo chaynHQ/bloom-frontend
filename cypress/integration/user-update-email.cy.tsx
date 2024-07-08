@@ -1,8 +1,8 @@
 describe('User account settings page', () => {
   const password = 'testpassword';
+  let username = `cypresstestemail+${Date.now()}@chayn.co`;
 
-  beforeEach(() => {
-    let username = `cypresstestemail+${Date.now()}@chayn.co`;
+  before(() => {
     cy.cleanUpTestState();
     cy.createUser({ emailInput: username, passwordInput: password });
     cy.logInWithEmailAndPassword(username, password);
