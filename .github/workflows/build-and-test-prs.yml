@@ -33,6 +33,9 @@ jobs:
       - name: Run linting
         run: yarn lint
 
+      - name: Run type checks
+        run: yarn type-check
+
       - name: Build app
         run: yarn build
         env:

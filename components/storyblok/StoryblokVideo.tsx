@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import dynamic from 'next/dynamic';
 import { YouTubeConfig } from 'react-player/youtube';

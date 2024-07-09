@@ -1,7 +1,6 @@
 import NavigateBeforeSharp from '@mui/icons-material/NavigateBeforeSharp';
 import NavigateNext from '@mui/icons-material/NavigateNext';
-import { IconButton, useMediaQuery, useTheme } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
 import NukaCarousel from 'nuka-carousel';
 import { columnStyle } from '../../styles/common';
