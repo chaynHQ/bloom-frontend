@@ -1,7 +1,8 @@
 // jest.config.js
 
 module.exports = {
-  preset: 'ts-jest',
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
   moduleNameMapper: {
     /* Handle CSS imports (with CSS modules)
