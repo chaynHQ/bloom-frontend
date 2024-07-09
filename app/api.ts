@@ -181,6 +181,7 @@ export const api = createApi({
         };
       },
     }),
+
     subscribeToWhatsapp: builder.mutation<Subscription, { subscriptionInfo: string }>({
       query(body) {
         return {
@@ -206,6 +207,13 @@ export const api = createApi({
         }),
       },
     ),
+    updatePartnerAdmin: builder.mutation<PartnerAdmin, { id: string; active: boolean }>({
+      query: ({ id, active }) => ({
+        url: `partner-admin/${id}`,
+        method: 'PATCH',
+        body: { active },
+      }),
+    }),
     createEventLog: builder.mutation<EventLog, { event: EVENT_LOG_NAME }>({
       query(body) {
         return {
@@ -235,5 +243,6 @@ export const {
   useSubscribeToWhatsappMutation,
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
+  useUpdatePartnerAdminMutation,
   useCreateEventLogMutation,
 } = api;

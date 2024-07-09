@@ -30,6 +30,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { columnStyle } from '../../styles/common';
+import theme from '../../styles/theme';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -275,13 +276,25 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
             imageAlt={headerProps.imageAlt}
             progressStatus={sessionProgress}
           >
-            <Button variant="outlined" href="/courses" size="small" component={Link}>
+            <Button
+              variant="outlined"
+              href="/courses"
+              sx={{ background: theme.palette.background.default }}
+              size="small"
+              component={Link}
+            >
               Courses
             </Button>
 
             <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
-            <Button variant="outlined" href={`/${course.full_slug}`} size="small" component={Link}>
+            <Button
+              variant="outlined"
+              sx={{ background: theme.palette.background.default }}
+              href={`/${course.full_slug}`}
+              size="small"
+              component={Link}
+            >
               {course.name}
             </Button>
             <Typography sx={sessionSubtitleStyle} variant="body2">
