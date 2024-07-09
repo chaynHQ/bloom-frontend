@@ -1,5 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
