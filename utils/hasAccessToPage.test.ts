@@ -6,12 +6,14 @@ import hasAccessToPage from './hasAccessToPage';
 const emptyPartnerAdmin: PartnerAdmin = {
   partner: null,
   id: null,
+  active: null,
   createdAt: null,
   updatedAt: null,
 };
 const partnerAdmin: PartnerAdmin = {
   partner: { name: 'Bumble' } as PartnerContent,
   id: null,
+  active: null,
   createdAt: null,
   updatedAt: null,
 };

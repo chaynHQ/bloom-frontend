@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-
+/**
+ * @type {import('next').NextConfig}
+ */
 const runtimeCaching = require('next-pwa/cache');
 
 const withPWA = require('next-pwa')({
@@ -36,9 +37,6 @@ module.exports = withBundleAnalyzer(
       locales: ['en', 'es', 'hi', 'fr', 'pt', 'de'],
       defaultLocale: 'en',
       localeDetection: true,
-    },
-    experimental: {
-      nextScriptWorkers: true,
     },
     async redirects() {
       return [
