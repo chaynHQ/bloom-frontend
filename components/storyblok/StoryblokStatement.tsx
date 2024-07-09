@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';
 
