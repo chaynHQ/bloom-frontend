@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
   ABOUT_YOU_SETA_ERROR,
@@ -17,6 +16,7 @@ import {
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../store/api';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
