@@ -1,5 +1,5 @@
-import { PartnerAccess, PartnerAccesses } from '../app/partnerAccessSlice';
-import { PartnerAdmin } from '../app/partnerAdminSlice';
+import { PartnerAccess, PartnerAccesses } from '../store/partnerAccessSlice';
+import { PartnerAdmin } from '../store/partnerAdminSlice';
 import { AccountType, getAccountType } from './getAccountType';
 const partnerAdminEmpty = { id: null } as PartnerAdmin;
 const partnerAdmin = { id: 'id' } as PartnerAdmin;

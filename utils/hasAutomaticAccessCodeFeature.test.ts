@@ -1,5 +1,5 @@
-import { Partner, PartnerFeature } from '../app/partnersSlice';
 import { FEATURES } from '../constants/enums';
+import { Partner, PartnerFeature } from '../store/partnersSlice';
 import hasAutomaticAccessCodeFeature from './hasAutomaticAccessCodeFeature';
 const partnerData = {
   id: 'partner',
