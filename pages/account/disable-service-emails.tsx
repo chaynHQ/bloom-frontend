@@ -3,12 +3,12 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { JSXElementConstructor, ReactElement, ReactNodeArray, useEffect, useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson5Yellow from '../../public/illustration_leaf_mix_bee.svg';
+import { useUpdateUserMutation } from '../../store/api';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const DisableServiceEmails: NextPage = () => {

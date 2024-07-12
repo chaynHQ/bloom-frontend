@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { PartnerAccess } from '../../app/partnerAccessSlice';
 import Faqs from '../../components/common/Faqs';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
@@ -14,6 +13,7 @@ import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { PartnerAccess } from '../../store/partnerAccessSlice';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const ConfirmedSession: NextPage = () => {
