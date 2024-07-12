@@ -1,5 +1,5 @@
-import { PartnerAccesses } from '../app/partnerAccessSlice';
-import { PartnerAdmin } from '../app/partnerAdminSlice';
+import { PartnerAccesses } from '../store/partnerAccessSlice';
+import { PartnerAdmin } from '../store/partnerAdminSlice';
 
 export enum AccountType {
   partnerAdmin = 'PARTNER_ADMIN',
