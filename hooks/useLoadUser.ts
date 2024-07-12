@@ -13,7 +13,12 @@ import {
   LOGOUT_SUCCESS,
 } from '../constants/events';
 import { useCreateEventLogMutation, useGetUserQuery } from '../store/api';
-import { setAuthStateLoading, setLoadError, setUserLoading, setUserToken } from '../store/userSlice';
+import {
+  setAuthStateLoading,
+  setLoadError,
+  setUserLoading,
+  setUserToken,
+} from '../store/userSlice';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
