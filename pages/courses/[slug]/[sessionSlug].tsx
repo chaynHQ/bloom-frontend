@@ -5,7 +5,9 @@ import {
   useStoryblokState,
 } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import SessionFeedbackCard from '../../../components/cards/SessionFeedbackCard';
 import NoDataAvailable from '../../../components/common/NoDataAvailable';
+import { RateSessionFormProps } from '../../../components/forms/RateSessionForm';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '../../../components/storyblok/StoryblokSessionPage';
@@ -23,12 +25,15 @@ const SessionDetail: NextPage<Props> = ({ story }) => {
   }
 
   return (
-    <StoryblokSessionPage
-      {...(story.content as StoryblokSessionPageProps)}
-      storyId={story.id}
-      storyUuid={story.uuid}
-      storyPosition={story.position}
-    />
+    <>
+      <StoryblokSessionPage
+        {...(story.content as StoryblokSessionPageProps)}
+        storyId={story.id}
+        storyUuid={story.uuid}
+        storyPosition={story.position}
+      />
+      <SessionFeedbackCard {...(story.content as RateSessionFormProps)} />
+    </>
   );
 };
 

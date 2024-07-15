@@ -80,3 +80,12 @@ export enum EVENT_LOG_NAME {
   LOGGED_IN = 'LOGGED_IN',
   LOGGED_OUT = 'LOGGED_OUT',
 }
+
+export enum FEEDBACK_TAGS {
+  RELATABLE = 'relatable',
+  USEFUL = 'useful',
+  INSPIRING = 'inspiring',
+  TOO_LONG = 'too long',
+  TOO_COMPLICATED = 'too complicated',
+  NOT_USEFUL = 'not useful',
+}
