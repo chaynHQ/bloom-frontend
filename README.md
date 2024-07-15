@@ -59,21 +59,24 @@ Happy coding! ⭐
 ### Run Local Backend
 
 See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions.
-You will need to run this in the background for the frontend to be functional.
+You will need to run this in the background for the frontend to be functional. 
 
-### Configure Environment Variables
+### Configure Environment Variables 
 
 - **For Chayn staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-- **For open-source contributors:** create a `env.local` file and populate it with **required** variables below. Required variables are needed to run the app, optional variables are for specific features. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token by visiting our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#bf62b5dcdb43496ea16231ff1815298b). Note: environment variables provided by Chayn are subject to change at any time, check for updates if you are experiencing problems.
+- **For open-source contributors:** create a `env.local` file and populate it with **required** variables below. Required variables are needed to run the app, optional variables are for specific features. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token from our [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). Additionally, while New Relic variables are not required to run the app, not including them prints lengthy warnings. To prevent this, set the New Relic variables as provided in the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). 
+  
+  Note: Variables provided by Chayn are public, not linked to production, and subject to change at any time. Check for updates if you are experiencing problems. The absence of some optional environment variables may result in test failures. If you require an optional environment variable and cannot acquire it yourself (some must be connected to Chayn in some way), please reach out to the team in GitHub’s issue discussions. 
+
+See the the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4) for more info.
 
 ```
 # --- REQUIRED ---
 NEXT_PUBLIC_ENV=local
 NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1/
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
-NEW_RELIC_APP_NAME=bloom-frontend
-NEW_RELIC_LICENSE_KEY=eu01xx6fc63a14eea79c367dfe82e702FFFFNRAL
+NEXT_PUBLIC_STORYBLOK_TOKEN= # provided in Chayn Tech Wiki Guide.
 
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
@@ -83,9 +86,10 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID= # enables Google Anayltics in Firebase project
 
-NEXT_PUBLIC_STORYBLOK_TOKEN= # content token, provided in Chayn Tech Wiki Guide.
-
 # --- OPTIONAL ---
+NEW_RELIC_APP_NAME=  # provided in Chayn Tech Wiki Guide.
+NEW_RELIC_LICENSE_KEY=  # provided in Chayn Tech Wiki Guide.
+
 NEXT_PUBLIC_CRISP_WEBSITE_ID= # user messaging
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # booking session forms
 NEXT_PUBLIC_HOTJAR_ID= # UX analytics
