@@ -59,15 +59,15 @@ Happy coding! ⭐
 ### Run Local Backend
 
 See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions.
-You will need to run this in the background for the frontend to be functional. 
+You will need to run this in the background for the frontend to be functional.
 
-### Configure Environment Variables 
+### Configure Environment Variables
 
 - **For Chayn staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
 
-- **For open-source contributors:** create a `env.local` file and populate it with **required** variables below. Required variables are needed to run the app, optional variables are for specific features. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token from our [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). Additionally, while New Relic variables are not required to run the app, not including them prints lengthy warnings. To prevent this, set the New Relic variables as provided in the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). 
-  
-  Note: Variables provided by Chayn are public, not linked to production, and subject to change at any time. Check for updates if you are experiencing problems. The absence of some optional environment variables may result in test failures. If you require an optional environment variable and cannot acquire it yourself (some must be connected to Chayn in some way), please reach out to the team in GitHub’s issue discussions. 
+- **For open-source contributors:** create a `env.local` file and populate it with **required** variables below. Required variables are needed to run the app, optional variables are for specific features. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token from our [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). Additionally, while New Relic variables are not required to run the app, not including them prints lengthy warnings. To prevent this, set the New Relic variables as provided in the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4).
+
+  Note: Variables provided by Chayn are public, not linked to production, and subject to change at any time. Check for updates if you are experiencing problems. The absence of some optional environment variables may result in test failures. If you require an optional environment variable and cannot acquire it yourself (some must be connected to Chayn in some way), please reach out to the team in GitHub’s issue discussions.
 
 See the the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4) for more info.
 
@@ -179,32 +179,34 @@ yarn test:watch
 
 ### Formatting and Linting
 
+We use ESLint and Prettier for linting and formatting. Workspace settings for VSCode are included in [.vscode/settings.json](.vscode/settings.json) for consistency, and can be replicated if using an alternative IDE. We recommend installing the VSCode extensions in the [.vscode/extensions](.vscode/extensions.json) for automated formatting and linting.
+
+[Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) are set up to run formatting and linting before each commit is pushed. **Commits will be blocked if there are any formatting or linting issues**
+
+If an error is thrown when pushing a commit:
+
+- check the output logs for linting errors - fix all linting errors before committing.
+- check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed.
+
+We strongly recommend linting and formatting before every commit:
+
+Run lint:
+
 ```bash
 yarn lint
 ```
 
-To lint and fix:
+Run lint and fix:
 
 ```bash
 yarn lint:fix
 ```
 
-Formatting and linting is provided by ESLint and Prettier (see the relevant configs for details).
+Run format and fix:
 
-**Install the VSCode extensions recommended in the [.vscode/extensions](.vscode/extensions.json) for automated formatting and linting**
-
-Workspace [settings](.vscode/settings.json) for VSCode are included for consistent linting and formatting, and can be replicated if using an alternative IDE.
-
-### Pre-commit and husky checks
-
-[Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) are set up to run formatting and linting before each commit is pushed.
-
-**Commits will be blocked if there are any formatting or linting issues**
-
-If an error is thrown when pushing a commit:
-
-- check the output logs for linting errors - fix all linting errors before committing
-- check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed
+```bash
+yarn format
+```
 
 ### Build for Production
 
