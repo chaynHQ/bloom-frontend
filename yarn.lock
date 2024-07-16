@@ -2094,10 +2094,10 @@
     prebuildify "^6.0.1"
     semver "^7.5.2"
 
-"@newrelic/next@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@newrelic/next/-/next-0.7.0.tgz#de9baa26e34b3177a812ef7accacbdfcf36676a9"
-  integrity sha512-IM1CAwGcEzRqGdCue2GPPDGOxNjR1sp6eiRGfV/9yMH7LEIg7GaDTHy1+R1WnbofK5vuhJA5o87K+E4JmLw88w==
+"@newrelic/next@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@newrelic/next/-/next-0.10.0.tgz#95c9884f4e677b70271c9d9a7da38ab508913695"
+  integrity sha512-66PcrzRDwGGLOrxEokbssoJ6x+HPeBYFoEUmXNISnVt6s+Ot1SvThd3B4WUvD98ZCJoPlncogoMviacoikZPwA==
   dependencies:
     semver "^7.3.7"
 
