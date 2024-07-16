@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: wait-for-vercel-deployment
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse
         id: lighthouseDesktop
         continue-on-error: true
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: wait-for-vercel-deployment
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse
         id: lighthouseMobile
         continue-on-error: true
