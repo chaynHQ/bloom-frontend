@@ -4,10 +4,10 @@ import { Box, Link, TextField, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../store/api';
 import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {

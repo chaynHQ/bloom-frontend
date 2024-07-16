@@ -2,9 +2,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Course } from '../../app/coursesSlice';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
+import { Course } from '../../store/coursesSlice';
 
 interface SessionProgressDisplayProps {
   sessionId: number;
