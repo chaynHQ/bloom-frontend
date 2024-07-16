@@ -29,6 +29,9 @@ module.exports = withBundleAnalyzer(
       NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
       NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
     },
+    compiler: {
+      emotion: true,
+    },
     images: {
       domains: ['a.storyblok.com'],
     },
