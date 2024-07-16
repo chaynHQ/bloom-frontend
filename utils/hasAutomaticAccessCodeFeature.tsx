@@ -1,5 +1,5 @@
-import { Partner } from '../app/partnersSlice';
 import { FEATURES } from '../constants/enums';
+import { Partner } from '../store/partnersSlice';
 
 export default function hasAutomaticAccessFeature(partner: Partner): boolean {
   return partner.partnerFeature.reduce<boolean>(

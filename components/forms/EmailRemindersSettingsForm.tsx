@@ -17,7 +17,6 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
@@ -29,6 +28,7 @@ import {
   EMAIL_REMINDERS_UNSET_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../store/api';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

@@ -1,6 +1,6 @@
-import { PartnerAccess } from '../app/partnerAccessSlice';
-import { PartnerAdmin } from '../app/partnerAdminSlice';
 import { PartnerContent } from '../constants/partners';
+import { PartnerAccess } from '../store/partnerAccessSlice';
+import { PartnerAdmin } from '../store/partnerAdminSlice';
 import hasAccessToPage from './hasAccessToPage';
 
 const emptyPartnerAdmin: PartnerAdmin = {

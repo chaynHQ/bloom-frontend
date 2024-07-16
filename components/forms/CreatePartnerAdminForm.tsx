@@ -3,13 +3,13 @@ import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../app/api';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
   CREATE_PARTNER_ADMIN_REQUEST,
   CREATE_PARTNER_ADMIN_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

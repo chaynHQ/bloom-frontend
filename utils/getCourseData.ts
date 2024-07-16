@@ -1,4 +1,4 @@
-import { Courses } from '../app/coursesSlice';
+import { Courses } from '../store/coursesSlice';
 
 const storyblokIdColumnMap: Record<string, string> = {
   98127815: 'number_dbr_sessions',
