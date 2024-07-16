@@ -2,12 +2,12 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useCompleteSessionMutation } from '../../app/api';
 import {
   SESSION_COMPLETE_ERROR,
   SESSION_COMPLETE_REQUEST,
   SESSION_COMPLETE_SUCCESS,
 } from '../../constants/events';
+import { useCompleteSessionMutation } from '../../store/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
 import { Dots } from '../common/Dots';

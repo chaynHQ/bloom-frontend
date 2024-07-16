@@ -4,8 +4,6 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useCreateEventLogMutation } from '../../app/api';
-import { setAuthStateLoading } from '../../app/userSlice';
 import { EVENT_LOG_NAME } from '../../constants/enums';
 import {
   GET_LOGIN_USER_ERROR,
@@ -16,6 +14,8 @@ import {
   LOGIN_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { useCreateEventLogMutation } from '../../store/api';
+import { setAuthStateLoading } from '../../store/userSlice';
 import logEvent from '../../utils/logEvent';
 import Link from '../common/Link';
 
