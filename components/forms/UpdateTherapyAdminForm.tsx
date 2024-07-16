@@ -14,10 +14,10 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { api, useUpdatePartnerAccessMutation } from '../../app/api';
-import { GetUserDto } from '../../app/userSlice';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { api, useUpdatePartnerAccessMutation } from '../../store/api';
+import { GetUserDto } from '../../store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

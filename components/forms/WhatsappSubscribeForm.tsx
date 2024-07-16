@@ -5,7 +5,6 @@ import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
 import 'react-international-phone/style.css';
-import { useSubscribeToWhatsappMutation } from '../../app/api';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -13,6 +12,7 @@ import {
   WHATSAPP_SUBSCRIBE_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useSubscribeToWhatsappMutation } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
 import logEvent, { getEventUserData } from '../../utils/logEvent';

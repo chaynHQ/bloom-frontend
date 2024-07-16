@@ -2,8 +2,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { useAssignPartnerAccessMutation } from '../../app/api';
-import { PartnerAccess } from '../../app/partnerAccessSlice';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   ASSIGN_NEW_PARTNER_ACCESS_ERROR,
@@ -11,6 +9,8 @@ import {
   ASSIGN_NEW_PARTNER_ACCESS_REQUEST,
   ASSIGN_NEW_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
+import { useAssignPartnerAccessMutation } from '../../store/api';
+import { PartnerAccess } from '../../store/partnerAccessSlice';
 
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
