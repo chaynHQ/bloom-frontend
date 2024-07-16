@@ -8,7 +8,7 @@ export default defineConfig({
   env: {
     login_path: 'auth/login',
     reset_password_path: 'auth/reset-password',
-    reset_pwd_confirm_email: 'test@test.com',
+    reset_pwd_confirm_email: 'tech@chayn.co',
     ...process.env,
   },
   e2e: {
