@@ -2,7 +2,7 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, fix-auth-tests, dependabot/**]
+    branches: [develop, dependabot/**, '*test*']
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -48,6 +48,7 @@ jobs:
           parallel: true
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}

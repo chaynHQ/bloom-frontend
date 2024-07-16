@@ -102,14 +102,15 @@
       "title": "Account Settings",
       "description": "View and update your settings in bloom",
       "imageAlt": "Illustration of a mobile phone with message containing a heart",
-      "form": {
-        "emailLabel": "Email",
-        "nameLabel": "Name",
-        "saveProfile": "Save Profile"
-      },
-      "profile": {
+      "profileSettings": {
         "title": "Profile details",
-        "description": "Update your name and email by getting in touch with the <link>bloom team</link>. This is the only personal information stored on your profile."
+        "description": "Update your name and email here. This is the only personal information stored with your profile.",
+        "nameLabel": "Name",
+        "emailLabel": "Email",
+        "submitLabel": "Update profile",
+        "emailAlreadyInUseError": "This email is already in use by another account, please try again",
+        "confirmDialogTitle": "When you change your email, you will need to log in again. Do you wish to proceed?",
+        "confirmDialogCancel": "Cancel"
       },
       "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or get in touch with the <link>Bloom team.</link>",
       "actions": {
@@ -117,9 +118,12 @@
         "description": "Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
         "button": {
           "resetPassword": "Reset password",
-          "deleteAccount": "Delete Account",
-          "cancel": "Cancel"
-        }
+          "deleteAccount": "Delete Account"
+        },
+        "confirmDialogCancel": "Go back",
+        "resetPasswordConfirmDialogTitle": "When you update your password, you will need to log in again. Do you wish to proceed?",
+        "deleteAccountConfirmDialogTitle": "Please confirm you want to delete your account",
+        "deleteAccountConfirmDialogDescription": "This means your account will immediately become inactive and cannot be recovered. You won’t have access to any Bloom features or your usage history. We’ll erase your email address and any personal data from our records."
       },
       "emailSettings": {
         "title": "Email preferences",

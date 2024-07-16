@@ -1,2 +1,1 @@
-yarn format
-yarn lint
+yarn format:precommit
