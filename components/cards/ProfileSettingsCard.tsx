@@ -16,10 +16,10 @@ const ProfileSettingsCard = () => {
     <Card sx={cardStyle}>
       <CardContent>
         <Typography variant="h2" component="h2">
-          {t('profile.title')}
+          {t('profileSettings.title')}
         </Typography>
         <Typography>
-          {t.rich('profile.description', {
+          {t.rich('profileSettings.description', {
             link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
           })}
         </Typography>

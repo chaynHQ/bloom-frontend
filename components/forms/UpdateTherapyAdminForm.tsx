@@ -14,10 +14,10 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { api, useUpdatePartnerAccessMutation } from '../../app/api';
-import { GetUserDto } from '../../app/userSlice';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { api, useUpdatePartnerAccessMutation } from '../../store/api';
+import { GetUserDto } from '../../store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -51,7 +51,7 @@ const UpdateTherapyAdminForm = () => {
   useEffect(() => {
     async function getUserData() {
       setAutocompleteSearchQueryIsLoading(true);
-      const searchCritiera = {
+      const searchCriteria = {
         email: autocompleteSearchQuery,
         partnerAccess: { featureTherapy: true, active: true },
         include: ['partnerAccess'],
@@ -62,7 +62,7 @@ const UpdateTherapyAdminForm = () => {
       const result = await dispatch(
         api.endpoints.getUsers.initiate(
           {
-            searchCriteria: JSON.stringify(searchCritiera),
+            searchCriteria: JSON.stringify(searchCriteria),
           },
           // We don't want this request cached as a user might use this request to check their updates have worked on the form
           { forceRefetch: true },

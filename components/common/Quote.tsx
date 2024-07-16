@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';
 

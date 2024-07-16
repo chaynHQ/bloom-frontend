@@ -1,5 +1,4 @@
-import { Box, Theme, debounce } from '@mui/material';
-import { SxProps } from '@mui/system';
+import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';

@@ -3,13 +3,13 @@ import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/materi
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useUnsubscribeFromWhatsappMutation } from '../../app/api';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
   WHATSAPP_UNSUBSCRIBE_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useUnsubscribeFromWhatsappMutation } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import { TextNode } from '../../utils/helper-types/translations';
 import logEvent, { getEventUserData } from '../../utils/logEvent';

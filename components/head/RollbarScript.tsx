@@ -13,7 +13,7 @@ var _rollbarConfig = {
     client: {
       javascript: {
         source_map_enabled: true,
-        code_version: "${process.env.VERCEL_GIT_COMMIT_SHA}",
+        code_version: "${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}",
         guess_uncaught_frames: true,
       },
     },

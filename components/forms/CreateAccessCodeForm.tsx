@@ -12,7 +12,6 @@ import {
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { useAddPartnerAccessMutation } from '../../app/api';
 import { BASE_URL } from '../../constants/common';
 import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
 import {
@@ -21,6 +20,7 @@ import {
   CREATE_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useAddPartnerAccessMutation } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
