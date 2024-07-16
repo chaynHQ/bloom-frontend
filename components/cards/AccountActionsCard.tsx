@@ -3,8 +3,8 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useDeleteUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
+import { useDeleteUserMutation } from '../../store/api';
 import theme from '../../styles/theme';
 import ConfirmDialog from '../forms/ConfirmDialog';
 
