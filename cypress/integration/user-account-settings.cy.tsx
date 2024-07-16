@@ -32,6 +32,7 @@ describe('User account settings page', () => {
     // Reset the value to 'never' so the test works on next run
     cy.get('input[name="email-reminders-settings"]').eq(3).check();
     cy.get('button[type="submit"]').contains('Save email reminders').click();
+    cy.wait(2000);
   });
 
   after(() => {
