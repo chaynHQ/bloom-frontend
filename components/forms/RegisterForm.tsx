@@ -5,12 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import {
-  useAddUserMutation,
-  useGetAutomaticAccessCodeFeatureForPartnerQuery,
-  useValidateCodeMutation,
-} from '../../app/api';
-import { setUserLoading } from '../../app/userSlice';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_ALREADY_EXISTS,
@@ -29,6 +23,12 @@ import {
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import {
+  useAddUserMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useValidateCodeMutation,
+} from '../../store/api';
+import { setUserLoading } from '../../store/userSlice';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';

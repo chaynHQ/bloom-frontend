@@ -12,7 +12,6 @@ import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
@@ -25,6 +24,7 @@ import firebase from '../config/firebase';
 import { storyblok } from '../config/storyblok';
 import { AuthGuard } from '../guards/AuthGuard';
 import '../public/hotjarNPS.css';
+import { wrapper } from '../store/store';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 

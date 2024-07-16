@@ -9,8 +9,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { useStartSessionMutation } from '../../app/api';
-import { Course, Session } from '../../app/coursesSlice';
 import SessionContentCard from '../../components/cards/SessionContentCard';
 import Link from '../../components/common/Link';
 import CrispButton from '../../components/crisp/CrispButton';
@@ -29,6 +27,8 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { useStartSessionMutation } from '../../store/api';
+import { Course, Session } from '../../store/coursesSlice';
 import { columnStyle } from '../../styles/common';
 import theme from '../../styles/theme';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';

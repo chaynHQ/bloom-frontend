@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { api } from '../app/api';
-import { clearCoursesSlice } from '../app/coursesSlice';
-import { clearPartnerAccessesSlice } from '../app/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../app/partnerAdminSlice';
-import type { AppDispatch, AppState } from '../app/store';
-import { clearUserSlice } from '../app/userSlice';
+import { api } from '../store/api';
+import { clearCoursesSlice } from '../store/coursesSlice';
+import { clearPartnerAccessesSlice } from '../store/partnerAccessSlice';
+import { clearPartnerAdminSlice } from '../store/partnerAdminSlice';
+import type { AppDispatch, AppState } from '../store/store';
+import { clearUserSlice } from '../store/userSlice';
 
 export const useTypedSelector: TypedUseSelectorHook<AppState> = useSelector;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

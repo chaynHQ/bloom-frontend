@@ -4,9 +4,9 @@ import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/materi
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../store/api';
 
 const formControlStyle = {
   marginY: 3,
