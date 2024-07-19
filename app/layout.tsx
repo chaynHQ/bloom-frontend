@@ -1,6 +1,8 @@
 import newrelic from 'newrelic';
 import Script from 'next/script';
 
+import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import RollbarScript from '../components/head/RollbarScript';
 import '../styles/globals.css';
 
 export default async function RootLayout({
@@ -28,6 +30,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <GoogleTagManagerScript />
+        <RollbarScript />
+      </head>
       <body>
         {children}
         <Script
