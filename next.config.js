@@ -14,8 +14,25 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Configuration according to Newrelic app router example
+// See https://github.com/newrelic/newrelic-node-nextjs?tab=readme-ov-file#example-projects
+const nrExternals = require('@newrelic/next/load-externals');
+
 module.exports = withBundleAnalyzer(
   withPWA({
+    experimental: {
+      // Without this setting, the Next.js compilation step will routinely
+      // try to import files such as `LICENSE` from the `newrelic` module.
+      // See https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages.
+      serverComponentsExternalPackages: ['newrelic'],
+    },
+    // In order for newrelic to effectively instrument a Next.js application,
+    // the modules that newrelic supports should not be mangled by webpack. Thus,
+    // we need to "externalize" all of the modules that newrelic supports.
+    webpack: (config) => {
+      nrExternals(config);
+      return config;
+    },
     reactStrictMode: true,
     publicRuntimeConfig: {
       NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
