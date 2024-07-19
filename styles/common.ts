@@ -1,3 +1,6 @@
+// THIS COLOUR IS USED FOR PWA META TAG CONFIGURATION IN A SERVER COMPONENT
+export const COLOUR_PRIMARY_MAIN = '#F3D6D8';
+
 export const rowStyle = {
   display: 'flex',
   flexDirection: 'row',
