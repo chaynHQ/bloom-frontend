@@ -1,19 +1,19 @@
 import { Card, CardContent } from '@mui/material';
-import { rowStyle } from '../../styles/common';
+import { columnStyle } from '../../styles/common';
 import RateSessionForm, { RateSessionFormProps } from '../forms/RateSessionForm';
 
 const cardStyle = {
-  ...rowStyle,
+  ...columnStyle,
   backgroundColor: 'background.paper',
   borderRadius: '0px',
-  paddingLeft: '10%',
+  alignItems: 'center',
 } as const;
 
 const SessionFeedbackCard = (props: RateSessionFormProps) => {
   return (
     <Card sx={cardStyle}>
       <CardContent>
-        <RateSessionForm storyId={props.storyId} course={props.course} />
+        <RateSessionForm sessionId={props.sessionId} />
       </CardContent>
     </Card>
   );

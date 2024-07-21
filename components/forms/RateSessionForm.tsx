@@ -10,16 +10,14 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useCreateSessionFeedbackMutation } from '../../app/api';
-import { Course, Session, SessionFeedback } from '../../app/coursesSlice';
+import { SessionFeedback } from '../../app/coursesSlice';
 import { FEEDBACK_TAGS } from '../../constants/enums';
-import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { staticFieldLabelStyle } from '../../styles/common';
 
@@ -37,12 +35,23 @@ const radioGroupStyle = {
 } as const;
 
 export interface RateSessionFormProps {
-  storyId: number;
-  course: ISbStoryData;
+  sessionId: string;
 }
 
+const imageContainerStyle = {
+  position: 'relative', // needed for next/image to fill the container
+  width: 200,
+  height: 200,
+} as const;
+
+const containerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+} as const;
+
 const RateSessionForm = (props: RateSessionFormProps) => {
-  const courses = useTypedSelector((state) => state.courses);
   const t = useTranslations('Courses.sessionFeedback');
   const tS = useTranslations('Shared');
   const [sendFeedback] = useCreateSessionFeedbackMutation();
@@ -66,25 +75,9 @@ const RateSessionForm = (props: RateSessionFormProps) => {
       return;
     }
 
-    const userCourse = courses.find((course: Course) => course.storyblokId === props.course.id);
-
-    if (!userCourse) {
-      setLoading(false);
-      return;
-    }
-
-    const userSession = userCourse.sessions.find(
-      (session: Session) => Number(session.storyblokId) === props.storyId,
-    );
-
-    if (!userSession) {
-      setLoading(false);
-      return;
-    }
-
     const feedbackData: SessionFeedback = {
       sessionFeedbackId: uuidv4(),
-      sessionId: userSession.id,
+      sessionId: props.sessionId,
       feedbackTags: selectedFeedbackTag,
       feedbackDescription: feedbackDescription,
     };
@@ -96,19 +89,21 @@ const RateSessionForm = (props: RateSessionFormProps) => {
   };
 
   const FormSuccess = () => (
-    <Box position="relative" alignContent="center" width="100%">
-      <Typography variant="h3" component="h3" mb={1}>
+    <Box sx={containerStyle}>
+      <Typography component="h3" variant="h3">
         {t('submissionText')}
       </Typography>
-      <Image
-        alt={tS('alt.personTea')}
-        src={illustrationPerson4Peach}
-        sizes="(max-width: 2000px) 100vw"
-        fill
-        style={{
-          objectFit: 'contain',
-        }}
-      />
+      <Box sx={imageContainerStyle}>
+        <Image
+          alt={tS('alt.personTea')}
+          src={illustrationPerson4Peach}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
     </Box>
   );
 
