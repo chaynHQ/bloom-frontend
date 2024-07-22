@@ -33,7 +33,7 @@ const SessionDetail: NextPage<Props> = ({ story }) => {
 
   if (userCourse) {
     userSession = userCourse.sessions.find(
-      (session: Session) => Number(session.storyblokId) === story.id,
+      (session: Session) => Number(session.storyblokId) === story?.id,
     );
   }
 

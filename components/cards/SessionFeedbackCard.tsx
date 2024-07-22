@@ -7,6 +7,7 @@ const cardStyle = {
   backgroundColor: 'background.paper',
   borderRadius: '0px',
   alignItems: 'center',
+  marginTop: '0px',
 } as const;
 
 const SessionFeedbackCard = (props: RateSessionFormProps) => {

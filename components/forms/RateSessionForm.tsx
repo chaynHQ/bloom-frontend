@@ -14,7 +14,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { FEEDBACK_TAGS } from '../../constants/enums';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { useCreateSessionFeedbackMutation } from '../../store/api';
@@ -49,6 +48,7 @@ const containerStyle = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+  textAlign: 'center',
 } as const;
 
 const RateSessionForm = (props: RateSessionFormProps) => {
@@ -76,7 +76,6 @@ const RateSessionForm = (props: RateSessionFormProps) => {
     }
 
     const feedbackData: SessionFeedback = {
-      sessionFeedbackId: uuidv4(),
       sessionId: props.sessionId,
       feedbackTags: selectedFeedbackTag,
       feedbackDescription: feedbackDescription,

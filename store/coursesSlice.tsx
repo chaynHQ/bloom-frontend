@@ -45,7 +45,6 @@ export interface CourseUser {
 }
 
 export interface SessionFeedback {
-  sessionFeedbackId: string;
   sessionId: string;
   feedbackTags: FEEDBACK_TAGS;
   feedbackDescription: string;
