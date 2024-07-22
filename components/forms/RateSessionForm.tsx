@@ -123,7 +123,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
             row
             sx={radioGroupStyle}
             aria-label="feature"
-            name="controlled-radio-buttons-group"
+            name="session-feedback-radio-buttons"
             value={selectedFeedbackTag}
             onChange={(e) => setSelectedFeedbackTag(e.target.value as FEEDBACK_TAGS)}
           >
@@ -154,13 +154,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
         />
         {formError && <Typography color="error.main">{formError}</Typography>}
 
-        <LoadingButton
-          variant="contained"
-          color="secondary"
-          type="submit"
-          loading={loading}
-          disabled={!selectedFeedbackTag}
-        >
+        <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
           {t('sendButtonText')}
         </LoadingButton>
       </form>
