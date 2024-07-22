@@ -5,13 +5,13 @@ import {
   useStoryblokState,
 } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import { Course, Session } from '../../../app/coursesSlice';
 import SessionFeedbackCard from '../../../components/cards/SessionFeedbackCard';
 import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '../../../components/storyblok/StoryblokSessionPage';
 import { useTypedSelector } from '../../../hooks/store';
+import { Course, Session } from '../../../store/coursesSlice';
 import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 
 interface Props {
@@ -45,7 +45,6 @@ const SessionDetail: NextPage<Props> = ({ story }) => {
         storyUuid={story.uuid}
         storyPosition={story.position}
       />
-      {/* Render only if the course has been started or completed */}
       {userSession !== undefined && <SessionFeedbackCard sessionId={userSession.id} />}
     </>
   );

@@ -15,10 +15,10 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useCreateSessionFeedbackMutation } from '../../app/api';
-import { SessionFeedback } from '../../app/coursesSlice';
 import { FEEDBACK_TAGS } from '../../constants/enums';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { useCreateSessionFeedbackMutation } from '../../store/api';
+import { SessionFeedback } from '../../store/coursesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
 
 const fieldBoxStyle: SxProps<Theme> = {

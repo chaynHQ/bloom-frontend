@@ -32,7 +32,7 @@ describe.only('A logged in user should be able to navigate to a course session a
       .click(); //click on a session when link loads
   });
 
-  it('Should read activity & bonus content, complete session & feedback form', () => {
+  it('Should read activity & bonus content, complete session and complete feedback form', () => {
     cy.visit('/courses/healing-from-sexual-trauma/what-is-sexual-trauma');
 
     cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
