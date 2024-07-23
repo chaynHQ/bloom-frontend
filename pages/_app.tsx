@@ -1,4 +1,4 @@
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import { EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 // Import the functions you need from the SDKs you need
@@ -12,7 +12,6 @@ import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { wrapper } from '../app/store';
 import CrispScript from '../components/crisp/CrispScript';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
@@ -25,6 +24,7 @@ import firebase from '../config/firebase';
 import { storyblok } from '../config/storyblok';
 import { AuthGuard } from '../guards/AuthGuard';
 import '../public/hotjarNPS.css';
+import { wrapper } from '../store/store';
 import '../styles/globals.css';
 import theme from '../styles/theme';
 
@@ -82,25 +82,23 @@ function MyApp(props: MyAppProps) {
           <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
-        <CacheProvider value={emotionCache}>
-          <CrispScript />
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <TopBar />
-            <AppBarSpacer />
-            {pathHead !== 'partner-admin' && <LeaveSiteButton />}
-            <AuthGuard>
-              <Component {...pageProps} />
-            </AuthGuard>
-            <Footer />
-            <Consent />
-            {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
-              <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-            )}
-            {/* Vercel analytics */}
-            <Analytics />
-          </ThemeProvider>
-        </CacheProvider>
+        <CrispScript />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <TopBar />
+          <AppBarSpacer />
+          {pathHead !== 'partner-admin' && <LeaveSiteButton />}
+          <AuthGuard>
+            <Component {...pageProps} />
+          </AuthGuard>
+          <Footer />
+          <Consent />
+          {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+            <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+          )}
+          {/* Vercel analytics */}
+          <Analytics />
+        </ThemeProvider>
       </NextIntlClientProvider>
     </ErrorBoundary>
   );

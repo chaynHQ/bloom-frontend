@@ -3,12 +3,11 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Link, TextField, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUpdateUserMutation } from '../../app/api';
 import { ErrorDisplay } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../store/api';
 import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {
@@ -25,12 +24,9 @@ const ProfileSettingsForm = () => {
   const [emailInput, setEmailInput] = useState<string | null>(email);
   const [nameInput, setNameInput] = useState<string | null>(name);
 
-  const router = useRouter();
-
   const diffExists = name !== nameInput || email !== emailInput;
 
   const tS = useTranslations('Shared');
-
   const t = useTranslations('Account.accountSettings');
 
   const generatePayload = (newEmail?: string | null, newName?: string | null) => ({
@@ -92,7 +88,10 @@ const ProfileSettingsForm = () => {
           variant="standard"
           fullWidth
           required
-          onChange={(ev) => setNameInput(ev.target.value)}
+          onChange={(ev) => {
+            setNameInput(ev.target.value);
+            setIsSuccess(false);
+          }}
         />
         <TextField
           id="email"
@@ -103,7 +102,10 @@ const ProfileSettingsForm = () => {
           type="email"
           fullWidth
           required
-          onChange={(ev) => setEmailInput(ev.target.value)}
+          onChange={(ev) => {
+            setEmailInput(ev.target.value);
+            setIsSuccess(false);
+          }}
         />
         {error && <Typography color="error.main">{error}</Typography>}
         <LoadingButton

@@ -2,7 +2,7 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, fix-auth-tests, dependabot/**]
+    branches: [develop, dependabot/**, '*test*']
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -14,7 +14,7 @@ jobs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
       - name: Wait for Vercel preview deployment to be ready
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
         id: waitForVercelDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +39,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run cypress
-        uses: cypress-io/github-action@v5.0.9
+        uses: cypress-io/github-action@v6.7.1
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx
@@ -48,6 +48,7 @@ jobs:
           parallel: true
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}

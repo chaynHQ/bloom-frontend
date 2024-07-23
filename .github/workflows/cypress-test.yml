@@ -26,7 +26,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Use NodeJs
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
@@ -40,6 +40,7 @@ jobs:
         run: yarn build
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
@@ -61,7 +62,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run cypress
-        uses: cypress-io/github-action@v5.0.9
+        uses: cypress-io/github-action@v6.7.1
         with:
           browser: chrome
           spec: cypress/**/*.cy.tsx

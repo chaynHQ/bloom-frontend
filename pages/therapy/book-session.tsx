@@ -5,7 +5,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-import { PartnerAccess } from '../../app/partnerAccessSlice';
 import Faqs from '../../components/common/Faqs';
 import ImageTextGrid, { ImageTextItem } from '../../components/common/ImageTextGrid';
 import Header from '../../components/layout/Header';
@@ -19,6 +18,7 @@ import illustrationConfidential from '../../public/illustration_confidential.svg
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
+import { PartnerAccess } from '../../store/partnerAccessSlice';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

@@ -1,5 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
+  Box,
   Card,
   CardActionArea,
   CardActions,
@@ -9,7 +10,6 @@ import {
   Link,
   Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';

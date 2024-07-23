@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
 import { richtextContentStyle } from '../../styles/common';

@@ -5,10 +5,13 @@ import {
   useStoryblokState,
 } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import SessionFeedbackCard from '../../../components/cards/SessionFeedbackCard';
 import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '../../../components/storyblok/StoryblokSessionPage';
+import { useTypedSelector } from '../../../hooks/store';
+import { Course, Session } from '../../../store/coursesSlice';
 import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 
 interface Props {
@@ -17,18 +20,33 @@ interface Props {
 
 const SessionDetail: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
+  const courses = useTypedSelector((state) => state.courses);
 
   if (!story) {
     return <NoDataAvailable />;
   }
 
+  const content = story.content as StoryblokSessionPageProps;
+  const userCourse = courses.find((course: Course) => course.storyblokId === content.course.id);
+
+  let userSession: Session | undefined;
+
+  if (userCourse) {
+    userSession = userCourse.sessions.find(
+      (session: Session) => Number(session.storyblokId) === story?.id,
+    );
+  }
+
   return (
-    <StoryblokSessionPage
-      {...(story.content as StoryblokSessionPageProps)}
-      storyId={story.id}
-      storyUuid={story.uuid}
-      storyPosition={story.position}
-    />
+    <>
+      <StoryblokSessionPage
+        {...content}
+        storyId={story.id}
+        storyUuid={story.uuid}
+        storyPosition={story.position}
+      />
+      {userSession !== undefined && <SessionFeedbackCard sessionId={userSession.id} />}
+    </>
   );
 };
 

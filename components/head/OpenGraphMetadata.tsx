@@ -15,11 +15,7 @@ const OpenGraphMetadata = () => {
       <meta property="og:image" content="/preview.png" key="og-image" />
       <meta property="og:image:alt" content={imageAltContent} key="og-image-alt" />
       <meta name="twitter:card" content="summary_large_image" key="twitter-card" />
-      <meta
-        name="twitter:description"
-        content={twitterDescriptionContent}
-        key="twitter-desc"
-      />
+      <meta name="twitter:description" content={twitterDescriptionContent} key="twitter-desc" />
       {/** PWA specific tags **/}
       <link rel="manifest" href="/manifest.json" />
       <link rel="apple-touch-icon" href="/icons/apple/icon-120x120.png"></link>

@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-
+/**
+ * @type {import('next').NextConfig}
+ */
 const runtimeCaching = require('next-pwa/cache');
 
 const withPWA = require('next-pwa')({
@@ -29,6 +30,9 @@ module.exports = withBundleAnalyzer(
       NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
       NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
     },
+    compiler: {
+      emotion: true,
+    },
     images: {
       domains: ['a.storyblok.com'],
     },
@@ -36,9 +40,6 @@ module.exports = withBundleAnalyzer(
       locales: ['en', 'es', 'hi', 'fr', 'pt', 'de'],
       defaultLocale: 'en',
       localeDetection: true,
-    },
-    experimental: {
-      nextScriptWorkers: true,
     },
     async redirects() {
       return [
