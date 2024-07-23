@@ -54,7 +54,7 @@
       "sendButtonText": "Send",
       "submissionText": "Thank you for submitting your feedback",
       "errors": {
-        "feedbackTagError": "Please select a feedback option before submitting."
+        "feedbackTagError": "Please select a rating before sending."
       }
     },
     "accessGuard": {

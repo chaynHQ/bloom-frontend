@@ -40,21 +40,21 @@
       "sessionComplete": "Session abgeschlossen"
     },
     "sessionFeedback": {
-      "title": "How was this session?",
-      "subtitle": "We’d love to hear how you found this session. Your feedback helps us to improve our courses.",
+      "title": "Wie war diese Session?",
+      "subtitle": "Wir würden gerne hören, wie Sie diese Sitzung gefunden haben. Ihr Feedback hilft uns, unsere Kurse zu verbessern.",
       "feedbackTags": {
-        "relatable": "Relatable",
-        "useful": "Useful",
-        "inspiring": "Inspiring",
-        "too long": "Too long",
-        "too complicated": "Too complicated",
-        "not useful": "Not useful"
+        "relatable": "Zuordenbar",
+        "useful": "Nützlich",
+        "inspiring": "Inspirierend",
+        "too long": "Zu lang",
+        "too complicated": "Zu kompliziert",
+        "not useful": "Nicht nützlich"
       },
-      "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
-      "submissionText": "Thank you for submitting your feedback",
+      "textboxDefaultText": "Füge einen Kommentar hinzu...",
+      "sendButtonText": "Senden",
+      "submissionText": "Vielen Dank für die Übermittlung Ihres Feedbacks",
       "errors": {
-        "feedbackTagError": "Please select a feedback option before submitting."
+        "feedbackTagError": "Bitte wählen Sie vor dem Absenden eine Bewertung aus."
       }
     },
     "accessGuard": {

@@ -151,7 +151,11 @@ const RateSessionForm = (props: RateSessionFormProps) => {
           InputProps={{ disableUnderline: true }}
           InputLabelProps={{ shrink: true }}
         />
-        {formError && <Typography color="error.main">{formError}</Typography>}
+        {formError && (
+          <Typography sx={{ '&:last-of-type': { mb: 4 } }} color="error.main">
+            {formError}
+          </Typography>
+        )}
 
         <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
           {t('sendButtonText')}
