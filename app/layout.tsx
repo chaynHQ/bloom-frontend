@@ -5,6 +5,7 @@ import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import '../styles/globals.css';
+import ThemeRegistry from './ThemeRegistry';
 
 export default async function RootLayout({
   // Layouts must accept a children prop.
@@ -37,7 +38,7 @@ export default async function RootLayout({
         <RollbarScript />
       </head>
       <body>
-        {children}
+        <ThemeRegistry>{children}</ThemeRegistry>
         <Script
           // We have to set an id for inline scripts.
           // See https://nextjs.org/docs/app/building-your-application/optimizing/scripts#inline-scripts

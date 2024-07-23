@@ -1,3 +1,5 @@
+'use client';
+
 import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles';
 import { COLOUR_PRIMARY_MAIN } from './common';
 
