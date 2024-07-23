@@ -40,21 +40,21 @@
       "sessionComplete": "Session poora hua"
     },
     "sessionFeedback": {
-      "title": "How was this session?",
-      "subtitle": "We’d love to hear how you found this session. Your feedback helps us to improve our courses.",
+      "title": "Yeh session kaisa tha?",
+      "subtitle": "Hum aapke is session ke vichaar jaanna chahte hain. Aapka feedback humare courses ko behtar banane mein madad karta hai.",
       "feedbackTags": {
-        "relatable": "Relatable",
-        "useful": "Useful",
-        "inspiring": "Inspiring",
-        "too long": "Too long",
-        "too complicated": "Too complicated",
-        "not useful": "Not useful"
+        "relatable": "joda ja sakane vaala",
+        "useful": "upyogi",
+        "inspiring": "prerak",
+        "too long": "bahut lamba",
+        "too complicated": "bahut jatil",
+        "not useful": "anupyogi"
       },
-      "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
-      "submissionText": "Thank you for submitting your feedback",
+      "textboxDefaultText": "Ek comment add karein...",
+      "sendButtonText": "Bhejein",
+      "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
       "errors": {
-        "feedbackTagError": "Please select a feedback option before submitting."
+        "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
       }
     },
     "accessGuard": {
