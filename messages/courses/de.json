@@ -39,6 +39,24 @@
       },
       "sessionComplete": "Session abgeschlossen"
     },
+    "sessionFeedback": {
+      "title": "Wie war diese Session?",
+      "subtitle": "Wir würden gerne hören, wie Sie diese Sitzung gefunden haben. Ihr Feedback hilft uns, unsere Kurse zu verbessern.",
+      "feedbackTags": {
+        "relatable": "Zuordenbar",
+        "useful": "Nützlich",
+        "inspiring": "Inspirierend",
+        "too long": "Zu lang",
+        "too complicated": "Zu kompliziert",
+        "not useful": "Nicht nützlich"
+      },
+      "textboxDefaultText": "Füge einen Kommentar hinzu...",
+      "sendButtonText": "Senden",
+      "submissionText": "Vielen Dank für die Übermittlung Ihres Feedbacks",
+      "errors": {
+        "feedbackTagError": "Bitte wählen Sie vor dem Absenden eine Bewertung aus."
+      }
+    },
     "accessGuard": {
       "title": "Kursinhalte nicht verfügbar",
       "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen</contactLink>."

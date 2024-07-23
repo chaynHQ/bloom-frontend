@@ -1,5 +1,5 @@
 import { Draft, createSlice } from '@reduxjs/toolkit';
-import { STORYBLOK_STORY_STATUS } from '../constants/enums';
+import { FEEDBACK_TAGS, STORYBLOK_STORY_STATUS } from '../constants/enums';
 import { api } from './api';
 import { User } from './userSlice';
 
@@ -42,6 +42,12 @@ export interface CourseUser {
   courseId: string;
   course: Course;
   sessionUser: SessionUser[];
+}
+
+export interface SessionFeedback {
+  sessionId: string;
+  feedbackTags: FEEDBACK_TAGS;
+  feedbackDescription: string;
 }
 
 export interface Courses extends Array<Course> {}
