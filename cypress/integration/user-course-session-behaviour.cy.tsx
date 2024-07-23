@@ -32,14 +32,28 @@ describe.only('A logged in user should be able to navigate to a course session a
       .click(); //click on a session when link loads
   });
 
-  it('Should read activity & bonus content and complete session', () => {
+  it('Should read activity & bonus content, complete session and complete feedback form', () => {
     cy.visit('/courses/healing-from-sexual-trauma/what-is-sexual-trauma');
+
+    cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
 
     cy.get('h3', { timeout: 10000 }).contains('Activity').click(); //open activities
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 
     cy.get('button').contains('Session complete').click(); //mark course as complete
+
+    cy.get('h2').contains('How was this session?').should('exist'); //feedback form available after course has started
+
+    cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
+
+    cy.get('p').contains('Please select a feedback option before submitting.').should('exist'); //give warning to user
+
+    cy.get('input[name="session-feedback-radio-buttons"').first().check(); //click feedback option
+
+    cy.get('button').contains('Send').click(); //submit feedback
+
+    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
 
     cy.deleteUser(); //delete test user
   });

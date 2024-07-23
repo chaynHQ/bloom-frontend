@@ -39,6 +39,24 @@
       },
       "sessionComplete": "Sessão completa"
     },
+    "sessionFeedback": {
+      "title": "How was this session?",
+      "subtitle": "We’d love to hear how you found this session. Your feedback helps us to improve our courses.",
+      "feedbackTags": {
+        "relatable": "Relatable",
+        "useful": "Useful",
+        "inspiring": "Inspiring",
+        "too long": "Too long",
+        "too complicated": "Too complicated",
+        "not useful": "Not useful"
+      },
+      "textboxDefaultText": "Add a comment...",
+      "sendButtonText": "Send",
+      "submissionText": "Thank you for submitting your feedback",
+      "errors": {
+        "feedbackTagError": "Please select a feedback option before submitting."
+      }
+    },
     "accessGuard": {
       "title": "Conteúdo do curso não disponível",
       "introduction": "Sua conta Bloom não inclui o acesso ao conteúdo do curso solicitado. Volte para seus <contactLink>cursos</contactLink>."
