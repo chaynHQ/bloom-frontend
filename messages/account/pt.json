@@ -63,8 +63,8 @@
         "countryHelpText": "Isso nos ajudará a entender de quais lugares as pessoas sobreviventes acessam nossos serviços. ",
         "ageLabel": "Qual é a sua faixa etária?",
         "ageLabels": {
-          "1": "Menos de 16 anos",
-          "2": "16-25 anos",
+          "1": "Menos de 18 anos",
+          "2": "18-25 anos",
           "3": "25-35 anos",
           "4": "35-45 anos",
           "5": "45-55 anos",

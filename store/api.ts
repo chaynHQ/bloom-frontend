@@ -8,7 +8,7 @@ import {
 import { getAuth } from 'firebase/auth';
 import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import { EventLog } from '../constants/eventLog';
-import { Course, Courses } from './coursesSlice';
+import { Course, Courses, SessionFeedback } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
@@ -223,6 +223,15 @@ export const api = createApi({
         };
       },
     }),
+    createSessionFeedback: builder.mutation<SessionFeedback, SessionFeedback>({
+      query(body) {
+        return {
+          url: 'session-feedback',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -245,4 +254,5 @@ export const {
   useUpdatePartnerAccessMutation,
   useUpdatePartnerAdminMutation,
   useCreateEventLogMutation,
+  useCreateSessionFeedbackMutation,
 } = api;
