@@ -291,11 +291,11 @@ const AboutYouDemographicForm = () => {
             value={ageInput}
           >
             <FormControlLabel
-              value="Under 16"
+              value="Under 18"
               control={<Radio required />}
               label={t('ageLabels.1')}
             />
-            <FormControlLabel value="16-25" control={<Radio required />} label={t('ageLabels.2')} />
+            <FormControlLabel value="18-25" control={<Radio required />} label={t('ageLabels.2')} />
             <FormControlLabel value="25-35" control={<Radio required />} label={t('ageLabels.3')} />
             <FormControlLabel value="35-45" control={<Radio required />} label={t('ageLabels.4')} />
             <FormControlLabel value="45-55" control={<Radio required />} label={t('ageLabels.5')} />

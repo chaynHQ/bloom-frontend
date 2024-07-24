@@ -63,8 +63,8 @@
         "countryHelpText": "Dies hilft uns zu verstehen, von wo aus Überlebende unser Angebot nutzen",
         "ageLabel": "Was ist Deine Altersgruppe?",
         "ageLabels": {
-          "1": "Unter 16",
-          "2": "16-25",
+          "1": "Unter 18",
+          "2": "18-25",
           "3": "25-35",
           "4": "35-45",
           "5": "45-55",
