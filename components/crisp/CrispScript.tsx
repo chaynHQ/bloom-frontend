@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useLocale } from 'next-intl';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { CHAT_MESSAGE_SENT, CHAT_STARTED, FIRST_CHAT_STARTED } from '../../constants/events';
@@ -7,14 +9,13 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { createCrispProfileData } from './utils/createCrispProfileData';
 
 const CrispScript = () => {
+  const locale = useLocale();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmail = useTypedSelector((state) => state.user.email);
   const userCrispTokenId = useTypedSelector((state) => state.user.crispTokenId);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
-
-  const router = useRouter();
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -81,7 +82,7 @@ const CrispScript = () => {
         __html: `
             window.$crisp=[];
             CRISP_RUNTIME_CONFIG = {
-              locale : ${router.locale ? `"${router.locale}"` : 'en'}
+              locale : ${locale ? `"${locale}"` : 'en'}
             };
             window.CRISP_WEBSITE_ID="${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}";
             (function(){

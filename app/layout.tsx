@@ -1,11 +1,23 @@
 import newrelic from 'newrelic';
 import Script from 'next/script';
 
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { headers } from 'next/headers';
+import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
+import { storyblok } from '../config/storyblok';
+import { defaultLocale, HEADER_LOCALE_NAME } from '../i18n.config';
+import StoreProvider from '../store/storeProvider';
 import '../styles/globals.css';
+import AppLayout from './appLayout';
 import ThemeRegistry from './ThemeRegistry';
+
+// Init storyblok
+storyblok;
 
 export default async function RootLayout({
   // Layouts must accept a children prop.
@@ -30,15 +42,29 @@ export default async function RootLayout({
     allowTransactionlessInjection: true,
   });
 
+  const messages = await getMessages();
+  const locale = headers().get(HEADER_LOCALE_NAME) ?? defaultLocale;
+
   return (
-    <html lang="en">
+    <html lang={defaultLocale}>
       <head>
+        <title>Bloom</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <OpenGraphMetadata />
         <GoogleTagManagerScript />
         <RollbarScript />
       </head>
       <body>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <StoreProvider>
+          <ErrorBoundary>
+            <NextIntlClientProvider messages={messages} locale={locale}>
+              <CrispScript />
+              <ThemeRegistry>
+                <AppLayout>{children}</AppLayout>
+              </ThemeRegistry>
+            </NextIntlClientProvider>
+          </ErrorBoundary>
+        </StoreProvider>
         <Script
           // We have to set an id for inline scripts.
           // See https://nextjs.org/docs/app/building-your-application/optimizing/scripts#inline-scripts
