@@ -7,7 +7,7 @@ import partnerAdminReducer from './partnerAdminSlice';
 import partnersReducer from './partnersSlice';
 import userReducer from './userSlice';
 
-const makeStore = () =>
+export const makeStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
@@ -19,6 +19,7 @@ const makeStore = () =>
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
+
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore['getState']>;
