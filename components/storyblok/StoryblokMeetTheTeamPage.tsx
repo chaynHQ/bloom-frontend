@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Head from 'next/head';

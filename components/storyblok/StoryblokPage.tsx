@@ -1,3 +1,5 @@
+'use client';
+
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
