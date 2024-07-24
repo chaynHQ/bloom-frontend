@@ -1,6 +1,7 @@
 import newrelic from 'newrelic';
 import Script from 'next/script';
 
+import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { headers } from 'next/headers';
@@ -18,6 +19,10 @@ import ThemeRegistry from './ThemeRegistry';
 
 // Init storyblok
 storyblok;
+
+export const metadata: Metadata = {
+  title: 'Bloom',
+};
 
 export default async function RootLayout({
   // Layouts must accept a children prop.
@@ -48,8 +53,6 @@ export default async function RootLayout({
   return (
     <html lang={defaultLocale}>
       <head>
-        <title>Bloom</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <OpenGraphMetadata />
         <GoogleTagManagerScript />
         <RollbarScript />
