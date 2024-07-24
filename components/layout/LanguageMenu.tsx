@@ -1,10 +1,13 @@
+'use client';
+
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
-import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
+import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { locales } from '../../i18n.config';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -42,8 +45,8 @@ const buttonStyle = {
 
 export default function LanguageMenu() {
   const router = useRouter();
-  const locale = router.locale;
-  const locales = router.locales;
+  const locale = useLocale();
+  const pathname = usePathname();
   const t = useTranslations('Navigation');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -94,7 +97,7 @@ export default function LanguageMenu() {
               <MenuItem key={language} sx={menuItemStyle}>
                 <Button
                   component={Link}
-                  href={router.asPath}
+                  href={pathname as string}
                   locale={language}
                   onClick={() => {
                     logEvent(generateLanguageMenuEvent(language), eventUserData);

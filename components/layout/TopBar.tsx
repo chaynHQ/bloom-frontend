@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -38,7 +38,7 @@ const logoContainerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
@@ -103,7 +103,7 @@ const TopBar = () => {
             {isSmallScreen && <NavigationDrawer />}
           </Box>
         </Container>
-        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
+        {!isSmallScreen && <SecondaryNav currentPage={pathname as string} />}
       </AppBar>
     </>
   );

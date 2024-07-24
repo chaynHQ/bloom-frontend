@@ -6,7 +6,7 @@ import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
@@ -91,7 +91,8 @@ const Footer = () => {
   const tS = useTranslations('Shared');
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [partners, setPartners] = useState<PartnerContent[]>([]);
-  const router = useRouter();
+  const pathname = usePathname() as string;
+  const searchParams = useSearchParams();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -116,14 +117,14 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
     });
 
-    const { partner } = router.query;
+    const partner = searchParams?.get('partner');
 
     if (partner) {
       addUniquePartner(partnersList, partner + '');
     }
 
-    if (router.pathname.includes('/welcome') || router.pathname.includes('/partnership')) {
-      const partnerName = router.asPath.split('/')[2].split('?')[0];
+    if (pathname.includes('/welcome') || pathname.includes('/partnership')) {
+      const partnerName = pathname.split('/')[2].split('?')[0];
       addUniquePartner(partnersList, partnerName);
     }
 
@@ -134,7 +135,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
+  }, [partnerAccesses, userCreatedAt, searchParams, partnerAdmin, pathname]);
 
   return (
     <>
