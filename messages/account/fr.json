@@ -63,8 +63,8 @@
         "countryHelpText": "Ceci nous aidera à connaître l'endroit à partir duquel les personnes survivantes accèdent à nos services.",
         "ageLabel": "Quelle est votre groupe d'âge  ?",
         "ageLabels": {
-          "1": "Moins de 16 ans",
-          "2": "16 à 25 ans",
+          "1": "Moins de 18 ans",
+          "2": "18 à 25 ans",
           "3": "25 à 35 ans",
           "4": "35 à 45 ans",
           "5": "45 à 55 ans",
