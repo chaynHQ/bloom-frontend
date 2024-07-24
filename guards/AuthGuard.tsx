@@ -22,6 +22,7 @@ const publicPathHeads = [
   'meet-the-team',
   'partnership',
   'about-our-courses',
+  // Added for testing purpouse until a route is migrated to app router
   'approutetest',
 ];
 
