@@ -1,14 +1,12 @@
-'use client';
-
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
-import { useCookies } from 'react-cookie';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { COOKIE_LOCALE_NAME, locales } from '../../i18n.config';
+import { locales } from '../../i18n.config';
+import { setUserLocale } from '../../locale.service';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -44,8 +42,7 @@ const buttonStyle = {
   '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
 } as const;
 
-export default function LanguageMenu() {
-  const [cookies, setCookie] = useCookies([COOKIE_LOCALE_NAME]);
+export default function LanguageMenuAppRoute() {
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations('Navigation');
@@ -64,6 +61,13 @@ export default function LanguageMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const pathnameLocale = pathname?.replace(/^\/+/, '').split('/')[0] ?? '';
+
+  let pathnameWithoutLocale = pathname;
+  if (locales.includes(pathnameLocale)) {
+    pathnameWithoutLocale = pathname?.slice(3) ?? '/';
+  }
 
   return (
     <Box>
@@ -98,10 +102,10 @@ export default function LanguageMenu() {
               <MenuItem key={language} sx={menuItemStyle}>
                 <Button
                   component={Link}
-                  href={pathname as string}
+                  href={`/${language}${pathnameWithoutLocale}`}
                   locale={language}
                   onClick={() => {
-                    setCookie(COOKIE_LOCALE_NAME, language);
+                    setUserLocale(language, pathnameWithoutLocale as string);
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
                     handleClose();
                   }}

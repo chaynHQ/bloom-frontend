@@ -9,7 +9,6 @@ import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
-import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
 import SecondaryNav from './SecondaryNav';
@@ -35,7 +34,7 @@ const logoContainerStyle = {
   height: 48,
 } as const;
 
-const TopBar = () => {
+const TopBar = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
   const pathname = usePathname();
@@ -84,7 +83,7 @@ const TopBar = () => {
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}
             {userId && <UserMenu />}
-            <LanguageMenu />
+            {children}
             {!isSmallScreen && !userId && (
               <Button
                 variant="contained"

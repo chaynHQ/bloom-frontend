@@ -17,6 +17,7 @@ import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
+import LanguageMenu from '../components/layout/LanguageMenu';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
@@ -85,7 +86,9 @@ function MyApp(props: MyAppProps) {
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <TopBar />
+          <TopBar>
+            <LanguageMenu />
+          </TopBar>
           <AppBarSpacer />
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <AuthGuard>

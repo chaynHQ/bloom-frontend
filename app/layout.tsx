@@ -3,15 +3,13 @@ import Script from 'next/script';
 
 import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { headers } from 'next/headers';
+import { getLocale, getMessages } from 'next-intl/server';
 import CrispScript from '../components/crisp/CrispScript';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import { storyblok } from '../config/storyblok';
-import { defaultLocale, HEADER_LOCALE_NAME } from '../i18n.config';
 import StoreProvider from '../store/storeProvider';
 import '../styles/globals.css';
 import AppLayout from './appLayout';
@@ -47,11 +45,14 @@ export default async function RootLayout({
     allowTransactionlessInjection: true,
   });
 
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
   const messages = await getMessages();
-  const locale = headers().get(HEADER_LOCALE_NAME) ?? defaultLocale;
 
   return (
-    <html lang={defaultLocale}>
+    <html lang={locale}>
       <head>
         <OpenGraphMetadata />
         <GoogleTagManagerScript />
@@ -60,7 +61,7 @@ export default async function RootLayout({
       <body>
         <StoreProvider>
           <ErrorBoundary>
-            <NextIntlClientProvider messages={messages} locale={locale}>
+            <NextIntlClientProvider messages={messages}>
               <CrispScript />
               <ThemeRegistry>
                 <AppLayout>{children}</AppLayout>

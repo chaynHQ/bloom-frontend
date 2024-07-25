@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import Footer from '../components/layout/Footer';
+import LanguageMenuAppRoute from '../components/layout/LanguageMenuAppRoute';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import firebase from '../config/firebase';
@@ -42,7 +43,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <>
-      <TopBar />
+      <TopBar>
+        <LanguageMenuAppRoute />
+      </TopBar>
       <AppBarSpacer />
       {pathHead !== 'partner-admin' && <LeaveSiteButton />}
       <AuthGuard>{children as JSX.Element}</AuthGuard>
