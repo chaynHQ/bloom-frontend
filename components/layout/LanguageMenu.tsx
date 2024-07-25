@@ -3,7 +3,7 @@
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -44,7 +44,6 @@ const buttonStyle = {
 } as const;
 
 export default function LanguageMenu() {
-  const router = useRouter();
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations('Navigation');
