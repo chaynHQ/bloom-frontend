@@ -1,12 +1,11 @@
 import createMiddleware from 'next-intl/middleware';
-import { NextURL } from 'next/dist/server/web/next-url';
 import { NextRequest, NextResponse } from 'next/server';
 import { COOKIE_LOCALE_NAME, defaultLocale, locales } from './i18n.config';
 
-function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, nextUrl: NextURL) {
+function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
 
-  let [, urlLocale, routeSegment] = nextUrl.href.replace(nextUrl.origin, '').split('/');
+  let [, urlLocale, routeSegment] = pathname.split('/');
 
   if (urlLocale && locales.includes(urlLocale)) {
     locale = urlLocale;
@@ -33,30 +32,38 @@ const isAnAppRoute = (routeSegment: string) => {
 export default async function middleware(request: NextRequest) {
   const currentLocale = request.cookies.get(COOKIE_LOCALE_NAME)?.value || defaultLocale;
 
-  const [locale, routeSegment] = getLocaleAndRouteSegment(locales, currentLocale, request.nextUrl);
+  const pathname = request.nextUrl.href.replace(request.nextUrl.origin, '');
+
+  const [locale, routeSegment] = getLocaleAndRouteSegment(locales, currentLocale, pathname);
+
+  if (!isAnAppRoute(routeSegment as string) && !pathname.startsWith(`/${locale}`)) {
+    const url = request.nextUrl.clone();
+    url.locale = locale;
+    const response = NextResponse.redirect(url);
+    response.cookies.set(COOKIE_LOCALE_NAME, locale);
+    return response;
+  }
 
   let response = NextResponse.next();
 
   // Create and call the next-intl middleware only if we are in an app route segment
   // so the next-intl app route configuration is applied
-  if (isAnAppRoute(routeSegment)) {
+  if (isAnAppRoute(routeSegment as string)) {
     const handleI18nRouting = createMiddleware({
       locales,
-      defaultLocale,
+      defaultLocale: 'null',
       localeDetection: true,
       localePrefix: 'never',
     });
 
     response = handleI18nRouting(request);
-  }
 
-  // Also handle the cookie to be consistent with next approach
-  const hasOutdatedCookie = request.cookies.get(COOKIE_LOCALE_NAME)?.value !== locale;
+    // Also handle the cookie to be consistent with next approach
+    const hasOutdatedCookie = request.cookies.get(COOKIE_LOCALE_NAME)?.value !== locale;
 
-  if (hasOutdatedCookie) {
-    response.cookies.set(COOKIE_LOCALE_NAME, locale, {
-      sameSite: 'strict',
-    });
+    if (hasOutdatedCookie) {
+      response.cookies.set(COOKIE_LOCALE_NAME, locale ?? currentLocale);
+    }
   }
 
   return response;

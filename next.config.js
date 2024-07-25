@@ -61,9 +61,12 @@ module.exports = withNextIntl(
         domains: ['a.storyblok.com'],
       },
       // We need to leave this configuration to get pages i18n working
+      // Forced to put defaultLocale to a non available value to solve
+      // problems when selecting en locale (defautlLocale), it didn't refresh at first
+      // This is going to display en in the url
       i18n: {
-        locales: ['en', 'es', 'hi', 'fr', 'pt', 'de'],
-        defaultLocale: 'en',
+        locales: ['en', 'es', 'hi', 'fr', 'pt', 'de', 'null'],
+        defaultLocale: 'null',
         localeDetection: true,
       },
       async redirects() {
