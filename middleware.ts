@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextURL } from 'next/dist/server/web/next-url';
 import { NextRequest, NextResponse } from 'next/server';
-import { COOKIE_LOCALE_NAME, defaultLocale, HEADER_LOCALE_NAME, locales } from './i18n.config';
+import { COOKIE_LOCALE_NAME, defaultLocale, locales } from './i18n.config';
 
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, nextUrl: NextURL) {
   let locale;
@@ -31,7 +31,7 @@ const isAnAppRoute = (routeSegment: string) => {
 // with the [slug] one that is in pages throwing an next.js error
 // Using a header as it detects the locale in the first request
 export default async function middleware(request: NextRequest) {
-  const currentLocale = request.headers.get(HEADER_LOCALE_NAME) || defaultLocale;
+  const currentLocale = request.cookies.get(COOKIE_LOCALE_NAME)?.value || defaultLocale;
 
   const [locale, routeSegment] = getLocaleAndRouteSegment(locales, currentLocale, request.nextUrl);
 
@@ -59,12 +59,10 @@ export default async function middleware(request: NextRequest) {
     });
   }
 
-  response.headers.set(HEADER_LOCALE_NAME, locale);
-
   return response;
 }
 
 export const config = {
   // Skip all paths that should not be internationalized
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)', '/'],
 };
