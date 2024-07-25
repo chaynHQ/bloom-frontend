@@ -1,7 +1,10 @@
-import { getMessages } from 'next-intl/server';
+'use client';
 
-export default async function Page() {
-  const messages = await getMessages();
+import { useTranslations } from 'next-intl';
 
-  return <div>{JSON.stringify(messages)}</div>;
+export default function Page() {
+  const t = useTranslations('Shared');
+  const message = t('navigateBack');
+
+  return <div>{message}</div>;
 }
