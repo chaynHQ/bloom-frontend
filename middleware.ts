@@ -1,7 +1,13 @@
 import createMiddleware from 'next-intl/middleware';
 import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextRequest, NextResponse } from 'next/server';
-import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, defaultLocale, Locale, locales } from './i18n/config';
+import {
+  COOKIE_LOCALE_NAME,
+  COOKIE_LOCALE_PATH,
+  defaultLocale,
+  Locale,
+  locales,
+} from './i18n/config';
 
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
@@ -29,7 +35,7 @@ const isAnAppRoute = (routeSegment: string) => {
 
 const setCookie = (cookies: ResponseCookies, locale: Locale) => {
   cookies.set(COOKIE_LOCALE_NAME, locale, { path: COOKIE_LOCALE_PATH });
-}
+};
 
 // We need to handle the locale here as we cannot use a [locale] segment as it colides
 // with the [slug] one that is in pages throwing an next.js error
