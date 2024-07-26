@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { COOKIE_LOCALE_NAME, Locale, defaultLocale } from './config';
+import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, Locale, defaultLocale } from './config';
 
 // In this example the locale is read from a cookie. You could alternatively
 // also read it from a database, backend service, or any other source.
@@ -11,7 +11,7 @@ export async function getUserLocale() {
 }
 
 export async function setUserLocale(locale: Locale, path: string = '/') {
-  cookies().set(COOKIE_LOCALE_NAME, locale);
+  cookies().set(COOKIE_LOCALE_NAME, locale, { path: COOKIE_LOCALE_PATH });
 
   revalidatePath(path);
 }

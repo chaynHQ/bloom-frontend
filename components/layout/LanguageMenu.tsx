@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { COOKIE_LOCALE_NAME, locales } from '../../i18n/config';
+import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, locales } from '../../i18n/config';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -101,7 +101,7 @@ export default function LanguageMenu() {
                   href={pathname as string}
                   locale={language}
                   onClick={() => {
-                    setCookie(COOKIE_LOCALE_NAME, language);
+                    setCookie(COOKIE_LOCALE_NAME, language, { path: COOKIE_LOCALE_PATH });
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
                     handleClose();
                   }}

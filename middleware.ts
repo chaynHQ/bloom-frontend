@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
+import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextRequest, NextResponse } from 'next/server';
-import { COOKIE_LOCALE_NAME, defaultLocale, locales } from './i18n/config';
+import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, defaultLocale, Locale, locales } from './i18n/config';
 
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
@@ -26,11 +27,16 @@ const isAnAppRoute = (routeSegment: string) => {
   return appRoutes.includes(routeSegment);
 };
 
+const setCookie = (cookies: ResponseCookies, locale: Locale) => {
+  cookies.set(COOKIE_LOCALE_NAME, locale, { path: COOKIE_LOCALE_PATH });
+}
+
 // We need to handle the locale here as we cannot use a [locale] segment as it colides
 // with the [slug] one that is in pages throwing an next.js error
 // Using a header as it detects the locale in the first request
 export default async function middleware(request: NextRequest) {
   const currentLocale = request.cookies.get(COOKIE_LOCALE_NAME)?.value || defaultLocale;
+  request.cookies.delete(COOKIE_LOCALE_NAME);
 
   const pathname = request.nextUrl.href.replace(request.nextUrl.origin, '');
 
@@ -40,7 +46,7 @@ export default async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.locale = locale;
     const response = NextResponse.redirect(url);
-    response.cookies.set(COOKIE_LOCALE_NAME, locale);
+    setCookie(response.cookies, locale);
     return response;
   }
 
@@ -57,13 +63,13 @@ export default async function middleware(request: NextRequest) {
     });
 
     response = handleI18nRouting(request);
+  }
 
-    // Also handle the cookie to be consistent with next approach
-    const hasOutdatedCookie = request.cookies.get(COOKIE_LOCALE_NAME)?.value !== locale;
+  // Also handle the cookie to be consistent with next approach
+  const hasOutdatedCookie = currentLocale !== locale;
 
-    if (hasOutdatedCookie) {
-      response.cookies.set(COOKIE_LOCALE_NAME, locale ?? currentLocale);
-    }
+  if (hasOutdatedCookie) {
+    setCookie(response.cookies, locale);
   }
 
   return response;
