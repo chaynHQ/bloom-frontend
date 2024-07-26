@@ -42,7 +42,6 @@ const setCookie = (cookies: ResponseCookies, locale: Locale) => {
 // Using a header as it detects the locale in the first request
 export default async function middleware(request: NextRequest) {
   const currentLocale = request.cookies.get(COOKIE_LOCALE_NAME)?.value || defaultLocale;
-  request.cookies.delete(COOKIE_LOCALE_NAME);
 
   const pathname = request.nextUrl.href.replace(request.nextUrl.origin, '');
 
