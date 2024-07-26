@@ -55,7 +55,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
         translatedImageAlt={story.content.translatedImageAlt}
         cta={
           <Button
-            id="primary-get-started-button"
+            qa-id="primary-get-started-button"
             sx={{ mt: 3 }}
             variant="contained"
             component={Link}
