@@ -7,9 +7,6 @@ describe('Meet The Team', () => {
     // Start from the home page
     cy.visit('/');
     cy.wait(2000);
-    // TODO put the correct home page check below when it is published
-    // cy.get('h2', { timeout: 8000 }).contains('Get started').should('exist');
-    // TODO - workout why #primary-get-started-button works locallly and headless but not in github actions
     cy.get('a[qa-id="meet-team-menu-button"]', { timeout: 10000 }).first().click({ force: true });
     cy.wait(2000);
     cy.get('h1', { timeout: 10000 }).should('contain', 'Our Bloom team');
