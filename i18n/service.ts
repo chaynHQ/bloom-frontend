@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { COOKIE_LOCALE_NAME, Locale, defaultLocale } from './i18n.config';
+import { COOKIE_LOCALE_NAME, Locale, defaultLocale } from './config';
 
 // In this example the locale is read from a cookie. You could alternatively
 // also read it from a database, backend service, or any other source.

@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import useLoadUser from '../hooks/useLoadUser';
-import { locales } from '../i18n.config';
+import { locales } from '../i18n/config';
 import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';

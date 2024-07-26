@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { locales } from '../../i18n.config';
-import { setUserLocale } from '../../locale.service';
+import { locales } from '../../i18n/config';
+import { setUserLocale } from '../../i18n/service';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 

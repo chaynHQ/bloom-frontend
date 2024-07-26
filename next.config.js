@@ -22,7 +22,7 @@ const nrExternals = require('@newrelic/next/load-externals');
 // See https://next-intl-docs.vercel.app/examples#app-router-migration
 // See https://github.com/amannn/next-intl/tree/main/examples/example-app-router-migration
 // Middleware has been hacked due to not being able to use a [locale] segment
-const withNextIntl = require('next-intl/plugin')();
+const withNextIntl = require('next-intl/plugin')('./i18n/i18n.ts');
 
 module.exports = withNextIntl(
   withBundleAnalyzer(

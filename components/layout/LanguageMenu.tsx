@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { COOKIE_LOCALE_NAME, locales } from '../../i18n.config';
+import { COOKIE_LOCALE_NAME, locales } from '../../i18n/config';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 

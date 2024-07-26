@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { COOKIE_LOCALE_NAME, defaultLocale, locales } from './i18n.config';
+import { COOKIE_LOCALE_NAME, defaultLocale, locales } from './i18n/config';
 
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
