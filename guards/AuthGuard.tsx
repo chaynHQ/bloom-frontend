@@ -22,8 +22,6 @@ const publicPathHeads = [
   'meet-the-team',
   'partnership',
   'about-our-courses',
-  // Added for testing purpouse until a route is migrated to app router
-  'approutetest',
 ];
 
 // As the subpages of courses are not public and these pages are only partially public,
