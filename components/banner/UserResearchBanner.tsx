@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import { FeatureFlag } from '../../config/featureFlag';
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
@@ -28,7 +28,7 @@ export default function UserResearchBanner() {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const router = useRouter();
+  const pathname = usePathname();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
@@ -36,9 +36,7 @@ export default function UserResearchBanner() {
     return pa.partner.name.toLowerCase() === 'badoo';
   });
 
-  const isTargetPage = !(
-    router.pathname.includes('auth') || router.pathname.includes('partnerName')
-  );
+  const isTargetPage = !(pathname?.includes('auth') || pathname?.includes('partnerName'));
 
   const showBanner = isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
   return showBanner ? (

@@ -22,7 +22,7 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
 // This is temporal until all segements are migrated to app router
 // Any segment migrated to app router needs to be included here
 const isAnAppRoute = (routeSegment: string) => {
-  const appRoutes = ['approutetest'];
+  const appRoutes = ['meet-the-team'];
   return appRoutes.includes(routeSegment);
 };
 
