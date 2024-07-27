@@ -39,7 +39,6 @@ const setCookie = (cookies: ResponseCookies, locale: Locale) => {
 
 // We need to handle the locale here as we cannot use a [locale] segment as it colides
 // with the [slug] one that is in pages throwing an next.js error
-// Using a header as it detects the locale in the first request
 export default async function middleware(request: NextRequest) {
   const currentLocale = request.cookies.get(COOKIE_LOCALE_NAME)?.value || defaultLocale;
 
