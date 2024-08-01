@@ -58,7 +58,7 @@
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },
   "devDependencies": {
-    "@builder.io/partytown": "^0.8.1",
+    "@builder.io/partytown": "^0.10.2",
     "@next/bundle-analyzer": "^14.0.4",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
