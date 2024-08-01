@@ -27,7 +27,9 @@ export function SuperAdminGuard({ children }: { children: JSX.Element }) {
   if (!userIsSuperAdmin) {
     return (
       <Container sx={containerStyle}>
-        <Head>{t('title')}</Head>
+        <Head>
+          <title>{t('title')}</title>
+        </Head>
         <Box sx={imageContainerStyle}>
           <Image
             alt={tS('alt.personTea')}

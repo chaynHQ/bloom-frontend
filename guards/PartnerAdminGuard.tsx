@@ -29,7 +29,9 @@ export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
   if (!partnerAdminId || !partnerAdminIsActive) {
     return (
       <Container sx={containerStyle}>
-        <Head>{t('title')}</Head>
+        <Head>
+          <title>{t('title')}</title>
+        </Head>
         <Box sx={imageContainerStyle}>
           <Image
             alt={tS('alt.personTea')}

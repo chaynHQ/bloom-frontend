@@ -33,7 +33,9 @@ const StoryblokPage = (props: StoryblokPageProps) => {
 
   return (
     <>
-      <Head>{title}</Head>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <main
         {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}
       >
