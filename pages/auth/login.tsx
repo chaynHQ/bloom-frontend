@@ -82,14 +82,14 @@ const Login: NextPage = () => {
     // because a query value can be an array
     const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
 
-    if (partnerAdmin?.id) {
+    if (partnerAdmin?.active) {
       router.push('/partner-admin/create-access-code');
     } else if (!!returnUrl) {
       router.push(returnUrl);
     } else {
       router.push('/courses');
     }
-  }, [userId, partnerAdmin?.id, router]);
+  }, [userId, partnerAdmin?.active, router]);
 
   const ExtraContent = () => {
     return (
