@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';

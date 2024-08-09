@@ -7,7 +7,7 @@ import partnerAdminReducer from './partnerAdminSlice';
 import partnersReducer from './partnersSlice';
 import userReducer from './userSlice';
 
-const makeStore = () =>
+export const makeStore = () =>
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,

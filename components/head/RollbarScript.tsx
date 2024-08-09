@@ -1,19 +1,22 @@
+import Script from 'next/script';
+
 const RollbarScript = () => {
   return (
-    <script
+    <Script
+      id="rollbar"
       dangerouslySetInnerHTML={{
         __html: `
 var _rollbarConfig = {
-  accessToken: "${process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN}",
+  accessToken: '${process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN}',
   captureUncaught: true,
   captureUnhandledRejections: true,
   captureIP: "anonymize",
   payload: {
-    environment: "${process.env.NEXT_PUBLIC_ENV}",
+    environment: '${process.env.NEXT_PUBLIC_ENV}',
     client: {
       javascript: {
         source_map_enabled: true,
-        code_version: "${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}",
+        code_version: '${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}',
         guess_uncaught_frames: true,
       },
     },
