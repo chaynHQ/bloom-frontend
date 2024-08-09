@@ -55,9 +55,11 @@ Chayn team members usually respond within 3 business days.
 
 Chayn is open to all kinds of contributions, such as:
 
-- additional software tests
-- code of any kind (enhancements, new features, maintenance)
-- no-code (documenation, translations) \*see spam policy below for accepted documentation changes.
+- additional software tests / test coverage
+- dependency updates \*check Dependabot pull requests
+- code (requested features, bug fixes, quality enhancements, maintenance help)
+- accessibility and language support.
+- no-code (documentation, translations) \*see spam policy below for accepted documentation changes.
 
 # Chayn's Spam Contribution Policy 🚫
 
