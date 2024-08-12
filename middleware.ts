@@ -34,32 +34,59 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
     routeSegment = '/';
   }
 
-  return [locale, routeSegment];
+  const routeSegmentWithoutQueryParams = routeSegment.split('?')[0];
+
+  return [locale, routeSegmentWithoutQueryParams];
 }
 
-// This is temporary until all segments are migrated to app router
-// Not found nextjs logic doesn't work due to having two different intl approaches/configurations
-// we need to check if the page is valid. We are using the storyblok data to verify it.
-async function isValidRoute(routeSegment: string) {
-  if (
-    routeSegment === '404' ||
-    routeSegment === '/' ||
-    routeSegment.startsWith('auth') ||
-    routeSegment.startsWith('activities') ||
-    routeSegment.startsWith('grounding') ||
-    routeSegment.startsWith('therapy') ||
-    routeSegment.startsWith('admin') ||
-    routeSegment.startsWith('partner-admin')
-  ) {
-    return true;
-  }
+function isParentWithoutPageRoute(routeSegment: string) {
+  return [
+    'account',
+    'admin',
+    'auth',
+    'partner-admin',
+    'partnership',
+    'subscription',
+    'therapy',
+  ].includes(routeSegment);
+}
 
+function isNonStoryblokRoute(routeSegment: string) {
+  const isValid = [
+    '500',
+    '404',
+    '/',
+    'account/about-you',
+    'account/apply-a-code',
+    'account/disable-service-emails',
+    'account/settings',
+    'admin/dashboard',
+    'auth/login',
+    'auth/register',
+    'auth/reset-password',
+    'partner-admin/create-access-code',
+    'therapy/book-session',
+    'therapy/confirmed-session',
+    'action-handler',
+  ].includes(routeSegment);
+  return isValid;
+}
+
+async function isStoryblokRoute(routeSegment: string) {
   const storyblokApi = getStoryblokApi();
   const { data } = await storyblokApi.get('cdn/links/', { published: true });
 
   const links = Object.values(data.links);
   const isValid = links.some((link) => (link as any).slug === routeSegment);
+}
+// This is temporary until all segments are migrated to app router
+// Not found nextjs logic doesn't work due to having two different intl approaches/configurations
+// we need to check if the page is valid to redirect to 404
+async function isValidRoute(routeSegment: string) {
+  if (isParentWithoutPageRoute(routeSegment)) return false;
+  if (isNonStoryblokRoute(routeSegment)) return true;
 
+  const isValid = await isStoryblokRoute(routeSegment);
   return isValid;
 }
 
