@@ -1,6 +1,8 @@
+import { getStoryblokApi } from '@storyblok/react';
 import createMiddleware from 'next-intl/middleware';
 import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextRequest, NextResponse } from 'next/server';
+import { storyblok } from './config/storyblok';
 import {
   COOKIE_LOCALE_NAME,
   COOKIE_LOCALE_PATH,
@@ -8,6 +10,9 @@ import {
   Locale,
   locales,
 } from './i18n/config';
+
+// Init storyblok
+storyblok;
 
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
@@ -23,7 +28,30 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
     routeSegment = urlLocale;
   }
 
+  if (!routeSegment) {
+    routeSegment = '/';
+  }
+
   return [locale, routeSegment];
+}
+
+async function isValidRoute(routeSegment: string) {
+  if (routeSegment === '404' || routeSegment === '/') {
+    return true;
+  }
+
+  const storyblokApi = getStoryblokApi();
+  const { data } = await storyblokApi.get('cdn/links/', { published: true });
+
+  const links = Object.values(data.links);
+  const isValid = links.some((link) => (link as any).slug === routeSegment);
+  console.log(
+    'MIDDLEWARE',
+    routeSegment,
+    links.filter((link) => (link as any).slug === routeSegment),
+    isValid,
+  );
+  return isValid;
 }
 
 // This is temporal until all segements are migrated to app router
@@ -45,6 +73,16 @@ export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.href.replace(request.nextUrl.origin, '');
 
   const [locale, routeSegment] = getLocaleAndRouteSegment(locales, currentLocale, pathname);
+
+  const isValid = await isValidRoute(routeSegment as string);
+  if (!isValid) {
+    const url = request.nextUrl.clone();
+    url.locale = locale;
+    url.pathname = '404';
+    const response = NextResponse.redirect(url);
+    setCookie(response.cookies, locale);
+    return response;
+  }
 
   if (!isAnAppRoute(routeSegment as string) && !pathname.startsWith(`/${locale}`)) {
     const url = request.nextUrl.clone();
