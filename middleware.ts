@@ -29,7 +29,8 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
 
   if (!locale) {
     locale = currentLocale;
-    routeSegment = urlLocale;
+    rest.unshift(urlLocale);
+    routeSegment = rest.join('/');
   }
 
   if (!routeSegment) {
@@ -67,6 +68,7 @@ function isNonStoryblokRoute(routeSegment: string) {
     'auth/register',
     'auth/reset-password',
     'partner-admin/create-access-code',
+    'subscription/whatsapp',
     'therapy/book-session',
     'therapy/confirmed-session',
     'action-handler',
