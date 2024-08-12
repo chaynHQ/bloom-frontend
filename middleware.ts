@@ -39,7 +39,14 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
 // Not found nextjs logic doesn't work due to having two different intl approaches/configurations
 // we need to check if the page is valid. We are using the storyblok data to verify it.
 async function isValidRoute(routeSegment: string) {
-  if (routeSegment === '404' || routeSegment === '/') {
+  if (
+    routeSegment === '404' ||
+    routeSegment === '/' ||
+    routeSegment.startsWith('auth') ||
+    routeSegment.startsWith('activities') ||
+    routeSegment.startsWith('grounding') ||
+    routeSegment.startsWith('therapy')
+  ) {
     return true;
   }
 
@@ -48,6 +55,7 @@ async function isValidRoute(routeSegment: string) {
 
   const links = Object.values(data.links);
   const isValid = links.some((link) => (link as any).slug === routeSegment);
+
   return isValid;
 }
 
