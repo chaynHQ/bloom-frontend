@@ -14,6 +14,8 @@ import {
 // Init storyblok
 storyblok;
 
+let storyblokLinks: any[];
+
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
 
@@ -73,11 +75,13 @@ function isNonStoryblokRoute(routeSegment: string) {
 }
 
 async function isStoryblokRoute(routeSegment: string) {
-  const storyblokApi = getStoryblokApi();
-  const { data } = await storyblokApi.get('cdn/links/', { published: true });
+  if (!storyblokLinks) {
+    const storyblokApi = getStoryblokApi();
+    const { data } = await storyblokApi.get('cdn/links/', { published: true });
+    storyblokLinks = Object.values(data.links);
+  }
 
-  const links = Object.values(data.links);
-  const isValid = links.some((link) => (link as any).slug === routeSegment);
+  const isValid = storyblokLinks.some((link) => (link as any).slug === routeSegment);
   return isValid;
 }
 // This is temporary until all segments are migrated to app router
