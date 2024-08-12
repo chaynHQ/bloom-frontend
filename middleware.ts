@@ -35,6 +35,9 @@ function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string,
   return [locale, routeSegment];
 }
 
+// This is temporary until all segments are migrated to app router
+// Not found nextjs logic doesn't work due to having two different intl approaches/configurations
+// we need to check if the page is valid. We are using the storyblok data to verify it.
 async function isValidRoute(routeSegment: string) {
   if (routeSegment === '404' || routeSegment === '/') {
     return true;
