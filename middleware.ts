@@ -45,7 +45,9 @@ async function isValidRoute(routeSegment: string) {
     routeSegment.startsWith('auth') ||
     routeSegment.startsWith('activities') ||
     routeSegment.startsWith('grounding') ||
-    routeSegment.startsWith('therapy')
+    routeSegment.startsWith('therapy') ||
+    routeSegment.startsWith('admin') ||
+    routeSegment.startsWith('partner-admin')
   ) {
     return true;
   }
