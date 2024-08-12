@@ -78,6 +78,7 @@ async function isStoryblokRoute(routeSegment: string) {
 
   const links = Object.values(data.links);
   const isValid = links.some((link) => (link as any).slug === routeSegment);
+  return isValid;
 }
 // This is temporary until all segments are migrated to app router
 // Not found nextjs logic doesn't work due to having two different intl approaches/configurations
