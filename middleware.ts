@@ -17,7 +17,9 @@ storyblok;
 function getLocaleAndRouteSegment(locales: Array<string>, currentLocale: string, pathname: string) {
   let locale;
 
-  let [, urlLocale, routeSegment] = pathname.split('/');
+  let [, urlLocale, ...rest] = pathname.split('/');
+
+  let routeSegment = rest.join('/');
 
   if (urlLocale && locales.includes(urlLocale)) {
     locale = urlLocale;
