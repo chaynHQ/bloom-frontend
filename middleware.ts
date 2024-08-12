@@ -45,12 +45,6 @@ async function isValidRoute(routeSegment: string) {
 
   const links = Object.values(data.links);
   const isValid = links.some((link) => (link as any).slug === routeSegment);
-  console.log(
-    'MIDDLEWARE',
-    routeSegment,
-    links.filter((link) => (link as any).slug === routeSegment),
-    isValid,
-  );
   return isValid;
 }
 
