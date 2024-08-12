@@ -86,6 +86,11 @@ module.exports = withNextIntl(
             destination: '/courses',
             permanent: false,
           },
+          {
+            source: '/home',
+            destination: '/',
+            permanent: false,
+          },
         ];
       },
       async rewrites() {
