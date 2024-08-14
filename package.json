@@ -20,7 +20,8 @@
     "test:watch": "jest --watch",
     "cypress": "cypress open",
     "cypress:headless": "cypress run --headless true --browser chrome",
-    "check:translations": "node ./scripts/checkTranlation.js",
+    "check:translations": "node ./scripts/checkTranslation.js",
+    "check:links": "node ./scripts/checkLinks.mjs",
     "postinstall": "husky",
     "prepare": "husky"
   },

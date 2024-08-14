@@ -39,6 +39,24 @@
       },
       "sessionComplete": "Session poora hua"
     },
+    "sessionFeedback": {
+      "title": "Yeh session kaisa tha?",
+      "subtitle": "Hum aapke is session ke vichaar jaanna chahte hain. Aapka feedback humare courses ko behtar banane mein madad karta hai.",
+      "feedbackTags": {
+        "relatable": "joda ja sakane vaala",
+        "useful": "upyogi",
+        "inspiring": "prerak",
+        "too long": "bahut lamba",
+        "too complicated": "bahut jatil",
+        "not useful": "anupyogi"
+      },
+      "textboxDefaultText": "Ek comment add karein...",
+      "sendButtonText": "Bhejein",
+      "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+      "errors": {
+        "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
+      }
+    },
     "accessGuard": {
       "title": "Yeh course content uplabhd nahi hai.",
       "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
