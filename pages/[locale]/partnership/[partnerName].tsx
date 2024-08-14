@@ -5,15 +5,16 @@ import {
   getStoryblokApi,
   useStoryblokState,
 } from '@storyblok/react';
-import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
-import NoDataAvailable from '../../components/common/NoDataAvailable';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
+import PartnerHeader from '../../../components/layout/PartnerHeader';
+import StoryblokPageSection from '../../../components/storyblok/StoryblokPageSection';
+import { PartnerContent, getPartnerContent } from '../../../constants/partners';
+import { locales } from '../../../i18n/config';
+import illustrationBloomHeadYellow from '../../../public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '../../../public/welcome_to_bloom.svg';
+import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
@@ -48,7 +49,8 @@ const Partnership: NextPage<Props> = ({ story }) => {
   );
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
+export async function getStaticProps({ preview = false, params }: GetStaticPropsContext) {
+  const locale = params?.locale as string;
   const partnerName = params?.partnerName;
 
   const storyblokProps = await getStoryblokPageProps(`partnership/${partnerName}`, locale, preview);
@@ -57,16 +59,16 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       ...storyblokProps,
       messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/partnership/${locale}.json`),
+        ...require(`../../../messages/shared/${locale}.json`),
+        ...require(`../../../messages/navigation/${locale}.json`),
+        ...require(`../../../messages/partnership/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+export async function getStaticPaths() {
   let sbParams: ISbStoriesParams = {
     published: true,
     starts_with: 'partnership/',
@@ -86,7 +88,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     if (locales) {
       // create additional languages
       for (const locale of locales) {
-        paths.push({ params: { partnerName: splittedSlug[1] }, locale });
+        paths.push({ params: { partnerName: splittedSlug[1], locale } });
       }
     }
   });

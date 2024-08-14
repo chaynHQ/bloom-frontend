@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -9,7 +9,6 @@ import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
-import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
 import SecondaryNav from './SecondaryNav';
@@ -35,10 +34,10 @@ const logoContainerStyle = {
   height: 48,
 } as const;
 
-const TopBar = () => {
+const TopBar = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
@@ -84,7 +83,7 @@ const TopBar = () => {
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}
             {userId && <UserMenu />}
-            <LanguageMenu />
+            {children}
             {!isSmallScreen && !userId && (
               <Button
                 variant="contained"
@@ -103,7 +102,7 @@ const TopBar = () => {
             {isSmallScreen && <NavigationDrawer />}
           </Box>
         </Container>
-        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
+        {!isSmallScreen && <SecondaryNav currentPage={pathname as string} />}
       </AppBar>
     </>
   );

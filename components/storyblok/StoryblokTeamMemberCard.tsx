@@ -127,7 +127,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
       </CardActionArea>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography variant="body2" mb={0} paragraph>
+          <Typography variant="body2" mb={0} paragraph component={'div'}>
             {render(bio, RichTextOptions)}
           </Typography>
         </CardContent>

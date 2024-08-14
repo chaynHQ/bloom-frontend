@@ -7,7 +7,7 @@ import { NextComponentType } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { NextRouter, withRouter } from 'next/router';
 import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ import { AppBarSpacer } from '../components/layout/AppBarSpacer';
 import Consent from '../components/layout/Consent';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
+import LanguageMenu from '../components/layout/LanguageMenu';
 import LeaveSiteButton from '../components/layout/LeaveSiteButton';
 import TopBar from '../components/layout/TopBar';
 import createEmotionCache from '../config/emotionCache';
@@ -36,22 +37,63 @@ firebase;
 // Init storyblok
 storyblok;
 
+type Props = AppProps & {
+  router: NextRouter;
+};
+
+const App = withRouter(({ Component, pageProps, router }: Props) => {
+  const locale = (router.query?.locale as string) ?? 'en';
+  console.log(locale);
+  return (
+    <ErrorBoundary>
+      <NextIntlClientProvider
+        locale={locale}
+        messages={pageProps.messages}
+        timeZone="Europe/Vienna"
+      >
+        <Head>
+          <title>Bloom</title>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <CrispScript />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <TopBar>
+            <LanguageMenu locale={locale} />
+          </TopBar>
+          <AppBarSpacer />
+          <AuthGuard>
+            <Component {...pageProps} />
+          </AuthGuard>
+          <Footer />
+          <Consent />
+          {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+            <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+          )}
+          {/* Vercel analytics */}
+          <Analytics />
+        </ThemeProvider>
+      </NextIntlClientProvider>
+    </ErrorBoundary>
+  );
+});
+
 export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-function MyApp(props: MyAppProps) {
+const MyApp = withRouter((props: MyAppProps & { router: NextRouter }) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps,
+    router,
   }: {
     Component: NextComponentType<NextPageContext<any>, any, any>;
     emotionCache?: EmotionCache;
     pageProps: any;
+    router: NextRouter;
   } = props;
-
-  const router = useRouter();
 
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
@@ -75,7 +117,7 @@ function MyApp(props: MyAppProps) {
     <ErrorBoundary>
       <NextIntlClientProvider
         messages={pageProps.messages}
-        locale={router.locale}
+        locale={(router.query?.locale as string) || 'en'}
         timeZone="Europe/London"
       >
         <Head>
@@ -85,7 +127,9 @@ function MyApp(props: MyAppProps) {
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <TopBar />
+          <TopBar>
+            <LanguageMenu />
+          </TopBar>
           <AppBarSpacer />
           {pathHead !== 'partner-admin' && <LeaveSiteButton />}
           <AuthGuard>
@@ -102,7 +146,7 @@ function MyApp(props: MyAppProps) {
       </NextIntlClientProvider>
     </ErrorBoundary>
   );
-}
+});
 
 function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -117,7 +161,7 @@ function AppReduxWrapper({ Component, ...rest }: MyAppProps) {
 
   return (
     <Provider store={store}>
-      <MyApp Component={Component} {...props} />
+      <App Component={Component} {...props} />
     </Provider>
   );
 }

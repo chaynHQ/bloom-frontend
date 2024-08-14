@@ -1,4 +1,4 @@
-import theme from '../../styles/theme';
+import { COLOUR_PRIMARY_MAIN } from '../../styles/common';
 
 const descriptionContent =
   'Join us on your healing journey. Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.';
@@ -19,7 +19,7 @@ const OpenGraphMetadata = () => {
       {/** PWA specific tags **/}
       <link rel="manifest" href="/manifest.json" />
       <link rel="apple-touch-icon" href="/icons/apple/icon-120x120.png"></link>
-      <meta name="theme-color" content={theme.palette.primary.main} />
+      <meta name="theme-color" content={COLOUR_PRIMARY_MAIN} />
     </>
   );
 };

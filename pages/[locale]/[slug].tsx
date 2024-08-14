@@ -1,8 +1,8 @@
 import { ISbStoryData, getStoryblokApi, useStoryblokState } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import StoryblokPage, { StoryblokPageProps } from '../components/storyblok/StoryblokPage';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
+import StoryblokPage, { StoryblokPageProps } from '../../components/storyblok/StoryblokPage';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
@@ -18,7 +18,8 @@ const Page: NextPage<Props> = ({ story }) => {
   return <StoryblokPage {...(story.content as StoryblokPageProps)} />;
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
+export async function getStaticProps({ preview = false, params }: GetStaticPropsContext) {
+  const locale = params?.locale as string;
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
   const storyblokProps = await getStoryblokPageProps(slug, locale, preview);
@@ -27,8 +28,8 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       ...storyblokProps,
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour

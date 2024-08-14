@@ -1,12 +1,15 @@
+'use client';
+
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import * as React from 'react';
-import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
+import { useCookies } from 'react-cookie';
+import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, locales } from '../../i18n/config';
+import { Link, usePathname } from '../../i18n/navigation';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -40,10 +43,9 @@ const buttonStyle = {
   '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
 } as const;
 
-export default function LanguageMenu() {
-  const router = useRouter();
-  const locale = router.locale;
-  const locales = router.locales;
+export default function LanguageMenu({ locale }: { locale: string }) {
+  const [cookies, setCookie] = useCookies([COOKIE_LOCALE_NAME]);
+  const pathname = usePathname();
   const t = useTranslations('Navigation');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -94,9 +96,10 @@ export default function LanguageMenu() {
               <MenuItem key={language} sx={menuItemStyle}>
                 <Button
                   component={Link}
-                  href={router.asPath}
+                  href={pathname as string}
                   locale={language}
                   onClick={() => {
+                    setCookie(COOKIE_LOCALE_NAME, language, { path: COOKIE_LOCALE_PATH });
                     logEvent(generateLanguageMenuEvent(language), eventUserData);
                     handleClose();
                   }}
