@@ -1,22 +1,18 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { ISbStoryData, useStoryblokState } from '@storyblok/react';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { SignUpBanner } from '../components/banner/SignUpBanner';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import CrispButton from '../components/crisp/CrispButton';
-import Header, { HeaderProps } from '../components/layout/Header';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '../hooks/store';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import { getEventUserData } from '../utils/logEvent';
+import { SignUpBanner } from '../../../components/banner/SignUpBanner';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
+import CrispButton from '../../../components/crisp/CrispButton';
+import Header, { HeaderProps } from '../../../components/layout/Header';
+import StoryblokPageSection from '../../../components/storyblok/StoryblokPageSection';
+import { useTypedSelector } from '../../../hooks/store';
+import { getEventUserData } from '../../../utils/logEvent';
 
-interface Props {
-  story: ISbStoryData | null;
-}
-
-const Chat: NextPage<Props> = ({ story }) => {
+const Chat = ({ story }: { story: ISbStoryData | null }) => {
   story = useStoryblokState(story);
 
   const t = useTranslations('Courses');
@@ -67,22 +63,5 @@ const Chat: NextPage<Props> = ({ story }) => {
     </>
   );
 };
-
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('chat', locale, preview);
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/courses/${locale}.json`),
-        ...require(`../messages/chat/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
-}
 
 export default Chat;

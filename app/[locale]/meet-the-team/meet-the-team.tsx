@@ -1,10 +1,10 @@
 'use client';
 
 import { ISbStoryData, useStoryblokState } from '@storyblok/react';
-import NoDataAvailable from '../../components/common/NoDataAvailable';
+import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import StoryblokMeetTheTeamPage, {
   StoryblokMeetTheTeamPageProps,
-} from '../../components/storyblok/StoryblokMeetTheTeamPage';
+} from '../../../components/storyblok/StoryblokMeetTheTeamPage';
 
 interface MeetTheTeamProps {
   story: ISbStoryData | null;

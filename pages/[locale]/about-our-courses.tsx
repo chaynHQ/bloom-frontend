@@ -3,13 +3,13 @@ import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import Header from '../components/layout/Header';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { ABOUT_COURSES_VIEWED } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
+import Header from '../../components/layout/Header';
+import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
+import { ABOUT_COURSES_VIEWED } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
   story: ISbStoryData | null;

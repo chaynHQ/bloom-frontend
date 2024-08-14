@@ -4,7 +4,7 @@ import { Box, Button, Card, CardContent, Container, Typography } from '@mui/mate
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import Link from '../../components/common/Link';
@@ -102,7 +102,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 };
 
 const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -125,9 +125,9 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
   }, [partners, partnerName]);
 
   useEffect(() => {
-    const { code } = router.query;
+    const code = searchParams?.get('code');
     if (code) setCodeParam(code + '');
-  }, [setCodeParam, router.query]);
+  }, [setCodeParam, searchParams]);
 
   return (
     <Card sx={rowItem}>

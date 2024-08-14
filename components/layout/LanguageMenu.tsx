@@ -2,15 +2,14 @@
 
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { useLocale, useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { generateLanguageMenuEvent, HEADER_LANGUAGE_MENU_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { COOKIE_LOCALE_NAME, COOKIE_LOCALE_PATH, locales } from '../../i18n/config';
+import { Link, usePathname } from '../../i18n/navigation';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -44,9 +43,8 @@ const buttonStyle = {
   '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
 } as const;
 
-export default function LanguageMenu() {
+export default function LanguageMenu({ locale }: { locale: string }) {
   const [cookies, setCookie] = useCookies([COOKIE_LOCALE_NAME]);
-  const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations('Navigation');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);

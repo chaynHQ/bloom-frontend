@@ -1,10 +1,14 @@
 import { getRequestConfig } from 'next-intl/server';
-import { getUserLocale } from './service';
+import { notFound } from 'next/navigation';
+import { locales } from './config';
 
-export default getRequestConfig(async () => {
-  const locale = await getUserLocale();
+export default getRequestConfig(async ({ locale }) => {
+  console.log('I18N', locale);
+  // Validate that the incoming `locale` parameter is valid
+  if (!locales.includes(locale as any)) notFound();
 
   return {
+    locale,
     messages: {
       ...(await import(`../messages/shared/${locale}.json`)).default,
       ...(await import(`../messages/navigation/${locale}.json`)).default,

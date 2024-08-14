@@ -7,28 +7,28 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import type { NextPage } from 'next';
+import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Link from '../../components/common/Link';
-import LoginForm from '../../components/forms/LoginForm';
-import PartnerHeader from '../../components/layout/PartnerHeader';
+import Link from '../../../components/common/Link';
+import LoginForm from '../../../components/forms/LoginForm';
+import PartnerHeader from '../../../components/layout/PartnerHeader';
 import {
   GET_STARTED_WITH_BLOOM_CLICKED,
   RESET_PASSWORD_HERE_CLICKED,
   generateGetStartedPartnerEvent,
-} from '../../constants/events';
-import { getAllPartnersContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+} from '../../../constants/events';
+import { getAllPartnersContent } from '../../../constants/partners';
+import { useTypedSelector } from '../../../hooks/store';
+import illustrationBloomHeadYellow from '../../../public/illustration_bloom_head_yellow.svg';
+import illustrationLeafMix from '../../../public/illustration_leaf_mix.svg';
+import welcomeToBloom from '../../../public/welcome_to_bloom.svg';
+import { rowStyle } from '../../../styles/common';
+import logEvent, { getEventUserData } from '../../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -179,15 +179,26 @@ const Login: NextPage = () => {
   );
 };
 
-export function getStaticProps({ locale }: GetStaticPropsContext) {
+export function getStaticProps({ params }: GetStaticPropsContext) {
+  const locale = params?.locale as string;
   return {
     props: {
       messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
+        ...require(`../../../messages/shared/${locale}.json`),
+        ...require(`../../../messages/navigation/${locale}.json`),
+        ...require(`../../../messages/auth/${locale}.json`),
       },
     },
+  };
+}
+
+export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+  const paths = [{ params: { locale: 'en' } }, { params: { locale: 'es' } }];
+
+  console.log(paths);
+  return {
+    paths,
+    fallback: false,
   };
 }
 

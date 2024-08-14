@@ -1,18 +1,18 @@
 import { Box, Button } from '@mui/material';
 import { ISbStoryData, useStoryblokState } from '@storyblok/react';
-import type { NextPage } from 'next';
+import type { GetStaticPathsContext, NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Link from '../components/common/Link';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import HomeHeader from '../components/layout/HomeHeader';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { PROMO_GET_STARTED_CLICKED } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import Link from '../../components/common/Link';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
+import HomeHeader from '../../components/layout/HomeHeader';
+import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
+import { PROMO_GET_STARTED_CLICKED } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
   story: ISbStoryData | null;
@@ -78,21 +78,31 @@ const Index: NextPage<Props> = ({ story, preview }) => {
   );
 };
 
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
+export async function getStaticProps({ params, preview = false }: GetStaticPropsContext) {
+  const locale = params?.locale as string;
   const storyblokProps = await getStoryblokPageProps('home', locale, preview);
 
   return {
     props: {
       ...storyblokProps,
       messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/welcome/${locale}.json`),
-        ...require(`../messages/courses/${locale}.json`),
-        ...require(`../messages/chat/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        ...require(`../../messages/welcome/${locale}.json`),
+        ...require(`../../messages/courses/${locale}.json`),
+        ...require(`../../messages/chat/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
+  };
+}
+
+export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+  const paths = [{ params: { locale: 'en' } }, { params: { locale: 'es' } }];
+
+  return {
+    paths,
+    fallback: false,
   };
 }
 
