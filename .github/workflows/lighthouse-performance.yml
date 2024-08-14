@@ -29,7 +29,7 @@ jobs:
       - name: Audit URLs using Lighthouse
         id: lighthouseDesktop
         continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         env:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
@@ -58,7 +58,7 @@ jobs:
       - name: Audit URLs using Lighthouse
         id: lighthouseMobile
         continue-on-error: true
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         env:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
