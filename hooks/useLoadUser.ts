@@ -21,11 +21,13 @@ import {
 } from '../store/userSlice';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserResponseData } from '../utils/logEvent';
+import { getIsMaintenanceMode } from '../utils/maintenanceMode';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {
   const auth = getAuth();
   const dispatch: any = useAppDispatch();
+  const isMaintenanceMode = getIsMaintenanceMode();
   const userToken = useTypedSelector((state) => state.user.token);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const { clearState } = useStateUtils();
@@ -40,9 +42,10 @@ export default function useLoadUser() {
     const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
       const token = await firebaseUser?.getIdToken();
       if (token) {
-        // User logged in or started a new authenticated session - state changes trigger call to get user record
+        // User logged in or started a new authenticated session
         await dispatch(setUserToken(token));
-        await dispatch(setUserLoading(true));
+        // Trigger call to get user record by changing userLoading state, skip if in maintenance mode
+        !isMaintenanceMode && (await dispatch(setUserLoading(true)));
         logEvent(GET_USER_REQUEST); // deprecated event
       } else if (!firebaseUser && userToken) {
         // User logged out or token was removed, clear state
@@ -53,7 +56,7 @@ export default function useLoadUser() {
       await dispatch(setAuthStateLoading(false)); // triggers step 2
     });
     return () => unsubscribe();
-  }, [userToken, auth, dispatch, clearState, createEventLog]);
+  }, [userToken, auth, dispatch, isMaintenanceMode, clearState, createEventLog]);
 
   // 2. Once firebase auth is complete, get the user database resource
   // skip property prevents the API query being called unless there is a user token and the user is not already set
@@ -63,7 +66,7 @@ export default function useLoadUser() {
     isSuccess: userResourceIsSuccess,
     error: userResourceError,
   } = useGetUserQuery('', {
-    skip: !userToken || !!userAuthLoading,
+    skip: !userToken || !!userAuthLoading || isMaintenanceMode,
   });
 
   // 3a. Handle get user success

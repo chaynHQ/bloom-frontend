@@ -4,28 +4,7 @@ import NoDataAvailable from '../components/common/NoDataAvailable';
 import StoryblokMeetTheTeamPage, {
   StoryblokMeetTheTeamPageProps,
 } from '../components/storyblok/StoryblokMeetTheTeamPage';
-import { columnStyle, rowStyle } from '../styles/common';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-
-const coreContainerStyle = {
-  backgroundColor: 'secondary.light',
-} as const;
-
-const supportingContainerStyle = {
-  backgroundColor: 'primary.light',
-} as const;
-
-const cardColumnStyle = {
-  ...columnStyle,
-  justifyContent: 'flex-start',
-  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
-  gap: { xs: 0, sm: 2, md: 4 },
-} as const;
-
-const cardColumnRowStyle = {
-  ...rowStyle,
-  marginTop: { xs: 2, md: 5 },
-} as const;
 
 interface Props {
   story: ISbStoryData | null;
