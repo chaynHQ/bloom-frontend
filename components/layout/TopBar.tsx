@@ -8,12 +8,15 @@ import { useTypedSelector } from '../../hooks/store';
 import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
 import SecondaryNav from './SecondaryNav';
 import UserMenu from './UserMenu';
+
+const isMaintenanceMode = getIsMaintenanceMode();
 
 const appBarStyle = {
   bgcolor: 'primary.dark',
@@ -33,6 +36,10 @@ const logoContainerStyle = {
   width: { xs: 80, sm: 120 },
   marginLeft: { xs: 4, md: 0 },
   height: 48,
+} as const;
+
+const topBarSpacerStyle = {
+  height: { xs: '3rem', sm: '4rem', md: isMaintenanceMode ? '4rem' : '8rem' },
 } as const;
 
 const TopBar = () => {
@@ -83,28 +90,33 @@ const TopBar = () => {
           </Link>
           <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
             {!isSmallScreen && <NavigationMenu />}
-            {userId && <UserMenu />}
+            {userId && !isMaintenanceMode && <UserMenu />}
             <LanguageMenu />
-            {!isSmallScreen && !userId && (
-              <Button
-                variant="contained"
-                size="medium"
-                qa-id="login-menu-button"
-                sx={{ width: 'auto', ml: 1 }}
-                component={Link}
-                href="/auth/login"
-                onClick={() => {
-                  logEvent(HEADER_LOGIN_CLICKED, eventUserData);
-                }}
-              >
-                {t('login')}
-              </Button>
+            {!isMaintenanceMode && (
+              <>
+                {!isSmallScreen && !userId && (
+                  <Button
+                    variant="contained"
+                    size="medium"
+                    qa-id="login-menu-button"
+                    sx={{ width: 'auto', ml: 1 }}
+                    component={Link}
+                    href="/auth/login"
+                    onClick={() => {
+                      logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+                    }}
+                  >
+                    {t('login')}
+                  </Button>
+                )}
+                {isSmallScreen && <NavigationDrawer />}
+              </>
             )}
-            {isSmallScreen && <NavigationDrawer />}
           </Box>
         </Container>
-        {!isSmallScreen && <SecondaryNav currentPage={router.pathname} />}
+        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav currentPage={router.pathname} />}
       </AppBar>
+      <Box sx={topBarSpacerStyle} marginTop={0} />
     </>
   );
 };
