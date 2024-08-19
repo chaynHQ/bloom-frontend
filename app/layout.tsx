@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 
+// Nextjs automatically includes for each route two default meta tags, charset and viewport
+// https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields
 export const metadata: Metadata = {
   title: 'Bloom',
 };
