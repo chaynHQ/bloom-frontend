@@ -61,7 +61,7 @@ Cypress.Commands.add('uiCreateAccessCode', () => {
 Cypress.Commands.add('createAccessCode', (accessCode) => {
   cy.getAccessToken().then((token) => {
     return cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}partner-access`,
+      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/partner-access`,
       method: 'POST',
       headers: {
         authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ Cypress.Commands.add('deleteUser', () => {
     if (email && email.indexOf('cypress') >= 0) {
       cy.getAccessToken().then((token) => {
         cy.request({
-          url: `${Cypress.env('NEXT_PUBLIC_API_URL')}user`,
+          url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user`,
           method: 'DELETE',
           headers: {
             authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ Cypress.Commands.add('deleteUser', () => {
 
 Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, partnerId }) => {
   cy.request({
-    url: `${Cypress.env('NEXT_PUBLIC_API_URL')}user`,
+    url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user`,
     method: 'POST',
     body: {
       partnerAccessCode: codeInput,
@@ -106,7 +106,7 @@ Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, part
 Cypress.Commands.add('deleteAllCypressUsers', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}user/cypress`,
+      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user/cypress`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
@@ -119,7 +119,7 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
 Cypress.Commands.add('deleteCypressAccessCodes', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}partner-access/cypress`,
+      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/partner-access/cypress`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,

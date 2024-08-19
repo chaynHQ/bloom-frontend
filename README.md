@@ -74,7 +74,7 @@ See the the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contrib
 ```
 # --- REQUIRED ---
 NEXT_PUBLIC_ENV=local
-NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1/
+NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_STORYBLOK_TOKEN= # provided in Chayn Tech Wiki Guide.
 
