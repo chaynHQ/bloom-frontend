@@ -195,6 +195,25 @@ Cypress.Commands.add('visitFrenchPage', (url) => {
   });
 });
 
+Cypress.Commands.add('checkImage', (alt, subSrc) => {
+  const image = cy.get(`img[alt="${alt}"]`);
+  image.should('exist');
+  image.should('have.attr', 'src').should('include', subSrc);
+});
+
+Cypress.Commands.add('checkLink', (href, text) => {
+  const link = cy.get(`a[href="${href}"]`).first();
+  link.should('exist');
+  link.should('contain', text);
+  link.then(($anchor) => {
+    const target = $anchor.attr('target');
+    if (target !== '_blank') {
+      $anchor.click();
+      cy.url().should('contain', href);
+    }
+  });
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
