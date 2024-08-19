@@ -1,5 +1,5 @@
 describe('Create User', () => {
-  let username = Cypress.env('super_admin_email');
+  let username = Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL');
   before(() => {
     cy.cleanUpTestState();
   });

@@ -7,8 +7,8 @@ describe('Register with access code', () => {
     cy.cleanUpTestState();
 
     cy.logInWithEmailAndPassword(
-      Cypress.env('badoo_partner_admin_email'),
-      Cypress.env('badoo_partner_admin_password'),
+      Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_EMAIL'),
+      Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD'),
     );
     cy.wait(2000);
 

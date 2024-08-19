@@ -21,7 +21,10 @@ describe('Navigation', () => {
   describe('A logged in public user', () => {
     before(() => {
       cy.cleanUpTestState();
-      cy.logInWithEmailAndPassword(Cypress.env('public_email'), Cypress.env('public_password'));
+      cy.logInWithEmailAndPassword(
+        Cypress.env('CYPRESS_PUBLIC_EMAIL'),
+        Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
+      );
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
@@ -48,8 +51,8 @@ describe('Navigation', () => {
       cy.cleanUpTestState();
 
       cy.logInWithEmailAndPassword(
-        Cypress.env('bumble_partner_admin_email'),
-        Cypress.env('bumble_partner_admin_password'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
       );
       cy.wait(2000);
 
@@ -94,8 +97,8 @@ describe('Navigation', () => {
       cy.cleanUpTestState();
 
       cy.logInWithEmailAndPassword(
-        Cypress.env('badoo_partner_admin_email'),
-        Cypress.env('badoo_partner_admin_password'),
+        Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_EMAIL'),
+        Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD'),
       );
       cy.wait(2000);
 
@@ -138,8 +141,8 @@ describe('Navigation', () => {
       cy.cleanUpTestState();
 
       cy.logInWithEmailAndPassword(
-        Cypress.env('bumble_partner_admin_email'),
-        Cypress.env('bumble_partner_admin_password'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
       );
     });
     it('on the home page, the nav bar should have the correct links ', () => {

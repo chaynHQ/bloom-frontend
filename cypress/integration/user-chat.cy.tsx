@@ -1,7 +1,10 @@
 describe('A logged in public user can start a chat', () => {
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(Cypress.env('public_email'), Cypress.env('public_password'));
+    cy.logInWithEmailAndPassword(
+      Cypress.env('CYPRESS_PUBLIC_EMAIL'),
+      Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
+    );
   });
 
   it('Navigate to the chat page and begin a chat', () => {
