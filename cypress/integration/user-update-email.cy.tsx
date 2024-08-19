@@ -19,7 +19,7 @@ describe('User account settings page', () => {
     cy.visit('/account/settings');
     cy.get('#email', { timeout: 10000 })
       .clear()
-      .type(Cypress.env('public_email') as string);
+      .type(Cypress.env('CYPRESS_PUBLIC_EMAIL') as string);
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
     cy.get('#confirm-dialog-submit', { timeout: 10000 }).click();
     cy.get('p', { timeout: 10000 })

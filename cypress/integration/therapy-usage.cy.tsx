@@ -10,8 +10,8 @@ describe('Therapy Usage', () => {
     before(() => {
       cy.logInWithEmailAndPassword(
         //log in as bumble admin
-        Cypress.env('bumble_partner_admin_email'),
-        Cypress.env('bumble_partner_admin_password'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
       );
     });
 

@@ -5,8 +5,8 @@ describe('A partner admin should be directed to admin ', () => {
 
   it('Once logged in should be redirected to the admin page`', () => {
     cy.uiLogin(
-      Cypress.env('bumble_partner_admin_email'),
-      Cypress.env('bumble_partner_admin_password'),
+      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
     );
     cy.get('[qa-id=partner-admin-menu-button]', { timeout: 10000 }).should('exist');
 
