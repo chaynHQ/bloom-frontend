@@ -21,6 +21,10 @@
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Unsere Richtlinien"
     },
+    "maintenanceBanner": {
+      "title": "Bloom ist vorübergehend nicht verfügbar",
+      "description": "Bitte haben Sie Verständnis dafür, dass wir derzeit wichtige Wartungsarbeiten durchführen. Bloom sollte innerhalb von {hours} Stunden wieder wie gewohnt verfügbar sein."
+    },
     "videoTranscript": {
       "title": "Video-Transcript",
       "description": "Lies das Transkript vom Video - ",

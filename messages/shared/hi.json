@@ -21,6 +21,10 @@
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Humari policies"
     },
+    "maintenanceBanner": {
+      "title": "Rakharakhaav ke lie Bloom band hai",
+      "description": "jab tak ham kuchh aavashyak niyojit rakharakhaav poora kar len, krpaya hamaare saath bane rahen. bloom hamesha kee tarah kuchh hee {hours} ghanton mein upalabdh ho jaana chaahie."
+    },
     "videoTranscript": {
       "title": "Video ki transcript",
       "description": "Video ki transcript padein - ",
