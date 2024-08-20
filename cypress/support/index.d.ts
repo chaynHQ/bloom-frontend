@@ -38,5 +38,6 @@ declare namespace Cypress {
     visitSpanishPage(url: string): Chainable<Element>;
     visitFrenchPage(url: string): Chainable<Element>;
     visitHindiPage(url: string): Chainable<Element>;
+    checkPageUrl(url: string, locale?: string): Chainable<Element>;
   }
 }
