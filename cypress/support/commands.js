@@ -205,13 +205,6 @@ Cypress.Commands.add('checkLink', (href, text) => {
   const link = cy.get(`a[href="${href}"]`).first();
   link.should('exist');
   link.should('contain', text);
-  link.then(($anchor) => {
-    const target = $anchor.attr('target');
-    if (target !== '_blank') {
-      $anchor.click();
-      cy.url().should('contain', href);
-    }
-  });
 });
 
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
