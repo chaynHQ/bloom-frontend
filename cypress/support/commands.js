@@ -195,6 +195,18 @@ Cypress.Commands.add('visitFrenchPage', (url) => {
   });
 });
 
+Cypress.Commands.add('checkImage', (alt, subSrc) => {
+  const image = cy.get(`img[alt="${alt}"]`);
+  image.should('exist');
+  image.should('have.attr', 'src').should('include', subSrc);
+});
+
+Cypress.Commands.add('checkLink', (href, text) => {
+  const link = cy.get(`a[href="${href}"]`).first();
+  link.should('exist');
+  link.should('contain', text);
+});
+
 Cypress.Commands.add('checkPageUrl', (url, locale = 'en') => {
   const localePart = locale === 'en' ? '' : `/${locale}`;
   const pageUrl = `${Cypress.config('baseUrl')}${localePart}${url}`;
