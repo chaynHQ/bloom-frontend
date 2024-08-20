@@ -15,7 +15,10 @@ describe('Welcome page should', () => {
     describe('for a public logged in user', () => {
       before(() => {
         cy.cleanUpTestState();
-        cy.logInWithEmailAndPassword(Cypress.env('public_email'), Cypress.env('public_password'));
+        cy.logInWithEmailAndPassword(
+          Cypress.env('CYPRESS_PUBLIC_EMAIL'),
+          Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
+        );
       });
       it('visiting page without partner', () => {
         cy.visit(welcomePageUrl);
