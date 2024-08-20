@@ -202,7 +202,7 @@ Cypress.Commands.add('checkImage', (alt, subSrc) => {
 });
 
 Cypress.Commands.add('checkLink', (href, text) => {
-  const link = cy.get(`a[href="${href}"]`).first();
+  const link = cy.get(`a[href="${href}"]`);
   link.should('exist');
   link.should('contain', text);
 });
