@@ -1,8 +1,8 @@
 describe('_afterAll', () => {
   after(() => {
     cy.logInWithEmailAndPassword(
-      Cypress.env('super_admin_email'),
-      Cypress.env('super_admin_password'),
+      Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL'),
+      Cypress.env('CYPRESS_SUPER_ADMIN_PASSWORD'),
     );
 
     try {

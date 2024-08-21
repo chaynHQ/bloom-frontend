@@ -1,7 +1,10 @@
 describe('A logged in user should be able to subscribe to notes from bloom', () => {
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(Cypress.env('public_email'), Cypress.env('public_password'));
+    cy.logInWithEmailAndPassword(
+      Cypress.env('CYPRESS_PUBLIC_EMAIL'),
+      Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
+    );
   });
 
   it('Should go to the notes page and try to subscribe using an incorrect number', () => {

@@ -9,7 +9,7 @@
     "navigateBack": "Voltar para a página anterior",
     "navigateTo": "Navegar para",
     "footer": {
-      "fundedByTitle": "Financiado por",
+      "fundedByTitle": "Fundado por",
       "chaynDescription": "O Bloom é oferecido a você pela <link>Chayn</link>, uma organização global sem fins lucrativos, administrada por pessoas sobreviventes e aliadas de todo o mundo, que cria recursos para apoiar no processo de recuperação de sobreviventes de violência baseada em gênero.",
       "chaynLine1": "Criado por <bold>CHAYN</bold> CIO.",
       "chaynLine2": "Número de caridade no Reino Unido: 1196098",
@@ -20,6 +20,10 @@
       "fruitzLine1": "Em parceria com ",
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Nossas políticas"
+    },
+    "maintenanceBanner": {
+      "title": "Bloom está em manutenção",
+      "description": "Pedimos desculpas, mas estamos realizando uma manutenção planejada essencial. Bloom deve estar disponível como de costume em {hours} horas."
     },
     "videoTranscript": {
       "title": "Video transcript",

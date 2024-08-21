@@ -9,7 +9,7 @@
     "navigateBack": "Zurück zur vorherigen Seite",
     "navigateTo": "Navigieren Sie zur",
     "footer": {
-      "fundedByTitle": "Finanziert von",
+      "fundedByTitle": "Mit finanzieller Unterstützung von",
       "chaynDescription": "Bloom wird Dir präsentiert von <link>Chayn</link>, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird und die für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
       "chaynLine1": "Entwickelt von <bold>CHAYN</bold> CIO.",
       "chaynLine2": "UK Charity Nummer: 1196098",
@@ -20,6 +20,10 @@
       "fruitzLine1": "In Kooperation mit",
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Unsere Richtlinien"
+    },
+    "maintenanceBanner": {
+      "title": "Bloom ist vorübergehend nicht verfügbar",
+      "description": "Bitte haben Sie Verständnis dafür, dass wir derzeit wichtige Wartungsarbeiten durchführen. Bloom sollte innerhalb von {hours} Stunden wieder wie gewohnt verfügbar sein."
     },
     "videoTranscript": {
       "title": "Video-Transcript",

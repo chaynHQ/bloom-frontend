@@ -7,6 +7,11 @@ export enum LANGUAGES {
   de = 'de',
 }
 
+export enum MAINTENANCE_MODE {
+  ON = 'on',
+  OFF = 'off',
+}
+
 export enum EMAIL_REMINDERS_FREQUENCY {
   TWO_WEEKS = 'TWO_WEEKS',
   ONE_MONTH = 'ONE_MONTH',

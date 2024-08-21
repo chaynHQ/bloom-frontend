@@ -9,7 +9,7 @@
     "navigateBack": "Pichhle prishth par nevigēt kareñ",
     "navigateTo": "Pichhle prishth par nevigēt kareñ",
     "footer": {
-      "fundedByTitle": "Vittiya Poshit Dvara",
+      "fundedByTitle": "Yeh kaam fund kiya gaya hai by",
       "chaynDescription": "Bloom aapke liye <link>Chayn</link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
       "chaynLine1": "<bold>CHAYN</bold> CIO. se banaya gaya",
       "chaynLine2": "UK Charity Number: 1196098",
@@ -20,6 +20,10 @@
       "fruitzLine1": "Partnership mein",
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Humari policies"
+    },
+    "maintenanceBanner": {
+      "title": "Rakharakhaav ke lie Bloom band hai",
+      "description": "jab tak ham kuchh aavashyak niyojit rakharakhaav poora kar len, krpaya hamaare saath bane rahen. bloom hamesha kee tarah kuchh hee {hours} ghanton mein upalabdh ho jaana chaahie."
     },
     "videoTranscript": {
       "title": "Video ki transcript",

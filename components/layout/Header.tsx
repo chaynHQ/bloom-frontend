@@ -33,7 +33,7 @@ const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '2.5rem !important', sm: '5rem !important' },
   paddingTop: { xs: '0', md: '6.5rem ' },
-  gap: '30px',
+  gap: 4,
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
     md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
@@ -54,8 +54,6 @@ const textContainerStyle = {
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
   maxWidth: { xs: '100%', sm: '60%', md: '55%' },
-  pl: { xs: 3, sm: 0 },
-  pr: { xs: 6, sm: 0 },
 } as const;
 
 const childrenContentStyle = {
