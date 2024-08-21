@@ -36,6 +36,9 @@
       "notStarted": "Sin empezar"
     },
     "meetTheTeam": { "expandTeamMember": "Expandir biografía para {name}" },
+    "noDataAvailable": {
+      "title": "Se produjo un problema al cargar esta página. Vuelva a intentarlo pronto o póngase en contacto con nosotros."
+    },
     "404": {
       "title": "404 - Página no encontrada",
       "authenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de cursos.",

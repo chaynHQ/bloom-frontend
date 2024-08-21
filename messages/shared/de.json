@@ -38,6 +38,9 @@
     "meetTheTeam": {
       "expandTeamMember": "Bio für {name} erweitern"
     },
+    "noDataAvailable": {
+      "title": "Beim Laden dieser Seite ist ein Problem aufgetreten. Bitte gehen Sie zurück und versuchen Sie es in Kürze erneut oder nehmen Sie Kontakt mit uns auf."
+    },
     "404": {
       "title": "404 - Seite nicht gefunden",
       "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",

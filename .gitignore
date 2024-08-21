@@ -46,6 +46,7 @@ yarn-error.log*
 /cypress/screenshots
 /cypress/videos
 /cypress/example
+cypress.env.json
 
 # Partytown
 /public/~partytown
