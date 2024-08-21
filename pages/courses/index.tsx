@@ -98,10 +98,8 @@ const CourseList: NextPage<Props> = ({ stories }) => {
       );
       setLoadedCourses(coursesWithAccess);
     } else if (referralPartner) {
-      const referralPartnerName = referralPartner.split('=')[0];
-
       const coursesWithAccess = stories.filter((story) =>
-        story.content.included_for_partners.includes(referralPartnerName),
+        story.content.included_for_partners.includes(referralPartner),
       );
       setLoadedCourses(coursesWithAccess);
     } else {

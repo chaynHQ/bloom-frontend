@@ -130,8 +130,7 @@ const Footer = () => {
     const referralPartner = window.localStorage.getItem('referralPartner');
 
     if (referralPartner) {
-      const referralPartnerName = referralPartner.split('=')[0];
-      addUniquePartner(partnersList, referralPartnerName);
+      addUniquePartner(partnersList, referralPartner);
     }
 
     setPartners(partnersList);
