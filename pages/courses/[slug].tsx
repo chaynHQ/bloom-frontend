@@ -10,6 +10,8 @@ import StoryblokCoursePage, {
   StoryblokCoursePageProps,
 } from '../../components/storyblok/StoryblokCoursePage';
 import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import { SignUpBanner } from '../../components/banner/SignUpBanner';
+import { useTypedSelector } from '../../hooks/store';
 
 interface Props {
   story: ISbStoryData | null;
@@ -18,12 +20,16 @@ interface Props {
 const CourseOverview: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
+  const userId = useTypedSelector((state) => state.user.id);
   if (!story) {
     return <NoDataAvailable />;
   }
 
   return (
-    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    <>
+      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+      {!userId && <SignUpBanner />}
+    </>
   );
 };
 

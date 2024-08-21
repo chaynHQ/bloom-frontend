@@ -23,17 +23,12 @@ const publicPathHeads = [
   'meet-the-team',
   'partnership',
   'about-our-courses',
+  'courses',
 ];
 
 // As the subpages of courses are not public and these pages are only partially public,
 // they are treated differently as they are not public path heads
-const partiallyPublicPages = [
-  '/courses',
-  '/activities',
-  '/grounding',
-  '/subscription/whatsapp',
-  '/chat',
-];
+const partiallyPublicPages = ['/activities', '/grounding', '/subscription/whatsapp', '/chat'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
