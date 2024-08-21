@@ -9,6 +9,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 import Link from '../common/Link';
 
 const listStyle = {
@@ -67,6 +68,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const isMaintenanceMode = getIsMaintenanceMode();
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
   const router = useRouter();
@@ -75,22 +77,23 @@ const NavigationMenu = (props: NavigationMenuProps) => {
     let links: Array<NavigationItem> = [];
 
     if (!userLoading) {
-      if (partnerAdmin && partnerAdmin.partner) {
+      if (!isMaintenanceMode) {
+        if (partnerAdmin && partnerAdmin.partner) {
+          links.push({
+            title: t('admin'),
+            href: '/partner-admin/create-access-code',
+            event: HEADER_ADMIN_CLICKED,
+            qaId: 'partner-admin-menu-button',
+          });
+        }
+
         links.push({
-          title: t('admin'),
-          href: '/partner-admin/create-access-code',
-          event: HEADER_ADMIN_CLICKED,
-          qaId: 'partner-admin-menu-button',
+          title: t('meetTheTeam'),
+          href: '/meet-the-team',
+          event: HEADER_OUR_BLOOM_TEAM_CLICKED,
+          qaId: 'meet-team-menu-button',
         });
       }
-
-      links.push({
-        title: t('meetTheTeam'),
-        href: '/meet-the-team',
-        event: HEADER_OUR_BLOOM_TEAM_CLICKED,
-        qaId: 'meet-team-menu-button',
-      });
-
       if (!partnerAdmin.partner) {
         links.push({
           title: t('immediateHelp'),

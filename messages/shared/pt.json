@@ -21,6 +21,10 @@
       "fruitzLine2": "FRUITZ LTD",
       "policies": "Nossas políticas"
     },
+    "maintenanceBanner": {
+      "title": "Bloom está em manutenção",
+      "description": "Pedimos desculpas, mas estamos realizando uma manutenção planejada essencial. Bloom deve estar disponível como de costume em {hours} horas."
+    },
     "videoTranscript": {
       "title": "Video transcript",
       "description": "Read the transcript for video - ",

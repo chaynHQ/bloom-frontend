@@ -185,6 +185,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           }),
         );
       }
+      await dispatch(setUserLoading(false));
     }
   };
 
