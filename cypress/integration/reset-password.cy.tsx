@@ -40,9 +40,9 @@ describe('Reset password', () => {
   });
 
   it('should receive email when known email submitted for password reset', async () => {
-    const mailslurp = new MailSlurp({ apiKey: Cypress.env('mail_slurp_api_key') });
+    const mailslurp = new MailSlurp({ apiKey: Cypress.env('CYPRESS_MAIL_SLURP_API_KEY') });
 
-    const inboxId = Cypress.env('inbox_id');
+    const inboxId = Cypress.env('CYPRESS_INBOX_ID');
 
     // Retrieve inbox
     const inbox = await mailslurp.getInbox(inboxId);
