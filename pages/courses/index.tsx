@@ -16,6 +16,7 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { capitaliseFirstLetter } from '../../utils/strings';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -99,7 +100,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
       setLoadedCourses(coursesWithAccess);
     } else if (referralPartner) {
       const coursesWithAccess = stories.filter((story) =>
-        story.content.included_for_partners.includes(referralPartner),
+        story.content.included_for_partners.includes(capitaliseFirstLetter(referralPartner)),
       );
       setLoadedCourses(coursesWithAccess);
     } else {
