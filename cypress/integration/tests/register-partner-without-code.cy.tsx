@@ -5,7 +5,7 @@ describe('Register without access code', () => {
     cy.cleanUpTestState();
   });
 
-  it('Access code input should be on form', () => {
+  it('Access code input should not be on form', () => {
     // Start from the home page
     cy.visit('/welcome/bumble');
     cy.wait(5000);

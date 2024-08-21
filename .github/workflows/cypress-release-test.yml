@@ -42,13 +42,14 @@ jobs:
         uses: cypress-io/github-action@v6.7.2
         with:
           browser: chrome
-          spec: cypress/**/*.cy.tsx
+          config-file: cypress.config.ts
           headed: false
           record: true # send results to cypress dashboard
           parallel: true
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
           NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
@@ -58,19 +59,18 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
           NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
-          CYPRESS_mail_slurp_api_key: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
-          CYPRESS_inbox_id: ${{secrets.CYPRESS_INBOX_ID}}
-          CYPRESS_reset_pwd_content_email: ${{secrets.CYPRESS_RESET_PWD_CONTENT_EMAIL}}
-          CYPRESS_bumble_partner_admin_email: ${{secrets.CYPRESS_BUMBLE_ADMIN_EMAIL}}
-          CYPRESS_bumble_partner_admin_password: ${{secrets.CYPRESS_BUMBLE_ADMIN_PASSWORD}}
-          CYPRESS_badoo_partner_admin_email: ${{secrets.CYPRESS_BADOO_ADMIN_EMAIL}}
-          CYPRESS_badoo_partner_admin_password: ${{secrets.CYPRESS_BADOO_ADMIN_PASSWORD}}
-          CYPRESS_super_admin_email: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
-          CYPRESS_super_admin_password: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
-          CYPRESS_public_email: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
-          CYPRESS_public_password: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
-          CYPRESS_public_name: ${{secrets.CYPRESS_PUBLIC_NAME}}
-          CYPRESS_api_url: ${{secrets.CYPRESS_BLOOM_BACKEND_API_URL}}
+          CYPRESS_MAIL_SLURP_API_KEY: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
+          CYPRESS_INBOX_ID: ${{secrets.CYPRESS_INBOX_ID}}
+          CYPRESS_SUPER_ADMIN_EMAIL: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
+          CYPRESS_SUPER_ADMIN_PASSWORD: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BUMBLE_ADMIN_EMAIL}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BUMBLE_ADMIN_PASSWORD}}
+          CYPRESS_BADOO_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BADOO_ADMIN_EMAIL}}
+          CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BADOO_ADMIN_PASSWORD}}
+          CYPRESS_PUBLIC_EMAIL: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
+          CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
+          CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
