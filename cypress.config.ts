@@ -5,10 +5,7 @@ dotenv.config({ path: '.env.local' });
 export default defineConfig({
   projectId: 'to91wg',
   fileServerFolder: 'cypress',
-  env: {
-    reset_pwd_confirm_email: 'tech@chayn.co',
-    ...process.env,
-  },
+  env: process.env, // Uses project environment variables set in .env
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
