@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-
 dotenv.config({ path: '.env.local' });
 
 export default defineConfig({
-  projectId: 'to91wg',
+  projectId: process.env.CYPRESS_PROJECT_ID,
   fileServerFolder: 'cypress',
   env: process.env, // Uses project environment variables set in .env
   e2e: {
@@ -17,7 +17,7 @@ export default defineConfig({
       'cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}',
       'cypress/integration/after/**/*.cy.{js,jsx,ts,tsx}',
     ],
-    baseUrl: 'http://localhost:3000',
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',
   },
 });
