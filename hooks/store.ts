@@ -19,6 +19,7 @@ export const useStateUtils = () => {
     await dispatch(clearCoursesSlice());
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
+    window.localStorage.removeItem('referralPartner');
   }, [dispatch]);
 
   return { clearState };
