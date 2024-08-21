@@ -151,7 +151,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             </Button>
           </>
         )}
-        {!userId && accessCodeRequired && (
+        {!userId && (accessCodeRequired || codeParam) && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}
@@ -160,7 +160,7 @@ const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
             <WelcomeCodeForm codeParam={codeParam} partnerParam={partnerName} />
           </>
         )}
-        {!userId && !accessCodeRequired && (
+        {!userId && !accessCodeRequired && !codeParam && (
           <>
             <Typography variant="h2" component="h2">
               {t('getStarted')}
