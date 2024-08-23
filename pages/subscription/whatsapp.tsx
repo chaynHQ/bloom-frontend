@@ -81,7 +81,9 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
 
   return (
     <>
-      <Head>{story.content.title}</Head>
+      <Head>
+        <title>{story.content.title}</title>
+      </Head>
       <Box>
         <Header {...headerProps} />
         {!userId && <SignUpBanner />}

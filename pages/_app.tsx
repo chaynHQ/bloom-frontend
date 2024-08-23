@@ -78,7 +78,6 @@ function MyApp(props: MyAppProps) {
         timeZone="Europe/London"
       >
         <Head>
-          <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <CrispScript />
