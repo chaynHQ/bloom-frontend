@@ -54,8 +54,6 @@ describe.only('A logged in user should be able to navigate to a course session a
     cy.get('button').contains('Send').click(); //submit feedback
 
     cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
-
-    cy.deleteUser(); //delete test user
   });
 
   after(() => {
