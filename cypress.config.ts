@@ -10,7 +10,8 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/config/plugins')(on, config);
+      require('@cypress/code-coverage/task')(on, config);
+      return config;
     },
     specPattern: [
       'cypress/integration/before/**/*.cy.{js,jsx,ts,tsx}',
@@ -19,5 +20,6 @@ export default defineConfig({
     ],
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',
+    experimentalRunAllSpecs: true,
   },
 });
