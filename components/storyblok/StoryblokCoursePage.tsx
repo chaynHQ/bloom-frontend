@@ -80,7 +80,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
-  const isLoggedIn = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
