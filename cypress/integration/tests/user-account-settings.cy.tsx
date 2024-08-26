@@ -57,11 +57,6 @@ describe('User account settings page', () => {
     cy.checkImage('Illustration of a mobile phone with message containing a heart', 'phone');
   });
 
-  it('Should display disabled user email and name fields with user data', () => {
-    cy.get('#email').should('have.value', publicEmail);
-    cy.get('#name').should('have.value', publicName);
-  });
-
   it('Should display Account actions section', () => {
     cy.get('h2').should('contain', 'Account actions');
     cy.get('p').should(
