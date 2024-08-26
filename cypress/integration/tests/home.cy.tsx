@@ -85,4 +85,23 @@ describe('Home page should display', () => {
 
     cy.checkLink('/meet-the-team', 'Meet the team');
   });
+
+  it('our themes section', () => {
+    cy.get('h2').should('contain', 'Our themes');
+    cy.checkImage('leaves with fire', 'leaf_mix_fire');
+
+    const themes = [
+      'Guilt and Shame',
+      'Positive coping mechanism',
+      'Myths of the Patriarchy',
+      'Sex after assault',
+      'Emotional boundaries',
+      'Image-based abuse',
+    ];
+    themes.forEach((theme) => {
+      cy.get('p').contains(theme).parents('a[href="/courses"]').should('exist');
+    });
+
+    cy.checkLink('/auth/register', 'Get started');
+  });
 });
