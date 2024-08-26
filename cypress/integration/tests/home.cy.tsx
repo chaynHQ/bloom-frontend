@@ -47,4 +47,18 @@ describe('Home page should display', () => {
 
     cy.checkLink('/auth/register', 'Get started');
   });
+
+  it('why bloom section', () => {
+    cy.get('h2').should('contain', 'Why Bloom?');
+    cy.get('p').should('contain', 'Bloom is here for you, whoever and wherever you are.');
+
+    cy.checkImage('pinkHeartWhiteBackground', 'pinkheartwhitebackground');
+    cy.get('h3').should('contain', 'Free and Anonymous');
+
+    cy.checkImage('pinkPlayPauseWhiteBackground', 'pinkplaypausewhitebackground');
+    cy.get('h3').should('contain', 'Explore at your own pace');
+
+    cy.checkImage('pinkGlobeWhiteBackground', 'pinkglobewhitebackground');
+    cy.get('h3').should('contain', 'Multilingual');
+  });
 });
