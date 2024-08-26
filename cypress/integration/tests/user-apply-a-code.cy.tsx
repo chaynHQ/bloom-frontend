@@ -1,6 +1,5 @@
 describe('User apply a code page should display', () => {
   const publicEmail = Cypress.env('CYPRESS_PUBLIC_EMAIL') as string;
-  const publicName = Cypress.env('CYPRESS_PUBLIC_NAME') as string;
 
   before(() => {
     cy.cleanUpTestState();
