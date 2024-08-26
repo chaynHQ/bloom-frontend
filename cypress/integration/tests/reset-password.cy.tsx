@@ -36,22 +36,22 @@ describe('Reset password', () => {
     const mailslurp = new MailSlurp({ apiKey: Cypress.env('CYPRESS_MAIL_SLURP_API_KEY') });
 
     const inboxId = Cypress.env('CYPRESS_INBOX_ID');
-
-    // Retrieve inbox
-    mailslurp.getInbox(inboxId).then((inbox) => {
-      // Reset password
-      cy.visit(resetPasswordPath);
-      cy.wait(1000); // Waiting for dom to rerender as the email input was detaching
-      cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).focus().type(email);
-      cy.get('p', { timeout: 8000 })
-        // check that front-end confirms an email has been sent
-        .should('contain', 'Check your emails for a reset link from Bloom.');
-      cy.get('button[type="submit"]').contains('Resend email');
-
-      // wait for email
-      mailslurp.waitForLatestEmail(inbox.id, 8000).then((latestEmail) => {
-        expect(latestEmail.subject).contains('Reset');
+    cy.visit(resetPasswordPath);
+    // Reset password
+    cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).focus().type(email);
+    cy.get('[qa-id=passwordResetEmailButton]').click();
+    cy.get('p', { timeout: 8000 })
+      // check that front-end confirms an email has been sent
+      .should('contain', 'Check your emails for a reset link from Bloom.');
+    cy.get('button[type="submit"]', { timeout: 8000 })
+      .contains('Resend email')
+      .then(() => {
+        mailslurp.getInbox(inboxId).then((inbox) => {
+          // wait for email
+          mailslurp.waitForLatestEmail(inbox.id, 8000).then((latestEmail) => {
+            expect(latestEmail.subject).contains('Reset');
+          });
+        });
       });
-    });
   });
 });
