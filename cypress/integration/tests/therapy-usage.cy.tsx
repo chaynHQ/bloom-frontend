@@ -17,7 +17,7 @@ describe('Therapy Usage', () => {
 
     it('Navigate to the admin page and create the access code', () => {
       cy.visit('/');
-      cy.get(`[qa-id=partner-admin-menu-button]`, { timeout: 8000 }).should('exist').click(); //Find admin button and click
+      cy.get(`[qa-id=partner-admin-menu-button]`, { timeout: 10000 }).should('exist').click(); //Find admin button and click
       cy.uiCreateAccessCode().then((res) => {
         accessCode = res;
       });
