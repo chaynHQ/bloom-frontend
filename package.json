@@ -15,7 +15,7 @@
     "lint:fix": "next lint --fix",
     "type-check": "tsc",
     "format": "prettier . --write",
-    "format:precommit": "prettier --write . && git add -A .",
+    "format:precommit": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress": "cypress open",
