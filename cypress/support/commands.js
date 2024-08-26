@@ -207,6 +207,12 @@ Cypress.Commands.add('checkLink', (href, text) => {
   link.should('contain', text);
 });
 
+Cypress.Commands.add('checkPageUrl', (url, locale = 'en') => {
+  const localePart = locale === 'en' ? '' : `/${locale}`;
+  const pageUrl = `${Cypress.config('baseUrl')}${localePart}${url}`;
+  cy.url().should('be.equal', pageUrl);
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
