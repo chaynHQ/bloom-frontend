@@ -244,7 +244,7 @@ const attachCustomCommands = (Cypress, auth) => {
   });
   Cypress.Commands.add('logInWithEmailAndPassword', (emailInput, passwordInput) => {
     signInWithEmailAndPassword(auth, emailInput, passwordInput).then((user) => {
-      cy.window().then(async (window) => {
+      cy.window().then((window) => {
         // @ts-ignore
         if (window.store) {
           // @ts-ignore
