@@ -104,4 +104,18 @@ describe('Home page should display', () => {
 
     cy.checkLink('/auth/register', 'Get started');
   });
+
+  it('testimonial section', () => {
+    cy.checkImage('blue_person_tea', 'blue_person_with_tea');
+    cy.get('blockquote').should(
+      'contain',
+      'It has brought so much clarity to my past experiences, putting words, labels, researched proof to what I didn’t know how to explain or process, I just knew the feelings.',
+    );
+
+    cy.checkImage('Illustration of a person sitting, holding a tea', 'illustration_person4_peach');
+    cy.get('blockquote').should(
+      'contain',
+      `Bloom has been a great experience for me. The course has made me reflect a lot on what it means to "work on yourself" and how that looks like. And through Bloom, I've realized that working on yourself is similar to school or hobbies - it takes commitment, time, and studying. This course is anonymous, accessible, and time sensitive - I think it gives grace to all participants who need that time, space, and encouragement to get through the sessions.`,
+    );
+  });
 });
