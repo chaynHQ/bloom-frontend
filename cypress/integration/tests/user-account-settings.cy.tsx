@@ -7,14 +7,16 @@ describe('User account settings page', () => {
     cy.logInWithEmailAndPassword(publicEmail, Cypress.env('CYPRESS_PUBLIC_PASSWORD'));
   });
 
-  it('Should display disabled user email and name fields with user data', () => {
+  beforeEach(() => {
     cy.visit('/account/settings');
+  });
+
+  it('Should display disabled user email and name fields with user data', () => {
     cy.get('#email').should('have.value', publicEmail);
     cy.get('#name').should('have.value', publicName);
   });
 
   it('Should have marketing and service email checkbox fields and submit button', () => {
-    cy.visit('/account/settings');
     cy.get('input[name="contactPermission"]').check();
     cy.get('input[name="serviceEmailsPermission"]').check();
     cy.get('button[type="submit"]').contains('Save email preferences').click();
@@ -24,7 +26,6 @@ describe('User account settings page', () => {
   });
 
   it('Should have email reminder frequency form and load user data', () => {
-    cy.visit('/account/settings');
     cy.get('input[name="email-reminders-settings"]').eq(1).check();
     cy.get('button[type="submit"]').contains('Save email reminders').click();
     cy.wait(2000);
