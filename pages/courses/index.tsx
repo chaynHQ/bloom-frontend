@@ -151,7 +151,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                   return (
                     <CourseCard
                       key={course.id}
-                      clickable={false}
+                      clickable={true}
                       course={course}
                       courseProgress={null}
                       liveCourseAccess={false}
@@ -165,7 +165,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                   return (
                     <CourseCard
                       key={course.id}
-                      clickable={false}
+                      clickable={true}
                       course={course}
                       courseProgress={null}
                       liveCourseAccess={false}
