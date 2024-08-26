@@ -61,4 +61,28 @@ describe('Home page should display', () => {
     cy.checkImage('pinkGlobeWhiteBackground', 'pinkglobewhitebackground');
     cy.get('h3').should('contain', 'Multilingual');
   });
+
+  it('our bloom team section', () => {
+    cy.get('h2').should('contain', 'Our Bloom Team');
+
+    cy.checkImage('spanish_team', 'spanish_team');
+    cy.get('h3').should('contain', 'Spanish');
+
+    cy.checkImage('hindi_team', 'hindi_team');
+    cy.get('h3').should('contain', 'Hindi');
+
+    cy.checkImage('french_team', 'french_team');
+    cy.get('h3').should('contain', 'French');
+
+    cy.checkImage('english_team', 'english_team');
+    cy.get('h3').should('contain', 'English');
+
+    cy.checkImage('portuguese_team', 'portuguese_team');
+    cy.get('h3').should('contain', 'Portuguese');
+
+    cy.checkImage('bloom_german', 'bloom_german-presenters');
+    cy.get('h3').should('contain', 'German');
+
+    cy.checkLink('/meet-the-team', 'Meet the team');
+  });
 });
