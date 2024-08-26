@@ -14,10 +14,7 @@ describe('User account settings page', () => {
   it('Should display header section', () => {
     cy.get('h1').should('contain', 'Account Settings');
     cy.get('p').should('contain', 'View and update your settings in bloom');
-    cy.checkImage(
-      'Illustration of a mobile phone with message containing a heart',
-      'phone.6467a87b',
-    );
+    cy.checkImage('Illustration of a mobile phone with message containing a heart', 'phone');
   });
 
   it('Should display disabled user email and name fields with user data', () => {
