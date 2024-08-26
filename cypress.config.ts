@@ -3,20 +3,23 @@ import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-
 dotenv.config({ path: '.env.local' });
 
 export default defineConfig({
-  projectId: 'to91wg',
+  projectId: process.env.CYPRESS_PROJECT_ID,
   fileServerFolder: 'cypress',
-  env: {
-    reset_pwd_confirm_email: 'tech@chayn.co',
-    ...process.env,
-  },
+  env: process.env, // Uses project environment variables set in .env
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/config/plugins')(on, config);
+      require('@cypress/code-coverage/task')(on, config);
+      return config;
     },
-    specPattern: ['cypress/integration/**/*.cy.{js,jsx,ts,tsx}'],
-    baseUrl: 'http://localhost:3000',
+    specPattern: [
+      'cypress/integration/before/**/*.cy.{js,jsx,ts,tsx}',
+      'cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}',
+      'cypress/integration/after/**/*.cy.{js,jsx,ts,tsx}',
+    ],
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',
+    experimentalRunAllSpecs: true,
   },
 });

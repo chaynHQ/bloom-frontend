@@ -61,7 +61,7 @@ function MyApp(props: MyAppProps) {
     const path = router.asPath;
 
     if (path?.includes('/welcome/')) {
-      const referralPartner = path.split('/')[2]; // Gets "bumble" from /welcome/bumble
+      const referralPartner = path.split('/')[2].split('?')[0]; // Gets "bumble" from /welcome/bumble?code=123
 
       if (referralPartner) {
         window.localStorage.setItem('referralPartner', referralPartner);
@@ -78,7 +78,6 @@ function MyApp(props: MyAppProps) {
         timeZone="Europe/London"
       >
         <Head>
-          <title>Bloom</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <CrispScript />
