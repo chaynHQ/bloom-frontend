@@ -242,16 +242,17 @@ const attachCustomCommands = (Cypress, auth) => {
   Cypress.Commands.add('getAccessToken', () => {
     return token ? cy.wrap(token) : undefined;
   });
-  Cypress.Commands.add('logInWithEmailAndPassword', async (emailInput, passwordInput) => {
-    const user = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-    cy.window().then(async (window) => {
-      // @ts-ignore
-      if (window.store) {
+  Cypress.Commands.add('logInWithEmailAndPassword', (emailInput, passwordInput) => {
+    signInWithEmailAndPassword(auth, emailInput, passwordInput).then((user) => {
+      cy.window().then(async (window) => {
         // @ts-ignore
-        window.store.dispatch({ type: 'user/setAuthStateLoading', action: false }); // important - triggers getUser in useLoadUser
-      }
+        if (window.store) {
+          // @ts-ignore
+          window.store.dispatch({ type: 'user/setAuthStateLoading', action: false }); // important - triggers getUser in useLoadUser
+        }
+      });
+      return user;
     });
-    return user;
   });
   Cypress.Commands.add('logout', () => {
     return signOut(auth);

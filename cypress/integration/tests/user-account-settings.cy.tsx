@@ -9,7 +9,7 @@ describe('User account settings page', () => {
 
   it('Should display disabled user email and name fields with user data', () => {
     cy.visit('/account/settings');
-    cy.get('#email').should('have.value', publicEmail);
+    cy.get('#email', { timeout: 8000 }).should('have.value', publicEmail);
     cy.get('#name').should('have.value', publicName);
   });
 
