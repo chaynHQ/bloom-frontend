@@ -45,6 +45,16 @@ describe('User account settings page', () => {
     cy.wait(2000);
   });
 
+  it('Should display Account actions section', () => {
+    cy.get('h2').should('contain', 'Account actions');
+    cy.get('p').should(
+      'contain',
+      `Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.`,
+    );
+    cy.get('button').should('contain', 'Reset password');
+    cy.get('button').should('contain', 'Delete Account');
+  });
+
   after(() => {
     cy.logout();
   });
