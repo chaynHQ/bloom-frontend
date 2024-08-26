@@ -11,6 +11,15 @@ describe('User account settings page', () => {
     cy.visit('/account/settings');
   });
 
+  it('Should display header section', () => {
+    cy.get('h1').should('contain', 'Account Settings');
+    cy.get('p').should('contain', 'View and update your settings in bloom');
+    cy.checkImage(
+      'Illustration of a mobile phone with message containing a heart',
+      'phone.6467a87b',
+    );
+  });
+
   it('Should display disabled user email and name fields with user data', () => {
     cy.get('#email').should('have.value', publicEmail);
     cy.get('#name').should('have.value', publicName);
