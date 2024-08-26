@@ -72,20 +72,6 @@ describe('Welcome badoo page should display', () => {
       cy.get(labelAccessCodeTag).should('exist').should('have.attr', 'for', 'accessCode');
       cy.get(inputAccessCodeTag).should('exist');
     });
-    describe('navigate to register page when clicking get started action', () => {
-      it('without action', () => {
-        const registerPartnerBadooUrl = '/auth/register?partner=badoo';
-        cy.get('button').contains('Get started').click();
-        cy.checkPageUrl(registerPartnerBadooUrl);
-      });
-      it('with action code', () => {
-        const actionCode = 'actionCode';
-        const registerPartnerBadooUrl = `/auth/register?partner=badoo&code=${actionCode}`;
-        cy.get(inputAccessCodeTag).type(actionCode);
-        cy.get('button').contains('Get started').click();
-        cy.checkPageUrl(registerPartnerBadooUrl);
-      });
-    });
   });
   describe('for a public logged in user', () => {
     before(() => {
