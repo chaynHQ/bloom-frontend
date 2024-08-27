@@ -5,15 +5,15 @@ describe('Final cleanup test', () => {
       Cypress.env('CYPRESS_SUPER_ADMIN_PASSWORD'),
     );
 
-    try {
-      cy.deleteCypressAccessCodes();
-      cy.deleteAllCypressUsers();
-      cy.log('After all function completed - new cypress users deleted');
-    } catch (error) {
-      cy.log(
-        `After all function failed - catching error to prevent failing tests. Error: ${error}`,
-      );
-    }
+    // try {
+    //   cy.deleteCypressAccessCodes();
+    //   cy.deleteAllCypressUsers();
+    //   cy.log('After all function completed - new cypress users deleted');
+    // } catch (error) {
+    //   cy.log(
+    //     `After all function failed - catching error to prevent failing tests. Error: ${error}`,
+    //   );
+    // }
 
     cy.logout();
   });
