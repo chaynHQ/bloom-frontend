@@ -41,7 +41,8 @@ describe('User account settings page', () => {
       });
       cy.get('h2').contains('Email reminders').should('exist');
       cy.get(`input[name="email-reminders-settings"]`).eq(newIndex).check();
-      cy.get('[qa-id="email-reminders-settings-submit"]', { timeout: 20000 })
+      cy.wait(2000); // wait for the form to rerender as the form seems to detach
+      cy.get('[qa-id="email-reminders-settings-submit"]')
         .contains('Save email reminders')
         .should('not.be.disabled')
         .click();
