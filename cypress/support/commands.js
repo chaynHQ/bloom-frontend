@@ -209,7 +209,7 @@ Cypress.Commands.add('checkLink', (href, text) => {
 
 Cypress.Commands.add('checkPageUrl', (url, locale = 'en') => {
   const localePart = locale === 'en' ? '' : `/${locale}`;
-  const pageUrl = `${Cypress.config('baseUrl')}${localePart}${url}`;
+  const pageUrl = `${Cypress.config('baseUrl')}/${localePart}${url}`;
   cy.url().should('be.equal', pageUrl);
 });
 
