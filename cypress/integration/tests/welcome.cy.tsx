@@ -1,6 +1,6 @@
-const welcomePageUrl = '/welcome';
+const welcomePageUrl = 'welcome';
 const invalidPartnerPageUrl = `${welcomePageUrl}/invalid-partner`;
-const coursesPageUrl = '/courses';
+const coursesPageUrl = 'courses';
 
 describe('Welcome page should', () => {
   before(() => {
