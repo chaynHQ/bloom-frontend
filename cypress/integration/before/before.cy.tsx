@@ -3,18 +3,13 @@ describe('Initial cleanup test', () => {
     cy.logInWithEmailAndPassword(
       Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL'),
       Cypress.env('CYPRESS_SUPER_ADMIN_PASSWORD'),
-    );
-
-    try {
+    ).then(() => {
       cy.deleteCypressAccessCodes();
-      cy.deleteAllCypressUsers();
-      cy.log('Before all function completed - stale cypress users deleted');
-    } catch (error) {
-      cy.log(
-        `Before all function failed - catching error to prevent failing tests. Error: ${error}`,
-      );
-    }
+      cy.deleteAllCypressUsers().then(() => {
+        cy.log('Before all function completed - stale cypress users deleted');
+      });
 
-    cy.logout();
+      cy.logout();
+    });
   });
 });
