@@ -27,7 +27,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@emotion/cache": "^11.11.0",
+    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.11.4",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.5",
