@@ -1,0 +1,7 @@
+{
+  "extends": "@istanbuljs/nyc-config-babel",
+  "reporter": ["text-summary", "html"],
+  "include": ["pages/**/*.ts", "pages/**/*.tsx", "components/**/*.ts", "components/**/*.tsx"],
+  "instrument": true,
+  "all": true
+}

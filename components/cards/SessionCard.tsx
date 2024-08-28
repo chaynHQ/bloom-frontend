@@ -55,10 +55,11 @@ interface SessionCardProps {
   session: ISbStoryData;
   sessionSubtitle: string;
   storyblokCourseId: number;
+  clickable: boolean;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionSubtitle, storyblokCourseId } = props;
+  const { session, sessionSubtitle, storyblokCourseId, clickable } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const t = useTranslations('Courses');
@@ -73,12 +74,27 @@ const SessionCard = (props: SessionCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea
-        sx={cardActionStyle}
-        component={Link}
-        href={`/${session.full_slug}`}
-        aria-label={`${t('navigateToSession')} ${session.name}`}
-      >
+      {clickable ? (
+        <CardActionArea
+          sx={cardActionStyle}
+          component={Link}
+          href={`/${session.full_slug}`}
+          aria-label={`${t('navigateToSession')} ${session.name}`}
+        >
+          <CardContent sx={cardContentStyle}>
+            <Box sx={cardContentRowStyles}>
+              <SessionProgressDisplay
+                sessionId={session.id}
+                storyblokCourseId={storyblokCourseId}
+              />
+              <Typography flex={1} component="h3" variant="h3">
+                {session.content.name}
+              </Typography>
+            </Box>
+            <Typography color="grey.700">{sessionSubtitle}</Typography>
+          </CardContent>
+        </CardActionArea>
+      ) : (
         <CardContent sx={cardContentStyle}>
           <Box sx={cardContentRowStyles}>
             <SessionProgressDisplay sessionId={session.id} storyblokCourseId={storyblokCourseId} />
@@ -88,7 +104,7 @@ const SessionCard = (props: SessionCardProps) => {
           </Box>
           <Typography color="grey.700">{sessionSubtitle}</Typography>
         </CardContent>
-      </CardActionArea>
+      )}
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}

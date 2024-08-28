@@ -195,6 +195,26 @@ Cypress.Commands.add('visitFrenchPage', (url) => {
   });
 });
 
+Cypress.Commands.add('checkImage', (alt, subSrc) => {
+  const image = cy.get(`img[alt="${alt}"]`);
+  image.should('exist');
+  image.should('have.attr', 'src').should('include', subSrc);
+});
+
+Cypress.Commands.add('checkLink', (href, text) => {
+  const link = cy.get(`a[href="${href}"]`);
+  link.should('exist');
+  link.should('contain', text);
+});
+
+Cypress.Commands.add('checkPageUrl', (url, locale = 'en') => {
+  const localePart = locale === 'en' ? '' : `${locale}/`;
+  const pageUrl = `/${localePart}${url}`;
+  cy.location().should((loc) => {
+    expect(loc.pathname).to.eq(pageUrl);
+  });
+});
+
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
   apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
@@ -224,16 +244,18 @@ const attachCustomCommands = (Cypress, auth) => {
   Cypress.Commands.add('getAccessToken', () => {
     return token ? cy.wrap(token) : undefined;
   });
-  Cypress.Commands.add('logInWithEmailAndPassword', async (emailInput, passwordInput) => {
-    const user = await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-    cy.window().then(async (window) => {
-      // @ts-ignore
-      if (window.store) {
+
+  Cypress.Commands.add('logInWithEmailAndPassword', (emailInput, passwordInput) => {
+    return signInWithEmailAndPassword(auth, emailInput, passwordInput).then((user) => {
+      cy.window().then((window) => {
         // @ts-ignore
-        window.store.dispatch({ type: 'user/setAuthStateLoading', action: false }); // important - triggers getUser in useLoadUser
-      }
+        if (window.store) {
+          // @ts-ignore
+          window.store.dispatch({ type: 'user/setAuthStateLoading', action: false }); // important - triggers getUser in useLoadUser
+        }
+      });
+      return user;
     });
-    return user;
   });
   Cypress.Commands.add('logout', () => {
     return signOut(auth);

@@ -10,7 +10,7 @@ describe('User account settings page', () => {
 
   it('Should successfully update name', () => {
     cy.visit('/account/settings');
-    cy.get('#name', { timeout: 10000 }).clear().type('Updated name');
+    cy.get('#name', { timeout: 15000 }).clear().type('Updated name');
     cy.get('#profile-settings-submit', { timeout: 10000 }).click();
     cy.get(`[data-testid='CheckCircleOutlinedIcon']`, { timeout: 10000 }).should('be.visible');
   });

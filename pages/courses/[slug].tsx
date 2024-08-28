@@ -23,7 +23,9 @@ const CourseOverview: NextPage<Props> = ({ story }) => {
   }
 
   return (
-    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    <>
+      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    </>
   );
 };
 

@@ -75,6 +75,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
 
   return (
     <Card
+      data-testid="TeamMemberCard"
       sx={cardStyle}
       {...storyblokEditable({
         _uid,
@@ -127,9 +128,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
       </CardActionArea>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography variant="body2" mb={0} paragraph>
-            {render(bio, RichTextOptions)}
-          </Typography>
+          <Box>{render(bio, RichTextOptions)}</Box>
         </CardContent>
       </Collapse>
     </Card>

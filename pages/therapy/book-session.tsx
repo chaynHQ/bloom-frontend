@@ -200,6 +200,7 @@ const BookSession: NextPage = () => {
           src="//widget.simplybook.it/v2/widget/widget.js"
           onLoad={() => {
             new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
+            document.title = t('title');
           }}
         />
       )}
