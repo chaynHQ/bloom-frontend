@@ -107,6 +107,8 @@ const CreatePartnerAdminForm = () => {
   return (
     <form autoComplete="off" onSubmit={submitHandler}>
       <TextField
+        id="selectPartner"
+        name="selectPartner"
         key="select-partner"
         fullWidth
         select
@@ -124,6 +126,8 @@ const CreatePartnerAdminForm = () => {
       </TextField>
 
       <TextField
+        id="email"
+        name="email"
         key="email-input"
         onChange={(e) => setEmail(e.target.value)}
         label={t('emailAddressLabel')}
@@ -134,6 +138,8 @@ const CreatePartnerAdminForm = () => {
         value={email}
       />
       <TextField
+        id="name"
+        name="name"
         key="name-input"
         onChange={(e) => setName(e.target.value)}
         label={t('nameLabel')}
