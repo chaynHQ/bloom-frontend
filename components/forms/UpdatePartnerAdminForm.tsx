@@ -152,6 +152,8 @@ const UpdatePartnerAdminForm = () => {
   return !formSubmitSuccess ? (
     <form autoComplete="off" onSubmit={submitHandler}>
       <Autocomplete
+        id="partnerAdmin"
+        componentName="partnerAdmin"
         value={autocompleteInputValue}
         onChange={onChange}
         onInputChange={onInputChange}
