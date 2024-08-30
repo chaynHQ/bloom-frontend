@@ -1,6 +1,7 @@
 import { MailSlurp } from 'mailslurp-client';
 
 const resetPasswordPath = 'auth/reset-password';
+const email = 'tech@chayn.co';
 
 describe('Reset password', () => {
   before(() => {
@@ -28,9 +29,7 @@ describe('Reset password', () => {
   it('should see resend-link button after typing known email', () => {
     cy.visit(resetPasswordPath);
     cy.wait(1000); // Waiting for dom to rerender as the email input was detaching
-    cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).type(
-      `${Cypress.env('CYPRESS_PUBLIC_EMAIL')}`,
-    );
+    cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).type(email);
     cy.get('[qa-id=passwordResetEmailButton]').click();
 
     cy.get('p', { timeout: 8000 }).should(
@@ -41,10 +40,9 @@ describe('Reset password', () => {
   });
 
   it('should receive email when known email submitted for password reset', async () => {
-    const mailslurp = new MailSlurp({ apiKey: Cypress.env('mail_slurp_api_key') });
+    const mailslurp = new MailSlurp({ apiKey: Cypress.env('CYPRESS_MAIL_SLURP_API_KEY') });
 
-    const inboxId = Cypress.env('inbox_id');
-    const email = Cypress.env('CYPRESS_PUBLIC_EMAIL');
+    const inboxId = Cypress.env('CYPRESS_INBOX_ID');
 
     // Retrieve inbox
     const inbox = await mailslurp.getInbox(inboxId);

@@ -38,6 +38,9 @@
     "meetTheTeam": {
       "expandTeamMember": "Ouvrir la biographie pour {name}"
     },
+    "noDataAvailable": {
+      "title": "Un problème est survenu lors du chargement de cette page. Veuillez revenir en arrière et réessayer bientôt, ou contactez-nous."
+    },
     "404": {
       "title": "404 - Page introuvable",
       "authenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URLou retournez à la page des cours.",

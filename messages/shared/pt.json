@@ -38,6 +38,9 @@
     "meetTheTeam": {
       "expandTeamMember": "Expandir a biografia para {name}"
     },
+    "noDataAvailable": {
+      "title": "Ocorreu um problema ao carregar esta página. Volte e tente novamente em breve ou entre em contacto."
+    },
     "404": {
       "title": "404 - Página não encontrada",
       "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
