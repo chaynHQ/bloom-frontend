@@ -38,6 +38,9 @@
     "meetTheTeam": {
       "expandTeamMember": "Bio bada kariye {name} ke liye"
     },
+    "noDataAvailable": {
+      "title": "Is pej ko lod karane mein kuchh samasya huee. krpaya vaapas jaen aur jaldee hee punah prayaas karen, ya sampark karen"
+    },
     "404": {
       "title": "404 - Page nahi mila",
       "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",

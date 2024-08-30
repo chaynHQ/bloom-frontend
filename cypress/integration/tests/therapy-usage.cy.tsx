@@ -6,10 +6,10 @@ describe('Therapy Usage', () => {
   before(() => {
     cy.cleanUpTestState();
   });
+
   describe('A logged in partner admin should be able to create an access code', () => {
     before(() => {
       cy.logInWithEmailAndPassword(
-        //log in as bumble admin
         Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
         Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
       );
