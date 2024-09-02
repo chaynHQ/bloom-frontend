@@ -10,10 +10,10 @@ async function generateSiteMap({ locales }: any) {
             <loc>https://bloom.chayn.co</loc>
         </url>
         <url>
-            <loc>https://bloom.chayn.co/therapy/about-our-courses</loc>
+            <loc>https://bloom.chayn.co/about-our-courses</loc>
         </url>
         <url>
-            <loc>https://bloom.chayn.co/therapy/meet-the-team</loc>
+            <loc>https://bloom.chayn.co/meet-the-team</loc>
         </url>
         <url>
             <loc>https://bloom.chayn.co/therapy/book-session</loc>
@@ -22,10 +22,11 @@ async function generateSiteMap({ locales }: any) {
             <loc>https://bloom.chayn.co/therapy/confirmed-session</loc>
         </url>
         ${courses
-          .map((course: any) => {
+          .map((course: { locale: string; params: { slug: string; sessionSlug: string } }) => {
+            const locale = course.locale !== 'en' ? `/${course.locale}` : '';
             return `
                     <url>
-                        <loc>${`https://bloom.chayn.co/courses/${course.params.slug}/${course.params.sessionSlug}`}</loc>
+                        <loc>${`https://bloom.chayn.co${locale}/courses/${course.params.slug}/${course.params.sessionSlug}`}</loc>
                     </url>
                 `;
           })
