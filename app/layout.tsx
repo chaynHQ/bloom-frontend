@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 
 // Nextjs automatically includes for each route two default meta tags, charset and viewport
 // https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields
@@ -15,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       <body>{children}</body>
     </html>
   );
