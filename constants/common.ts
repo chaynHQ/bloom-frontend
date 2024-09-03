@@ -12,3 +12,5 @@ export type ErrorDisplay =
   | ReactElement<any, string | JSXElementConstructor<any>>
   | ReactNodeArray
   | null;
+
+export const PRIMARY_MAIN_COLOR = '#F3D6D8';
