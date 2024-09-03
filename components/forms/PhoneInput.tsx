@@ -71,6 +71,8 @@ const PhoneInput = (props: PhoneInputProps) => {
 
   return (
     <TextField
+      id="phoneNumber"
+      name="phoneNumber"
       variant="standard"
       label={t('phoneNumber')}
       color="primary"
