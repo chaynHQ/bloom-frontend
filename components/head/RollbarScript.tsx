@@ -1,6 +1,9 @@
+import Script from 'next/script';
+
 const RollbarScript = () => {
   return (
-    <script
+    <Script
+      id="rollbar"
       dangerouslySetInnerHTML={{
         __html: `
 var _rollbarConfig = {
