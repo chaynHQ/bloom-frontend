@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import ThemeRegistry from './ThemeRegistry';
 
 // Nextjs automatically includes for each route two default meta tags, charset and viewport
 // https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields
@@ -15,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeRegistry>{children}</ThemeRegistry>
+      </body>
     </html>
   );
 }
