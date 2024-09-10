@@ -13,12 +13,13 @@ describe('Welcome page should', () => {
       cy.checkPageUrl(coursesPageUrl);
     });
     describe('for a public logged in user', () => {
+      const email = `cypresstestemail+${Date.now()}@chayn.co`;
+      const password = 'testtesttest';
+
       before(() => {
         cy.cleanUpTestState();
-        cy.logInWithEmailAndPassword(
-          Cypress.env('CYPRESS_PUBLIC_EMAIL'),
-          Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
-        );
+        cy.createUser({ emailInput: email, passwordInput: password });
+        cy.logInWithEmailAndPassword(email, password);
       });
       it('visiting page without partner', () => {
         cy.visit(welcomePageUrl);
