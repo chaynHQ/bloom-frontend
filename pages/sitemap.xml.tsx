@@ -10,9 +10,6 @@ async function generateSiteMap({ locales }: any) {
             <loc>https://bloom.chayn.co</loc>
         </url>
         <url>
-            <loc>https://bloom.chayn.co/about-our-courses</loc>
-        </url>
-        <url>
             <loc>https://bloom.chayn.co/meet-the-team</loc>
         </url>
         <url>
