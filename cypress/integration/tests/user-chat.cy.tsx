@@ -1,10 +1,11 @@
 describe('A logged in public user can', () => {
+  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const password = 'testtesttest';
+
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(
-      Cypress.env('CYPRESS_PUBLIC_EMAIL'),
-      Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
-    );
+    cy.createUser({ emailInput: email, passwordInput: password });
+    cy.logInWithEmailAndPassword(email, password);
   });
 
   it('Navigate to the chat page and begin a chat', () => {

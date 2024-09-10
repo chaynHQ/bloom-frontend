@@ -19,12 +19,12 @@ describe('Navigation', () => {
     });
   });
   describe('A logged in public user', () => {
+    const email = `cypresstestemail+${Date.now()}@chayn.co`;
+    const password = 'testtesttest';
     before(() => {
       cy.cleanUpTestState();
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_PUBLIC_EMAIL'),
-        Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
-      );
+      cy.createUser({ emailInput: email, passwordInput: password });
+      cy.logInWithEmailAndPassword(email, password);
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');
