@@ -23,14 +23,12 @@ describe('Welcome badoo page should display', () => {
     );
   });
   it('about the program content', () => {
-    const partnershipBadooUrl = '/partnership/badoo';
     cy.checkImage('person with legs crossed holding heart', 'badoo_welcome_1');
     cy.get('h2').should('contain', 'About the program');
     cy.get('p').should(
       'contain',
       'Everyone’s healing journey is different. When we experience trauma due to sexual assault and relationship abuse, we may need support. Badoo partnered with Bloom to create a free, curated, online trauma support program for survivors. This program has been developed based on feedback from the global Badoo and Bloom communities.',
     );
-    cy.checkLink(partnershipBadooUrl, 'About the partnership');
   });
 
   it('about Bloom content', () => {

@@ -21,7 +21,6 @@ const publicPathHeads = [
   '500',
   'faqs',
   'meet-the-team',
-  'partnership',
   'about-our-courses',
 ];
 

@@ -196,7 +196,7 @@ export const generatePartnershipPromoLogoClick = (partner: string) =>
 export const generatePartnerPromoGetStartedEvent = (partner: string) =>
   `${partner.toUpperCase()}_PROMO_GET_STARTED_CLICKED`;
 export const generatePartnerPromoGoToCoursesEvent = (partner: string) =>
-  `${partner.toUpperCase()}_PROMO_GO_TO_COURSES_CLICKED`;
+  `${partner.toUpperCase()}_PROMO_GO_TO_COURSES_CLICKED`; // not in use - delete
 
 // HOME PAGE EVENTS
 export const PROMO_GO_TO_COURSES_CLICKED = 'PROMO_GO_TO_COURSES_CLICKED';
