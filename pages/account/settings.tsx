@@ -30,7 +30,6 @@ const AccountSettings: NextPage = () => {
   const t = useTranslations('Account.accountSettings');
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const headerProps = {
     title: t('title'),
@@ -57,7 +56,7 @@ const AccountSettings: NextPage = () => {
         </Box>
         <Box sx={columnContainerStyle}>
           <AccountActionsCard />
-          {isPublicUser && <EmailRemindersSettingsCard />}
+          <EmailRemindersSettingsCard />
         </Box>
       </Container>
     </Box>
