@@ -61,7 +61,6 @@ const AboutYouSetAForm = () => {
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -187,19 +186,15 @@ const AboutYouSetAForm = () => {
         ))}
 
         {/* Additional user setting for email reminders frequency */}
-        {isPublicUser && (
-          <>
-            <Typography mt={3} mb={1.5}>
-              {tAccount('introduction')}
-            </Typography>
-            <Typography>{tAccount('description')}</Typography>
-            <EmailRemindersSettingsFormControl
-              selectedInput={emailRemindersSettingInput}
-              setSelectedInput={setEmailRemindersSettingInput}
-            />
-            <Typography variant="body2">{tAccount('update')}</Typography>
-          </>
-        )}
+        <Typography mt={3} mb={1.5}>
+          {tAccount('introduction')}
+        </Typography>
+        <Typography>{tAccount('description')}</Typography>
+        <EmailRemindersSettingsFormControl
+          selectedInput={emailRemindersSettingInput}
+          setSelectedInput={setEmailRemindersSettingInput}
+        />
+        <Typography variant="body2">{tAccount('update')}</Typography>
 
         {formError && (
           <Typography color="error.main" mb={2}>
