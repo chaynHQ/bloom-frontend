@@ -106,7 +106,7 @@ describe('Home page should display', () => {
   });
 
   it('testimonial section', () => {
-    cy.checkImage('blue_person_tea', 'blue_person_with_tea');
+    cy.checkImage('Illustration of a person sitting cross legged with a tea', 'tea_blue');
     cy.get('blockquote').should(
       'contain',
       'It has brought so much clarity to my past experiences, putting words, labels, researched proof to what I didn’t know how to explain or process, I just knew the feelings.',
