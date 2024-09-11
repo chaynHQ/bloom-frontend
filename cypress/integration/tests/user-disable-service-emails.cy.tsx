@@ -17,7 +17,10 @@ describe('User disable service emails page should display', () => {
       'contain',
       `You will no longer receive emails related to Bloom. If you'd like to change this later, please get in touch with the`,
     );
-    cy.checkLink('/account/disable-service-emails#', 'Bloom team');
+    cy.checkLink(
+      'https://chayn.typeform.com/to/OY9Wdk4h?typeform-source=bloom.chayn.co',
+      'Bloom team',
+    );
   });
 
   after(() => {
