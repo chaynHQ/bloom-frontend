@@ -7,14 +7,16 @@ describe.only('User account settings page', () => {
     cy.logInWithEmailAndPassword(publicEmail, Cypress.env('CYPRESS_PUBLIC_PASSWORD'));
   });
 
-  it.skip('Should display disabled user email and name fields with user data', () => {
+  beforeEach(() => {
     cy.visit('/account/settings');
+  });
+
+  it.skip('Should display disabled user email and name fields with user data', () => {
     cy.get('#email', { timeout: 8000 }).should('have.value', publicEmail);
     cy.get('#name').should('have.value', publicName);
   });
 
   it.skip('Should have marketing and service email checkbox fields and submit button', () => {
-    cy.visit('/account/settings');
     cy.get('input[name="contactPermission"]', { timeout: 8000 }).check();
     cy.get('input[name="serviceEmailsPermission"]').check();
     cy.get('button[type="submit"]').contains('Save email preferences').click();
@@ -30,7 +32,6 @@ describe.only('User account settings page', () => {
       NEVER: 3,
     };
 
-    cy.visit('/account/settings');
     // Get currently set value
     cy.get('input[name="email-reminders-settings"]:checked').then((item) => {
       const currentValue: string = item.val().toString();
@@ -48,6 +49,22 @@ describe.only('User account settings page', () => {
         .click();
       cy.get('input[name="email-reminders-settings"]').eq(newIndex).should('be.checked');
     });
+  });
+
+  it('Should display header section', () => {
+    cy.get('h1').should('contain', 'Account Settings');
+    cy.get('p').should('contain', 'View and update your settings in bloom');
+    cy.checkImage('Illustration of a mobile phone with message containing a heart', 'phone');
+  });
+
+  it('Should display Account actions section', () => {
+    cy.get('h2').should('contain', 'Account actions');
+    cy.get('p').should(
+      'contain',
+      `Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.`,
+    );
+    cy.get('button').should('contain', 'Reset password');
+    cy.get('button').should('contain', 'Delete Account');
   });
 
   after(() => {
