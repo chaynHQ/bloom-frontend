@@ -59,16 +59,8 @@ describe('Welcome badoo page should display', () => {
   });
 
   describe('for a non-logged in user', () => {
-    const inputAccessCodeTag = 'input[id="accessCode"]';
-    const labelAccessCodeTag = 'label[id="accessCode-label"]';
-    it('get started panel', () => {
-      cy.get('h2').should('contain', 'Get started');
-      cy.get('p').should(
-        'contain',
-        'Enter the access code you received from Badoo to begin your Bloom journey.',
-      );
-      cy.get(labelAccessCodeTag).should('exist').should('have.attr', 'for', 'accessCode');
-      cy.get(inputAccessCodeTag).should('exist');
+    it('get started button', () => {
+      cy.get('a[href="/auth/register?partner=badoo"]').should('contain', 'Get started');
     });
   });
   describe('for a public logged in user', () => {
@@ -81,10 +73,7 @@ describe('Welcome badoo page should display', () => {
       cy.logInWithEmailAndPassword(email, password);
     });
     it('continue to bloom panel', () => {
-      const coursesUrl = '/courses';
-      cy.get('h2').should('contain', 'Continue to Bloom');
-      cy.get('p').should('contain', 'Pick up where you left off.');
-      cy.checkLink(coursesUrl, 'Go to courses');
+      cy.get('a[href="/courses"]').should('contain', 'Go to courses');
     });
     after(() => {
       cy.logout();
