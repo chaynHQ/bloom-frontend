@@ -28,7 +28,7 @@ describe('Register with access code', () => {
   it('Access code should be on first register button link', () => {
     // Start from the home page
     cy.visit(welcomeCodeLink);
-    cy.get(`button[href="http://localhost:3000/auth/register?partner=badoo&code=${welcomeCode}"]`)
+    cy.get(`a[href="/auth/register?partner=badoo&code=${welcomeCode}"]`)
       .contains('Get started')
       .click();
     cy.wait(2000); // waiting for dom to rerender
