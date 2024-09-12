@@ -131,10 +131,11 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         <Box sx={introTextStyle}>{render(introduction, RichTextOptions)}</Box>
 
         <Button
-          sx={{ mt: 3, px: 6 }}
+          sx={{ mt: 4, px: 6 }}
           variant="contained"
           component={Link}
           color="secondary"
+          size="large"
           onClick={logPromoEvent}
           href={
             userId
