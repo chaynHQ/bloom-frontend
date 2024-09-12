@@ -33,7 +33,7 @@ describe('Register with access code', () => {
       .click();
     cy.wait(2000); // waiting for dom to rerender
     cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
-    cy.get('#partnerAccessCode').should('contain', welcomeCode);
+    cy.get('#partnerAccessCode').should('have.value', welcomeCode);
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');
