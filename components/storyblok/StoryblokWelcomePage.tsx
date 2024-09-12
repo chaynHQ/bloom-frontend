@@ -1,12 +1,10 @@
-import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import Link from '../../components/common/Link';
-import WelcomeCodeForm from '../../components/forms/WelcomeCodeForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection, {
   StoryblokPageSectionProps,
@@ -16,33 +14,29 @@ import {
   generatePartnerPromoGoToCoursesEvent,
 } from '../../constants/events';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { useGetAutomaticAccessCodeFeatureForPartnerQuery } from '../../store/api';
-import { rowStyle } from '../../styles/common';
-import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
+import Link from '../common/Link';
 
 const introContainerStyle = {
-  maxWidth: 600,
-  width: { xs: '100%', md: '45%' },
-  fontSize: '1.375rem',
-  fontFamily: 'Montserrat, sans-serif',
-  fontStyle: 'italic',
-  lineHeight: 1.75,
-  'p, a, span': {
-    fontSize: '1.375rem',
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'italic',
-    lineHeight: 1.75,
+  backgroundColor: 'secondary.light',
+  textAlign: 'center',
+  '*': {
+    marginX: 'auto !important',
   },
 } as const;
 
-const rowItem = {
-  width: { xs: '100%', sm: '60%', md: '45%' },
-  height: '100%',
+const introTextStyle = {
+  width: { xs: '100%', md: '100%' },
+
+  'p, a, span': {
+    fontSize: '1.25rem',
+    fontFamily: 'Montserrat, sans-serif',
+    lineHeight: 1.4,
+  },
 } as const;
 
 export interface StoryblokWelcomePageProps {
@@ -67,6 +61,52 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
     imageAlt: 'alt.bloomHead',
   };
 
+  const [codeParam, setCodeParam] = useState<string>('');
+  const router = useRouter();
+  const dispatch: any = useAppDispatch();
+  const t = useTranslations('Welcome');
+
+  const userId = useTypedSelector((state) => state.user.id);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
+  // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
+  useEffect(() => {
+    const { code } = router.query;
+
+    if (code) {
+      // code in url query
+      setCodeParam(code + '');
+    } else if (
+      entryPartnerReferral === partnerContent.name.toLowerCase() &&
+      entryPartnerAccessCode
+    ) {
+      // Entry code in state, add to url query in case of refresh
+      router.replace(
+        {
+          query: { ...router.query, code: entryPartnerAccessCode },
+        },
+        undefined,
+        {
+          shallow: true,
+        },
+      );
+      setCodeParam(entryPartnerAccessCode);
+    }
+  }, [dispatch, router, entryPartnerAccessCode, entryPartnerReferral, partnerContent.name]);
+
+  const logPromoEvent = () => {
+    if (userId) {
+      logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name), eventUserData);
+    } else {
+      logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name), eventUserData);
+    }
+  };
+
   return (
     <Box
       {...storyblokEditable({
@@ -87,102 +127,29 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
       />
-      <Container sx={{ ...rowStyle, backgroundColor: 'primary.light' }}>
-        <Box sx={introContainerStyle}>{render(introduction, RichTextOptions)}</Box>
-        <CallToActionCard partnerName={partnerContent.name} />
+      <Container sx={introContainerStyle}>
+        <Box sx={introTextStyle}>{render(introduction, RichTextOptions)}</Box>
+
+        <Button
+          sx={{ mt: 3, px: 6 }}
+          variant="contained"
+          component={Link}
+          color="secondary"
+          onClick={logPromoEvent}
+          href={
+            userId
+              ? '/courses'
+              : `/auth/register?partner=${partnerContent.name.toLocaleLowerCase()}${codeParam && '&code=' + codeParam}`
+          }
+        >
+          {t(userId ? 'goToCourses' : 'getStarted')}
+        </Button>
       </Container>
       {page_sections?.length > 0 &&
         page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
     </Box>
-  );
-};
-
-const CallToActionCard = ({ partnerName }: { partnerName: string }) => {
-  const router = useRouter();
-
-  const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const partners = useTypedSelector((state) => state.partners);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
-  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
-  const [codeParam, setCodeParam] = useState<string>('');
-
-  const t = useTranslations('Welcome');
-
-  useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
-  useEffect(() => {
-    const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
-    if (partnerData) {
-      setAccessCodeRequired(!hasAutomaticAccessFeature(partnerData));
-    }
-  }, [partners, partnerName]);
-
-  useEffect(() => {
-    const { code } = router.query;
-    if (code) setCodeParam(code + '');
-  }, [setCodeParam, router.query]);
-
-  return (
-    <Card sx={rowItem}>
-      <CardContent>
-        {userId && (
-          <>
-            <Typography variant="h2" component="h2">
-              {t('continueCourses')}
-            </Typography>
-            <Typography>{t('continueCoursesDescription')}</Typography>
-            <Button
-              sx={{ mt: 3 }}
-              variant="contained"
-              fullWidth
-              component={Link}
-              color="secondary"
-              onClick={() => {
-                logEvent(generatePartnerPromoGoToCoursesEvent(partnerName), eventUserData);
-              }}
-              href="/courses"
-            >
-              {t('goToCourses')}
-            </Button>
-          </>
-        )}
-        {!userId && (accessCodeRequired || codeParam) && (
-          <>
-            <Typography variant="h2" component="h2">
-              {t('getStarted')}
-            </Typography>
-            <Typography>{t.rich('accessIntroduction', { partnerName })}</Typography>
-            <WelcomeCodeForm codeParam={codeParam} partnerParam={partnerName} />
-          </>
-        )}
-        {!userId && !accessCodeRequired && !codeParam && (
-          <>
-            <Typography variant="h2" component="h2">
-              {t('getStarted')}
-            </Typography>
-            <Typography>{t.rich('publicIntroduction', { partnerName })}</Typography>
-            <Button
-              sx={{ mt: 3 }}
-              variant="contained"
-              fullWidth
-              component={Link}
-              color="secondary"
-              onClick={() => {
-                logEvent(generatePartnerPromoGetStartedEvent(partnerName), eventUserData);
-              }}
-              href={`/auth/register?partner=${partnerName.toLocaleLowerCase()}`}
-            >
-              {t('getStarted')}
-            </Button>
-          </>
-        )}
-      </CardContent>
-    </Card>
   );
 };
 

@@ -58,7 +58,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const userLoading = useTypedSelector((state) => state.user.loading);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [codeInput, setCodeInput] = useState<string>('');
+  const [codeInput, setCodeInput] = useState<string>(codeParam ?? '');
   const [nameInput, setNameInput] = useState<string>('');
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
@@ -76,11 +76,9 @@ const RegisterForm = (props: RegisterFormProps) => {
   const tS = useTranslations('Shared');
   const router = useRouter();
 
-  useEffect(() => {
-    if (codeParam) {
-      setCodeInput(codeParam);
-    }
-  }, [codeParam]);
+  // Include access code field if the partner requires access codes, or the user
+  // has provided an access code for additional features on signup (i.e. not required, but additional access)
+  const includeCodeField = partnerName && (accessCodeRequired || codeParam);
 
   useEffect(() => {
     // Redirects in 2 scenarios:
@@ -194,7 +192,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     setLoading(true);
     setFormError('');
 
-    partnerName && accessCodeRequired && (await validateAccessCode());
+    includeCodeField && (await validateAccessCode());
     await createUserRecord();
     setLoading(false);
   };
@@ -202,7 +200,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   return (
     <Box sx={containerStyle}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        {partnerName && accessCodeRequired && (
+        {includeCodeField && (
           <TextField
             id="partnerAccessCode"
             onChange={(e) => setCodeInput(e.target.value)}
@@ -279,15 +277,15 @@ interface PartnerRegisterFormProps {
 
 export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
   const partners = useTypedSelector((state) => state.partners);
-  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(true);
+  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(false);
   const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
 
   useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
 
   useEffect(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
-    if (partnerData) {
-      setAccessCodeRequired(!hasAutomaticAccessFeature(partnerData));
+    if (partnerData && hasAutomaticAccessFeature(partnerData) === false) {
+      setAccessCodeRequired(true);
       setPartnerId(partnerData.id);
     }
   }, [partners, partnerName]);
