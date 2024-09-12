@@ -41,7 +41,6 @@ jobs:
             https://bloom-frontend-git-develop-chaynhq.vercel.app/meet-the-team
             https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/register
             https://bloom-frontend-git-develop-chaynhq.vercel.app/welcome/bumble
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/partnership/bumble
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
       - name: Upload artifact
@@ -70,7 +69,6 @@ jobs:
             https://bloom-frontend-git-develop-chaynhq.vercel.app/meet-the-team
             https://bloom-frontend-git-develop-chaynhq.vercel.app/auth/register
             https://bloom-frontend-git-develop-chaynhq.vercel.app/welcome/bumble
-            https://bloom-frontend-git-develop-chaynhq.vercel.app/partnership/bumble
           budgetPath: ./lighthouse_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
       - name: Upload artifact
