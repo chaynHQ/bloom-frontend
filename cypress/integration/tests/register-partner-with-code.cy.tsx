@@ -3,6 +3,7 @@ describe('Register with access code', () => {
   let welcomeCodeLink = null;
   let welcomeCode = null;
   let username = `cypresstestemail+${Date.now()}@chayn.co`;
+
   before(() => {
     cy.cleanUpTestState();
 
@@ -24,20 +25,15 @@ describe('Register with access code', () => {
     cy.logout();
   });
 
-  it('Access code input should be on form', () => {
+  it('Access code should be on first register button link', () => {
     // Start from the home page
     cy.visit(welcomeCodeLink);
-    cy.wait(5000);
-    // The new page should contain an h2 with "Reset your password"
-    cy.get('p', { timeout: 8000 }).contains(
-      'Enter the access code you received from Badoo to begin your Bloom journey.',
-    );
-    cy.get('#accessCode')
-      .invoke('val')
-      .then((val) => expect(val).equals(welcomeCode));
-    cy.get('button[type="submit"]').contains('Get started').click();
+    cy.get(`button[href="http://localhost:3000/auth/register?partner=badoo&code=${welcomeCode}"]`)
+      .contains('Get started')
+      .click();
     cy.wait(2000); // waiting for dom to rerender
     cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('#partnerAccessCode').should('contain', welcomeCode);
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');

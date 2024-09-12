@@ -8,13 +8,6 @@ describe('Register without access code', () => {
   it('Access code input should not be on form', () => {
     // Start from the home page
     cy.visit('/welcome/bumble');
-    cy.wait(5000);
-    cy.get('p', { timeout: 8000 })
-      .contains('Enter the access code you received from Bumble to begin your Bloom journey.')
-      .should('not.exist');
-    cy.get('p').contains(
-      'Create an account with Bloom to get started with our courses, or first find out more about Bloom below.',
-    );
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
     cy.wait(2000); // waiting for dom to rerender
     cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
