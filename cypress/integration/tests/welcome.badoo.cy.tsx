@@ -30,7 +30,7 @@ describe('Welcome badoo page should display', () => {
     cy.get('h2').should('contain', 'About the program');
     cy.get('p').should(
       'contain',
-      'Everyone’s healing journey is different. When we experience trauma due to sexual assault and relationship abuse, we may need support. Badoo partnered with Bloom to create a free, curated, online trauma support program for survivors. This program has been developed based on feedback from the global Badoo and Bloom communities.',
+      'Everyone’s healing journey is different. When we experience trauma such as sexual assault and relationship abuse, we may need support to manage the aftermath effects. Badoo has partnered with Bloom to create a free, custom curated online trauma support program for survivors of sexual assault and relationship abuse. This program has been developed based on feedback from the global Badoo and Bloom communities.',
     );
   });
 
