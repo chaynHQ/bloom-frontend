@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // Import the functions you need from the SDKs you need
 import { Analytics } from '@vercel/analytics/react';
 import { NextComponentType } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
+import { IntlError, NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -57,12 +57,21 @@ function MyApp(props: MyAppProps) {
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
 
+  function onIntlError(error: IntlError) {
+    if (error.code === 'MISSING_MESSAGE') {
+      console.error(`${error.message} Page: ${router.asPath}`);
+    } else {
+      console.error(error);
+    }
+  }
+
   return (
     <ErrorBoundary>
       <NextIntlClientProvider
         messages={pageProps.messages}
         locale={router.locale}
         timeZone="Europe/London"
+        onError={onIntlError}
       >
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />

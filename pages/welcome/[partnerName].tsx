@@ -39,6 +39,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       ...storyblokProps,
       messages: {
+        ...require(`../../messages/courses/${locale}.json`),
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
         ...require(`../../messages/welcome/${locale}.json`),
@@ -50,7 +51,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
-    published: true,
+    version: 'published',
     starts_with: 'welcome/',
   };
 

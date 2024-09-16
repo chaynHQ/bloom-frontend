@@ -75,7 +75,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
-    published: true,
+    version: 'published',
     starts_with: 'courses/',
   };
 

@@ -9,7 +9,6 @@ export const getStoryblokPageProps = async (
   if (!slug) {
     return {
       story: null,
-      key: false,
       preview,
       locale: locale || null,
       error: 'No slug provided',
@@ -27,11 +26,10 @@ export const getStoryblokPageProps = async (
     let { data } = await storyblokApi.get(`cdn/stories/${slug}`, sbParams);
     return {
       story: data ? data.story : null,
-      key: data ? data.story.id : false,
       preview,
       locale: locale || null,
     };
   } catch (error) {
-    console.log('Error getting storyblok data for page', error);
+    console.log('Error getting storyblok data for page', slug, sbParams, error);
   }
 };
