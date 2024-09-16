@@ -23,6 +23,8 @@ export interface User {
   isSuperAdmin: boolean;
   activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
+  entryPartnerAccessCode: string | null;
+  entryPartnerReferral: string | null;
 }
 
 // GetUserDto is the response format of the Get User endpoint
@@ -80,6 +82,8 @@ const initialState: User = {
   isSuperAdmin: false,
   activeSubscriptions: [],
   authStateLoading: true,
+  entryPartnerAccessCode: null,
+  entryPartnerReferral: null,
 };
 
 const slice = createSlice({
@@ -91,6 +95,12 @@ const slice = createSlice({
     },
     setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
+    },
+    setEntryPartnerReferral(state, action: PayloadAction<string>) {
+      state.entryPartnerReferral = action.payload;
+    },
+    setEntryPartnerAccessCode(state, action: PayloadAction<string>) {
+      state.entryPartnerAccessCode = action.payload;
     },
     setUserLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
@@ -148,6 +158,13 @@ const isSubscriptionActive = (subscription: Subscription): subscription is Activ
 };
 
 const { actions, reducer } = slice;
-export const { clearUserSlice, setUserToken, setUserLoading, setAuthStateLoading, setLoadError } =
-  actions;
+export const {
+  clearUserSlice,
+  setUserToken,
+  setUserLoading,
+  setAuthStateLoading,
+  setLoadError,
+  setEntryPartnerAccessCode,
+  setEntryPartnerReferral,
+} = actions;
 export default reducer;

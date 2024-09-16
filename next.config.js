@@ -54,9 +54,9 @@ module.exports = withBundleAnalyzer(
           permanent: false,
         },
         {
-          source: '/about-our-courses',
-          destination: '/courses',
-          permanent: false,
+          source: '/partnership/:path*',
+          destination: '/welcome/:path*',
+          permanent: true,
         },
       ];
     },

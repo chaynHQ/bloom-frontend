@@ -23,22 +23,14 @@ describe('Welcome badoo page should display', () => {
     );
   });
   it('about the program content', () => {
-    const partnershipBadooUrl = '/partnership/badoo';
-    cy.checkImage('person with legs crossed holding heart', 'badoo_welcome_1');
+    cy.checkImage(
+      'Illustration of a person sitting down with a laptop. Illustrations of video, messaging and flowers are included.',
+      'landing_page_illo',
+    );
     cy.get('h2').should('contain', 'About the program');
     cy.get('p').should(
       'contain',
-      'Everyone’s healing journey is different. When we experience trauma due to sexual assault and relationship abuse, we may need support. Badoo partnered with Bloom to create a free, curated, online trauma support program for survivors. This program has been developed based on feedback from the global Badoo and Bloom communities.',
-    );
-    cy.checkLink(partnershipBadooUrl, 'About the partnership');
-  });
-
-  it('about Bloom content', () => {
-    cy.checkImage('leaves with a rose bloom', 'leaf_mix_bloom');
-    cy.get('h2').should('contain', 'About Bloom');
-    cy.get('p').should(
-      'contain',
-      'Bloom informs and empowers survivors by offering remote courses that combine the insights of survivors globally on trauma and gender-based violence with therapeutic practices to heal from trauma. Bloom is a programme by Chayn.',
+      'Everyone’s healing journey is different. When we experience trauma such as sexual assault and relationship abuse, we may need support to manage the aftermath effects. Badoo has partnered with Bloom to create a free, custom curated online trauma support program for survivors of sexual assault and relationship abuse. This program has been developed based on feedback from the global Badoo and Bloom communities.',
     );
   });
 
@@ -51,41 +43,22 @@ describe('Welcome badoo page should display', () => {
     );
   });
 
-  it('about you content', () => {
-    cy.checkImage('leaves with fire', 'leaf_mix_fire');
-    cy.get('h2').should('contain', 'About you');
-    cy.get('p').should(
-      'contain',
-      'The programme is available to any Badoo user who reports sexual abuse or assault to Badoo, regardless of your background, race, age, disability, religion or belief, sexuality, gender identity or expression, or life circumstances – we are here for you.',
-    );
-  });
-
   describe('for a non-logged in user', () => {
-    const inputAccessCodeTag = 'input[id="accessCode"]';
-    const labelAccessCodeTag = 'label[id="accessCode-label"]';
-    it('get started panel', () => {
-      cy.get('h2').should('contain', 'Get started');
-      cy.get('p').should(
-        'contain',
-        'Enter the access code you received from Badoo to begin your Bloom journey.',
-      );
-      cy.get(labelAccessCodeTag).should('exist').should('have.attr', 'for', 'accessCode');
-      cy.get(inputAccessCodeTag).should('exist');
+    it('get started button', () => {
+      cy.get('a[href="/auth/register?partner=badoo"]').should('contain', 'Get started');
     });
   });
   describe('for a public logged in user', () => {
+    const email = `cypresstestemail+${Date.now()}@chayn.co`;
+    const password = 'testtesttest';
+
     before(() => {
       cy.cleanUpTestState();
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_PUBLIC_EMAIL'),
-        Cypress.env('CYPRESS_PUBLIC_PASSWORD'),
-      );
+      cy.createUser({ emailInput: email, passwordInput: password });
+      cy.logInWithEmailAndPassword(email, password);
     });
     it('continue to bloom panel', () => {
-      const coursesUrl = '/courses';
-      cy.get('h2').should('contain', 'Continue to Bloom');
-      cy.get('p').should('contain', 'Pick up where you left off.');
-      cy.checkLink(coursesUrl, 'Go to courses');
+      cy.get('a[href="/courses"]').should('contain', 'Go to courses');
     });
     after(() => {
       cy.logout();

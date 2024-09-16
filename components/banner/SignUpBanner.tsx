@@ -29,7 +29,7 @@ export const SignUpBanner = () => {
   }, []);
 
   return (
-    <Container sx={containerStyle}>
+    <Container id="signup-banner" sx={containerStyle}>
       <Typography variant="h2" component="h2" mb={2}>
         {t('signUpTodayPromo.title')}
       </Typography>

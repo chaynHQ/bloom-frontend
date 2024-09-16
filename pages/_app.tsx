@@ -22,6 +22,7 @@ import createEmotionCache from '../config/emotionCache';
 import firebase from '../config/firebase';
 import { storyblok } from '../config/storyblok';
 import { AuthGuard } from '../guards/AuthGuard';
+import useReferralPartner from '../hooks/useReferralPartner';
 import '../public/hotjarNPS.css';
 import { wrapper } from '../store/store';
 import '../styles/globals.css';
@@ -50,25 +51,11 @@ function MyApp(props: MyAppProps) {
     pageProps: any;
   } = props;
 
+  useReferralPartner(); // Check and set referral partner name and code if provided in entry url
   const router = useRouter();
 
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
-
-  useEffect(() => {
-    // Check if entry path is from a partner referral and if so, store referring partner in local storage
-    // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
-    const path = router.asPath;
-
-    if (path?.includes('/welcome/')) {
-      const referralPartner = path.split('/')[2].split('?')[0]; // Gets "bumble" from /welcome/bumble?code=123
-
-      if (referralPartner) {
-        window.localStorage.setItem('referralPartner', referralPartner);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <ErrorBoundary>

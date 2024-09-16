@@ -19,6 +19,7 @@ import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
+import { SignUpBanner } from '../banner/SignUpBanner';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -217,7 +218,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
                             session={session}
                             sessionSubtitle={position}
                             storyblokCourseId={storyId}
-                            clickable={isLoggedIn}
+                            isLoggedIn={isLoggedIn}
                           />
                         );
                       })}
@@ -229,6 +230,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
           </>
         )}
       </Container>
+      {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };
