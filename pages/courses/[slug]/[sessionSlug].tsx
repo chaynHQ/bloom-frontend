@@ -88,7 +88,12 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     const slug = session.slug;
     if (!slug) return;
 
-    if (session.is_startpage || session.is_folder || isAlternativelyHandledSession(slug)) {
+    if (
+      session.is_startpage ||
+      session.is_folder ||
+      isAlternativelyHandledSession(slug) ||
+      !session.published
+    ) {
       return;
     }
 

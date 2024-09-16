@@ -66,7 +66,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let paths: any = [];
 
   courses.forEach((course: Partial<ISbStoryData>) => {
-    if (!course.slug) return;
+    if (!course.slug || !course.published) return;
 
     if (!course.is_startpage || isAlternativelyHandledCourse(course.slug)) {
       return;

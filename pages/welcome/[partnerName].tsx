@@ -61,7 +61,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let paths: any = [];
 
   data.forEach((story: Partial<ISbStoryData>) => {
-    if (!story.slug) return;
+    if (!story.slug || !story.published) return;
 
     // get array for slug because of catch all
     let splittedSlug = story.slug.split('/');
