@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { rowStyle } from '../../styles/common';
+import Link from '../common/Link';
 import { SessionProgressDisplay } from '../session/SessionProgressDisplay';
 
 const cardStyle = {
@@ -65,7 +66,7 @@ const SessionCard = (props: SessionCardProps) => {
   const t = useTranslations('Courses');
   const router = useRouter();
 
-  const handleCardClick = () => {
+  const scrollToSignupBanner = () => {
     if (isLoggedIn) {
       router.push(`/${session.full_slug}`);
     } else {
@@ -91,7 +92,9 @@ const SessionCard = (props: SessionCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea
         sx={cardActionStyle}
-        onClick={handleCardClick}
+        {...(isLoggedIn
+          ? { onClick: scrollToSignupBanner }
+          : { href: `/${session.full_slug}`, component: Link })}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>
