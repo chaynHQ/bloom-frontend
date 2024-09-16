@@ -37,7 +37,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const storyblokApi = getStoryblokApi();
-  let { data } = await storyblokApi.get('cdn/links/', { published: true });
+  let { data } = await storyblokApi.get('cdn/links/', { version: 'published' });
 
   const excludePaths: string[] = [
     'home',
@@ -50,7 +50,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
   let paths: any = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (data.links[linkKey].is_folder) {
+    if (data.links[linkKey].is_folder || !data.links[linkKey].published) {
       return;
     }
 
