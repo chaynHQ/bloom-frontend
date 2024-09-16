@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
@@ -55,14 +56,29 @@ interface SessionCardProps {
   session: ISbStoryData;
   sessionSubtitle: string;
   storyblokCourseId: number;
-  clickable: boolean;
+  isLoggedIn: boolean;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionSubtitle, storyblokCourseId, clickable } = props;
+  const { session, sessionSubtitle, storyblokCourseId, isLoggedIn } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const t = useTranslations('Courses');
+  const router = useRouter();
+
+  const scrollToSignupBanner = () => {
+    if (isLoggedIn) {
+      router.push(`/${session.full_slug}`);
+    } else {
+      const signupBanner = document.getElementById('signup-banner');
+
+      if (signupBanner) {
+        const scrollToY = signupBanner.getBoundingClientRect().top + window.scrollY - 136;
+
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -74,27 +90,13 @@ const SessionCard = (props: SessionCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      {clickable ? (
-        <CardActionArea
-          sx={cardActionStyle}
-          component={Link}
-          href={`/${session.full_slug}`}
-          aria-label={`${t('navigateToSession')} ${session.name}`}
-        >
-          <CardContent sx={cardContentStyle}>
-            <Box sx={cardContentRowStyles}>
-              <SessionProgressDisplay
-                sessionId={session.id}
-                storyblokCourseId={storyblokCourseId}
-              />
-              <Typography flex={1} component="h3" variant="h3">
-                {session.content.name}
-              </Typography>
-            </Box>
-            <Typography color="grey.700">{sessionSubtitle}</Typography>
-          </CardContent>
-        </CardActionArea>
-      ) : (
+      <CardActionArea
+        sx={cardActionStyle}
+        {...(isLoggedIn
+          ? { onClick: scrollToSignupBanner }
+          : { href: `/${session.full_slug}`, component: Link })}
+        aria-label={`${t('navigateToSession')} ${session.name}`}
+      >
         <CardContent sx={cardContentStyle}>
           <Box sx={cardContentRowStyles}>
             <SessionProgressDisplay sessionId={session.id} storyblokCourseId={storyblokCourseId} />
@@ -104,7 +106,7 @@ const SessionCard = (props: SessionCardProps) => {
           </Box>
           <Typography color="grey.700">{sessionSubtitle}</Typography>
         </CardContent>
-      )}
+      </CardActionArea>
       <CardActions sx={cardActionsStyle}>
         <IconButton
           sx={{ marginLeft: 'auto' }}

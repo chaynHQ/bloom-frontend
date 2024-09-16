@@ -6,7 +6,6 @@ import StoryblokCoursePage, {
 } from '../../../components/storyblok/StoryblokCoursePage';
 import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
 
-import { SignUpBanner } from '../../../components/banner/SignUpBanner';
 import { useTypedSelector } from '../../../hooks/store';
 interface Props {
   story: ISbStoryData | null;
@@ -23,7 +22,6 @@ const CourseOverview: NextPage<Props> = ({ story }) => {
   return (
     <>
       <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
-      {!userId && <SignUpBanner />}
     </>
   );
 };
