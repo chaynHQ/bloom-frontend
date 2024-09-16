@@ -43,7 +43,7 @@ const Chat: NextPage<Props> = ({ story }) => {
     <>
       <Head>
         <title>{headerProps.title}</title>
-      </Head>
+      </Head>{' '}
       <Box>
         <Header
           {...headerProps}
@@ -60,7 +60,12 @@ const Chat: NextPage<Props> = ({ story }) => {
         {userId ? (
           story.content.page_sections?.length > 0 &&
           story.content.page_sections.map((section: any, index: number) => (
-            <StoryblokPageSection key={`page_section_${index}`} {...section} />
+            <>
+              <Box padding="10%" borderRadius="100px" overflow={'hidden'}>
+                <iframe height="500px" width="100%" src={'/crisp'}></iframe>
+              </Box>
+              <StoryblokPageSection key={`page_section_${index}`} {...section} />
+            </>
           ))
         ) : (
           <SignUpBanner />
