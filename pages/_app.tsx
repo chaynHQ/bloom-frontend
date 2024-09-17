@@ -75,7 +75,6 @@ function MyApp(props: MyAppProps) {
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
-        {/* <CrispScript /> */}
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />
