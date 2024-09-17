@@ -20,12 +20,20 @@ const chatRowStyle = {
 } as const;
 
 const iframeContainerStyle = {
+  position: 'relative',
   flex: 1,
   width: '100%',
   height: { xs: '70vh', md: '500px' },
+  marginTop: -4,
   maxHeight: { md: '500px' },
   borderRadius: 1,
   overflow: 'hidden',
+} as const;
+
+const iframeStyle = {
+  position: 'absolute',
+  marginTop: -158,
+  borderRadius: 16,
 } as const;
 
 const imageContainerStyle = {
@@ -95,7 +103,7 @@ const Chat: NextPage<Props> = ({ story }) => {
                   />
                 </Box>
                 <Box sx={iframeContainerStyle}>
-                  <iframe height="100%" width="100%" src={crispUrl} />
+                  <iframe height="100%" width="100%" style={iframeStyle} src={crispUrl} />
                 </Box>
               </Box>
             </Container>

@@ -38,6 +38,7 @@ interface StoryblokAccordionItemProps {
   _editable: string;
   body: any;
   title: string;
+  title_size: 'small' | 'large';
   icon: { filename: string; alt: string };
 }
 interface StoryblokAccordionProps {
@@ -72,7 +73,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
             aria-controls={`panel${i}-content`}
             id={`panel${i}-header`}
           >
-            {ai.icon && (
+            {ai.icon?.filename && (
               <Icon
                 sx={{
                   position: 'relative',
@@ -96,7 +97,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
               <Typography
                 sx={{ marginBottom: 0, maxWidth: 800 }}
                 component="h3"
-                variant="h3"
+                variant={ai.title_size === 'small' ? 'body1' : 'h3'}
                 textAlign="left"
               >
                 {ai.title}
