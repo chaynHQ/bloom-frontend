@@ -13,6 +13,7 @@ import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import CrispScript from '../components/crisp/CrispScript';
+import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import Consent from '../components/layout/Consent';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
@@ -76,6 +77,7 @@ function MyApp(props: MyAppProps) {
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
+        <GoogleTagManagerScript />
         <CrispScript />
         <ThemeProvider theme={theme}>
           <CssBaseline />
