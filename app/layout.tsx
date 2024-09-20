@@ -1,4 +1,6 @@
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
+import rootMetadata from './rootMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import ThemeRegistry from './ThemeRegistry';
 import rootMetadata from './rootMetadata';
@@ -21,7 +23,9 @@ export default function RootLayout({
         */}
         <GoogleTagManagerScript />
         <RollbarScript />
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ErrorBoundary>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </ErrorBoundary>
       </body>
     </html>
   );
