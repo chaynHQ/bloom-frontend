@@ -1,12 +1,9 @@
-import { Metadata } from 'next';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import RollbarScript from '../components/head/RollbarScript';
 import { newRelicInit } from '../config/newRelic';
+import rootMetadata from './rootMetadata';
 
-// Nextjs automatically includes for each route two default meta tags, charset and viewport
-// https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields
-export const metadata: Metadata = {
-  title: 'Bloom',
-};
+export const metadata = rootMetadata;
 
 export default async function RootLayout({
   // Layouts must accept a children prop.
@@ -24,6 +21,7 @@ export default async function RootLayout({
         but sending an event using sendGTMEvent requires an object rather than a list of arguments so the current gtag api function would need to be adapted
         */}
         <GoogleTagManagerScript />
+        <RollbarScript />
         {children}
         {NewRelicScript}
       </body>

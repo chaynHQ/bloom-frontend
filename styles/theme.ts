@@ -1,4 +1,5 @@
 import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles';
+import { PRIMARY_MAIN_COLOR } from '../constants/common';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here
 declare module '@mui/material/styles' {
@@ -16,7 +17,7 @@ declare module '@mui/material/styles' {
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#F3D6D8',
+      main: PRIMARY_MAIN_COLOR,
       light: '#F7E2E4',
       dark: '#EA0050',
     },
