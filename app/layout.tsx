@@ -1,12 +1,8 @@
-import { Metadata } from 'next';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
+import rootMetadata from './rootMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 
-// Nextjs automatically includes for each route two default meta tags, charset and viewport
-// https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields
-export const metadata: Metadata = {
-  title: 'Bloom',
-};
+export const metadata = rootMetadata;
 
 export default function RootLayout({
   // Layouts must accept a children prop.
