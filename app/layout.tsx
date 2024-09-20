@@ -1,7 +1,10 @@
+import Analytics from '../components/head/Analytics';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import RollbarScript from '../components/head/RollbarScript';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
 import { newRelicInit } from '../config/newRelic';
 import rootMetadata from './rootMetadata';
+import ThemeRegistry from './ThemeRegistry';
 
 export const metadata = rootMetadata;
 
@@ -22,8 +25,11 @@ export default async function RootLayout({
         */}
         <GoogleTagManagerScript />
         <RollbarScript />
-        {children}
+        <ErrorBoundary>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </ErrorBoundary>
         {NewRelicScript}
+        <Analytics />
       </body>
     </html>
   );
