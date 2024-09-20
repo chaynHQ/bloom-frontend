@@ -1,9 +1,9 @@
+import Analytics from '../components/head/Analytics';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import rootMetadata from './rootMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import ThemeRegistry from './ThemeRegistry';
-import rootMetadata from './rootMetadata';
 
 export const metadata = rootMetadata;
 
@@ -26,6 +26,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <ThemeRegistry>{children}</ThemeRegistry>
         </ErrorBoundary>
+        <Analytics />
       </body>
     </html>
   );
