@@ -4,7 +4,6 @@ import ErrorBoundary from '../components/layout/ErrorBoundary';
 import rootMetadata from './rootMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import ThemeRegistry from './ThemeRegistry';
-import rootMetadata from './rootMetadata';
 
 export const metadata = rootMetadata;
 
