@@ -1,6 +1,11 @@
+import Script from 'next/script';
+
 const RollbarScript = () => {
   return (
-    <script
+    // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
+    <Script
+      id="rollbar"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{
         __html: `
 var _rollbarConfig = {
