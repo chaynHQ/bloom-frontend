@@ -1,5 +1,6 @@
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
 import rootMetadata from './rootMetadata';
+import RollbarScript from '../components/head/RollbarScript';
 
 export const metadata = rootMetadata;
 
@@ -18,6 +19,7 @@ export default function RootLayout({
         but sending an event using sendGTMEvent requires an object rather than a list of arguments so the current gtag api function would need to be adapted
         */}
         <GoogleTagManagerScript />
+        <RollbarScript />
         {children}
       </body>
     </html>
