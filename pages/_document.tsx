@@ -4,7 +4,6 @@ import { AppType } from 'next/app';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
-import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
 import { MyAppProps } from './_app';
 
@@ -26,7 +25,6 @@ export default class MyDocument extends Document<NewRelicProps> {
             rel="stylesheet"
           />
           <OpenGraphMetadata />
-          <RollbarScript />
         </Head>
         <body>
           <Main />
