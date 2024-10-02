@@ -97,7 +97,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
         userPartners.some((partner) => story.content.included_for_partners.includes(partner)),
       );
       setLoadedCourses(coursesWithAccess);
-    } else if (referralPartner) {
+    } else if (referralPartner && !userId) {
       const coursesWithAccess = stories.filter((story) =>
         story.content.included_for_partners.includes(capitaliseFirstLetter(referralPartner)),
       );
