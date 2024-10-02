@@ -5,7 +5,7 @@ describe('Register without access code', () => {
     cy.cleanUpTestState();
   });
 
-  it('Access code input should not be on form', () => {
+  it('Access code input should not be on form and correct courses should be available', () => {
     // Start from the home page
     cy.visit('/welcome/bumble');
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
@@ -17,7 +17,13 @@ describe('Register without access code', () => {
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.wait(4000); // Waiting for dom to rerender
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
+    cy.get('a').contains('Skip').click();
+    cy.wait(2000); // Waiting for dom to rerender
+    cy.get('h3').contains('Dating, boundaries, and relationships').click();
+    cy.get('h3').contains('What are boundaries').click();
+    cy.get('h1').contains('What are boundaries').should('exist');
   });
+
   after(() => {
     cy.logout();
   });
