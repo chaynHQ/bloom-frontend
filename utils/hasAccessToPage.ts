@@ -2,10 +2,28 @@ import { PartnerAccesses } from '../store/partnerAccessSlice';
 import { PartnerAdmin } from '../store/partnerAdminSlice';
 
 const hasAccessToPage = (
+  availablePreLogin: boolean,
   partnersWithAccess: Array<string>,
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
+  referralPartner?: string | null,
 ) => {
+  // if page is available prelogin
+
+  if (availablePreLogin) {
+    // if available to bumble and has referal partner in local storage return true
+    const referralPartnerCapitalized =
+      referralPartner && referralPartner?.charAt(0).toUpperCase() + referralPartner?.slice(1);
+    if (referralPartnerCapitalized && partnersWithAccess.includes(referralPartnerCapitalized)) {
+      return true;
+    }
+    // if available to general public and has no referral partner in local storage return true
+    if (partnersWithAccess.includes('Public') && !referralPartner) {
+      return true;
+    }
+    return false;
+  }
+
   const isPublicUser = (partnerAccesses !== null && partnerAccesses.length) === 0;
   // determine if public user has access
   if (isPublicUser && partnersWithAccess.includes('Public')) {
