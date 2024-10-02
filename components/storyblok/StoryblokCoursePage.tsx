@@ -89,8 +89,11 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   useEffect(() => {
     const storyPartners = included_for_partners;
+    const referralPartner = window.localStorage.getItem('referralPartner');
 
-    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+    setIncorrectAccess(
+      !hasAccessToPage(true, storyPartners, partnerAccesses, partnerAdmin, referralPartner),
+    );
   }, [partnerAccesses, partnerAdmin, included_for_partners]);
 
   useEffect(() => {
