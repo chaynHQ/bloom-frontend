@@ -2,6 +2,7 @@ import { PartnerAccesses } from '../store/partnerAccessSlice';
 import { PartnerAdmin } from '../store/partnerAdminSlice';
 
 const hasAccessToPage = (
+  loggedIn: boolean,
   availablePreLogin: boolean,
   partnersWithAccess: Array<string>,
   partnerAccesses: PartnerAccesses,
@@ -10,7 +11,7 @@ const hasAccessToPage = (
 ) => {
   // if page is available prelogin
 
-  if (availablePreLogin) {
+  if (availablePreLogin && !loggedIn) {
     // if available to bumble and has referal partner in local storage return true
     const referralPartnerCapitalized =
       referralPartner && referralPartner?.charAt(0).toUpperCase() + referralPartner?.slice(1);
@@ -21,6 +22,9 @@ const hasAccessToPage = (
     if (partnersWithAccess.includes('Public') && !referralPartner) {
       return true;
     }
+    return false;
+  }
+  if (!availablePreLogin && !loggedIn) {
     return false;
   }
 
