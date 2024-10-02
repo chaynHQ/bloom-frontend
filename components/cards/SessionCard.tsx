@@ -93,8 +93,8 @@ const SessionCard = (props: SessionCardProps) => {
       <CardActionArea
         sx={cardActionStyle}
         {...(isLoggedIn
-          ? { onClick: scrollToSignupBanner }
-          : { href: `/${session.full_slug}`, component: Link })}
+          ? { href: `/${session.full_slug}`, component: Link }
+          : { onClick: scrollToSignupBanner })}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>
