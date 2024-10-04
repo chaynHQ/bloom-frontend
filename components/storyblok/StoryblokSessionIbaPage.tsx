@@ -108,6 +108,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmail = useTypedSelector((state) => state.user.email);
+  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -125,7 +126,9 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
   // TODO refactor chat access logic
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
-    setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
+    setIncorrectAccess(
+      !hasAccessToPage(isLoggedIn, false, coursePartners, partnerAccesses, partnerAdmin),
+    );
 
     const liveAccess = partnerAccesses.find(
       (partnerAccess) => partnerAccess.featureLiveChat === true,
