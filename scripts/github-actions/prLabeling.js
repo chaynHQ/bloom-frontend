@@ -1,6 +1,7 @@
 module.exports = async ({ github, context, core }) => {
   const pr = context.payload.pull_request;
   const bodyText = pr.body;
+  // regex to search for issue linked in description
   const issuePattern = /(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i;
   const match = bodyText.match(issuePattern);
 

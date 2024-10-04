@@ -9,13 +9,15 @@ async function main({ g, c }) {
   const prBody = context.payload.pull_request.body;
   const prNumber = context.payload.pull_request.number;
   const prOwner = context.payload.pull_request.user.login;
+  const exemptPrOwners = ['kyleecodes', 'swetha-charles', 'eleanorreem', 'annarhughes', 'tarebyte', 'dependabot[bot]', 'dependabot', 'github-actions[bot]', 'github-actions'];
   const regex =
     /(?!&lt;!--)(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s*#(\d+)(?![^&lt;]*--&gt;)/gi;
   const match = prBody.match(regex);
 
   let prComment;
 
-  if (!match) {
+  // if no issue linked in description and PR not owned by staff
+  if (!match && !exemptPrOwners.includes(prOwner)) {
     console.log('PR does not have a properly linked issue.');
     prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Above, on the first line of your PR, please link the number of the issue that you worked on using the format of 'Resolves #' + issue number, for example:   **_Fixes #9876_**\n\nNote: Do **_not_** use the number of this PR or URL for issue. Chayn staff may disregard this. A linked issue is required for automated PR labeling.`;
   } else {
