@@ -1,65 +1,41 @@
 # Cypress Testing Guide
 
-Currently, integration tests are set up to be run locally with Chrome. When cypress runs in github actions in the CI flow, it runs against staging backend.
+### Prerequisites
 
-## Setup
+- Chrome internet browser (or Chromium with 'chrome' alias on Linux).
+- Backend is running, and database populated with test data.
+- Frontend is runnning, must be on `localhost:3000` port.
 
-First, create a local `cypress.env.json` file (this file is in `.gitignore` and will be ignore by git) and populate it with environment variables listed in the `cypress.env.example.json` file. Next, configure these variables using in our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#1e51da106e1a484baf1429a04be71388).
+### Summary
 
-To configure the login credential variables in your database, first you need to create a super admin user in your database:
+We use [Cypress](https://learn.cypress.io/) for integration testing and [MailSlurp](https://www.mailslurp.com/) for email tesitng. Integration tests run locally with Chrome. In GitHub Action CI workflows, it runs against the staging backend. Cypress tests require the frontend running on `localhost:3000` port and backend running with populated database.
 
-1. Create a public user through the UI.
-2. In the database in `bloom-backend` you will need to set "isSuperAdmin" column to true for the user you created. See [BLOOM_USERS.md](/BLOOM_USERS.md) for steps on how to set up different users.
-3. There are 2 ways of data seeding with users. 1 is via a script in the bloom-scripts repo. Or 2 creating users through the UI (recommended).
+## Set-Up:
 
-   #### Creating users with the UI (Recommended):
+To set-up, configure the Cypress variables in `env.local`.
 
-   - ensure your `bloom-backend` is running.
-   - create a public user through the UI by navigating to the '/' home page and following instructions to create a user.
-   - To create partner admin users, log in as the super admin you created. Go to /admin/dashboard and create 1 bumble user and 1 badoo user. Make sure the emails are aliases of your own email. For example, if my email was 'test@chayn.co', I need to make accounts with emails `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`. You will need to reset the password through the UI for both of these as firebase provides a random password for you.
+1. For `CYPRESS_PROJECT_ID`: [Get started with Cypress](https://docs.cypress.io/guides/cloud/getting-started) and use your [Cypress project ID](https://docs.cypress.io/guides/cloud/account-management/projects).
+2. For `CYPRESS_MAIL_SLURP_API_KEY` and `CYPRESS_INBOX_ID`: Create a [Mailslurp account](https://www.mailslurp.com/), navigate to your dashboard to obtain the API key, then [create an Mailslurp inbox](https://docs.mailslurp.com/inboxes/).
+3. For local Bloom Users: Create local Bloom users from your local frontend. You will need a public user, a super admin user, and 2 partner admin users. Directions in [BLOOM_USERS.md](/BLOOM_USERS.md).
 
-   #### Creating users with a script:
+For additional guidance setting up Cypress environemnt variables, check out our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#1e51da106e1a484baf1429a04be71388).
 
-   - You will need to pull the [bloom-scripts repo](https://github.com/chaynHQ/bloom-scripts). This repo contains scripts for data seeding public and partner admin users. Note that you can also perform
-   - You will need the `bloom-backend/cypress-setup.ts` in the the bloom scripts repo.
-   - There are a few environment variables that you will need to get.
-
-     - URL - this is the url of your bloom-backend service so will likely be `http://localhost:35001/api`
-     - TOKEN - this needs to be a token with super admin authentication. The way you get this token is to log in as the super admin user in the UI. Go to the Network tab in the developer tools (this is for chrome users). Look for authenticated requests to the backend. A good one to use is the user/me endpoint. In the network tab it usually comes up as `me`. Click on the request and look at the request headers. In particular, look for the authorisation header. This should look like `bearer 123dsdfljkdbfksndfg;ksndg`. Copy everything that is after the `bearer ` into your .env TOKEN variable.
-     - BUMBLE_PARTNER_ID - you should be able to get this ID from your database in the `partner` table
-     - BADOO_PARTNER_ID - you should be able to get this ID from your database in the `partner` table
-     - CYPRESS_TEMPLATE_EMAIL - this needs to be your email because you will need to reset passwords in the UI. To be able to reset passwords, you need the reset email to go into your inbox. The script will generate alias email addresses for all the Cypress template users. For example - my email is `test@chayn.co`. The accounts that will be created will be under `test+publicuser@chayn.co`, `test+bumblepartneradmin@chayn.co`, `test+badoopartneradmin@chayn.co`.
-     - CYPRESS_TEMPLATE_PASSWORD - this will be the password for all test accounts created.
-     - run the script with `npm run setup-cypress`.
-
-### Finish Cypress Variable Configuration
-
-- You will have created all the accounts needed to run cypress tests.
-- You will need to reset the passwords for both partner admin accounts. Navigate to `localhost:3000/auth/login` in the frontend UI. Click on the password reset button and reset both passwords by following the instructions.
-- You now will need to populate the cypress.env.json with the information below:
-
-```
-  "bumble_partner_admin_email": "",
-  "bumble_partner_admin_password": "",
-  "badoo_partner_admin_email": "",
-  "badoo_partner_admin_password": "",
-  "super_admin_email": "",
-  "super_admin_password": "",
-  "public_email": "",
-  "public_password": "",
-```
-
-- The environment is now ready to run the tests.
-
-## Run the Tests Locally
+## Run Tests:
 
 To run the tests, follow the instructions below:
 
-1. Ensure both bloom backend and bloom front-end are running locally.
-2. Ensure the local database contains users with emails matching those in the `cypress.env.json` file.
+1. Ensure prerequisites are met.
+2. Ensure the local database contains users with emails matching those in the `env.local` file.
 3. Ensure Chrome is available on your local machine.
-4. Run the command `yarn cypress` on your terminal.
+4. Run the command `yarn cypress` on your terminal to run tests in the browser.
+   - To run a faster, head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`.
+   - Run single tests at a time by running `./node_modules/.bin/cypress run --spec cypress/integration/example_test_PATH.cy.tsx`
 5. Cypress will now open a new screen displaying the available test (this may take upto a minute the first the command runs).
 6. Click on the test you'd like to run. This will open another Chrome window and the chosen test will now run.
 
-The above option will run the tests against a visible browser. To run a head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`. The headless cypress runs will be faster as the browser elements are not visible.
+## Test Coverage
+
+A code coverage report can be generated by running `yarn cypress:coverage`. This will generate two reports:
+
+1. A coverage summary in the terminal
+2. An `index.html` page found in `./coverage` which provides details of what lines of code have or have not been covered by tests, and can be viewed in a browser

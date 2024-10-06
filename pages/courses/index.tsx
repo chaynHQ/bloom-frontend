@@ -50,7 +50,6 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
-  const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
@@ -98,7 +97,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
         userPartners.some((partner) => story.content.included_for_partners.includes(partner)),
       );
       setLoadedCourses(coursesWithAccess);
-    } else if (referralPartner) {
+    } else if (referralPartner && !userId) {
       const coursesWithAccess = stories.filter((story) =>
         story.content.included_for_partners.includes(capitaliseFirstLetter(referralPartner)),
       );
@@ -151,7 +150,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                   return (
                     <CourseCard
                       key={course.id}
-                      clickable={false}
+                      clickable={true}
                       course={course}
                       courseProgress={null}
                       liveCourseAccess={false}
@@ -165,7 +164,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                   return (
                     <CourseCard
                       key={course.id}
-                      clickable={false}
+                      clickable={true}
                       course={course}
                       courseProgress={null}
                       liveCourseAccess={false}
@@ -240,7 +239,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           </Box>
         )}
       </Container>
-      {!!showEmailRemindersBanner && isPublicUser && <EmailRemindersSettingsBanner />}
+      {!!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );
 };

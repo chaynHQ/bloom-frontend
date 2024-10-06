@@ -170,6 +170,7 @@ const EmailRemindersSettingsForm = () => {
       {showUpdateLaterMessage && <Typography variant="body2">{t('update')}</Typography>}
 
       <LoadingButton
+        qa-id="email-reminders-settings-submit"
         sx={{ mt: 3 }}
         variant="contained"
         fullWidth

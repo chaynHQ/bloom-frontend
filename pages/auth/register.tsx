@@ -19,7 +19,7 @@ import RegisterForm, { PartnerRegisterForm } from '../../components/forms/Regist
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '../../constants/events';
 import { PartnerContent, getAllPartnersContent, getPartnerContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -73,8 +73,11 @@ const Register: NextPage = () => {
   const tS = useTranslations('Shared');
   const router = useRouter();
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
@@ -83,18 +86,39 @@ const Register: NextPage = () => {
   const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
   const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
 
+  // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
   useEffect(() => {
     const { code, partner } = router.query;
 
-    if (code) setCodeParam(code + '');
-
     if (partner) {
       const partnerContentResult = getPartnerContent(partner + '');
-      if (partnerContentResult) setPartnerContent(partnerContentResult);
+      if (partnerContentResult) {
+        setPartnerContent(partnerContentResult);
+
+        if (code) {
+          // code in url query
+          setCodeParam(code + '');
+        } else if (
+          entryPartnerReferral === partnerContentResult.name.toLowerCase() &&
+          entryPartnerAccessCode
+        ) {
+          // Entry code in state, add to url query in case of refresh
+          router.replace(
+            {
+              query: { ...router.query, code: entryPartnerAccessCode },
+            },
+            undefined,
+            {
+              shallow: true,
+            },
+          );
+          setCodeParam(entryPartnerAccessCode);
+        }
+      }
     } else {
       setAllPartnersContent(getAllPartnersContent());
     }
-  }, [router.query]);
+  }, [router, dispatch, entryPartnerAccessCode, entryPartnerReferral]);
 
   const headerProps = {
     partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,

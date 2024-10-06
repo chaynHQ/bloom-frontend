@@ -19,6 +19,7 @@ import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
+import { SignUpBanner } from '../banner/SignUpBanner';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -80,7 +81,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
-
+  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -88,8 +89,18 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   useEffect(() => {
     const storyPartners = included_for_partners;
+    const referralPartner = window.localStorage.getItem('referralPartner');
 
-    setIncorrectAccess(!hasAccessToPage(storyPartners, partnerAccesses, partnerAdmin));
+    setIncorrectAccess(
+      !hasAccessToPage(
+        isLoggedIn,
+        true,
+        storyPartners,
+        partnerAccesses,
+        partnerAdmin,
+        referralPartner,
+      ),
+    );
   }, [partnerAccesses, partnerAdmin, included_for_partners]);
 
   useEffect(() => {
@@ -217,6 +228,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
                             session={session}
                             sessionSubtitle={position}
                             storyblokCourseId={storyId}
+                            isLoggedIn={isLoggedIn}
                           />
                         );
                       })}
@@ -228,6 +240,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
           </>
         )}
       </Container>
+      {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };

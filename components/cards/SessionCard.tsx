@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
@@ -55,13 +56,29 @@ interface SessionCardProps {
   session: ISbStoryData;
   sessionSubtitle: string;
   storyblokCourseId: number;
+  isLoggedIn: boolean;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionSubtitle, storyblokCourseId } = props;
+  const { session, sessionSubtitle, storyblokCourseId, isLoggedIn } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const t = useTranslations('Courses');
+  const router = useRouter();
+
+  const scrollToSignupBanner = () => {
+    if (isLoggedIn) {
+      router.push(`/${session.full_slug}`);
+    } else {
+      const signupBanner = document.getElementById('signup-banner');
+
+      if (signupBanner) {
+        const scrollToY = signupBanner.getBoundingClientRect().top + window.scrollY - 136;
+
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -75,8 +92,9 @@ const SessionCard = (props: SessionCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea
         sx={cardActionStyle}
-        component={Link}
-        href={`/${session.full_slug}`}
+        {...(isLoggedIn
+          ? { href: `/${session.full_slug}`, component: Link }
+          : { onClick: scrollToSignupBanner })}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>

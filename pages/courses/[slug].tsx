@@ -23,7 +23,9 @@ const CourseOverview: NextPage<Props> = ({ story }) => {
   }
 
   return (
-    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    <>
+      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    </>
   );
 };
 
@@ -49,7 +51,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
-    published: true,
+    version: 'published',
     starts_with: 'courses/',
     filter_query: {
       component: {
@@ -64,7 +66,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let paths: any = [];
 
   courses.forEach((course: Partial<ISbStoryData>) => {
-    if (!course.slug) return;
+    if (!course.slug || !course.published) return;
 
     if (!course.is_startpage || isAlternativelyHandledCourse(course.slug)) {
       return;

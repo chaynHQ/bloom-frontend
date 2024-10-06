@@ -21,7 +21,6 @@ const publicPathHeads = [
   '500',
   'faqs',
   'meet-the-team',
-  'partnership',
   'about-our-courses',
 ];
 
@@ -29,6 +28,12 @@ const publicPathHeads = [
 // they are treated differently as they are not public path heads
 const partiallyPublicPages = [
   '/courses',
+  '/courses/image-based-abuse-and-rebuilding-ourselves',
+  '/courses/recovering-from-toxic-and-abusive-relationships',
+  '/courses/society-patriarchy-and-sexual-trauma',
+  '/courses/healing-from-sexual-trauma',
+  '/courses/dating-boundaries-and-relationships',
+  '/courses/reclaiming-resilience-in-your-trauma-story',
   '/activities',
   '/grounding',
   '/subscription/whatsapp',

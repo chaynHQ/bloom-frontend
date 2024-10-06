@@ -2,36 +2,27 @@
 
 [![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml)
 
-**Currently in active development.**
+Bloom is a remote trauma support service from [Chayn](https://www.chayn.co/about), a global, award-winning charity designing open-source tools to support the healing of survivors across the world. Since 2013, Chayn has reached over 500,000 survivors worldwide with our trauma-informed, survivor-centred, and intersectional approaches in utilizing tech for social impact. Bloom is our flagship product; a free, web-based, secure support service designed to aid in the healing of survivors. Through a combination of online video-based courses, anonymous interaction, and 1:1 chat, Bloom provides tailored information, self-help guidance, everyday tools, and comfort to cope with traumatic events.
 
-Bloom is a remote trauma support service from Chayn, a global charity supporting survivors of abuse across borders. Bloom is our flagship product; a free, web-based support service designed for anyone who has experienced or is currently experiencing domestic or sexual abuse. Through a combination of online video-based courses, anonymous interaction and 1:1 chat, Bloom aims to provide tailored information, guidance, everyday tools, and comforting words to cope with traumatic events. 💖
+Explore Chayn's [website](https://www.chayn.co/about), [research](https://org.chayn.co/research), [resources](https://www.chayn.co/resources), [projects](https://org.chayn.co/projects), [impact](https://org.chayn.co/impact), and [support services directory](https://www.chayn.co/global-directory). 💖
 
-For a more detailed explanation of this project's key concepts and architecture, please visit the [/docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs).
+## Support Our Work
 
-## Get Involved
+Chayn is proudly open-source and built with volunteer contributions. We are grateful for the generosity of the open-source community and aim to provide a fulfilling experience for open-source developers.
 
-Do you want to make an impact with Chayn and receive special access to our organization and volunteer opportunities? Please visit our [Getting Involved Guide](https://www.chayn.co/get-involved) to get started!
+**Please give this repository a star ⭐ and follow our GitHub profile 🙏 to help us grow our open-source community and find more contributors like you!**
 
-Other ways you can support Chayn are [donating](https://www.paypal.me/chaynhq), starring this repository ⭐ (so we can find more contributors like you!), making an open-source contribution, and supporting us on social media!
+Support our mission further by [sponsoring us on GitHub](https://github.com/sponsors/chaynHQ), exploring our [volunteer programs](https://www.chayn.co/get-involved), and following Chayn on social media: - Linktree: [https://linktr.ee/chayn](https://linktr.ee/chayn) - Twitter: [@chaynhq](https://twitter.com/ChaynHQ) - Instagram: [@chaynhq](https://www.instagram.com/chaynhq/) - Youtube: [@chaynhq](https://www.youtube.com/@chaynhq) - Facebook: [@chayn](https://www.facebook.com/chayn) - LinkedIn: [@chayn](https://www.linkedin.com/company/chayn).
 
-Find us online:
+# Bloom Frontend Contribution Docs:
 
-- Website: [https://www.chayn.co/](https://www.chayn.co/)
-- Linktree: [https://linktr.ee/chayn](https://linktr.ee/chayn)
-- Twitter: [@ChaynHQ](https://twitter.com/ChaynHQ)
-- Instagram: [@chaynhq](https://www.instagram.com/chaynhq/)
-- Youtube: [Chayn Team](www.youtube.com/@chaynhq)
-- LinkedIn: [@chayn](https://www.linkedin.com/company/chayn)
-
-# Contributing to Bloom Frontend
-
-Before making a contribution, please read our Contributing Guidelines in the [CONTRIBUTING.md](/CONTRIBUTING.md) file.
-
-We ask all contributors to follow our [Contributing Guidelines](/CONTRIBUTING.md) to help Chayn developers maintain open-source best practices.
+By making an open-source contribution to Chayn, you have agreed to our [Code of Conduct](/CODE_OF_CONDUCT.md).
 
 Happy coding! ⭐
 
 ## Technologies Used
+
+Visit the [/docs directory](https://github.com/chaynHQ/bloom-frontend/tree/develop/docs) for an overview of Bloom's frontend key concepts.
 
 - [React](https://reactjs.org/) - JavaScript library for building component based user interfaces
 - [Next.js](https://nextjs.org/) - React framework for hybrid static & server rendering, file-system routing and more
@@ -48,96 +39,107 @@ Happy coding! ⭐
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline
 - [Jest](https://jestjs.io/) - Unit testing.
 - [Cypress](https://www.cypress.io/) - End-to-end testing.
+- [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) for linting and formatting.
+
+## Local Development:
+
+### Summary
+
+To run Bloom's frontend: install prerequisites, run Bloom's backend locally, configure environment variables, install dependencies, then run the app locally with yarn.
+
+Before running Cypress integration tests, first populate your backend local database with test data ([directions in Bloom's backend repo](https://github.com/chaynHQ/bloom-backend?tab=readme-ov-file#populate-database)).
 
 ## Prerequisites
 
 - NodeJS 20.x
 - Yarn v1.x
-
-## Local Development:
+- Read [Contribution Guidelines](/CONTRIBUTING.md)
 
 ### Run Local Backend
 
-See [bloom-backend](https://github.com/chaynHQ/bloom-backend) for instructions.
-You will need to run this in the background for the frontend to be functional.
+See [Bloom's backend repo](https://github.com/chaynHQ/bloom-backend) for instructions. You will need to run this in the background for the frontend to be functional.
 
 ### Configure Environment Variables
 
-- **For Chayn staff:** You can import all environment variables from Vercel. Please get in touch with the team for environment variables and access to Vercel. If you already have access, you may proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) directions.
-
-- **For open-source contributors:** create a `env.local` file and populate it with **required** variables below. Required variables are needed to run the app, optional variables are for specific features. To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Next, obtain the Storyblok token from our [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4). Additionally, while New Relic variables are not required to run the app, not including them prints lengthy warnings. To prevent this, set the New Relic variables as provided in the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4).
-
-  Note: Variables provided by Chayn are public, not linked to production, and subject to change at any time. Check for updates if you are experiencing problems. The absence of some optional environment variables may result in test failures. If you require an optional environment variable and cannot acquire it yourself (some must be connected to Chayn in some way), please reach out to the team in GitHub’s issue discussions.
-
-See the the [Chayn Tech Wiki Guide](https://chayn.notion.site/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4) for more info.
+Create a new `.env.local` file and fill it with the required environment variables:
 
 ```
-# --- REQUIRED ---
+# Variables for building, unit tests, and integration tests.
+# Provided variables are read-only and subject to change.
+#====================================================================
+# REQUIRED VARIABLES FOR LOCAL DEVELOPMENT
+#--------------------------------------------------------------------
+# CORE ENVIRONMENT VARIABLES
 NEXT_PUBLIC_ENV=local
 NEXT_PUBLIC_API_URL=http://localhost:35001/api/v1
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
-NEXT_PUBLIC_STORYBLOK_TOKEN= # provided in Chayn Tech Wiki Guide.
+NEXT_PUBLIC_PORT=3000
 
+# FIREBASE AUTH AND ANALYTICS
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID= # enables Google Anayltics in Firebase project
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 
-# --- OPTIONAL ---
-NEW_RELIC_APP_NAME=  # provided in Chayn Tech Wiki Guide.
-NEW_RELIC_LICENSE_KEY=  # provided in Chayn Tech Wiki Guide.
+# CONTENT TOKEN
+NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
 
-NEXT_PUBLIC_CRISP_WEBSITE_ID= # user messaging
-NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # booking session forms
-NEXT_PUBLIC_HOTJAR_ID= # UX analytics
-NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # user data form webhooks
-NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # user data form webhooks
+# FEATURE FLAGS
+NEXT_PUBLIC_FF_USER_RESEARCH_BANNER=true
+
+# REQUIRED VARIABLES FOR CYPRESS INTEGRATION TESTING
+# SEE CYPRESS.MD FOR INSTRUCTIONS
+#--------------------------------------------------------------------
+# CYPRESS PROJECT
+CYPRESS_PROJECT_ID=
+
+# MAILSLURP
+CYPRESS_MAIL_SLURP_API_KEY=
+CYPRESS_INBOX_ID=
+
+# LOCAL BLOOM USERS
+CYPRESS_SUPER_ADMIN_EMAIL=
+CYPRESS_SUPER_ADMIN_PASSWORD=
+CYPRESS_PUBLIC_NAME=
+CYPRESS_PUBLIC_EMAIL=
+CYPRESS_PUBLIC_PASSWORD=
+CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL=
+CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD=
+CYPRESS_BADOO_PARTNER_ADMIN_EMAIL=
+CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD=
+
+# OPTIONAL VARIABLES
+#--------------------------------------------------------------------
+# NEW RELIC TRACKING
+NEW_RELIC_LICENSE_KEY=eu01xx6fc63a14eea79c367dfe82e702FFFFNRAL
+NEW_RELIC_APP_NAME=bloom-frontend
+NEW_RELIC_BROWSER_MONITORING_KEY=NRJS-0f9d5f21ee9234a45cc
+
+# ANALYTICS
+NEXT_PUBLIC_HOTJAR_ID=
+NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID=
+
+# ADDITIONAL FEATURES
+NEXT_PUBLIC_CRISP_WEBSITE_ID= # User messaging
+NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # Booking session forms
+NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # User data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # User data form webhooks
+NEXT_PUBLIC_ROLLBAR_ENV= # Rollbar logging
+NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
 ```
 
-#### Vercel Environment Variable Import:
+#### How to Configure Firebase Variables:
 
-For Chayn staff only -- if you have access to Vercel as a staff member, follow the instructions below. If you do not have access, please proceed past this section.
+To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). For additional guidance on setting environment variables, check out our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#bf62b5dcdb43496ea16231ff1815298b).
 
-Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables). These environment variables can be imported using the Vercel CLI.
+#### How to Create New Environment Variables:
 
-Download and login to the Vercel CLI:
+If creating new environment variables, please tag Chayn staff developers in PR / issue discussions to let us know. New environment variables may require being added to Vercel (required for production-level variables) and GitHub Actions (required for app to build and pass CI tests). Note: Environment variables that are exposed to the client/browser must be prefixed with `NEXT_PUBLIC_` - see [next.js docs](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser).
 
-```bash
-npm i -g vercel
-vercel login
-```
-
-Link the Vercel project to your local directory:
-
-```bash
-vercel link
-
-# copy these answers
-Vercel CLI 24.1.0
-? Set up “~/yourpath/bloom-frontend? [Y/n] y
-? Which scope should contain your project? Chayn
-? Found project “chaynhq/bloom-frontend”. Link to it? [Y/n] y
-✅  Linked to chaynhq/bloom-frontend (created .vercel)
-```
-
-Download the local environment variables files from Vercel:
-
-```bash
-vercel env pull .env.local
-```
-
-#### Creating New Environment Variables:
-
-When creating new environment variables, for use in production, they must be added to Vercel before release. Please tag staff in your issue if creating new environment variables for production. Additionally, new environment variables that are required for the app to build and pass tests must be added to GitHub Secrets and workflows.
-
-Note: Environment variables that are exposed to the client/browser must be prefixed with `NEXT_PUBLIC_` - see [next.js docs](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser).
-
-#### Additional Environment Variables:
-
-These additional environment variables are optional:
+#### Additional Helper Environment Variables (optional):
 
 - `FF_DISABLED_COURSES`: This feature flag is intended to remove courses from the users course home page. Note that this does not prevent the user from accessing the course completely - the user may still be able to access the course if they navigate to the URL.
 
@@ -145,17 +147,45 @@ These additional environment variables are optional:
 
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
+#### How to Import Environment Variables with Vercel (Chayn team only):
+
+- Chayn staff can import all environment variables from Vercel. Ask the team for access, then proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) for directions. Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables). These environment variables can be imported using the Vercel CLI.
+
+  Download and login to the Vercel CLI:
+
+  ```bash
+  npm i -g vercel
+  vercel login
+  ```
+
+  Link the Vercel project to your local directory:
+
+  ```bash
+  vercel link
+
+  # copy these answers
+  Vercel CLI 24.1.0
+  ? Set up “~/yourpath/bloom-frontend? [Y/n] y
+  ? Which scope should contain your project? Chayn
+  ? Found project “chaynhq/bloom-frontend”. Link to it? [Y/n] y
+  ✅  Linked to chaynhq/bloom-frontend (created .vercel)
+  ```
+
+  Download the local environment variables files from Vercel:
+
+  ```bash
+  vercel env pull .env.local
+  ```
+
 ### Install Dependencies
 
-After configuring your environment variables, it's time to install dependencies and run the app.
-
-First, to install dependencies, run:
+Install dependencies by running:
 
 ```bash
 yarn
 ```
 
-### Run Locally
+### Run Locally with yarn
 
 Start the app in development mode (with hot-code reloading, error reporting, etc.):
 
@@ -165,7 +195,7 @@ yarn dev
 
 Go to [http://localhost:3000](http://localhost:3000)
 
-### Run Tests
+### Unit Testing
 
 ```bash
 yarn test
@@ -177,20 +207,18 @@ To have your unit tests running in the background as you change code:
 yarn test:watch
 ```
 
-### Formatting and Linting
+### Format and Linting
 
-We use ESLint and Prettier for linting and formatting. Workspace settings for VSCode are included in [.vscode/settings.json](.vscode/settings.json) for consistency, and can be replicated if using an alternative IDE. We recommend installing the VSCode extensions in the [.vscode/extensions](.vscode/extensions.json) for automated formatting and linting.
+Linting and formatting are provided by [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/). We recommend VSCode users to utilize the workspace settings in [.vscode/settings.json](.vscode/settings.json) and install the extensions in [.vscode/extensions](.vscode/extensions.json) for automated consistency.
 
-[Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) are set up to run formatting and linting before each commit is pushed. **Commits will be blocked if there are any formatting or linting issues**
-
-If an error is thrown when pushing a commit:
+Additionally, this application uses [Pre-commit](https://pre-commit.com/) and [husky](https://typicode.github.io/husky/) to run formatting and linting before each commit is pushed. If an error is thrown when pushing a commit:
 
 - check the output logs for linting errors - fix all linting errors before committing.
 - check file changes for new formatting changes - if formatting fixes were applied during pre-commit, the original changes will now be staged, and new formatted changes will need to be staged and committed.
 
-We strongly recommend linting and formatting before every commit:
+**We strongly recommend maintaining consistent code style by linting and formatting before every commit:**
 
-Run lint:
+Run linting:
 
 ```bash
 yarn lint
@@ -218,41 +246,22 @@ yarn build
 
 ## Cypress Testing
 
-We use Cypress to perform end-to-end (e2e) tests of platform.
-See [CYPRESS.md](CYPRESS.md) for set up instructions for Cypress tests.
-
-**Running the https proxy**
-You need to run a https proxy for the storyblok preview.
-
-```bash
-// Install mkcert for creating a valid certificate (Mac OS):
-
-          $ brew install mkcert
-          $ mkcert -install
-          $ mkcert localhost
-
-// Then install and run the proxy
-
-          $ npm install -g local-ssl-proxy
-          $ local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem
-
-// https is now running on port 3010 and forwarding requests to http 3000
-```
+Bloom uses Cypress to perform end-to-end (e2e) tests of platform.
+See [CYPRESS.md](CYPRESS.md) for set-up instructions.
 
 ## Git Flow and Deployment
 
 **The develop branch is our source of truth, not main.**
 
-### Directions for Contributors
+### Staging Directions for Contributors
 
-1. Follow the Contributing Guidelines in [CONTRIBUTING.md](/CONTRIBUTING.md).
-2. Fork the repo and create a new branch from the `develop` base branch.
-3. Run the app on the new branch, complete your work testing on http://localhost:3000, and commit. Note that commits with linting errors will be blocked - see [pre-commit and husky checks](#pre-commit-and-husky-checks)
-4. Go to Github and open a pull request for the branch - the branch should be automatically based off of the `develop` branch. Creating a pull request will trigger GitHub Actions to automatically run build and linting tasks. A [vercel preview url](https://vercel.com/docs/deployments/preview-deployments) will also be created, to act as a staging environment for this branch
-5. Test the new branch on the vercel preview url, and ensure all new changes working as expected
-6. Request a code review from a staff member who will manage the merge and deployment flow (see below)
+Testing the staging preview is helpful for making front-end design changes.
 
-### Merge and Deployment Flow
+1. Creating a pull request will trigger GitHub Actions to automatically run build and linting tasks. A [vercel preview url](https://vercel.com/docs/deployments/preview-deployments) will also be created, to act as a staging environment for this branch
+2. Test the new branch on the vercel preview url, and ensure all new changes working as expected
+3. Request a code review from a staff member who will manage the merge and deployment flow.
+
+### Staging Merge and Deployment Flow Directions for Maintainers
 
 1. When a pull request is approved, **squash and merge** the pull request into `develop`. Merging a pull request into `develop` will trigger a deployment to the [staging preview url](https://bloom-frontend-git-develop-chaynhq.vercel.app/). A new pull request `Merge Develop onto Main` will be automatically created when `develop` is ahead of `main`
 

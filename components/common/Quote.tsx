@@ -19,20 +19,10 @@ const Quote = (props: QuoteProps) => {
       : textSize === 'small'
         ? { xs: 1, md: 1.125 }
         : textSize === 'large'
-          ? { xs: 1.25, md: 1.5 }
+          ? { xs: 1.25, md: 1.375 }
           : textSize === 'extra-large'
-            ? { xs: 1.5, md: 1.75 }
+            ? { xs: 1.375, md: 1.5 }
             : { xs: 1.125, md: 1.25 }; // default / medium
-  const quotePosition =
-    textSize === 'extra-small'
-      ? { top: '-50px', left: '0' }
-      : textSize === 'small'
-        ? { top: '-40px', left: '0' }
-        : { top: '-50px', left: '0' }; // medium/ large/ extra large
-  const quoteSize =
-    textSize === 'extra-small' || textSize === 'small'
-      ? { height: '20px', width: '20px' }
-      : { height: '20px', width: '30px' }; // medium/ large/ extra large
 
   const containerStyle = {
     fontFamily: 'Montserrat, sans-serif',
@@ -40,7 +30,7 @@ const Quote = (props: QuoteProps) => {
     maxWidth: 700,
     blockquote: {
       fontSize: { xs: `${fontSize.xs}rem`, md: `${fontSize.md}rem` },
-      lineHeight: `calc(${fontSize.md} * 1.75rem)`,
+      lineHeight: { xs: `calc(${fontSize.xs} * 1.625rem)`, md: `calc(${fontSize.md} * 1.625rem)` },
       marginX: 0,
       position: 'relative',
       '&:before': {
@@ -50,11 +40,13 @@ const Quote = (props: QuoteProps) => {
         color: iconColor,
         fontSize: `calc(${fontSize.md} * 4rem)`,
         position: 'absolute',
-        ...quoteSize,
-        ...quotePosition,
+        height: '28px',
+        width: '28px',
+        top: { xs: '-60px', md: '-40px' },
+        left: { xs: 0, md: '-44px' },
       },
       '&:after': {
-        content: 'no-close-quote',
+        content: 'none',
       },
     },
     cite: {

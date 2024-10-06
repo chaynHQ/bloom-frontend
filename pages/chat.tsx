@@ -41,7 +41,9 @@ const Chat: NextPage<Props> = ({ story }) => {
 
   return (
     <>
-      <Head>{headerProps.title}</Head>
+      <Head>
+        <title>{headerProps.title}</title>
+      </Head>
       <Box>
         <Header
           {...headerProps}
