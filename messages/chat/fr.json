@@ -1,5 +1,6 @@
 {
   "Chat": {
-    "title": "1-1 Chat"
+    "chatHeading": "Dites-nous ce qui vous préoccupe",
+    "chatReplies": "Nous t’assurons que nous répondons à chaque message."
   }
 }
