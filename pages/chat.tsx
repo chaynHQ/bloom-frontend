@@ -16,23 +16,25 @@ import { getEventUserData } from '../utils/logEvent';
 
 const chatRowStyle = {
   ...rowStyle,
-  gap: '10%',
+  flexDirection: { xs: 'column', md: 'row' },
+  gap: { xs: '3rem', md: '10%' },
 } as const;
 
 const iframeContainerStyle = {
-  position: 'relative',
-  flex: 1,
+  flex: { md: 1 },
   width: '100%',
   height: { xs: '70vh', md: '500px' },
-  marginTop: -4,
-  maxHeight: { md: '500px' },
-  borderRadius: 1,
+  marginTop: { md: -4 },
+  marginBottom: { md: -8 },
+  maxHeight: '550px',
+  borderTopLeftRadius: 16,
+  borderTopRightRadius: 16,
   overflow: 'hidden',
 } as const;
 
 const iframeStyle = {
-  position: 'absolute',
   marginTop: -158,
+  marginBottom: 20,
   borderRadius: 16,
 } as const;
 
@@ -55,6 +57,7 @@ const Chat: NextPage<Props> = ({ story }) => {
 
   const userEmail = useTypedSelector((state) => state.user.email);
   const userId = useTypedSelector((state) => state.user.id);
+  const userSignUpLanguage = useTypedSelector((state) => state.user.signUpLanguage);
   const userCrispTokenId = useTypedSelector((state) => state.user.crispTokenId);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -76,6 +79,7 @@ const Chat: NextPage<Props> = ({ story }) => {
 
   if (userEmail) crispUrl = crispUrl + '&user_email=' + encodeURI(userEmail);
   if (userCrispTokenId) crispUrl = crispUrl + '&token_id=' + encodeURI(userCrispTokenId);
+  if (userSignUpLanguage !== 'en') crispUrl = crispUrl + '&locale=' + userSignUpLanguage;
 
   return (
     <>
@@ -104,6 +108,7 @@ const Chat: NextPage<Props> = ({ story }) => {
                 </Box>
                 <Box sx={iframeContainerStyle}>
                   <iframe height="100%" width="100%" style={iframeStyle} src={crispUrl} />
+                  <Typography>{t('chatReplies')}</Typography>
                 </Box>
               </Box>
             </Container>

@@ -17,7 +17,7 @@ import { RichTextOptions } from '../../utils/richText';
 
 const containerStyle = {
   width: '100%',
-  maxWidth: 800,
+  maxWidth: 725,
   marginBottom: 5,
 } as const;
 
