@@ -1,19 +1,21 @@
 import Analytics from '../components/head/Analytics';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import ErrorBoundary from '../components/layout/ErrorBoundary';
-import rootMetadata from './rootMetadata';
 import RollbarScript from '../components/head/RollbarScript';
+import ErrorBoundary from '../components/layout/ErrorBoundary';
+import { newRelicInit } from '../config/newRelic';
+import rootMetadata from './rootMetadata';
 import ThemeRegistry from './ThemeRegistry';
 
 export const metadata = rootMetadata;
 
-export default function RootLayout({
+export default async function RootLayout({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const NewRelicScript = await newRelicInit();
   return (
     <html lang="en">
       <body>
@@ -26,6 +28,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <ThemeRegistry>{children}</ThemeRegistry>
         </ErrorBoundary>
+        {NewRelicScript}
         <Analytics />
       </body>
     </html>
