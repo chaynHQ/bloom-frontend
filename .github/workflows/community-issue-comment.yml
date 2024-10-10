@@ -27,12 +27,12 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.payload.issue.number,
               body: `Thank you @${context.payload.issue.assignee.login} you have been assigned this issue!
-              **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request shortly ✨**
+              **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
               
               ---
               
               Support Chayn's mission? ⭐ Please star this repo to help us find more contributors like you!
-              Learn more about Chayn [here](https://linktr.ee/chayn) and [explore our projects](https://org.chayn.co/projects). 🌸`
+              Learn more about Chayn and our impact [here](https://github.com/chaynHQ/.github/blob/main/profile/README.md). 🌸`
               })
 
   # When issues are labeled as stale, a comment is posted.
