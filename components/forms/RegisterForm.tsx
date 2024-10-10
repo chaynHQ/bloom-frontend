@@ -32,7 +32,7 @@ import { setUserLoading } from '../../store/userSlice';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent, { getEventUserResponseData } from '../../utils/logEvent';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const containerStyle = {
@@ -137,7 +137,11 @@ const RegisterForm = (props: RegisterFormProps) => {
     });
 
     if (userResponse?.data && userResponse.data.user.id) {
-      const eventUserData = getEventUserResponseData(userResponse.data);
+      const eventUserData = getEventUserData(
+        userResponse.data.user.createdAt,
+        userResponse.data.partnerAccesses,
+        userResponse.data.partnerAdmin,
+      );
 
       logEvent(REGISTER_SUCCESS, eventUserData);
       try {

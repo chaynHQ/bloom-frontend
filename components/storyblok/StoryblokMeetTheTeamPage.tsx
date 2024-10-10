@@ -4,15 +4,13 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import Header from '../../components/layout/Header';
-import StoryblokTeamMemberCard, {
-  StoryblokTeamMemberCardProps,
-} from '../../components/storyblok/StoryblokTeamMemberCard';
+import { StoryblokTeamMemberCardProps } from '../../components/storyblok/StoryblokTeamMemberCard';
 import { MEET_THE_TEAM_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
+import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
 
 const coreContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -20,18 +18,6 @@ const coreContainerStyle = {
 
 const supportingContainerStyle = {
   backgroundColor: 'primary.light',
-} as const;
-
-const cardColumnStyle = {
-  ...columnStyle,
-  justifyContent: 'flex-start',
-  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
-  gap: { xs: 0, sm: 2, md: 4 },
-} as const;
-
-const cardColumnRowStyle = {
-  ...rowStyle,
-  marginTop: { xs: 2, md: 5 },
 } as const;
 
 export interface StoryblokMeetTheTeamPageProps {
@@ -124,32 +110,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
           typeof core_team_description === 'string' && (
             <Typography maxWidth={650}>{core_team_description}</Typography>
           )}
-        <Box sx={cardColumnRowStyle}>
-          <Box sx={cardColumnStyle}>
-            {core_team_members.map((teamMember, index) => {
-              if (index % 2 === 1) return;
-              return (
-                <StoryblokTeamMemberCard
-                  key={`${teamMember.name}_team_member`}
-                  {...teamMember}
-                  alwaysOpen={true}
-                />
-              );
-            })}
-          </Box>
-          <Box sx={cardColumnStyle}>
-            {core_team_members.map((teamMember, index) => {
-              if (index % 2 === 0) return;
-              return (
-                <StoryblokTeamMemberCard
-                  key={`${teamMember.name}_team_member`}
-                  {...teamMember}
-                  alwaysOpen={true}
-                />
-              );
-            })}
-          </Box>
-        </Box>
+        <StoryblokTeamMembersCards team_member_items={core_team_members} cards_expandable={false} />
       </Container>
 
       {page_section_2?.length > 0 && <StoryblokPageSection {...page_section_2[0]} />}
@@ -161,24 +122,10 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         {supporting_team_description && (
           <Box maxWidth={650}>{render(supporting_team_description, RichTextOptions)}</Box>
         )}
-        <Box sx={cardColumnRowStyle}>
-          <Box sx={cardColumnStyle}>
-            {supporting_team_members.map((teamMember: any, index: number) => {
-              if (index % 2 === 1) return;
-              return (
-                <StoryblokTeamMemberCard key={`${teamMember.name}_team_member`} {...teamMember} />
-              );
-            })}
-          </Box>
-          <Box sx={cardColumnStyle}>
-            {supporting_team_members.map((teamMember: any, index: number) => {
-              if (index % 2 === 0) return;
-              return (
-                <StoryblokTeamMemberCard key={`${teamMember.name}_team_member`} {...teamMember} />
-              );
-            })}
-          </Box>
-        </Box>
+        <StoryblokTeamMembersCards
+          team_member_items={supporting_team_members}
+          cards_expandable={true}
+        />
       </Container>
 
       {page_section_3?.length > 0 && <StoryblokPageSection {...page_section_3[0]} />}

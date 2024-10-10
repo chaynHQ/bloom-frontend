@@ -1,5 +1,6 @@
 {
   "Chat": {
-    "title": "1-1 Chat"
+    "chatHeading": "Hume bataiye ki aapke mann mein kya hai",
+    "chatReplies": "Aur aap nishchint rahein, hum har ek message ka reply karte hain."
   }
 }

@@ -1,16 +1,49 @@
-import { Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, useStoryblokState } from '@storyblok/react';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import Image from 'next/image';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
 import NoDataAvailable from '../components/common/NoDataAvailable';
-import CrispButton from '../components/crisp/CrispButton';
 import Header, { HeaderProps } from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import { useTypedSelector } from '../hooks/store';
+import IllustrationCourseDBR from '../public/illustration_course_dbr.svg';
+import { rowStyle } from '../styles/common';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 import { getEventUserData } from '../utils/logEvent';
+
+const chatRowStyle = {
+  ...rowStyle,
+  flexDirection: { xs: 'column', md: 'row' },
+  gap: { xs: '3rem', md: '10%' },
+} as const;
+
+const iframeContainerStyle = {
+  flex: { md: 1 },
+  width: '100%',
+  height: { xs: '70vh', md: '500px' },
+  marginTop: { md: -4 },
+  marginBottom: { md: -8 },
+  maxHeight: '550px',
+  borderTopLeftRadius: 16,
+  borderTopRightRadius: 16,
+  overflow: 'hidden',
+} as const;
+
+const iframeStyle = {
+  marginTop: -158,
+  marginBottom: 20,
+  borderRadius: 16,
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative', // needed for next/image to fill the container
+  width: 260,
+  height: 260,
+  mt: { md: 3 },
+} as const;
 
 interface Props {
   story: ISbStoryData | null;
@@ -19,10 +52,13 @@ interface Props {
 const Chat: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
-  const t = useTranslations('Courses');
+  const t = useTranslations('Chat');
+  const tS = useTranslations('Shared');
 
   const userEmail = useTypedSelector((state) => state.user.email);
   const userId = useTypedSelector((state) => state.user.id);
+  const userSignUpLanguage = useTypedSelector((state) => state.user.signUpLanguage);
+  const userCrispTokenId = useTypedSelector((state) => state.user.crispTokenId);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -39,29 +75,48 @@ const Chat: NextPage<Props> = ({ story }) => {
   };
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
+  let crispUrl = `https://go.crisp.chat/chat/embed/?website_id=${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}`;
+
+  if (userEmail) crispUrl = crispUrl + '&user_email=' + encodeURI(userEmail);
+  if (userCrispTokenId) crispUrl = crispUrl + '&token_id=' + encodeURI(userCrispTokenId);
+  if (userSignUpLanguage !== 'en') crispUrl = crispUrl + '&locale=' + userSignUpLanguage;
+
   return (
     <>
       <Head>
         <title>{headerProps.title}</title>
-      </Head>
+      </Head>{' '}
       <Box>
-        <Header
-          {...headerProps}
-          cta={
-            userId && (
-              <CrispButton
-                email={userEmail}
-                eventData={eventUserData}
-                buttonText={t('sessionDetail.chat.startButton')}
-              />
-            )
-          }
-        />
+        <Header {...headerProps} />
         {userId ? (
-          story.content.page_sections?.length > 0 &&
-          story.content.page_sections.map((section: any, index: number) => (
-            <StoryblokPageSection key={`page_section_${index}`} {...section} />
-          ))
+          <>
+            <Container sx={{ backgroundColor: 'secondary.light' }}>
+              <Typography variant="h2" mb={8}>
+                {t('chatHeading')}
+              </Typography>
+              <Box sx={chatRowStyle}>
+                <Box sx={imageContainerStyle}>
+                  <Image
+                    alt={tS('alt.personSitting')}
+                    src={IllustrationCourseDBR}
+                    sizes="50vw"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                    }}
+                  />
+                </Box>
+                <Box sx={iframeContainerStyle}>
+                  <iframe height="100%" width="100%" style={iframeStyle} src={crispUrl} />
+                  <Typography>{t('chatReplies')}</Typography>
+                </Box>
+              </Box>
+            </Container>
+            {story.content.page_sections?.length > 0 &&
+              story.content.page_sections.map((section: any, index: number) => (
+                <StoryblokPageSection key={`page_section_${index}`} {...section} />
+              ))}
+          </>
         ) : (
           <SignUpBanner />
         )}
@@ -79,7 +134,6 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/courses/${locale}.json`),
         ...require(`../messages/chat/${locale}.json`),
       },
     },

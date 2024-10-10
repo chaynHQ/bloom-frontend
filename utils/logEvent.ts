@@ -1,6 +1,5 @@
 import { track } from '@vercel/analytics/react';
 import { getAnalytics } from 'firebase/analytics';
-import { GetUserResponse } from '../store/api';
 import { PartnerAccesses } from '../store/partnerAccessSlice';
 import { PartnerAdmin } from '../store/partnerAdminSlice';
 import {
@@ -54,14 +53,6 @@ export const getEventUserData = (
     console.error('getEventUserData error:', error);
     return {};
   }
-};
-
-export const getEventUserResponseData = (userResponse: GetUserResponse) => {
-  return getEventUserData(
-    userResponse.user.createdAt,
-    userResponse.partnerAccesses,
-    userResponse.partnerAdmin,
-  );
 };
 
 export default logEvent;
