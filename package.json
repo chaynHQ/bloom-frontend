@@ -38,7 +38,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@storyblok/react": "^3.0.0",
     "@vercel/analytics": "^1.1.1",
-    "axios": "^1.7.4",
+    "axios": "^1.7.7",
     "firebase": "^10.7.1",
     "gemoji": "^8.1.0",
     "js-cookie": "^3.0.1",
