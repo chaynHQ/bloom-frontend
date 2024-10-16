@@ -114,14 +114,14 @@
       },
       "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {
-        "title": "Actions du compte",
-        "description": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
+        "title": "Actions sur le compte",
+        "description": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l’historique des sessions que vous avez regardées de notre système.",
         "button": {
           "resetPassword": "Réinitialiser le mot de passe",
           "deleteAccount": "Supprimer le compte"
         },
         "confirmDialogCancel": "Annuler",
-        "resetPasswordConfirmDialogTitle": "Lorsque vous mettez à jour votre mot de passe, vous devrez vous reconnecter. Voulez-vous continuer?",
+        "resetPasswordConfirmDialogTitle": "Après avoir réinitialisé votre mot de passe, vous devrez vous reconnecter. Voulez-vous continuer?",
         "deleteAccountConfirmDialogTitle": "Êtes-vous sûr de vouloir supprimer votre compte ?",
         "deleteAccountConfirmDialogDescription": "Cela supprimera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système."
       },
