@@ -1,6 +1,6 @@
 {
   "Auth": {
-    "introduction": "Bloom informe les personnes survivantes et leur donne les moyens d'agir en proposant des cours à distance qui informent sur les traumatismes et les violences sexistes et sur les pratiques thérapeutiques permettant de guérir ces traumatismes.",
+    "introduction": "Bloom informe les personnes survivantes et leur donne la capacité d’agir en proposant des cours à distance qui combinent des connaissances sur les traumatismes et les violences basées sur le genre avec des pratiques thérapeutiques qui aident à guérir des traumatismes. ",
     "getStartedBloom": "Démarrer avec Bloom",
     "getStartedWith": "Commencer par saisir un code de {partnerName}",
     "loginLink": "Vous avez déjà un compte ? <loginLink>Connectez-vous</loginLink>",
@@ -30,7 +30,7 @@
       "resetPasswordStep2": "Vous y êtes presque ! Vous pouvez maintenant créer un nouveau mot de passe.",
       "resetPasswordSubmit": "Réinitialiser le mot de passe",
       "resendPasswordSubmit": "Renvoyer l'e-mail",
-      "resetPasswordSent": "Vérifiez vos e-mails pour voir si vous avez reçu un lien de réinitialisation de Bloom. Si vous ne l'avez pas reçu, vérifiez vos spams ou renvoyez l'e-mail.",
+      "resetPasswordSent": "Vérifiez vos emails pour voir si vous avez reçu un lien de réinitialisation de Bloom. Si vous ne l’avez pas reçu, vérifiez vos spams ou renvoyez l’email.",
       "passwordResetSuccess": "Votre mot de passe a été réinitialisé ! Vous pouvez dès à présent vous connecter avec votre nouveau mot de passe.",
       "loginSubmit": "Connexion",
       "createUserError": "Une erreur s'est produite lors de la configuration de votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
