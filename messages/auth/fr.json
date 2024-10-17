@@ -7,7 +7,7 @@
     "terms": "En poursuivant, vous indiquez que vous acceptez nos <policiesLink>conditions d'utilisation et notre politique de confidentialité</policiesLink>.",
     "login": {
       "title": "Bienvenue",
-      "resetPasswordLink": "Mot de passe oublié ? <resetLink>Réinitialiser mot de passe</resetLink>",
+      "resetPasswordLink": "Mot de passe oublié? <resetLink>Réinitialiser le mot de passe</resetLink>",
       "newUserTitle": "Vous êtes nouveau sur Bloom ?"
     },
     "register": {
@@ -46,7 +46,7 @@
         "invalidEmail": "Votre email semble être invalide, corrigez les erreurs de frappe pour continuer.",
         "tooManyAttempts": "Trop de tentatives de connexion infructueuses. Veuillez patienter quelques minutes ou réinitialiser votre mot de passe maintenant.",
         "weakPassword": "Votre mot de passe doit être un peu plus long pour plus de sécurité.",
-        "emailAlreadyInUse": "Cet email est déjà enregistré chez Bloom, allez sur <loginLink>login</loginLink> pour continuer.",
+        "emailAlreadyInUse": "Cet email est déjà enregistré chez Bloom, cliquez sur <loginLink>Connexion</loginLink> pour continuer.",
         "invalidCode": "Ce lien de réinitialisation du mot de passe n'est pas valide, veuillez <resetLink>recommencer le processus</resetLink> et réessayer.",
         "expiredCode": "Ce lien de réinitialisation du mot de passe a expiré, veuillez <resetLink>recommencer le processus</resetLink> et réessayer."
       }
