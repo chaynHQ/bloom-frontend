@@ -18,7 +18,7 @@ import {
 } from '../../constants/events';
 import { useStartSessionMutation } from '../../store/api';
 
-interface EventData extends EventUserData {
+export interface EventData extends EventUserData {
   session_name: string;
   session_storyblok_id: number;
   session_progress: PROGRESS_STATUS;
@@ -90,40 +90,43 @@ export const SessionVideo = (props: SessionVideoProps) => {
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
   }, []);
+
   return (
-    <SessionContentCard
-      title={t('sessionDetail.videoTitle')}
-      titleIcon={SlowMotionVideoIcon}
-      eventPrefix="SESSION_VIDEO"
-      eventData={eventData}
-      initialExpanded={true}
-    >
-      <Typography mb={3}>
-        {t.rich('sessionDetail.videoDescription', {
-          transcriptLink: (children) => (
-            <MuiLink
-              component="button"
-              variant="body1"
-              onClick={() => setOpenTranscriptModal(true)}
-            >
-              {children}
-            </MuiLink>
-          ),
-        })}
-      </Typography>
-      <Video
-        url={video.url}
-        setVideoStarted={setVideoStarted}
+    video && (
+      <SessionContentCard
+        title={t('sessionDetail.videoTitle')}
+        titleIcon={SlowMotionVideoIcon}
+        eventPrefix="SESSION_VIDEO"
         eventData={eventData}
-        eventPrefix="SESSION"
-        containerStyles={{ mx: 'auto', my: 2 }}
-      />
-      <VideoTranscriptModal
-        videoName={name}
-        content={video_transcript}
-        setOpenTranscriptModal={setOpenTranscriptModal}
-        openTranscriptModal={openTranscriptModal}
-      />
-    </SessionContentCard>
+        initialExpanded={true}
+      >
+        <Typography mb={3}>
+          {t.rich('sessionDetail.videoDescription', {
+            transcriptLink: (children) => (
+              <MuiLink
+                component="button"
+                variant="body1"
+                onClick={() => setOpenTranscriptModal(true)}
+              >
+                {children}
+              </MuiLink>
+            ),
+          })}
+        </Typography>
+        <Video
+          url={video.url}
+          setVideoStarted={setVideoStarted}
+          eventData={eventData}
+          eventPrefix="SESSION"
+          containerStyles={{ mx: 'auto', my: 2 }}
+        />
+        <VideoTranscriptModal
+          videoName={name}
+          content={video_transcript}
+          setOpenTranscriptModal={setOpenTranscriptModal}
+          openTranscriptModal={openTranscriptModal}
+        />
+      </SessionContentCard>
+    )
   );
 };

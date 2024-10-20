@@ -1,13 +1,15 @@
-import { Session } from '../store/coursesSlice';
+import { Courses, Session } from '../store/coursesSlice';
 import { Dispatch, SetStateAction } from 'react';
 import { PROGRESS_STATUS } from '../constants/enums';
+import { ISbStoryData } from '@storyblok/react';
+import { ISbComponentType } from 'storyblok-js-client';
 
 export const getSessionCompletion = (
-  course: any,
-  courses: any[],
+  course: ISbStoryData<ISbComponentType<string> & { [p: string]: any }>,
+  courses: Courses,
   storyUuid: string,
   storyId: number,
-  setWeekString: (weekName: string) => void,
+  setWeekString: Dispatch<SetStateAction<string>>,
   setSessionProgress: Dispatch<SetStateAction<PROGRESS_STATUS>>,
 ) => {
   course.content.weeks.map((week: any) => {
