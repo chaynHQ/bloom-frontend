@@ -115,7 +115,8 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
   const [weekString, setWeekString] = useState<string>('');
   const [startSession] = useStartSessionMutation();
 
-  // TODO refactor chat access logic
+  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
+
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
     setIncorrectAccess(!hasAccessToPage(coursePartners, partnerAccesses, partnerAdmin));
@@ -124,8 +125,8 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
       (partnerAccess) => partnerAccess.featureLiveChat === true,
     );
 
-    if (liveAccess) setLiveChatAccess(true);
-  }, [partnerAccesses, course.content.included_for_partners, partnerAdmin]);
+    if (liveAccess || liveCourseAccess) setLiveChatAccess(true);
+  }, [partnerAccesses, liveCourseAccess, course.content.included_for_partners, partnerAdmin]);
 
   // TODO refactor session completion logic
   useEffect(() => {
@@ -361,6 +362,16 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
                         <li>{t('sessionDetail.chat.detailLegal')}</li>
                         <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
                       </ul>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                      <Button
+                        variant="contained"
+                        href="/messaging"
+                        component={Link}
+                        startIcon={<ChatBubbleOutlineIcon color="error" />}
+                      >
+                        {t('sessionDetail.chat.startButton')}
+                      </Button>
                     </Box>
                   </SessionContentCard>
                 </>

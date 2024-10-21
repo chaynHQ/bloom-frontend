@@ -397,6 +397,16 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                           <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
                         </ul>
                       </Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                        <Button
+                          variant="contained"
+                          href="/messaging"
+                          component={Link}
+                          startIcon={<ChatBubbleOutlineIcon color="error" />}
+                        >
+                          {t('sessionDetail.chat.startButton')}
+                        </Button>
+                      </Box>
                     </SessionContentCard>
                   </>
                 )}
