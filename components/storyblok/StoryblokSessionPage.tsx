@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionContentCard from '../../components/cards/SessionContentCard';
 import Link from '../../components/common/Link';
-import CrispButton from '../../components/crisp/CrispButton';
 import Header from '../../components/layout/Header';
 import { SessionCompleteButton } from '../../components/session/SessionCompleteButton';
 import Video from '../../components/video/Video';
@@ -59,12 +58,6 @@ const dotStyle = {
 
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
-} as const;
-
-const crispButtonContainerStyle = {
-  paddingTop: 4,
-  paddingBottom: 1,
-  display: 'flex',
 } as const;
 
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
@@ -403,13 +396,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                           <li>{t('sessionDetail.chat.detailLegal')}</li>
                           <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
                         </ul>
-                      </Box>
-                      <Box sx={crispButtonContainerStyle}>
-                        <CrispButton
-                          email={userEmail}
-                          eventData={eventData}
-                          buttonText={t('sessionDetail.chat.startButton')}
-                        />
                       </Box>
                     </SessionContentCard>
                   </>

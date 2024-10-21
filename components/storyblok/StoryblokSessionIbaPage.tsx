@@ -29,7 +29,6 @@ import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
 import Link from '../common/Link';
-import CrispButton from '../crisp/CrispButton';
 import Header from '../layout/Header';
 import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
 import { SessionCompleteButton } from '../session/SessionCompleteButton';
@@ -59,12 +58,6 @@ const dotStyle = {
 
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
-} as const;
-
-const crispButtonContainerStyle = {
-  paddingTop: 4,
-  paddingBottom: 1,
-  display: 'flex',
 } as const;
 
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
@@ -368,13 +361,6 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
                         <li>{t('sessionDetail.chat.detailLegal')}</li>
                         <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
                       </ul>
-                    </Box>
-                    <Box sx={crispButtonContainerStyle}>
-                      <CrispButton
-                        email={userEmail}
-                        eventData={eventData}
-                        buttonText={t('sessionDetail.chat.startButton')}
-                      />
                     </Box>
                   </SessionContentCard>
                 </>

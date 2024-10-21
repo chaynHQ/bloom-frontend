@@ -14,10 +14,10 @@ import { rowStyle } from '../styles/common';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 import { getEventUserData } from '../utils/logEvent';
 
-const chatRowStyle = {
+const messageRowStyle = {
   ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: '3rem', md: '10%' },
+  gap: { xs: '2rem', md: '10%' },
 } as const;
 
 const iframeContainerStyle = {
@@ -29,6 +29,7 @@ const iframeContainerStyle = {
   maxHeight: '550px',
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
+  borderTop: '4px solid white',
   overflow: 'hidden',
 } as const;
 
@@ -36,23 +37,23 @@ const iframeStyle = {
   marginTop: -158,
   marginBottom: 20,
   borderRadius: 16,
+  // border: '2px solid white',
 } as const;
 
 const imageContainerStyle = {
   position: 'relative', // needed for next/image to fill the container
-  width: 260,
-  height: 260,
-  mt: { md: 3 },
+  width: { xs: '40%', md: 260 },
+  height: { xs: '40%', md: 260 },
 } as const;
 
 interface Props {
   story: ISbStoryData | null;
 }
 
-const Chat: NextPage<Props> = ({ story }) => {
+const Message: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
-  const t = useTranslations('Chat');
+  const t = useTranslations('Messaging');
   const tS = useTranslations('Shared');
 
   const userEmail = useTypedSelector((state) => state.user.email);
@@ -80,6 +81,7 @@ const Chat: NextPage<Props> = ({ story }) => {
   if (userEmail) crispUrl = crispUrl + '&user_email=' + encodeURI(userEmail);
   if (userCrispTokenId) crispUrl = crispUrl + '&token_id=' + encodeURI(userCrispTokenId);
   if (userSignUpLanguage !== 'en') crispUrl = crispUrl + '&locale=' + userSignUpLanguage;
+  if (userId) crispUrl = crispUrl + '&user_id=' + userId;
 
   return (
     <>
@@ -90,11 +92,11 @@ const Chat: NextPage<Props> = ({ story }) => {
         <Header {...headerProps} />
         {userId ? (
           <>
-            <Container sx={{ backgroundColor: 'secondary.light' }}>
-              <Typography variant="h2" mb={8}>
-                {t('chatHeading')}
+            <Container sx={{ backgroundColor: 'secondary.light', pt: 2 }}>
+              <Typography variant="h2" sx={{ mb: { xs: 4, md: 8 } }}>
+                {t('messageHeading')}
               </Typography>
-              <Box sx={chatRowStyle}>
+              <Box sx={messageRowStyle}>
                 <Box sx={imageContainerStyle}>
                   <Image
                     alt={tS('alt.personSitting')}
@@ -108,7 +110,7 @@ const Chat: NextPage<Props> = ({ story }) => {
                 </Box>
                 <Box sx={iframeContainerStyle}>
                   <iframe height="100%" width="100%" style={iframeStyle} src={crispUrl} />
-                  <Typography>{t('chatReplies')}</Typography>
+                  <Typography>{t('messageReplies')}</Typography>
                 </Box>
               </Box>
             </Container>
@@ -134,11 +136,11 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
       messages: {
         ...require(`../messages/shared/${locale}.json`),
         ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/chat/${locale}.json`),
+        ...require(`../messages/messaging/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
   };
 }
 
-export default Chat;
+export default Message;
