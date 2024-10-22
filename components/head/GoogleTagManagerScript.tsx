@@ -4,7 +4,7 @@ const GoogleTagManagerScript = () => {
   return (
     <Script
       id="gtag"
-      strategy="worker"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
             window.dataLayer = window.dataLayer || [];
