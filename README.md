@@ -1,4 +1,4 @@
-# Welcome to Bloom
+# Welcome to Bloomm
 
 [![Bloom CI Pipeline](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml/badge.svg)](https://github.com/chaynHQ/bloom-frontend/actions/workflows/build-and-test-prs.yml)
 
