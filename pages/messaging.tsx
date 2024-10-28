@@ -6,38 +6,18 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { SignUpBanner } from '../components/banner/SignUpBanner';
 import NoDataAvailable from '../components/common/NoDataAvailable';
+import { CrispIframe } from '../components/crisp/CrispIframe';
 import Header, { HeaderProps } from '../components/layout/Header';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import { useTypedSelector } from '../hooks/store';
 import IllustrationCourseDBR from '../public/illustration_course_dbr.svg';
 import { rowStyle } from '../styles/common';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import { getEventUserData } from '../utils/logEvent';
 
 const messageRowStyle = {
   ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
   gap: { xs: '2rem', md: '10%' },
-} as const;
-
-const iframeContainerStyle = {
-  flex: { md: 1 },
-  width: '100%',
-  height: { xs: '70vh', md: '500px' },
-  marginTop: { md: -4 },
-  marginBottom: { md: -8 },
-  maxHeight: '550px',
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  borderTop: '4px solid white',
-  overflow: 'hidden',
-} as const;
-
-const iframeStyle = {
-  marginTop: -158,
-  marginBottom: 20,
-  borderRadius: 16,
-  // border: '2px solid white',
 } as const;
 
 const imageContainerStyle = {
@@ -55,33 +35,17 @@ const Message: NextPage<Props> = ({ story }) => {
 
   const t = useTranslations('Messaging');
   const tS = useTranslations('Shared');
-
-  const userEmail = useTypedSelector((state) => state.user.email);
   const userId = useTypedSelector((state) => state.user.id);
-  const userSignUpLanguage = useTypedSelector((state) => state.user.signUpLanguage);
-  const userCrispTokenId = useTypedSelector((state) => state.user.crispTokenId);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   if (!story) {
     return <NoDataAvailable />;
   }
-
   const headerProps: HeaderProps = {
     title: story.content.title,
     introduction: story.content.description,
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
   };
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
-  let crispUrl = `https://go.crisp.chat/chat/embed/?website_id=${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}`;
-
-  if (userEmail) crispUrl = crispUrl + '&user_email=' + encodeURI(userEmail);
-  if (userCrispTokenId) crispUrl = crispUrl + '&token_id=' + encodeURI(userCrispTokenId);
-  if (userSignUpLanguage !== 'en') crispUrl = crispUrl + '&locale=' + userSignUpLanguage;
-  if (userId) crispUrl = crispUrl + '&user_id=' + userId;
 
   return (
     <>
@@ -108,8 +72,8 @@ const Message: NextPage<Props> = ({ story }) => {
                     }}
                   />
                 </Box>
-                <Box sx={iframeContainerStyle}>
-                  <iframe height="100%" width="100%" style={iframeStyle} src={crispUrl} />
+                <Box flex={1}>
+                  <CrispIframe />
                   <Typography>{t('messageReplies')}</Typography>
                 </Box>
               </Box>
