@@ -288,9 +288,9 @@ export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterF
 
   useEffect(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
+    if (partnerData) setPartnerId(partnerData.id);
     if (partnerData && hasAutomaticAccessFeature(partnerData) === false) {
       setAccessCodeRequired(true);
-      setPartnerId(partnerData.id);
     }
   }, [partners, partnerName]);
 
