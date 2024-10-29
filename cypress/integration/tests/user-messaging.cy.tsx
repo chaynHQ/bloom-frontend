@@ -8,7 +8,7 @@ describe('A logged in public user can', () => {
     cy.logInWithEmailAndPassword(email, password);
   });
 
-  it('Navigate to the messaging page and begin a messaging', () => {
+  it('Navigate to the messaging page', () => {
     cy.visit('/'); // initial home page visit
     cy.get(`[qa-id=secondary-nav-messaging-button]`, { timeout: 8000 }).should('exist').click(); //go to messaging page
   });
