@@ -74,7 +74,6 @@ const Message: NextPage<Props> = ({ story }) => {
                 </Box>
                 <Box flex={1}>
                   <CrispIframe />
-                  <Typography>{t('messageReplies')}</Typography>
                 </Box>
               </Box>
             </Container>
