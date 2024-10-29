@@ -17,6 +17,8 @@ import StoryblokSessionIbaPage from '../components/storyblok/StoryblokSessionIba
 import StoryblokSessionPage from '../components/storyblok/StoryblokSessionPage';
 import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
+import StoryblokTeamMemberCard from '../components/storyblok/StoryblokTeamMemberCard';
+import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 import StoryblokWelcomePage from '../components/storyblok/StoryblokWelcomePage';
 
@@ -29,6 +31,8 @@ export const storyblok = storyblokInit({
     audio: StoryblokAudio,
     row: StoryblokRow,
     row_new: StoryblokRowColumnBlock,
+    team_member: StoryblokTeamMemberCard,
+    team_members_cards: StoryblokTeamMembersCards,
     quote: StoryblokQuote,
     card: StoryblokCard,
     button: StoryblokButton,

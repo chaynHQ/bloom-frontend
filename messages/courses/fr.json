@@ -27,7 +27,7 @@
       "chat": {
         "title": "Réfléchir avec nous",
         "description": "Vous souhaitez partager votre avis sur cette session ? L'équipe Bloom serait ravie de vous entendre ! ",
-        "videoIntro": "En savoir plus sur le fonctionnement de notre chat en ligne :",
+        "videoIntro": "Découvrez comment fonctionne la messagerie:",
         "videoLink": "https://youtu.be/euoYjZFZ7Ow",
         "detailIntro": "Bon à savoir : ",
         "detailPrivacy": "Vos messages sont confidentiels et sécurisés, ils ne sont vus que par l'équipe Bloom et vous restez anonyme.",
@@ -35,7 +35,7 @@
         "detailLanguage": "Bloom est disponible en anglais ou en espagnol. Cependant, les membres de notre équipe communiquent également en français, en italien, en hindi, en arabe et en bangla. Ils se feront un plaisir de s'entretenir avec vous.",
         "detailLegal": "Si vous êtes concerné·e par une affaire judiciaire en cours, réfléchissez aux informations que vous partagez avec nous, afin que celles-ci n'interfèrent pas dans votre affaire.",
         "detailImmediateHelp": "Si vous êtes en danger imminent , veuillez consulter la rubrique \"Aide immédiate\" dans le menu pour trouver le service qui pourra vous aider.",
-        "startButton": "Démarrer un chat"
+        "startButton": "Envoyez-nous un message"
       },
       "sessionComplete": "Session complète"
     },

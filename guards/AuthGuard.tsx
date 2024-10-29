@@ -37,7 +37,7 @@ const partiallyPublicPages = [
   '/activities',
   '/grounding',
   '/subscription/whatsapp',
-  '/chat',
+  '/messaging',
 ];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing

@@ -31,7 +31,7 @@ describe('Home page should display', () => {
 
     cy.checkImage('chatIcon', 'icon_chat');
     cy.get('h3').should('contain', '1-to-1 Messaging');
-    cy.checkLink('/chat', '');
+    cy.checkLink('/messaging', '');
 
     cy.checkImage('activityIcon', 'icon_activities');
     cy.get('h3').should('contain', 'Reflective activities');

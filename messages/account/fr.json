@@ -11,7 +11,7 @@
       "formSuccess": {
         "success": "Un code Bumble a été appliqué à votre compte !",
         "successLine2": "Votre code Bumble vous permet d'accéder au contenu suivant :",
-        "liveChat": "Chat 1-1 avec l'équipe Bloom ",
+        "liveChat": "Messagerie avec l'équipe Bloom",
         "therapy": "{therapySessionsRemaining} sessions de thérapie",
         "courses": "Cours auto-guidés"
       },
@@ -103,40 +103,40 @@
       "description": "Afficher et mettre à jour vos paramètres dans Bloom",
       "imageAlt": "Illustration d'un téléphone portable avec un message contenant un cœur",
       "profileSettings": {
-        "title": "Détails du profil",
-        "description": "Mettez à jour votre nom et votre adresse e-mail ici. Ce sont les seules informations personnelles stockées avec votre profil.",
+        "title": "Profil",
+        "description": "Vous pouvez modifier votre nom et votre adresse email ici. Ce sont les seules informations stockées avec votre profil.",
         "nameLabel": "Nom",
         "emailLabel": "Email",
         "submitLabel": "Enregistrer le profil",
         "emailAlreadyInUseError": "Cette adresse e-mail est déjà utilisée par un autre compte, veuillez réessayer",
-        "confirmDialogTitle": "Lorsque vous modifiez votre email, vous devrez vous reconnecter. Voulez-vous continuer?",
+        "confirmDialogTitle": "Après avoir modifié votre email, vous devrez vous reconnecter. Voulez-vous continuer?",
         "confirmDialogCancel": "Annuler"
       },
       "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
       "actions": {
-        "title": "Actions du compte",
-        "description": "La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système.",
+        "title": "Actions sur le compte",
+        "description": " La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l’historique des sessions que vous avez regardées de notre système.",
         "button": {
           "resetPassword": "Réinitialiser le mot de passe",
           "deleteAccount": "Supprimer le compte"
         },
         "confirmDialogCancel": "Annuler",
-        "resetPasswordConfirmDialogTitle": "Lorsque vous mettez à jour votre mot de passe, vous devrez vous reconnecter. Voulez-vous continuer?",
+        "resetPasswordConfirmDialogTitle": "Après avoir réinitialisé votre mot de passe, vous devrez vous reconnecter. Voulez-vous continuer?",
         "deleteAccountConfirmDialogTitle": "Êtes-vous sûr de vouloir supprimer votre compte ?",
         "deleteAccountConfirmDialogDescription": "Cela supprimera définitivement votre nom, votre adresse e-mail et l'historique des sessions que vous avez regardées de notre système."
       },
       "emailSettings": {
-        "title": "Préférences d'email",
-        "description": "Faites-nous savoir si nous pouvons vous envoyer des e-mails:",
+        "title": "Rester informé·es ",
+        "description": "Dites-nous si nous pouvons vous envoyer des emails:",
         "serviceEmailsPermissionLabel": "Concernant vos services ou les modifications apportées à votre compte",
         "contactPermissionLabel": "Lorsqu'un nouveau cours, un nouveau service ou une nouvelle langue est disponible",
         "submitLabel": "Enregistrer les préférences d'email",
         "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
       },
       "emailRemindersSettings": {
-        "title": "Rappels par e-mail",
+        "title": "Rappels par emails",
         "introduction": "Travailler sur un traumatisme peut être difficile, surtout si vous le faites seul.",
-        "description": "Nous pouvons vous aider à rester sur la voie de votre guérison, avec des rappels doux si vous ne vous êtes pas connecté depuis un certain temps.",
+        "description": "Nous pouvons vous aider à rester sur votre chemin de guérison avec des rappels doux si vous ne vous êtes pas connecté·e depuis un certain temps",
         "fieldLabel": "Se faire rappeler :",
         "twoWeeksLabel": "Après deux semaines",
         "oneMonthLabel": "Après un mois",

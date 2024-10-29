@@ -20,7 +20,7 @@ import {
   setUserToken,
 } from '../store/userSlice';
 import { getErrorMessage } from '../utils/errorMessage';
-import logEvent, { getEventUserResponseData } from '../utils/logEvent';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 import { getIsMaintenanceMode } from '../utils/maintenanceMode';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
@@ -78,7 +78,11 @@ export default function useLoadUser() {
       }
       dispatch(setUserLoading(false));
 
-      const eventUserData = getEventUserResponseData(userResource);
+      const eventUserData = getEventUserData(
+        userResource.user.createdAt,
+        userResource.partnerAccesses,
+        userResource.partnerAdmin,
+      );
       logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
       logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
     }

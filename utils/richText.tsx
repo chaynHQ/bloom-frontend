@@ -21,6 +21,7 @@ import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
 import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
+import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 
 export const RichTextOptions: RenderOptions = {
@@ -36,6 +37,7 @@ export const RichTextOptions: RenderOptions = {
     ['faq_list']: (props: any) => <StoryblokFaqs {...props} />,
     ['statement']: (props: any) => <StoryblokStatement {...props} />,
     ['accordion']: (props: any) => <StoryblokAccordion {...props} />,
+    ['team_members_cards']: (props: any) => <StoryblokTeamMembersCards {...props} />,
     ['carousel']: (props: any) => <StoryblokCarousel {...props} />,
     ['spacer']: (props: any) => <StoryblokSpacer {...props} />,
   },
