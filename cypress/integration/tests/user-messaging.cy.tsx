@@ -9,7 +9,7 @@ describe('A logged in public user can', () => {
   });
 
   it('Navigate to the messaging page and begin a messaging', () => {
-    cy.visit('/'); //intitial home page visit
+    cy.visit('/'); // initial home page visit
     cy.get(`[qa-id=secondary-nav-messaging-button]`, { timeout: 8000 }).should('exist').click(); //go to messaging page
   });
 
