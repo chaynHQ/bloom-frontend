@@ -92,7 +92,7 @@ const Message: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('chat', locale, preview);
+  const storyblokProps = await getStoryblokPageProps('messaging', locale, preview);
 
   return {
     props: {
