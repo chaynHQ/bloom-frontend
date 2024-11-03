@@ -18,7 +18,6 @@ import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import { SessionHeader } from '../session/SessionHeader';
 import { Dots } from '../common/Dots';
 import { SessionVideo } from '../session/SessionVideo';
-import { getChatAccess } from '../../utils/getChatAccess';
 import { SessionChat } from '../session/SessionChat';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 
