@@ -38,7 +38,9 @@ const StoryblokPage = (props: StoryblokPageProps) => {
       <Head>
         <title>{`${title} • Bloom`}</title>
         <meta property="og:title" content={title} key="og-title" />
-        <meta property="og:description" content={seo_description} key="og-description" />
+        {seo_description && (
+          <meta property="og:description" content={seo_description} key="og-description" />
+        )}
       </Head>
       <main
         {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}
