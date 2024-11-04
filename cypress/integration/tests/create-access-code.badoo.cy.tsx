@@ -29,7 +29,7 @@ describe('Create access code page should display', () => {
       .should('have.prop', 'type', 'radio')
       .should('have.value', 'therapy')
       .parents('label')
-      .contains('Courses, 1:1 chat and six therapy sessions');
+      .contains('Courses, messaging and six therapy sessions');
 
     cy.get('button').contains('Create access codes').should('have.prop', 'type', 'submit');
   });

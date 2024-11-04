@@ -58,6 +58,11 @@ module.exports = withBundleAnalyzer(
           destination: '/welcome/:path*',
           permanent: true,
         },
+        {
+          source: '/chat',
+          destination: '/messaging',
+          permanent: true,
+        },
       ];
     },
     async rewrites() {

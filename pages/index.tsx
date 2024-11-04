@@ -89,7 +89,6 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
         ...require(`../messages/navigation/${locale}.json`),
         ...require(`../messages/welcome/${locale}.json`),
         ...require(`../messages/courses/${locale}.json`),
-        ...require(`../messages/chat/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour

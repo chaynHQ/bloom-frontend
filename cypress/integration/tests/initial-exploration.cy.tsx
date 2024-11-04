@@ -2,7 +2,7 @@ describe('Initial exploration', () => {
   it('should be able to explore all pages', () => {
     cy.visit('/');
     cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
-    cy.get(`[qa-id=secondary-nav-chat-button]`).click();
+    cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
@@ -21,7 +21,7 @@ describe('Initial exploration', () => {
   it('a user with partner referral should be able to explore all pages for partners', () => {
     cy.visit('/welcome/bumble');
     cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
-    cy.get(`[qa-id=secondary-nav-chat-button]`).click();
+    cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
