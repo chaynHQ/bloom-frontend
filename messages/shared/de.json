@@ -1,6 +1,11 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "metadata": {
+      "title": "Begleite uns während deines Heilungsprozesses",
+      "description": "Bloom ist dafür da, damit du Lernen, Heilen und Wachsen kannst, hin zu einer selbstbewussten Zukunft. Es wird dir von Chayn angeboten, einer globalen Non-Profit-Organisation, geführt von Überlebenden und Verbündeten aus der ganzen Welt.",
+      "imageAlt": "Illustration eines Gesichts und der Schultern einer Person, mit großen Blättern und Blumen, die über ihnen blühen. Das Bloom-Typografie-Logo ist enthalten."
+    },
     "leaveSite": {
       "button": "Seite verlassen",
       "wikiLink": "https://de.wikipedia.org/wiki/Main_Page",
