@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened, edited]
     branches:
-      - "develop"
+      - 'develop'
 
 jobs:
   Check-For-Linked-Issue:

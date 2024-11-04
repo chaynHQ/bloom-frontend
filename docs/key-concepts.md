@@ -6,7 +6,7 @@ Anyone can come directly to the site and register as a _public_ Bloom user with 
 
 ### Partner access and multi tenancy
 
-Alongside _public_ Bloom, we also have `Partners` (e.g. Bumble) which offer their users a Bloom `PartnerAccess` with additional features to public Bloom. The additional features include therapy, 1-1 chat and extra courses. A `PartnerAccess` is created by a `PartnerAdmin` and has a unique code for the user to apply when registering for an account, or afterwards on the `/apply-code` page. See [database schemas](https://github.com/chaynHQ/bloom-backend#database-models) for more details.
+Alongside _public_ Bloom, we also have `Partners` (e.g. Bumble) which offer their users a Bloom `PartnerAccess` with additional features to public Bloom. The additional features include therapy, messaging and extra courses. A `PartnerAccess` is created by a `PartnerAdmin` and has a unique code for the user to apply when registering for an account, or afterwards on the `/apply-code` page. See [database schemas](https://github.com/chaynHQ/bloom-backend#database-models) for more details.
 
 A user can have 0 (public) or many partners and the app dynamically handles this. Partner branding and tags are applied across the app (e.g. in the footer) and some pages are custom to the partner e.g. [welcome/[partnerName].tsx](pages/welcome/[partnerName].tsx).
 
@@ -16,7 +16,7 @@ A user can have 0 (public) or many partners and the app dynamically handles this
 
 **Bloom therapy** is available to some users dependent on their partner access, with a number of therapy sessions available to book via the integrated Simplybook booking widget. Therapy is offered in multiple languages and currently users can select their preferred language and therapist. Webhooks are triggered by zapier when a booking is created/cancelled, to update the user's available therapy sessions remaining in the database.
 
-**Bloom 1-1 chat** is currently available to all users. Users can send Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with 1-1 chat will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api.
+**Bloom messaging** is currently available to all users. Users can send Crisp messages to the Bloom team in relation to course content or other questions and support. The Crisp widget is embedded in session pages and users with messaging will have a profile in Crisp which reflects key data and events, sent by the bloom-backend api. Note "messaging" used to be named "chat" and there are code references to "chat" remaining.
 
 **Notes from Bloom** is currently available all users. Users can sign up for whatsapp messages twice a week. Message content can range from affirmational quotes, videos or snapshot of course content. Respond.io is used to hold contact information and to schedule messages. Contact information is also held in the database. As there was not the budget to use the Respond.io plan which allows for a direct integration, a Zapier workaround is used where bloom backend triggers a Zapier webhook which will then add / delete a contact from respond.io.
 
