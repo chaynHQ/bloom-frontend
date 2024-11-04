@@ -52,7 +52,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const courses = useTypedSelector((state) => state.courses);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
+  const liveCourseAccess = !!userId; // soon to be retired in issue 1176
   const t = useTranslations('Courses');
 
   const headerProps = {
@@ -123,62 +123,6 @@ const CourseList: NextPage<Props> = ({ stories }) => {
       setCoursesCompleted(courseCoursesCompleted);
     }
   }, [partnerAccesses, partnerAdmin, stories, courses]);
-  // Show sign up banner if user is logged out
-  if (!userId) {
-    return (
-      <Box>
-        <Head>
-          <title>{`${t('title')} • Bloom`}</title>
-        </Head>
-        <Header
-          title={headerProps.title}
-          introduction={headerProps.introduction}
-          imageSrc={headerProps.imageSrc}
-          imageAlt={headerProps.imageAlt}
-        />
-        <Container sx={containerStyle}>
-          {loadedCourses === null ? (
-            <LoadingContainer />
-          ) : loadedCourses.length === 0 ? (
-            // Leaving blank instead of saying no courses are available
-            <Box></Box>
-          ) : (
-            <Box sx={rowStyle}>
-              <Box sx={cardColumnStyle}>
-                {loadedCourses?.map((course, index) => {
-                  if (index % 2 === 1) return;
-                  return (
-                    <CourseCard
-                      key={course.id}
-                      clickable={true}
-                      course={course}
-                      courseProgress={null}
-                      liveCourseAccess={false}
-                    />
-                  );
-                })}
-              </Box>
-              <Box sx={cardColumnStyle}>
-                {loadedCourses?.map((course, index) => {
-                  if (index % 2 === 0) return;
-                  return (
-                    <CourseCard
-                      key={course.id}
-                      clickable={true}
-                      course={course}
-                      courseProgress={null}
-                      liveCourseAccess={false}
-                    />
-                  );
-                })}
-              </Box>
-            </Box>
-          )}
-        </Container>
-        <SignUpBanner />
-      </Box>
-    );
-  }
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
@@ -192,6 +136,8 @@ const CourseList: NextPage<Props> = ({ stories }) => {
     <Box>
       <Head>
         <title>{`${t('title')} • Bloom`}</title>
+        <meta property="og:title" content={t('courses')} key="og-title" />
+        <meta property="og:description" content={t('introduction')} key="og-description" />
       </Head>
       <Header
         title={headerProps.title}
@@ -211,7 +157,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
             <Box sx={cardColumnStyle}>
               {loadedCourses?.map((course, index) => {
                 if (index % 2 === 1) return;
-                const courseProgress = getCourseProgress(course.id);
+                const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
                   <CourseCard
                     key={course.id}
@@ -225,7 +171,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
             <Box sx={cardColumnStyle}>
               {loadedCourses?.map((course, index) => {
                 if (index % 2 === 0) return;
-                const courseProgress = getCourseProgress(course.id);
+                const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
                   <CourseCard
                     key={course.id}
@@ -239,7 +185,8 @@ const CourseList: NextPage<Props> = ({ stories }) => {
           </Box>
         )}
       </Container>
-      {!!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      {!userId && <SignUpBanner />}
+      {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );
 };
