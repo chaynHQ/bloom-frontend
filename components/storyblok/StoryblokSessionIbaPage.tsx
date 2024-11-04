@@ -237,7 +237,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
       })}
     >
       <Head>
-        <title>{`${name} • Bloom`}</title>
+        <title>{`${t('session')} • ${name} • Bloom`}</title>
         <meta property="og:title" content={name} key="og-title" />
         <meta property="og:description" content={seo_description} key="og-description" />
       </Head>
