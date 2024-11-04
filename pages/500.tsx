@@ -35,7 +35,7 @@ const Custom500: NextPage = () => {
   return (
     <Container sx={containerStyle}>
       <Head>
-        <title>{t('500.title')}</title>
+        <title>{`${t('500.title')} • Bloom`}</title>
       </Head>
       <Box sx={imageContainerStyle}>
         <Image alt={t('alt.bloomHead')} src={bloomHead} fill sizes="100vw" />

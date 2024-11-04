@@ -6,12 +6,12 @@ import { Analytics } from '@vercel/analytics/react';
 import { NextComponentType } from 'next';
 import { IntlError, NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import DefaultHeadMetadata from '../components/head/DefaultHeadMetadata';
 import Consent from '../components/layout/Consent';
 import ErrorBoundary from '../components/layout/ErrorBoundary';
 import Footer from '../components/layout/Footer';
@@ -72,9 +72,7 @@ function MyApp(props: MyAppProps) {
         timeZone="Europe/London"
         onError={onIntlError}
       >
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
+        <DefaultHeadMetadata />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <TopBar />

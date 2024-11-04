@@ -11,13 +11,15 @@ export interface StoryblokPageProps {
   _uid: string;
   _editable: string;
   title: string;
+  seo_description: string;
   description: ISbRichtext;
   header_image: { filename: string; alt: string };
   page_sections: StoryblokPageSectionProps[];
 }
 
 const StoryblokPage = (props: StoryblokPageProps) => {
-  const { _uid, _editable, title, description, header_image, page_sections } = props;
+  const { _uid, _editable, title, seo_description, description, header_image, page_sections } =
+    props;
 
   const userId = useTypedSelector((state) => state.user.id);
   const router = useRouter();
@@ -34,7 +36,9 @@ const StoryblokPage = (props: StoryblokPageProps) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{`${title} • Bloom`}</title>
+        <meta property="og:title" content={title} key="og-title" />
+        <meta property="og:description" content={seo_description} key="og-description" />
       </Head>
       <main
         {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}

@@ -44,13 +44,23 @@ export interface StoryblokWelcomePageProps {
   _editable: string;
   storySlug: string;
   title: string;
+  seo_description: string;
   introduction: ISbRichtext;
   header_image: { filename: string; alt: string };
   page_sections: StoryblokPageSectionProps[];
 }
 
 const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
-  const { _uid, _editable, storySlug, title, introduction, header_image, page_sections } = props;
+  const {
+    _uid,
+    _editable,
+    storySlug,
+    title,
+    seo_description,
+    introduction,
+    header_image,
+    page_sections,
+  } = props;
 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
@@ -119,8 +129,11 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       })}
     >
       <Head>
-        <title>{title}</title>
+        <title>{`${title} • Bloom`}</title>
+        <meta property="og:title" content={title} key="og-title" />
+        <meta property="og:description" content={seo_description} key="og-description" />
       </Head>
+
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}

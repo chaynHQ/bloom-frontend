@@ -30,7 +30,7 @@ export function PartnerAdminGuard({ children }: { children: JSX.Element }) {
     return (
       <Container sx={containerStyle}>
         <Head>
-          <title>{t('title')}</title>
+          <title>{`${t('title')} • Bloom`}</title>
         </Head>
         <Box sx={imageContainerStyle}>
           <Image

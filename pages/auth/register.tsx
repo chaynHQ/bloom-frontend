@@ -179,7 +179,7 @@ const Register: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('register.title')}</title>
+        <title>{`${t('register.title')} • Bloom`}</title>
       </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}

@@ -50,8 +50,14 @@ const Message: NextPage<Props> = ({ story }) => {
   return (
     <>
       <Head>
-        <title>{headerProps.title}</title>
-      </Head>{' '}
+        <title>{`${story.content.title} • Bloom`}</title>
+        <meta property="og:title" content={story.content.title} key="og-title" />
+        <meta
+          property="og:description"
+          content={story.content.seo_description}
+          key="og-description"
+        />
+      </Head>
       <Box>
         <Header {...headerProps} />
         {userId ? (

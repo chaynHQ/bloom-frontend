@@ -65,7 +65,7 @@ const ConfirmedSession: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('title')}</title>
+        <title>{`${t('title')} • Bloom`}</title>
       </Head>
       <Header
         title={headerProps.title}

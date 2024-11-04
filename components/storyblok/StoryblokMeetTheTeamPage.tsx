@@ -24,6 +24,7 @@ export interface StoryblokMeetTheTeamPageProps {
   _uid: string;
   _editable: string;
   title: string;
+  seo_description: string;
   description: string;
   header_image: { filename: string; alt: string };
   core_team_title: string;
@@ -42,6 +43,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     _uid,
     _editable,
     title,
+    seo_description,
     description,
     header_image,
     core_team_title,
@@ -64,13 +66,6 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
   }, []);
 
-  const headerProps = {
-    title: title,
-    introduction: description,
-    imageSrc: header_image.filename,
-    translatedImageAlt: header_image.alt,
-  };
-
   return (
     <Box
       {...storyblokEditable({
@@ -91,13 +86,15 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
       })}
     >
       <Head>
-        <title>{headerProps.title}</title>
+        <title>{`${title} • Bloom`}</title>
+        <meta property="og:title" content={title} key="og-title" />
+        <meta property="og:description" content={seo_description} key="og-description" />
       </Head>
       <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
+        title={title}
+        introduction={description}
+        imageSrc={header_image.filename}
+        translatedImageAlt={header_image.alt}
       />
       {page_section_1?.length > 0 && <StoryblokPageSection {...page_section_1[0]} />}
       <Container sx={coreContainerStyle}>

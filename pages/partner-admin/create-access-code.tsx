@@ -41,7 +41,7 @@ const CreateAccessCode: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('title')}</title>
+        <title>{`${t('title')} • Bloom`}</title>
       </Head>
       <AdminHeader
         title={headerProps.title}
