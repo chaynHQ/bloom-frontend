@@ -1,12 +1,13 @@
-import Header from '../layout/Header';
+import CircleIcon from '@mui/icons-material/Circle';
 import { Button, Typography } from '@mui/material';
+import { ISbRichtext, ISbStoryData } from '@storyblok/react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { PROGRESS_STATUS } from '../../constants/enums';
+import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import theme from '../../styles/theme';
 import Link from '../common/Link';
-import CircleIcon from '@mui/icons-material/Circle';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { ISbRichtext, ISbStoryData } from '@storyblok/react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useTranslations } from 'next-intl';
+import Header from '../layout/Header';
 
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
@@ -21,19 +22,33 @@ interface SessionHeaderProps {
   name: string;
   sessionProgress: PROGRESS_STATUS;
   course: ISbStoryData;
-  weekString: string;
   subtitle?: string;
+  storyUuid: string;
   storyPosition?: number;
 }
+
 export const SessionHeader = (props: SessionHeaderProps) => {
+  const { description, name, sessionProgress, course, subtitle, storyUuid, storyPosition } = props;
+  const [weekString, setWeekString] = useState<string>('');
+
   const t = useTranslations('Courses');
-  const { description, name, sessionProgress, course, weekString, subtitle, storyPosition } = props;
+
   const headerProps = {
     title: name,
     introduction: description,
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
+
+  useEffect(() => {
+    course.content.weeks.map((week: any) => {
+      week.sessions.map((session: any) => {
+        if (session === storyUuid) {
+          setWeekString(week.name);
+        }
+      });
+    });
+  }, [storyUuid, course.content.weeks]);
 
   return (
     <Header

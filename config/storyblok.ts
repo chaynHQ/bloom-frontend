@@ -13,7 +13,6 @@ import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
-import StoryblokSessionIbaPage from '../components/storyblok/StoryblokSessionIbaPage';
 import StoryblokSessionPage from '../components/storyblok/StoryblokSessionPage';
 import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
@@ -45,7 +44,6 @@ export const storyblok = storyblokInit({
     page: StoryblokPage,
     course: StoryblokCoursePage,
     session: StoryblokSessionPage,
-    session_iba: StoryblokSessionIbaPage,
     welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
   },
