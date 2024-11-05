@@ -79,12 +79,12 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       qaId: 'secondary-nav-courses-button',
     },
     {
-      label: t('chat'),
+      label: t('messaging'),
       icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
-      ariaLabel: t('chat'),
-      href: '/chat',
+      ariaLabel: t('messaging'),
+      href: '/messaging',
       event: SECONDARY_HEADER_CHAT_CLICKED,
-      qaId: 'secondary-nav-chat-button',
+      qaId: 'secondary-nav-messaging-button',
     },
 
     {
