@@ -7,19 +7,20 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import SessionContentCard from '../../components/cards/SessionContentCard';
-import { SessionCompleteButton } from '../session/SessionCompleteButton';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { columnStyle } from '../../styles/common';
 import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
+import { getChatAccess } from '../../utils/getChatAccess';
+import { getSessionCompletion } from '../../utils/getSessionCompletion';
+import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-import { getSessionCompletion } from '../../utils/getSessionCompletion';
-import { SessionHeader } from '../session/SessionHeader';
 import { Dots } from '../common/Dots';
-import { SessionVideo } from '../session/SessionVideo';
 import { SessionChat } from '../session/SessionChat';
-import hasAccessToPage from '../../utils/hasAccessToPage';
+import { SessionCompleteButton } from '../session/SessionCompleteButton';
+import { SessionHeader } from '../session/SessionHeader';
+import { SessionVideo } from '../session/SessionVideo';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -83,9 +84,14 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [weekString, setWeekString] = useState<string>('');
+  const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
   const courseComingSoon: boolean = course.content.coming_soon;
   const courseLiveSoon: boolean = courseIsLiveSoon(course);
   const courseLiveNow: boolean = courseIsLiveNow(course);
+
+  useEffect(() => {
+    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
+  }, [partnerAccesses, partnerAdmin]);
 
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
@@ -191,11 +197,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                     </SessionContentCard>
                   </>
                 )}
-                <SessionChat
-                  eventData={eventData}
-                  partnerAccesses={partnerAccesses}
-                  partnerAdmin={partnerAdmin}
-                />
+                {liveChatAccess && <SessionChat eventData={eventData} />}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                   <SessionCompleteButton storyId={storyId} eventData={eventData} />
                 )}

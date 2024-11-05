@@ -8,17 +8,18 @@ import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { columnStyle } from '../../styles/common';
+import { getChatAccess } from '../../utils/getChatAccess';
+import { getSessionCompletion } from '../../utils/getSessionCompletion';
+import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
 import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
+import { SessionChat } from '../session/SessionChat';
 import { SessionCompleteButton } from '../session/SessionCompleteButton';
-import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import { SessionHeader } from '../session/SessionHeader';
 import { SessionVideo } from '../session/SessionVideo';
-import { SessionChat } from '../session/SessionChat';
-import hasAccessToPage from '../../utils/hasAccessToPage';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -80,6 +81,11 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [weekString, setWeekString] = useState<string>('');
+  const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
+  }, [partnerAccesses, partnerAdmin]);
 
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
@@ -164,11 +170,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
                   </>
                 )}
               {bonus && <MultipleBonusContent bonus={bonus} eventData={eventData} />}
-              <SessionChat
-                eventData={eventData}
-                partnerAccesses={partnerAccesses}
-                partnerAdmin={partnerAdmin}
-              />
+              {liveChatAccess && <SessionChat eventData={eventData} />}
               {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
                 <SessionCompleteButton storyId={storyId} eventData={eventData} />
               )}
