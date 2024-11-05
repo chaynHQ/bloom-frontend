@@ -16,7 +16,7 @@ describe('A logged in public user can', () => {
   it('see the More about section', () => {
     cy.visit('/messaging');
     cy.get('h2').contains('Tell us what’s on your mind');
-    cy.get('h2').contains('Meet the Bloom team');
+    cy.get('h2').contains('Meet the Bloom messaging team');
     cy.get('h2').contains('More about how Bloom’s Messaging works');
     cy.checkImage('Illustration of a person sitting', 'illustration_course_dbr');
     cy.get('h3').contains('Who is 1-1 Messaging for?');
