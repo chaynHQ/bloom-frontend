@@ -16,7 +16,9 @@ import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
+import SessionFeedbackCard from '../cards/SessionFeedbackCard';
 import { Dots } from '../common/Dots';
+import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
 import { SessionChat } from '../session/SessionChat';
 import { SessionCompleteButton } from '../session/SessionCompleteButton';
 import { SessionHeader } from '../session/SessionHeader';
@@ -40,13 +42,14 @@ export interface StoryblokSessionPageProps {
   _editable: string;
   course: ISbStoryData;
   name: string;
+  subtitle: string;
   seo_description: string;
-  description: ISbRichtext;
+  description: string;
   video: { url: string };
   video_transcript: ISbRichtext;
   video_outro: ISbRichtext;
   activity: ISbRichtext;
-  bonus: ISbRichtext;
+  bonus: ISbRichtext | BonusContent[];
   coming_soon: boolean;
   coming_soon_content: ISbRichtext;
 }
@@ -60,6 +63,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     _editable,
     course,
     name,
+    subtitle,
     seo_description,
     description,
     video,
@@ -80,29 +84,24 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const courses = useTypedSelector((state) => state.courses);
 
   const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [sessionId, setSessionId] = useState<string>(); // database Session id
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-  const [weekString, setWeekString] = useState<string>('');
   const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
-  const courseComingSoon: boolean = course.content.coming_soon;
-  const courseLiveSoon: boolean = courseIsLiveSoon(course);
-  const courseLiveNow: boolean = courseIsLiveNow(course);
 
-  useEffect(() => {
-    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
-  }, [partnerAccesses, partnerAdmin]);
+  // This component handles both "session" and alternative "session_iba" page blocks
+  // "session_iba" page blocks have a multi-block bonus field, and omit the coming soon fields
+  const isAlternateSessionPage = Array.isArray(bonus);
+  const richtextBonusContent = !isAlternateSessionPage ? (bonus as ISbRichtext) : null;
+  const multipleBonusContent = isAlternateSessionPage ? (bonus as BonusContent[]) : null;
+  const showRichtextBonusContent =
+    richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
+  const showMultipleBonusContent = multipleBonusContent && multipleBonusContent.length > 0;
 
-  useEffect(() => {
-    const coursePartners = course.content.included_for_partners;
-    setIncorrectAccess(
-      !hasAccessToPage(isLoggedIn, false, coursePartners, partnerAccesses, partnerAdmin),
-    );
-  }, [partnerAccesses, course.content.included_for_partners, partnerAdmin]);
-
-  useEffect(() => {
-    getSessionCompletion(course, courses, storyUuid, storyId, setWeekString, setSessionProgress);
-  }, [courses, course.content.weeks, storyId, course.id, storyUuid]);
+  const courseComingSoon: boolean = !isAlternateSessionPage && course.content.coming_soon;
+  const courseLiveSoon: boolean = !isAlternateSessionPage && courseIsLiveSoon(course);
+  const courseLiveNow: boolean = !isAlternateSessionPage && courseIsLiveNow(course);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const eventData = {
@@ -117,6 +116,27 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     course_live_now: courseLiveNow,
   };
 
+  useEffect(() => {
+    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
+  }, [partnerAccesses, partnerAdmin]);
+
+  useEffect(() => {
+    const coursePartners = course.content.included_for_partners;
+    setIncorrectAccess(
+      !hasAccessToPage(isLoggedIn, false, coursePartners, partnerAccesses, partnerAdmin),
+    );
+  }, [
+    isAlternateSessionPage,
+    partnerAccesses,
+    course.content.included_for_partners,
+    isLoggedIn,
+    partnerAdmin,
+  ]);
+
+  useEffect(() => {
+    getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
+  }, [courses, course, storyId, storyUuid]);
+
   return (
     <Box
       {...storyblokEditable({
@@ -124,6 +144,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
         _editable,
         course,
         name,
+        subtitle,
         description,
         video,
         video_transcript,
@@ -151,7 +172,8 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
             name={name}
             sessionProgress={sessionProgress}
             course={course}
-            weekString={weekString}
+            subtitle={subtitle}
+            storyUuid={storyUuid}
             storyPosition={storyPosition}
           />
           <Container sx={containerStyle}>
@@ -183,7 +205,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                       </SessionContentCard>
                     </>
                   )}
-                {bonus.content && (bonus.content?.length > 1 || bonus.content[0].content) && (
+                {showRichtextBonusContent && (
                   <>
                     <Dots />
                     <SessionContentCard
@@ -193,9 +215,12 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                       eventPrefix="SESSION_BONUS_CONTENT"
                       eventData={eventData}
                     >
-                      <>{render(bonus, RichTextOptions)}</>
+                      <>{render(richtextBonusContent, RichTextOptions)}</>
                     </SessionContentCard>
                   </>
+                )}
+                {showMultipleBonusContent && (
+                  <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
                 )}
                 {liveChatAccess && <SessionChat eventData={eventData} />}
                 {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
@@ -204,6 +229,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
               </Box>
             )}
           </Container>
+          {sessionId && <SessionFeedbackCard sessionId={sessionId} />}
         </Box>
       )}
     </Box>
