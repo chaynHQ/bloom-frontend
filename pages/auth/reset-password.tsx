@@ -43,7 +43,7 @@ const ResetPassword: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('resetPassword.title')}</title>
+        <title>{`${t('resetPassword.title')} • Bloom`}</title>
       </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}

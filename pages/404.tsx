@@ -35,7 +35,7 @@ const Custom404: NextPage = () => {
   return (
     <Container sx={containerStyle}>
       <Head>
-        <title>{t('404.title')}</title>
+        <title>{`${t('404.title')} • Bloom`}</title>
       </Head>
       <Box sx={imageContainerStyle}>
         <Image alt={t('alt.bloomLogo')} src={bloomHead} fill sizes="100vw" />

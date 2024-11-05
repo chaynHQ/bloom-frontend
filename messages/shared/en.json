@@ -1,6 +1,11 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "metadata": {
+      "title": "Join us on your healing journey",
+      "description": "Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.",
+      "imageAlt": "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them. The Bloom typography logo is included."
+    },
     "leaveSite": {
       "button": "Leave this site",
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",

@@ -4,7 +4,6 @@ import { AppType } from 'next/app';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import GoogleTagManagerScript from '../components/head/GoogleTagManagerScript';
-import OpenGraphMetadata from '../components/head/OpenGraphMetadata';
 import RollbarScript from '../components/head/RollbarScript';
 import createEmotionCache from '../config/emotionCache';
 import { MyAppProps } from './_app';
@@ -26,7 +25,6 @@ export default class MyDocument extends Document<NewRelicProps> {
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
             rel="stylesheet"
           />
-          <OpenGraphMetadata />
           <GoogleTagManagerScript />
           <RollbarScript />
         </Head>

@@ -70,6 +70,7 @@ export interface StoryblokSessionPageProps {
   _editable: string;
   course: ISbStoryData;
   name: string;
+  seo_description: string;
   description: ISbRichtext;
   video: { url: string };
   video_transcript: ISbRichtext;
@@ -89,6 +90,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     _editable,
     course,
     name,
+    seo_description,
     description,
     video,
     video_transcript,
@@ -225,13 +227,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     course_live_now: courseLiveNow,
   };
 
-  const headerProps = {
-    title: name,
-    introduction: description,
-    imageSrc: illustrationPerson4Peach,
-    imageAlt: 'alt.personTea',
-  };
-
   const Dots = () => {
     return (
       <Box sx={dotsStyle}>
@@ -259,17 +254,22 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
       })}
     >
       <Head>
-        <title>{name}</title>
+        <title>{`${t('session')} • ${name} • Bloom`}</title>
+        <meta property="og:title" content={name} key="og-title" />
+        {seo_description && (
+          <meta property="og:description" content={seo_description} key="og-description" />
+        )}
       </Head>
+
       {incorrectAccess ? (
         <Container sx={containerStyle}></Container>
       ) : (
         <Box>
           <Header
-            title={headerProps.title}
-            introduction={headerProps.introduction}
-            imageSrc={headerProps.imageSrc}
-            imageAlt={headerProps.imageAlt}
+            title={name}
+            introduction={description}
+            imageSrc={illustrationPerson4Peach}
+            imageAlt={'alt.personTea'}
             progressStatus={sessionProgress}
           >
             <Button

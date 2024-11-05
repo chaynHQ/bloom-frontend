@@ -1,6 +1,11 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "metadata": {
+      "title": "Junte-se a nós em sua jornada de recuperação",
+      "description": "Bloom está aqui para que você aprenda, se recupere e se mova em direção a um futuro confiante. É trazido a você por Chayn, uma organização global sem fins lucrativos, dirigida por sobreviventes e aliados de todo o mundo.",
+      "imageAlt": "Ilustração de um rosto e ombros de uma pessoa, com grandes folhas e flores desabrochando acima deles. O logotipo tipográfico Bloom está incluído."
+    },
     "leaveSite": {
       "button": "Sair deste site",
       "wikiLink": "https://pt.wikipedia.org/wiki/Main_Page",
