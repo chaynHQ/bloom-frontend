@@ -46,16 +46,13 @@ const listButtonStyle = {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  ':hover': {
-    backgroundColor: 'unset !important',
-  },
 } as const;
 
 const loginButtonStyle = {
   width: 'auto',
   ml: 2,
   mt: 1,
-  color: 'text.main !important',
+  color: 'text.primary !important',
 } as const;
 
 interface NavigationItem {
