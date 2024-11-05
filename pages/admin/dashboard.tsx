@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import CreatePartnerAdminForm from '../../components/forms/CreatePartnerAdminForm';
-import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
 import UpdatePartnerAdminForm from '../../components/forms/UpdatePartnerAdminForm';
+import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -40,7 +40,7 @@ const Dashboard: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{headerProps.title}</title>
+        <title>{`${headerProps.title} • Bloom`}</title>
       </Head>
       <AdminHeader title={headerProps.title} />
       <Container sx={containerStyle}>

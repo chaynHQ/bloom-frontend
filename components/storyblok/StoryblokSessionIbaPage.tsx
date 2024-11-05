@@ -39,6 +39,7 @@ export interface StoryblokSessionIbaPageProps {
   course: ISbStoryData;
   name: string;
   subtitle: string;
+  seo_description: string;
   description: string;
   video: { url: string };
   video_transcript: ISbRichtext;
@@ -57,6 +58,7 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
     course,
     name,
     subtitle,
+    seo_description,
     description,
     video,
     video_transcript,
@@ -117,8 +119,13 @@ const StoryblokSessionIbaPage = (props: StoryblokSessionIbaPageProps) => {
       })}
     >
       <Head>
-        <title>{name}</title>
+        <title>{`${t('session')} • ${name} • Bloom`}</title>
+        <meta property="og:title" content={name} key="og-title" />
+        {seo_description && (
+          <meta property="og:description" content={seo_description} key="og-description" />
+        )}
       </Head>
+
       {incorrectAccess ? (
         <Container sx={containerStyle}></Container>
       ) : (

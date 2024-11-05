@@ -16,10 +16,6 @@ body {
     sans-serif;
 }
 
-a {
-  color: inherit !important;
-}
-
 a span {
   color: inherit !important;
 }
@@ -65,6 +61,10 @@ ol > li {
 ol > li::marker {
   color: #ea0050;
   font-weight: bold;
+}
+
+iframe {
+  border: none;
 }
 
 /* Styling for the nuka-carousel */

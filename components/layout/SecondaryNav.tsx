@@ -37,6 +37,29 @@ interface SecondaryNavIconType {
   alt: string;
   src: string;
 }
+
+const tabsStyle = {
+  backgroundColor: theme.palette.palePrimaryLight,
+} as const;
+
+const tabStyle = {
+  flexDirection: 'row',
+  textTransform: 'none',
+  fontSize: theme.typography.body1.fontSize,
+  fontWeight: 600,
+  padding: 0.25,
+  color: 'text.primary',
+  '& .material-icons ': { mb: 0, mr: 1.5 },
+
+  '&.Mui-selected': {
+    color: 'text.secondary',
+  },
+  ':hover': {
+    borderBottom: '2px solid',
+    borderColor: 'primary.dark',
+  },
+} as const;
+
 export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
   <Icon
     sx={{
@@ -79,12 +102,12 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       qaId: 'secondary-nav-courses-button',
     },
     {
-      label: t('chat'),
+      label: t('messaging'),
       icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
-      ariaLabel: t('chat'),
-      href: '/chat',
+      ariaLabel: t('messaging'),
+      href: '/messaging',
       event: SECONDARY_HEADER_CHAT_CLICKED,
-      qaId: 'secondary-nav-chat-button',
+      qaId: 'secondary-nav-messaging-button',
     },
 
     {
@@ -131,16 +154,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
     <Tabs
       value={tabValue}
       aria-label={t('secondaryNavigationMenu')}
-      sx={{
-        backgroundColor: theme.palette.palePrimaryLight,
-        '& a.Mui-selected': {
-          color: 'text.secondary',
-        },
-        '& a:hover': {
-          borderBottom: '2px solid',
-          borderColor: 'primary.dark',
-        },
-      }}
+      sx={tabsStyle}
       variant="fullWidth"
       qa-id="secondary-nav"
       // Weird type errors for this prop
@@ -159,14 +173,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
             key={linkData.label}
             component={NextLinkComposed}
             icon={linkData.icon}
-            sx={{
-              textTransform: 'none',
-              fontSize: theme.typography.body1.fontSize,
-              fontWeight: 600,
-              '& .material-icons ': { mb: 0, mr: 1.5 },
-              padding: 0.25,
-              flexDirection: 'row',
-            }}
+            sx={tabStyle}
             aria-label={linkData.ariaLabel}
             label={linkData.label}
             to={linkData.href}

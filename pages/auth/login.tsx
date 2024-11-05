@@ -131,7 +131,7 @@ const Login: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('login.title')}</title>
+        <title>{`${t('login.title')} • Bloom`}</title>
       </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}

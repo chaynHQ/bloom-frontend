@@ -93,8 +93,8 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
         icon: <SecondaryNavIcon src={courseIcon} alt={t('alt.courseIcon')} />,
       },
       {
-        label: t('chat'),
-        href: '/chat',
+        label: t('messaging'),
+        href: '/messaging',
         event: DRAWER_CHAT_CLICKED,
         icon: <SecondaryNavIcon src={chatIcon} alt={t('alt.chatIcon')} />,
       },
