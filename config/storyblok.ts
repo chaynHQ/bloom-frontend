@@ -13,10 +13,11 @@ import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
 import StoryblokQuote from '../components/storyblok/StoryblokQuote';
 import StoryblokRow from '../components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
-import StoryblokSessionIbaPage from '../components/storyblok/StoryblokSessionIbaPage';
 import StoryblokSessionPage from '../components/storyblok/StoryblokSessionPage';
 import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
+import StoryblokTeamMemberCard from '../components/storyblok/StoryblokTeamMemberCard';
+import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 import StoryblokWelcomePage from '../components/storyblok/StoryblokWelcomePage';
 
@@ -29,6 +30,8 @@ export const storyblok = storyblokInit({
     audio: StoryblokAudio,
     row: StoryblokRow,
     row_new: StoryblokRowColumnBlock,
+    team_member: StoryblokTeamMemberCard,
+    team_members_cards: StoryblokTeamMembersCards,
     quote: StoryblokQuote,
     card: StoryblokCard,
     button: StoryblokButton,
@@ -41,7 +44,6 @@ export const storyblok = storyblokInit({
     page: StoryblokPage,
     course: StoryblokCoursePage,
     session: StoryblokSessionPage,
-    session_iba: StoryblokSessionIbaPage,
     welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
   },

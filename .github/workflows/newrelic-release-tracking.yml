@@ -14,7 +14,7 @@ jobs:
         run: echo "COMMIT_REF=${{ github.ref_name }}" >> $GITHUB_ENV
       # This step creates a new Change Tracking Marker for the APM entity
       - name: New Relic Application Deployment Marker
-        uses: newrelic/deployment-marker-action@v2.5.0
+        uses: newrelic/deployment-marker-action@v2.5.1
         with:
           apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
           region: 'EU'
@@ -23,7 +23,7 @@ jobs:
           user: '${{ github.actor }}'
       # This step creates a new Change Tracking Marker for the Browser entity
       - name: New Relic Browser Deployment Marker
-        uses: newrelic/deployment-marker-action@v2.5.0
+        uses: newrelic/deployment-marker-action@v2.5.1
         with:
           apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
           region: 'EU'

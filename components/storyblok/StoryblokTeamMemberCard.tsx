@@ -55,13 +55,13 @@ export interface StoryblokTeamMemberCardProps {
   languages: string;
   bio: ISbRichtext;
   image: { filename: string; alt: string };
-  alwaysOpen?: boolean;
+  cardExpandable?: boolean;
 }
 
 const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
-  const { _uid, _editable, name, role, languages, bio, image, alwaysOpen = false } = props;
+  const { _uid, _editable, name, role, languages, bio, image, cardExpandable = false } = props;
 
-  const [expanded, setExpanded] = useState<boolean>(alwaysOpen);
+  const [expanded, setExpanded] = useState<boolean>(!cardExpandable);
   const t = useTranslations('Shared.meetTheTeam');
 
   const handleExpandClick = () => {
@@ -85,13 +85,13 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
         languages,
         bio,
         image,
-        alwaysOpen,
+        cardExpandable,
       })}
     >
       <CardActionArea
         onClick={handleExpandClick}
         aria-label={`${t.rich('expandTeamMember', { name: name })}`}
-        disabled={alwaysOpen}
+        disabled={!cardExpandable}
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={imageContainerStyle}>
@@ -118,7 +118,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
                 </Typography>
               </Box>
             </Box>
-            {!alwaysOpen && (
+            {cardExpandable && (
               <Box style={expandArrowStyle}>
                 <KeyboardArrowDownIcon color="error"></KeyboardArrowDownIcon>
               </Box>

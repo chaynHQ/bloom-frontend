@@ -11,7 +11,7 @@
       "formSuccess": {
         "success": "A Bumble code was applied to your account!",
         "successLine2": "Your Bumble access enables the following:",
-        "liveChat": "1-1 chat with the Bloom team",
+        "liveChat": "Messaging with the Bloom team",
         "therapy": "{therapySessionsRemaining} therapy sessions",
         "courses": "Self-guided courses"
       },

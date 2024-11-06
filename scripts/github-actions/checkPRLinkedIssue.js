@@ -9,7 +9,17 @@ async function main({ g, c }) {
   const prBody = context.payload.pull_request.body;
   const prNumber = context.payload.pull_request.number;
   const prOwner = context.payload.pull_request.user.login;
-  const exemptPrOwners = ['kyleecodes', 'swetha-charles', 'eleanorreem', 'annarhughes', 'tarebyte', 'dependabot[bot]', 'dependabot', 'github-actions[bot]', 'github-actions'];
+  const exemptPrOwners = [
+    'kyleecodes',
+    'swetha-charles',
+    'eleanorreem',
+    'annarhughes',
+    'tarebyte',
+    'dependabot[bot]',
+    'dependabot',
+    'github-actions[bot]',
+    'github-actions',
+  ];
   const regex =
     /(?!&lt;!--)(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s*#(\d+)(?![^&lt;]*--&gt;)/gi;
   const match = prBody.match(regex);

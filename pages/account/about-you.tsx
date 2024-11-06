@@ -75,7 +75,7 @@ const AboutYou: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('title')}</title>
+        <title>{`${t('title')} • Bloom`}</title>
       </Head>
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}

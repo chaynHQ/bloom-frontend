@@ -288,16 +288,16 @@ If it says your account it already registered and you can’t remember the passw
 
 Our preview urls work almost exactly like our live website, except for:
 
-- When you open chat, it will show a fake set of ‘chat team’ members available.
-- When you send a chat, no-one will reply.
-- We might have also set the chat text to be different on staging/preview, if we are testing options.
+- When you open messaging, it will show a fake set of ‘chat team’ members available.
+- When you send a message, no-one will reply.
+- We might have also set the message text to be different on staging/preview, if we are testing options.
 - When you go to book a therapy session, you will see fake therapists.
 - When you book a therapy session, it won’t actually book a session with anyone.
 - When you get the email confirmation of a therapy session, it won’t show the same email as we send to Bumble/Badoo users.
 
 You might want to use the live site if:
 
-- You want to test something about chat
+- You want to test something about messaging
 - You want to book a therapy session with one of the therapists as part of their onboarding
 - A bug has been reported but you can’t see it on preview, so you want to see if it’s only affecting the live site
 - To test features that only work on production e.g. Hotjar

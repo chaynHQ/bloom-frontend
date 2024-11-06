@@ -68,7 +68,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   courses.forEach((course: Partial<ISbStoryData>) => {
     if (!course.slug || !course.published) return;
 
-    if (!course.is_startpage || isAlternativelyHandledCourse(course.slug)) {
+    if (!course.is_startpage) {
       return;
     }
 
@@ -89,9 +89,5 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
-
-const isAlternativelyHandledCourse = (slug: string) => {
-  return slug.includes('/image-based-abuse-and-rebuilding-ourselves/');
-};
 
 export default CourseOverview;

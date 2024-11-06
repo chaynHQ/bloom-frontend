@@ -1,6 +1,11 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "metadata": {
+      "title": "Apne healing ke safar par humein join kariye",
+      "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
+      "imageAlt": "Ek insan ke chehre aur kandhon ki tasveer, jiske upar bade patte aur phool khil rahe hain. Bloom ka logo bhi ismein shamil hai."
+    },
     "leaveSite": {
       "button": "Site ko chodiye",
       "wikiLink": "https://hi.wikipedia.org/wiki/Main_Page",
