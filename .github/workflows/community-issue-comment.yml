@@ -1,50 +1,62 @@
-# This workflow handles issue comments.
-# See for more info: https://github.com/actions/github-script
+# -----------------------------------------------------------------------------
+# GitHub Actions Workflow: Issue Comments
+# Description: Post issue comments
+# Jobs:
+# - Assigned comment
+# - Stale label comment
+# -----------------------------------------------------------------------------
 
-name: Issue Comments
+name: Issue Comment Workflows
 
 on:
+  workflow_run:
+    workflows: ["Label Stale Contributions"]
+    types:
+      - completed
   issues:
     types:
       - assigned
       - labeled
 
 jobs:
-  # When issues are assigned, a comment is posted
-  # Tags the assignee with links to helpful resources
+  # Job: Assigned issue comment
+  # Trigger: Issues are assigned
+  # Returns: Posts comment tagging assignee and helpful message
   assigned-comment:
     if: github.event.action == 'assigned'
     runs-on: ubuntu-latest
     steps:
       - name: Post assignee issue comment
         id: assigned-comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7 # https://github.com/actions/github-script
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
-              body: `Thank you @${context.payload.issue.assignee.login} you have been assigned this issue!
-              **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
-              
-              ---
-              
-              Support Chayn's mission? ⭐ Please star this repo to help us find more contributors like you!
-              Learn more about Chayn and our impact [here](https://github.com/chaynHQ/.github/blob/main/profile/README.md). 🌸`
-              })
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.payload.issue.number,
+            body: `Thank you @${context.payload.issue.assignee.login} you have been assigned this issue!
+            **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
 
-  # When issues are labeled as stale, a comment is posted.
-  # Tags the assignee with warning.
-  # Enables manual issue management in addition to community-stale-management.yml
+            ---
+
+            Support Chayn's mission? ⭐ Please star this repo to help us find more contributors like you!
+            Learn more about Chayn's impact [here](https://github.com/chaynHQ/.github/blob/main/profile/README.md). 🌸`
+            })
+
+  # Job: Stale label comment
+  # Triggers:
+  #   Labeled as stale by maintainer
+  #   'Label Stale Contributions' workflow runs
+  # Returns: Posts warning comment tagging assignee
   stale-label-comment:
     if: github.event.action == 'labeled' && github.event.label.name == 'stale'
     runs-on: ubuntu-latest
     steps:
       - name: Post stale issue comment
         id: stale-label-comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7 # https://github.com/actions/github-script
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |

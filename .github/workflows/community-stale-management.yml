@@ -1,17 +1,22 @@
-# This workflow labels stale issues and PRs after 30 days of inactivity.
-# Stale PRs are closed after 1 week of inactivity after labeled stale.
-# See for more info: https://github.com/actions/stale
+# -----------------------------------------------------------------------------
+# GitHub Actions Workflow: Label Stale Contributions
+# Description: Labels stale contributions
+# Job: actions/stale
+# -----------------------------------------------------------------------------
 
-name: Mark Stale Contributions
+name: Label Stale Contributions
 
 on:
-  # Enable manual run from the Actions tab so workflow can be run at any time
-  workflow_dispatch:
+  workflow_dispatch: # enables manual trigger
   # Scheduled to run at 12:00 on every Monday
   schedule:
-    - cron: '0 0 * * MON'
+    - cron: "0 0 * * MON"
 
 jobs:
+  # Trigger: Scheduled weekly
+  # Returns: labels issues and PRs with 'stale' after 30 days inactivity
+  # PRs: automated closing after 1 more week of inactivity
+  # Issues: requires manual closing by maintainers
   stale:
     runs-on: ubuntu-latest
     permissions:
@@ -19,11 +24,11 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v9 # https://github.com/actions/stale
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-issue-label: 'stale'
-          stale-pr-label: 'stale'
+          stale-issue-label: "stale"
+          stale-pr-label: "stale"
           days-before-stale: 30
           # disables closing issues
           days-before-issue-close: -1
@@ -31,14 +36,12 @@ jobs:
           # only scan assigned issues
           include-only-assigned: true
           # ignore issues assigned to staff and bots
-          exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions'
+          exempt-assignees: "kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions"
           # disable removing stale label due to irrelevant activity (like branch updates)
           remove-stale-when-updated: false
           # exempt dependabot prs from going stale
           exempt-pr-labels: dependencies
           # disable counting irrelevant activity (branch updates) towards day counter on prs.
           ignore-pr-updates: true
-          # messages skipped, instead handled by issue-comment.yml
-          stale-pr-message: ''
-          close-pr-message: ''
-          stale-issue-message: ''
+          # actions/stale does not enable tagging authors / assignees, so comments are handled by Issue Comments Workflows.
+          stale-pr-message: "As per Chayn policy, after 30 days of inactivity, we will close this PR in 7 days. Please comment or update to keep open."
