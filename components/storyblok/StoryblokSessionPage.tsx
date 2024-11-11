@@ -158,8 +158,19 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
       <Head>
         <title>{`${t('session')} • ${name} • Bloom`}</title>
         <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <meta property="og:description" content={seo_description} key="og-description" />
+        {(seo_description || description) && (
+          <>
+            <meta
+              property="description"
+              content={seo_description || description}
+              key="description"
+            />
+            <meta
+              property="og:description"
+              content={seo_description || description}
+              key="og-description"
+            />
+          </>
         )}
       </Head>
 

@@ -53,11 +53,18 @@ const Message: NextPage<Props> = ({ story }) => {
         <title>{`${story.content.title} • Bloom`}</title>
         <meta property="og:title" content={story.content.title} key="og-title" />
         {story.content.seo_description && (
-          <meta
-            property="og:description"
-            content={story.content.seo_description}
-            key="og-description"
-          />
+          <>
+            <meta
+              property="description"
+              content={story.content.seo_description}
+              key="description"
+            />
+            <meta
+              property="og:description"
+              content={story.content.seo_description}
+              key="og-description"
+            />
+          </>
         )}
       </Head>
       <Box>
