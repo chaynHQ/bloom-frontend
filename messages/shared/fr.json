@@ -1,6 +1,11 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "metadata": {
+      "title": "Rejoins-nous sur ton chemin de guérison",
+      "description": "Bloom est là pour te permettre d’apprendre, de guérir et d’évoluer vers un avenir confiant. Il vous est proposé par Chayn, une organisation mondiale à but non lucratif, dirigée par des survivants et des alliés du monde entier.",
+      "imageAlt": "Illustration d'un visage et d'épaules d'une personne, avec de grandes feuilles et des fleurs épanouies au-dessus d'eux. Le logo typographique Bloom est inclus."
+    },
     "leaveSite": {
       "button": "Sortir du site",
       "wikiLink": "https://fr.wikipedia.org/wiki/Main_Page",

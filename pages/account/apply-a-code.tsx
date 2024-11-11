@@ -75,7 +75,7 @@ const ApplyACode: NextPage = () => {
   return (
     <Box>
       <Head>
-        <title>{t('applyCode.title')}</title>
+        <title>{`${t('applyCode.title')} • Bloom`}</title>
       </Head>
       <Header
         title={headerProps.title}
