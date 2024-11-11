@@ -178,7 +178,10 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         <title>{`${t('course')} • ${name} • Bloom`}</title>
         <meta property="og:title" content={name} key="og-title" />
         {seo_description && (
-          <meta property="og:description" content={seo_description} key="og-description" />
+          <>
+            <meta name="description" content={seo_description} key="description" />
+            <meta property="og:description" content={seo_description} key="og-description" />
+          </>
         )}
       </Head>
       <CourseHeader
