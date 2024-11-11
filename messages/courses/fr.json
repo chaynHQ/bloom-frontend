@@ -40,15 +40,15 @@
       "sessionComplete": "Session complète"
     },
     "sessionFeedback": {
-      "title": "Comment avez-vous trouvé cette session ?",
+      "title": "Comment s’est déroulée la session?",
       "subtitle": "Nous aimerions connaître votre avis sur cette session. Vos retours nous aident à améliorer nos cours.",
       "feedbackTags": {
-        "relatable": "Relatable",
+        "relatable": "Réaliste",
         "useful": "Utile",
         "inspiring": "Inspirant",
         "too long": "Trop long",
         "too complicated": "Trop compliqué",
-        "not useful": "Pas utile"
+        "not useful": "Inutile"
       },
       "textboxDefaultText": "Ajouter un commentaire...",
       "sendButtonText": "Envoyer",
