@@ -132,7 +132,10 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         <title>{`${title} • Bloom`}</title>
         <meta property="og:title" content={title} key="og-title" />
         {seo_description && (
-          <meta property="og:description" content={seo_description} key="og-description" />
+          <>
+            <meta name="description" content={seo_description} key="description" />
+            <meta property="og:description" content={seo_description} key="og-description" />
+          </>
         )}
       </Head>
 
