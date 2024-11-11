@@ -49,11 +49,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
         <meta property="og:title" content={story.content.title} key="og-title" />
         {story.content.seo_description && (
           <>
-            <meta
-              property="description"
-              content={story.content.seo_description}
-              key="description"
-            />
+            <meta name="description" content={story.content.seo_description} key="description" />
             <meta
               property="og:description"
               content={story.content.seo_description}

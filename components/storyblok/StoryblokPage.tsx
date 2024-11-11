@@ -40,7 +40,7 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         <meta property="og:title" content={title} key="og-title" />
         {seo_description && (
           <>
-            <meta property="description" content={seo_description} key="description" />
+            <meta name="description" content={seo_description} key="description" />
             <meta property="og:description" content={seo_description} key="og-description" />
           </>
         )}
