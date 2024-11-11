@@ -61,7 +61,7 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
     "@builder.io/partytown": "^0.10.2",
-    "@cypress/code-coverage": "^3.12.44",
+    "@cypress/code-coverage": "^3.13.6",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@next/bundle-analyzer": "^14.0.4",
