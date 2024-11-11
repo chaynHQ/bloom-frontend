@@ -90,11 +90,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         <meta property="og:title" content={title} key="og-title" />
         {(seo_description || description) && (
           <>
-            <meta
-              property="description"
-              content={seo_description || description}
-              key="description"
-            />
+            <meta name="description" content={seo_description || description} key="description" />
             <meta
               property="og:description"
               content={seo_description || description}

@@ -8,7 +8,7 @@ const DefaultHeadMetadata = () => {
   return (
     <Head>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
-      <meta property="description" content={t('description')} key="description" />
+      <meta name="description" content={t('description')} key="description" />
       <meta property="og:title" content={t('title')} key="og-title" />
       <meta property="og:description" content={t('description')} key="og-description" />
       <meta property="og:image" content="/preview.png" key="og-image" />
