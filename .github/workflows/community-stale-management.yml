@@ -10,7 +10,7 @@ on:
   workflow_dispatch: # enables manual trigger
   # Scheduled to run at 12:00 on every Monday
   schedule:
-    - cron: "0 0 * * MON"
+    - cron: '0 0 * * MON'
 
 jobs:
   # Trigger: Scheduled weekly
@@ -27,8 +27,8 @@ jobs:
       - uses: actions/stale@v9 # https://github.com/actions/stale
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-issue-label: "stale"
-          stale-pr-label: "stale"
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
           days-before-stale: 30
           # disables closing issues
           days-before-issue-close: -1
@@ -36,7 +36,7 @@ jobs:
           # only scan assigned issues
           include-only-assigned: true
           # ignore issues assigned to staff and bots
-          exempt-assignees: "kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions"
+          exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions'
           # disable removing stale label due to irrelevant activity (like branch updates)
           remove-stale-when-updated: false
           # exempt dependabot prs from going stale
@@ -44,4 +44,4 @@ jobs:
           # disable counting irrelevant activity (branch updates) towards day counter on prs.
           ignore-pr-updates: true
           # actions/stale does not enable tagging authors / assignees, so comments are handled by Issue Comments Workflows.
-          stale-pr-message: "As per Chayn policy, after 30 days of inactivity, we will close this PR in 7 days. Please comment or update to keep open."
+          stale-pr-message: 'As per Chayn policy, after 30 days of inactivity, we will close this PR in 7 days. Please comment or update to keep open.'
