@@ -145,7 +145,6 @@ const CourseCard = (props: CourseCardProps) => {
             <Typography>{t('comingSoon')}</Typography>
           </Box>
         )}
-       
 
         <IconButton
           sx={{ marginLeft: 'auto' }}

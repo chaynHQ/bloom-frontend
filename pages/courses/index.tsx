@@ -75,7 +75,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   }, [userEmailRemindersFrequency]);
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner');
 
     if (partnerAdmin && partnerAdmin.partner) {
       const partnerName = partnerAdmin.partner.name;
@@ -158,11 +158,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 1) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>
@@ -171,11 +167,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 0) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>

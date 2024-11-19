@@ -10,7 +10,7 @@ name: Contributor Activity Slack Bot
 on:
   workflow_dispatch: # enables manual trigger
   schedule:
-    - cron: "0 0 1,15 * *" # Runs at 00:00 on the 1st and 15th of every month
+    - cron: '0 0 1,15 * *' # Runs at 00:00 on the 1st and 15th of every month
 
 jobs:
   gather-gh-activity:
@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4 # https://github.com/actions/setup-node
         with:
-          node-version: "20"
+          node-version: '20'
 
       - name: Install dependencies
         run: |
