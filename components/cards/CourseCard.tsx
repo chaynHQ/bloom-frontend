@@ -17,7 +17,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { formatDateToString } from '../../utils/dateTime';
 import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -139,7 +138,7 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       )}
       <CardActions sx={cardActionsStyle}>
-        {courseComingSoon && !courseLiveSoon && (
+        {courseComingSoon && (
           <Box sx={statusRowStyle}>
             <PendingOutlined color="error" />
             <Typography>{t('comingSoon')}</Typography>
