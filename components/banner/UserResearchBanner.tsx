@@ -24,6 +24,7 @@ export default function UserResearchBanner() {
   const [open, setOpen] = React.useState(true);
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
@@ -41,6 +42,21 @@ export default function UserResearchBanner() {
   );
 
   const showBanner = isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
+
+  const handleClickAccepted = () => {
+    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    logEvent(USER_BANNER_INTERESTED, eventUserData);
+    setOpen(false);
+
+    window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleClickDeclined = () => {
+    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    logEvent(USER_BANNER_DISMISSED, eventUserData);
+    setOpen(false);
+  };
+
   return showBanner ? (
     <Stack sx={{ width: '100%' }} spacing={2}>
       <Collapse in={open}>
@@ -49,30 +65,10 @@ export default function UserResearchBanner() {
           sx={alertStyle}
           action={
             <>
-              <Button
-                color="inherit"
-                size="medium"
-                onClick={() => {
-                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-                  logEvent(USER_BANNER_INTERESTED, eventUserData);
-
-                  setOpen(false);
-
-                  window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
-                }}
-              >
+              <Button color="inherit" size="medium" onClick={handleClickAccepted}>
                 I’m interested
               </Button>
-              <Button
-                color="inherit"
-                size="medium"
-                onClick={() => {
-                  Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-                  logEvent(USER_BANNER_DISMISSED, eventUserData);
-
-                  setOpen(false);
-                }}
-              >
+              <Button color="inherit" size="medium" onClick={handleClickDeclined}>
                 Dismiss
               </Button>
             </>
