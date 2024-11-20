@@ -41,9 +41,9 @@
     },
     "sessionFeedback": {
       "title": "Como foi esta sessão?",
-      "subtitle": "Adoraríamos saber como você achou esta sessão. Seu feedback nos ajuda a melhorar nossos cursos.",
+      "subtitle": "Adoraríamos saber o que você achou desta sessão. Seu feedback nos ajuda a melhorar nossos cursos.",
       "feedbackTags": {
-        "relatable": "Relatável",
+        "relatable": "Compreensível",
         "useful": "Útil",
         "inspiring": "Inspirador",
         "too long": "Muito longo",
