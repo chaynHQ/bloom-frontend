@@ -52,7 +52,6 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const courses = useTypedSelector((state) => state.courses);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const liveCourseAccess = !!userId; // soon to be retired in issue 1176
   const t = useTranslations('Courses');
 
   const headerProps = {
@@ -159,12 +158,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 1) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                    liveCourseAccess={liveCourseAccess}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>
@@ -173,12 +167,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 0) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                    liveCourseAccess={liveCourseAccess}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>
