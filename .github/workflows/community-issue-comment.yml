@@ -10,7 +10,7 @@ name: Issue Comment Workflows
 
 on:
   workflow_run:
-    workflows: ['Label Stale Contributions']
+    workflows: [Label Stale Contributions]
     types:
       - completed
   issues:
