@@ -17,7 +17,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { formatDateToString } from '../../utils/dateTime';
 import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -79,6 +78,8 @@ const CourseCard = (props: CourseCardProps) => {
   const locale = router.locale || 'en';
 
   const courseComingSoon: boolean = course.content.coming_soon;
+
+  const courseLiveSoon = course.content.live_soon || false;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -145,7 +146,6 @@ const CourseCard = (props: CourseCardProps) => {
             <Typography>{t('comingSoon')}</Typography>
           </Box>
         )}
-       
 
         <IconButton
           sx={{ marginLeft: 'auto' }}
