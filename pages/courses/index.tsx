@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
