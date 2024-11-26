@@ -25,6 +25,7 @@ export interface User {
   authStateLoading: boolean;
   entryPartnerAccessCode: string | null;
   entryPartnerReferral: string | null;
+  cookiesAccepted: boolean;
 }
 
 // GetUserDto is the response format of the Get User endpoint
@@ -84,6 +85,7 @@ const initialState: User = {
   authStateLoading: true,
   entryPartnerAccessCode: null,
   entryPartnerReferral: null,
+  cookiesAccepted: false,
 };
 
 const slice = createSlice({
@@ -95,6 +97,9 @@ const slice = createSlice({
     },
     setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
+    },
+    setCookiesAccepted(state, action: PayloadAction<boolean>) {
+      state.cookiesAccepted = action.payload;
     },
     setEntryPartnerReferral(state, action: PayloadAction<string>) {
       state.entryPartnerReferral = action.payload;
@@ -163,6 +168,7 @@ export const {
   setUserToken,
   setUserLoading,
   setAuthStateLoading,
+  setCookiesAccepted,
   setLoadError,
   setEntryPartnerAccessCode,
   setEntryPartnerReferral,

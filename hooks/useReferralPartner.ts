@@ -1,17 +1,19 @@
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '../store/userSlice';
-import { useAppDispatch } from './store';
+import { useAppDispatch, useTypedSelector } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
 export default function useReferralPartner() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
 
   useEffect(() => {
     async function setReferralPartner(referralPartner: string) {
-      window.localStorage.setItem('referralPartner', referralPartner);
+      if (userCookiesAccepted) Cookies.set('referralPartner', referralPartner);
       await dispatch(setEntryPartnerReferral(referralPartner));
     }
     async function setReferralCode(referralCode: string) {
