@@ -1,4 +1,5 @@
 import { Button, Container, Typography } from '@mui/material';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
@@ -21,7 +22,7 @@ export const SignUpBanner = () => {
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner');
 
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);

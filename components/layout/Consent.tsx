@@ -2,16 +2,18 @@ import { getAnalytics } from '@firebase/analytics';
 import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import React from 'react';
-import CookieConsent from 'react-cookie-consent';
+import React, { useEffect } from 'react';
+import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
+import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
+import { setCookiesAccepted } from '../../store/userSlice';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
 const Consent = (props: {}) => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -67,6 +69,13 @@ const Consent = (props: {}) => {
     });
     logEvent(COOKIES_ACCEPTED, eventUserData);
   };
+
+  useEffect(() => {
+    const cookieConsent = getCookieConsentValue('analyticsConsent');
+    if (cookieConsent && cookieConsent === 'true') {
+      dispatch(setCookiesAccepted(true));
+    }
+  }, [dispatch]);
 
   return (
     <CookieConsent

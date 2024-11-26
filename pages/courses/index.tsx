@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -75,7 +76,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   }, [userEmailRemindersFrequency]);
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner');
 
     if (partnerAdmin && partnerAdmin.partner) {
       const partnerName = partnerAdmin.partner.name;

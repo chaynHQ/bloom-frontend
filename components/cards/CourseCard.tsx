@@ -13,7 +13,6 @@ import {
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
@@ -74,12 +73,8 @@ const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress, clickable = true } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
-  const router = useRouter();
-  const locale = router.locale || 'en';
 
   const courseComingSoon: boolean = course.content.coming_soon;
-
-  const courseLiveSoon = course.content.live_soon || false;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -140,7 +135,7 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       )}
       <CardActions sx={cardActionsStyle}>
-        {courseComingSoon && !courseLiveSoon && (
+        {courseComingSoon && (
           <Box sx={statusRowStyle}>
             <PendingOutlined color="error" />
             <Typography>{t('comingSoon')}</Typography>

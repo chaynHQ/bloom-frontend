@@ -16,6 +16,7 @@ import comicReliefLogo from '../../public/comic_relief_logo.png';
 import communityFundLogo from '../../public/community_fund_logo.svg';
 import tiktokLogo from '../../public/tiktok.svg';
 
+import Cookies from 'js-cookie';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
@@ -127,7 +128,7 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerName);
     }
 
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner');
 
     if (referralPartner) {
       addUniquePartner(partnersList, referralPartner);
