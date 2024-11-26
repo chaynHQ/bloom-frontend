@@ -40,15 +40,15 @@
       "sessionComplete": "Session poora hua"
     },
     "sessionFeedback": {
-      "title": "Yeh session kaisa tha?",
-      "subtitle": "Hum aapke is session ke vichaar jaanna chahte hain. Aapka feedback humare courses ko behtar banane mein madad karta hai.",
+      "title": "Yeh session kaisa aapko kaisa laga?",
+      "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
       "feedbackTags": {
-        "relatable": "joda ja sakane vaala",
-        "useful": "upyogi",
-        "inspiring": "prerak",
-        "too long": "bahut lamba",
-        "too complicated": "bahut jatil",
-        "not useful": "anupyogi"
+        "relatable": "Mein session ko samjh pai aur usse jud pai",
+        "useful": "Faidemand",
+        "inspiring": "Mujhe hausla afzai mehsoos hui",
+        "too long": "Bahut lamba tha",
+        "too complicated": "Bahut mushkil tha",
+        "not useful": "Zada faidemand nahi tha"
       },
       "textboxDefaultText": "Ek comment add karein...",
       "sendButtonText": "Bhejein",
