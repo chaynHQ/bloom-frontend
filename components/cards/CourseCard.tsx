@@ -79,6 +79,8 @@ const CourseCard = (props: CourseCardProps) => {
 
   const courseComingSoon: boolean = course.content.coming_soon;
 
+  const courseLiveSoon = course.content.live_soon || false;
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
