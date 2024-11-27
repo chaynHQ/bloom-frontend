@@ -95,6 +95,7 @@ const Footer = () => {
   const router = useRouter();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
@@ -128,7 +129,7 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerName);
     }
 
-    const referralPartner = Cookies.get('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     if (referralPartner) {
       addUniquePartner(partnersList, referralPartner);
