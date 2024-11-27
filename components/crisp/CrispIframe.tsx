@@ -5,7 +5,7 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const iframeContainerStyle = {
   width: '100%',
-  height: '400px',
+  height: '450px',
   marginTop: { md: -2 },
   marginBottom: 3,
   maxHeight: '70vh',
@@ -16,7 +16,7 @@ const iframeContainerStyle = {
 } as const;
 
 const iframeStyle = {
-  marginTop: -158,
+  marginTop: -110,
   borderRadius: 16,
   maxHeight: 'calc(70vh + 158px)',
 } as const;
@@ -66,6 +66,11 @@ export const CrispIframe = () => {
       if (process.env.NEXT_PUBLIC_ENV === 'production') {
         crisp.push(['safe', true]); // Turns on safe mode = turns off errors in production
       }
+
+      // Send custom event widget:loaded each time the widget is loaded
+      // Acts as a trigger to overwrite the initial message - see AI automations -> chatbox triggers
+      crisp.push(['set', 'session:event', 'widget:loaded']);
+      // Set user email to set the contact
       crisp.push(['set', 'user:email', [userEmail]]);
 
       crisp.push([

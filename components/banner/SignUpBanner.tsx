@@ -1,4 +1,5 @@
 import { Button, Container, Typography } from '@mui/material';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
@@ -15,13 +16,14 @@ const containerStyle = {
 export const SignUpBanner = () => {
   const t = useTranslations('Shared');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);

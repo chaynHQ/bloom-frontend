@@ -1,0 +1,37 @@
+# -----------------------------------------------------------------------------
+# GitHub Actions Workflow: Contributor Activity Slack Bot
+# Description: Posts biweekly open-source activity metrics to internal Slack channel
+# Triggers: bi-weekly schedule and manual
+# Job: runs './scripts/github-actions/communityActivitySlackPost.js'
+# -----------------------------------------------------------------------------
+
+name: Contributor Activity Slack Bot
+
+on:
+  workflow_dispatch: # enables manual trigger
+  schedule:
+    - cron: '0 0 1,15 * *' # Runs at 00:00 on the 1st and 15th of every month
+
+jobs:
+  gather-gh-activity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # https://github.com/actions/setup-node
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install @octokit/rest @slack/web-api --force
+
+      - name: Gather contributor activity
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        run: |
+          node ./scripts/github_actions/communityActivitySlackPost.js

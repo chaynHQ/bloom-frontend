@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useCallback } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { api } from '../store/api';
@@ -19,7 +20,7 @@ export const useStateUtils = () => {
     await dispatch(clearCoursesSlice());
     await dispatch(clearUserSlice());
     await dispatch(api.util.resetApiState());
-    window.localStorage.removeItem('referralPartner');
+    Cookies.remove('referralPartner');
   }, [dispatch]);
 
   return { clearState };

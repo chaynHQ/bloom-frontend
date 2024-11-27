@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
@@ -80,6 +81,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   const t = useTranslations('Courses');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -91,7 +93,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   useEffect(() => {
     const storyPartners = included_for_partners;
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     setIncorrectAccess(
       !hasAccessToPage(

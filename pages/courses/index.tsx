@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -47,12 +48,12 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const liveCourseAccess = !!userId; // soon to be retired in issue 1176
   const t = useTranslations('Courses');
 
   const headerProps = {
@@ -76,7 +77,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   }, [userEmailRemindersFrequency]);
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     if (partnerAdmin && partnerAdmin.partner) {
       const partnerName = partnerAdmin.partner.name;
@@ -159,12 +160,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 1) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                    liveCourseAccess={liveCourseAccess}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>
@@ -173,12 +169,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
                 if (index % 2 === 0) return;
                 const courseProgress = userId ? getCourseProgress(course.id) : null;
                 return (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    courseProgress={courseProgress}
-                    liveCourseAccess={liveCourseAccess}
-                  />
+                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 );
               })}
             </Box>

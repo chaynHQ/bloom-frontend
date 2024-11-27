@@ -1,5 +1,3 @@
-import Circle from '@mui/icons-material/Circle';
-import Event from '@mui/icons-material/Event';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import PendingOutlined from '@mui/icons-material/PendingOutlined';
 import {
@@ -15,12 +13,9 @@ import {
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
-import { formatDateToString } from '../../utils/dateTime';
 import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -71,20 +66,15 @@ const statusRowStyle = {
 interface CourseCardProps {
   course: ISbStoryData;
   courseProgress: PROGRESS_STATUS | null;
-  liveCourseAccess: boolean;
   clickable?: boolean;
 }
 
 const CourseCard = (props: CourseCardProps) => {
-  const { course, courseProgress, liveCourseAccess, clickable = true } = props;
+  const { course, courseProgress, clickable = true } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
-  const router = useRouter();
-  const locale = router.locale || 'en';
 
   const courseComingSoon: boolean = course.content.coming_soon;
-  const courseLiveSoon: boolean = courseIsLiveSoon(course.content);
-  const courseLiveNow: boolean = courseIsLiveNow(course.content);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -145,30 +135,10 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       )}
       <CardActions sx={cardActionsStyle}>
-        {courseComingSoon && (!courseLiveSoon || !liveCourseAccess) && (
+        {courseComingSoon && (
           <Box sx={statusRowStyle}>
             <PendingOutlined color="error" />
             <Typography>{t('comingSoon')}</Typography>
-          </Box>
-        )}
-        {courseLiveSoon && liveCourseAccess && (
-          <Box sx={statusRowStyle}>
-            <Event color="error" />
-            <Typography>
-              {t.rich('liveFrom', {
-                date: formatDateToString(course.content.live_start_date, locale),
-              })}
-            </Typography>
-          </Box>
-        )}
-        {courseLiveNow && liveCourseAccess && (
-          <Box sx={statusRowStyle}>
-            <Circle color="error" />
-            <Typography>
-              {t.rich('liveUntil', {
-                date: formatDateToString(course.content.live_end_date, locale),
-              })}
-            </Typography>
           </Box>
         )}
 

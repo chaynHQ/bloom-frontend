@@ -27,8 +27,9 @@ To run the tests, follow the instructions below:
 1. Ensure prerequisites are met.
 2. Ensure the local database contains users with emails matching those in the `env.local` file.
 3. Ensure Chrome is available on your local machine.
-4. Run the command `yarn cypress` on your terminal to run tests in the browser.
-   - To run a faster, head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`.
+4. Run Cypress:
+   - run `yarn cypress` on your terminal to run tests in the browser.
+   - for lower-spec computers and faster, head-less version of the tests (i.e. no visible browser), use the command `yarn cypress:headless`.
    - Run single tests at a time by running `./node_modules/.bin/cypress run --spec cypress/integration/example_test_PATH.cy.tsx`
 5. Cypress will now open a new screen displaying the available test (this may take upto a minute the first the command runs).
 6. Click on the test you'd like to run. This will open another Chrome window and the chosen test will now run.

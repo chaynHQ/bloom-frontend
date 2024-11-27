@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { ISbStoryData, useStoryblokState } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
@@ -25,13 +26,14 @@ const Index: NextPage<Props> = ({ story, preview }) => {
   const t = useTranslations('Welcome');
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
-    const referralPartner = window.localStorage.getItem('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);
