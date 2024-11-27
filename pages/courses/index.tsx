@@ -48,6 +48,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -76,7 +77,7 @@ const CourseList: NextPage<Props> = ({ stories }) => {
   }, [userEmailRemindersFrequency]);
 
   useEffect(() => {
-    const referralPartner = Cookies.get('referralPartner');
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
 
     if (partnerAdmin && partnerAdmin.partner) {
       const partnerName = partnerAdmin.partner.name;
