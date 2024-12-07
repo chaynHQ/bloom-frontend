@@ -3,7 +3,7 @@ export default [
     code: 'AF',
     label: {
       en: 'Afghanistan',
-      hi: 'Afghanistan',
+      hi: 'अफगानिस्तान',
       fr: 'Afghanistan',
       es: 'Afganistán',
       pt: 'Afeganistão',
@@ -14,7 +14,7 @@ export default [
     code: 'AX',
     label: {
       en: 'Aland Islands',
-      hi: 'Aland Islands',
+      hi: 'आलंद द्वीप',
       fr: 'Îles Åland',
       es: 'Åland',
       pt: 'Ilhas Åland',
@@ -25,7 +25,7 @@ export default [
     code: 'AL',
     label: {
       en: 'Albania',
-      hi: 'Albania',
+      hi: 'अल्बानिया',
       fr: 'Albanie',
       es: 'Albania',
       pt: 'Albânia',
@@ -36,7 +36,7 @@ export default [
     code: 'DZ',
     label: {
       en: 'Algeria',
-      hi: 'Algeria',
+      hi: 'अल्जीरिया',
       fr: 'Algérie',
       es: 'Argelia',
       pt: 'Argélia',
@@ -47,7 +47,7 @@ export default [
     code: 'AS',
     label: {
       en: 'American Samoa',
-      hi: 'American Samoa',
+      hi: 'अमेरिकी समोआ',
       fr: 'Samoa américaines',
       es: 'Samoa Americana',
       pt: 'Samoa Americana',
@@ -58,7 +58,7 @@ export default [
     code: 'AD',
     label: {
       en: 'Andorra',
-      hi: 'Andorra',
+      hi: 'आंडोरा',
       fr: 'Andorre',
       es: 'Andorra',
       pt: 'Andorra',
@@ -67,13 +67,20 @@ export default [
   },
   {
     code: 'AO',
-    label: { en: 'Angola', hi: 'Angola', fr: 'Angola', es: 'Angola', pt: 'Angola', de: 'Angola' },
+    label: {
+      en: 'Angola',
+      hi: 'अंगोला',
+      fr: 'Angola',
+      es: 'Angola',
+      pt: 'Angola',
+      de: 'Angola',
+    },
   },
   {
     code: 'AI',
     label: {
       en: 'Anguilla',
-      hi: 'Anguilla',
+      hi: 'एंग्विला',
       fr: 'Anguilla',
       es: 'Anguila',
       pt: 'Anguila',
@@ -84,7 +91,7 @@ export default [
     code: 'AQ',
     label: {
       en: 'Antarctica',
-      hi: 'Antarctica',
+      hi: 'अंटार्कटिका',
       fr: 'Antarctique',
       es: 'Antártida',
       pt: 'Antártida',
@@ -95,7 +102,7 @@ export default [
     code: 'AG',
     label: {
       en: 'Antigua And Barbuda',
-      hi: 'Antigua And Barbuda',
+      hi: 'एंटीगुआ और बारबुडा',
       fr: 'Antigua-et-Barbuda',
       es: 'Antigua y Barbuda',
       pt: 'Antígua e Barbuda',
@@ -106,7 +113,7 @@ export default [
     code: 'AR',
     label: {
       en: 'Argentina',
-      hi: 'Argentina',
+      hi: 'अर्जेंटीना',
       fr: 'Argentine',
       es: 'Argentina',
       pt: 'Argentina',
@@ -117,7 +124,7 @@ export default [
     code: 'AM',
     label: {
       en: 'Armenia',
-      hi: 'Armenia',
+      hi: 'आर्मेनिया',
       fr: 'Arménie',
       es: 'Armenia',
       pt: 'Armênia',
@@ -126,13 +133,20 @@ export default [
   },
   {
     code: 'AW',
-    label: { en: 'Aruba', hi: 'Aruba', fr: 'Aruba', es: 'Aruba', pt: 'Aruba', de: 'Aruba' },
+    label: {
+      en: 'Aruba',
+      hi: 'अरूबा',
+      fr: 'Aruba',
+      es: 'Aruba',
+      pt: 'Aruba',
+      de: 'Aruba',
+    },
   },
   {
     code: 'AU',
     label: {
       en: 'Australia',
-      hi: 'Australia',
+      hi: 'ऑस्ट्रेलिया',
       fr: 'Australie',
       es: 'Australia',
       pt: 'Austrália',
@@ -143,7 +157,7 @@ export default [
     code: 'AT',
     label: {
       en: 'Austria',
-      hi: 'Austria',
+      hi: 'ऑस्ट्रिया',
       fr: 'Autriche',
       es: 'Austria',
       pt: 'Áustria',
@@ -154,7 +168,7 @@ export default [
     code: 'AZ',
     label: {
       en: 'Azerbaijan',
-      hi: 'Azerbaijan',
+      hi: 'अज़रबैजान',
       fr: 'Azerbaïdjan',
       es: 'Azerbaiyán',
       pt: 'Azerbaijão',
@@ -165,7 +179,7 @@ export default [
     code: 'BS',
     label: {
       en: 'Bahamas',
-      hi: 'Bahamas',
+      hi: 'बहामास',
       fr: 'Bahamas',
       es: 'Bahamas',
       pt: 'Bahamas',
@@ -176,7 +190,7 @@ export default [
     code: 'BH',
     label: {
       en: 'Bahrain',
-      hi: 'Bahrain',
+      hi: 'बहरीन',
       fr: 'Bahreïn',
       es: 'Baréin',
       pt: 'Barém',
@@ -187,7 +201,7 @@ export default [
     code: 'BD',
     label: {
       en: 'Bangladesh',
-      hi: 'Bangladesh',
+      hi: 'बांग्लादेश',
       fr: 'Bangladesh',
       es: 'Bangladés',
       pt: 'Bangladexe',
@@ -198,7 +212,7 @@ export default [
     code: 'BB',
     label: {
       en: 'Barbados',
-      hi: 'Barbados',
+      hi: 'बारबाडोस',
       fr: 'Barbade',
       es: 'Barbados',
       pt: 'Barbados',
@@ -209,7 +223,7 @@ export default [
     code: 'BY',
     label: {
       en: 'Belarus',
-      hi: 'Belarus',
+      hi: 'बेलारूस',
       fr: 'Biélorussie',
       es: 'Bielorrusia',
       pt: 'Bielorrússia',
@@ -220,7 +234,7 @@ export default [
     code: 'BE',
     label: {
       en: 'Belgium',
-      hi: 'Belgium',
+      hi: 'बेल्जियम',
       fr: 'Belgique',
       es: 'Bélgica',
       pt: 'Bélgica',
@@ -229,17 +243,31 @@ export default [
   },
   {
     code: 'BZ',
-    label: { en: 'Belize', hi: 'Belize', fr: 'Belize', es: 'Belice', pt: 'Belize', de: 'Belize' },
+    label: {
+      en: 'Belize',
+      hi: 'बेलीज',
+      fr: 'Belize',
+      es: 'Belice',
+      pt: 'Belize',
+      de: 'Belize',
+    },
   },
   {
     code: 'BJ',
-    label: { en: 'Benin', hi: 'Benin', fr: 'Bénin', es: 'Benín', pt: 'Benim', de: 'Benin' },
+    label: {
+      en: 'Benin',
+      hi: 'बेनिन',
+      fr: 'Bénin',
+      es: 'Benín',
+      pt: 'Benim',
+      de: 'Benin',
+    },
   },
   {
     code: 'BM',
     label: {
       en: 'Bermuda',
-      hi: 'Bermuda',
+      hi: 'बरमूडा',
       fr: 'Bermudes',
       es: 'Bermudas',
       pt: 'Bermudas',
@@ -248,13 +276,20 @@ export default [
   },
   {
     code: 'BT',
-    label: { en: 'Bhutan', hi: 'Bhutan', fr: 'Bhoutan', es: 'Bután', pt: 'Butão', de: 'Bhutan' },
+    label: {
+      en: 'Bhutan',
+      hi: 'भूटान',
+      fr: 'Bhoutan',
+      es: 'Bután',
+      pt: 'Butão',
+      de: 'Bhutan',
+    },
   },
   {
     code: 'BO',
     label: {
       en: 'Bolivia',
-      hi: 'Bolivia',
+      hi: 'बोलीविया',
       fr: 'Bolivie',
       es: 'Bolivia',
       pt: 'Bolívia',
@@ -265,7 +300,7 @@ export default [
     code: 'BQ',
     label: {
       en: 'Bonaire, Sint Eustatius and Saba',
-      hi: 'Bonaire, Sint Eustatius and Saba',
+      hi: 'बोनेयर, सिंट यूस्टेटियस और साबा',
       fr: 'Pays-Bas caribéens',
       es: 'Bonaire, San Eustaquio y Saba',
       pt: 'Países Baixos Caribenhos',
@@ -276,7 +311,7 @@ export default [
     code: 'BA',
     label: {
       en: 'Bosnia And Herzegovina',
-      hi: 'Bosnia And Herzegovina',
+      hi: 'बोस्निया और हर्जेगोविना',
       fr: 'Bosnie-Herzégovine',
       es: 'Bosnia y Herzegovina',
       pt: 'Bósnia e Herzegovina',
@@ -286,8 +321,8 @@ export default [
   {
     code: 'BW',
     label: {
-      en: 'Botswana',
-      hi: 'Botswana',
+      en: ' Botswana',
+      hi: 'बोत्सवाना',
       fr: 'Botswana',
       es: 'Botsuana',
       pt: 'Botsuana',
@@ -298,7 +333,7 @@ export default [
     code: 'BV',
     label: {
       en: 'Bouvet Island',
-      hi: 'Bouvet Island',
+      hi: 'बोवेट द्वीप',
       fr: 'Île Bouvet',
       es: 'Isla Bouvet',
       pt: 'Ilha Bouvet',
@@ -309,7 +344,7 @@ export default [
     code: 'BR',
     label: {
       en: 'Brazil',
-      hi: 'Brazil',
+      hi: 'ब्राज़ील',
       fr: 'Brésil',
       es: 'Brasil',
       pt: 'Brasil',
@@ -320,7 +355,7 @@ export default [
     code: 'IO',
     label: {
       en: 'British Indian Ocean Territory',
-      hi: 'British Indian Ocean Territory',
+      hi: 'ब्रिटिश हिंद महासागर क्षेत्र',
       fr: "Territoire britannique de l'océan Indien",
       es: 'Territorio Británico del Océano Índico',
       pt: 'Território Britânico do Oceano Índico',
@@ -331,7 +366,7 @@ export default [
     code: 'BN',
     label: {
       en: 'Brunei Darussalam',
-      hi: 'Brunei Darussalam',
+      hi: 'ब्रुनेई दारुस्सलाम',
       fr: 'Brunei',
       es: 'Brunéi',
       pt: 'Brunei',
@@ -342,7 +377,7 @@ export default [
     code: 'BG',
     label: {
       en: 'Bulgaria',
-      hi: 'Bulgaria',
+      hi: 'बुल्गारिया',
       fr: 'Bulgarie',
       es: 'Bulgaria',
       pt: 'Bulgária',
@@ -353,7 +388,7 @@ export default [
     code: 'BF',
     label: {
       en: 'Burkina Faso',
-      hi: 'Burkina Faso',
+      hi: 'बुर्किना फासो',
       fr: 'Burkina Faso',
       es: 'Burkina Faso',
       pt: 'Burquina Fasso',
@@ -364,7 +399,7 @@ export default [
     code: 'BI',
     label: {
       en: 'Burundi',
-      hi: 'Burundi',
+      hi: 'बुरुंडी',
       fr: 'Burundi',
       es: 'Burundi',
       pt: 'Burundi',
@@ -375,7 +410,7 @@ export default [
     code: 'KH',
     label: {
       en: 'Cambodia',
-      hi: 'Cambodia',
+      hi: 'कंबोडिया',
       fr: 'Cambodge',
       es: 'Camboya',
       pt: 'Camboja',
@@ -386,7 +421,7 @@ export default [
     code: 'CM',
     label: {
       en: 'Cameroon',
-      hi: 'Cameroon',
+      hi: 'कैमरून',
       fr: 'Cameroun',
       es: 'Camerún',
       pt: 'Camarões',
@@ -395,13 +430,20 @@ export default [
   },
   {
     code: 'CA',
-    label: { en: 'Canada', hi: 'Canada', fr: 'Canada', es: 'Canadá', pt: 'Canadá', de: 'Kanada' },
+    label: {
+      en: 'Canada',
+      hi: 'कनाडा',
+      fr: 'Canada',
+      es: 'Canadá',
+      pt: 'Canadá',
+      de: 'Kanada',
+    },
   },
   {
     code: 'CV',
     label: {
       en: 'Cape Verde',
-      hi: 'Cape Verde',
+      hi: 'केप वर्डे',
       fr: 'Cap-Vert',
       es: 'Cabo Verde',
       pt: 'Cabo Verde',
@@ -412,7 +454,7 @@ export default [
     code: 'KY',
     label: {
       en: 'Cayman Islands',
-      hi: 'Cayman Islands',
+      hi: 'केमैन द्वीप',
       fr: 'Îles Caïmans',
       es: 'Islas Caimán',
       pt: 'Ilhas Caimã',
@@ -423,7 +465,7 @@ export default [
     code: 'CF',
     label: {
       en: 'Central African Republic',
-      hi: 'Central African Republic',
+      hi: 'मध्य अफ़्रीकी गणराज्य',
       fr: 'République centrafricaine',
       es: 'República Centroafricana',
       pt: 'República Centro-Africana',
@@ -432,17 +474,31 @@ export default [
   },
   {
     code: 'TD',
-    label: { en: 'Chad', hi: 'Chad', fr: 'Tchad', es: 'Chad', pt: 'Chade', de: 'Tschad' },
+    label: {
+      en: 'Chad',
+      hi: ' चाड',
+      fr: 'Tchad',
+      es: 'Chad',
+      pt: 'Chade',
+      de: 'Tschad',
+    },
   },
   {
     code: 'CL',
-    label: { en: 'Chile', hi: 'Chile', fr: 'Chili', es: 'Chile', pt: 'Chile', de: 'Chile' },
+    label: {
+      en: 'Chile',
+      hi: 'चिली',
+      fr: 'Chili',
+      es: 'Chile',
+      pt: 'Chile',
+      de: 'Chile',
+    },
   },
   {
     code: 'CN',
     label: {
       en: 'China',
-      hi: 'China',
+      hi: 'चीन',
       fr: 'Chine',
       es: 'China',
       pt: 'China',
@@ -453,7 +509,7 @@ export default [
     code: 'CX',
     label: {
       en: 'Christmas Island',
-      hi: 'Christmas Island',
+      hi: 'क्रिसमस द्वीप',
       fr: 'Île Christmas',
       es: 'Isla de Navidad',
       pt: 'Ilha do Natal',
@@ -464,7 +520,7 @@ export default [
     code: 'CC',
     label: {
       en: 'Cocos (Keeling) Islands',
-      hi: 'Cocos (Keeling) Islands',
+      hi: 'कोकोस (कीलिंग) द्वीप',
       fr: 'Îles Cocos',
       es: 'Islas Cocos',
       pt: 'Ilhas Cocos (Keeling)',
@@ -475,7 +531,7 @@ export default [
     code: 'CO',
     label: {
       en: 'Colombia',
-      hi: 'Colombia',
+      hi: 'कोलम्बिया',
       fr: 'Colombie',
       es: 'Colombia',
       pt: 'Colômbia',
@@ -486,7 +542,7 @@ export default [
     code: 'KM',
     label: {
       en: 'Comoros',
-      hi: 'Comoros',
+      hi: 'कोमोरोस',
       fr: 'Comores',
       es: 'Comoras',
       pt: 'Comores',
@@ -497,7 +553,7 @@ export default [
     code: 'CG',
     label: {
       en: 'Congo',
-      hi: 'Congo',
+      hi: 'कांगो',
       fr: 'République du Congo',
       es: 'República del Congo',
       pt: 'República do Congo',
@@ -508,7 +564,7 @@ export default [
     code: 'CD',
     label: {
       en: 'Congo}, Democratic Republic',
-      hi: 'Congo}, Democratic Republic',
+      hi: 'कांगो, लोकतांत्रिक गणराज्य',
       fr: 'République démocratique du Congo',
       es: 'República Democrática del Congo',
       pt: 'República Democrática do Congo',
@@ -519,7 +575,7 @@ export default [
     code: 'CK',
     label: {
       en: 'Cook Islands',
-      hi: 'Cook Islands',
+      hi: 'कुक द्वीप',
       fr: 'Îles Cook',
       es: 'Islas Cook',
       pt: 'Ilhas Cook',
@@ -530,7 +586,7 @@ export default [
     code: 'CR',
     label: {
       en: 'Costa Rica',
-      hi: 'Costa Rica',
+      hi: 'कोस्टा रिका',
       fr: 'Costa Rica',
       es: 'Costa Rica',
       pt: 'Costa Rica',
@@ -541,7 +597,7 @@ export default [
     code: 'CI',
     label: {
       en: "Cote D'Ivoire",
-      hi: "Cote D'Ivoire",
+      hi: 'कोटे डी आइवर',
       fr: "Côte d'Ivoire",
       es: 'Costa de Marfil',
       pt: 'Costa do Marfim',
@@ -552,34 +608,51 @@ export default [
     code: 'HR',
     label: {
       en: 'Croatia',
-      hi: 'Croatia',
+      hi: 'क्रोएशिया',
       fr: 'Croatie',
       es: 'Croacia',
       pt: 'Croácia',
       de: 'Kroatien',
     },
   },
-  { code: 'CU', label: { en: 'Cuba', hi: 'Cuba', fr: 'Cuba', es: 'Cuba', pt: 'Cuba', de: 'Kuba' } },
+  {
+    code: 'CU',
+    label: {
+      en: 'Cuba',
+      hi: 'क्यूबा',
+      fr: 'Cuba',
+      es: 'Cuba',
+      pt: 'Cuba',
+      de: 'Kuba',
+    },
+  },
   {
     code: 'CY',
-    label: { en: 'Cyprus', hi: 'Cyprus', fr: 'Chypre', es: 'Chipre', pt: 'Chipre', de: 'Zypern' },
+    label: {
+      en: 'Cyprus',
+      hi: 'साइप्रस',
+      fr: 'Chypre',
+      es: 'Chipre',
+      pt: 'Chipre',
+      de: 'Zypern',
+    },
   },
   {
     code: 'CZ',
     label: {
       en: 'Czech Republic',
-      hi: 'Czech Republic',
-      fr: 'Tchéquie',
+      hi: 'चेक गणराज्य',
+      fr: 'République tchèque',
       es: 'República Checa',
-      pt: 'Chéquia',
-      de: 'Tschechien',
+      pt: 'República Checa',
+      de: 'Tschechische Republik',
     },
   },
   {
     code: 'DK',
     label: {
       en: 'Denmark',
-      hi: 'Denmark',
+      hi: 'डेनमार्क',
       fr: 'Danemark',
       es: 'Dinamarca',
       pt: 'Dinamarca',
@@ -590,10 +663,10 @@ export default [
     code: 'DJ',
     label: {
       en: 'Djibouti',
-      hi: 'Djibouti',
+      hi: 'जिबूती',
       fr: 'Djibouti',
       es: 'Yibuti',
-      pt: 'Djibuti',
+      pt: 'Jibuti',
       de: 'Dschibuti',
     },
   },
@@ -601,7 +674,7 @@ export default [
     code: 'DM',
     label: {
       en: 'Dominica',
-      hi: 'Dominica',
+      hi: 'डोमिनिका',
       fr: 'Dominique',
       es: 'Dominica',
       pt: 'Dominica',
@@ -612,7 +685,7 @@ export default [
     code: 'DO',
     label: {
       en: 'Dominican Republic',
-      hi: 'Dominican Republic',
+      hi: 'डोमिनिकन गणराज्य',
       fr: 'République dominicaine',
       es: 'República Dominicana',
       pt: 'República Dominicana',
@@ -623,7 +696,7 @@ export default [
     code: 'EC',
     label: {
       en: 'Ecuador',
-      hi: 'Ecuador',
+      hi: 'इक्वाडोर',
       fr: 'Équateur',
       es: 'Ecuador',
       pt: 'Equador',
@@ -632,13 +705,20 @@ export default [
   },
   {
     code: 'EG',
-    label: { en: 'Egypt', hi: 'Egypt', fr: 'Égypte', es: 'Egipto', pt: 'Egito', de: 'Ägypten' },
+    label: {
+      en: 'Egypt',
+      hi: 'मिस्र',
+      fr: 'Égypte',
+      es: 'Egipto',
+      pt: 'Egito',
+      de: 'Ägypten',
+    },
   },
   {
     code: 'SV',
     label: {
       en: 'El Salvador',
-      hi: 'El Salvador',
+      hi: 'एल सैल्वाडोर',
       fr: 'Salvador',
       es: 'El Salvador',
       pt: 'El Salvador',
@@ -649,7 +729,7 @@ export default [
     code: 'GQ',
     label: {
       en: 'Equatorial Guinea',
-      hi: 'Equatorial Guinea',
+      hi: 'इक्वेटोरियल गिनी',
       fr: 'Guinée équatoriale',
       es: 'Guinea Ecuatorial',
       pt: 'Guiné Equatorial',
@@ -660,7 +740,7 @@ export default [
     code: 'ER',
     label: {
       en: 'Eritrea',
-      hi: 'Eritrea',
+      hi: 'एरिट्रिया',
       fr: 'Érythrée',
       es: 'Eritrea',
       pt: 'Eritreia',
@@ -671,7 +751,7 @@ export default [
     code: 'EE',
     label: {
       en: 'Estonia',
-      hi: 'Estonia',
+      hi: 'एस्टोनिया',
       fr: 'Estonie',
       es: 'Estonia',
       pt: 'Estónia',
@@ -682,7 +762,7 @@ export default [
     code: 'ET',
     label: {
       en: 'Ethiopia',
-      hi: 'Ethiopia',
+      hi: 'इथियोपिया',
       fr: 'Éthiopie',
       es: 'Etiopía',
       pt: 'Etiópia',
@@ -693,7 +773,7 @@ export default [
     code: 'FK',
     label: {
       en: 'Falkland Islands (Malvinas)',
-      hi: 'Falkland Islands (Malvinas)',
+      hi: 'फ़ॉकलैंड द्वीप (माल्विनास)',
       fr: 'Malouines',
       es: 'Islas Malvinas',
       pt: 'Ilhas Malvinas',
@@ -704,7 +784,7 @@ export default [
     code: 'FO',
     label: {
       en: 'Faroe Islands',
-      hi: 'Faroe Islands',
+      hi: 'फ़रो द्वीप',
       fr: 'Îles Féroé',
       es: 'Islas Feroe',
       pt: 'Ilhas Feroé',
@@ -713,13 +793,20 @@ export default [
   },
   {
     code: 'FJ',
-    label: { en: 'Fiji', hi: 'Fiji', fr: 'Fidji', es: 'Fiyi', pt: 'Fiji', de: 'Fidschi' },
+    label: {
+      en: 'Fiji',
+      hi: 'फ़िजी',
+      fr: 'Fidji',
+      es: 'Fiyi',
+      pt: 'Fiji',
+      de: 'Fidschi',
+    },
   },
   {
     code: 'FI',
     label: {
       en: 'Finland',
-      hi: 'Finland',
+      hi: 'फ़िनलैंड',
       fr: 'Finlande',
       es: 'Finlandia',
       pt: 'Finlândia',
@@ -730,7 +817,7 @@ export default [
     code: 'FR',
     label: {
       en: 'France',
-      hi: 'France',
+      hi: 'फ़्रांस',
       fr: 'France',
       es: 'Francia',
       pt: 'França',
@@ -741,7 +828,7 @@ export default [
     code: 'GF',
     label: {
       en: 'French Guiana',
-      hi: 'French Guiana',
+      hi: 'फ़्रेंच गुयाना',
       fr: 'Guyane',
       es: 'Guayana Francesa',
       pt: 'Guiana Francesa',
@@ -752,7 +839,7 @@ export default [
     code: 'PF',
     label: {
       en: 'French Polynesia',
-      hi: 'French Polynesia',
+      hi: 'फ़्रेंच पॉलिनेशिया',
       fr: 'Polynésie française',
       es: 'Polinesia Francesa',
       pt: 'Polinésia Francesa',
@@ -763,7 +850,7 @@ export default [
     code: 'TF',
     label: {
       en: 'French Southern Territories',
-      hi: 'French Southern Territories',
+      hi: 'फ़्रेंच दक्षिणी क्षेत्र',
       fr: 'Terres australes et antarctiques françaises',
       es: 'Tierras Australes y Antárticas Francesas',
       pt: 'Terras Austrais e Antárticas Francesas',
@@ -772,17 +859,31 @@ export default [
   },
   {
     code: 'GA',
-    label: { en: 'Gabon', hi: 'Gabon', fr: 'Gabon', es: 'Gabón', pt: 'Gabão', de: 'Gabun' },
+    label: {
+      en: 'Gabon',
+      hi: 'गैबॉन',
+      fr: 'Gabon',
+      es: 'Gabón',
+      pt: 'Gabão',
+      de: 'Gabun',
+    },
   },
   {
     code: 'GM',
-    label: { en: 'Gambia', hi: 'Gambia', fr: 'Gambie', es: 'Gambia', pt: 'Gâmbia', de: 'Gambia' },
+    label: {
+      en: 'Gambia',
+      hi: 'गाम्बिया',
+      fr: 'Gambie',
+      es: 'Gambia',
+      pt: 'Gâmbia',
+      de: 'Gambia',
+    },
   },
   {
     code: 'GE',
     label: {
       en: 'Georgia',
-      hi: 'Georgia',
+      hi: 'जॉर्जिया',
       fr: 'Géorgie',
       es: 'Georgia',
       pt: 'Geórgia',
@@ -793,7 +894,7 @@ export default [
     code: 'DE',
     label: {
       en: 'Germany',
-      hi: 'Germany',
+      hi: 'जर्मनी',
       fr: 'Allemagne',
       es: 'Alemania',
       pt: 'Alemanha',
@@ -802,13 +903,20 @@ export default [
   },
   {
     code: 'GH',
-    label: { en: 'Ghana', hi: 'Ghana', fr: 'Ghana', es: 'Ghana', pt: 'Gana', de: 'Ghana' },
+    label: {
+      en: 'Ghana',
+      hi: 'घाना',
+      fr: 'Ghana',
+      es: 'Ghana',
+      pt: 'Gana',
+      de: 'Ghana',
+    },
   },
   {
     code: 'GI',
     label: {
       en: 'Gibraltar',
-      hi: 'Gibraltar',
+      hi: 'जिब्राल्टर',
       fr: 'Gibraltar',
       es: 'Gibraltar',
       pt: 'Gibraltar',
@@ -819,8 +927,8 @@ export default [
     code: 'GR',
     label: {
       en: 'Greece',
-      hi: 'Greece',
-      fr: 'Grèce',
+      hi: 'ग्रीस',
+      fr: 'Grèce ',
       es: 'Grecia',
       pt: 'Grécia',
       de: 'Griechenland',
@@ -830,7 +938,7 @@ export default [
     code: 'GL',
     label: {
       en: 'Greenland',
-      hi: 'Greenland',
+      hi: 'ग्रीनलैंड',
       fr: 'Groenland',
       es: 'Groenlandia',
       pt: 'Gronelândia',
@@ -841,7 +949,7 @@ export default [
     code: 'GD',
     label: {
       en: 'Grenada',
-      hi: 'Grenada',
+      hi: 'ग्रेनेडा',
       fr: 'Grenade',
       es: 'Granada',
       pt: 'Granada',
@@ -852,19 +960,29 @@ export default [
     code: 'GP',
     label: {
       en: 'Guadeloupe',
-      hi: 'Guadeloupe',
+      hi: 'ग्वाडेलोप',
       fr: 'Guadeloupe',
       es: 'Guadalupe',
       pt: 'Guadalupe',
       de: 'Guadeloupe',
     },
   },
-  { code: 'GU', label: { en: 'Guam', hi: 'Guam', fr: 'Guam', es: 'Guam', pt: 'Guam', de: 'Guam' } },
+  {
+    code: 'GU',
+    label: {
+      en: 'Guam',
+      hi: 'गुआम',
+      fr: 'Guam',
+      es: 'Guam',
+      pt: 'Guam',
+      de: 'Guam',
+    },
+  },
   {
     code: 'GT',
     label: {
       en: 'Guatemala',
-      hi: 'Guatemala',
+      hi: 'ग्वाटेमाला',
       fr: 'Guatemala',
       es: 'Guatemala',
       pt: 'Guatemala',
@@ -875,7 +993,7 @@ export default [
     code: 'GG',
     label: {
       en: 'Guernsey',
-      hi: 'Guernsey',
+      hi: 'ग्वेर्नसे',
       fr: 'Guernesey',
       es: 'Guernsey',
       pt: 'Guernsey',
@@ -884,13 +1002,20 @@ export default [
   },
   {
     code: 'GN',
-    label: { en: 'Guinea', hi: 'Guinea', fr: 'Guinée', es: 'Guinea', pt: 'Guiné', de: 'Guinea' },
+    label: {
+      en: 'Guinea',
+      hi: 'गिनी',
+      fr: 'Guinée',
+      es: 'Guinea',
+      pt: 'Guiné',
+      de: 'Guinea',
+    },
   },
   {
     code: 'GW',
     label: {
       en: 'Guinea-Bissau',
-      hi: 'Guinea-Bissau',
+      hi: 'गिनी-बिसाऊ',
       fr: 'Guinée-Bissau',
       es: 'Guinea-Bisáu',
       pt: 'Guiné-Bissau',
@@ -899,17 +1024,31 @@ export default [
   },
   {
     code: 'GY',
-    label: { en: 'Guyana', hi: 'Guyana', fr: 'Guyana', es: 'Guyana', pt: 'Guiana', de: 'Guyana' },
+    label: {
+      en: 'Guyana',
+      hi: 'गुयाना',
+      fr: 'Guyana',
+      es: 'Guyana',
+      pt: 'Guiana',
+      de: 'Guyana',
+    },
   },
   {
     code: 'HT',
-    label: { en: 'Haiti', hi: 'Haiti', fr: 'Haïti', es: 'Haití', pt: 'Haiti', de: 'Haiti' },
+    label: {
+      en: 'Haiti',
+      hi: 'हैती',
+      fr: 'Haïti',
+      es: 'Haití',
+      pt: 'Haiti',
+      de: 'Haiti',
+    },
   },
   {
     code: 'HM',
     label: {
       en: 'Heard Island & Mcdonald Islands',
-      hi: 'Heard Island & Mcdonald Islands',
+      hi: 'हियर्ड द्वीप और मैकडोनाल्ड द्वीप',
       fr: 'Îles Heard-et-MacDonald',
       es: 'Islas Heard y McDonald',
       pt: 'Ilha Heard e Ilhas McDonald',
@@ -920,7 +1059,7 @@ export default [
     code: 'VA',
     label: {
       en: 'Holy See (Vatican City State)',
-      hi: 'Holy See (Vatican City State)',
+      hi: 'होली सी (वेटिकन सिटी राज्य)',
       fr: 'Saint-Siège (État de la Cité du Vatican)',
       es: 'Vaticano, Ciudad del',
       pt: 'Vaticano',
@@ -931,7 +1070,7 @@ export default [
     code: 'HN',
     label: {
       en: 'Honduras',
-      hi: 'Honduras',
+      hi: 'होंडुरास',
       fr: 'Honduras',
       es: 'Honduras',
       pt: 'Honduras',
@@ -942,7 +1081,7 @@ export default [
     code: 'HK',
     label: {
       en: 'Hong Kong',
-      hi: 'Hong Kong',
+      hi: 'हांगकांग',
       fr: 'Hong Kong',
       es: 'Hong Kong',
       pt: 'Hong Kong',
@@ -953,7 +1092,7 @@ export default [
     code: 'HU',
     label: {
       en: 'Hungary',
-      hi: 'Hungary',
+      hi: 'हंगरी',
       fr: 'Hongrie',
       es: 'Hungría',
       pt: 'Hungria',
@@ -964,7 +1103,7 @@ export default [
     code: 'IS',
     label: {
       en: 'Iceland',
-      hi: 'Iceland',
+      hi: 'आइसलैंड',
       fr: 'Islande',
       es: 'Islandia',
       pt: 'Islândia',
@@ -973,13 +1112,20 @@ export default [
   },
   {
     code: 'IN',
-    label: { en: 'India', hi: 'India', fr: 'Inde', es: 'India', pt: 'Índia', de: 'Indien' },
+    label: {
+      en: 'India',
+      hi: 'भारत',
+      fr: 'Inde',
+      es: 'India',
+      pt: 'Índia',
+      de: 'Indien',
+    },
   },
   {
     code: 'ID',
     label: {
       en: 'Indonesia',
-      hi: 'Indonesia',
+      hi: 'इंडोनेशिया',
       fr: 'Indonésie',
       es: 'Indonesia',
       pt: 'Indonésia',
@@ -990,7 +1136,7 @@ export default [
     code: 'IR',
     label: {
       en: 'Iran}, Islamic Republic Of',
-      hi: 'Iran}, Islamic Republic Of',
+      hi: 'ईरान, इस्लामिक रिपब्लिक ऑफ',
       fr: 'Iran',
       es: 'Irán',
       pt: 'Irã',
@@ -999,13 +1145,20 @@ export default [
   },
   {
     code: 'IQ',
-    label: { en: 'Iraq', hi: 'Iraq', fr: 'Irak', es: 'Irak', pt: 'Iraque', de: 'Irak' },
+    label: {
+      en: 'Iraq',
+      hi: 'इराक',
+      fr: 'Irak',
+      es: 'Irak',
+      pt: 'Iraque',
+      de: 'Irak',
+    },
   },
   {
     code: 'IE',
     label: {
       en: 'Ireland',
-      hi: 'Ireland',
+      hi: 'आयरलैंड',
       fr: 'Irlande',
       es: 'Irlanda',
       pt: 'Irlanda',
@@ -1016,7 +1169,7 @@ export default [
     code: 'IM',
     label: {
       en: 'Isle Of Man',
-      hi: 'Isle Of Man',
+      hi: 'आइल ऑफ मैन',
       fr: 'Île de Man',
       es: 'Isla de Man',
       pt: 'Ilha de Man',
@@ -1025,17 +1178,31 @@ export default [
   },
   {
     code: 'IL',
-    label: { en: 'Israel', hi: 'Israel', fr: 'Israël', es: 'Israel', pt: 'Israel', de: 'Israel' },
+    label: {
+      en: 'Israel',
+      hi: 'इज़राइल',
+      fr: 'Israël',
+      es: 'Israel',
+      pt: 'Israel',
+      de: 'Israel',
+    },
   },
   {
     code: 'IT',
-    label: { en: 'Italy', hi: 'Italy', fr: 'Italie', es: 'Italia', pt: 'Itália', de: 'Italien' },
+    label: {
+      en: 'Italy',
+      hi: 'इटली',
+      fr: 'Italie',
+      es: 'Italia',
+      pt: 'Itália',
+      de: 'Italien',
+    },
   },
   {
     code: 'JM',
     label: {
       en: 'Jamaica',
-      hi: 'Jamaica',
+      hi: 'जमैका',
       fr: 'Jamaïque',
       es: 'Jamaica',
       pt: 'Jamaica',
@@ -1044,13 +1211,20 @@ export default [
   },
   {
     code: 'JP',
-    label: { en: 'Japan', hi: 'Japan', fr: 'Japon', es: 'Japón', pt: 'Japão', de: 'Japan' },
+    label: {
+      en: 'Japan',
+      hi: 'जापान',
+      fr: 'Japon',
+      es: 'Japón',
+      pt: 'Japão',
+      de: 'Japan',
+    },
   },
   {
     code: 'JE',
     label: {
       en: 'Jersey',
-      hi: 'Jersey',
+      hi: 'जर्सी',
       fr: 'Jersey',
       es: 'Jersey',
       pt: 'Jersey',
@@ -1061,7 +1235,7 @@ export default [
     code: 'JO',
     label: {
       en: 'Jordan',
-      hi: 'Jordan',
+      hi: 'जॉर्डन',
       fr: 'Jordanie',
       es: 'Jordania',
       pt: 'Jordânia',
@@ -1072,7 +1246,7 @@ export default [
     code: 'KZ',
     label: {
       en: 'Kazakhstan',
-      hi: 'Kazakhstan',
+      hi: 'कज़ाकिस्तान',
       fr: 'Kazakhstan',
       es: 'Kazajistán',
       pt: 'Cazaquistão',
@@ -1081,13 +1255,20 @@ export default [
   },
   {
     code: 'KE',
-    label: { en: 'Kenya', hi: 'Kenya', fr: 'Kenya', es: 'Kenia', pt: 'Quênia', de: 'Kenia' },
+    label: {
+      en: 'Kenya',
+      hi: 'केन्या',
+      fr: 'Kenya',
+      es: 'Kenia',
+      pt: 'Quênia',
+      de: 'Kenia',
+    },
   },
   {
     code: 'KI',
     label: {
       en: 'Kiribati',
-      hi: 'Kiribati',
+      hi: 'किरिबाती',
       fr: 'Kiribati',
       es: 'Kiribati',
       pt: 'Quiribáti',
@@ -1098,7 +1279,7 @@ export default [
     code: 'KR',
     label: {
       en: 'Korea (Republic of)',
-      hi: 'Korea (Republic of)',
+      hi: 'कोरिया (गणराज्य)',
       fr: 'Corée du Sud',
       es: 'Corea del Sur',
       pt: 'Coreia do Sul',
@@ -1109,7 +1290,7 @@ export default [
     code: 'KP',
     label: {
       en: "Korea (Democratic People's Republic of)",
-      hi: "Korea (Democratic People's Republic of)",
+      hi: 'कोरिया (लोकतांत्रिक जनवादी गणराज्य)',
       fr: 'Corée du Nord',
       es: 'Corea del Norte',
       pt: 'Coreia do Norte',
@@ -1118,13 +1299,20 @@ export default [
   },
   {
     code: 'KW',
-    label: { en: 'Kuwait', hi: 'Kuwait', fr: 'Koweït', es: 'Kuwait', pt: 'Kuwait', de: 'Kuwait' },
+    label: {
+      en: 'Kuwait',
+      hi: 'कुवैत',
+      fr: 'Koweït',
+      es: 'Kuwait',
+      pt: 'Kuwait',
+      de: 'Kuwait',
+    },
   },
   {
     code: 'KG',
     label: {
       en: 'Kyrgyzstan',
-      hi: 'Kyrgyzstan',
+      hi: 'किर्गिज़स्तान',
       fr: 'Kirghizistan',
       es: 'Kirguistán',
       pt: 'Quirguistão',
@@ -1135,7 +1323,7 @@ export default [
     code: 'LA',
     label: {
       en: "Lao People's Democratic Republic",
-      hi: "Lao People's Democratic Republic",
+      hi: 'लाओ पीपुल्स डेमोक्रेटिक रिपब्लिक',
       fr: 'Laos',
       es: 'Laos',
       pt: 'Laos',
@@ -1146,7 +1334,7 @@ export default [
     code: 'LV',
     label: {
       en: 'Latvia',
-      hi: 'Latvia',
+      hi: 'लातविया',
       fr: 'Lettonie',
       es: 'Letonia',
       pt: 'Letônia',
@@ -1155,13 +1343,20 @@ export default [
   },
   {
     code: 'LB',
-    label: { en: 'Lebanon', hi: 'Lebanon', fr: 'Liban', es: 'Líbano', pt: 'Líbano', de: 'Libanon' },
+    label: {
+      en: 'Lebanon',
+      hi: 'लेबनान',
+      fr: 'Liban',
+      es: 'Líbano',
+      pt: 'Líbano',
+      de: 'Libanon',
+    },
   },
   {
     code: 'LS',
     label: {
       en: 'Lesotho',
-      hi: 'Lesotho',
+      hi: 'लेसोथो',
       fr: 'Lesotho',
       es: 'Lesoto',
       pt: 'Lesoto',
@@ -1172,7 +1367,7 @@ export default [
     code: 'LR',
     label: {
       en: 'Liberia',
-      hi: 'Liberia',
+      hi: 'लाइबेरिया',
       fr: 'Liberia',
       es: 'Liberia',
       pt: 'Libéria',
@@ -1183,7 +1378,7 @@ export default [
     code: 'LY',
     label: {
       en: 'Libyan Arab Jamahiriya',
-      hi: 'Libyan Arab Jamahiriya',
+      hi: 'लीबिया अरब जमाहिरिया',
       fr: 'Libye',
       es: 'Libia',
       pt: 'Líbia',
@@ -1194,7 +1389,7 @@ export default [
     code: 'LI',
     label: {
       en: 'Liechtenstein',
-      hi: 'Liechtenstein',
+      hi: 'लिकटेंस्टीन',
       fr: 'Liechtenstein',
       es: 'Liechtenstein',
       pt: 'Listenstaine',
@@ -1205,7 +1400,7 @@ export default [
     code: 'LT',
     label: {
       en: 'Lithuania',
-      hi: 'Lithuania',
+      hi: 'लिथुआनिया',
       fr: 'Lituanie',
       es: 'Lituania',
       pt: 'Lituânia',
@@ -1216,7 +1411,7 @@ export default [
     code: 'LU',
     label: {
       en: 'Luxembourg',
-      hi: 'Luxembourg',
+      hi: 'लक्समबर्ग',
       fr: 'Luxembourg',
       es: 'Luxemburgo',
       pt: 'Luxemburgo',
@@ -1225,13 +1420,20 @@ export default [
   },
   {
     code: 'MO',
-    label: { en: 'Macao', hi: 'Macao', fr: 'Macao', es: 'Macao', pt: 'Macau', de: 'Macau' },
+    label: {
+      en: 'Macao',
+      hi: 'मакаो',
+      fr: 'Macao',
+      es: 'Macao',
+      pt: 'Macau',
+      de: 'Macau',
+    },
   },
   {
     code: 'MK',
     label: {
       en: 'Macedonia',
-      hi: 'Macedonia',
+      hi: 'मैसेडोनिया',
       fr: 'Macédoine du Nord',
       es: 'Macedonia del Norte',
       pt: 'Macedônia do Norte',
@@ -1242,7 +1444,7 @@ export default [
     code: 'MG',
     label: {
       en: 'Madagascar',
-      hi: 'Madagascar',
+      hi: 'मेडागास्कर',
       fr: 'Madagascar',
       es: 'Madagascar',
       pt: 'Madagáscar',
@@ -1251,13 +1453,20 @@ export default [
   },
   {
     code: 'MW',
-    label: { en: 'Malawi', hi: 'Malawi', fr: 'Malawi', es: 'Malaui', pt: 'Maláui', de: 'Malawi' },
+    label: {
+      en: 'Malawi',
+      hi: 'मलावी',
+      fr: 'Malawi',
+      es: 'Malaui',
+      pt: 'Maláui',
+      de: 'Malawi',
+    },
   },
   {
     code: 'MY',
     label: {
       en: 'Malaysia',
-      hi: 'Malaysia',
+      hi: 'मलेशिया',
       fr: 'Malaisie',
       es: 'Malasia',
       pt: 'Malásia',
@@ -1268,23 +1477,40 @@ export default [
     code: 'MV',
     label: {
       en: 'Maldives',
-      hi: 'Maldives',
+      hi: 'मालदीव',
       fr: 'Maldives',
       es: 'Maldivas',
       pt: 'Maldivas',
       de: 'Malediven',
     },
   },
-  { code: 'ML', label: { en: 'Mali', hi: 'Mali', fr: 'Mali', es: 'Malí', pt: 'Mali', de: 'Mali' } },
+  {
+    code: 'ML',
+    label: {
+      en: 'Mali',
+      hi: 'माली',
+      fr: 'Mali',
+      es: 'Malí',
+      pt: 'Mali',
+      de: 'Mali',
+    },
+  },
   {
     code: 'MT',
-    label: { en: 'Malta', hi: 'Malta', fr: 'Malte', es: 'Malta', pt: 'Malta', de: 'Malta' },
+    label: {
+      en: 'Malta',
+      hi: 'माल्टा',
+      fr: 'Malte',
+      es: 'Malta',
+      pt: 'Malta',
+      de: 'Malta',
+    },
   },
   {
     code: 'MH',
     label: {
       en: 'Marshall Islands',
-      hi: 'Marshall Islands',
+      hi: 'मार्शल द्वीप',
       fr: 'Îles Marshall',
       es: 'Islas Marshall',
       pt: 'Ilhas Marshall',
@@ -1295,7 +1521,7 @@ export default [
     code: 'MQ',
     label: {
       en: 'Martinique',
-      hi: 'Martinique',
+      hi: 'मार्टिनिक',
       fr: 'Martinique',
       es: 'Martinica',
       pt: 'Martinica',
@@ -1306,7 +1532,7 @@ export default [
     code: 'MR',
     label: {
       en: 'Mauritania',
-      hi: 'Mauritania',
+      hi: 'मॉरिटानिया',
       fr: 'Mauritanie',
       es: 'Mauritania',
       pt: 'Mauritânia',
@@ -1317,7 +1543,7 @@ export default [
     code: 'MU',
     label: {
       en: 'Mauritius',
-      hi: 'Mauritius',
+      hi: 'मॉरीशस',
       fr: 'Maurice',
       es: 'Mauricio',
       pt: 'Ilhas Maurícias',
@@ -1328,7 +1554,7 @@ export default [
     code: 'YT',
     label: {
       en: 'Mayotte',
-      hi: 'Mayotte',
+      hi: 'मायोट',
       fr: 'Mayotte',
       es: 'Mayotte',
       pt: 'Maiote',
@@ -1337,13 +1563,20 @@ export default [
   },
   {
     code: 'MX',
-    label: { en: 'Mexico', hi: 'Mexico', fr: 'Mexique', es: 'México', pt: 'México', de: 'Mexiko' },
+    label: {
+      en: 'Mexico',
+      hi: 'मेक्सिको',
+      fr: 'Mexique',
+      es: 'México',
+      pt: 'México',
+      de: 'Mexiko',
+    },
   },
   {
     code: 'FM',
     label: {
       en: 'Micronesia}, Federated States Of',
-      hi: 'Micronesia}, Federated States Of',
+      hi: 'माइक्रोनेशिया, संघीय राज्य',
       fr: 'États fédérés de Micronésie',
       es: 'Micronesia',
       pt: 'Estados Federados da Micronésia',
@@ -1354,7 +1587,7 @@ export default [
     code: 'MD',
     label: {
       en: 'Moldova',
-      hi: 'Moldova',
+      hi: 'मोल्दोवा',
       fr: 'Moldavie',
       es: 'Moldavia',
       pt: 'Moldávia',
@@ -1362,14 +1595,21 @@ export default [
     },
   },
   {
-    code: 'MC',
-    label: { en: 'Monaco', hi: 'Monaco', fr: 'Monaco', es: 'Mónaco', pt: 'Mónaco', de: 'Monaco' },
+    code: ' MC',
+    label: {
+      en: 'Monaco',
+      hi: 'मोनाको',
+      fr: 'Monaco',
+      es: 'Mónaco',
+      pt: 'Mónaco',
+      de: 'Monaco',
+    },
   },
   {
     code: 'MN',
     label: {
       en: 'Mongolia',
-      hi: 'Mongolia',
+      hi: 'मंगोलिया',
       fr: 'Mongolie',
       es: 'Mongolia',
       pt: 'Mongólia',
@@ -1380,7 +1620,7 @@ export default [
     code: 'ME',
     label: {
       en: 'Montenegro',
-      hi: 'Montenegro',
+      hi: 'मोंटेनेग्रो',
       fr: 'Monténégro',
       es: 'Montenegro',
       pt: 'Montenegro',
@@ -1391,7 +1631,7 @@ export default [
     code: 'MS',
     label: {
       en: 'Montserrat',
-      hi: 'Montserrat',
+      hi: 'मोंटसेराट',
       fr: 'Montserrat',
       es: 'Montserrat',
       pt: 'Monserrate',
@@ -1402,7 +1642,7 @@ export default [
     code: 'MA',
     label: {
       en: 'Morocco',
-      hi: 'Morocco',
+      hi: 'मोरक्को',
       fr: 'Maroc',
       es: 'Marruecos',
       pt: 'Marrocos',
@@ -1413,7 +1653,7 @@ export default [
     code: 'MZ',
     label: {
       en: 'Mozambique',
-      hi: 'Mozambique',
+      hi: 'मोज़ाम्बिक',
       fr: 'Mozambique',
       es: 'Mozambique',
       pt: 'Moçambique',
@@ -1424,7 +1664,7 @@ export default [
     code: 'MM',
     label: {
       en: 'Myanmar',
-      hi: 'Myanmar',
+      hi: 'म्यांमार',
       fr: 'Birmanie',
       es: 'Birmania',
       pt: 'Mianmar',
@@ -1435,7 +1675,7 @@ export default [
     code: 'NA',
     label: {
       en: 'Namibia',
-      hi: 'Namibia',
+      hi: 'नामीबिया',
       fr: 'Namibie',
       es: 'Namibia',
       pt: 'Namíbia',
@@ -1444,17 +1684,31 @@ export default [
   },
   {
     code: 'NR',
-    label: { en: 'Nauru', hi: 'Nauru', fr: 'Nauru', es: 'Nauru', pt: 'Nauru', de: 'Nauru' },
+    label: {
+      en: 'Nauru',
+      hi: 'नाउरू',
+      fr: 'Nauru',
+      es: 'Nauru',
+      pt: 'Nauru',
+      de: 'Nauru',
+    },
   },
   {
     code: 'NP',
-    label: { en: 'Nepal', hi: 'Nepal', fr: 'Népal', es: 'Nepal', pt: 'Nepal', de: 'Nepal' },
+    label: {
+      en: 'Nepal',
+      hi: 'नेपाल',
+      fr: 'Népal',
+      es: 'Nepal',
+      pt: 'Nepal',
+      de: 'Nepal',
+    },
   },
   {
     code: 'NL',
     label: {
       en: 'Netherlands',
-      hi: 'Netherlands',
+      hi: 'नीदरलैंड',
       fr: 'Pays-Bas',
       es: 'Países Bajos',
       pt: 'Países Baixos',
@@ -1465,7 +1719,7 @@ export default [
     code: 'NC',
     label: {
       en: 'New Caledonia',
-      hi: 'New Caledonia',
+      hi: 'न्यू कैलेडोनिया',
       fr: 'Nouvelle-Calédonie',
       es: 'Nueva Caledonia',
       pt: 'Nova Caledônia',
@@ -1476,7 +1730,7 @@ export default [
     code: 'NZ',
     label: {
       en: 'New Zealand',
-      hi: 'New Zealand',
+      hi: 'न्यूजीलैंड',
       fr: 'Nouvelle-Zélande',
       es: 'Nueva Zelanda',
       pt: 'Nova Zelândia',
@@ -1487,7 +1741,7 @@ export default [
     code: 'NI',
     label: {
       en: 'Nicaragua',
-      hi: 'Nicaragua',
+      hi: 'निकारागुआ',
       fr: 'Nicaragua',
       es: 'Nicaragua',
       pt: 'Nicarágua',
@@ -1496,25 +1750,42 @@ export default [
   },
   {
     code: 'NE',
-    label: { en: 'Niger', hi: 'Niger', fr: 'Niger', es: 'Níger', pt: 'Níger', de: 'Niger' },
+    label: {
+      en: 'Niger',
+      hi: 'नाइजर',
+      fr: 'Niger',
+      es: 'Níger',
+      pt: 'Níger',
+      de: 'Niger',
+    },
   },
   {
     code: 'NG',
     label: {
       en: 'Nigeria',
-      hi: 'Nigeria',
-      fr: 'Nigeria',
+      hi: 'नाइजीरिया',
+      fr: ' Nigeria',
       es: 'Nigeria',
       pt: 'Nigéria',
       de: 'Nigeria',
     },
   },
-  { code: 'NU', label: { en: 'Niue', hi: 'Niue', fr: 'Niue', es: 'Niue', pt: 'Niue', de: 'Niue' } },
+  {
+    code: 'NU',
+    label: {
+      en: 'Niue',
+      hi: 'न्यू',
+      fr: 'Niue',
+      es: 'Niue',
+      pt: 'Niue',
+      de: 'Niue',
+    },
+  },
   {
     code: 'NF',
     label: {
       en: 'Norfolk Island',
-      hi: 'Norfolk Island',
+      hi: 'नॉरफ़ॉक द्वीप',
       fr: 'Île Norfolk',
       es: 'Isla Norfolk',
       pt: 'Ilha Norfolk',
@@ -1525,7 +1796,7 @@ export default [
     code: 'MP',
     label: {
       en: 'Northern Mariana Islands',
-      hi: 'Northern Mariana Islands',
+      hi: 'उत्तरी मारियाना द्वीप',
       fr: 'Îles Mariannes du Nord',
       es: 'Islas Marianas del Norte',
       pt: 'Marianas Setentrionais',
@@ -1536,19 +1807,29 @@ export default [
     code: 'NO',
     label: {
       en: 'Norway',
-      hi: 'Norway',
+      hi: 'नॉर्वे',
       fr: 'Norvège',
       es: 'Noruega',
       pt: 'Noruega',
       de: 'Norwegen',
     },
   },
-  { code: 'OM', label: { en: 'Oman', hi: 'Oman', fr: 'Oman', es: 'Omán', pt: 'Omã', de: 'Oman' } },
+  {
+    code: 'OM',
+    label: {
+      en: 'Oman',
+      hi: 'ओमान',
+      fr: 'Oman',
+      es: 'Omán',
+      pt: 'Omã',
+      de: 'Oman',
+    },
+  },
   {
     code: 'PK',
     label: {
       en: 'Pakistan',
-      hi: 'Pakistan',
+      hi: 'पाकिस्तान',
       fr: 'Pakistan',
       es: 'Pakistán',
       pt: 'Paquistão',
@@ -1557,13 +1838,20 @@ export default [
   },
   {
     code: 'PW',
-    label: { en: 'Palau', hi: 'Palau', fr: 'Palaos', es: 'Palaos', pt: 'Palau', de: 'Palau' },
+    label: {
+      en: 'Palau',
+      hi: 'पलाऊ',
+      fr: 'Palaos',
+      es: 'Palaos',
+      pt: 'Palau',
+      de: 'Palau',
+    },
   },
   {
     code: 'PS',
     label: {
       en: 'Palestinian Territory}, Occupied',
-      hi: 'Palestinian Territory}, Occupied',
+      hi: 'फिलिस्तीनी क्षेत्र, कब्जे वाला',
       fr: 'Palestine',
       es: 'Palestina',
       pt: 'Palestina',
@@ -1572,13 +1860,20 @@ export default [
   },
   {
     code: 'PA',
-    label: { en: 'Panama', hi: 'Panama', fr: 'Panama', es: 'Panamá', pt: 'Panamá', de: 'Panama' },
+    label: {
+      en: 'Panama',
+      hi: 'पनामा',
+      fr: 'Panama',
+      es: 'Panamá',
+      pt: 'Panamá',
+      de: 'Panama',
+    },
   },
   {
     code: 'PG',
     label: {
       en: 'Papua New Guinea',
-      hi: 'Papua New Guinea',
+      hi: 'पापुआ न्यू गिनी',
       fr: 'Papouasie-Nouvelle-Guinée',
       es: 'Papúa Nueva Guinea',
       pt: 'Papua-Nova Guiné',
@@ -1589,7 +1884,7 @@ export default [
     code: 'PY',
     label: {
       en: 'Paraguay',
-      hi: 'Paraguay',
+      hi: 'पैराग्वे',
       fr: 'Paraguay',
       es: 'Paraguay',
       pt: 'Paraguai',
@@ -1598,13 +1893,20 @@ export default [
   },
   {
     code: 'PE',
-    label: { en: 'Peru', hi: 'Peru', fr: 'Pérou', es: 'Perú', pt: 'Peru', de: 'Peru' },
+    label: {
+      en: 'Peru',
+      hi: 'पेरू',
+      fr: 'Pérou',
+      es: 'Perú',
+      pt: 'Peru',
+      de: 'Peru',
+    },
   },
   {
     code: 'PH',
     label: {
       en: 'Philippines',
-      hi: 'Philippines',
+      hi: 'फिलीपींस',
       fr: 'Philippines',
       es: 'Filipinas',
       pt: 'Filipinas',
@@ -1615,7 +1917,7 @@ export default [
     code: 'PN',
     label: {
       en: 'Pitcairn',
-      hi: 'Pitcairn',
+      hi: 'पिटकेर्न',
       fr: 'Îles Pitcairn',
       es: 'Islas Pitcairn',
       pt: 'Pitcairn',
@@ -1624,13 +1926,20 @@ export default [
   },
   {
     code: 'PL',
-    label: { en: 'Poland', hi: 'Poland', fr: 'Pologne', es: 'Polonia', pt: 'Polónia', de: 'Polen' },
+    label: {
+      en: 'Poland',
+      hi: 'पोलैंड',
+      fr: 'Pologne',
+      es: 'Polonia',
+      pt: 'Polónia',
+      de: 'Polen',
+    },
   },
   {
     code: 'PT',
     label: {
       en: 'Portugal',
-      hi: 'Portugal',
+      hi: 'पुर्तगाल',
       fr: 'Portugal',
       es: 'Portugal',
       pt: 'Portugal',
@@ -1641,7 +1950,7 @@ export default [
     code: 'PR',
     label: {
       en: 'Puerto Rico',
-      hi: 'Puerto Rico',
+      hi: 'प्यूर्टो रिको',
       fr: 'Porto Rico',
       es: 'Puerto Rico',
       pt: 'Porto Rico',
@@ -1650,13 +1959,20 @@ export default [
   },
   {
     code: 'QA',
-    label: { en: 'Qatar', hi: 'Qatar', fr: 'Qatar', es: 'Catar', pt: 'Catar', de: 'Katar' },
+    label: {
+      en: 'Qatar',
+      hi: 'कतर',
+      fr: 'Qatar',
+      es: 'Catar',
+      pt: 'Catar',
+      de: 'Katar',
+    },
   },
   {
     code: 'RE',
     label: {
       en: 'Reunion',
-      hi: 'Reunion',
+      hi: 'रीयूनियन',
       fr: 'La Réunion',
       es: 'Reunión',
       pt: 'Reunião',
@@ -1667,7 +1983,7 @@ export default [
     code: 'RO',
     label: {
       en: 'Romania',
-      hi: 'Romania',
+      hi: 'रोमानिया',
       fr: 'Roumanie',
       es: 'Rumania',
       pt: 'Roménia',
@@ -1678,7 +1994,7 @@ export default [
     code: 'RU',
     label: {
       en: 'Russian Federation',
-      hi: 'Russian Federation',
+      hi: 'रूसी संघ',
       fr: 'Russie',
       es: 'Rusia',
       pt: 'Rússia',
@@ -1687,13 +2003,20 @@ export default [
   },
   {
     code: 'RW',
-    label: { en: 'Rwanda', hi: 'Rwanda', fr: 'Rwanda', es: 'Ruanda', pt: 'Ruanda', de: 'Ruanda' },
+    label: {
+      en: 'Rwanda',
+      hi: 'रवांडा',
+      fr: 'Rwanda',
+      es: 'Ruanda',
+      pt: 'Ruanda',
+      de: 'Ruanda',
+    },
   },
   {
     code: 'BL',
     label: {
       en: 'Saint Barthelemy',
-      hi: 'Saint Barthelemy',
+      hi: 'सेंट बार्थेलेमी',
       fr: 'Saint-Barthélemy',
       es: 'San Bartolomé',
       pt: 'São Bartolomeu',
@@ -1704,7 +2027,7 @@ export default [
     code: 'SH',
     label: {
       en: 'Saint Helena',
-      hi: 'Saint Helena',
+      hi: 'सेंट हेलेना',
       fr: 'Sainte-Hélène, Ascension et Tristan da Cunha',
       es: 'Santa Elena, Ascensión y Tristán de Acuña',
       pt: 'Santa Helena, Ascensão e Tristão da Cunha',
@@ -1715,7 +2038,7 @@ export default [
     code: 'KN',
     label: {
       en: 'Saint Kitts And Nevis',
-      hi: 'Saint Kitts And Nevis',
+      hi: 'सेंट किट्स और नेविस',
       fr: 'Saint-Christophe-et-Niévès',
       es: 'San Cristóbal y Nieves',
       pt: 'São Cristóvão e Neves',
@@ -1726,7 +2049,7 @@ export default [
     code: 'LC',
     label: {
       en: 'Saint Lucia',
-      hi: 'Saint Lucia',
+      hi: 'सेंट लूसिया',
       fr: 'Sainte-Lucie',
       es: 'Santa Lucía',
       pt: 'Santa Lúcia',
@@ -1737,7 +2060,7 @@ export default [
     code: 'MF',
     label: {
       en: 'Saint Martin (France)',
-      hi: 'Saint Martin (France)',
+      hi: 'सेंट मार्टिन (फ्रांस)',
       fr: 'Saint-Martin (France)',
       es: 'San Martín (Francia)',
       pt: 'São Martinho (França)',
@@ -1748,7 +2071,7 @@ export default [
     code: 'SX',
     label: {
       en: 'Saint Martin',
-      hi: 'Saint Martin',
+      hi: 'सेंट मार्टिन',
       fr: 'Saint-Martin',
       es: 'San Martín',
       pt: 'São Martinho',
@@ -1759,7 +2082,7 @@ export default [
     code: 'PM',
     label: {
       en: 'Saint Pierre And Miquelon',
-      hi: 'Saint Pierre And Miquelon',
+      hi: 'सेंट पियरे और मिकेलॉन',
       fr: 'Saint-Pierre-et-Miquelon',
       es: 'San Pedro y Miquelón',
       pt: 'São Pedro e Miquelão',
@@ -1770,7 +2093,7 @@ export default [
     code: 'VC',
     label: {
       en: 'Saint Vincent And Grenadines',
-      hi: 'Saint Vincent And Grenadines',
+      hi: 'सेंट विंसेंट और ग्रेनेडाइंस',
       fr: 'Saint-Vincent-et-les-Grenadines',
       es: 'San Vicente y las Granadinas',
       pt: 'São Vicente e Granadinas',
@@ -1779,13 +2102,20 @@ export default [
   },
   {
     code: 'WS',
-    label: { en: 'Samoa', hi: 'Samoa', fr: 'Samoa', es: 'Samoa', pt: 'Samoa', de: 'Samoa' },
+    label: {
+      en: 'Samoa',
+      hi: 'समोआ',
+      fr: 'Samoa',
+      es: 'Samoa',
+      pt: 'Samoa',
+      de: 'Samoa',
+    },
   },
   {
     code: 'SM',
     label: {
       en: 'San Marino',
-      hi: 'San Marino',
+      hi: 'सैन मैरिनो',
       fr: 'Saint-Marin',
       es: 'San Marino',
       pt: 'San Marino',
@@ -1796,7 +2126,7 @@ export default [
     code: 'ST',
     label: {
       en: 'Sao Tome And Principe',
-      hi: 'Sao Tome And Principe',
+      hi: 'साओ टोमे और प्रिंसिपे',
       fr: 'Sao Tomé-et-Principe',
       es: 'Santo Tomé y Príncipe',
       pt: 'São Tomé e Príncipe',
@@ -1807,7 +2137,7 @@ export default [
     code: 'SA',
     label: {
       en: 'Saudi Arabia',
-      hi: 'Saudi Arabia',
+      hi: 'सऊदी अरब',
       fr: 'Arabie saoudite',
       es: 'Arabia Saudita',
       pt: 'Arábia Saudita',
@@ -1818,7 +2148,7 @@ export default [
     code: 'SN',
     label: {
       en: 'Senegal',
-      hi: 'Senegal',
+      hi: 'सेनेगल',
       fr: 'Sénégal',
       es: 'Senegal',
       pt: 'Senegal',
@@ -1827,13 +2157,20 @@ export default [
   },
   {
     code: 'RS',
-    label: { en: 'Serbia', hi: 'Serbia', fr: 'Serbie', es: 'Serbia', pt: 'Sérvia', de: 'Serbien' },
+    label: {
+      en: 'Serbia',
+      hi: 'सर्बिया',
+      fr: 'Serbie',
+      es: 'Serbia',
+      pt: 'Sérvia',
+      de: 'Serbien',
+    },
   },
   {
     code: 'SC',
     label: {
       en: 'Seychelles',
-      hi: 'Seychelles',
+      hi: 'सेशेल्स',
       fr: 'Seychelles',
       es: 'Seychelles',
       pt: 'Seicheles',
@@ -1844,7 +2181,7 @@ export default [
     code: 'SL',
     label: {
       en: 'Sierra Leone',
-      hi: 'Sierra Leone',
+      hi: 'सिएरा लियोन',
       fr: 'Sierra Leone',
       es: 'Sierra Leona',
       pt: 'Serra Leoa',
@@ -1855,7 +2192,7 @@ export default [
     code: 'SG',
     label: {
       en: 'Singapore',
-      hi: 'Singapore',
+      hi: 'सिंगापुर',
       fr: 'Singapour',
       es: 'Singapur',
       pt: 'Singapura',
@@ -1866,7 +2203,7 @@ export default [
     code: 'SK',
     label: {
       en: 'Slovakia',
-      hi: 'Slovakia',
+      hi: 'स्लोवाकिया',
       fr: 'Slovaquie',
       es: 'Eslovaquia',
       pt: 'Eslováquia',
@@ -1877,7 +2214,7 @@ export default [
     code: 'SI',
     label: {
       en: 'Slovenia',
-      hi: 'Slovenia',
+      hi: 'स्लोवेनिया',
       fr: 'Slovénie',
       es: 'Eslovenia',
       pt: 'Eslovênia',
@@ -1888,18 +2225,18 @@ export default [
     code: 'SB',
     label: {
       en: 'Solomon Islands',
-      hi: 'Solomon Islands',
+      hi: 'सोलोमन द्वीप',
       fr: 'Îles Salomon',
       es: 'Islas Salomón',
       pt: 'Ilhas Salomão',
-      de: 'Salomonen',
+      de: 'Sal omonen',
     },
   },
   {
     code: 'SO',
     label: {
       en: 'Somalia',
-      hi: 'Somalia',
+      hi: 'सोमालिया',
       fr: 'Somalie',
       es: 'Somalia',
       pt: 'Somália',
@@ -1910,7 +2247,7 @@ export default [
     code: 'ZA',
     label: {
       en: 'South Africa',
-      hi: 'South Africa',
+      hi: 'दक्षिण अफ़्रीका',
       fr: 'Afrique du Sud',
       es: 'Sudáfrica',
       pt: 'África do Sul',
@@ -1921,7 +2258,7 @@ export default [
     code: 'GS',
     label: {
       en: 'South Georgia And Sandwich Isl.',
-      hi: 'South Georgia And Sandwich Isl.',
+      hi: 'दक्षिण जॉर्जिया और सैंडविच द्वीप',
       fr: 'Géorgie du Sud-et-les îles Sandwich du Sud',
       es: 'Islas Georgias del Sur y Sandwich del Sur',
       pt: 'Ilhas Geórgia do Sul e Sandwich do Sul',
@@ -1932,7 +2269,7 @@ export default [
     code: 'SS',
     label: {
       en: 'South Sudan',
-      hi: 'South Sudan',
+      hi: 'दक्षिण सूडान',
       fr: 'Soudan du Sud',
       es: 'Sudán del Sur',
       pt: 'Sudão do Sul',
@@ -1941,13 +2278,20 @@ export default [
   },
   {
     code: 'ES',
-    label: { en: 'Spain', hi: 'Spain', fr: 'Espagne', es: 'España', pt: 'Espanha', de: 'Spanien' },
+    label: {
+      en: 'Spain',
+      hi: 'स्पेन',
+      fr: 'Espagne',
+      es: 'España',
+      pt: 'Espanha',
+      de: 'Spanien',
+    },
   },
   {
     code: 'LK',
     label: {
       en: 'Sri Lanka',
-      hi: 'Sri Lanka',
+      hi: 'श्रीलंका',
       fr: 'Sri Lanka',
       es: 'Sri Lanka',
       pt: 'Seri Lanca',
@@ -1956,13 +2300,20 @@ export default [
   },
   {
     code: 'SD',
-    label: { en: 'Sudan', hi: 'Sudan', fr: 'Soudan', es: 'Sudán', pt: 'Sudão', de: 'Sudan' },
+    label: {
+      en: 'Sudan',
+      hi: 'सूडान',
+      fr: 'Soudan',
+      es: 'Sudán',
+      pt: 'Sudão',
+      de: 'Sudan',
+    },
   },
   {
     code: 'SR',
     label: {
       en: 'Suriname',
-      hi: 'Suriname',
+      hi: 'सूरीनाम',
       fr: 'Suriname',
       es: 'Surinam',
       pt: 'Suriname',
@@ -1973,7 +2324,7 @@ export default [
     code: 'SJ',
     label: {
       en: 'Svalbard And Jan Mayen',
-      hi: 'Svalbard And Jan Mayen',
+      hi: 'स्वालबार्ड और जान मायेन',
       fr: 'Svalbard et île Jan Mayen',
       es: 'Svalbard y Jan Mayen',
       pt: 'Esvalbarde e Jan Mayen',
@@ -1984,7 +2335,7 @@ export default [
     code: 'SZ',
     label: {
       en: 'Swaziland',
-      hi: 'Swaziland',
+      hi: 'स्वाज़ीलैंड',
       fr: 'Eswatini',
       es: 'Suazilandia',
       pt: 'Essuatíni',
@@ -1993,13 +2344,20 @@ export default [
   },
   {
     code: 'SE',
-    label: { en: 'Sweden', hi: 'Sweden', fr: 'Suède', es: 'Suecia', pt: 'Suécia', de: 'Schweden' },
+    label: {
+      en: 'Sweden',
+      hi: 'स्वीडन',
+      fr: 'Suède',
+      es: 'Suecia',
+      pt: 'Suécia',
+      de: 'Schweden',
+    },
   },
   {
     code: 'CH',
     label: {
       en: 'Switzerland',
-      hi: 'Switzerland',
+      hi: 'स्विट्ज़रलैंड',
       fr: 'Suisse',
       es: 'Suiza',
       pt: 'Suíça',
@@ -2010,7 +2368,7 @@ export default [
     code: 'SY',
     label: {
       en: 'Syrian Arab Republic',
-      hi: 'Syrian Arab Republic',
+      hi: 'सीरियाई अरब गणराज्य',
       fr: 'Syrie',
       es: 'Siria',
       pt: 'Síria',
@@ -2021,18 +2379,18 @@ export default [
     code: 'TW',
     label: {
       en: 'Taiwan',
-      hi: 'Taiwan',
+      hi: 'ताइवान',
       fr: 'Taïwan (République de Chine)',
       es: 'Taiwán (República de China)',
       pt: 'Taiwan',
-      de: 'China, Republik',
+      de: 'China, Republik ',
     },
   },
   {
     code: 'TJ',
     label: {
       en: 'Tajikistan',
-      hi: 'Tajikistan',
+      hi: 'ताजिकिस्तान',
       fr: 'Tadjikistan',
       es: 'Tayikistán',
       pt: 'Tajiquistão',
@@ -2043,7 +2401,7 @@ export default [
     code: 'TZ',
     label: {
       en: 'Tanzania',
-      hi: 'Tanzania',
+      hi: 'तंजानिया',
       fr: 'Tanzanie',
       es: 'Tanzania',
       pt: 'Tanzânia',
@@ -2054,7 +2412,7 @@ export default [
     code: 'TH',
     label: {
       en: 'Thailand',
-      hi: 'Thailand',
+      hi: 'थाईलैंड',
       fr: 'Thaïlande',
       es: 'Tailandia',
       pt: 'Tailândia',
@@ -2065,19 +2423,29 @@ export default [
     code: 'TL',
     label: {
       en: 'Timor-Leste',
-      hi: 'Timor-Leste',
+      hi: 'तिमोर-लेस्ते',
       fr: 'Timor oriental',
       es: 'Timor Oriental',
       pt: 'Timor-Leste',
       de: 'Osttimor',
     },
   },
-  { code: 'TG', label: { en: 'Togo', hi: 'Togo', fr: 'Togo', es: 'Togo', pt: 'Togo', de: 'Togo' } },
+  {
+    code: 'TG',
+    label: {
+      en: 'Togo',
+      hi: 'टोगो',
+      fr: 'Togo',
+      es: 'Togo',
+      pt: 'Togo',
+      de: 'Togo',
+    },
+  },
   {
     code: 'TK',
     label: {
       en: 'Tokelau',
-      hi: 'Tokelau',
+      hi: 'टोकेलाऊ',
       fr: 'Tokelau',
       es: 'Tokelau',
       pt: 'Toquelau',
@@ -2086,13 +2454,20 @@ export default [
   },
   {
     code: 'TO',
-    label: { en: 'Tonga', hi: 'Tonga', fr: 'Tonga', es: 'Tonga', pt: 'Tonga', de: 'Tonga' },
+    label: {
+      en: 'Tonga',
+      hi: 'टोंगा',
+      fr: 'Tonga',
+      es: 'Tonga',
+      pt: 'Tonga',
+      de: 'Tonga',
+    },
   },
   {
     code: 'TT',
     label: {
       en: 'Trinidad And Tobago',
-      hi: 'Trinidad And Tobago',
+      hi: 'त्रिनिदाद और टोबैगो',
       fr: 'Trinité-et-Tobago',
       es: 'Trinidad y Tobago',
       pt: 'Trinidad e Tobago',
@@ -2103,7 +2478,7 @@ export default [
     code: 'TN',
     label: {
       en: 'Tunisia',
-      hi: 'Tunisia',
+      hi: 'ट्यूनिशिया',
       fr: 'Tunisie',
       es: 'Túnez',
       pt: 'Tunísia',
@@ -2114,7 +2489,7 @@ export default [
     code: 'TR',
     label: {
       en: 'Turkey',
-      hi: 'Turkey',
+      hi: 'तुर्की',
       fr: 'Turquie',
       es: 'Turquía',
       pt: 'Turquia',
@@ -2125,7 +2500,7 @@ export default [
     code: 'TM',
     label: {
       en: 'Turkmenistan',
-      hi: 'Turkmenistan',
+      hi: 'तुर्कमेनिस्तान',
       fr: 'Turkménistan',
       es: 'Turkmenistán',
       pt: 'Turcomenistão',
@@ -2136,7 +2511,7 @@ export default [
     code: 'TC',
     label: {
       en: 'Turks And Caicos Islands',
-      hi: 'Turks And Caicos Islands',
+      hi: 'तुर्क और कैकोस द्वीप',
       fr: 'Îles Turques-et-Caïques',
       es: 'Islas Turcas y Caicos',
       pt: 'Turcas e Caicos',
@@ -2145,17 +2520,31 @@ export default [
   },
   {
     code: 'TV',
-    label: { en: 'Tuvalu', hi: 'Tuvalu', fr: 'Tuvalu', es: 'Tuvalu', pt: 'Tuvalu', de: 'Tuvalu' },
+    label: {
+      en: 'Tuvalu',
+      hi: 'तुवालु',
+      fr: 'Tuvalu',
+      es: 'Tuvalu',
+      pt: 'Tuvalu',
+      de: 'Tuvalu',
+    },
   },
   {
     code: 'UG',
-    label: { en: 'Uganda', hi: 'Uganda', fr: 'Ouganda', es: 'Uganda', pt: 'Uganda', de: 'Uganda' },
+    label: {
+      en: 'Uganda',
+      hi: 'युगांडा',
+      fr: 'Ouganda',
+      es: 'Uganda',
+      pt: 'Uganda',
+      de: 'Uganda',
+    },
   },
   {
     code: 'UA',
     label: {
       en: 'Ukraine',
-      hi: 'Ukraine',
+      hi: 'यूक्रेन',
       fr: 'Ukraine',
       es: 'Ucrania',
       pt: 'Ucrânia',
@@ -2166,7 +2555,7 @@ export default [
     code: 'AE',
     label: {
       en: 'United Arab Emirates',
-      hi: 'United Arab Emirates',
+      hi: 'संयुक्त अरब अमीरात',
       fr: 'Émirats arabes unis',
       es: 'Emiratos Árabes Unidos',
       pt: 'Emirados Árabes Unidos',
@@ -2177,7 +2566,7 @@ export default [
     code: 'GB',
     label: {
       en: 'United Kingdom',
-      hi: 'United Kingdom',
+      hi: 'यूनाइटेड किंगडम',
       fr: 'Royaume-Uni',
       es: 'Reino Unido',
       pt: 'Reino Unido',
@@ -2188,7 +2577,7 @@ export default [
     code: 'US',
     label: {
       en: 'United States',
-      hi: 'United States',
+      hi: 'संयुक्त राज्य अमेरिका',
       fr: 'États-Unis',
       es: 'Estados Unidos',
       pt: 'Estados Unidos',
@@ -2199,7 +2588,7 @@ export default [
     code: 'UM',
     label: {
       en: 'United States Outlying Islands',
-      hi: 'United States Outlying Islands',
+      hi: 'संयुक्त राज्य अमेरिका के बाहरी द्वीप',
       fr: 'Îles mineures éloignées des États-Unis',
       es: 'Islas Ultramarinas Menores de los Estados Unidos',
       pt: 'Ilhas Menores Distantes dos Estados Unidos',
@@ -2210,7 +2599,7 @@ export default [
     code: 'UY',
     label: {
       en: 'Uruguay',
-      hi: 'Uruguay',
+      hi: 'उरुग्वे',
       fr: 'Uruguay',
       es: 'Uruguay',
       pt: 'Uruguai',
@@ -2221,7 +2610,7 @@ export default [
     code: 'UZ',
     label: {
       en: 'Uzbekistan',
-      hi: 'Uzbekistan',
+      hi: 'उज़्बेकिस्तान',
       fr: 'Ouzbékistan',
       es: 'Uzbekistán',
       pt: 'Uzbequistão',
@@ -2232,7 +2621,7 @@ export default [
     code: 'VU',
     label: {
       en: 'Vanuatu',
-      hi: 'Vanuatu',
+      hi: 'वानूआतू',
       fr: 'Vanuatu',
       es: 'Vanuatu',
       pt: 'Vanuatu',
@@ -2243,7 +2632,7 @@ export default [
     code: 'VE',
     label: {
       en: 'Venezuela',
-      hi: 'Venezuela',
+      hi: 'वेनेज़ुएला',
       fr: 'Venezuela',
       es: 'Venezuela',
       pt: 'Venezuela',
@@ -2254,7 +2643,7 @@ export default [
     code: 'VN',
     label: {
       en: 'Vietnam',
-      hi: 'Vietnam',
+      hi: 'वियतनाम',
       fr: 'Viêt Nam',
       es: 'Vietnam',
       pt: 'Vietname',
@@ -2265,7 +2654,7 @@ export default [
     code: 'VG',
     label: {
       en: 'Virgin Islands}, British',
-      hi: 'Virgin Islands}, British',
+      hi: 'वर्जिन द्वीप, ब्रिटिश',
       fr: 'Îles Vierges britanniques',
       es: 'Islas Vírgenes Británicas',
       pt: 'Ilhas Virgens Britânicas',
@@ -2276,7 +2665,7 @@ export default [
     code: 'VI',
     label: {
       en: 'Virgin Islands}, U.S.',
-      hi: 'Virgin Islands}, U.S.',
+      hi: 'वर्जिन द्वीप, यू.एस.',
       fr: 'Îles Vierges des États-Unis',
       es: 'Islas Vírgenes de los Estados Unidos',
       pt: 'Ilhas Virgens Americanas',
@@ -2287,7 +2676,7 @@ export default [
     code: 'WF',
     label: {
       en: 'Wallis And Futuna',
-      hi: 'Wallis And Futuna',
+      hi: 'वालिस और फ़्यूचूना',
       fr: 'Wallis-et-Futuna',
       es: 'Wallis y Futuna',
       pt: 'Wallis e Futuna',
@@ -2298,7 +2687,7 @@ export default [
     code: 'EH',
     label: {
       en: 'Western Sahara',
-      hi: 'Western Sahara',
+      hi: 'पश्चिमी सहारा',
       fr: 'République arabe sahraouie démocratique',
       es: 'República Árabe Saharaui Democrática',
       pt: 'Saara Ocidental',
@@ -2307,17 +2696,31 @@ export default [
   },
   {
     code: 'YE',
-    label: { en: 'Yemen', hi: 'Yemen', fr: 'Yémen', es: 'Yemen', pt: 'Iêmen', de: 'Jemen' },
+    label: {
+      en: 'Yemen',
+      hi: 'यमन',
+      fr: 'Yémen',
+      es: 'Yemen',
+      pt: 'Iêmen',
+      de: 'Jemen',
+    },
   },
   {
     code: 'ZM',
-    label: { en: 'Zambia', hi: 'Zambia', fr: 'Zambie', es: 'Zambia', pt: 'Zâmbia', de: 'Sambia' },
+    label: {
+      en: 'Zambia',
+      hi: 'ज़ाम्बिया',
+      fr: 'Zambie',
+      es: 'Zambia',
+      pt: 'Zâmbia',
+      de: 'Sambia',
+    },
   },
   {
     code: 'ZW',
     label: {
       en: 'Zimbabwe',
-      hi: 'Zimbabwe',
+      hi: 'ज़िम्बाब्वे',
       fr: 'Zimbabwe',
       es: 'Zimbabue',
       pt: 'Zimbábue',
