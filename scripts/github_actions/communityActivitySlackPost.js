@@ -31,6 +31,7 @@ async function main() {
       'eleanorreem',
       'github-actions[bot]',
       'dependabot[bot]',
+      'chaynteam',
     ];
 
     const contributorPrs = {};
