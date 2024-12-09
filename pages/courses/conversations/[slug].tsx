@@ -43,9 +43,9 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       ...storyblokProps,
       messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/resources/${locale}.json`),
+        ...require(`../../../messages/shared/${locale}.json`),
+        ...require(`../../../messages/navigation/${locale}.json`),
+        // ...require(`../../../messages/resources/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
