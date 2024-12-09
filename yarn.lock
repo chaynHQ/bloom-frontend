@@ -1191,10 +1191,10 @@
     nan "^2.19.0"
     node-gyp-build "^4.8.1"
 
-"@cypress/code-coverage@^3.13.6":
-  version "3.13.6"
-  resolved "https://registry.yarnpkg.com/@cypress/code-coverage/-/code-coverage-3.13.6.tgz#573d0bb4f4fd3f11d16ff74999b4c4001c9044ab"
-  integrity sha512-nNVDYDK6r9zPqDIv9k7FibPP9/dATGRR3us9Ued/ldcxPz5x8WbVthjV5OIjqotRKEmS7wxiXFHSDhKJqaZNuw==
+"@cypress/code-coverage@^3.13.8":
+  version "3.13.8"
+  resolved "https://registry.yarnpkg.com/@cypress/code-coverage/-/code-coverage-3.13.8.tgz#847c4ca3c60b55b3e1b8b8194b827fc675de93f3"
+  integrity sha512-liUtYL42nbEUkMKtB8H2sudI7gREeKNSTO1VbvFRjiRxj+2hurEkxgbVB8fmjm10iQrDeiX6XGEIL2IefcdC0A==
   dependencies:
     "@cypress/webpack-preprocessor" "^6.0.0"
     chalk "4.1.2"
