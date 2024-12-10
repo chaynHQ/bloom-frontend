@@ -6868,10 +6868,10 @@ npm-run-path@^4.0.0, npm-run-path@^4.0.1:
   dependencies:
     path-key "^3.0.0"
 
-nuka-carousel@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-7.0.0.tgz#bcf1d9d1ebf194a589ffecbfd42df269a6219805"
-  integrity sha512-KE0WV1MuE4Gq6ynL8P3qJH2rGq/DkJ0ej+ezo0IuZp4oklV8WNqu6P6O1utJqihHLGoEuFppq5wlHSHfhdCHXA==
+nuka-carousel@^8.0.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-8.1.1.tgz#a5833cbd4b651338b6c209fc2225c629abe60f66"
+  integrity sha512-pOXBwKJCOxAmGh3x5f3tYypbAYNKg1GqL0pXrWIwy+TxN2oskN4EGan8Pp+m/hk6DWgAKCXkfpiplIEQ/qZcSw==
 
 nwsapi@^2.2.2:
   version "2.2.16"

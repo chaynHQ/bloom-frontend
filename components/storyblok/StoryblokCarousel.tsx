@@ -1,9 +1,10 @@
-import NavigateBeforeSharp from '@mui/icons-material/NavigateBeforeSharp';
-import NavigateNext from '@mui/icons-material/NavigateNext';
+import { KeyboardArrowRight } from '@mui/icons-material';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
-import NukaCarousel from 'nuka-carousel';
+import { Carousel, useCarousel } from 'nuka-carousel';
 import { columnStyle } from '../../styles/common';
+import theme from '../../styles/theme';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
@@ -23,51 +24,86 @@ interface StoryblokCarouselProps {
   number_desktop_slides?: number;
   number_mobile_slides?: number;
 }
-const PreviousButton = ({ onClick }: { onClick: () => void }) => {
-  return (
-    <IconButton
-      onClick={onClick}
-      sx={{
-        color: 'primary.dark',
 
-        ml: { md: -7, lg: -10, xl: -20 },
-        ':hover': {
-          background: 'none',
-        },
-        '& svg': {
-          height: 60,
-          width: 60,
-        },
-      }}
-      aria-label="previous slide"
+const numberSlidesToWidthMap: { [key: number]: string } = {
+  1: '100%',
+  2: '50%',
+  3: '33.33%',
+};
+
+// Dots and arrows in 1 component because of the design
+export const CustomDots = () => {
+  const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
+
+  const getBackground = (index: number) =>
+    currentPage === index ? theme.palette.primary.dark : theme.palette.common.white;
+
+  return (
+    <Box
+      justifyContent={['space-between', 'center']}
+      gap={[1, 5]}
+      alignItems="center"
+      marginLeft="auto" // need to override some mobile styles so that the dots are centered
+      marginRight="auto"
+      width="100%"
+      maxWidth="400px"
+      display="flex"
     >
-      <NavigateBeforeSharp width={5} height={5} fontSize="inherit" />
-    </IconButton>
+      <Box alignContent="center">
+        <IconButton
+          onClick={goBack}
+          sx={{
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.common.white,
+            '&:hover': {
+              backgroundColor: theme.palette.common.white,
+              color: theme.palette.primary.dark,
+            },
+          }}
+        >
+          <KeyboardArrowLeft></KeyboardArrowLeft>
+        </IconButton>
+      </Box>
+      <Box>
+        <Box display="flex" gap={1} alignContent="center" width="100%">
+          {[...Array(totalPages)].map((_, index) => (
+            <Box>
+              <button
+                style={{
+                  borderRadius: 50,
+                  backgroundColor: getBackground(index),
+                  height: '0.75em',
+                  width: '0.75em',
+                  padding: 0,
+                  border: 'none',
+                  display: 'inline-block',
+                }}
+                key={index}
+                onClick={() => goToPage(index)}
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+      <Box alignContent="center">
+        <IconButton
+          onClick={goForward}
+          sx={{
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.common.white,
+            '&:hover': {
+              backgroundColor: theme.palette.common.white,
+              color: theme.palette.primary.dark,
+            },
+          }}
+        >
+          <KeyboardArrowRight></KeyboardArrowRight>
+        </IconButton>
+      </Box>
+    </Box>
   );
 };
 
-const NextButton = ({ onClick }: { onClick: () => void }) => {
-  return (
-    <IconButton
-      onClick={onClick}
-      sx={{
-        color: 'primary.dark',
-        mr: { md: -7, lg: -10, xl: -20 },
-        ':hover': {
-          background: 'none',
-        },
-        '& svg': {
-          height: 60,
-          width: 60,
-        },
-      }}
-      aria-label="next slide"
-      size="large"
-    >
-      <NavigateNext fontSize="inherit" />
-    </IconButton>
-  );
-};
 const StoryblokCarousel = (props: StoryblokCarouselProps) => {
   const {
     _uid,
@@ -80,52 +116,42 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
 
   const siteTheme = useTheme();
 
-  const isMobileScreen = useMediaQuery(siteTheme.breakpoints.down('md'));
-  const mobileSlidesToShow = number_mobile_slides || 1;
-  const desktopSlidesToShow = number_desktop_slides || 1;
-  const slidesToShow = isMobileScreen ? mobileSlidesToShow : desktopSlidesToShow;
-  const hideControls = items.length <= slidesToShow;
+  const getSlideWidth = () => {
+    if (useMediaQuery(siteTheme.breakpoints.down('sm'))) {
+      return numberSlidesToWidthMap[number_mobile_slides || 1];
+    }
+    return numberSlidesToWidthMap[number_desktop_slides || 1];
+  };
 
   return (
     <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
-      <NukaCarousel
-        wrapAround={true}
-        adaptiveHeight={false}
-        defaultControlsConfig={{
-          pagingDotsStyle: {
-            fill: theme === 'primary' ? '#F5E4E6' : '#FFFFFF',
-          },
-          pagingDotsContainerClassName: 'paging-dots-container',
-        }}
-        slidesToShow={isMobileScreen ? mobileSlidesToShow : desktopSlidesToShow}
-        withoutControls={hideControls}
-        renderCenterLeftControls={
-          isMobileScreen
-            ? () => {
-                return <></>;
-              }
-            : ({ previousSlide }) => <PreviousButton onClick={previousSlide} />
-        }
-        renderCenterRightControls={
-          isMobileScreen
-            ? () => {
-                return <></>;
-              }
-            : ({ nextSlide }) => <NextButton onClick={nextSlide} />
-        }
+      <Carousel
+        wrapMode="wrap"
+        showArrows={false}
+        showDots={true}
+        scrollDistance="slide"
+        swiping={true}
+        dots={<CustomDots />}
+        title="carousel"
       >
         {items.map((item, index: number) => {
           const component = components.find((c) => c.name === item.component);
           if (component) {
             const Component = component.component;
             return (
-              <Box sx={columnStyle} key={index}>
+              <Box
+                sx={{
+                  ...columnStyle,
+                  minWidth: getSlideWidth(),
+                }}
+                key={index}
+              >
                 <Component {...item} key={index} />
               </Box>
             );
           }
         })}
-      </NukaCarousel>
+      </Carousel>
     </Box>
   );
 };
