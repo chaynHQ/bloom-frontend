@@ -101,5 +101,31 @@
       "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
       "button": "Shuru karte hain"
     }
+  },
+  "exerciseNames": {
+    "activities-thought-diaries": "Personal diary",
+    "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
+    "activities-timelines": "Timelines",
+    "activities-trust-mapping": "Trust mapping",
+    "activities-mapping-fear-and-stress-in-our-bodies": "Darr aur tanav ko apne shareer mein samjhna",
+    "activities-letter-to-a-part-of-my-body": "Mere shareer ke ek hisse ko khatt",
+    "activities-accelerators-and-brakes": "Accelerators aur brakes",
+    "activities-ideal-sexual-being": "Aadarsh sexual insaan",
+    "grounding-visual-breathing": "Picture ke saath saans lena",
+    "grounding-slow-breathing": "Slow breathing",
+    "grounding-box-breathing": "Box breathing",
+    "grounding-drifting-clouds-meditation": "Tension free — chalte badal",
+    "grounding-positive-coping-statement": "Positive shabd",
+    "grounding-finger-focus": "Unglio ka dhyaan kariyes",
+    "grounding-day-walkthrough": "Mene din mein kya kiya?",
+    "grounding-what-can-you-hear": "Kya tum mujhe sun sakte ho?",
+    "grounding-listen-to-your-voice": "Apni awaaz ko suno",
+    "grounding-calming-colours": "Sukoon ke rang",
+    "grounding-coming-back-to-your-safe-space": "Apni safe space mein wapis ana",
+    "grounding-best-check-in": "BEST check-in",
+    "grounding-compassionate-body-scan": "Sahanbhooti se shareer ko mehsoos karna",
+    "grounding-touching-and-feeling-textures": "Textures ko mehsoos karna",
+    "grouding-sound-of-claps": "Taaliyo ki awaz",
+    "grounding-affirming-ourselves": "Jaadu ki jhappi!"
   }
 }
