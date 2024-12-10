@@ -67,7 +67,7 @@ export const CustomDots = () => {
       <Box>
         <Box display="flex" gap={1} alignContent="center" width="100%">
           {[...Array(totalPages)].map((_, index) => (
-            <Box>
+            <Box key={index}>
               <button
                 style={{
                   borderRadius: 50,
@@ -115,12 +115,12 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
   } = props;
 
   const siteTheme = useTheme();
+  const isMobileScreen = useMediaQuery(siteTheme.breakpoints.down('sm'));
 
   const getSlideWidth = () => {
-    if (useMediaQuery(siteTheme.breakpoints.down('sm'))) {
+    if (isMobileScreen) {
       return numberSlidesToWidthMap[number_mobile_slides || 1];
     }
-    return numberSlidesToWidthMap[number_desktop_slides || 1];
   };
 
   return (
