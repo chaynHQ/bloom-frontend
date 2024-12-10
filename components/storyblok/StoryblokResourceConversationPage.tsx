@@ -3,8 +3,6 @@ import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { ContentUnavailable } from '../../components/common/ContentUnavailable';
-import Link from '../../components/common/Link';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { RESOURCE_CONVERSATION_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -47,6 +45,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     related_content,
     related_exercises,
   } = props;
+  console.log(props);
 
   const t = useTranslations('Resources');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -82,17 +81,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     resource_storyblok_id: storyId,
     resource_progress: resourceProgress,
   };
-
-  if (!isLoggedIn) {
-    return (
-      <ContentUnavailable
-        title={t('accessGuard.title')}
-        message={t.rich('accessGuard.introduction', {
-          contactLink: (children) => <Link href="/courses">{children}</Link>,
-        })}
-      />
-    );
-  }
 
   return (
     <Box

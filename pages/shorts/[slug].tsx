@@ -5,17 +5,17 @@ import {
   useStoryblokState,
 } from '@storyblok/react';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import NoDataAvailable from '../../../components/common/NoDataAvailable';
-import StoryblokResourceConversationPage, {
-  StoryblokResourceConversationPageProps,
-} from '../../../components/storyblok/StoryblokResourceConversationPage';
-import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
+import StoryblokResourceShortPage, {
+  StoryblokResourceShortPageProps,
+} from '../../components/storyblok/StoryblokResourceShortPage';
+import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
 }
 
-const ResourceConversationOverview: NextPage<Props> = ({ story }) => {
+const ResourceShortOverview: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
   if (!story) {
@@ -24,8 +24,8 @@ const ResourceConversationOverview: NextPage<Props> = ({ story }) => {
 
   return (
     <>
-      <StoryblokResourceConversationPage
-        {...(story.content as StoryblokResourceConversationPageProps)}
+      <StoryblokResourceShortPage
+        {...(story.content as StoryblokResourceShortPageProps)}
         storyId={story.id}
       />
     </>
@@ -35,7 +35,7 @@ const ResourceConversationOverview: NextPage<Props> = ({ story }) => {
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const storyblokProps = await getStoryblokPageProps(`conversations/${slug}`, locale, preview, {
+  const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, preview, {
     resolve_relations: ['related_content', 'related_exercises'],
   });
 
@@ -43,9 +43,9 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     props: {
       ...storyblokProps,
       messages: {
-        ...require(`../../../messages/shared/${locale}.json`),
-        ...require(`../../../messages/navigation/${locale}.json`),
-        // ...require(`../../../messages/resources/${locale}.json`),
+        ...require(`../../messages/shared/${locale}.json`),
+        ...require(`../../messages/navigation/${locale}.json`),
+        // ...require(`../../messages/resources/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour
@@ -56,24 +56,24 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
   let sbParams: ISbStoriesParams = {
     version: isProduction ? 'published' : 'draft',
-    starts_with: 'conversations/',
+    starts_with: 'shorts/',
     filter_query: {
       component: {
-        in: 'resource_conversation',
+        in: 'resource_short',
       },
     },
   };
 
   const storyblokApi = getStoryblokApi();
-  let conversations = await storyblokApi.getAll('cdn/links', sbParams);
+  let shorts = await storyblokApi.getAll('cdn/links', sbParams);
 
   let paths: any = [];
 
-  conversations.forEach((conversation: Partial<ISbStoryData>) => {
-    if (!conversation.slug || (isProduction && !conversation.published)) return;
+  shorts.forEach((short: Partial<ISbStoryData>) => {
+    if (!short.slug || (isProduction && !short.published)) return;
 
     // get array for slug because of catch all
-    const slug = conversation.slug;
+    const slug = short.slug;
     let splittedSlug = slug.split('/');
 
     if (locales) {
@@ -90,4 +90,4 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 }
 
-export default ResourceConversationOverview;
+export default ResourceShortOverview;
