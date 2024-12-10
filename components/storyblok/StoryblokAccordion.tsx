@@ -9,6 +9,8 @@ import {
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -40,6 +42,7 @@ interface StoryblokAccordionItemProps {
   title: string;
   title_size: 'small' | 'large';
   icon: { filename: string; alt: string };
+  accordion_id: string; // see storyblok datasource accordion_ids
 }
 interface StoryblokAccordionProps {
   _uid: string;
@@ -53,6 +56,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const router = useRouter();
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -64,10 +68,27 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
         });
       }
     };
+  const scrollRef = useRef(null);
+  const accordionInUrl = router.query.openacc ?? undefined;
+
+  useEffect(() => {
+    if (accordionInUrl && scrollRef.current) {
+      // @ts-ignore
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [router.query.openacc, accordionInUrl]);
+
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
       {accordion_items.map((ai, i) => (
-        <Accordion key={`panel${i}`} onChange={handleChange(ai.title)} sx={themes[theme]}>
+        <Accordion
+          id={ai.accordion_id ?? undefined}
+          ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
+          key={`panel${i}`}
+          defaultExpanded={accordionInUrl === ai.accordion_id ? true : false}
+          onChange={handleChange(ai.title)}
+          sx={themes[theme]}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}-content`}

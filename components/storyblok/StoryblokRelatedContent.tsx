@@ -2,6 +2,7 @@ import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { rowStyle } from '../../styles/common';
+import Link from '../common/Link';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
@@ -31,7 +32,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
     return {
       id: relatedExerciseId,
       name: tExerciseNames(relatedExerciseId),
-      href: `/${pageUrl}#${relatedExerciseId}`,
+      href: `/${pageUrl}?openacc=${relatedExerciseId}`,
     };
   });
 
@@ -41,7 +42,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
         <Card sx={cardStyles} key={`related_content_${relatedContentItem.id}`}>
           <CardContent>
             <Typography variant="h3">{relatedContentItem.content.name}</Typography>
-            <Button href={relatedContentItem.full_slug} variant="contained">
+            <Button component={Link} href={relatedContentItem.full_slug} variant="contained">
               Open
             </Button>
           </CardContent>
@@ -51,7 +52,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
         <Card sx={cardStyles} key={`related_exercise_${relatedExerciseItem.id}`}>
           <CardContent>
             <Typography variant="h3">{relatedExerciseItem.name}</Typography>
-            <Button href={relatedExerciseItem.href} variant="contained">
+            <Button component={Link} href={relatedExerciseItem.href} variant="contained">
               Open
             </Button>
           </CardContent>
