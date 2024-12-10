@@ -1,6 +1,7 @@
 {
   "Resources": {
     "conversations": "Conversations",
-    "shorts": "Shorts"
+    "shorts": "Shorts",
+    "completed": "Completed"
   }
 }

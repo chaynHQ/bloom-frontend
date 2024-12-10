@@ -275,4 +275,6 @@ export const {
   useUpdatePartnerAdminMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
+  useStartResourceMutation,
+  useCompleteResourceMutation,
 } = api;

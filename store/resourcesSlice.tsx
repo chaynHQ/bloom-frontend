@@ -11,7 +11,7 @@ export interface Resource {
   storyblokId: number;
   storyblokUuid: string;
   category: RESOURCE_CATEGORIES;
-  completedAt: string;
+  completed: boolean;
 }
 
 export interface ResourceUser {

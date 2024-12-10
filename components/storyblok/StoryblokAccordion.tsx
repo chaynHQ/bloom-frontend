@@ -16,11 +16,11 @@ import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-
 const containerStyle = {
   width: '100%',
   maxWidth: 725,
   marginBottom: 5,
+  marginX: 'auto',
 } as const;
 
 const accordionDetail = {

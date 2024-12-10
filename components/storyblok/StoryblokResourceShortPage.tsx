@@ -1,22 +1,23 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
 import {
-  RESOURCE_SHORT_TRANSCRIPT_CLOSED,
-  RESOURCE_SHORT_TRANSCRIPT_OPENED,
-  RESOURCE_SHORT_VIEWED,
+  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
+  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
+  RESOURCE_SHORT_VIDEO_VIEWED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
+import { ResourceShortVideo } from '../resources/ResourceShortVideo';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
@@ -64,7 +65,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
@@ -80,7 +80,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
 
     if (userResource) {
-      !!userResource.completedAt
+      userResource.completed
         ? setResourceProgress(PROGRESS_STATUS.COMPLETED)
         : setResourceProgress(PROGRESS_STATUS.STARTED);
     } else {
@@ -89,7 +89,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   }, [resources, storyId]);
 
   useEffect(() => {
-    logEvent(RESOURCE_SHORT_VIEWED, eventData);
+    logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
 
   useEffect(() => {
@@ -98,7 +98,9 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     }
 
     logEvent(
-      openTranscriptModal ? RESOURCE_SHORT_TRANSCRIPT_OPENED : RESOURCE_SHORT_TRANSCRIPT_CLOSED,
+      openTranscriptModal
+        ? RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED
+        : RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
       {
         ...eventData,
         name,
@@ -125,7 +127,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       })}
     >
       <Head>
-        <title>{`${t('short')} • ${name} • Bloom`}</title>
+        <title>{`${t('shorts')} • ${name} • Bloom`}</title>
         <meta property="og:title" content={name} key="og-title" />
         {seo_description && (
           <>
@@ -136,20 +138,24 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       </Head>
       <Container>
         <Typography variant="h1">{name}</Typography>
+        <Typography variant="h3">Progress: {resourceProgress}</Typography>
         {render(description, RichTextOptions)}
-        <Box>
-          <ReactPlayer light={true} url={video.url} controls modestbranding={1} {...videoOptions} />
-        </Box>
-        <Button variant="contained" sx={{ my: 3 }} onClick={() => setOpenTranscriptModal(true)}>
-          Open transcript
-        </Button>
-        <VideoTranscriptModal
-          videoName={name}
-          content={video_transcript}
-          setOpenTranscriptModal={setOpenTranscriptModal}
-          openTranscriptModal={openTranscriptModal}
+        <ResourceShortVideo
+          eventData={eventData}
+          resourceProgress={resourceProgress}
+          name={name}
+          storyId={storyId}
+          video={video}
+          video_transcript={video_transcript}
         />
-        <Typography variant="h2">Related content</Typography>
+        <ResourceCompleteButton
+          category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+          storyId={storyId}
+          eventData={eventData}
+        />
+        <Typography variant="h2" mt={6}>
+          Related content
+        </Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}
           relatedExercises={related_exercises}

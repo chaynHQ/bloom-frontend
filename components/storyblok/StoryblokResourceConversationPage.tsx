@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
 import {
   RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
   RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
@@ -16,6 +16,7 @@ import { Resource } from '../../store/resourcesSlice';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
+import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -60,7 +61,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-
+  console.log(props);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
@@ -76,7 +77,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
 
     if (userResource) {
-      !!userResource.completedAt
+      !!userResource.completed
         ? setResourceProgress(PROGRESS_STATUS.COMPLETED)
         : setResourceProgress(PROGRESS_STATUS.STARTED);
     } else {
@@ -131,6 +132,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       </Head>
       <Container>
         <Typography variant="h1">{name}</Typography>
+        <Typography variant="h3">Progress: {resourceProgress}</Typography>
         {render(description, RichTextOptions)}
         <Box position="relative">
           <ReactPlayer width="100%" height="50px" url={audio.filename} controls />
@@ -143,6 +145,11 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           content={audio_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
+        />
+        <ResourceCompleteButton
+          category={RESOURCE_CATEGORIES.CONVERSATION}
+          storyId={storyId}
+          eventData={eventData}
         />
         <Typography variant="h2">Related content</Typography>
         <StoryblokRelatedContent
