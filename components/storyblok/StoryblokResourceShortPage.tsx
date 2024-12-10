@@ -1,35 +1,41 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import { RESOURCE_SHORT_VIEWED } from '../../constants/events';
+import {
+  RESOURCE_SHORT_TRANSCRIPT_CLOSED,
+  RESOURCE_SHORT_TRANSCRIPT_OPENED,
+  RESOURCE_SHORT_VIEWED,
+} from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
+import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
-import { StoryblokCoursePageProps } from './StoryblokCoursePage';
+import VideoTranscriptModal from '../video/VideoTranscriptModal';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
+import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
+import { videoConfig } from './StoryblokVideo';
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 export interface StoryblokResourceShortPageProps {
   storyId: number;
   _uid: string;
   _editable: string;
-  title: string;
+  name: string;
   seo_description: string;
   description: ISbRichtext;
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: StoryblokSessionPageProps;
-  related_content: (
-    | StoryblokCoursePageProps
-    | StoryblokSessionPageProps
-    | StoryblokResourceShortPageProps
-  )[];
-  related_exercises: { name: string; value: string }[];
+  related_content: StoryblokRelatedContentStory[];
+  related_exercises: string[];
 }
 
 const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
@@ -37,7 +43,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     storyId,
     _uid,
     _editable,
-    title,
+    name,
     seo_description,
     description,
     video,
@@ -48,8 +54,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_exercises,
   } = props;
 
-  console.log(props);
-
   const t = useTranslations('Resources');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -59,6 +63,18 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
+  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
+
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
+  const eventData = useMemo(() => {
+    return {
+      ...eventUserData,
+      resource_name: name,
+      resource_storyblok_id: storyId,
+      resource_progress: resourceProgress,
+    };
+  }, [eventUserData, name, storyId, resourceProgress]);
 
   useEffect(() => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
@@ -76,33 +92,41 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     logEvent(RESOURCE_SHORT_VIEWED, eventData);
   }, []);
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  useEffect(() => {
+    if (openTranscriptModal === null) {
+      return;
+    }
 
-  const eventData = {
-    ...eventUserData,
-    resource_name: title,
-    resource_storyblok_id: storyId,
-    resource_progress: resourceProgress,
-  };
+    logEvent(
+      openTranscriptModal ? RESOURCE_SHORT_TRANSCRIPT_OPENED : RESOURCE_SHORT_TRANSCRIPT_CLOSED,
+      {
+        ...eventData,
+        name,
+      },
+    );
+  }, [openTranscriptModal, name, eventData]);
+
+  const videoOptions = videoConfig(video);
 
   return (
     <Box
       {...storyblokEditable({
         _uid,
         _editable,
-        title,
+        name,
         seo_description,
         description,
         video,
         video_transcript,
         page_sections,
+        related_session,
         related_content,
         related_exercises,
       })}
     >
       <Head>
-        <title>{`${t('course')} • ${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
+        <title>{`${t('short')} • ${name} • Bloom`}</title>
+        <meta property="og:title" content={name} key="og-title" />
         {seo_description && (
           <>
             <meta name="description" content={seo_description} key="description" />
@@ -111,7 +135,25 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         )}
       </Head>
       <Container>
-        <Typography variant="h1">{title}</Typography>
+        <Typography variant="h1">{name}</Typography>
+        {render(description, RichTextOptions)}
+        <Box>
+          <ReactPlayer light={true} url={video.url} controls modestbranding={1} {...videoOptions} />
+        </Box>
+        <Button variant="contained" sx={{ my: 3 }} onClick={() => setOpenTranscriptModal(true)}>
+          Open transcript
+        </Button>
+        <VideoTranscriptModal
+          videoName={name}
+          content={video_transcript}
+          setOpenTranscriptModal={setOpenTranscriptModal}
+          openTranscriptModal={openTranscriptModal}
+        />
+        <Typography variant="h2">Related content</Typography>
+        <StoryblokRelatedContent
+          relatedContent={related_content}
+          relatedExercises={related_exercises}
+        />
       </Container>
       {!isLoggedIn && <SignUpBanner />}
     </Box>

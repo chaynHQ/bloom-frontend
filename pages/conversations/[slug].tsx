@@ -36,7 +36,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
   const storyblokProps = await getStoryblokPageProps(`conversations/${slug}`, locale, preview, {
-    resolve_relations: ['related_content.Course', 'related_content.Session'],
+    resolve_relations: ['resource_conversation.related_content'],
   });
 
   console.log('storyblokProps', storyblokProps);
@@ -46,7 +46,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
-        // ...require(`../../messages/resources/${locale}.json`),
+        ...require(`../../messages/resources/${locale}.json`),
       },
     },
     revalidate: 3600, // revalidate every hour

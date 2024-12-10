@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "NODE_OPTIONS='-r @newrelic/next' next start",
-    "https:proxy": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
+    "https:proxy": "local-ssl-proxy --source 3010 --target 3001 --cert localhost.pem --key localhost-key.pem",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc",
