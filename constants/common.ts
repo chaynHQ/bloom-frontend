@@ -1,4 +1,4 @@
-import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
+import { JSXElementConstructor, ReactElement, ReactNode, ReactNodeArray } from 'react';
 
 // Always use BASE_URL const instead of NEXT_PUBLIC_BASE_URL
 // Dynamic vercel preview branches have random wildcard subdomains
@@ -11,4 +11,5 @@ export type ErrorDisplay =
   | string
   | ReactElement<any, string | JSXElementConstructor<any>>
   | ReactNodeArray
+  | ReactNode
   | null;
