@@ -3,6 +3,7 @@ import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/materi
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { ErrorDisplay } from '../../constants/common';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
@@ -11,7 +12,6 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { useUnsubscribeFromWhatsappMutation } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
-import { TextNode } from '../../utils/helper-types/translations';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { findWhatsappSubscription } from '../../utils/whatsappUtils';
 const containerStyle = {
@@ -25,7 +25,7 @@ const WhatsappUnsubscribeForm = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [formError, setFormError] = useState<TextNode>();
+  const [formError, setFormError] = useState<ErrorDisplay>();
 
   const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 

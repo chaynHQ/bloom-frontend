@@ -12,6 +12,7 @@ import {
 import { useAssignPartnerAccessMutation } from '../../store/api';
 import { PartnerAccess } from '../../store/partnerAccessSlice';
 
+import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -26,11 +27,7 @@ const ApplyCodeForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [newPartnerAccess, setNewPartnerAccess] = useState<PartnerAccess | null>(null);
-  const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  >();
+  const [formError, setFormError] = useState<ErrorDisplay>();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);

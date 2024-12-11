@@ -140,7 +140,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
 
         <TextField
           id="feedbackDescription"
-          placeholder={t.rich('textboxDefaultText').toString()}
+          placeholder={t.rich('textboxDefaultText')?.toString()}
           onChange={(e) => setFeedbackDescription(e.target.value)}
           value={feedbackDescription}
           sx={fieldBoxStyle}
