@@ -8,17 +8,14 @@ import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { TextNode } from '../../utils/helper-types/translations';
 import { RichTextOptions } from '../../utils/richText';
 import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
 
 export interface HeaderProps {
   title: string;
-  introduction:
-    | string
-    | ISbRichtext
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactNodeArray; // can be a string, storyblok rich text, or intl rich text
+  introduction: TextNode | ISbRichtext;
   imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -110,7 +107,7 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1" marginBottom={{ md: '2.5rem' }}>
             {title}
           </Typography>
-          {typeof introduction === 'string' || !introduction.hasOwnProperty('content') ? (
+          {typeof introduction === 'string' || !introduction?.hasOwnProperty('content') ? (
             <Typography fontSize="1rem !important">
               {
                 introduction as
