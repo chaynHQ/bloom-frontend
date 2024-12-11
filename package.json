@@ -14,7 +14,7 @@
     "https:proxy": "local-ssl-proxy --source 3010 --target 3001 --cert localhost.pem --key localhost-key.pem",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "type-check": "tsc",
+    "type-check": "tsc -p tsconfig.json",
     "format": "prettier . --write",
     "format:precommit": "prettier --write .",
     "test": "jest",
