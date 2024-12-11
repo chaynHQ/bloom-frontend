@@ -12,6 +12,7 @@ import { Course, Courses, SessionFeedback } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
+import { Resource, Resources } from './resourcesSlice';
 import { AppState } from './store';
 import { setUserToken, Subscription, Subscriptions, User } from './userSlice';
 
@@ -20,9 +21,10 @@ export interface GetUserResponse {
   partnerAccesses: PartnerAccesses;
   partnerAdmin: PartnerAdmin;
   courses: Courses;
+  resources: Resources;
   subscriptions: Subscriptions;
 }
-export interface SessionActionPayload {
+export interface StoryblokIdActionPayload {
   storyblokId: number;
 }
 
@@ -151,7 +153,7 @@ export const api = createApi({
         };
       },
     }),
-    startSession: builder.mutation<Course, SessionActionPayload>({
+    startSession: builder.mutation<Course, StoryblokIdActionPayload>({
       query(body) {
         return {
           url: 'session-user',
@@ -160,10 +162,28 @@ export const api = createApi({
         };
       },
     }),
-    completeSession: builder.mutation<Course, SessionActionPayload>({
+    completeSession: builder.mutation<Course, StoryblokIdActionPayload>({
       query(body) {
         return {
           url: 'session-user/complete',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    startResource: builder.mutation<Resource, StoryblokIdActionPayload>({
+      query(body) {
+        return {
+          url: 'resource-user',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    completeResource: builder.mutation<Resource, StoryblokIdActionPayload>({
+      query(body) {
+        return {
+          url: 'resource-user/complete',
           method: 'POST',
           body,
         };
@@ -255,4 +275,6 @@ export const {
   useUpdatePartnerAdminMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
+  useStartResourceMutation,
+  useCompleteResourceMutation,
 } = api;

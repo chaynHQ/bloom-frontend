@@ -12,6 +12,11 @@ export enum MAINTENANCE_MODE {
   OFF = 'off',
 }
 
+export enum RESOURCE_CATEGORIES {
+  SHORT_VIDEO = 'short_video',
+  CONVERSATION = 'conversation',
+}
+
 export enum EMAIL_REMINDERS_FREQUENCY {
   TWO_WEEKS = 'TWO_WEEKS',
   ONE_MONTH = 'ONE_MONTH',

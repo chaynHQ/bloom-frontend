@@ -1,13 +1,9 @@
-import SessionContentCard from '../cards/SessionContentCard';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import { Link as MuiLink, Typography } from '@mui/material';
-import Video from '../video/Video';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
-import { useTranslations } from 'next-intl';
-import logEvent, { EventUserData } from '../../utils/logEvent';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useEffect, useState } from 'react';
 import { ISbRichtext } from '@storyblok/react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { PROGRESS_STATUS } from '../../constants/enums';
 import {
   SESSION_STARTED_ERROR,
   SESSION_STARTED_REQUEST,
@@ -17,6 +13,10 @@ import {
   SESSION_VIEWED,
 } from '../../constants/events';
 import { useStartSessionMutation } from '../../store/api';
+import logEvent, { EventUserData } from '../../utils/logEvent';
+import SessionContentCard from '../cards/SessionContentCard';
+import Video from '../video/Video';
+import VideoTranscriptModal from '../video/VideoTranscriptModal';
 
 export interface EventData extends EventUserData {
   session_name: string;

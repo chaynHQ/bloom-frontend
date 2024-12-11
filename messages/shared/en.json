@@ -100,6 +100,32 @@
       "description1": "Bloom is an online platform to support you as you heal from trauma. From video courses and reflective activities to direct messaging with our team, there's lots of different ways to engage with Bloom.",
       "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
       "button": "Get started"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Thought diaries",
+      "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
+      "activities-timelines": "Timelines",
+      "activities-trust-mapping": "Trust mapping",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Mapping fear and stress in our bodies",
+      "activities-letter-to-a-part-of-my-body": "Letter to a part of my body",
+      "activities-accelerators-and-brakes": "Accelerators and brakes",
+      "activities-ideal-sexual-being": "Ideal sexual being",
+      "grounding-visual-breathing": "Visual breathing",
+      "grounding-slow-breathing": "Slow breathing",
+      "grounding-box-breathing": "Box breathing",
+      "grounding-drifting-clouds-meditation": "Drifting clouds meditation",
+      "grounding-positive-coping-statement": "Positive coping statement",
+      "grounding-finger-focus": "Finger focus",
+      "grounding-day-walkthrough": "Day walkthrough",
+      "grounding-what-can-you-hear": "What can you hear",
+      "grounding-listen-to-your-voice": "Listen to your voice",
+      "grounding-calming-colours": "Calming colours",
+      "grounding-coming-back-to-your-safe-space": "Coming back to your safe space",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Compassionate body scan",
+      "grounding-touching-and-feeling-textures": "Touching and feeling textures",
+      "grouding-sound-of-claps": "Sound of claps",
+      "grounding-affirming-ourselves": "Affirming ourselves (firm pressure)"
     }
   }
 }
