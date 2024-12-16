@@ -8,6 +8,16 @@ import { StoryblokResourceConversationPageProps } from './StoryblokResourceConve
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 
+const containerStyle = {
+  ...rowStyle,
+} as const;
+
+const cardStyle = {
+  mt: 0,
+  width: { xs: '100%', sm: 'calc(50% - 0.75rem)', md: 'calc(33% - 0.75rem)' },
+  mb: { xs: '1rem', sm: '1.5rem' },
+} as const;
+
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
   content:
     | StoryblokCoursePageProps
@@ -20,8 +30,6 @@ export interface StoryblokRelatedContentProps {
   relatedContent: StoryblokRelatedContentStory[];
   relatedExercises: string[];
 }
-
-const cardStyles = { width: '32%', mb: 2 } as const;
 
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
   const { relatedContent, relatedExercises } = props;
@@ -37,19 +45,19 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   });
 
   return (
-    <Box sx={rowStyle}>
+    <Box sx={containerStyle}>
       {relatedContent.map((relatedContentItem) => (
-        <Card sx={cardStyles} key={`related_content_${relatedContentItem.id}`}>
+        <Card sx={cardStyle} key={`related_content_${relatedContentItem.id}`}>
           <CardContent>
             <Typography variant="h3">{relatedContentItem.content.name}</Typography>
-            <Button component={Link} href={relatedContentItem.full_slug} variant="contained">
+            <Button component={Link} href={`/${relatedContentItem.full_slug}`} variant="contained">
               Open
             </Button>
           </CardContent>
         </Card>
       ))}
       {relatedExercisesItems.map((relatedExerciseItem) => (
-        <Card sx={cardStyles} key={`related_exercise_${relatedExerciseItem.id}`}>
+        <Card sx={cardStyle} key={`related_exercise_${relatedExerciseItem.id}`}>
           <CardContent>
             <Typography variant="h3">{relatedExerciseItem.name}</Typography>
             <Button component={Link} href={relatedExerciseItem.href} variant="contained">

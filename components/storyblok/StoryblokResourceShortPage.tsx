@@ -29,7 +29,7 @@ const headerRightStyle = {
   justifyContent: 'flex-end',
   flex: { md: 1 },
   width: { md: '100%' },
-  height: 290,
+  height: { md: 290 },
 } as const;
 
 const headerLeftStyles = {
