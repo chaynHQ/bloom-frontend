@@ -77,8 +77,8 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
   return (
     <>
       <Button
-        color="secondary"
-        size="large"
+        color="primary"
+        size="medium"
         variant="contained"
         onClick={completeResourceAction}
         startIcon={<CheckCircleIcon color="error" />}

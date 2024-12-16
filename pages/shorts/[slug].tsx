@@ -9,13 +9,14 @@ import NoDataAvailable from '../../components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '../../components/storyblok/StoryblokResourceShortPage';
-import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import { getStoryblokPageProps, getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
+  related_course: ISbStoryData | null;
 }
 
-const ResourceShortOverview: NextPage<Props> = ({ story }) => {
+const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
   story = useStoryblokState(story);
 
   if (!story) {
@@ -26,6 +27,7 @@ const ResourceShortOverview: NextPage<Props> = ({ story }) => {
     <>
       <StoryblokResourceShortPage
         {...(story.content as StoryblokResourceShortPageProps)}
+        related_course={related_course}
         storyId={story.id}
       />
     </>
@@ -36,12 +38,30 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
   const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, preview, {
-    resolve_relations: ['resource_short_video.related_content'],
+    resolve_relations: [
+      'resource_short_video.related_content',
+      'resource_short_video.related_session',
+    ],
   });
+  let relatedCourse;
+
+  if (storyblokProps?.story.content.related_session.length) {
+    const storyblokCourseProps = await getStoryblokPagesByUuids(
+      storyblokProps?.story.content.related_session[0].content.course, // get course by course uuid
+      locale,
+      preview,
+      {},
+    );
+
+    if (storyblokCourseProps?.stories.length) {
+      relatedCourse = storyblokCourseProps.stories[0];
+    }
+  }
 
   return {
     props: {
       ...storyblokProps,
+      related_course: relatedCourse,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),

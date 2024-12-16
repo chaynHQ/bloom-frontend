@@ -1,10 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { Box, Button, Container, Typography } from '@mui/material';
+import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
@@ -13,17 +11,41 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
+import { columnStyle, rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
+import Link from '../common/Link';
+import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import { ResourceShortVideo } from '../resources/ResourceShortVideo';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 import { videoConfig } from './StoryblokVideo';
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
+
+const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
+const headerRightStyle = {
+  ...columnStyle,
+  justifyContent: 'flex-end',
+  flex: { md: 1 },
+  width: { md: '100%' },
+  height: 290,
+} as const;
+
+const headerLeftStyles = {
+  width: 514, // >515px enables the "watch on youtube" button
+  maxWidth: '100%',
+} as const;
+
+const progressStyle = {
+  ...rowStyle,
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  gap: 3,
+  '.MuiBox-root': {
+    mt: 0,
+  },
+} as const;
 
 export interface StoryblokResourceShortPageProps {
   storyId: number;
@@ -35,7 +57,8 @@ export interface StoryblokResourceShortPageProps {
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
-  related_session: StoryblokSessionPageProps;
+  related_session: ISbStoryData[];
+  related_course: ISbStoryData | null;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
 }
@@ -52,10 +75,10 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     video_transcript,
     page_sections,
     related_session,
+    related_course,
     related_content,
     related_exercises,
   } = props;
-
   const t = useTranslations('Resources');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -141,30 +164,49 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       </Head>
       <Container>
         <Typography variant="h1">{name}</Typography>
-        <Typography variant="h3">Progress: {resourceProgress}</Typography>
-        {render(description, RichTextOptions)}
-        <ResourceShortVideo
-          eventData={eventData}
-          resourceProgress={resourceProgress}
-          name={name}
-          storyId={storyId}
-          video={video}
-          video_transcript={video_transcript}
-        />
-        {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
-          <ResourceCompleteButton
-            category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-            storyId={storyId}
-            eventData={eventData}
-          />
-        )}
-        <Typography variant="h2" mt={6}>
-          Related content
-        </Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-        />
+        <Box sx={headerStyle}>
+          <Box sx={headerLeftStyles}>
+            <ResourceShortVideo
+              eventData={eventData}
+              resourceProgress={resourceProgress}
+              name={name}
+              storyId={storyId}
+              video={video}
+              video_transcript={video_transcript}
+            />
+            <Box sx={progressStyle}>
+              {resourceProgress && <ProgressStatus status={resourceProgress} />}
+
+              {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
+                <ResourceCompleteButton
+                  category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                  storyId={storyId}
+                  eventData={eventData}
+                />
+              )}
+            </Box>
+          </Box>
+          <Box sx={headerRightStyle}>
+            {/* {render(description, RichTextOptions)} */}
+
+            <Typography component="h2" mb={2}>
+              {t('sessionDetail', {
+                sessionNumber: related_session[0].position / 10 - 1,
+                sessionName: related_session[0].name,
+                courseName: related_course?.content.name,
+              })}
+            </Typography>
+            <Button
+              component={Link}
+              href={related_session[0].full_slug}
+              variant="contained"
+              color="secondary"
+              sx={{ mr: 'auto' }}
+            >
+              {t('sessionButtonLabel')}
+            </Button>
+          </Box>
+        </Box>
       </Container>
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
@@ -174,6 +216,14 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           />
         </Container>
       )}
+      <Container>
+        <Typography variant="h2">Related content</Typography>
+        <StoryblokRelatedContent
+          relatedContent={related_content}
+          relatedExercises={related_exercises}
+        />
+      </Container>
+
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );

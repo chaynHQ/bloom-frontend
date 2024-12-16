@@ -1,5 +1,6 @@
-import { Button } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import {
@@ -29,11 +30,14 @@ interface ResourceShortVideoProps {
   video: { url: string };
   video_transcript: ISbRichtext;
 }
+
 export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
   const { eventData, storyId, resourceProgress, name, video_transcript, video } = props;
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startResourceShort] = useStartResourceMutation();
+  const t = useTranslations('Resources');
+
   async function callStartResourceShort() {
     logEvent(RESOURCE_SHORT_VIDEO_STARTED_REQUEST, {
       ...eventData,
@@ -90,16 +94,19 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
   return (
     video && (
       <>
-        <Button variant="contained" sx={{ my: 3 }} onClick={() => setOpenTranscriptModal(true)}>
-          Open transcript
-        </Button>
         <Video
           url={video.url}
           setVideoStarted={setVideoStarted}
           eventData={eventData}
           eventPrefix="RESOURCE_SHORT"
-          containerStyles={{ mx: 'auto', my: 2 }}
         />
+        <Typography sx={{ my: '1rem !important' }}>
+          {t.rich('transcriptLink', {
+            link: (children) => (
+              <Link onClick={() => setOpenTranscriptModal(true)}>{children}</Link>
+            ),
+          })}
+        </Typography>
         <VideoTranscriptModal
           videoName={name}
           content={video_transcript}

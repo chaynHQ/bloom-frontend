@@ -3,6 +3,9 @@
     "conversations": "Conversations",
     "shorts": "Shorts",
     "completed": "Completed",
+    "sessionDetail": "This clip is from Session {sessionNumber}, {sessionName}, from our {courseName} course.",
+    "sessionButtonLabel": "Watch full session",
+    "transcriptLink": "Watch the video or read the <link>transcript</link>.",
     "resourceFeedback": {
       "title": "How was this learning?",
       "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
