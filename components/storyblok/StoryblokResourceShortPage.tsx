@@ -8,6 +8,7 @@ import {
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
   RESOURCE_SHORT_VIDEO_VIEWED,
+  RESOURCE_SHORT_VIDEO_VISIT_SESSION,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
@@ -21,7 +22,6 @@ import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import { ResourceShortVideo } from '../resources/ResourceShortVideo';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-import { videoConfig } from './StoryblokVideo';
 
 const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
 const headerRightStyle = {
@@ -134,7 +134,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     );
   }, [openTranscriptModal, name, eventData]);
 
-  const videoOptions = videoConfig(video);
+  const redirectToSession = () => {
+    logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
+      ...eventData,
+      shorts_name: name,
+      session_name: related_session[0].name,
+    });
+  };
 
   return (
     <Box
@@ -198,7 +204,8 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
             </Typography>
             <Button
               component={Link}
-              href={related_session[0].full_slug}
+              href={`/${related_session[0].full_slug}`}
+              onClick={redirectToSession}
               variant="contained"
               color="secondary"
               sx={{ mr: 'auto' }}
