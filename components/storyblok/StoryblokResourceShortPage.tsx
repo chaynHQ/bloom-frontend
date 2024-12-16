@@ -16,6 +16,7 @@ import { Resource } from '../../store/resourcesSlice';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
+import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import { ResourceShortVideo } from '../resources/ResourceShortVideo';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -64,6 +65,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
+  const [resourceId, setResourceId] = useState<string>();
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -83,6 +85,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       userResource.completed
         ? setResourceProgress(PROGRESS_STATUS.COMPLETED)
         : setResourceProgress(PROGRESS_STATUS.STARTED);
+      setResourceId(userResource.id);
     } else {
       setResourceProgress(PROGRESS_STATUS.NOT_STARTED);
     }
@@ -148,11 +151,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           video={video}
           video_transcript={video_transcript}
         />
-        <ResourceCompleteButton
-          category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-          storyId={storyId}
-          eventData={eventData}
-        />
+        {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
+          <ResourceCompleteButton
+            category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+            storyId={storyId}
+            eventData={eventData}
+          />
+        )}
         <Typography variant="h2" mt={6}>
           Related content
         </Typography>
@@ -161,6 +166,14 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           relatedExercises={related_exercises}
         />
       </Container>
+      {resourceId && (
+        <Container sx={{ bgcolor: 'background.paper' }}>
+          <ResourceFeedbackForm
+            resourceId={resourceId}
+            category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+          />
+        </Container>
+      )}
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
