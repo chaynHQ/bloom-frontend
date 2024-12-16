@@ -6,9 +6,9 @@ import {
   RESOURCE_CONVERSATION_COMPLETE_ERROR,
   RESOURCE_CONVERSATION_COMPLETE_REQUEST,
   RESOURCE_CONVERSATION_COMPLETE_SUCCESS,
-  RESOURCE_SHORT_COMPLETE_ERROR,
-  RESOURCE_SHORT_COMPLETE_REQUEST,
-  RESOURCE_SHORT_COMPLETE_SUCCESS,
+  RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
+  RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
+  RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
 } from '../../constants/events';
 import { useCompleteResourceMutation } from '../../store/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
@@ -39,7 +39,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
   const completeResourceAction = async () => {
     logEvent(
       category === RESOURCE_CATEGORIES.SHORT_VIDEO
-        ? RESOURCE_SHORT_COMPLETE_REQUEST
+        ? RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST
         : RESOURCE_CONVERSATION_COMPLETE_REQUEST,
       eventData,
     );
@@ -51,7 +51,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
     if (completeResourceResponse.data) {
       logEvent(
         category === RESOURCE_CATEGORIES.SHORT_VIDEO
-          ? RESOURCE_SHORT_COMPLETE_SUCCESS
+          ? RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS
           : RESOURCE_CONVERSATION_COMPLETE_SUCCESS,
         eventData,
       );
@@ -63,7 +63,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
 
       logEvent(
         category === RESOURCE_CATEGORIES.SHORT_VIDEO
-          ? RESOURCE_SHORT_COMPLETE_ERROR
+          ? RESOURCE_SHORT_VIDEO_COMPLETE_ERROR
           : RESOURCE_CONVERSATION_COMPLETE_ERROR,
         eventData,
       );
