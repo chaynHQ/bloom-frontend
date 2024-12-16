@@ -33,7 +33,7 @@ const radioGroupStyle = {
   padding: '20px 0px',
 } as const;
 
-export interface RateSessionFormProps {
+export interface SessionFeedbackFormProps {
   sessionId: string;
 }
 
@@ -51,7 +51,7 @@ const containerStyle = {
   textAlign: 'center',
 } as const;
 
-const RateSessionForm = (props: RateSessionFormProps) => {
+const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
   const t = useTranslations('Courses.sessionFeedback');
   const tS = useTranslations('Shared');
   const [sendFeedback] = useCreateSessionFeedbackMutation();
@@ -81,7 +81,9 @@ const RateSessionForm = (props: RateSessionFormProps) => {
       feedbackDescription: feedbackDescription,
     };
 
-    await sendFeedback(feedbackData);
+    if (true) {
+      await sendFeedback(feedbackData);
+    }
 
     setLoading(false);
     setFormSubmitSuccess(true);
@@ -122,7 +124,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
             row
             sx={radioGroupStyle}
             aria-label="feature"
-            name="session-feedback-radio-buttons"
+            name="feedback-radio-buttons"
             value={selectedFeedbackTag}
             onChange={(e) => setSelectedFeedbackTag(e.target.value as FEEDBACK_TAGS)}
           >
@@ -165,4 +167,4 @@ const RateSessionForm = (props: RateSessionFormProps) => {
   );
 };
 
-export default RateSessionForm;
+export default SessionFeedbackForm;
