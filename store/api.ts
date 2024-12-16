@@ -12,7 +12,7 @@ import { Course, Courses, SessionFeedback } from './coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 import { Partner, PartnerFeature } from './partnersSlice';
-import { Resource, Resources } from './resourcesSlice';
+import { Resource, ResourceFeedback, Resources } from './resourcesSlice';
 import { AppState } from './store';
 import { setUserToken, Subscription, Subscriptions, User } from './userSlice';
 
@@ -252,6 +252,15 @@ export const api = createApi({
         };
       },
     }),
+    createResourceFeedback: builder.mutation<ResourceFeedback, ResourceFeedback>({
+      query(body) {
+        return {
+          url: 'resource-feedback',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -275,6 +284,7 @@ export const {
   useUpdatePartnerAdminMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
+  useCreateResourceFeedbackMutation,
   useStartResourceMutation,
   useCompleteResourceMutation,
 } = api;
