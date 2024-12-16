@@ -118,9 +118,8 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
   const isMobileScreen = useMediaQuery(siteTheme.breakpoints.down('sm'));
 
   const getSlideWidth = () => {
-    if (isMobileScreen) {
-      return numberSlidesToWidthMap[number_mobile_slides || 1];
-    }
+    const slideNumber = isMobileScreen ? number_mobile_slides || 1 : number_desktop_slides || 1;
+    return numberSlidesToWidthMap[slideNumber];
   };
 
   return (
