@@ -63,6 +63,7 @@ export interface StoryblokResourceShortPageProps {
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
+  component: 'resource_short_video';
 }
 
 const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {

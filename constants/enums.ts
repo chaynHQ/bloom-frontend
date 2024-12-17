@@ -17,6 +17,22 @@ export enum RESOURCE_CATEGORIES {
   CONVERSATION = 'conversation',
 }
 
+export enum CORE_CATEGORIES {
+  COURSE = 'course',
+  SESSION = 'session',
+  SESSION_IBA = 'session_iba',
+}
+
+export enum EXERCISE_CATEGORIES {
+  GROUNDING = 'grounding',
+  ACTIVITIES = 'activities',
+}
+
+export type RELATED_CONTENT_CATEGORIES =
+  | RESOURCE_CATEGORIES
+  | CORE_CATEGORIES
+  | EXERCISE_CATEGORIES;
+
 export enum EMAIL_REMINDERS_FREQUENCY {
   TWO_WEEKS = 'TWO_WEEKS',
   ONE_MONTH = 'ONE_MONTH',

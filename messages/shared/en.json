@@ -101,6 +101,15 @@
       "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
       "button": "Get started"
     },
+    "relatedContent": {
+      "short_video": "Short",
+      "conversation": "Conversation",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity"
+    },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",
       "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
