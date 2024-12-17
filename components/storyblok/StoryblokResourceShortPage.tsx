@@ -13,6 +13,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
+import theme from '../../styles/theme';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import Link from '../common/Link';
@@ -169,7 +170,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           </>
         )}
       </Head>
-      <Container>
+      <Container sx={{ background: theme.palette.bloomGradient }}>
         <Typography variant="h1">{name}</Typography>
         <Box sx={headerStyle}>
           <Box sx={headerLeftStyles}>
@@ -181,17 +182,19 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               video={video}
               video_transcript={video_transcript}
             />
-            <Box sx={progressStyle}>
-              {resourceProgress && <ProgressStatus status={resourceProgress} />}
+            {isLoggedIn && (
+              <Box sx={progressStyle}>
+                {resourceProgress && <ProgressStatus status={resourceProgress} />}
 
-              {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
-                <ResourceCompleteButton
-                  category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                  storyId={storyId}
-                  eventData={eventData}
-                />
-              )}
-            </Box>
+                {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
+                  <ResourceCompleteButton
+                    category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                    storyId={storyId}
+                    eventData={eventData}
+                  />
+                )}
+              </Box>
+            )}
           </Box>
           <Box sx={headerRightStyle}>
             {/* {render(description, RichTextOptions)} */}
