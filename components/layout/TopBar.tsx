@@ -82,7 +82,7 @@ const TopBar = () => {
               alt={tS('alt.bloomLogo')}
               src={bloomLogo}
               fill
-              sizes="100vw"
+              sizes="250px"
               style={{
                 objectFit: 'contain',
               }}

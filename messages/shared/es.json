@@ -98,6 +98,32 @@
       "description1": "Bloom es una plataforma en línea que te ayuda a recuperarte de un trauma. Desde cursos en vídeo y actividades de reflexión hasta mensajería directa con nuestro equipo, hay muchas formas diferentes de participar en Bloom.",
       "description2": "Regístrate a continuación para acceder a todos nuestros contenidos y explorar todo lo que Bloom puede ofrecerte.",
       "button": "Iniciar"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Diarios de pensamientos",
+      "activities-stream-of-consciousness-journaling": "Diario de flujo de consciencia",
+      "activities-timelines": "Líneas de tiempo",
+      "activities-trust-mapping": "El mapa de la confianza",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Observando el miedo y el estrés en nuestro cuerpe",
+      "activities-letter-to-a-part-of-my-body": "Una carta a una parte de mi cuerpe",
+      "activities-accelerators-and-brakes": "Aceleradores y frenos",
+      "activities-ideal-sexual-being": "El ser sexual ideal",
+      "grounding-visual-breathing": "Respiración visual",
+      "grounding-slow-breathing": "Respiración lenta",
+      "grounding-box-breathing": "Respiración de caja",
+      "grounding-drifting-clouds-meditation": "Sin preocupaciones, meditación con nubes a la deri",
+      "grounding-positive-coping-statement": "Declaración positiva de afrontamiento",
+      "grounding-finger-focus": "Enfocarse en los dedos",
+      "grounding-day-walkthrough": "Paseo por el día",
+      "grounding-what-can-you-hear": "¿Me escuchas?",
+      "grounding-listen-to-your-voice": "Escucha tu voz",
+      "grounding-calming-colours": "Colores relajantes",
+      "grounding-coming-back-to-your-safe-space": "Volviendo a tu lugar seguro",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Escaneo corporal compasivo",
+      "grounding-touching-and-feeling-textures": "Tacto, sensaciones y texturas",
+      "grouding-sound-of-claps": "El sonido de los aplausos",
+      "grounding-affirming-ourselves": "Reafirmarnos (presión firme)"
     }
   }
 }

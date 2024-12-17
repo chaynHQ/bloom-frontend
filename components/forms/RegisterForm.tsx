@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { ErrorDisplay } from '../../constants/common';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_ALREADY_EXISTS,
@@ -63,11 +64,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [contactPermissionInput, setContactPermissionInput] = useState<boolean>(false);
-  const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  >();
+  const [formError, setFormError] = useState<ErrorDisplay>();
 
   const [createUser] = useAddUserMutation();
   const [validateCode] = useValidateCodeMutation();
