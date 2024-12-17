@@ -35,6 +35,7 @@ export interface StoryblokResourceConversationPageProps {
   page_sections: StoryblokPageSectionProps[];
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
+  languages: string[];
 }
 
 const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {

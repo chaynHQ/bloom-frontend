@@ -1,6 +1,8 @@
 import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import { rowStyle } from '../../styles/common';
 import Link from '../common/Link';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
@@ -34,6 +36,7 @@ export interface StoryblokRelatedContentProps {
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
   const { relatedContent, relatedExercises } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
+  const router = useRouter();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const pageUrl = relatedExerciseId.includes('grounding-') ? 'grounding' : 'activities';
@@ -44,9 +47,20 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
     };
   });
 
+  const disabledCoursesString = process.env.FF_DISABLED_COURSES;
+
+  const filteredRelatedContent = useMemo(() => {
+    return relatedContent.filter(
+      (story) =>
+        (story.content.languages
+          ? story.content.languages.includes(router.locale || 'en')
+          : true) && !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`),
+    );
+  }, [relatedContent]);
+
   return (
     <Box sx={containerStyle}>
-      {relatedContent.map((relatedContentItem) => (
+      {filteredRelatedContent.map((relatedContentItem) => (
         <Card sx={cardStyle} key={`related_content_${relatedContentItem.id}`}>
           <CardContent>
             <Typography variant="h3">{relatedContentItem.content.name}</Typography>

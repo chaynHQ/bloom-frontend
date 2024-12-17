@@ -52,6 +52,7 @@ export interface StoryblokSessionPageProps {
   bonus: ISbRichtext | BonusContent[];
   coming_soon: boolean;
   coming_soon_content: ISbRichtext;
+  languages: string[];
 }
 
 const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {

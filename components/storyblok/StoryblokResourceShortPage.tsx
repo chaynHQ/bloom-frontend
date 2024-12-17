@@ -61,6 +61,7 @@ export interface StoryblokResourceShortPageProps {
   related_course: ISbStoryData | null;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
+  languages: string[];
 }
 
 const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
