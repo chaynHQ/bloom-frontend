@@ -1,8 +1,8 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
@@ -13,16 +13,52 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
+import { rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
+import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+import { ResourceConversationAudio } from '../resources/ResourceConversationAudio';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
+
+const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
+
+const headerLeftStyles = {
+  width: { xs: '100%', md: '60%' },
+  maxWidth: '100%',
+} as const;
+
+const headerRightStyle = {
+  flex: { md: 1 },
+  width: '100%',
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  width: 200,
+  height: 200,
+  marginLeft: 'auto',
+  marginRight: { xs: '8%', md: '0' },
+} as const;
+
+const audioContainerStyle = {
+  mt: { xs: 4, md: 6 },
+  mb: 3,
+} as const;
+
+const progressStyle = {
+  ...rowStyle,
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  gap: 3,
+  '.MuiBox-root': {
+    mt: 0,
+  },
+} as const;
 
 export interface StoryblokResourceConversationPageProps {
   storyId: number;
@@ -31,6 +67,7 @@ export interface StoryblokResourceConversationPageProps {
   name: string;
   seo_description: string;
   description: ISbRichtext;
+  header_image: { filename: string; alt: string };
   audio: { filename: string };
   audio_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
@@ -48,6 +85,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     name,
     seo_description,
     description,
+    header_image,
     audio,
     audio_transcript,
     page_sections,
@@ -56,6 +94,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   } = props;
 
   const t = useTranslations('Resources');
+  const tS = useTranslations('Shared');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -66,12 +105,12 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   );
   const [resourceId, setResourceId] = useState<string>();
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-  console.log(props);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
+      resource_category: RESOURCE_CATEGORIES.CONVERSATION,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
@@ -104,10 +143,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       openTranscriptModal
         ? RESOURCE_CONVERSATION_TRANSCRIPT_OPENED
         : RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-      {
-        ...eventData,
-        name,
-      },
+      eventData,
     );
   }, [openTranscriptModal, name, eventData]);
 
@@ -136,37 +172,57 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           </>
         )}
       </Head>
+
       <Container sx={{ background: theme.palette.bloomGradient }}>
-        <Typography variant="h1">{name}</Typography>
-        <Typography variant="h3">Progress: {resourceProgress}</Typography>
-        {render(description, RichTextOptions)}
-        <Box position="relative">
-          <ReactPlayer width="100%" height="50px" url={audio.filename} controls />
+        <Box sx={headerStyle}>
+          <Box sx={headerLeftStyles}>
+            <Typography variant="h1" maxWidth={600}>
+              {name}
+            </Typography>
+            {render(description, RichTextOptions)}
+            <Box sx={audioContainerStyle}>
+              <ResourceConversationAudio
+                eventData={eventData}
+                resourceProgress={resourceProgress}
+                name={name}
+                storyId={storyId}
+                audio={audio.filename}
+                audio_transcript={audio_transcript}
+              />
+            </Box>
+
+            {resourceId && (
+              <Box sx={progressStyle}>
+                {resourceProgress && <ProgressStatus status={resourceProgress} />}
+                {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
+                  <ResourceCompleteButton
+                    resourceName={name}
+                    category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                    storyId={storyId}
+                    eventData={eventData}
+                  />
+                )}
+              </Box>
+            )}
+          </Box>
+          <Box sx={headerRightStyle}>
+            {header_image && (
+              <Box sx={imageContainerStyle}>
+                <Image
+                  alt={header_image.alt}
+                  src={header_image.filename}
+                  fill
+                  sizes="500px"
+                  style={{
+                    objectFit: 'contain',
+                  }}
+                />
+              </Box>
+            )}
+          </Box>
         </Box>
-        <Button variant="contained" sx={{ my: 3 }} onClick={() => setOpenTranscriptModal(true)}>
-          Open transcript
-        </Button>
-        <VideoTranscriptModal
-          videoName={name}
-          content={audio_transcript}
-          setOpenTranscriptModal={setOpenTranscriptModal}
-          openTranscriptModal={openTranscriptModal}
-        />
-        {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
-          <ResourceCompleteButton
-            category={RESOURCE_CATEGORIES.CONVERSATION}
-            storyId={storyId}
-            eventData={eventData}
-          />
-        )}
       </Container>
-      <Container>
-        <Typography variant="h2">Related content</Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-        />
-      </Container>
+
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
@@ -175,6 +231,16 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           />
         </Container>
       )}
+      <Container sx={{ bgcolor: 'secondary.main' }}>
+        <Typography variant="h2" mb={4}>
+          {tS('relatedContent.title')}
+        </Typography>
+        <StoryblokRelatedContent
+          relatedContent={related_content}
+          relatedExercises={related_exercises}
+        />
+      </Container>
+
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );

@@ -180,7 +180,7 @@ theme = createTheme(theme, {
         },
         outlinedPrimary: {
           color: '#000000',
-          borderColor: theme.palette.primary.main,
+          borderColor: theme.palette.primary.dark,
         },
         containedPrimary: {
           borderColor: 'transparent',

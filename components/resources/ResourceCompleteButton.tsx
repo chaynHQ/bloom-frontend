@@ -22,13 +22,14 @@ const errorStyle = {
 } as const;
 
 interface ResourceCompleteButtonProps {
+  resourceName: string;
   category: RESOURCE_CATEGORIES;
   storyId: number;
   eventData: EventUserData;
 }
 
 export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
-  const { category, storyId, eventData } = props;
+  const { resourceName, category, storyId, eventData } = props;
 
   const t = useTranslations('Resources');
 
@@ -79,7 +80,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
       <Button
         color="primary"
         size="medium"
-        variant="contained"
+        variant="outlined"
         onClick={completeResourceAction}
         startIcon={<CheckCircleIcon color="error" />}
       >

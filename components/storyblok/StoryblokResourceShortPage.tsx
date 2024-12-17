@@ -5,8 +5,6 @@ import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
 import {
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
   RESOURCE_SHORT_VIDEO_VIEWED,
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
 } from '../../constants/events';
@@ -83,6 +81,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_exercises,
   } = props;
   const t = useTranslations('Resources');
+  const tS = useTranslations('Shared');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -92,12 +91,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
-  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
+      resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
@@ -120,22 +119,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
-
-  useEffect(() => {
-    if (openTranscriptModal === null) {
-      return;
-    }
-
-    logEvent(
-      openTranscriptModal
-        ? RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED
-        : RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-      {
-        ...eventData,
-        name,
-      },
-    );
-  }, [openTranscriptModal, name, eventData]);
 
   const redirectToSession = () => {
     logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
@@ -171,8 +154,11 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           </>
         )}
       </Head>
+
       <Container sx={{ background: theme.palette.bloomGradient }}>
-        <Typography variant="h1">{name}</Typography>
+        <Typography variant="h1" maxWidth={600}>
+          {name}
+        </Typography>
         <Box sx={headerStyle}>
           <Box sx={headerLeftStyles}>
             <ResourceShortVideo
@@ -183,12 +169,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               video={video}
               video_transcript={video_transcript}
             />
-            {isLoggedIn && (
+            {resourceId && (
               <Box sx={progressStyle}>
                 {resourceProgress && <ProgressStatus status={resourceProgress} />}
 
                 {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                   <ResourceCompleteButton
+                    resourceName={name}
                     category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                     storyId={storyId}
                     eventData={eventData}
@@ -198,6 +185,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
             )}
           </Box>
           <Box sx={headerRightStyle}>
+            {/* Description field is not currently displayed */}
             {/* {render(description, RichTextOptions)} */}
 
             <Typography component="h2" mb={2}>
@@ -220,6 +208,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           </Box>
         </Box>
       </Container>
+
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
@@ -228,8 +217,10 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           />
         </Container>
       )}
-      <Container>
-        <Typography variant="h2">Related content</Typography>
+      <Container sx={{ bgcolor: 'secondary.main' }}>
+        <Typography variant="h2" mb={4}>
+          {tS('relatedContent.title')}
+        </Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}
           relatedExercises={related_exercises}
