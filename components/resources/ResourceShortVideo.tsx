@@ -141,7 +141,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
           autoplay={true}
         />
         <Typography sx={{ my: '1rem !important' }}>
-          {t.rich('transcriptLink', {
+          {t.rich('videoTranscriptLink', {
             link: (children) => (
               <Link onClick={() => setOpenTranscriptModal(true)}>{children}</Link>
             ),
