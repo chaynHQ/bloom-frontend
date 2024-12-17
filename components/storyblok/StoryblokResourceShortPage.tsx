@@ -96,6 +96,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
+      resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
@@ -168,12 +169,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               video={video}
               video_transcript={video_transcript}
             />
-            {isLoggedIn && (
+            {resourceId && (
               <Box sx={progressStyle}>
                 {resourceProgress && <ProgressStatus status={resourceProgress} />}
 
                 {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                   <ResourceCompleteButton
+                    resourceName={name}
                     category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                     storyId={storyId}
                     eventData={eventData}

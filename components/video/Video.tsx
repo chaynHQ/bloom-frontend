@@ -39,6 +39,7 @@ const Video = (props: VideoProps) => {
     setVideoFinished,
   } = props;
   const [videoDuration, setVideoDuration] = useState<number>(0);
+  const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
   const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
 
   const player = useRef<typeof ReactPlayer>(null);
@@ -50,6 +51,8 @@ const Video = (props: VideoProps) => {
   };
 
   const videoEnded = () => {
+    if (!!videoCompleted) return;
+
     setVideoFinished && setVideoFinished(true);
 
     if (player.current) {
@@ -58,6 +61,7 @@ const Video = (props: VideoProps) => {
         video_duration: videoDuration,
       });
     }
+    setVideoCompleted(true);
   };
 
   const videoPausedOrPlayed = (played: boolean) => {
@@ -71,11 +75,8 @@ const Video = (props: VideoProps) => {
         video_current_percentage: playedPercentage,
       });
 
-      if (played) {
-      } else {
-        if (playedPercentage > 90) {
-          videoEnded();
-        }
+      if (!played && playedPercentage > 95) {
+        videoEnded();
       }
     }
   };
@@ -106,8 +107,6 @@ const Video = (props: VideoProps) => {
       : {};
   };
 
-  console.log(videoConfig({ url }));
-
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
@@ -116,11 +115,10 @@ const Video = (props: VideoProps) => {
           light={true}
           onDuration={(duration) => setVideoDuration(duration)}
           onStart={videoStarted}
+          onEnded={videoEnded}
           onPause={() => videoPausedOrPlayed(false)}
           onPlay={() => videoPausedOrPlayed(true)}
-          onEnded={videoEnded}
           onProgress={handleProgress}
-          playing={true}
           style={videoStyle}
           width="100%"
           height="100%"

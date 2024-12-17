@@ -1,7 +1,6 @@
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,10 +21,9 @@ import { SignUpBanner } from '../banner/SignUpBanner';
 import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+import { ResourceConversationAudio } from '../resources/ResourceConversationAudio';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
 
@@ -112,6 +110,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
+      resource_category: RESOURCE_CATEGORIES.CONVERSATION,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
@@ -144,10 +143,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       openTranscriptModal
         ? RESOURCE_CONVERSATION_TRANSCRIPT_OPENED
         : RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-      {
-        ...eventData,
-        name,
-      },
+      eventData,
     );
   }, [openTranscriptModal, name, eventData]);
 
@@ -185,28 +181,22 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
             </Typography>
             {render(description, RichTextOptions)}
             <Box sx={audioContainerStyle}>
-              <ReactPlayer width="100%" height="50px" url={audio.filename} controls />
+              <ResourceConversationAudio
+                eventData={eventData}
+                resourceProgress={resourceProgress}
+                name={name}
+                storyId={storyId}
+                audio={audio.filename}
+                audio_transcript={audio_transcript}
+              />
             </Box>
 
-            <Typography>
-              {t.rich('conversationTranscriptLink', {
-                link: (children) => (
-                  <Link onClick={() => setOpenTranscriptModal(true)}>{children}</Link>
-                ),
-              })}
-            </Typography>
-            <VideoTranscriptModal
-              videoName={name}
-              content={audio_transcript}
-              setOpenTranscriptModal={setOpenTranscriptModal}
-              openTranscriptModal={openTranscriptModal}
-            />
-            {isLoggedIn && (
+            {resourceId && (
               <Box sx={progressStyle}>
                 {resourceProgress && <ProgressStatus status={resourceProgress} />}
-
                 {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                   <ResourceCompleteButton
+                    resourceName={name}
                     category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                     storyId={storyId}
                     eventData={eventData}
