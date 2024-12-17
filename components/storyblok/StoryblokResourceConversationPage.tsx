@@ -13,6 +13,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
+import theme from '../../styles/theme';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
@@ -35,6 +36,8 @@ export interface StoryblokResourceConversationPageProps {
   page_sections: StoryblokPageSectionProps[];
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
+  languages: string[];
+  component: 'resource_conversation';
 }
 
 const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {
@@ -133,7 +136,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           </>
         )}
       </Head>
-      <Container>
+      <Container sx={{ background: theme.palette.bloomGradient }}>
         <Typography variant="h1">{name}</Typography>
         <Typography variant="h3">Progress: {resourceProgress}</Typography>
         {render(description, RichTextOptions)}
@@ -156,6 +159,8 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
             eventData={eventData}
           />
         )}
+      </Container>
+      <Container>
         <Typography variant="h2">Related content</Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}

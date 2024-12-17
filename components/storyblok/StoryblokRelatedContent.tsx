@@ -1,12 +1,19 @@
-import { Box, Button, Card, CardContent, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
 import { rowStyle } from '../../styles/common';
-import Link from '../common/Link';
+import { RelatedContentCard } from '../cards/RelatedContentCard';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
+
+const containerStyle = {
+  ...rowStyle,
+} as const;
 
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
   content:
@@ -21,42 +28,54 @@ export interface StoryblokRelatedContentProps {
   relatedExercises: string[];
 }
 
-const cardStyles = { width: '32%', mb: 2 } as const;
-
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
   const { relatedContent, relatedExercises } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
+  const router = useRouter();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
-    const pageUrl = relatedExerciseId.includes('grounding-') ? 'grounding' : 'activities';
+    const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
+      ? EXERCISE_CATEGORIES.GROUNDING
+      : EXERCISE_CATEGORIES.ACTIVITIES;
+
     return {
       id: relatedExerciseId,
       name: tExerciseNames(relatedExerciseId),
-      href: `/${pageUrl}?openacc=${relatedExerciseId}`,
+      href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
+      category: exerciseCategory,
     };
   });
 
+  const disabledCoursesString = process.env.FF_DISABLED_COURSES;
+
+  const filteredRelatedContent = useMemo(() => {
+    return relatedContent.filter(
+      (story) =>
+        (story.content.languages
+          ? story.content.languages.includes(router.locale || 'en')
+          : true) && !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`),
+    );
+  }, [relatedContent, disabledCoursesString, router.locale]);
+
   return (
-    <Box sx={rowStyle}>
-      {relatedContent.map((relatedContentItem) => (
-        <Card sx={cardStyles} key={`related_content_${relatedContentItem.id}`}>
-          <CardContent>
-            <Typography variant="h3">{relatedContentItem.content.name}</Typography>
-            <Button component={Link} href={relatedContentItem.full_slug} variant="contained">
-              Open
-            </Button>
-          </CardContent>
-        </Card>
+    <Box sx={containerStyle}>
+      {filteredRelatedContent.map((relatedContentItem) => (
+        <RelatedContentCard
+          key={`related_content_${relatedContentItem.id}`}
+          title={relatedContentItem.name}
+          href={`/${relatedContentItem.full_slug}`}
+          category={
+            relatedContentItem.content.component.toLowerCase() as RELATED_CONTENT_CATEGORIES
+          }
+        />
       ))}
       {relatedExercisesItems.map((relatedExerciseItem) => (
-        <Card sx={cardStyles} key={`related_exercise_${relatedExerciseItem.id}`}>
-          <CardContent>
-            <Typography variant="h3">{relatedExerciseItem.name}</Typography>
-            <Button component={Link} href={relatedExerciseItem.href} variant="contained">
-              Open
-            </Button>
-          </CardContent>
-        </Card>
+        <RelatedContentCard
+          key={`related_exercise_${relatedExerciseItem.id}`}
+          title={relatedExerciseItem.name}
+          href={relatedExerciseItem.href}
+          category={relatedExerciseItem.category}
+        />
       ))}
     </Box>
   );
