@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
 import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
@@ -8,36 +8,39 @@ import { useEffect, useState } from 'react';
 import { EmailRemindersSettingsBanner } from '../../components/banner/EmailRemindersSettingsBanner';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
+import { RelatedContentCard } from '../../components/cards/RelatedContentCard';
+import Carousel from '../../components/common/Carousel';
+import Column from '../../components/common/Column';
 import LoadingContainer from '../../components/common/LoadingContainer';
+import PageSection from '../../components/common/PageSection';
+import Row from '../../components/common/Row';
 import Header from '../../components/layout/Header';
 import { FeatureFlag } from '../../config/featureFlag';
-import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '../../constants/enums';
+import {
+  EMAIL_REMINDERS_FREQUENCY,
+  PROGRESS_STATUS,
+  RESOURCE_CATEGORIES,
+  STORYBLOK_COLORS,
+} from '../../constants/enums';
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
-import { columnStyle, rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { capitaliseFirstLetter } from '../../utils/strings';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
-  paddingY: { xs: 4, sm: 6, md: 8 },
-} as const;
-
-const cardColumnStyle = {
-  ...columnStyle,
-  justifyContent: 'flex-start',
-  margin: { xs: 'auto', md: '0' },
-  width: { xs: '100%', md: 'calc(50% - 1rem)' },
-  maxWidth: 520,
-  gap: { xs: 0, md: 4 },
+  paddingTop: { xs: 2, sm: 2, md: 2 },
+  paddingBottom: { xs: 6, sm: 6, md: 8 },
 } as const;
 
 interface Props {
   stories: ISbStoryData[];
+  conversations: ISbStoryData[];
+  shorts: ISbStoryData[];
 }
 
-const CourseList: NextPage<Props> = ({ stories }) => {
+const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
@@ -154,28 +157,77 @@ const CourseList: NextPage<Props> = ({ stories }) => {
             <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Box sx={rowStyle}>
-            <Box sx={cardColumnStyle}>
-              {loadedCourses?.map((course, index) => {
-                if (index % 2 === 1) return;
-                const courseProgress = userId ? getCourseProgress(course.id) : null;
-                return (
+          <Grid
+            container
+            columnSpacing={2}
+            rowSpacing={[0, 2]}
+            justifyContent={['center', 'flex-start']}
+          >
+            {loadedCourses?.map((course) => {
+              const courseProgress = userId ? getCourseProgress(course.id) : null;
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={4}
+                  height="100%"
+                  maxWidth="400px"
+                  key={course.id}
+                >
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
-                );
-              })}
-            </Box>
-            <Box sx={cardColumnStyle}>
-              {loadedCourses?.map((course, index) => {
-                if (index % 2 === 0) return;
-                const courseProgress = userId ? getCourseProgress(course.id) : null;
-                return (
-                  <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
-                );
-              })}
-            </Box>
-          </Box>
+                </Grid>
+              );
+            })}
+          </Grid>
         )}
       </Container>
+      {conversations.length > 0 && (
+        <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
+          <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
+            <Column width="full-width">
+              <Typography variant="h2" fontWeight={500}>
+                {t('conversationsHeading')}
+              </Typography>
+              <Carousel
+                theme="primary"
+                numberMobileSlides={1}
+                numberDesktopSlides={3}
+                items={conversations.map((conversation) => {
+                  return (
+                    <RelatedContentCard
+                      title={conversation.name}
+                      href={conversation.full_slug}
+                      category={RESOURCE_CATEGORIES.CONVERSATION}
+                    />
+                  );
+                })}
+              />
+            </Column>
+          </Row>
+        </PageSection>
+      )}
+      {shorts.length > 0 && (
+        <PageSection color={STORYBLOK_COLORS.SECONDARY_LIGHT} alignment="left">
+          <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
+            <Column width="full-width">
+              <Typography variant="h2" fontWeight={500}>
+                {t('shortsHeading')}
+              </Typography>
+              <Carousel
+                theme="primary"
+                numberMobileSlides={1}
+                numberDesktopSlides={3}
+                items={shorts.map((short) => {
+                  return <Box> {short.name} </Box>;
+                })}
+              />
+            </Column>
+          </Row>
+        </PageSection>
+      )}
+
       {!userId && <SignUpBanner />}
       {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
@@ -183,11 +235,14 @@ const CourseList: NextPage<Props> = ({ stories }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  let sbParams: ISbStoriesParams = {
+  const baseProps: Partial<ISbStoriesParams> = {
     language: locale || 'en',
     version: preview ? 'draft' : 'published',
-    starts_with: 'courses/',
     sort_by: 'position:description',
+  };
+  let sbParams: ISbStoriesParams = {
+    ...baseProps,
+    starts_with: 'courses/',
     filter_query: {
       component: {
         in: 'Course',
@@ -199,9 +254,25 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
 
   let { data } = await storyblokApi.get('cdn/stories/', sbParams);
 
+  let sbConversationsParams: ISbStoriesParams = {
+    ...baseProps,
+    starts_with: 'conversations/',
+  };
+
+  let { data: conversationsData } = await storyblokApi.get('cdn/stories/', sbConversationsParams);
+
+  let sbShortsParams: ISbStoriesParams = {
+    ...baseProps,
+    starts_with: 'shorts/',
+  };
+
+  let { data: shortsData } = await storyblokApi.get('cdn/stories/', sbShortsParams);
+
   return {
     props: {
       stories: data ? getEnabledCourses(data.stories) : null,
+      conversations: conversationsData ? getEnabledConversations(conversationsData.stories) : null,
+      shorts: shortsData ? getEnabledShorts(shortsData.stories) : null,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
@@ -218,6 +289,22 @@ const getEnabledCourses = (courseStories: ISbStoryData[]): ISbStoryData[] => {
   // Note that this filter only removes the course from the courses page for the user.
   // If the user navigates to the URL, they may still be able to access the course.
   return courseStories.filter((course) => !FeatureFlag.getDisabledCourses().has(course.full_slug));
+};
+
+const getEnabledConversations = (conversationStories: ISbStoryData[]): ISbStoryData[] => {
+  const enabledConversations = [
+    'conversations/stories-around-tech-abuse-with-francesca-and-carolina',
+  ];
+
+  return conversationStories.filter(
+    (conversation) => enabledConversations.indexOf(conversation.full_slug) > -1,
+  );
+};
+
+const getEnabledShorts = (shortsStories: ISbStoryData[]): ISbStoryData[] => {
+  const enabledShorts = ['conversations/stories-around-tech-abuse-with-francesca-and-carolina'];
+
+  return shortsStories.filter((short) => enabledShorts.indexOf(short.full_slug) > -1);
 };
 
 export default CourseList;

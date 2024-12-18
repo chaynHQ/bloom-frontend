@@ -64,6 +64,8 @@
     "errors": {
       "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."
     },
-    "backToCourses": "Voltar para Cursos"
+    "backToCourses": "Voltar para Cursos",
+    "conversationsHeading": "Conversations",
+    "shortsHeading": "Shorts"
   }
 }
