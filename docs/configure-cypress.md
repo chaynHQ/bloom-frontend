@@ -12,13 +12,15 @@ We use [Cypress](https://learn.cypress.io/) for integration testing and [MailSlu
 
 ## Set-Up:
 
+To obtain the `CYPRESS_MAIL_SLURP_API_KEY` and `CYPRESS_INBOX_ID` variables, you must create a Mailslurp account, navigate to your dashboard to obtain the API key, then create an Mailslurp inbox.
+
+For `CYPRESS_PROJECT_ID`, get started with Cypress by [creating a Cypress project](https://docs.cypress.io/cloud/get-started/setup). Then use the project id generated in your project configuration file, as directed [here](https://docs.cypress.io/cloud/account-management/projects).
+
 To set-up, configure the Cypress variables in `env.local`.
 
 1. For `CYPRESS_PROJECT_ID`: [Get started with Cypress](https://docs.cypress.io/guides/cloud/getting-started) and use your [Cypress project ID](https://docs.cypress.io/guides/cloud/account-management/projects).
 2. For `CYPRESS_MAIL_SLURP_API_KEY` and `CYPRESS_INBOX_ID`: Create a [Mailslurp account](https://www.mailslurp.com/), navigate to your dashboard to obtain the API key, then [create an Mailslurp inbox](https://docs.mailslurp.com/inboxes/).
-3. For local Bloom Users: Create local Bloom users from your local frontend. You will need a public user, a super admin user, and 2 partner admin users. Directions in [BLOOM_USERS.md](/BLOOM_USERS.md).
-
-For additional guidance setting up Cypress environemnt variables, check out our [Chayn Tech Wiki Guide](https://www.notion.so/chayn/Chayn-Tech-Contributor-Wiki-5356c7118c134863a2e092e9df6cbc34?pvs=4#1e51da106e1a484baf1429a04be71388).
+3. For local Bloom Users: Create local Bloom users from your local frontend. You will need a public user, a super admin user, and 2 partner admin users. Directions in [configure-users.md](configure-users.md).
 
 ## Run Tests:
 
