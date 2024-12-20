@@ -2,7 +2,7 @@
 
 ## Summary
 
-**The develop branch is our source of truth.** Fork from develop, and when your PR is merged, develop will automatically merge into the main branch for deployment to production. Consider [staging your frontend](https://github.com/chaynHQ/bloom-frontend/wiki/Staging-Directions) to test changes after opening your PR.
+**The develop branch is our source of truth.** Fork from develop, create your feature branch, and when your PR is merged, develop will automatically merge into the main branch for deployment to production. Consider [staging your frontend](https://github.com/chaynHQ/bloom-frontend/wiki/Staging-Directions) to test changes after opening your PR.
 
 To run Bloom's frontend:
 
@@ -15,17 +15,17 @@ To run Bloom's frontend:
 To test the frontend:
 
 - Run unit tests
-- Run integration tests for fullstack contributions. \*[requires populating your database first](https://github.com/chaynHQ/bloom-backend?tab=readme-ov-file#populate-database)
+- Run integration tests for fullstack contributions. \*requires populating your database first
+- Verify happy paths
 
 Additional Resources:
 
-- Read our [Bloom Technical Wiki Docs](https://github.com/chaynHQ/bloom-frontend/wiki) for overviews of key concepts, software architecture, staging directions, and design guides.
+- Read our [Bloom Tech Wiki Docs](https://github.com/chaynHQ/bloom-frontend/wiki) for overviews of key concepts, software architecture, staging directions, and design guides.
 
 ## Prerequisites
 
 - NodeJS 20.x
 - Yarn v1.x
-- Read [Contribution Guidelines](https://github.com/chaynHQ/bloom-frontend/blob/develop/CONTRIBUTING.md)
 
 ## Run Local Backend
 
@@ -33,7 +33,7 @@ See [Bloom's backend repo](https://github.com/chaynHQ/bloom-backend) for instruc
 
 ## Configure Environment Variables
 
-See [Environment Variables Configuration Instructions](configure-env.md).
+See [configure-env.md](configure-env.md) for instructions on configuring environment variables.
 
 ## Install Dependencies
 
@@ -106,8 +106,19 @@ yarn test:watch
 
 ## Cypress Testing
 
-See [Cypress Directions](configure-cypress.md) for set-up instructions. Cypress e2e integration tests are required for most full-stack contributions.
+Cypress e2e integration tests are required for most fullstack contributions.
+See [configure-cypress.md](configure-cypress.md) for Cypress set-up instructions.
 
 ## Happy Paths
 
 In addition to unit and integration testing, contributors should ensure their happy paths (the ideal, error-free path for a user to complete a task or achieve a goal in Bloom). View [our Happy Paths here](https://chayn.notion.site/Bloom-happy-paths-e2cc25f206f9494d8cfcf7df718a0679).
+
+## Git Flow and Deployment
+
+**The develop branch is our source of truth, not main.**
+
+Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. Rebase and merge feature/bug branches into `develop`.
+
+This will trigger an automatic deployment to the staging app by Heroku.
+
+When changes have been tested in staging, merge `develop` into `main`. This will trigger an automatic deployment to the production app by Heroku.

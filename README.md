@@ -19,7 +19,7 @@ Chayn's Bloom service offers several key features designed to support individual
 
 ## Bloom Frontend Technical Documentation
 
-Read our [Bloom Frontend Technical Wiki Docs](https://github.com/chaynHQ/bloom-frontend/wiki) for overviews of key concepts, software architecture, staging directions, and design guides.
+Read our [Bloom Frontend Tech Wiki Docs](https://github.com/chaynHQ/bloom-frontend/wiki) for overviews of key concepts, software architecture, staging directions, and design guides.
 
 Technologies Used:
 
@@ -44,7 +44,7 @@ Technologies Used:
 
 Making an open-source contribution you have agreed to our [Code of Conduct](/CODE_OF_CONDUCT.md).
 
-- See our [Directions for Local Development](docs/local-development.md) docs to get started.
+- See [docs/local-development.md](docs/local-development.md) docs to get started.
 - New contributors should start with our [Contribution Guidelines](CONTRIBUTING.md).
 
 Happy coding! ⭐
@@ -57,7 +57,7 @@ Chayn is proudly open-source and built with volunteer contributions. We are grat
 
 Support our mission further by [sponsoring us on GitHub](https://github.com/sponsors/chaynHQ), exploring [our volunteer programs](), and following us on [social media](https://linktr.ee/chayn).
 
-# License
+# Licence
 
 This project uses the [MIT License](/LICENCE.md).
 
