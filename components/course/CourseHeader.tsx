@@ -7,6 +7,14 @@ import { EventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 import Header from '../layout/Header';
 
+const buttonStyle = {
+  background: theme.palette.background.default,
+  boxShadow: 'none !important',
+  ':hover': {
+    background: 'white',
+  },
+} as const;
+
 export interface CourseHeaderProps {
   name: string;
   description: ISbRichtext;
@@ -29,13 +37,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   return (
     <Header {...headerProps}>
-      <Button
-        variant="outlined"
-        sx={{ background: theme.palette.background.default }}
-        href="/courses"
-        size="small"
-        component={Link}
-      >
+      <Button variant="outlined" sx={buttonStyle} href="/courses" size="small" component={Link}>
         {t('backToCourses')}
       </Button>
     </Header>

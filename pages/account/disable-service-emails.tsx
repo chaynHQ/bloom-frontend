@@ -2,9 +2,10 @@ import { Box, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { JSXElementConstructor, ReactElement, ReactNodeArray, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
+import { ErrorDisplay } from '../../constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson5Yellow from '../../public/illustration_leaf_mix_bee.svg';
@@ -21,9 +22,7 @@ const DisableServiceEmails: NextPage = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const [error, setError] = useState<
-    string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNodeArray | null
-  >();
+  const [error, setError] = useState<ErrorDisplay>();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
 
   useEffect(() => {

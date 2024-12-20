@@ -5,6 +5,7 @@ import coursesReducer from './coursesSlice';
 import partnerAccessesReducer from './partnerAccessSlice';
 import partnerAdminReducer from './partnerAdminSlice';
 import partnersReducer from './partnersSlice';
+import resourceReducer from './resourcesSlice';
 import userReducer from './userSlice';
 
 const makeStore = () =>
@@ -16,6 +17,7 @@ const makeStore = () =>
       partnerAccesses: partnerAccessesReducer,
       partnerAdmin: partnerAdminReducer,
       partners: partnersReducer,
+      resources: resourceReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });

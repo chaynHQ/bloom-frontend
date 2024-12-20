@@ -9,6 +9,14 @@ import theme from '../../styles/theme';
 import Link from '../common/Link';
 import Header from '../layout/Header';
 
+const buttonStyle = {
+  background: theme.palette.background.default,
+  boxShadow: 'none !important',
+  ':hover': {
+    background: 'white',
+  },
+} as const;
+
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
 } as const;
@@ -58,21 +66,15 @@ export const SessionHeader = (props: SessionHeaderProps) => {
       imageAlt={headerProps.imageAlt}
       progressStatus={sessionProgress}
     >
-      <Button
-        variant="outlined"
-        href="/courses"
-        sx={{ background: theme.palette.background.default }}
-        size="small"
-        component={Link}
-      >
+      <Button variant="contained" href="/courses" sx={buttonStyle} size="small" component={Link}>
         Courses
       </Button>
 
       <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
       <Button
-        variant="outlined"
-        sx={{ background: theme.palette.background.default }}
+        variant="contained"
+        sx={buttonStyle}
         href={`/${course.full_slug}`}
         size="small"
         component={Link}

@@ -49,7 +49,7 @@ describe.only('A logged in user should be able to navigate to a course session a
 
     cy.get('p').contains('Please select a rating before sending.').should('exist'); //give warning to user
 
-    cy.get('input[name="session-feedback-radio-buttons"').first().check(); //click feedback option
+    cy.get('input[name="feedback-radio-buttons"').first().check(); //click feedback option
 
     cy.get('button').contains('Send').click(); //submit feedback
 

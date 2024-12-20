@@ -83,10 +83,8 @@ const AccountActionsCard = () => {
             id="delete-account-button"
             variant="outlined"
             sx={{
-              border: `solid 2px ${theme.palette.primary.dark}`,
               color: theme.palette.primary.dark,
               '&:hover': {
-                border: `solid 2px ${theme.palette.primary.dark}`,
                 background: theme.palette.primary.dark,
                 color: theme.palette.common.white,
               },

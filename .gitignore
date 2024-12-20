@@ -54,3 +54,6 @@ cypress.env.json
 
 # New Relic
 newrelic_agent.log
+
+# Typescript
+tsconfig.tsbuildinfo
