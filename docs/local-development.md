@@ -27,6 +27,14 @@ Additional Resources:
 - NodeJS 20.x
 - Yarn v1.x
 
+#### Recommended Minimum System Requirements:
+
+- CPU: Quad-core 2.5 GHz (i5/Ryzen 5)
+- Memory: 16 GB RAM
+- Storage: 512 GB
+- OS: Linux, macOS, Windows, or WSL2 (latest versions)
+- Internet Connection: For accessing dependencies and external APIs/services
+
 ## Run Local Backend
 
 See [Bloom's backend repo](https://github.com/chaynHQ/bloom-backend) for instructions. You will need to run this in the background for the frontend to be functional.
