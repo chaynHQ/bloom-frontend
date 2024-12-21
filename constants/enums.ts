@@ -78,6 +78,7 @@ export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',
   SECONDARY_LIGHT = 'secondary.light',
+  SECONDARY_MAIN = 'secondary.main',
   SECONDARY_DARK = 'secondary.dark',
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',

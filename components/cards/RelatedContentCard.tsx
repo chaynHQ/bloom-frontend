@@ -5,7 +5,8 @@ import Link from '../common/Link';
 
 const cardStyle = {
   mt: 0,
-  width: { xs: '100%', sm: 'calc(50% - 0.75rem)', md: 'calc(33% - 0.75rem)' },
+  width: '100%',
+  maxWidth: '400px',
   mb: { xs: '1rem', sm: '1.5rem' },
 } as const;
 
