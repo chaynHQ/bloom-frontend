@@ -2,24 +2,26 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '../../constants/enums';
 import {
   RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
   RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
   RESOURCE_CONVERSATION_VIEWED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import illustrationCourses from '../../public/illustration_courses.svg';
 import { Resource } from '../../store/resourcesSlice';
 import { rowStyle } from '../../styles/common';
-import theme from '../../styles/theme';
+import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
+import PageSection from '../common/PageSection';
 import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
+import Header from '../layout/Header';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import { ResourceConversationAudio } from '../resources/ResourceConversationAudio';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -68,6 +70,7 @@ export interface StoryblokResourceConversationPageProps {
   seo_description: string;
   description: ISbRichtext;
   header_image: { filename: string; alt: string };
+  duration: string;
   audio: { filename: string };
   audio_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
@@ -96,6 +99,8 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userId = useTypedSelector((state) => state.user.id);
+
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
@@ -105,6 +110,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   );
   const [resourceId, setResourceId] = useState<string>();
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
+
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
@@ -172,13 +178,10 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           </>
         )}
       </Head>
-
-      <Container sx={{ background: theme.palette.bloomGradient }}>
-        <Box sx={headerStyle}>
-          <Box sx={headerLeftStyles}>
-            <Typography variant="h1" maxWidth={600}>
-              {name}
-            </Typography>
+      <Header
+        title={name}
+        introduction={
+          <Box display="flex" flexDirection="column" gap={3}>
             {render(description, RichTextOptions)}
             <Box sx={audioContainerStyle}>
               <ResourceConversationAudio
@@ -190,39 +193,40 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
                 audio_transcript={audio_transcript}
               />
             </Box>
-
-            {resourceId && (
-              <Box sx={progressStyle}>
-                {resourceProgress && <ProgressStatus status={resourceProgress} />}
-                {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
-                  <ResourceCompleteButton
-                    resourceName={name}
-                    category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                    storyId={storyId}
-                    eventData={eventData}
-                  />
-                )}
-              </Box>
-            )}
+            <Box>
+              {resourceId && (
+                <Box sx={progressStyle}>
+                  {resourceProgress && <ProgressStatus status={resourceProgress} />}
+                  {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
+                    <ResourceCompleteButton
+                      resourceName={name}
+                      category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                      storyId={storyId}
+                      eventData={eventData}
+                    />
+                  )}
+                </Box>
+              )}
+            </Box>
           </Box>
-          <Box sx={headerRightStyle}>
-            {header_image && (
-              <Box sx={imageContainerStyle}>
-                <Image
-                  alt={header_image.alt}
-                  src={header_image.filename}
-                  fill
-                  sizes="500px"
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                />
-              </Box>
-            )}
-          </Box>
-        </Box>
-      </Container>
-
+        }
+        imageSrc={header_image ? header_image.filename : illustrationCourses}
+      />
+      <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
+        <Typography variant="h2" fontWeight={600}>
+          Related content
+        </Typography>
+        <StoryblokRelatedContent
+          relatedContent={related_content}
+          relatedExercises={related_exercises}
+          userContentPartners={userHasAccessToPartnerContent(
+            partnerAdmin?.partner,
+            partnerAccesses,
+            null,
+            userId,
+          )}
+        />
+      </PageSection>
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
@@ -231,16 +235,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           />
         </Container>
       )}
-      <Container sx={{ bgcolor: 'secondary.main' }}>
-        <Typography variant="h2" mb={4}>
-          {tS('relatedContent.title')}
-        </Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-        />
-      </Container>
-
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
