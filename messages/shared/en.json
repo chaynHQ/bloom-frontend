@@ -103,13 +103,15 @@
     },
     "relatedContent": {
       "title": "Related content",
-      "short_video": "Short",
-      "conversation": "Conversation",
+      "resource_short_video": "Watch",
+      "resource_conversation": "Audio",
+      "short_video": "Watch",
       "course": "Course",
       "session": "Session",
       "session_iba": "Session",
       "grounding": "Grounding",
-      "activities": "Activity"
+      "activities": "Activity",
+      "minuteLabel": "minutes"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",

@@ -126,6 +126,18 @@
       "grounding-touching-and-feeling-textures": "Toucher et sentir les textures",
       "grouding-sound-of-claps": "Bruit des applaudissements",
       "grounding-affirming-ourselves": "S'affirmer (pression ferme)"
+    },
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_conversation": "Audio",
+      "short_video": "Watch",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
     }
   }
 }
