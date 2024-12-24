@@ -78,7 +78,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   if (
     publicPathHeads.includes(pathHead) ||
     partiallyPublicPages.includes(router.asPath) ||
-    router.asPath.includes('/conversations') ||
     router.asPath.includes('/shorts')
   ) {
     return <>{children}</>;
@@ -86,7 +85,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.push(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
+    router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
   }
 
   if (userId) {
