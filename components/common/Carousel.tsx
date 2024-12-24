@@ -1,6 +1,6 @@
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Breakpoint, IconButton, useTheme } from '@mui/material';
+import { Box, Breakpoint, IconButton } from '@mui/material';
 import { Carousel as NukaCarousel, useCarousel } from 'nuka-carousel';
 import theme from '../../styles/theme';
 
@@ -135,20 +135,17 @@ export const getSlideWidth = (
   numberTabletSlides: number,
   numberDesktopSlides: number,
 ) => {
-  const theme = useTheme();
   return {
-    [theme.breakpoints.down('sm')]: {
-      width: numberSlidesToWidthMap[numberMobileSlides || 1],
-      minWidth: numberSlidesToWidthMap[numberMobileSlides || 1],
-    },
-    [theme.breakpoints.between('sm', 'md')]: {
-      width: numberSlidesToWidthMap[numberTabletSlides || 1],
-      minWidth: numberSlidesToWidthMap[numberTabletSlides || 1],
-    },
-    [theme.breakpoints.up('md')]: {
-      width: numberSlidesToWidthMap[numberDesktopSlides || 1],
-      minWidth: numberSlidesToWidthMap[numberDesktopSlides || 1],
-    },
+    width: [
+      numberSlidesToWidthMap[numberMobileSlides || 1],
+      numberSlidesToWidthMap[numberTabletSlides || 1],
+      numberSlidesToWidthMap[numberDesktopSlides || 1],
+    ],
+    minWidth: [
+      numberSlidesToWidthMap[numberMobileSlides || 1],
+      numberSlidesToWidthMap[numberTabletSlides || 1],
+      numberSlidesToWidthMap[numberDesktopSlides || 1],
+    ],
   };
 };
 
@@ -157,7 +154,6 @@ export const isNavigationEnabled = (
   numberOfSlides: number,
   slidesPerBreakpoint: Partial<Record<Breakpoint, number>>,
 ) => {
-  return slidesPerBreakpoint && slidesPerBreakpoint[currentBreakpoint]
-    ? slidesPerBreakpoint[currentBreakpoint] < numberOfSlides
-    : true;
+  const currentSlidesPerBreakpoint = slidesPerBreakpoint[currentBreakpoint] || 1;
+  return currentSlidesPerBreakpoint < numberOfSlides || true;
 };

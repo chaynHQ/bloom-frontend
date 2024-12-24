@@ -261,7 +261,7 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
   const language = (locale || 'en') as LANGUAGES;
   const baseProps: Partial<ISbStoriesParams> = {
     language: language,
-    version: 'draft', // toDo - change this bacl
+    version: preview ? 'draft' : 'published',
     sort_by: 'position:description',
   };
   let sbParams: ISbStoriesParams = {
