@@ -4,16 +4,13 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { rowStyle } from '../../styles/common';
+import { useWidth } from '../../utils/getCurrentBreakpoint';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
+import Carousel, { getSlideWidth, isNavigationEnabled } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
-
-const containerStyle = {
-  ...rowStyle,
-} as const;
 
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
   content:
@@ -26,12 +23,14 @@ export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'conten
 export interface StoryblokRelatedContentProps {
   relatedContent: StoryblokRelatedContentStory[];
   relatedExercises: string[];
+  userContentPartners: string[];
 }
 
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
-  const { relatedContent, relatedExercises } = props;
+  const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
   const router = useRouter();
+  const width = useWidth();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
@@ -49,34 +48,71 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const disabledCoursesString = process.env.FF_DISABLED_COURSES;
 
   const filteredRelatedContent = useMemo(() => {
-    return relatedContent.filter(
-      (story) =>
-        (story.content.languages
-          ? story.content.languages.includes(router.locale || 'en')
-          : true) && !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`),
-    );
-  }, [relatedContent, disabledCoursesString, router.locale]);
+    return relatedContent.filter((story) => {
+      const locale = router.locale === 'en' ? 'default' : router.locale || 'default';
 
-  return (
-    <Box sx={containerStyle}>
-      {filteredRelatedContent.map((relatedContentItem) => (
-        <RelatedContentCard
-          key={`related_content_${relatedContentItem.id}`}
-          title={relatedContentItem.name}
-          href={`/${relatedContentItem.full_slug}`}
-          category={
-            relatedContentItem.content.component.toLowerCase() as RELATED_CONTENT_CATEGORIES
-          }
-        />
-      ))}
-      {relatedExercisesItems.map((relatedExerciseItem) => (
+      return (
+        (story.content?.languages ? story.content.languages.includes(locale) : true) &&
+        (story.content && 'included_for_partners' in story.content
+          ? 'included_for_partners' in story.content &&
+            userContentPartners.some(
+              (partner) =>
+                'included_for_partners' in story.content &&
+                story.content?.included_for_partners?.includes(partner),
+            )
+          : true) &&
+        !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`)
+      );
+    });
+  }, [relatedContent, disabledCoursesString, router.locale]);
+  let items = filteredRelatedContent
+    .map((relatedContentItem) => (
+      <RelatedContentCard
+        key={`related_content_${relatedContentItem.id}`}
+        title={relatedContentItem.content.name}
+        href={`/${relatedContentItem.full_slug}`}
+        category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
+        duration={
+          relatedContentItem.content && 'duration' in relatedContentItem.content
+            ? relatedContentItem.content.duration
+            : undefined
+        }
+      />
+    ))
+    .concat(
+      relatedExercisesItems.map((relatedExerciseItem) => (
         <RelatedContentCard
           key={`related_exercise_${relatedExerciseItem.id}`}
           title={relatedExerciseItem.name}
           href={relatedExerciseItem.href}
           category={relatedExerciseItem.category}
         />
-      ))}
+      )),
+    );
+
+  return (
+    <Box width="100%">
+      <Carousel
+        showArrows={true}
+        arrowPosition="bottom"
+        navigationEnabled={isNavigationEnabled(width, items.length, {
+          xs: 1,
+          sm: 2,
+          md: 3,
+        })}
+        items={items.map((item, index) => (
+          <Box
+            sx={{
+              ...(getSlideWidth(1, 2, 3) as any),
+            }}
+            padding={[0.25, 0.5]}
+            key={index}
+          >
+            {item}
+          </Box>
+        ))}
+        theme="primary"
+      />
     </Box>
   );
 };
