@@ -1,9 +1,12 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { Box, Button, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '../../constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '../../constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_VIEWED,
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
@@ -12,9 +15,11 @@ import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
+import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import Link from '../common/Link';
+import PageSection from '../common/PageSection';
 import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
@@ -46,6 +51,21 @@ const progressStyle = {
   },
 } as const;
 
+const backButtonStyle = {
+  display: { md: 'none' },
+  width: '2.5rem',
+  marginLeft: '-0.675rem',
+  mb: 2,
+  mt: 0,
+  padding: 0,
+} as const;
+
+const backIconStyle = {
+  height: '1.75rem',
+  width: '1.75rem',
+  color: 'primary.dark',
+} as const;
+
 export interface StoryblokResourceShortPageProps {
   storyId: number;
   _uid: string;
@@ -53,15 +73,17 @@ export interface StoryblokResourceShortPageProps {
   name: string;
   seo_description: string;
   description: ISbRichtext;
+  duration: string;
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
-  related_course: ISbStoryData | null;
+  related_course?: ISbStoryData | null;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
   component: 'resource_short_video';
+  included_for_partners: string[];
 }
 
 const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
@@ -80,13 +102,17 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_content,
     related_exercises,
   } = props;
+  const router = useRouter();
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
+  const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -155,7 +181,14 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         )}
       </Head>
 
-      <Container sx={{ background: theme.palette.bloomGradient }}>
+      <Container sx={{ background: theme.palette.bloomGradient, paddingTop: ['20px', '60px'] }}>
+        <IconButton
+          sx={backButtonStyle}
+          onClick={() => router.back()}
+          aria-label={tS('navigateBack')}
+        >
+          <KeyboardArrowLeftIcon sx={backIconStyle} />
+        </IconButton>
         <Typography variant="h1" maxWidth={600}>
           {name}
         </Typography>
@@ -217,15 +250,22 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           />
         </Container>
       )}
-      <Container sx={{ bgcolor: 'secondary.main' }}>
-        <Typography variant="h2" mb={4}>
-          {tS('relatedContent.title')}
+
+      <PageSection alignment="flex-start" color={STORYBLOK_COLORS.SECONDARY_MAIN}>
+        <Typography variant="h2" fontWeight={600}>
+          Related content
         </Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}
           relatedExercises={related_exercises}
+          userContentPartners={userHasAccessToPartnerContent(
+            partnerAdmin?.partner,
+            partnerAccesses,
+            Cookies.get('referralPartner') || entryPartnerReferral,
+            userId,
+          )}
         />
-      </Container>
+      </PageSection>
 
       {!isLoggedIn && <SignUpBanner />}
     </Box>
