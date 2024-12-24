@@ -26,6 +26,7 @@ interface VideoProps {
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;
   setVideoFinished?: Dispatch<SetStateAction<boolean>>;
+  lightMode?: boolean;
 }
 
 const Video = (props: VideoProps) => {
@@ -37,7 +38,9 @@ const Video = (props: VideoProps) => {
     containerStyles,
     setVideoStarted,
     setVideoFinished,
+    lightMode = true,
   } = props;
+
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
   const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
@@ -112,7 +115,7 @@ const Video = (props: VideoProps) => {
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           ref={player}
-          light={true}
+          light={lightMode}
           onDuration={(duration) => setVideoDuration(duration)}
           onStart={videoStarted}
           onEnded={videoEnded}
