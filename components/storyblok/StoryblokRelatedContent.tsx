@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { useWidth } from '../../utils/getCurrentBreakpoint';
+import { useWidth } from '../../utils/useWidth';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import Carousel, { getSlideWidth, isNavigationEnabled } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';

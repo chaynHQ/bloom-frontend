@@ -1,6 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
-import { useWidth } from '../../utils/getCurrentBreakpoint';
+import { useWidth } from '../../utils/useWidth';
 import Carousel, { getSlideWidth, isNavigationEnabled } from '../common/Carousel';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
