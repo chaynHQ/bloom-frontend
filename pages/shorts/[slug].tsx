@@ -74,8 +74,9 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
+
   let sbParams: ISbStoriesParams = {
-    version: isProduction ? 'published' : 'draft',
+    version: 'published',
     starts_with: 'shorts/',
     filter_query: {
       component: {
