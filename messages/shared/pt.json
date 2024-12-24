@@ -126,6 +126,18 @@
       "grounding-touching-and-feeling-textures": "Tocando e sentindo texturas",
       "grouding-sound-of-claps": "Som de palmas",
       "grounding-affirming-ourselves": "Nos reafirmarmos (pressão firme)"
+    },
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_conversation": "Audio",
+      "short_video": "Watch",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
     }
   }
 }

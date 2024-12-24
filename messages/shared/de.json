@@ -100,6 +100,18 @@
       "description1": "Bloom ist eine Online-Plattform, die dich bei der Heilung von Traumata unterstützt. Von Videokursen und reflektierenden Aktivitäten bis hin zur direkten Kommunikation mit unserem Team gibt es viele verschiedene Möglichkeiten, sich mit Bloom zu beschäftigen.",
       "description2": "Registriere dich unten, um Zugriff auf all unsere Inhalte zu erhalten und alles zu erkunden, was Bloom zu bieten hat.",
       "button": "Loslegen"
+    },
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_conversation": "Audio",
+      "short_video": "Watch",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
     }
   }
 }

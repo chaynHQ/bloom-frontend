@@ -64,6 +64,8 @@
     "errors": {
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
-    "backToCourses": "Zurück zu Kursen"
+    "backToCourses": "Zurück zu Kursen",
+    "conversationsHeading": "Conversations",
+    "shortsHeading": "Shorts"
   }
 }

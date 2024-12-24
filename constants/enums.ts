@@ -14,7 +14,7 @@ export enum MAINTENANCE_MODE {
 
 export enum RESOURCE_CATEGORIES {
   SHORT_VIDEO = 'short_video',
-  CONVERSATION = 'conversation',
+  CONVERSATION = 'resource_conversation',
 }
 
 export enum CORE_CATEGORIES {
@@ -78,6 +78,7 @@ export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',
   SECONDARY_LIGHT = 'secondary.light',
+  SECONDARY_MAIN = 'secondary.main',
   SECONDARY_DARK = 'secondary.dark',
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
