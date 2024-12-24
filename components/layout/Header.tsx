@@ -4,7 +4,6 @@ import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
-import { JSXElementConstructor, ReactElement, ReactNodeArray } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
@@ -15,7 +14,7 @@ import ProgressStatus from '../common/ProgressStatus';
 
 export interface HeaderProps {
   title: string;
-  introduction: TextNode | ISbRichtext;
+  introduction?: TextNode | ISbRichtext;
   imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -28,7 +27,7 @@ const headerContainerStyle = {
   ...rowStyle,
   alignItems: 'flex-start',
   minHeight: { xs: 220, lg: 360 },
-  paddingBottom: { xs: '2.5rem !important', sm: '5rem !important' },
+  paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
   paddingTop: { xs: '0', md: '6.5rem ' },
   gap: 4,
   background: {
@@ -39,18 +38,18 @@ const headerContainerStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 200, md: 250 },
-  height: { xs: 200, md: 250 },
+  width: { xs: 200, sm: 150, md: 250 },
+  height: { xs: 200, sm: 150, md: 250 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: '1rem', md: '8%' },
-  marginTop: { sm: '5rem', md: 0 },
+  marginTop: 0,
 } as const;
 
 const textContainerStyle = {
   ...columnStyle,
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
-  maxWidth: { xs: '100%', sm: '60%', md: '55%' },
+  maxWidth: { xs: '100%', sm: '80%', md: '55%' },
 } as const;
 
 const childrenContentStyle = {
@@ -91,6 +90,17 @@ const Header = (props: HeaderProps) => {
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt ? translatedImageAlt : imageAlt ? tS(imageAlt) : '';
 
+  const getIntroduction = () => {
+    if (!introduction) return undefined;
+    if (typeof introduction === 'string') {
+      return <Typography fontSize="1rem !important">{introduction}</Typography>;
+    } else if (typeof introduction === 'object' && 'content' in introduction) {
+      return render(introduction as ISbRichtext, RichTextOptions);
+    } else {
+      return introduction;
+    }
+  };
+
   return (
     <Container sx={headerContainerStyle}>
       <UserResearchBanner />
@@ -107,18 +117,7 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1" marginBottom={{ md: '2.5rem' }}>
             {title}
           </Typography>
-          {typeof introduction === 'string' || !introduction?.hasOwnProperty('content') ? (
-            <Typography fontSize="1rem !important">
-              {
-                introduction as
-                  | string
-                  | ReactElement<any, string | JSXElementConstructor<any>>
-                  | ReactNodeArray
-              }
-            </Typography>
-          ) : (
-            render(introduction, RichTextOptions)
-          )}
+          {getIntroduction()}
         </Box>
         {progressStatus && <ProgressStatus status={progressStatus} />}
         {cta && <Box mt={4}>{cta}</Box>}
