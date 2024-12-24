@@ -3,6 +3,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Breakpoint, IconButton } from '@mui/material';
 import { Carousel as NukaCarousel, useCarousel } from 'nuka-carousel';
 import theme from '../../styles/theme';
+import { useWidth } from '../../utils/useWidth';
 
 interface CarouselProps {
   items: Array<React.ReactNode>;
@@ -10,7 +11,7 @@ interface CarouselProps {
   showArrows?: boolean;
   arrowPosition?: 'side' | 'bottom';
   title?: string;
-  navigationEnabled?: boolean;
+  slidesPerView?: { xs: number; sm: number; md: number; lg: number; xl: number };
 }
 
 const numberSlidesToWidthMap: { [key: number]: string } = {
@@ -110,8 +111,17 @@ const Carousel = (props: CarouselProps) => {
     showArrows = false,
     arrowPosition = 'bottom',
     title = 'carousel',
-    navigationEnabled = true,
+    slidesPerView = {
+      xs: 1,
+      sm: 1,
+      md: 1,
+      lg: 1,
+      xl: 1,
+    },
   } = props;
+  const width = useWidth();
+  const navigationEnabled = isNavigationEnabled(width, items.length, slidesPerView);
+
   return (
     <NukaCarousel
       id={title}
@@ -148,12 +158,12 @@ export const getSlideWidth = (
     ],
   };
 };
-
-export const isNavigationEnabled = (
+const isNavigationEnabled = (
   currentBreakpoint: Breakpoint,
   numberOfSlides: number,
-  slidesPerBreakpoint: Partial<Record<Breakpoint, number>>,
+  slidesPerBreakpoint: Record<Breakpoint, number>,
 ) => {
-  const currentSlidesPerBreakpoint = slidesPerBreakpoint[currentBreakpoint] || 1;
-  return currentSlidesPerBreakpoint < numberOfSlides || true;
+  const currentSlidesPerBreakpoint = slidesPerBreakpoint[currentBreakpoint];
+  console.log(currentBreakpoint, numberOfSlides, currentSlidesPerBreakpoint);
+  return currentSlidesPerBreakpoint < numberOfSlides;
 };
