@@ -43,9 +43,8 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
       'resource_short_video.related_session',
     ],
   });
-  let relatedCourse;
+  let relatedCourse = null;
 
-  console.log('story', storyblokProps);
   if (storyblokProps?.story.content.related_session.length) {
     const storyblokCourseProps = await getStoryblokPagesByUuids(
       storyblokProps?.story.content.related_session[0].content.course, // get course by course uuid

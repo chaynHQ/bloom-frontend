@@ -39,7 +39,6 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     resolve_relations: ['resource_conversation.related_content'],
   });
 
-  console.log('storyblokProps', storyblokProps);
   return {
     props: {
       ...storyblokProps,
