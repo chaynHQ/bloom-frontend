@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
 import { useWidth } from '../../utils/useWidth';
-import Carousel, { getSlideWidth, isNavigationEnabled } from '../common/Carousel';
+import Carousel, { getSlideWidth } from '../common/Carousel';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
 import StoryblokQuote from './StoryblokQuote';
@@ -36,11 +36,13 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
   return (
     <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
       <Carousel
-        navigationEnabled={isNavigationEnabled(width, items.length, {
+        slidesPerView={{
           xs: number_mobile_slides || 1,
           sm: number_desktop_slides || 1,
           md: number_desktop_slides || 1,
-        })}
+          lg: number_desktop_slides || 1,
+          xl: number_desktop_slides || 1,
+        }}
         theme={theme}
         items={items.map((item, index: number) => {
           const component = components.find((c) => c.name === item.component);

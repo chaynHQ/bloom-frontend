@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
 import { useWidth } from '../../utils/useWidth';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
-import Carousel, { getSlideWidth, isNavigationEnabled } from '../common/Carousel';
+import Carousel, { getSlideWidth } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
@@ -95,11 +95,13 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
       <Carousel
         showArrows={true}
         arrowPosition="bottom"
-        navigationEnabled={isNavigationEnabled(width, items.length, {
+        slidesPerView={{
           xs: 1,
           sm: 2,
           md: 3,
-        })}
+          lg: 3,
+          xl: 3,
+        }}
         items={items.map((item, index) => (
           <Box
             sx={{

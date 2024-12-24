@@ -10,7 +10,7 @@ import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import CourseCard from '../../components/cards/CourseCard';
 import { RelatedContentCard } from '../../components/cards/RelatedContentCard';
 import { ShortsCard } from '../../components/cards/ShortsCard';
-import Carousel, { getSlideWidth, isNavigationEnabled } from '../../components/common/Carousel';
+import Carousel, { getSlideWidth } from '../../components/common/Carousel';
 import Column from '../../components/common/Column';
 import LoadingContainer from '../../components/common/LoadingContainer';
 import PageSection from '../../components/common/PageSection';
@@ -186,13 +186,13 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                 title="conversations"
                 theme="primary"
                 showArrows={true}
-                navigationEnabled={isNavigationEnabled(width, conversations.length, {
+                slidesPerView={{
                   xs: 1,
                   sm: 2,
                   md: 3,
                   lg: 3,
                   xl: 3,
-                })}
+                }}
                 items={conversations.map((conversation) => {
                   return (
                     <Box
@@ -227,11 +227,13 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                 title="shorts"
                 theme="primary"
                 showArrows={true}
-                navigationEnabled={isNavigationEnabled(width, loadedShorts.length, {
+                slidesPerView={{
                   xs: 1,
                   sm: 2,
                   md: 3,
-                })}
+                  lg: 3,
+                  xl: 3,
+                }}
                 items={loadedShorts.map((short) => {
                   return (
                     <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
