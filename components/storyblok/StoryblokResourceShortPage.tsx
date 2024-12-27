@@ -6,7 +6,12 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '../../constants/enums';
+import {
+  PROGRESS_STATUS,
+  RESOURCE_CATEGORIES,
+  STORYBLOK_COLORS,
+  STORYBLOK_COMPONENTS,
+} from '../../constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_VIEWED,
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
@@ -15,6 +20,7 @@ import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
+import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
 import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { SignUpBanner } from '../banner/SignUpBanner';
@@ -78,7 +84,7 @@ export interface StoryblokResourceShortPageProps {
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
-  related_course?: ISbStoryData | null;
+  // related_course?: ISbStoryData | null;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -98,7 +104,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     video_transcript,
     page_sections,
     related_session,
-    related_course,
+    // related_course,
     related_content,
     related_exercises,
   } = props;
@@ -112,6 +118,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const [linkedCourse, setLinkedCourse] = useState<ISbStoryData>();
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -144,6 +151,56 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
+  }, []);
+  useEffect(() => {
+    async function fetchCourse() {
+      let linkedStoryData: ISbStoryData[] | null = null;
+
+      // ensure we have the correct story data for the linked story rather than a uuid
+      if (typeof related_session === 'string') {
+        try {
+          const storyblokStory = await getStoryblokPagesByUuids(
+            related_session, // get course by course uuid
+            router.locale,
+            false,
+            {},
+          );
+          if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
+            linkedStoryData = storyblokStory.stories || null;
+          }
+        } catch (error) {
+          console.error('Error fetching related course:', error);
+        }
+      } else {
+        linkedStoryData = related_session[0]?.content.related_session;
+      }
+      // depending on the type of linked story, we need to fetch the course
+      if (linkedStoryData?.length) {
+        // if we already have the course data, use it
+        if (linkedStoryData[0]?.content.component === STORYBLOK_COMPONENTS.COURSE) {
+          setLinkedCourse(linkedStoryData[0]);
+        } else {
+          // if we don't have the course data, we need to get it from the linked story
+          try {
+            const storyblokCourseProps = await getStoryblokPagesByUuids(
+              linkedStoryData[0].content.related_session[0].content.course, // get course by course uuid
+              router.locale,
+              false,
+              {},
+            );
+
+            if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
+              setLinkedCourse(storyblokCourseProps.stories[0]);
+            }
+            // Your data fetching logic here
+          } catch (error) {
+            console.error('Error fetching related courses:', error);
+          }
+        }
+      }
+    }
+
+    fetchCourse();
   }, []);
 
   const redirectToSession = () => {
@@ -223,9 +280,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
             <Typography component="h2" mb={2}>
               {t('sessionDetail', {
-                sessionNumber: related_session[0]?.position / 10 - 1,
+                sessionNumber:
+                  related_session[0]?.content.component === STORYBLOK_COMPONENTS.COURSE
+                    ? 0
+                    : related_session[0]?.position / 10 - 1,
                 sessionName: related_session[0]?.name,
-                courseName: related_course?.content.name,
+                courseName: linkedCourse?.content.name,
               })}
             </Typography>
             <Button
