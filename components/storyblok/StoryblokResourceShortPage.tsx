@@ -84,7 +84,7 @@ export interface StoryblokResourceShortPageProps {
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
-  // related_course?: ISbStoryData | null;
+  related_course?: ISbStoryData | null;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -104,7 +104,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     video_transcript,
     page_sections,
     related_session,
-    // related_course,
+    related_course,
     related_content,
     related_exercises,
   } = props;

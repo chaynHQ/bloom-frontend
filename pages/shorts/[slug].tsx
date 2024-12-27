@@ -9,11 +9,12 @@ import NoDataAvailable from '../../components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '../../components/storyblok/StoryblokResourceShortPage';
+import { STORYBLOK_COMPONENTS } from '../../constants/enums';
 import { getStoryblokPageProps, getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
-  related_course?: ISbStoryData | null;
+  related_course: ISbStoryData | null;
 }
 
 const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
@@ -27,6 +28,7 @@ const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
     <>
       <StoryblokResourceShortPage
         {...(story.content as StoryblokResourceShortPageProps)}
+        related_course={related_course}
         storyId={story.id}
       />
     </>
@@ -46,19 +48,18 @@ export async function getStaticProps({
       'resource_short_video.related_session',
     ],
   });
-  // const relatedCourse = await fetchRelatedCourse(storyblokProps?.story, locale, preview, {});
-  const relatedContent = await fetchRelatedContent(
-    storyblokProps?.story.content.related_content,
-    locale,
-    preview,
-    {},
-  );
+  const relatedCourse = await fetchRelatedCourse(storyblokProps?.story, locale, preview, {});
+  // const relatedContent = await fetchRelatedContent(
+  //   storyblokProps?.story.content.related_content,
+  //   locale,
+  //   preview,
+  //   {},
+  // );
 
   return {
     props: {
       ...storyblokProps,
-      // related_course: relatedCourse ? relatedCourse : null,
-      related_content: relatedContent ? relatedContent : null,
+      related_course: relatedCourse || null,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
@@ -138,60 +139,60 @@ const fetchRelatedContent = async (
   return formattedRelatedContent;
 };
 
-// const fetchRelatedCourse = async (
-//   relatedSession: ISbStoryData | string,
-//   locale: string,
-//   preview: boolean,
-//   params: ISbStoriesParams,
-// ) => {
-//   let linkedStoryData: ISbStoryData[] | null = null;
-//   let course: ISbStoryData | null = null;
+const fetchRelatedCourse = async (
+  relatedSession: ISbStoryData | string,
+  locale: string,
+  preview: boolean,
+  params: ISbStoriesParams,
+) => {
+  let linkedStoryData: ISbStoryData[] | null = null;
+  let course: ISbStoryData | null = null;
 
-//   // ensure we have the correct story data for the linked story rather than a uuid
-//   if (typeof relatedSession === 'string') {
-//     try {
-//       const storyblokStory = await getStoryblokPagesByUuids(
-//         relatedSession, // get course by course uuid
-//         locale,
-//         preview,
-//         params,
-//       );
-//       if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
-//         linkedStoryData = storyblokStory.stories || null;
-//       }
-//     } catch (error) {
-//       console.error('Error fetching related course:', error);
-//       return null;
-//     }
-//   } else {
-//     linkedStoryData = relatedSession.content.related_session;
-//   }
-//   // depending on the type of linked story, we need to fetch the course
-//   if (linkedStoryData?.length) {
-//     // if we already have the course data, use it
-//     if (linkedStoryData[0]?.content.component === STORYBLOK_COMPONENTS.COURSE) {
-//       course = linkedStoryData[0] || null;
-//     } else {
-//       // if we don't have the course data, we need to get it from the linked story
-//       try {
-//         const storyblokCourseProps = await getStoryblokPagesByUuids(
-//           linkedStoryData[0].content.related_session[0].content.course, // get course by course uuid
-//           locale,
-//           preview,
-//           params,
-//         );
+  // ensure we have the correct story data for the linked story rather than a uuid
+  if (typeof relatedSession === 'string') {
+    try {
+      const storyblokStory = await getStoryblokPagesByUuids(
+        relatedSession, // get course by course uuid
+        locale,
+        preview,
+        params,
+      );
+      if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
+        linkedStoryData = storyblokStory.stories || null;
+      }
+    } catch (error) {
+      console.error('Error fetching related course:', error);
+      return null;
+    }
+  } else {
+    linkedStoryData = relatedSession.content.related_session;
+  }
+  // depending on the type of linked story, we need to fetch the course
+  if (linkedStoryData?.length) {
+    // if we already have the course data, use it
+    if (linkedStoryData[0]?.content.component === STORYBLOK_COMPONENTS.COURSE) {
+      course = linkedStoryData[0] || null;
+    } else {
+      // if we don't have the course data, we need to get it from the linked story
+      try {
+        const storyblokCourseProps = await getStoryblokPagesByUuids(
+          linkedStoryData[0].content.related_session[0].content.course, // get course by course uuid
+          locale,
+          preview,
+          params,
+        );
 
-//         if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-//           course = storyblokCourseProps.stories[0] || null;
-//         }
-//         // Your data fetching logic here
-//       } catch (error) {
-//         console.error('Error fetching related courses:', error);
-//         return null;
-//       }
-//     }
-//   }
-//   return course;
-// };
+        if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
+          course = storyblokCourseProps.stories[0] || null;
+        }
+        // Your data fetching logic here
+      } catch (error) {
+        console.error('Error fetching related courses:', error);
+        return null;
+      }
+    }
+  }
+  return course;
+};
 
 export default ResourceShortOverview;
