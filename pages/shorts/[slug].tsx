@@ -14,10 +14,9 @@ import { getStoryblokPageProps, getStoryblokPagesByUuids } from '../../utils/get
 
 interface Props {
   story: ISbStoryData | null;
-  related_course: ISbStoryData | null;
 }
 
-const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
+const ResourceShortOverview: NextPage<Props> = ({ story }) => {
   story = useStoryblokState(story);
 
   if (!story) {
@@ -28,7 +27,6 @@ const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
     <>
       <StoryblokResourceShortPage
         {...(story.content as StoryblokResourceShortPageProps)}
-        related_course={related_course}
         storyId={story.id}
       />
     </>
@@ -59,7 +57,6 @@ export async function getStaticProps({
   return {
     props: {
       ...storyblokProps,
-      related_course: relatedCourse || null,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
