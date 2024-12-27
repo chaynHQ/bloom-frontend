@@ -60,7 +60,7 @@ export async function getStaticProps({
     props: {
       ...storyblokProps,
       ...(relatedCourse && { related_course: relatedCourse || null }),
-      related_content: relatedContent,
+      related_content: relatedContent || null,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
