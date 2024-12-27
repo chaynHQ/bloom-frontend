@@ -47,7 +47,10 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   const relatedCourses = storyblokProps?.story.content.related_session;
   let relatedCourse: ISbStoryData | null = null;
   if (relatedCourses.length) {
-    if (relatedCourses[0]?.content.component === STORYBLOK_COMPONENTS.COURSE) {
+    if (
+      relatedCourses[0]?.content.component === STORYBLOK_COMPONENTS.COURSE &&
+      !!relatedCourses[0]
+    ) {
       relatedCourse = relatedCourses[0];
     } else {
       const storyblokCourseProps = await getStoryblokPagesByUuids(
@@ -57,7 +60,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
         {},
       );
 
-      if (storyblokCourseProps?.stories.length && storyblokCourseProps?.stories.length > 0) {
+      if (storyblokCourseProps?.stories.length && storyblokCourseProps.stories[0]) {
         relatedCourse = storyblokCourseProps.stories[0];
       }
     }
