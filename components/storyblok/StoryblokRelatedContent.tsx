@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { useWidth } from '../../utils/useWidth';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import Carousel, { getSlideWidth } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
@@ -30,7 +29,6 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
   const router = useRouter();
-  const width = useWidth();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')

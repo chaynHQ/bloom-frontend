@@ -7,6 +7,9 @@
     "redux": "^5.0.0",
     "cross-spawn": "^7.0.5"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
