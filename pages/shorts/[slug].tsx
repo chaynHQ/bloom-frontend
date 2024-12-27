@@ -49,6 +49,7 @@ export async function getStaticProps({
     ],
   });
   const relatedCourse = await fetchRelatedCourse(storyblokProps?.story, locale, preview, {});
+  console.log('>>>>>>>>>>>>', relatedCourse);
   const relatedContent = await fetchRelatedContent(
     storyblokProps?.story.content.related_content,
     locale,
@@ -59,7 +60,7 @@ export async function getStaticProps({
   return {
     props: {
       ...storyblokProps,
-      ...(relatedCourse && { related_course: relatedCourse || null }),
+      related_course: relatedCourse || null,
       related_content: relatedContent || null,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
@@ -120,14 +121,18 @@ const fetchRelatedContent = async (
   // Sometimes the related content is just a string with the uuid of the related content. TODO debug why
   relatedContent.forEach(async (relatedContentItem) => {
     if (typeof relatedContentItem === 'string') {
-      const storyblokStory = await getStoryblokPagesByUuids(
-        relatedContentItem, // get course by course uuid
-        locale,
-        preview,
-        params,
-      );
-      if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
-        formattedRelatedContent.push(storyblokStory.stories[0]);
+      try {
+        const storyblokStory = await getStoryblokPagesByUuids(
+          relatedContentItem, // get course by course uuid
+          locale,
+          preview,
+          params,
+        );
+        if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
+          formattedRelatedContent.push(storyblokStory.stories[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching related content:', error);
       }
     } else {
       formattedRelatedContent.push(relatedContentItem);
@@ -151,15 +156,21 @@ const fetchRelatedCourse = async (
     ) {
       relatedCourse = relatedCourses[0] || null;
     } else {
-      const storyblokCourseProps = await getStoryblokPagesByUuids(
-        relatedSession.content.related_session[0].content.course, // get course by course uuid
-        locale,
-        preview,
-        params,
-      );
+      try {
+        const storyblokCourseProps = await getStoryblokPagesByUuids(
+          relatedSession.content.related_session[0].content.course, // get course by course uuid
+          locale,
+          preview,
+          params,
+        );
 
-      if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-        relatedCourse = storyblokCourseProps.stories[0] || null;
+        if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
+          relatedCourse = storyblokCourseProps.stories[0] || null;
+        }
+        // Your data fetching logic here
+      } catch (error) {
+        console.error('Error fetching related courses:', error);
+        return null;
       }
     }
   }
