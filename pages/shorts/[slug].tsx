@@ -35,7 +35,11 @@ const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
   );
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
+export async function getStaticProps({
+  locale = 'en',
+  preview = false,
+  params,
+}: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
   const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, preview, {
@@ -44,31 +48,19 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
       'resource_short_video.related_session',
     ],
   });
-  const relatedCourses = storyblokProps?.story.content.related_session;
-  let relatedCourse: ISbStoryData | null = null;
-  if (relatedCourses.length) {
-    if (
-      relatedCourses[0]?.content.component === STORYBLOK_COMPONENTS.COURSE &&
-      !!relatedCourses[0]
-    ) {
-      relatedCourse = relatedCourses[0];
-    } else {
-      const storyblokCourseProps = await getStoryblokPagesByUuids(
-        storyblokProps?.story.content.related_session[0].content.course, // get course by course uuid
-        locale,
-        preview,
-        {},
-      );
+  const relatedCourse = await fetchRelatedCourse(storyblokProps?.story, locale, preview, {});
+  const relatedContent = await fetchRelatedContent(
+    storyblokProps?.story.content.related_content,
+    locale,
+    preview,
+    {},
+  );
 
-      if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-        relatedCourse = storyblokCourseProps.stories[0];
-      }
-    }
-  }
   return {
     props: {
       ...storyblokProps,
       ...(relatedCourse && { related_course: relatedCourse || null }),
+      related_content: relatedContent,
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
@@ -83,7 +75,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
 
   let sbParams: ISbStoriesParams = {
-    version: 'published',
+    version: isProduction ? 'published' : 'draft',
     starts_with: 'shorts/',
     filter_query: {
       component: {
@@ -117,5 +109,61 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: false,
   };
 }
+
+const fetchRelatedContent = async (
+  relatedContent: Array<ISbStoryData | string>,
+  locale: string,
+  preview: boolean,
+  params: ISbStoriesParams,
+): Promise<ISbStoryData[]> => {
+  let formattedRelatedContent: ISbStoryData[] = [];
+  // Sometimes the related content is just a string with the uuid of the related content. TODO debug why
+  relatedContent.forEach(async (relatedContentItem) => {
+    if (typeof relatedContentItem === 'string') {
+      const storyblokStory = await getStoryblokPagesByUuids(
+        relatedContentItem, // get course by course uuid
+        locale,
+        preview,
+        params,
+      );
+      if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
+        formattedRelatedContent.push(storyblokStory.stories[0]);
+      }
+    } else {
+      formattedRelatedContent.push(relatedContentItem);
+    }
+  });
+  return formattedRelatedContent;
+};
+
+const fetchRelatedCourse = async (
+  relatedSession: ISbStoryData,
+  locale: string,
+  preview: boolean,
+  params: ISbStoriesParams,
+) => {
+  const relatedCourses = relatedSession.content.related_session;
+  let relatedCourse: ISbStoryData | null = null;
+  if (relatedCourses.length) {
+    if (
+      relatedCourses[0]?.content.component === STORYBLOK_COMPONENTS.COURSE &&
+      !!relatedCourses[0]
+    ) {
+      relatedCourse = relatedCourses[0];
+    } else {
+      const storyblokCourseProps = await getStoryblokPagesByUuids(
+        relatedSession.content.related_session[0].content.course, // get course by course uuid
+        locale,
+        preview,
+        params,
+      );
+
+      if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
+        relatedCourse = storyblokCourseProps.stories[0];
+      }
+    }
+  }
+  return relatedCourse;
+};
 
 export default ResourceShortOverview;
