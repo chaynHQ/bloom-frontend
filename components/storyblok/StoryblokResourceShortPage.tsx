@@ -150,7 +150,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
       ...eventData,
       shorts_name: name,
-      session_name: related_session[0].name,
+      session_name: related_session.length && related_session[0]?.name,
     });
   };
 
@@ -223,14 +223,14 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
             <Typography component="h2" mb={2}>
               {t('sessionDetail', {
-                sessionNumber: related_session[0].position / 10 - 1,
-                sessionName: related_session[0].name,
+                sessionNumber: related_session[0]?.position / 10 - 1,
+                sessionName: related_session[0]?.name,
                 courseName: related_course?.content.name,
               })}
             </Typography>
             <Button
               component={Link}
-              href={`/${related_session[0].full_slug}`}
+              href={related_session[0] && `/${related_session[0]?.full_slug}`}
               onClick={redirectToSession}
               variant="contained"
               color="secondary"
