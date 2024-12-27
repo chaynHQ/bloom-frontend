@@ -149,7 +149,7 @@ const fetchRelatedCourse = async (
       relatedCourses[0]?.content.component === STORYBLOK_COMPONENTS.COURSE &&
       !!relatedCourses[0]
     ) {
-      relatedCourse = relatedCourses[0];
+      relatedCourse = relatedCourses[0] || null;
     } else {
       const storyblokCourseProps = await getStoryblokPagesByUuids(
         relatedSession.content.related_session[0].content.course, // get course by course uuid
@@ -159,7 +159,7 @@ const fetchRelatedCourse = async (
       );
 
       if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-        relatedCourse = storyblokCourseProps.stories[0];
+        relatedCourse = storyblokCourseProps.stories[0] || null;
       }
     }
   }
