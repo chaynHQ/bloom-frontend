@@ -100,9 +100,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     if (locales) {
       // create additional languages
       for (const locale of locales) {
-        if (short?.content?.languages && short.content.languages.includes(locale)) {
-          paths.push({ params: { slug: splittedSlug[1] }, locale });
-        }
+        paths.push({ params: { slug: splittedSlug[1] }, locale });
       }
     }
   });
