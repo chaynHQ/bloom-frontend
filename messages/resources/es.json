@@ -2,27 +2,27 @@
   "Resources": {
     "conversations": "Conversaciones",
     "shorts": "Cortos",
-    "completed": "Completed",
-    "sessionDetail": "This clip is from Session {sessionNumber}, {sessionName}, from our {courseName} course.",
-    "sessionButtonLabel": "Watch full session",
-    "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
-    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
+    "completed": "Completado",
+    "sessionDetail": "Este clip es de la Sesión {sessionNumber}, {sessionName}, de nuestro curso {courseName}.",
+    "sessionButtonLabel": "Ver sesión completa",
+    "videoTranscriptLink": "Mira el video o lee la <link>transcripción</link>.",
+    "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción</link>.",
     "resourceFeedback": {
-      "title": "How was this session?",
-      "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
+      "title": "¿Cómo fue esta sesión?",
+      "subtitle": "Nos encantaría saber cómo encontraste esta sesión. Tu opinión nos ayuda a mejorar nuestros cursos.",
       "feedbackTags": {
-        "relatable": "Relatable",
-        "useful": "Useful",
-        "inspiring": "Inspiring",
-        "too long": "Too long",
-        "too complicated": "Too complicated",
-        "not useful": "Not useful"
+        "relatable": "Identificable",
+        "useful": "Útil",
+        "inspiring": "Inspirador",
+        "too long": "Demasiado largo",
+        "too complicated": "Demasiado complicado",
+        "not useful": "No útil"
       },
-      "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
-      "submissionText": "Thank you for submitting your feedback",
+      "textboxDefaultText": "Añade un comentario...",
+      "sendButtonText": "Enviar",
+      "submissionText": "Gracias por enviar tu opinión",
       "errors": {
-        "feedbackTagError": "Please select a rating before sending."
+        "feedbackTagError": "Por favor selecciona una calificación antes de enviar."
       }
     }
   }

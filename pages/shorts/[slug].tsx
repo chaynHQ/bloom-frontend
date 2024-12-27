@@ -60,7 +60,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
         {},
       );
 
-      if (storyblokCourseProps?.stories.length && storyblokCourseProps.stories[0]) {
+      if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
         relatedCourse = storyblokCourseProps.stories[0];
       }
     }
@@ -68,7 +68,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
   return {
     props: {
       ...storyblokProps,
-      related_course: relatedCourse || null,
+      ...(relatedCourse && { related_course: relatedCourse || null }),
       messages: {
         ...require(`../../messages/shared/${locale}.json`),
         ...require(`../../messages/navigation/${locale}.json`),
