@@ -116,3 +116,7 @@ export enum FEEDBACK_TAGS {
   TOO_COMPLICATED = 'too complicated',
   NOT_USEFUL = 'not useful',
 }
+
+export enum STORYBLOK_COMPONENTS {
+  COURSE = 'Course',
+}

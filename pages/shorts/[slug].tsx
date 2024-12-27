@@ -9,11 +9,12 @@ import NoDataAvailable from '../../components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '../../components/storyblok/StoryblokResourceShortPage';
+import { STORYBLOK_COMPONENTS } from '../../constants/enums';
 import { getStoryblokPageProps, getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;
-  related_course: ISbStoryData | null;
+  related_course?: ISbStoryData | null;
 }
 
 const ResourceShortOverview: NextPage<Props> = ({ story, related_course }) => {
@@ -43,18 +44,22 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
       'resource_short_video.related_session',
     ],
   });
+  const relatedCourses = storyblokProps?.story.content.related_session;
   let relatedCourse = null;
+  if (relatedCourses.length) {
+    if (relatedCourses[0].content.component === STORYBLOK_COMPONENTS.COURSE) {
+      relatedCourse = relatedCourses[0];
+    } else {
+      const storyblokCourseProps = await getStoryblokPagesByUuids(
+        storyblokProps?.story.content.related_session[0].content.course, // get course by course uuid
+        locale,
+        preview,
+        {},
+      );
 
-  if (storyblokProps?.story.content.related_session.length) {
-    const storyblokCourseProps = await getStoryblokPagesByUuids(
-      storyblokProps?.story.content.related_session[0].content.course, // get course by course uuid
-      locale,
-      preview,
-      {},
-    );
-
-    if (storyblokCourseProps?.stories.length) {
-      relatedCourse = storyblokCourseProps.stories[0];
+      if (storyblokCourseProps?.stories.length) {
+        relatedCourse = storyblokCourseProps.stories[0];
+      }
     }
   }
 

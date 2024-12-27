@@ -164,6 +164,5 @@ const isNavigationEnabled = (
   slidesPerBreakpoint: Record<Breakpoint, number>,
 ) => {
   const currentSlidesPerBreakpoint = slidesPerBreakpoint[currentBreakpoint];
-  console.log(currentBreakpoint, numberOfSlides, currentSlidesPerBreakpoint);
   return currentSlidesPerBreakpoint < numberOfSlides;
 };
