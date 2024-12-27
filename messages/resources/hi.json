@@ -1,29 +1,25 @@
 {
-  "Resources": {
-    "conversations": "Baatcheet",
-    "shorts": "Short Films",
-    "completed": "Completed",
-    "sessionDetail": "This clip is from Session {sessionNumber}, {sessionName}, from our {courseName} course.",
-    "sessionButtonLabel": "Watch full session",
-    "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
-    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
-    "resourceFeedback": {
-      "title": "How was this learning?",
-      "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
-      "feedbackTags": {
-        "relatable": "Relatable",
-        "useful": "Useful",
-        "inspiring": "Inspiring",
-        "too long": "Too long",
-        "too complicated": "Too complicated",
-        "not useful": "Not useful"
-      },
-      "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
-      "submissionText": "Thank you for submitting your feedback",
-      "errors": {
-        "feedbackTagError": "Please select a rating before sending."
-      }
+  "completed": "Pūra",
+  "sessionDetail": "Yah clip Session {sessionNumber}, {sessionName}, hamāre {courseName} course se hai.",
+  "sessionButtonLabel": "Pūrī session dekhen",
+  "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
+  "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+  "resourceFeedback": {
+    "title": "Yeh session kaisa aapko kaisa laga?",
+    "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+    "feedbackTags": {
+      "relatable": "Mein session ko samjh pai aur usse jud pai",
+      "useful": "Faidemand",
+      "inspiring": "Mujhe hausla afzai mehsoos hui",
+      "too long": "Bahut lamba tha",
+      "too complicated": "Bahut mushkil tha",
+      "not useful": "Zada faidemand nahi tha"
+    },
+    "textboxDefaultText": "Ek comment add karein...",
+    "sendButtonText": "Bhejein",
+    "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+    "errors": {
+      "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
     }
   }
 }
