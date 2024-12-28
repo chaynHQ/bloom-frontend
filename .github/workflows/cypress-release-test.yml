@@ -36,8 +36,15 @@ jobs:
         # this will automatically load balance
         containers: [1, 2, 3]
     steps:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: node -v
+
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.7
         with:
