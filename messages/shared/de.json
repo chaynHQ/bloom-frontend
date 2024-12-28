@@ -102,16 +102,16 @@
       "button": "Loslegen"
     },
     "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
+      "title": "Verwandte Inhalte",
+      "resource_short_video": "Ansehen",
       "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
+      "short_video": "Ansehen",
+      "course": "Kurs",
+      "session": "Sitzung",
+      "session_iba": "Sitzung",
+      "grounding": "Stabilisierung",
+      "activities": "Übungen",
+      "minuteLabel": "Minuten"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",
