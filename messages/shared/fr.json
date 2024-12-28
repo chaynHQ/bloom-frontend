@@ -128,15 +128,15 @@
       "grounding-affirming-ourselves": "S'affirmer (pression ferme)"
     },
     "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
+      "title": "Contenu associé",
+      "resource_short_video": "Montre",
+      "resource_conversation": "Écouter",
+      "short_video": "",
+      "course": "Cours",
       "session": "Session",
       "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
+      "grounding": "Ancrage",
+      "activities": "Activités",
       "minuteLabel": "minutes"
     }
   }
