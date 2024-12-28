@@ -1,4 +1,7 @@
 describe('Initial exploration', () => {
+  before(() => {
+    cy.cleanUpTestState();
+  });
   it('should be able to explore all pages', () => {
     cy.visit('/');
     cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
@@ -15,6 +18,7 @@ describe('Initial exploration', () => {
     cy.get(`h3`).contains('Reclaiming resilience');
     cy.get(`h3`).should('not.contain', 'Dating, boundaries, and relationships');
     cy.get(`h3`).contains('Healing from sexual trauma').click();
+    cy.wait(2000); // leave time for the page to load as flakey
     cy.get('h3').contains('What is sexual trauma').click();
     cy.get('#signup-banner').should('be.visible');
   });
