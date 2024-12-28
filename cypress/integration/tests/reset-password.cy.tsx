@@ -1,4 +1,4 @@
-import { MailSlurp } from 'mailslurp-client';
+import { Email, MailSlurp } from 'mailslurp-client';
 
 const email = `cypresstestemail+${Date.now()}@chayn.co`;
 
@@ -18,7 +18,7 @@ describe('Reset password', () => {
     cy.visit('/');
 
     // Find a link with an href attribute containing "login" and click it
-    cy.get('a[href*="login"]', { timeout: 8000 }).click();
+    cy.get('a[href*="login"]').click();
 
     // The new url should include "login"
     cy.url().should('include', 'auth/login');
@@ -29,7 +29,7 @@ describe('Reset password', () => {
     cy.url().should('include', resetPasswordPath);
 
     // The new page should contain an h2 with "Reset your password"
-    cy.get('h2', { timeout: 8000 }).contains('Reset your password');
+    cy.get('h2').contains('Reset your password');
   });
 
   it('should receive email when known email submitted for password reset', () => {
@@ -38,20 +38,22 @@ describe('Reset password', () => {
     const inboxId = Cypress.env('CYPRESS_INBOX_ID');
     cy.visit(resetPasswordPath);
     // Reset password
-    cy.get('[qa-id=passwordResetEmailInput]', { timeout: 8000 }).focus().type(email);
+    cy.get('[qa-id=passwordResetEmailInput]').focus().type(email);
     cy.get('[qa-id=passwordResetEmailButton]').click();
-    cy.get('p', { timeout: 8000 })
+    cy.get('p')
       // check that front-end confirms an email has been sent
       .should('contain', 'Check your emails for a reset link from Bloom.');
-    cy.get('button[type="submit"]', { timeout: 8000 })
-      .contains('Resend email')
-      .then(() => {
-        mailslurp.getInbox(inboxId).then((inbox) => {
-          // wait for email
-          mailslurp.waitForLatestEmail(inbox.id, 8000).then((latestEmail) => {
-            expect(latestEmail.subject).contains('Reset');
-          });
+    cy.get('button[type="submit"]').contains('Resend email');
+    cy.wrap(
+      mailslurp.getInbox(inboxId).then((inbox) => {
+        // wait for email
+        return mailslurp.waitForLatestEmail(inbox.id, 8000).then((latestEmail) => {
+          return latestEmail;
         });
-      });
+      }),
+    ).then((latestEmail: Email) => {
+      expect(latestEmail).to.haveOwnProperty('subject');
+      expect(latestEmail?.subject).to.equal('Reset');
+    });
   });
 });

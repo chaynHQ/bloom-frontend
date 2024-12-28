@@ -3,36 +3,33 @@ describe('Therapy Usage', () => {
   const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
-  before(() => {
-    cy.cleanUpTestState();
-  });
-
-  describe('A logged in partner admin should be able to create an access code', () => {
-    it('Navigate to the admin page and create the access code', () => {
+  describe('A new partner user should be able to apply the access code', () => {
+    before(() => {
+      cy.cleanUpTestState();
+      // create a partner access code with therapy
       cy.logInWithEmailAndPassword(
         Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
         Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
       );
-      cy.visit('/');
-      cy.get(`[qa-id=partner-admin-menu-button]`, { timeout: 10000 }).should('exist').click(); //Find admin button and click
-      cy.uiCreateAccessCode().then((res) => {
-        accessCode = res;
-      });
-    });
-  });
-
-  describe('A new partner user should be able to apply the access code', () => {
-    before(() => {
+      cy.visit('/partner-admin/create-access-code');
+      cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
+      cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
+      cy.get('#access-code')
+        .should('exist') //wait for result to exist in dom then get the access code
+        .then((elem) => {
+          //get the access code
+          accessCode = elem.text();
+        });
       cy.logout();
+    });
+
+    it('Log in as a user and apply code', () => {
       cy.createUser({
         //create test user
         emailInput: newUserEmail,
         passwordInput: password,
       });
       cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
-    });
-
-    it('Log in as a user and apply code', () => {
       cy.visit('/welcome/bumble');
       cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
       cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
