@@ -22,6 +22,7 @@ export default defineConfig({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',
     experimentalRunAllSpecs: true,
+    experimentalMemoryManagement: true,
     chromeWebSecurity: false,
   },
 });
