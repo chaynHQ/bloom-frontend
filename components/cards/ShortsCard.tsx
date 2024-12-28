@@ -15,7 +15,7 @@ interface ShortsCardProps {
   title: string;
   href: string;
   duration?: string;
-  image?: { href: string; alt: string };
+  image?: { filename: string; alt: string };
   category: RELATED_CONTENT_CATEGORIES;
 }
 
@@ -33,7 +33,7 @@ const categoryStyle = {
 } as const;
 
 export const ShortsCard = (props: ShortsCardProps) => {
-  const { title, href, duration, category } = props;
+  const { title, href, duration, category, image } = props;
 
   const t = useTranslations('Shared');
 
@@ -45,10 +45,10 @@ export const ShortsCard = (props: ShortsCardProps) => {
         >
           <Box height="130px" position="relative" width="100%" overflow="hidden">
             <Image
-              src="/bloom_shorts.png"
+              src={image?.filename || '/bloom_shorts.png'}
               objectFit="cover"
               fill
-              alt="Bloom shorts default image"
+              alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
             />
           </Box>
           <Box minHeight="100px" p={3}>

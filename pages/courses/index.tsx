@@ -29,7 +29,6 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { useWidth } from '../../utils/useWidth';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -63,7 +62,6 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Courses');
-  const width = useWidth();
 
   const headerProps = {
     title: t('title'),
