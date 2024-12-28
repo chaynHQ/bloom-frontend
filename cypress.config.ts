@@ -6,6 +6,8 @@ export default defineConfig({
   projectId: process.env.CYPRESS_PROJECT_ID,
   fileServerFolder: 'cypress',
   defaultCommandTimeout: 10000,
+  requestTimeout: 10000,
+  responseTimeout: 10000,
   env: process.env, // Uses project environment variables set in .env
   e2e: {
     // We've imported your old cypress plugins here.
