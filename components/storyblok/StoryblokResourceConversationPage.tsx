@@ -14,9 +14,9 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import { Resource } from '../../store/resourcesSlice';
 import { rowStyle } from '../../styles/common';
-import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
+import { userHasAccessToPartnerContent } from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import PageSection from '../common/PageSection';
 import ProgressStatus from '../common/ProgressStatus';
@@ -26,26 +26,6 @@ import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
 import { ResourceConversationAudio } from '../resources/ResourceConversationAudio';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-
-const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
-
-const headerLeftStyles = {
-  width: { xs: '100%', md: '60%' },
-  maxWidth: '100%',
-} as const;
-
-const headerRightStyle = {
-  flex: { md: 1 },
-  width: '100%',
-} as const;
-
-const imageContainerStyle = {
-  position: 'relative',
-  width: 200,
-  height: 200,
-  marginLeft: 'auto',
-  marginRight: { xs: '8%', md: '0' },
-} as const;
 
 const audioContainerStyle = {
   mt: { xs: 4, md: 6 },
