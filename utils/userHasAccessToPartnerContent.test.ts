@@ -1,6 +1,6 @@
 import { PartnerContent } from '../constants/partners';
 import { PartnerAccesses } from '../store/partnerAccessSlice';
-import { userHasAccessToPartnerContent } from './userHasAccessToPartnerContent';
+import userHasAccessToPartnerContent from './userHasAccessToPartnerContent';
 
 const partnerAPartnerAccessCode = {
   id: '1',

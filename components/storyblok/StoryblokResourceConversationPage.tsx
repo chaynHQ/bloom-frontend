@@ -16,7 +16,7 @@ import { Resource } from '../../store/resourcesSlice';
 import { rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-import { userHasAccessToPartnerContent } from '../../utils/userHasAccessToPartnerContent';
+import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import PageSection from '../common/PageSection';
 import ProgressStatus from '../common/ProgressStatus';

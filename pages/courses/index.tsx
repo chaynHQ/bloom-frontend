@@ -28,7 +28,7 @@ import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { userHasAccessToPartnerContent } from '../../utils/userHasAccessToPartnerContent';
+import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

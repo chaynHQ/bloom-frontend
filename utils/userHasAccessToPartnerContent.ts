@@ -1,7 +1,7 @@
 import { PartnerContent } from '../constants/partners';
 import { PartnerAccess } from '../store/partnerAccessSlice';
 
-export const userHasAccessToPartnerContent = (
+const userHasAccessToPartnerContent = (
   partnerAdminPartner: PartnerContent | null,
   partnerAccesses: PartnerAccess[],
   referralPartner: string | null,
@@ -29,3 +29,5 @@ export const userHasAccessToPartnerContent = (
     return partners.indexOf(partner) === index;
   });
 };
+
+export default userHasAccessToPartnerContent;
