@@ -56,7 +56,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
             userContentPartners.some(
               (partner) =>
                 'included_for_partners' in story.content &&
-                story.content?.included_for_partners?.includes(partner),
+                story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
             )
           : true) &&
         !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`)
