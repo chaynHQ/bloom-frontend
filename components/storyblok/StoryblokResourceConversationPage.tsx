@@ -194,7 +194,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       />
       <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
         <Typography variant="h2" fontWeight={600}>
-          {ts('relatedContent.title')}
+          {tS('relatedContent.title')}
         </Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}
