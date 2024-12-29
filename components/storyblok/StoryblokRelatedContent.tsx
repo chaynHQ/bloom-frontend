@@ -48,21 +48,16 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const filteredRelatedContent = useMemo(() => {
     return relatedContent.filter((story) => {
       const locale = router.locale === 'en' ? 'default' : router.locale || 'default';
-
-      return (
-        (story.content?.languages ? story.content.languages.includes(locale) : true) &&
-        (story.content && 'included_for_partners' in story.content
-          ? 'included_for_partners' in story.content &&
-            userContentPartners.some(
-              (partner) =>
-                'included_for_partners' in story.content &&
-                story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
-            )
-          : true) &&
-        !disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`)
+      const storyAvailableForLocale =
+        story.content?.languages?.length > 0 ? story.content.languages.includes(locale) : true;
+      const storyDisabled = disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`);
+      const storyIncludedForUserPartners = userContentPartners.some((partner) =>
+        story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
       );
+      return storyAvailableForLocale && storyIncludedForUserPartners && !storyDisabled;
     });
   }, [relatedContent, disabledCoursesString, router.locale]);
+
   let items = filteredRelatedContent
     .map((relatedContentItem) => (
       <RelatedContentCard
