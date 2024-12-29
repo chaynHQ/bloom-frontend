@@ -7,7 +7,6 @@ export const userHasAccessToPartnerContent = (
   referralPartner: string | null,
   userId: string | null,
 ): string[] => {
-  console.log(partnerAdminPartner, partnerAccesses, referralPartner, userId);
   let accessPartners: string[] = [];
   if (partnerAdminPartner) {
     accessPartners.push(partnerAdminPartner.name.toLowerCase());
