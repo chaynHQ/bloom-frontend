@@ -7,7 +7,6 @@ import {
   CardContent,
   Collapse,
   IconButton,
-  Link,
   Typography,
 } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
@@ -16,6 +15,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
+import Link from '../common/Link';
 
 interface StoryblokCardProps {
   _uid: string;
