@@ -1,7 +1,8 @@
-import { Box, Card, CardActionArea, CardContent, Link, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
+import Link from '../common/Link';
 
 const cardStyle = {
   mt: 0,
