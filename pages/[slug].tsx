@@ -46,6 +46,8 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     'courses',
     'about-our-courses',
     'messaging',
+    'shorts',
+    'conversations',
   ];
 
   let paths: any = [];

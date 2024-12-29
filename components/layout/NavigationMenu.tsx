@@ -1,6 +1,5 @@
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   HEADER_ADMIN_CLICKED,
@@ -71,7 +70,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const isMaintenanceMode = getIsMaintenanceMode();
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
-  const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];

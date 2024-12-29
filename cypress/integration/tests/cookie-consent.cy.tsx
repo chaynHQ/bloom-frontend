@@ -1,4 +1,7 @@
 describe('Cookie consent', () => {
+  before(() => {
+    cy.cleanUpTestState();
+  });
   it('cookie should be true if user consents', () => {
     // Start from the home page
     cy.visit('/');

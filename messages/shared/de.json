@@ -100,6 +100,44 @@
       "description1": "Bloom ist eine Online-Plattform, die dich bei der Heilung von Traumata unterstützt. Von Videokursen und reflektierenden Aktivitäten bis hin zur direkten Kommunikation mit unserem Team gibt es viele verschiedene Möglichkeiten, sich mit Bloom zu beschäftigen.",
       "description2": "Registriere dich unten, um Zugriff auf all unsere Inhalte zu erhalten und alles zu erkunden, was Bloom zu bieten hat.",
       "button": "Loslegen"
+    },
+    "relatedContent": {
+      "title": "Verwandte Inhalte",
+      "resource_short_video": "Ansehen",
+      "resource_conversation": "Audio",
+      "short_video": "Ansehen",
+      "course": "Kurs",
+      "session": "Sitzung",
+      "session_iba": "Sitzung",
+      "grounding": "Stabilisierung",
+      "activities": "Übungen",
+      "minuteLabel": "Minuten"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Thought diaries",
+      "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
+      "activities-timelines": "Timelines",
+      "activities-trust-mapping": "Trust mapping",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Mapping fear and stress in our bodies",
+      "activities-letter-to-a-part-of-my-body": "Letter to a part of my body",
+      "activities-accelerators-and-brakes": "Accelerators and brakes",
+      "activities-ideal-sexual-being": "Ideal sexual being",
+      "grounding-visual-breathing": "Visual breathing",
+      "grounding-slow-breathing": "Slow breathing",
+      "grounding-box-breathing": "Box breathing",
+      "grounding-drifting-clouds-meditation": "Drifting clouds meditation",
+      "grounding-positive-coping-statement": "Positive coping statement",
+      "grounding-finger-focus": "Finger focus",
+      "grounding-day-walkthrough": "Day walkthrough",
+      "grounding-what-can-you-hear": "What can you hear",
+      "grounding-listen-to-your-voice": "Listen to your voice",
+      "grounding-calming-colours": "Calming colours",
+      "grounding-coming-back-to-your-safe-space": "Coming back to your safe space",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Compassionate body scan",
+      "grounding-touching-and-feeling-textures": "Touching and feeling textures",
+      "grouding-sound-of-claps": "Sound of claps",
+      "grounding-affirming-ourselves": "Affirming ourselves (firm pressure)"
     }
   }
 }

@@ -6,16 +6,26 @@ import { richtextContentStyle } from '../../styles/common';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
-const videoContainerStyle = {
+export const videoContainerStyle = {
   position: 'relative',
   paddingTop: '56.25%',
 } as const;
 
-const videoStyle = {
+export const videoStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
 } as const;
+
+export const videoConfig = (video: { url: string }): YouTubeConfig => {
+  return video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
+    ? {
+        embedOptions: {
+          host: 'https://www.youtube-nocookie.com',
+        },
+      }
+    : {};
+};
 
 interface StoryblokVideoProps {
   _uid: string;
@@ -58,15 +68,6 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
     ...richtextContentStyle,
   } as const;
 
-  const extraConfig: YouTubeConfig =
-    video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
-      ? {
-          embedOptions: {
-            host: 'https://www.youtube-nocookie.com',
-          },
-        }
-      : {};
-
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, video, size, alignment })}>
       <Box sx={videoContainerStyle}>
@@ -78,7 +79,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           url={video.url}
           controls
           modestbranding={1}
-          {...extraConfig}
+          {...videoConfig(video)}
         />
       </Box>
     </Box>

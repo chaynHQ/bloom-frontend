@@ -2,6 +2,7 @@ import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
+import { YouTubeConfig } from 'react-player/youtube';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
@@ -19,15 +20,29 @@ const videoStyle = {
 
 interface VideoProps {
   url: string;
+  autoplay?: boolean;
   eventData: EventUserData;
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;
+  setVideoFinished?: Dispatch<SetStateAction<boolean>>;
+  lightMode?: boolean;
 }
 
 const Video = (props: VideoProps) => {
-  const { url, eventData, eventPrefix, containerStyles, setVideoStarted } = props;
+  const {
+    url,
+    autoplay = false,
+    eventData,
+    eventPrefix,
+    containerStyles,
+    setVideoStarted,
+    setVideoFinished,
+    lightMode = true,
+  } = props;
+
   const [videoDuration, setVideoDuration] = useState<number>(0);
+  const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
   const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
 
   const player = useRef<typeof ReactPlayer>(null);
@@ -39,12 +54,17 @@ const Video = (props: VideoProps) => {
   };
 
   const videoEnded = () => {
+    if (!!videoCompleted) return;
+
+    setVideoFinished && setVideoFinished(true);
+
     if (player.current) {
       logEvent(`${eventPrefix}_VIDEO_FINISHED`, {
         ...eventData,
         video_duration: videoDuration,
       });
     }
+    setVideoCompleted(true);
   };
 
   const videoPausedOrPlayed = (played: boolean) => {
@@ -58,11 +78,8 @@ const Video = (props: VideoProps) => {
         video_current_percentage: playedPercentage,
       });
 
-      if (played) {
-      } else {
-        if (playedPercentage > 90) {
-          videoEnded();
-        }
+      if (!played && playedPercentage > 95) {
+        videoEnded();
       }
     }
   };
@@ -78,17 +95,32 @@ const Video = (props: VideoProps) => {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
   } as const;
 
+  const videoConfig = (video: { url: string }): YouTubeConfig => {
+    return video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
+      ? {
+          embedOptions: {
+            host: 'https://www.youtube-nocookie.com',
+          },
+          ...(autoplay && {
+            playerVars: {
+              autoplay: 1, // note this doesnt work consistently as autoplay is often blocked by browsers
+            },
+          }),
+        }
+      : {};
+  };
+
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
         <ReactPlayer
           ref={player}
-          light={true}
+          light={lightMode}
           onDuration={(duration) => setVideoDuration(duration)}
           onStart={videoStarted}
+          onEnded={videoEnded}
           onPause={() => videoPausedOrPlayed(false)}
           onPlay={() => videoPausedOrPlayed(true)}
-          onEnded={videoEnded}
           onProgress={handleProgress}
           style={videoStyle}
           width="100%"
@@ -96,6 +128,7 @@ const Video = (props: VideoProps) => {
           url={url}
           controls
           modestbranding={1}
+          {...videoConfig({ url })}
         />
       </Box>
     </Box>

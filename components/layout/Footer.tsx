@@ -190,7 +190,7 @@ const Footer = () => {
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
                       fill
-                      sizes="100vw"
+                      sizes="300px"
                       style={{
                         objectFit: 'contain',
                         objectPosition: 'left',

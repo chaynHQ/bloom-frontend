@@ -12,6 +12,27 @@ export enum MAINTENANCE_MODE {
   OFF = 'off',
 }
 
+export enum RESOURCE_CATEGORIES {
+  SHORT_VIDEO = 'short_video',
+  CONVERSATION = 'resource_conversation',
+}
+
+export enum CORE_CATEGORIES {
+  COURSE = 'course',
+  SESSION = 'session',
+  SESSION_IBA = 'session_iba',
+}
+
+export enum EXERCISE_CATEGORIES {
+  GROUNDING = 'grounding',
+  ACTIVITIES = 'activities',
+}
+
+export type RELATED_CONTENT_CATEGORIES =
+  | RESOURCE_CATEGORIES
+  | CORE_CATEGORIES
+  | EXERCISE_CATEGORIES;
+
 export enum EMAIL_REMINDERS_FREQUENCY {
   TWO_WEEKS = 'TWO_WEEKS',
   ONE_MONTH = 'ONE_MONTH',
@@ -57,6 +78,7 @@ export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',
   SECONDARY_LIGHT = 'secondary.light',
+  SECONDARY_MAIN = 'secondary.main',
   SECONDARY_DARK = 'secondary.dark',
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
@@ -93,4 +115,9 @@ export enum FEEDBACK_TAGS {
   TOO_LONG = 'too long',
   TOO_COMPLICATED = 'too complicated',
   NOT_USEFUL = 'not useful',
+}
+
+export enum STORYBLOK_COMPONENTS {
+  COURSE = 'Course',
+  SESSION = 'Session',
 }

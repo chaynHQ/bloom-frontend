@@ -14,10 +14,10 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
-import { FEEDBACK_TAGS } from '../../constants/enums';
+import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '../../constants/enums';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { useCreateSessionFeedbackMutation } from '../../store/api';
-import { SessionFeedback } from '../../store/coursesSlice';
+import { useCreateResourceFeedbackMutation } from '../../store/api';
+import { ResourceFeedback } from '../../store/resourcesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
 
 const fieldBoxStyle: SxProps<Theme> = {
@@ -33,10 +33,6 @@ const radioGroupStyle = {
   padding: '20px 0px',
 } as const;
 
-export interface RateSessionFormProps {
-  sessionId: string;
-}
-
 const imageContainerStyle = {
   position: 'relative', // needed for next/image to fill the container
   width: 200,
@@ -51,10 +47,17 @@ const containerStyle = {
   textAlign: 'center',
 } as const;
 
-const RateSessionForm = (props: RateSessionFormProps) => {
-  const t = useTranslations('Courses.sessionFeedback');
+export interface ResourceFeedbackFormProps {
+  resourceId: string;
+  category: RESOURCE_CATEGORIES;
+}
+
+const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
+  const { resourceId, category } = props;
+
+  const t = useTranslations('Resources.resourceFeedback');
   const tS = useTranslations('Shared');
-  const [sendFeedback] = useCreateSessionFeedbackMutation();
+  const [sendFeedback] = useCreateResourceFeedbackMutation();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedFeedbackTag, setSelectedFeedbackTag] = useState<FEEDBACK_TAGS | null>(null);
   const [feedbackDescription, setFeedbackDescription] = useState<string>('');
@@ -75,13 +78,15 @@ const RateSessionForm = (props: RateSessionFormProps) => {
       return;
     }
 
-    const feedbackData: SessionFeedback = {
-      sessionId: props.sessionId,
+    const feedbackData: ResourceFeedback = {
+      resourceId: resourceId,
       feedbackTags: selectedFeedbackTag,
       feedbackDescription: feedbackDescription,
     };
 
-    await sendFeedback(feedbackData);
+    if (true) {
+      await sendFeedback(feedbackData);
+    }
 
     setLoading(false);
     setFormSubmitSuccess(true);
@@ -122,7 +127,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
             row
             sx={radioGroupStyle}
             aria-label="feature"
-            name="session-feedback-radio-buttons"
+            name="feedback-radio-buttons"
             value={selectedFeedbackTag}
             onChange={(e) => setSelectedFeedbackTag(e.target.value as FEEDBACK_TAGS)}
           >
@@ -140,7 +145,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
 
         <TextField
           id="feedbackDescription"
-          placeholder={t.rich('textboxDefaultText').toString()}
+          placeholder={t.rich('textboxDefaultText')?.toString()}
           onChange={(e) => setFeedbackDescription(e.target.value)}
           value={feedbackDescription}
           sx={fieldBoxStyle}
@@ -165,4 +170,4 @@ const RateSessionForm = (props: RateSessionFormProps) => {
   );
 };
 
-export default RateSessionForm;
+export default ResourceFeedbackForm;
