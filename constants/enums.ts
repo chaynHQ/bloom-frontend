@@ -119,4 +119,5 @@ export enum FEEDBACK_TAGS {
 
 export enum STORYBLOK_COMPONENTS {
   COURSE = 'Course',
+  SESSION = 'Session',
 }
