@@ -128,7 +128,6 @@ const Carousel = (props: CarouselProps) => {
       wrapMode="wrap"
       showArrows={navigationEnabled && showArrows && arrowPosition == 'side'}
       showDots={navigationEnabled}
-      scrollDistance="slide"
       swiping={true}
       dots={<CustomDots showArrows={showArrows} arrowPosition={arrowPosition} />}
       title={title}
