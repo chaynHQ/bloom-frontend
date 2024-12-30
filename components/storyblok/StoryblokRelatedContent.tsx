@@ -51,9 +51,12 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
       const storyAvailableForLocale =
         story.content?.languages?.length > 0 ? story.content.languages.includes(locale) : true;
       const storyDisabled = disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`);
-      const storyIncludedForUserPartners = userContentPartners.some((partner) =>
-        story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
-      );
+      const storyIncludedForUserPartners =
+        story.content?.included_for_partners?.length > 0
+          ? userContentPartners.some((partner) =>
+              story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
+            )
+          : true;
       return storyAvailableForLocale && storyIncludedForUserPartners && !storyDisabled;
     });
   }, [relatedContent, disabledCoursesString, router.locale]);
