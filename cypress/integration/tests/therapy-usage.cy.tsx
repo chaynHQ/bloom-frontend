@@ -24,8 +24,8 @@ describe('Therapy Usage', () => {
     });
 
     it('Log in as a user and apply code', () => {
+      cy.cleanUpTestState();
       cy.createUser({
-        //create test user
         emailInput: newUserEmail,
         passwordInput: password,
       });
