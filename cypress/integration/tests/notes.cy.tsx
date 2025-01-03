@@ -5,6 +5,7 @@ describe('A logged in user should be able to subscribe to notes from bloom', () 
   before(() => {
     cy.cleanUpTestState();
     cy.createUser({ emailInput: email, passwordInput: password });
+    cy.wait(3000);
     cy.logInWithEmailAndPassword(email, password);
   });
 
