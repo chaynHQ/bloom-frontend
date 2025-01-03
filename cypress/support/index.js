@@ -17,4 +17,5 @@ after(() => {
   cy.deleteAllCypressUsers().then(() => {
     cy.log('After function completed - stale cypress users deleted');
   });
+  cy.cleanUpTestState();
 });
