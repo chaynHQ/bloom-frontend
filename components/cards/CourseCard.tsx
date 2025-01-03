@@ -93,8 +93,8 @@ const CourseCard = (props: CourseCardProps) => {
           <CardContent sx={cardContentStyle}>
             <Box flex={[2, 1]} sx={imageContainerStyle}>
               <Image
-                alt={course.content.image.alt}
-                src={course.content.image.filename}
+                alt={course.content.image_with_background.alt}
+                src={course.content.image_with_background.filename}
                 fill
                 sizes="100vw"
                 style={{

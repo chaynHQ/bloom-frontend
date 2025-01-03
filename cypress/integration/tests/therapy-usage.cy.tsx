@@ -5,7 +5,6 @@ describe('Therapy Usage', () => {
 
   describe('A new partner user should be able to apply the access code', () => {
     before(() => {
-      cy.cleanUpTestState();
       // create a partner access code with therapy
       cy.logInWithEmailAndPassword(
         Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
@@ -24,8 +23,8 @@ describe('Therapy Usage', () => {
     });
 
     it('Log in as a user and apply code', () => {
+      cy.cleanUpTestState();
       cy.createUser({
-        //create test user
         emailInput: newUserEmail,
         passwordInput: password,
       });

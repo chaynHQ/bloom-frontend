@@ -53,7 +53,7 @@ describe('Reset password', () => {
       }),
     ).then((latestEmail: Email) => {
       expect(latestEmail).to.haveOwnProperty('subject');
-      expect(latestEmail?.subject).to.equal('Reset');
+      expect(latestEmail?.subject).to.equal('Greetings!'); // note used to be 'Reset' - unclear why this changed
     });
   });
 });

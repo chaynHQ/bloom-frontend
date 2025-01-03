@@ -16,7 +16,7 @@ export default defineConfig({
       require('@cypress/code-coverage/task')(on, config);
       return config;
     },
-    specPattern: ['cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}'],
+    specPattern: ['cypress/integration/after/**/*.cy.{js,jsx,ts,tsx}'], // Run only tests in the after folder
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',
     experimentalRunAllSpecs: true,
