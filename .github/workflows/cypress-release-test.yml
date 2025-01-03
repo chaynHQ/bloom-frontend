@@ -46,7 +46,7 @@ jobs:
       - run: node -v
 
       - name: Run cypress
-        uses: cypress-io/github-action@v6.7.7
+        uses: cypress-io/github-action@v6.7.8
         with:
           browser: chrome
           config-file: cypress.config.ts
