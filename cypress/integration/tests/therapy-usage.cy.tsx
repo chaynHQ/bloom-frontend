@@ -28,7 +28,6 @@ describe('Therapy Usage', () => {
         emailInput: newUserEmail,
         passwordInput: password,
       });
-      cy.wait(3000);
       cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
       cy.visit('/welcome/bumble');
       cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
