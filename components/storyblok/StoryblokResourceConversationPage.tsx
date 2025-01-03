@@ -58,6 +58,7 @@ export interface StoryblokResourceConversationPageProps {
   related_exercises: string[];
   languages: string[];
   component: 'resource_conversation';
+  included_for_partners: string[];
 }
 
 const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {

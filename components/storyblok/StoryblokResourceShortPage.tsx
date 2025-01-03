@@ -124,6 +124,17 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const [resourceId, setResourceId] = useState<string>();
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
+  const getContentPartners = useMemo(() => {
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
+
+    return userHasAccessToPartnerContent(
+      partnerAdmin?.partner,
+      partnerAccesses,
+      referralPartner,
+      userId,
+    );
+  }, [entryPartnerReferral, partnerAccesses, partnerAdmin, userId]);
+
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
@@ -297,12 +308,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         <StoryblokRelatedContent
           relatedContent={related_content}
           relatedExercises={related_exercises}
-          userContentPartners={userHasAccessToPartnerContent(
-            partnerAdmin?.partner,
-            partnerAccesses,
-            Cookies.get('referralPartner') || entryPartnerReferral,
-            userId,
-          )}
+          userContentPartners={getContentPartners}
         />
       </PageSection>
 

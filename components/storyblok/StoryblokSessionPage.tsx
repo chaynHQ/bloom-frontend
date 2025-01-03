@@ -54,6 +54,7 @@ export interface StoryblokSessionPageProps {
   coming_soon_content: ISbRichtext;
   languages: string[];
   component: 'Session' | 'session_iba';
+  included_for_partners: string[];
 }
 
 const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {

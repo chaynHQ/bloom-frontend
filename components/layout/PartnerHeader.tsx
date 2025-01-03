@@ -8,14 +8,15 @@ const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'end',
   backgroundColor: 'common.white',
+  paddingTop: { xs: 0, sm: 0, md: 0, lg: 0 },
   paddingBottom: { xs: 0, md: 0 },
-  minHeight: { xs: 270, sm: 300, md: 320, lg: 340 },
+  minHeight: { xs: 200, sm: 250, md: 300, lg: 300 },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 160, sm: 180, md: 200, lg: 220 },
-  height: { xs: 160, sm: 180, md: 200, lg: 220 },
+  width: { xs: 120, sm: 180, md: 200, lg: 220 },
+  height: { xs: 120, sm: 180, md: 200, lg: 220 },
   marginRight: { sm: 2, md: 3, lg: 2 },
 } as const;
 
