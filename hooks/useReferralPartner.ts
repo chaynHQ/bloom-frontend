@@ -9,7 +9,9 @@ import { useAppDispatch, useTypedSelector } from './store';
 export default function useReferralPartner() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
+  const userCookiesAccepted =
+    useTypedSelector((state) => state.user.cookiesAccepted) ||
+    Cookies.get('analyticsConsent') === 'true';
 
   useEffect(() => {
     async function setReferralPartner(referralPartner: string) {

@@ -126,16 +126,16 @@
       "grounding-affirming-ourselves": "Reafirmarnos (presión firme)"
     },
     "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
+      "title": "Contenido relacionado",
+      "resource_short_video": "Ver",
+      "resource_conversation": "Escuchar",
+      "short_video": "Ver",
+      "course": "Curso",
+      "session": "Sesión",
+      "session_iba": "Sesión",
+      "grounding": "Anclaje",
+      "activities": "Actividad",
+      "minuteLabel": "minutos"
     }
   }
 }

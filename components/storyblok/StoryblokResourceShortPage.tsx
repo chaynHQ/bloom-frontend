@@ -21,8 +21,8 @@ import { Resource } from '../../store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
 import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
-import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
+import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import Link from '../common/Link';
 import PageSection from '../common/PageSection';
@@ -124,6 +124,17 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const [resourceId, setResourceId] = useState<string>();
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
+  const getContentPartners = useMemo(() => {
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
+
+    return userHasAccessToPartnerContent(
+      partnerAdmin?.partner,
+      partnerAccesses,
+      referralPartner,
+      userId,
+    );
+  }, [entryPartnerReferral, partnerAccesses, partnerAdmin, userId]);
+
   const eventData = useMemo(() => {
     return {
       ...eventUserData,
@@ -152,48 +163,29 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   }, []);
   useEffect(() => {
     async function fetchCourse() {
-      let linkedStoryData: ISbStoryData[] | null = null;
+      const relatedSession = related_session[0];
+      const relatedCourse = related_session[0]?.content.course;
 
-      // ensure we have the correct story data for the linked story rather than a uuid
-      if (typeof related_session === 'string') {
+      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.COURSE) {
+        setLinkedCourse(relatedSession);
+        return;
+      }
+      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.SESSION) {
+        // if the related session is a session, we need to get the course from the session
         try {
-          const storyblokStory = await getStoryblokPagesByUuids(
-            related_session, // get course by course uuid
+          const storyblokCourseProps = await getStoryblokPagesByUuids(
+            relatedCourse, // get course by course uuid
             router.locale,
             false,
             {},
           );
-          if (storyblokStory?.stories.length && !!storyblokStory.stories[0]) {
-            linkedStoryData = storyblokStory.stories || null;
-          }
-        } catch (error) {
-          console.error('Error fetching related course:', error);
-        }
-      } else {
-        linkedStoryData = related_session[0]?.content.related_session;
-      }
-      // depending on the type of linked story, we need to fetch the course
-      if (linkedStoryData?.length) {
-        // if we already have the course data, use it
-        if (linkedStoryData[0]?.content.component === STORYBLOK_COMPONENTS.COURSE) {
-          setLinkedCourse(linkedStoryData[0]);
-        } else {
-          // if we don't have the course data, we need to get it from the linked story
-          try {
-            const storyblokCourseProps = await getStoryblokPagesByUuids(
-              linkedStoryData[0].content.related_session[0].content.course, // get course by course uuid
-              router.locale,
-              false,
-              {},
-            );
 
-            if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-              setLinkedCourse(storyblokCourseProps.stories[0]);
-            }
-            // Your data fetching logic here
-          } catch (error) {
-            console.error('Error fetching related courses:', error);
+          if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
+            setLinkedCourse(storyblokCourseProps.stories[0]);
           }
+          // Your data fetching logic here
+        } catch (error) {
+          console.error('Error fetching related courses:', error);
         }
       }
     }
@@ -282,7 +274,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
                   related_session[0]?.content.component === STORYBLOK_COMPONENTS.COURSE
                     ? 0
                     : related_session[0]?.position / 10 - 1,
-                sessionName: related_session[0]?.name,
+                sessionName: related_session[0]?.content.name,
                 courseName: linkedCourse?.content.name,
               })}
             </Typography>
@@ -311,17 +303,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
       <PageSection alignment="flex-start" color={STORYBLOK_COLORS.SECONDARY_MAIN}>
         <Typography variant="h2" fontWeight={600}>
-          Related content
+          {tS('relatedContent.title')}
         </Typography>
         <StoryblokRelatedContent
           relatedContent={related_content}
           relatedExercises={related_exercises}
-          userContentPartners={userHasAccessToPartnerContent(
-            partnerAdmin?.partner,
-            partnerAccesses,
-            Cookies.get('referralPartner') || entryPartnerReferral,
-            userId,
-          )}
+          userContentPartners={getContentPartners}
         />
       </PageSection>
 

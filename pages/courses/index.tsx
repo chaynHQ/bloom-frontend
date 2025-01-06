@@ -27,8 +27,8 @@ import {
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
-import { userHasAccessToPartnerContent } from '../../utils/hasAccessToPartnerContent';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
+import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -85,7 +85,6 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
 
   useEffect(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
     const userPartners = userHasAccessToPartnerContent(
       partnerAdmin?.partner,
       partnerAccesses,
@@ -94,10 +93,18 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
     );
 
     const coursesWithAccess = stories.filter((story) =>
-      userPartners.some((partner) => story.content.included_for_partners.includes(partner)),
+      userPartners.some((partner) => {
+        return story.content.included_for_partners
+          .map((p: string) => p.toLowerCase())
+          .includes(partner);
+      }),
     );
     const shortsWithAccess = shorts.filter((short) =>
-      userPartners.some((partner) => short.content.included_for_partners.includes(partner)),
+      userPartners.some((partner) => {
+        return short.content.included_for_partners
+          .map((p: string) => p.toLowerCase())
+          .includes(partner);
+      }),
     );
 
     setLoadedCourses(coursesWithAccess);
@@ -160,7 +167,7 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                   item
                   xs={12}
                   sm={6}
-                  md={6}
+                  md={4}
                   lg={4}
                   height="100%"
                   maxWidth="400px"
