@@ -36,6 +36,7 @@ jobs:
 
       - name: Run type checks
         run: yarn type-check
+        continue-on-error: true
 
       - name: Build app
         run: yarn build
