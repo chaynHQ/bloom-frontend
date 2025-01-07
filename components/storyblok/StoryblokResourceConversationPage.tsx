@@ -37,6 +37,7 @@ const progressStyle = {
   alignItems: 'center',
   justifyContent: 'flex-start',
   gap: 3,
+  mt: 2,
   '.MuiBox-root': {
     mt: 0,
   },
@@ -194,7 +195,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         imageSrc={header_image ? header_image.filename : illustrationCourses}
       />
       <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
-        <Typography variant="h2" fontWeight={600}>
+        <Typography variant="h2" fontWeight={500}>
           {tS('relatedContent.title')}
         </Typography>
         <StoryblokRelatedContent

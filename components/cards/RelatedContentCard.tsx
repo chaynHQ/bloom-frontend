@@ -6,7 +6,6 @@ import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
 const cardStyle = {
   mt: 0,
   width: '100%',
-  height: '100%',
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
 } as const;
@@ -39,7 +38,7 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea href={href}>
-        <CardContent>
+        <CardContent sx={{ minHeight: 238 }}>
           <Box position="relative" width="100%" paddingRight={3}>
             <Box>
               <Typography sx={categoryStyle}>
@@ -48,7 +47,9 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
                   <span className="before-dot">{` ${duration} ${t('minuteLabel')}`}</span>
                 )}
               </Typography>
-              <Typography variant="h3">{title}</Typography>
+              <Typography variant="h3" mb={0}>
+                {title}
+              </Typography>
             </Box>
             <ArrowForwardIos
               color="error"

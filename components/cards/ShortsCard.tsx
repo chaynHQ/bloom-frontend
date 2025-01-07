@@ -7,9 +7,9 @@ import Link from '../common/Link';
 const cardStyle = {
   mt: 0,
   width: '250px',
-  height: '100%',
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
+  flex: 0,
 } as const;
 
 interface ShortsCardProps {
@@ -40,9 +40,12 @@ export const ShortsCard = (props: ShortsCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea component={Link} href={`/${href}`}>
+      <CardActionArea component={Link} href={`/${href}`} sx={{ height: '100%' }}>
         <CardContent
-          sx={{ padding: '0 !important', display: 'flex', flexDirection: 'column', gap: '1' }}
+          sx={{
+            minHeight: 335,
+            padding: '0 !important',
+          }}
         >
           <Box height="130px" position="relative" width="100%" overflow="hidden">
             <Image

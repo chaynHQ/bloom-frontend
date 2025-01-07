@@ -8,6 +8,7 @@ import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';
 import { TextNode } from '../../utils/helper-types/translations';
+import { getImageSizes } from '../../utils/imageSizes';
 import { RichTextOptions } from '../../utils/richText';
 import UserResearchBanner from '../banner/UserResearchBanner';
 import ProgressStatus from '../common/ProgressStatus';
@@ -58,6 +59,7 @@ const childrenContentStyle = {
 
 const textContentStyle = {
   marginTop: 'auto',
+  mb: 2,
 } as const;
 
 const backButtonStyle = {
@@ -127,7 +129,7 @@ const Header = (props: HeaderProps) => {
           alt={imageAltText}
           src={imageSrc}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}

@@ -52,6 +52,7 @@ const progressStyle = {
   alignItems: 'center',
   justifyContent: 'flex-start',
   gap: 3,
+  mt: 2,
   '.MuiBox-root': {
     mt: 0,
   },
@@ -302,7 +303,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       )}
 
       <PageSection alignment="flex-start" color={STORYBLOK_COLORS.SECONDARY_MAIN}>
-        <Typography variant="h2" fontWeight={600}>
+        <Typography variant="h2" fontWeight={500}>
           {tS('relatedContent.title')}
         </Typography>
         <StoryblokRelatedContent

@@ -14,6 +14,7 @@ import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 const containerStyle = {
@@ -107,7 +108,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                   alt={ai.icon.alt}
                   src={ai.icon.filename}
                   fill
-                  sizes="100vw"
+                  sizes={getImageSizes(32)}
                   style={{
                     objectFit: 'contain',
                   }}

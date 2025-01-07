@@ -19,6 +19,7 @@ import illustrationPerson4Peach from '../../public/illustration_person4_peach.sv
 import { useCreateSessionFeedbackMutation } from '../../store/api';
 import { SessionFeedback } from '../../store/coursesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
@@ -99,7 +100,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           alt={tS('alt.personTea')}
           src={illustrationPerson4Peach}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}

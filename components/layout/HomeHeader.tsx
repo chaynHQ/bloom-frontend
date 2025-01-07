@@ -7,6 +7,7 @@ import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
+import { getImageSizes } from '../../utils/imageSizes';
 import { RichTextOptions } from '../../utils/richText';
 import UserResearchBanner from '../banner/UserResearchBanner';
 
@@ -87,7 +88,7 @@ const Header = (props: HeaderProps) => {
           alt={imageAltText}
           src={imageSrc}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}

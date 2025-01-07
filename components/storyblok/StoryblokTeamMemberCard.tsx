@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { columnStyle, rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import { RichTextOptions } from '../../utils/richText';
 
 const cardStyle = {
@@ -99,7 +100,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               alt={image.alt}
               src={image.filename}
               fill
-              sizes="100vw"
+              sizes={getImageSizes(imageContainerStyle.width)}
               style={{
                 objectFit: 'cover',
               }}
