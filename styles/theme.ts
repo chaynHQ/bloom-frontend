@@ -39,21 +39,21 @@ let theme = createTheme({
     borderRadius: 20,
   },
   typography: {
-    fontFamily: 'Open Sans, sans-serif',
+    fontFamily: 'var(--font-open-sans)',
     h1: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
       fontWeight: 500,
       marginBottom: '1.75rem',
     },
     h2: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: 'var(--font-montserrat)',
       fontSize: '1.875rem',
       fontWeight: 400,
       marginBottom: '1rem',
     },
     h3: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: 'var(--font-montserrat)',
       fontSize: '1.375rem',
       marginBottom: '1rem',
       lineHeight: 1.4,
@@ -64,7 +64,7 @@ let theme = createTheme({
     },
     subtitle1: {
       fontSize: '1.375rem',
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: 'var(--font-montserrat)',
       fontStyle: 'italic',
     },
     body1: {

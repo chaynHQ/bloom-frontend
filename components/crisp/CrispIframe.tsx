@@ -71,7 +71,7 @@ export const CrispIframe = () => {
       // Acts as a trigger to overwrite the initial message - see AI automations -> chatbox triggers
       crisp.push(['set', 'session:event', 'widget:loaded']);
       // Set user email to set the contact
-      crisp.push(['set', 'user:email', [userEmail]]);
+      crisp.push(['set', 'user:email', userEmail]);
 
       crisp.push([
         'on',
