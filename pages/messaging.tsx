@@ -13,6 +13,7 @@ import { useTypedSelector } from '../hooks/store';
 import IllustrationCourseDBR from '../public/illustration_course_dbr.svg';
 import { rowStyle } from '../styles/common';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
+import { getImageSizes } from '../utils/imageSizes';
 
 const messageRowStyle = {
   ...rowStyle,
@@ -21,7 +22,7 @@ const messageRowStyle = {
 } as const;
 
 const imageContainerStyle = {
-  position: 'relative', // needed for next/image to fill the container
+  position: 'relative',
   width: { xs: '40%', md: 260 },
   height: { xs: '40%', md: 260 },
 } as const;
@@ -76,7 +77,7 @@ const Message: NextPage<Props> = ({ story }) => {
                   <Image
                     alt={tS('alt.personSitting')}
                     src={IllustrationCourseDBR}
-                    sizes="50vw"
+                    sizes={getImageSizes(imageContainerStyle.width)}
                     style={{
                       width: '100%',
                       height: 'auto',

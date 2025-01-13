@@ -6,6 +6,7 @@ import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
 import { columnStyle } from '../styles/common';
+import { getImageSizes } from '../utils/imageSizes';
 
 const containerStyle = {
   ...columnStyle,
@@ -39,7 +40,7 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
             alt={tS('alt.personTea')}
             src={illustrationPerson4Peach}
             fill
-            sizes="100vw"
+            sizes={getImageSizes(imageContainerStyle.width)}
             style={{
               objectFit: 'contain',
             }}

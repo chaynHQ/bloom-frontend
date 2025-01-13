@@ -161,16 +161,7 @@ const BookSession: NextPage = () => {
           {t('faqHeader')}
         </Typography>
         <Box textAlign="center">
-          <Image
-            alt={tS('alt.leafMix')}
-            src={illustrationLeafMix}
-            width={125}
-            height={100}
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-            }}
-          />
+          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
         </Box>
 
         <Box sx={faqsContainerStyle}>

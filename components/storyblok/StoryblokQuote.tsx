@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
+import { getImageSizes } from '../../utils/imageSizes';
 import Quote from '../common/Quote';
 
 const containerStyle = {
@@ -47,7 +48,16 @@ const StoryblokQuote = (props: StoryblokQuoteProps) => {
     >
       {image && (
         <Box sx={imageContainerStyle}>
-          <Image src={image.filename} alt={image.alt} className="image" fill sizes="520px" />
+          <Image
+            src={image.filename}
+            alt={image.alt}
+            className="image"
+            fill
+            sizes={getImageSizes(imageContainerStyle.maxWidth)}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
         </Box>
       )}
       <Quote text={text} textSize={text_size} iconColor={icon_color} />

@@ -2,6 +2,7 @@ import { Box, Container } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import UserResearchBanner from '../banner/UserResearchBanner';
 
 const headerContainerStyles = {
@@ -46,7 +47,7 @@ const PartnerHeader = (props: HeaderProps) => {
           alt={tS(partnerLogoAlt)}
           src={partnerLogoSrc}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(logoContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}
@@ -57,7 +58,7 @@ const PartnerHeader = (props: HeaderProps) => {
           alt={tS(imageAlt)}
           src={imageSrc}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}

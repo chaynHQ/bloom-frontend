@@ -2,6 +2,7 @@ import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
+import { getImageSizes } from '../../utils/imageSizes';
 
 const headerContainerStyles = {
   backgroundColor: 'common.white',
@@ -36,6 +37,7 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
           alt={tS(partnerLogoAlt)}
           src={partnerLogoSrc}
           width={200}
+          sizes={getImageSizes(200)}
           style={{
             maxWidth: '100%',
             height: 'auto',

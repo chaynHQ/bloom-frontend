@@ -24,6 +24,7 @@ import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_ye
 import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
@@ -131,7 +132,12 @@ const Register: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMixDots')} src={illustrationLeafMixDots} fill sizes="100vw" />
+          <Image
+            alt={tS('alt.leafMixDots')}
+            src={illustrationLeafMixDots}
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+          />
         </Box>
         {!partnerContent && (
           // Show the public bloom and all other partner's welcome page links
@@ -160,7 +166,7 @@ const Register: NextPage = () => {
                         alt={tS(partner.logoAlt)}
                         src={partner.logo}
                         fill
-                        sizes="100vw"
+                        sizes={getImageSizes(logoContainerStyle.maxWidth)}
                         style={{
                           objectFit: 'contain',
                         }}
