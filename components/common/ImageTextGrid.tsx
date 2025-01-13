@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 
 export interface ImageTextItem {
   text: string;
@@ -52,7 +53,7 @@ const ImageTextGrid = (props: ImageTextGridProps) => {
               alt={tS(item.illustrationAlt)}
               src={item.illustrationSrc}
               fill
-              sizes="100vw"
+              sizes={getImageSizes(imageContainerStyle.width)}
               style={{
                 objectFit: 'contain',
               }}

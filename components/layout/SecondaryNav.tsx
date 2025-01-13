@@ -23,6 +23,7 @@ import { HTMLAttributes } from 'react';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { NextLinkComposed } from '../common/Link';
+import { getImageSizes } from '../../utils/imageSizes';
 
 interface LinkTabProps {
   label?: string;
@@ -72,7 +73,7 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
       alt={alt}
       src={src}
       fill
-      sizes="100vw"
+      sizes={getImageSizes(35)}
       style={{
         objectFit: 'contain',
       }}

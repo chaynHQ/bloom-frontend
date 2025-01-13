@@ -19,6 +19,7 @@ import illustrationPerson4Peach from '../../public/illustration_person4_peach.sv
 import { useCreateResourceFeedbackMutation } from '../../store/api';
 import { ResourceFeedback } from '../../store/resourcesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
@@ -102,7 +103,7 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
           alt={tS('alt.personTea')}
           src={illustrationPerson4Peach}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}

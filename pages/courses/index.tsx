@@ -167,8 +167,8 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                   item
                   xs={12}
                   sm={6}
-                  md={4}
-                  lg={4}
+                  md={6}
+                  lg={6}
                   height="100%"
                   maxWidth="400px"
                   key={course.id}

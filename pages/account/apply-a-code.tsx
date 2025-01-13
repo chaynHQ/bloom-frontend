@@ -12,6 +12,7 @@ import { PartnerContent, getAllPartnersContent } from '../../constants/partners'
 import { useTypedSelector } from '../../hooks/store';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
@@ -110,7 +111,7 @@ const ApplyACode: NextPage = () => {
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
                       fill
-                      sizes="100vw"
+                      sizes={getImageSizes(logoContainerStyle.maxWidth)}
                       style={{
                         objectFit: 'contain',
                       }}

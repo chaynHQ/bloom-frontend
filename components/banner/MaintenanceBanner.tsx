@@ -2,6 +2,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import illustrationChange from '../../public/illustration_change_peach.svg';
+import { getImageSizes } from '../../utils/imageSizes';
 
 const containerStyle = {
   textAlign: 'center',
@@ -25,7 +26,7 @@ export const MaintenanceBanner = () => {
           alt={t('alt.personTea')}
           src={illustrationChange}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}
