@@ -100,6 +100,44 @@
       "description1": "Bloom est une plateforme en ligne qui t’aide à guérir des traumatismes. Que ce soit par les cours vidéo, les activités de réflexion ou la messagerie, il y a de nombreuses façons différentes de s’engager avec Bloom.",
       "description2": "Inscris-toi ci-dessous pour avoir accès à l’ensemble de notre contenu et pour explorer tout ce que Bloom a à t’offrir.",
       "button": "Commencer"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Journaux de pensées",
+      "activities-stream-of-consciousness-journaling": "Écrire son journal : le flux de conscience",
+      "activities-timelines": "Chronologie",
+      "activities-trust-mapping": "Le trust mapping",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Comprendre la peur et le stress dans notre corps",
+      "activities-letter-to-a-part-of-my-body": "Une lettre pour une partie de mon corps",
+      "activities-accelerators-and-brakes": "Accélérateurs et freins",
+      "activities-ideal-sexual-being": "L'être sexuel idéal",
+      "grounding-visual-breathing": "Respiration visuelle",
+      "grounding-slow-breathing": "Respiration lente",
+      "grounding-box-breathing": "Respiration en boîte",
+      "grounding-drifting-clouds-meditation": "Méditation sur les nuages dérivants",
+      "grounding-positive-coping-statement": "Déclaration d’adaptation positive",
+      "grounding-finger-focus": "Focus sur les doigts",
+      "grounding-day-walkthrough": "Observer la journée",
+      "grounding-what-can-you-hear": "Pouvez-vous m’entendre?",
+      "grounding-listen-to-your-voice": "Écoutez votre voix",
+      "grounding-calming-colours": "Revenir de votre espace de sécurité",
+      "grounding-coming-back-to-your-safe-space": "Couleurs apaisantes",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Analyse corporelle compatissant",
+      "grounding-touching-and-feeling-textures": "Toucher et sentir les textures",
+      "grouding-sound-of-claps": "Bruit des applaudissements",
+      "grounding-affirming-ourselves": "S'affirmer (pression ferme)"
+    },
+    "relatedContent": {
+      "title": "Contenu associé",
+      "resource_short_video": "Regarder",
+      "resource_conversation": "Écouter",
+      "short_video": "Regarder",
+      "course": "Cours",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Ancrage",
+      "activities": "Activités",
+      "minuteLabel": "minutes"
     }
   }
 }

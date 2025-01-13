@@ -16,8 +16,8 @@ import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-import SessionFeedbackCard from '../cards/SessionFeedbackCard';
 import { Dots } from '../common/Dots';
+import SessionFeedbackForm from '../forms/SessionFeedbackForm';
 import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
 import { SessionChat } from '../session/SessionChat';
 import { SessionCompleteButton } from '../session/SessionCompleteButton';
@@ -52,6 +52,9 @@ export interface StoryblokSessionPageProps {
   bonus: ISbRichtext | BonusContent[];
   coming_soon: boolean;
   coming_soon_content: ISbRichtext;
+  languages: string[];
+  component: 'Session' | 'session_iba';
+  included_for_partners: string[];
 }
 
 const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
@@ -236,7 +239,12 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
               </Box>
             )}
           </Container>
-          {sessionId && <SessionFeedbackCard sessionId={sessionId} />}
+
+          {sessionId && (
+            <Container sx={{ bgcolor: 'background.paper' }}>
+              <SessionFeedbackForm sessionId={sessionId} />
+            </Container>
+          )}
         </Box>
       )}
     </Box>

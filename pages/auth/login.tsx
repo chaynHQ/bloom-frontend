@@ -28,6 +28,7 @@ import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_ye
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const containerStyle = {
@@ -95,7 +96,12 @@ const Login: NextPage = () => {
     return (
       <>
         <Box sx={imageContainerStyle}>
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} fill sizes="100vw" />
+          <Image
+            alt={tS('alt.leafMix')}
+            src={illustrationLeafMix}
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+          />
         </Box>
         <Typography variant="h3" component="h3">
           {t('login.newUserTitle')}

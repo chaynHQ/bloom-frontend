@@ -8,6 +8,7 @@ import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
 import { columnStyle } from '../styles/common';
+import { getImageSizes } from '../utils/imageSizes';
 
 const containerStyle = {
   ...columnStyle,
@@ -38,7 +39,12 @@ const Custom404: NextPage = () => {
         <title>{`${t('404.title')} • Bloom`}</title>
       </Head>
       <Box sx={imageContainerStyle}>
-        <Image alt={t('alt.bloomLogo')} src={bloomHead} fill sizes="100vw" />
+        <Image
+          alt={t('alt.bloomLogo')}
+          src={bloomHead}
+          fill
+          sizes={getImageSizes(imageContainerStyle.width)}
+        />
       </Box>
       <Typography variant="h1" component="h1">
         {t('404.title')}

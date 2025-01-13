@@ -55,6 +55,8 @@ export interface StoryblokCoursePageProps {
   live_end_date: string;
   live_soon_content: ISbRichtext;
   live_now_content: ISbRichtext;
+  languages: string[]; // TODO: implement this field - currently uses FF_DISABLED_COURSES env var
+  component: 'Course';
 }
 
 const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {

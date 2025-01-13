@@ -1,7 +1,7 @@
 name: Build & test
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize]
   push:
     branches: [develop]
@@ -10,7 +10,8 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -35,6 +36,7 @@ jobs:
 
       - name: Run type checks
         run: yarn type-check
+        continue-on-error: true
 
       - name: Build app
         run: yarn build

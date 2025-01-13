@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { NextComponentType } from 'next';
 import { IntlError, NextIntlClientProvider } from 'next-intl';
 import type { AppProps } from 'next/app';
+import { Montserrat, Open_Sans } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { NextPageContext } from 'next/types';
 import { Hotjar } from 'nextjs-hotjar';
@@ -26,6 +27,25 @@ import '../public/hotjarNPS.css';
 import { wrapper } from '../store/store';
 import '../styles/globals.css';
 import theme from '../styles/theme';
+
+// <link
+//   href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
+//   rel="stylesheet"
+// />;
+
+export const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '600'],
+  variable: '--font-open-sans',
+  display: 'swap',
+});
+
+export const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
 
 // For SSG compatibility with MUI
 // Client-side emotion cache, shared for the whole session of the user in the browser.
@@ -65,31 +85,33 @@ function MyApp(props: MyAppProps) {
   }
 
   return (
-    <ErrorBoundary>
-      <NextIntlClientProvider
-        messages={pageProps.messages}
-        locale={router.locale}
-        timeZone="Europe/London"
-        onError={onIntlError}
-      >
-        <DefaultHeadMetadata />
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <TopBar />
-          {pathHead !== 'partner-admin' && <LeaveSiteButton />}
-          <AuthGuard>
-            <Component {...pageProps} />
-          </AuthGuard>
-          <Footer />
-          <Consent />
-          {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
-            <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-          )}
-          {/* Vercel analytics */}
-          <Analytics />
-        </ThemeProvider>
-      </NextIntlClientProvider>
-    </ErrorBoundary>
+    <div className={`${openSans.variable} ${montserrat.variable}`}>
+      <ErrorBoundary>
+        <NextIntlClientProvider
+          messages={pageProps.messages}
+          locale={router.locale}
+          timeZone="Europe/London"
+          onError={onIntlError}
+        >
+          <DefaultHeadMetadata />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <TopBar />
+            {pathHead !== 'partner-admin' && <LeaveSiteButton />}
+            <AuthGuard>
+              <Component {...pageProps} />
+            </AuthGuard>
+            <Footer />
+            <Consent />
+            {!!process.env.NEXT_PUBLIC_HOTJAR_ID && process.env.NEXT_PUBLIC_ENV !== 'local' && (
+              <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+            )}
+            {/* Vercel analytics */}
+            <Analytics />
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </ErrorBoundary>
+    </div>
   );
 }
 

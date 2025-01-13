@@ -1,0 +1,29 @@
+{
+  "Resources": {
+    "conversations": "Conversaciones",
+    "shorts": "Cortos",
+    "completed": "Completado",
+    "sessionDetail": "Este clip es de la Sesión {sessionNumber}, {sessionName}, de nuestro curso {courseName}.",
+    "sessionButtonLabel": "Ver sesión completa",
+    "videoTranscriptLink": "Mira el video o lee la <link>transcripción</link>.",
+    "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción</link>.",
+    "resourceFeedback": {
+      "title": "¿Cómo fue esta sesión?",
+      "subtitle": "Nos encantaría saber cómo encontraste esta sesión. Tu opinión nos ayuda a mejorar nuestros cursos.",
+      "feedbackTags": {
+        "relatable": "Identificable",
+        "useful": "Útil",
+        "inspiring": "Inspirador",
+        "too long": "Demasiado largo",
+        "too complicated": "Demasiado complicado",
+        "not useful": "No útil"
+      },
+      "textboxDefaultText": "Añade un comentario...",
+      "sendButtonText": "Enviar",
+      "submissionText": "Gracias por enviar tu opinión",
+      "errors": {
+        "feedbackTagError": "Por favor selecciona una calificación antes de enviar."
+      }
+    }
+  }
+}

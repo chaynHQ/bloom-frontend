@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { ErrorDisplay } from '../../constants/common';
 import {
   RESET_PASSWORD_ERROR,
   RESET_PASSWORD_REQUEST,
@@ -112,11 +113,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordInput, setPasswordInput] = useState<string>('');
-  const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  >();
+  const [formError, setFormError] = useState<ErrorDisplay>();
 
   const [formSuccess, setFormSuccess] = useState<boolean>(false);
 

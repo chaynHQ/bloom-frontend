@@ -7,7 +7,6 @@ import {
   CardContent,
   Collapse,
   IconButton,
-  Link,
   Typography,
 } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
@@ -15,7 +14,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { getImageSizes } from '../../utils/imageSizes';
 import { RichTextOptions } from '../../utils/richText';
+import Link from '../common/Link';
 
 interface StoryblokCardProps {
   _uid: string;
@@ -35,19 +36,6 @@ const cardActionsStyle = {
   right: 1,
   bottom: 3,
 } as const;
-
-const slimImageStyle = {
-  width: { xs: 80, sm: 80, md: 80 },
-  height: { xs: 80, sm: 80, md: 80 },
-  minWidth: { xs: 80, sm: 80, md: 80 },
-  minHeight: { xs: 80, sm: 80, md: 80 },
-};
-const defaultStyle = {
-  width: { xs: 80, md: 100 },
-  height: { xs: 80, md: 100 },
-  minWidth: { xs: 80, md: 100 },
-  minHeight: { xs: 80, md: 100 },
-};
 
 const cardStyle = {
   '&:first-of-type': {
@@ -77,6 +65,8 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     setExpanded(!expanded);
   };
 
+  const isSlimStyle = style === 'slim';
+
   const arrowStyle = {
     transform: expanded ? 'rotate(180deg)' : 'none',
   } as const;
@@ -92,7 +82,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   };
 
   const cardContentStyle = {
-    ...(style == 'slim' ? slimPadding : {}),
+    ...(isSlimStyle && slimPadding),
     display: 'flex',
     flexDirection:
       alignment === 'right' ? 'row-reverse' : alignment === 'center' ? 'column' : 'row',
@@ -103,8 +93,11 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   } as const;
 
   const imageContainerStyle = {
-    ...(style == 'slim' ? slimImageStyle : defaultStyle),
     position: 'relative',
+    width: { xs: 80, ...(isSlimStyle && { md: 100 }) },
+    height: { xs: 80, ...(isSlimStyle && { md: 100 }) },
+    minWidth: { xs: 80, ...(isSlimStyle && { md: 100 }) },
+    minHeight: { xs: 80, ...(isSlimStyle && { md: 100 }) },
   } as const;
 
   const collapseContentStyle = {
@@ -117,7 +110,13 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     <CardContent sx={cardContentStyle}>
       {image && image.filename && (
         <Box sx={imageContainerStyle}>
-          <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw"></Image>
+          <Image
+            src={image.filename}
+            alt={image.alt}
+            className="image"
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+          ></Image>
         </Box>
       )}
       <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>

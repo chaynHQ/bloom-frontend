@@ -8,6 +8,7 @@ import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
 import { setCookiesAccepted } from '../../store/userSlice';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -111,7 +112,7 @@ const Consent = (props: {}) => {
         <Image
           alt={tS('alt.cookieCat')}
           src={IllustrationCookieCat}
-          sizes="100vw"
+          sizes={getImageSizes(70)}
           style={{
             width: '100%',
             height: 'auto',

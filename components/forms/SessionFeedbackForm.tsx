@@ -19,6 +19,7 @@ import illustrationPerson4Peach from '../../public/illustration_person4_peach.sv
 import { useCreateSessionFeedbackMutation } from '../../store/api';
 import { SessionFeedback } from '../../store/coursesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
@@ -33,7 +34,7 @@ const radioGroupStyle = {
   padding: '20px 0px',
 } as const;
 
-export interface RateSessionFormProps {
+export interface SessionFeedbackFormProps {
   sessionId: string;
 }
 
@@ -51,7 +52,7 @@ const containerStyle = {
   textAlign: 'center',
 } as const;
 
-const RateSessionForm = (props: RateSessionFormProps) => {
+const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
   const t = useTranslations('Courses.sessionFeedback');
   const tS = useTranslations('Shared');
   const [sendFeedback] = useCreateSessionFeedbackMutation();
@@ -81,7 +82,9 @@ const RateSessionForm = (props: RateSessionFormProps) => {
       feedbackDescription: feedbackDescription,
     };
 
-    await sendFeedback(feedbackData);
+    if (true) {
+      await sendFeedback(feedbackData);
+    }
 
     setLoading(false);
     setFormSubmitSuccess(true);
@@ -97,7 +100,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
           alt={tS('alt.personTea')}
           src={illustrationPerson4Peach}
           fill
-          sizes="100vw"
+          sizes={getImageSizes(imageContainerStyle.width)}
           style={{
             objectFit: 'contain',
           }}
@@ -122,7 +125,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
             row
             sx={radioGroupStyle}
             aria-label="feature"
-            name="session-feedback-radio-buttons"
+            name="feedback-radio-buttons"
             value={selectedFeedbackTag}
             onChange={(e) => setSelectedFeedbackTag(e.target.value as FEEDBACK_TAGS)}
           >
@@ -140,7 +143,7 @@ const RateSessionForm = (props: RateSessionFormProps) => {
 
         <TextField
           id="feedbackDescription"
-          placeholder={t.rich('textboxDefaultText').toString()}
+          placeholder={t.rich('textboxDefaultText')?.toString()}
           onChange={(e) => setFeedbackDescription(e.target.value)}
           value={feedbackDescription}
           sx={fieldBoxStyle}
@@ -165,4 +168,4 @@ const RateSessionForm = (props: RateSessionFormProps) => {
   );
 };
 
-export default RateSessionForm;
+export default SessionFeedbackForm;

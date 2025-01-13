@@ -18,6 +18,7 @@ import tiktokLogo from '../../public/tiktok.svg';
 
 import Cookies from 'js-cookie';
 import { rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import Link from '../common/Link';
 
@@ -142,16 +143,7 @@ const Footer = () => {
     <>
       <Container sx={footerContainerStyle} component="footer">
         <Box width="100%" mb={3}>
-          <Image
-            alt={tS('alt.bloomLogo')}
-            src={bloomLogo}
-            width={140}
-            height={60}
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-            }}
-          />
+          <Image alt={tS('alt.bloomLogo')} src={bloomLogo} width={140} height={60} />
         </Box>
         <Box sx={footerContentRowStyle}>
           <Box sx={getDescriptionContainerStyle(partners.length)}>
@@ -190,7 +182,7 @@ const Footer = () => {
                       alt={tS(partner.logoAlt)}
                       src={partner.logo}
                       fill
-                      sizes="100vw"
+                      sizes={getImageSizes(logoContainerStyle.width)}
                       style={{
                         objectFit: 'contain',
                         objectPosition: 'left',
@@ -272,14 +264,7 @@ const Footer = () => {
                           })
                         }
                       >
-                        <Image
-                          alt={tS('alt.tiktokLogo')}
-                          src={tiktokLogo}
-                          style={{
-                            maxWidth: '100%',
-                            height: 'auto',
-                          }}
-                        />
+                        <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} width={24} height={24} />
                       </IconButton>
                     )}
                     {partner.github && (
@@ -310,16 +295,7 @@ const Footer = () => {
         </Typography>
         <Box sx={fundingLogosContainerStyle}>
           <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
-            <Image
-              alt={tS('alt.comicReliefLogo')}
-              src={comicReliefLogo}
-              width={88}
-              height={64}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
-            />
+            <Image alt={tS('alt.comicReliefLogo')} src={comicReliefLogo} width={88} height={64} />
           </Link>
           <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
             <Image
@@ -327,10 +303,6 @@ const Footer = () => {
               src={communityFundLogo}
               width={170}
               height={50}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
           </Link>
         </Box>

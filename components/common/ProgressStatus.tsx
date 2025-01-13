@@ -15,7 +15,7 @@ const ProgressStatus = (props: ProgressStatusProps) => {
 
   if (status === PROGRESS_STATUS.STARTED) {
     return (
-      <Box sx={iconTextRowStyle}>
+      <Box sx={{ ...iconTextRowStyle, marginTop: '0 !important' }}>
         <DonutLargeIcon color="error" />
         <Typography>{tS('started')}</Typography>
       </Box>
@@ -23,7 +23,7 @@ const ProgressStatus = (props: ProgressStatusProps) => {
   }
   if (status === PROGRESS_STATUS.COMPLETED) {
     return (
-      <Box sx={iconTextRowStyle}>
+      <Box sx={{ ...iconTextRowStyle, marginTop: '0 !important' }}>
         <CheckCircleIcon color="error" />
         <Typography>{tS('completed')}</Typography>
       </Box>

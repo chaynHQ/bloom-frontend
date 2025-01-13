@@ -22,6 +22,8 @@ const publicPathHeads = [
   'faqs',
   'meet-the-team',
   'about-our-courses',
+  'conversations',
+  'shorts',
 ];
 
 // As the subpages of courses are not public and these pages are only partially public,
@@ -73,13 +75,17 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   }
 
   // Page does not require authenticated user, return content without guards
-  if (publicPathHeads.includes(pathHead) || partiallyPublicPages.includes(router.asPath)) {
+  if (
+    publicPathHeads.includes(pathHead) ||
+    partiallyPublicPages.includes(router.asPath) ||
+    router.asPath.includes('/shorts')
+  ) {
     return <>{children}</>;
   }
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.push(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
+    router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
   }
 
   if (userId) {

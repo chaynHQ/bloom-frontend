@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
 import { richtextContentStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 
 interface StoryblokImageProps {
   _uid: string;
@@ -60,7 +61,16 @@ const StoryblokImage = (props: StoryblokImageProps) => {
       {...storyblokEditable({ _uid, _editable, image, size, alignment })}
       sx={imageContainerStyle}
     >
-      <Image src={image.filename} alt={image.alt} className="image" fill sizes="100vw"></Image>
+      <Image
+        src={image.filename}
+        alt={image.alt}
+        className="image"
+        fill
+        sizes={getImageSizes(imageContainerStyle.width)}
+        style={{
+          objectFit: 'contain',
+        }}
+      />
     </Box>
   );
 };

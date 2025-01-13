@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
+import { getImageSizes } from '../../utils/imageSizes';
 import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
@@ -29,7 +30,7 @@ const cardContentStyle = {
   ...rowStyle,
   gap: 2,
   padding: { xs: 2, md: 3 },
-  paddingBottom: '0.5rem !important',
+  paddingBottom: '0rem !important',
   minHeight: { xs: 124, md: 136 },
 } as const;
 
@@ -43,8 +44,9 @@ const cardActionStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 80, md: 120 },
-  height: { xs: 80, md: 120 },
+  width: '100%',
+  maxHeight: '110px',
+  minHeight: '72px',
 } as const;
 
 const collapseContentStyle = {
@@ -53,8 +55,10 @@ const collapseContentStyle = {
 } as const;
 
 const cardActionsStyle = {
+  paddingLeft: 4,
   paddingTop: 0,
-  alignItems: 'end',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
 } as const;
 
 const statusRowStyle = {
@@ -90,24 +94,21 @@ const CourseCard = (props: CourseCardProps) => {
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >
           <CardContent sx={cardContentStyle}>
-            <Box sx={imageContainerStyle}>
+            <Box flex={[2, 1]} sx={imageContainerStyle}>
               <Image
-                alt={course.content.image.alt}
-                src={course.content.image.filename}
+                alt={course.content.image_with_background.alt}
+                src={course.content.image_with_background.filename}
                 fill
-                sizes="100vw"
+                sizes={getImageSizes(imageContainerStyle.width)}
                 style={{
                   objectFit: 'contain',
                 }}
               />
             </Box>
-            <Box flex={1}>
+            <Box flex={[3, 2]}>
               <Typography component="h3" variant="h3">
                 {course.content.name}
               </Typography>
-              {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
-                <ProgressStatus status={courseProgress} />
-              )}
             </Box>
           </CardContent>
         </CardActionArea>
@@ -118,7 +119,7 @@ const CourseCard = (props: CourseCardProps) => {
               alt={course.content.image.alt}
               src={course.content.image.filename}
               fill
-              sizes="100vw"
+              sizes={getImageSizes(imageContainerStyle.width)}
               style={{
                 objectFit: 'contain',
               }}
@@ -140,6 +141,10 @@ const CourseCard = (props: CourseCardProps) => {
             <PendingOutlined color="error" />
             <Typography>{t('comingSoon')}</Typography>
           </Box>
+        )}
+
+        {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
+          <ProgressStatus status={courseProgress} />
         )}
 
         <IconButton

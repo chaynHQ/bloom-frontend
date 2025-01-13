@@ -100,6 +100,44 @@
       "description1": "Bloom é uma plataforma online para te apoiar enquanto você se recupera de traumas. Desde cursos em vídeo e atividades reflexivas até a troca de mensagens diretas com nossa equipe, há muitas maneiras diferentes de interagir com o Bloom.",
       "description2": "Inscreva-se abaixo para ter acesso a todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer!",
       "button": "Comece"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Diários de reflexão",
+      "activities-stream-of-consciousness-journaling": "Diário de fluxo de consciência",
+      "activities-timelines": "Linhas do tempo",
+      "activities-trust-mapping": "Mapeamento de confiança",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Mapeando o medo e o estresse em nossos corpos",
+      "activities-letter-to-a-part-of-my-body": "Carta para uma parte de meu corpo",
+      "activities-accelerators-and-brakes": "Aceleradores e freios",
+      "activities-ideal-sexual-being": "Tipo ideal de sexualidade",
+      "grounding-visual-breathing": "Respiração visual",
+      "grounding-slow-breathing": "Respiração lenta",
+      "grounding-box-breathing": "Respiração em caixa",
+      "grounding-drifting-clouds-meditation": "Meditação sem preocupações — nuvens flutuante",
+      "grounding-positive-coping-statement": "Declaração de enfrentamento positivo ",
+      "grounding-finger-focus": "Concentre-se nos dedos",
+      "grounding-day-walkthrough": "Visão geral do dia",
+      "grounding-what-can-you-hear": "Você pode me ouvir?",
+      "grounding-listen-to-your-voice": "Escute a sua voz",
+      "grounding-calming-colours": "Cores calmantes",
+      "grounding-coming-back-to-your-safe-space": "Voltando para o seu espaço seguro",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Scan Corporal Compassivo",
+      "grounding-touching-and-feeling-textures": "Tocando e sentindo texturas",
+      "grouding-sound-of-claps": "Som de palmas",
+      "grounding-affirming-ourselves": "Nos reafirmarmos (pressão firme)"
+    },
+    "relatedContent": {
+      "title": "Conteúdo relacionado",
+      "resource_short_video": "Assistir",
+      "resource_conversation": "Áudio",
+      "short_video": "Assistir",
+      "course": "Curso",
+      "session": "Sessão",
+      "session_iba": "Sessão",
+      "grounding": "Aterramento",
+      "activities": "Atividade",
+      "minuteLabel": "minutos"
     }
   }
 }

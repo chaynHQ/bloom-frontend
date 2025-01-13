@@ -1,0 +1,25 @@
+{
+  "completed": "Pūra",
+  "sessionDetail": "Yah clip Session {sessionNumber}, {sessionName}, hamāre {courseName} course se hai.",
+  "sessionButtonLabel": "Pūrī session dekhen",
+  "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
+  "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+  "resourceFeedback": {
+    "title": "Yeh session kaisa aapko kaisa laga?",
+    "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+    "feedbackTags": {
+      "relatable": "Mein session ko samjh pai aur usse jud pai",
+      "useful": "Faidemand",
+      "inspiring": "Mujhe hausla afzai mehsoos hui",
+      "too long": "Bahut lamba tha",
+      "too complicated": "Bahut mushkil tha",
+      "not useful": "Zada faidemand nahi tha"
+    },
+    "textboxDefaultText": "Ek comment add karein...",
+    "sendButtonText": "Bhejein",
+    "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+    "errors": {
+      "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
+    }
+  }
+}
