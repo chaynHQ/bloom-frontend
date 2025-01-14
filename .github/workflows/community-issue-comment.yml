@@ -37,7 +37,7 @@ jobs:
             repo: context.repo.repo,
             issue_number: context.payload.issue.number,
             body: `Thank you @${context.payload.issue.assignee.login} you have been assigned this issue!
-            **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
+            **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/bloom-frontend/blob/develop/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
 
             ---
 
