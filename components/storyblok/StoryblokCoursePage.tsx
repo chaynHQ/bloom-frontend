@@ -4,22 +4,18 @@ import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
 import SessionCard from '../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../components/common/ContentUnavailable';
 import Link from '../../components/common/Link';
 import CourseHeader from '../../components/course/CourseHeader';
 import CourseIntroduction from '../../components/course/CourseIntroduction';
-import CourseStatusHeader from '../../components/course/CourseStatusHeader';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
-import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 import { SignUpBanner } from '../banner/SignUpBanner';
 
 const containerStyle = {
@@ -49,12 +45,6 @@ export interface StoryblokCoursePageProps {
   video_transcript: ISbRichtext;
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
   included_for_partners: string[];
-  coming_soon: boolean;
-  coming_soon_content: ISbRichtext;
-  live_start_date: string;
-  live_end_date: string;
-  live_soon_content: ISbRichtext;
-  live_now_content: ISbRichtext;
   languages: string[]; // TODO: implement this field - currently uses FF_DISABLED_COURSES env var
   component: 'Course';
 }
@@ -73,12 +63,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     video_transcript,
     weeks,
     included_for_partners,
-    coming_soon,
-    coming_soon_content,
-    live_start_date,
-    live_end_date,
-    live_soon_content,
-    live_now_content,
   } = props;
 
   const t = useTranslations('Courses');
@@ -119,29 +103,10 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const courseComingSoon: boolean = coming_soon;
-  const courseLiveSoon: boolean = courseIsLiveSoon({
-    live_start_date,
-    live_end_date,
-    coming_soon,
-    live_soon_content,
-  });
-  const courseLiveNow: boolean = courseIsLiveNow({
-    live_start_date,
-    live_end_date,
-    coming_soon,
-    live_now_content,
-  });
-  // only show live content to public users
-  const liveCourseAccess = partnerAccesses.length === 0 && !partnerAdmin.id;
-
   const eventData = {
     ...eventUserData,
     course_name: name,
     course_storyblok_id: storyId,
-    course_coming_soon: courseComingSoon,
-    course_live_soon: courseLiveSoon,
-    course_live_now: courseLiveNow,
     course_progress: courseProgress,
   };
 
@@ -170,12 +135,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         video_transcript,
         weeks,
         included_for_partners,
-        coming_soon,
-        coming_soon_content,
-        live_start_date,
-        live_end_date,
-        live_soon_content,
-        live_now_content,
       })}
     >
       <Head>
@@ -196,63 +155,42 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         courseProgress={courseProgress}
       />
       <Container sx={containerStyle}>
-        {courseComingSoon ? (
-          <>
-            {liveCourseAccess && courseLiveSoon ? (
-              <Box maxWidth={700}>
-                <CourseStatusHeader status="liveSoon" />
-                {render(live_soon_content, RichTextOptions)}
-              </Box>
-            ) : (
-              <Box maxWidth={700}>
-                <CourseStatusHeader status="comingSoon" />
-                {render(coming_soon_content, RichTextOptions)}
-              </Box>
-            )}
-          </>
-        ) : (
-          <>
-            {video && (
-              <CourseIntroduction
-                video={video}
-                name={name}
-                video_transcript={video_transcript}
-                live_soon_content={live_soon_content}
-                live_now_content={live_now_content}
-                eventData={eventData}
-                courseLiveSoon={courseLiveSoon}
-                courseLiveNow={courseLiveNow}
-                liveCourseAccess={liveCourseAccess}
-              />
-            )}
-            <Box sx={sessionsContainerStyle}>
-              {weeks.map((week: any) => {
-                return (
-                  <Box mb={6} key={week.name.split(':')[0]}>
-                    <Typography mb={{ xs: 0, md: 3.5 }} key={week.name} component="h2" variant="h2">
-                      {week.name}
-                    </Typography>
-                    <Box sx={cardsContainerStyle}>
-                      {week.sessions.map((session: any) => {
-                        const position = `${t('session')} ${session.position / 10 - 1}`;
+        <>
+          {video && (
+            <CourseIntroduction
+              video={video}
+              name={name}
+              video_transcript={video_transcript}
+              eventData={eventData}
+            />
+          )}
+          <Box sx={sessionsContainerStyle}>
+            {weeks.map((week: any) => {
+              return (
+                <Box mb={6} key={week.name.split(':')[0]}>
+                  <Typography mb={{ xs: 0, md: 3.5 }} key={week.name} component="h2" variant="h2">
+                    {week.name}
+                  </Typography>
+                  <Box sx={cardsContainerStyle}>
+                    {week.sessions.map((session: any) => {
+                      const position = `${t('session')} ${session.position / 10 - 1}`;
 
-                        return (
-                          <SessionCard
-                            key={session.id}
-                            session={session}
-                            sessionSubtitle={position}
-                            storyblokCourseId={storyId}
-                            isLoggedIn={isLoggedIn}
-                          />
-                        );
-                      })}
-                    </Box>
+                      return (
+                        <SessionCard
+                          key={session.id}
+                          session={session}
+                          sessionSubtitle={position}
+                          storyblokCourseId={storyId}
+                          isLoggedIn={isLoggedIn}
+                        />
+                      );
+                    })}
                   </Box>
-                );
-              })}
-            </Box>
-          </>
-        )}
+                </Box>
+              );
+            })}
+          </Box>
+        </>
       </Container>
       {!isLoggedIn && <SignUpBanner />}
     </Box>
