@@ -18,7 +18,7 @@ jobs:
   # PRs: automated closing after 1 more week of inactivity
   # Issues: requires manual closing by maintainers
   stale:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       issues: write
       pull-requests: write

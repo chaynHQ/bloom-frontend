@@ -6,7 +6,7 @@ on:
 
 jobs:
   newrelic:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: New Relic Release Tracking
     steps:
       # This step builds a var with the release tag value to use later

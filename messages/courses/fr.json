@@ -9,11 +9,6 @@
     "expandSummary": "Ouvrir le résumé de",
     "navigateToSession": "Aller à la session -",
     "navigateToCourse": "Aller au cours -",
-    "liveFrom": "Direct du {date}",
-    "liveUntil": "En direct jusqu'au {date}",
-    "liveSoon": "Bientôt en direct",
-    "liveNow": "En direct",
-    "comingSoon": "Prochainement",
     "noCourses": "Il n'y a pas de cours disponible pour le moment. Réessayez plus tard ou contactez l'équipe Bloom.",
     "courseDetail": {
       "introductionTitle": "Début du cours",

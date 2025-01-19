@@ -11,7 +11,7 @@ jobs:
   # assume the develop branch has also completed deploying
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
@@ -22,7 +22,7 @@ jobs:
           check_interval: 5
 
   lighthouse-desktop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: wait-for-vercel-deployment
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
           path: ${{ steps.lighthouseDesktop.outputs.resultsPath }}
 
   lighthouse-mobile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: wait-for-vercel-deployment
     steps:
       - uses: actions/checkout@v4

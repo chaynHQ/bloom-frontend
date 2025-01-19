@@ -9,7 +9,7 @@ jobs:
   # wait for new deployment to complete before running tests
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
@@ -24,7 +24,7 @@ jobs:
   cypress-run:
     name: Cypress e2e tests
     needs: wait-for-vercel-deployment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes

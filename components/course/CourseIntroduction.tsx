@@ -2,17 +2,14 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
 import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
 } from '../../constants/events';
 import { rowStyle } from '../../styles/common';
 import { EventUserData, logEvent } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 import Video from '../video/Video';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';
-import CourseStatusHeader from './CourseStatusHeader';
 
 const containerStyle = {
   ...rowStyle,
@@ -28,26 +25,11 @@ interface CourseIntroductionProps {
   video: { url: string };
   name: string;
   video_transcript: ISbRichtext;
-  live_soon_content: ISbRichtext;
-  live_now_content: ISbRichtext;
-  courseLiveSoon?: boolean;
-  courseLiveNow?: boolean;
-  liveCourseAccess?: boolean;
   eventData: EventUserData;
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {
-  const {
-    video,
-    name,
-    video_transcript,
-    live_soon_content,
-    live_now_content,
-    courseLiveSoon = false,
-    courseLiveNow = false,
-    liveCourseAccess = false,
-    eventData,
-  } = props;
+  const { video, name, video_transcript, eventData } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
 
   const t = useTranslations('Courses');
@@ -102,22 +84,8 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />
-        {/* Video position switches column depending on if live content shown */}
-        {liveCourseAccess && (courseLiveSoon || courseLiveNow) && <IntroductionVideo />}
       </Box>
-      {liveCourseAccess && courseLiveSoon ? (
-        <Box flex={1}>
-          <CourseStatusHeader status="liveSoon" />
-          {render(live_soon_content, RichTextOptions)}
-        </Box>
-      ) : liveCourseAccess && courseLiveNow ? (
-        <Box flex={1}>
-          <CourseStatusHeader status="liveNow" />
-          {render(live_now_content, RichTextOptions)}
-        </Box>
-      ) : (
-        <IntroductionVideo />
-      )}
+      <IntroductionVideo />
     </Box>
   );
 };
