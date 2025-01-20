@@ -1,23 +1,22 @@
 import type { Viewport } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
-import theme from '../styles/theme';
+import { notFound } from 'next/navigation';
+import firebase from '../../config/firebase';
+import { storyblok } from '../../config/storyblok';
+import { routing } from '../../i18n/routing';
+
+firebase;
+storyblok;
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'de' },
-    { locale: 'es' },
-    { locale: 'pt' },
-    { locale: 'fr' },
-    { locale: 'hi' },
-  ];
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 type Params = Promise<{ locale: string }>;
 
 export const viewport: Viewport = {
-  themeColor: theme.palette.primary.main,
+  themeColor: '#F3D6D8',
 };
 
 export async function generateMetadata({ params }: { params: Params }) {
@@ -100,17 +99,21 @@ export const montserrat = Montserrat({
   display: 'swap',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
   children,
-  params,
+  params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: 'en' | 'de' | 'es' | 'pt' | 'fr' | 'hi' };
+  params: { locale: string };
 }) {
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
   return (
-    <html lang={params.locale} className={`${openSans.variable} ${montserrat.variable}`}>
+    <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
       <body>{children}</body>
     </html>
   );

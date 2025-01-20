@@ -7046,14 +7046,14 @@ newrelic@^12.6.1:
     "@newrelic/native-metrics" "^11.0.0"
     "@prisma/prisma-fmt-wasm" "^4.17.0-16.27eb2449f178cd9fe1a4b892d732cc4795f75085"
 
-next-intl@^3.17.1:
-  version "3.26.0"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-3.26.0.tgz#ee76d975c8e03f1ba001f716d6e852f3a0f5501a"
-  integrity sha512-gkamnHIANQzeW8xpTGRxd0xiOCztQhY8GDp79fgdlw0GioqrjTEfSWLhHkgaAtvHRbuh/ByJdwiEY5eNK9bUSQ==
+next-intl@^3.26.3:
+  version "3.26.3"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-3.26.3.tgz#4991ba09de7d09d8a3e1a75b2cdf28a9648a4b70"
+  integrity sha512-6Y97ODrDsEE1J8cXKMHwg1laLdtkN66QMIqG8BzH4zennJRUNTtM8UMtBDyhfmF6uiZ+xsbWLXmHUgmUymUsfQ==
   dependencies:
     "@formatjs/intl-localematcher" "^0.5.4"
     negotiator "^1.0.0"
-    use-intl "^3.26.0"
+    use-intl "^3.26.3"
 
 next-pwa@^5.6.0:
   version "5.6.0"
@@ -9247,10 +9247,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-intl@^3.26.0:
-  version "3.26.0"
-  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-3.26.0.tgz#ba822c7d4ab3010d4f81154ef5e7d44f0aac1935"
-  integrity sha512-HGXmpjGlbEv1uFZPfm557LK8p/hv0pKF9UwnrJeHUTxQx6bUGzMgpmPRLCVY3zkr7hfjy4LPwQJfk4Fhnn+dIg==
+use-intl@^3.26.3:
+  version "3.26.3"
+  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-3.26.3.tgz#948c37388c1bfc894504f040930a32791b0158cf"
+  integrity sha512-yY0a2YseO17cKwHA9M6fcpiEJ2Uo81DEU0NOUxNTp6lJVNOuI6nULANPVVht6IFdrYFtlsMmMoc97+Eq9/Tnng==
   dependencies:
     "@formatjs/fast-memoize" "^2.2.0"
     intl-messageformat "^10.5.14"
