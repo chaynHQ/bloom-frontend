@@ -96,14 +96,14 @@ export async function generateMetadata({ params }: { params: Params }) {
   };
 }
 
-export const openSans = Open_Sans({
+const openSans = Open_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '600'],
   variable: '--font-open-sans',
   display: 'swap',
 });
 
-export const montserrat = Montserrat({
+const montserrat = Montserrat({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
   variable: '--font-montserrat',
