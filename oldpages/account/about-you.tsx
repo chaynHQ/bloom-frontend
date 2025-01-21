@@ -3,7 +3,7 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
-import { JSX, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -34,7 +34,7 @@ const formContainerStyle = {
 } as const;
 
 const getForm = (formLabel: string) => {
-  const formMap: { [key: string]: JSX.Element } = {
+  const formMap: { [key: string]: ReactNode } = {
     default: <AboutYouDemographicForm />,
     a: <AboutYouSetAForm />,
   };
