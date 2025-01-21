@@ -2,7 +2,7 @@
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';

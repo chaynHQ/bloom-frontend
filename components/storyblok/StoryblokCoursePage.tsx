@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Container, Link, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

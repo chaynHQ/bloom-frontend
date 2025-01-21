@@ -12,7 +12,7 @@ import {
   Link,
   Typography,
 } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

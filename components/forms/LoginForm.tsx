@@ -16,8 +16,8 @@ import {
   LOGIN_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { useCreateEventLogMutation } from '../../store/api';
-import { setAuthStateLoading } from '../../store/userSlice';
+import { useCreateEventLogMutation } from '../../lib/api';
+import { setAuthStateLoading } from '../../lib/store/userSlice';
 import logEvent from '../../utils/logEvent';
 
 const containerStyle = {

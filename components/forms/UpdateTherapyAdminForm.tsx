@@ -18,8 +18,8 @@ import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { api, useUpdatePartnerAccessMutation } from '../../store/api';
-import { GetUserDto } from '../../store/userSlice';
+import { api, useUpdatePartnerAccessMutation } from '../../lib/api';
+import { GetUserDto } from '../../lib/store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

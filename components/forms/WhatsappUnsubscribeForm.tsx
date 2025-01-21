@@ -12,7 +12,7 @@ import {
   WHATSAPP_UNSUBSCRIBE_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useUnsubscribeFromWhatsappMutation } from '../../store/api';
+import { useUnsubscribeFromWhatsappMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { findWhatsappSubscription } from '../../utils/whatsappUtils';

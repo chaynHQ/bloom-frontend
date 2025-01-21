@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { RichTextOptions } from '../../utils/richText';
 import Column from '../common/Column';

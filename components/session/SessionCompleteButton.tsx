@@ -9,7 +9,7 @@ import {
   SESSION_COMPLETE_REQUEST,
   SESSION_COMPLETE_SUCCESS,
 } from '../../constants/events';
-import { useCompleteSessionMutation } from '../../store/api';
+import { useCompleteSessionMutation } from '../../lib/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
 import { Dots } from '../common/Dots';

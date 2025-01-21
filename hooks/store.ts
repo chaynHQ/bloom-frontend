@@ -1,15 +1,17 @@
 import Cookies from 'js-cookie';
 import { useCallback } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { api } from '../store/api';
-import { clearCoursesSlice } from '../store/coursesSlice';
-import { clearPartnerAccessesSlice } from '../store/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../store/partnerAdminSlice';
-import type { AppDispatch, AppState } from '../store/store';
-import { clearUserSlice } from '../store/userSlice';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { api } from '../lib/api';
+import type { AppDispatch, AppStore, RootState } from '../lib/store';
+import { clearCoursesSlice } from '../lib/store/coursesSlice';
+import { clearPartnerAccessesSlice } from '../lib/store/partnerAccessSlice';
+import { clearPartnerAdminSlice } from '../lib/store/partnerAdminSlice';
+import { clearUserSlice } from '../lib/store/userSlice';
 
-export const useTypedSelector: TypedUseSelectorHook<AppState> = useSelector;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useTypedSelector = useSelector.withTypes<RootState>();
+export const useAppStore = useStore.withTypes<AppStore>();
 
 export const useStateUtils = () => {
   const dispatch: any = useAppDispatch();

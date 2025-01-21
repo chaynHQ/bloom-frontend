@@ -30,7 +30,7 @@ import {
   EMAIL_REMINDERS_UNSET_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
+import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

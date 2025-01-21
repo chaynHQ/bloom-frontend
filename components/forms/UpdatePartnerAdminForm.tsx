@@ -16,8 +16,8 @@ import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { api, useUpdatePartnerAdminMutation } from '../../store/api';
-import { GetUserDto } from '../../store/userSlice';
+import { api, useUpdatePartnerAdminMutation } from '../../lib/api';
+import { GetUserDto } from '../../lib/store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

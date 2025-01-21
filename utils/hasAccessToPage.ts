@@ -1,5 +1,5 @@
-import { PartnerAccesses } from '../store/partnerAccessSlice';
-import { PartnerAdmin } from '../store/partnerAdminSlice';
+import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
+import { PartnerAdmin } from '../lib/store/partnerAdminSlice';
 
 const hasAccessToPage = (
   loggedIn: boolean,

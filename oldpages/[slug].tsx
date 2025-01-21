@@ -1,4 +1,4 @@
-import { ISbStoryData, getStoryblokApi, useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import NoDataAvailable from '../components/common/NoDataAvailable';
 import StoryblokPage, { StoryblokPageProps } from '../components/storyblok/StoryblokPage';
@@ -9,8 +9,6 @@ interface Props {
 }
 
 const Page: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -18,10 +16,10 @@ const Page: NextPage<Props> = ({ story }) => {
   return <StoryblokPage {...(story.content as StoryblokPageProps)} />;
 };
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
+export async function getStaticProps({ locale, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const storyblokProps = await getStoryblokPageProps(slug, locale, preview);
+  const storyblokProps = await getStoryblokPageProps(slug, locale);
 
   return {
     props: {
@@ -37,7 +35,11 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const storyblokApi = getStoryblokApi();
-  let { data } = await storyblokApi.get('cdn/links/', { version: 'published' });
+  let { data } = await storyblokApi.get(
+    'cdn/links/',
+    { version: 'published' },
+    { cache: 'no-store' },
+  );
 
   const excludePaths: string[] = [
     'home',

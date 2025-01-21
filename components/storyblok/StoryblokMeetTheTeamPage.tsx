@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';

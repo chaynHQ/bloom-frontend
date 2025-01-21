@@ -7,8 +7,8 @@ import Header from '../../components/layout/Header';
 import { ErrorDisplay } from '../../constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { useUpdateUserMutation } from '../../lib/api';
 import illustrationPerson5Yellow from '../../public/illustration_leaf_mix_bee.svg';
-import { useUpdateUserMutation } from '../../store/api';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const DisableServiceEmails: NextPage = () => {

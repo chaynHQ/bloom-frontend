@@ -3,7 +3,7 @@
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container } from '@mui/material';
-import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';

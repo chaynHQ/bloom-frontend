@@ -1,4 +1,4 @@
-import { apiPlugin, storyblokInit } from '@storyblok/react';
+import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
 import StoryblokAccordion from '../components/storyblok/StoryblokAccordion';
 import StoryblokAudio from '../components/storyblok/StoryblokAudio';
 import StoryblokButton from '../components/storyblok/StoryblokButton';
@@ -21,7 +21,7 @@ import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMemb
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
 import StoryblokWelcomePage from '../components/storyblok/StoryblokWelcomePage';
 
-export const storyblok = storyblokInit({
+export const getStoryblokApi = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
   use: [apiPlugin],
   components: {

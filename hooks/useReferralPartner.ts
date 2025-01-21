@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '../store/userSlice';
+import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '../lib/store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage

@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
-import { useDeleteUserMutation } from '../../store/api';
+import { useDeleteUserMutation } from '../../lib/api';
 import theme from '../../styles/theme';
 import ConfirmDialog from '../forms/ConfirmDialog';
 

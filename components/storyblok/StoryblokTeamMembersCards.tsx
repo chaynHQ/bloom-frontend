@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { columnStyle, rowStyle } from '../../styles/common';
 import StoryblokTeamMemberCard, { StoryblokTeamMemberCardProps } from './StoryblokTeamMemberCard';
 

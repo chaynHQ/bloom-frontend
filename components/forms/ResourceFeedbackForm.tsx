@@ -17,9 +17,9 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '../../constants/enums';
+import { useCreateResourceFeedbackMutation } from '../../lib/api';
+import { ResourceFeedback } from '../../lib/store/resourcesSlice';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { useCreateResourceFeedbackMutation } from '../../store/api';
-import { ResourceFeedback } from '../../store/resourcesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
 

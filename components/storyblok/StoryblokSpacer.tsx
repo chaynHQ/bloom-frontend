@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, useTheme } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 interface StoryblokSpacerProps {
   _uid: string;
   _editable: string;

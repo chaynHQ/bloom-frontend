@@ -11,7 +11,7 @@ import {
   CREATE_PARTNER_ADMIN_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../store/api';
+import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

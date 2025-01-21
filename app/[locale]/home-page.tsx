@@ -1,25 +1,23 @@
+'use client';
+
 import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import type { NextPage } from 'next';
-import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import HomeHeader from '../components/layout/HomeHeader';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { PROMO_GET_STARTED_CLICKED } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import NoDataAvailable from '../../components/common/NoDataAvailable';
+import HomeHeader from '../../components/layout/HomeHeader';
+import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
+import { PROMO_GET_STARTED_CLICKED } from '../../constants/events';
+import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
   story: ISbStoryData | null;
-  preview: boolean;
 }
 
-const Index: NextPage<Props> = ({ story, preview }) => {
+export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -85,23 +83,4 @@ const Index: NextPage<Props> = ({ story, preview }) => {
         ))}
     </Box>
   );
-};
-
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('home', locale);
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-        ...require(`../messages/welcome/${locale}.json`),
-        ...require(`../messages/courses/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
 }
-
-export default Index;

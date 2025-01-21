@@ -1,9 +1,4 @@
-import {
-  ISbStoriesParams,
-  ISbStoryData,
-  getStoryblokApi,
-  useStoryblokState,
-} from '@storyblok/react';
+import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import NoDataAvailable from '../../../components/common/NoDataAvailable';
 import StoryblokSessionPage, {
@@ -16,8 +11,6 @@ interface Props {
 }
 
 const SessionDetail: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -42,7 +35,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
   const fullSlug = `courses/${slug}/${sessionSlug}`;
 
-  const storyblokProps = await getStoryblokPageProps(fullSlug, locale, preview, {
+  const storyblokProps = await getStoryblokPageProps(fullSlug, locale, {
     resolve_relations: ['Session.course', 'session_iba.course'],
   });
 
@@ -66,7 +59,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 
   const storyblokApi = getStoryblokApi();
-  let sessions = await storyblokApi.getAll('cdn/links', sbParams);
+  let sessions = await storyblokApi.getAll('cdn/links', sbParams, 'session', { cache: 'no-store' });
 
   let paths: any = [];
 

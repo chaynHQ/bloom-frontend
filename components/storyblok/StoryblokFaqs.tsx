@@ -2,7 +2,7 @@
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { FAQ_OPENED } from '../../constants/events';

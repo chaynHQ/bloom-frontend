@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material';
-import { ISbStoryData, useStoryblokState } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -32,8 +32,6 @@ interface Props {
 }
 
 const Message: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   const t = useTranslations('Messaging');
   const tS = useTranslations('Shared');
   const userId = useTypedSelector((state) => state.user.id);
@@ -103,7 +101,7 @@ const Message: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('messaging', locale, preview);
+  const storyblokProps = await getStoryblokPageProps('messaging', locale);
 
   return {
     props: {

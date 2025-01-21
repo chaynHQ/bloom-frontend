@@ -18,7 +18,7 @@ import {
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
+import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';

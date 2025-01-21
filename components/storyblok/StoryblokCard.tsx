@@ -11,7 +11,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';

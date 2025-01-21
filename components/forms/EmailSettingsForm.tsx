@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
+import { useUpdateUserMutation } from '../../lib/api';
 
 const formControlStyle = {
   marginY: 3,

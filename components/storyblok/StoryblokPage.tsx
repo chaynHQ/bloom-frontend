@@ -1,6 +1,6 @@
 'use client';
 
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Head from 'next/head';
 import { usePathname } from 'next/navigation';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';

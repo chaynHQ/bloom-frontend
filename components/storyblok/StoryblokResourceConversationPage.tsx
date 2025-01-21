@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
@@ -13,8 +13,8 @@ import {
   RESOURCE_CONVERSATION_VIEWED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Resource } from '../../lib/store/resourcesSlice';
 import illustrationCourses from '../../public/illustration_courses.svg';
-import { Resource } from '../../store/resourcesSlice';
 import { rowStyle } from '../../styles/common';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';

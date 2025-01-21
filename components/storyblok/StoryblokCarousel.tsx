@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, useTheme } from '@mui/material';
-import { SbBlokData, storyblokEditable } from '@storyblok/react';
+import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { useWidth } from '../../utils/useWidth';
 import Carousel, { getSlideWidth } from '../common/Carousel';
 import { Component as DynamicComponent } from './DynamicComponent';

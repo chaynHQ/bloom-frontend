@@ -17,9 +17,9 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 import { FEEDBACK_TAGS } from '../../constants/enums';
+import { useCreateSessionFeedbackMutation } from '../../lib/api';
+import { SessionFeedback } from '../../lib/store/coursesSlice';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { useCreateSessionFeedbackMutation } from '../../store/api';
-import { SessionFeedback } from '../../store/coursesSlice';
 import { staticFieldLabelStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
 

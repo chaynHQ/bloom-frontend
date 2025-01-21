@@ -1,4 +1,4 @@
-import { Course, Courses, Session } from '../store/coursesSlice';
+import { Course, Courses, Session } from '../lib/store/coursesSlice';
 import { getCourseData } from './getCourseData';
 
 const coursesBase: Courses = [

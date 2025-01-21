@@ -1,6 +1,6 @@
 import { PROGRESS_STATUS } from '../../../constants/enums';
-import { Course } from '../../../store/coursesSlice';
-import { PartnerAccesses } from '../../../store/partnerAccessSlice';
+import { Course } from '../../../lib/store/coursesSlice';
+import { PartnerAccesses } from '../../../lib/store/partnerAccessSlice';
 
 export const getAcronym = (text: string) => {
   return `${text

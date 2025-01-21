@@ -14,7 +14,7 @@ import illustrationChange from '../../public/illustration_change.svg';
 import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 
-import { ISbStoryData, useStoryblokState } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import NoDataAvailable from '../../components/common/NoDataAvailable';
 import { rowStyle } from '../../styles/common';
 import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
@@ -57,8 +57,6 @@ const steps: Array<ImageTextItem> = [
 ];
 
 const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
@@ -119,7 +117,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps(`subscription/whatsapp`, locale, preview);
+  const storyblokProps = await getStoryblokPageProps(`subscription/whatsapp`, locale);
 
   return {
     props: {

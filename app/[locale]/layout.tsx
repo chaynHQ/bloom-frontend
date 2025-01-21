@@ -1,23 +1,23 @@
 import type { Viewport } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { ReduxProvider } from '../../components/providers/ReduxProvider';
+import StoryblokProvider from '../../components/providers/StoryblokProvider';
 import firebase from '../../config/firebase';
-import { storyblok } from '../../config/storyblok';
 import { routing } from '../../i18n/routing';
 
 firebase;
-storyblok;
-
-export async function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
 type Params = Promise<{ locale: string }>;
 
 export const viewport: Viewport = {
   themeColor: '#F3D6D8',
 };
+
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { locale } = await params;
@@ -99,22 +99,26 @@ export const montserrat = Montserrat({
   display: 'swap',
 });
 
-export default async function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
-  children,
-  params: { locale },
-}: {
+export interface RootLayoutProps {
   children: React.ReactNode;
   params: { locale: string };
-}) {
-  // Ensure that the incoming `locale` is valid
+}
+
+export default async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
+  const messages = await getMessages();
+
   return (
     <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
-      <body>{children}</body>
+      <NextIntlClientProvider messages={messages}>
+        <ReduxProvider>
+          <StoryblokProvider>
+            <body>{children}</body>
+          </StoryblokProvider>
+        </ReduxProvider>
+      </NextIntlClientProvider>
     </html>
   );
 }

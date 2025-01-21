@@ -1,7 +1,7 @@
 import { STORYBLOK_STORY_STATUS } from '../../../constants/enums';
-import { Course, Session } from '../../../store/coursesSlice';
-import { PartnerAccess } from '../../../store/partnerAccessSlice';
-import { User } from '../../../store/userSlice';
+import { Course, Session } from '../../../lib/store/coursesSlice';
+import { PartnerAccess } from '../../../lib/store/partnerAccessSlice';
+import { User } from '../../../lib/store/userSlice';
 import { createCrispProfileData } from './createCrispProfileData';
 
 const user = {

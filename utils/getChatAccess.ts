@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { PartnerAccesses } from '../store/partnerAccessSlice';
+import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
 
 export const getChatAccess = (
   partnerAccesses: PartnerAccesses,

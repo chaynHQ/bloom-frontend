@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokStatementProps {

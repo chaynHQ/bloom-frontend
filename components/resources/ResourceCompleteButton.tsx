@@ -12,7 +12,7 @@ import {
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
   RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
 } from '../../constants/events';
-import { useCompleteResourceMutation } from '../../store/api';
+import { useCompleteResourceMutation } from '../../lib/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
 import { RESOURCE_CATEGORIES } from '../../constants/enums';

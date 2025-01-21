@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react';
+import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
@@ -283,21 +283,25 @@ export async function getStaticProps({ locale, preview = false }: GetStaticProps
 
   const storyblokApi = getStoryblokApi();
 
-  let { data } = await storyblokApi.get('cdn/stories/', sbParams);
+  let { data } = await storyblokApi.get('cdn/stories/', sbParams, { cache: 'no-store' });
 
   let sbConversationsParams: ISbStoriesParams = {
     ...baseProps,
     starts_with: 'conversations/',
   };
 
-  let { data: conversationsData } = await storyblokApi.get('cdn/stories/', sbConversationsParams);
+  let { data: conversationsData } = await storyblokApi.get('cdn/stories/', sbConversationsParams, {
+    cache: 'no-store',
+  });
 
   let sbShortsParams: ISbStoriesParams = {
     ...baseProps,
     starts_with: 'shorts/',
   };
 
-  let { data: shortsData } = await storyblokApi.get('cdn/stories/', sbShortsParams);
+  let { data: shortsData } = await storyblokApi.get('cdn/stories/', sbShortsParams, {
+    cache: 'no-store',
+  });
   return {
     props: {
       stories: data ? getEnabledCourses(data.stories) : null,

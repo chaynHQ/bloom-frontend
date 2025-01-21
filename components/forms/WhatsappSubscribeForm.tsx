@@ -15,7 +15,7 @@ import {
   WHATSAPP_SUBSCRIBE_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useSubscribeToWhatsappMutation } from '../../store/api';
+import { useSubscribeToWhatsappMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import PhoneInput from './PhoneInput';

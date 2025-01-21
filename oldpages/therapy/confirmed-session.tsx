@@ -10,9 +10,9 @@ import { BASE_URL } from '../../constants/common';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
+import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { PartnerAccess } from '../../store/partnerAccessSlice';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const ConfirmedSession: NextPage = () => {

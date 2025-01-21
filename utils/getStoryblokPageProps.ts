@@ -1,32 +1,30 @@
-import { ISbStoriesParams, ISbStoryParams, getStoryblokApi } from '@storyblok/react';
+import { ISbStoriesParams, ISbStoryParams, StoryblokClient } from '@storyblok/react/rsc';
+import { getStoryblokApi } from '../lib/storyblok';
 
 export const getStoryblokPageProps = async (
   slug: string | undefined,
   locale: string | undefined,
-  preview: boolean,
   params?: Partial<ISbStoriesParams>,
 ) => {
   if (!slug) {
     return {
       story: null,
-      preview,
       locale: locale || null,
       error: 'No slug provided',
     };
   }
 
   const sbParams: ISbStoriesParams = {
-    version: preview ? 'draft' : 'published',
+    version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
     language: locale || 'en',
     ...(params && params),
   };
 
   try {
-    const storyblokApi = getStoryblokApi();
-    let { data } = await storyblokApi.get(`cdn/stories/${slug}`, sbParams);
+    const storyblokApi: StoryblokClient = getStoryblokApi();
+    let { data } = await storyblokApi.get(`cdn/stories/${slug}`, sbParams, { cache: 'no-store' });
     return {
       story: data ? data.story : null,
-      preview,
       locale: locale || null,
     };
   } catch (error) {
@@ -37,11 +35,10 @@ export const getStoryblokPageProps = async (
 export const getStoryblokPagesByUuids = async (
   uuids: string,
   locale: string | undefined,
-  preview: boolean,
   params: Partial<ISbStoryParams>,
 ) => {
   const sbParams: ISbStoriesParams = {
-    version: preview ? 'draft' : 'published',
+    version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
     language: locale || 'en',
     by_uuids: uuids,
     ...(params && params),
@@ -50,11 +47,10 @@ export const getStoryblokPagesByUuids = async (
   try {
     const storyblokApi = getStoryblokApi();
 
-    let { data } = await storyblokApi.get(`cdn/stories`, sbParams);
+    let { data } = await storyblokApi.get(`cdn/stories`, sbParams, { cache: 'no-store' });
 
     return {
       stories: data ? data.stories : null,
-      preview,
       locale: locale || null,
     };
   } catch (error) {

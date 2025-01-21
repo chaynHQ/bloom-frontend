@@ -11,8 +11,8 @@ import {
   ASSIGN_NEW_PARTNER_ACCESS_REQUEST,
   ASSIGN_NEW_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
-import { useAssignPartnerAccessMutation } from '../../store/api';
-import { PartnerAccess } from '../../store/partnerAccessSlice';
+import { useAssignPartnerAccessMutation } from '../../lib/api';
+import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 
 import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';

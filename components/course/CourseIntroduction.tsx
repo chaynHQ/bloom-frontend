@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Link as MuiLink, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import {

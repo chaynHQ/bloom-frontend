@@ -12,13 +12,13 @@ import {
   LOGOUT_FORCED,
   LOGOUT_SUCCESS,
 } from '../constants/events';
-import { useCreateEventLogMutation, useGetUserQuery } from '../store/api';
+import { useCreateEventLogMutation, useGetUserQuery } from '../lib/api';
 import {
   setAuthStateLoading,
   setLoadError,
   setUserLoading,
   setUserToken,
-} from '../store/userSlice';
+} from '../lib/store/userSlice';
 import { getErrorMessage } from '../utils/errorMessage';
 import logEvent, { getEventUserData } from '../utils/logEvent';
 import { getIsMaintenanceMode } from '../utils/maintenanceMode';

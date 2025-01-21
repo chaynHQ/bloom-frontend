@@ -23,7 +23,7 @@ import {
   CREATE_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useAddPartnerAccessMutation } from '../../store/api';
+import { useAddPartnerAccessMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

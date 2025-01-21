@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { api } from './api';
+import { api } from '../api';
 import { PartnerAccess } from './partnerAccessSlice';
 
 export interface Feature {

@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
+import { useUpdateUserMutation } from '../../lib/api';
 import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {

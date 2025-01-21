@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Button, Container, IconButton, Typography } from '@mui/material';
-import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
@@ -17,7 +17,7 @@ import {
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { Resource } from '../../store/resourcesSlice';
+import { Resource } from '../../lib/store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
 import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';

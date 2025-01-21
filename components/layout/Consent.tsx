@@ -8,8 +8,8 @@ import React, { useEffect } from 'react';
 import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { setCookiesAccepted } from '../../lib/store/userSlice';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
-import { setCookiesAccepted } from '../../store/userSlice';
 import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

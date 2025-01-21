@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
-import { Course } from '../../store/coursesSlice';
+import { Course } from '../../lib/store/coursesSlice';
 
 interface SessionProgressDisplayProps {
   sessionId: number;

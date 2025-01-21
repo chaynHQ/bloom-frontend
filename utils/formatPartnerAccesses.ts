@@ -1,5 +1,5 @@
-import { PartnerAccess } from '../store/partnerAccessSlice';
-import { PartnerAdmin } from '../store/partnerAdminSlice';
+import { PartnerAccess } from '../lib/store/partnerAccessSlice';
+import { PartnerAdmin } from '../lib/store/partnerAdminSlice';
 
 export const joinedPartners = (
   partnerAccesses: PartnerAccess[] | undefined,

@@ -12,13 +12,13 @@ import { getSimplybookWidgetConfig } from '../../config/simplybook';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
+import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 import illustrationChange from '../../public/illustration_change.svg';
 import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
 import illustrationConfidential from '../../public/illustration_confidential.svg';
 import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { PartnerAccess } from '../../store/partnerAccessSlice';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 

@@ -1,4 +1,4 @@
-import { User } from '../store/userSlice';
+import { User } from '../lib/store/userSlice';
 
 // Simplybook hardcodes additional field IDs
 const userIdFieldId =

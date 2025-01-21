@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
 import { richtextContentStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';

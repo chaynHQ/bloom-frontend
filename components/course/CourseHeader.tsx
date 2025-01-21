@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import theme from '../../styles/theme';

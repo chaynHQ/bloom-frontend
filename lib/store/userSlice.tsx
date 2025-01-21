@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '../constants/enums';
-import { api, GetUserResponse } from './api';
+import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '../../constants/enums';
+import { api, GetUserResponse } from '../api';
 import { PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';
 

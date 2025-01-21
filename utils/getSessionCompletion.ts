@@ -1,8 +1,8 @@
-import { ISbStoryData } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { Dispatch, SetStateAction } from 'react';
 import { ISbComponentType } from 'storyblok-js-client';
 import { PROGRESS_STATUS } from '../constants/enums';
-import { Courses, Session } from '../store/coursesSlice';
+import { Courses, Session } from '../lib/store/coursesSlice';
 
 export const getSessionCompletion = (
   course: ISbStoryData<ISbComponentType<string> & { [p: string]: any }>,

@@ -8,13 +8,13 @@ import {
 import { getAuth } from 'firebase/auth';
 import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
 import { EventLog } from '../constants/eventLog';
-import { Course, Courses, SessionFeedback } from './coursesSlice';
-import { PartnerAccess, PartnerAccesses } from './partnerAccessSlice';
-import { PartnerAdmin } from './partnerAdminSlice';
-import { Partner, PartnerFeature } from './partnersSlice';
-import { Resource, ResourceFeedback, Resources } from './resourcesSlice';
-import { AppState } from './store';
-import { setUserToken, Subscription, Subscriptions, User } from './userSlice';
+import { RootState } from './store';
+import { Course, Courses, SessionFeedback } from './store/coursesSlice';
+import { PartnerAccess, PartnerAccesses } from './store/partnerAccessSlice';
+import { PartnerAdmin } from './store/partnerAdminSlice';
+import { Partner, PartnerFeature } from './store/partnersSlice';
+import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
+import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 
 export interface GetUserResponse {
   user: User;
@@ -36,7 +36,7 @@ interface WhatsappUnsubscribePayload {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: (headers, { getState }) => {
-    const user = (getState() as AppState).user;
+    const user = (getState() as RootState).user;
     const token = user.token;
 
     if (token) {

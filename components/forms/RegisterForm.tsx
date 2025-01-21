@@ -38,8 +38,8 @@ import {
   useAddUserMutation,
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
-} from '../../store/api';
-import { setUserLoading } from '../../store/userSlice';
+} from '../../lib/api';
+import { setUserLoading } from '../../lib/store/userSlice';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Link, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
@@ -16,7 +16,7 @@ import {
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { useCompleteResourceMutation, useStartResourceMutation } from '../../store/api';
+import { useCompleteResourceMutation, useStartResourceMutation } from '../../lib/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 import Video from '../video/Video';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';

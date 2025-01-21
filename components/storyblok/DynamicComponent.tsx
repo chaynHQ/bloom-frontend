@@ -1,6 +1,6 @@
 'use client';
 
-import { SbBlokData } from '@storyblok/react';
+import { SbBlokData } from '@storyblok/react/rsc';
 import Placeholder from './Placeholder';
 import StoryblokButton from './StoryblokButton';
 import StoryblokCard from './StoryblokCard';

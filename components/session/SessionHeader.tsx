@@ -2,7 +2,7 @@
 
 import CircleIcon from '@mui/icons-material/Circle';
 import { Button, Typography } from '@mui/material';
-import { ISbRichtext, ISbStoryData } from '@storyblok/react';
+import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';

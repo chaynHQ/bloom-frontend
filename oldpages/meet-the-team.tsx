@@ -1,4 +1,4 @@
-import { ISbStoryData, useStoryblokState } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { GetStaticPropsContext, NextPage } from 'next';
 import NoDataAvailable from '../components/common/NoDataAvailable';
 import StoryblokMeetTheTeamPage, {
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const MeetTheTeam: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -21,7 +19,7 @@ const MeetTheTeam: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('meet-the-team', locale, preview);
+  const storyblokProps = await getStoryblokPageProps('meet-the-team', locale);
 
   return {
     props: {

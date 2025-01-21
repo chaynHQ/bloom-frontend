@@ -9,7 +9,7 @@ import {
   Icon,
   Typography,
 } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';

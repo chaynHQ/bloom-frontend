@@ -1,5 +1,5 @@
 import { PartnerContent } from '../constants/partners';
-import { PartnerAccesses } from '../store/partnerAccessSlice';
+import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
 import userHasAccessToPartnerContent from './userHasAccessToPartnerContent';
 
 const partnerAPartnerAccessCode = {

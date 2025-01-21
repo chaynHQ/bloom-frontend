@@ -1,7 +1,7 @@
 import { track } from '@vercel/analytics/react';
 import { getAnalytics } from 'firebase/analytics';
-import { PartnerAccesses } from '../store/partnerAccessSlice';
-import { PartnerAdmin } from '../store/partnerAdminSlice';
+import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
+import { PartnerAdmin } from '../lib/store/partnerAdminSlice';
 import {
   joinedFeatureLiveChat,
   joinedFeatureTherapy,

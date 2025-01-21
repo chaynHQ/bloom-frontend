@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Button } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import { generateStoryblokButtonEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';

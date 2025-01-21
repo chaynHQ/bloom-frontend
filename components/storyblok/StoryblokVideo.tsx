@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import dynamic from 'next/dynamic';
 import { YouTubeConfig } from 'react-player/youtube';
 import { richtextContentStyle } from '../../styles/common';

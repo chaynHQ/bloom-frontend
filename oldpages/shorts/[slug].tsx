@@ -1,9 +1,4 @@
-import {
-  ISbStoriesParams,
-  ISbStoryData,
-  getStoryblokApi,
-  useStoryblokState,
-} from '@storyblok/react';
+import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 import NoDataAvailable from '../../components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
@@ -16,8 +11,6 @@ interface Props {
 }
 
 const ResourceShortOverview: NextPage<Props> = ({ story }) => {
-  story = useStoryblokState(story);
-
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -39,7 +32,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, preview, {
+  const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, {
     resolve_relations: [
       'resource_short_video.related_content',
       'resource_short_video.related_session',
@@ -73,7 +66,9 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 
   const storyblokApi = getStoryblokApi();
-  let shorts = await storyblokApi.getAll('cdn/links', sbParams);
+  let shorts = await storyblokApi.getAll('cdn/links', sbParams, 'short_video', {
+    cache: 'no-store',
+  });
 
   let paths: any = [];
 

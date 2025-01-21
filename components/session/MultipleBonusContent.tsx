@@ -1,7 +1,7 @@
 'use client';
 
 import LinkIcon from '@mui/icons-material/Link';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { EventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';

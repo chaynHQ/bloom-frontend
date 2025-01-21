@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Button, Modal, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';

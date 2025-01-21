@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getPartnerContent, PartnerContent } from '../constants/partners';
-import { api, GetUserResponse } from './api';
+import { getPartnerContent, PartnerContent } from '../../constants/partners';
+import { api, GetUserResponse } from '../api';
 
 export interface PartnerAdmin {
   id: string | null;

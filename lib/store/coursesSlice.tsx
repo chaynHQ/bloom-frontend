@@ -1,6 +1,6 @@
 import { Draft, createSlice } from '@reduxjs/toolkit';
-import { FEEDBACK_TAGS, STORYBLOK_STORY_STATUS } from '../constants/enums';
-import { api } from './api';
+import { FEEDBACK_TAGS, STORYBLOK_STORY_STATUS } from '../../constants/enums';
+import { api } from '../api';
 import { User } from './userSlice';
 
 export interface Session {

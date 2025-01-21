@@ -1,7 +1,7 @@
 'use client';
 
 import { Box } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
