@@ -69,7 +69,7 @@
     "@cypress/code-coverage": "^3.13.10",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@next/bundle-analyzer": "^15.0.3",
+    "@next/bundle-analyzer": "^15.1.5",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
