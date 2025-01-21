@@ -1,6 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import useLoadUser from '../hooks/useLoadUser';
@@ -44,8 +45,9 @@ const partiallyPublicPages = [
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
-export function AuthGuard({ children }: { children: JSX.Element }) {
+export function AuthGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -56,10 +58,10 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   const unauthenticated = userResourceError || (!userAuthLoading && !userLoading && !userId);
 
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
-  const pathHead = router.pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
+  const pathHead = pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
 
   // If app is in maintenance mode, redirect all pages to /maintenance
-  if (isMaintenanceMode && router.pathname !== '/maintenance') {
+  if (isMaintenanceMode && pathname !== '/maintenance') {
     if (typeof window !== 'undefined') {
       router.replace(`/maintenance`);
     }
@@ -67,7 +69,7 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   }
 
   // If app is not in maintenance mode, redirect /maintenance to home page
-  if (!isMaintenanceMode && router.pathname === '/maintenance') {
+  if (!isMaintenanceMode && pathname === '/maintenance') {
     if (typeof window !== 'undefined') {
       router.replace(`/`);
     }
@@ -77,15 +79,15 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
   // Page does not require authenticated user, return content without guards
   if (
     publicPathHeads.includes(pathHead) ||
-    partiallyPublicPages.includes(router.asPath) ||
-    router.asPath.includes('/shorts')
+    partiallyPublicPages.includes(pathname) ||
+    pathname.includes('/shorts')
   ) {
     return <>{children}</>;
   }
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.replace(`/auth/login${generateReturnUrlQuery(router.asPath)}`);
+    router.replace(`/auth/login${generateReturnUrlQuery(pathname)}`);
   }
 
   if (userId) {

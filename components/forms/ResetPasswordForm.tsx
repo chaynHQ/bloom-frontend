@@ -21,9 +21,7 @@ export const EmailForm = () => {
   const [emailInput, setEmailInput] = useState<string>('');
   const [resetEmailSent, setResetEmailSent] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const t = useTranslations('Auth.form');
 

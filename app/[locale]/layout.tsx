@@ -1,12 +1,23 @@
+import { ThemeProvider } from '@mui/material';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { Analytics } from '@vercel/analytics/react';
 import type { Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import { Hotjar } from 'nextjs-hotjar';
+import { ReactNode } from 'react';
+import Consent from '../../components/layout/Consent';
+import Footer from '../../components/layout/Footer';
+import LeaveSiteButton from '../../components/layout/LeaveSiteButton';
+import TopBar from '../../components/layout/TopBar';
 import { ReduxProvider } from '../../components/providers/ReduxProvider';
 import StoryblokProvider from '../../components/providers/StoryblokProvider';
 import firebase from '../../config/firebase';
+import { AuthGuard } from '../../guards/AuthGuard';
 import { routing } from '../../i18n/routing';
+import theme from '../../styles/theme';
 
 firebase;
 type Params = Promise<{ locale: string }>;
@@ -100,11 +111,14 @@ export const montserrat = Montserrat({
 });
 
 export interface RootLayoutProps {
-  children: React.ReactNode;
-  params: { locale: string };
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
 }
 
-export default async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
+export default async function RootLayout(props: RootLayoutProps) {
+  const { locale } = await props.params;
+  const { children } = props;
+
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
@@ -114,9 +128,26 @@ export default async function RootLayout({ children, params: { locale } }: RootL
     <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
       <NextIntlClientProvider messages={messages}>
         <ReduxProvider>
-          <StoryblokProvider>
-            <body>{children}</body>
-          </StoryblokProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <StoryblokProvider>
+                <body>
+                  <TopBar />
+                  <LeaveSiteButton />
+                  <main>
+                    <AuthGuard>{children}</AuthGuard>
+                  </main>
+                  <Footer />
+                  <Consent />
+                  {!!process.env.NEXT_PUBLIC_HOTJAR_ID &&
+                    process.env.NEXT_PUBLIC_ENV !== 'local' && (
+                      <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+                    )}
+                  <Analytics />
+                </body>
+              </StoryblokProvider>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
         </ReduxProvider>
       </NextIntlClientProvider>
     </html>

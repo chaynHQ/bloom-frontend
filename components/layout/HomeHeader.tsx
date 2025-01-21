@@ -16,11 +16,11 @@ import UserResearchBanner from '../banner/UserResearchBanner';
 export interface HeaderProps {
   title:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   imageSrc: StaticImageData;
   imageAlt?: string;

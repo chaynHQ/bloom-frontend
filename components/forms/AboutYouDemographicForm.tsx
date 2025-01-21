@@ -18,7 +18,14 @@ import {
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import countries from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
@@ -74,9 +81,7 @@ const AboutYouDemographicForm = () => {
     }>
   >([]);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | ReactNode[] | ReactElement<any, string | JSXElementConstructor<any>>
   >();
   const userId = useTypedSelector((state) => state.user.id);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);

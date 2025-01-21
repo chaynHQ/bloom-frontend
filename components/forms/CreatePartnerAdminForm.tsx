@@ -35,9 +35,7 @@ const CreatePartnerAdminForm = () => {
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [addPartnerAdmin, { isLoading: addPartnerAdminIsLoading }] = useAddPartnerAdminMutation();
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {

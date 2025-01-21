@@ -66,9 +66,7 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
   const [feedbackDescription, setFeedbackDescription] = useState<string>('');
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {

@@ -14,11 +14,11 @@ const headerContainerStyles = {
 interface PartnerAdminHeaderProps {
   title:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction?:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   partnerLogoSrc?: StaticImageData;
   partnerLogoAlt?: string;

@@ -41,9 +41,7 @@ const UpdatePartnerAdminForm = () => {
   const [partnerUserData, setPartnerUserData] = useState<GetUserDto | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   useEffect(() => {
     async function getUserData() {

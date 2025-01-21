@@ -57,9 +57,7 @@ const AboutYouSetAForm = () => {
   const [scale7Input, setScale7Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale8Input, setScale8Input] = useState<number>(DEFAULT_SCALE_START);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);

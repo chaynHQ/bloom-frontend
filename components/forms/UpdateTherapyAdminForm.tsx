@@ -45,9 +45,7 @@ const UpdateTherapyAdminForm = () => {
   const [therapySessionAdjustmentValue, setTherapySessionAdjustmentValue] = useState<number>(0);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   useEffect(() => {
