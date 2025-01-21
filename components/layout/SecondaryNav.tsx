@@ -2,7 +2,7 @@
 
 import { Icon, Tab, Tabs } from '@mui/material';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '../../i18n/routing';
 import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
 

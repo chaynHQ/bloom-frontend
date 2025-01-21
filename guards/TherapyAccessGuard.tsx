@@ -1,7 +1,9 @@
 import { Box, Container, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 import { useTranslations } from 'use-intl';
+import { FEEDBACK_FORM_URL } from '../constants/common';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
 import { columnStyle } from '../styles/common';
@@ -19,7 +21,7 @@ const imageContainerStyle = {
   marginBottom: 4,
 } as const;
 
-export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
+export function TherapyAccessGuard({ children }: { children: ReactNode }) {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
@@ -50,7 +52,11 @@ export function TherapyAccessGuard({ children }: { children: JSX.Element }) {
         </Typography>
         <Typography mb={2}>
           {t.rich('introduction', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           })}
         </Typography>
       </Container>

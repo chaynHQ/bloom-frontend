@@ -23,6 +23,7 @@ import {
   CREATE_PARTNER_ACCESS_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import { useAddPartnerAccessMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -123,7 +124,7 @@ const CreateAccessCodeForm = () => {
       <Typography>
         {t.rich('resultLink', {
           welcomeURL: (children) => (
-            <Link id="access-code-url" href={welcomeURL}>
+            <Link component={i18nLink} id="access-code-url" href={welcomeURL}>
               {welcomeURL}
             </Link>
           ),

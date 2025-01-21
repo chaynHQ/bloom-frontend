@@ -3,9 +3,9 @@
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
+import { useParams, useRouter } from '../../i18n/routing';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import Carousel, { getSlideWidth } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';

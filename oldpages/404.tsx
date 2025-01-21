@@ -9,6 +9,8 @@ import bloomHead from '../public/illustration_bloom_head.svg';
 import { columnStyle } from '../styles/common';
 import { getImageSizes } from '../utils/imageSizes';
 
+import { Link as i18nLink } from '../i18n/routing';
+
 const containerStyle = {
   ...columnStyle,
   height: '100vh',
@@ -55,6 +57,7 @@ const Custom404: NextPage = () => {
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
+        component={i18nLink}
         href={userId ? '/courses' : '/login'}
       >
         {userId ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}

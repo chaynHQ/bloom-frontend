@@ -3,9 +3,10 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { EmailForm, PasswordForm } from '../../components/forms/ResetPasswordForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
+import { useRouter } from '../../i18n/routing';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
@@ -27,11 +28,8 @@ const formCardStyle = {
 const ResetPassword: NextPage = () => {
   const t = useTranslations('Auth');
   const router = useRouter();
-  const codeParam: string | undefined = router.query.oobCode
-    ? router.query.oobCode instanceof Array
-      ? router.query.oobCode + ''
-      : router.query.oobCode
-    : undefined;
+  const searchParams = useSearchParams();
+  const oobCodeParam = searchParams.get('oobCode');
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
@@ -62,7 +60,7 @@ const ResetPassword: NextPage = () => {
             <Typography variant="h2" component="h2">
               {t('resetPassword.title')}
             </Typography>
-            {codeParam ? <PasswordForm codeParam={codeParam} /> : <EmailForm />}
+            {oobCodeParam ? <PasswordForm codeParam={oobCodeParam} /> : <EmailForm />}
           </CardContent>
         </Card>
       </Container>

@@ -1,22 +1,22 @@
 import { GetStaticPropsContext, NextPage } from 'next';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { LANGUAGES } from '../constants/enums';
+import { useRouter } from '../i18n/routing';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  if (router.isReady) {
-    let modeParam = router.query.mode;
-    let langParam = router.query.lang;
-    const options =
-      typeof langParam === 'string' && langParam in LANGUAGES ? { locale: langParam } : undefined;
-    if (modeParam && modeParam === 'resetPassword') {
-      router.replace(`/auth/reset-password?oobCode=${router.query.oobCode}`, undefined, options);
-    } else {
-      router.replace('/404', undefined, options);
-    }
+  let modeParam = searchParams.get('mode');
+  let langParam = searchParams.get('lang');
+  const options = langParam && langParam in LANGUAGES ? { locale: langParam } : undefined;
+
+  if (modeParam && modeParam === 'resetPassword') {
+    router.replace(`/auth/reset-password?oobCode=${searchParams.get('oobCode')}`, options);
+  } else {
+    router.replace('/404', options);
   }
   return <LoadingContainer />;
 };

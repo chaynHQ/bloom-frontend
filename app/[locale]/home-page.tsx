@@ -11,6 +11,7 @@ import HomeHeader from '../../components/layout/HomeHeader';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
 import { PROMO_GET_STARTED_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface Props {
@@ -70,6 +71,7 @@ export default function HomePage({ story }: Props) {
             onClick={() => {
               logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
             }}
+            component={i18nLink}
             href={registerPath}
             size="large"
           >

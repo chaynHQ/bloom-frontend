@@ -16,6 +16,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
+import { Link as i18nLink } from '../../i18n/routing';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
 import ProgressStatus from '../common/ProgressStatus';
@@ -87,6 +88,7 @@ const CourseCard = (props: CourseCardProps) => {
       {clickable ? (
         <CardActionArea
           sx={cardActionStyle}
+          component={i18nLink}
           href={`/${course.full_slug}`}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >

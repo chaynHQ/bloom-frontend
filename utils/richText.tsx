@@ -22,6 +22,8 @@ import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '../components/storyblok/StoryblokStatement';
 import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '../components/storyblok/StoryblokVideo';
+import { BASE_URL } from '../constants/common';
+import { Link as i18nLink } from '../i18n/routing';
 
 export const RichTextOptions: RenderOptions = {
   blokResolvers: {
@@ -68,10 +70,14 @@ export const RichTextOptions: RenderOptions = {
         return <a href={`mailto:${href}`}>{children}</a>;
       }
 
-      // Internal links: map to <Link>
+      // Internal links: map to <Link component={i18nLink} >
       if (href)
         return (
-          <Link href={href} target={href?.match(/^(https?:)?\/\//) && '_blank'}>
+          <Link
+            component={href.includes(BASE_URL) ? i18nLink : 'a'}
+            href={href}
+            target={href?.match(/^(https?:)?\/\//) && '_blank'}
+          >
             {children}
           </Link>
         );

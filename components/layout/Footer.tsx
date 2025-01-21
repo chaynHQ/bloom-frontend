@@ -8,7 +8,7 @@ import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
@@ -94,7 +94,6 @@ const Footer = () => {
   const tS = useTranslations('Shared');
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [partners, setPartners] = useState<PartnerContent[]>([]);
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);

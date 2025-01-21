@@ -4,7 +4,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
@@ -18,6 +17,7 @@ import {
   SIGNUP_SURVEY_COMPLETED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { usePathname, useRouter } from '../../i18n/routing';
 import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';

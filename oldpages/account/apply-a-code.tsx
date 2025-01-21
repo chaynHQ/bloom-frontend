@@ -9,6 +9,7 @@ import Header from '../../components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';
 import { PartnerContent, getAllPartnersContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
@@ -100,6 +101,7 @@ const ApplyACode: NextPage = () => {
               <Box sx={logosContainerStyle}>
                 {allPartnersContent?.map((partner) => (
                   <Link
+                    component={i18nLink}
                     sx={logoContainerStyle}
                     key={`${partner.name}-link`}
                     aria-label={tS(partner.logoAlt)}

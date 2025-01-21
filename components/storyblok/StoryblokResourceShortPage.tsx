@@ -4,7 +4,7 @@ import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/r
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import {
   PROGRESS_STATUS,
@@ -17,6 +17,7 @@ import {
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink, useRouter } from '../../i18n/routing';
 import { Resource } from '../../lib/store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
@@ -281,6 +282,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
             </Typography>
             <Button
               href={related_session[0] && `/${related_session[0]?.full_slug}`}
+              component={i18nLink}
               onClick={redirectToSession}
               variant="contained"
               color="secondary"

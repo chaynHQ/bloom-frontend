@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink, usePathname } from '../../i18n/routing';
 import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
@@ -81,6 +81,7 @@ const TopBar = () => {
       <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
         <Container sx={appBarContainerStyles}>
           <Link
+            component={i18nLink}
             qa-id="home-logo-link"
             href={welcomeUrl}
             aria-label={t('home')}
@@ -111,6 +112,7 @@ const TopBar = () => {
                     size="medium"
                     qa-id="login-menu-button"
                     sx={{ width: 'auto', ml: 1 }}
+                    component={i18nLink}
                     href="/auth/login"
                     onClick={() => {
                       logEvent(HEADER_LOGIN_CLICKED, eventUserData);

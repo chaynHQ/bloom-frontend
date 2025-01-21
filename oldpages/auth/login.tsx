@@ -13,7 +13,7 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import LoginForm from '../../components/forms/LoginForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -24,6 +24,7 @@ import {
 } from '../../constants/events';
 import { getAllPartnersContent } from '../../constants/partners';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink, useRouter } from '../../i18n/routing';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
@@ -59,6 +60,8 @@ const Login: NextPage = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -79,9 +82,8 @@ const Login: NextPage = () => {
   useEffect(() => {
     // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
     if (!userId) return;
-    // Checking if the query type is a string to keep typescript happy
-    // because a query value can be an array
-    const returnUrl = typeof router.query.return_url === 'string' ? router.query.return_url : null;
+
+    const returnUrl = searchParams?.get('return_url');
 
     if (partnerAdmin?.active) {
       router.push('/partner-admin/create-access-code');
@@ -108,6 +110,7 @@ const Login: NextPage = () => {
         </Typography>
         <Typography>
           <Link
+            component={i18nLink}
             onClick={() => {
               logEvent(GET_STARTED_WITH_BLOOM_CLICKED, eventUserData);
             }}
@@ -120,6 +123,7 @@ const Login: NextPage = () => {
         {allPartnersContent?.map((partner) => (
           <Typography key={`${partner.name}-link`} mt={0.5}>
             <Link
+              component={i18nLink}
               mt="1rem !important"
               href={`/welcome/${partner.name.toLowerCase()}`}
               onClick={() => {
@@ -163,6 +167,7 @@ const Login: NextPage = () => {
               {t.rich('login.resetPasswordLink', {
                 resetLink: (children) => (
                   <Link
+                    component={i18nLink}
                     onClick={() => {
                       logEvent(RESET_PASSWORD_HERE_CLICKED, eventUserData);
                     }}

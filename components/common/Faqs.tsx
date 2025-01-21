@@ -1,7 +1,6 @@
 'use client';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import {
   Accordion,
   AccordionDetails,
@@ -11,9 +10,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { BASE_URL } from '../../constants/common';
 import { THERAPY_FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';
 import { PartnerContent } from '../../constants/partners';
+import { Link as i18nLink } from '../../i18n/routing';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
 interface FaqsProps {
@@ -57,7 +58,11 @@ const Faqs = (props: FaqsProps) => {
                 partnerName: partnerName,
                 ...(faq.link && {
                   faqLink: (children) => (
-                    <Link href={faq.link ? faq.link : '#'} target="_blank">
+                    <Link
+                      component={faq.link?.startsWith(BASE_URL || '/') ? i18nLink : 'a'}
+                      href={faq.link ? faq.link : '#'}
+                      target="_blank"
+                    >
                       {children}
                     </Link>
                   ),

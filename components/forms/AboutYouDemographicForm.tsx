@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import {
   JSXElementConstructor,
   ReactElement,
@@ -35,6 +35,7 @@ import {
 } from '../../constants/events';
 import { genderOptions } from '../../constants/gender';
 import { useTypedSelector } from '../../hooks/store';
+import { usePathname, useRouter } from '../../i18n/routing';
 import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
 import logEvent, { getEventUserData } from '../../utils/logEvent';

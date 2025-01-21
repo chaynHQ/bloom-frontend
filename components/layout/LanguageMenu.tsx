@@ -3,11 +3,11 @@
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { MouseEvent, startTransition, useState } from 'react';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { routing } from '../../i18n/routing';
+import { routing, usePathname, useRouter } from '../../i18n/routing';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const menuItemStyle = {

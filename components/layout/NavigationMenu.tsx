@@ -9,6 +9,7 @@ import {
   HEADER_OUR_BLOOM_TEAM_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 
@@ -114,6 +115,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
+            component={i18nLink}
             href={link.href}
             qa-id={link.qaId}
             target={link.target || '_self'}

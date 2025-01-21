@@ -5,7 +5,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
 import { useUpdateUserMutation } from '../../lib/api';
@@ -50,7 +50,11 @@ const ProfileSettingsForm = () => {
     } else {
       setError(
         t.rich('updateError', {
-          link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          link: (children) => (
+            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              {children}
+            </Link>
+          ),
         }),
       );
     }

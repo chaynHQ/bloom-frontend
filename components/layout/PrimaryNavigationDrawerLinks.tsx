@@ -2,7 +2,6 @@
 
 import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   DRAWER_ADMIN_CLICKED,
@@ -11,6 +10,7 @@ import {
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const listStyle = {
@@ -79,7 +79,6 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
-  const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
@@ -119,6 +118,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
+            component={link.href.startsWith('/') ? i18nLink : 'a'}
             href={link.href}
             target={link.target || '_self'}
             onClick={() => {}}
@@ -134,6 +134,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
             size="large"
             sx={loginButtonStyle}
             href="/auth/login"
+            component={i18nLink}
             onClick={() => {
               logEvent(DRAWER_LOGIN_CLICKED, eventUserData);
             }}

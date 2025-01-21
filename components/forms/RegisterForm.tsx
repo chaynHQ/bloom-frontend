@@ -11,10 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   CREATE_USER_ALREADY_EXISTS,
@@ -33,6 +33,7 @@ import {
   VALIDATE_ACCESS_CODE_SUCCESS,
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink, useRouter } from '../../i18n/routing';
 import {
   useAddUserMutation,
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
@@ -120,7 +121,11 @@ const RegisterForm = (props: RegisterFormProps) => {
       } else {
         setFormError(
           t.rich('codeErrors.internal', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
         (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
@@ -164,7 +169,11 @@ const RegisterForm = (props: RegisterFormProps) => {
       } catch (err) {
         setFormError(
           t.rich('createUserError', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }
@@ -179,7 +188,9 @@ const RegisterForm = (props: RegisterFormProps) => {
           t.rich('firebase.emailAlreadyInUse', {
             loginLink: (children) => (
               <strong>
-                <Link href="/auth/login">{children}</Link>
+                <Link component={i18nLink} href="/auth/login">
+                  {children}
+                </Link>
               </strong>
             ),
           }),
@@ -193,7 +204,11 @@ const RegisterForm = (props: RegisterFormProps) => {
         (window as any).Rollbar?.error('User register create user error', error);
         setFormError(
           t.rich('createUserError', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }

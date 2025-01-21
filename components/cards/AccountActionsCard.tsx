@@ -1,11 +1,11 @@
 'use client';
 
-import { Box, Button, Card, CardContent, Link, Typography, lighten } from '@mui/material';
+import { Box, Button, Card, CardContent, lighten, Link, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
+import { useRouter } from '../../i18n/routing';
 import { useDeleteUserMutation } from '../../lib/api';
 import theme from '../../styles/theme';
 import ConfirmDialog from '../forms/ConfirmDialog';
@@ -47,7 +47,11 @@ const AccountActionsCard = () => {
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }

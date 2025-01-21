@@ -12,6 +12,7 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
 } from '../../constants/events';
+import { Link as i18nLink } from '../../i18n/routing';
 import { confirmAuthPasswordReset, logout, sendAuthPasswordResetEmail } from '../../lib/auth';
 import { auth } from '../../lib/firebase';
 import logEvent from '../../utils/logEvent';
@@ -135,13 +136,21 @@ export const PasswordForm = (props: PasswordFormProps) => {
       } else if (errorCode === 'auth/expired-action-code') {
         setFormError(
           t.rich('firebase.expiredCode', {
-            resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+            resetLink: (children) => (
+              <Link component={i18nLink} href="/auth/reset-password">
+                {children}
+              </Link>
+            ),
           }),
         );
       } else {
         setFormError(
           t.rich('firebase.invalidCode', {
-            resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+            resetLink: (children) => (
+              <Link component={i18nLink} href="/auth/reset-password">
+                {children}
+              </Link>
+            ),
           }),
         );
         setLoading(false);

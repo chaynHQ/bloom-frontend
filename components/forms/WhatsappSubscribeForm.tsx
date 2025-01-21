@@ -7,7 +7,7 @@ import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
 import 'react-international-phone/style.css';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -67,13 +67,21 @@ const WhatsappSubscribeForm = () => {
         if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
           setFormError(
             t.rich('subscribeErrors.alreadyExists', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+              contactLink: (children) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {children}
+                </Link>
+              ),
             }),
           );
         } else {
           setFormError(
             t.rich('subscribeErrors.internal', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+              contactLink: (children) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {children}
+                </Link>
+              ),
             }),
           );
         }

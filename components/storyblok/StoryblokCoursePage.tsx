@@ -13,6 +13,7 @@ import CourseIntroduction from '../../components/course/CourseIntroduction';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import { rowStyle } from '../../styles/common';
 import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
@@ -116,7 +117,11 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
       <ContentUnavailable
         title={t('accessGuard.title')}
         message={t.rich('accessGuard.introduction', {
-          contactLink: (children) => <Link href="/courses">{children}</Link>,
+          contactLink: (children) => (
+            <Link component={i18nLink} href="/courses">
+              {children}
+            </Link>
+          ),
         })}
       />
     );

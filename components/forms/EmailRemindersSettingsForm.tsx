@@ -1,25 +1,19 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-
-const containerStyle = {
-  marginY: 3,
-} as const;
-
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Link,
   Radio,
   RadioGroup,
   Typography,
 } from '@mui/material';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
   EMAIL_REMINDERS_SET_ERROR,
@@ -30,6 +24,7 @@ import {
   EMAIL_REMINDERS_UNSET_SUCCESS,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { usePathname } from '../../i18n/routing';
 import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle } from '../../styles/common';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
@@ -147,7 +142,11 @@ const EmailRemindersSettingsForm = () => {
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);

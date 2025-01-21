@@ -4,6 +4,7 @@ import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/materia
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
+import { Link as i18nLink } from '../../i18n/routing';
 
 const cardStyle = {
   mt: 0,
@@ -41,7 +42,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={`/${href}`} sx={{ height: '100%' }}>
+      <CardActionArea href={`/${href}`} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent
           sx={{
             minHeight: 335,

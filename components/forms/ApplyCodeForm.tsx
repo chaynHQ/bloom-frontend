@@ -4,6 +4,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { FEEDBACK_FORM_URL } from '../../constants/common';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
   ASSIGN_NEW_PARTNER_ACCESS_ERROR,
@@ -81,7 +82,11 @@ const ApplyCodeForm = () => {
       } else {
         setFormError(
           t.rich('form.codeErrors.internal', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
 

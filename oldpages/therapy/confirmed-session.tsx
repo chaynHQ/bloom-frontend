@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Faqs from '../../components/common/Faqs';
 import Header from '../../components/layout/Header';
-import { BASE_URL } from '../../constants/common';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
 import { therapyFaqs } from '../../constants/faqs';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
@@ -76,7 +76,11 @@ const ConfirmedSession: NextPage = () => {
         <Typography>{t('confirmation.returnDescription')}</Typography>
         <Typography>
           {t.rich('confirmation.bookmarkDescription', {
-            bookingLink: (children) => <Link href={`${BASE_URL}/`}>{children}</Link>,
+            bookingLink: (children) => (
+              <Link component={i18nLink} href={`/`}>
+                {children}
+              </Link>
+            ),
           })}
         </Typography>
       </Container>

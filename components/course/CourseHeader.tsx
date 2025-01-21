@@ -7,6 +7,7 @@ import { PROGRESS_STATUS } from '../../constants/enums';
 import theme from '../../styles/theme';
 import { EventUserData } from '../../utils/logEvent';
 import Header from '../layout/Header';
+import { Link as i18nLink } from '../../i18n/routing';
 
 const buttonStyle = {
   background: theme.palette.background.default,
@@ -38,7 +39,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   return (
     <Header {...headerProps}>
-      <Button variant="outlined" sx={buttonStyle} href="/courses" size="small">
+      <Button variant="outlined" sx={buttonStyle} href="/courses" component={i18nLink} size="small">
         {t('backToCourses')}
       </Button>
     </Header>

@@ -5,6 +5,7 @@ import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { FEEDBACK_FORM_URL } from '../../constants/common';
 import { EVENT_LOG_NAME } from '../../constants/enums';
 import {
   GET_LOGIN_USER_ERROR,
@@ -54,7 +55,11 @@ const LoginForm = () => {
 
       setFormError(
         t.rich('getUserError', {
-          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          contactLink: (children) => (
+            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              {children}
+            </Link>
+          ),
         }),
       );
     }

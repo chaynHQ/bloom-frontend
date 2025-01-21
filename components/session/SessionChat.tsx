@@ -3,6 +3,7 @@
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { Link as i18nLink } from '../../i18n/routing';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
 import Video from '../video/Video';
@@ -51,6 +52,7 @@ export const SessionChat = (props: SessionChatProps) => {
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
           <Button
             variant="contained"
+            component={i18nLink}
             href="/messaging"
             startIcon={<ChatBubbleOutlineIcon color="error" />}
           >

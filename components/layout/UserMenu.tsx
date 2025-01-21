@@ -7,6 +7,8 @@ import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+import { Link as i18nLink } from '../../i18n/routing';
+
 import {
   HEADER_ACCOUNT_ICON_CLICKED,
   HEADER_APPLY_A_CODE_CLICKED,
@@ -90,6 +92,7 @@ export default function UserMenu() {
           <MenuItem sx={menuItemStyle}>
             <Button
               href={'/account/apply-a-code'}
+              component={i18nLink}
               startIcon={<AddCircleOutline />}
               onClick={() => {
                 logEvent(HEADER_APPLY_A_CODE_CLICKED, eventUserData);
@@ -101,7 +104,12 @@ export default function UserMenu() {
           </MenuItem>
         )}
         <MenuItem sx={menuItemStyle}>
-          <Button href="/account/settings" onClick={handleClose} startIcon={<Settings />}>
+          <Button
+            href="/account/settings"
+            component={i18nLink}
+            onClick={handleClose}
+            startIcon={<Settings />}
+          >
             {t('accountSettings')}
           </Button>
         </MenuItem>

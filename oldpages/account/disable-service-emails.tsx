@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Header from '../../components/layout/Header';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { useUpdateUserMutation } from '../../lib/api';
@@ -33,7 +33,9 @@ const DisableServiceEmails: NextPage = () => {
         setError(
           t.rich('error', {
             link: (content) => (
-              <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {content}
+              </Link>
             ),
           }),
         );
@@ -45,7 +47,9 @@ const DisableServiceEmails: NextPage = () => {
     title: t('title'),
     introduction: t.rich('description', {
       link: (content) => (
-        <Link href={process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#'}>{content}</Link>
+        <Link target="_blank" href={FEEDBACK_FORM_URL}>
+          {content}
+        </Link>
       ),
     }),
     imageSrc: illustrationPerson5Yellow,

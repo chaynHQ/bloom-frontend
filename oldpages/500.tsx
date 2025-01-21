@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'use-intl';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
+import { Link as i18nLink } from '../i18n/routing';
 import bloomHead from '../public/illustration_bloom_head.svg';
 import { columnStyle } from '../styles/common';
 import { getImageSizes } from '../utils/imageSizes';
@@ -53,6 +54,7 @@ const Custom500: NextPage = () => {
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
+        component={i18nLink}
         href={userId ? '/courses' : '/login'}
       >
         {userId ? t('500.authenticatedRedirectButton') : t('500.unauthenticatedRedirectButton')}

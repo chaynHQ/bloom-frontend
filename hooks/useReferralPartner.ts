@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useRouter } from '../i18n/routing';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '../lib/store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
 

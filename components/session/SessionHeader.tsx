@@ -6,6 +6,7 @@ import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
+import { Link as i18nLink } from '../../i18n/routing';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import theme from '../../styles/theme';
 import Header from '../layout/Header';
@@ -73,7 +74,13 @@ export const SessionHeader = (props: SessionHeaderProps) => {
 
       <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
-      <Button variant="contained" sx={buttonStyle} href={`/${course.full_slug}`} size="small">
+      <Button
+        variant="contained"
+        sx={buttonStyle}
+        href={`/${course.full_slug}`}
+        component={i18nLink}
+        size="small"
+      >
         {course.name}
       </Button>
       <Typography sx={sessionSubtitleStyle} variant="body2">

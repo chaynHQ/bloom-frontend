@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
@@ -48,6 +49,7 @@ export const SignUpBanner = () => {
         variant="contained"
         color="secondary"
         href={registerPath}
+        component={i18nLink}
         onClick={() => {
           logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, eventUserData);
         }}

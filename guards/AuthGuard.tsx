@@ -1,10 +1,10 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import useLoadUser from '../hooks/useLoadUser';
+import { usePathname, useRouter } from '../i18n/routing';
 import { default as generateReturnUrlQuery } from '../utils/generateReturnQuery';
 import { getIsMaintenanceMode } from '../utils/maintenanceMode';
 import { PartnerAdminGuard } from './PartnerAdminGuard';

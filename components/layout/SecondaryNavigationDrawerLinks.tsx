@@ -11,6 +11,7 @@ import {
   DRAWER_THERAPY_CLICKED,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import activitiesIcon from '../../public/activities_icon.svg';
 import chatIcon from '../../public/chat_icon.svg';
 import courseIcon from '../../public/course_icon.svg';
@@ -149,6 +150,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
               borderBottom: index !== navigationLinks.length - 1 ? 1 : 0,
             }}
             href={link.href}
+            component={i18nLink}
             target={link.target || '_self'}
             onClick={() => {
               logEvent(link.event, eventUserData);

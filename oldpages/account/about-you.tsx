@@ -2,14 +2,15 @@ import { Box, Button, Card, CardContent, Container, Typography } from '@mui/mate
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { JSX, useEffect, useState } from 'react';
 import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { SURVEY_FORMS } from '../../constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { Link as i18nLink } from '../../i18n/routing';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
@@ -42,23 +43,23 @@ const getForm = (formLabel: string) => {
 
 const AboutYou: NextPage = () => {
   const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
-  const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const qParam = searchParams.get('q');
+  const return_url = searchParams.get('return_url');
   const t = useTranslations('Account.aboutYou');
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const { q, return_url } = router.query;
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
-    if (q) {
-      setQuestionSetParam(q + '');
+    if (qParam) {
+      setQuestionSetParam(qParam + '');
     } else {
       setQuestionSetParam(SURVEY_FORMS.default);
     }
-  }, [q]);
+  }, [qParam]);
 
   useEffect(() => {
     logEvent(ABOUT_YOU_VIEWED, eventUserData);
@@ -104,6 +105,7 @@ const AboutYou: NextPage = () => {
               logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
             }}
             color="secondary"
+            component={i18nLink}
             href={typeof return_url === 'string' ? return_url : '/courses'}
           >
             {t('goToCourses')}

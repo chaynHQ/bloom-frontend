@@ -5,7 +5,7 @@ import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/materi
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
@@ -16,6 +16,7 @@ import { useUnsubscribeFromWhatsappMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { findWhatsappSubscription } from '../../utils/whatsappUtils';
+
 const containerStyle = {
   marginY: 3,
 } as const;
@@ -66,7 +67,11 @@ const WhatsappUnsubscribeForm = () => {
 
       setFormError(
         t.rich('unsubscribeErrors.internal', {
-          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          contactLink: (children) => (
+            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              {children}
+            </Link>
+          ),
         }),
       );
 
