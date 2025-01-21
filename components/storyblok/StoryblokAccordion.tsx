@@ -1,3 +1,5 @@
+'use client';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -9,7 +11,7 @@ import {
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
@@ -57,7 +59,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -70,14 +72,14 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
       }
     };
   const scrollRef = useRef(null);
-  const accordionInUrl = router.query.openacc ?? undefined;
+  const accordionInUrl = searchParams?.get('openacc') ?? undefined;
 
   useEffect(() => {
     if (accordionInUrl && scrollRef.current) {
       // @ts-ignore
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [router.query.openacc, accordionInUrl]);
+  }, [searchParams, accordionInUrl]);
 
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>

@@ -1,3 +1,5 @@
+'use client';
+
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
@@ -15,8 +17,8 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import countries from '../../constants/countries';
 import { LANGUAGES } from '../../constants/enums';
 import {
@@ -47,7 +49,11 @@ const actionsStyle = {
 
 const AboutYouDemographicForm = () => {
   const t = useTranslations('Account.aboutYou.demographicForm');
+  const params = useParams<{ locale: string }>();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const locale = params?.locale || 'en';
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -77,16 +83,28 @@ const AboutYouDemographicForm = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
   useEffect(() => {
-    if (router.locale) {
+    if (locale) {
       setCountryList(
         countries.map((c: { code: string; label: { [key: string]: string } }) => ({
           code: c.code,
-          label: router.locale ? c.label[router.locale] : c.label.en,
+          label: locale ? c.label[locale] : c.label.en,
         })),
       );
     }
-  }, [router.locale]);
+  }, [locale]);
 
   useEffect(() => {
     setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
@@ -131,7 +149,7 @@ const AboutYouDemographicForm = () => {
       race_ethn_natn: raceEthnNatn,
       current_country: countries.find((c) => c.code === countryInput?.code)?.label.en,
       age: ageInput,
-      language: router.locale as LANGUAGES,
+      language: locale as LANGUAGES,
       ...eventUserData, // add user data
     };
 
@@ -146,8 +164,7 @@ const AboutYouDemographicForm = () => {
           logEvent(ABOUT_YOU_DEMO_SUCCESS, eventUserData);
 
           // append `?q=a` to the url to reload the page and show the setA form instead
-          router.query.q = 'a';
-          router.push(router);
+          router.push(pathname + '?' + createQueryString('q', 'a'));
           setLoading(false);
         })
         .catch(function (error) {

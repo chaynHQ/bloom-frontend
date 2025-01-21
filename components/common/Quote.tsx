@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { richtextContentStyle } from '../../styles/common';

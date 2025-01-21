@@ -1,7 +1,9 @@
+'use client';
+
 import { Box, Button, Card, CardContent, Link, Typography, lighten } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
 import { useDeleteUserMutation } from '../../store/api';
@@ -39,10 +41,9 @@ const AccountActionsCard = () => {
 
       if ((response as any)?.data?.id) {
         setError(undefined);
-        router.push('/').then(() => {
-          const auth = getAuth();
-          signOut(auth);
-        });
+        router.push('/');
+        const auth = getAuth();
+        signOut(auth);
       } else {
         setError(
           t.rich('updateError', {

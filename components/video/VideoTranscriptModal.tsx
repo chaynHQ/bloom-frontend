@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';

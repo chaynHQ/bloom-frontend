@@ -1,7 +1,18 @@
-import { AppBar, Box, Button, Container, Theme, useMediaQuery, useTheme } from '@mui/material';
+'use client';
+
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Link,
+  Theme,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
@@ -10,7 +21,6 @@ import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
-import Link from '../common/Link';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';
@@ -46,7 +56,7 @@ const topBarSpacerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
@@ -101,7 +111,6 @@ const TopBar = () => {
                     size="medium"
                     qa-id="login-menu-button"
                     sx={{ width: 'auto', ml: 1 }}
-                    component={Link}
                     href="/auth/login"
                     onClick={() => {
                       logEvent(HEADER_LOGIN_CLICKED, eventUserData);
@@ -115,7 +124,7 @@ const TopBar = () => {
             )}
           </Box>
         </Container>
-        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav currentPage={router.pathname} />}
+        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav currentPage={pathname || '/'} />}
       </AppBar>
       <Box sx={topBarSpacerStyle} marginTop={0} />
     </>

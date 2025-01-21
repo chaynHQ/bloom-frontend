@@ -1,3 +1,5 @@
+'use client';
+
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer } from '@mui/material';

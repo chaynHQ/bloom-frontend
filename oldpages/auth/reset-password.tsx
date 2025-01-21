@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { EmailForm, PasswordForm } from '../../components/forms/ResetPasswordForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';

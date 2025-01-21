@@ -1,6 +1,8 @@
+'use client';
+
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { SignUpBanner } from '../../components/banner/SignUpBanner';
 import Header from '../../components/layout/Header';
 import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
@@ -22,7 +24,7 @@ const StoryblokPage = (props: StoryblokPageProps) => {
     props;
 
   const userId = useTypedSelector((state) => state.user.id);
-  const router = useRouter();
+  const pathname = usePathname();
 
   const headerProps = {
     title: title,
@@ -31,7 +33,7 @@ const StoryblokPage = (props: StoryblokPageProps) => {
     translatedImageAlt: header_image?.alt,
   };
   const partiallyPublicPages = ['/activities', '/grounding'];
-  const isPartiallyPublicPage = partiallyPublicPages.includes(router.asPath);
+  const isPartiallyPublicPage = partiallyPublicPages.includes(pathname);
 
   return (
     <>

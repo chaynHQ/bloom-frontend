@@ -1,3 +1,5 @@
+'use client';
+
 import LinkIcon from '@mui/icons-material/Link';
 import { ISbRichtext } from '@storyblok/react';
 import { render } from 'storyblok-rich-text-react-renderer';

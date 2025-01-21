@@ -1,6 +1,8 @@
+'use client';
+
 import { Icon, Tab, Tabs } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
 
@@ -21,9 +23,8 @@ import groundingIcon from '../../public/grounding_icon.svg';
 
 import { HTMLAttributes } from 'react';
 import theme from '../../styles/theme';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { NextLinkComposed } from '../common/Link';
 import { getImageSizes } from '../../utils/imageSizes';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface LinkTabProps {
   label?: string;
@@ -83,6 +84,7 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
 
 const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -148,8 +150,13 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       })
     : publicLinks;
 
-  const tabIndex = allLinks.findIndex((link) => link.href === router.asPath);
+  const tabIndex = allLinks.findIndex((link) => link.href === pathname);
   const tabValue = tabIndex === -1 ? false : tabIndex;
+
+  const onTabClick = (linkData: LinkTabProps) => {
+    router.push(linkData.href);
+    logEvent(linkData.event, eventUserData);
+  };
 
   return (
     <Tabs
@@ -172,15 +179,11 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
           <Tab
             qa-id={linkData.qaId}
             key={linkData.label}
-            component={NextLinkComposed}
             icon={linkData.icon}
             sx={tabStyle}
             aria-label={linkData.ariaLabel}
             label={linkData.label}
-            to={linkData.href}
-            onClick={() => {
-              logEvent(linkData.event, eventUserData);
-            }}
+            onClick={() => onTabClick(linkData)}
           />
         );
       })}

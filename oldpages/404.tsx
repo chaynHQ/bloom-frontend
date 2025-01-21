@@ -3,7 +3,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
-import Link from '../components/common/Link';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { useTypedSelector } from '../hooks/store';
 import bloomHead from '../public/illustration_bloom_head.svg';
@@ -56,7 +55,6 @@ const Custom404: NextPage = () => {
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
-        component={Link}
         href={userId ? '/courses' : '/login'}
       >
         {userId ? t('404.authenticatedRedirectButton') : t('404.unauthenticatedRedirectButton')}

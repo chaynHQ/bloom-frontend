@@ -1,5 +1,5 @@
 import { GetStaticPropsContext, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import LoadingContainer from '../components/common/LoadingContainer';
 import { LANGUAGES } from '../constants/enums';
 

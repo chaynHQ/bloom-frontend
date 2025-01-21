@@ -1,3 +1,5 @@
+'use client';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box, Typography } from '@mui/material';

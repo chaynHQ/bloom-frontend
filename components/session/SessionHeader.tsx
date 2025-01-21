@@ -1,3 +1,5 @@
+'use client';
+
 import CircleIcon from '@mui/icons-material/Circle';
 import { Button, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData } from '@storyblok/react';
@@ -6,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import theme from '../../styles/theme';
-import Link from '../common/Link';
 import Header from '../layout/Header';
 
 const buttonStyle = {
@@ -66,19 +67,13 @@ export const SessionHeader = (props: SessionHeaderProps) => {
       imageAlt={headerProps.imageAlt}
       progressStatus={sessionProgress}
     >
-      <Button variant="contained" href="/courses" sx={buttonStyle} size="small" component={Link}>
+      <Button variant="contained" href="/courses" sx={buttonStyle} size="small">
         Courses
       </Button>
 
       <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
-      <Button
-        variant="contained"
-        sx={buttonStyle}
-        href={`/${course.full_slug}`}
-        size="small"
-        component={Link}
-      >
+      <Button variant="contained" sx={buttonStyle} href={`/${course.full_slug}`} size="small">
         {course.name}
       </Button>
       <Typography sx={sessionSubtitleStyle} variant="body2">

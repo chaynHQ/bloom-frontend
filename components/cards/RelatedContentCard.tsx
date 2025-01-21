@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';

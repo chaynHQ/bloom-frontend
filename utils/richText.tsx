@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { nameToEmoji } from 'gemoji';
 import { ReactNode } from 'react';
 import {
@@ -8,7 +8,6 @@ import {
   NODE_PARAGRAPH,
   RenderOptions,
 } from 'storyblok-rich-text-react-renderer';
-import Link from '../components/common/Link';
 import StoryblokAccordion from '../components/storyblok/StoryblokAccordion';
 import StoryblokAudio from '../components/storyblok/StoryblokAudio';
 import StoryblokButton from '../components/storyblok/StoryblokButton';

@@ -1,8 +1,10 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
@@ -32,6 +34,7 @@ const actionsStyle = {
 const DEFAULT_SCALE_START = 3;
 
 const AboutYouSetAForm = () => {
+  const pathname = usePathname();
   const t = useTranslations('Account.aboutYou.setAForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
   const tAccount = useTranslations('Account.accountSettings.emailRemindersSettings');
@@ -86,7 +89,7 @@ const AboutYouSetAForm = () => {
       const emailRemindersEventData = {
         ...eventUserData,
         frequency: emailRemindersSettingInput,
-        origin_url: router.pathname,
+        origin_url: pathname,
       };
       logEvent(
         isEmailRemindersSet ? EMAIL_REMINDERS_SET_REQUEST : EMAIL_REMINDERS_UNSET_REQUEST,

@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';

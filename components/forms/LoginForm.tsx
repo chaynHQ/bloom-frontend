@@ -1,5 +1,7 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Link, TextField, Typography } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -17,7 +19,6 @@ import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { useCreateEventLogMutation } from '../../store/api';
 import { setAuthStateLoading } from '../../store/userSlice';
 import logEvent from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,

@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Container, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -6,7 +8,6 @@ import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import theme from '../../styles/theme';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -44,7 +45,6 @@ export const SignUpBanner = () => {
         {t('signUpTodayPromo.description2')}
       </Typography>
       <Button
-        component={Link}
         variant="contained"
         color="secondary"
         href={registerPath}

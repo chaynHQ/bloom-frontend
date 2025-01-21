@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';

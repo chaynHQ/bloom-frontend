@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';

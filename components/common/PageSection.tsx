@@ -1,3 +1,5 @@
+'use client';
+
 import { Container } from '@mui/material';
 import { STORYBLOK_COLORS } from '../../constants/enums';
 import { columnStyle } from '../../styles/common';

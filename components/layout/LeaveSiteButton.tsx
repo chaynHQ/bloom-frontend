@@ -1,4 +1,6 @@
-import { Button, Box } from '@mui/material';
+'use client';
+
+import { Box, Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
 import logEvent from '../../utils/logEvent';

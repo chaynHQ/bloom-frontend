@@ -1,11 +1,10 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Faqs from '../../components/common/Faqs';
-import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
 import { BASE_URL } from '../../constants/common';
 import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';

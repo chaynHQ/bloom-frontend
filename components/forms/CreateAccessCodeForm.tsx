@@ -1,3 +1,5 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -5,6 +7,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Link,
   Radio,
   RadioGroup,
   Typography,
@@ -23,7 +26,6 @@ import { useTypedSelector } from '../../hooks/store';
 import { useAddPartnerAccessMutation } from '../../store/api';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const CreateAccessCodeForm = () => {
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);

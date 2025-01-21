@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { richtextContentStyle, rowStyle } from '../../styles/common';
 

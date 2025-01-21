@@ -1,8 +1,9 @@
+'use client';
+
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import Link from '../common/Link';
 
 const cardStyle = {
   mt: 0,
@@ -40,7 +41,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea component={Link} href={`/${href}`} sx={{ height: '100%' }}>
+      <CardActionArea href={`/${href}`} sx={{ height: '100%' }}>
         <CardContent
           sx={{
             minHeight: 335,

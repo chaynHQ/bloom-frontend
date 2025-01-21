@@ -1,12 +1,20 @@
+'use client';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Link,
+  Typography,
+} from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { THERAPY_FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';
 import { PartnerContent } from '../../constants/partners';
 import logEvent, { EventUserData } from '../../utils/logEvent';
-import Link from './Link';
 
 interface FaqsProps {
   translations: string;

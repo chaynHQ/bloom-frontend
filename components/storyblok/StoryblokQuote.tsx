@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Image from 'next/image';

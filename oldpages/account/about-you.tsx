@@ -2,9 +2,8 @@ import { Box, Button, Card, CardContent, Container, Typography } from '@mui/mate
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Link from '../../components/common/Link';
 import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
@@ -104,7 +103,6 @@ const AboutYou: NextPage = () => {
             onClick={() => {
               logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
             }}
-            component={Link}
             color="secondary"
             href={typeof return_url === 'string' ? return_url : '/courses'}
           >

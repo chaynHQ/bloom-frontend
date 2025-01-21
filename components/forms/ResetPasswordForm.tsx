@@ -1,8 +1,10 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import { confirmPasswordReset, getAuth, sendPasswordResetEmail, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
@@ -12,9 +14,10 @@ import {
   RESET_PASSWORD_SUCCESS,
 } from '../../constants/events';
 import logEvent from '../../utils/logEvent';
-import Link from '../common/Link';
 
 export const EmailForm = () => {
+  const params = useParams<{ locale: string }>();
+  const locale = params?.locale || 'en';
   const [emailInput, setEmailInput] = useState<string>('');
   const [resetEmailSent, setResetEmailSent] = useState<boolean>(false);
   const [formError, setFormError] = useState<
@@ -22,7 +25,6 @@ export const EmailForm = () => {
     | React.ReactNodeArray
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const router = useRouter();
   const t = useTranslations('Auth.form');
 
   const sendResetEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,8 +34,8 @@ export const EmailForm = () => {
 
     const auth = getAuth();
 
-    if (router.locale) {
-      auth.languageCode = router.locale;
+    if (locale) {
+      auth.languageCode = locale;
     }
 
     sendPasswordResetEmail(auth, emailInput)
@@ -166,7 +168,6 @@ export const PasswordForm = (props: PasswordFormProps) => {
         <Button
           sx={{ mt: 2, mr: 1.5 }}
           variant="contained"
-          component={Link}
           fullWidth
           color="secondary"
           href="/auth/login"

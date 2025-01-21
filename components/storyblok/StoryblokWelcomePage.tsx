@@ -1,9 +1,11 @@
+'use client';
+
 import { Box, Button, Container } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import StoryblokPageSection, {
@@ -19,7 +21,6 @@ import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_ye
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
-import Link from '../common/Link';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -73,6 +74,8 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 
   const [codeParam, setCodeParam] = useState<string>('');
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Welcome');
 
@@ -84,9 +87,19 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
   // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
   useEffect(() => {
-    const { code } = router.query;
+    const code = searchParams.get('code');
 
     if (code) {
       // code in url query
@@ -96,15 +109,8 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       entryPartnerAccessCode
     ) {
       // Entry code in state, add to url query in case of refresh
-      router.replace(
-        {
-          query: { ...router.query, code: entryPartnerAccessCode },
-        },
-        undefined,
-        {
-          shallow: true,
-        },
-      );
+      router.replace(pathname + '?' + createQueryString('code', entryPartnerAccessCode));
+
       setCodeParam(entryPartnerAccessCode);
     }
   }, [dispatch, router, entryPartnerAccessCode, entryPartnerReferral, partnerContent.name]);
@@ -151,7 +157,6 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         <Button
           sx={{ mt: 4, px: 6 }}
           variant="contained"
-          component={Link}
           color="secondary"
           size="large"
           onClick={logPromoEvent}

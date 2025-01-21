@@ -1,5 +1,7 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
@@ -16,7 +18,6 @@ import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');

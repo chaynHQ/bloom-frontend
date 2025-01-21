@@ -1,10 +1,11 @@
+'use client';
+
 import { Box, Button } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import { STORYBLOK_COLORS } from '../../constants/enums';
-import Link from '../common/Link';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { generateStoryblokButtonEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 interface StoryblokLink {
   cached_url: string;
@@ -43,7 +44,6 @@ const StoryblokButton = (props: StoryblokButtonProps) => {
   return (
     <Box {...storyblokEditable({ _uid, _editable, text, color, link, size })}>
       <Button
-        component={Link}
         sx={buttonStyle}
         variant="contained"
         color={color.includes('primary') ? 'primary' : 'secondary'}

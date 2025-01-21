@@ -1,3 +1,5 @@
+'use client';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -16,7 +18,6 @@ import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { getImageSizes } from '../../utils/imageSizes';
 import { RichTextOptions } from '../../utils/richText';
-import Link from '../common/Link';
 
 interface StoryblokCardProps {
   _uid: string;
@@ -131,7 +132,6 @@ const StoryblokCard = (props: StoryblokCardProps) => {
       <Box sx={{ position: 'relative' }}>
         {card_link?.cached_url ? (
           <CardActionArea
-            component={Link}
             href={card_link.cached_url}
             aria-label={`${tS('navigateTo')} ${card_link.cached_url}`}
           >

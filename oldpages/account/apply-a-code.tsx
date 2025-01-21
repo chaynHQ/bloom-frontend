@@ -1,10 +1,9 @@
-import { Box, Card, CardContent, Container, Typography } from '@mui/material';
+import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Link from '../../components/common/Link';
 import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
 import Header from '../../components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';

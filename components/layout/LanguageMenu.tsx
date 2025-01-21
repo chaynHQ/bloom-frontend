@@ -1,12 +1,14 @@
+'use client';
+
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import { useParams, usePathname, useRouter } from 'next/navigation';
+import { MouseEvent, startTransition, useState } from 'react';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { routing } from '../../i18n/routing';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -42,18 +44,33 @@ const buttonStyle = {
 
 export default function LanguageMenu() {
   const router = useRouter();
-  const locale = router.locale;
-  const locales = router.locales;
+  const pathname = usePathname();
+  const params = useParams<{ locale: string }>();
+  const locale = params?.locale || 'en';
   const t = useTranslations('Navigation');
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  function onChangeLanguage(locale: string) {
+    startTransition(() => {
+      logEvent(generateLanguageMenuEvent(locale), eventUserData);
+      handleClose();
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: locale },
+      );
+    });
+  }
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     logEvent(HEADER_LANGUAGE_MENU_CLICKED, eventUserData);
     setAnchorEl(event.currentTarget);
   };
@@ -86,23 +103,13 @@ export default function LanguageMenu() {
           id: 'language-menu',
         }}
       >
-        {locales
+        {routing.locales
           ?.filter((language) => language !== locale)
           .map((language) => {
             const languageLabel = languageMap[language];
             return (
               <MenuItem key={language} sx={menuItemStyle}>
-                <Button
-                  component={Link}
-                  href={router.asPath}
-                  locale={language}
-                  onClick={() => {
-                    logEvent(generateLanguageMenuEvent(language), eventUserData);
-                    handleClose();
-                  }}
-                >
-                  {languageLabel}
-                </Button>
+                <Button onClick={() => onChangeLanguage(languageLabel)}>{languageLabel}</Button>
               </MenuItem>
             );
           })}

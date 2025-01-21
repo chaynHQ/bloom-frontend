@@ -1,3 +1,5 @@
+'use client';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';

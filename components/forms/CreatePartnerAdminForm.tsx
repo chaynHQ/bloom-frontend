@@ -1,3 +1,5 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';

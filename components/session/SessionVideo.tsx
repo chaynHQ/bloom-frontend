@@ -1,3 +1,5 @@
+'use client';
+
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import { Link as MuiLink, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';

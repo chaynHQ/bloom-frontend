@@ -1,6 +1,7 @@
-import { Card, CardContent, Typography } from '@mui/material';
+'use client';
+
+import { Card, CardContent, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Link from '../common/Link';
 import ProfileSettingsForm from '../forms/ProfileSettingsForm';
 
 const cardStyle = {

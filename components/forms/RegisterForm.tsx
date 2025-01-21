@@ -1,8 +1,18 @@
+'use client';
+
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Checkbox, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
@@ -34,7 +44,6 @@ import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const containerStyle = {
   marginY: 3,
@@ -55,6 +64,9 @@ interface RegisterFormProps {
 
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
+  const params = useParams<{ locale: string }>();
+  const locale = params?.locale || 'en';
+
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
 
@@ -129,7 +141,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       email: emailInput,
       password: passwordInput,
       contactPermission: contactPermissionInput,
-      signUpLanguage: router.locale as LANGUAGES,
+      signUpLanguage: locale as LANGUAGES,
       partnerId: partnerId,
     });
 

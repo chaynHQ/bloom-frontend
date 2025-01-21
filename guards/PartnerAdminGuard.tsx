@@ -1,8 +1,7 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
-import Link from '../components/common/Link';
 import { useTypedSelector } from '../hooks/store';
 import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
 import { columnStyle } from '../styles/common';

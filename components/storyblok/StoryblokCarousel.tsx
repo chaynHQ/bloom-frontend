@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, useTheme } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react';
 import { useWidth } from '../../utils/useWidth';

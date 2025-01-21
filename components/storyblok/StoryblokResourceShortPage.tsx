@@ -4,7 +4,7 @@ import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import {
   PROGRESS_STATUS,
@@ -24,7 +24,6 @@ import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
 import { getEventUserData, logEvent } from '../../utils/logEvent';
 import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
-import Link from '../common/Link';
 import PageSection from '../common/PageSection';
 import ProgressStatus from '../common/ProgressStatus';
 import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
@@ -107,6 +106,8 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_content,
     related_exercises,
   } = props;
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const router = useRouter();
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
@@ -176,8 +177,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         try {
           const storyblokCourseProps = await getStoryblokPagesByUuids(
             relatedCourse, // get course by course uuid
-            router.locale,
-            false,
+            locale,
             {},
           );
 
@@ -280,7 +280,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               })}
             </Typography>
             <Button
-              component={Link}
               href={related_session[0] && `/${related_session[0]?.full_slug}`}
               onClick={redirectToSession}
               variant="contained"

@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react';
 import { columnStyle, rowStyle } from '../../styles/common';

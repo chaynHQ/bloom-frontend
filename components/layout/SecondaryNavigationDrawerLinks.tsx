@@ -1,3 +1,5 @@
+'use client';
+
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -16,7 +18,6 @@ import groundingIcon from '../../public/grounding_icon.svg';
 import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 import { SecondaryNavIcon } from './SecondaryNav';
 
 const listStyle = {
@@ -147,7 +148,6 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
               borderColor: 'primary.dark',
               borderBottom: index !== navigationLinks.length - 1 ? 1 : 0,
             }}
-            component={Link}
             href={link.href}
             target={link.target || '_self'}
             onClick={() => {

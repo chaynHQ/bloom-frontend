@@ -1,7 +1,9 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
@@ -29,6 +31,8 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params?.locale || 'en';
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
@@ -47,10 +51,12 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
 
   const filteredRelatedContent = useMemo(() => {
     return relatedContent.filter((story) => {
-      const locale = router.locale === 'en' ? 'default' : router.locale || 'default';
+      const localeString = locale === 'en' ? 'default' : locale || 'default';
       const storyAvailableForLocale =
-        story.content?.languages?.length > 0 ? story.content.languages.includes(locale) : true;
-      const storyDisabled = disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`);
+        story.content?.languages?.length > 0
+          ? story.content.languages.includes(localeString)
+          : true;
+      const storyDisabled = disabledCoursesString?.includes(`${localeString}/${story.full_slug}`);
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
@@ -59,7 +65,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
           : true;
       return storyAvailableForLocale && storyIncludedForUserPartners && !storyDisabled;
     });
-  }, [relatedContent, disabledCoursesString, router.locale]);
+  }, [relatedContent, disabledCoursesString, locale, userContentPartners]);
 
   let items = filteredRelatedContent
     .map((relatedContentItem) => (

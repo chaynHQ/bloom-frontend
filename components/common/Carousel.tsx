@@ -1,3 +1,5 @@
+'use client';
+
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Breakpoint, IconButton } from '@mui/material';

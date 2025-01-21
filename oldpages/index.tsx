@@ -6,7 +6,6 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Link from '../components/common/Link';
 import NoDataAvailable from '../components/common/NoDataAvailable';
 import HomeHeader from '../components/layout/HomeHeader';
 import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
@@ -71,7 +70,6 @@ const Index: NextPage<Props> = ({ story, preview }) => {
             id="primary-get-started-button"
             sx={{ mt: 3 }}
             variant="contained"
-            component={Link}
             color="secondary"
             onClick={() => {
               logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);

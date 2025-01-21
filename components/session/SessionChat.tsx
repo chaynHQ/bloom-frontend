@@ -1,9 +1,10 @@
+'use client';
+
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import SessionContentCard from '../cards/SessionContentCard';
 import { Dots } from '../common/Dots';
-import Link from '../common/Link';
 import Video from '../video/Video';
 import { EventData } from './SessionVideo';
 
@@ -51,7 +52,6 @@ export const SessionChat = (props: SessionChatProps) => {
           <Button
             variant="contained"
             href="/messaging"
-            component={Link}
             startIcon={<ChatBubbleOutlineIcon color="error" />}
           >
             {t('sessionDetail.chat.startButton')}

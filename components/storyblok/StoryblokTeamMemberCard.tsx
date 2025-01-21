@@ -1,3 +1,5 @@
+'use client';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';

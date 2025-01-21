@@ -1,3 +1,5 @@
+'use client';
+
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import theme from '../../styles/theme';

@@ -1,12 +1,14 @@
+'use client';
+
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import YoutubeIcon from '@mui/icons-material/YouTube';
-import { Box, Container, IconButton, Typography } from '@mui/material';
+import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
 import { PartnerContent, getPartnerContent } from '../../constants/partners';
@@ -20,7 +22,6 @@ import Cookies from 'js-cookie';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
@@ -93,7 +94,8 @@ const Footer = () => {
   const tS = useTranslations('Shared');
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [partners, setPartners] = useState<PartnerContent[]>([]);
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
@@ -119,15 +121,10 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
     });
 
-    const { partner } = router.query;
+    const partner = searchParams?.get('partner');
 
     if (partner) {
       addUniquePartner(partnersList, partner + '');
-    }
-
-    if (router.pathname.includes('/welcome')) {
-      const partnerName = router.asPath.split('/')[2].split('?')[0];
-      addUniquePartner(partnersList, partnerName);
     }
 
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
@@ -137,7 +134,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
+  }, [partnerAccesses, userCreatedAt, searchParams, entryPartnerReferral, partnerAdmin]);
 
   return (
     <>

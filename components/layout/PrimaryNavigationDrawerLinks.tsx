@@ -1,6 +1,8 @@
+'use client';
+
 import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   DRAWER_ADMIN_CLICKED,
@@ -10,7 +12,6 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const listStyle = {
   display: 'flex',
@@ -118,7 +119,6 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
-            component={Link}
             href={link.href}
             target={link.target || '_self'}
             onClick={() => {}}
@@ -133,7 +133,6 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
             variant="contained"
             size="large"
             sx={loginButtonStyle}
-            component={Link}
             href="/auth/login"
             onClick={() => {
               logEvent(DRAWER_LOGIN_CLICKED, eventUserData);

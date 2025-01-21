@@ -1,3 +1,5 @@
+'use client';
+
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
@@ -13,7 +15,6 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -89,7 +90,6 @@ export default function UserMenu() {
         {!(partnerAdmin && partnerAdmin.partner) && (
           <MenuItem sx={menuItemStyle}>
             <Button
-              component={Link}
               href={'/account/apply-a-code'}
               startIcon={<AddCircleOutline />}
               onClick={() => {
@@ -102,12 +102,7 @@ export default function UserMenu() {
           </MenuItem>
         )}
         <MenuItem sx={menuItemStyle}>
-          <Button
-            component={Link}
-            href="/account/settings"
-            onClick={handleClose}
-            startIcon={<Settings />}
-          >
+          <Button href="/account/settings" onClick={handleClose} startIcon={<Settings />}>
             {t('accountSettings')}
           </Button>
         </MenuItem>

@@ -1,3 +1,5 @@
+'use client';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';

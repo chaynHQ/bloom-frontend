@@ -1,10 +1,11 @@
+'use client';
+
 import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import theme from '../../styles/theme';
 import { EventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 import Header from '../layout/Header';
 
 const buttonStyle = {
@@ -37,7 +38,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   return (
     <Header {...headerProps}>
-      <Button variant="outlined" sx={buttonStyle} href="/courses" size="small" component={Link}>
+      <Button variant="outlined" sx={buttonStyle} href="/courses" size="small">
         {t('backToCourses')}
       </Button>
     </Header>

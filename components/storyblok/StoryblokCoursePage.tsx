@@ -1,4 +1,6 @@
-import { Box, Container, Typography } from '@mui/material';
+'use client';
+
+import { Box, Container, Link, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -6,7 +8,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import SessionCard from '../../components/cards/SessionCard';
 import { ContentUnavailable } from '../../components/common/ContentUnavailable';
-import Link from '../../components/common/Link';
 import CourseHeader from '../../components/course/CourseHeader';
 import CourseIntroduction from '../../components/course/CourseIntroduction';
 import { PROGRESS_STATUS } from '../../constants/enums';

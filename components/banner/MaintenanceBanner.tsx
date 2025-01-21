@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';

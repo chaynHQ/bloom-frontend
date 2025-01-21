@@ -1,3 +1,5 @@
+'use client';
+
 import { debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';

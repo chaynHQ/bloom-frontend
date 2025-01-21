@@ -1,3 +1,5 @@
+'use client';
+
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container } from '@mui/material';

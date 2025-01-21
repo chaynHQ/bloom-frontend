@@ -1,3 +1,5 @@
+'use client';
+
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -16,7 +18,6 @@ import { useState } from 'react';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { iconTextRowStyle, rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import Link from '../common/Link';
 import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
@@ -86,7 +87,6 @@ const CourseCard = (props: CourseCardProps) => {
       {clickable ? (
         <CardActionArea
           sx={cardActionStyle}
-          component={Link}
           href={`/${course.full_slug}`}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >

@@ -1,3 +1,5 @@
+'use client';
+
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -9,7 +11,6 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
-import Link from '../common/Link';
 
 const listStyle = {
   display: 'flex',
@@ -113,7 +114,6 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
-            component={Link}
             href={link.href}
             qa-id={link.qaId}
             target={link.target || '_self'}

@@ -1,9 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Link from '../../components/common/Link';
 import Header from '../../components/layout/Header';
 import { ErrorDisplay } from '../../constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';

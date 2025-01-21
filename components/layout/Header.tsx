@@ -1,9 +1,11 @@
+'use client';
+
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { columnStyle, rowStyle } from '../../styles/common';

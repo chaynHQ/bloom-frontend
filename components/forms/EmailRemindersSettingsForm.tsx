@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 
 const containerStyle = {
@@ -15,7 +17,7 @@ import {
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
@@ -103,7 +105,7 @@ const EmailRemindersSettingsForm = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const router = useRouter();
+  const pathname = usePathname();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
   const tS = useTranslations('Shared');
 
@@ -128,7 +130,7 @@ const EmailRemindersSettingsForm = () => {
       const eventData = {
         ...eventUserData,
         frequency: selectedInput,
-        origin_url: router.pathname,
+        origin_url: pathname,
       };
 
       const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
@@ -151,10 +153,10 @@ const EmailRemindersSettingsForm = () => {
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);
       }
     },
-    [updateUser, selectedInput, router.pathname, eventUserData, t, tS],
+    [updateUser, selectedInput, pathname, eventUserData, t, tS],
   );
 
-  const showUpdateLaterMessage = router.pathname !== '/account/settings' && !error;
+  const showUpdateLaterMessage = pathname !== '/account/settings' && !error;
 
   return (
     <form onSubmit={onSubmit}>

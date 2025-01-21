@@ -1,5 +1,7 @@
+'use client';
+
 import { getAnalytics } from '@firebase/analytics';
-import { Box, Button, alpha, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Link, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
@@ -10,7 +12,6 @@ import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
 import { setCookiesAccepted } from '../../store/userSlice';
 import { getImageSizes } from '../../utils/imageSizes';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const Consent = (props: {}) => {
   const theme = useTheme();
