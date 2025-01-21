@@ -2,7 +2,6 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, TextField, Typography } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -17,6 +16,7 @@ import {
 } from '../../constants/events';
 import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { useCreateEventLogMutation } from '../../lib/api';
+import { login } from '../../lib/auth';
 import { setAuthStateLoading } from '../../lib/store/userSlice';
 import logEvent from '../../utils/logEvent';
 
@@ -66,40 +66,36 @@ const LoginForm = () => {
     await setFormError('');
     logEvent(LOGIN_REQUEST);
 
-    const auth = getAuth();
+    const { user, error } = await login(emailInput, passwordInput);
+    if (error) {
+      const errorCode = error.code;
 
-    signInWithEmailAndPassword(auth, emailInput, passwordInput)
-      .then(async (userCredential) => {
-        createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });
-        await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
-        logEvent(LOGIN_SUCCESS);
-        logEvent(GET_LOGIN_USER_REQUEST);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        setFormError(t('firebase.invalidEmail'));
+      }
+      if (errorCode === 'auth/too-many-requests') {
+        setFormError(t('firebase.tooManyAttempts'));
+      }
+      if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
+        setFormError(t('firebase.authError'));
+      }
 
-        if (errorCode === 'auth/invalid-email') {
-          setFormError(t('firebase.invalidEmail'));
-        }
-        if (errorCode === 'auth/too-many-requests') {
-          setFormError(t('firebase.tooManyAttempts'));
-        }
-        if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
-          setFormError(t('firebase.authError'));
-        }
+      if (
+        errorCode !== 'auth/too-many-requests' &&
+        errorCode !== 'auth/invalid-email' &&
+        errorCode !== 'auth/user-not-found' &&
+        errorCode !== 'auth/wrong-password'
+      ) {
+        logEvent(LOGIN_ERROR, { message: errorCode });
+        (window as any).Rollbar?.error('User login firebase error', error);
+      }
+    } else if (user) {
+      createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });
+      logEvent(LOGIN_SUCCESS);
+      logEvent(GET_LOGIN_USER_REQUEST);
+    }
 
-        if (
-          errorCode !== 'auth/too-many-requests' &&
-          errorCode !== 'auth/invalid-email' &&
-          errorCode !== 'auth/user-not-found' &&
-          errorCode !== 'auth/wrong-password'
-        ) {
-          logEvent(LOGIN_ERROR, { message: errorCode });
-          (window as any).Rollbar?.error('User login firebase error', error);
-        }
-      });
-
-    await dispatch(setAuthStateLoading(false));
+    await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
   };
 
   return (

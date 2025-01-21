@@ -48,7 +48,7 @@ const partiallyPublicPages = [
 export function AuthGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-
+  console.log(pathname);
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);

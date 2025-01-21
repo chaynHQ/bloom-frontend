@@ -5,7 +5,6 @@ import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import {
@@ -14,6 +13,7 @@ import {
   LOGOUT_REQUEST,
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
+import { logout } from '../../lib/auth';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const menuItemStyle = {
@@ -56,10 +56,9 @@ export default function UserMenu() {
     setAnchorEl(null);
   };
 
-  const logout = () => {
+  const handleLogout = async () => {
     logEvent(LOGOUT_REQUEST);
-    const auth = getAuth();
-    signOut(auth);
+    await logout();
     // logout flow is completed in useLoadUser - triggered by firebase token listener
   };
 
@@ -107,7 +106,7 @@ export default function UserMenu() {
           </Button>
         </MenuItem>
         <MenuItem sx={menuItemStyle}>
-          <Button id="logout-button" onClick={logout} startIcon={<Logout />}>
+          <Button id="logout-button" onClick={handleLogout} startIcon={<Logout />}>
             {t('logout')}
           </Button>
         </MenuItem>

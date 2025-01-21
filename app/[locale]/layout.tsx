@@ -14,9 +14,9 @@ import LeaveSiteButton from '../../components/layout/LeaveSiteButton';
 import TopBar from '../../components/layout/TopBar';
 import { ReduxProvider } from '../../components/providers/ReduxProvider';
 import StoryblokProvider from '../../components/providers/StoryblokProvider';
-import firebase from '../../config/firebase';
 import { AuthGuard } from '../../guards/AuthGuard';
 import { routing } from '../../i18n/routing';
+import firebase from '../../lib/firebase';
 import theme from '../../styles/theme';
 
 firebase;

@@ -2,7 +2,6 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, Link, TextField, Typography } from '@mui/material';
-import { confirmPasswordReset, getAuth, sendPasswordResetEmail, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
@@ -13,6 +12,8 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
 } from '../../constants/events';
+import { confirmAuthPasswordReset, logout, sendAuthPasswordResetEmail } from '../../lib/auth';
+import { auth } from '../../lib/firebase';
 import logEvent from '../../utils/logEvent';
 
 export const EmailForm = () => {
@@ -30,29 +31,27 @@ export const EmailForm = () => {
     setFormError('');
     logEvent(RESET_PASSWORD_REQUEST);
 
-    const auth = getAuth();
-
     if (locale) {
       auth.languageCode = locale;
     }
 
-    sendPasswordResetEmail(auth, emailInput)
-      .then(() => {
-        logEvent(RESET_PASSWORD_SUCCESS);
-        setResetEmailSent(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
+    const { error } = await sendAuthPasswordResetEmail(emailInput);
 
-        if (errorCode === 'auth/invalid-email') {
-          setFormError(t('firebase.invalidEmail'));
-        } else if (errorCode === 'auth/user-not-found') {
-          setFormError(t('firebase.authError'));
-        } else {
-          logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-          (window as any).Rollbar?.error('User send reset password email firebase error', error);
-        }
-      });
+    if (error) {
+      const errorCode = error.code;
+
+      if (errorCode === 'auth/invalid-email') {
+        setFormError(t('firebase.invalidEmail'));
+      } else if (errorCode === 'auth/user-not-found') {
+        setFormError(t('firebase.authError'));
+      } else {
+        logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
+        (window as any).Rollbar?.error('User send reset password email firebase error', error);
+      }
+    } else if (!error) {
+      logEvent(RESET_PASSWORD_SUCCESS);
+      setResetEmailSent(true);
+    }
   };
   return (
     <Box>
@@ -123,40 +122,39 @@ export const PasswordForm = (props: PasswordFormProps) => {
     event.preventDefault();
     setLoading(true);
 
-    const auth = getAuth();
+    const { error } = await confirmAuthPasswordReset(codeParam, passwordInput);
 
-    confirmPasswordReset(auth, codeParam, passwordInput)
-      .then(() => {
-        if (auth.currentUser) signOut(auth);
-        setFormSuccess(true);
+    if (error) {
+      const errorCode = error.code;
+
+      logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
+      (window as any).Rollbar?.error('User confirm reset password firebase error', error);
+
+      if (errorCode === 'auth/weak-password') {
+        setFormError(t('firebase.weakPassword'));
+      } else if (errorCode === 'auth/expired-action-code') {
+        setFormError(
+          t.rich('firebase.expiredCode', {
+            resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+          }),
+        );
+      } else {
+        setFormError(
+          t.rich('firebase.invalidCode', {
+            resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
+          }),
+        );
         setLoading(false);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        (window as any).Rollbar?.error('User confirm reset password firebase error', error);
-
-        if (errorCode === 'auth/weak-password') {
-          setFormError(t('firebase.weakPassword'));
-        } else if (errorCode === 'auth/expired-action-code') {
-          setFormError(
-            t.rich('firebase.expiredCode', {
-              resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
-            }),
-          );
-        } else {
-          setFormError(
-            t.rich('firebase.invalidCode', {
-              resetLink: (children) => <Link href="/auth/reset-password">{children}</Link>,
-            }),
-          );
-          setLoading(false);
-          throw error;
-        }
-        setLoading(false);
-      });
+        throw error;
+      }
+      setLoading(false);
+    } else if (!error) {
+      if (auth.currentUser) {
+        await logout();
+      }
+      setFormSuccess(true);
+      setLoading(false);
+    }
   };
 
   if (formSuccess) {

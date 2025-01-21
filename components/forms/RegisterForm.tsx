@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -39,6 +38,7 @@ import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
 } from '../../lib/api';
+import { login } from '../../lib/auth';
 import { setUserLoading } from '../../lib/store/userSlice';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
@@ -154,12 +154,13 @@ const RegisterForm = (props: RegisterFormProps) => {
 
       logEvent(REGISTER_SUCCESS, eventUserData);
       try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+        const { user, error } = await login(emailInput, passwordInput);
 
-        logEvent(LOGIN_SUCCESS, eventUserData);
-        logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
-        logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+        if (user && !error) {
+          logEvent(LOGIN_SUCCESS, eventUserData);
+          logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
+          logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+        }
       } catch (err) {
         setFormError(
           t.rich('createUserError', {

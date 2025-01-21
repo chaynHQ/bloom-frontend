@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics, isSupported } from 'firebase/analytics';
-import { initializeApp } from 'firebase/app';
+import { getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,12 +18,13 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Initialise Firebase
+const firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 if (!isSupported()) {
-  const analytics = getAnalytics(app);
+  getAnalytics(firebaseApp);
 }
 
-export default app;
+export const auth = getAuth(firebaseApp);
+
+export default firebaseApp;

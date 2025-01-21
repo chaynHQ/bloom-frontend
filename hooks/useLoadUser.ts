@@ -1,6 +1,6 @@
 'use client';
 
-import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth';
+import { onIdTokenChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { EVENT_LOG_NAME } from '../constants/enums';
 import {
@@ -13,6 +13,8 @@ import {
   LOGOUT_SUCCESS,
 } from '../constants/events';
 import { useCreateEventLogMutation, useGetUserQuery } from '../lib/api';
+import { logout } from '../lib/auth';
+import { auth } from '../lib/firebase';
 import {
   setAuthStateLoading,
   setLoadError,
@@ -25,7 +27,6 @@ import { getIsMaintenanceMode } from '../utils/maintenanceMode';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {
-  const auth = getAuth();
   const dispatch: any = useAppDispatch();
   const isMaintenanceMode = getIsMaintenanceMode();
   const userToken = useTypedSelector((state) => state.user.token);
@@ -90,11 +91,16 @@ export default function useLoadUser() {
 
   // 3b. Handle get user error
   useEffect(() => {
+    const handleLogout = async () => {
+      await logout();
+    };
+
     if (userResourceError || isInvalidUserResourceResponse) {
       const errorMessage = userResourceError
         ? getErrorMessage(userResourceError) || 'error'
         : invalidUserResourceError;
-      signOut(auth);
+
+      handleLogout();
       dispatch(setLoadError(errorMessage));
       dispatch(setUserLoading(false));
 

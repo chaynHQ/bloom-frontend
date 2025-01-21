@@ -3,13 +3,13 @@
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Link, TextField, Typography } from '@mui/material';
-import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { ErrorDisplay } from '../../constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
 import { useTypedSelector } from '../../hooks/store';
 import { useUpdateUserMutation } from '../../lib/api';
+import { logout } from '../../lib/auth';
 import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {
@@ -43,8 +43,7 @@ const ProfileSettingsForm = () => {
       setError(undefined);
       setIsSuccess(true);
       if (payload.email) {
-        const auth = getAuth();
-        signOut(auth);
+        await logout();
       }
     } else if ((response as any)?.error?.data?.message === UPDATE_USER_ALREADY_EXISTS) {
       setError(t('profileSettings.emailAlreadyInUseError'));
