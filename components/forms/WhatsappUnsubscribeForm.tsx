@@ -15,7 +15,7 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { useUnsubscribeFromWhatsappMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { findWhatsappSubscription } from '../../utils/whatsappUtils';
 
 const containerStyle = {
@@ -26,18 +26,13 @@ const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const rollbar = useRollbar();
 
+  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
+  const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
+
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<ErrorDisplay>();
-
-  const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
-
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     const activeWhatsappSubscription = findWhatsappSubscription(userActiveSubscriptions);
@@ -51,7 +46,7 @@ const WhatsappUnsubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST, eventUserData);
+    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST);
 
     const unsubscribeResponse = await unsubscribeFromWhatsapp({
       id: subscriptionId,
@@ -60,7 +55,7 @@ const WhatsappUnsubscribeForm = () => {
 
     if (unsubscribeResponse.data) {
       setLoading(false);
-      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS, eventUserData);
+      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS);
     }
 
     if (unsubscribeResponse.error) {

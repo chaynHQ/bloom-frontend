@@ -13,20 +13,16 @@ import { PROMO_GET_STARTED_CLICKED } from '../constants/events';
 import { useTypedSelector } from '../hooks/store';
 import { Link as i18nLink } from '../i18n/routing';
 import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import logEvent, { getEventUserData } from '../utils/logEvent';
+import logEvent from '../utils/logEvent';
 interface Props {
   story: ISbStoryData | null;
   preview: boolean;
 }
 
-const Index: NextPage<Props> = ({ story, preview }) => {
+const Index: NextPage<Props> = ({ story }) => {
   const t = useTranslations('Welcome');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
@@ -70,7 +66,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
             variant="contained"
             color="secondary"
             onClick={() => {
-              logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
+              logEvent(PROMO_GET_STARTED_CLICKED);
             }}
             component={i18nLink}
             href={registerPath}
@@ -88,7 +84,7 @@ const Index: NextPage<Props> = ({ story, preview }) => {
   );
 };
 
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
   const storyblokProps = await getStoryblokPageProps('home', locale);
 
   return {

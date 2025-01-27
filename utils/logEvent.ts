@@ -1,5 +1,5 @@
+import { sendGAEvent } from '@next/third-parties/google';
 import { track } from '@vercel/analytics/react';
-import { getAnalytics } from 'firebase/analytics';
 import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
 import { PartnerAdmin } from '../lib/store/partnerAdminSlice';
 import {
@@ -21,13 +21,9 @@ export interface EventUserData {
   registered_at?: string | Date | null;
 }
 
-export const logEvent = (event: string, params?: {}) => {
-  // Send analytics event to firebase / Google Analytics
-  getAnalytics();
-  (window as any).gtag('event', event, { method: 'Google', ...params });
-
-  // Send analytics event to Vercel analytics
-  // Don't include params as only 2 params are available on our plan
+export const logEvent = (event: string, params = {}) => {
+  // Send analytics events to Google Analytics and Vercel Analytics
+  sendGAEvent('event', event, params);
   track(event, params);
 };
 

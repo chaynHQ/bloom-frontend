@@ -1,5 +1,6 @@
 'use client';
 
+import { sendGAEvent } from '@next/third-parties/google';
 import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
@@ -83,13 +84,18 @@ export default function useLoadUser() {
       }
       dispatch(setUserLoading(false));
 
-      const eventUserData = getEventUserData(
-        userResource.user.createdAt,
-        userResource.partnerAccesses,
-        userResource.partnerAdmin,
+      // Sets GA user data on global scope https://developers.google.com/tag-platform/gtagjs/reference
+      sendGAEvent(
+        'set',
+        getEventUserData(
+          userResource.user.createdAt,
+          userResource.partnerAccesses,
+          userResource.partnerAdmin,
+        ),
       );
-      logEvent(GET_AUTH_USER_SUCCESS, eventUserData);
-      logEvent(GET_USER_SUCCESS, eventUserData); // deprecated event
+
+      logEvent(GET_AUTH_USER_SUCCESS);
+      logEvent(GET_USER_SUCCESS); // deprecated event
     }
   }, [userResourceIsSuccess, userResource, dispatch]);
 

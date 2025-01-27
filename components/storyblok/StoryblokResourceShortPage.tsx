@@ -22,7 +22,7 @@ import { Resource } from '../../lib/store/resourcesSlice';
 import { columnStyle, rowStyle } from '../../styles/common';
 import theme from '../../styles/theme';
 import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
+import { logEvent } from '../../utils/logEvent';
 import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 import PageSection from '../common/PageSection';
@@ -113,7 +113,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
@@ -125,7 +124,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const getContentPartners = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
@@ -140,13 +138,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
   const eventData = useMemo(() => {
     return {
-      ...eventUserData,
       resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
     };
-  }, [eventUserData, name, storyId, resourceProgress]);
+  }, [name, storyId, resourceProgress]);
 
   useEffect(() => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
@@ -257,7 +254,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
                 {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                   <ResourceCompleteButton
-                    resourceName={name}
                     category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                     storyId={storyId}
                     eventData={eventData}

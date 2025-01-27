@@ -10,7 +10,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 
 const listStyle = {
@@ -64,11 +64,9 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const isMaintenanceMode = getIsMaintenanceMode();
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
@@ -120,7 +118,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
             qa-id={link.qaId}
             target={link.target || '_self'}
             onClick={() => {
-              logEvent(link.event, eventUserData);
+              logEvent(link.event);
             }}
           >
             <ListItemText sx={listItemTextStyle} primary={link.title} />

@@ -29,7 +29,7 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=
 
 # CONTENT TOKEN (read-only)
 NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
@@ -82,7 +82,7 @@ NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
 
 ### Configure Firebase Variables:
 
-To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Ensure the toggle is turned on to enable Google Analytics as it is required for `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+To configure the Firebase variables, [create a Firebase project in the Firebase console](https://firebase.google.com/) (Google account required). Ensure the toggle is turned on to enable Google Analytics as it is required for `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID`
 
 ###
 

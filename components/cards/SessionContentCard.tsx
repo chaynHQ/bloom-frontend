@@ -13,7 +13,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { rowStyle } from '../../styles/common';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const cardStyle = {
   width: { xs: '100%', md: 700 },
@@ -26,10 +26,9 @@ interface SessionContentCardProps {
   title: string;
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
   titleIconSize?: number;
-  richtextContent?: boolean;
   initialExpanded?: boolean;
   eventPrefix: string;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 const SessionContentCard = (props: SessionContentCardProps) => {
@@ -38,7 +37,6 @@ const SessionContentCard = (props: SessionContentCardProps) => {
     title,
     titleIcon,
     titleIconSize = 28,
-    richtextContent = false,
     initialExpanded = false,
     eventPrefix,
     eventData,

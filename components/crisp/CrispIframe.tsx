@@ -3,7 +3,7 @@
 import { Box } from '@mui/material';
 import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const iframeContainerStyle = {
   width: '100%',
@@ -27,10 +27,6 @@ export const CrispIframe = () => {
   const userEmail = useTypedSelector((state) => state.user.email);
   const userSignUpLanguage = useTypedSelector((state) => state.user.signUpLanguage);
   const userCrispTokenId = useTypedSelector((state) => state.user.crispTokenId);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const iframeLoaded = async () => {
     const iframeWindow: any = (document.getElementById('crispIframe') as HTMLIFrameElement)
@@ -63,7 +59,7 @@ export const CrispIframe = () => {
     iframeScript.onload = () => {
       let composeEventSent = false;
 
-      logEvent(CHAT_VIEWED, eventUserData);
+      logEvent(CHAT_VIEWED);
 
       if (process.env.NEXT_PUBLIC_ENV === 'production') {
         crisp.push(['safe', true]); // Turns on safe mode = turns off errors in production
@@ -80,7 +76,7 @@ export const CrispIframe = () => {
         'message:compose:sent',
         () => {
           if (!composeEventSent) {
-            logEvent(CHAT_MESSAGE_COMPOSED, eventUserData);
+            logEvent(CHAT_MESSAGE_COMPOSED);
             composeEventSent = true;
           }
         },
@@ -90,7 +86,7 @@ export const CrispIframe = () => {
         'on',
         'message:sent',
         () => {
-          logEvent(CHAT_MESSAGE_SENT, eventUserData);
+          logEvent(CHAT_MESSAGE_SENT);
           composeEventSent = false;
         },
       ]);

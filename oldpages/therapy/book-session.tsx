@@ -20,7 +20,7 @@ import illustrationDateSelector from '../../public/illustration_date_selector.sv
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -76,8 +76,6 @@ const BookSession: NextPage = () => {
 
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(user.createdAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     let partnerAccess = partnerAccesses.find(
@@ -101,7 +99,7 @@ const BookSession: NextPage = () => {
   }, [setPartnerAccess, partnerAccesses]);
 
   useEffect(() => {
-    logEvent(THERAPY_BOOKING_VIEWED, eventUserData);
+    logEvent(THERAPY_BOOKING_VIEWED);
   }, []);
 
   const headerProps = {
@@ -112,7 +110,7 @@ const BookSession: NextPage = () => {
   };
 
   const openWidget = () => {
-    logEvent(THERAPY_BOOKING_OPENED, eventUserData);
+    logEvent(THERAPY_BOOKING_OPENED);
 
     setWidgetOpen(true);
   };
@@ -169,7 +167,6 @@ const BookSession: NextPage = () => {
             faqList={therapyFaqs(tS('feedbackTypeform'))}
             translations="Therapy.faqs"
             partner={partnerAccess?.partner}
-            eventUserData={eventUserData}
           />
           {hasTherapyRemaining && (
             <Button

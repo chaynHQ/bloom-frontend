@@ -18,18 +18,12 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { useCompleteResourceMutation, useStartResourceMutation } from '../../lib/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import Audio from '../video/Audio';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';
 
-export interface EventData extends EventUserData {
-  resource_name: string;
-  resource_storyblok_id: number;
-  resource_progress: PROGRESS_STATUS;
-}
-
 interface ResourceConversationAudioProps {
-  eventData: EventData;
+  eventData: { [key: string]: any };
   resourceProgress: PROGRESS_STATUS;
   name: string;
   storyId: number;

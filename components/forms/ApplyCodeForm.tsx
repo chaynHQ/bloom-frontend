@@ -3,7 +3,7 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FEEDBACK_FORM_URL } from '../../constants/common';
 import { PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
 import {
@@ -17,36 +17,26 @@ import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 
 import { useRollbar } from '@rollbar/react';
 import { ErrorDisplay } from '../../constants/common';
-import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');
   const rollbar = useRollbar();
 
-  const [eventUserData, setEventUserData] = useState<any>(null);
   const [codeInput, setCodeInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [newPartnerAccess, setNewPartnerAccess] = useState<PartnerAccess | null>(null);
   const [formError, setFormError] = useState<ErrorDisplay>();
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  const [assignPartnerAccess, { isLoading: assignPartnerAccessIsLoading }] =
-    useAssignPartnerAccessMutation();
-
-  useEffect(() => {
-    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
-  }, [userCreatedAt, partnerAccesses, partnerAdmin]);
+  const [assignPartnerAccess] = useAssignPartnerAccessMutation();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(ASSIGN_NEW_PARTNER_ACCESS_REQUEST, eventUserData);
+    logEvent(ASSIGN_NEW_PARTNER_ACCESS_REQUEST);
 
     const partnerAccessResponse = await assignPartnerAccess({
       partnerAccessCode: codeInput,
@@ -60,7 +50,7 @@ const ApplyCodeForm = () => {
         feature_therapy: partnerAccessResponse.data.featureTherapy,
         therapy_sessions_remaining: partnerAccessResponse.data.therapySessionsRemaining,
       };
-      logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, { ...eventUserData, ...eventData });
+      logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, eventData);
       setNewPartnerAccess(partnerAccessResponse.data);
       setLoading(false);
       setFormSubmitSuccess(true);
@@ -94,13 +84,12 @@ const ApplyCodeForm = () => {
         rollbar.error('Assign partner access error', partnerAccessResponse.error);
 
         logEvent(ASSIGN_NEW_PARTNER_ACCESS_ERROR, {
-          ...eventUserData,
           message: error,
         });
         setLoading(false);
         throw error;
       }
-      logEvent(ASSIGN_NEW_PARTNER_ACCESS_INVALID, { ...eventUserData, message: error });
+      logEvent(ASSIGN_NEW_PARTNER_ACCESS_INVALID, { message: error });
       setLoading(false);
       throw error;
     }

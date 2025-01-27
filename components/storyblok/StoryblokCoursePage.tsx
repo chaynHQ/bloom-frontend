@@ -17,7 +17,7 @@ import { Link as i18nLink } from '../../i18n/routing';
 import { rowStyle } from '../../styles/common';
 import { determineCourseProgress } from '../../utils/courseProgress';
 import hasAccessToPage from '../../utils/hasAccessToPage';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
+import { logEvent } from '../../utils/logEvent';
 import { SignUpBanner } from '../banner/SignUpBanner';
 
 const containerStyle = {
@@ -68,7 +68,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   } = props;
 
   const t = useTranslations('Courses');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -93,7 +92,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         referralPartner,
       ),
     );
-  }, [partnerAccesses, partnerAdmin, included_for_partners]);
+  }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
   useEffect(() => {
     setCourseProgress(determineCourseProgress(courses, storyId));
@@ -103,10 +102,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   const eventData = {
-    ...eventUserData,
     course_name: name,
     course_storyblok_id: storyId,
     course_progress: courseProgress,

@@ -223,7 +223,7 @@ const fbConfig = {
   storageBucket: Cypress.env('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
   messagingSenderId: Cypress.env('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
   appId: Cypress.env('NEXT_PUBLIC_FIREBASE_APP_ID'),
-  measurementId: Cypress.env('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID'),
+  measurementId: Cypress.env('NEXT_PUBLIC_GOOGLE_ANALYTICS_ID'),
 };
 
 const app = initializeApp(fbConfig);

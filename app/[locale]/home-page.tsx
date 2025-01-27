@@ -12,7 +12,7 @@ import StoryblokPageSection from '../../components/storyblok/StoryblokPageSectio
 import { PROMO_GET_STARTED_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 interface Props {
   story: ISbStoryData | null;
@@ -21,11 +21,7 @@ interface Props {
 export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
@@ -69,7 +65,7 @@ export default function HomePage({ story }: Props) {
             variant="contained"
             color="secondary"
             onClick={() => {
-              logEvent(PROMO_GET_STARTED_CLICKED, eventUserData);
+              logEvent(PROMO_GET_STARTED_CLICKED);
             }}
             component={i18nLink}
             href={registerPath}

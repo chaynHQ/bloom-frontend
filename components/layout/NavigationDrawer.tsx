@@ -9,8 +9,7 @@ import {
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
 } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import PrimaryNavigationDrawerLinks from './PrimaryNavigationDrawerLinks';
 import SecondaryNavigationDrawerLinks from './SecondaryNavigationDrawerLinks';
 
@@ -34,18 +33,14 @@ const NavigationDrawer = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const t = useTranslations('Navigation');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    logEvent(HEADER_NAVIGATION_MENU_OPENED, eventUserData);
+    logEvent(HEADER_NAVIGATION_MENU_OPENED);
   };
   const handleClose = () => {
     setAnchorEl(null);
-    logEvent(HEADER_NAVIGATION_MENU_CLOSED, eventUserData);
+    logEvent(HEADER_NAVIGATION_MENU_CLOSED);
   };
 
   return (

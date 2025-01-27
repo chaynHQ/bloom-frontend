@@ -7,16 +7,12 @@ import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '../../constants/enums';
-import {
-  RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-  RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
-  RESOURCE_CONVERSATION_VIEWED,
-} from '../../constants/events';
+import { RESOURCE_CONVERSATION_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Resource } from '../../lib/store/resourcesSlice';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import { rowStyle } from '../../styles/common';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
+import { logEvent } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 import { SignUpBanner } from '../banner/SignUpBanner';
@@ -82,7 +78,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
 
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userId = useTypedSelector((state) => state.user.id);
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -93,19 +88,15 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
-  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
     return {
-      ...eventUserData,
       resource_category: RESOURCE_CATEGORIES.CONVERSATION,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
     };
-  }, [eventUserData, name, storyId, resourceProgress]);
+  }, [name, storyId, resourceProgress]);
 
   useEffect(() => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
@@ -123,19 +114,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
   }, []);
-
-  useEffect(() => {
-    if (openTranscriptModal === null) {
-      return;
-    }
-
-    logEvent(
-      openTranscriptModal
-        ? RESOURCE_CONVERSATION_TRANSCRIPT_OPENED
-        : RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-      eventData,
-    );
-  }, [openTranscriptModal, name, eventData]);
 
   return (
     <Box
@@ -183,7 +161,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
                   {resourceProgress && <ProgressStatus status={resourceProgress} />}
                   {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                     <ResourceCompleteButton
-                      resourceName={name}
                       category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                       storyId={storyId}
                       eventData={eventData}

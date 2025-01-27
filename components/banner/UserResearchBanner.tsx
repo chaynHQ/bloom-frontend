@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { FeatureFlag } from '../../config/featureFlag';
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { usePathname, useRouter } from '../../i18n/routing';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { usePathname } from '../../i18n/routing';
+import logEvent from '../../utils/logEvent';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -26,13 +26,9 @@ export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const pathname = usePathname();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const router = useRouter();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
@@ -46,7 +42,7 @@ export default function UserResearchBanner() {
 
   const handleClickAccepted = () => {
     if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_INTERESTED, eventUserData);
+    logEvent(USER_BANNER_INTERESTED);
     setOpen(false);
 
     window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
@@ -54,7 +50,7 @@ export default function UserResearchBanner() {
 
   const handleClickDeclined = () => {
     if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_DISMISSED, eventUserData);
+    logEvent(USER_BANNER_DISMISSED);
     setOpen(false);
   };
 

@@ -13,7 +13,7 @@ import {
   RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
 } from '../../constants/events';
 import { useCompleteResourceMutation } from '../../lib/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 import { useRollbar } from '@rollbar/react';
 import { RESOURCE_CATEGORIES } from '../../constants/enums';
@@ -25,14 +25,13 @@ const errorStyle = {
 } as const;
 
 interface ResourceCompleteButtonProps {
-  resourceName: string;
   category: RESOURCE_CATEGORIES;
   storyId: number;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
-  const { resourceName, category, storyId, eventData } = props;
+  const { category, storyId, eventData } = props;
 
   const t = useTranslations('Resources');
   const rollbar = useRollbar();

@@ -8,8 +8,7 @@ import { render } from 'storyblok-rich-text-react-renderer';
 import Header from '../../components/layout/Header';
 import { StoryblokTeamMemberCardProps } from '../../components/storyblok/StoryblokTeamMemberCard';
 import { MEET_THE_TEAM_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
 import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
@@ -59,13 +58,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     page_section_3,
   } = props;
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   useEffect(() => {
-    logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
+    logEvent(MEET_THE_TEAM_VIEWED);
   }, []);
 
   return (

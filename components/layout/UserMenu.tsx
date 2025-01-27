@@ -16,7 +16,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { logout } from '../../lib/auth';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -41,17 +41,14 @@ const buttonStyle = {
 
 export default function UserMenu() {
   const t = useTranslations('Navigation');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    logEvent(HEADER_ACCOUNT_ICON_CLICKED, eventUserData);
+    logEvent(HEADER_ACCOUNT_ICON_CLICKED);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -95,7 +92,7 @@ export default function UserMenu() {
               component={i18nLink}
               startIcon={<AddCircleOutline />}
               onClick={() => {
-                logEvent(HEADER_APPLY_A_CODE_CLICKED, eventUserData);
+                logEvent(HEADER_APPLY_A_CODE_CLICKED);
                 handleClose();
               }}
             >

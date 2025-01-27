@@ -1,25 +1,21 @@
 'use client';
 
-import { getAnalytics } from '@firebase/analytics';
 import { Box, Button, Link, alpha, useMediaQuery, useTheme } from '@mui/material';
+import { sendGAEvent } from '@next/third-parties/google';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { useAppDispatch } from '../../hooks/store';
 import { setCookiesAccepted } from '../../lib/store/userSlice';
 import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
-const Consent = (props: {}) => {
+const Consent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const tS = useTranslations('Shared');
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -54,23 +50,31 @@ const Consent = (props: {}) => {
   };
 
   const handleDecline = () => {
-    getAnalytics();
+    sendGAEvent('consent', 'update', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    });
+    logEvent(COOKIES_REJECTED);
+  };
 
-    (window as any).gtag('consent', 'update', {
+  const handleAccept = () => {
+    sendGAEvent('consent', 'update', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'granted',
+    });
+    logEvent(COOKIES_ACCEPTED);
+  };
+
+  useEffect(() => {
+    sendGAEvent('consent', 'default', {
       ad_storage: 'denied',
       analytics_storage: 'denied',
     });
-    logEvent(COOKIES_REJECTED, eventUserData);
-  };
-  const handleAccept = () => {
-    getAnalytics();
-
-    (window as any).gtag('consent', 'update', {
-      ad_storage: 'denied',
-      analytics_storage: 'granted',
-    });
-    logEvent(COOKIES_ACCEPTED, eventUserData);
-  };
+  }, []);
 
   useEffect(() => {
     const cookieConsent = getCookieConsentValue('analyticsConsent');

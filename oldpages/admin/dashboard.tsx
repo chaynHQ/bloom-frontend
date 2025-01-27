@@ -8,9 +8,8 @@ import UpdatePartnerAdminForm from '../../components/forms/UpdatePartnerAdminFor
 import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '../../components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -24,17 +23,13 @@ const cardStyle = {
 
 const Dashboard: NextPage = () => {
   const t = useTranslations('Admin');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     title: t('title'),
   };
 
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED, eventUserData);
+    logEvent(CREATE_PARTNER_ACCESS_VIEWED);
   }, []);
 
   return (

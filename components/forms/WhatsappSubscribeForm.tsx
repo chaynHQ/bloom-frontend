@@ -15,10 +15,9 @@ import {
   WHATSAPP_SUBSCRIBE_REQUEST,
   WHATSAPP_SUBSCRIBE_SUCCESS,
 } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import { useSubscribeToWhatsappMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import PhoneInput from './PhoneInput';
 
 const containerStyle = {
@@ -28,11 +27,6 @@ const containerStyle = {
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const rollbar = useRollbar();
-
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +38,7 @@ const WhatsappSubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_SUBSCRIBE_REQUEST, eventUserData);
+    logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
 
     const validatedNumber = validateNumber(phoneNumber);
 
@@ -59,7 +53,7 @@ const WhatsappSubscribeForm = () => {
 
       if (subscribeResponse.data) {
         setLoading(false);
-        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS, eventUserData);
+        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
       }
 
       if (subscribeResponse.error) {

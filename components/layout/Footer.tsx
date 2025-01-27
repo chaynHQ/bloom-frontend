@@ -21,7 +21,7 @@ import tiktokLogo from '../../public/tiktok.svg';
 import Cookies from 'js-cookie';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
@@ -92,7 +92,6 @@ const fundingLogosContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
-  const [eventUserData, setEventUserData] = useState<any>(null);
   const [partners, setPartners] = useState<PartnerContent[]>([]);
   const searchParams = useSearchParams();
 
@@ -109,7 +108,6 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
     let partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
 
     if (partnerAdmin && partnerAdmin.partner) {
@@ -201,7 +199,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Facebook',
                           })
                         }
@@ -216,7 +213,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Instagram',
                           })
                         }
@@ -229,9 +225,7 @@ const Footer = () => {
                         href={partner.twitter}
                         aria-label="Twitter"
                         target="_blank"
-                        onClick={() =>
-                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
-                        }
+                        onClick={() => logEvent(socialLinkEvent, { social_account: 'Twitter' })}
                       >
                         <TwitterIcon />
                       </IconButton>
@@ -241,9 +235,7 @@ const Footer = () => {
                         href={partner.youtube}
                         aria-label="Youtube"
                         target="_blank"
-                        onClick={() =>
-                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
-                        }
+                        onClick={() => logEvent(socialLinkEvent, { social_account: 'Youtube' })}
                       >
                         <YoutubeIcon />
                       </IconButton>
@@ -255,7 +247,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Tiktok',
                           })
                         }
@@ -270,7 +261,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Github',
                           })
                         }

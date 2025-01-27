@@ -8,12 +8,11 @@ import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
 import Header from '../../components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';
 import { PartnerContent, getAllPartnersContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -51,9 +50,6 @@ const ApplyACode: NextPage = () => {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
 
   useEffect(() => {
@@ -61,9 +57,7 @@ const ApplyACode: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
-    logEvent(ASSIGN_NEW_PARTNER_VIEWED, eventUserData);
+    logEvent(ASSIGN_NEW_PARTNER_VIEWED);
   }, []);
 
   const headerProps = {

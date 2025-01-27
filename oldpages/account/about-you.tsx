@@ -9,12 +9,11 @@ import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
 import PartnerHeader from '../../components/layout/PartnerHeader';
 import { SURVEY_FORMS } from '../../constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -48,11 +47,6 @@ const AboutYou: NextPage = () => {
   const return_url = searchParams.get('return_url');
   const t = useTranslations('Account.aboutYou');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   useEffect(() => {
     if (qParam) {
       setQuestionSetParam(qParam + '');
@@ -62,7 +56,7 @@ const AboutYou: NextPage = () => {
   }, [qParam]);
 
   useEffect(() => {
-    logEvent(ABOUT_YOU_VIEWED, eventUserData);
+    logEvent(ABOUT_YOU_VIEWED);
   }, []);
 
   const headerProps = {
@@ -102,7 +96,7 @@ const AboutYou: NextPage = () => {
             sx={{ mt: 3 }}
             variant="contained"
             onClick={() => {
-              logEvent(SIGNUP_SURVEY_SKIPPED, eventUserData);
+              logEvent(SIGNUP_SURVEY_SKIPPED);
             }}
             color="secondary"
             component={i18nLink}

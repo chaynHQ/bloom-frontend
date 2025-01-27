@@ -27,7 +27,7 @@ import {
 import { COURSE_LIST_VIEWED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 
 const containerStyle = {
@@ -50,7 +50,6 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userId = useTypedSelector((state) => state.user.id);
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
@@ -60,7 +59,6 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Courses');
 
   const headerProps = {
@@ -71,7 +69,7 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
   };
 
   useEffect(() => {
-    logEvent(COURSE_LIST_VIEWED, eventUserData);
+    logEvent(COURSE_LIST_VIEWED);
   }, []);
 
   useEffect(() => {

@@ -27,7 +27,7 @@ import { useTypedSelector } from '../../hooks/store';
 import { usePathname } from '../../i18n/routing';
 import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const radioGroupStyle = {
   ...rowStyle,
@@ -95,14 +95,8 @@ const EmailRemindersSettingsForm = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [selectedInput, setSelectedInput] = useState<EMAIL_REMINDERS_FREQUENCY>();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   const pathname = usePathname();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
-  const tS = useTranslations('Shared');
 
   useEffect(() => {
     // Reset success and error states if new input selected
@@ -123,7 +117,6 @@ const EmailRemindersSettingsForm = () => {
       if (!selectedInput) return;
 
       const eventData = {
-        ...eventUserData,
         frequency: selectedInput,
         origin_url: pathname,
       };
@@ -152,7 +145,7 @@ const EmailRemindersSettingsForm = () => {
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);
       }
     },
-    [updateUser, selectedInput, pathname, eventUserData, t, tS],
+    [updateUser, selectedInput, pathname, t],
   );
 
   const showUpdateLaterMessage = pathname !== '/account/settings' && !error;

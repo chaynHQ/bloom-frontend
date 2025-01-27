@@ -26,7 +26,7 @@ import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -78,12 +78,8 @@ const Register: NextPage = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [codeParam, setCodeParam] = useState<string>('');
   const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
@@ -154,9 +150,7 @@ const Register: NextPage = () => {
                       key={`${partner.name}-link`}
                       aria-label={tS(partner.logoAlt)}
                       mt="1rem !important"
-                      onClick={() =>
-                        logEvent(generatePartnershipPromoLogoClick(partner.name), eventUserData)
-                      }
+                      onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.name))}
                       href={`/welcome/${partner.name.toLowerCase()}${
                         codeParam && '?code=' + codeParam
                       }`}

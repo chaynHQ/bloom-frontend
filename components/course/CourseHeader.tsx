@@ -4,10 +4,9 @@ import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { PROGRESS_STATUS } from '../../constants/enums';
-import theme from '../../styles/theme';
-import { EventUserData } from '../../utils/logEvent';
-import Header from '../layout/Header';
 import { Link as i18nLink } from '../../i18n/routing';
+import theme from '../../styles/theme';
+import Header from '../layout/Header';
 
 const buttonStyle = {
   background: theme.palette.background.default,
@@ -22,10 +21,10 @@ export interface CourseHeaderProps {
   description: ISbRichtext;
   image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 const CourseHeader = (props: CourseHeaderProps) => {
-  const { name, description, image_with_background, courseProgress, eventData } = props;
+  const { name, description, image_with_background, courseProgress } = props;
 
   const headerProps = {
     title: name,

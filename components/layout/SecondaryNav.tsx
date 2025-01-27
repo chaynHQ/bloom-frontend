@@ -24,7 +24,7 @@ import groundingIcon from '../../public/grounding_icon.svg';
 import { HTMLAttributes } from 'react';
 import theme from '../../styles/theme';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 interface LinkTabProps {
   label?: string;
@@ -82,13 +82,10 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
   </Icon>
 );
 
-const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
+const SecondaryNav = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Navigation');
 
   const therapyAccess = partnerAccesses.find(
@@ -155,7 +152,7 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
 
   const onTabClick = (linkData: LinkTabProps) => {
     router.push(linkData.href);
-    logEvent(linkData.event, eventUserData);
+    logEvent(linkData.event);
   };
 
   return (

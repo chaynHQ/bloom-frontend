@@ -45,7 +45,7 @@ import { setUserLoading } from '../../lib/store/userSlice';
 import theme from '../../styles/theme';
 import { getErrorMessage } from '../../utils/errorMessage';
 import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   marginY: 3,
@@ -85,7 +85,6 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [validateCode] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Auth.form');
-  const tS = useTranslations('Shared');
   const router = useRouter();
 
   // Include access code field if the partner requires access codes, or the user
@@ -153,20 +152,14 @@ const RegisterForm = (props: RegisterFormProps) => {
     });
 
     if (userResponse?.data && userResponse.data.user.id) {
-      const eventUserData = getEventUserData(
-        userResponse.data.user.createdAt,
-        userResponse.data.partnerAccesses,
-        userResponse.data.partnerAdmin,
-      );
-
-      logEvent(REGISTER_SUCCESS, eventUserData);
+      logEvent(REGISTER_SUCCESS);
       try {
         const { user, error } = await login(emailInput, passwordInput);
 
         if (user && !error) {
-          logEvent(LOGIN_SUCCESS, eventUserData);
-          logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
-          logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+          logEvent(LOGIN_SUCCESS);
+          logEvent(GET_USER_REQUEST); // deprecated event
+          logEvent(GET_LOGIN_USER_REQUEST);
         }
       } catch (err) {
         setFormError(

@@ -11,7 +11,7 @@ import {
 } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const listStyle = {
   display: 'flex',
@@ -73,10 +73,8 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
 
@@ -136,7 +134,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
             href="/auth/login"
             component={i18nLink}
             onClick={() => {
-              logEvent(DRAWER_LOGIN_CLICKED, eventUserData);
+              logEvent(DRAWER_LOGIN_CLICKED);
             }}
           >
             {t('login')}

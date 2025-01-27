@@ -5,7 +5,7 @@ import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
 import {
   ABOUT_YOU_SETA_ERROR,
@@ -23,7 +23,7 @@ import { useUpdateUserMutation } from '../../lib/api';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
 import { hashString } from '../../utils/hashString';
 import { ScaleFieldItem } from '../../utils/interfaces';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { EmailRemindersSettingsFormControl } from './EmailRemindersSettingsForm';
 
 const actionsStyle = {
@@ -44,7 +44,7 @@ const AboutYouSetAForm = () => {
   const router = useRouter();
   const [updateUser] = useUpdateUserMutation();
 
-  const [eventUserData, setEventUserData] = useState<any>(null);
+  const [eventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [hopesInput, setHopesInput] = useState<string>('');
   const [emailRemindersSettingInput, setEmailRemindersSettingInput] = useState<
@@ -58,12 +58,10 @@ const AboutYouSetAForm = () => {
   const [scale6Input, setScale6Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale7Input, setScale7Input] = useState<number>(DEFAULT_SCALE_START);
   const [scale8Input, setScale8Input] = useState<number>(DEFAULT_SCALE_START);
-  const [formError, setFormError] = useState<
+  const [formError] = useState<
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const user = useTypedSelector((state) => state.user);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const scaleQuestions: ScaleFieldItem[] = [
     { name: 'Q1', inputState: scale1Input, inputStateSetter: setScale1Input },
@@ -76,10 +74,6 @@ const AboutYouSetAForm = () => {
     { name: 'Q8', inputState: scale8Input, inputStateSetter: setScale8Input },
   ];
 
-  useEffect(() => {
-    setEventUserData(getEventUserData(user.createdAt, partnerAccesses, partnerAdmin));
-  }, [user.createdAt, partnerAccesses, partnerAdmin]);
-
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -87,7 +81,6 @@ const AboutYouSetAForm = () => {
     if (emailRemindersSettingInput) {
       const isEmailRemindersSet = emailRemindersSettingInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
       const emailRemindersEventData = {
-        ...eventUserData,
         frequency: emailRemindersSettingInput,
         origin_url: pathname,
       };
@@ -104,7 +97,7 @@ const AboutYouSetAForm = () => {
       );
     }
 
-    logEvent(ABOUT_YOU_SETA_REQUEST, eventUserData);
+    logEvent(ABOUT_YOU_SETA_REQUEST);
 
     const formData = {
       date: new Date().toISOString(),
@@ -122,11 +115,11 @@ const AboutYouSetAForm = () => {
     // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
     if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM) {
       axios
-        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+        .create({ transformRequest: [(data) => JSON.stringify(data)] })
         .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM, formData)
-        .then(function (response) {
-          logEvent(ABOUT_YOU_SETA_SUCCESS, eventUserData);
-          logEvent(SIGNUP_SURVEY_COMPLETED, eventUserData);
+        .then(function () {
+          logEvent(ABOUT_YOU_SETA_SUCCESS);
+          logEvent(SIGNUP_SURVEY_COMPLETED);
 
           router.push('/courses');
           setLoading(false);

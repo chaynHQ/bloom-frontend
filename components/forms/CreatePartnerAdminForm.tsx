@@ -14,20 +14,15 @@ import {
 import { useTypedSelector } from '../../hooks/store';
 import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const CreatePartnerAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const partners = useTypedSelector((state) => state.partners);
   const rollbar = useRollbar();
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   useGetPartnersQuery(undefined);
 
   const t = useTranslations('Admin.createPartnerAdmin');
-  const tS = useTranslations('Shared');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedPartner, setSelectedPartner] = useState<string>('');
@@ -35,7 +30,7 @@ const CreatePartnerAdminForm = () => {
   const [name, setName] = useState<string | null>(null);
 
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
-  const [addPartnerAdmin, { isLoading: addPartnerAdminIsLoading }] = useAddPartnerAdminMutation();
+  const [addPartnerAdmin] = useAddPartnerAdminMutation();
   const [formError, setFormError] = useState<
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
@@ -44,7 +39,7 @@ const CreatePartnerAdminForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(CREATE_PARTNER_ADMIN_REQUEST, eventUserData);
+    logEvent(CREATE_PARTNER_ADMIN_REQUEST);
     if (email == null || name == null) {
       setFormError('Make sure you have supplied email address and name');
       setLoading(false);
@@ -57,7 +52,7 @@ const CreatePartnerAdminForm = () => {
     });
 
     if (partnerAdminResponse.data) {
-      logEvent(CREATE_PARTNER_ADMIN_SUCCESS, eventUserData);
+      logEvent(CREATE_PARTNER_ADMIN_SUCCESS);
     }
 
     if (partnerAdminResponse.error) {
@@ -65,7 +60,6 @@ const CreatePartnerAdminForm = () => {
       const errorMessage = getErrorMessage(error);
 
       logEvent(CREATE_PARTNER_ADMIN_ERROR, {
-        ...eventUserData,
         error: errorMessage,
       });
       rollbar.error(t('error') + errorMessage);

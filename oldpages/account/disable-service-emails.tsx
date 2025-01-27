@@ -9,7 +9,7 @@ import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { useUpdateUserMutation } from '../../lib/api';
 import illustrationPerson5Yellow from '../../public/illustration_leaf_mix_bee.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const DisableServiceEmails: NextPage = () => {
   const t = useTranslations('Account.disableServiceEmails');
@@ -17,18 +17,14 @@ const DisableServiceEmails: NextPage = () => {
   const userServiceEmailsPermission = useTypedSelector(
     (state) => state.user.serviceEmailsPermission,
   );
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [error, setError] = useState<ErrorDisplay>();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
 
   useEffect(() => {
-    if (userCreatedAt && userServiceEmailsPermission === true) {
+    if (userServiceEmailsPermission === true) {
       try {
         updateUser({ serviceEmailsPermission: false });
-        logEvent(USER_DISABLED_SERVICE_EMAILS, eventUserData);
+        logEvent(USER_DISABLED_SERVICE_EMAILS);
       } catch (error) {
         setError(
           t.rich('error', {

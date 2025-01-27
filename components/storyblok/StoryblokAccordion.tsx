@@ -15,9 +15,8 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 const containerStyle = {
   width: '100%',
@@ -55,19 +54,14 @@ interface StoryblokAccordionProps {
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const { _uid, _editable, accordion_items, theme } = props;
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const searchParams = useSearchParams();
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       if (isExpanded) {
-        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle, ...eventUserData });
+        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle });
         logEvent(generateAccordionEvent(accordionTitle), {
           accordionTitle: accordionTitle,
-          ...eventUserData,
         });
       }
     };

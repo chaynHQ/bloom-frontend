@@ -9,7 +9,7 @@ import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
 } from '../../constants/events';
 import { rowStyle } from '../../styles/common';
-import { EventUserData, logEvent } from '../../utils/logEvent';
+import { logEvent } from '../../utils/logEvent';
 import Video from '../video/Video';
 import VideoTranscriptModal from '../video/VideoTranscriptModal';
 
@@ -27,7 +27,7 @@ interface CourseIntroductionProps {
   video: { url: string };
   name: string;
   video_transcript: ISbRichtext;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 const CourseIntroduction = (props: CourseIntroductionProps) => {

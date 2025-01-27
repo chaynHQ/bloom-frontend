@@ -13,16 +13,13 @@ import { Link as i18nLink } from '../../i18n/routing';
 import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
 
   useEffect(() => {
@@ -42,7 +39,7 @@ const ConfirmedSession: NextPage = () => {
   }, [partnerAccesses]);
 
   useEffect(() => {
-    logEvent(THERAPY_CONFIRMATION_VIEWED, eventUserData);
+    logEvent(THERAPY_CONFIRMATION_VIEWED);
   }, []);
 
   const headerProps = {
@@ -96,7 +93,6 @@ const ConfirmedSession: NextPage = () => {
             faqList={therapyFaqs(tS('feedbackTypeform'))}
             translations="Therapy.faqs"
             partner={partnerAccess?.partner}
-            eventUserData={eventUserData}
           />
         </Box>
       </Container>

@@ -15,11 +15,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, usePathname } from '../../i18n/routing';
+import { Link as i18nLink } from '../../i18n/routing';
 import bloomLogo from '../../public/bloom_logo_white.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
@@ -56,16 +56,13 @@ const topBarSpacerStyle = {
 const TopBar = () => {
   const t = useTranslations('Navigation');
   const tS = useTranslations('Shared');
-  const pathname = usePathname();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     if (partnerAdmin && partnerAdmin.partner) {
@@ -87,7 +84,7 @@ const TopBar = () => {
             aria-label={t('home')}
             sx={logoContainerStyle}
             onClick={() => {
-              logEvent(HEADER_HOME_LOGO_CLICKED, eventUserData);
+              logEvent(HEADER_HOME_LOGO_CLICKED);
             }}
           >
             <Image
@@ -115,7 +112,7 @@ const TopBar = () => {
                     component={i18nLink}
                     href="/auth/login"
                     onClick={() => {
-                      logEvent(HEADER_LOGIN_CLICKED, eventUserData);
+                      logEvent(HEADER_LOGIN_CLICKED);
                     }}
                   >
                     {t('login')}
@@ -126,7 +123,7 @@ const TopBar = () => {
             )}
           </Box>
         </Container>
-        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav currentPage={pathname || '/'} />}
+        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav />}
       </AppBar>
       <Box sx={topBarSpacerStyle} marginTop={0} />
     </>

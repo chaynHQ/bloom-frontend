@@ -16,19 +16,14 @@ import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { useAppDispatch } from '../../hooks/store';
 import { api, useUpdatePartnerAdminMutation } from '../../lib/api';
 import { GetUserDto } from '../../lib/store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const UpdatePartnerAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const rollbar = useRollbar();
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const t = useTranslations('Admin.updatePartner');
   const dispatch: any = useAppDispatch();
@@ -89,7 +84,7 @@ const UpdatePartnerAdminForm = () => {
     return option.user.email;
   };
 
-  const [updateUserData, { isLoading }] = useUpdatePartnerAdminMutation();
+  const [updateUserData] = useUpdatePartnerAdminMutation();
 
   const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (partnerUserData === null || !partnerUserData.partnerAdmin) {
@@ -106,7 +101,7 @@ const UpdatePartnerAdminForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(UPDATE_PARTNER_ADMIN, eventUserData);
+    logEvent(UPDATE_PARTNER_ADMIN);
 
     if (
       partnerUserData === null ||
@@ -129,7 +124,6 @@ const UpdatePartnerAdminForm = () => {
       const errorMessage = getErrorMessage(error);
 
       logEvent(UPDATE_PARTNER_ADMIN_ERROR, {
-        ...eventUserData,
         errorMessage,
       });
       rollbar.error(t('error') + errorMessage);

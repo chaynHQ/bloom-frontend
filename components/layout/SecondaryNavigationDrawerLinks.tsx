@@ -18,7 +18,7 @@ import courseIcon from '../../public/course_icon.svg';
 import groundingIcon from '../../public/grounding_icon.svg';
 import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
 import therapyIcon from '../../public/therapy_icon.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { SecondaryNavIcon } from './SecondaryNav';
 
 const listStyle = {
@@ -77,12 +77,10 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<SecondaryNavigationItem>>([]);
 
@@ -153,7 +151,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
             component={i18nLink}
             target={link.target || '_self'}
             onClick={() => {
-              logEvent(link.event, eventUserData);
+              logEvent(link.event);
             }}
           >
             <ListItemIcon>{link.icon}</ListItemIcon>

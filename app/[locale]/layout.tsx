@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
 import { Analytics } from '@vercel/analytics/react';
 import newrelic from 'newrelic';
@@ -168,6 +169,7 @@ export default async function RootLayout(props: RootLayoutProps) {
                       )}
                     <Analytics />
                   </body>
+                  <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
                 </StoryblokProvider>
               </ThemeProvider>
             </AppRouterCacheProvider>

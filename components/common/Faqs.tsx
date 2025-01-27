@@ -15,25 +15,24 @@ import { THERAPY_FAQ_OPENED } from '../../constants/events';
 import { FaqItem } from '../../constants/faqs';
 import { PartnerContent } from '../../constants/partners';
 import { Link as i18nLink } from '../../i18n/routing';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<FaqItem>;
   partner?: PartnerContent | null;
-  eventUserData: EventUserData;
 }
 
 // TO BE REMOVED IF THERAPY FAQS ARE MOVED TO STORYBLOK, use StoryblokFaqs.tsx instead.
 const Faqs = (props: FaqsProps) => {
-  const { faqList, translations, partner, eventUserData } = props;
+  const { faqList, translations, partner } = props;
   const t = useTranslations(translations);
 
   const partnerName = partner ? partner.name : '';
 
   const handleChange = (faqTitle: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     if (isExpanded) {
-      logEvent(THERAPY_FAQ_OPENED, { faqTitle: t(faqTitle), ...eventUserData });
+      logEvent(THERAPY_FAQ_OPENED, { faqTitle: t(faqTitle) });
     }
   };
 

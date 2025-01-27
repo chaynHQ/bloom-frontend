@@ -6,9 +6,8 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { MouseEvent, startTransition, useState } from 'react';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
 import { routing, usePathname, useRouter } from '../../i18n/routing';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -48,17 +47,13 @@ export default function LanguageMenu() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale || 'en';
   const t = useTranslations('Navigation');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   function onChangeLanguage(locale: string) {
     startTransition(() => {
-      logEvent(generateLanguageMenuEvent(locale), eventUserData);
+      logEvent(generateLanguageMenuEvent(locale));
       handleClose();
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
@@ -71,7 +66,7 @@ export default function LanguageMenu() {
   }
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    logEvent(HEADER_LANGUAGE_MENU_CLICKED, eventUserData);
+    logEvent(HEADER_LANGUAGE_MENU_CLICKED);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -109,7 +104,7 @@ export default function LanguageMenu() {
             const languageLabel = languageMap[language];
             return (
               <MenuItem key={language} sx={menuItemStyle}>
-                <Button onClick={() => onChangeLanguage(languageLabel)}>{languageLabel}</Button>
+                <Button onClick={() => onChangeLanguage(language)}>{languageLabel}</Button>
               </MenuItem>
             );
           })}

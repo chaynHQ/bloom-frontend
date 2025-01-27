@@ -15,7 +15,6 @@ import { columnStyle } from '../../styles/common';
 import { getChatAccess } from '../../utils/getChatAccess';
 import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import hasAccessToPage from '../../utils/hasAccessToPage';
-import { getEventUserData } from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 import { Dots } from '../common/Dots';
 import SessionFeedbackForm from '../forms/SessionFeedbackForm';
@@ -77,7 +76,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   const t = useTranslations('Courses');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -99,9 +97,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
   const showMultipleBonusContent = multipleBonusContent && multipleBonusContent.length > 0;
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const eventData = {
-    ...eventUserData,
     session_name: name,
     session_storyblok_id: storyId,
     session_progress: sessionProgress,
@@ -191,7 +187,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                     <SessionContentCard
                       title={t('sessionDetail.activityTitle')}
                       titleIcon={StarBorderIcon}
-                      richtextContent
                       eventPrefix="SESSION_ACTIVITY"
                       eventData={eventData}
                     >
@@ -205,7 +200,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
                   <SessionContentCard
                     title={t('sessionDetail.bonusTitle')}
                     titleIcon={LinkIcon}
-                    richtextContent
                     eventPrefix="SESSION_BONUS_CONTENT"
                     eventData={eventData}
                   >

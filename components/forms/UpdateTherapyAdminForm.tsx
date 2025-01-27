@@ -18,21 +18,15 @@ import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+import { useAppDispatch } from '../../hooks/store';
 import { api, useUpdatePartnerAccessMutation } from '../../lib/api';
 import { GetUserDto } from '../../lib/store/userSlice';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const UpdateTherapyAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const rollbar = useRollbar();
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   const t = useTranslations('Admin.updateTherapy');
+  const rollbar = useRollbar();
   const dispatch: any = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -95,14 +89,13 @@ const UpdateTherapyAdminForm = () => {
     return option.user.email;
   };
 
-  const [updateTherapySessions, { isLoading: updateTherapySessionsIsLoading }] =
-    useUpdatePartnerAccessMutation();
+  const [updateTherapySessions] = useUpdatePartnerAccessMutation();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(UPDATE_THERAPY_SESSIONS, eventUserData);
+    logEvent(UPDATE_THERAPY_SESSIONS);
 
     if (therapySessionUserData == null || therapySessionAdjustmentValue == 0) {
       setFormError('Make sure you have selected a user or changed the value');
@@ -126,7 +119,6 @@ const UpdateTherapyAdminForm = () => {
         const errorMessage = getErrorMessage(error);
 
         logEvent(UPDATE_THERAPY_SESSIONS_ERROR, {
-          ...eventUserData,
           error: errorMessage,
         });
         rollbar.error(t('error') + errorMessage);

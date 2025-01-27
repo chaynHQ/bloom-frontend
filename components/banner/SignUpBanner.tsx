@@ -8,7 +8,7 @@ import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
 import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
 import theme from '../../styles/theme';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -17,11 +17,7 @@ const containerStyle = {
 
 export const SignUpBanner = () => {
   const t = useTranslations('Shared');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
@@ -51,7 +47,7 @@ export const SignUpBanner = () => {
         href={registerPath}
         component={i18nLink}
         onClick={() => {
-          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, eventUserData);
+          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED);
         }}
       >
         {t('signUpTodayPromo.button')}

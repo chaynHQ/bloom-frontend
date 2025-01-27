@@ -20,7 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink, usePathname, useRouter } from '../../i18n/routing';
 import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 import { RichTextOptions } from '../../utils/richText';
 
 const introContainerStyle = {
@@ -81,12 +81,8 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const t = useTranslations('Welcome');
 
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -118,9 +114,9 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 
   const logPromoEvent = () => {
     if (userId) {
-      logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name), eventUserData);
+      logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name));
     } else {
-      logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name), eventUserData);
+      logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name));
     }
   };
 

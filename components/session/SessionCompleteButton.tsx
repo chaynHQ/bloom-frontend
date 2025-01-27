@@ -10,7 +10,7 @@ import {
   SESSION_COMPLETE_SUCCESS,
 } from '../../constants/events';
 import { useCompleteSessionMutation } from '../../lib/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 import { useRollbar } from '@rollbar/react';
 import { Dots } from '../common/Dots';
@@ -23,7 +23,7 @@ const errorStyle = {
 
 interface SessionCompleteButtonProps {
   storyId: number;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {

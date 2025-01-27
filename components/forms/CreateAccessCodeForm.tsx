@@ -27,13 +27,10 @@ import { useTypedSelector } from '../../hooks/store';
 import { Link as i18nLink } from '../../i18n/routing';
 import { useAddPartnerAccessMutation } from '../../lib/api';
 import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const CreateAccessCodeForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const rollbar = useRollbar();
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
@@ -44,8 +41,7 @@ const CreateAccessCodeForm = () => {
   const [formError, setFormError] = useState<
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
-    useAddPartnerAccessMutation();
+  const [addPartnerAccess] = useAddPartnerAccessMutation();
 
   const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
 
@@ -68,7 +64,6 @@ const CreateAccessCodeForm = () => {
       feature_live_chat: true,
       feature_therapy: includeTherapy,
       therapy_sessions_remaining: therapySessionsRemaining,
-      ...eventUserData,
     };
 
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
@@ -126,7 +121,7 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography>
         {t.rich('resultLink', {
-          welcomeURL: (children) => (
+          welcomeURL: () => (
             <Link component={i18nLink} id="access-code-url" href={welcomeURL}>
               {welcomeURL}
             </Link>
@@ -135,7 +130,7 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography mt={2}>
         {t.rich('resultCode', {
-          partnerAccessCode: (children) => <strong id="access-code">{partnerAccessCode}</strong>,
+          partnerAccessCode: () => <strong id="access-code">{partnerAccessCode}</strong>,
         })}
       </Typography>
 

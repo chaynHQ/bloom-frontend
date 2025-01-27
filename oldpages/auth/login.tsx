@@ -30,7 +30,7 @@ import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
 import welcomeToBloom from '../../public/welcome_to_bloom.svg';
 import { rowStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,
@@ -65,10 +65,7 @@ const Login: NextPage = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const headerProps = {
     partnerLogoSrc: welcomeToBloom,
@@ -112,7 +109,7 @@ const Login: NextPage = () => {
           <Link
             component={i18nLink}
             onClick={() => {
-              logEvent(GET_STARTED_WITH_BLOOM_CLICKED, eventUserData);
+              logEvent(GET_STARTED_WITH_BLOOM_CLICKED);
             }}
             href="/"
           >
@@ -127,7 +124,7 @@ const Login: NextPage = () => {
               mt="1rem !important"
               href={`/welcome/${partner.name.toLowerCase()}`}
               onClick={() => {
-                logEvent(generateGetStartedPartnerEvent(partner.name), eventUserData);
+                logEvent(generateGetStartedPartnerEvent(partner.name));
               }}
             >
               {t.rich('getStartedWith', { partnerName: partner.name })}
@@ -169,7 +166,7 @@ const Login: NextPage = () => {
                   <Link
                     component={i18nLink}
                     onClick={() => {
-                      logEvent(RESET_PASSWORD_HERE_CLICKED, eventUserData);
+                      logEvent(RESET_PASSWORD_HERE_CLICKED);
                     }}
                     href="/auth/reset-password"
                   >

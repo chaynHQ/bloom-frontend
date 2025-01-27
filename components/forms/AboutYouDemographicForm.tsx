@@ -84,7 +84,7 @@ const AboutYouDemographicForm = () => {
       label: string;
     }>
   >([]);
-  const [formError, setFormError] = useState<
+  const [formError] = useState<
     string | ReactNode[] | ReactElement<any, string | JSXElementConstructor<any>>
   >();
   const userId = useTypedSelector((state) => state.user.id);
@@ -167,9 +167,9 @@ const AboutYouDemographicForm = () => {
     // transformRequest required for cors issue see https://stackoverflow.com/a/63776819
     if (process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM) {
       axios
-        .create({ transformRequest: [(data, _headers) => JSON.stringify(data)] })
+        .create({ transformRequest: [(data) => JSON.stringify(data)] })
         .post(process.env.NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM, formData)
-        .then(function (response) {
+        .then(function () {
           logEvent(ABOUT_YOU_DEMO_SUCCESS, eventUserData);
 
           // append `?q=a` to the url to reload the page and show the setA form instead
@@ -205,7 +205,7 @@ const AboutYouDemographicForm = () => {
           onInputChange={(e, value) => {
             setGenderTextInput(value);
           }}
-          onBlur={(e) => {
+          onBlur={() => {
             if (genderTextInput) {
               setGenderInput([...genderInput, genderTextInput]);
               setGenderTextInput('');
