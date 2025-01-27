@@ -1,6 +1,7 @@
 'use client';
 
 import { Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
@@ -42,6 +43,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
   const [startResourceConversation] = useStartResourceMutation();
   const [completeResourceConversation] = useCompleteResourceMutation();
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const rollbar = useRollbar();
 
   const t = useTranslations('Resources');
 
@@ -60,7 +62,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
       const error = startResourceConversationResponse.error;
 
       logEvent(RESOURCE_CONVERSATION_STARTED_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceConversation started error', error);
+      rollbar.error('ResourceConversation started error', error);
 
       throw error;
     }
@@ -81,7 +83,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
       const error = completeResourceConversationResponse.error;
 
       logEvent(RESOURCE_CONVERSATION_COMPLETE_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceConversation completed error', error);
+      rollbar.error('ResourceConversation completed error', error);
 
       throw error;
     }

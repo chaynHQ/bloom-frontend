@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
@@ -70,6 +71,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
+  const rollbar = useRollbar();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>(codeParam ?? '');
@@ -128,7 +130,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             ),
           }),
         );
-        (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
+        rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
         return;
       }
@@ -201,7 +203,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         setFormError(t('firebase.invalidEmail'));
       } else {
         logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-        (window as any).Rollbar?.error('User register create user error', error);
+        rollbar.error('User register create user error', error);
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => (

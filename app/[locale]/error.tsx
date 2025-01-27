@@ -1,12 +1,13 @@
 'use client';
 
 import { Box, Button, Container, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import bloomHead from '../../public/illustration_bloom_head.svg';
 import { columnStyle } from '../../styles/common';
 import { getImageSizes } from '../../utils/imageSizes';
-import bloomHead from '../public/illustration_bloom_head.svg';
 
 const containerStyle = {
   ...columnStyle,
@@ -23,11 +24,15 @@ const imageContainerStyle = {
 } as const;
 
 const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+  const rollbar = useRollbar();
+
   useEffect(() => {
+    rollbar.error(error);
+
     if ((window as any).newrelic) {
       (window as any).newrelic.noticeError(error);
     }
-  }, [error]);
+  }, [error, rollbar]);
 
   const t = useTranslations('Shared.error');
 

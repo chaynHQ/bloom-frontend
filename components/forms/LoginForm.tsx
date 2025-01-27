@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,7 @@ const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const tS = useTranslations('Shared');
   const dispatch = useAppDispatch();
+  const rollbar = useRollbar();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -92,7 +94,7 @@ const LoginForm = () => {
         errorCode !== 'auth/wrong-password'
       ) {
         logEvent(LOGIN_ERROR, { message: errorCode });
-        (window as any).Rollbar?.error('User login firebase error', error);
+        rollbar.error('User login firebase error', error);
       }
     } else if (user) {
       createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });

@@ -38,9 +38,7 @@ module.exports = withBundleAnalyzer(
       images: {
         domains: ['a.storyblok.com'],
       },
-      experimental: {
-        serverComponentsExternalPackages: ['newrelic'],
-      },
+      serverExternalPackages: ['newrelic'],
       webpack: (config) => {
         nrExternals(config);
         return config;

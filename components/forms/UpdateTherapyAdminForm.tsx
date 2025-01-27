@@ -14,6 +14,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
@@ -27,6 +28,7 @@ const UpdateTherapyAdminForm = () => {
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const rollbar = useRollbar();
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -127,7 +129,7 @@ const UpdateTherapyAdminForm = () => {
           ...eventUserData,
           error: errorMessage,
         });
-        (window as any).Rollbar?.error(t('error') + errorMessage);
+        rollbar.error(t('error') + errorMessage);
 
         setFormError(t('error') + errorMessage);
         setLoading(false);

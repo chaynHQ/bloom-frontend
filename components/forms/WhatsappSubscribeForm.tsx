@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Card, CardContent, Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
 import * as React from 'react';
@@ -26,7 +27,7 @@ const containerStyle = {
 
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
-  const tS = useTranslations('Shared');
+  const rollbar = useRollbar();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -86,7 +87,7 @@ const WhatsappSubscribeForm = () => {
           );
         }
 
-        (window as any).Rollbar?.error('Whatsapp subscribe error', subscribeResponse.error);
+        rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
         logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
         setLoading(false);
 

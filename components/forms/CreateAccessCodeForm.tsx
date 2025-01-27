@@ -12,6 +12,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
@@ -33,6 +34,7 @@ const CreateAccessCodeForm = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const rollbar = useRollbar();
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
@@ -91,7 +93,8 @@ const CreateAccessCodeForm = () => {
         ...eventData,
         error: errorMessage,
       });
-      (window as any).Rollbar?.error('Create partner access code error', error);
+
+      rollbar.error('Create partner access code error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
       setLoading(false);

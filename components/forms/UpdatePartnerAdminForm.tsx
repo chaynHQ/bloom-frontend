@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '../../constants/events';
@@ -25,6 +26,7 @@ const UpdatePartnerAdminForm = () => {
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const rollbar = useRollbar();
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
@@ -130,7 +132,7 @@ const UpdatePartnerAdminForm = () => {
         ...eventUserData,
         errorMessage,
       });
-      (window as any).Rollbar?.error(t('error') + errorMessage);
+      rollbar.error(t('error') + errorMessage);
       setFormError(t('error') + errorMessage);
     } else {
       setFormSubmitSuccess(true);

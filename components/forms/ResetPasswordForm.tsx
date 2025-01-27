@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
@@ -26,6 +27,7 @@ export const EmailForm = () => {
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const t = useTranslations('Auth.form');
+  const rollbar = useRollbar();
 
   const sendResetEmailSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,7 +49,7 @@ export const EmailForm = () => {
         setFormError(t('firebase.authError'));
       } else {
         logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-        (window as any).Rollbar?.error('User send reset password email firebase error', error);
+        rollbar.error('User send reset password email firebase error', error);
       }
     } else if (!error) {
       logEvent(RESET_PASSWORD_SUCCESS);
@@ -129,7 +131,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
       const errorCode = error.code;
 
       logEvent(RESET_PASSWORD_ERROR, { message: errorCode });
-      (window as any).Rollbar?.error('User confirm reset password firebase error', error);
+      rollbar.error('User confirm reset password firebase error', error);
 
       if (errorCode === 'auth/weak-password') {
         setFormError(t('firebase.weakPassword'));

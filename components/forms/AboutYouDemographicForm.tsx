@@ -15,6 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -61,6 +62,8 @@ const AboutYouDemographicForm = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const rollbar = useRollbar();
+
   const locale = params?.locale || 'en';
 
   const [eventUserData, setEventUserData] = useState<any>(null);
@@ -174,10 +177,8 @@ const AboutYouDemographicForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          (window as any).Rollbar?.error(
-            'Send zapier webhook about you demo form data error',
-            error,
-          );
+          rollbar.error('Send zapier webhook about you demo form data error', error);
+
           logEvent(ABOUT_YOU_DEMO_ERROR, {
             ...eventUserData,
             message: error,

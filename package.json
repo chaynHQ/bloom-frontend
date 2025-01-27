@@ -40,6 +40,7 @@
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^6.3.1",
     "@reduxjs/toolkit": "^2.2.7",
+    "@rollbar/react": "^0.12.0-beta",
     "@storyblok/react": "^4.3.3",
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.7.7",
@@ -61,6 +62,7 @@
     "react-international-phone": "^4.0.4",
     "react-player": "^2.13.0",
     "react-redux": "^9.1.2",
+    "rollbar": "^2.26.4",
     "storyblok-rich-text-react-renderer": "^2.9.0"
   },
   "devDependencies": {

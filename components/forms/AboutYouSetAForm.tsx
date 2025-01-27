@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,7 @@ const AboutYouSetAForm = () => {
   const t = useTranslations('Account.aboutYou.setAForm');
   const tBase = useTranslations('Account.aboutYou.baseForm');
   const tAccount = useTranslations('Account.accountSettings.emailRemindersSettings');
+  const rollbar = useRollbar();
 
   const router = useRouter();
   const [updateUser] = useUpdateUserMutation();
@@ -130,10 +132,8 @@ const AboutYouSetAForm = () => {
           setLoading(false);
         })
         .catch(function (error) {
-          (window as any).Rollbar?.error(
-            'Send zapier webhook about you demo form data error',
-            error,
-          );
+          rollbar.error('Send zapier webhook about you Set A demo form data error', error);
+
           logEvent(ABOUT_YOU_SETA_ERROR, {
             ...eventUserData,
             message: error,

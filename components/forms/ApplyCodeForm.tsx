@@ -15,6 +15,7 @@ import {
 import { useAssignPartnerAccessMutation } from '../../lib/api';
 import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
 
+import { useRollbar } from '@rollbar/react';
 import { ErrorDisplay } from '../../constants/common';
 import { useTypedSelector } from '../../hooks/store';
 import { getErrorMessage } from '../../utils/errorMessage';
@@ -22,7 +23,7 @@ import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');
-  const tS = useTranslations('Shared');
+  const rollbar = useRollbar();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [codeInput, setCodeInput] = useState<string>('');
@@ -90,7 +91,8 @@ const ApplyCodeForm = () => {
           }),
         );
 
-        (window as any).Rollbar?.error('Assign partner access error', partnerAccessResponse.error);
+        rollbar.error('Assign partner access error', partnerAccessResponse.error);
+
         logEvent(ASSIGN_NEW_PARTNER_ACCESS_ERROR, {
           ...eventUserData,
           message: error,

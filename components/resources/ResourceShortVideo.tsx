@@ -1,6 +1,7 @@
 'use client';
 
 import { Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
@@ -42,6 +43,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
   const [startResourceShort] = useStartResourceMutation();
   const [completeResourceShort] = useCompleteResourceMutation();
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const rollbar = useRollbar();
 
   const t = useTranslations('Resources');
 
@@ -60,7 +62,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
       const error = startResourceShortResponse.error;
 
       logEvent(RESOURCE_SHORT_VIDEO_STARTED_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceShort started error', error);
+      rollbar.error('ResourceShort started error', error);
 
       throw error;
     }
@@ -81,7 +83,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
       const error = completeResourceShortResponse.error;
 
       logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceShort completed error', error);
+      rollbar.error('ResourceShort completed error', error);
 
       throw error;
     }

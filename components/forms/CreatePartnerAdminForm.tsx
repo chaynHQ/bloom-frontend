@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
@@ -20,6 +21,7 @@ const CreatePartnerAdminForm = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const partners = useTypedSelector((state) => state.partners);
+  const rollbar = useRollbar();
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   useGetPartnersQuery(undefined);
@@ -66,7 +68,7 @@ const CreatePartnerAdminForm = () => {
         ...eventUserData,
         error: errorMessage,
       });
-      (window as any).Rollbar?.error(t('error') + errorMessage);
+      rollbar.error(t('error') + errorMessage);
 
       setFormError(t('error') + errorMessage);
       setLoading(false);

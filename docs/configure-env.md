@@ -77,7 +77,6 @@ NEXT_PUBLIC_CRISP_WEBSITE_ID= # User messaging
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # Booking session forms
 NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # User data form webhooks
 NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # User data form webhooks
-NEXT_PUBLIC_ROLLBAR_ENV= # Rollbar logging
 NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
 ```
 

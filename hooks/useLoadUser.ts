@@ -1,5 +1,6 @@
 'use client';
 
+import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { EVENT_LOG_NAME } from '../constants/enums';
@@ -31,10 +32,13 @@ export default function useLoadUser() {
   const isMaintenanceMode = getIsMaintenanceMode();
   const userToken = useTypedSelector((state) => state.user.token);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const { clearState } = useStateUtils();
+
   const [createEventLog] = useCreateEventLogMutation();
   const [isInvalidUserResourceResponse, setIsInvalidUserResourceResponse] =
     useState<boolean>(false);
+
+  const rollbar = useRollbar();
+  const { clearState } = useStateUtils();
 
   const invalidUserResourceError = 'Invalid user resource success response';
   // 1. Listen for firebase auth state or auth token updated, triggered by firebase auth loaded
@@ -104,10 +108,7 @@ export default function useLoadUser() {
       dispatch(setLoadError(errorMessage));
       dispatch(setUserLoading(false));
 
-      (window as any).Rollbar?.error(
-        'useLoadUser error: failed to get user resource -',
-        userResourceError,
-      );
+      rollbar.error('useLoadUser error: failed to get user resource -', userResourceError);
       logEvent(GET_AUTH_USER_ERROR, { errorMessage });
       logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
       logEvent(LOGOUT_FORCED);

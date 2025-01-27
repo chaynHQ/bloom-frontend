@@ -12,6 +12,7 @@ import {
 import { useCompleteSessionMutation } from '../../lib/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
+import { useRollbar } from '@rollbar/react';
 import { Dots } from '../common/Dots';
 
 const errorStyle = {
@@ -29,6 +30,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
   const { storyId, eventData } = props;
 
   const t = useTranslations('Courses');
+  const rollbar = useRollbar();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +52,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
       const error = completeSessionResponse.error;
 
       logEvent(SESSION_COMPLETE_ERROR, eventData);
-      (window as any).Rollbar?.error('Session complete error', error);
+      rollbar.error('Session complete error', error);
 
       setError(t('errors.completeSessionError'));
       throw error;

@@ -1,9 +1,10 @@
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { Provider as RollbarProvider } from '@rollbar/react';
 import { Analytics } from '@vercel/analytics/react';
 import newrelic from 'newrelic';
 import type { Viewport } from 'next';
-import { IntlError, NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
@@ -19,6 +20,7 @@ import StoryblokProvider from '../../components/providers/StoryblokProvider';
 import { AuthGuard } from '../../guards/AuthGuard';
 import { routing } from '../../i18n/routing';
 import firebase from '../../lib/firebase';
+import { clientConfig } from '../../lib/rollbar';
 import theme from '../../styles/theme';
 
 firebase;
@@ -126,14 +128,6 @@ export default async function RootLayout(props: RootLayoutProps) {
   }
   const messages = await getMessages();
 
-  function onIntlError(error: IntlError) {
-    if (error.code === 'MISSING_MESSAGE') {
-      console.error(`${error.message}`);
-    } else {
-      console.error(error);
-    }
-  }
-
   // @ts-ignore
   if (newrelic.agent.collector.isConnected() === false) {
     await new Promise((resolve) => {
@@ -148,32 +142,38 @@ export default async function RootLayout(props: RootLayoutProps) {
   });
 
   return (
-    <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
-      <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
-      <NextIntlClientProvider messages={messages} timeZone="Europe/London" onError={onIntlError}>
-        <ReduxProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <StoryblokProvider>
-                <body>
-                  <TopBar />
-                  <LeaveSiteButton />
-                  <main>
-                    <AuthGuard>{children}</AuthGuard>
-                  </main>
-                  <Footer />
-                  <Consent />
-                  {!!process.env.NEXT_PUBLIC_HOTJAR_ID &&
-                    process.env.NEXT_PUBLIC_ENV !== 'local' && (
-                      <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
-                    )}
-                  <Analytics />
-                </body>
-              </StoryblokProvider>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
-        </ReduxProvider>
-      </NextIntlClientProvider>
-    </html>
+    <RollbarProvider config={clientConfig}>
+      <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
+        <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
+        <NextIntlClientProvider messages={messages} timeZone="Europe/London">
+          <ReduxProvider>
+            <AppRouterCacheProvider>
+              <ThemeProvider theme={theme}>
+                <StoryblokProvider>
+                  <body>
+                    <TopBar />
+                    <LeaveSiteButton />
+                    <main>
+                      <AuthGuard>{children}</AuthGuard>
+                    </main>
+                    <Footer />
+                    <Consent />
+                    {!!process.env.NEXT_PUBLIC_HOTJAR_ID &&
+                      process.env.NEXT_PUBLIC_ENV !== 'local' && (
+                        <Hotjar
+                          id={process.env.NEXT_PUBLIC_HOTJAR_ID}
+                          sv={6}
+                          strategy="lazyOnload"
+                        />
+                      )}
+                    <Analytics />
+                  </body>
+                </StoryblokProvider>
+              </ThemeProvider>
+            </AppRouterCacheProvider>
+          </ReduxProvider>
+        </NextIntlClientProvider>
+      </html>
+    </RollbarProvider>
   );
 }

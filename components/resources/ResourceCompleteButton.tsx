@@ -15,6 +15,7 @@ import {
 import { useCompleteResourceMutation } from '../../lib/api';
 import logEvent, { EventUserData } from '../../utils/logEvent';
 
+import { useRollbar } from '@rollbar/react';
 import { RESOURCE_CATEGORIES } from '../../constants/enums';
 
 const errorStyle = {
@@ -34,6 +35,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
   const { resourceName, category, storyId, eventData } = props;
 
   const t = useTranslations('Resources');
+  const rollbar = useRollbar();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -70,7 +72,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
           : RESOURCE_CONVERSATION_COMPLETE_ERROR,
         eventData,
       );
-      (window as any).Rollbar?.error('Resource complete error', error);
+      rollbar.error('Resource complete error', error);
 
       setError(t('errors.completeResourceError'));
       throw error;

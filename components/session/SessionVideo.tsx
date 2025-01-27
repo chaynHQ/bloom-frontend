@@ -2,6 +2,7 @@
 
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import { Link as MuiLink, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,8 @@ interface SessionVideoProps {
 export const SessionVideo = (props: SessionVideoProps) => {
   const { eventData, storyId, sessionProgress, name, video_transcript, video } = props;
   const t = useTranslations('Courses');
+  const rollbar = useRollbar();
+
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startSession] = useStartSessionMutation();
@@ -60,7 +63,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
       const error = startSessionResponse.error;
 
       logEvent(SESSION_STARTED_ERROR, eventData);
-      (window as any).Rollbar?.error('Session started error', error);
+      rollbar.error('Session started error', error);
 
       throw error;
     }

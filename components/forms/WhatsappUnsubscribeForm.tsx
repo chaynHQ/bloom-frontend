@@ -2,6 +2,7 @@
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -23,7 +24,7 @@ const containerStyle = {
 
 const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
-  const tS = useTranslations('Shared');
+  const rollbar = useRollbar();
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [subscriptionId, setSubscriptionId] = useState<string>('');
@@ -75,7 +76,7 @@ const WhatsappUnsubscribeForm = () => {
         }),
       );
 
-      (window as any).Rollbar?.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
+      rollbar.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
       logEvent(WHATSAPP_UNSUBSCRIBE_ERROR, { message: error });
       setLoading(false);
 
