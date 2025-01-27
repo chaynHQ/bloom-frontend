@@ -46,6 +46,11 @@
     "noDataAvailable": {
       "title": "Is pej ko lod karane mein kuchh samasya huee. krpaya vaapas jaen aur jaldee hee punah prayaas karen, ya sampark karen"
     },
+    "error": {
+      "title": "Kuch galat ho gaya",
+      "description": "Pichhle request mein kuch samasya thi, kripya dobara prayas karein. Yadi samasya bani rahti hai, to Bloom team se sampark karein.",
+      "buttonLabel": "Dobara prayas karein"
+    },
     "404": {
       "title": "404 - Page nahi mila",
       "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",

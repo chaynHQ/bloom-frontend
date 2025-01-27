@@ -46,6 +46,11 @@
     "noDataAvailable": {
       "title": "Ocorreu um problema ao carregar esta página. Volte e tente novamente em breve ou entre em contacto."
     },
+    "error": {
+      "title": "Algo deu errado",
+      "description": "Houve um problema com a última solicitação, por favor, tente novamente. Se o problema persistir, entre em contato com a equipe do Bloom.",
+      "buttonLabel": "Tente novamente"
+    },
     "404": {
       "title": "404 - Página não encontrada",
       "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",

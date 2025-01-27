@@ -46,6 +46,11 @@
     "noDataAvailable": {
       "title": "Beim Laden dieser Seite ist ein Problem aufgetreten. Bitte gehen Sie zurück und versuchen Sie es in Kürze erneut oder nehmen Sie Kontakt mit uns auf."
     },
+    "error": {
+      "title": "Etwas ist schief gelaufen",
+      "description": "Bei der letzten Anfrage ist ein Problem aufgetreten, bitte versuche es erneut. Wenn das Problem weiterhin besteht, nimm Kontakt mit dem Bloom-Team auf.",
+      "buttonLabel": "Erneut versuchen"
+    },
     "404": {
       "title": "404 - Seite nicht gefunden",
       "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",

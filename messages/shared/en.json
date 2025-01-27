@@ -46,6 +46,11 @@
     "noDataAvailable": {
       "title": "There was an issue loading this page. Please go back and try again soon, or get in touch."
     },
+    "error": {
+      "title": "Something went wrong",
+      "description": "There was an issue with that last request, please try again. If the issue persists, get in touch with the bloom team.",
+      "buttonLabel": "Try again"
+    },
     "404": {
       "title": "404 - Page not found",
       "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",

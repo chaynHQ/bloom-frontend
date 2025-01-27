@@ -1,11 +1,13 @@
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Analytics } from '@vercel/analytics/react';
+import newrelic from 'newrelic';
 import type { Viewport } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
+import { IntlError, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode } from 'react';
 import Consent from '../../components/layout/Consent';
@@ -124,9 +126,31 @@ export default async function RootLayout(props: RootLayoutProps) {
   }
   const messages = await getMessages();
 
+  function onIntlError(error: IntlError) {
+    if (error.code === 'MISSING_MESSAGE') {
+      console.error(`${error.message}`);
+    } else {
+      console.error(error);
+    }
+  }
+
+  // @ts-ignore
+  if (newrelic.agent.collector.isConnected() === false) {
+    await new Promise((resolve) => {
+      // @ts-ignore
+      newrelic.agent.on('connected', resolve);
+    });
+  }
+
+  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+    allowTransactionlessInjection: true,
+  });
+
   return (
     <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
-      <NextIntlClientProvider messages={messages}>
+      <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
+      <NextIntlClientProvider messages={messages} timeZone="Europe/London" onError={onIntlError}>
         <ReduxProvider>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
