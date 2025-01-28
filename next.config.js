@@ -39,10 +39,6 @@ module.exports = withBundleAnalyzer(
         domains: ['a.storyblok.com'],
       },
       serverExternalPackages: ['newrelic'],
-      webpack: (config) => {
-        nrExternals(config);
-        return config;
-      },
       async redirects() {
         return [
           {

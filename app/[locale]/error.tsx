@@ -1,8 +1,8 @@
 'use client';
 
 import bloomHead from '@/public/illustration_bloom_head.svg';
-import { getImageSizes } from '@/tils/imageSizes';
-import { columnStyle } from '@/tyles/common';
+import { columnStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';

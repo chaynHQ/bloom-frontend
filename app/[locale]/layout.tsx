@@ -1,14 +1,14 @@
-import { routing } from '@/18n/routing';
 import Consent from '@/components/layout/Consent';
-import firebase from '@/ib/firebase';
-import { clientConfig } from '@/ib/rollbar';
-import Footer from '@/omponents/layout/Footer';
-import LeaveSiteButton from '@/omponents/layout/LeaveSiteButton';
-import TopBar from '@/omponents/layout/TopBar';
-import { ReduxProvider } from '@/omponents/providers/ReduxProvider';
-import StoryblokProvider from '@/omponents/providers/StoryblokProvider';
-import theme from '@/tyles/theme';
-import { AuthGuard } from '@/uards/AuthGuard';
+import Footer from '@/components/layout/Footer';
+import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
+import TopBar from '@/components/layout/TopBar';
+import { ReduxProvider } from '@/components/providers/ReduxProvider';
+import StoryblokProvider from '@/components/providers/StoryblokProvider';
+import { AuthGuard } from '@/guards/AuthGuard';
+import { routing } from '@/i18n/routing';
+import firebase from '@/lib/firebase';
+import { clientConfig } from '@/lib/rollbar';
+import theme from '@/styles/theme';
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -130,13 +130,14 @@ export default async function RootLayout(props: RootLayoutProps) {
   const messages = await getMessages();
 
   // @ts-ignore
-  if (newrelic.agent.collector.isConnected() === false) {
+  if (newrelic.agent?.collector.isConnected() === false) {
     await new Promise((resolve) => {
       // @ts-ignore
       newrelic.agent.on('connected', resolve);
     });
   }
 
+  // @ts-ignore
   const browserTimingHeader = newrelic.getBrowserTimingHeader({
     hasToRemoveScriptWrapper: true,
     allowTransactionlessInjection: true,

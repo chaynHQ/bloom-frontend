@@ -1,12 +1,12 @@
 'use client';
 
-import { Link as i18nLink } from '@/18n/routing';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
-import HomeHeader from '@/omponents/layout/HomeHeader';
-import StoryblokPageSection from '@/omponents/storyblok/StoryblokPageSection';
-import { PROMO_GET_STARTED_CLICKED } from '@/onstants/events';
-import { useTypedSelector } from '@/ooks/store';
-import logEvent from '@/tils/logEvent';
+import HomeHeader from '@/components/layout/HomeHeader';
+import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { PROMO_GET_STARTED_CLICKED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
