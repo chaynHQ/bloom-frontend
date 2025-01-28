@@ -1,11 +1,11 @@
 'use client';
 
+import UserResearchBanner from '@/components/banner/UserResearchBanner';
+import { rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Container } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import UserResearchBanner from '../banner/UserResearchBanner';
 
 const headerContainerStyles = {
   ...rowStyle,

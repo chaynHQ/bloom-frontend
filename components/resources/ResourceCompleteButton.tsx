@@ -1,9 +1,5 @@
 'use client';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Button, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import {
   RESOURCE_CONVERSATION_COMPLETE_ERROR,
   RESOURCE_CONVERSATION_COMPLETE_REQUEST,
@@ -11,12 +7,16 @@ import {
   RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
   RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
-} from '../../constants/events';
-import { useCompleteResourceMutation } from '../../lib/api';
-import logEvent from '../../utils/logEvent';
+} from '@/constants/events';
+import { useCompleteResourceMutation } from '@/lib/api';
+import logEvent from '@/utils/logEvent';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Button, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
+import { RESOURCE_CATEGORIES } from '@/constants/enums';
 import { useRollbar } from '@rollbar/react';
-import { RESOURCE_CATEGORIES } from '../../constants/enums';
 
 const errorStyle = {
   color: 'primary.dark',

@@ -1,3 +1,19 @@
+import { Link as i18nLink, useRouter } from '@/18n/routing';
+import LoginForm from '@/components/forms/LoginForm';
+import PartnerHeader from '@/omponents/layout/PartnerHeader';
+import {
+  GET_STARTED_WITH_BLOOM_CLICKED,
+  RESET_PASSWORD_HERE_CLICKED,
+  generateGetStartedPartnerEvent,
+} from '@/onstants/events';
+import { getAllPartnersContent } from '@/onstants/partners';
+import { useTypedSelector } from '@/ooks/store';
+import { getImageSizes } from '@/tils/imageSizes';
+import logEvent from '@/tils/logEvent';
+import { rowStyle } from '@/tyles/common';
+import illustrationBloomHeadYellow from '@/ublic/illustration_bloom_head_yellow.svg';
+import illustrationLeafMix from '@/ublic/illustration_leaf_mix.svg';
+import welcomeToBloom from '@/ublic/welcome_to_bloom.svg';
 import {
   Box,
   Card,
@@ -15,22 +31,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import LoginForm from '../../components/forms/LoginForm';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import {
-  GET_STARTED_WITH_BLOOM_CLICKED,
-  RESET_PASSWORD_HERE_CLICKED,
-  generateGetStartedPartnerEvent,
-} from '../../constants/events';
-import { getAllPartnersContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, useRouter } from '../../i18n/routing';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,

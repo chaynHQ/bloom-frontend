@@ -1,11 +1,8 @@
 'use client';
 
-import { Link, Typography } from '@mui/material';
-import { useRollbar } from '@rollbar/react';
-import { ISbRichtext } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import Audio from '@/components/video/Audio';
+import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
+import { PROGRESS_STATUS } from '@/constants/enums';
 import {
   RESOURCE_CONVERSATION_COMPLETE_ERROR,
   RESOURCE_CONVERSATION_COMPLETE_REQUEST,
@@ -15,12 +12,15 @@ import {
   RESOURCE_CONVERSATION_STARTED_SUCCESS,
   RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
   RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useCompleteResourceMutation, useStartResourceMutation } from '../../lib/api';
-import logEvent from '../../utils/logEvent';
-import Audio from '../video/Audio';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { useCompleteResourceMutation, useStartResourceMutation } from '@/lib/api';
+import logEvent from '@/utils/logEvent';
+import { Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
 
 interface ResourceConversationAudioProps {
   eventData: { [key: string]: any };

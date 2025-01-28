@@ -1,9 +1,9 @@
 'use client';
 
+import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import logEvent from '@/utils/logEvent';
 import { Box } from '@mui/material';
-import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent from '../../utils/logEvent';
 
 const iframeContainerStyle = {
   width: '100%',

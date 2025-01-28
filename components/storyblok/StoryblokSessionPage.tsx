@@ -1,5 +1,20 @@
 'use client';
 
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import { Dots } from '@/components/common/Dots';
+import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
+import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
+import { SessionChat } from '@/components/session/SessionChat';
+import { SessionCompleteButton } from '@/components/session/SessionCompleteButton';
+import { SessionHeader } from '@/components/session/SessionHeader';
+import { SessionVideo } from '@/components/session/SessionVideo';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { useTypedSelector } from '@/hooks/store';
+import { columnStyle } from '@/styles/common';
+import { getChatAccess } from '@/utils/getChatAccess';
+import { getSessionCompletion } from '@/utils/getSessionCompletion';
+import hasAccessToPage from '@/utils/hasAccessToPage';
+import { RichTextOptions } from '@/utils/richText';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container } from '@mui/material';
@@ -8,21 +23,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import SessionContentCard from '../../components/cards/SessionContentCard';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useTypedSelector } from '../../hooks/store';
-import { columnStyle } from '../../styles/common';
-import { getChatAccess } from '../../utils/getChatAccess';
-import { getSessionCompletion } from '../../utils/getSessionCompletion';
-import hasAccessToPage from '../../utils/hasAccessToPage';
-import { RichTextOptions } from '../../utils/richText';
-import { Dots } from '../common/Dots';
-import SessionFeedbackForm from '../forms/SessionFeedbackForm';
-import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
-import { SessionChat } from '../session/SessionChat';
-import { SessionCompleteButton } from '../session/SessionCompleteButton';
-import { SessionHeader } from '../session/SessionHeader';
-import { SessionVideo } from '../session/SessionVideo';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

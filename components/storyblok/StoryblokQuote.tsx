@@ -1,10 +1,10 @@
 'use client';
 
+import Quote from '@/components/common/Quote';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
-import { getImageSizes } from '../../utils/imageSizes';
-import Quote from '../common/Quote';
 
 const containerStyle = {
   display: 'flex',

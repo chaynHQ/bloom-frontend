@@ -1,5 +1,10 @@
 'use client';
 
+import ProgressStatus from '@/components/common/ProgressStatus';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { Link as i18nLink } from '@/i18n/routing';
+import { iconTextRowStyle, rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -15,11 +20,6 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { Link as i18nLink } from '../../i18n/routing';
-import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
   alignSelf: 'flex-start',

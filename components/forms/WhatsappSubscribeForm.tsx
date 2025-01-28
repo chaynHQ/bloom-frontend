@@ -1,5 +1,15 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { WHATSAPP_SUBSCRIPTION_STATUS } from '@/constants/enums';
+import {
+  WHATSAPP_SUBSCRIBE_ERROR,
+  WHATSAPP_SUBSCRIBE_REQUEST,
+  WHATSAPP_SUBSCRIBE_SUCCESS,
+} from '@/constants/events';
+import { useSubscribeToWhatsappMutation } from '@/lib/api';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Card, CardContent, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -8,16 +18,6 @@ import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
 import 'react-international-phone/style.css';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
-import {
-  WHATSAPP_SUBSCRIBE_ERROR,
-  WHATSAPP_SUBSCRIBE_REQUEST,
-  WHATSAPP_SUBSCRIBE_SUCCESS,
-} from '../../constants/events';
-import { useSubscribeToWhatsappMutation } from '../../lib/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
 import PhoneInput from './PhoneInput';
 
 const containerStyle = {

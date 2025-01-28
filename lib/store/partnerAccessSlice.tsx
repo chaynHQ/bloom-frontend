@@ -1,6 +1,6 @@
+import { getPartnerContent, PartnerContent } from '@/constants/partners';
+import { api } from '@/lib/api';
 import { createSlice } from '@reduxjs/toolkit';
-import { getPartnerContent, PartnerContent } from '../../constants/partners';
-import { api } from '../api';
 import { Partner } from './partnersSlice';
 
 export interface PartnerAccess {

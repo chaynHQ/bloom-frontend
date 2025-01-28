@@ -1,4 +1,4 @@
-import { ActiveSubscription } from '../lib/store/userSlice';
+import { ActiveSubscription } from '@/lib/store/userSlice';
 
 export const findWhatsappSubscription = (
   subs: ActiveSubscription[] | null,

@@ -1,5 +1,20 @@
 'use client';
 
+import PartnerHeader from '@/components/layout/PartnerHeader';
+import StoryblokPageSection, {
+  StoryblokPageSectionProps,
+} from '@/components/storyblok/StoryblokPageSection';
+import {
+  generatePartnerPromoGetStartedEvent,
+  generatePartnerPromoGoToCoursesEvent,
+} from '@/constants/events';
+import { PartnerContent, getPartnerContent } from '@/constants/partners';
+import { useAppDispatch, useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
+import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '@/public/welcome_to_bloom.svg';
+import logEvent from '@/utils/logEvent';
+import { RichTextOptions } from '@/utils/richText';
 import { Box, Button, Container } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
@@ -7,21 +22,6 @@ import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import StoryblokPageSection, {
-  StoryblokPageSectionProps,
-} from '../../components/storyblok/StoryblokPageSection';
-import {
-  generatePartnerPromoGetStartedEvent,
-  generatePartnerPromoGoToCoursesEvent,
-} from '../../constants/events';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, usePathname, useRouter } from '../../i18n/routing';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import logEvent from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',

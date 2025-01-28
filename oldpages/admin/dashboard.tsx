@@ -1,15 +1,15 @@
+import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
+import UpdatePartnerAdminForm from '@/omponents/forms/UpdatePartnerAdminForm';
+import UpdateTherapyAdminForm from '@/omponents/forms/UpdateTherapyAdminForm';
+import AdminHeader from '@/omponents/layout/PartnerAdminHeader';
+import { CREATE_PARTNER_ACCESS_VIEWED } from '@/onstants/events';
+import logEvent from '@/tils/logEvent';
+import { rowStyle } from '@/tyles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import CreatePartnerAdminForm from '../../components/forms/CreatePartnerAdminForm';
-import UpdatePartnerAdminForm from '../../components/forms/UpdatePartnerAdminForm';
-import UpdateTherapyAdminForm from '../../components/forms/UpdateTherapyAdminForm';
-import AdminHeader from '../../components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
-import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

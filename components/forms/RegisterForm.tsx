@@ -1,5 +1,36 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '@/constants/enums';
+import {
+  CREATE_USER_ALREADY_EXISTS,
+  CREATE_USER_INVALID_EMAIL,
+  CREATE_USER_WEAK_PASSWORD,
+} from '@/constants/errors';
+import {
+  GET_LOGIN_USER_REQUEST,
+  GET_USER_REQUEST,
+  LOGIN_SUCCESS,
+  REGISTER_ERROR,
+  REGISTER_SUCCESS,
+  VALIDATE_ACCESS_CODE_ERROR,
+  VALIDATE_ACCESS_CODE_INVALID,
+  VALIDATE_ACCESS_CODE_REQUEST,
+  VALIDATE_ACCESS_CODE_SUCCESS,
+} from '@/constants/events';
+import { useAppDispatch, useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import {
+  useAddUserMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useValidateCodeMutation,
+} from '@/lib/api';
+import { login } from '@/lib/auth';
+import { setUserLoading } from '@/lib/store/userSlice';
+import theme from '@/styles/theme';
+import { getErrorMessage } from '@/utils/errorMessage';
+import hasAutomaticAccessFeature from '@/utils/hasAutomaticAccessCodeFeature';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -15,37 +46,6 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
-import {
-  CREATE_USER_ALREADY_EXISTS,
-  CREATE_USER_INVALID_EMAIL,
-  CREATE_USER_WEAK_PASSWORD,
-} from '../../constants/errors';
-import {
-  GET_LOGIN_USER_REQUEST,
-  GET_USER_REQUEST,
-  LOGIN_SUCCESS,
-  REGISTER_ERROR,
-  REGISTER_SUCCESS,
-  VALIDATE_ACCESS_CODE_ERROR,
-  VALIDATE_ACCESS_CODE_INVALID,
-  VALIDATE_ACCESS_CODE_REQUEST,
-  VALIDATE_ACCESS_CODE_SUCCESS,
-} from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, useRouter } from '../../i18n/routing';
-import {
-  useAddUserMutation,
-  useGetAutomaticAccessCodeFeatureForPartnerQuery,
-  useValidateCodeMutation,
-} from '../../lib/api';
-import { login } from '../../lib/auth';
-import { setUserLoading } from '../../lib/store/userSlice';
-import theme from '../../styles/theme';
-import { getErrorMessage } from '../../utils/errorMessage';
-import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   marginY: 3,

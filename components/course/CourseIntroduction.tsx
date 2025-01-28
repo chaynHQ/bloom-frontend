@@ -1,17 +1,17 @@
 'use client';
 
+import Video from '@/components/video/Video';
+import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
+import {
+  COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
+  COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
+} from '@/constants/events';
+import { rowStyle } from '@/styles/common';
+import { logEvent } from '@/utils/logEvent';
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import {
-  COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED,
-  COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
-} from '../../constants/events';
-import { rowStyle } from '../../styles/common';
-import { logEvent } from '../../utils/logEvent';
-import Video from '../video/Video';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
 
 const containerStyle = {
   ...rowStyle,

@@ -1,3 +1,19 @@
+import Faqs from '@/components/common/Faqs';
+import { PartnerAccess } from '@/ib/store/partnerAccessSlice';
+import ImageTextGrid, { ImageTextItem } from '@/omponents/common/ImageTextGrid';
+import Header from '@/omponents/layout/Header';
+import { getSimplybookWidgetConfig } from '@/onfig/simplybook';
+import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/onstants/events';
+import { therapyFaqs } from '@/onstants/faqs';
+import { useTypedSelector } from '@/ooks/store';
+import logEvent from '@/tils/logEvent';
+import { rowStyle } from '@/tyles/common';
+import illustrationChange from '@/ublic/illustration_change.svg';
+import illustrationChooseTherapist from '@/ublic/illustration_choose_therapist.svg';
+import illustrationConfidential from '@/ublic/illustration_confidential.svg';
+import illustrationDateSelector from '@/ublic/illustration_date_selector.svg';
+import illustrationLeafMix from '@/ublic/illustration_leaf_mix.svg';
+import illustrationPerson4Peach from '@/ublic/illustration_person4_peach.svg';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
@@ -5,22 +21,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-import Faqs from '../../components/common/Faqs';
-import ImageTextGrid, { ImageTextItem } from '../../components/common/ImageTextGrid';
-import Header from '../../components/layout/Header';
-import { getSimplybookWidgetConfig } from '../../config/simplybook';
-import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '../../constants/events';
-import { therapyFaqs } from '../../constants/faqs';
-import { useTypedSelector } from '../../hooks/store';
-import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
-import illustrationChange from '../../public/illustration_change.svg';
-import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
-import illustrationConfidential from '../../public/illustration_confidential.svg';
-import illustrationDateSelector from '../../public/illustration_date_selector.svg';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

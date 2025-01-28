@@ -1,8 +1,8 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
+import { LANGUAGES } from '@/constants/enums';
+import { useRouter } from '@/i18n/routing';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useSearchParams } from 'next/navigation';
-import LoadingContainer from '../components/common/LoadingContainer';
-import { LANGUAGES } from '../constants/enums';
-import { useRouter } from '../i18n/routing';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 const ActionHandler: NextPage = () => {

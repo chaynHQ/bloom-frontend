@@ -1,15 +1,15 @@
 'use client';
 
+import Header from '@/components/layout/Header';
+import { StoryblokTeamMemberCardProps } from '@/components/storyblok/StoryblokTeamMemberCard';
+import { MEET_THE_TEAM_VIEWED } from '@/constants/events';
+import logEvent from '@/utils/logEvent';
+import { RichTextOptions } from '@/utils/richText';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import Header from '../../components/layout/Header';
-import { StoryblokTeamMemberCardProps } from '../../components/storyblok/StoryblokTeamMemberCard';
-import { MEET_THE_TEAM_VIEWED } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
 import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
 

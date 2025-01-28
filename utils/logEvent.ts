@@ -1,7 +1,7 @@
+import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
+import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 import { sendGAEvent } from '@next/third-parties/google';
 import { track } from '@vercel/analytics/react';
-import { PartnerAccesses } from '../lib/store/partnerAccessSlice';
-import { PartnerAdmin } from '../lib/store/partnerAdminSlice';
 import {
   joinedFeatureLiveChat,
   joinedFeatureTherapy,

@@ -1,4 +1,4 @@
-import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
+import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 import HomePage from './home-page';
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {

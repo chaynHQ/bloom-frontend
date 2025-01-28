@@ -1,5 +1,13 @@
 'use client';
 
+import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import bloomLogo from '@/public/bloom_logo_white.svg';
+import { rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
+import { getIsMaintenanceMode } from '@/utils/maintenanceMode';
 import {
   AppBar,
   Box,
@@ -13,14 +21,6 @@ import {
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import bloomLogo from '../../public/bloom_logo_white.svg';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
-import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
 import LanguageMenu from './LanguageMenu';
 import NavigationDrawer from './NavigationDrawer';
 import NavigationMenu from './NavigationMenu';

@@ -1,5 +1,5 @@
-import { PROGRESS_STATUS } from '../constants/enums';
-import { Course } from '../lib/store/coursesSlice';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { Course } from '@/lib/store/coursesSlice';
 
 export const determineCourseProgress = (courses: Course[], courseId: number) => {
   const userCourse = courses.find((course: Course) => course.storyblokId === courseId);

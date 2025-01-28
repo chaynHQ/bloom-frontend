@@ -1,19 +1,19 @@
+import AboutYouDemographicForm from '@/components/forms/AboutYouDemographicForm';
+import AboutYouSetAForm from '@/components/forms/AboutYouSetAForm';
+import PartnerHeader from '@/components/layout/PartnerHeader';
+import { SURVEY_FORMS } from '@/constants/enums';
+import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '@/constants/events';
+import { Link as i18nLink } from '@/i18n/routing';
+import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '@/public/welcome_to_bloom.svg';
+import { rowStyle } from '@/styles/common';
+import logEvent from '@/utils/logEvent';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
-import AboutYouDemographicForm from '../../components/forms/AboutYouDemographicForm';
-import AboutYouSetAForm from '../../components/forms/AboutYouSetAForm';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import { SURVEY_FORMS } from '../../constants/enums';
-import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '../../constants/events';
-import { Link as i18nLink } from '../../i18n/routing';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,

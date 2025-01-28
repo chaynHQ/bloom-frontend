@@ -1,17 +1,17 @@
 'use client';
 
-import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   DRAWER_ADMIN_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
+import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const listStyle = {
   display: 'flex',

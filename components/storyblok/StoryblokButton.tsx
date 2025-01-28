@@ -1,12 +1,12 @@
 'use client';
 
+import { BASE_URL } from '@/constants/common';
+import { STORYBLOK_COLORS } from '@/constants/enums';
+import { generateStoryblokButtonEvent } from '@/constants/events';
+import { Link as i18nLink } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import { Box, Button } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { BASE_URL } from '../../constants/common';
-import { STORYBLOK_COLORS } from '../../constants/enums';
-import { generateStoryblokButtonEvent } from '../../constants/events';
-import { Link as i18nLink } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
 
 interface StoryblokLink {
   cached_url: string;

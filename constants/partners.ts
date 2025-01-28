@@ -1,14 +1,14 @@
+import badooLogo from '@/public/badoo_logo.svg';
+import bloomBadooLogo from '@/public/bloom_badoo_logo.svg';
+import bloomBumbleLogo from '@/public/bloom_bumble_logo.svg';
+import bloomFruitzLogo from '@/public/bloom_fruitz_logo.svg';
+import bumbleLogo from '@/public/bumble_logo.svg';
+import chaynLogo from '@/public/chayn_logo.png';
+import fruitzLogo from '@/public/fruitz_logo.svg';
+import illustrationBloomHeadPink from '@/public/illustration_bloom_head_pink.svg';
+import illustrationBloomHeadPurple from '@/public/illustration_bloom_head_purple.svg';
+import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import { StaticImageData } from 'next/image';
-import badooLogo from '../public/badoo_logo.svg';
-import bloomBadooLogo from '../public/bloom_badoo_logo.svg';
-import bloomBumbleLogo from '../public/bloom_bumble_logo.svg';
-import bloomFruitzLogo from '../public/bloom_fruitz_logo.svg';
-import bumbleLogo from '../public/bumble_logo.svg';
-import chaynLogo from '../public/chayn_logo.png';
-import fruitzLogo from '../public/fruitz_logo.svg';
-import illustrationBloomHeadPink from '../public/illustration_bloom_head_pink.svg';
-import illustrationBloomHeadPurple from '../public/illustration_bloom_head_purple.svg';
-import illustrationBloomHeadYellow from '../public/illustration_bloom_head_yellow.svg';
 
 export interface PartnerContent {
   id?: string;

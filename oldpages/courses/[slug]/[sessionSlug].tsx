@@ -1,10 +1,10 @@
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
-import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import NoDataAvailable from '../../../components/common/NoDataAvailable';
+import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
-} from '../../../components/storyblok/StoryblokSessionPage';
-import { getStoryblokPageProps } from '../../../utils/getStoryblokPageProps';
+} from '@/components/storyblok/StoryblokSessionPage';
+import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
+import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 
 interface Props {
   story: ISbStoryData | null;

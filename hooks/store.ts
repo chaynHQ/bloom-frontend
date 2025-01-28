@@ -1,12 +1,12 @@
+import { api } from '@/lib/api';
+import type { AppDispatch, AppStore, RootState } from '@/lib/store';
+import { clearCoursesSlice } from '@/lib/store/coursesSlice';
+import { clearPartnerAccessesSlice } from '@/lib/store/partnerAccessSlice';
+import { clearPartnerAdminSlice } from '@/lib/store/partnerAdminSlice';
+import { clearUserSlice } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useCallback } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { api } from '../lib/api';
-import type { AppDispatch, AppStore, RootState } from '../lib/store';
-import { clearCoursesSlice } from '../lib/store/coursesSlice';
-import { clearPartnerAccessesSlice } from '../lib/store/partnerAccessSlice';
-import { clearPartnerAdminSlice } from '../lib/store/partnerAdminSlice';
-import { clearUserSlice } from '../lib/store/userSlice';
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();

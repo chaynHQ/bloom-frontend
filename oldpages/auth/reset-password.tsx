@@ -1,15 +1,15 @@
+import { useRouter } from '@/18n/routing';
+import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
+import PartnerHeader from '@/omponents/layout/PartnerHeader';
+import { rowStyle } from '@/tyles/common';
+import illustrationBloomHeadYellow from '@/ublic/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '@/ublic/welcome_to_bloom.svg';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
-import { EmailForm, PasswordForm } from '../../components/forms/ResetPasswordForm';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import { useRouter } from '../../i18n/routing';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { rowStyle } from '../../styles/common';
 
 const containerStyle = {
   ...rowStyle,

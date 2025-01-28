@@ -1,5 +1,11 @@
 'use client';
 
+import { BASE_URL } from '@/constants/common';
+import { THERAPY_FAQ_OPENED } from '@/constants/events';
+import { FaqItem } from '@/constants/faqs';
+import { PartnerContent } from '@/constants/partners';
+import { Link as i18nLink } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -10,12 +16,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { BASE_URL } from '../../constants/common';
-import { THERAPY_FAQ_OPENED } from '../../constants/events';
-import { FaqItem } from '../../constants/faqs';
-import { PartnerContent } from '../../constants/partners';
-import { Link as i18nLink } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
 
 interface FaqsProps {
   translations: string;

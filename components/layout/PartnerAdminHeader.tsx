@@ -1,10 +1,10 @@
 'use client';
 
+import { getImageSizes } from '@/utils/imageSizes';
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const headerContainerStyles = {
   backgroundColor: 'common.white',

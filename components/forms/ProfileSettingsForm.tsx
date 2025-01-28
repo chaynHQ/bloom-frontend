@@ -1,15 +1,15 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { UPDATE_USER_ALREADY_EXISTS } from '@/constants/errors';
+import { useTypedSelector } from '@/hooks/store';
+import { useUpdateUserMutation } from '@/lib/api';
+import { logout } from '@/lib/auth';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Link, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { UPDATE_USER_ALREADY_EXISTS } from '../../constants/errors';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../lib/api';
-import { logout } from '../../lib/auth';
 import ConfirmDialog from './ConfirmDialog';
 
 const containerStyle = {

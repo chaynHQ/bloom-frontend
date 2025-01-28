@@ -1,5 +1,18 @@
 'use client';
 
+import countries from '@/constants/countries';
+import { LANGUAGES } from '@/constants/enums';
+import {
+  ABOUT_YOU_DEMO_ERROR,
+  ABOUT_YOU_DEMO_REQUEST,
+  ABOUT_YOU_DEMO_SUCCESS,
+} from '@/constants/events';
+import { genderOptions } from '@/constants/gender';
+import { useTypedSelector } from '@/hooks/store';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { rowStyle, staticFieldLabelStyle } from '@/styles/common';
+import { hashString } from '@/utils/hashString';
+import logEvent, { getEventUserData } from '@/utils/logEvent';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
@@ -27,19 +40,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import countries from '../../constants/countries';
-import { LANGUAGES } from '../../constants/enums';
-import {
-  ABOUT_YOU_DEMO_ERROR,
-  ABOUT_YOU_DEMO_REQUEST,
-  ABOUT_YOU_DEMO_SUCCESS,
-} from '../../constants/events';
-import { genderOptions } from '../../constants/gender';
-import { useTypedSelector } from '../../hooks/store';
-import { usePathname, useRouter } from '../../i18n/routing';
-import { rowStyle, staticFieldLabelStyle } from '../../styles/common';
-import { hashString } from '../../utils/hashString';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const rowStyles = {
   ...rowStyle,

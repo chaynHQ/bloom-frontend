@@ -1,12 +1,11 @@
 'use client';
 
+import { usePathname, useRouter } from '@/i18n/routing';
+import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
+import therapyIcon from '@/public/therapy_icon.svg';
 import { Icon, Tab, Tabs } from '@mui/material';
 import Image from 'next/image';
-import { usePathname, useRouter } from '../../i18n/routing';
-import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
-import therapyIcon from '../../public/therapy_icon.svg';
 
-import { useTranslations } from 'next-intl';
 import {
   SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
@@ -14,17 +13,18 @@ import {
   SECONDARY_HEADER_GROUNDING_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import activitiesIcon from '../../public/activities_icon.svg';
-import chatIcon from '../../public/chat_icon.svg';
-import courseIcon from '../../public/course_icon.svg';
-import groundingIcon from '../../public/grounding_icon.svg';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import activitiesIcon from '@/public/activities_icon.svg';
+import chatIcon from '@/public/chat_icon.svg';
+import courseIcon from '@/public/course_icon.svg';
+import groundingIcon from '@/public/grounding_icon.svg';
+import { useTranslations } from 'next-intl';
 
+import theme from '@/styles/theme';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
 import { HTMLAttributes } from 'react';
-import theme from '../../styles/theme';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 interface LinkTabProps {
   label?: string;

@@ -1,8 +1,8 @@
 'use client';
 
+import EmailSettingsForm from '@/components/forms/EmailSettingsForm';
 import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import EmailSettingsForm from '../forms/EmailSettingsForm';
 
 const cardStyle = {
   width: { xs: '100%', md: 'auto' },

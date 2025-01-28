@@ -1,5 +1,5 @@
-import { FEATURES } from '../constants/enums';
-import { Partner, PartnerFeature } from '../lib/store/partnersSlice';
+import { FEATURES } from '@/constants/enums';
+import { Partner, PartnerFeature } from '@/lib/store/partnersSlice';
 import hasAutomaticAccessCodeFeature from './hasAutomaticAccessCodeFeature';
 const partnerData = {
   id: 'partner',
@@ -14,11 +14,11 @@ const accessCodePartnerFeature = {
 
 describe('hasAutomaticAccessFeature', () => {
   it('should return false as has no partner features', () => {
-    expect(hasAutomaticAccessCodeFeature(partnerData)).toBe(false);
+    expect(hasAutomaticAccessCodeFeature(partnerData)).to.equal(false);
   });
   it('should return true as has no partner features', () => {
     expect(
       hasAutomaticAccessCodeFeature({ ...partnerData, partnerFeature: [accessCodePartnerFeature] }),
-    ).toBe(true);
+    ).to.equal(true);
   });
 });

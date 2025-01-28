@@ -1,13 +1,13 @@
 'use client';
 
+import bloomHead from '@/public/illustration_bloom_head.svg';
+import { getImageSizes } from '@/tils/imageSizes';
+import { columnStyle } from '@/tyles/common';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import bloomHead from '../../public/illustration_bloom_head.svg';
-import { columnStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const containerStyle = {
   ...columnStyle,

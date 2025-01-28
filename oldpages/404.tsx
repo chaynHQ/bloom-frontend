@@ -1,15 +1,15 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
+import { useTypedSelector } from '@/hooks/store';
+import bloomHead from '@/public/illustration_bloom_head.svg';
+import { columnStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
-import LoadingContainer from '../components/common/LoadingContainer';
-import { useTypedSelector } from '../hooks/store';
-import bloomHead from '../public/illustration_bloom_head.svg';
-import { columnStyle } from '../styles/common';
-import { getImageSizes } from '../utils/imageSizes';
 
-import { Link as i18nLink } from '../i18n/routing';
+import { Link as i18nLink } from '@/i18n/routing';
 
 const containerStyle = {
   ...columnStyle,

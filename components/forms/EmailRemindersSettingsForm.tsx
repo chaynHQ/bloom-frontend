@@ -1,5 +1,20 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/constants/enums';
+import {
+  EMAIL_REMINDERS_SET_ERROR,
+  EMAIL_REMINDERS_SET_REQUEST,
+  EMAIL_REMINDERS_SET_SUCCESS,
+  EMAIL_REMINDERS_UNSET_ERROR,
+  EMAIL_REMINDERS_UNSET_REQUEST,
+  EMAIL_REMINDERS_UNSET_SUCCESS,
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { usePathname } from '@/i18n/routing';
+import { useUpdateUserMutation } from '@/lib/api';
+import { rowStyle } from '@/styles/common';
+import logEvent from '@/utils/logEvent';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -13,21 +28,6 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
-import {
-  EMAIL_REMINDERS_SET_ERROR,
-  EMAIL_REMINDERS_SET_REQUEST,
-  EMAIL_REMINDERS_SET_SUCCESS,
-  EMAIL_REMINDERS_UNSET_ERROR,
-  EMAIL_REMINDERS_UNSET_REQUEST,
-  EMAIL_REMINDERS_UNSET_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { usePathname } from '../../i18n/routing';
-import { useUpdateUserMutation } from '../../lib/api';
-import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
 
 const radioGroupStyle = {
   ...rowStyle,

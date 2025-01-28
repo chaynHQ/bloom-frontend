@@ -1,18 +1,18 @@
+import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
+import Header from '@/components/layout/Header';
+import { ASSIGN_NEW_PARTNER_VIEWED } from '@/constants/events';
+import { PartnerContent, getAllPartnersContent } from '@/constants/partners';
+import { Link as i18nLink } from '@/i18n/routing';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import ApplyCodeForm from '../../components/forms/ApplyCodeForm';
-import Header from '../../components/layout/Header';
-import { ASSIGN_NEW_PARTNER_VIEWED } from '../../constants/events';
-import { PartnerContent, getAllPartnersContent } from '../../constants/partners';
-import { Link as i18nLink } from '../../i18n/routing';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,

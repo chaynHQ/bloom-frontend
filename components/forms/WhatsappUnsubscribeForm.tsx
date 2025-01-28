@@ -1,22 +1,22 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import {
+  WHATSAPP_UNSUBSCRIBE_ERROR,
+  WHATSAPP_UNSUBSCRIBE_REQUEST,
+  WHATSAPP_UNSUBSCRIBE_SUCCESS,
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { useUnsubscribeFromWhatsappMutation } from '@/lib/api';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent from '@/utils/logEvent';
+import { findWhatsappSubscription } from '@/utils/whatsappUtils';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import {
-  WHATSAPP_UNSUBSCRIBE_ERROR,
-  WHATSAPP_UNSUBSCRIBE_REQUEST,
-  WHATSAPP_UNSUBSCRIBE_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useUnsubscribeFromWhatsappMutation } from '../../lib/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
-import { findWhatsappSubscription } from '../../utils/whatsappUtils';
 
 const containerStyle = {
   marginY: 3,

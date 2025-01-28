@@ -1,11 +1,11 @@
 'use client';
 
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import { Dots } from '@/components/common/Dots';
+import { RichTextOptions } from '@/utils/richText';
 import LinkIcon from '@mui/icons-material/Link';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { RichTextOptions } from '../../utils/richText';
-import SessionContentCard from '../cards/SessionContentCard';
-import { Dots } from '../common/Dots';
 
 export type BonusContent = {
   _uid: string;

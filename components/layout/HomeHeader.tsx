@@ -1,5 +1,10 @@
 'use client';
 
+import UserResearchBanner from '@/components/banner/UserResearchBanner';
+import { columnStyle, rowStyle } from '@/styles/common';
+import theme from '@/styles/theme';
+import { getImageSizes } from '@/utils/imageSizes';
+import { RichTextOptions } from '@/utils/richText';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -7,11 +12,6 @@ import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { columnStyle, rowStyle } from '../../styles/common';
-import theme from '../../styles/theme';
-import { getImageSizes } from '../../utils/imageSizes';
-import { RichTextOptions } from '../../utils/richText';
-import UserResearchBanner from '../banner/UserResearchBanner';
 
 export interface HeaderProps {
   title:

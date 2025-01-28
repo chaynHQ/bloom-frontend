@@ -1,3 +1,19 @@
+import StoryblokAccordion from '@/components/storyblok/StoryblokAccordion';
+import StoryblokAudio from '@/components/storyblok/StoryblokAudio';
+import StoryblokButton from '@/components/storyblok/StoryblokButton';
+import StoryblokCard from '@/components/storyblok/StoryblokCard';
+import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
+import StoryblokFaqs from '@/components/storyblok/StoryblokFaqs';
+import StoryblokImage from '@/components/storyblok/StoryblokImage';
+import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
+import StoryblokRow from '@/components/storyblok/StoryblokRow';
+import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
+import StoryblokSpacer from '@/components/storyblok/StoryblokSpacer';
+import StoryblokStatement from '@/components/storyblok/StoryblokStatement';
+import StoryblokTeamMembersCards from '@/components/storyblok/StoryblokTeamMembersCards';
+import StoryblokVideo from '@/components/storyblok/StoryblokVideo';
+import { BASE_URL } from '@/constants/common';
+import { Link as i18nLink } from '@/i18n/routing';
 import { Link, Typography } from '@mui/material';
 import { nameToEmoji } from 'gemoji';
 import { ReactNode } from 'react';
@@ -8,22 +24,6 @@ import {
   NODE_PARAGRAPH,
   RenderOptions,
 } from 'storyblok-rich-text-react-renderer';
-import StoryblokAccordion from '../components/storyblok/StoryblokAccordion';
-import StoryblokAudio from '../components/storyblok/StoryblokAudio';
-import StoryblokButton from '../components/storyblok/StoryblokButton';
-import StoryblokCard from '../components/storyblok/StoryblokCard';
-import StoryblokCarousel from '../components/storyblok/StoryblokCarousel';
-import StoryblokFaqs from '../components/storyblok/StoryblokFaqs';
-import StoryblokImage from '../components/storyblok/StoryblokImage';
-import StoryblokQuote from '../components/storyblok/StoryblokQuote';
-import StoryblokRow from '../components/storyblok/StoryblokRow';
-import StoryblokRowColumnBlock from '../components/storyblok/StoryblokRowColumnBlock';
-import StoryblokSpacer from '../components/storyblok/StoryblokSpacer';
-import StoryblokStatement from '../components/storyblok/StoryblokStatement';
-import StoryblokTeamMembersCards from '../components/storyblok/StoryblokTeamMembersCards';
-import StoryblokVideo from '../components/storyblok/StoryblokVideo';
-import { BASE_URL } from '../constants/common';
-import { Link as i18nLink } from '../i18n/routing';
 
 export const RichTextOptions: RenderOptions = {
   blokResolvers: {

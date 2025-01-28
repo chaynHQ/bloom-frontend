@@ -1,5 +1,15 @@
 'use client';
 
+import { ErrorDisplay } from '@/constants/common';
+import {
+  RESET_PASSWORD_ERROR,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+} from '@/constants/events';
+import { Link as i18nLink } from '@/i18n/routing';
+import { confirmAuthPasswordReset, logout, sendAuthPasswordResetEmail } from '@/lib/auth';
+import { auth } from '@/lib/firebase';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -7,16 +17,6 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import {
-  RESET_PASSWORD_ERROR,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-} from '../../constants/events';
-import { Link as i18nLink } from '../../i18n/routing';
-import { confirmAuthPasswordReset, logout, sendAuthPasswordResetEmail } from '../../lib/auth';
-import { auth } from '../../lib/firebase';
-import logEvent from '../../utils/logEvent';
 
 export const EmailForm = () => {
   const params = useParams<{ locale: string }>();
@@ -116,10 +116,10 @@ export const PasswordForm = (props: PasswordFormProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordInput, setPasswordInput] = useState<string>('');
   const [formError, setFormError] = useState<ErrorDisplay>();
-
   const [formSuccess, setFormSuccess] = useState<boolean>(false);
 
   const t = useTranslations('Auth.form');
+  const rollbar = useRollbar();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

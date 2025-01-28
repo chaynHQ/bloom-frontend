@@ -1,17 +1,17 @@
 'use client';
 
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
-import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
+import { getIsMaintenanceMode } from '@/utils/maintenanceMode';
+import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const listStyle = {
   display: 'flex',

@@ -1,13 +1,13 @@
 'use client';
 
+import { FeatureFlag } from '@/config/featureFlag';
+import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { usePathname } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
-import { FeatureFlag } from '../../config/featureFlag';
-import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { usePathname } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',

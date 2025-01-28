@@ -1,11 +1,11 @@
 'use client';
 
+import { iconTextRowStyle } from '@/styles/common';
 import Circle from '@mui/icons-material/Circle';
 import Event from '@mui/icons-material/Event';
 import PendingOutlined from '@mui/icons-material/PendingOutlined';
 import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { iconTextRowStyle } from '../../styles/common';
 
 interface CourseStatusHeaderProps {
   status: 'liveNow' | 'liveSoon' | 'comingSoon';

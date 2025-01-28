@@ -10,9 +10,9 @@ enum WEEKDAYS {
 
 describe('enumUtils', () => {
   it('should return true if string is in enum', () => {
-    expect(isEnumValue(WEEKDAYS, 'monday')).toBe(true);
+    expect(isEnumValue(WEEKDAYS, 'monday')).to.equal(true);
   });
   it('should return false if string isnt in enum', () => {
-    expect(isEnumValue(WEEKDAYS, 'saturday')).toBe(false);
+    expect(isEnumValue(WEEKDAYS, 'saturday')).to.equal(false);
   });
 });

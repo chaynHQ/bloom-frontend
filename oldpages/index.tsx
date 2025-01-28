@@ -1,3 +1,11 @@
+import NoDataAvailable from '@/components/common/NoDataAvailable';
+import HomeHeader from '@/components/layout/HomeHeader';
+import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { PROMO_GET_STARTED_CLICKED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import logEvent from '@/utils/logEvent';
 import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
@@ -6,14 +14,6 @@ import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import HomeHeader from '../components/layout/HomeHeader';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { PROMO_GET_STARTED_CLICKED } from '../constants/events';
-import { useTypedSelector } from '../hooks/store';
-import { Link as i18nLink } from '../i18n/routing';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import logEvent from '../utils/logEvent';
 interface Props {
   story: ISbStoryData | null;
   preview: boolean;

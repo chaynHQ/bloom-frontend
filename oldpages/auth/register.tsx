@@ -1,3 +1,15 @@
+import { Link as i18nLink, useRouter } from '@/18n/routing';
+import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
+import PartnerHeader from '@/omponents/layout/PartnerHeader';
+import { generatePartnershipPromoLogoClick } from '@/onstants/events';
+import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/onstants/partners';
+import { useAppDispatch, useTypedSelector } from '@/ooks/store';
+import { getImageSizes } from '@/tils/imageSizes';
+import logEvent from '@/tils/logEvent';
+import { rowStyle } from '@/tyles/common';
+import illustrationBloomHeadYellow from '@/ublic/illustration_bloom_head_yellow.svg';
+import illustrationLeafMixDots from '@/ublic/illustration_leaf_mix_dots.svg';
+import welcomeToBloom from '@/ublic/welcome_to_bloom.svg';
 import {
   Box,
   Card,
@@ -15,18 +27,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import RegisterForm, { PartnerRegisterForm } from '../../components/forms/RegisterForm';
-import PartnerHeader from '../../components/layout/PartnerHeader';
-import { generatePartnershipPromoLogoClick } from '../../constants/events';
-import { PartnerContent, getAllPartnersContent, getPartnerContent } from '../../constants/partners';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, useRouter } from '../../i18n/routing';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import illustrationLeafMixDots from '../../public/illustration_leaf_mix_dots.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   ...rowStyle,

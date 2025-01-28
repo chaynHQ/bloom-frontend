@@ -1,8 +1,8 @@
+import NoDataAvailable from '@/components/common/NoDataAvailable';
+import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/StoryblokPage';
+import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 import { ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import StoryblokPage, { StoryblokPageProps } from '../components/storyblok/StoryblokPage';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
 
 interface Props {
   story: ISbStoryData | null;

@@ -1,9 +1,9 @@
 'use client';
 
+import EmailRemindersSettingsForm from '@/components/forms/EmailRemindersSettingsForm';
+import theme from '@/styles/theme';
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import theme from '../../styles/theme';
-import EmailRemindersSettingsForm from '../forms/EmailRemindersSettingsForm';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,

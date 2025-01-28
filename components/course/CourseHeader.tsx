@@ -1,12 +1,12 @@
 'use client';
 
+import Header from '@/components/layout/Header';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { Link as i18nLink } from '@/i18n/routing';
+import theme from '@/styles/theme';
 import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { Link as i18nLink } from '../../i18n/routing';
-import theme from '../../styles/theme';
-import Header from '../layout/Header';
 
 const buttonStyle = {
   background: theme.palette.background.default,

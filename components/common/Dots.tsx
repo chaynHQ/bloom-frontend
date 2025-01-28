@@ -1,8 +1,8 @@
 'use client';
 
+import { columnStyle } from '@/styles/common';
 import CircleIcon from '@mui/icons-material/Circle';
 import Box from '@mui/material/Box';
-import { columnStyle } from '../../styles/common';
 
 const dotsStyle = {
   ...columnStyle,

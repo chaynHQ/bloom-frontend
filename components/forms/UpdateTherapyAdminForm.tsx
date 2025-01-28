@@ -3,6 +3,12 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
+import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '@/constants/events';
+import { useAppDispatch } from '@/hooks/store';
+import { api, useUpdatePartnerAccessMutation } from '@/lib/api';
+import { GetUserDto } from '@/lib/store/userSlice';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
@@ -17,12 +23,6 @@ import {
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
-import { useAppDispatch } from '../../hooks/store';
-import { api, useUpdatePartnerAccessMutation } from '../../lib/api';
-import { GetUserDto } from '../../lib/store/userSlice';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
 
 const UpdateTherapyAdminForm = () => {
   const t = useTranslations('Admin.updateTherapy');

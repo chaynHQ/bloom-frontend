@@ -1,17 +1,17 @@
 'use client';
 
+import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '@/constants/events';
+import { useAppDispatch } from '@/hooks/store';
+import { setCookiesAccepted } from '@/lib/store/userSlice';
+import IllustrationCookieCat from '@/public/illustration_cookie_cat.svg';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
 import { Box, Button, Link, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { sendGAEvent } from '@next/third-parties/google';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent';
-import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '../../constants/events';
-import { useAppDispatch } from '../../hooks/store';
-import { setCookiesAccepted } from '../../lib/store/userSlice';
-import IllustrationCookieCat from '../../public/illustration_cookie_cat.svg';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 const Consent = () => {
   const theme = useTheme();

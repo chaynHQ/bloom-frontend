@@ -1,9 +1,9 @@
 'use client';
 
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { getImageSizes } from '../../utils/imageSizes';
 
 export interface ImageTextItem {
   text: string;

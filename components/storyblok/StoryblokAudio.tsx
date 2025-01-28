@@ -1,9 +1,9 @@
 'use client';
 
+import { richtextContentStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import dynamic from 'next/dynamic';
-import { richtextContentStyle } from '../../styles/common';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/file'), { ssr: false });
 

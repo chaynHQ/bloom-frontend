@@ -1,9 +1,9 @@
 'use client';
 
+import { STORYBLOK_COLORS } from '@/constants/enums';
+import { columnStyle } from '@/styles/common';
+import theme from '@/styles/theme';
 import { Container } from '@mui/material';
-import { STORYBLOK_COLORS } from '../../constants/enums';
-import { columnStyle } from '../../styles/common';
-import theme from '../../styles/theme';
 
 interface PageSectionProps {
   children: any;

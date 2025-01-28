@@ -1,15 +1,12 @@
 'use client';
 
+import { HEADER_NAVIGATION_MENU_CLOSED, HEADER_NAVIGATION_MENU_OPENED } from '@/constants/events';
+import logEvent from '@/utils/logEvent';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import {
-  HEADER_NAVIGATION_MENU_CLOSED,
-  HEADER_NAVIGATION_MENU_OPENED,
-} from '../../constants/events';
-import logEvent from '../../utils/logEvent';
 import PrimaryNavigationDrawerLinks from './PrimaryNavigationDrawerLinks';
 import SecondaryNavigationDrawerLinks from './SecondaryNavigationDrawerLinks';
 

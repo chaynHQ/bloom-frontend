@@ -1,11 +1,11 @@
 'use client';
 
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { iconTextRowStyle } from '@/styles/common';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { iconTextRowStyle } from '../../styles/common';
 
 interface ProgressStatusProps {
   status: PROGRESS_STATUS;

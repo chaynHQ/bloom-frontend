@@ -1,10 +1,10 @@
 'use client';
 
+import { LEAVE_SITE_BUTTON_CLICKED } from '@/constants/events';
+import { usePathname } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import { Box, Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
-import { usePathname } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
 
 const leaveThisSiteStyles = {
   position: 'fixed',

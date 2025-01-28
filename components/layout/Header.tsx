@@ -1,19 +1,19 @@
 'use client';
 
+import UserResearchBanner from '@/components/banner/UserResearchBanner';
+import ProgressStatus from '@/components/common/ProgressStatus';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { useRouter } from '@/i18n/routing';
+import { columnStyle, rowStyle } from '@/styles/common';
+import { TextNode } from '@/utils/helper-types/translations';
+import { getImageSizes } from '@/utils/imageSizes';
+import { RichTextOptions } from '@/utils/richText';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useRouter } from '../../i18n/routing';
-import { columnStyle, rowStyle } from '../../styles/common';
-import { TextNode } from '../../utils/helper-types/translations';
-import { getImageSizes } from '../../utils/imageSizes';
-import { RichTextOptions } from '../../utils/richText';
-import UserResearchBanner from '../banner/UserResearchBanner';
-import ProgressStatus from '../common/ProgressStatus';
 
 export interface HeaderProps {
   title: string;

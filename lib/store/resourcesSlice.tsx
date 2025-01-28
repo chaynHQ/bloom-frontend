@@ -1,6 +1,6 @@
-import { Draft, createSlice } from '@reduxjs/toolkit';
-import { FEEDBACK_TAGS, RESOURCE_CATEGORIES, STORYBLOK_STORY_STATUS } from '../../constants/enums';
-import { api } from '../api';
+import { FEEDBACK_TAGS, RESOURCE_CATEGORIES, STORYBLOK_STORY_STATUS } from '@/constants/enums';
+import { api } from '@/lib/api';
+import { createSlice, Draft } from '@reduxjs/toolkit';
 import { User } from './userSlice';
 
 export interface Resource {

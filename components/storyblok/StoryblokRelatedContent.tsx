@@ -1,13 +1,13 @@
 'use client';
 
+import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
+import Carousel, { getSlideWidth } from '@/components/common/Carousel';
+import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/constants/enums';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { RelatedContentCard } from '../cards/RelatedContentCard';
-import Carousel, { getSlideWidth } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';

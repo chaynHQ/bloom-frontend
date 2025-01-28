@@ -1,5 +1,17 @@
 'use client';
 
+import { BASE_URL } from '@/constants/common';
+import { PARTNER_ACCESS_FEATURES } from '@/constants/enums';
+import {
+  CREATE_PARTNER_ACCESS_ERROR,
+  CREATE_PARTNER_ACCESS_REQUEST,
+  CREATE_PARTNER_ACCESS_SUCCESS,
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import { useAddPartnerAccessMutation } from '@/lib/api';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -16,18 +28,6 @@ import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { BASE_URL } from '../../constants/common';
-import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
-import {
-  CREATE_PARTNER_ACCESS_ERROR,
-  CREATE_PARTNER_ACCESS_REQUEST,
-  CREATE_PARTNER_ACCESS_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import { useAddPartnerAccessMutation } from '../../lib/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
 
 const CreateAccessCodeForm = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);

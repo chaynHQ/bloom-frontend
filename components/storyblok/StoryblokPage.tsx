@@ -1,12 +1,12 @@
 'use client';
 
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import Header from '@/components/layout/Header';
+import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { useTypedSelector } from '@/hooks/store';
+import { usePathname } from '@/i18n/routing';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Head from 'next/head';
-import { SignUpBanner } from '../../components/banner/SignUpBanner';
-import Header from '../../components/layout/Header';
-import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '../../hooks/store';
-import { usePathname } from '../../i18n/routing';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 
 export interface StoryblokPageProps {

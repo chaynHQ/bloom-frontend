@@ -1,11 +1,8 @@
 'use client';
 
-import { Link, Typography } from '@mui/material';
-import { useRollbar } from '@rollbar/react';
-import { ISbRichtext } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
+import Video from '@/components/video/Video';
+import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
+import { PROGRESS_STATUS } from '@/constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
@@ -15,12 +12,15 @@ import {
   RESOURCE_SHORT_VIDEO_STARTED_SUCCESS,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useCompleteResourceMutation, useStartResourceMutation } from '../../lib/api';
-import logEvent from '../../utils/logEvent';
-import Video from '../video/Video';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { useCompleteResourceMutation, useStartResourceMutation } from '@/lib/api';
+import logEvent from '@/utils/logEvent';
+import { Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
 
 interface ResourceShortVideoProps {
   eventData: { [key: string]: any };

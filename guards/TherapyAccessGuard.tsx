@@ -1,13 +1,13 @@
+import { FEEDBACK_FORM_URL } from '@/constants/common';
+import { useTypedSelector } from '@/hooks/store';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { columnStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Container, Link, Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { useTranslations } from 'use-intl';
-import { FEEDBACK_FORM_URL } from '../constants/common';
-import { useTypedSelector } from '../hooks/store';
-import illustrationPerson4Peach from '../public/illustration_person4_peach.svg';
-import { columnStyle } from '../styles/common';
-import { getImageSizes } from '../utils/imageSizes';
 
 const containerStyle = {
   ...columnStyle,

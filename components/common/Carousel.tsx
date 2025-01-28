@@ -1,11 +1,11 @@
 'use client';
 
+import theme from '@/styles/theme';
+import { useWidth } from '@/utils/useWidth';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Breakpoint, IconButton } from '@mui/material';
 import { Carousel as NukaCarousel, useCarousel } from 'nuka-carousel';
-import theme from '../../styles/theme';
-import { useWidth } from '../../utils/useWidth';
 
 interface CarouselProps {
   items: Array<React.ReactNode>;

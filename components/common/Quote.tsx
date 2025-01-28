@@ -1,8 +1,8 @@
 'use client';
 
+import { richtextContentStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
-import { richtextContentStyle } from '../../styles/common';
 
 interface QuoteProps {
   text: ISbRichtext | string;

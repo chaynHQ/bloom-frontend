@@ -1,10 +1,10 @@
 'use client';
 
+import { RELATED_CONTENT_CATEGORIES } from '@/constants/enums';
+import { Link as i18nLink } from '@/i18n/routing';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { Link as i18nLink } from '../../i18n/routing';
 
 const cardStyle = {
   mt: 0,

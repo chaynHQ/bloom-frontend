@@ -1,15 +1,15 @@
+import AccountActionsCard from '@/components/cards/AccountActionsCard';
+import EmailRemindersSettingsCard from '@/components/cards/EmailRemindersSettingsCard';
+import EmailSettingsCard from '@/components/cards/EmailSettingsCard';
+import ProfileSettingsCard from '@/components/cards/ProfileSettingsCard';
+import Header from '@/components/layout/Header';
+import { useTypedSelector } from '@/hooks/store';
+import { columnStyle, rowStyle } from '@/styles/common';
+import phoneIllustration from '@/ublic/phone.svg';
 import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import AccountActionsCard from '../../components/cards/AccountActionsCard';
-import EmailRemindersSettingsCard from '../../components/cards/EmailRemindersSettingsCard';
-import EmailSettingsCard from '../../components/cards/EmailSettingsCard';
-import ProfileSettingsCard from '../../components/cards/ProfileSettingsCard';
-import Header from '../../components/layout/Header';
-import { useTypedSelector } from '../../hooks/store';
-import phoneIllustration from '../../public/phone.svg';
-import { columnStyle, rowStyle } from '../../styles/common';
 
 const rowContainerStyle = {
   ...rowStyle,

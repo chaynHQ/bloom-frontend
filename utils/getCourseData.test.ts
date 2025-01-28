@@ -1,4 +1,4 @@
-import { Course, Courses, Session } from '../lib/store/coursesSlice';
+import { Course, Courses, Session } from '@/lib/store/coursesSlice';
 import { getCourseData } from './getCourseData';
 
 const coursesBase: Courses = [
@@ -9,15 +9,15 @@ const coursesBase: Courses = [
 ];
 describe('getCourseData', () => {
   it('if empty course is supplied, it returns empty record ', () => {
-    expect(getCourseData([])).toEqual({});
+    expect(getCourseData([])).to.equal({});
   });
   it('if course is supplied, it returns record ', () => {
-    expect(getCourseData(coursesBase)).toEqual({ number_dbr_sessions: 1 });
+    expect(getCourseData(coursesBase)).to.equal({ number_dbr_sessions: 1 });
   });
   it('if two courses are supplied, it returns record with two entries', () => {
     expect(
       getCourseData(coursesBase.concat({ storyblokId: 100421614, sessions: [{}, {}] } as Course)),
-    ).toEqual({
+    ).to.equal({
       number_dbr_sessions: 1,
       number_spst_sessions: 2,
     });

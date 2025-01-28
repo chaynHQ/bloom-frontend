@@ -1,14 +1,14 @@
 'use client';
 
+import ConfirmDialog from '@/components/forms/ConfirmDialog';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { useRouter } from '@/i18n/routing';
+import { useDeleteUserMutation } from '@/lib/api';
+import theme from '@/styles/theme';
 import { Box, Button, Card, CardContent, lighten, Link, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { useRouter } from '../../i18n/routing';
-import { useDeleteUserMutation } from '../../lib/api';
-import theme from '../../styles/theme';
-import ConfirmDialog from '../forms/ConfirmDialog';
 
 const cardStyle = {
   width: { xs: '100%', md: 'auto' },

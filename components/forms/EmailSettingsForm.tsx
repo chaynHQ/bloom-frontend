@@ -1,13 +1,13 @@
 'use client';
 
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { useTypedSelector } from '@/hooks/store';
+import { useUpdateUserMutation } from '@/lib/api';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../lib/api';
 
 const formControlStyle = {
   marginY: 3,

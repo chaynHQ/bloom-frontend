@@ -1,10 +1,10 @@
 'use client';
 
+import { richtextContentStyle, rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { richtextContentStyle, rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
 
 export interface ImageTextItem {
   text: string;

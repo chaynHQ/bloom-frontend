@@ -1,5 +1,6 @@
 'use client';
 
+import { Link as i18nLink } from '@/i18n/routing';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
@@ -7,16 +8,15 @@ import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { Link as i18nLink } from '../../i18n/routing';
 
 import {
   HEADER_ACCOUNT_ICON_CLICKED,
   HEADER_APPLY_A_CODE_CLICKED,
   LOGOUT_REQUEST,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { logout } from '../../lib/auth';
-import logEvent from '../../utils/logEvent';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { logout } from '@/lib/auth';
+import logEvent from '@/utils/logEvent';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },

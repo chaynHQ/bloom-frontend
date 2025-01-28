@@ -1,19 +1,19 @@
+import { Link as i18nLink } from '@/18n/routing';
+import Faqs from '@/components/common/Faqs';
+import { PartnerAccess } from '@/ib/store/partnerAccessSlice';
+import Header from '@/omponents/layout/Header';
+import { THERAPY_CONFIRMATION_VIEWED } from '@/onstants/events';
+import { therapyFaqs } from '@/onstants/faqs';
+import { useTypedSelector } from '@/ooks/store';
+import logEvent from '@/tils/logEvent';
+import illustrationLeafMix from '@/ublic/illustration_leaf_mix.svg';
+import illustrationPerson4Peach from '@/ublic/illustration_person4_peach.svg';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Faqs from '../../components/common/Faqs';
-import Header from '../../components/layout/Header';
-import { THERAPY_CONFIRMATION_VIEWED } from '../../constants/events';
-import { therapyFaqs } from '../../constants/faqs';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import { PartnerAccess } from '../../lib/store/partnerAccessSlice';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import logEvent from '../../utils/logEvent';
 
 const ConfirmedSession: NextPage = () => {
   const t = useTranslations('Therapy');

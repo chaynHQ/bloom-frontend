@@ -1,8 +1,8 @@
 'use client';
 
+import { columnStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { columnStyle, rowStyle } from '../../styles/common';
 import StoryblokTeamMemberCard, { StoryblokTeamMemberCardProps } from './StoryblokTeamMemberCard';
 
 const cardColumnStyle = {

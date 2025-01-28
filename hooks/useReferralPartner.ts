@@ -1,7 +1,7 @@
+import { usePathname } from '@/i18n/routing';
+import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
-import { usePathname } from '../i18n/routing';
-import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '../lib/store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage

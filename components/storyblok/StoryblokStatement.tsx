@@ -1,8 +1,8 @@
 'use client';
 
+import { richtextContentStyle } from '@/styles/common';
 import { Box, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { richtextContentStyle } from '../../styles/common';
 
 interface StoryblokStatementProps {
   _uid: string;

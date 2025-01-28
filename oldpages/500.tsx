@@ -1,14 +1,14 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import bloomHead from '@/public/illustration_bloom_head.svg';
+import { columnStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
-import LoadingContainer from '../components/common/LoadingContainer';
-import { useTypedSelector } from '../hooks/store';
-import { Link as i18nLink } from '../i18n/routing';
-import bloomHead from '../public/illustration_bloom_head.svg';
-import { columnStyle } from '../styles/common';
-import { getImageSizes } from '../utils/imageSizes';
 
 const Custom500: NextPage = () => {
   const t = useTranslations('Shared');

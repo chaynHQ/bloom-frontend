@@ -7,25 +7,25 @@ describe('featureFlag', () => {
   it('should return disabled courses when environment variable set', () => {
     process.env.FF_DISABLED_COURSES = [disabledCourse1, disabledCourse2].join(',');
 
-    expect(Array.from(FeatureFlag.getDisabledCourses())).toContain(disabledCourse1);
-    expect(Array.from(FeatureFlag.getDisabledCourses())).toContain(disabledCourse2);
+    expect(Array.from(FeatureFlag.getDisabledCourses())).to.contain(disabledCourse1);
+    expect(Array.from(FeatureFlag.getDisabledCourses())).to.contain(disabledCourse2);
   });
 
   it('should return empty array when environment variable not', () => {
     process.env.FF_DISABLED_COURSES = '';
 
-    expect(FeatureFlag.getDisabledCourses().size).toEqual(0);
+    expect(FeatureFlag.getDisabledCourses().size).to.equal(0);
   });
 
   it('should return user research banner value when environment variable set', () => {
     process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER = 'true';
 
-    expect(FeatureFlag.isUserResearchBannerEnabled()).toEqual(true);
+    expect(FeatureFlag.isUserResearchBannerEnabled()).to.equal(true);
   });
 
   it('should return false when user research banner environment variable is not set', () => {
     process.env.NEXT_PUBLIC_FF_USER_RESEARCH_BANNER = '';
 
-    expect(FeatureFlag.isUserResearchBannerEnabled()).toEqual(false);
+    expect(FeatureFlag.isUserResearchBannerEnabled()).to.equal(false);
   });
 });

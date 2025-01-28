@@ -1,24 +1,24 @@
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ImageTextColumn from '@/omponents/common/ImageTextColumn';
+import { ImageTextItem } from '@/omponents/common/ImageTextGrid';
+import WhatsappSubscribeForm from '@/omponents/forms/WhatsappSubscribeForm';
+import WhatsappUnsubscribeForm from '@/omponents/forms/WhatsappUnsubscribeForm';
+import Header, { HeaderProps } from '@/omponents/layout/Header';
+import StoryblokPageSection from '@/omponents/storyblok/StoryblokPageSection';
+import { useTypedSelector } from '@/ooks/store';
+import illustrationChange from '@/ublic/illustration_change.svg';
+import illustrationChooseTherapist from '@/ublic/illustration_choose_therapist.svg';
+import illustrationDateSelector from '@/ublic/illustration_date_selector.svg';
 import { Box, Container } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { SignUpBanner } from '../../components/banner/SignUpBanner';
-import ImageTextColumn from '../../components/common/ImageTextColumn';
-import { ImageTextItem } from '../../components/common/ImageTextGrid';
-import WhatsappSubscribeForm from '../../components/forms/WhatsappSubscribeForm';
-import WhatsappUnsubscribeForm from '../../components/forms/WhatsappUnsubscribeForm';
-import Header, { HeaderProps } from '../../components/layout/Header';
-import StoryblokPageSection from '../../components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '../../hooks/store';
-import illustrationChange from '../../public/illustration_change.svg';
-import illustrationChooseTherapist from '../../public/illustration_choose_therapist.svg';
-import illustrationDateSelector from '../../public/illustration_date_selector.svg';
 
+import NoDataAvailable from '@/omponents/common/NoDataAvailable';
+import { getStoryblokPageProps } from '@/tils/getStoryblokPageProps';
+import { hasWhatsappSubscription } from '@/tils/whatsappUtils';
+import { rowStyle } from '@/tyles/common';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import NoDataAvailable from '../../components/common/NoDataAvailable';
-import { rowStyle } from '../../styles/common';
-import { getStoryblokPageProps } from '../../utils/getStoryblokPageProps';
-import { hasWhatsappSubscription } from '../../utils/whatsappUtils';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

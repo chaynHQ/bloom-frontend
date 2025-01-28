@@ -1,15 +1,15 @@
+import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
+import AdminHeader from '@/omponents/layout/PartnerAdminHeader';
+import { CREATE_PARTNER_ACCESS_VIEWED } from '@/onstants/events';
+import { useTypedSelector } from '@/ooks/store';
+import logEvent from '@/tils/logEvent';
+import { rowStyle } from '@/tyles/common';
+import bloomLogo from '@/ublic/bloom_logo.svg';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import CreateAccessCodeForm from '../../components/forms/CreateAccessCodeForm';
-import AdminHeader from '../../components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import bloomLogo from '../../public/bloom_logo.svg';
-import { rowStyle } from '../../styles/common';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

@@ -1,5 +1,5 @@
+import { getStoryblokApi } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryParams, StoryblokClient } from '@storyblok/react/rsc';
-import { getStoryblokApi } from '../lib/storyblok';
 
 export const getStoryblokPageProps = async (
   slug: string | undefined,

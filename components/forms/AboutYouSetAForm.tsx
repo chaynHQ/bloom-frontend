@@ -1,12 +1,6 @@
 'use client';
 
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
-import { useRollbar } from '@rollbar/react';
-import axios from 'axios';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/constants/enums';
 import {
   ABOUT_YOU_SETA_ERROR,
   ABOUT_YOU_SETA_REQUEST,
@@ -16,14 +10,20 @@ import {
   EMAIL_REMINDERS_UNSET_REQUEST,
   EMAIL_REMINDERS_UNSET_SUCCESS,
   SIGNUP_SURVEY_COMPLETED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { usePathname, useRouter } from '../../i18n/routing';
-import { useUpdateUserMutation } from '../../lib/api';
-import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '../../styles/common';
-import { hashString } from '../../utils/hashString';
-import { ScaleFieldItem } from '../../utils/interfaces';
-import logEvent from '../../utils/logEvent';
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { useUpdateUserMutation } from '@/lib/api';
+import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '@/styles/common';
+import { hashString } from '@/utils/hashString';
+import { ScaleFieldItem } from '@/utils/interfaces';
+import logEvent from '@/utils/logEvent';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import axios from 'axios';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { EmailRemindersSettingsFormControl } from './EmailRemindersSettingsForm';
 
 const actionsStyle = {

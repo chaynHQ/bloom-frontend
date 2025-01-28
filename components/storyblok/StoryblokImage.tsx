@@ -1,10 +1,10 @@
 'use client';
 
+import { richtextContentStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
-import { richtextContentStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
 
 interface StoryblokImageProps {
   _uid: string;

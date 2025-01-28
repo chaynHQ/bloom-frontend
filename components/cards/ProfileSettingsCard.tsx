@@ -1,9 +1,9 @@
 'use client';
 
+import ProfileSettingsForm from '@/components/forms/ProfileSettingsForm';
+import { FEEDBACK_FORM_URL } from '@/constants/common';
 import { Card, CardContent, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { FEEDBACK_FORM_URL } from '../../constants/common';
-import ProfileSettingsForm from '../forms/ProfileSettingsForm';
 
 const cardStyle = {
   width: { xs: '100%', md: 'auto' },

@@ -1,18 +1,17 @@
 'use client';
 
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import { Dots } from '@/components/common/Dots';
+import Video from '@/components/video/Video';
+import { Link as i18nLink } from '@/i18n/routing';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Link as i18nLink } from '../../i18n/routing';
-import SessionContentCard from '../cards/SessionContentCard';
-import { Dots } from '../common/Dots';
-import Video from '../video/Video';
-import { EventData } from './SessionVideo';
 
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
 export interface SessionChatProps {
-  eventData: EventData;
+  eventData: { [key: string]: any };
 }
 
 export const SessionChat = (props: SessionChatProps) => {

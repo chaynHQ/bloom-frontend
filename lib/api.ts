@@ -1,3 +1,5 @@
+import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '@/constants/enums';
+import { EventLog } from '@/constants/eventLog';
 import {
   BaseQueryFn,
   createApi,
@@ -5,8 +7,6 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '../constants/enums';
-import { EventLog } from '../constants/eventLog';
 import { getAuthToken } from './auth';
 import { RootState } from './store';
 import { Course, Courses, SessionFeedback } from './store/coursesSlice';

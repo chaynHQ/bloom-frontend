@@ -1,13 +1,13 @@
 'use client';
 
+import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/constants/events';
+import { routing, usePathname, useRouter } from '@/i18n/routing';
+import logEvent from '@/utils/logEvent';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { MouseEvent, startTransition, useState } from 'react';
-import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '../../constants/events';
-import { routing, usePathname, useRouter } from '../../i18n/routing';
-import logEvent from '../../utils/logEvent';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },

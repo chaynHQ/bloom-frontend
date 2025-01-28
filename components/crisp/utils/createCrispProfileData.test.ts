@@ -1,7 +1,7 @@
-import { STORYBLOK_STORY_STATUS } from '../../../constants/enums';
-import { Course, Session } from '../../../lib/store/coursesSlice';
-import { PartnerAccess } from '../../../lib/store/partnerAccessSlice';
-import { User } from '../../../lib/store/userSlice';
+import { STORYBLOK_STORY_STATUS } from '@/constants/enums';
+import { Course, Session } from '@/lib/store/coursesSlice';
+import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
+import { User } from '@/lib/store/userSlice';
 import { createCrispProfileData } from './createCrispProfileData';
 
 const user = {
@@ -58,7 +58,7 @@ const course = {
 describe('createCrispProfileData', () => {
   describe('createCrispProfileData should return correctly ', () => {
     it('when supplied with user with no partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData([], [])).toEqual([
+      expect(createCrispProfileData([], [])).to.equal([
         ['partners', ''],
         ['feature_live_chat', true],
         ['feature_therapy', false],
@@ -67,7 +67,7 @@ describe('createCrispProfileData', () => {
       ]);
     });
     it('when supplied with user with two partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData([partnerAccess, partnerAccess], [])).toEqual([
+      expect(createCrispProfileData([partnerAccess, partnerAccess], [])).to.equal([
         ['partners', 'partner; partner'],
         ['feature_live_chat', true],
         ['feature_therapy', true],
@@ -76,7 +76,7 @@ describe('createCrispProfileData', () => {
       ]);
     });
     it('when supplied with user with a course , it should return correctly', () => {
-      expect(createCrispProfileData([], [course])).toEqual([
+      expect(createCrispProfileData([], [course])).to.equal([
         ['partners', ''],
         ['feature_live_chat', true],
         ['feature_therapy', false],

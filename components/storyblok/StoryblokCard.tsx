@@ -1,5 +1,9 @@
 'use client';
 
+import { BASE_URL } from '@/constants/common';
+import { Link as i18nLink } from '@/i18n/routing';
+import { getImageSizes } from '@/utils/imageSizes';
+import { RichTextOptions } from '@/utils/richText';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -16,10 +20,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { BASE_URL } from '../../constants/common';
-import { Link as i18nLink } from '../../i18n/routing';
-import { getImageSizes } from '../../utils/imageSizes';
-import { RichTextOptions } from '../../utils/richText';
 
 interface StoryblokCardProps {
   _uid: string;

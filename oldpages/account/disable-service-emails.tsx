@@ -1,15 +1,15 @@
+import Header from '@/components/layout/Header';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
+import { USER_DISABLED_SERVICE_EMAILS } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { useUpdateUserMutation } from '@/lib/api';
+import illustrationPerson5Yellow from '@/public/illustration_leaf_mix_bee.svg';
+import logEvent from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Header from '../../components/layout/Header';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '../../constants/common';
-import { USER_DISABLED_SERVICE_EMAILS } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../lib/api';
-import illustrationPerson5Yellow from '../../public/illustration_leaf_mix_bee.svg';
-import logEvent from '../../utils/logEvent';
 
 const DisableServiceEmails: NextPage = () => {
   const t = useTranslations('Account.disableServiceEmails');

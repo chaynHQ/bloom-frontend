@@ -1,11 +1,11 @@
 'use client';
 
+import Column from '@/components/common/Column';
+import Row from '@/components/common/Row';
+import { RichTextOptions } from '@/utils/richText';
 import { Box } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { RichTextOptions } from '../../utils/richText';
-import Column from '../common/Column';
-import Row from '../common/Row';
 import { StoryblokBlok, StoryblokColumn } from './StoryblokTypes';
 
 interface StoryblokRowProps {

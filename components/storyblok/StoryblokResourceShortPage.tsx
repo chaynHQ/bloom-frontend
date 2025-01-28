@@ -1,3 +1,27 @@
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import PageSection from '@/components/common/PageSection';
+import ProgressStatus from '@/components/common/ProgressStatus';
+import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
+import { ResourceCompleteButton } from '@/components/resources/ResourceCompleteButton';
+import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
+import {
+  PROGRESS_STATUS,
+  RESOURCE_CATEGORIES,
+  STORYBLOK_COLORS,
+  STORYBLOK_COMPONENTS,
+} from '@/constants/enums';
+import {
+  RESOURCE_SHORT_VIDEO_VIEWED,
+  RESOURCE_SHORT_VIDEO_VISIT_SESSION,
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import { Resource } from '@/lib/store/resourcesSlice';
+import { columnStyle, rowStyle } from '@/styles/common';
+import theme from '@/styles/theme';
+import { getStoryblokPagesByUuids } from '@/utils/getStoryblokPageProps';
+import { logEvent } from '@/utils/logEvent';
+import userHasAccessToPartnerContent from '@/utils/userHasAccessToPartnerContent';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Button, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
@@ -6,30 +30,6 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import {
-  PROGRESS_STATUS,
-  RESOURCE_CATEGORIES,
-  STORYBLOK_COLORS,
-  STORYBLOK_COMPONENTS,
-} from '../../constants/enums';
-import {
-  RESOURCE_SHORT_VIDEO_VIEWED,
-  RESOURCE_SHORT_VIDEO_VISIT_SESSION,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink, useRouter } from '../../i18n/routing';
-import { Resource } from '../../lib/store/resourcesSlice';
-import { columnStyle, rowStyle } from '../../styles/common';
-import theme from '../../styles/theme';
-import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
-import { logEvent } from '../../utils/logEvent';
-import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
-import { SignUpBanner } from '../banner/SignUpBanner';
-import PageSection from '../common/PageSection';
-import ProgressStatus from '../common/ProgressStatus';
-import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
-import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
-import { ResourceShortVideo } from '../resources/ResourceShortVideo';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 

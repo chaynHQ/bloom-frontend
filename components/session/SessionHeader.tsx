@@ -1,15 +1,15 @@
 'use client';
 
+import Header from '@/components/layout/Header';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { Link as i18nLink } from '@/i18n/routing';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import theme from '@/styles/theme';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Button, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { Link as i18nLink } from '../../i18n/routing';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import theme from '../../styles/theme';
-import Header from '../layout/Header';
 
 const buttonStyle = {
   background: theme.palette.background.default,

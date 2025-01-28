@@ -1,24 +1,24 @@
 'use client';
 
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import SessionCard from '@/components/cards/SessionCard';
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import CourseHeader from '@/components/course/CourseHeader';
+import CourseIntroduction from '@/components/course/CourseIntroduction';
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { COURSE_OVERVIEW_VIEWED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import { rowStyle } from '@/styles/common';
+import { determineCourseProgress } from '@/utils/courseProgress';
+import hasAccessToPage from '@/utils/hasAccessToPage';
+import { logEvent } from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import SessionCard from '../../components/cards/SessionCard';
-import { ContentUnavailable } from '../../components/common/ContentUnavailable';
-import CourseHeader from '../../components/course/CourseHeader';
-import CourseIntroduction from '../../components/course/CourseIntroduction';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import { rowStyle } from '../../styles/common';
-import { determineCourseProgress } from '../../utils/courseProgress';
-import hasAccessToPage from '../../utils/hasAccessToPage';
-import { logEvent } from '../../utils/logEvent';
-import { SignUpBanner } from '../banner/SignUpBanner';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

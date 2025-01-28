@@ -1,20 +1,20 @@
 'use client';
 
+import {
+  CREATE_PARTNER_ADMIN_ERROR,
+  CREATE_PARTNER_ADMIN_REQUEST,
+  CREATE_PARTNER_ADMIN_SUCCESS,
+} from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { useAddPartnerAdminMutation, useGetPartnersQuery } from '@/lib/api';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent from '@/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import {
-  CREATE_PARTNER_ADMIN_ERROR,
-  CREATE_PARTNER_ADMIN_REQUEST,
-  CREATE_PARTNER_ADMIN_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../lib/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent from '../../utils/logEvent';
 
 const CreatePartnerAdminForm = () => {
   const partners = useTypedSelector((state) => state.partners);

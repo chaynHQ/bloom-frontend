@@ -1,5 +1,9 @@
 'use client';
 
+import { ACCORDION_OPENED, generateAccordionEvent } from '@/constants/events';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
+import { RichTextOptions } from '@/utils/richText';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -14,10 +18,6 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 const containerStyle = {
   width: '100%',
   maxWidth: 725,

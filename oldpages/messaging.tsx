@@ -1,19 +1,19 @@
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import NoDataAvailable from '@/components/common/NoDataAvailable';
+import { CrispIframe } from '@/components/crisp/CrispIframe';
+import Header, { HeaderProps } from '@/components/layout/Header';
+import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { useTypedSelector } from '@/hooks/store';
+import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
+import { rowStyle } from '@/styles/common';
+import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import { SignUpBanner } from '../components/banner/SignUpBanner';
-import NoDataAvailable from '../components/common/NoDataAvailable';
-import { CrispIframe } from '../components/crisp/CrispIframe';
-import Header, { HeaderProps } from '../components/layout/Header';
-import StoryblokPageSection from '../components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '../hooks/store';
-import IllustrationCourseDBR from '../public/illustration_course_dbr.svg';
-import { rowStyle } from '../styles/common';
-import { getStoryblokPageProps } from '../utils/getStoryblokPageProps';
-import { getImageSizes } from '../utils/imageSizes';
 
 const messageRowStyle = {
   ...rowStyle,

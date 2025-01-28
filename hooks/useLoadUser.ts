@@ -1,10 +1,6 @@
 'use client';
 
-import { sendGAEvent } from '@next/third-parties/google';
-import { useRollbar } from '@rollbar/react';
-import { onIdTokenChanged } from 'firebase/auth';
-import { useEffect, useState } from 'react';
-import { EVENT_LOG_NAME } from '../constants/enums';
+import { EVENT_LOG_NAME } from '@/constants/enums';
 import {
   GET_AUTH_USER_ERROR,
   GET_AUTH_USER_SUCCESS,
@@ -13,19 +9,23 @@ import {
   GET_USER_SUCCESS,
   LOGOUT_FORCED,
   LOGOUT_SUCCESS,
-} from '../constants/events';
-import { useCreateEventLogMutation, useGetUserQuery } from '../lib/api';
-import { logout } from '../lib/auth';
-import { auth } from '../lib/firebase';
+} from '@/constants/events';
+import { useCreateEventLogMutation, useGetUserQuery } from '@/lib/api';
+import { logout } from '@/lib/auth';
+import { auth } from '@/lib/firebase';
 import {
   setAuthStateLoading,
   setLoadError,
   setUserLoading,
   setUserToken,
-} from '../lib/store/userSlice';
-import { getErrorMessage } from '../utils/errorMessage';
-import logEvent, { getEventUserData } from '../utils/logEvent';
-import { getIsMaintenanceMode } from '../utils/maintenanceMode';
+} from '@/lib/store/userSlice';
+import { getErrorMessage } from '@/utils/errorMessage';
+import logEvent, { getEventUserData } from '@/utils/logEvent';
+import { getIsMaintenanceMode } from '@/utils/maintenanceMode';
+import { sendGAEvent } from '@next/third-parties/google';
+import { useRollbar } from '@rollbar/react';
+import { onIdTokenChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {

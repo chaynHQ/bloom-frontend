@@ -1,3 +1,27 @@
+import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
+import { SignUpBanner } from '@/omponents/banner/SignUpBanner';
+import CourseCard from '@/omponents/cards/CourseCard';
+import { RelatedContentCard } from '@/omponents/cards/RelatedContentCard';
+import { ShortsCard } from '@/omponents/cards/ShortsCard';
+import Carousel, { getSlideWidth } from '@/omponents/common/Carousel';
+import Column from '@/omponents/common/Column';
+import LoadingContainer from '@/omponents/common/LoadingContainer';
+import PageSection from '@/omponents/common/PageSection';
+import Row from '@/omponents/common/Row';
+import Header from '@/omponents/layout/Header';
+import { FeatureFlag } from '@/onfig/featureFlag';
+import {
+  EMAIL_REMINDERS_FREQUENCY,
+  LANGUAGES,
+  PROGRESS_STATUS,
+  RESOURCE_CATEGORIES,
+  STORYBLOK_COLORS,
+} from '@/onstants/enums';
+import { COURSE_LIST_VIEWED } from '@/onstants/events';
+import { useTypedSelector } from '@/ooks/store';
+import logEvent from '@/tils/logEvent';
+import userHasAccessToPartnerContent from '@/tils/userHasAccessToPartnerContent';
+import illustrationCourses from '@/ublic/illustration_courses.svg';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
@@ -5,30 +29,6 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { EmailRemindersSettingsBanner } from '../../components/banner/EmailRemindersSettingsBanner';
-import { SignUpBanner } from '../../components/banner/SignUpBanner';
-import CourseCard from '../../components/cards/CourseCard';
-import { RelatedContentCard } from '../../components/cards/RelatedContentCard';
-import { ShortsCard } from '../../components/cards/ShortsCard';
-import Carousel, { getSlideWidth } from '../../components/common/Carousel';
-import Column from '../../components/common/Column';
-import LoadingContainer from '../../components/common/LoadingContainer';
-import PageSection from '../../components/common/PageSection';
-import Row from '../../components/common/Row';
-import Header from '../../components/layout/Header';
-import { FeatureFlag } from '../../config/featureFlag';
-import {
-  EMAIL_REMINDERS_FREQUENCY,
-  LANGUAGES,
-  PROGRESS_STATUS,
-  RESOURCE_CATEGORIES,
-  STORYBLOK_COLORS,
-} from '../../constants/enums';
-import { COURSE_LIST_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import illustrationCourses from '../../public/illustration_courses.svg';
-import logEvent from '../../utils/logEvent';
-import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',

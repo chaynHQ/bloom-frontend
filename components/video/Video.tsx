@@ -1,11 +1,11 @@
 'use client';
 
+import logEvent from '@/utils/logEvent';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
 import { YouTubeConfig } from 'react-player/youtube';
-import logEvent from '../../utils/logEvent';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 

@@ -1,12 +1,12 @@
 'use client';
 
+import { PROGRESS_STATUS } from '@/constants/enums';
+import { useTypedSelector } from '@/hooks/store';
+import { Course } from '@/lib/store/coursesSlice';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useTypedSelector } from '../../hooks/store';
-import { Course } from '../../lib/store/coursesSlice';
 
 interface SessionProgressDisplayProps {
   sessionId: number;

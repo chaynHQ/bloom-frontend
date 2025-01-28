@@ -1,13 +1,7 @@
 'use client';
 
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, TextField, Typography } from '@mui/material';
-import { useRollbar } from '@rollbar/react';
-import { useTranslations } from 'next-intl';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { FEEDBACK_FORM_URL } from '../../constants/common';
-import { EVENT_LOG_NAME } from '../../constants/enums';
+import { FEEDBACK_FORM_URL } from '@/constants/common';
+import { EVENT_LOG_NAME } from '@/constants/enums';
 import {
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -15,12 +9,18 @@ import {
   LOGIN_ERROR,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-} from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { useCreateEventLogMutation } from '../../lib/api';
-import { login } from '../../lib/auth';
-import { setAuthStateLoading } from '../../lib/store/userSlice';
-import logEvent from '../../utils/logEvent';
+} from '@/constants/events';
+import { useAppDispatch, useTypedSelector } from '@/hooks/store';
+import { useCreateEventLogMutation } from '@/lib/api';
+import { login } from '@/lib/auth';
+import { setAuthStateLoading } from '@/lib/store/userSlice';
+import logEvent from '@/utils/logEvent';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 const containerStyle = {
   marginY: 3,

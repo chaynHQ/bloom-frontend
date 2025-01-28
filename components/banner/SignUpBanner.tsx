@@ -1,14 +1,14 @@
 'use client';
 
+import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/constants/events';
+import { useTypedSelector } from '@/hooks/store';
+import { Link as i18nLink } from '@/i18n/routing';
+import theme from '@/styles/theme';
+import logEvent from '@/utils/logEvent';
 import { Button, Container, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Link as i18nLink } from '../../i18n/routing';
-import theme from '../../styles/theme';
-import logEvent from '../../utils/logEvent';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,

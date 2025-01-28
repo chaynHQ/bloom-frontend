@@ -1,5 +1,12 @@
 'use client';
 
+import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/constants/events';
+import { PartnerContent, getPartnerContent } from '@/constants/partners';
+import { useTypedSelector } from '@/hooks/store';
+import bloomLogo from '@/public/bloom_logo.svg';
+import comicReliefLogo from '@/public/comic_relief_logo.png';
+import communityFundLogo from '@/public/community_fund_logo.svg';
+import tiktokLogo from '@/public/tiktok.svg';
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -10,18 +17,11 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
-import bloomLogo from '../../public/bloom_logo.svg';
-import comicReliefLogo from '../../public/comic_relief_logo.png';
-import communityFundLogo from '../../public/community_fund_logo.svg';
-import tiktokLogo from '../../public/tiktok.svg';
 
+import { rowStyle } from '@/styles/common';
+import { getImageSizes } from '@/utils/imageSizes';
+import logEvent from '@/utils/logEvent';
 import Cookies from 'js-cookie';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent from '../../utils/logEvent';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
