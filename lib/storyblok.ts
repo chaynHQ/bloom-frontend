@@ -61,7 +61,7 @@ export const getStoryblokStory = async (
   params?: Partial<ISbStoriesParams>,
   uuids?: string,
 ) => {
-  if (!slug) {
+  if (!slug && !uuids) {
     throw new Error('No slug provided');
   }
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import PageSection from '@/components/common/PageSection';
 import ProgressStatus from '@/components/common/ProgressStatus';
@@ -17,7 +19,6 @@ import {
 import { useTypedSelector } from '@/hooks/store';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { Resource } from '@/lib/store/resourcesSlice';
-import { getStoryblokStory } from '@/lib/storyblok';
 import { columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { logEvent } from '@/utils/logEvent';
@@ -28,7 +29,6 @@ import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/r
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -85,6 +85,7 @@ export interface StoryblokResourceShortPageProps {
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
+  related_course: ISbStoryData | undefined;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -104,11 +105,11 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     video_transcript,
     page_sections,
     related_session,
+    related_course,
     related_content,
     related_exercises,
   } = props;
-  const params = useParams<{ locale: string }>();
-  const locale = params.locale;
+
   const router = useRouter();
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
@@ -118,7 +119,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [linkedCourse, setLinkedCourse] = useState<ISbStoryData>();
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -160,37 +160,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
-  }, []);
-  useEffect(() => {
-    async function fetchCourse() {
-      const relatedSession = related_session[0];
-      const relatedCourseUuid = related_session[0]?.content.course;
-
-      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.COURSE) {
-        setLinkedCourse(relatedSession);
-        return;
-      }
-      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.SESSION) {
-        // if the related session is a session, we need to get the course from the session
-        try {
-          const storyblokCourseProps = await getStoryblokStory(
-            undefined,
-            locale,
-            undefined,
-            relatedCourseUuid,
-          );
-
-          if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-            setLinkedCourse(storyblokCourseProps.stories[0]);
-          }
-          // Your data fetching logic here
-        } catch (error) {
-          console.error('Error fetching related courses:', error);
-        }
-      }
-    }
-
-    fetchCourse();
   }, []);
 
   const redirectToSession = () => {
@@ -274,7 +243,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
                     ? 0
                     : related_session[0]?.position / 10 - 1,
                 sessionName: related_session[0]?.content.name,
-                courseName: linkedCourse?.content.name,
+                courseName: related_course?.content.name,
               })}
             </Typography>
             <Button

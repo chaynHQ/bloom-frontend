@@ -23,6 +23,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(await import(`../messages/therapy/${locale}.json`)).default,
       ...(await import(`../messages/welcome/${locale}.json`)).default,
       ...(await import(`../messages/partnerAdmin/${locale}.json`)).default,
+      ...(await import(`../messages/messaging/${locale}.json`)).default,
+      ...(await import(`../messages/resources/${locale}.json`)).default,
+      ...(await import(`../messages/whatsapp/${locale}.json`)).default,
     },
   };
 });
