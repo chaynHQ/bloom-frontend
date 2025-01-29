@@ -1,3 +1,5 @@
+'use client';
+
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import { CrispIframe } from '@/components/crisp/CrispIframe';
