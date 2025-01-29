@@ -28,15 +28,11 @@ export async function generateStaticParams() {
 
     if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
 
-    // get array for slug because of catch all
     const courseSlug = session.slug.split('/')[1];
     const sessionSlug = session.slug.split('/')[2];
 
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ slug: `/${courseSlug}/${sessionSlug}`, locale });
-      }
+    for (const locale of locales) {
+      paths.push({ slug: `/${courseSlug}/${sessionSlug}`, locale });
     }
   });
 

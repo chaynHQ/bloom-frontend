@@ -36,14 +36,10 @@ export async function generateStaticParams() {
       return;
     }
 
-    // get array for slug because of catch all
     const slug = course.slug.split('/')[1];
 
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ slug, locale });
-      }
+    for (const locale of locales) {
+      paths.push({ slug, locale });
     }
   });
 
@@ -67,8 +63,6 @@ export default async function Page({
   }
 
   return (
-    <>
-      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
-    </>
+    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
   );
 }

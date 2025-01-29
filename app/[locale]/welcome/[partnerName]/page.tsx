@@ -31,10 +31,8 @@ export async function generateStaticParams() {
 
     const slug = story.slug;
 
-    if (locales) {
-      for (const locale of locales) {
-        paths.push({ slug, locale });
-      }
+    for (const locale of locales) {
+      paths.push({ slug, locale });
     }
   });
 

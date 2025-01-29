@@ -33,16 +33,13 @@ export async function generateStaticParams() {
 
   Object.keys(data.links).forEach((linkKey) => {
     const story = data.links[linkKey];
-
-    if (story.is_folder || !story.published) return;
-
     const slug = story.slug;
     const basePath = slug.split('/')[0];
 
-    if (locales && !excludePaths.includes(basePath)) {
-      for (const locale of locales) {
-        paths.push({ slug, locale });
-      }
+    if (story.is_folder || !story.published || excludePaths.includes(basePath)) return;
+
+    for (const locale of locales) {
+      paths.push({ slug, locale });
     }
   });
   return paths;

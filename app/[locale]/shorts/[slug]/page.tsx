@@ -2,61 +2,21 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '@/components/storyblok/StoryblokResourceShortPage';
+import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
-import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
-interface Props {
-  story: ISbStoryData | null;
-}
+export const dynamicParams = false;
+export const revalidate = 14400; // invalidate every 4 hours
 
-const ResourceShortOverview: NextPage<Props> = ({ story }) => {
-  if (!story) {
-    return <NoDataAvailable />;
-  }
+export async function generateStaticParams() {
+  let paths: { slug: string; locale: string }[] = [];
 
-  return (
-    <>
-      <StoryblokResourceShortPage
-        {...(story.content as StoryblokResourceShortPageProps)}
-        storyId={story.id}
-      />
-    </>
-  );
-};
-
-export async function getStaticProps({
-  locale = 'en',
-  preview = false,
-  params,
-}: GetStaticPropsContext) {
-  const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
-
-  const storyblokProps = await getStoryblokStory(`shorts/${slug}`, locale, {
-    resolve_relations: [
-      'resource_short_video.related_content',
-      'resource_short_video.related_session',
-    ],
-  });
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/resources/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
-}
-
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
+  const locales = routing.locales;
+  const storyblokApi = getStoryblokApi();
 
   let sbParams: ISbStoriesParams = {
-    version: isProduction ? 'published' : 'draft',
+    version: 'published',
     starts_with: 'shorts/',
     filter_query: {
       component: {
@@ -65,32 +25,45 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     },
   };
 
-  const storyblokApi = getStoryblokApi();
-  let shorts = await storyblokApi.getAll('cdn/links', sbParams, 'short_video', {
-    cache: 'no-store',
-  });
+  const { data } = await storyblokApi.get('cdn/links/', sbParams, { cache: 'no-store' });
 
-  let paths: any = [];
+  Object.keys(data.links).forEach((linkKey) => {
+    const story = data.links[linkKey];
 
-  shorts.forEach((short: Partial<ISbStoryData>) => {
-    if (!short.slug || (isProduction && !short.published)) return;
+    if (!story.slug || !story.published) return;
 
-    // get array for slug because of catch all
-    const slug = short.slug;
-    let splittedSlug = slug.split('/');
+    const slug = story.slug.split('/')[1];
 
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ params: { slug: splittedSlug[1] }, locale });
-      }
+    for (const locale of locales) {
+      paths.push({ slug, locale });
     }
   });
-
-  return {
-    paths: paths,
-    fallback: false,
-  };
+  return paths;
 }
 
-export default ResourceShortOverview;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const locale = (await params).locale;
+  const slug = (await params).slug;
+
+  const story = await getStoryblokStory(`shorts/${slug}`, locale, {
+    resolve_relations: [
+      'resource_short_video.related_content',
+      'resource_short_video.related_session',
+    ],
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
+  return (
+    <StoryblokResourceShortPage
+      {...(story.content as StoryblokResourceShortPageProps)}
+      storyId={story.id}
+    />
+  );
+}
