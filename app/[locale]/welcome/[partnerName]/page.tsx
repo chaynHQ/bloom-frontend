@@ -3,8 +3,8 @@ import StoryblokWelcomePage, {
   StoryblokWelcomePageProps,
 } from '@/components/storyblok/StoryblokWelcomePage';
 import { routing } from '@/i18n/routing';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
-import { ISbResult, ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
+import { getStoryblokStory } from '@/lib/storyblok';
+import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/rsc';
 
 export const revalidate = 14400; // invalidate every 4 hours
 
@@ -49,8 +49,7 @@ export default async function Page({
   const locale = (await params).locale;
   const partnerName = (await params).partnerName;
 
-  const pageProps = await getStoryblokPageProps(`welcome/${partnerName}`, locale);
-  const story = pageProps?.story as ISbStoryData;
+  const story = await getStoryblokStory(`welcome/${partnerName}`, locale);
 
   if (!story) {
     return <NoDataAvailable />;

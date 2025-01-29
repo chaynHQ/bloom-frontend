@@ -19,7 +19,13 @@ import StoryblokTeamMemberCard from '@/components/storyblok/StoryblokTeamMemberC
 import StoryblokTeamMembersCards from '@/components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '@/components/storyblok/StoryblokVideo';
 import StoryblokWelcomePage from '@/components/storyblok/StoryblokWelcomePage';
-import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
+import {
+  apiPlugin,
+  ISbStoriesParams,
+  ISbStoryData,
+  StoryblokClient,
+  storyblokInit,
+} from '@storyblok/react/rsc';
 
 export const getStoryblokApi = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
@@ -48,3 +54,63 @@ export const getStoryblokApi = storyblokInit({
     meet_the_team: StoryblokMeetTheTeamPage,
   },
 });
+
+export const getStoryblokStory = async (
+  slug: string | undefined,
+  locale: string | undefined,
+  params?: Partial<ISbStoriesParams>,
+  uuids?: string,
+) => {
+  if (!slug) {
+    throw new Error('No slug provided');
+  }
+
+  const sbParams: ISbStoriesParams = {
+    version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
+    language: locale || 'en',
+    ...(params && params),
+    ...(uuids && { by_uuids: uuids }),
+  };
+
+  const sbOptions = {
+    cache: 'no-store' as RequestCache,
+  };
+
+  try {
+    const storyblokApi: StoryblokClient = getStoryblokApi();
+
+    let { data } = await storyblokApi.get(`cdn/stories/${!uuids && slug}`, sbParams, sbOptions);
+
+    return data?.story as ISbStoryData;
+  } catch (error) {
+    console.log('Error getting storyblok data for page', slug, sbParams, error);
+    return undefined;
+  }
+};
+
+export const getStoryblokStories = async (
+  locale: string | undefined,
+  params: Partial<ISbStoriesParams>,
+  uuids?: string,
+) => {
+  const sbParams: ISbStoriesParams = {
+    version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
+    language: locale || 'en',
+    ...(params && params),
+    ...(uuids && { by_uuids: uuids }),
+  };
+
+  const sbOptions = {
+    cache: 'no-store' as RequestCache,
+  };
+
+  try {
+    const storyblokApi: StoryblokClient = getStoryblokApi();
+
+    let { data } = await storyblokApi.get(`cdn/stories`, sbParams, sbOptions);
+
+    return data?.stories as ISbStoryData[];
+  } catch (error) {
+    console.log('Error getting storyblok data for page', sbParams, error);
+  }
+};

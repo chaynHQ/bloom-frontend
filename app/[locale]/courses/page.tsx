@@ -1,6 +1,6 @@
 import { FeatureFlag } from '@/config/featureFlag';
 import { LANGUAGES } from '@/constants/enums';
-import { getStoryblokApi } from '@/lib/storyblok';
+import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
 import CoursesPage from './page-client';
 
@@ -35,36 +35,21 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
     starts_with: 'shorts/',
   };
 
-  const storyblokApi = getStoryblokApi();
-
-  const { data: coursesData } = await storyblokApi.get('cdn/stories/', sbCoursesParams, {
-    cache: 'no-store',
-  });
-
-  const { data: conversationsData } = await storyblokApi.get(
-    'cdn/stories/',
-    sbConversationsParams,
-    {
-      cache: 'no-store',
-    },
-  );
-
-  const { data: shortsData } = await storyblokApi.get('cdn/stories/', sbShortsParams, {
-    cache: 'no-store',
-  });
+  const coursesStories = (await getStoryblokStories(locale, sbCoursesParams)) || [];
+  const conversationsStories = (await getStoryblokStories(locale, sbConversationsParams)) || [];
+  const shortsStories = (await getStoryblokStories(locale, sbShortsParams)) || [];
 
   const contentLanguagesString = locale === 'en' ? 'default' : locale;
 
-  console.log(coursesData);
-  const courses = coursesData.stories?.filter(
+  const courses = coursesStories?.filter(
     (course: ISbStoryData) => !FeatureFlag.getDisabledCourses().has(course.full_slug),
   );
 
-  const conversations = conversationsData.stories.filter((conversation: ISbStoryData) =>
+  const conversations = conversationsStories?.filter((conversation: ISbStoryData) =>
     conversation.content.languages.includes(contentLanguagesString),
   );
 
-  const shorts = shortsData.stories.filter((short: ISbStoryData) =>
+  const shorts = shortsStories?.filter((short: ISbStoryData) =>
     short.content.languages.includes(contentLanguagesString),
   );
 

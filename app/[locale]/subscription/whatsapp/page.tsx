@@ -15,8 +15,8 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { rowStyle } from '@/styles/common';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 import { hasWhatsappSubscription } from '@/utils/whatsappUtils';
 import { ISbStoryData } from '@storyblok/react/rsc';
 
@@ -117,7 +117,7 @@ const ManageWhatsappSubscription: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps(`subscription/whatsapp`, locale);
+  const storyblokProps = await getStoryblokStory(`subscription/whatsapp`, locale);
 
   return {
     props: {

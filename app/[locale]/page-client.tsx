@@ -15,7 +15,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 interface Props {
-  story: ISbStoryData | null;
+  story: ISbStoryData | undefined;
 }
 
 export default function HomePage({ story }: Props) {

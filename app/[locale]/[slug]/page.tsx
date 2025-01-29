@@ -1,9 +1,9 @@
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/StoryblokPage';
-import { getStoryblokApi, ISbStoryData } from '@storyblok/react/rsc';
+import { getStoryblokApi } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getStoryblokStory } from '@/lib/storyblok';
 
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
@@ -55,8 +55,7 @@ export default async function Page({
   const locale = (await params).locale;
   const slug = (await params).slug;
 
-  const pageProps = await getStoryblokPageProps(slug, locale);
-  const story = pageProps?.story as ISbStoryData;
+  const story = await getStoryblokStory(slug, locale);
 
   if (!story) {
     return <NoDataAvailable />;

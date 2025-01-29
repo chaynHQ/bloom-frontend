@@ -4,9 +4,9 @@ import { CrispIframe } from '@/components/crisp/CrispIframe';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { useTypedSelector } from '@/hooks/store';
+import { getStoryblokStory } from '@/lib/storyblok';
 import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
 import { rowStyle } from '@/styles/common';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -101,7 +101,7 @@ const Message: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('messaging', locale);
+  const storyblokProps = await getStoryblokStory('messaging', locale);
 
   return {
     props: {

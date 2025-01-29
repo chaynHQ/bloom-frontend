@@ -2,7 +2,7 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokMeetTheTeamPage, {
   StoryblokMeetTheTeamPageProps,
 } from '@/components/storyblok/StoryblokMeetTheTeamPage';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { GetStaticPropsContext, NextPage } from 'next';
 
@@ -19,7 +19,7 @@ const MeetTheTeam: NextPage<Props> = ({ story }) => {
 };
 
 export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokPageProps('meet-the-team', locale);
+  const storyblokProps = await getStoryblokStory('meet-the-team', locale);
 
   return {
     props: {

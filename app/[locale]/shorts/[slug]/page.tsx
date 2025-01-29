@@ -2,7 +2,7 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '@/components/storyblok/StoryblokResourceShortPage';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 
@@ -32,7 +32,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const storyblokProps = await getStoryblokPageProps(`shorts/${slug}`, locale, {
+  const storyblokProps = await getStoryblokStory(`shorts/${slug}`, locale, {
     resolve_relations: [
       'resource_short_video.related_content',
       'resource_short_video.related_session',

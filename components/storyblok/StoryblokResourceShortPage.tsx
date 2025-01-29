@@ -17,9 +17,9 @@ import {
 import { useTypedSelector } from '@/hooks/store';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { Resource } from '@/lib/store/resourcesSlice';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
-import { getStoryblokPagesByUuids } from '@/utils/getStoryblokPageProps';
 import { logEvent } from '@/utils/logEvent';
 import userHasAccessToPartnerContent from '@/utils/userHasAccessToPartnerContent';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -164,7 +164,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   useEffect(() => {
     async function fetchCourse() {
       const relatedSession = related_session[0];
-      const relatedCourse = related_session[0]?.content.course;
+      const relatedCourseUuid = related_session[0]?.content.course;
 
       if (relatedSession?.content.component === STORYBLOK_COMPONENTS.COURSE) {
         setLinkedCourse(relatedSession);
@@ -173,10 +173,11 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       if (relatedSession?.content.component === STORYBLOK_COMPONENTS.SESSION) {
         // if the related session is a session, we need to get the course from the session
         try {
-          const storyblokCourseProps = await getStoryblokPagesByUuids(
-            relatedCourse, // get course by course uuid
+          const storyblokCourseProps = await getStoryblokStory(
+            undefined,
             locale,
-            {},
+            undefined,
+            relatedCourseUuid,
           );
 
           if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {

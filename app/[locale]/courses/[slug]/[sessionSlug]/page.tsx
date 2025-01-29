@@ -2,7 +2,7 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '@/components/storyblok/StoryblokSessionPage';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 
@@ -35,7 +35,7 @@ export async function getStaticProps({ locale, preview = false, params }: GetSta
     params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
   const fullSlug = `courses/${slug}/${sessionSlug}`;
 
-  const storyblokProps = await getStoryblokPageProps(fullSlug, locale, {
+  const storyblokProps = await getStoryblokStory(fullSlug, locale, {
     resolve_relations: ['Session.course', 'session_iba.course'],
   });
 

@@ -2,7 +2,7 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokResourceConversationPage, {
   StoryblokResourceConversationPageProps,
 } from '@/components/storyblok/StoryblokResourceConversationPage';
-import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
+import { getStoryblokStory } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
 
@@ -28,7 +28,7 @@ const ResourceConversationOverview: NextPage<Props> = ({ story }) => {
 export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
   const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
 
-  const storyblokProps = await getStoryblokPageProps(`conversations/${slug}`, locale, {
+  const storyblokProps = await getStoryblokStory(`conversations/${slug}`, locale, {
     resolve_relations: ['resource_conversation.related_content'],
   });
 
