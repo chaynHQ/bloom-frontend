@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing';
 import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 
 export const dynamicParams = false;
+export const revalidate = 14400; // invalidate every 4 hours
 
 export async function generateStaticParams() {
   let paths: { slug: string; locale: string }[] = [];

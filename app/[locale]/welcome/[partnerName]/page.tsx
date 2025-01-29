@@ -6,7 +6,7 @@ import { routing } from '@/i18n/routing';
 import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 import { ISbResult, ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 
-export const revalidate = 14400; // invalidate every 4 hour
+export const revalidate = 14400; // invalidate every 4 hours
 
 export async function generateStaticParams() {
   let paths: { slug: string; locale: string }[] = [];
