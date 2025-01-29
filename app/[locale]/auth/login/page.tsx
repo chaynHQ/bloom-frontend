@@ -1,3 +1,5 @@
+'use client';
+
 import LoginForm from '@/components/forms/LoginForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import {
@@ -24,8 +26,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import type { NextPage } from 'next';
-import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -55,7 +55,7 @@ const imageContainerStyle = {
   marginTop: { xs: 0, md: 2 },
 } as const;
 
-const Login: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const theme = useTheme();
@@ -185,18 +185,4 @@ const Login: NextPage = () => {
       )}
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default Login;

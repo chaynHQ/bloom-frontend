@@ -1,3 +1,5 @@
+'use client';
+
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '@/constants/events';
@@ -20,8 +22,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import type { NextPage } from 'next';
-import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -70,7 +70,7 @@ const logosContainerStyle = {
   justifyContent: 'flex-start',
 } as const;
 
-const Register: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
@@ -229,18 +229,4 @@ const Register: NextPage = () => {
       )}
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default Register;

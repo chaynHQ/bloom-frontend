@@ -1,3 +1,5 @@
+'use client';
+
 import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
 import Header from '@/components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '@/constants/events';
@@ -8,7 +10,6 @@ import { rowStyle } from '@/styles/common';
 import { getImageSizes } from '@/utils/imageSizes';
 import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -46,7 +47,7 @@ const partnerCardStyle = {
   marginY: { xs: 2, md: 3 },
 } as const;
 
-const ApplyACode: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
@@ -130,19 +131,4 @@ const ApplyACode: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/account/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default ApplyACode;

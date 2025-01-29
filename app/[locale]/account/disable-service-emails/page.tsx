@@ -1,3 +1,5 @@
+'use client';
+
 import Header from '@/components/layout/Header';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '@/constants/events';
@@ -6,12 +8,11 @@ import { useUpdateUserMutation } from '@/lib/api';
 import illustrationPerson5Yellow from '@/public/illustration_leaf_mix_bee.svg';
 import logEvent from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
-const DisableServiceEmails: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Account.disableServiceEmails');
 
   const userServiceEmailsPermission = useTypedSelector(
@@ -72,18 +73,4 @@ const DisableServiceEmails: NextPage = () => {
       )}
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/account/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default DisableServiceEmails;

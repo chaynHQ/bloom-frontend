@@ -1,3 +1,5 @@
+'use client';
+
 import AboutYouDemographicForm from '@/components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '@/components/forms/AboutYouSetAForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
@@ -9,7 +11,6 @@ import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import logEvent from '@/utils/logEvent';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
@@ -40,7 +41,7 @@ const getForm = (formLabel: string) => {
   return formMap[formLabel];
 };
 
-const AboutYou: NextPage = () => {
+export default function Page() {
   const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
   const searchParams = useSearchParams();
   const qParam = searchParams.get('q');
@@ -119,19 +120,4 @@ const AboutYou: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/account/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default AboutYou;

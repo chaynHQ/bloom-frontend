@@ -1,12 +1,11 @@
+'use client';
+
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
-import { useRouter } from '@/i18n/routing';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
-import type { NextPage } from 'next';
-import { GetStaticPropsContext } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
@@ -25,9 +24,8 @@ const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
 } as const;
 
-const ResetPassword: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Auth');
-  const router = useRouter();
   const searchParams = useSearchParams();
   const oobCodeParam = searchParams.get('oobCode');
 
@@ -66,18 +64,4 @@ const ResetPassword: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/auth/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default ResetPassword;
