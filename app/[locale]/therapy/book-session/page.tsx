@@ -1,3 +1,5 @@
+'use client';
+
 import Faqs from '@/components/common/Faqs';
 import ImageTextGrid, { ImageTextItem } from '@/components/common/ImageTextGrid';
 import Header from '@/components/layout/Header';
@@ -15,7 +17,6 @@ import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { rowStyle } from '@/styles/common';
 import logEvent from '@/utils/logEvent';
 import { Box, Button, Container, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -67,7 +68,7 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-const BookSession: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
@@ -194,18 +195,4 @@ const BookSession: NextPage = () => {
       )}
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/therapy/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default BookSession;

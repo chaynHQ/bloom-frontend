@@ -1,4 +1,4 @@
-import { GetStaticPropsContext, NextPage } from 'next';
+'use client';
 
 import illustrationChange from '@/public/illustration_change_peach.svg';
 import { getImageSizes } from '@/utils/imageSizes';
@@ -18,7 +18,7 @@ const imageContainerStyle = {
   marginX: 'auto',
 } as const;
 
-const Maintenance: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Shared');
 
   return (
@@ -42,18 +42,4 @@ const Maintenance: NextPage = () => {
       </Typography>
     </Container>
   );
-};
-
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
 }
-
-export default Maintenance;

@@ -1,11 +1,12 @@
+'use client';
+
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { LANGUAGES } from '@/constants/enums';
 import { useRouter } from '@/i18n/routing';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useSearchParams } from 'next/navigation';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
-const ActionHandler: NextPage = () => {
+export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -19,17 +20,4 @@ const ActionHandler: NextPage = () => {
     router.replace('/404', options);
   }
   return <LoadingContainer />;
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default ActionHandler;

@@ -1,3 +1,5 @@
+'use client';
+
 import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
 import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
 import UpdateTherapyAdminForm from '@/components/forms/UpdateTherapyAdminForm';
@@ -6,7 +8,6 @@ import { CREATE_PARTNER_ACCESS_VIEWED } from '@/constants/events';
 import { rowStyle } from '@/styles/common';
 import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -21,7 +22,7 @@ const cardStyle = {
   margin: { xs: '10px' },
 } as const;
 
-const Dashboard: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Admin');
 
   const headerProps = {
@@ -82,19 +83,4 @@ const Dashboard: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/partnerAdmin/${locale}.json`),
-        ...require(`../../messages/admin/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default Dashboard;

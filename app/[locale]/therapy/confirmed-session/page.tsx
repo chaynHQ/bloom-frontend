@@ -1,3 +1,5 @@
+'use client';
+
 import Faqs from '@/components/common/Faqs';
 import Header from '@/components/layout/Header';
 import { THERAPY_CONFIRMATION_VIEWED } from '@/constants/events';
@@ -9,13 +11,12 @@ import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import logEvent from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-const ConfirmedSession: NextPage = () => {
+export default function Page() {
   const t = useTranslations('Therapy');
   const tS = useTranslations('Shared');
 
@@ -98,18 +99,4 @@ const ConfirmedSession: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/therapy/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default ConfirmedSession;

@@ -1,3 +1,5 @@
+'use client';
+
 import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '@/constants/events';
@@ -6,7 +8,6 @@ import bloomLogo from '@/public/bloom_logo.svg';
 import { rowStyle } from '@/styles/common';
 import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
-import { GetStaticPropsContext, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -20,7 +21,7 @@ const cardStyle = {
   width: { xs: '100%', md: '60%' },
 } as const;
 
-const CreateAccessCode: NextPage = () => {
+export default function Page() {
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
@@ -67,18 +68,4 @@ const CreateAccessCode: NextPage = () => {
       </Container>
     </Box>
   );
-};
-
-export function getStaticProps({ locale }: GetStaticPropsContext) {
-  return {
-    props: {
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/partnerAdmin/${locale}.json`),
-      },
-    },
-  };
 }
-
-export default CreateAccessCode;
