@@ -2,7 +2,7 @@ import { FeatureFlag } from '@/config/featureFlag';
 import { LANGUAGES } from '@/constants/enums';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
-import CoursesPage from './page-client';
+import CoursesPage from '../../../components/pages/CoursesPage';
 
 export const revalidate = 14400; // invalidate every 4 hours
 

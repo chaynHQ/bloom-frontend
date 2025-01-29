@@ -1,5 +1,5 @@
 import { getStoryblokStory } from '@/lib/storyblok';
-import HomePage from './page-client';
+import HomePage from '../../components/pages/HomePage';
 
 export const revalidate = 14400; // invalidate every 4 hours
 
