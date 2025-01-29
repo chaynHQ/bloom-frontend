@@ -11,7 +11,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "NODE_OPTIONS='newrelic' next dev --turbopack",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "NODE_OPTIONS='-r newrelic' next start",
     "https:proxy": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",

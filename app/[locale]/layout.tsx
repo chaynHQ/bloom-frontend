@@ -129,24 +129,29 @@ export default async function RootLayout(props: RootLayoutProps) {
   }
   const messages = await getMessages();
 
-  // @ts-ignore
-  if (newrelic.agent?.collector.isConnected() === false) {
-    await new Promise((resolve) => {
-      // @ts-ignore
-      newrelic.agent.on('connected', resolve);
+  let browserTimingHeader = undefined;
+
+  if (process.env.NEXT_PUBLIC_ENV === 'production') {
+    // @ts-ignore
+    if (newrelic.agent?.collector.isConnected() === false) {
+      await new Promise((resolve) => {
+        // @ts-ignore
+        newrelic.agent.on('connected', resolve);
+      });
+    }
+    // @ts-ignore
+    browserTimingHeader = newrelic.getBrowserTimingHeader({
+      hasToRemoveScriptWrapper: true,
+      allowTransactionlessInjection: true,
     });
   }
-
-  // @ts-ignore
-  const browserTimingHeader = newrelic.getBrowserTimingHeader({
-    hasToRemoveScriptWrapper: true,
-    allowTransactionlessInjection: true,
-  });
 
   return (
     <RollbarProvider config={clientConfig}>
       <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
-        <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
+        {browserTimingHeader && (
+          <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
+        )}
         <NextIntlClientProvider messages={messages} timeZone="Europe/London">
           <ReduxProvider>
             <AppRouterCacheProvider>
