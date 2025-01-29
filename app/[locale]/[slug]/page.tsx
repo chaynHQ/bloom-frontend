@@ -1,6 +1,6 @@
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/StoryblokPage';
-import { getStoryblokApi } from '@storyblok/react/rsc';
+import { getStoryblokApi, ISbStoryData } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
 import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
@@ -8,9 +8,11 @@ import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
+  let paths: { slug: string; locale: string }[] = [];
+
   const locales = routing.locales;
   const storyblokApi = getStoryblokApi();
-  let { data } = await storyblokApi.get(
+  const { data } = await storyblokApi.get(
     'cdn/links/',
     { version: 'published' },
     { cache: 'no-store' },
@@ -27,17 +29,15 @@ export async function generateStaticParams() {
     'conversations',
   ];
 
-  let paths: { slug: string; locale: string }[] = [];
   Object.keys(data.links).forEach((linkKey) => {
-    if (data.links[linkKey].is_folder || !data.links[linkKey].published) {
-      return;
-    }
+    const story = data.links[linkKey];
 
-    const slug = data.links[linkKey].slug;
-    let splittedSlug = slug.split('/');
+    if (story.is_folder || !story.published) return;
 
-    if (locales && !excludePaths.includes(splittedSlug[0])) {
-      // create additional languages
+    const slug = story.slug;
+    const basePath = slug.split('/')[0];
+
+    if (locales && !excludePaths.includes(basePath)) {
       for (const locale of locales) {
         paths.push({ slug, locale });
       }
@@ -55,7 +55,7 @@ export default async function Page({
   const slug = (await params).slug;
 
   const pageProps = await getStoryblokPageProps(slug, locale);
-  const story = pageProps?.story;
+  const story = pageProps?.story as ISbStoryData;
 
   if (!story) {
     return <NoDataAvailable />;

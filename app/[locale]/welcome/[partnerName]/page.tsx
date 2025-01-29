@@ -2,16 +2,56 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokWelcomePage, {
   StoryblokWelcomePageProps,
 } from '@/components/storyblok/StoryblokWelcomePage';
+import { routing } from '@/i18n/routing';
 import { getStoryblokPageProps } from '@/utils/getStoryblokPageProps';
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
-import type { GetStaticPathsContext, NextPage } from 'next';
-import { GetStaticPropsContext } from 'next';
+import { ISbResult, ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
 
-interface Props {
-  story: ISbStoryData | null;
+export const revalidate = 14400; // invalidate every 4 hour
+
+export async function generateStaticParams() {
+  let paths: { slug: string; locale: string }[] = [];
+
+  const locales = routing.locales;
+
+  let sbParams: ISbStoriesParams = {
+    version: 'published',
+    starts_with: 'welcome/',
+  };
+
+  const storyblokApi = getStoryblokApi();
+
+  const { data } = (await storyblokApi.get('cdn/links', sbParams, {
+    cache: 'no-store',
+  })) as ISbResult;
+
+  Object.keys(data.links).forEach((linkKey: string) => {
+    const story = data.links[linkKey];
+
+    if (story.is_folder || !story.published) return;
+
+    const slug = story.slug;
+
+    if (locales) {
+      for (const locale of locales) {
+        paths.push({ slug, locale });
+      }
+    }
+  });
+
+  return paths;
 }
 
-const Welcome: NextPage<Props> = ({ story }) => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; partnerName: string }>;
+}) {
+  const locale = (await params).locale;
+  const partnerName = (await params).partnerName;
+
+  const pageProps = await getStoryblokPageProps(`welcome/${partnerName}`, locale);
+  const story = pageProps?.story as ISbStoryData;
+
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -22,55 +62,4 @@ const Welcome: NextPage<Props> = ({ story }) => {
       storySlug={story.slug}
     />
   );
-};
-
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  const partnerName = params?.partnerName;
-  const storyblokProps = await getStoryblokPageProps(`welcome/${partnerName}`, locale);
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../../messages/courses/${locale}.json`),
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/welcome/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
 }
-
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let sbParams: ISbStoriesParams = {
-    version: 'published',
-    starts_with: 'welcome/',
-  };
-
-  const storyblokApi = getStoryblokApi();
-  let data = await storyblokApi.getAll('cdn/links', sbParams, 'welcome', { cache: 'no-store' });
-
-  let paths: any = [];
-
-  data.forEach((story: Partial<ISbStoryData>) => {
-    if (!story.slug || !story.published) return;
-
-    // get array for slug because of catch all
-    let splittedSlug = story.slug.split('/');
-
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ params: { partnerName: splittedSlug[1] }, locale });
-      }
-    }
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export default Welcome;
