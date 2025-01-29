@@ -1,6 +1,6 @@
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/StoryblokPage';
-import { getStoryblokApi } from '@storyblok/react/rsc';
+import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -13,11 +13,12 @@ export async function generateStaticParams() {
 
   const locales = routing.locales;
   const storyblokApi = getStoryblokApi();
-  const { data } = await storyblokApi.get(
-    'cdn/links/',
-    { version: 'published' },
-    { cache: 'no-store' },
-  );
+
+  let sbParams: ISbStoriesParams = {
+    version: 'published',
+  };
+
+  const { data } = await storyblokApi.get('cdn/links/', sbParams, { cache: 'no-store' });
 
   const excludePaths: string[] = [
     'home',

@@ -2,47 +2,19 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokCoursePage, {
   StoryblokCoursePageProps,
 } from '@/components/storyblok/StoryblokCoursePage';
+import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
-import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
-interface Props {
-  story: ISbStoryData | null;
-}
+export const dynamicParams = false;
+export const revalidate = 14400; // invalidate every 4 hours
 
-const CourseOverview: NextPage<Props> = ({ story }) => {
-  if (!story) {
-    return <NoDataAvailable />;
-  }
+export async function generateStaticParams() {
+  let paths: { slug: string; locale: string }[] = [];
 
-  return (
-    <>
-      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
-    </>
-  );
-};
+  const locales = routing.locales;
+  const storyblokApi = getStoryblokApi();
 
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
-
-  const storyblokProps = await getStoryblokStory(`courses/${slug}`, locale, {
-    resolve_relations: 'week.sessions',
-  });
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../../messages/shared/${locale}.json`),
-        ...require(`../../messages/navigation/${locale}.json`),
-        ...require(`../../messages/courses/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
-}
-
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   let sbParams: ISbStoriesParams = {
     version: 'published',
     starts_with: 'courses/',
@@ -53,12 +25,11 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     },
   };
 
-  const storyblokApi = getStoryblokApi();
-  let courses = await storyblokApi.getAll('cdn/links', sbParams, 'course', { cache: 'no-store' });
+  let { data } = await storyblokApi.get('cdn/links', sbParams, { cache: 'no-store' });
 
-  let paths: any = [];
+  Object.keys(data.links).forEach((linkKey) => {
+    const course = data.links[linkKey];
 
-  courses.forEach((course: Partial<ISbStoryData>) => {
     if (!course.slug || !course.published) return;
 
     if (!course.is_startpage) {
@@ -66,21 +37,38 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     }
 
     // get array for slug because of catch all
-    const slug = course.slug;
-    let splittedSlug = slug.split('/');
+    const slug = course.slug.split('/')[1];
 
     if (locales) {
       // create additional languages
       for (const locale of locales) {
-        paths.push({ params: { slug: splittedSlug[1] }, locale });
+        paths.push({ slug, locale });
       }
     }
   });
 
-  return {
-    paths: paths,
-    fallback: false,
-  };
+  return paths;
 }
 
-export default CourseOverview;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const locale = (await params).locale;
+  const slug = (await params).slug;
+
+  const story = await getStoryblokStory(`courses/${slug}`, locale, {
+    resolve_relations: 'week.sessions',
+  });
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
+  return (
+    <>
+      <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    </>
+  );
+}

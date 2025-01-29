@@ -2,15 +2,62 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '@/components/storyblok/StoryblokSessionPage';
+import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
-import { ISbStoriesParams, ISbStoryData, getStoryblokApi } from '@storyblok/react/rsc';
-import { GetStaticPathsContext, GetStaticPropsContext, NextPage } from 'next';
+import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
-interface Props {
-  story: ISbStoryData | null;
+export const dynamicParams = false;
+export const revalidate = 14400; // invalidate every 4 hours
+
+export async function generateStaticParams() {
+  let paths: { slug: string; locale: string }[] = [];
+
+  const locales = routing.locales;
+  const storyblokApi = getStoryblokApi();
+
+  let sbParams: ISbStoriesParams = {
+    version: 'published',
+    starts_with: 'courses/',
+    content_type: 'session',
+  };
+
+  let { data } = await storyblokApi.get('cdn/links', sbParams, { cache: 'no-store' });
+
+  Object.keys(data.links).forEach((linkKey) => {
+    const session = data.links[linkKey];
+
+    if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
+
+    // get array for slug because of catch all
+    const courseSlug = session.slug.split('/')[1];
+    const sessionSlug = session.slug.split('/')[2];
+
+    if (locales) {
+      // create additional languages
+      for (const locale of locales) {
+        paths.push({ slug: `/${courseSlug}/${sessionSlug}`, locale });
+      }
+    }
+  });
+
+  return paths;
 }
 
-const SessionDetail: NextPage<Props> = ({ story }) => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string; sessionSlug: string }>;
+}) {
+  const locale = (await params).locale;
+  const slug = (await params).slug;
+  const sessionSlug = (await params).sessionSlug;
+
+  const fullSlug = `courses/${slug}/${sessionSlug}`;
+
+  const story = await getStoryblokStory(fullSlug, locale, {
+    resolve_relations: ['Session.course', 'session_iba.course'],
+  });
+
   if (!story) {
     return <NoDataAvailable />;
   }
@@ -18,74 +65,11 @@ const SessionDetail: NextPage<Props> = ({ story }) => {
   const content = story.content as StoryblokSessionPageProps;
 
   return (
-    <>
-      <StoryblokSessionPage
-        {...content}
-        storyId={story.id}
-        storyUuid={story.uuid}
-        storyPosition={story.position}
-      />
-    </>
+    <StoryblokSessionPage
+      {...content}
+      storyId={story.id}
+      storyUuid={story.uuid}
+      storyPosition={story.position}
+    />
   );
-};
-
-export async function getStaticProps({ locale, preview = false, params }: GetStaticPropsContext) {
-  const slug = params?.slug instanceof Array ? params.slug.join('/') : params?.slug;
-  const sessionSlug =
-    params?.sessionSlug instanceof Array ? params.sessionSlug.join('/') : params?.sessionSlug;
-  const fullSlug = `courses/${slug}/${sessionSlug}`;
-
-  const storyblokProps = await getStoryblokStory(fullSlug, locale, {
-    resolve_relations: ['Session.course', 'session_iba.course'],
-  });
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../../../messages/shared/${locale}.json`),
-        ...require(`../../../messages/navigation/${locale}.json`),
-        ...require(`../../../messages/courses/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
 }
-
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  let sbParams: ISbStoriesParams = {
-    version: 'published',
-    starts_with: 'courses/',
-  };
-
-  const storyblokApi = getStoryblokApi();
-  let sessions = await storyblokApi.getAll('cdn/links', sbParams, 'session', { cache: 'no-store' });
-
-  let paths: any = [];
-
-  sessions.forEach((session: Partial<ISbStoryData>) => {
-    const slug = session.slug;
-    if (!slug) return;
-
-    if (session.is_startpage || session.is_folder || !session.published) {
-      return;
-    }
-
-    // get array for slug because of catch all
-    let splittedSlug = slug.split('/');
-
-    if (locales) {
-      // create additional languages
-      for (const locale of locales) {
-        paths.push({ params: { slug: splittedSlug[1], sessionSlug: splittedSlug[2] }, locale });
-      }
-    }
-  });
-
-  return {
-    paths: paths,
-    fallback: false,
-  };
-}
-
-export default SessionDetail;
