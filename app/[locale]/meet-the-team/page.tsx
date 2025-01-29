@@ -3,34 +3,16 @@ import StoryblokMeetTheTeamPage, {
   StoryblokMeetTheTeamPageProps,
 } from '@/components/storyblok/StoryblokMeetTheTeamPage';
 import { getStoryblokStory } from '@/lib/storyblok';
-import { ISbStoryData } from '@storyblok/react/rsc';
-import { GetStaticPropsContext, NextPage } from 'next';
 
-interface Props {
-  story: ISbStoryData | null;
-}
+export const revalidate = 14400; // invalidate every 4 hours
 
-const MeetTheTeam: NextPage<Props> = ({ story }) => {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = (await params).locale;
+  const story = await getStoryblokStory('meet-the-team', locale);
+
   if (!story) {
     return <NoDataAvailable />;
   }
 
   return <StoryblokMeetTheTeamPage {...(story.content as StoryblokMeetTheTeamPageProps)} />;
-};
-
-export async function getStaticProps({ locale, preview = false }: GetStaticPropsContext) {
-  const storyblokProps = await getStoryblokStory('meet-the-team', locale);
-
-  return {
-    props: {
-      ...storyblokProps,
-      messages: {
-        ...require(`../messages/shared/${locale}.json`),
-        ...require(`../messages/navigation/${locale}.json`),
-      },
-    },
-    revalidate: 3600, // revalidate every hour
-  };
 }
-
-export default MeetTheTeam;
