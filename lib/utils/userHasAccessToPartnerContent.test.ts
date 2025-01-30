@@ -1,5 +1,6 @@
 import { PartnerContent } from '@/lib/constants/partners';
 import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
+import { expect } from '@jest/globals';
 import userHasAccessToPartnerContent from './userHasAccessToPartnerContent';
 
 const partnerAPartnerAccessCode = {
@@ -34,7 +35,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['public']);
+      expect(result).toEqual(['public']);
     });
     it('and has PartnerA referral partner', () => {
       // Arrange
@@ -52,7 +53,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['partnera']);
+      expect(result).toEqual(['partnera']);
     });
   });
 
@@ -73,7 +74,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['public']);
+      expect(result).toEqual(['public']);
     });
     it('and has PartnerA referral partner but no access code', () => {
       // Arrange
@@ -91,7 +92,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['public']);
+      expect(result).toEqual(['public']);
     });
     it('and has no referral partner but has a PartnerA access code', () => {
       // Arrange
@@ -109,7 +110,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['partnera']);
+      expect(result).toEqual(['partnera']);
     });
     it('and has no referral partner but has a PartnerA access code and is partnerAdmin', () => {
       // Arrange
@@ -128,7 +129,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['partnera']);
+      expect(result).toEqual(['partnera']);
     });
     it('and has no referral partner but has a PartnerA access code and is partnerAdmin', () => {
       // Arrange
@@ -147,7 +148,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['partnera']);
+      expect(result).toEqual(['partnera']);
     });
     it('and has no referral partner but has a PartnerA and PartnerB access code', () => {
       // Arrange
@@ -169,7 +170,7 @@ describe('userHasAccessToPartnerContent', () => {
       );
 
       // Assert
-      expect(result).to.equal(['partnera', 'partnerb']);
+      expect(result).toEqual(['partnera', 'partnerb']);
     });
   });
 });

@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { isEnumValue } from './enumUtils';
 
 enum WEEKDAYS {
@@ -10,9 +11,9 @@ enum WEEKDAYS {
 
 describe('enumUtils', () => {
   it('should return true if string is in enum', () => {
-    expect(isEnumValue(WEEKDAYS, 'monday')).to.equal(true);
+    expect(isEnumValue(WEEKDAYS, 'monday')).toEqual(true);
   });
   it('should return false if string isnt in enum', () => {
-    expect(isEnumValue(WEEKDAYS, 'saturday')).to.equal(false);
+    expect(isEnumValue(WEEKDAYS, 'saturday')).toEqual(false);
   });
 });
