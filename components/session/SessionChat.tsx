@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 
-export interface SessionChatProps {
+interface SessionChatProps {
   eventData: { [key: string]: any };
 }
 

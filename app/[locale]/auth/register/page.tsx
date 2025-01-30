@@ -5,6 +5,7 @@ import PartnerHeader from '@/components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '@/constants/events';
 import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/constants/partners';
 import { useAppDispatch, useTypedSelector } from '@/hooks/store';
+import useReferralPartner from '@/hooks/useReferralPartner';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '@/public/illustration_leaf_mix_dots.svg';
@@ -80,6 +81,7 @@ export default function Page() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  useReferralPartner();
 
   const [codeParam, setCodeParam] = useState<string>('');
   const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);

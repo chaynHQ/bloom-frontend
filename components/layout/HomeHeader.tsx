@@ -13,7 +13,7 @@ import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
-export interface HeaderProps {
+interface HeaderProps {
   title:
     | string
     | React.ReactNode[]

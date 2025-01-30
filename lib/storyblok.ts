@@ -67,7 +67,7 @@ export const getStoryblokStory = async (
 
   const sbParams: ISbStoriesParams = {
     // TODO: fix draft
-    // version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
+    // version: ENVIRONMENT === ENVIRONMENTS.PRODUCTION ? 'published' : 'draft',
     version: 'published',
     language: locale || 'en',
     ...(params && params),
@@ -97,7 +97,7 @@ export const getStoryblokStories = async (
 ) => {
   const sbParams: ISbStoriesParams = {
     // TODO: fix draft
-    // version: process.env.NEXT_PUBLIC_ENV === 'production' ? 'published' : 'draft',
+    // version: ENVIRONMENT === ENVIRONMENTS.PRODUCTION ? 'published' : 'draft',
     version: 'published',
     language: locale || 'en',
     ...(params && params),

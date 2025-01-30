@@ -36,7 +36,7 @@ const radioGroupStyle = {
   padding: '20px 0px',
 } as const;
 
-export interface SessionFeedbackFormProps {
+interface SessionFeedbackFormProps {
   sessionId: string;
 }
 

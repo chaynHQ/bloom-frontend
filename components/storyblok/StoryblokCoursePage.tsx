@@ -12,7 +12,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { rowStyle } from '@/styles/common';
 import { determineCourseProgress } from '@/utils/courseProgress';
 import hasAccessToPage from '@/utils/hasAccessToPage';
-import { logEvent } from '@/utils/logEvent';
+import logEvent from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';

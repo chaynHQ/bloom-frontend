@@ -29,7 +29,7 @@ export interface PartnerContent {
   github?: string;
 }
 
-export const publicContent: PartnerContent = {
+const publicContent: PartnerContent = {
   name: 'Chayn',
   logo: chaynLogo,
   logoAlt: 'alt.chaynLogo',
@@ -43,7 +43,7 @@ export const publicContent: PartnerContent = {
   github: 'https://github.com/chaynHQ',
 };
 
-export const bumbleContent: PartnerContent = {
+const bumbleContent: PartnerContent = {
   name: 'Bumble',
   logo: bumbleLogo,
   logoAlt: 'alt.bumbleLogo',
@@ -58,7 +58,7 @@ export const bumbleContent: PartnerContent = {
   tiktok: 'https://www.tiktok.com/@bumble',
 };
 
-export const badooContent: PartnerContent = {
+const badooContent: PartnerContent = {
   name: 'Badoo',
   logo: badooLogo,
   logoAlt: 'alt.badooLogo',
@@ -74,7 +74,7 @@ export const badooContent: PartnerContent = {
   twitter: 'https://twitter.com/Badoo',
 };
 
-export const fruitzContent: PartnerContent = {
+const fruitzContent: PartnerContent = {
   name: 'Fruitz',
   logo: fruitzLogo,
   logoAlt: 'alt.fruitzLogo',

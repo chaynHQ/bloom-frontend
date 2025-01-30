@@ -5,14 +5,12 @@ import { Box, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
-export interface ImageTextItem {
-  text: string;
-  illustrationSrc: StaticImageData;
-  illustrationAlt: string;
-}
-
 interface ImageTextGridProps {
-  items: Array<ImageTextItem>;
+  items: {
+    text: string;
+    illustrationSrc: StaticImageData;
+    illustrationAlt: string;
+  }[];
   translations: string;
 }
 

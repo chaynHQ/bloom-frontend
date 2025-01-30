@@ -12,15 +12,15 @@ export enum MAINTENANCE_MODE {
   OFF = 'off',
 }
 
-export enum RESOURCE_CATEGORIES {
-  SHORT_VIDEO = 'short_video',
-  CONVERSATION = 'resource_conversation',
-}
-
-export enum CORE_CATEGORIES {
+export enum COURSE_CATEGORIES {
   COURSE = 'course',
   SESSION = 'session',
   SESSION_IBA = 'session_iba',
+}
+
+export enum RESOURCE_CATEGORIES {
+  SHORT_VIDEO = 'short_video',
+  CONVERSATION = 'resource_conversation',
 }
 
 export enum EXERCISE_CATEGORIES {
@@ -30,7 +30,7 @@ export enum EXERCISE_CATEGORIES {
 
 export type RELATED_CONTENT_CATEGORIES =
   | RESOURCE_CATEGORIES
-  | CORE_CATEGORIES
+  | COURSE_CATEGORIES
   | EXERCISE_CATEGORIES;
 
 export enum EMAIL_REMINDERS_FREQUENCY {
@@ -69,11 +69,6 @@ export enum PROGRESS_STATUS {
   NOT_STARTED = 'Not started',
 }
 
-export enum VIDEO_TYPES {
-  COURSE_INTRO = 'COURSE_INTRO',
-  SESSION = 'SESSION',
-}
-
 export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',
@@ -88,14 +83,12 @@ export enum STORYBLOK_COLORS {
 export enum SURVEY_FORMS {
   default = 'default',
   a = 'a',
-  b = 'b',
-  c = 'c',
 }
 
-export enum ENVIRONMENT {
-  PRODUCTION = 'production',
+export enum ENVIRONMENTS {
   LOCAL = 'local',
   STAGING = 'staging',
+  PRODUCTION = 'production',
 }
 
 export enum FEATURES {
@@ -115,9 +108,4 @@ export enum FEEDBACK_TAGS {
   TOO_LONG = 'too long',
   TOO_COMPLICATED = 'too complicated',
   NOT_USEFUL = 'not useful',
-}
-
-export enum STORYBLOK_COMPONENTS {
-  COURSE = 'Course',
-  SESSION = 'Session',
 }

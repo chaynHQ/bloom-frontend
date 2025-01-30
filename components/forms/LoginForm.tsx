@@ -3,6 +3,7 @@
 import { FEEDBACK_FORM_URL } from '@/constants/common';
 import { EVENT_LOG_NAME } from '@/constants/enums';
 import {
+  GET_AUTH_USER_ERROR,
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
   GET_LOGIN_USER_SUCCESS,
@@ -54,6 +55,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (userLoadError) {
       logEvent(GET_LOGIN_USER_ERROR, { message: userLoadError });
+      logEvent(GET_AUTH_USER_ERROR, { message: userLoadError });
 
       setFormError(
         t.rich('getUserError', {

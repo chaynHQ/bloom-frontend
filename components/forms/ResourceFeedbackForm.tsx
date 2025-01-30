@@ -50,7 +50,7 @@ const containerStyle = {
   textAlign: 'center',
 } as const;
 
-export interface ResourceFeedbackFormProps {
+interface ResourceFeedbackFormProps {
   resourceId: string;
   category: RESOURCE_CATEGORIES;
 }

@@ -16,13 +16,14 @@ const buttonStyle = {
   },
 } as const;
 
-export interface CourseHeaderProps {
+interface CourseHeaderProps {
   name: string;
   description: ISbRichtext;
   image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
   eventData: { [key: string]: any };
 }
+
 const CourseHeader = (props: CourseHeaderProps) => {
   const { name, description, image_with_background, courseProgress } = props;
 

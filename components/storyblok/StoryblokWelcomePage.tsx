@@ -10,6 +10,7 @@ import {
 } from '@/constants/events';
 import { PartnerContent, getPartnerContent } from '@/constants/partners';
 import { useAppDispatch, useTypedSelector } from '@/hooks/store';
+import useReferralPartner from '@/hooks/useReferralPartner';
 import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
@@ -79,6 +80,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const searchParams = useSearchParams();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Welcome');
+  useReferralPartner();
 
   const userId = useTypedSelector((state) => state.user.id);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);

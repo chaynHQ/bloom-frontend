@@ -5,6 +5,7 @@ import {
   DRAWER_CHAT_CLICKED,
   DRAWER_COURSES_CLICKED,
   DRAWER_GROUNDING_CLICKED,
+  DRAWER_NOTES_CLICKED,
   DRAWER_THERAPY_CLICKED,
 } from '@/constants/events';
 import { useTypedSelector } from '@/hooks/store';
@@ -113,7 +114,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
       {
         label: t('notes'),
         href: '/subscription/whatsapp',
-        event: DRAWER_GROUNDING_CLICKED,
+        event: DRAWER_NOTES_CLICKED,
         icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,
       },
     ];

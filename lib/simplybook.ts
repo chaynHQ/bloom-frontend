@@ -1,8 +1,10 @@
+import { ENVIRONMENT } from '@/constants/common';
+import { ENVIRONMENTS } from '@/constants/enums';
 import { User } from '@/lib/store/userSlice';
 
 // Simplybook hardcodes additional field IDs
 const userIdFieldId =
-  process.env.NEXT_PUBLIC_ENV === 'production'
+  ENVIRONMENT === ENVIRONMENTS.PRODUCTION
     ? '86a541b6d059de75eaba4e18a288cd24'
     : 'b3b2455c79e69e6baf6e8c1fcf34b691';
 

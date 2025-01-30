@@ -3,10 +3,10 @@
 import Faqs from '@/components/common/Faqs';
 import ImageTextGrid, { ImageTextItem } from '@/components/common/ImageTextGrid';
 import Header from '@/components/layout/Header';
-import { getSimplybookWidgetConfig } from '@/config/simplybook';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/constants/events';
 import { therapyFaqs } from '@/constants/faqs';
 import { useTypedSelector } from '@/hooks/store';
+import { getSimplybookWidgetConfig } from '@/lib/simplybook';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';

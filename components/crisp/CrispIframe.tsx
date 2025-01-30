@@ -1,5 +1,7 @@
 'use client';
 
+import { ENVIRONMENT } from '@/constants/common';
+import { ENVIRONMENTS } from '@/constants/enums';
 import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '@/constants/events';
 import { useTypedSelector } from '@/hooks/store';
 import logEvent from '@/utils/logEvent';
@@ -61,7 +63,7 @@ export const CrispIframe = () => {
 
       logEvent(CHAT_VIEWED);
 
-      if (process.env.NEXT_PUBLIC_ENV === 'production') {
+      if (ENVIRONMENT === ENVIRONMENTS.PRODUCTION) {
         crisp.push(['safe', true]); // Turns on safe mode = turns off errors in production
       }
 

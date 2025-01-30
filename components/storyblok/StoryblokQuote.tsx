@@ -29,7 +29,7 @@ const imageContainerStyle = {
   },
 };
 
-export interface StoryblokQuoteProps {
+interface StoryblokQuoteProps {
   _uid: string;
   _editable: string;
   text: ISbRichtext;

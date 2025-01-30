@@ -13,7 +13,7 @@ import { useTypedSelector } from '@/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import { rowStyle } from '@/styles/common';
-import { logEvent } from '@/utils/logEvent';
+import logEvent from '@/utils/logEvent';
 import { RichTextOptions } from '@/utils/richText';
 import userHasAccessToPartnerContent from '@/utils/userHasAccessToPartnerContent';
 import { Box, Container, Typography } from '@mui/material';

@@ -7,7 +7,7 @@ import {
   COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED,
 } from '@/constants/events';
 import { rowStyle } from '@/styles/common';
-import { logEvent } from '@/utils/logEvent';
+import logEvent from '@/utils/logEvent';
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';

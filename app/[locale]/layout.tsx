@@ -4,6 +4,8 @@ import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
 import TopBar from '@/components/layout/TopBar';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
+import { ENVIRONMENT } from '@/constants/common';
+import { ENVIRONMENTS } from '@/constants/enums';
 import { AuthGuard } from '@/guards/AuthGuard';
 import { routing } from '@/i18n/routing';
 import firebase from '@/lib/firebase';
@@ -131,7 +133,7 @@ export default async function RootLayout(props: RootLayoutProps) {
 
   let browserTimingHeader = undefined;
 
-  if (process.env.NEXT_PUBLIC_ENV === 'production') {
+  if (ENVIRONMENT === ENVIRONMENTS.PRODUCTION) {
     // @ts-ignore
     if (newrelic.agent?.collector.isConnected() === false) {
       await new Promise((resolve) => {
@@ -165,14 +167,9 @@ export default async function RootLayout(props: RootLayoutProps) {
                     </main>
                     <Footer />
                     <Consent />
-                    {!!process.env.NEXT_PUBLIC_HOTJAR_ID &&
-                      process.env.NEXT_PUBLIC_ENV !== 'local' && (
-                        <Hotjar
-                          id={process.env.NEXT_PUBLIC_HOTJAR_ID}
-                          sv={6}
-                          strategy="lazyOnload"
-                        />
-                      )}
+                    {!!process.env.NEXT_PUBLIC_HOTJAR_ID && ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
+                      <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+                    )}
                     <Analytics />
                   </body>
                   <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />

@@ -2,7 +2,7 @@
 
 import { EVENT_LOG_NAME } from '@/constants/enums';
 import {
-  GET_AUTH_USER_ERROR,
+  GET_AUTH_USER_REQUEST,
   GET_AUTH_USER_SUCCESS,
   GET_USER_ERROR,
   GET_USER_REQUEST,
@@ -46,13 +46,16 @@ export default function useLoadUser() {
   // When a user token is available, set the token in state to be used in request headers
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
+      logEvent(GET_AUTH_USER_REQUEST);
+
       const token = await firebaseUser?.getIdToken();
       if (token) {
         // User logged in or started a new authenticated session
         await dispatch(setUserToken(token));
         // Trigger call to get user record by changing userLoading state, skip if in maintenance mode
         !isMaintenanceMode && (await dispatch(setUserLoading(true)));
-        logEvent(GET_USER_REQUEST); // deprecated event
+        logEvent(GET_AUTH_USER_SUCCESS);
+        logEvent(GET_USER_REQUEST);
       } else if (!firebaseUser && userToken) {
         // User logged out or token was removed, clear state
         createEventLog({ event: EVENT_LOG_NAME.LOGGED_OUT });
@@ -62,7 +65,7 @@ export default function useLoadUser() {
       await dispatch(setAuthStateLoading(false)); // triggers step 2
     });
     return () => unsubscribe();
-  }, [userToken, auth, dispatch, isMaintenanceMode, clearState, createEventLog]);
+  }, [userToken, dispatch, isMaintenanceMode, clearState, createEventLog]);
 
   // 2. Once firebase auth is complete, get the user database resource
   // skip property prevents the API query being called unless there is a user token and the user is not already set
@@ -94,8 +97,7 @@ export default function useLoadUser() {
         ),
       );
 
-      logEvent(GET_AUTH_USER_SUCCESS);
-      logEvent(GET_USER_SUCCESS); // deprecated event
+      logEvent(GET_USER_SUCCESS);
     }
   }, [userResourceIsSuccess, userResource, dispatch]);
 
@@ -115,11 +117,10 @@ export default function useLoadUser() {
       dispatch(setUserLoading(false));
 
       rollbar.error('useLoadUser error: failed to get user resource -', userResourceError);
-      logEvent(GET_AUTH_USER_ERROR, { errorMessage });
-      logEvent(GET_USER_ERROR, { message: errorMessage }); // deprecated event
+      logEvent(GET_USER_ERROR, { message: errorMessage });
       logEvent(LOGOUT_FORCED);
     }
-  }, [userResourceError, isInvalidUserResourceResponse, dispatch, auth]);
+  }, [userResourceError, isInvalidUserResourceResponse, dispatch, rollbar]);
 
   return {
     userResourceIsLoading,

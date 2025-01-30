@@ -10,7 +10,7 @@ import {
 } from './formatPartnerAccesses';
 import { AccountType, getAccountType } from './getAccountType';
 
-export interface EventUserData {
+interface EventUserData {
   account_type?: AccountType | null;
   partner?: string | null;
   partner_live_chat?: string | null;
@@ -21,7 +21,7 @@ export interface EventUserData {
   registered_at?: string | Date | null;
 }
 
-export const logEvent = (event: string, params = {}) => {
+const logEvent = (event: string, params = {}) => {
   // Send analytics events to Google Analytics and Vercel Analytics
   sendGAEvent('event', event, params);
   track(event, params);

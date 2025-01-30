@@ -24,7 +24,7 @@ const numberSlidesToWidthMap: { [key: number]: string } = {
 };
 
 // Dots and arrows in 1 component because of the design
-export const CustomDots = ({
+const CustomDots = ({
   showArrows = false,
   arrowPosition = 'bottom',
 }: {

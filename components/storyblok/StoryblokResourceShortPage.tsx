@@ -7,10 +7,10 @@ import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { ResourceCompleteButton } from '@/components/resources/ResourceCompleteButton';
 import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
 import {
+  COURSE_CATEGORIES,
   PROGRESS_STATUS,
   RESOURCE_CATEGORIES,
   STORYBLOK_COLORS,
-  STORYBLOK_COMPONENTS,
 } from '@/constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_VIEWED,
@@ -21,7 +21,7 @@ import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { Resource } from '@/lib/store/resourcesSlice';
 import { columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
-import { logEvent } from '@/utils/logEvent';
+import logEvent from '@/utils/logEvent';
 import userHasAccessToPartnerContent from '@/utils/userHasAccessToPartnerContent';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Button, Container, IconButton, Typography } from '@mui/material';
@@ -239,7 +239,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
             <Typography component="h2" mb={2}>
               {t('sessionDetail', {
                 sessionNumber:
-                  related_session[0]?.content.component === STORYBLOK_COMPONENTS.COURSE
+                  related_session[0]?.content.component === COURSE_CATEGORIES.COURSE
                     ? 0
                     : related_session[0]?.position / 10 - 1,
                 sessionName: related_session[0]?.content.name,

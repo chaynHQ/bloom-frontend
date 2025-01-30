@@ -12,6 +12,7 @@ import {
   GET_USER_REQUEST,
   LOGIN_SUCCESS,
   REGISTER_ERROR,
+  REGISTER_REQUEST,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
@@ -196,6 +197,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         setFormError(t('firebase.invalidEmail'));
       } else {
         logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
+
         rollbar.error('User register create user error', error);
         setFormError(
           t.rich('createUserError', {
@@ -215,6 +217,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     event.preventDefault();
     setLoading(true);
     setFormError('');
+    logEvent(REGISTER_REQUEST);
 
     includeCodeField && (await validateAccessCode());
     await createUserRecord();

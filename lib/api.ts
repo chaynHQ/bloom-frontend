@@ -24,7 +24,8 @@ export interface GetUserResponse {
   resources: Resources;
   subscriptions: Subscriptions;
 }
-export interface StoryblokIdActionPayload {
+
+interface StoryblokIdActionPayload {
   storyblokId: number;
 }
 

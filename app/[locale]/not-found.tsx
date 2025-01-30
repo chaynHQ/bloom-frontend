@@ -8,9 +8,9 @@ import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Button, Container, Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useTranslations } from 'use-intl';
 
 import { Link as i18nLink } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 const containerStyle = {
   ...columnStyle,

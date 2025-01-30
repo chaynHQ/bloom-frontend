@@ -1,13 +1,15 @@
+'use client';
+
 import { FEEDBACK_FORM_URL } from '@/constants/common';
 import { useTypedSelector } from '@/hooks/store';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { columnStyle } from '@/styles/common';
 import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Container, Link, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { ReactNode } from 'react';
-import { useTranslations } from 'use-intl';
 
 const containerStyle = {
   ...columnStyle,
