@@ -30,7 +30,7 @@ import {
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import {
   JSXElementConstructor,
@@ -63,8 +63,7 @@ const AboutYouDemographicForm = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rollbar = useRollbar();
-
-  const locale = params?.locale || 'en';
+  const locale = useLocale();
 
   const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);

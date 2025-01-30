@@ -5,7 +5,7 @@ import Carousel, { getSlideWidth } from '@/lib/components/common/Carousel';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
@@ -31,7 +31,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
   const params = useParams<{ locale: string }>();
-  const locale = params?.locale || 'en';
+  const locale = useLocale();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')

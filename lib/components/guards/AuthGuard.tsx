@@ -11,37 +11,7 @@ import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-const publicPathHeads = [
-  '',
-  'index',
-  'welcome',
-  'auth',
-  'maintenance',
-  'action-handler',
-  '404',
-  '500',
-  'faqs',
-  'meet-the-team',
-  'about-our-courses',
-  'conversations',
-  'shorts',
-];
-
-// As the subpages of courses are not public and these pages are only partially public,
-// they are treated differently as they are not public path heads
-const partiallyPublicPages = [
-  '/courses',
-  '/courses/image-based-abuse-and-rebuilding-ourselves',
-  '/courses/recovering-from-toxic-and-abusive-relationships',
-  '/courses/society-patriarchy-and-sexual-trauma',
-  '/courses/healing-from-sexual-trauma',
-  '/courses/dating-boundaries-and-relationships',
-  '/courses/reclaiming-resilience-in-your-trauma-story',
-  '/activities',
-  '/grounding',
-  '/subscription/whatsapp',
-  '/messaging',
-];
+const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
@@ -77,11 +47,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   }
 
   // Page does not require authenticated user, return content without guards
-  if (
-    publicPathHeads.includes(pathHead) ||
-    partiallyPublicPages.includes(pathname) ||
-    pathname.includes('/shorts')
-  ) {
+  if (!authenticatedPathHeads.includes(pathHead)) {
     return <>{children}</>;
   }
 

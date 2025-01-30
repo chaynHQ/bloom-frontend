@@ -5,7 +5,7 @@ import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/lib/c
 import logEvent from '@/lib/utils/logEvent';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { MouseEvent, startTransition, useState } from 'react';
 
@@ -45,7 +45,7 @@ export default function LanguageMenu() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams<{ locale: string }>();
-  const locale = params?.locale || 'en';
+  const locale = useLocale();
   const t = useTranslations('Navigation');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
