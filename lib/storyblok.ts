@@ -74,14 +74,10 @@ export const getStoryblokStory = async (
     ...(uuids && { by_uuids: uuids }),
   };
 
-  const sbOptions = {
-    cache: 'no-store' as RequestCache,
-  };
-
   try {
     const storyblokApi: StoryblokClient = getStoryblokApi();
 
-    let { data } = await storyblokApi.get(`cdn/stories/${!uuids && slug}`, sbParams, sbOptions);
+    let { data } = await storyblokApi.get(`cdn/stories/${!uuids && slug}`, sbParams);
 
     return data?.story as ISbStoryData;
   } catch (error) {
@@ -104,14 +100,10 @@ export const getStoryblokStories = async (
     ...(uuids && { by_uuids: uuids }),
   };
 
-  const sbOptions = {
-    cache: 'no-store' as RequestCache,
-  };
-
   try {
     const storyblokApi: StoryblokClient = getStoryblokApi();
 
-    let { data } = await storyblokApi.get(`cdn/stories`, sbParams, sbOptions);
+    let { data } = await storyblokApi.get(`cdn/stories`, sbParams);
 
     return data?.stories as ISbStoryData[];
   } catch (error) {

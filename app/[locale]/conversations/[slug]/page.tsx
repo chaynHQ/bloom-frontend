@@ -25,7 +25,7 @@ export async function generateStaticParams() {
     },
   };
 
-  const { data } = await storyblokApi.get('cdn/links/', sbParams, { cache: 'no-store' });
+  const { data } = await storyblokApi.get('cdn/links/', sbParams);
 
   Object.keys(data.links).forEach((linkKey) => {
     const story = data.links[linkKey];

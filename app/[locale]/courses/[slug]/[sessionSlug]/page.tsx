@@ -21,7 +21,7 @@ export async function generateStaticParams() {
     content_type: 'session',
   };
 
-  let { data } = await storyblokApi.get('cdn/links', sbParams, { cache: 'no-store' });
+  let { data } = await storyblokApi.get('cdn/links', sbParams);
 
   Object.keys(data.links).forEach((linkKey) => {
     const session = data.links[linkKey];

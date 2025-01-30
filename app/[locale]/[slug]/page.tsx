@@ -18,7 +18,7 @@ export async function generateStaticParams() {
     version: 'published',
   };
 
-  const { data } = await storyblokApi.get('cdn/links/', sbParams, { cache: 'no-store' });
+  const { data } = await storyblokApi.get('cdn/links/', sbParams);
 
   const excludePaths: string[] = [
     'home',
