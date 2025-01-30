@@ -1,7 +1,7 @@
 'use client';
 
-import CreateAccessCodeForm from '@/lib/components/forms/CreateAccessCodeForm';
-import AdminHeader from '@/lib/components/layout/PartnerAdminHeader';
+import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
+import AdminHeader from '@/components/layout/PartnerAdminHeader';
 import { CREATE_PARTNER_ACCESS_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';

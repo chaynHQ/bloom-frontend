@@ -1,5 +1,5 @@
+import BaseLayout from '@/components/layout/BaseLayout';
 import { routing } from '@/i18n/routing';
-import BaseLayout from '@/lib/components/layout/BaseLayout';
 import type { Viewport } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';

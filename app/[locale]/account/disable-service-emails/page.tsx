@@ -1,7 +1,7 @@
 'use client';
 
+import Header from '@/components/layout/Header';
 import { useUpdateUserMutation } from '@/lib/api';
-import Header from '@/lib/components/layout/Header';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';

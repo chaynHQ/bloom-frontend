@@ -1,8 +1,8 @@
 'use client';
 
+import Faqs from '@/components/common/Faqs';
+import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
-import Faqs from '@/lib/components/common/Faqs';
-import Header from '@/lib/components/layout/Header';
 import { THERAPY_CONFIRMATION_VIEWED } from '@/lib/constants/events';
 import { therapyFaqs } from '@/lib/constants/faqs';
 import { useTypedSelector } from '@/lib/hooks/store';

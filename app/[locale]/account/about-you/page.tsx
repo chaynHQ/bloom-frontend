@@ -1,9 +1,9 @@
 'use client';
 
+import AboutYouDemographicForm from '@/components/forms/AboutYouDemographicForm';
+import AboutYouSetAForm from '@/components/forms/AboutYouSetAForm';
+import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink } from '@/i18n/routing';
-import AboutYouDemographicForm from '@/lib/components/forms/AboutYouDemographicForm';
-import AboutYouSetAForm from '@/lib/components/forms/AboutYouSetAForm';
-import PartnerHeader from '@/lib/components/layout/PartnerHeader';
 import { SURVEY_FORMS } from '@/lib/constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';

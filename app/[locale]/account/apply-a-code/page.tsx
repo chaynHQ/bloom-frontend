@@ -1,8 +1,8 @@
 'use client';
 
+import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
+import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
-import ApplyCodeForm from '@/lib/components/forms/ApplyCodeForm';
-import Header from '@/lib/components/layout/Header';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '@/lib/constants/events';
 import { PartnerContent, getAllPartnersContent } from '@/lib/constants/partners';
 import { getImageSizes } from '@/lib/utils/imageSizes';

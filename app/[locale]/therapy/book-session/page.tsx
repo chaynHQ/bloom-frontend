@@ -1,8 +1,8 @@
 'use client';
 
-import Faqs from '@/lib/components/common/Faqs';
-import ImageTextGrid, { ImageTextItem } from '@/lib/components/common/ImageTextGrid';
-import Header from '@/lib/components/layout/Header';
+import Faqs from '@/components/common/Faqs';
+import ImageTextGrid, { ImageTextItem } from '@/components/common/ImageTextGrid';
+import Header from '@/components/layout/Header';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
 import { therapyFaqs } from '@/lib/constants/faqs';
 import { useTypedSelector } from '@/lib/hooks/store';

@@ -1,8 +1,8 @@
 'use client';
 
+import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
+import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
-import RegisterForm, { PartnerRegisterForm } from '@/lib/components/forms/RegisterForm';
-import PartnerHeader from '@/lib/components/layout/PartnerHeader';
 import { generatePartnershipPromoLogoClick } from '@/lib/constants/events';
 import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';

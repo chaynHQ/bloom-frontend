@@ -1,7 +1,7 @@
-import NoDataAvailable from '@/lib/components/common/NoDataAvailable';
+import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokMeetTheTeamPage, {
   StoryblokMeetTheTeamPageProps,
-} from '@/lib/components/storyblok/StoryblokMeetTheTeamPage';
+} from '@/components/storyblok/StoryblokMeetTheTeamPage';
 import { getStoryblokStory } from '@/lib/storyblok';
 
 export const revalidate = 14400; // invalidate every 4 hours

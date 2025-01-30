@@ -1,8 +1,8 @@
 'use client';
 
+import LoginForm from '@/components/forms/LoginForm';
+import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
-import LoginForm from '@/lib/components/forms/LoginForm';
-import PartnerHeader from '@/lib/components/layout/PartnerHeader';
 import {
   GET_STARTED_WITH_BLOOM_CLICKED,
   RESET_PASSWORD_HERE_CLICKED,

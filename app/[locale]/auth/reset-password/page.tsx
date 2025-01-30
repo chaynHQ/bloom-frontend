@@ -1,7 +1,7 @@
 'use client';
 
-import { EmailForm, PasswordForm } from '@/lib/components/forms/ResetPasswordForm';
-import PartnerHeader from '@/lib/components/layout/PartnerHeader';
+import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
+import PartnerHeader from '@/components/layout/PartnerHeader';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
