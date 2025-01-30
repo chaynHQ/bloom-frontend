@@ -1,5 +1,5 @@
-import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '@/constants/enums';
-import { EventLog } from '@/constants/eventLog';
+import { EVENT_LOG_NAME, PARTNER_ACCESS_CODE_STATUS } from '@/lib/constants/enums';
+import { EventLog } from '@/lib/constants/eventLog';
 import {
   BaseQueryFn,
   createApi,

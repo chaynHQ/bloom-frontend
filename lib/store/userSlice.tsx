@@ -1,5 +1,5 @@
-import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '@/constants/enums';
 import { api, GetUserResponse } from '@/lib/api';
+import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '@/lib/constants/enums';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PartnerAccesses } from './partnerAccessSlice';
 import { PartnerAdmin } from './partnerAdminSlice';

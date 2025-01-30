@@ -1,18 +1,18 @@
 'use client';
 
-import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
-import PartnerHeader from '@/components/layout/PartnerHeader';
-import { generatePartnershipPromoLogoClick } from '@/constants/events';
-import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/constants/partners';
-import { useAppDispatch, useTypedSelector } from '@/hooks/store';
-import useReferralPartner from '@/hooks/useReferralPartner';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import RegisterForm, { PartnerRegisterForm } from '@/lib/components/forms/RegisterForm';
+import PartnerHeader from '@/lib/components/layout/PartnerHeader';
+import { generatePartnershipPromoLogoClick } from '@/lib/constants/events';
+import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import useReferralPartner from '@/lib/hooks/useReferralPartner';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '@/public/illustration_leaf_mix_dots.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
-import { getImageSizes } from '@/utils/imageSizes';
-import logEvent from '@/utils/logEvent';
 import {
   Box,
   Card,

@@ -1,21 +1,21 @@
 'use client';
 
-import LoginForm from '@/components/forms/LoginForm';
-import PartnerHeader from '@/components/layout/PartnerHeader';
+import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import LoginForm from '@/lib/components/forms/LoginForm';
+import PartnerHeader from '@/lib/components/layout/PartnerHeader';
 import {
   GET_STARTED_WITH_BLOOM_CLICKED,
   RESET_PASSWORD_HERE_CLICKED,
   generateGetStartedPartnerEvent,
-} from '@/constants/events';
-import { getAllPartnersContent } from '@/constants/partners';
-import { useTypedSelector } from '@/hooks/store';
-import { Link as i18nLink, useRouter } from '@/i18n/routing';
+} from '@/lib/constants/events';
+import { getAllPartnersContent } from '@/lib/constants/partners';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
-import { getImageSizes } from '@/utils/imageSizes';
-import logEvent from '@/utils/logEvent';
 import {
   Box,
   Card,

@@ -1,10 +1,10 @@
 'use client';
 
-import AccountActionsCard from '@/components/cards/AccountActionsCard';
-import EmailRemindersSettingsCard from '@/components/cards/EmailRemindersSettingsCard';
-import EmailSettingsCard from '@/components/cards/EmailSettingsCard';
-import ProfileSettingsCard from '@/components/cards/ProfileSettingsCard';
-import Header from '@/components/layout/Header';
+import AccountActionsCard from '@/lib/components/cards/AccountActionsCard';
+import EmailRemindersSettingsCard from '@/lib/components/cards/EmailRemindersSettingsCard';
+import EmailSettingsCard from '@/lib/components/cards/EmailSettingsCard';
+import ProfileSettingsCard from '@/lib/components/cards/ProfileSettingsCard';
+import Header from '@/lib/components/layout/Header';
 import phoneIllustration from '@/public/phone.svg';
 import { columnStyle, rowStyle } from '@/styles/common';
 import { Box, Container } from '@mui/material';

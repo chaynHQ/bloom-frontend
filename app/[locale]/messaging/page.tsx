@@ -1,7 +1,7 @@
 import { getStoryblokStory } from '@/lib/storyblok';
 
-import NoDataAvailable from '@/components/common/NoDataAvailable';
-import MessagingPage from '../../../components/pages/MessagingPage';
+import NoDataAvailable from '@/lib/components/common/NoDataAvailable';
+import MessagingPage from '../../../lib/components/pages/MessagingPage';
 
 export const revalidate = 14400; // invalidate every 4 hours
 

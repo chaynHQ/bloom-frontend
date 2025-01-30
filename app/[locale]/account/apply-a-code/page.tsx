@@ -1,14 +1,14 @@
 'use client';
 
-import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
-import Header from '@/components/layout/Header';
-import { ASSIGN_NEW_PARTNER_VIEWED } from '@/constants/events';
-import { PartnerContent, getAllPartnersContent } from '@/constants/partners';
 import { Link as i18nLink } from '@/i18n/routing';
+import ApplyCodeForm from '@/lib/components/forms/ApplyCodeForm';
+import Header from '@/lib/components/layout/Header';
+import { ASSIGN_NEW_PARTNER_VIEWED } from '@/lib/constants/events';
+import { PartnerContent, getAllPartnersContent } from '@/lib/constants/partners';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { rowStyle } from '@/styles/common';
-import { getImageSizes } from '@/utils/imageSizes';
-import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

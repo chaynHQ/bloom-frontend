@@ -1,8 +1,8 @@
-import { FeatureFlag } from '@/config/featureFlag';
-import { LANGUAGES } from '@/constants/enums';
+import { LANGUAGES } from '@/lib/constants/enums';
+import { FeatureFlag } from '@/lib/featureFlag';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
-import CoursesPage from '../../../components/pages/CoursesPage';
+import CoursesPage from '../../../lib/components/pages/CoursesPage';
 
 export const revalidate = 14400; // invalidate every 4 hours
 

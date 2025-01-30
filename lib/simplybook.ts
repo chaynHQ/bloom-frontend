@@ -1,5 +1,5 @@
-import { ENVIRONMENT } from '@/constants/common';
-import { ENVIRONMENTS } from '@/constants/enums';
+import { ENVIRONMENT } from '@/lib/constants/common';
+import { ENVIRONMENTS } from '@/lib/constants/enums';
 import { User } from '@/lib/store/userSlice';
 
 // Simplybook hardcodes additional field IDs

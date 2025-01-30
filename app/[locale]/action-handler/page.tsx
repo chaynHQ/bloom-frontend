@@ -1,8 +1,8 @@
 'use client';
 
-import LoadingContainer from '@/components/common/LoadingContainer';
-import { LANGUAGES } from '@/constants/enums';
 import { useRouter } from '@/i18n/routing';
+import LoadingContainer from '@/lib/components/common/LoadingContainer';
+import { LANGUAGES } from '@/lib/constants/enums';
 import { useSearchParams } from 'next/navigation';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....

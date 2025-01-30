@@ -1,13 +1,14 @@
 'use client';
 
-import Faqs from '@/components/common/Faqs';
-import ImageTextGrid, { ImageTextItem } from '@/components/common/ImageTextGrid';
-import Header from '@/components/layout/Header';
-import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/constants/events';
-import { therapyFaqs } from '@/constants/faqs';
-import { useTypedSelector } from '@/hooks/store';
+import Faqs from '@/lib/components/common/Faqs';
+import ImageTextGrid, { ImageTextItem } from '@/lib/components/common/ImageTextGrid';
+import Header from '@/lib/components/layout/Header';
+import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
+import { therapyFaqs } from '@/lib/constants/faqs';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { getSimplybookWidgetConfig } from '@/lib/simplybook';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
 import illustrationConfidential from '@/public/illustration_confidential.svg';
@@ -15,7 +16,6 @@ import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { rowStyle } from '@/styles/common';
-import logEvent from '@/utils/logEvent';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

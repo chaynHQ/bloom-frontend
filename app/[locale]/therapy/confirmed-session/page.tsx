@@ -1,15 +1,15 @@
 'use client';
 
-import Faqs from '@/components/common/Faqs';
-import Header from '@/components/layout/Header';
-import { THERAPY_CONFIRMATION_VIEWED } from '@/constants/events';
-import { therapyFaqs } from '@/constants/faqs';
-import { useTypedSelector } from '@/hooks/store';
 import { Link as i18nLink } from '@/i18n/routing';
+import Faqs from '@/lib/components/common/Faqs';
+import Header from '@/lib/components/layout/Header';
+import { THERAPY_CONFIRMATION_VIEWED } from '@/lib/constants/events';
+import { therapyFaqs } from '@/lib/constants/faqs';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
-import logEvent from '@/utils/logEvent';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

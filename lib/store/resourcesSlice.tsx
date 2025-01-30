@@ -1,5 +1,5 @@
-import { FEEDBACK_TAGS, RESOURCE_CATEGORIES, STORYBLOK_STORY_STATUS } from '@/constants/enums';
 import { api } from '@/lib/api';
+import { FEEDBACK_TAGS, RESOURCE_CATEGORIES, STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
 import { createSlice, Draft } from '@reduxjs/toolkit';
 import { User } from './userSlice';
 

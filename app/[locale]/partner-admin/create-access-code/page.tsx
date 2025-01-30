@@ -1,12 +1,12 @@
 'use client';
 
-import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
-import AdminHeader from '@/components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '@/constants/events';
-import { useTypedSelector } from '@/hooks/store';
+import CreateAccessCodeForm from '@/lib/components/forms/CreateAccessCodeForm';
+import AdminHeader from '@/lib/components/layout/PartnerAdminHeader';
+import { CREATE_PARTNER_ACCESS_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import { rowStyle } from '@/styles/common';
-import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

@@ -1,5 +1,5 @@
-import { getPartnerContent, PartnerContent } from '@/constants/partners';
 import { api } from '@/lib/api';
+import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
 import { createSlice } from '@reduxjs/toolkit';
 import { Partner } from './partnersSlice';
 

@@ -1,12 +1,12 @@
 'use client';
 
-import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
-import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
-import UpdateTherapyAdminForm from '@/components/forms/UpdateTherapyAdminForm';
-import AdminHeader from '@/components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '@/constants/events';
+import CreatePartnerAdminForm from '@/lib/components/forms/CreatePartnerAdminForm';
+import UpdatePartnerAdminForm from '@/lib/components/forms/UpdatePartnerAdminForm';
+import UpdateTherapyAdminForm from '@/lib/components/forms/UpdateTherapyAdminForm';
+import AdminHeader from '@/lib/components/layout/PartnerAdminHeader';
+import { CREATE_PARTNER_ACCESS_VIEWED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
-import logEvent from '@/utils/logEvent';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';

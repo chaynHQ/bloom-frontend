@@ -1,10 +1,10 @@
 'use client';
 
-import LoadingContainer from '@/components/common/LoadingContainer';
-import { useTypedSelector } from '@/hooks/store';
+import LoadingContainer from '@/lib/components/common/LoadingContainer';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getImageSizes } from '@/lib/utils/imageSizes';
 import bloomHead from '@/public/illustration_bloom_head.svg';
 import { columnStyle } from '@/styles/common';
-import { getImageSizes } from '@/utils/imageSizes';
 import { Box, Button, Container, Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';

@@ -1,8 +1,8 @@
-import NoDataAvailable from '@/components/common/NoDataAvailable';
+import { routing } from '@/i18n/routing';
+import NoDataAvailable from '@/lib/components/common/NoDataAvailable';
 import StoryblokResourceConversationPage, {
   StoryblokResourceConversationPageProps,
-} from '@/components/storyblok/StoryblokResourceConversationPage';
-import { routing } from '@/i18n/routing';
+} from '@/lib/components/storyblok/StoryblokResourceConversationPage';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
