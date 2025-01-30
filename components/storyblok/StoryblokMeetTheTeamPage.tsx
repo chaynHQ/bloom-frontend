@@ -7,7 +7,6 @@ import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import Head from 'next/head';
 import { useEffect } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -81,20 +80,6 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         page_section_3,
       })}
     >
-      <Head>
-        <title>{`${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
-        {(seo_description || description) && (
-          <>
-            <meta name="description" content={seo_description || description} key="description" />
-            <meta
-              property="og:description"
-              content={seo_description || description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
       <Header
         title={title}
         introduction={description}

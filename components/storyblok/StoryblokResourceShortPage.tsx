@@ -28,7 +28,6 @@ import { Box, Button, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -186,17 +185,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         related_exercises,
       })}
     >
-      <Head>
-        <title>{`${t('shorts')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
-
       <Container sx={{ background: theme.palette.bloomGradient, paddingTop: ['20px', '60px'] }}>
         <IconButton
           sx={backButtonStyle}

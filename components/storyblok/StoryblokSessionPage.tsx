@@ -20,7 +20,6 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
@@ -142,21 +141,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
         bonus,
       })}
     >
-      <Head>
-        <title>{`${t('session')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {(seo_description || description) && (
-          <>
-            <meta name="description" content={seo_description || description} key="description" />
-            <meta
-              property="og:description"
-              content={seo_description || description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
-
       {incorrectAccess ? (
         <Container sx={containerStyle}></Container>
       ) : (

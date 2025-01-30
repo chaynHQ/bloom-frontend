@@ -1,12 +1,23 @@
 import { LANGUAGES } from '@/lib/constants/enums';
 import { FeatureFlag } from '@/lib/featureFlag';
 import { getStoryblokStories } from '@/lib/storyblok';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
+import { getTranslations } from 'next-intl/server';
 import CoursesPage from '../../../components/pages/CoursesPage';
 
 export const revalidate = 14400; // invalidate every 4 hours
 
-export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+type Params = Promise<{ locale: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Courses' });
+
+  return generateMetadataBasic({ title: t('courses'), description: t('introduction') });
+}
+
+export default async function Page({ params }: { params: Params }) {
   const locale = (await params).locale as LANGUAGES;
 
   const baseProps: Partial<ISbStoriesParams> = {

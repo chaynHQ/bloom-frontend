@@ -12,7 +12,6 @@ import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import Image from 'next/image';
 
 const messageRowStyle = {
@@ -47,55 +46,39 @@ export default function MessagingPage({ story }: Props) {
   };
 
   return (
-    <>
-      <Head>
-        <title>{`${story.content.title} • Bloom`}</title>
-        <meta property="og:title" content={story.content.title} key="og-title" />
-        {story.content.seo_description && (
-          <>
-            <meta name="description" content={story.content.seo_description} key="description" />
-            <meta
-              property="og:description"
-              content={story.content.seo_description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
-      <Box>
-        <Header {...headerProps} />
-        {userId ? (
-          <>
-            <Container sx={{ backgroundColor: 'secondary.light', pt: 2 }}>
-              <Typography variant="h2" sx={{ mb: { xs: 4, md: 8 } }}>
-                {t('messageHeading')}
-              </Typography>
-              <Box sx={messageRowStyle}>
-                <Box sx={imageContainerStyle}>
-                  <Image
-                    alt={tS('alt.personSitting')}
-                    src={IllustrationCourseDBR}
-                    sizes={getImageSizes(imageContainerStyle.width)}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                    }}
-                  />
-                </Box>
-                <Box flex={1}>
-                  <CrispIframe />
-                </Box>
+    <Box>
+      <Header {...headerProps} />
+      {userId ? (
+        <>
+          <Container sx={{ backgroundColor: 'secondary.light', pt: 2 }}>
+            <Typography variant="h2" sx={{ mb: { xs: 4, md: 8 } }}>
+              {t('messageHeading')}
+            </Typography>
+            <Box sx={messageRowStyle}>
+              <Box sx={imageContainerStyle}>
+                <Image
+                  alt={tS('alt.personSitting')}
+                  src={IllustrationCourseDBR}
+                  sizes={getImageSizes(imageContainerStyle.width)}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                  }}
+                />
               </Box>
-            </Container>
-            {story.content.page_sections?.length > 0 &&
-              story.content.page_sections.map((section: any, index: number) => (
-                <StoryblokPageSection key={`page_section_${index}`} {...section} />
-              ))}
-          </>
-        ) : (
-          <SignUpBanner />
-        )}
-      </Box>
-    </>
+              <Box flex={1}>
+                <CrispIframe />
+              </Box>
+            </Box>
+          </Container>
+          {story.content.page_sections?.length > 0 &&
+            story.content.page_sections.map((section: any, index: number) => (
+              <StoryblokPageSection key={`page_section_${index}`} {...section} />
+            ))}
+        </>
+      ) : (
+        <SignUpBanner />
+      )}
+    </Box>
   );
 }

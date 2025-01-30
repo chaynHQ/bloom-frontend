@@ -4,9 +4,28 @@ import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
+
+type Params = Promise<{ locale: string; slug: string }>;
+
+async function getStory(locale: string, slug: string) {
+  return await getStoryblokStory(slug, locale);
+}
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale, slug } = await params;
+  const story = await getStory(locale, slug);
+
+  if (!story) return;
+
+  return generateMetadataBasic({
+    title: story.content.title,
+    description: story.content.seo_description,
+  });
+}
 
 export async function generateStaticParams() {
   let paths: { slug: string; locale: string }[] = [];
@@ -45,15 +64,11 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string }>;
-}) {
+export default async function Page({ params }: { params: Params }) {
   const locale = (await params).locale;
   const slug = (await params).slug;
 
-  const story = await getStoryblokStory(slug, locale);
+  const story = await getStory(locale, slug);
 
   if (!story) {
     return <NoDataAvailable />;

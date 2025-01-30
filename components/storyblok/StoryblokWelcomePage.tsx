@@ -19,7 +19,6 @@ import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -133,17 +132,6 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         page_sections,
       })}
     >
-      <Head>
-        <title>{`${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
-
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}

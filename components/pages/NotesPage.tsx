@@ -13,7 +13,6 @@ import illustrationChooseTherapist from '@/public/illustration_choose_therapist.
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
@@ -78,40 +77,24 @@ export default function NotesPage({ story }: Props) {
   };
 
   return (
-    <>
-      <Head>
-        <title>{`${story.content.title} • Bloom`}</title>
-        <meta property="og:title" content={story.content.title} key="og-title" />
-        {story.content.seo_description && (
-          <>
-            <meta name="description" content={story.content.seo_description} key="description" />
-            <meta
-              property="og:description"
-              content={story.content.seo_description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
-      <Box>
-        <Header {...headerProps} />
-        {!userId && <SignUpBanner />}
-        {userId && (
-          <Container sx={containerStyle}>
-            <Box sx={infoBoxStyle}>
-              <ImageTextColumn items={steps} translations="Whatsapp.steps" />
-            </Box>
-            <Box sx={formContainerStyle}>
-              {hasActiveWhatsappSub ? <WhatsappUnsubscribeForm /> : <WhatsappSubscribeForm />}
-            </Box>
-          </Container>
-        )}
-        {userId &&
-          story.content.page_sections?.length > 0 &&
-          story.content.page_sections.map((section: any, index: number) => (
-            <StoryblokPageSection key={`page_section_${index}`} {...section} />
-          ))}
-      </Box>
-    </>
+    <Box>
+      <Header {...headerProps} />
+      {!userId && <SignUpBanner />}
+      {userId && (
+        <Container sx={containerStyle}>
+          <Box sx={infoBoxStyle}>
+            <ImageTextColumn items={steps} translations="Whatsapp.steps" />
+          </Box>
+          <Box sx={formContainerStyle}>
+            {hasActiveWhatsappSub ? <WhatsappUnsubscribeForm /> : <WhatsappSubscribeForm />}
+          </Box>
+        </Container>
+      )}
+      {userId &&
+        story.content.page_sections?.length > 0 &&
+        story.content.page_sections.map((section: any, index: number) => (
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+        ))}
+    </Box>
   );
 }

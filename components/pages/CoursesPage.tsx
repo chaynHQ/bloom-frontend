@@ -26,7 +26,6 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 const containerStyle = {
@@ -131,11 +130,6 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   return (
     <Box>
-      <Head>
-        <title>{`${t('title')} • Bloom`}</title>
-        <meta property="og:title" content={t('courses')} key="og-title" />
-        <meta property="og:description" content={t('introduction')} key="og-description" />
-      </Head>
       <Header
         title={headerProps.title}
         introduction={headerProps.introduction}

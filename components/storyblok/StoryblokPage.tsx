@@ -6,7 +6,6 @@ import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import Head from 'next/head';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 
 export interface StoryblokPageProps {
@@ -36,34 +35,22 @@ const StoryblokPage = (props: StoryblokPageProps) => {
   const isPartiallyPublicPage = partiallyPublicPages.includes(pathname);
 
   return (
-    <>
-      <Head>
-        <title>{`${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
-      <main
-        {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}
-      >
-        <Header
-          title={headerProps.title}
-          introduction={headerProps.introduction}
-          imageSrc={headerProps.imageSrc}
-          translatedImageAlt={headerProps.translatedImageAlt}
-        />
-        {!userId && isPartiallyPublicPage && <SignUpBanner />}
-        {userId &&
-          page_sections?.length > 0 &&
-          page_sections.map((section: StoryblokPageSectionProps, index: number) => (
-            <StoryblokPageSection key={`page_section_${index}`} {...section} />
-          ))}
-      </main>
-    </>
+    <main
+      {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}
+    >
+      <Header
+        title={headerProps.title}
+        introduction={headerProps.introduction}
+        imageSrc={headerProps.imageSrc}
+        translatedImageAlt={headerProps.translatedImageAlt}
+      />
+      {!userId && isPartiallyPublicPage && <SignUpBanner />}
+      {userId &&
+        page_sections?.length > 0 &&
+        page_sections.map((section: StoryblokPageSectionProps, index: number) => (
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+        ))}
+    </main>
   );
 };
 

@@ -4,10 +4,34 @@ import StoryblokResourceConversationPage, {
 } from '@/components/storyblok/StoryblokResourceConversationPage';
 import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
+
+type Params = Promise<{ locale: string; slug: string }>;
+
+async function getStory(locale: string, slug: string) {
+  return await getStoryblokStory(`conversations/${slug}`, locale, {
+    resolve_relations: ['resource_conversation.related_content'],
+  });
+}
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'Resources' });
+  const story = await getStory(locale, slug);
+
+  if (!story) return;
+
+  return generateMetadataBasic({
+    title: story.content.name,
+    titleParent: t('conversations'),
+    description: story.content.seo_description,
+  });
+}
 
 export async function generateStaticParams() {
   let paths: { slug: string; locale: string }[] = [];
@@ -41,17 +65,11 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string }>;
-}) {
+export default async function Page({ params }: { params: Params }) {
   const locale = (await params).locale;
   const slug = (await params).slug;
 
-  const story = await getStoryblokStory(`conversations/${slug}`, locale, {
-    resolve_relations: ['resource_conversation.related_content'],
-  });
+  const story = await getStory(locale, slug);
 
   if (!story) {
     return <NoDataAvailable />;

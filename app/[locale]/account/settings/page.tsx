@@ -1,62 +1,16 @@
-'use client';
+import SettingsPage from '@/components/pages/SettingsPage';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getTranslations } from 'next-intl/server';
 
-import AccountActionsCard from '@/components/cards/AccountActionsCard';
-import EmailRemindersSettingsCard from '@/components/cards/EmailRemindersSettingsCard';
-import EmailSettingsCard from '@/components/cards/EmailSettingsCard';
-import ProfileSettingsCard from '@/components/cards/ProfileSettingsCard';
-import Header from '@/components/layout/Header';
-import phoneIllustration from '@/public/phone.svg';
-import { columnStyle, rowStyle } from '@/styles/common';
-import { Box, Container } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import Head from 'next/head';
+type Params = Promise<{ locale: string }>;
 
-const rowContainerStyle = {
-  ...rowStyle,
-  gap: { xs: 2, md: 6 },
-  flexWrap: { xs: 'wrap', md: 'nowrap' },
-  maxWidth: '100%',
-  paddingTop: { xs: 3, md: 5 },
-} as const;
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Account.accountSettings' });
 
-const columnContainerStyle = {
-  ...columnStyle,
-  width: '100%',
-  gap: { xs: 2, md: 6 },
-  marginBottom: 'auto',
-} as const;
+  return generateMetadataBasic({ title: t('title') });
+}
 
 export default function Page() {
-  const t = useTranslations('Account.accountSettings');
-
-  const headerProps = {
-    title: t('title'),
-    introduction: t.rich('description'),
-    imageSrc: phoneIllustration,
-    translatedImageAlt: t('imageAlt'),
-  };
-
-  return (
-    <Box bgcolor={'secondary.light'}>
-      <Head>
-        <title>{`${t('title')} • Bloom`}</title>
-      </Head>
-      <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        translatedImageAlt={headerProps.translatedImageAlt}
-      />
-      <Container sx={rowContainerStyle}>
-        <Box sx={columnContainerStyle}>
-          <ProfileSettingsCard />
-          <EmailSettingsCard />
-        </Box>
-        <Box sx={columnContainerStyle}>
-          <AccountActionsCard />
-          <EmailRemindersSettingsCard />
-        </Box>
-      </Container>
-    </Box>
-  );
+  return <SettingsPage />;
 }

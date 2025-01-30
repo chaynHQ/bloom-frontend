@@ -17,7 +17,6 @@ import { Box, Container, Link, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 const containerStyle = {
@@ -139,16 +138,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         included_for_partners,
       })}
     >
-      <Head>
-        <title>{`${t('course')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
       <CourseHeader
         name={name}
         description={description}

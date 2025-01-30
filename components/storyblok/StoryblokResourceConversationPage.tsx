@@ -19,7 +19,6 @@ import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -130,16 +129,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         related_exercises,
       })}
     >
-      <Head>
-        <title>{`${t('conversations')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
       <Header
         title={name}
         introduction={

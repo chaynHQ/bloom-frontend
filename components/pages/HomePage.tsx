@@ -11,7 +11,6 @@ import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -38,20 +37,6 @@ export default function HomePage({ story }: Props) {
 
   return (
     <Box>
-      <Head>
-        <title>{`${story.content.title} • Bloom`}</title>
-        <meta property="og:title" content={story.content.title} key="og-title" />
-        {story.content.seo_description && (
-          <>
-            <meta name="description" content={story.content.seo_description} key="description" />
-            <meta
-              property="og:description"
-              content={story.content.seo_description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
       <HomeHeader
         title={story.content.title}
         imageSrc={story.content.header_image?.filename}
