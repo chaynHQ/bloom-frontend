@@ -46,8 +46,11 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     return <LoadingContainer />;
   }
 
+  const isSessionPage = pathname.includes('courses') && pathname.split('/').length > 2;
+  const isPublicPage = !authenticatedPathHeads.includes(pathHead) && !isSessionPage;
+
   // Page does not require authenticated user, return content without guards
-  if (!authenticatedPathHeads.includes(pathHead)) {
+  if (isPublicPage) {
     return <>{children}</>;
   }
 
