@@ -71,8 +71,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: Params }) {
-  const locale = (await params).locale;
-  const slug = (await params).slug;
+  const { locale, slug } = await params;
 
   const story = await getStory(locale, slug);
 

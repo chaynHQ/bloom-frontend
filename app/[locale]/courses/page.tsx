@@ -1,4 +1,3 @@
-import { LANGUAGES } from '@/lib/constants/enums';
 import { FeatureFlag } from '@/lib/featureFlag';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
@@ -18,7 +17,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export default async function Page({ params }: { params: Params }) {
-  const locale = (await params).locale as LANGUAGES;
+  const { locale } = await params;
 
   const baseProps: Partial<ISbStoriesParams> = {
     language: locale,

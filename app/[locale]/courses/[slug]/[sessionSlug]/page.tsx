@@ -65,9 +65,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: Params }) {
-  const locale = (await params).locale;
-  const slug = (await params).slug;
-  const sessionSlug = (await params).sessionSlug;
+  const { locale, slug, sessionSlug } = await params;
 
   const fullSlug = `courses/${slug}/${sessionSlug}`;
   const story = await getStory(locale, fullSlug);
