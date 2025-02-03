@@ -1,18 +1,17 @@
 'use client';
 
-import LoadingContainer from '@/components/common/LoadingContainer';
-import { Link as i18nLink } from '@/i18n/routing';
-import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import bloomHead from '@/public/illustration_bloom_head.svg';
 import { columnStyle } from '@/styles/common';
 import { Box, Button, Container, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const containerStyle = {
   ...columnStyle,
-  minHeight: 'calc(100vh - 120px)',
+  height: '100vh',
   alignItems: 'flex-start',
 } as const;
 
@@ -21,17 +20,27 @@ const imageContainerStyle = {
   width: { xs: 180, md: 260 },
   height: { xs: 180, md: 260 },
   marginLeft: { xs: -3, md: -6 },
-  marginBottom: 4,
+  marginBottom: 2,
 } as const;
 
-export default function NotFoundPage() {
-  const t = useTranslations('Shared');
-  const userId = useTypedSelector((state) => state.user.id);
-  const userLoading = useTypedSelector((state) => state.user.loading);
+export default function ErrorPage({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  const rollbar = useRollbar();
 
-  if (userLoading) {
-    return <LoadingContainer />;
-  }
+  useEffect(() => {
+    rollbar.error(error);
+
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError(error);
+    }
+  }, [error, rollbar]);
+
+  const t = useTranslations('Shared.error');
 
   return (
     <Container sx={containerStyle}>
@@ -43,22 +52,18 @@ export default function NotFoundPage() {
           sizes={getImageSizes(imageContainerStyle.width)}
         />
       </Box>
-      <Typography variant="h1" component="h1">
-        {t('notFound.title')}
-      </Typography>
-      <Typography>
-        {userId ? t('notFound.authenticatedDescription') : t('notFound.unauthenticatedDescription')}
-      </Typography>
+      <Typography variant="h1">{t('title')}</Typography>
+      <Typography>{t('description')}</Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
         color="secondary"
-        component={i18nLink}
-        href={userId ? '/courses' : '/login'}
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
       >
-        {userId
-          ? t('notFound.authenticatedRedirectButton')
-          : t('notFound.unauthenticatedRedirectButton')}
+        {t('buttonLabel')}
       </Button>
     </Container>
   );

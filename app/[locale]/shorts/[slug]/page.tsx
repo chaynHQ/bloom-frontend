@@ -1,4 +1,3 @@
-import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '@/components/storyblok/StoryblokResourceShortPage';
@@ -7,6 +6,7 @@ import { getStoryblokStories, getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: Params }) {
   );
 
   if (!story) {
-    return <NoDataAvailable />;
+    notFound();
   }
 
   return (

@@ -51,17 +51,11 @@
       "description": "Houve um problema com a última solicitação, por favor, tente novamente. Se o problema persistir, entre em contato com a equipe do Bloom.",
       "buttonLabel": "Tente novamente"
     },
-    "404": {
+    "notFound": {
       "title": "404 - Página não encontrada",
       "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
       "unauthenticatedDescription": "Página não encontrada. Verifique a  url ou volte à página inicial.",
       "authenticatedRedirectButton": "Retornar à página de cursos",
-      "unauthenticatedRedirectButton": "Voltar à página inicial"
-    },
-    "500": {
-      "title": "500 - Erro interno",
-      "description": "Ooops, algo deu errado aí. Por favor, volte e tente novamente. Entre em contato através do formulário de contato se o erro persistir.",
-      "authenticatedRedirectButton": "Voltar à página de cursos",
       "unauthenticatedRedirectButton": "Voltar à página inicial"
     },
     "alt": {

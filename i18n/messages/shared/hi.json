@@ -51,18 +51,12 @@
       "description": "Pichhle request mein kuch samasya thi, kripya dobara prayas karein. Yadi samasya bani rahti hai, to Bloom team se sampark karein.",
       "buttonLabel": "Dobara prayas karein"
     },
-    "404": {
+    "notFound": {
       "title": "404 - Page nahi mila",
       "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",
       "unauthenticatedDescription": "Yeh page nahi mila. URL check kariya ya fir welcome page par vapis jaiye",
       "authenticatedRedirectButton": "Courses ke page par vapis jaiye",
       "unauthenticatedRedirectButton": "Welcome page par vapis jaiye."
-    },
-    "500": {
-      "title": "500 - Internal error",
-      "description": "Hmm, kuch galat hogaya. Kripya vapis jaiye aur dobara prayas kariye. Humse contact form ke dwara sampark kariye agar yeh error baar baar aa raha hai toh.",
-      "authenticatedRedirectButton": "Courses ke page par vapis jaiye.",
-      "unauthenticatedRedirectButton": "Welcome page par vapis jaiye"
     },
     "alt": {
       "chaynLogo": "Chayn logo",

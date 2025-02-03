@@ -44,23 +44,17 @@
       "expandTeamMember": "Expand bio for {name}"
     },
     "noDataAvailable": {
-      "title": "There was an issue loading this page. Please go back and try again soon, or get in touch."
+      "title": "There was an issue loading this page. Please go back and try again, or get in touch."
     },
     "error": {
       "title": "Something went wrong",
       "description": "There was an issue with that last request, please try again. If the issue persists, get in touch with the bloom team.",
       "buttonLabel": "Try again"
     },
-    "404": {
+    "notFound": {
       "title": "404 - Page not found",
       "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
       "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
-      "authenticatedRedirectButton": "Back to courses page",
-      "unauthenticatedRedirectButton": "Back to welcome page"
-    },
-    "500": {
-      "title": "500 - Internal error",
-      "description": "Hmm, something went wrong there. Please go back and try again. Get in touch via the contact form if the error continues.",
       "authenticatedRedirectButton": "Back to courses page",
       "unauthenticatedRedirectButton": "Back to welcome page"
     },

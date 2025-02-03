@@ -1,4 +1,3 @@
-import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokSessionPage, {
   StoryblokSessionPageProps,
 } from '@/components/storyblok/StoryblokSessionPage';
@@ -7,6 +6,7 @@ import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
@@ -46,12 +46,19 @@ export async function generateStaticParams() {
     content_type: 'session',
   };
 
-  let { data } = await storyblokApi.get('cdn/links', sbParams);
+  let sbIBAParams: ISbStoriesParams = {
+    version: 'published',
+    starts_with: 'courses/',
+    content_type: 'session_iba',
+  };
 
-  Object.keys(data.links).forEach((linkKey) => {
+  let { data } = await storyblokApi.get('cdn/links', sbParams);
+  let { data: dataIBA } = await storyblokApi.get('cdn/links', sbIBAParams);
+
+  Object.keys([...data.links, ...dataIBA.links]).forEach((linkKey) => {
     const session = data.links[linkKey];
 
-    if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
+    if (!session.slug || !session.published) return;
 
     const courseSlug = session.slug.split('/')[1];
     const sessionSlug = session.slug.split('/')[2];
@@ -71,7 +78,7 @@ export default async function Page({ params }: { params: Params }) {
   const story = await getStory(locale, fullSlug);
 
   if (!story) {
-    return <NoDataAvailable />;
+    notFound();
   }
 
   const content = story.content as StoryblokSessionPageProps;

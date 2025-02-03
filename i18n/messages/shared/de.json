@@ -51,16 +51,10 @@
       "description": "Bei der letzten Anfrage ist ein Problem aufgetreten, bitte versuche es erneut. Wenn das Problem weiterhin besteht, nimm Kontakt mit dem Bloom-Team auf.",
       "buttonLabel": "Erneut versuchen"
     },
-    "404": {
+    "notFound": {
       "title": "404 - Seite nicht gefunden",
       "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",
       "unauthenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück auf die Startseite.",
-      "authenticatedRedirectButton": "Zurück zur Kursseite",
-      "unauthenticatedRedirectButton": "Zurück zur Startseite"
-    },
-    "500": {
-      "title": "500 - Interner Fehler",
-      "description": "Hmm, da ist etwas schief gelaufen. Bitte gehe zurück und versuche es erneut. Kontaktiere uns über das Kontaktformular, wenn der Fehler weiterhin besteht. ",
       "authenticatedRedirectButton": "Zurück zur Kursseite",
       "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },

@@ -2,8 +2,7 @@
 
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { useRouter } from '@/i18n/routing';
-import { LANGUAGES } from '@/lib/constants/enums';
-import { useSearchParams } from 'next/navigation';
+import { notFound, useSearchParams } from 'next/navigation';
 
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 export default function Page() {
@@ -11,13 +10,11 @@ export default function Page() {
   const searchParams = useSearchParams();
 
   let modeParam = searchParams.get('mode');
-  let langParam = searchParams.get('lang');
-  const options = langParam && langParam in LANGUAGES ? { locale: langParam } : undefined;
 
   if (modeParam && modeParam === 'resetPassword') {
-    router.replace(`/auth/reset-password?oobCode=${searchParams.get('oobCode')}`, options);
+    router.replace(`/auth/reset-password?oobCode=${searchParams.get('oobCode')}`);
   } else {
-    router.replace('/404', options);
+    notFound();
   }
   return <LoadingContainer />;
 }
