@@ -108,7 +108,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   };
 
   useEffect(() => {
-    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
+    getChatAccess(partnerAccesses, setLiveChatAccess);
   }, [partnerAccesses, partnerAdmin]);
 
   useEffect(() => {
