@@ -1,4 +1,5 @@
-import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
@@ -45,16 +46,56 @@ export const ShortsCard = (props: ShortsCardProps) => {
           sx={{
             minHeight: 335,
             padding: '0 !important',
+            transition: 'background-color 0.3s ease',
+            '&:hover .play-button': {
+              opacity: 1,
+              transform: 'translate(-50%, -50%) scale(1)',
+            },
+            '&:hover .image-box': {
+              filter: 'brightness(0.8752)',
+            },
           }}
         >
-          <Box height="130px" position="relative" width="100%" overflow="hidden">
+          <Box
+            className="image-box"
+            height="130px"
+            position="relative"
+            width="100%"
+            overflow="hidden"
+            bgcolor="palePrimaryLight"
+            sx={{
+              transition: 'filter 0.3s ease',
+            }}
+          >
             <Image
-              src={image?.filename || '/bloom_shorts.png'}
+              src={image?.filename ?? '/bloom_shorts.png'}
               objectFit="cover"
               fill
-              alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
+              alt={image?.alt ?? 'Bloom shorts default image'}
             />
+            <Box
+              className="play-button"
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) scale(0.8)',
+                opacity: 0,
+                transition: 'opacity 0.3s ease, transform 0.3s ease',
+                zIndex: 2,
+              }}
+            >
+              <IconButton
+                sx={{
+                  color: 'white',
+                  backgroundColor: 'rgb(255, 250, 250)',
+                }}
+              >
+                <PlayArrowIcon sx={{ fontSize: 40, color: 'error.main' }} />
+              </IconButton>
+            </Box>
           </Box>
+
           <Box minHeight="100px" p={3}>
             <Typography sx={categoryStyle}>
               {t(`relatedContent.${category}`)}
