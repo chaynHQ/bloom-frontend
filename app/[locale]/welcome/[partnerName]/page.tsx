@@ -1,4 +1,3 @@
-import NoDataAvailable from '@/components/common/NoDataAvailable';
 import StoryblokWelcomePage, {
   StoryblokWelcomePageProps,
 } from '@/components/storyblok/StoryblokWelcomePage';
@@ -6,6 +5,7 @@ import { routing } from '@/i18n/routing';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/rsc';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 14400; // invalidate every 4 hours
 export const dynamic = 'force-dynamic';
@@ -63,7 +63,7 @@ export default async function Page({ params }: { params: Params }) {
   const story = await getStory(locale, partnerName);
 
   if (!story) {
-    return <NoDataAvailable />;
+    notFound();
   }
 
   return (

@@ -2,6 +2,8 @@ import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getTranslations } from 'next-intl/server';
 import ResetPasswordPage from '../../../../components/pages/ResetPasswordPage';
 
+export const dynamic = 'force-dynamic';
+
 type Params = Promise<{ locale: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {

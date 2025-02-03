@@ -144,7 +144,7 @@ Cypress.Commands.add('cleanUpTestState', () => {
 });
 
 Cypress.Commands.add('visitGermanPage', (url) => {
-  cy.visit(url, {
+  cy.visit(`/de/${url}`, {
     onBeforeLoad(win) {
       Object.defineProperty(win.navigator, 'language', { value: 'de-DE' });
       Object.defineProperty(win.navigator, 'languages', { value: ['de'] });
@@ -157,7 +157,7 @@ Cypress.Commands.add('visitGermanPage', (url) => {
 });
 
 Cypress.Commands.add('visitSpanishPage', (url) => {
-  cy.visit(url, {
+  cy.visit(`/es/${url}`, {
     onBeforeLoad(win) {
       Object.defineProperty(win.navigator, 'language', { value: 'es-ES' });
       Object.defineProperty(win.navigator, 'languages', { value: ['es'] });
@@ -170,7 +170,7 @@ Cypress.Commands.add('visitSpanishPage', (url) => {
 });
 
 Cypress.Commands.add('visitHindiPage', (url) => {
-  cy.visit(url, {
+  cy.visit(`/hi/${url}`, {
     onBeforeLoad(win) {
       Object.defineProperty(win.navigator, 'language', { value: 'hi-IN' });
       Object.defineProperty(win.navigator, 'languages', { value: ['hi'] });
@@ -183,7 +183,7 @@ Cypress.Commands.add('visitHindiPage', (url) => {
 });
 
 Cypress.Commands.add('visitFrenchPage', (url) => {
-  cy.visit(url, {
+  cy.visit(`/fr/${url}`, {
     onBeforeLoad(win) {
       Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });
       Object.defineProperty(win.navigator, 'languages', { value: ['fr'] });

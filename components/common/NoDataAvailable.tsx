@@ -24,7 +24,7 @@ const imageContainerStyle = {
 } as const;
 
 const NoDataAvailable = () => {
-  const t = useTranslations('Shared.noDataAvailable');
+  const t = useTranslations('Shared');
 
   return (
     <Container sx={containerStyle}>
@@ -37,7 +37,7 @@ const NoDataAvailable = () => {
         />
       </Box>
       <Typography variant="h3" component="h1" maxWidth={700}>
-        {t('title')}
+        {t('noDataAvailable.title')}
       </Typography>
     </Container>
   );

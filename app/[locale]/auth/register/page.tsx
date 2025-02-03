@@ -4,6 +4,8 @@ import RegisterPage from '../../../../components/pages/RegisterPage';
 
 type Params = Promise<{ locale: string }>;
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: Params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Auth.register' });
