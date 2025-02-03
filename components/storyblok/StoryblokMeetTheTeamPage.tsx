@@ -24,7 +24,6 @@ export interface StoryblokMeetTheTeamPageProps {
   _uid: string;
   _editable: string;
   title: string;
-  seo_description: string;
   description: string;
   header_image: { filename: string; alt: string };
   core_team_title: string;
@@ -43,7 +42,6 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     _uid,
     _editable,
     title,
-    seo_description,
     description,
     header_image,
     core_team_title,

@@ -77,7 +77,6 @@ export interface StoryblokResourceShortPageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   duration: string;
   video: { url: string };
@@ -98,7 +97,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     video,
     video_transcript,
@@ -175,7 +173,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         video,
         video_transcript,

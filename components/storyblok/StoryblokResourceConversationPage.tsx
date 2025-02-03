@@ -45,7 +45,6 @@ export interface StoryblokResourceConversationPageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
@@ -65,7 +64,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     header_image,
     audio,
@@ -120,7 +118,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         audio,
         audio_transcript,

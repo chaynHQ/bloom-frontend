@@ -38,7 +38,6 @@ export interface StoryblokCoursePageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   image: { filename: string; alt: string };
   image_with_background: { filename: string; alt: string };
@@ -56,7 +55,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     image,
     image_with_background,
@@ -128,7 +126,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         image,
         image_with_background,

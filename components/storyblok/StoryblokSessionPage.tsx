@@ -42,7 +42,6 @@ export interface StoryblokSessionPageProps {
   course: ISbStoryData;
   name: string;
   subtitle: string;
-  seo_description: string;
   description: string;
   video: { url: string };
   video_transcript: ISbRichtext;
@@ -64,7 +63,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     course,
     name,
     subtitle,
-    seo_description,
     description,
     video,
     video_transcript,
