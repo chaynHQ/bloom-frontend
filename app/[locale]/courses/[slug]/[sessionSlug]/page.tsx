@@ -55,7 +55,9 @@ export async function generateStaticParams() {
   let { data } = await storyblokApi.get('cdn/links', sbParams);
   let { data: dataIBA } = await storyblokApi.get('cdn/links', sbIBAParams);
 
-  Object.keys([...data.links, ...dataIBA.links]).forEach((linkKey) => {
+  const combinedSessions = { ...data.links, ...dataIBA.links };
+
+  Object.keys(combinedSessions).forEach((linkKey) => {
     const session = data.links[linkKey];
 
     if (!session.slug || !session.published) return;
