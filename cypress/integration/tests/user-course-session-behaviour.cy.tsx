@@ -10,11 +10,10 @@ describe.only('A logged in user should be able to navigate to a course session a
       emailInput: newUserEmail,
       passwordInput: password,
     });
+    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
   });
 
   it('Should go to courses page and select a course & session', () => {
-    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
-
     cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 8000 }).should('exist').click(); //navigate to courses
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
