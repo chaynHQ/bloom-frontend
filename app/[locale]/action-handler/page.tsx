@@ -1,8 +1,7 @@
 'use client';
 
-import LoadingContainer from '@/components/common/LoadingContainer';
 import { useRouter } from '@/i18n/routing';
-import { notFound, useSearchParams } from 'next/navigation';
+import { notFound, redirect, useSearchParams } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,9 +13,8 @@ export default function Page() {
   let modeParam = searchParams.get('mode');
 
   if (modeParam && modeParam === 'resetPassword') {
-    router.replace(`/auth/reset-password?oobCode=${searchParams.get('oobCode')}`);
+    redirect(`/auth/reset-password?oobCode=${searchParams.get('oobCode')}`);
   } else {
     notFound();
   }
-  return <LoadingContainer />;
 }
