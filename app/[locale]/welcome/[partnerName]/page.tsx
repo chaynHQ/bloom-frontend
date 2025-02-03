@@ -8,6 +8,7 @@ import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/rsc';
 
 export const revalidate = 14400; // invalidate every 4 hours
+export const dynamic = 'force-dynamic';
 
 type Params = Promise<{ locale: string; partnerName: string }>;
 
