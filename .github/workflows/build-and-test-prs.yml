@@ -3,6 +3,8 @@ name: Build & test
 on:
   pull_request:
     types: [opened, synchronize]
+  pull_request_target:
+    types: [opened, synchronize]
   push:
     branches: [develop]
 
