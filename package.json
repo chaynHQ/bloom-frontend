@@ -39,7 +39,7 @@
     "@mui/lab": "^5.0.0-alpha.175",
     "@mui/material": "^5.16.7",
     "@newrelic/next": "^0.10.0",
-    "@reduxjs/toolkit": "^2.5.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "@storyblok/react": "^4.3.3",
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.7.7",
