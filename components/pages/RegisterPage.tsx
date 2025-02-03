@@ -114,7 +114,7 @@ export default function RegisterPage() {
     } else {
       setAllPartnersContent(getAllPartnersContent());
     }
-  }, [router, dispatch, entryPartnerAccessCode, entryPartnerReferral]);
+  }, [router, dispatch, entryPartnerAccessCode, entryPartnerReferral, searchParams]);
 
   const headerProps = {
     partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,

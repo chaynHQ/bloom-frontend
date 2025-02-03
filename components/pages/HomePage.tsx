@@ -29,7 +29,7 @@ export default function HomePage({ story }: Props) {
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);
     }
-  }, []);
+  }, [entryPartnerReferral]);
 
   if (!story) {
     return <NoDataAvailable />;

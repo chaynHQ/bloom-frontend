@@ -118,7 +118,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts]);
+  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)

@@ -55,7 +55,7 @@ const EmailSettingsForm = () => {
         );
       }
     },
-    [updateUser, t, tS],
+    [updateUser, t],
   );
 
   return (

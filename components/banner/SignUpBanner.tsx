@@ -26,7 +26,7 @@ export const SignUpBanner = () => {
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);
     }
-  }, []);
+  }, [entryPartnerReferral]);
 
   return (
     <Container id="signup-banner" sx={containerStyle}>

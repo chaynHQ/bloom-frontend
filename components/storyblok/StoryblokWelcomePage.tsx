@@ -101,7 +101,16 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 
       setCodeParam(entryPartnerAccessCode);
     }
-  }, [dispatch, router, entryPartnerAccessCode, entryPartnerReferral, partnerContent.name]);
+  }, [
+    dispatch,
+    router,
+    entryPartnerAccessCode,
+    entryPartnerReferral,
+    partnerContent.name,
+    createQueryString,
+    pathname,
+    searchParams,
+  ]);
 
   const logPromoEvent = () => {
     if (userId) {

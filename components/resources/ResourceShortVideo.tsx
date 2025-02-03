@@ -60,7 +60,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
 
       throw error;
     }
-  }, [startResourceShort, eventData, storyId]);
+  }, [startResourceShort, eventData, storyId, rollbar]);
 
   const callCompleteResourceShort = useCallback(async () => {
     logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST, eventData);
@@ -81,7 +81,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
 
       throw error;
     }
-  }, [completeResourceShort, eventData, storyId]);
+  }, [completeResourceShort, eventData, storyId, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;

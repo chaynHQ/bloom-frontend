@@ -88,7 +88,7 @@ export default function LoginPage() {
     } else {
       router.push('/courses');
     }
-  }, [userId, partnerAdmin?.active, router]);
+  }, [userId, partnerAdmin?.active, router, searchParams]);
 
   const ExtraContent = () => {
     return (

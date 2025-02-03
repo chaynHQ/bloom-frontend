@@ -60,7 +60,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
 
       throw error;
     }
-  }, [startResourceConversation, eventData, name, storyId]);
+  }, [startResourceConversation, eventData, storyId, rollbar]);
 
   const callCompleteResourceConversation = useCallback(async () => {
     logEvent(RESOURCE_CONVERSATION_COMPLETE_REQUEST, eventData);
@@ -81,7 +81,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
 
       throw error;
     }
-  }, [completeResourceConversation, eventData, name, storyId]);
+  }, [completeResourceConversation, eventData, storyId, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
