@@ -93,7 +93,7 @@
         "hopesLabel": "Quelle chose espérez-vous que Bloom vous aide à comprendre ou à faire ?"
       }
     },
-    "fr": {
+    "disableServiceEmails": {
       "title": "E-mails de service désactivés",
       "description": "Vous ne recevrez plus d'e-mails liés à Bloom. Si vous souhaitez modifier cela ultérieurement, veuillez contacter l'équipe Bloom.",
       "error": "Une erreur s'est produite lors de la désactivation des e-mails de service. Réessayez en actualisant cette page ou contactez l'équipe Bloom."

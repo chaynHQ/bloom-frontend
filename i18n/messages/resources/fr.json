@@ -1,5 +1,7 @@
 {
   "Resources": {
+    "conversations": "Conversations",
+    "shorts": "Courte",
     "completed": "Terminé",
     "sessionDetail": "Ce clip provient de la session {sessionNumber}, {sessionName}, de notre cours {courseName}.",
     "sessionButtonLabel": "Regarder la session complète",
