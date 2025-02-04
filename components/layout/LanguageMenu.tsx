@@ -42,9 +42,9 @@ const buttonStyle = {
 } as const;
 
 export default function LanguageMenu() {
-  const pathname = usePathname();
   const router = useRouter();
-  const params = useParams();
+  const pathname = usePathname();
+  const params = useParams<{ locale: string }>();
   const locale = useLocale();
   const t = useTranslations('Navigation');
 
@@ -56,12 +56,11 @@ export default function LanguageMenu() {
       logEvent(generateLanguageMenuEvent(locale));
       handleClose();
       router.replace(
-        {
-          pathname,
-          // @ts-ignore
-          params,
-        },
-        locale,
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: locale },
       );
     });
   }

@@ -23,7 +23,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -74,7 +74,6 @@ export default function RegisterPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
-  const locale = useLocale();
   const searchParams = useSearchParams();
   const theme = useTheme();
   const dispatch = useAppDispatch();
@@ -105,9 +104,9 @@ export default function RegisterPage() {
           entryPartnerAccessCode
         ) {
           // Entry code in state, add to url query in case of refresh
-          router.push({
+          router.replace({
             pathname: '/auth/register',
-            query: { code: entryPartnerAccessCode, partner: partner },
+            query: { partner: partner, code: entryPartnerAccessCode },
           });
           setCodeParam(entryPartnerAccessCode);
         }
@@ -115,7 +114,7 @@ export default function RegisterPage() {
     } else {
       setAllPartnersContent(getAllPartnersContent());
     }
-  }, [router, locale, dispatch, entryPartnerAccessCode, entryPartnerReferral, searchParams]);
+  }, [router, dispatch, entryPartnerAccessCode, entryPartnerReferral, searchParams]);
 
   const headerProps = {
     partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,

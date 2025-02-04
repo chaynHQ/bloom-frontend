@@ -14,10 +14,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useState } from 'react';
 
 export const EmailForm = () => {
+  const params = useParams<{ locale: string }>();
   const locale = useLocale();
   const [emailInput, setEmailInput] = useState<string>('');
   const [resetEmailSent, setResetEmailSent] = useState<boolean>(false);

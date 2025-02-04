@@ -1,9 +1,8 @@
+import { STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
 import { Course, Session } from '@/lib/store/coursesSlice';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import { expect } from '@jest/globals';
 import { createCrispProfileData } from './createCrispProfileData';
-
-const storyblokPublished = 'published';
 
 const partnerAccess = {
   featureLiveChat: true,
@@ -18,7 +17,7 @@ const partnerAccess = {
 const course = {
   id: 'c1',
   name: 'Course 1',
-  status: storyblokPublished,
+  status: STORYBLOK_STORY_STATUS.PUBLISHED,
   completed: false,
   sessions: [
     {
@@ -27,7 +26,7 @@ const course = {
       id: 's1',
       slug: 'slug',
       storyblokId: 1,
-      status: storyblokPublished,
+      status: STORYBLOK_STORY_STATUS.PUBLISHED,
     } as Session,
     {
       completed: true,
@@ -35,7 +34,7 @@ const course = {
       id: 's2',
       slug: 'slug',
       storyblokId: 2,
-      status: storyblokPublished,
+      status: STORYBLOK_STORY_STATUS.PUBLISHED,
     },
     {
       completed: false,
@@ -43,7 +42,7 @@ const course = {
       id: 's3',
       slug: 'slug',
       storyblokId: 3,
-      status: storyblokPublished,
+      status: STORYBLOK_STORY_STATUS.PUBLISHED,
     },
   ],
 } as Course;

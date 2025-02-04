@@ -44,6 +44,7 @@ import {
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useLocale, useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
@@ -66,7 +67,9 @@ interface RegisterFormProps {
 
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
+  const params = useParams<{ locale: string }>();
   const locale = useLocale();
+
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const rollbar = useRollbar();

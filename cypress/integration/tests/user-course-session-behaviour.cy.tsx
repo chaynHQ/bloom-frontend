@@ -1,4 +1,4 @@
-describe.only('A course session user', () => {
+describe.only('A logged in user should be able to navigate to a course session and complete it', () => {
   const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
@@ -13,7 +13,7 @@ describe.only('A course session user', () => {
     cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
   });
 
-  it('Should navigate to a session and complete it', () => {
+  it('Should go to courses page and select a course & session', () => {
     cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 8000 }).should('exist').click(); //navigate to courses
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
@@ -29,12 +29,16 @@ describe.only('A course session user', () => {
     })
       .first()
       .click(); //click on a session when link loads
+  });
+
+  it('Should read activity & bonus content, complete session and complete feedback form', () => {
+    cy.visit('/courses/healing-from-sexual-trauma/what-is-sexual-trauma');
 
     cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
 
     cy.get('h3', { timeout: 10000 }).contains('Activity').click(); //open activities
 
-    // cy.get('h3').contains('Bonus content').click(); //open bonus content
+    cy.get('h3').contains('Bonus content').click(); //open bonus content
 
     cy.get('button').contains('Session complete').click(); //mark course as complete
 
@@ -48,7 +52,7 @@ describe.only('A course session user', () => {
 
     cy.get('button').contains('Send').click(); //submit feedback
 
-    // cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
+    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
   });
 
   after(() => {

@@ -31,8 +31,15 @@ import {
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
-import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 const rowStyles = {
   ...rowStyle,
@@ -51,6 +58,7 @@ const actionsStyle = {
 
 const AboutYouDemographicForm = () => {
   const t = useTranslations('Account.aboutYou.demographicForm');
+  const params = useParams<{ locale: string }>();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -82,6 +90,18 @@ const AboutYouDemographicForm = () => {
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   useEffect(() => {
     if (locale) {
@@ -152,7 +172,7 @@ const AboutYouDemographicForm = () => {
           logEvent(ABOUT_YOU_DEMO_SUCCESS, eventUserData);
 
           // append `?q=a` to the url to reload the page and show the setA form instead
-          router.push({ pathname, query: { q: 'a' } });
+          router.push(pathname + '?' + createQueryString('q', 'a'));
           setLoading(false);
         })
         .catch(function (error) {
