@@ -25,12 +25,12 @@ a span {
 }
 
 ul > li::marker {
-  color: #ea0050;
+  color: #ea0050 !important;
 }
 
 ul,
 ol {
-  padding-left: 2rem;
+  padding-left: 1.75rem;
 }
 
 p:only-child,

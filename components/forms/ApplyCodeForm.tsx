@@ -11,7 +11,7 @@ import {
 } from '@/lib/constants/events';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, TextField, Typography } from '@mui/material';
+import { Box, Link, List, ListItem, TextField, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -19,6 +19,14 @@ import { ErrorDisplay } from '@/lib/constants/common';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
+
+const listItemStyle = {
+  display: 'list-item',
+  color: 'primary.dark',
+  span: {
+    color: 'text.primary',
+  },
+} as const;
 
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');
@@ -100,19 +108,25 @@ const ApplyCodeForm = () => {
       <Box>
         <Typography mb={2}>{t('formSuccess.success')}</Typography>
         <Typography>{t('formSuccess.successLine2')}</Typography>
-        <ul>
-          <li key="courses-item">{t('formSuccess.courses')}</li>
+        <List sx={{ listStyleType: 'disc', pl: 2 }}>
+          <ListItem key="courses-item" sx={listItemStyle}>
+            <Typography component="span">{t('formSuccess.courses')}</Typography>
+          </ListItem>
           {newPartnerAccess?.featureTherapy && (
-            <li key="therapy-item">
-              {t.rich('formSuccess.therapy', {
-                therapySessionsRemaining: newPartnerAccess.therapySessionsRemaining,
-              })}
-            </li>
+            <ListItem key="therapy-item" sx={listItemStyle}>
+              <Typography component="span">
+                {t.rich('formSuccess.therapy', {
+                  therapySessionsRemaining: newPartnerAccess.therapySessionsRemaining,
+                })}{' '}
+              </Typography>
+            </ListItem>
           )}
           {newPartnerAccess?.featureLiveChat && (
-            <li key="chat-item">{t('formSuccess.liveChat')}</li>
+            <ListItem key="chat-item" sx={listItemStyle}>
+              <Typography component="span">{t('formSuccess.liveChat')}</Typography>
+            </ListItem>
           )}
-        </ul>
+        </List>
       </Box>
     );
 

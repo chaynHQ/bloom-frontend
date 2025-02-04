@@ -43,24 +43,14 @@ export async function generateStaticParams() {
   let sbParams: ISbStoriesParams = {
     version: 'published',
     starts_with: 'courses/',
-    content_type: 'session',
-  };
-
-  let sbIBAParams: ISbStoriesParams = {
-    version: 'published',
-    starts_with: 'courses/',
-    content_type: 'session_iba',
   };
 
   let { data } = await storyblokApi.get('cdn/links', sbParams);
-  let { data: dataIBA } = await storyblokApi.get('cdn/links', sbIBAParams);
 
-  const combinedSessions = { ...data.links, ...dataIBA.links };
-
-  Object.keys(combinedSessions).forEach((linkKey) => {
+  Object.keys(data.links).forEach((linkKey) => {
     const session = data.links[linkKey];
 
-    if (!session.slug || !session.published) return;
+    if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
 
     const courseSlug = session.slug.split('/')[1];
     const sessionSlug = session.slug.split('/')[2];
