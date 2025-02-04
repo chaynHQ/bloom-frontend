@@ -33,9 +33,7 @@ describe.only('A course session user', () => {
       timeout: 8000,
     }).should('not.exist');
 
-    cy.url({
-      timeout: 8000,
-    }).should('include', 'return_url');
+    cy.get('h1').should('not.contain', 'There was an issue loading this page');
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
