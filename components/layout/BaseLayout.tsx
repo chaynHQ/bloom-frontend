@@ -1,5 +1,5 @@
 import { AuthGuard } from '@/components/guards/AuthGuard';
-import Consent from '@/components/layout/Consent';
+import Consent from '@/components/layout/CookieConsent';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
 import TopBar from '@/components/layout/TopBar';
