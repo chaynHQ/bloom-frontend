@@ -3,12 +3,14 @@ name: Build & test
 on:
   pull_request:
     types: [opened, synchronize]
+  pull_request_target:
+    types: [opened, synchronize]
   push:
     branches: [develop]
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

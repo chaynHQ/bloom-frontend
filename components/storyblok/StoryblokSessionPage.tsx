@@ -10,7 +10,6 @@ import SessionContentCard from '../../components/cards/SessionContentCard';
 import { PROGRESS_STATUS } from '../../constants/enums';
 import { useTypedSelector } from '../../hooks/store';
 import { columnStyle } from '../../styles/common';
-import { courseIsLiveNow, courseIsLiveSoon } from '../../utils/courseLiveStatus';
 import { getChatAccess } from '../../utils/getChatAccess';
 import { getSessionCompletion } from '../../utils/getSessionCompletion';
 import hasAccessToPage from '../../utils/hasAccessToPage';
@@ -50,8 +49,6 @@ export interface StoryblokSessionPageProps {
   video_outro: ISbRichtext;
   activity: ISbRichtext;
   bonus: ISbRichtext | BonusContent[];
-  coming_soon: boolean;
-  coming_soon_content: ISbRichtext;
   languages: string[];
   component: 'Session' | 'session_iba';
   included_for_partners: string[];
@@ -74,8 +71,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     video_outro,
     activity,
     bonus,
-    coming_soon,
-    coming_soon_content,
   } = props;
 
   const t = useTranslations('Courses');
@@ -102,10 +97,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
   const showMultipleBonusContent = multipleBonusContent && multipleBonusContent.length > 0;
 
-  const courseComingSoon: boolean = !isAlternateSessionPage && course.content.coming_soon;
-  const courseLiveSoon: boolean = !isAlternateSessionPage && courseIsLiveSoon(course);
-  const courseLiveNow: boolean = !isAlternateSessionPage && courseIsLiveNow(course);
-
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const eventData = {
     ...eventUserData,
@@ -114,13 +105,10 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     session_progress: sessionProgress,
     course_name: course.name,
     course_storyblok_id: course.id,
-    course_coming_soon: courseComingSoon,
-    course_live_soon: courseLiveSoon,
-    course_live_now: courseLiveNow,
   };
 
   useEffect(() => {
-    getChatAccess(partnerAccesses, setLiveChatAccess, partnerAdmin);
+    getChatAccess(partnerAccesses, setLiveChatAccess);
   }, [partnerAccesses, partnerAdmin]);
 
   useEffect(() => {
@@ -154,8 +142,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
         video_outro,
         activity,
         bonus,
-        coming_soon,
-        coming_soon_content,
       })}
     >
       <Head>
@@ -187,57 +173,52 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
             storyPosition={storyPosition}
           />
           <Container sx={containerStyle}>
-            {coming_soon && (
-              <Box maxWidth={700}>{render(coming_soon_content, RichTextOptions)}</Box>
-            )}
-            {!coming_soon && (
-              <Box sx={cardColumnStyle}>
-                <SessionVideo
-                  eventData={eventData}
-                  name={name}
-                  video={video}
-                  storyId={storyId}
-                  sessionProgress={sessionProgress}
-                  video_transcript={video_transcript}
-                />
-                {activity.content &&
-                  (activity.content?.length > 1 || activity.content[0].content) && (
-                    <>
-                      <Dots />
-                      <SessionContentCard
-                        title={t('sessionDetail.activityTitle')}
-                        titleIcon={StarBorderIcon}
-                        richtextContent
-                        eventPrefix="SESSION_ACTIVITY"
-                        eventData={eventData}
-                      >
-                        <>{render(activity, RichTextOptions)}</>
-                      </SessionContentCard>
-                    </>
-                  )}
-                {showRichtextBonusContent && (
+            <Box sx={cardColumnStyle}>
+              <SessionVideo
+                eventData={eventData}
+                name={name}
+                video={video}
+                storyId={storyId}
+                sessionProgress={sessionProgress}
+                video_transcript={video_transcript}
+              />
+              {activity.content &&
+                (activity.content?.length > 1 || activity.content[0].content) && (
                   <>
                     <Dots />
                     <SessionContentCard
-                      title={t('sessionDetail.bonusTitle')}
-                      titleIcon={LinkIcon}
+                      title={t('sessionDetail.activityTitle')}
+                      titleIcon={StarBorderIcon}
                       richtextContent
-                      eventPrefix="SESSION_BONUS_CONTENT"
+                      eventPrefix="SESSION_ACTIVITY"
                       eventData={eventData}
                     >
-                      <>{render(richtextBonusContent, RichTextOptions)}</>
+                      <>{render(activity, RichTextOptions)}</>
                     </SessionContentCard>
                   </>
                 )}
-                {showMultipleBonusContent && (
-                  <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
-                )}
-                {liveChatAccess && <SessionChat eventData={eventData} />}
-                {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-                  <SessionCompleteButton storyId={storyId} eventData={eventData} />
-                )}
-              </Box>
-            )}
+              {showRichtextBonusContent && (
+                <>
+                  <Dots />
+                  <SessionContentCard
+                    title={t('sessionDetail.bonusTitle')}
+                    titleIcon={LinkIcon}
+                    richtextContent
+                    eventPrefix="SESSION_BONUS_CONTENT"
+                    eventData={eventData}
+                  >
+                    <>{render(richtextBonusContent, RichTextOptions)}</>
+                  </SessionContentCard>
+                </>
+              )}
+              {showMultipleBonusContent && (
+                <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
+              )}
+              {liveChatAccess && <SessionChat eventData={eventData} />}
+              {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
+                <SessionCompleteButton storyId={storyId} eventData={eventData} />
+              )}
+            </Box>
           </Container>
 
           {sessionId && (

@@ -9,11 +9,6 @@
     "expandSummary": "Zusammenfassung erweitern für",
     "navigateToSession": "Zur Session navigieren -",
     "navigateToCourse": "Zum Kurs navigieren -",
-    "liveFrom": "Live ab {date}",
-    "liveUntil": "Live bis {date}",
-    "liveSoon": "Demnächst live",
-    "liveNow": "Jetzt live",
-    "comingSoon": "Demnächst",
     "noCourses": "Zur Zeit sind keine Kurse verfügbar. Falls Dir das nicht richtig erscheint, kontaktiere das Bloom-Team.",
     "courseDetail": {
       "introductionTitle": "Einführung in den Kurs",

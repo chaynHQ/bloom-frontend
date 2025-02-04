@@ -9,11 +9,6 @@
     "expandSummary": "Summary vistaar karein",
     "navigateToSession": "Session par leke jaiye",
     "navigateToCourse": "Course pe leke jaiye",
-    "liveFrom": "Live hoga {date} ko",
-    "liveUntil": "{date} tak live rahega",
-    "liveSoon": "Jald he live hoga",
-    "liveNow": "Live hogaya hai",
-    "comingSoon": "Jald he aa raha hai",
     "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",

@@ -1,5 +1,4 @@
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import PendingOutlined from '@mui/icons-material/PendingOutlined';
 import {
   Box,
   Card,
@@ -78,8 +77,6 @@ const CourseCard = (props: CourseCardProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
 
-  const courseComingSoon: boolean = course.content.coming_soon;
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -136,13 +133,6 @@ const CourseCard = (props: CourseCardProps) => {
         </CardContent>
       )}
       <CardActions sx={cardActionsStyle}>
-        {courseComingSoon && (
-          <Box sx={statusRowStyle}>
-            <PendingOutlined color="error" />
-            <Typography>{t('comingSoon')}</Typography>
-          </Box>
-        )}
-
         {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
           <ProgressStatus status={courseProgress} />
         )}

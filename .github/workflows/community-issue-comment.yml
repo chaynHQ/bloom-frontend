@@ -24,7 +24,7 @@ jobs:
   # Returns: Posts comment tagging assignee and helpful message
   assigned-comment:
     if: github.event.action == 'assigned'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Post assignee issue comment
         id: assigned-comment
@@ -37,7 +37,7 @@ jobs:
             repo: context.repo.repo,
             issue_number: context.payload.issue.number,
             body: `Thank you @${context.payload.issue.assignee.login} you have been assigned this issue!
-            **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/.github/blob/main/docs/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
+            **Please follow the directions in our [Contributing Guide](https://github.com/chaynHQ/bloom-frontend/blob/develop/CONTRIBUTING.md). We look forward to reviewing your pull request. ✨**
 
             ---
 
@@ -52,7 +52,7 @@ jobs:
   # Returns: Posts warning comment tagging assignee
   stale-label-comment:
     if: ${{ github.event.action == 'labeled' && github.event.label.name == 'stale' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Post stale issue comment
         id: stale-label-comment
