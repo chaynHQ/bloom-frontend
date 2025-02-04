@@ -11,7 +11,7 @@ const centeredContainerStyle = {
 
 const LoadingContainer = () => {
   return (
-    <Container sx={centeredContainerStyle}>
+    <Container sx={centeredContainerStyle} data-testid="LoadingContainer">
       <CircularProgress color="error" />
     </Container>
   );

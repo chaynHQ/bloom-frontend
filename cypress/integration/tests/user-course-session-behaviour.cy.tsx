@@ -25,6 +25,8 @@ describe.only('A course session user', () => {
       .first()
       .click(); //click on a session when link loads
 
+    cy.url().should('include', 'what-is-sexual-trauma');
+
     cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
