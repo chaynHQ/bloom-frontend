@@ -1,18 +1,20 @@
+'use client';
+
+import logEvent from '@/lib/utils/logEvent';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
 import { YouTubeConfig } from 'react-player/youtube';
-import logEvent, { EventUserData } from '../../utils/logEvent';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
-const videoContainerStyle = {
+export const videoContainerStyle = {
   position: 'relative',
   paddingTop: '56.25%',
 } as const;
 
-const videoStyle = {
+export const videoStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -21,7 +23,7 @@ const videoStyle = {
 interface VideoProps {
   url: string;
   autoplay?: boolean;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;

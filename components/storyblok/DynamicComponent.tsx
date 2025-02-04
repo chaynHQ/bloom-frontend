@@ -1,4 +1,7 @@
-import { SbBlokData } from '@storyblok/react';
+'use client';
+
+import { SbBlokData } from '@storyblok/react/rsc';
+import { ReactNode } from 'react';
 import Placeholder from './Placeholder';
 import StoryblokButton from './StoryblokButton';
 import StoryblokCard from './StoryblokCard';
@@ -14,7 +17,7 @@ import StoryblokVideo from './StoryblokVideo';
 
 export interface Component {
   name: string;
-  component: (props: any) => JSX.Element;
+  component: (props: any) => ReactNode;
 }
 
 const components: Component[] = [

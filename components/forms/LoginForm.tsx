@@ -1,23 +1,27 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Typography } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useTranslations } from 'next-intl';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { EVENT_LOG_NAME } from '../../constants/enums';
+'use client';
+
+import { useCreateEventLogMutation } from '@/lib/api';
+import { login } from '@/lib/auth';
+import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import {
+  GET_AUTH_USER_ERROR,
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
   GET_LOGIN_USER_SUCCESS,
   LOGIN_ERROR,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-} from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { useCreateEventLogMutation } from '../../store/api';
-import { setAuthStateLoading } from '../../store/userSlice';
-import logEvent from '../../utils/logEvent';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { setAuthStateLoading } from '@/lib/store/userSlice';
+import logEvent from '@/lib/utils/logEvent';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 const containerStyle = {
   marginY: 3,
@@ -27,6 +31,7 @@ const LoginForm = () => {
   const t = useTranslations('Auth.form');
   const tS = useTranslations('Shared');
   const dispatch = useAppDispatch();
+  const rollbar = useRollbar();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -50,10 +55,15 @@ const LoginForm = () => {
   useEffect(() => {
     if (userLoadError) {
       logEvent(GET_LOGIN_USER_ERROR, { message: userLoadError });
+      logEvent(GET_AUTH_USER_ERROR, { message: userLoadError });
 
       setFormError(
         t.rich('getUserError', {
-          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          contactLink: (children) => (
+            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              {children}
+            </Link>
+          ),
         }),
       );
     }
@@ -65,40 +75,36 @@ const LoginForm = () => {
     await setFormError('');
     logEvent(LOGIN_REQUEST);
 
-    const auth = getAuth();
+    const { user, error } = await login(emailInput, passwordInput);
+    if (error) {
+      const errorCode = error.code;
 
-    signInWithEmailAndPassword(auth, emailInput, passwordInput)
-      .then(async (userCredential) => {
-        createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });
-        await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
-        logEvent(LOGIN_SUCCESS);
-        logEvent(GET_LOGIN_USER_REQUEST);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        setFormError(t('firebase.invalidEmail'));
+      }
+      if (errorCode === 'auth/too-many-requests') {
+        setFormError(t('firebase.tooManyAttempts'));
+      }
+      if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
+        setFormError(t('firebase.authError'));
+      }
 
-        if (errorCode === 'auth/invalid-email') {
-          setFormError(t('firebase.invalidEmail'));
-        }
-        if (errorCode === 'auth/too-many-requests') {
-          setFormError(t('firebase.tooManyAttempts'));
-        }
-        if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
-          setFormError(t('firebase.authError'));
-        }
+      if (
+        errorCode !== 'auth/too-many-requests' &&
+        errorCode !== 'auth/invalid-email' &&
+        errorCode !== 'auth/user-not-found' &&
+        errorCode !== 'auth/wrong-password'
+      ) {
+        logEvent(LOGIN_ERROR, { message: errorCode });
+        rollbar.error('User login firebase error', error);
+      }
+    } else if (user) {
+      createEventLog({ event: EVENT_LOG_NAME.LOGGED_IN });
+      logEvent(LOGIN_SUCCESS);
+      logEvent(GET_LOGIN_USER_REQUEST);
+    }
 
-        if (
-          errorCode !== 'auth/too-many-requests' &&
-          errorCode !== 'auth/invalid-email' &&
-          errorCode !== 'auth/user-not-found' &&
-          errorCode !== 'auth/wrong-password'
-        ) {
-          logEvent(LOGIN_ERROR, { message: errorCode });
-          (window as any).Rollbar?.error('User login firebase error', error);
-        }
-      });
-
-    await dispatch(setAuthStateLoading(false));
+    await dispatch(setAuthStateLoading(false)); // important - triggers getUser in useLoadUser
   };
 
   return (

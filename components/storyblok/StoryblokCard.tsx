@@ -1,3 +1,9 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { BASE_URL } from '@/lib/constants/common';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import { RichTextOptions } from '@/lib/utils/richText';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -9,14 +15,11 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { getImageSizes } from '../../utils/imageSizes';
-import { RichTextOptions } from '../../utils/richText';
-import Link from '../common/Link';
 
 interface StoryblokCardProps {
   _uid: string;
@@ -131,7 +134,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
       <Box sx={{ position: 'relative' }}>
         {card_link?.cached_url ? (
           <CardActionArea
-            component={Link}
+            component={card_link.cached_url.startsWith(BASE_URL || '/') ? i18nLink : 'a'}
             href={card_link.cached_url}
             aria-label={`${tS('navigateTo')} ${card_link.cached_url}`}
           >

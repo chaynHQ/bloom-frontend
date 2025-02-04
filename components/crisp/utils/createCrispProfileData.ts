@@ -1,19 +1,19 @@
-import { PROGRESS_STATUS } from '../../../constants/enums';
-import { Course } from '../../../store/coursesSlice';
-import { PartnerAccesses } from '../../../store/partnerAccessSlice';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { Course } from '@/lib/store/coursesSlice';
+import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
 
-export const getAcronym = (text: string) => {
+const getAcronym = (text: string) => {
   return `${text
     .split(/\s/)
     .reduce((response, word) => (response += word.slice(0, 1)), '')
     .toLowerCase()}`;
 };
 
-export const formatCourseKey = (courseName: string) => {
+const formatCourseKey = (courseName: string) => {
   return `course_${getAcronym(courseName)}_status`;
 };
 
-export const formatSessionKey = (courseName: string, status: PROGRESS_STATUS) => {
+const formatSessionKey = (courseName: string, status: PROGRESS_STATUS) => {
   return `course_${getAcronym(courseName)}_sessions_${status.toLowerCase()}`;
 };
 

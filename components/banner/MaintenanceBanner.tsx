@@ -1,8 +1,10 @@
+'use client';
+
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import illustrationChange from '@/public/illustration_change_peach.svg';
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import illustrationChange from '../../public/illustration_change_peach.svg';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const containerStyle = {
   textAlign: 'center',

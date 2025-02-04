@@ -1,12 +1,13 @@
+'use client';
+
+import { useUpdateUserMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useCallback, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
 
 const formControlStyle = {
   marginY: 3,
@@ -45,12 +46,16 @@ const EmailSettingsForm = () => {
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }
     },
-    [updateUser, t, tS],
+    [updateUser, t],
   );
 
   return (

@@ -5,6 +5,7 @@ describe('Auth redirect', () => {
   it('User visits a session page with an auth guard and should be redirected', () => {
     cy.visit(
       '/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming',
+      { failOnStatusCode: false },
     );
 
     cy.get('h2', { timeout: 8000 }).should('contain', 'Welcome back');

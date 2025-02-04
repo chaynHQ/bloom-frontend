@@ -1,3 +1,8 @@
+'use client';
+
+import { SessionProgressDisplay } from '@/components/session/SessionProgressDisplay';
+import { useRouter } from '@/i18n/routing';
+import { rowStyle } from '@/styles/common';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -7,15 +12,12 @@ import {
   CardContent,
   Collapse,
   IconButton,
+  Link,
   Typography,
 } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { rowStyle } from '../../styles/common';
-import Link from '../common/Link';
-import { SessionProgressDisplay } from '../session/SessionProgressDisplay';
 
 const cardStyle = {
   alignSelf: 'flex-start',

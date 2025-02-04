@@ -1,6 +1,8 @@
+'use client';
+
+import EmailRemindersSettingsForm from '@/components/forms/EmailRemindersSettingsForm';
 import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import EmailRemindersSettingsForm from '../forms/EmailRemindersSettingsForm';
 
 const cardStyle = {
   width: { xs: '100%', md: 'auto' },

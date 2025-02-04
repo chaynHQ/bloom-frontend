@@ -1,12 +1,14 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import theme from '@/styles/theme';
 import { Button, Container, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import theme from '../../styles/theme';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -15,11 +17,7 @@ const containerStyle = {
 
 export const SignUpBanner = () => {
   const t = useTranslations('Shared');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
   useEffect(() => {
@@ -28,7 +26,7 @@ export const SignUpBanner = () => {
     if (referralPartner) {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);
     }
-  }, []);
+  }, [entryPartnerReferral]);
 
   return (
     <Container id="signup-banner" sx={containerStyle}>
@@ -44,12 +42,12 @@ export const SignUpBanner = () => {
         {t('signUpTodayPromo.description2')}
       </Typography>
       <Button
-        component={Link}
         variant="contained"
         color="secondary"
         href={registerPath}
+        component={i18nLink}
         onClick={() => {
-          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, eventUserData);
+          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED);
         }}
       >
         {t('signUpTodayPromo.button')}

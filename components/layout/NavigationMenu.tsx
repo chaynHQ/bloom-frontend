@@ -1,15 +1,17 @@
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
 import {
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { getIsMaintenanceMode } from '../../utils/maintenanceMode';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const listStyle = {
   display: 'flex',
@@ -62,11 +64,9 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const isMaintenanceMode = getIsMaintenanceMode();
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
@@ -113,12 +113,12 @@ const NavigationMenu = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
-            component={Link}
+            component={i18nLink}
             href={link.href}
             qa-id={link.qaId}
             target={link.target || '_self'}
             onClick={() => {
-              logEvent(link.event, eventUserData);
+              logEvent(link.event);
             }}
           >
             <ListItemText sx={listItemTextStyle} primary={link.title} />

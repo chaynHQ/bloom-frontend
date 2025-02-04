@@ -1,39 +1,38 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
+'use client';
+
+import { useUnsubscribeFromWhatsappMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
   WHATSAPP_UNSUBSCRIBE_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useUnsubscribeFromWhatsappMutation } from '../../store/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { findWhatsappSubscription } from '../../utils/whatsappUtils';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
+import { findWhatsappSubscription } from '@/lib/utils/whatsappUtils';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+
 const containerStyle = {
   marginY: 3,
 } as const;
 
 const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
-  const tS = useTranslations('Shared');
+  const rollbar = useRollbar();
+
+  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
+  const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<ErrorDisplay>();
-
-  const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
-
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   useEffect(() => {
     const activeWhatsappSubscription = findWhatsappSubscription(userActiveSubscriptions);
@@ -47,7 +46,7 @@ const WhatsappUnsubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST, eventUserData);
+    logEvent(WHATSAPP_UNSUBSCRIBE_REQUEST);
 
     const unsubscribeResponse = await unsubscribeFromWhatsapp({
       id: subscriptionId,
@@ -56,7 +55,7 @@ const WhatsappUnsubscribeForm = () => {
 
     if (unsubscribeResponse.data) {
       setLoading(false);
-      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS, eventUserData);
+      logEvent(WHATSAPP_UNSUBSCRIBE_SUCCESS);
     }
 
     if (unsubscribeResponse.error) {
@@ -64,11 +63,15 @@ const WhatsappUnsubscribeForm = () => {
 
       setFormError(
         t.rich('unsubscribeErrors.internal', {
-          contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+          contactLink: (children) => (
+            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              {children}
+            </Link>
+          ),
         }),
       );
 
-      (window as any).Rollbar?.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
+      rollbar.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
       logEvent(WHATSAPP_UNSUBSCRIBE_ERROR, { message: error });
       setLoading(false);
 

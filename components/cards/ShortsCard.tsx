@@ -1,8 +1,10 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import Link from '../common/Link';
 
 const cardStyle = {
   mt: 0,
@@ -40,7 +42,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea component={Link} href={`/${href}`} sx={{ height: '100%' }}>
+      <CardActionArea href={`/${href}`} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent
           sx={{
             minHeight: 335,

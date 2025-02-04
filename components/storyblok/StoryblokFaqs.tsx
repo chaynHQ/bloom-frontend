@@ -1,12 +1,14 @@
+'use client';
+
+import { FAQ_OPENED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
+import { RichTextOptions } from '@/lib/utils/richText';
+import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { FAQ_OPENED } from '../../constants/events';
-import illustrationLeafMix from '../../public/illustration_leaf_mix.svg';
-import logEvent from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 
 const containerStyle = {
   width: '100%',

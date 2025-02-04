@@ -1,3 +1,11 @@
+'use client';
+
+import { useCreateResourceFeedbackMutation } from '@/lib/api';
+import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { ResourceFeedback } from '@/lib/store/resourcesSlice';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -14,12 +22,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
-import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '../../constants/enums';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { useCreateResourceFeedbackMutation } from '../../store/api';
-import { ResourceFeedback } from '../../store/resourcesSlice';
-import { staticFieldLabelStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
@@ -48,7 +50,7 @@ const containerStyle = {
   textAlign: 'center',
 } as const;
 
-export interface ResourceFeedbackFormProps {
+interface ResourceFeedbackFormProps {
   resourceId: string;
   category: RESOURCE_CATEGORIES;
 }
@@ -64,9 +66,7 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
   const [feedbackDescription, setFeedbackDescription] = useState<string>('');
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {

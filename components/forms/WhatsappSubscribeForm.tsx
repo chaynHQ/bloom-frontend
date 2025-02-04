@@ -1,21 +1,23 @@
+'use client';
+
+import { useSubscribeToWhatsappMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { WHATSAPP_SUBSCRIPTION_STATUS } from '@/lib/constants/enums';
+import {
+  WHATSAPP_SUBSCRIBE_ERROR,
+  WHATSAPP_SUBSCRIBE_REQUEST,
+  WHATSAPP_SUBSCRIBE_SUCCESS,
+} from '@/lib/constants/events';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Card, CardContent, Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
 import * as React from 'react';
 import { useState } from 'react';
 import 'react-international-phone/style.css';
-import { ErrorDisplay } from '../../constants/common';
-import { WHATSAPP_SUBSCRIPTION_STATUS } from '../../constants/enums';
-import {
-  WHATSAPP_SUBSCRIBE_ERROR,
-  WHATSAPP_SUBSCRIBE_REQUEST,
-  WHATSAPP_SUBSCRIBE_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useSubscribeToWhatsappMutation } from '../../store/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 import PhoneInput from './PhoneInput';
 
 const containerStyle = {
@@ -24,12 +26,7 @@ const containerStyle = {
 
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
-  const tS = useTranslations('Shared');
-
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const rollbar = useRollbar();
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +38,7 @@ const WhatsappSubscribeForm = () => {
     event.preventDefault();
     setFormError('');
     setLoading(true);
-    logEvent(WHATSAPP_SUBSCRIBE_REQUEST, eventUserData);
+    logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
 
     const validatedNumber = validateNumber(phoneNumber);
 
@@ -56,7 +53,7 @@ const WhatsappSubscribeForm = () => {
 
       if (subscribeResponse.data) {
         setLoading(false);
-        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS, eventUserData);
+        logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
       }
 
       if (subscribeResponse.error) {
@@ -65,18 +62,26 @@ const WhatsappSubscribeForm = () => {
         if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
           setFormError(
             t.rich('subscribeErrors.alreadyExists', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+              contactLink: (children) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {children}
+                </Link>
+              ),
             }),
           );
         } else {
           setFormError(
             t.rich('subscribeErrors.internal', {
-              contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+              contactLink: (children) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {children}
+                </Link>
+              ),
             }),
           );
         }
 
-        (window as any).Rollbar?.error('Whatsapp subscribe error', subscribeResponse.error);
+        rollbar.error('Whatsapp subscribe error', subscribeResponse.error);
         logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
         setLoading(false);
 

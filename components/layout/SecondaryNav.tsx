@@ -1,10 +1,11 @@
+'use client';
+
+import { usePathname, useRouter } from '@/i18n/routing';
+import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
+import therapyIcon from '@/public/therapy_icon.svg';
 import { Icon, Tab, Tabs } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
-import therapyIcon from '../../public/therapy_icon.svg';
 
-import { useTranslations } from 'next-intl';
 import {
   SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
@@ -12,18 +13,18 @@ import {
   SECONDARY_HEADER_GROUNDING_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import activitiesIcon from '../../public/activities_icon.svg';
-import chatIcon from '../../public/chat_icon.svg';
-import courseIcon from '../../public/course_icon.svg';
-import groundingIcon from '../../public/grounding_icon.svg';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import activitiesIcon from '@/public/activities_icon.svg';
+import chatIcon from '@/public/chat_icon.svg';
+import courseIcon from '@/public/course_icon.svg';
+import groundingIcon from '@/public/grounding_icon.svg';
+import { useTranslations } from 'next-intl';
 
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
+import theme from '@/styles/theme';
 import { HTMLAttributes } from 'react';
-import theme from '../../styles/theme';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { NextLinkComposed } from '../common/Link';
-import { getImageSizes } from '../../utils/imageSizes';
 
 interface LinkTabProps {
   label?: string;
@@ -81,12 +82,10 @@ export const SecondaryNavIcon = ({ alt, src }: SecondaryNavIconType) => (
   </Icon>
 );
 
-const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
+const SecondaryNav = () => {
   const router = useRouter();
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const pathname = usePathname();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Navigation');
 
   const therapyAccess = partnerAccesses.find(
@@ -148,8 +147,13 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
       })
     : publicLinks;
 
-  const tabIndex = allLinks.findIndex((link) => link.href === router.asPath);
+  const tabIndex = allLinks.findIndex((link) => link.href === pathname);
   const tabValue = tabIndex === -1 ? false : tabIndex;
+
+  const onTabClick = (linkData: LinkTabProps) => {
+    router.push(linkData.href);
+    logEvent(linkData.event);
+  };
 
   return (
     <Tabs
@@ -172,15 +176,11 @@ const SecondaryNav = ({ currentPage }: { currentPage: string }) => {
           <Tab
             qa-id={linkData.qaId}
             key={linkData.label}
-            component={NextLinkComposed}
             icon={linkData.icon}
             sx={tabStyle}
             aria-label={linkData.ariaLabel}
             label={linkData.label}
-            to={linkData.href}
-            onClick={() => {
-              logEvent(linkData.event, eventUserData);
-            }}
+            onClick={() => onTabClick(linkData)}
           />
         );
       })}
