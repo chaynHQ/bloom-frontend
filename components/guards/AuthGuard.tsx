@@ -56,10 +56,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.replace(
-      { pathname: '/auth/login', query: { return_url: encodeURIComponent(pathname) } },
-      { locale },
-    );
+    router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
   }
 
   if (userId) {
