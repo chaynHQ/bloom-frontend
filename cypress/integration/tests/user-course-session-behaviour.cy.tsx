@@ -1,16 +1,11 @@
 describe.only('A course session user', () => {
-  const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
-  const password = 'testpassword';
+  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const password = 'testtesttest';
 
   before(() => {
     cy.cleanUpTestState();
-
-    cy.createUser({
-      //create test user
-      emailInput: newUserEmail,
-      passwordInput: password,
-    });
-    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
+    cy.createUser({ emailInput: email, passwordInput: password });
+    cy.logInWithEmailAndPassword(email, password);
   });
 
   it('Should navigate to a session and complete it', () => {
@@ -32,7 +27,9 @@ describe.only('A course session user', () => {
 
     cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
 
-    // cy.get('h3', { timeout: 10000 }).contains('Activity').click(); //open activities
+    cy.get('h1').should('contain', 'What is sexual trauma?');
+
+    cy.get('h3').contains('Activity').click(); //open activities
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 
