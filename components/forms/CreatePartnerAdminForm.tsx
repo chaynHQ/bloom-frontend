@@ -1,29 +1,28 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import * as React from 'react';
-import { useState } from 'react';
+'use client';
+
+import { useAddPartnerAdminMutation, useGetPartnersQuery } from '@/lib/api';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
   CREATE_PARTNER_ADMIN_REQUEST,
   CREATE_PARTNER_ADMIN_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useAddPartnerAdminMutation, useGetPartnersQuery } from '../../store/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useState } from 'react';
 
 const CreatePartnerAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const partners = useTypedSelector((state) => state.partners);
+  const rollbar = useRollbar();
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   useGetPartnersQuery(undefined);
 
   const t = useTranslations('Admin.createPartnerAdmin');
-  const tS = useTranslations('Shared');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedPartner, setSelectedPartner] = useState<string>('');
@@ -31,18 +30,16 @@ const CreatePartnerAdminForm = () => {
   const [name, setName] = useState<string | null>(null);
 
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
-  const [addPartnerAdmin, { isLoading: addPartnerAdminIsLoading }] = useAddPartnerAdminMutation();
+  const [addPartnerAdmin] = useAddPartnerAdminMutation();
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(CREATE_PARTNER_ADMIN_REQUEST, eventUserData);
+    logEvent(CREATE_PARTNER_ADMIN_REQUEST);
     if (email == null || name == null) {
       setFormError('Make sure you have supplied email address and name');
       setLoading(false);
@@ -55,7 +52,7 @@ const CreatePartnerAdminForm = () => {
     });
 
     if (partnerAdminResponse.data) {
-      logEvent(CREATE_PARTNER_ADMIN_SUCCESS, eventUserData);
+      logEvent(CREATE_PARTNER_ADMIN_SUCCESS);
     }
 
     if (partnerAdminResponse.error) {
@@ -63,10 +60,9 @@ const CreatePartnerAdminForm = () => {
       const errorMessage = getErrorMessage(error);
 
       logEvent(CREATE_PARTNER_ADMIN_ERROR, {
-        ...eventUserData,
         error: errorMessage,
       });
-      (window as any).Rollbar?.error(t('error') + errorMessage);
+      rollbar.error(t('error') + errorMessage);
 
       setFormError(t('error') + errorMessage);
       setLoading(false);

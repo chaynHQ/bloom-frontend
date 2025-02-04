@@ -1,25 +1,27 @@
-import { Box, Button, Container } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
-import { useTranslations } from 'next-intl';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
-import PartnerHeader from '../../components/layout/PartnerHeader';
+'use client';
+
+import PartnerHeader from '@/components/layout/PartnerHeader';
 import StoryblokPageSection, {
   StoryblokPageSectionProps,
-} from '../../components/storyblok/StoryblokPageSection';
+} from '@/components/storyblok/StoryblokPageSection';
+import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
 import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
-} from '../../constants/events';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import illustrationBloomHeadYellow from '../../public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '../../public/welcome_to_bloom.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import useReferralPartner from '@/lib/hooks/useReferralPartner';
+import logEvent from '@/lib/utils/logEvent';
+import { RichTextOptions } from '@/lib/utils/richText';
+import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '@/public/welcome_to_bloom.svg';
+import { Box, Button, Container } from '@mui/material';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { render } from 'storyblok-rich-text-react-renderer';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -44,23 +46,13 @@ export interface StoryblokWelcomePageProps {
   _editable: string;
   storySlug: string;
   title: string;
-  seo_description: string;
   introduction: ISbRichtext;
   header_image: { filename: string; alt: string };
   page_sections: StoryblokPageSectionProps[];
 }
 
 const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
-  const {
-    _uid,
-    _editable,
-    storySlug,
-    title,
-    seo_description,
-    introduction,
-    header_image,
-    page_sections,
-  } = props;
+  const { _uid, _editable, storySlug, title, introduction, header_image, page_sections } = props;
 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
@@ -73,20 +65,29 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 
   const [codeParam, setCodeParam] = useState<string>('');
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Welcome');
+  useReferralPartner();
 
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
   useEffect(() => {
-    const { code } = router.query;
+    const code = searchParams.get('code');
 
     if (code) {
       // code in url query
@@ -96,24 +97,26 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       entryPartnerAccessCode
     ) {
       // Entry code in state, add to url query in case of refresh
-      router.replace(
-        {
-          query: { ...router.query, code: entryPartnerAccessCode },
-        },
-        undefined,
-        {
-          shallow: true,
-        },
-      );
+      router.replace(pathname + '?' + createQueryString('code', entryPartnerAccessCode));
+
       setCodeParam(entryPartnerAccessCode);
     }
-  }, [dispatch, router, entryPartnerAccessCode, entryPartnerReferral, partnerContent.name]);
+  }, [
+    dispatch,
+    router,
+    entryPartnerAccessCode,
+    entryPartnerReferral,
+    partnerContent.name,
+    createQueryString,
+    pathname,
+    searchParams,
+  ]);
 
   const logPromoEvent = () => {
     if (userId) {
-      logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name), eventUserData);
+      logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name));
     } else {
-      logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name), eventUserData);
+      logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name));
     }
   };
 
@@ -128,17 +131,6 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         page_sections,
       })}
     >
-      <Head>
-        <title>{`${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
-
       <PartnerHeader
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
@@ -151,10 +143,10 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
         <Button
           sx={{ mt: 4, px: 6 }}
           variant="contained"
-          component={Link}
           color="secondary"
           size="large"
           onClick={logPromoEvent}
+          component={i18nLink}
           href={
             userId
               ? '/courses'

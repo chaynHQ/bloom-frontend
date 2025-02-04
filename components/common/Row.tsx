@@ -1,5 +1,7 @@
+'use client';
+
+import { richtextContentStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
-import { richtextContentStyle, rowStyle } from '../../styles/common';
 
 interface RowProps {
   children: any;

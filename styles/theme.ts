@@ -1,3 +1,5 @@
+'use client';
+
 import { createTheme, lighten, responsiveFontSizes } from '@mui/material/styles';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here

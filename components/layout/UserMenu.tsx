@@ -1,19 +1,22 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
+
+import { logout } from '@/lib/auth';
 import {
   HEADER_ACCOUNT_ICON_CLICKED,
   HEADER_APPLY_A_CODE_CLICKED,
   LOGOUT_REQUEST,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -38,27 +41,23 @@ const buttonStyle = {
 
 export default function UserMenu() {
   const t = useTranslations('Navigation');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    logEvent(HEADER_ACCOUNT_ICON_CLICKED, eventUserData);
+    logEvent(HEADER_ACCOUNT_ICON_CLICKED);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
+  const handleLogout = async () => {
     logEvent(LOGOUT_REQUEST);
-    const auth = getAuth();
-    signOut(auth);
+    await logout();
     // logout flow is completed in useLoadUser - triggered by firebase token listener
   };
 
@@ -89,11 +88,11 @@ export default function UserMenu() {
         {!(partnerAdmin && partnerAdmin.partner) && (
           <MenuItem sx={menuItemStyle}>
             <Button
-              component={Link}
               href={'/account/apply-a-code'}
+              component={i18nLink}
               startIcon={<AddCircleOutline />}
               onClick={() => {
-                logEvent(HEADER_APPLY_A_CODE_CLICKED, eventUserData);
+                logEvent(HEADER_APPLY_A_CODE_CLICKED);
                 handleClose();
               }}
             >
@@ -103,8 +102,8 @@ export default function UserMenu() {
         )}
         <MenuItem sx={menuItemStyle}>
           <Button
-            component={Link}
             href="/account/settings"
+            component={i18nLink}
             onClick={handleClose}
             startIcon={<Settings />}
           >
@@ -112,7 +111,7 @@ export default function UserMenu() {
           </Button>
         </MenuItem>
         <MenuItem sx={menuItemStyle}>
-          <Button id="logout-button" onClick={logout} startIcon={<Logout />}>
+          <Button id="logout-button" onClick={handleLogout} startIcon={<Logout />}>
             {t('logout')}
           </Button>
         </MenuItem>

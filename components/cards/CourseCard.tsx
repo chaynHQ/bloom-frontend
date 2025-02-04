@@ -1,3 +1,10 @@
+'use client';
+
+import ProgressStatus from '@/components/common/ProgressStatus';
+import { Link as i18nLink } from '@/i18n/routing';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import { iconTextRowStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -9,15 +16,10 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import Link from '../common/Link';
-import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -86,7 +88,7 @@ const CourseCard = (props: CourseCardProps) => {
       {clickable ? (
         <CardActionArea
           sx={cardActionStyle}
-          component={Link}
+          component={i18nLink}
           href={`/${course.full_slug}`}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >

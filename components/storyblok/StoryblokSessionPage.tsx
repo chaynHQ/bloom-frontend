@@ -1,27 +1,29 @@
+'use client';
+
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import { Dots } from '@/components/common/Dots';
+import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
+import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
+import { SessionChat } from '@/components/session/SessionChat';
+import { SessionCompleteButton } from '@/components/session/SessionCompleteButton';
+import { SessionHeader } from '@/components/session/SessionHeader';
+import { SessionVideo } from '@/components/session/SessionVideo';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getChatAccess } from '@/lib/utils/getChatAccess';
+import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
+import { RichTextOptions } from '@/lib/utils/richText';
+import { columnStyle } from '@/styles/common';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container } from '@mui/material';
-import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import SessionContentCard from '../../components/cards/SessionContentCard';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { useTypedSelector } from '../../hooks/store';
-import { columnStyle } from '../../styles/common';
-import { getChatAccess } from '../../utils/getChatAccess';
-import { getSessionCompletion } from '../../utils/getSessionCompletion';
-import hasAccessToPage from '../../utils/hasAccessToPage';
-import { getEventUserData } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
-import { Dots } from '../common/Dots';
-import SessionFeedbackForm from '../forms/SessionFeedbackForm';
-import MultipleBonusContent, { BonusContent } from '../session/MultipleBonusContent';
-import { SessionChat } from '../session/SessionChat';
-import { SessionCompleteButton } from '../session/SessionCompleteButton';
-import { SessionHeader } from '../session/SessionHeader';
-import { SessionVideo } from '../session/SessionVideo';
+import LoadingContainer from '../common/LoadingContainer';
+import NoDataAvailable from '../common/NoDataAvailable';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -42,7 +44,6 @@ export interface StoryblokSessionPageProps {
   course: ISbStoryData;
   name: string;
   subtitle: string;
-  seo_description: string;
   description: string;
   video: { url: string };
   video_transcript: ISbRichtext;
@@ -64,7 +65,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     course,
     name,
     subtitle,
-    seo_description,
     description,
     video,
     video_transcript,
@@ -75,13 +75,12 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   const t = useTranslations('Courses');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
 
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [incorrectAccess, setIncorrectAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -97,9 +96,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
   const showMultipleBonusContent = multipleBonusContent && multipleBonusContent.length > 0;
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const eventData = {
-    ...eventUserData,
     session_name: name,
     session_storyblok_id: storyId,
     session_progress: sessionProgress,
@@ -128,6 +125,9 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
   }, [courses, course, storyId, storyUuid]);
 
+  if (incorrectAccess === undefined) return <LoadingContainer />;
+  if (!!incorrectAccess) return <NoDataAvailable />;
+
   return (
     <Box
       {...storyblokEditable({
@@ -144,89 +144,65 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
         bonus,
       })}
     >
-      <Head>
-        <title>{`${t('session')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {(seo_description || description) && (
-          <>
-            <meta name="description" content={seo_description || description} key="description" />
-            <meta
-              property="og:description"
-              content={seo_description || description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
-
-      {incorrectAccess ? (
-        <Container sx={containerStyle}></Container>
-      ) : (
-        <Box>
-          <SessionHeader
-            description={description}
+      <SessionHeader
+        description={description}
+        name={name}
+        sessionProgress={sessionProgress}
+        course={course}
+        subtitle={subtitle}
+        storyUuid={storyUuid}
+        storyPosition={storyPosition}
+      />
+      <Container sx={containerStyle}>
+        <Box sx={cardColumnStyle}>
+          <SessionVideo
+            eventData={eventData}
             name={name}
+            video={video}
+            storyId={storyId}
             sessionProgress={sessionProgress}
-            course={course}
-            subtitle={subtitle}
-            storyUuid={storyUuid}
-            storyPosition={storyPosition}
+            video_transcript={video_transcript}
           />
-          <Container sx={containerStyle}>
-            <Box sx={cardColumnStyle}>
-              <SessionVideo
+          {activity.content && (activity.content?.length > 1 || activity.content[0].content) && (
+            <>
+              <Dots />
+              <SessionContentCard
+                title={t('sessionDetail.activityTitle')}
+                titleIcon={StarBorderIcon}
+                eventPrefix="SESSION_ACTIVITY"
                 eventData={eventData}
-                name={name}
-                video={video}
-                storyId={storyId}
-                sessionProgress={sessionProgress}
-                video_transcript={video_transcript}
-              />
-              {activity.content &&
-                (activity.content?.length > 1 || activity.content[0].content) && (
-                  <>
-                    <Dots />
-                    <SessionContentCard
-                      title={t('sessionDetail.activityTitle')}
-                      titleIcon={StarBorderIcon}
-                      richtextContent
-                      eventPrefix="SESSION_ACTIVITY"
-                      eventData={eventData}
-                    >
-                      <>{render(activity, RichTextOptions)}</>
-                    </SessionContentCard>
-                  </>
-                )}
-              {showRichtextBonusContent && (
-                <>
-                  <Dots />
-                  <SessionContentCard
-                    title={t('sessionDetail.bonusTitle')}
-                    titleIcon={LinkIcon}
-                    richtextContent
-                    eventPrefix="SESSION_BONUS_CONTENT"
-                    eventData={eventData}
-                  >
-                    <>{render(richtextBonusContent, RichTextOptions)}</>
-                  </SessionContentCard>
-                </>
-              )}
-              {showMultipleBonusContent && (
-                <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
-              )}
-              {liveChatAccess && <SessionChat eventData={eventData} />}
-              {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-                <SessionCompleteButton storyId={storyId} eventData={eventData} />
-              )}
-            </Box>
-          </Container>
-
-          {sessionId && (
-            <Container sx={{ bgcolor: 'background.paper' }}>
-              <SessionFeedbackForm sessionId={sessionId} />
-            </Container>
+              >
+                <>{render(activity, RichTextOptions)}</>
+              </SessionContentCard>
+            </>
+          )}
+          {showRichtextBonusContent && (
+            <>
+              <Dots />
+              <SessionContentCard
+                title={t('sessionDetail.bonusTitle')}
+                titleIcon={LinkIcon}
+                eventPrefix="SESSION_BONUS_CONTENT"
+                eventData={eventData}
+              >
+                <>{render(richtextBonusContent, RichTextOptions)}</>
+              </SessionContentCard>
+            </>
+          )}
+          {showMultipleBonusContent && (
+            <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
+          )}
+          {liveChatAccess && <SessionChat eventData={eventData} />}
+          {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
+            <SessionCompleteButton storyId={storyId} eventData={eventData} />
           )}
         </Box>
+      </Container>
+
+      {sessionId && (
+        <Container sx={{ bgcolor: 'background.paper' }}>
+          <SessionFeedbackForm sessionId={sessionId} />
+        </Container>
       )}
     </Box>
   );

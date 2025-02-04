@@ -1,3 +1,5 @@
+'use client';
+
 import { CircularProgress, Container } from '@mui/material';
 
 const centeredContainerStyle = {

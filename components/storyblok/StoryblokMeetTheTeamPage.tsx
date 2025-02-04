@@ -1,14 +1,14 @@
+'use client';
+
+import Header from '@/components/layout/Header';
+import { StoryblokTeamMemberCardProps } from '@/components/storyblok/StoryblokTeamMemberCard';
+import { MEET_THE_TEAM_VIEWED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
+import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
-import Head from 'next/head';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useEffect } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import Header from '../../components/layout/Header';
-import { StoryblokTeamMemberCardProps } from '../../components/storyblok/StoryblokTeamMemberCard';
-import { MEET_THE_TEAM_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
 import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
 
@@ -24,7 +24,6 @@ export interface StoryblokMeetTheTeamPageProps {
   _uid: string;
   _editable: string;
   title: string;
-  seo_description: string;
   description: string;
   header_image: { filename: string; alt: string };
   core_team_title: string;
@@ -43,7 +42,6 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     _uid,
     _editable,
     title,
-    seo_description,
     description,
     header_image,
     core_team_title,
@@ -57,13 +55,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     page_section_3,
   } = props;
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   useEffect(() => {
-    logEvent(MEET_THE_TEAM_VIEWED, eventUserData);
+    logEvent(MEET_THE_TEAM_VIEWED);
   }, []);
 
   return (
@@ -85,20 +78,6 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         page_section_3,
       })}
     >
-      <Head>
-        <title>{`${title} • Bloom`}</title>
-        <meta property="og:title" content={title} key="og-title" />
-        {(seo_description || description) && (
-          <>
-            <meta name="description" content={seo_description || description} key="description" />
-            <meta
-              property="og:description"
-              content={seo_description || description}
-              key="og-description"
-            />
-          </>
-        )}
-      </Head>
       <Header
         title={title}
         introduction={description}

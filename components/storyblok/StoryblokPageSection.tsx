@@ -1,9 +1,11 @@
+'use client';
+
+import PageSection from '@/components/common/PageSection';
+import { STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { RichTextOptions } from '@/lib/utils/richText';
 import { Box } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { STORYBLOK_COLORS } from '../../constants/enums';
-import { RichTextOptions } from '../../utils/richText';
-import PageSection from '../common/PageSection';
 
 export interface StoryblokPageSectionProps {
   _uid: string;

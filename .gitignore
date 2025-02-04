@@ -49,9 +49,6 @@ yarn-error.log*
 cypress.env.json
 /.nyc_output
 
-# Partytown
-/public/~partytown
-
 # New Relic
 newrelic_agent.log
 

@@ -1,3 +1,11 @@
+'use client';
+
+import { useCreateSessionFeedbackMutation } from '@/lib/api';
+import { FEEDBACK_TAGS } from '@/lib/constants/enums';
+import { SessionFeedback } from '@/lib/store/coursesSlice';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -14,12 +22,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
-import { FEEDBACK_TAGS } from '../../constants/enums';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { useCreateSessionFeedbackMutation } from '../../store/api';
-import { SessionFeedback } from '../../store/coursesSlice';
-import { staticFieldLabelStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
@@ -34,7 +36,7 @@ const radioGroupStyle = {
   padding: '20px 0px',
 } as const;
 
-export interface SessionFeedbackFormProps {
+interface SessionFeedbackFormProps {
   sessionId: string;
 }
 
@@ -61,9 +63,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
   const [feedbackDescription, setFeedbackDescription] = useState<string>('');
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {

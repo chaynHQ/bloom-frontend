@@ -1,0 +1,142 @@
+{
+  "Shared": {
+    "bloom": "Bloom",
+    "metadata": {
+      "title": "Apne healing ke safar par humein join kariye",
+      "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
+      "imageAlt": "Ek insan ke chehre aur kandhon ki tasveer, jiske upar bade patte aur phool khil rahe hain. Bloom ka logo bhi ismein shamil hai."
+    },
+    "leaveSite": {
+      "button": "Site ko chodiye",
+      "wikiLink": "https://hi.wikipedia.org/wiki/Main_Page",
+      "googleLink": "https://www.google.com/search?q=%E0%A4%AA%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A4%BE+%E0%A4%AC%E0%A4%9A%E0%A5%8D%E0%A4%9A%E0%A4%BE+%E0%A4%AA%E0%A4%B6%E0%A5%81+memes&sca_esv=c4520c9ea19d39e2&sca_upv=1&udm=2&biw=1277&bih=659&sxsrf=ADLYWIJoTLyEWIrJrVKtvC--b54j8mJHgA%3A1715343868084&ei=_BE-Zv3QBL3bseMP1d28iAY&ved=0ahUKEwj9vrLviYOGAxW9bWwGHdUuD2EQ4dUDCBA&uact=5&oq=%E0%A4%AA%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A4%BE+%E0%A4%AC%E0%A4%9A%E0%A5%8D%E0%A4%9A%E0%A4%BE+%E0%A4%AA%E0%A4%B6%E0%A5%81+memes"
+    },
+    "navigateBack": "Pichhle prishth par nevigēt kareñ",
+    "navigateTo": "Pichhle prishth par nevigēt kareñ",
+    "footer": {
+      "fundedByTitle": "Yeh kaam fund kiya gaya hai by",
+      "chaynDescription": "Bloom aapke liye <link>Chayn</link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
+      "chaynLine1": "<bold>CHAYN</bold> CIO. se banaya gaya",
+      "chaynLine2": "UK Charity Number: 1196098",
+      "bumbleLine1": "Partnership mein",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "badooLine1": "Partnership mein",
+      "badooLine2": "BADOO LTD",
+      "fruitzLine1": "Partnership mein",
+      "fruitzLine2": "FRUITZ LTD",
+      "policies": "Humari policies"
+    },
+    "maintenanceBanner": {
+      "title": "Rakharakhaav ke lie Bloom band hai",
+      "description": "jab tak ham kuchh aavashyak niyojit rakharakhaav poora kar len, krpaya hamaare saath bane rahen. bloom hamesha kee tarah kuchh hee {hours} ghanton mein upalabdh ho jaana chaahie."
+    },
+    "videoTranscript": {
+      "title": "Video ki transcript",
+      "description": "Video ki transcript padein - ",
+      "closeModal": "Transcript band karein"
+    },
+    "progressStatus": {
+      "started": "Shuru ho gaya",
+      "completed": "Poora hai",
+      "notStarted": "Shuru nahi hua"
+    },
+    "meetTheTeam": {
+      "expandTeamMember": "Bio bada kariye {name} ke liye"
+    },
+    "noDataAvailable": {
+      "title": "Is pej ko lod karane mein kuchh samasya huee. krpaya vaapas jaen aur jaldee hee punah prayaas karen, ya sampark karen"
+    },
+    "error": {
+      "title": "Kuch galat ho gaya",
+      "description": "Pichhle request mein kuch samasya thi, kripya dobara prayas karein. Yadi samasya bani rahti hai, to Bloom team se sampark karein.",
+      "buttonLabel": "Dobara prayas karein"
+    },
+    "notFound": {
+      "title": "404 - Page nahi mila",
+      "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",
+      "unauthenticatedDescription": "Yeh page nahi mila. URL check kariya ya fir welcome page par vapis jaiye",
+      "authenticatedRedirectButton": "Courses ke page par vapis jaiye",
+      "unauthenticatedRedirectButton": "Welcome page par vapis jaiye."
+    },
+    "alt": {
+      "chaynLogo": "Chayn logo",
+      "bloomLogo": "Bloom logo",
+      "bumbleLogo": "Bumble logo",
+      "bloomBumbleLogo": "Bloom ki partnership Badoo logo ke saath",
+      "badooLogo": "Badoo logo",
+      "bloomBadooLogo": "Bloom ki partnership Badoo logo ke saath",
+      "comicReliefLogo": "Comic Relief logo",
+      "communityFundLogo": "Community Fund logo",
+      "welcomeToBloom": "Bloom pe swagat hai",
+      "tiktokLogo": "Tiktok logo",
+      "githubLogo": "Github logo",
+      "bloomHead": "ek vyakti ke chehre aur kandho ka chitra hai, jiske upar bade patte aur fool khile hue hain",
+      "beehive": "Bee hive ka chitra",
+      "leafMix": "Illustration of two leaves joined with a rose",
+      "leafMixBee": "Illustration of two leaves with a bee hovering above",
+      "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
+      "personTea": "Chai pakde baithe vyakti ka chitran",
+      "personSitting": "baithe vyakti ka chitran",
+      "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
+      "dateSelector": "Illustration of a calendar with a heart in the middle",
+      "change": "Ek chakra ka chitran - ke chakra mein teen sooraj unke beech mein teer. ",
+      "confidential": "Illustration of a document with a lock in the corner",
+      "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
+      "fruitzLogo": "Fruitz logo",
+      "bloomFruitzLogo": "Bloom ki partnership Fruitz logo ke saath",
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+    },
+    "feedbackTypeform": "https://chayn.typeform.com/to/oHbPDvL2",
+    "survivor": "Survivor",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Kripya analytics cookies ki anumati dein taki hum Bloom mein sudhaar kar sakein. Humare mein aur padein. ",
+      "cookieConsentPolicy": "Cookies neeti",
+      "acceptLabel": "Cookies sweekaar kariye",
+      "declineLabel": "Cookies asweekar karein"
+    },
+    "signUpTodayPromo": {
+      "title": "Free account ke liye aaj he sign up karein",
+      "description1": "Bloom ek online platform hai jo apko apke ghavon se ubharne aur heal hone mein madad karta hai. Bloom par bahut sar alag alag suvidhaye hain - \nVideo courses, vichar sambhanti activities, aur toh aur aap humari team se seedha message par baat kar sakte hain.",
+      "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
+      "button": "Shuru karte hain"
+    },
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_conversation": "Audio",
+      "short_video": "Watch",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Personal diary",
+      "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
+      "activities-timelines": "Timelines",
+      "activities-trust-mapping": "Trust mapping",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Darr aur tanav ko apne shareer mein samjhna",
+      "activities-letter-to-a-part-of-my-body": "Mere shareer ke ek hisse ko khatt",
+      "activities-accelerators-and-brakes": "Accelerators aur brakes",
+      "activities-ideal-sexual-being": "Aadarsh sexual insaan",
+      "grounding-visual-breathing": "Picture ke saath saans lena",
+      "grounding-slow-breathing": "Slow breathing",
+      "grounding-box-breathing": "Box breathing",
+      "grounding-drifting-clouds-meditation": "Tension free — chalte badal",
+      "grounding-positive-coping-statement": "Positive shabd",
+      "grounding-finger-focus": "Unglio ka dhyaan kariyes",
+      "grounding-day-walkthrough": "Mene din mein kya kiya?",
+      "grounding-what-can-you-hear": "Kya tum mujhe sun sakte ho?",
+      "grounding-listen-to-your-voice": "Apni awaaz ko suno",
+      "grounding-calming-colours": "Sukoon ke rang",
+      "grounding-coming-back-to-your-safe-space": "Apni safe space mein wapis ana",
+      "grounding-best-check-in": "BEST check-in",
+      "grounding-compassionate-body-scan": "Sahanbhooti se shareer ko mehsoos karna",
+      "grounding-touching-and-feeling-textures": "Textures ko mehsoos karna",
+      "grouding-sound-of-claps": "Taaliyo ki awaz",
+      "grounding-affirming-ourselves": "Jaadu ki jhappi!"
+    }
+  }
+}

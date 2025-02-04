@@ -1,17 +1,9 @@
-import { STORYBLOK_STORY_STATUS } from '../../../constants/enums';
-import { Course, Session } from '../../../store/coursesSlice';
-import { PartnerAccess } from '../../../store/partnerAccessSlice';
-import { User } from '../../../store/userSlice';
+import { STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
+import { Course, Session } from '@/lib/store/coursesSlice';
+import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
+import { expect } from '@jest/globals';
 import { createCrispProfileData } from './createCrispProfileData';
 
-const user = {
-  email: 'user@email.com',
-  name: 'name',
-  id: 'string',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  crispTokenId: '123',
-} as User;
 const partnerAccess = {
   featureLiveChat: true,
   featureTherapy: true,

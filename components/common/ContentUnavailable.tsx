@@ -1,10 +1,12 @@
+'use client';
+
+import { TextNode } from '@/lib/types/types';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { columnStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import illustrationPerson4Peach from '../../public/illustration_person4_peach.svg';
-import { columnStyle } from '../../styles/common';
-import { TextNode } from '../../utils/helper-types/translations';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const accessContainerStyle = {
   ...columnStyle,

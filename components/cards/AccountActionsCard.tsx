@@ -1,12 +1,14 @@
-import { Box, Button, Card, CardContent, Link, Typography, lighten } from '@mui/material';
+'use client';
+
+import ConfirmDialog from '@/components/forms/ConfirmDialog';
+import { useRouter } from '@/i18n/routing';
+import { useDeleteUserMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import theme from '@/styles/theme';
+import { Box, Button, Card, CardContent, lighten, Link, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import { useDeleteUserMutation } from '../../store/api';
-import theme from '../../styles/theme';
-import ConfirmDialog from '../forms/ConfirmDialog';
 
 const cardStyle = {
   width: { xs: '100%', md: 'auto' },
@@ -39,14 +41,17 @@ const AccountActionsCard = () => {
 
       if ((response as any)?.data?.id) {
         setError(undefined);
-        router.push('/').then(() => {
-          const auth = getAuth();
-          signOut(auth);
-        });
+        router.push('/');
+        const auth = getAuth();
+        signOut(auth);
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }

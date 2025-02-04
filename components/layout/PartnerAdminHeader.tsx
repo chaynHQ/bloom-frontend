@@ -1,8 +1,10 @@
+'use client';
+
+import { getImageSizes } from '@/lib/utils/imageSizes';
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
-import { getImageSizes } from '../../utils/imageSizes';
 
 const headerContainerStyles = {
   backgroundColor: 'common.white',
@@ -12,11 +14,11 @@ const headerContainerStyles = {
 interface PartnerAdminHeaderProps {
   title:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction?:
     | string
-    | React.ReactNodeArray
+    | React.ReactNode[]
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   partnerLogoSrc?: StaticImageData;
   partnerLogoAlt?: string;

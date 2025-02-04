@@ -1,22 +1,25 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
 import {
   DRAWER_ACTIVITIES_CLICKED,
   DRAWER_CHAT_CLICKED,
   DRAWER_COURSES_CLICKED,
   DRAWER_GROUNDING_CLICKED,
+  DRAWER_NOTES_CLICKED,
   DRAWER_THERAPY_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import activitiesIcon from '../../public/activities_icon.svg';
-import chatIcon from '../../public/chat_icon.svg';
-import courseIcon from '../../public/course_icon.svg';
-import groundingIcon from '../../public/grounding_icon.svg';
-import notesFromBloomIcon from '../../public/notes_from_bloom_icon.svg';
-import therapyIcon from '../../public/therapy_icon.svg';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import activitiesIcon from '@/public/activities_icon.svg';
+import chatIcon from '@/public/chat_icon.svg';
+import courseIcon from '@/public/course_icon.svg';
+import groundingIcon from '@/public/grounding_icon.svg';
+import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
+import therapyIcon from '@/public/therapy_icon.svg';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SecondaryNavIcon } from './SecondaryNav';
 
 const listStyle = {
@@ -75,12 +78,10 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<SecondaryNavigationItem>>([]);
 
@@ -113,7 +114,7 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
       {
         label: t('notes'),
         href: '/subscription/whatsapp',
-        event: DRAWER_GROUNDING_CLICKED,
+        event: DRAWER_NOTES_CLICKED,
         icon: <SecondaryNavIcon src={notesFromBloomIcon} alt={t('alt.notesIcon')} />,
       },
     ];
@@ -147,11 +148,11 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
               borderColor: 'primary.dark',
               borderBottom: index !== navigationLinks.length - 1 ? 1 : 0,
             }}
-            component={Link}
             href={link.href}
+            component={i18nLink}
             target={link.target || '_self'}
             onClick={() => {
-              logEvent(link.event, eventUserData);
+              logEvent(link.event);
             }}
           >
             <ListItemIcon>{link.icon}</ListItemIcon>

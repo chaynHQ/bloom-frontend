@@ -1,4 +1,4 @@
-import 'react-international-phone/style.css';
+'use client';
 
 import {
   BaseTextFieldProps,
@@ -16,6 +16,7 @@ import {
   parseCountry,
   usePhoneInput,
 } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 const inputStyles = { width: '15rem', '.MuiInput-root': { mt: 2.5 } } as const;
 

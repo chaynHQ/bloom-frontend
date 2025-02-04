@@ -1,8 +1,9 @@
-import { Link, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
-import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
+'use client';
+
+import Video from '@/components/video/Video';
+import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
+import { useCompleteResourceMutation, useStartResourceMutation } from '@/lib/api';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
@@ -12,21 +13,17 @@ import {
   RESOURCE_SHORT_VIDEO_STARTED_SUCCESS,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useCompleteResourceMutation, useStartResourceMutation } from '../../store/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
-import Video from '../video/Video';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
-
-export interface EventData extends EventUserData {
-  resource_name: string;
-  resource_storyblok_id: number;
-  resource_progress: PROGRESS_STATUS;
-}
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import { Link, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useState } from 'react';
 
 interface ResourceShortVideoProps {
-  eventData: EventData;
+  eventData: { [key: string]: any };
   resourceProgress: PROGRESS_STATUS;
   name: string;
   storyId: number;
@@ -40,6 +37,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
   const [startResourceShort] = useStartResourceMutation();
   const [completeResourceShort] = useCompleteResourceMutation();
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const rollbar = useRollbar();
 
   const t = useTranslations('Resources');
 
@@ -58,11 +56,11 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
       const error = startResourceShortResponse.error;
 
       logEvent(RESOURCE_SHORT_VIDEO_STARTED_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceShort started error', error);
+      rollbar.error('ResourceShort started error', error);
 
       throw error;
     }
-  }, [startResourceShort, eventData, storyId]);
+  }, [startResourceShort, eventData, storyId, rollbar]);
 
   const callCompleteResourceShort = useCallback(async () => {
     logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST, eventData);
@@ -79,11 +77,11 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
       const error = completeResourceShortResponse.error;
 
       logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_ERROR, eventData);
-      (window as any).Rollbar?.error('ResourceShort completed error', error);
+      rollbar.error('ResourceShort completed error', error);
 
       throw error;
     }
-  }, [completeResourceShort, eventData, storyId]);
+  }, [completeResourceShort, eventData, storyId, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;

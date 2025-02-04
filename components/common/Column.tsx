@@ -1,3 +1,5 @@
+'use client';
+
 import { Box } from '@mui/material';
 
 interface ColumnProps {

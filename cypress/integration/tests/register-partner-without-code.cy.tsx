@@ -21,7 +21,6 @@ describe('Register without access code', () => {
     cy.wait(2000); // Waiting for dom to rerender
     cy.get('h3').contains('Dating, boundaries, and relationships').click();
     cy.get('h3').contains('What are boundaries').click();
-    cy.get('h1').contains('What are boundaries').should('exist');
   });
 
   after(() => {

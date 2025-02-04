@@ -1,7 +1,6 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Button, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+'use client';
+
+import { useCompleteResourceMutation } from '@/lib/api';
 import {
   RESOURCE_CONVERSATION_COMPLETE_ERROR,
   RESOURCE_CONVERSATION_COMPLETE_REQUEST,
@@ -9,11 +8,15 @@ import {
   RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
   RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
-} from '../../constants/events';
-import { useCompleteResourceMutation } from '../../store/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
+} from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Button, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
-import { RESOURCE_CATEGORIES } from '../../constants/enums';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { useRollbar } from '@rollbar/react';
 
 const errorStyle = {
   color: 'primary.dark',
@@ -22,16 +25,16 @@ const errorStyle = {
 } as const;
 
 interface ResourceCompleteButtonProps {
-  resourceName: string;
   category: RESOURCE_CATEGORIES;
   storyId: number;
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
-  const { resourceName, category, storyId, eventData } = props;
+  const { category, storyId, eventData } = props;
 
   const t = useTranslations('Resources');
+  const rollbar = useRollbar();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -68,7 +71,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
           : RESOURCE_CONVERSATION_COMPLETE_ERROR,
         eventData,
       );
-      (window as any).Rollbar?.error('Resource complete error', error);
+      rollbar.error('Resource complete error', error);
 
       setError(t('errors.completeResourceError'));
       throw error;

@@ -1,3 +1,9 @@
+'use client';
+
+import { ACCORDION_OPENED, generateAccordionEvent } from '@/lib/constants/events';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
+import { RichTextOptions } from '@/lib/utils/richText';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -7,16 +13,11 @@ import {
   Icon,
   Typography,
 } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { ACCORDION_OPENED, generateAccordionEvent } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
 const containerStyle = {
   width: '100%',
   maxWidth: 725,
@@ -53,31 +54,26 @@ interface StoryblokAccordionProps {
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const { _uid, _editable, accordion_items, theme } = props;
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       if (isExpanded) {
-        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle, ...eventUserData });
+        logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle });
         logEvent(generateAccordionEvent(accordionTitle), {
           accordionTitle: accordionTitle,
-          ...eventUserData,
         });
       }
     };
   const scrollRef = useRef(null);
-  const accordionInUrl = router.query.openacc ?? undefined;
+  const accordionInUrl = searchParams?.get('openacc') ?? undefined;
 
   useEffect(() => {
     if (accordionInUrl && scrollRef.current) {
       // @ts-ignore
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [router.query.openacc, accordionInUrl]);
+  }, [searchParams, accordionInUrl]);
 
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>

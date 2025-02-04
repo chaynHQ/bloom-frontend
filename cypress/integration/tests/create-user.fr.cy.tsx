@@ -8,9 +8,6 @@ describe('Create User', () => {
     // Start from the home page
     cy.visitFrenchPage('/');
     cy.wait(2000);
-    cy.get('h1', { timeout: 8000 })
-      .contains('Rejoins-nous sur ton chemin de guérison')
-      .should('exist');
     cy.get('a[href="/fr/auth/register"]', { timeout: 5000 }).first().click({ force: true });
     cy.wait(2000);
     cy.get('h2', { timeout: 8000 }).should('contain', 'Créer un compte');

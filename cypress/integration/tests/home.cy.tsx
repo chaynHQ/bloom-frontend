@@ -83,7 +83,7 @@ describe('Home page should display', () => {
     cy.checkImage('bloom_german', 'bloom_german-presenters');
     cy.get('h3').should('contain', 'German');
 
-    cy.checkLink('/meet-the-team', 'Meet the team');
+    cy.checkLink('meet-the-team', 'Meet the team');
   });
 
   it('our themes section', () => {

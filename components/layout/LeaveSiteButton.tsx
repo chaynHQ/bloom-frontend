@@ -1,7 +1,10 @@
-import { Button, Box } from '@mui/material';
+'use client';
+
+import { usePathname } from '@/i18n/routing';
+import { LEAVE_SITE_BUTTON_CLICKED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
+import { Box, Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { LEAVE_SITE_BUTTON_CLICKED } from '../../constants/events';
-import logEvent from '../../utils/logEvent';
 
 const leaveThisSiteStyles = {
   position: 'fixed',
@@ -14,11 +17,18 @@ const leaveThisSiteStyles = {
 const LeaveSiteButton = () => {
   const tS = useTranslations('Shared.leaveSite');
 
+  const pathname = usePathname();
+  const pathHead = pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
+
   const hideSite = () => {
     logEvent(LEAVE_SITE_BUTTON_CLICKED);
     window.open(tS('wikiLink'), '_newtab');
     location.replace(tS('googleLink'));
   };
+
+  if (pathHead === 'partner-admin') {
+    return <></>;
+  }
 
   return (
     <Box sx={leaveThisSiteStyles}>
