@@ -46,7 +46,7 @@ jobs:
       - run: node -v
 
       - name: Run cypress
-        uses: cypress-io/github-action@v6.7.9
+        uses: cypress-io/github-action@v6.7.10
         with:
           browser: chrome
           config-file: cypress.config.ts
@@ -83,7 +83,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run cypress after cleanup
-        uses: cypress-io/github-action@v6.7.9
+        uses: cypress-io/github-action@v6.7.10
         with:
           browser: chrome
           config-file: cypress-after.config.ts
