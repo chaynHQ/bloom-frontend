@@ -22,8 +22,6 @@ import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/r
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import LoadingContainer from '../common/LoadingContainer';
-import NoDataAvailable from '../common/NoDataAvailable';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -125,8 +123,8 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
   }, [courses, course, storyId, storyUuid]);
 
-  if (incorrectAccess === undefined) return <LoadingContainer />;
-  if (!!incorrectAccess) return <NoDataAvailable />;
+  // if (incorrectAccess === undefined) return <LoadingContainer />;
+  // if (!!incorrectAccess) return <NoDataAvailable />;
 
   return (
     <Box
