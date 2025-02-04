@@ -29,6 +29,8 @@ describe.only('A course session user', () => {
 
     cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
 
+    cy.get('div[data-testid="LoadingContainer"]').should('exist');
+
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
     cy.get('h3').contains('Activity').click(); //open activities
