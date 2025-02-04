@@ -1,7 +1,7 @@
 'use client';
 
 import LoadingContainer from '@/components/common/LoadingContainer';
-import { redirect, usePathname } from '@/i18n/routing';
+import { redirect, usePathname, useRouter } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useLoadUser from '@/lib/hooks/useLoadUser';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
@@ -18,7 +18,7 @@ const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
 export function AuthGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const locale = useLocale();
-
+  const router = useRouter();
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
@@ -33,10 +33,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   // If app is in maintenance mode, redirect all pages to /maintenance
   if (isMaintenanceMode && pathname !== '/maintenance') {
     if (typeof window !== 'undefined') {
-      redirect({
-        href: '/maintenance',
-        locale,
-      });
+      router.replace('/maintenance', { locale });
     }
     return <LoadingContainer />;
   }
@@ -59,12 +56,10 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    redirect({
-      href: '/auth/login',
-      // @ts-ignore
-      query: { return_url: encodeURIComponent(pathname) },
-      locale,
-    });
+    router.replace(
+      { pathname: '/auth/login', query: { return_url: encodeURIComponent(pathname) } },
+      { locale },
+    );
   }
 
   if (userId) {
