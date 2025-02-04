@@ -12,6 +12,7 @@ import Image from 'next/image';
 
 const containerStyle = {
   ...columnStyle,
+  backgroundColor: 'background.default',
   minHeight: 'calc(100vh - 120px)',
   alignItems: 'flex-start',
 } as const;
