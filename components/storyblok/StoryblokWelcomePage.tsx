@@ -18,9 +18,9 @@ import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
 import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 const introContainerStyle = {
@@ -65,6 +65,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
 
   const [codeParam, setCodeParam] = useState<string>('');
   const router = useRouter();
+  const locale = useLocale();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const dispatch: any = useAppDispatch();
@@ -75,19 +76,10 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
-
   // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
   useEffect(() => {
     const code = searchParams.get('code');
+    const partner = searchParams.get('partner');
 
     if (code) {
       // code in url query
@@ -97,17 +89,19 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       entryPartnerAccessCode
     ) {
       // Entry code in state, add to url query in case of refresh
-      router.replace(pathname + '?' + createQueryString('code', entryPartnerAccessCode));
-
+      router.push({
+        pathname,
+        query: { code: entryPartnerAccessCode, partner },
+      });
       setCodeParam(entryPartnerAccessCode);
     }
   }, [
     dispatch,
     router,
+    locale,
     entryPartnerAccessCode,
     entryPartnerReferral,
     partnerContent.name,
-    createQueryString,
     pathname,
     searchParams,
   ]);
