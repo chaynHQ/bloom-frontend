@@ -10,6 +10,7 @@ import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
 import { clientConfig } from '@/lib/rollbar';
 import '@/styles/globals.css';
+import '@/styles/hotjarNPS.css';
 import theme from '@/styles/theme';
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
