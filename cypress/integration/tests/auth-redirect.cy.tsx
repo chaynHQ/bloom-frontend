@@ -8,7 +8,7 @@ describe('Auth redirect', () => {
       { failOnStatusCode: false },
     );
 
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Welcome back');
+    cy.get('h1').should('contain', 'Welcome back');
     cy.url().should(
       'include',
       'return_url=%2Fcourses%2Fimage-based-abuse-and-rebuilding-ourselves%2Fthe-social-context-of-image-based-abuse-and-victim-blaming',
