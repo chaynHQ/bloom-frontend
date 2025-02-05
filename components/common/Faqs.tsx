@@ -1,30 +1,38 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+'use client';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { Link as i18nLink } from '@/i18n/routing';
+import { BASE_URL } from '@/lib/constants/common';
+import { THERAPY_FAQ_OPENED } from '@/lib/constants/events';
+import { FaqItem } from '@/lib/constants/faqs';
+import { PartnerContent } from '@/lib/constants/partners';
+import logEvent from '@/lib/utils/logEvent';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Link,
+  Typography,
+} from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { THERAPY_FAQ_OPENED } from '../../constants/events';
-import { FaqItem } from '../../constants/faqs';
-import { PartnerContent } from '../../constants/partners';
-import logEvent, { EventUserData } from '../../utils/logEvent';
-import Link from './Link';
 
 interface FaqsProps {
   translations: string;
   faqList: Array<FaqItem>;
   partner?: PartnerContent | null;
-  eventUserData: EventUserData;
 }
 
 // TO BE REMOVED IF THERAPY FAQS ARE MOVED TO STORYBLOK, use StoryblokFaqs.tsx instead.
 const Faqs = (props: FaqsProps) => {
-  const { faqList, translations, partner, eventUserData } = props;
+  const { faqList, translations, partner } = props;
   const t = useTranslations(translations);
 
   const partnerName = partner ? partner.name : '';
 
   const handleChange = (faqTitle: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     if (isExpanded) {
-      logEvent(THERAPY_FAQ_OPENED, { faqTitle: t(faqTitle), ...eventUserData });
+      logEvent(THERAPY_FAQ_OPENED, { faqTitle: t(faqTitle) });
     }
   };
 
@@ -49,7 +57,11 @@ const Faqs = (props: FaqsProps) => {
                 partnerName: partnerName,
                 ...(faq.link && {
                   faqLink: (children) => (
-                    <Link href={faq.link ? faq.link : '#'} target="_blank">
+                    <Link
+                      component={faq.link?.startsWith(BASE_URL || '/') ? i18nLink : 'a'}
+                      href={faq.link ? faq.link : '#'}
+                      target="_blank"
+                    >
                       {children}
                     </Link>
                   ),

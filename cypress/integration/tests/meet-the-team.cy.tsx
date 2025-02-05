@@ -101,7 +101,6 @@ describe('Meet the team page should', () => {
       cy.get('p').should('contain', 'CogX Global Goals - Good Health and Well-Being Award');
       cy.get('p').should('contain', 'You can see the full list of awards ');
       cy.get('h3').should('contain', 'Our therapists');
-      cy.get('svg[data-testid="OpenInNewIcon"]').should('exist');
       cy.checkLink('https://www.chayn.co/about', 'here');
 
       cy.get('h2').should('contain', 'Funded by');

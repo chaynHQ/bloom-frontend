@@ -1,26 +1,27 @@
+'use client';
+
+import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
+import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
+import { useTypedSelector } from '@/lib/hooks/store';
+import bloomLogo from '@/public/bloom_logo.svg';
+import comicReliefLogo from '@/public/comic_relief_logo.png';
+import communityFundLogo from '@/public/community_fund_logo.svg';
+import tiktokLogo from '@/public/tiktok.svg';
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import YoutubeIcon from '@mui/icons-material/YouTube';
-import { Box, Container, IconButton, Typography } from '@mui/material';
+import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '../../constants/events';
-import { PartnerContent, getPartnerContent } from '../../constants/partners';
-import { useTypedSelector } from '../../hooks/store';
-import bloomLogo from '../../public/bloom_logo.svg';
-import comicReliefLogo from '../../public/comic_relief_logo.png';
-import communityFundLogo from '../../public/community_fund_logo.svg';
-import tiktokLogo from '../../public/tiktok.svg';
 
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
 import Cookies from 'js-cookie';
-import { rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
@@ -91,9 +92,8 @@ const fundingLogosContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
-  const [eventUserData, setEventUserData] = useState<any>(null);
   const [partners, setPartners] = useState<PartnerContent[]>([]);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
@@ -108,7 +108,6 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
     let partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
 
     if (partnerAdmin && partnerAdmin.partner) {
@@ -119,15 +118,10 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
     });
 
-    const { partner } = router.query;
+    const partner = searchParams?.get('partner');
 
     if (partner) {
       addUniquePartner(partnersList, partner + '');
-    }
-
-    if (router.pathname.includes('/welcome')) {
-      const partnerName = router.asPath.split('/')[2].split('?')[0];
-      addUniquePartner(partnersList, partnerName);
     }
 
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
@@ -137,7 +131,7 @@ const Footer = () => {
     }
 
     setPartners(partnersList);
-  }, [partnerAccesses, userCreatedAt, router, partnerAdmin]);
+  }, [partnerAccesses, userCreatedAt, searchParams, entryPartnerReferral, partnerAdmin]);
 
   return (
     <>
@@ -205,7 +199,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Facebook',
                           })
                         }
@@ -220,7 +213,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Instagram',
                           })
                         }
@@ -233,9 +225,7 @@ const Footer = () => {
                         href={partner.twitter}
                         aria-label="Twitter"
                         target="_blank"
-                        onClick={() =>
-                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Twitter' })
-                        }
+                        onClick={() => logEvent(socialLinkEvent, { social_account: 'Twitter' })}
                       >
                         <TwitterIcon />
                       </IconButton>
@@ -245,9 +235,7 @@ const Footer = () => {
                         href={partner.youtube}
                         aria-label="Youtube"
                         target="_blank"
-                        onClick={() =>
-                          logEvent(socialLinkEvent, { ...eventUserData, social_account: 'Youtube' })
-                        }
+                        onClick={() => logEvent(socialLinkEvent, { social_account: 'Youtube' })}
                       >
                         <YoutubeIcon />
                       </IconButton>
@@ -259,7 +247,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Tiktok',
                           })
                         }
@@ -274,7 +261,6 @@ const Footer = () => {
                         target="_blank"
                         onClick={() =>
                           logEvent(socialLinkEvent, {
-                            ...eventUserData,
                             social_account: 'Github',
                           })
                         }

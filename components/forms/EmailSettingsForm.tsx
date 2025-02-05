@@ -1,12 +1,13 @@
+'use client';
+
+import { useUpdateUserMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Checkbox, FormControl, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useCallback, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
 
 const formControlStyle = {
   marginY: 3,
@@ -16,12 +17,10 @@ const formControlStyle = {
 } as const;
 
 const EmailSettingsForm = () => {
+  const t = useTranslations('Account.accountSettings.emailSettings');
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const t = useTranslations('Account.accountSettings.emailSettings');
-  const tS = useTranslations('Shared');
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
@@ -31,11 +30,11 @@ const EmailSettingsForm = () => {
       const formData = new FormData(ev.currentTarget);
       ev.preventDefault();
 
-      const contactPermission = formData.get('contactPermission') === 'on';
-      const serviceEmailsPermission = formData.get('serviceEmailsPermission') === 'on';
+      const contactPermissionValue = formData.get('contactPermission') === 'on';
+      const serviceEmailsPermissionValue = formData.get('serviceEmailsPermission') === 'on';
       const payload = {
-        contactPermission,
-        serviceEmailsPermission,
+        contactPermission: contactPermissionValue,
+        serviceEmailsPermission: serviceEmailsPermissionValue,
       };
 
       const response = await updateUser(payload);
@@ -45,12 +44,16 @@ const EmailSettingsForm = () => {
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }
     },
-    [updateUser, t, tS],
+    [updateUser, t],
   );
 
   return (

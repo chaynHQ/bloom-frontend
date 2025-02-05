@@ -1,9 +1,11 @@
+'use client';
+
+import { useWidth } from '@/lib/utils/useWidth';
+import theme from '@/styles/theme';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Breakpoint, IconButton } from '@mui/material';
 import { Carousel as NukaCarousel, useCarousel } from 'nuka-carousel';
-import theme from '../../styles/theme';
-import { useWidth } from '../../utils/useWidth';
 
 interface CarouselProps {
   items: Array<React.ReactNode>;
@@ -22,7 +24,7 @@ const numberSlidesToWidthMap: { [key: number]: string } = {
 };
 
 // Dots and arrows in 1 component because of the design
-export const CustomDots = ({
+const CustomDots = ({
   showArrows = false,
   arrowPosition = 'bottom',
 }: {

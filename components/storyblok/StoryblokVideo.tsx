@@ -1,30 +1,22 @@
+'use client';
+
+import { richtextContentStyle } from '@/styles/common';
 import { Box } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import dynamic from 'next/dynamic';
 import { YouTubeConfig } from 'react-player/youtube';
-import { richtextContentStyle } from '../../styles/common';
+import { videoContainerStyle, videoStyle } from '../video/Video';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
 
-export const videoContainerStyle = {
-  position: 'relative',
-  paddingTop: '56.25%',
-} as const;
-
-export const videoStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-} as const;
-
-export const videoConfig = (video: { url: string }): YouTubeConfig => {
+const getVideoConfig = (video: { url: string }): YouTubeConfig | undefined => {
   return video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
     ? {
         embedOptions: {
           host: 'https://www.youtube-nocookie.com',
         },
       }
-    : {};
+    : undefined;
 };
 
 interface StoryblokVideoProps {
@@ -39,6 +31,8 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
   const { _uid, _editable, video, size = 'extra-large', alignment = 'left' } = props;
 
   if (!video) return <></>;
+
+  const videoConfig = getVideoConfig(video);
 
   const containerStyle = {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
@@ -79,7 +73,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
           url={video.url}
           controls
           modestbranding={1}
-          {...videoConfig(video)}
+          config={videoConfig}
         />
       </Box>
     </Box>

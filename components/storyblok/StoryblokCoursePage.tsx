@@ -1,22 +1,24 @@
-import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+'use client';
+
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import SessionCard from '@/components/cards/SessionCard';
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import CourseHeader from '@/components/course/CourseHeader';
+import CourseIntroduction from '@/components/course/CourseIntroduction';
+import { Link as i18nLink } from '@/i18n/routing';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { determineCourseProgress } from '@/lib/utils/courseProgress';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
+import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
+import { Box, Container, Link, Typography } from '@mui/material';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import SessionCard from '../../components/cards/SessionCard';
-import { ContentUnavailable } from '../../components/common/ContentUnavailable';
-import Link from '../../components/common/Link';
-import CourseHeader from '../../components/course/CourseHeader';
-import CourseIntroduction from '../../components/course/CourseIntroduction';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { COURSE_OVERVIEW_VIEWED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { rowStyle } from '../../styles/common';
-import { determineCourseProgress } from '../../utils/courseProgress';
-import hasAccessToPage from '../../utils/hasAccessToPage';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
-import { SignUpBanner } from '../banner/SignUpBanner';
+import LoadingContainer from '../common/LoadingContainer';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -37,7 +39,6 @@ export interface StoryblokCoursePageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   image: { filename: string; alt: string };
   image_with_background: { filename: string; alt: string };
@@ -55,7 +56,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     image,
     image_with_background,
@@ -66,13 +66,12 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   } = props;
 
   const t = useTranslations('Courses');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [userAccess, setUserAccess] = useState<boolean>();
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -80,18 +79,16 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   useEffect(() => {
     const storyPartners = included_for_partners;
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    setIncorrectAccess(
-      !hasAccessToPage(
-        isLoggedIn,
-        true,
-        storyPartners,
-        partnerAccesses,
-        partnerAdmin,
-        referralPartner,
-      ),
+    const userHasAccess = hasAccessToPage(
+      isLoggedIn,
+      true,
+      storyPartners,
+      partnerAccesses,
+      partnerAdmin,
+      referralPartner,
     );
-  }, [partnerAccesses, partnerAdmin, included_for_partners]);
+    setUserAccess(userHasAccess);
+  }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
   useEffect(() => {
     setCourseProgress(determineCourseProgress(courses, storyId));
@@ -101,21 +98,24 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, []);
 
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   const eventData = {
-    ...eventUserData,
     course_name: name,
     course_storyblok_id: storyId,
     course_progress: courseProgress,
   };
 
-  if (incorrectAccess) {
+  if (userAccess === undefined) return <LoadingContainer />;
+
+  if (!userAccess) {
     return (
       <ContentUnavailable
         title={t('accessGuard.title')}
         message={t.rich('accessGuard.introduction', {
-          contactLink: (children) => <Link href="/courses">{children}</Link>,
+          contactLink: (children) => (
+            <Link component={i18nLink} href="/courses">
+              {children}
+            </Link>
+          ),
         })}
       />
     );
@@ -127,7 +127,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         image,
         image_with_background,
@@ -137,16 +136,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
         included_for_partners,
       })}
     >
-      <Head>
-        <title>{`${t('course')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
       <CourseHeader
         name={name}
         description={description}

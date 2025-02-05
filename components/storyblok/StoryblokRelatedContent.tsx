@@ -1,11 +1,13 @@
+'use client';
+
+import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
+import Carousel, { getSlideWidth } from '@/components/common/Carousel';
+import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { Box } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { ISbStoryData } from '@storyblok/react/rsc';
+import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
-import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
-import { RelatedContentCard } from '../cards/RelatedContentCard';
-import Carousel, { getSlideWidth } from '../common/Carousel';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
@@ -28,7 +30,7 @@ export interface StoryblokRelatedContentProps {
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
   const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
-  const router = useRouter();
+  const locale = useLocale();
 
   const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
     const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
@@ -47,10 +49,12 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
 
   const filteredRelatedContent = useMemo(() => {
     return relatedContent.filter((story) => {
-      const locale = router.locale === 'en' ? 'default' : router.locale || 'default';
+      const localeString = locale === 'en' ? 'default' : locale || 'default';
       const storyAvailableForLocale =
-        story.content?.languages?.length > 0 ? story.content.languages.includes(locale) : true;
-      const storyDisabled = disabledCoursesString?.includes(`${router.locale}/${story.full_slug}`);
+        story.content?.languages?.length > 0
+          ? story.content.languages.includes(localeString)
+          : true;
+      const storyDisabled = disabledCoursesString?.includes(story.full_slug);
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
@@ -59,14 +63,14 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
           : true;
       return storyAvailableForLocale && storyIncludedForUserPartners && !storyDisabled;
     });
-  }, [relatedContent, disabledCoursesString, router.locale]);
+  }, [relatedContent, disabledCoursesString, locale, userContentPartners]);
 
   let items = filteredRelatedContent
     .map((relatedContentItem) => (
       <RelatedContentCard
         key={`related_content_${relatedContentItem.id}`}
         title={relatedContentItem.content.name}
-        href={`/${relatedContentItem.full_slug}`}
+        href={getDefaultFullSlug(relatedContentItem.full_slug, locale)}
         category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
         duration={
           relatedContentItem.content && 'duration' in relatedContentItem.content

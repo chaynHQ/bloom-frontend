@@ -1,35 +1,35 @@
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Button, Container, IconButton, Typography } from '@mui/material';
-import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react';
-import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+'use client';
+
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import PageSection from '@/components/common/PageSection';
+import ProgressStatus from '@/components/common/ProgressStatus';
+import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
+import { ResourceCompleteButton } from '@/components/resources/ResourceCompleteButton';
+import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
+import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import {
+  COURSE_CATEGORIES,
   PROGRESS_STATUS,
   RESOURCE_CATEGORIES,
   STORYBLOK_COLORS,
-  STORYBLOK_COMPONENTS,
-} from '../../constants/enums';
+} from '@/lib/constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_VIEWED,
   RESOURCE_SHORT_VIDEO_VISIT_SESSION,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { Resource } from '../../store/resourcesSlice';
-import { columnStyle, rowStyle } from '../../styles/common';
-import theme from '../../styles/theme';
-import { getStoryblokPagesByUuids } from '../../utils/getStoryblokPageProps';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
-import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
-import { SignUpBanner } from '../banner/SignUpBanner';
-import Link from '../common/Link';
-import PageSection from '../common/PageSection';
-import ProgressStatus from '../common/ProgressStatus';
-import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
-import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
-import { ResourceShortVideo } from '../resources/ResourceShortVideo';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { Resource } from '@/lib/store/resourcesSlice';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import logEvent from '@/lib/utils/logEvent';
+import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import { columnStyle, rowStyle } from '@/styles/common';
+import theme from '@/styles/theme';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { Box, Button, Container, IconButton, Typography } from '@mui/material';
+import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
+import Cookies from 'js-cookie';
+import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useMemo, useState } from 'react';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
@@ -78,13 +78,13 @@ export interface StoryblokResourceShortPageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   duration: string;
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
+  related_course: ISbStoryData | undefined;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -98,32 +98,34 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     video,
     video_transcript,
     page_sections,
     related_session,
+    related_course,
     related_content,
     related_exercises,
   } = props;
+
   const router = useRouter();
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
+  const locale = useLocale();
+
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [linkedCourse, setLinkedCourse] = useState<ISbStoryData>();
+
+  const relatedSession = related_session[0];
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const getContentPartners = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
@@ -138,13 +140,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
   const eventData = useMemo(() => {
     return {
-      ...eventUserData,
       resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
     };
-  }, [eventUserData, name, storyId, resourceProgress]);
+  }, [name, storyId, resourceProgress]);
 
   useEffect(() => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
@@ -162,43 +163,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
-  useEffect(() => {
-    async function fetchCourse() {
-      const relatedSession = related_session[0];
-      const relatedCourse = related_session[0]?.content.course;
-
-      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.COURSE) {
-        setLinkedCourse(relatedSession);
-        return;
-      }
-      if (relatedSession?.content.component === STORYBLOK_COMPONENTS.SESSION) {
-        // if the related session is a session, we need to get the course from the session
-        try {
-          const storyblokCourseProps = await getStoryblokPagesByUuids(
-            relatedCourse, // get course by course uuid
-            router.locale,
-            false,
-            {},
-          );
-
-          if (storyblokCourseProps?.stories.length && !!storyblokCourseProps.stories[0]) {
-            setLinkedCourse(storyblokCourseProps.stories[0]);
-          }
-          // Your data fetching logic here
-        } catch (error) {
-          console.error('Error fetching related courses:', error);
-        }
-      }
-    }
-
-    fetchCourse();
-  }, []);
 
   const redirectToSession = () => {
     logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
       ...eventData,
       shorts_name: name,
-      session_name: related_session.length && related_session[0]?.name,
+      session_name: relatedSession?.name,
     });
   };
 
@@ -208,7 +178,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         video,
         video_transcript,
@@ -218,17 +187,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         related_exercises,
       })}
     >
-      <Head>
-        <title>{`${t('shorts')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
-
       <Container sx={{ background: theme.palette.bloomGradient, paddingTop: ['20px', '60px'] }}>
         <IconButton
           sx={backButtonStyle}
@@ -256,7 +214,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
 
                 {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                   <ResourceCompleteButton
-                    resourceName={name}
                     category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                     storyId={storyId}
                     eventData={eventData}
@@ -265,31 +222,33 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               </Box>
             )}
           </Box>
-          <Box sx={headerRightStyle}>
-            {/* Description field is not currently displayed */}
-            {/* {render(description, RichTextOptions)} */}
+          {relatedSession && (
+            <Box sx={headerRightStyle}>
+              {/* Description field is not currently displayed */}
+              {/* {render(description, RichTextOptions)} */}
 
-            <Typography component="h2" mb={2}>
-              {t('sessionDetail', {
-                sessionNumber:
-                  related_session[0]?.content.component === STORYBLOK_COMPONENTS.COURSE
-                    ? 0
-                    : related_session[0]?.position / 10 - 1,
-                sessionName: related_session[0]?.content.name,
-                courseName: linkedCourse?.content.name,
-              })}
-            </Typography>
-            <Button
-              component={Link}
-              href={related_session[0] && `/${related_session[0]?.full_slug}`}
-              onClick={redirectToSession}
-              variant="contained"
-              color="secondary"
-              sx={{ mr: 'auto' }}
-            >
-              {t('sessionButtonLabel')}
-            </Button>
-          </Box>
+              <Typography component="h2" mb={2}>
+                {t('sessionDetail', {
+                  sessionNumber:
+                    relatedSession.content.component === COURSE_CATEGORIES.COURSE
+                      ? 0
+                      : relatedSession.position / 10 - 1,
+                  sessionName: relatedSession.content.name,
+                  courseName: related_course?.content.name,
+                })}
+              </Typography>
+              <Button
+                href={getDefaultFullSlug(relatedSession.full_slug, locale)}
+                component={i18nLink}
+                onClick={redirectToSession}
+                variant="contained"
+                color="secondary"
+                sx={{ mr: 'auto' }}
+              >
+                {t('sessionButtonLabel')}
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
 

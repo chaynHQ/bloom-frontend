@@ -1,24 +1,9 @@
-import { useTranslations } from 'next-intl';
+'use client';
 
-const containerStyle = {
-  marginY: 3,
-} as const;
-
-import { CheckCircleOutlined } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@mui/material';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import { EMAIL_REMINDERS_FREQUENCY } from '../../constants/enums';
+import { usePathname } from '@/i18n/routing';
+import { useUpdateUserMutation } from '@/lib/api';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   EMAIL_REMINDERS_SET_ERROR,
   EMAIL_REMINDERS_SET_REQUEST,
@@ -26,11 +11,23 @@ import {
   EMAIL_REMINDERS_UNSET_ERROR,
   EMAIL_REMINDERS_UNSET_REQUEST,
   EMAIL_REMINDERS_UNSET_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useUpdateUserMutation } from '../../store/api';
-import { rowStyle } from '../../styles/common';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
+import { CheckCircleOutlined } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Link,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 
 const radioGroupStyle = {
   ...rowStyle,
@@ -98,14 +95,8 @@ const EmailRemindersSettingsForm = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [selectedInput, setSelectedInput] = useState<EMAIL_REMINDERS_FREQUENCY>();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
-  const router = useRouter();
+  const pathname = usePathname();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
-  const tS = useTranslations('Shared');
 
   useEffect(() => {
     // Reset success and error states if new input selected
@@ -126,9 +117,8 @@ const EmailRemindersSettingsForm = () => {
       if (!selectedInput) return;
 
       const eventData = {
-        ...eventUserData,
         frequency: selectedInput,
-        origin_url: router.pathname,
+        origin_url: pathname,
       };
 
       const setOn = selectedInput !== EMAIL_REMINDERS_FREQUENCY.NEVER;
@@ -145,16 +135,20 @@ const EmailRemindersSettingsForm = () => {
       } else {
         setError(
           t.rich('updateError', {
-            link: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            link: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);
       }
     },
-    [updateUser, selectedInput, router.pathname, eventUserData, t, tS],
+    [updateUser, selectedInput, pathname, t],
   );
 
-  const showUpdateLaterMessage = router.pathname !== '/account/settings' && !error;
+  const showUpdateLaterMessage = pathname !== '/account/settings' && !error;
 
   return (
     <form onSubmit={onSubmit}>

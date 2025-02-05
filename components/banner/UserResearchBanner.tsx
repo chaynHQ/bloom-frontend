@@ -1,11 +1,13 @@
+'use client';
+
+import { usePathname } from '@/i18n/routing';
+import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
+import { FeatureFlag } from '@/lib/featureFlag';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import React from 'react';
-import { FeatureFlag } from '../../config/featureFlag';
-import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
+import { useState } from 'react';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -21,15 +23,12 @@ const USER_RESEARCH_FORM_LINK =
   'https://docs.google.com/forms/d/e/1FAIpQLSfBwYdXRKDX_IKtcShgYvNu835BqtI5PbIC-GrmBBVIZDpQgw/viewform?usp=sf_link';
 
 export default function UserResearchBanner() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const pathname = usePathname();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const router = useRouter();
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
@@ -37,15 +36,13 @@ export default function UserResearchBanner() {
     return pa.partner.name.toLowerCase() === 'badoo';
   });
 
-  const isTargetPage = !(
-    router.pathname.includes('auth') || router.pathname.includes('partnerName')
-  );
+  const isTargetPage = !(pathname.includes('auth') || pathname.includes('partnerName'));
 
   const showBanner = isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
 
   const handleClickAccepted = () => {
     if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_INTERESTED, eventUserData);
+    logEvent(USER_BANNER_INTERESTED);
     setOpen(false);
 
     window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
@@ -53,7 +50,7 @@ export default function UserResearchBanner() {
 
   const handleClickDeclined = () => {
     if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_DISMISSED, eventUserData);
+    logEvent(USER_BANNER_DISMISSED);
     setOpen(false);
   };
 

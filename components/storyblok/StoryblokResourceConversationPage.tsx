@@ -1,29 +1,26 @@
+'use client';
+
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import PageSection from '@/components/common/PageSection';
+import ProgressStatus from '@/components/common/ProgressStatus';
+import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
+import Header from '@/components/layout/Header';
+import { ResourceCompleteButton } from '@/components/resources/ResourceCompleteButton';
+import { ResourceConversationAudio } from '@/components/resources/ResourceConversationAudio';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { Resource } from '@/lib/store/resourcesSlice';
+import logEvent from '@/lib/utils/logEvent';
+import { RichTextOptions } from '@/lib/utils/richText';
+import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import illustrationCourses from '@/public/illustration_courses.svg';
+import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react';
+import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Head from 'next/head';
 import { useEffect, useMemo, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '../../constants/enums';
-import {
-  RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-  RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
-  RESOURCE_CONVERSATION_VIEWED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import illustrationCourses from '../../public/illustration_courses.svg';
-import { Resource } from '../../store/resourcesSlice';
-import { rowStyle } from '../../styles/common';
-import { getEventUserData, logEvent } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
-import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
-import { SignUpBanner } from '../banner/SignUpBanner';
-import PageSection from '../common/PageSection';
-import ProgressStatus from '../common/ProgressStatus';
-import ResourceFeedbackForm from '../forms/ResourceFeedbackForm';
-import Header from '../layout/Header';
-import { ResourceCompleteButton } from '../resources/ResourceCompleteButton';
-import { ResourceConversationAudio } from '../resources/ResourceConversationAudio';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
@@ -48,7 +45,6 @@ export interface StoryblokResourceConversationPageProps {
   _uid: string;
   _editable: string;
   name: string;
-  seo_description: string;
   description: ISbRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
@@ -68,7 +64,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     _uid,
     _editable,
     name,
-    seo_description,
     description,
     header_image,
     audio,
@@ -80,7 +75,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
 
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userId = useTypedSelector((state) => state.user.id);
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -91,19 +85,15 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
-  const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const eventData = useMemo(() => {
     return {
-      ...eventUserData,
       resource_category: RESOURCE_CATEGORIES.CONVERSATION,
       resource_name: name,
       resource_storyblok_id: storyId,
       resource_progress: resourceProgress,
     };
-  }, [eventUserData, name, storyId, resourceProgress]);
+  }, [name, storyId, resourceProgress]);
 
   useEffect(() => {
     const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
@@ -122,26 +112,12 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
   }, []);
 
-  useEffect(() => {
-    if (openTranscriptModal === null) {
-      return;
-    }
-
-    logEvent(
-      openTranscriptModal
-        ? RESOURCE_CONVERSATION_TRANSCRIPT_OPENED
-        : RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-      eventData,
-    );
-  }, [openTranscriptModal, name, eventData]);
-
   return (
     <Box
       {...storyblokEditable({
         _uid,
         _editable,
         name,
-        seo_description,
         description,
         audio,
         audio_transcript,
@@ -150,16 +126,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         related_exercises,
       })}
     >
-      <Head>
-        <title>{`${t('conversations')} • ${name} • Bloom`}</title>
-        <meta property="og:title" content={name} key="og-title" />
-        {seo_description && (
-          <>
-            <meta name="description" content={seo_description} key="description" />
-            <meta property="og:description" content={seo_description} key="og-description" />
-          </>
-        )}
-      </Head>
       <Header
         title={name}
         introduction={
@@ -181,7 +147,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
                   {resourceProgress && <ProgressStatus status={resourceProgress} />}
                   {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
                     <ResourceCompleteButton
-                      resourceName={name}
                       category={RESOURCE_CATEGORIES.SHORT_VIDEO}
                       storyId={storyId}
                       eventData={eventData}
@@ -194,6 +159,14 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         }
         imageSrc={header_image ? header_image.filename : illustrationCourses}
       />
+      {resourceId && (
+        <Container sx={{ bgcolor: 'background.paper' }}>
+          <ResourceFeedbackForm
+            resourceId={resourceId}
+            category={RESOURCE_CATEGORIES.CONVERSATION}
+          />
+        </Container>
+      )}
       <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
         <Typography variant="h2" fontWeight={500}>
           {tS('relatedContent.title')}
@@ -209,14 +182,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           )}
         />
       </PageSection>
-      {resourceId && (
-        <Container sx={{ bgcolor: 'background.paper' }}>
-          <ResourceFeedbackForm
-            resourceId={resourceId}
-            category={RESOURCE_CATEGORIES.CONVERSATION}
-          />
-        </Container>
-      )}
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );

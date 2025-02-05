@@ -1,10 +1,11 @@
+'use client';
+
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import { Dots } from '@/components/common/Dots';
+import { RichTextOptions } from '@/lib/utils/richText';
 import LinkIcon from '@mui/icons-material/Link';
-import { ISbRichtext } from '@storyblok/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { EventUserData } from '../../utils/logEvent';
-import { RichTextOptions } from '../../utils/richText';
-import SessionContentCard from '../cards/SessionContentCard';
-import { Dots } from '../common/Dots';
 
 export type BonusContent = {
   _uid: string;
@@ -13,7 +14,7 @@ export type BonusContent = {
 };
 interface MultipleBonusContentProps {
   bonus: BonusContent[];
-  eventData: EventUserData;
+  eventData: { [key: string]: any };
 }
 
 const MultipleBonusContent = (props: MultipleBonusContentProps) => {
@@ -27,7 +28,6 @@ const MultipleBonusContent = (props: MultipleBonusContentProps) => {
           key={bonus._uid}
           title={bonus.title}
           titleIcon={LinkIcon}
-          richtextContent
           eventPrefix="SESSION_BONUS_CONTENT"
           eventData={eventData}
         >

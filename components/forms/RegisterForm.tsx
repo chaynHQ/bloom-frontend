@@ -1,40 +1,51 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Checkbox, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { ErrorDisplay } from '../../constants/common';
-import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '../../constants/enums';
+'use client';
+
+import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import {
+  useAddUserMutation,
+  useGetAutomaticAccessCodeFeatureForPartnerQuery,
+  useValidateCodeMutation,
+} from '@/lib/api';
+import { login } from '@/lib/auth';
+import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { LANGUAGES, PARTNER_ACCESS_CODE_STATUS } from '@/lib/constants/enums';
 import {
   CREATE_USER_ALREADY_EXISTS,
   CREATE_USER_INVALID_EMAIL,
   CREATE_USER_WEAK_PASSWORD,
-} from '../../constants/errors';
+} from '@/lib/constants/errors';
 import {
   GET_LOGIN_USER_REQUEST,
   GET_USER_REQUEST,
   LOGIN_SUCCESS,
   REGISTER_ERROR,
+  REGISTER_REQUEST,
   REGISTER_SUCCESS,
   VALIDATE_ACCESS_CODE_ERROR,
   VALIDATE_ACCESS_CODE_INVALID,
   VALIDATE_ACCESS_CODE_REQUEST,
   VALIDATE_ACCESS_CODE_SUCCESS,
-} from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
+} from '@/lib/constants/events';
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { setUserLoading } from '@/lib/store/userSlice';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import hasAutomaticAccessFeature from '@/lib/utils/hasAutomaticAccessCodeFeature';
+import logEvent from '@/lib/utils/logEvent';
+import theme from '@/styles/theme';
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
-  useAddUserMutation,
-  useGetAutomaticAccessCodeFeatureForPartnerQuery,
-  useValidateCodeMutation,
-} from '../../store/api';
-import { setUserLoading } from '../../store/userSlice';
-import theme from '../../styles/theme';
-import { getErrorMessage } from '../../utils/errorMessage';
-import hasAutomaticAccessFeature from '../../utils/hasAutomaticAccessCodeFeature';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { useLocale, useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 const containerStyle = {
   marginY: 3,
@@ -55,8 +66,10 @@ interface RegisterFormProps {
 
 const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
+  const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
+  const rollbar = useRollbar();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [codeInput, setCodeInput] = useState<string>(codeParam ?? '');
@@ -70,7 +83,6 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [validateCode] = useValidateCodeMutation();
   const dispatch: any = useAppDispatch();
   const t = useTranslations('Auth.form');
-  const tS = useTranslations('Shared');
   const router = useRouter();
 
   // Include access code field if the partner requires access codes, or the user
@@ -108,10 +120,14 @@ const RegisterForm = (props: RegisterFormProps) => {
       } else {
         setFormError(
           t.rich('codeErrors.internal', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
-        (window as any).Rollbar?.error('Validate code error', validateCodeResponse.error);
+        rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
         return;
       }
@@ -129,29 +145,28 @@ const RegisterForm = (props: RegisterFormProps) => {
       email: emailInput,
       password: passwordInput,
       contactPermission: contactPermissionInput,
-      signUpLanguage: router.locale as LANGUAGES,
+      signUpLanguage: locale as LANGUAGES,
       partnerId: partnerId,
     });
 
     if (userResponse?.data && userResponse.data.user.id) {
-      const eventUserData = getEventUserData(
-        userResponse.data.user.createdAt,
-        userResponse.data.partnerAccesses,
-        userResponse.data.partnerAdmin,
-      );
-
-      logEvent(REGISTER_SUCCESS, eventUserData);
+      logEvent(REGISTER_SUCCESS);
       try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+        const { user, error } = await login(emailInput, passwordInput);
 
-        logEvent(LOGIN_SUCCESS, eventUserData);
-        logEvent(GET_USER_REQUEST, eventUserData); // deprecated event
-        logEvent(GET_LOGIN_USER_REQUEST, eventUserData);
+        if (user && !error) {
+          logEvent(LOGIN_SUCCESS);
+          logEvent(GET_USER_REQUEST); // deprecated event
+          logEvent(GET_LOGIN_USER_REQUEST);
+        }
       } catch (err) {
         setFormError(
           t.rich('createUserError', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }
@@ -166,7 +181,9 @@ const RegisterForm = (props: RegisterFormProps) => {
           t.rich('firebase.emailAlreadyInUse', {
             loginLink: (children) => (
               <strong>
-                <Link href="/auth/login">{children}</Link>
+                <Link component={i18nLink} href="/auth/login">
+                  {children}
+                </Link>
               </strong>
             ),
           }),
@@ -177,10 +194,15 @@ const RegisterForm = (props: RegisterFormProps) => {
         setFormError(t('firebase.invalidEmail'));
       } else {
         logEvent(REGISTER_ERROR, { partner: partnerName, message: errorMessage });
-        (window as any).Rollbar?.error('User register create user error', error);
+
+        rollbar.error('User register create user error', error);
         setFormError(
           t.rich('createUserError', {
-            contactLink: (children) => <Link href={tS('feedbackTypeform')}>{children}</Link>,
+            contactLink: (children) => (
+              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                {children}
+              </Link>
+            ),
           }),
         );
       }
@@ -192,6 +214,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     event.preventDefault();
     setLoading(true);
     setFormError('');
+    logEvent(REGISTER_REQUEST);
 
     includeCodeField && (await validateAccessCode());
     await createUserRecord();

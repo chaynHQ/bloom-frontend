@@ -1,6 +1,14 @@
+'use client';
+
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
+import { api, useUpdatePartnerAccessMutation } from '@/lib/api';
+import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '@/lib/constants/events';
+import { useAppDispatch } from '@/lib/hooks/store';
+import { GetUserDto } from '@/lib/store/userSlice';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
@@ -12,23 +20,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { api, useUpdatePartnerAccessMutation } from '../../store/api';
-import { GetUserDto } from '../../store/userSlice';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const UpdateTherapyAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-
   const t = useTranslations('Admin.updateTherapy');
+  const rollbar = useRollbar();
   const dispatch: any = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,9 +41,7 @@ const UpdateTherapyAdminForm = () => {
   const [therapySessionAdjustmentValue, setTherapySessionAdjustmentValue] = useState<number>(0);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
 
   useEffect(() => {
@@ -93,14 +89,13 @@ const UpdateTherapyAdminForm = () => {
     return option.user.email;
   };
 
-  const [updateTherapySessions, { isLoading: updateTherapySessionsIsLoading }] =
-    useUpdatePartnerAccessMutation();
+  const [updateTherapySessions] = useUpdatePartnerAccessMutation();
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(UPDATE_THERAPY_SESSIONS, eventUserData);
+    logEvent(UPDATE_THERAPY_SESSIONS);
 
     if (therapySessionUserData == null || therapySessionAdjustmentValue == 0) {
       setFormError('Make sure you have selected a user or changed the value');
@@ -124,10 +119,9 @@ const UpdateTherapyAdminForm = () => {
         const errorMessage = getErrorMessage(error);
 
         logEvent(UPDATE_THERAPY_SESSIONS_ERROR, {
-          ...eventUserData,
           error: errorMessage,
         });
-        (window as any).Rollbar?.error(t('error') + errorMessage);
+        rollbar.error(t('error') + errorMessage);
 
         setFormError(t('error') + errorMessage);
         setLoading(false);

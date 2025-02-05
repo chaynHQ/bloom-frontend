@@ -1,3 +1,11 @@
+'use client';
+
+import ProgressStatus from '@/components/common/ProgressStatus';
+import { Link as i18nLink } from '@/i18n/routing';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import { getImageSizes } from '@/lib/utils/imageSizes';
+import { iconTextRowStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -9,15 +17,10 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react';
-import { useTranslations } from 'next-intl';
+import { ISbStoryData } from '@storyblok/react/rsc';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
-import { iconTextRowStyle, rowStyle } from '../../styles/common';
-import { getImageSizes } from '../../utils/imageSizes';
-import Link from '../common/Link';
-import ProgressStatus from '../common/ProgressStatus';
 
 const cardStyle = {
   alignSelf: 'flex-start',
@@ -76,6 +79,7 @@ const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress, clickable = true } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
+  const locale = useLocale();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -86,8 +90,8 @@ const CourseCard = (props: CourseCardProps) => {
       {clickable ? (
         <CardActionArea
           sx={cardActionStyle}
-          component={Link}
-          href={`/${course.full_slug}`}
+          component={i18nLink}
+          href={getDefaultFullSlug(course.full_slug, locale)}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >
           <CardContent sx={cardContentStyle}>

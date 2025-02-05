@@ -1,7 +1,10 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { RELATED_CONTENT_CATEGORIES } from '../../constants/enums';
 
 const cardStyle = {
   mt: 0,
@@ -37,7 +40,7 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={href}>
+      <CardActionArea href={href} component={i18nLink}>
         <CardContent sx={{ minHeight: 238 }}>
           <Box position="relative" width="100%" paddingRight={3}>
             <Box>

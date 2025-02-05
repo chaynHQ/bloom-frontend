@@ -1,9 +1,10 @@
-import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
-import { Link as MuiLink, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import { PROGRESS_STATUS } from '../../constants/enums';
+'use client';
+
+import SessionContentCard from '@/components/cards/SessionContentCard';
+import Video from '@/components/video/Video';
+import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
+import { useStartSessionMutation } from '@/lib/api';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import {
   SESSION_STARTED_ERROR,
   SESSION_STARTED_REQUEST,
@@ -11,22 +12,17 @@ import {
   SESSION_VIDEO_TRANSCRIPT_CLOSED,
   SESSION_VIDEO_TRANSCRIPT_OPENED,
   SESSION_VIEWED,
-} from '../../constants/events';
-import { useStartSessionMutation } from '../../store/api';
-import logEvent, { EventUserData } from '../../utils/logEvent';
-import SessionContentCard from '../cards/SessionContentCard';
-import Video from '../video/Video';
-import VideoTranscriptModal from '../video/VideoTranscriptModal';
+} from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
+import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
+import { Link as MuiLink, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
+import { ISbRichtext } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
-export interface EventData extends EventUserData {
-  session_name: string;
-  session_storyblok_id: number;
-  session_progress: PROGRESS_STATUS;
-  course_name: string;
-  course_storyblok_id: number;
-}
 interface SessionVideoProps {
-  eventData: EventData;
+  eventData: { [key: string]: any };
   sessionProgress: PROGRESS_STATUS;
   name: string;
   storyId: number;
@@ -36,6 +32,8 @@ interface SessionVideoProps {
 export const SessionVideo = (props: SessionVideoProps) => {
   const { eventData, storyId, sessionProgress, name, video_transcript, video } = props;
   const t = useTranslations('Courses');
+  const rollbar = useRollbar();
+
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startSession] = useStartSessionMutation();
@@ -58,7 +56,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
       const error = startSessionResponse.error;
 
       logEvent(SESSION_STARTED_ERROR, eventData);
-      (window as any).Rollbar?.error('Session started error', error);
+      rollbar.error('Session started error', error);
 
       throw error;
     }

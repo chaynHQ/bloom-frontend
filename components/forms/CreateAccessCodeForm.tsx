@@ -1,3 +1,17 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { useAddPartnerAccessMutation } from '@/lib/api';
+import { BASE_URL } from '@/lib/constants/common';
+import { PARTNER_ACCESS_FEATURES } from '@/lib/constants/enums';
+import {
+  CREATE_PARTNER_ACCESS_ERROR,
+  CREATE_PARTNER_ACCESS_REQUEST,
+  CREATE_PARTNER_ACCESS_SUCCESS,
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -5,31 +19,19 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Link,
   Radio,
   RadioGroup,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
-import { BASE_URL } from '../../constants/common';
-import { PARTNER_ACCESS_FEATURES } from '../../constants/enums';
-import {
-  CREATE_PARTNER_ACCESS_ERROR,
-  CREATE_PARTNER_ACCESS_REQUEST,
-  CREATE_PARTNER_ACCESS_SUCCESS,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import { useAddPartnerAccessMutation } from '../../store/api';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
 
 const CreateAccessCodeForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const rollbar = useRollbar();
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,12 +39,9 @@ const CreateAccessCodeForm = () => {
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
-  const [addPartnerAccess, { isLoading: addPartnerAccessIsLoading }] =
-    useAddPartnerAccessMutation();
+  const [addPartnerAccess] = useAddPartnerAccessMutation();
 
   const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
 
@@ -65,7 +64,6 @@ const CreateAccessCodeForm = () => {
       feature_live_chat: true,
       feature_therapy: includeTherapy,
       therapy_sessions_remaining: therapySessionsRemaining,
-      ...eventUserData,
     };
 
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
@@ -90,7 +88,8 @@ const CreateAccessCodeForm = () => {
         ...eventData,
         error: errorMessage,
       });
-      (window as any).Rollbar?.error('Create partner access code error', error);
+
+      rollbar.error('Create partner access code error', error);
 
       setFormError(t('form.errors.createPartnerAccessError'));
       setLoading(false);
@@ -122,8 +121,8 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography>
         {t.rich('resultLink', {
-          welcomeURL: (children) => (
-            <Link id="access-code-url" href={welcomeURL}>
+          welcomeURL: () => (
+            <Link component={i18nLink} id="access-code-url" href={welcomeURL}>
               {welcomeURL}
             </Link>
           ),
@@ -131,7 +130,7 @@ const CreateAccessCodeForm = () => {
       </Typography>
       <Typography mt={2}>
         {t.rich('resultCode', {
-          partnerAccessCode: (children) => <strong id="access-code">{partnerAccessCode}</strong>,
+          partnerAccessCode: () => <strong id="access-code">{partnerAccessCode}</strong>,
         })}
       </Typography>
 

@@ -1,10 +1,12 @@
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
+import { BASE_URL } from '@/lib/constants/common';
+import { STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { generateStoryblokButtonEvent } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { Box, Button } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react';
-import { STORYBLOK_COLORS } from '../../constants/enums';
-import Link from '../common/Link';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import { generateStoryblokButtonEvent } from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
+import { storyblokEditable } from '@storyblok/react/rsc';
 
 interface StoryblokLink {
   cached_url: string;
@@ -20,10 +22,6 @@ interface StoryblokButtonProps {
 
 const StoryblokButton = (props: StoryblokButtonProps) => {
   const { _uid, _editable, text, color = 'secondary.main', link, size = 'medium' } = props;
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   if (!link || !link.cached_url) return <></>;
 
@@ -43,14 +41,14 @@ const StoryblokButton = (props: StoryblokButtonProps) => {
   return (
     <Box {...storyblokEditable({ _uid, _editable, text, color, link, size })}>
       <Button
-        component={Link}
         sx={buttonStyle}
         variant="contained"
         color={color.includes('primary') ? 'primary' : 'secondary'}
         href={link.cached_url}
+        component={link.cached_url.startsWith(BASE_URL || '/') ? i18nLink : 'a'}
         size={size}
         onClick={() => {
-          logEvent(generateStoryblokButtonEvent(text), eventUserData);
+          logEvent(generateStoryblokButtonEvent(text));
         }}
       >
         {text}

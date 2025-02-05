@@ -1,16 +1,17 @@
-import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+'use client';
+
+import { Link as i18nLink } from '@/i18n/routing';
 import {
   DRAWER_ADMIN_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
-} from '../../constants/events';
-import { useTypedSelector } from '../../hooks/store';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
-import Link from '../common/Link';
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent from '@/lib/utils/logEvent';
+import { Button, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const listStyle = {
   display: 'flex',
@@ -72,13 +73,10 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
 
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userId = useTypedSelector((state) => state.user.id);
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
-  const router = useRouter();
 
   useEffect(() => {
     let links: Array<NavigationItem> = [];
@@ -118,7 +116,7 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
         <ListItem sx={listItemStyle} key={link.title} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
-            component={Link}
+            component={link.href.startsWith('/') ? i18nLink : 'a'}
             href={link.href}
             target={link.target || '_self'}
             onClick={() => {}}
@@ -133,10 +131,10 @@ const PrimaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
             variant="contained"
             size="large"
             sx={loginButtonStyle}
-            component={Link}
             href="/auth/login"
+            component={i18nLink}
             onClick={() => {
-              logEvent(DRAWER_LOGIN_CLICKED, eventUserData);
+              logEvent(DRAWER_LOGIN_CLICKED);
             }}
           >
             {t('login')}

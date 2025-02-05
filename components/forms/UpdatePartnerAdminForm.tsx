@@ -1,3 +1,11 @@
+'use client';
+
+import { api, useUpdatePartnerAdminMutation } from '@/lib/api';
+import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '@/lib/constants/events';
+import { useAppDispatch } from '@/lib/hooks/store';
+import { GetUserDto } from '@/lib/store/userSlice';
+import { getErrorMessage } from '@/lib/utils/errorMessage';
+import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
@@ -10,21 +18,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '../../constants/events';
-import { useAppDispatch, useTypedSelector } from '../../hooks/store';
-import { api, useUpdatePartnerAdminMutation } from '../../store/api';
-import { GetUserDto } from '../../store/userSlice';
-import { getErrorMessage } from '../../utils/errorMessage';
-import logEvent, { getEventUserData } from '../../utils/logEvent';
 
 const UpdatePartnerAdminForm = () => {
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const rollbar = useRollbar();
 
   const t = useTranslations('Admin.updatePartner');
   const dispatch: any = useAppDispatch();
@@ -39,9 +38,7 @@ const UpdatePartnerAdminForm = () => {
   const [partnerUserData, setPartnerUserData] = useState<GetUserDto | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
-    | string
-    | React.ReactNodeArray
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   useEffect(() => {
     async function getUserData() {
@@ -87,7 +84,7 @@ const UpdatePartnerAdminForm = () => {
     return option.user.email;
   };
 
-  const [updateUserData, { isLoading }] = useUpdatePartnerAdminMutation();
+  const [updateUserData] = useUpdatePartnerAdminMutation();
 
   const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (partnerUserData === null || !partnerUserData.partnerAdmin) {
@@ -104,7 +101,7 @@ const UpdatePartnerAdminForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    logEvent(UPDATE_PARTNER_ADMIN, eventUserData);
+    logEvent(UPDATE_PARTNER_ADMIN);
 
     if (
       partnerUserData === null ||
@@ -127,10 +124,9 @@ const UpdatePartnerAdminForm = () => {
       const errorMessage = getErrorMessage(error);
 
       logEvent(UPDATE_PARTNER_ADMIN_ERROR, {
-        ...eventUserData,
         errorMessage,
       });
-      (window as any).Rollbar?.error(t('error') + errorMessage);
+      rollbar.error(t('error') + errorMessage);
       setFormError(t('error') + errorMessage);
     } else {
       setFormSubmitSuccess(true);
