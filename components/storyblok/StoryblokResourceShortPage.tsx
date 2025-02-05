@@ -19,6 +19,7 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { columnStyle, rowStyle } from '@/styles/common';
@@ -27,7 +28,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Button, Container, IconButton, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -110,12 +111,16 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const router = useRouter();
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
+  const locale = useLocale();
+
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+
+  const relatedSession = related_session[0];
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -163,7 +168,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
       ...eventData,
       shorts_name: name,
-      session_name: related_session.length && related_session[0]?.name,
+      session_name: relatedSession?.name,
     });
   };
 
@@ -217,31 +222,33 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
               </Box>
             )}
           </Box>
-          <Box sx={headerRightStyle}>
-            {/* Description field is not currently displayed */}
-            {/* {render(description, RichTextOptions)} */}
+          {relatedSession && (
+            <Box sx={headerRightStyle}>
+              {/* Description field is not currently displayed */}
+              {/* {render(description, RichTextOptions)} */}
 
-            <Typography component="h2" mb={2}>
-              {t('sessionDetail', {
-                sessionNumber:
-                  related_session[0]?.content.component === COURSE_CATEGORIES.COURSE
-                    ? 0
-                    : related_session[0]?.position / 10 - 1,
-                sessionName: related_session[0]?.content.name,
-                courseName: related_course?.content.name,
-              })}
-            </Typography>
-            <Button
-              href={related_session[0] && `/${related_session[0]?.full_slug}`}
-              component={i18nLink}
-              onClick={redirectToSession}
-              variant="contained"
-              color="secondary"
-              sx={{ mr: 'auto' }}
-            >
-              {t('sessionButtonLabel')}
-            </Button>
-          </Box>
+              <Typography component="h2" mb={2}>
+                {t('sessionDetail', {
+                  sessionNumber:
+                    relatedSession.content.component === COURSE_CATEGORIES.COURSE
+                      ? 0
+                      : relatedSession.position / 10 - 1,
+                  sessionName: relatedSession.content.name,
+                  courseName: related_course?.content.name,
+                })}
+              </Typography>
+              <Button
+                href={getDefaultFullSlug(relatedSession.full_slug, locale)}
+                component={i18nLink}
+                onClick={redirectToSession}
+                variant="contained"
+                color="secondary"
+                sx={{ mr: 'auto' }}
+              >
+                {t('sessionButtonLabel')}
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
 

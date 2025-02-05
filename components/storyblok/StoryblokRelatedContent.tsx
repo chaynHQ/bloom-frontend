@@ -3,6 +3,7 @@
 import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
 import Carousel, { getSlideWidth } from '@/components/common/Carousel';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
@@ -53,7 +54,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
         story.content?.languages?.length > 0
           ? story.content.languages.includes(localeString)
           : true;
-      const storyDisabled = disabledCoursesString?.includes(`${localeString}/${story.full_slug}`);
+      const storyDisabled = disabledCoursesString?.includes(story.full_slug);
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
@@ -69,7 +70,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
       <RelatedContentCard
         key={`related_content_${relatedContentItem.id}`}
         title={relatedContentItem.content.name}
-        href={`/${relatedContentItem.full_slug}`}
+        href={getDefaultFullSlug(relatedContentItem.full_slug, locale)}
         category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
         duration={
           relatedContentItem.content && 'duration' in relatedContentItem.content

@@ -18,6 +18,7 @@ import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import LoadingContainer from '../common/LoadingContainer';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -70,7 +71,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>(true);
+  const [userAccess, setUserAccess] = useState<boolean>();
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -78,17 +79,15 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   useEffect(() => {
     const storyPartners = included_for_partners;
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    setIncorrectAccess(
-      !hasAccessToPage(
-        isLoggedIn,
-        true,
-        storyPartners,
-        partnerAccesses,
-        partnerAdmin,
-        referralPartner,
-      ),
+    const userHasAccess = hasAccessToPage(
+      isLoggedIn,
+      true,
+      storyPartners,
+      partnerAccesses,
+      partnerAdmin,
+      referralPartner,
     );
+    setUserAccess(userHasAccess);
   }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
   useEffect(() => {
@@ -105,7 +104,9 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     course_progress: courseProgress,
   };
 
-  if (incorrectAccess) {
+  if (userAccess === undefined) return <LoadingContainer />;
+
+  if (!userAccess) {
     return (
       <ContentUnavailable
         title={t('accessGuard.title')}
