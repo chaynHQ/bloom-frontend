@@ -19,13 +19,14 @@ import {
 } from '@/lib/constants/enums';
 import { COURSE_LIST_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const containerStyle = {
@@ -40,9 +41,10 @@ interface Props {
   shorts: ISbStoryData[];
 }
 export default function CoursesPage({ courseStories, conversations, shorts }: Props) {
+  const locale = useLocale();
+
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
@@ -199,7 +201,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                     >
                       <RelatedContentCard
                         title={conversation.name}
-                        href={conversation.full_slug}
+                        href={getDefaultFullSlug(conversation.full_slug, locale)}
                         category={RESOURCE_CATEGORIES.CONVERSATION}
                         duration={conversation.content.duration}
                       />
@@ -235,7 +237,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                       <ShortsCard
                         title={short.content.name}
                         category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                        href={short.full_slug}
+                        href={getDefaultFullSlug(short.full_slug, locale)}
                         duration={short.content.duration}
                         image={short.content.preview_image}
                       />

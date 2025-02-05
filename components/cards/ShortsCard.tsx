@@ -42,7 +42,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={`/${href}`} sx={{ height: '100%' }} component={i18nLink}>
+      <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent
           sx={{
             minHeight: 335,

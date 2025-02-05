@@ -159,6 +159,14 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         }
         imageSrc={header_image ? header_image.filename : illustrationCourses}
       />
+      {resourceId && (
+        <Container sx={{ bgcolor: 'background.paper' }}>
+          <ResourceFeedbackForm
+            resourceId={resourceId}
+            category={RESOURCE_CATEGORIES.CONVERSATION}
+          />
+        </Container>
+      )}
       <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
         <Typography variant="h2" fontWeight={500}>
           {tS('relatedContent.title')}
@@ -174,14 +182,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           )}
         />
       </PageSection>
-      {resourceId && (
-        <Container sx={{ bgcolor: 'background.paper' }}>
-          <ResourceFeedbackForm
-            resourceId={resourceId}
-            category={RESOURCE_CATEGORIES.CONVERSATION}
-          />
-        </Container>
-      )}
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
