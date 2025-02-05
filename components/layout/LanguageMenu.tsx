@@ -52,7 +52,6 @@ export default function LanguageMenu() {
   const open = Boolean(anchorEl);
 
   function onChangeLanguage(newLocale: string) {
-    console.log('newLocale', newLocale, newLocale === 'en');
     startTransition(() => {
       logEvent(generateLanguageMenuEvent(newLocale));
       handleClose();
