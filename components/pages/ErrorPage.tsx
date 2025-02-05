@@ -40,7 +40,7 @@ export default function ErrorPage({
     }
   }, [error, rollbar]);
 
-  const t = useTranslations('Shared.error');
+  const t = useTranslations('Shared');
 
   return (
     <Container sx={containerStyle}>
@@ -52,8 +52,8 @@ export default function ErrorPage({
           sizes={getImageSizes(imageContainerStyle.width)}
         />
       </Box>
-      <Typography variant="h1">{t('title')}</Typography>
-      <Typography>{t('description')}</Typography>
+      <Typography variant="h1">{t('error.title')}</Typography>
+      <Typography>{t('error.description')}</Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
@@ -63,7 +63,7 @@ export default function ErrorPage({
           () => reset()
         }
       >
-        {t('buttonLabel')}
+        {t('error.buttonLabel')}
       </Button>
     </Container>
   );

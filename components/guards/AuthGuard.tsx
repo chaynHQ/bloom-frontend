@@ -26,10 +26,8 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   const isMaintenanceMode = getIsMaintenanceMode();
   const { userResourceError } = useLoadUser();
   const unauthenticated = userResourceError || (!userAuthLoading && !userLoading && !userId);
-  console.log(pathname);
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
-  console.log(pathHead);
 
   // If app is in maintenance mode, redirect all pages to /maintenance
   if (isMaintenanceMode && pathname !== '/maintenance') {

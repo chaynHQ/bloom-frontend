@@ -25,7 +25,9 @@ export async function generateMetadata({ params }: { params: Params }) {
   const fullSlug = `courses/${slug}/${sessionSlug}`;
   const story = await getStory(locale, fullSlug);
 
-  if (!story) return;
+  if (!story) {
+    return;
+  }
 
   return generateMetadataBasic({
     title: story.content.name,
@@ -35,7 +37,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export async function generateStaticParams() {
-  let paths: { slug: string; locale: string }[] = [];
+  let paths: { slug: string; sessionSlug: string; locale: string }[] = [];
 
   const locales = routing.locales;
   const storyblokApi = getStoryblokApi();
@@ -53,7 +55,9 @@ export async function generateStaticParams() {
     if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
 
     for (const locale of locales) {
-      paths.push({ slug: session.real_path, locale });
+      const slug = session.slug.split('/')[1];
+      const sessionSlug = session.slug.split('/')[2];
+      paths.push({ slug, sessionSlug, locale });
     }
   });
 
