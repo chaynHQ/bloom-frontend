@@ -17,12 +17,10 @@ const formControlStyle = {
 } as const;
 
 const EmailSettingsForm = () => {
+  const t = useTranslations('Account.accountSettings.emailSettings');
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const t = useTranslations('Account.accountSettings.emailSettings');
-  const tS = useTranslations('Shared');
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
@@ -32,11 +30,11 @@ const EmailSettingsForm = () => {
       const formData = new FormData(ev.currentTarget);
       ev.preventDefault();
 
-      const contactPermission = formData.get('contactPermission') === 'on';
-      const serviceEmailsPermission = formData.get('serviceEmailsPermission') === 'on';
+      const contactPermissionValue = formData.get('contactPermission') === 'on';
+      const serviceEmailsPermissionValue = formData.get('serviceEmailsPermission') === 'on';
       const payload = {
-        contactPermission,
-        serviceEmailsPermission,
+        contactPermission: contactPermissionValue,
+        serviceEmailsPermission: serviceEmailsPermissionValue,
       };
 
       const response = await updateUser(payload);
