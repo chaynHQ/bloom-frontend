@@ -52,11 +52,8 @@ export async function generateStaticParams() {
 
     if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
 
-    const courseSlug = session.slug.split('/')[1];
-    const sessionSlug = session.slug.split('/')[2];
-
     for (const locale of locales) {
-      paths.push({ slug: `/${courseSlug}/${sessionSlug}`, locale });
+      paths.push({ slug: session.real_path, locale });
     }
   });
 
