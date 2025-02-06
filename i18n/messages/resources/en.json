@@ -1,5 +1,7 @@
 {
   "Resources": {
+    "backToConversations": "Back to conversations",
+    "backToShorts": "Back to shorts",
     "conversations": "Conversations",
     "shorts": "Shorts",
     "completed": "Completed",

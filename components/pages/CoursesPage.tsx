@@ -8,14 +8,12 @@ import { ShortsCard } from '@/components/cards/ShortsCard';
 import Carousel, { getSlideWidth } from '@/components/common/Carousel';
 import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
-import PageSection from '@/components/common/PageSection';
 import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
 import {
   EMAIL_REMINDERS_FREQUENCY,
   PROGRESS_STATUS,
   RESOURCE_CATEGORIES,
-  STORYBLOK_COLORS,
 } from '@/lib/constants/enums';
 import { COURSE_LIST_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -23,11 +21,13 @@ import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import illustrationCourses from '@/public/illustration_courses.svg';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import theme from '@/styles/theme';
+import { Box, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -57,6 +57,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
+  const searchParams = useSearchParams();
+  const sectionQueryParam = searchParams.get('section');
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const headerOffset = isSmallScreen ? 48 : 136;
 
   const t = useTranslations('Courses');
 
@@ -70,6 +74,27 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED);
   }, []);
+
+  const setShortsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (!node) return;
+      if (sectionQueryParam === 'shorts' && node && loadedCourses) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset, loadedCourses],
+  );
+
+  const setConversationsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (sectionQueryParam === 'conversations' && node && loadedCourses) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset, loadedCourses],
+  );
 
   useEffect(() => {
     if (
@@ -173,7 +198,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
         )}
       </Container>
       {conversations.length > 0 && (
-        <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
+        <Container sx={{ backgroundColor: 'secondary.main' }} ref={setConversationsSectionRef}>
           <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
             <Column width="full-width">
               <Typography variant="h2" fontWeight={500}>
@@ -211,10 +236,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               />
             </Column>
           </Row>
-        </PageSection>
+        </Container>
       )}
       {loadedShorts && loadedShorts?.length > 0 && (
-        <PageSection color={STORYBLOK_COLORS.SECONDARY_LIGHT} alignment="left">
+        <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
           <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
             <Column width="full-width">
               <Typography variant="h2" fontWeight={500}>
@@ -247,7 +272,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               />
             </Column>
           </Row>
-        </PageSection>
+        </Container>
       )}
 
       {!userId && <SignUpBanner />}
