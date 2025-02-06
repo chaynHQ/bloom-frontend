@@ -6,7 +6,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { RichTextOptions } from '@/lib/utils/richText';
 import illustrationCourses from '@/public/illustration_courses.svg';
-import theme from '@/styles/theme';
+import { breadcrumbButtonStyle } from '@/styles/common';
 import { Box, Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
@@ -15,14 +15,6 @@ import { render } from 'storyblok-rich-text-react-renderer';
 const audioContainerStyle = {
   mt: { xs: 4, md: 6 },
   mb: 3,
-} as const;
-
-const backButtonStyle = {
-  background: theme.palette.background.default,
-  boxShadow: 'none !important',
-  ':hover': {
-    background: 'white',
-  },
 } as const;
 
 interface ResourceConversationHeaderProps {
@@ -71,8 +63,8 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
       progressStatus={resourceProgress}
     >
       <Button
-        variant="outlined"
-        sx={backButtonStyle}
+        variant="contained"
+        sx={breadcrumbButtonStyle}
         href="/courses?section=conversations"
         component={i18nLink}
         size="small"

@@ -7,7 +7,7 @@ import { COURSE_CATEGORIES, PROGRESS_STATUS } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VISIT_SESSION } from '@/lib/constants/events';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
-import { columnStyle, rowStyle } from '@/styles/common';
+import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
@@ -25,26 +25,6 @@ const headerRightStyle = {
 const headerLeftStyles = {
   width: 514, // >515px enables the "watch on youtube" button
   maxWidth: '100%',
-} as const;
-
-const progressStyle = {
-  ...rowStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 3,
-  mt: 2,
-  '.MuiBox-root': {
-    mt: 0,
-  },
-} as const;
-
-const backButtonStyle = {
-  mb: 4,
-  background: theme.palette.background.default,
-  boxShadow: 'none !important',
-  ':hover': {
-    background: 'white',
-  },
 } as const;
 
 interface ResourceShortHeaderProps {
@@ -83,8 +63,8 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
   return (
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
-        variant="outlined"
-        sx={backButtonStyle}
+        variant="contained"
+        sx={breadcrumbButtonStyle}
         href="/courses?section=shorts"
         component={i18nLink}
         size="small"
@@ -104,11 +84,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             video={video}
             video_transcript={video_transcript}
           />
-          {resourceProgress && (
-            <Box sx={progressStyle}>
-              {resourceProgress && <ProgressStatus status={resourceProgress} />}
-            </Box>
-          )}
+          {resourceProgress && <ProgressStatus status={resourceProgress} />}
         </Box>
         {relatedSession && (
           <Box sx={headerRightStyle}>
