@@ -33,6 +33,14 @@ export const richtextContentStyle = {
   },
 } as const;
 
+export const breadcrumbButtonStyle = {
+  backgroundColor: 'background.default',
+  boxShadow: 'none !important',
+  ':hover': {
+    background: 'white',
+  },
+} as const;
+
 export const scaleTitleStyle = {
   marginBottom: '0.5rem !important',
   fontStyle: 'italic',
