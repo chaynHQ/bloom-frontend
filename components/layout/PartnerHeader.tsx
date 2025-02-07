@@ -1,6 +1,5 @@
 'use client';
 
-import UserResearchBanner from '@/components/banner/UserResearchBanner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { rowStyle } from '@/styles/common';
 import { Box, Container } from '@mui/material';
@@ -43,7 +42,6 @@ const PartnerHeader = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <UserResearchBanner />
       <Box sx={logoContainerStyle}>
         <Image
           alt={tS(partnerLogoAlt)}

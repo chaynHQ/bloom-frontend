@@ -2,76 +2,21 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import PageSection from '@/components/common/PageSection';
-import ProgressStatus from '@/components/common/ProgressStatus';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { ResourceCompleteButton } from '@/components/resources/ResourceCompleteButton';
-import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
-import { Link as i18nLink, useRouter } from '@/i18n/routing';
-import {
-  COURSE_CATEGORIES,
-  PROGRESS_STATUS,
-  RESOURCE_CATEGORIES,
-  STORYBLOK_COLORS,
-} from '@/lib/constants/enums';
-import {
-  RESOURCE_SHORT_VIDEO_VIEWED,
-  RESOURCE_SHORT_VIDEO_VISIT_SESSION,
-} from '@/lib/constants/events';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
-import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { columnStyle, rowStyle } from '@/styles/common';
-import theme from '@/styles/theme';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Button, Container, IconButton, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
+import { ResourceShortHeader } from '../resources/ResourceShortsHeader';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-
-const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
-const headerRightStyle = {
-  ...columnStyle,
-  justifyContent: 'flex-end',
-  flex: { md: 1 },
-  width: { md: '100%' },
-  height: { md: 290 },
-} as const;
-
-const headerLeftStyles = {
-  width: 514, // >515px enables the "watch on youtube" button
-  maxWidth: '100%',
-} as const;
-
-const progressStyle = {
-  ...rowStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 3,
-  mt: 2,
-  '.MuiBox-root': {
-    mt: 0,
-  },
-} as const;
-
-const backButtonStyle = {
-  display: { md: 'none' },
-  width: '2.5rem',
-  marginLeft: '-0.675rem',
-  mb: 2,
-  mt: 0,
-  padding: 0,
-} as const;
-
-const backIconStyle = {
-  height: '1.75rem',
-  width: '1.75rem',
-  color: 'primary.dark',
-} as const;
 
 export interface StoryblokResourceShortPageProps {
   storyId: number;
@@ -84,7 +29,7 @@ export interface StoryblokResourceShortPageProps {
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_session: ISbStoryData[];
-  related_course: ISbStoryData | undefined;
+  related_course: ISbStoryData;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -108,10 +53,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_exercises,
   } = props;
 
-  const router = useRouter();
-  const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
-  const locale = useLocale();
 
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -119,8 +61,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-
-  const relatedSession = related_session[0];
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -164,14 +104,6 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
 
-  const redirectToSession = () => {
-    logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
-      ...eventData,
-      shorts_name: name,
-      session_name: relatedSession?.name,
-    });
-  };
-
   return (
     <Box
       {...storyblokEditable({
@@ -187,71 +119,18 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         related_exercises,
       })}
     >
-      <Container sx={{ background: theme.palette.bloomGradient, paddingTop: ['20px', '60px'] }}>
-        <IconButton
-          sx={backButtonStyle}
-          onClick={() => router.back()}
-          aria-label={tS('navigateBack')}
-        >
-          <KeyboardArrowLeftIcon sx={backIconStyle} />
-        </IconButton>
-        <Typography variant="h1" maxWidth={600}>
-          {name}
-        </Typography>
-        <Box sx={headerStyle}>
-          <Box sx={headerLeftStyles}>
-            <ResourceShortVideo
-              eventData={eventData}
-              resourceProgress={resourceProgress}
-              name={name}
-              storyId={storyId}
-              video={video}
-              video_transcript={video_transcript}
-            />
-            {resourceId && (
-              <Box sx={progressStyle}>
-                {resourceProgress && <ProgressStatus status={resourceProgress} />}
-
-                {resourceProgress !== PROGRESS_STATUS.COMPLETED && (
-                  <ResourceCompleteButton
-                    category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                    storyId={storyId}
-                    eventData={eventData}
-                  />
-                )}
-              </Box>
-            )}
-          </Box>
-          {relatedSession && (
-            <Box sx={headerRightStyle}>
-              {/* Description field is not currently displayed */}
-              {/* {render(description, RichTextOptions)} */}
-
-              <Typography component="h2" mb={2}>
-                {t('sessionDetail', {
-                  sessionNumber:
-                    relatedSession.content.component === COURSE_CATEGORIES.COURSE
-                      ? 0
-                      : relatedSession.position / 10 - 1,
-                  sessionName: relatedSession.content.name,
-                  courseName: related_course?.content.name,
-                })}
-              </Typography>
-              <Button
-                href={getDefaultFullSlug(relatedSession.full_slug, locale)}
-                component={i18nLink}
-                onClick={redirectToSession}
-                variant="contained"
-                color="secondary"
-                sx={{ mr: 'auto' }}
-              >
-                {t('sessionButtonLabel')}
-              </Button>
-            </Box>
-          )}
-        </Box>
-      </Container>
-
+      <ResourceShortHeader
+        {...{
+          storyId,
+          name,
+          resourceProgress,
+          relatedSession: related_session[0],
+          relatedCourse: related_course,
+          video,
+          video_transcript,
+          eventData,
+        }}
+      />
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm

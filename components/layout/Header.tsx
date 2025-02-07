@@ -1,6 +1,5 @@
 'use client';
 
-import UserResearchBanner from '@/components/banner/UserResearchBanner';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { useRouter } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -107,7 +106,6 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyle}>
-      <UserResearchBanner />
       <Box sx={textContainerStyle}>
         <IconButton
           sx={backButtonStyle}
