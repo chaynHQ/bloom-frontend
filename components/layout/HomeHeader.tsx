@@ -1,6 +1,5 @@
 'use client';
 
-import UserResearchBanner from '@/components/banner/UserResearchBanner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { columnStyle, rowStyle } from '@/styles/common';
@@ -75,7 +74,6 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <UserResearchBanner />
       <Box sx={textContainerStyle}>
         <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1" mb={3}>
