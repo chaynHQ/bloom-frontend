@@ -32,18 +32,21 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
   const tExerciseNames = useTranslations('Shared.exerciseNames');
   const locale = useLocale();
 
-  const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
-    const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
-      ? EXERCISE_CATEGORIES.GROUNDING
-      : EXERCISE_CATEGORIES.ACTIVITIES;
+  const relatedExercisesItems =
+    locale === 'de'
+      ? [] // exercises are not currently available in german so we'll return an empty list for 'de'
+      : relatedExercises.map((relatedExerciseId) => {
+          const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
+            ? EXERCISE_CATEGORIES.GROUNDING
+            : EXERCISE_CATEGORIES.ACTIVITIES;
 
-    return {
-      id: relatedExerciseId,
-      name: tExerciseNames(relatedExerciseId),
-      href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
-      category: exerciseCategory,
-    };
-  });
+          return {
+            id: relatedExerciseId,
+            name: tExerciseNames(relatedExerciseId),
+            href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
+            category: exerciseCategory,
+          };
+        });
 
   const disabledCoursesString = process.env.FF_DISABLED_COURSES;
 

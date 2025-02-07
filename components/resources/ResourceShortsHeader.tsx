@@ -64,7 +64,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
         variant="contained"
-        sx={breadcrumbButtonStyle}
+        sx={{ ...breadcrumbButtonStyle, mb: 4 }}
         href="/courses?section=shorts"
         component={i18nLink}
         size="small"
