@@ -238,7 +238,6 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                 theme="primary"
                 showArrows={true}
                 afterSlideHandle={(newSlideIndex) => {
-                  console.log(newSlideIndex);
                   setCurrentSlide(newSlideIndex);
                 }}
                 slidesPerView={numberTheCardToShow}
