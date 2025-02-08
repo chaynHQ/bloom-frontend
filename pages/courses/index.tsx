@@ -29,6 +29,7 @@ import { useTypedSelector } from '../../hooks/store';
 import illustrationCourses from '../../public/illustration_courses.svg';
 import logEvent, { getEventUserData } from '../../utils/logEvent';
 import userHasAccessToPartnerContent from '../../utils/userHasAccessToPartnerContent';
+import { useWidth } from '../../utils/useWidth';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -43,6 +44,7 @@ interface Props {
 }
 
 const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
 
@@ -62,6 +64,15 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
   const t = useTranslations('Courses');
+  const width = useWidth();
+  const numberTheCardToShow = {
+    xs: 1,
+    sm: 2,
+    md: 3,
+    lg: 3,
+    xl: 3,
+  };
+  const cardsPerPage = numberTheCardToShow[width];
 
   const headerProps = {
     title: t('title'),
@@ -191,13 +202,7 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                 title="conversations"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
+                slidesPerView={numberTheCardToShow}
                 items={conversations.map((conversation) => {
                   return (
                     <Box
@@ -232,16 +237,28 @@ const CourseList: NextPage<Props> = ({ stories, conversations, shorts }) => {
                 title="shorts"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
+                afterSlideHandle={(newSlideIndex) => {
+                  console.log(newSlideIndex);
+                  setCurrentSlide(newSlideIndex);
                 }}
-                items={loadedShorts.map((short) => {
+                slidesPerView={numberTheCardToShow}
+                items={loadedShorts.map((short, index) => {
+                  let opacity: number = 0.5;
+                  if (
+                    index >= currentSlide * cardsPerPage &&
+                    index < (currentSlide + 0.7) * cardsPerPage
+                  ) {
+                    opacity = 1;
+                  }
+
                   return (
-                    <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
+                    <Box
+                      p={0.65}
+                      minWidth="260px"
+                      width="260px"
+                      key={short.name}
+                      style={{ opacity: currentSlide % 2 === 0 ? opacity : 1 }}
+                    >
                       <ShortsCard
                         title={short.content.name}
                         category={RESOURCE_CATEGORIES.SHORT_VIDEO}
