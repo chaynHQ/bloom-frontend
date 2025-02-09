@@ -100,6 +100,12 @@
       "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
       "button": "Get started"
     },
+    "loginDialog": {
+      "title": "Login or Create an account",
+      "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
+      "loginButton": "Log in",
+      "registerButton": "Create account"
+    },
     "relatedContent": {
       "title": "Related content",
       "resource_short_video": "Watch",
