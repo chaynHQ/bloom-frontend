@@ -6,6 +6,8 @@ import Image from 'next/image';
 
 const LoginDialog = () => {
   const t = useTranslations('Shared');
+  const tN = useTranslations('Navigation');
+
   const pathname = usePathname();
 
   return (
@@ -20,7 +22,7 @@ const LoginDialog = () => {
         }}
       >
         <Box display="flex" flexDirection="row" justifyContent="flex-start" gap={1}>
-          <Image src={courseIcon} alt={t('alt.courseIcon')} width={30} height={30} />
+          <Image src={courseIcon} alt={tN('alt.courseIcon')} width={30} height={30} />
           <Typography variant="h3" mb={0}>
             {t('loginDialog.title')}
           </Typography>
@@ -34,6 +36,7 @@ const LoginDialog = () => {
           flexWrap="wrap"
         >
           <Button
+            qa-id="dialogLoginButton"
             color="secondary"
             variant="outlined"
             size="small"
@@ -43,6 +46,7 @@ const LoginDialog = () => {
             {t('loginDialog.loginButton')}
           </Button>
           <Button
+            qa-id="dialogCreateAccountButton"
             color="secondary"
             variant="contained"
             size="small"
