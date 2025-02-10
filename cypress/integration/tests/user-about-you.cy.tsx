@@ -42,8 +42,8 @@ describe('User about you page should display', () => {
       `We are asking this to better understand how our users identify, with a view to designing even more inclusive and gender-affirming resources. You can select 'Prefer not to answer'.`,
     );
 
-    cy.get('legend.Mui-required').contains('Would you describe yourself as neurodivergent?');
-    const neurodivergentOptions = ['Yes', 'No', 'Not sure'];
+    cy.get('legend').contains('Do you have a neurotype that affects the way your brain processes information? This might be a learning difficulty (I.e. Dyslexia, Dyspraxia, Dyscalculia), ADHD, or Autism.');
+    const neurodivergentOptions = ['Yes', 'No', 'Not sure', 'Prefer not to say'];
     cy.get('input[name="neurodivergent-radio-buttons-group"]').each(($option, index) => {
       cy.wrap($option)
         .should('have.value', neurodivergentOptions[index])
@@ -53,7 +53,7 @@ describe('User about you page should display', () => {
     });
     cy.get('p').should(
       'contain',
-      `We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent`,
+      `We do our best to design inclusive services, so it’s helpful to know this.`,
     );
 
     cy.get('label').contains(
