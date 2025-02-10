@@ -80,7 +80,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
 
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>();
+  const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -110,9 +110,14 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
-    setIncorrectAccess(
-      !hasAccessToPage(isLoggedIn, false, coursePartners, partnerAccesses, partnerAdmin),
+    const userHasAccess = hasAccessToPage(
+      isLoggedIn,
+      false,
+      coursePartners,
+      partnerAccesses,
+      partnerAdmin,
     );
+    setUserAccess(userHasAccess);
   }, [
     isAlternateSessionPage,
     partnerAccesses,
@@ -125,8 +130,8 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
   }, [courses, course, storyId, storyUuid]);
 
-  if (incorrectAccess === undefined) return <LoadingContainer />;
-  if (!!incorrectAccess) return <NoDataAvailable />;
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess) return <NoDataAvailable />;
 
   return (
     <Box
