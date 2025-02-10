@@ -89,7 +89,7 @@
     "feedbackTypeform": "https://chayn.typeform.com/to/WP73HFzz",
     "survivor": "Survivant·e",
     "cookieConsent": {
-      "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
+      "cookieConsentExplainer": "Veuillez autoriser les cookies d'analyse afin que nous puissions améliorer Bloom. En savoir plus dans notre ",
       "cookieConsentPolicy": "politique relative aux cookies",
       "acceptLabel": "Accepter les Cookies",
       "declineLabel": "Reject Cookies"
@@ -99,6 +99,12 @@
       "description1": "Bloom est une plateforme en ligne qui t’aide à guérir des traumatismes. Que ce soit par les cours vidéo, les activités de réflexion ou la messagerie, il y a de nombreuses façons différentes de s’engager avec Bloom.",
       "description2": "Inscris-toi ci-dessous pour avoir accès à l’ensemble de notre contenu et pour explorer tout ce que Bloom a à t’offrir.",
       "button": "Commencer"
+    },
+    "loginDialog": {
+      "title": "Connectez-vous ou créez un compte",
+      "description": "Inscrivez-vous gratuitement pour accéder à tout notre contenu et explorer tout ce que Bloom a à offrir",
+      "loginButton": "Se connecter",
+      "registerButton": "Créer un compte"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Journaux de pensées",

@@ -5,6 +5,7 @@ import { login } from '@/lib/auth';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import {
+  CREATE_ACCOUNT_LINK_CLICKED,
   GET_AUTH_USER_ERROR,
   GET_LOGIN_USER_ERROR,
   GET_LOGIN_USER_REQUEST,
@@ -12,6 +13,7 @@ import {
   LOGIN_ERROR,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  RESET_PASSWORD_HERE_CLICKED,
 } from '@/lib/constants/events';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import { setAuthStateLoading } from '@/lib/store/userSlice';
@@ -23,12 +25,8 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 
-const containerStyle = {
-  marginY: 3,
-} as const;
-
 const LoginForm = () => {
-  const t = useTranslations('Auth.form');
+  const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const dispatch = useAppDispatch();
   const rollbar = useRollbar();
@@ -58,7 +56,7 @@ const LoginForm = () => {
       logEvent(GET_AUTH_USER_ERROR, { message: userLoadError });
 
       setFormError(
-        t.rich('getUserError', {
+        t.rich('form.firebase.getUserError', {
           contactLink: (children) => (
             <Link target="_blank" href={FEEDBACK_FORM_URL}>
               {children}
@@ -80,13 +78,13 @@ const LoginForm = () => {
       const errorCode = error.code;
 
       if (errorCode === 'auth/invalid-email') {
-        setFormError(t('firebase.invalidEmail'));
+        setFormError(t('form.firebase.invalidEmail'));
       }
       if (errorCode === 'auth/too-many-requests') {
-        setFormError(t('firebase.tooManyAttempts'));
+        setFormError(t('form.firebase.tooManyAttempts'));
       }
       if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
-        setFormError(t('firebase.authError'));
+        setFormError(t('form.firebase.authError'));
       }
 
       if (
@@ -108,12 +106,12 @@ const LoginForm = () => {
   };
 
   return (
-    <Box sx={containerStyle}>
+    <Box mb={1}>
       <form id="login-form" autoComplete="off" onSubmit={submitHandler}>
         <TextField
           id="email"
           onChange={(e) => setEmailInput(e.target.value)}
-          label={t('emailLabel')}
+          label={t('form.emailLabel')}
           variant="standard"
           type="email"
           fullWidth
@@ -122,7 +120,7 @@ const LoginForm = () => {
         <TextField
           id="password"
           onChange={(e) => setPasswordInput(e.target.value)}
-          label={t('passwordLabel')}
+          label={t('form.passwordLabel')}
           type="password"
           variant="standard"
           fullWidth
@@ -136,15 +134,42 @@ const LoginForm = () => {
 
         <LoadingButton
           id="login-submit"
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2, mr: 1.5, mb: 2, minWidth: 150 }}
           variant="contained"
-          fullWidth
           color="secondary"
           type="submit"
           loading={userAuthLoading || userLoading}
         >
-          {t('loginSubmit')}
+          {t('form.loginSubmit')}
         </LoadingButton>
+        <Typography variant="body2" textAlign="left" mb={1}>
+          {t.rich('login.resetPasswordLink', {
+            resetLink: (children) => (
+              <Link
+                onClick={() => {
+                  logEvent(RESET_PASSWORD_HERE_CLICKED);
+                }}
+                href="/auth/reset-password"
+              >
+                {children}
+              </Link>
+            ),
+          })}
+        </Typography>
+        <Typography variant="body2" textAlign="left">
+          {t.rich('login.createAnAccountLink', {
+            createAnAccountLink: (children) => (
+              <Link
+                onClick={() => {
+                  logEvent(CREATE_ACCOUNT_LINK_CLICKED);
+                }}
+                href="/auth/register"
+              >
+                {children}
+              </Link>
+            ),
+          })}
+        </Typography>
       </form>
     </Box>
   );

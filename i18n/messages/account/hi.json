@@ -50,12 +50,13 @@
           "other": "Autre (à préciser)",
           "preferNotToAnswer": "Batana pasand nahi karte"
         },
-        "neurodivergentLabel": "Kya aap apne aapko neuro-divergent ke roop mein describe karenge?",
-        "neurodivergentHelpText": "Hum apni sevaon ko ese design karte hai ko vo sabke liye inclusive ho. Toh humare liye bahut helpful hota hai jab humein neurodivergent logon se feedback milti hai.",
+        "neurodivergentLabel": "Kya aapko koi neuro-manorog hai jo aapke dimaag ke kaam karne ki shamta pe prabhav daalta hai? Yeh koi adhigham shamta ho sakti hai (jaise ki Dyslexia, Dyspraxia, Dyscalculia), ADHD, ya fir Autism.",
+        "neurodivergentHelpText": "Hum apni sewaon ko sahit banane ki poori koshish karte hain, toh isliye humara yeh jaanna zaroori hai.",
         "neurodivergentLabels": {
           "1": "Haan",
           "2": "Nahi",
-          "3": "Nishchit nahin\n"
+          "3": "Nishchit nahin\n",
+          "4": "Nahin kahana pasand karate hain\n"
         },
         "raceEthnNatnLabel": "Aapki race, ethnicity and nationality kya hai? E.g., White Hispanic Mexican, or Tamil Indian.",
         "raceEthnNatnHelpText": "Hum jaante hain ki sab logon ka unki race aur ethnicity ke sath experience alag hota hai jo depend karta hai ki vo kahan rehte hain. Toh aap vo likhiye jo sabse achi tarha se aapko describe karta hai.",

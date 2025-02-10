@@ -100,6 +100,12 @@
       "description2": "Registriere dich unten, um Zugriff auf all unsere Inhalte zu erhalten und alles zu erkunden, was Bloom zu bieten hat.",
       "button": "Loslegen"
     },
+    "loginDialog": {
+      "title": "Anmelden oder Konto erstellen",
+      "description": "Melden Sie sich kostenlos an, um auf alle unsere Inhalte zuzugreifen und alles zu entdecken, was Bloom zu bieten hat",
+      "loginButton": "Anmelden",
+      "registerButton": "Konto erstellen"
+    },
     "relatedContent": {
       "title": "Verwandte Inhalte",
       "resource_short_video": "Ansehen",

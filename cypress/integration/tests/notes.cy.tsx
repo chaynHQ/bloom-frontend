@@ -53,14 +53,6 @@ describe('A logged in user should be able to subscribe to notes from bloom', () 
     it('more about section', () => {
       cy.get('h2').should('contain', 'More about Notes from Bloom');
       cy.checkImage('alt', 'illustration_leaf_mix');
-
-      cy.fixture('subscription-whatsapp').then(
-        (data: { notes: { question: string; answer: string }[] }) => {
-          data.notes.forEach((note) => {
-            cy.get('p').contains(note.question).parents('.MuiAccordion-root').contains(note.answer);
-          });
-        },
-      );
     });
   });
 

@@ -8,7 +8,7 @@
     "login": {
       "title": "Vapas se swagat hai",
       "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here</resetLink>",
-      "newUserTitle": "Bloom pe naye hain?"
+      "createAnAccountLink": "Aapke paas account nahi hai? <createAnAccountLink>Account banaiye</createAnAccountLink>"
     },
     "register": {
       "title": "Account banaiye",

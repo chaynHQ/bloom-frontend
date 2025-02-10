@@ -50,12 +50,13 @@
           "other": "Anderes (bitte gib hier den Namen an)",
           "preferNotToAnswer": "Das möchte ich nicht sagen"
         },
-        "neurodivergentLabel": "Würdest Du Dich selbst als neurodivergent bezeichnen?",
-        "neurodivergentHelpText": "Wir gestalten unser Angebot inklusiv. Deshalb ist es hilfreich, wenn wir Feedback von neurodivergenten Menschen erhalten. ",
+        "neurodivergentLabel": "Hast du einen Neurotyp, der die Art und Weise beeinflusst, wie dein Gehirn Informationen verarbeitet? Das kann eine Lernschwierigkeit (z. B. Legasthenie, Dyspraxie, Dyskalkulie), ADHS, eine Lernbehinderung oder Autismus sein.",
+        "neurodivergentHelpText": "Wir tun unser Bestes, um unsere Dienste inklusive zu gestalten, daher ist es hilfreich für uns das zu wissen .",
         "neurodivergentLabels": {
           "1": "Ja",
           "2": "Nein",
-          "3": "Nicht sicher"
+          "3": "Nicht sicher",
+          "4": "Sag es lieber nicht"
         },
         "raceEthnNatnLabel": "Wie würdest du deine ethnische Zugehörigkeit und Nationalität beschreiben? Z.B. Weiß lateinamerikanisch und aus Mexiko oder Tamil aus Indien. ",
         "raceEthnNatnHelpText": "Wir wissen, dass die Erfahrungen von Menschen bezüglich Rassifizierung und Ethnizität sehr unterschiedlich sein können, je nachdem, wo sie leben. Schreibe, was auf Dich persönlich am Besten zutrifft. ",

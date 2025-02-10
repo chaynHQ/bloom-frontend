@@ -100,6 +100,12 @@
       "description2": "Inscreva-se abaixo para ter acesso a todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer!",
       "button": "Comece"
     },
+    "loginDialog": {
+      "title": "Faça login ou crie uma conta",
+      "description": "Inscreva-se gratuitamente para acessar todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer",
+      "loginButton": "Entrar",
+      "registerButton": "Criar conta"
+    },
     "exerciseNames": {
       "activities-thought-diaries": "Diários de reflexão",
       "activities-stream-of-consciousness-journaling": "Diário de fluxo de consciência",

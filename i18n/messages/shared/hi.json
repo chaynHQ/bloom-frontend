@@ -100,6 +100,12 @@
       "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
       "button": "Shuru karte hain"
     },
+    "loginDialog": {
+      "title": "Bloom mein login karein ya ek naya account banayein",
+      "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
+      "loginButton": "Log in",
+      "registerButton": "Account banayein"
+    },
     "relatedContent": {
       "title": "Related content",
       "resource_short_video": "Watch",
