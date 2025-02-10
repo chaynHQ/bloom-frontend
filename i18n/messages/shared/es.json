@@ -95,8 +95,14 @@
     "signUpTodayPromo": {
       "title": "Regístrese hoy mismo para obtener una cuenta gratuita",
       "description1": "Bloom es una plataforma en línea que te ayuda a recuperarte de un trauma. Desde cursos en vídeo y actividades de reflexión hasta mensajería directa con nuestro equipo, hay muchas formas diferentes de participar en Bloom.",
-      "description2": "Regístrate a continuación para acceder a todos nuestros contenidos y explorar todo lo que Bloom puede ofrecerte.",
+      "description2": "Regístrate a continuación para acceder a todos nuestros contenidos y explorar todo lo que Bloom ofrecer.",
       "button": "Iniciar"
+    },
+    "loginDialog": {
+      "title": "Iniciar sesión o crear una cuenta",
+      "description": "Regístrate gratis para acceder a todo nuestro contenido y explorar todo lo que Bloom tiene para ofrecer",
+      "loginButton": "Iniciar sesión",
+      "registerButton": "Crear cuenta"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Diarios de pensamientos",
