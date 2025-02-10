@@ -8,7 +8,7 @@
     "login": {
       "title": "Bienvenue",
       "resetPasswordLink": "Mot de passe oublié? <resetLink>Réinitialiser le mot de passe</resetLink>",
-      "newUserTitle": "Vous êtes nouveau sur Bloom ?"
+      "createAnAccountLink": "Vous n'avez pas de compte ? <createAnAccountLink>Créez un compte</createAnAccountLink>"
     },
     "register": {
       "title": "Créer un compte",
