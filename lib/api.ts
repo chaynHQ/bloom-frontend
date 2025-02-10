@@ -261,6 +261,14 @@ export const api = createApi({
         };
       },
     }),
+    getUserCourses: builder.query<Courses, void>({
+      query() {
+        return {
+          url: 'courses-user',
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
@@ -287,4 +295,5 @@ export const {
   useCreateResourceFeedbackMutation,
   useStartResourceMutation,
   useCompleteResourceMutation,
+  useGetUserCoursesQuery,
 } = api;

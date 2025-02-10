@@ -28,6 +28,7 @@ import Cookies from 'js-cookie';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { useGetUserCoursesQuery } from '@/lib/api';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -70,6 +71,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     imageSrc: illustrationCourses,
     imageAlt: 'alt.personSitting',
   };
+
+  const { data: userCourses } = useGetUserCoursesQuery(undefined, {
+    skip: !userId,
+  });
 
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED);
@@ -132,10 +137,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     setLoadedCourses(coursesWithAccess);
     setLoadedShorts(shortsWithAccess);
 
-    if (courses) {
+    if (userCourses) {
       let courseCoursesStarted: Array<number> = [];
       let courseCoursesCompleted: Array<number> = [];
-      courses.map((course) => {
+      userCourses.map((course) => {
         if (course.completed) {
           courseCoursesCompleted.push(course.storyblokId);
         } else {
@@ -145,7 +150,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
+  }, [partnerAccesses, partnerAdmin, courseStories, userCourses, shorts, entryPartnerReferral, userId]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
