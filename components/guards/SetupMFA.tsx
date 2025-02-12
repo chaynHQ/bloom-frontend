@@ -26,6 +26,8 @@ const SetupMFA = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
 
+  console.log('SetupMFA userVerifiedEmail', userVerifiedEmail);
+
   const handleEnrollMFA = async () => {
     if (!userVerifiedEmail) {
       setError(t('form.emailNotVerified'));
