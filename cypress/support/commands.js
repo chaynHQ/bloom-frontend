@@ -265,29 +265,28 @@ const attachCustomCommands = (Cypress, auth) => {
     });
   });
 
-  Cypress.Commands.add('loginAsSuperAdmin', (email, password, code) => {
-    return signInWithEmailAndPassword(auth, email, password).then(async ({ user, error }) => {
-      // Simulate MFA challenge
-      const mockResolver = getMultiFactorResolver(auth, error);
+  Cypress.Commands.add('loginAsSuperAdmin', async (email, password, code) => {
+    const { error } = await signInWithEmailAndPassword(auth, email, password);
+    // Simulate MFA challenge
+    const mockResolver = getMultiFactorResolver(auth, error);
 
-      const { verificationId, error: triggerError } = await triggerVerifyMFA(mockResolver);
-      if (triggerError) {
-        throw new Error(`MFA trigger failed: ${triggerError.message}`);
+    const { verificationId, error: triggerError } = await triggerVerifyMFA(mockResolver);
+    if (triggerError) {
+      throw new Error(`MFA trigger failed: ${triggerError.message}`);
+    }
+
+    const { success, error: verifyError } = await verifyMFA(verificationId, code, mockResolver);
+    if (!success) {
+      throw new Error(`MFA verification failed: ${verifyError?.message || 'Unknown error'}`);
+    }
+
+    // Set the auth state
+    return cy.window().then((window) => {
+      if (window.store) {
+        window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
+        window.store.dispatch({ type: 'user/setUserVerifiedEmail', payload: true });
+        window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
       }
-
-      const { success, error: verifyError } = await verifyMFA(verificationId, code, mockResolver);
-      if (!success) {
-        throw new Error(`MFA verification failed: ${verifyError?.message || 'Unknown error'}`);
-      }
-
-      // Set the auth state
-      return cy.window().then((window) => {
-        if (window.store) {
-          window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
-          window.store.dispatch({ type: 'user/setUserVerifiedEmail', payload: true });
-          window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
-        }
-      });
     });
   });
 
