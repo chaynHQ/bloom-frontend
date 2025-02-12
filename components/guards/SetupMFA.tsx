@@ -1,6 +1,6 @@
 'use client';
 
-import { sendVerificationEmail, triggerMFA, verifyMFA } from '@/lib/auth';
+import { sendVerificationEmail, triggerInitialMFA, verifyMFA } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Box, Button, TextField, Typography } from '@mui/material';
@@ -35,7 +35,7 @@ const SetupMFA = () => {
       return;
     }
 
-    const { verificationId, error } = await triggerMFA(phoneNumber);
+    const { verificationId, error } = await triggerInitialMFA(phoneNumber);
     if (error) {
       setError(t('form.mfaEnrollError'));
       rollbar.error('MFA enrollment trigger error:', error);
@@ -70,7 +70,7 @@ const SetupMFA = () => {
   return (
     <Box>
       <Typography variant="h3">{t('setupMFA.title')}</Typography>
-      {userVerifiedEmail ? (
+      {!userVerifiedEmail ? (
         <Box>
           <Typography>{t('form.emailNotVerified')}</Typography>
           <Button
