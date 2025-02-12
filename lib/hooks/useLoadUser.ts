@@ -54,7 +54,6 @@ export default function useLoadUser() {
       if (token) {
         // User logged in or started a new authenticated session
         await dispatch(setUserToken(token.token));
-        console.log('firebaseUser?.emailVerified ', firebaseUser?.emailVerified);
         await dispatch(setUserVerifiedEmail(firebaseUser?.emailVerified ?? false));
         await dispatch(setUserMFAisSetup(!!token.signInSecondFactor));
         // Trigger call to get user record by changing userLoading state, skip if in maintenance mode

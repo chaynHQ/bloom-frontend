@@ -85,23 +85,13 @@ const LoginForm = () => {
         const resolver = getMultiFactorResolver(auth, error as MultiFactorError);
         setShowVerifyMFA(true);
         setMfaResolver(resolver);
-      }
-      if (errorCode === 'auth/invalid-email') {
+      } else if (errorCode === 'auth/invalid-email') {
         setFormError(t('form.firebase.invalidEmail'));
-      }
-      if (errorCode === 'auth/too-many-requests') {
+      } else if (errorCode === 'auth/too-many-requests') {
         setFormError(t('form.firebase.tooManyAttempts'));
-      }
-      if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
+      } else if (errorCode === 'auth/user-not-found' || 'auth/wrong-password') {
         setFormError(t('form.firebase.authError'));
-      }
-
-      if (
-        errorCode !== 'auth/too-many-requests' &&
-        errorCode !== 'auth/invalid-email' &&
-        errorCode !== 'auth/user-not-found' &&
-        errorCode !== 'auth/wrong-password'
-      ) {
+      } else {
         logEvent(LOGIN_ERROR, { message: errorCode });
         rollbar.error('User login firebase error', error);
       }
