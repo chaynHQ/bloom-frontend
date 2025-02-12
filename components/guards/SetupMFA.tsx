@@ -70,7 +70,7 @@ const SetupMFA = () => {
   return (
     <Box>
       <Typography variant="h3">{t('setupMFA.title')}</Typography>
-      {!userVerifiedEmail ? (
+      {userVerifiedEmail ? (
         <Box>
           <Typography>{t('form.emailNotVerified')}</Typography>
           <Button
@@ -91,6 +91,7 @@ const SetupMFA = () => {
         </>
       ) : (
         <>
+          <Typography>{t('setupMFA.enterCodeHelperText')}</Typography>
           <TextField
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}

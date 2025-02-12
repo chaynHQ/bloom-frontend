@@ -83,7 +83,7 @@ export async function confirmEmailVerified(codeParam: string) {
 }
 
 // Triggers sending the user an SMS for 2FA/MFA
-export async function triggerMFA(phoneNumber?: string) {
+export async function triggerMFA(phoneNumber: string) {
   try {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
@@ -91,26 +91,12 @@ export async function triggerMFA(phoneNumber?: string) {
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',
     });
-
     const phoneAuthProvider = new PhoneAuthProvider(auth);
-    let verificationId;
 
-    if (phoneNumber) {
-      // This is for initial enrollment
-      verificationId = await phoneAuthProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier);
-    } else {
-      // This is for verification during login
-      const multiFactorUser = multiFactor(user);
-      const session = await multiFactorUser.getSession();
-      const phoneInfoOptions = {
-        multiFactorHint: multiFactorUser.enrolledFactors[0],
-        session,
-      };
-      verificationId = await phoneAuthProvider.verifyPhoneNumber(
-        phoneInfoOptions,
-        recaptchaVerifier,
-      );
-    }
+    const verificationId = await phoneAuthProvider.verifyPhoneNumber(
+      phoneNumber,
+      recaptchaVerifier,
+    );
 
     return { verificationId, error: null };
   } catch (error) {
