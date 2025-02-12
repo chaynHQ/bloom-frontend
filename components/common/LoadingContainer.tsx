@@ -1,10 +1,14 @@
 'use client';
 
+import { topBarSpacerStyle } from '@/styles/common';
 import { CircularProgress, Container } from '@mui/material';
 
 const centeredContainerStyle = {
   display: 'flex',
-  height: '100vh',
+  minHeight: {
+    xs: `calc(100vh - ${topBarSpacerStyle.height.xs})`,
+    md: `calc(100vh - ${topBarSpacerStyle.height.md})`,
+  },
   justifyContent: 'center',
   alignItems: 'center',
 } as const;

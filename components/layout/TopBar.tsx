@@ -7,7 +7,7 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import bloomLogo from '@/public/bloom_logo_white.svg';
-import { rowStyle } from '@/styles/common';
+import { rowStyle, topBarSpacerStyle } from '@/styles/common';
 import {
   AppBar,
   Box,
@@ -47,10 +47,6 @@ const logoContainerStyle = {
   width: { xs: 80, sm: 120 },
   marginLeft: { xs: 4, md: 0 },
   height: 48,
-} as const;
-
-const topBarSpacerStyle = {
-  height: { xs: '3rem', sm: '4rem', md: isMaintenanceMode ? '4rem' : '8rem' },
 } as const;
 
 const TopBar = () => {

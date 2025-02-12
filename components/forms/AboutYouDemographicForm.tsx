@@ -169,7 +169,6 @@ const AboutYouDemographicForm = () => {
     }
   };
 
-
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
@@ -224,18 +223,8 @@ const AboutYouDemographicForm = () => {
             onChange={(e) => setNeurodivergentInput(e.target.value)}
             value={neurodivergentInput}
           >
-            <FormControlLabel
-              value="Yes"
-              control={
-                <Radio />
-              }
-              label={t('neurodivergentLabels.1')}
-            />
-            <FormControlLabel
-              value="No"
-              control={<Radio />}
-              label={t('neurodivergentLabels.2')}
-            />
+            <FormControlLabel value="Yes" control={<Radio />} label={t('neurodivergentLabels.1')} />
+            <FormControlLabel value="No" control={<Radio />} label={t('neurodivergentLabels.2')} />
             <FormControlLabel
               value="Not sure"
               control={<Radio />}
