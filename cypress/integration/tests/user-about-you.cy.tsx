@@ -42,7 +42,9 @@ describe('User about you page should display', () => {
       `We are asking this to better understand how our users identify, with a view to designing even more inclusive and gender-affirming resources. You can select 'Prefer not to answer'.`,
     );
 
-    cy.get('legend').contains('Do you have a neurotype that affects the way your brain processes information? This might be a learning difficulty (I.e. Dyslexia, Dyspraxia, Dyscalculia), ADHD, or Autism.');
+    cy.get('legend').contains(
+      'Do you have a neurotype that affects the way your brain processes information? This might be a learning difficulty (I.e. Dyslexia, Dyspraxia, Dyscalculia), ADHD, or Autism.',
+    );
     const neurodivergentOptions = ['Yes', 'No', 'Not sure', 'Prefer not to say'];
     cy.get('input[name="neurodivergent-radio-buttons-group"]').each(($option, index) => {
       cy.wrap($option)
