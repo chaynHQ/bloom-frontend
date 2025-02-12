@@ -68,7 +68,6 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const userId = useTypedSelector((state) => state.user.id);
   const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
-  const userVerifiedEmail = useTypedSelector((state) => state.user.verifiedEmail);
   const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
@@ -108,8 +107,8 @@ export default function LoginPage() {
     partnerAdmin?.active,
     router,
     searchParams,
+    showSetupMFA,
     userIsSuperAdmin,
-    userVerifiedEmail,
     userMFAisSetup,
   ]);
 
