@@ -1,11 +1,12 @@
 describe('Admin dashboard page should display', () => {
   const superAdminEmail = Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL') as string;
   const superAdminPassword = Cypress.env('CYPRESS_SUPER_ADMIN_PASSWORD');
+  const superAdminMFACode = Cypress.env('CYPRESS_SUPER_ADMIN_MFA_CODE');
   const adminDashboardUrl = '/admin/dashboard';
 
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
+    cy.loginAsSuperAdmin(superAdminEmail, superAdminPassword, superAdminMFACode);
   });
 
   beforeEach(() => {
