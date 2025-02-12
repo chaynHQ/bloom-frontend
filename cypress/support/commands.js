@@ -32,7 +32,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { triggerVerifyMFA, verifyMFA } from '../../src/lib/auth';
+import { triggerVerifyMFA, verifyMFA } from '../../lib/auth';
 
 const http = require('http');
 
