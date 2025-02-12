@@ -1,6 +1,6 @@
 'use client';
 
-import { triggerMFA, verifyMFA } from '@/lib/auth';
+import { triggerVerifyMFA, verifyMFA } from '@/lib/auth';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
@@ -33,13 +33,14 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
     // Get the phone number from the resolver
     const hint = resolver.hints[0];
     if (hint.factorId === 'phone') {
-      setPhoneNumber(hint.uid || '');
+      // @ts-ignore
+      setPhoneNumber(hint.phoneNumber || '');
     }
   }, [resolver]);
 
   const handleTriggerMFA = async () => {
     setError('');
-    const { verificationId, error } = await triggerMFA(phoneNumber);
+    const { verificationId, error } = await triggerVerifyMFA(resolver);
     if (error) {
       rollbar.error('MFA trigger error:', error);
       setError(t('form.mfaTriggerError'));

@@ -82,8 +82,31 @@ export async function confirmEmailVerified(codeParam: string) {
   }
 }
 
-// Triggers sending the user an SMS for 2FA/MFA
-export async function triggerMFA(phoneNumber: string) {
+// Triggers sending the user an SMS for 2FA/MFA for login process
+export async function triggerVerifyMFA(resolver: MultiFactorResolver) {
+  try {
+    const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+    });
+    const phoneInfoOptions = {
+      multiFactorHint: resolver.hints[0],
+      session: resolver.session,
+    };
+    const phoneAuthProvider = new PhoneAuthProvider(auth);
+
+    // Send SMS verification code
+    const verificationId = await phoneAuthProvider.verifyPhoneNumber(
+      phoneInfoOptions,
+      recaptchaVerifier,
+    );
+    return { verificationId, error: null };
+  } catch (error) {
+    return { verificationId: null, error: error as FirebaseError };
+  }
+}
+
+// Triggers sending the user an SMS for 2FA/MFA for enrollment process
+export async function triggerInitialMFA(phoneNumber: string) {
   try {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
@@ -93,11 +116,11 @@ export async function triggerMFA(phoneNumber: string) {
     });
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
+    // Send SMS verification code
     const verificationId = await phoneAuthProvider.verifyPhoneNumber(
       phoneNumber,
       recaptchaVerifier,
     );
-
     return { verificationId, error: null };
   } catch (error) {
     return { verificationId: null, error: error as FirebaseError };
