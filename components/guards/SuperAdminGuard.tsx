@@ -1,21 +1,17 @@
 'use client';
 
+import { useRouter } from '@/i18n/routing';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
-import { columnStyle } from '@/styles/common';
+import { fullScreenContainerStyle } from '@/styles/common';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { ReactNode } from 'react';
-
-const containerStyle = {
-  ...columnStyle,
-  height: '100vh',
-} as const;
 
 const imageContainerStyle = {
   position: 'relative',
@@ -35,12 +31,19 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 export function SuperAdminGuard({ children }: { children: ReactNode }) {
   const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
+  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
   const t = useTranslations('Admin.accessGuard');
   const tS = useTranslations('Shared');
+  const router = useRouter();
+
+  if (userIsSuperAdmin && !userMFAisSetup) {
+    router.push('/auth/login');
+    return <></>;
+  }
 
   if (!userIsSuperAdmin) {
     return (
-      <Container sx={containerStyle}>
+      <Container sx={fullScreenContainerStyle}>
         <Box sx={imageContainerStyle}>
           <Image
             alt={tS('alt.personTea')}

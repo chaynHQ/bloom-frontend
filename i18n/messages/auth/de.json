@@ -49,7 +49,33 @@
         "emailAlreadyInUse": "Diese Email ist bereits bei Bloom registriert, bitte geh zum <loginLink>Login-Bereich</loginLink> um fortzufahren.",
         "invalidCode": "Dieser Link zum Zurücksetzen des Passworts ist ungültig. Bitte <resetLink>starte den Prozess neu</resetLink> und versuche es noch einmal. ",
         "expiredCode": "Dieser Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte <resetLink>starte den Vorgang neu</resetLink> und versuche es noch einmal. "
-      }
+      },
+      "phoneNumberLabel": "Telefonnummer",
+      "verificationCodeLabel": "Verifizierungscode",
+      "mfaTriggerError": "Fehler beim Senden des SMS-Codes. Bitte versuchen Sie es erneut.",
+      "mfaVerificationIdMissing": "Bitte fordern Sie zuerst einen SMS-Code an.",
+      "mfaEnrollError": "Fehler bei der Anmeldung für die Zwei-Faktor-Authentifizierung. Bitte versuche es erneut.",
+      "mfaFinalizeError": "Fehler beim Abschließen der Zwei-Faktor-Authentifizierung. Bitte versuche es erneut.",
+      "mfaError": "Ungültiger Verifizierungscode. Bitte versuche es erneut.",
+      "emailNotVerified": "Bitte verifiziere deine E-Mail-Adresse, bevor du die Zwei-Faktor-Authentifizierung einrichtest.",
+      "emailVerificationError": "Fehler beim Senden der Verifizierungs-E-Mail. Bitte versuche es erneut.",
+      "emailVerificationSent": "Verifizierungs-E-Mail wurde gesendet. Bitte überprüfe deinen Posteingang.",
+      "sendVerificationEmail": "Verifizierungs-E-Mail senden"
+    },
+    "setupMFA": {
+      "title": "Zwei-Faktor-Authentifizierung einrichten",
+      "pageTitle": "Sichere dein Konto",
+      "sendCode": "Verifizierungscode senden",
+      "verifyCode": "Code verifizieren"
+    },
+    "verifyMFA": {
+      "title": "Zwei-Faktor-Authentifizierung verifizieren",
+      "verifyCode": "Code verifizieren"
+    },
+    "verifyEmail": {
+      "pageTitle": "E-Mail-Adresse verifizieren",
+      "instructions": "Bitte überprüfe deine E-Mails und klicke auf den Verifizierungslink, um fortzufahren.",
+      "sendButton": "Verifizierungs-E-Mail erneut senden"
     }
   }
 }

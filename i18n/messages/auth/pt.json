@@ -49,7 +49,33 @@
         "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
         "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
         "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente."
-      }
+      },
+      "phoneNumberLabel": "Número de telefone",
+      "verificationCodeLabel": "Código de verificação",
+      "mfaTriggerError": "Erro ao enviar o código SMS. Por favor, tente novamente.",
+      "mfaVerificationIdMissing": "Por favor, solicite um código SMS primeiro.",
+      "mfaEnrollError": "Erro ao se inscrever na autenticação de dois fatores. Por favor, tente novamente.",
+      "mfaFinalizeError": "Erro ao finalizar a configuração da autenticação de dois fatores. Por favor, tente novamente.",
+      "mfaError": "Código de verificação inválido. Por favor, tente novamente.",
+      "emailNotVerified": "Por favor, verifique seu e-mail antes de configurar a autenticação de dois fatores.",
+      "emailVerificationError": "Erro ao enviar e-mail de verificação. Por favor, tente novamente.",
+      "emailVerificationSent": "E-mail de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "sendVerificationEmail": "Enviar e-mail de verificação"
+    },
+    "setupMFA": {
+      "title": "Configurar autenticação de dois fatores",
+      "pageTitle": "Proteja sua conta",
+      "sendCode": "Enviar código de verificação",
+      "verifyCode": "Verificar código"
+    },
+    "verifyMFA": {
+      "title": "Verificar autenticação de dois fatores",
+      "verifyCode": "Verificar código"
+    },
+    "verifyEmail": {
+      "pageTitle": "Verifique seu e-mail",
+      "instructions": "Por favor, verifique seu e-mail e clique no link de verificação para continuar.",
+      "sendButton": "Reenviar e-mail de verificação"
     }
   }
 }
