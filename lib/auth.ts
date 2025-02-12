@@ -5,6 +5,7 @@ import {
   PhoneAuthProvider,
   PhoneMultiFactorGenerator,
   RecaptchaVerifier,
+  applyActionCode,
   confirmPasswordReset,
   multiFactor,
   sendEmailVerification,
@@ -74,7 +75,7 @@ export async function sendVerificationEmail(user: User) {
 export async function confirmEmailVerified(codeParam: string) {
   try {
     // Confirms the user has verified their email using a link with a valid oobCode
-    await confirmEmailVerified(codeParam);
+    await applyActionCode(auth, codeParam);
     return { success: true, error: null };
   } catch (error) {
     return { success: false, error: error as FirebaseError };
