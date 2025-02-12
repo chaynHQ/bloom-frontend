@@ -62,16 +62,18 @@
       "emailVerificationSent": "Verification email sent. Please check your inbox.",
       "sendVerificationEmail": "Send Verification Email"
     },
+    "verifyMFA": {
+      "title": "Verify Two-Factor Authentication",
+      "triggerSMS": "Send SMS Code",
+      "verifyCode": "Verify Code",
+      "phoneNumber": "We will send a verification code to your registered phone number: {phoneNumber}"
+    },
     "setupMFA": {
       "title": "Set up Two-Factor Authentication",
       "pageTitle": "Secure Your Account",
       "sendCode": "Send Verification Code",
-      "verifyCode": "Verify Code"
-    },
-    "verifyMFA": {
-      "title": "Verify Two-Factor Authentication",
-      "triggerSMS": "Send SMS Code",
-      "verifyCode": "Verify Code"
+      "verifyCode": "Verify Code",
+      "enterCodeHelperText": "Please enter the verification code we sent to your phone:"
     },
     "verifyEmail": {
       "pageTitle": "Verify Your Email",

@@ -62,15 +62,18 @@
       "emailVerificationSent": "E-mail de verificação enviado. Por favor, verifique sua caixa de entrada.",
       "sendVerificationEmail": "Enviar e-mail de verificação"
     },
-    "setupMFA": {
-      "title": "Configurar autenticação de dois fatores",
-      "pageTitle": "Proteja sua conta",
-      "sendCode": "Enviar código de verificação",
-      "verifyCode": "Verificar código"
-    },
     "verifyMFA": {
-      "title": "Verificar autenticação de dois fatores",
-      "verifyCode": "Verificar código"
+      "title": "Verificar Autenticação de Dois Fatores",
+      "triggerSMS": "Enviar Código SMS",
+      "verifyCode": "Verificar Código",
+      "phoneNumber": "Enviaremos um código de verificação para o seu número de telefone registrado: {phoneNumber}"
+    },
+    "setupMFA": {
+      "title": "Configurar Autenticação de Dois Fatores",
+      "pageTitle": "Proteja sua Conta",
+      "sendCode": "Enviar Código de Verificação",
+      "verifyCode": "Verificar Código",
+      "enterCodeHelperText": "Por favor, digite o código de verificação que enviamos para o seu telefone:"
     },
     "verifyEmail": {
       "pageTitle": "Verifique seu e-mail",

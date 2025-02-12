@@ -7,7 +7,7 @@ import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const buttonStyle = {
   display: 'block',
@@ -23,13 +23,23 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const t = useTranslations('Auth');
   const [verificationId, setVerificationId] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const [error, setError] = useState('');
   const router = useRouter();
   const rollbar = useRollbar();
 
+  useEffect(() => {
+    // Get the phone number from the resolver
+    const hint = resolver.hints[0];
+    if (hint.factorId === 'phone') {
+      setPhoneNumber(hint.uid || '');
+    }
+  }, [resolver]);
+
   const handleTriggerMFA = async () => {
     setError('');
-    const { verificationId, error } = await triggerMFA();
+    const { verificationId, error } = await triggerMFA(phoneNumber);
     if (error) {
       rollbar.error('MFA trigger error:', error);
       setError(t('form.mfaTriggerError'));
@@ -56,6 +66,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   return (
     <Box>
       <Typography variant="h3">{t('verifyMFA.title')}</Typography>
+      {phoneNumber && <Typography>{t('verifyMFA.phoneNumber', { phoneNumber })}</Typography>}
       {!verificationId ? (
         <Button onClick={handleTriggerMFA} variant="contained" color="secondary" sx={buttonStyle}>
           {t('verifyMFA.triggerSMS')}
