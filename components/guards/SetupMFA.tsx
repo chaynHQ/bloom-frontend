@@ -4,6 +4,7 @@ import { sendVerificationEmail, triggerMFA, verifyMFA } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ const buttonStyle = {
 const SetupMFA = () => {
   const t = useTranslations('Auth');
   const router = useRouter();
+  const rollbar = useRollbar();
 
   const userVerifiedEmail = useTypedSelector((state) => state.user.verifiedEmail);
 
@@ -26,17 +28,17 @@ const SetupMFA = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
 
-  console.log('SetupMFA userVerifiedEmail', userVerifiedEmail);
-
   const handleEnrollMFA = async () => {
     if (!userVerifiedEmail) {
       setError(t('form.emailNotVerified'));
+      rollbar.error('MFA setup page reached before email is verified');
       return;
     }
 
     const { verificationId, error } = await triggerMFA(phoneNumber);
     if (error) {
       setError(t('form.mfaEnrollError'));
+      rollbar.error('MFA enrollment trigger error:', error);
     } else {
       setVerificationId(verificationId!);
     }
@@ -47,6 +49,7 @@ const SetupMFA = () => {
     if (success) {
       router.push('/admin/dashboard');
     } else {
+      rollbar.error('MFA enrollment verify error:', error || ' Undefined');
       setError(t('form.mfaFinalizeError'));
     }
   };
@@ -58,6 +61,7 @@ const SetupMFA = () => {
       if (error) {
         setError(t('form.emailVerificationError'));
       } else {
+        rollbar.error('Send verification email error:', error || ' Undefined');
         setError(t('form.emailVerificationSent'));
       }
     }

@@ -2,6 +2,7 @@
 
 import { triggerMFA, verifyMFA } from '@/lib/auth';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -24,11 +25,13 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const rollbar = useRollbar();
 
   const handleTriggerMFA = async () => {
     setError('');
     const { verificationId, error } = await triggerMFA();
     if (error) {
+      rollbar.error('MFA trigger error:', error);
       setError(t('form.mfaTriggerError'));
     } else {
       setVerificationId(verificationId);
@@ -45,6 +48,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
     if (success) {
       router.push('/admin/dashboard');
     } else {
+      rollbar.error('MFA verify error:', error || ' Undefined');
       setError(t('form.mfaError'));
     }
   };
