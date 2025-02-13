@@ -27,7 +27,6 @@
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
-  getMultiFactorResolver,
   onAuthStateChanged,
   PhoneAuthProvider,
   PhoneMultiFactorGenerator,
@@ -268,28 +267,34 @@ const attachCustomCommands = (Cypress, auth) => {
 
   Cypress.Commands.add('loginAsSuperAdmin', (email, password, mfaCode) => {
     return new Cypress.Promise((resolve, reject) => {
+      // Mock RecaptchaVerifier
+      auth.settings.appVerificationDisabledForTesting = true;
+      const mockRecaptchaVerifier = new RecaptchaVerifier(
+        'recaptcha-container',
+        {
+          size: 'invisible',
+          callback: () => {
+            return Promise.resolve('mock-recaptcha-token');
+          },
+        },
+        auth,
+      );
+
       signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
-          const idTokenResult = await userCredential.user.getIdTokenResult();
-          if (idTokenResult.claims.isSuperAdmin !== true) {
-            throw new Error('User is not a superadmin');
-          }
-          resolve(userCredential);
+          throw new Error('Superadmin access requires 2FA');
         })
         .catch(async (error) => {
           if (error.code === 'auth/multi-factor-auth-required') {
-            const resolver = getMultiFactorResolver(auth, error);
-
+            const resolver = error.resolver;
             const phoneInfoOptions = {
               multiFactorHint: resolver.hints[0],
               session: resolver.session,
             };
             const phoneAuthProvider = new PhoneAuthProvider(auth);
-
-            // Send SMS verification code
             const verificationId = await phoneAuthProvider.verifyPhoneNumber(
               phoneInfoOptions,
-              window.recaptchaVerifier,
+              mockRecaptchaVerifier,
             );
 
             // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
