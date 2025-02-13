@@ -267,9 +267,9 @@ const attachCustomCommands = (Cypress) => {
   });
 
   Cypress.Commands.add('loginAsSuperAdmin', (email, password, mfaCode) => {
-    return new Cypress.Promise(async (resolve, reject) => {
+    return new Cypress.Promise((resolve, reject) => {
       // Mock RecaptchaVerifier
-      await auth.setSettings({ appVerificationDisabledForTesting: true });
+      auth.settings.appVerificationDisabledForTesting = true;
       const mockRecaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
         size: 'invisible',
         callback: () => {
