@@ -4,10 +4,12 @@ import { redirect } from '@/i18n/routing';
 import { confirmEmailVerified } from '@/lib/auth';
 import { useAppDispatch } from '@/lib/hooks/store';
 import { setUserVerifiedEmail } from '@/lib/store/userSlice';
+import { fullScreenContainerStyle } from '@/styles/common';
+import { Container, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useLocale } from 'next-intl';
 import { notFound, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +22,7 @@ export default function Page() {
 
   const modeParam = searchParams.get('mode');
   const oobCode = searchParams.get('oobCode');
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     const handleEmailVerified = async () => {
@@ -38,7 +41,8 @@ export default function Page() {
         });
       } else {
         rollbar.error('Failed to confirm email verification', error || ': Error undefined');
-        notFound();
+        // This is currently only shown to super admin team members
+        setError(`There was an issue completing that request: ${error}`);
       }
     };
 
@@ -47,6 +51,13 @@ export default function Page() {
     }
   }, [modeParam, oobCode, dispatch, locale, rollbar]);
 
+  if (error) {
+    return (
+      <Container sx={fullScreenContainerStyle}>
+        <Typography>{error}</Typography>
+      </Container>
+    );
+  }
   if (modeParam && modeParam === 'resetPassword') {
     redirect({
       href: '/auth/reset-password',
