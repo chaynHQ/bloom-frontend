@@ -25,7 +25,14 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  getAuth,
+  onAuthStateChanged,
+  PhoneAuthProvider,
+  PhoneMultiFactorGenerator,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 
 const http = require('http');
 
@@ -258,28 +265,60 @@ const attachCustomCommands = (Cypress, auth) => {
     });
   });
 
-  Cypress.Commands.add('loginAsSuperAdmin', (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-      const idTokenResult = await userCredential.user.getIdTokenResult();
+  Cypress.Commands.add('loginAsSuperAdmin', (email, password, mfaCode) => {
+    return new Cypress.Promise((resolve, reject) => {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          const idTokenResult = await userCredential.user.getIdTokenResult();
+          if (idTokenResult.claims.isSuperAdmin !== true) {
+            throw new Error('User is not a superadmin');
+          }
+          resolve(userCredential);
+        })
+        .catch(async (error) => {
+          if (error.code === 'auth/multi-factor-auth-required') {
+            const resolver = error.resolver;
+            const phoneInfoOptions = {
+              multiFactorHint: resolver.hints[0],
+              session: resolver.session,
+            };
+            const phoneAuthProvider = new PhoneAuthProvider(auth);
+            const verificationId = await phoneAuthProvider.verifyPhoneNumber(
+              phoneInfoOptions,
+              window.recaptchaVerifier,
+            );
 
-      // Set the auth state
-      cy.window().then((window) => {
-        if (window.store) {
-          window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
-          window.store.dispatch({ type: 'user/setUserToken', payload: idTokenResult.token });
-          window.store.dispatch({
-            type: 'user/setUserVerifiedEmail',
-            payload: userCredential.user.emailVerified,
-          });
-          window.store.dispatch({
-            type: 'user/setUserMFAisSetup',
-            payload: !!idTokenResult.signInSecondFactor,
-          });
-          window.store.dispatch({ type: 'user/setIsSuperAdmin', payload: true });
-        }
-      });
+            // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
+            const credential = PhoneAuthProvider.credential(verificationId, mfaCode);
+            const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(credential);
 
-      return userCredential;
+            return resolver.resolveSignIn(multiFactorAssertion);
+          } else {
+            throw error;
+          }
+        })
+        .then((userCredential) => {
+          // Set the auth state
+          cy.window().then((window) => {
+            if (window.store) {
+              window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
+              window.store.dispatch({
+                type: 'user/setUserToken',
+                payload: userCredential.user.getIdToken(),
+              });
+              window.store.dispatch({
+                type: 'user/setUserVerifiedEmail',
+                payload: userCredential.user.emailVerified,
+              });
+              window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
+              window.store.dispatch({ type: 'user/setIsSuperAdmin', payload: true });
+            }
+          });
+          resolve(userCredential);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   });
 
