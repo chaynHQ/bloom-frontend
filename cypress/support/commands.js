@@ -30,6 +30,7 @@ import {
   onAuthStateChanged,
   PhoneAuthProvider,
   PhoneMultiFactorGenerator,
+  RecaptchaVerifier,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
