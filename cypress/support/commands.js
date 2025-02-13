@@ -237,7 +237,7 @@ const fbConfig = {
 const app = initializeApp(fbConfig);
 const auth = getAuth(app);
 
-const attachCustomCommands = (Cypress, auth) => {
+const attachCustomCommands = (Cypress) => {
   let currentUser = null;
   let token = null;
   onAuthStateChanged(auth, async (user) => {
@@ -267,19 +267,15 @@ const attachCustomCommands = (Cypress, auth) => {
   });
 
   Cypress.Commands.add('loginAsSuperAdmin', (email, password, mfaCode) => {
-    return new Cypress.Promise((resolve, reject) => {
+    return new Cypress.Promise(async (resolve, reject) => {
       // Mock RecaptchaVerifier
-      auth.settings.appVerificationDisabledForTesting = true;
-      const mockRecaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-          size: 'invisible',
-          callback: () => {
-            return Promise.resolve('mock-recaptcha-token');
-          },
+      await auth.setSettings({ appVerificationDisabledForTesting: true });
+      const mockRecaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'invisible',
+        callback: () => {
+          return Promise.resolve('mock-recaptcha-token');
         },
-        auth,
-      );
+      });
 
       signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
