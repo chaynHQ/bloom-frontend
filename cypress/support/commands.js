@@ -31,7 +31,6 @@ import {
   onAuthStateChanged,
   PhoneAuthProvider,
   PhoneMultiFactorGenerator,
-  RecaptchaVerifier,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
@@ -281,9 +280,6 @@ const attachCustomCommands = (Cypress, auth) => {
           if (error.code === 'auth/multi-factor-auth-required') {
             const resolver = getMultiFactorResolver(auth, error);
 
-            const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-              size: 'invisible',
-            });
             const phoneInfoOptions = {
               multiFactorHint: resolver.hints[0],
               session: resolver.session,
@@ -293,7 +289,7 @@ const attachCustomCommands = (Cypress, auth) => {
             // Send SMS verification code
             const verificationId = await phoneAuthProvider.verifyPhoneNumber(
               phoneInfoOptions,
-              recaptchaVerifier,
+              window.recaptchaVerifier,
             );
 
             // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
