@@ -289,41 +289,50 @@ const attachCustomCommands = (Cypress) => {
               session: resolver.session,
             };
             const phoneAuthProvider = new PhoneAuthProvider(auth);
-            const verificationId = await phoneAuthProvider.verifyPhoneNumber(
-              phoneInfoOptions,
-              mockRecaptchaVerifier,
-            );
-
-            // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
-            const credential = PhoneAuthProvider.credential(verificationId, mfaCode);
-            const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(credential);
-
-            return resolver.resolveSignIn(multiFactorAssertion);
+            phoneAuthProvider
+              .verifyPhoneNumber(phoneInfoOptions, mockRecaptchaVerifier)
+              .then((verificationId) => {
+                // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
+                const credential = PhoneAuthProvider.credential(verificationId, mfaCode);
+                const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(credential);
+                resolver
+                  .resolveSignIn(multiFactorAssertion)
+                  .then((userCredential) => {
+                    // Set the auth state
+                    cy.window().then((window) => {
+                      if (window.store) {
+                        window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
+                        window.store.dispatch({
+                          type: 'user/setUserToken',
+                          payload: userCredential.user.getIdToken(),
+                        });
+                        window.store.dispatch({
+                          type: 'user/setUserVerifiedEmail',
+                          payload: userCredential.user.emailVerified,
+                        });
+                        window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
+                        window.store.dispatch({ type: 'user/setIsSuperAdmin', payload: true });
+                      }
+                    });
+                    resolve(userCredential);
+                  })
+                  .catch((error) => {
+                    cy.log('loginAsSuperAdmin failed on resolveSignIn');
+                    console.log('loginAsSuperAdmin failed on resolveSignIn');
+                    reject(error);
+                  });
+                return;
+              })
+              .catch((error) => {
+                cy.log('loginAsSuperAdmin failed on verifyPhoneNumber');
+                console.log('loginAsSuperAdmin failed on verifyPhoneNumber');
+                throw error;
+              });
           } else {
+            cy.log('loginAsSuperAdmin failed on login error code');
+            console.log('loginAsSuperAdmin failed on login error code');
             throw error;
           }
-        })
-        .then((userCredential) => {
-          // Set the auth state
-          cy.window().then((window) => {
-            if (window.store) {
-              window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
-              window.store.dispatch({
-                type: 'user/setUserToken',
-                payload: userCredential.user.getIdToken(),
-              });
-              window.store.dispatch({
-                type: 'user/setUserVerifiedEmail',
-                payload: userCredential.user.emailVerified,
-              });
-              window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
-              window.store.dispatch({ type: 'user/setIsSuperAdmin', payload: true });
-            }
-          });
-          resolve(userCredential);
-        })
-        .catch((error) => {
-          reject(error);
         });
     });
   });
