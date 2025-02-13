@@ -21,6 +21,8 @@ export interface User {
   crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
+  verifiedEmail: boolean;
+  MFAisSetup: boolean;
   activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
   entryPartnerAccessCode: string | null;
@@ -81,6 +83,8 @@ const initialState: User = {
   crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
+  verifiedEmail: false,
+  MFAisSetup: false,
   activeSubscriptions: [],
   authStateLoading: true,
   entryPartnerAccessCode: null,
@@ -109,6 +113,12 @@ const slice = createSlice({
     },
     setUserLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
+    },
+    setUserVerifiedEmail(state, action: PayloadAction<boolean>) {
+      state.verifiedEmail = action.payload;
+    },
+    setUserMFAisSetup(state, action: PayloadAction<boolean>) {
+      state.MFAisSetup = action.payload;
     },
     setAuthStateLoading(state, action: PayloadAction<boolean>) {
       state.authStateLoading = action.payload;
@@ -172,5 +182,7 @@ export const {
   setLoadError,
   setEntryPartnerAccessCode,
   setEntryPartnerReferral,
+  setUserVerifiedEmail,
+  setUserMFAisSetup,
 } = actions;
 export default reducer;

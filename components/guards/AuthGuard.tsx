@@ -13,6 +13,7 @@ import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
 const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account', 'conversations'];
+const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
@@ -56,12 +57,16 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    return (
-      <>
-        <LoginDialog />
-        {children}
-      </>
-    );
+    if (shouldNotShowPreview.includes(pathHead)) {
+      router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
+    } else {
+      return (
+        <>
+          <LoginDialog />
+          {children}
+        </>
+      );
+    }
   }
 
   if (userId) {
