@@ -100,7 +100,8 @@ module.exports = withBundleAnalyzer(
                 value: `
                   default-src 'self';
                   script-src 'self' 'unsafe-eval' 'unsafe-inline' https://identitytoolkit.googleapis.com https://*.hotjar.com https://*.storyblok.com https://*.newrelic.com https://*.nr-data.net https://*.crisp.chat https://*.googletagmanager.com https://vercel.live;
-                  child-src 'self';
+                  child-src 'self' blob:;
+                  worker-src 'self' blob:;
                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat;
                   font-src 'self' https://fonts.gstatic.com https://*.hotjar.com https://*.crisp.chat;
                   img-src 'self' data: https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat;
