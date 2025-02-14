@@ -79,6 +79,62 @@ module.exports = withBundleAnalyzer(
           },
         ];
       },
+      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Crisp iframes, Rollbar, SimplyBook, and Zapier.
+      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Crisp.
+      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Crisp.
+      // font-src: Allows fonts from the same origin and Google's Fonts API.
+      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Crisp.
+      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Crisp, Firebase, Rollbar, SimplyBook, and Zapier.
+      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Crisp.
+      // object-src: Disallows all object sources.
+      // base-uri: Restricts the base URI to the same origin.
+      // form-action: Restricts form actions to the same origin.
+      // frame-ancestors: Restricts embedding to the same origin.
+      async headers() {
+        const headers = [
+          {
+            source: '/:path',
+            headers: [
+              {
+                key: 'Content-Security-Policy',
+                value: `
+                  default-src 'self';
+                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://static.hotjar.com https://script.hotjar.com https://app.storyblok.com https://widget.crisp.chat https://js-agent.newrelic.com *.nr-data.net;
+                  child-src 'self';
+                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://widget.crisp.chat;
+                  font-src 'self' https://fonts.gstatic.com;
+                  img-src 'self' data: https://static.hotjar.com https://app.storyblok.com https://image.storyblok.com https://widget.crisp.chat;
+                  connect-src 'self' https://*.hotjar.com wss://*.hotjar.com https://api.storyblok.com https://app.storyblok.com https://connect.crisp.chat https://*.firebaseapp.com https://api.rollbar.com https://*.simplybook.it https://hooks.zapier.com *.nr-data.net ${process.env.NEXT_PUBLIC_API_URL};
+                  frame-src 'self' https://vars.hotjar.com https://app.storyblok.com https://widget.crisp.chat https://*.crisp.chat https://*.simplybook.it;
+                  object-src 'none';
+                  base-uri 'self';
+                  form-action 'self';
+                  frame-ancestors 'self';
+                `
+                  .replace(/\s{2,}/g, ' ')
+                  .trim(),
+              },
+              {
+                key: 'Referrer-Policy',
+                value: 'origin-when-cross-origin',
+              },
+              {
+                key: 'X-Content-Type-Options',
+                value: 'nosniff',
+              },
+            ],
+          },
+        ];
+        // This enforces HTTPS for all requests so we don't want this for local development
+        if (process.env.NODE_ENV === 'production') {
+          headers[0].headers.push({
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          });
+        }
+
+        return headers;
+      },
     }),
   ),
 );
