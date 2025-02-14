@@ -99,13 +99,13 @@ module.exports = withBundleAnalyzer(
                 key: 'Content-Security-Policy',
                 value: `
                   default-src 'self';
-                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://identitytoolkit.googleapis.com https://*.hotjar.com https://*.storyblok.com https://*.newrelic.com https://*.nr-data.net https://*.crisp.chat https://*.googletagmanager.com https://vercel.live;
+                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.google-analytics.com https://identitytoolkit.googleapis.com https://*.hotjar.com https://*.storyblok.com https://*.newrelic.com https://*.nr-data.net https://*.crisp.chat https://*.googletagmanager.com https://vercel.live https://*.noembed.com;
                   child-src 'self' blob:;
                   worker-src 'self' blob:;
-                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat;
+                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat https://*.google-analytics.com;
                   font-src 'self' https://fonts.gstatic.com https://*.hotjar.com https://*.crisp.chat;
-                  img-src 'self' data: https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat;
-                  connect-src 'self' https://*.hotjar.io https://identitytoolkit.googleapis.com https://*.storyblok.com https://*.rollbar.com https://*.simplybook.it https://*.zapier.com https://*.nr-data.net ${process.env.NEXT_PUBLIC_API_URL} wss://client.relay.crisp.chat https://*.crisp.chat/;
+                  img-src 'self' data: https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat https://*.googletagmanager.com;
+                  connect-src 'self' https://*.hotjar.io https://identitytoolkit.googleapis.com https://*.storyblok.com https://*.rollbar.com https://*.simplybook.it https://*.zapier.com https://*.nr-data.net ${process.env.NEXT_PUBLIC_API_URL} wss://client.relay.crisp.chat https://*.crisp.chat https://*.google-analytics.com https://*.noembed.com https://*.googletagmanager.com;
                   frame-src 'self' https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat https://*.simplybook.it;
                   object-src 'none';
                   base-uri 'self';
