@@ -102,9 +102,9 @@ module.exports = withBundleAnalyzer(
                   script-src 'self' 'unsafe-eval' 'unsafe-inline' https://identitytoolkit.googleapis.com https://static.hotjar.com https://script.hotjar.com https://app.storyblok.com https://js-agent.newrelic.com https://*.nr-data.net https://client.crisp.chat https://www.googletagmanager.com https://vercel.live;
                   child-src 'self';
                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat;
-                  font-src 'self' https://fonts.gstatic.com https://script.hotjar.com;
+                  font-src 'self' https://fonts.gstatic.com https://script.hotjar.com https://client.crisp.chat;
                   img-src 'self' data: https://static.hotjar.com https://app.storyblok.com https://image.storyblok.com https://client.crisp.chat;
-                  connect-src 'self' https://surveystats.hotjar.io https://identitytoolkit.googleapis.com https://*.hotjar.com wss://*.hotjar.com https://api.storyblok.com https://app.storyblok.com https://connect.crisp.chat https://api.rollbar.com https://*.simplybook.it https://hooks.zapier.com https://*.nr-data.net ${process.env.NEXT_PUBLIC_API_URL};
+                  connect-src 'self' https://surveystats.hotjar.io https://identitytoolkit.googleapis.com https://*.hotjar.com wss://*.hotjar.com https://api.storyblok.com https://app.storyblok.com https://connect.crisp.chat https://api.rollbar.com https://*.simplybook.it https://hooks.zapier.com https://*.nr-data.net ${process.env.NEXT_PUBLIC_API_URL} wss://client.relay.crisp.chat;
                   frame-src 'self' https://vars.hotjar.com https://app.storyblok.com https://client.crisp.chat https://*.crisp.chat https://*.simplybook.it;
                   object-src 'none';
                   base-uri 'self';
