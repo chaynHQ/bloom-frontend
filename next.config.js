@@ -99,13 +99,13 @@ module.exports = withBundleAnalyzer(
                 key: 'Content-Security-Policy',
                 value: `
                   default-src 'self';
-                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://static.hotjar.com https://script.hotjar.com https://app.storyblok.com https://widget.crisp.chat https://js-agent.newrelic.com *.nr-data.net;
+                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://static.hotjar.com https://script.hotjar.com https://app.storyblok.com https://js-agent.newrelic.com *.nr-data.net https://client.crisp.chat;
                   child-src 'self';
-                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://widget.crisp.chat;
+                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat;
                   font-src 'self' https://fonts.gstatic.com;
-                  img-src 'self' data: https://static.hotjar.com https://app.storyblok.com https://image.storyblok.com https://widget.crisp.chat;
+                  img-src 'self' data: https://static.hotjar.com https://app.storyblok.com https://image.storyblok.com https://client.crisp.chat;
                   connect-src 'self' https://*.hotjar.com wss://*.hotjar.com https://api.storyblok.com https://app.storyblok.com https://connect.crisp.chat https://*.firebaseapp.com https://api.rollbar.com https://*.simplybook.it https://hooks.zapier.com *.nr-data.net ${process.env.NEXT_PUBLIC_API_URL};
-                  frame-src 'self' https://vars.hotjar.com https://app.storyblok.com https://widget.crisp.chat https://*.crisp.chat https://*.simplybook.it;
+                  frame-src 'self' https://vars.hotjar.com https://app.storyblok.com https://client.crisp.chat https://*.crisp.chat https://*.simplybook.it;
                   object-src 'none';
                   base-uri 'self';
                   form-action 'self';
