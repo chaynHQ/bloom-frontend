@@ -49,7 +49,36 @@
         "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
         "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
-      }
+      },
+      "phoneNumberLabel": "Phone Number",
+      "verificationCodeLabel": "Verification Code",
+      "mfaTriggerError": "Error sending SMS code. Please try again.",
+      "mfaVerificationIdMissing": "Please request an SMS code first.",
+      "mfaEnrollError": "Error enrolling in 2FA. Please try again.",
+      "mfaFinalizeError": "Error finalizing 2FA setup. Please try again.",
+      "mfaError": "Invalid verification code. Please try again.",
+      "emailNotVerified": "Please verify your email before setting up 2FA.",
+      "emailVerificationError": "Error sending verification email. Please try again.",
+      "emailVerificationSent": "Verification email sent. Please check your inbox.",
+      "sendVerificationEmail": "Send Verification Email"
+    },
+    "verifyMFA": {
+      "title": "Verify Two-Factor Authentication",
+      "triggerSMS": "Send SMS Code",
+      "verifyCode": "Verify Code",
+      "phoneNumber": "We will send a verification code to your registered phone number: {phoneNumber}"
+    },
+    "setupMFA": {
+      "title": "Set up Two-Factor Authentication",
+      "pageTitle": "Secure Your Account",
+      "sendCode": "Send Verification Code",
+      "verifyCode": "Verify Code",
+      "enterCodeHelperText": "Please enter the verification code we sent to your phone:"
+    },
+    "verifyEmail": {
+      "pageTitle": "Verify Your Email",
+      "instructions": "Please check your email and click the verification link to continue.",
+      "sendButton": "Resend Verification Email"
     }
   }
 }

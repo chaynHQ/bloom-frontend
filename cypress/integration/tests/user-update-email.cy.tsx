@@ -33,7 +33,7 @@ describe('User account settings page', () => {
     cy.get('#email').clear().type(newEmail);
     cy.get('#profile-settings-submit').click();
     cy.get('#confirm-dialog-submit').click();
-    cy.get('[qa-id="dialogLoginButton"]').click();
+    cy.url({ timeout: 10000 }).should('include', '/auth/login');
     cy.get('#email').type(newEmail);
     cy.get('#password').type(password);
     cy.get('#login-submit').click();
