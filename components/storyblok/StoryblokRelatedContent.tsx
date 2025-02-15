@@ -3,10 +3,10 @@
 import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
 import Carousel, { getSlideWidth } from '@/components/common/Carousel';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
@@ -30,21 +30,23 @@ export interface StoryblokRelatedContentProps {
 export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
   const { relatedContent, relatedExercises, userContentPartners = [] } = props;
   const tExerciseNames = useTranslations('Shared.exerciseNames');
-  const params = useParams<{ locale: string }>();
   const locale = useLocale();
 
-  const relatedExercisesItems = relatedExercises.map((relatedExerciseId) => {
-    const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
-      ? EXERCISE_CATEGORIES.GROUNDING
-      : EXERCISE_CATEGORIES.ACTIVITIES;
+  const relatedExercisesItems =
+    locale === 'de'
+      ? [] // exercises are not currently available in german so we'll return an empty list for 'de'
+      : relatedExercises.map((relatedExerciseId) => {
+          const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
+            ? EXERCISE_CATEGORIES.GROUNDING
+            : EXERCISE_CATEGORIES.ACTIVITIES;
 
-    return {
-      id: relatedExerciseId,
-      name: tExerciseNames(relatedExerciseId),
-      href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
-      category: exerciseCategory,
-    };
-  });
+          return {
+            id: relatedExerciseId,
+            name: tExerciseNames(relatedExerciseId),
+            href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
+            category: exerciseCategory,
+          };
+        });
 
   const disabledCoursesString = process.env.FF_DISABLED_COURSES;
 
@@ -55,7 +57,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
         story.content?.languages?.length > 0
           ? story.content.languages.includes(localeString)
           : true;
-      const storyDisabled = disabledCoursesString?.includes(`${localeString}/${story.full_slug}`);
+      const storyDisabled = disabledCoursesString?.includes(story.full_slug);
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
@@ -71,7 +73,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
       <RelatedContentCard
         key={`related_content_${relatedContentItem.id}`}
         title={relatedContentItem.content.name}
-        href={`/${relatedContentItem.full_slug}`}
+        href={getDefaultFullSlug(relatedContentItem.full_slug, locale)}
         category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
         duration={
           relatedContentItem.content && 'duration' in relatedContentItem.content

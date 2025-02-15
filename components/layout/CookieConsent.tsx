@@ -6,7 +6,7 @@ import { setCookiesAccepted } from '@/lib/store/userSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import IllustrationCookieCat from '@/public/illustration_cookie_cat.svg';
-import { Box, Button, Link, alpha, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Link, Typography, alpha, useMediaQuery, useTheme } from '@mui/material';
 import { sendGAEvent } from '@next/third-parties/google';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -40,6 +40,9 @@ const Consent = () => {
   const acceptButtonStyle = {
     backgroundColor: 'secondary.main',
     marginBottom: theme.spacing(1),
+    ':hover': {
+      backgroundColor: 'secondary.dark',
+    },
   };
   const declineButtonStyle = {
     fontSize: theme.typography.caption.fontSize,
@@ -97,7 +100,7 @@ const Consent = () => {
       enableDeclineButton
       ButtonComponent={Button}
       customButtonProps={{
-        size: 'medium',
+        size: 'small',
         variant: 'contained',
         display: 'block',
         'qa-id': 'cookieConsentAcceptButton',
@@ -113,7 +116,7 @@ const Consent = () => {
       ariaDeclineLabel={tS('cookieConsent.declineLabel')}
       flipButtons={true}
     >
-      <Box width={[60, 70]} margin="auto" marginBottom={2}>
+      <Box width={[60, 70]} margin="auto" mb={1}>
         <Image
           alt={tS('alt.cookieCat')}
           src={IllustrationCookieCat}
@@ -124,22 +127,17 @@ const Consent = () => {
           }}
         />
       </Box>
-      <Box
-        marginBottom={2}
-        sx={{
-          fontSize: theme.typography.body2.fontSize,
-          [theme.breakpoints.up('sm')]: {
-            fontSize: theme.typography.body1.fontSize,
-          },
-        }}
-      >
-        {tS('cookieConsent.cookieConsentExplainer')}
-        <Link
-          target="_blank"
-          href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
-        >
-          {tS('cookieConsent.cookieConsentPolicy')}
-        </Link>
+      <Box mb={2}>
+        <Typography fontSize={'1rem !important'}>
+          {tS('cookieConsent.cookieConsentExplainer')}
+          <Link
+            target="_blank"
+            href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
+          >
+            {tS('cookieConsent.cookieConsentPolicy')}
+          </Link>
+          .
+        </Typography>
       </Box>
     </CookieConsent>
   );

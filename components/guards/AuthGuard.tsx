@@ -1,24 +1,26 @@
 'use client';
 
 import LoadingContainer from '@/components/common/LoadingContainer';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { redirect, usePathname, useRouter } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useLoadUser from '@/lib/hooks/useLoadUser';
-import { default as generateReturnUrlQuery } from '@/lib/utils/generateReturnQuery';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+import { useLocale } from 'next-intl';
 import { ReactNode } from 'react';
+import LoginDialog from '../layout/LoginDialog';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
+const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account', 'conversations'];
+const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
 export function AuthGuard({ children }: { children: ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
+  const locale = useLocale();
+  const router = useRouter();
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
@@ -26,14 +28,13 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   const isMaintenanceMode = getIsMaintenanceMode();
   const { userResourceError } = useLoadUser();
   const unauthenticated = userResourceError || (!userAuthLoading && !userLoading && !userId);
-
   // Get top level directory of path e.g pathname /courses/course_name has pathHead courses
   const pathHead = pathname.split('/')[1]; // E.g. courses | therapy | partner-admin
 
   // If app is in maintenance mode, redirect all pages to /maintenance
   if (isMaintenanceMode && pathname !== '/maintenance') {
     if (typeof window !== 'undefined') {
-      router.replace(`/maintenance`);
+      router.replace('/maintenance', { locale });
     }
     return <LoadingContainer />;
   }
@@ -41,7 +42,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   // If app is not in maintenance mode, redirect /maintenance to home page
   if (!isMaintenanceMode && pathname === '/maintenance') {
     if (typeof window !== 'undefined') {
-      router.replace(`/`);
+      redirect({ href: '/', locale });
     }
     return <LoadingContainer />;
   }
@@ -56,7 +57,16 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.replace(`/auth/login${generateReturnUrlQuery(pathname)}`);
+    if (shouldNotShowPreview.includes(pathHead)) {
+      router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
+    } else {
+      return (
+        <>
+          <LoginDialog />
+          {children}
+        </>
+      );
+    }
   }
 
   if (userId) {

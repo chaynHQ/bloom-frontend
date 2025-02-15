@@ -42,25 +42,25 @@ const buttonStyle = {
 } as const;
 
 export default function LanguageMenu() {
-  const router = useRouter();
   const pathname = usePathname();
-  const params = useParams<{ locale: string }>();
+  const router = useRouter();
+  const params = useParams();
   const locale = useLocale();
   const t = useTranslations('Navigation');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  function onChangeLanguage(locale: string) {
+  function onChangeLanguage(newLocale: string) {
     startTransition(() => {
-      logEvent(generateLanguageMenuEvent(locale));
+      logEvent(generateLanguageMenuEvent(newLocale));
       handleClose();
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
         { pathname, params },
-        { locale: locale },
+        { locale: newLocale.toUpperCase() },
       );
     });
   }

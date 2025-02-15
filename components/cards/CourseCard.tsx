@@ -3,6 +3,7 @@
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { iconTextRowStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
@@ -17,7 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -78,6 +79,7 @@ const CourseCard = (props: CourseCardProps) => {
   const { course, courseProgress, clickable = true } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
+  const locale = useLocale();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -89,7 +91,7 @@ const CourseCard = (props: CourseCardProps) => {
         <CardActionArea
           sx={cardActionStyle}
           component={i18nLink}
-          href={`/${course.full_slug}`}
+          href={getDefaultFullSlug(course.full_slug, locale)}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >
           <CardContent sx={cardContentStyle}>

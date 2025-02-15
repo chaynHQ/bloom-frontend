@@ -1,8 +1,8 @@
 import { STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
 import { Course, Session } from '@/lib/store/coursesSlice';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
+import { createCrispProfileData } from '@/lib/utils/createCrispProfileData';
 import { expect } from '@jest/globals';
-import { createCrispProfileData } from './createCrispProfileData';
 
 const partnerAccess = {
   featureLiveChat: true,

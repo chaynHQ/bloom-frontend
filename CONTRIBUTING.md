@@ -2,7 +2,7 @@
 
 Thank you for taking the time to contribute!
 
-Have feedback on how we can improve? Questions, insight, or other concerns? We invite you to share in our [this anonymous form](https://forms.gle/v2whmf4XX3du4Y3t9).
+Have feedback on how we can improve? Questions, insight, or other concerns? We invite you to share in [this anonymous form](https://forms.gle/v2whmf4XX3du4Y3t9).
 
 ## Support Our Work
 
@@ -152,7 +152,7 @@ To create new branches locally, run this git command to create a new branch and 
 git checkout -b <feature-branch-name>
 ```
 
-5. **Verify that you working in the correct feature branch** by running this command (you should see your feature branch as the selected branch):
+5. **Verify that you are working in the correct feature branch** by running this command (you should see your feature branch as the selected branch):
 
 ```
 git branch
@@ -177,7 +177,7 @@ Whether you are a beginner developer or experienced, we recommend all contributo
 3. **Run linters** to properly format your code before making commits. Directions for running linters are in the repository's `README` file.
 4. **Run tests and check that they pass.** Directions for running tests are in the repository's `README` file.
 
-5. **Check that no secrets (sensitive API keys and environment variables) and no unwanted, irrelevant files are commited.** Everything you commit to Chayn will be public, please be vigilant about not commiting sensitive information. Be sure to update `.gitignore` as needed, making sure to clean the `.gitignore` cache whenever new files are added to it. Learn more about properly using the `.gitignore` file to ignore specific files in this GitHub guide: [Ignoring Files Guide](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files).
+5. **Check that no secrets (sensitive API keys and environment variables) and no unwanted, irrelevant files are committed.** Everything you commit to Chayn will be public, please be vigilant about not committing sensitive information. Be sure to update `.gitignore` as needed, making sure to clean the `.gitignore` cache whenever new files are added to it. Learn more about properly using the `.gitignore` file to ignore specific files in this GitHub guide: [Ignoring Files Guide](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files).
 
 6. **Write readable commit messages** as demonstrated below:
 
@@ -220,7 +220,7 @@ If the default branch of the Chayn repository you forked from has been updated (
 
 ### How Can I Tell if the Upstream Repository has been Updated?
 
-Navigate to the GitHub UI (in the web browser) and view your forked repository, you will see a notification alerting you that your fork has less commits than the the upstream. See an example in the guide linked below.
+Navigate to the GitHub UI (in the web browser) and view your forked repository, you will see a notification alerting you that your fork has less commits than the upstream. See an example in the guide linked below.
 
 ### How Do I Update my Fork?
 
@@ -247,7 +247,7 @@ We recommend using the `git status` command to verify that the right files are b
 
 - [Git Docs: git-status command](https://git-scm.com/docs/git-status)
 - [Git Docs: git push command](https://github.com/git-guides/git-push)
-- [GitHub Docs: How to Push to Remote Repositoru](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository)
+- [GitHub Docs: How to Push to a Remote Repository](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository)
 
 ## 7 . **Make a Pull Request to Chayn:**
 
@@ -263,4 +263,4 @@ Woohoo! Once your PR is merged, your changes will be public on GitHub!
 
 Thank you for contributing to Chayn! 👏
 
-**If you enjoyed the contributing to Chayn, give our repo a star to help our projects reach more developers like you!** ⭐
+**If you enjoyed contributing to Chayn, give our repo a star to help our projects reach more developers like you!** ⭐

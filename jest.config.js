@@ -4,7 +4,10 @@ module.exports = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
+  modulePaths: ['<rootDir>'],
   moduleNameMapper: {
+    '@/(.*)': '<rootDir>/$1',
+
     /* Handle CSS imports (with CSS modules)
     https://jestjs.io/docs/webpack#mocking-css-modules */
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',

@@ -4,20 +4,24 @@ import { ACCORDION_OPENED, generateAccordionEvent } from '@/lib/constants/events
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
+import muiTheme from '@/styles/theme';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box } from '@mui/material';
+
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box,
   Icon,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
+
 const containerStyle = {
   width: '100%',
   maxWidth: 725,
@@ -55,6 +59,8 @@ interface StoryblokAccordionProps {
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   const { _uid, _editable, accordion_items, theme } = props;
   const searchParams = useSearchParams();
+  const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const headerOffset = isSmallScreen ? 48 : 136;
 
   const handleChange =
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -70,10 +76,13 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
 
   useEffect(() => {
     if (accordionInUrl && scrollRef.current) {
+      const scrollToY =
+        // @ts-ignore
+        scrollRef.current.getBoundingClientRect().top + window.scrollY - headerOffset - 16;
+      window.scrollTo({ top: scrollToY, behavior: 'smooth' });
       // @ts-ignore
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [searchParams, accordionInUrl]);
+  }, [headerOffset, accordionInUrl]);
 
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>

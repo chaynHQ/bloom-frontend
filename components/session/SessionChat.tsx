@@ -5,11 +5,17 @@ import { Dots } from '@/components/common/Dots';
 import Video from '@/components/video/Video';
 import { Link as i18nLink } from '@/i18n/routing';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
-
+const listItemStyle = {
+  display: 'list-item',
+  color: 'primary.dark',
+  span: {
+    color: 'text.primary',
+  },
+} as const;
 interface SessionChatProps {
   eventData: { [key: string]: any };
 }
@@ -17,6 +23,14 @@ interface SessionChatProps {
 export const SessionChat = (props: SessionChatProps) => {
   const { eventData } = props;
   const t = useTranslations('Courses');
+
+  const chatList = [
+    t('sessionDetail.chat.detailPrivacy'),
+    t('sessionDetail.chat.detailTimezone'),
+    t('sessionDetail.chat.detailLanguage'),
+    t('sessionDetail.chat.detailLegal'),
+    t('sessionDetail.chat.detailImmediateHelp'),
+  ];
 
   return (
     <>
@@ -36,17 +50,14 @@ export const SessionChat = (props: SessionChatProps) => {
           url={t('sessionDetail.chat.videoLink')}
           containerStyles={{ mx: 'auto', my: 2 }}
         ></Video>
-        <Box sx={chatDetailIntroStyle}>
-          <Typography>{t('sessionDetail.chat.detailIntro')}</Typography>
-        </Box>
         <Box>
-          <ul>
-            <li>{t('sessionDetail.chat.detailPrivacy')}</li>
-            <li>{t('sessionDetail.chat.detailTimezone')}</li>
-            <li>{t('sessionDetail.chat.detailLanguage')}</li>
-            <li>{t('sessionDetail.chat.detailLegal')}</li>
-            <li>{t('sessionDetail.chat.detailImmediateHelp')}</li>
-          </ul>
+          <List sx={{ listStyleType: 'disc', pl: 2 }}>
+            {chatList.map((text, index) => (
+              <ListItem key={`chat_copy_${index}`} sx={listItemStyle}>
+                <Typography component="span">{text}</Typography>
+              </ListItem>
+            ))}
+          </List>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
           <Button

@@ -3,21 +3,15 @@
 import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { breadcrumbButtonStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import CircleIcon from '@mui/icons-material/Circle';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, useMediaQuery } from '@mui/material';
 import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-
-const buttonStyle = {
-  background: theme.palette.background.default,
-  boxShadow: 'none !important',
-  ':hover': {
-    background: 'white',
-  },
-} as const;
 
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
@@ -39,9 +33,12 @@ interface SessionHeaderProps {
 
 export const SessionHeader = (props: SessionHeaderProps) => {
   const { description, name, sessionProgress, course, subtitle, storyUuid, storyPosition } = props;
-  const [weekString, setWeekString] = useState<string>('');
 
   const t = useTranslations('Courses');
+  const locale = useLocale();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [weekString, setWeekString] = useState<string>('');
 
   const headerProps = {
     title: name,
@@ -60,6 +57,10 @@ export const SessionHeader = (props: SessionHeaderProps) => {
     });
   }, [storyUuid, course.content.weeks]);
 
+  const courseNameEllipses =
+    isSmallScreen && course.content.name.length > 35
+      ? `${course.content.name.substring(0, 35)}...`
+      : course.content.name;
   return (
     <Header
       title={headerProps.title}
@@ -68,20 +69,20 @@ export const SessionHeader = (props: SessionHeaderProps) => {
       imageAlt={headerProps.imageAlt}
       progressStatus={sessionProgress}
     >
-      <Button variant="contained" href="/courses" sx={buttonStyle} size="small">
-        Courses
+      <Button variant="contained" href="/courses" sx={breadcrumbButtonStyle} size="small">
+        {t('courses')}
       </Button>
 
       <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
 
       <Button
         variant="contained"
-        sx={buttonStyle}
-        href={`/${course.full_slug}`}
+        sx={breadcrumbButtonStyle}
+        href={getDefaultFullSlug(course.full_slug, locale)}
         component={i18nLink}
         size="small"
       >
-        {course.name}
+        {courseNameEllipses}
       </Button>
       <Typography sx={sessionSubtitleStyle} variant="body2">
         {weekString} -{' '}

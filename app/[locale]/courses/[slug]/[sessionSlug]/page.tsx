@@ -25,7 +25,9 @@ export async function generateMetadata({ params }: { params: Params }) {
   const fullSlug = `courses/${slug}/${sessionSlug}`;
   const story = await getStory(locale, fullSlug);
 
-  if (!story) return;
+  if (!story) {
+    return;
+  }
 
   return generateMetadataBasic({
     title: story.content.name,
@@ -35,7 +37,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export async function generateStaticParams() {
-  let paths: { slug: string; locale: string }[] = [];
+  let paths: { slug: string; sessionSlug: string; locale: string }[] = [];
 
   const locales = routing.locales;
   const storyblokApi = getStoryblokApi();
@@ -43,30 +45,19 @@ export async function generateStaticParams() {
   let sbParams: ISbStoriesParams = {
     version: 'published',
     starts_with: 'courses/',
-    content_type: 'session',
-  };
-
-  let sbIBAParams: ISbStoriesParams = {
-    version: 'published',
-    starts_with: 'courses/',
-    content_type: 'session_iba',
   };
 
   let { data } = await storyblokApi.get('cdn/links', sbParams);
-  let { data: dataIBA } = await storyblokApi.get('cdn/links', sbIBAParams);
 
-  const combinedSessions = { ...data.links, ...dataIBA.links };
-
-  Object.keys(combinedSessions).forEach((linkKey) => {
+  Object.keys(data.links).forEach((linkKey) => {
     const session = data.links[linkKey];
 
-    if (!session.slug || !session.published) return;
-
-    const courseSlug = session.slug.split('/')[1];
-    const sessionSlug = session.slug.split('/')[2];
+    if (!session.slug || !session.published || session.is_startpage || session.is_folder) return;
 
     for (const locale of locales) {
-      paths.push({ slug: `/${courseSlug}/${sessionSlug}`, locale });
+      const slug = session.slug.split('/')[1];
+      const sessionSlug = session.slug.split('/')[2];
+      paths.push({ slug, sessionSlug, locale });
     }
   });
 

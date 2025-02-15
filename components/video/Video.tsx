@@ -97,8 +97,8 @@ const Video = (props: VideoProps) => {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
   } as const;
 
-  const videoConfig = (video: { url: string }): YouTubeConfig => {
-    return video.url.indexOf('youtu.be') > -1 || video.url.indexOf('youtube') > -1
+  const getVideoConfig = (url: string): YouTubeConfig | undefined => {
+    return url.indexOf('youtu.be') > -1 || url.indexOf('youtube') > -1
       ? {
           embedOptions: {
             host: 'https://www.youtube-nocookie.com',
@@ -109,8 +109,10 @@ const Video = (props: VideoProps) => {
             },
           }),
         }
-      : {};
+      : undefined;
   };
+
+  const videoConfig = getVideoConfig(url);
 
   return (
     <Box sx={containerStyle}>
@@ -130,7 +132,7 @@ const Video = (props: VideoProps) => {
           url={url}
           controls
           modestbranding={1}
-          {...videoConfig({ url })}
+          config={videoConfig}
         />
       </Box>
     </Box>
