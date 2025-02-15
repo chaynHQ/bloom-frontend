@@ -1,7 +1,7 @@
 'use client';
 
 import { SessionProgressDisplay } from '@/components/session/SessionProgressDisplay';
-import { useRouter } from '@/i18n/routing';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { rowStyle } from '@/styles/common';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -16,7 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 const cardStyle = {
@@ -64,21 +64,16 @@ interface SessionCardProps {
 const SessionCard = (props: SessionCardProps) => {
   const { session, sessionSubtitle, storyblokCourseId, isLoggedIn } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
-
   const t = useTranslations('Courses');
-  const router = useRouter();
+  const locale = useLocale();
 
   const scrollToSignupBanner = () => {
-    if (isLoggedIn) {
-      router.push(`/${session.full_slug}`);
-    } else {
-      const signupBanner = document.getElementById('signup-banner');
+    const signupBanner = document.getElementById('signup-banner');
 
-      if (signupBanner) {
-        const scrollToY = signupBanner.getBoundingClientRect().top + window.scrollY - 136;
+    if (signupBanner) {
+      const scrollToY = signupBanner.getBoundingClientRect().top + window.scrollY - 136;
 
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: scrollToY, behavior: 'smooth' });
     }
   };
 
@@ -95,7 +90,7 @@ const SessionCard = (props: SessionCardProps) => {
       <CardActionArea
         sx={cardActionStyle}
         {...(isLoggedIn
-          ? { href: `/${session.full_slug}`, component: Link }
+          ? { href: getDefaultFullSlug(session.full_slug, locale), component: Link }
           : { onClick: scrollToSignupBanner })}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >

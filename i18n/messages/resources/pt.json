@@ -1,5 +1,7 @@
 {
   "Resources": {
+    "backToConversations": "Voltar às conversas",
+    "backToShorts": "Voltar às curtas",
     "conversations": "Conversas",
     "shorts": "Curtas",
     "completed": "Concluído",

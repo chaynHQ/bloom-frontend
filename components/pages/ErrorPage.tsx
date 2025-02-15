@@ -2,18 +2,12 @@
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import bloomHead from '@/public/illustration_bloom_head.svg';
-import { columnStyle } from '@/styles/common';
+import { fullScreenContainerStyle } from '@/styles/common';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect } from 'react';
-
-const containerStyle = {
-  ...columnStyle,
-  height: '100vh',
-  alignItems: 'flex-start',
-} as const;
 
 const imageContainerStyle = {
   position: 'relative',
@@ -40,10 +34,10 @@ export default function ErrorPage({
     }
   }, [error, rollbar]);
 
-  const t = useTranslations('Shared.error');
+  const t = useTranslations('Shared');
 
   return (
-    <Container sx={containerStyle}>
+    <Container sx={fullScreenContainerStyle}>
       <Box sx={imageContainerStyle}>
         <Image
           alt={t('alt.bloomLogo')}
@@ -52,8 +46,8 @@ export default function ErrorPage({
           sizes={getImageSizes(imageContainerStyle.width)}
         />
       </Box>
-      <Typography variant="h1">{t('title')}</Typography>
-      <Typography>{t('description')}</Typography>
+      <Typography variant="h1">{t('error.title')}</Typography>
+      <Typography>{t('error.description')}</Typography>
       <Button
         sx={{ mt: 3 }}
         variant="contained"
@@ -63,7 +57,7 @@ export default function ErrorPage({
           () => reset()
         }
       >
-        {t('buttonLabel')}
+        {t('error.buttonLabel')}
       </Button>
     </Container>
   );

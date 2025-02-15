@@ -51,17 +51,16 @@ export default function LanguageMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  function onChangeLanguage(locale: string) {
+  function onChangeLanguage(newLocale: string) {
     startTransition(() => {
-      logEvent(generateLanguageMenuEvent(locale));
+      logEvent(generateLanguageMenuEvent(newLocale));
       handleClose();
       router.replace(
-        {
-          pathname,
-          // @ts-ignore
-          params,
-        },
-        locale,
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        // are used in combination with a given `pathname`. Since the two will
+        // always match for the current route, we can skip runtime checks.
+        { pathname, params },
+        { locale: newLocale.toUpperCase() },
       );
     });
   }

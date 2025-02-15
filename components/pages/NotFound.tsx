@@ -5,16 +5,10 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import bloomHead from '@/public/illustration_bloom_head.svg';
-import { columnStyle } from '@/styles/common';
+import { fullScreenContainerStyle } from '@/styles/common';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-
-const containerStyle = {
-  ...columnStyle,
-  minHeight: 'calc(100vh - 120px)',
-  alignItems: 'flex-start',
-} as const;
 
 const imageContainerStyle = {
   position: 'relative',
@@ -34,7 +28,7 @@ export default function NotFoundPage() {
   }
 
   return (
-    <Container sx={containerStyle}>
+    <Container sx={fullScreenContainerStyle}>
       <Box sx={imageContainerStyle}>
         <Image
           alt={t('alt.bloomLogo')}

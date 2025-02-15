@@ -80,14 +80,14 @@ export default async function Page({ params }: { params: Params }) {
     story?.content.related_session[0].content.course,
   );
 
-  if (!story) {
+  if (!story || !relatedCourse) {
     notFound();
   }
 
   return (
     <StoryblokResourceShortPage
       {...(story.content as StoryblokResourceShortPageProps)}
-      related_course={relatedCourse ? relatedCourse[0] : undefined}
+      related_course={relatedCourse[0]}
       storyId={story.id}
     />
   );

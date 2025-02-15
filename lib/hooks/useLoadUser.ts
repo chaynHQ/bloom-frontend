@@ -17,7 +17,9 @@ import {
   setAuthStateLoading,
   setLoadError,
   setUserLoading,
+  setUserMFAisSetup,
   setUserToken,
+  setUserVerifiedEmail,
 } from '@/lib/store/userSlice';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
@@ -48,10 +50,12 @@ export default function useLoadUser() {
     const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
       logEvent(GET_AUTH_USER_REQUEST);
 
-      const token = await firebaseUser?.getIdToken();
+      const token = await firebaseUser?.getIdTokenResult();
       if (token) {
         // User logged in or started a new authenticated session
-        await dispatch(setUserToken(token));
+        await dispatch(setUserToken(token.token));
+        await dispatch(setUserVerifiedEmail(firebaseUser?.emailVerified ?? false));
+        await dispatch(setUserMFAisSetup(!!token.signInSecondFactor));
         // Trigger call to get user record by changing userLoading state, skip if in maintenance mode
         !isMaintenanceMode && (await dispatch(setUserLoading(true)));
         logEvent(GET_AUTH_USER_SUCCESS);

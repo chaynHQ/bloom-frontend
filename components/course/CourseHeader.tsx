@@ -3,18 +3,10 @@
 import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
-import theme from '@/styles/theme';
+import { breadcrumbButtonStyle } from '@/styles/common';
 import { Button } from '@mui/material';
 import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-
-const buttonStyle = {
-  background: theme.palette.background.default,
-  boxShadow: 'none !important',
-  ':hover': {
-    background: 'white',
-  },
-} as const;
 
 interface CourseHeaderProps {
   name: string;
@@ -39,7 +31,13 @@ const CourseHeader = (props: CourseHeaderProps) => {
 
   return (
     <Header {...headerProps}>
-      <Button variant="outlined" sx={buttonStyle} href="/courses" component={i18nLink} size="small">
+      <Button
+        variant="contained"
+        sx={breadcrumbButtonStyle}
+        href="/courses"
+        component={i18nLink}
+        size="small"
+      >
         {t('backToCourses')}
       </Button>
     </Header>

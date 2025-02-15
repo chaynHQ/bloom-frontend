@@ -45,7 +45,6 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
 
     if (completeSessionResponse.data) {
       logEvent(SESSION_COMPLETE_SUCCESS, eventData);
-      window.scrollTo(0, 0);
     }
 
     if (completeSessionResponse.error) {

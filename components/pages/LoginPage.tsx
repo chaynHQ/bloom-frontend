@@ -1,84 +1,98 @@
 'use client';
 
 import LoginForm from '@/components/forms/LoginForm';
-import PartnerHeader from '@/components/layout/PartnerHeader';
-import { Link as i18nLink, useRouter } from '@/i18n/routing';
-import {
-  GET_STARTED_WITH_BLOOM_CLICKED,
-  RESET_PASSWORD_HERE_CLICKED,
-  generateGetStartedPartnerEvent,
-} from '@/lib/constants/events';
-import { getAllPartnersContent } from '@/lib/constants/partners';
+import { useRouter } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getImageSizes } from '@/lib/utils/imageSizes';
-import logEvent from '@/lib/utils/logEvent';
-import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
-import { rowStyle } from '@/styles/common';
-import {
-  Box,
-  Card,
-  CardContent,
-  Container,
-  Link,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import theme from '@/styles/theme';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-
-const containerStyle = {
-  ...rowStyle,
-  backgroundColor: 'primary.light',
-} as const;
-
-const textContainerStyle = {
-  maxWidth: 600,
-  width: { xs: '100%', md: '45%' },
-} as const;
-
-const formCardStyle = {
-  width: { xs: '100%', sm: '70%', md: '45%' },
-  alignSelf: 'flex-start',
-} as const;
+import { useEffect, useState } from 'react';
+import UserResearchBanner from '../banner/UserResearchBanner';
+import SetupMFA from '../guards/SetupMFA';
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 120, md: 160 },
-  height: { xs: 70, md: 80 },
-  marginBottom: 3,
-  marginTop: { xs: 0, md: 2 },
+  width: { xs: 100, md: 120 },
+  height: { xs: 80, md: 100 },
+} as const;
+
+const headerContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
+  paddingTop: { xs: '0', md: '6.5rem ' },
+  paddingY: '2rem',
+  paddingX: '2rem',
+  background: {
+    xs: theme.palette.bloomGradient,
+    md: theme.palette.bloomGradient,
+  },
+};
+const headerContentStyle = {
+  alignContent: 'flex-center',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: 3,
+  width: '100%',
+  maxWidth: 400,
+};
+
+const backButtonStyle = {
+  display: { md: 'none' },
+  width: '2.5rem',
+  marginLeft: '-0.675rem',
+  marginY: { xs: 1.5, sm: 2 },
+  paddingRight: '1rem',
+  alignSelf: 'start',
+} as const;
+
+const backIconStyle = {
+  height: '1.75rem',
+  width: '1.75rem',
+  color: 'primary.dark',
 } as const;
 
 export default function LoginPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
-  const theme = useTheme();
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-
   const userId = useTypedSelector((state) => state.user.id);
+  const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
+  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
+  const [showSetupMFA, setShowSetupMFA] = useState(false);
+
   const headerProps = {
-    partnerLogoSrc: welcomeToBloom,
-    partnerLogoAlt: 'alt.welcomeToBloom',
-    imageSrc: illustrationBloomHeadYellow,
-    imageAlt: 'alt.bloomHead',
+    imageSrc: illustrationLeafMix,
+    imageAlt: 'alt.leafMix',
   };
 
-  const allPartnersContent = getAllPartnersContent();
-
   useEffect(() => {
-    // Redirect if the user is on the login page but is already logged in and their data has been retrieved from the backend
-    if (!userId) return;
+    if (!userId) {
+      if (showSetupMFA) {
+        setShowSetupMFA(false);
+      }
+      return;
+    }
 
+    // Check if superadmin and complete extra 2FA/MFA steps
+    if (userIsSuperAdmin && !userMFAisSetup) {
+      setShowSetupMFA(true);
+      return;
+    }
+
+    // Redirect if the user if login process is complete and userId loaded
     const returnUrl = searchParams?.get('return_url');
 
     if (partnerAdmin?.active) {
@@ -88,97 +102,51 @@ export default function LoginPage() {
     } else {
       router.push('/courses');
     }
-  }, [userId, partnerAdmin?.active, router, searchParams]);
-
-  const ExtraContent = () => {
-    return (
-      <>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={tS('alt.leafMix')}
-            src={illustrationLeafMix}
-            fill
-            sizes={getImageSizes(imageContainerStyle.width)}
-          />
-        </Box>
-        <Typography variant="h3" component="h3">
-          {t('login.newUserTitle')}
-        </Typography>
-        <Typography>
-          <Link
-            component={i18nLink}
-            onClick={() => {
-              logEvent(GET_STARTED_WITH_BLOOM_CLICKED);
-            }}
-            href="/"
-          >
-            {t('getStartedBloom')}
-          </Link>
-        </Typography>
-
-        {allPartnersContent?.map((partner) => (
-          <Typography key={`${partner.name}-link`} mt={0.5}>
-            <Link
-              component={i18nLink}
-              mt="1rem !important"
-              href={`/welcome/${partner.name.toLowerCase()}`}
-              onClick={() => {
-                logEvent(generateGetStartedPartnerEvent(partner.name));
-              }}
-            >
-              {t.rich('getStartedWith', { partnerName: partner.name })}
-            </Link>
-          </Typography>
-        ))}
-      </>
-    );
-  };
+  }, [
+    userId,
+    partnerAdmin?.active,
+    router,
+    searchParams,
+    showSetupMFA,
+    userIsSuperAdmin,
+    userMFAisSetup,
+  ]);
 
   return (
     <Box>
-      <PartnerHeader
-        partnerLogoSrc={headerProps.partnerLogoSrc}
-        partnerLogoAlt={headerProps.partnerLogoAlt}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
-      />
-      <Container sx={containerStyle}>
-        <Box sx={textContainerStyle}>
-          <Typography pb={2} variant="subtitle1" component="p">
-            {t('introduction')}
-          </Typography>
-          {!isSmallScreen && <ExtraContent />}
-        </Box>
-        <Card sx={formCardStyle}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
+      <Head>
+        <title>{`${t('login.title')} • Bloom`}</title>
+      </Head>
+      <Box sx={headerContainerStyle}>
+        <UserResearchBanner />
+        <IconButton
+          sx={backButtonStyle}
+          onClick={() => router.back()}
+          aria-label={tS('navigateBack')}
+        >
+          <KeyboardArrowLeftIcon sx={backIconStyle} />
+        </IconButton>
+        <Box sx={headerContentStyle}>
+          <Box>
+            <Typography variant="h1" component="h1" marginBottom={0}>
               {t('login.title')}
             </Typography>
-
-            <LoginForm />
-            <Typography textAlign="center">
-              {t.rich('login.resetPasswordLink', {
-                resetLink: (children) => (
-                  <Link
-                    component={i18nLink}
-                    onClick={() => {
-                      logEvent(RESET_PASSWORD_HERE_CLICKED);
-                    }}
-                    href="/auth/reset-password"
-                  >
-                    {children}
-                  </Link>
-                ),
-              })}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Container>
-      {isSmallScreen && (
-        <Container>
-          <ExtraContent />
-        </Container>
-      )}
+          </Box>
+          <Card style={{ marginTop: 0, maxWidth: 400 }}>
+            <CardContent>{showSetupMFA ? <SetupMFA /> : <LoginForm />}</CardContent>
+          </Card>
+          <Box sx={imageContainerStyle}>
+            <Image
+              src={headerProps.imageSrc}
+              alt={headerProps.imageAlt}
+              fill
+              style={{
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 }
