@@ -1,6 +1,6 @@
 ### Resolves #enter-issue-number
 
-### What changes did you make and why did you make them?
+### What changes did you make and why did you make them? (Include screenshots)
 
 ### Did you run tests? Share screenshot of results:
 
