@@ -1,10 +1,13 @@
-name: Build & test
+name: Prescan PR
 
 on:
   pull_request:
     types: [opened, synchronize]
   push:
     branches: [develop]
+
+permissions:
+  contents: read
 
 jobs:
   build-and-test:
@@ -19,14 +22,14 @@ jobs:
         uses: actions/cache@v4
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}nm
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Use NodeJs
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: "20.x"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --non-interactive
@@ -38,14 +41,19 @@ jobs:
         run: yarn type-check
         continue-on-error: true
 
-      - name: Build app
-        run: yarn build
+      - name: View PR author
+        id: view-pr-author
         env:
-          NEXT_PUBLIC_ROLLBAR_ENV: CI
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
-          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
-          NEW_RELIC_APP_NAME: ${{ secrets.NEW_RELIC_APP_NAME }}
-          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-      - name: Test app
-        run: yarn test
+          TEAM_MEMBER: ${{ github.event.pull_request.user.login == 'kyleecodes' }}
+        run: |
+          if [ $TEAM_MEMBER = true ]; 
+            echo "This PR is opened by a team member."
+            exit 0
+          else
+            echo "This PR is opened by a non-team member."
+            exit 1
+          fi
+
+      # - name: The PR author is not a team member
+      #   if: ${{ failure() && steps.view-pr-author.conclusion == 'failure' }}
+      #   run: echo "PR author is not a team member - checks failed"

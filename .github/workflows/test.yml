@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  workflow_run:
+    workflows: [Prescan PR]
+    types:
+      - completed
+      - requested
+
+jobs:
+  check-prescan:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Build app
+        run: yarn build
+        env:
+          NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
+          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
+          NEW_RELIC_APP_NAME: ${{ secrets.NEW_RELIC_APP_NAME }}
+          NEW_RELIC_LICENSE_KEY: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+      - name: Test app
+        run: yarn test
