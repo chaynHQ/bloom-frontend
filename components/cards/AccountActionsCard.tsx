@@ -17,7 +17,6 @@ const cardStyle = {
 
 const AccountActionsCard = () => {
   const t = useTranslations('Account.accountSettings');
-  const tS = useTranslations('Shared');
   const router = useRouter();
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
   const [error, setError] = useState<ErrorDisplay>();

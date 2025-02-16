@@ -7,11 +7,13 @@ import useLoadUser from '@/lib/hooks/useLoadUser';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import { useLocale } from 'next-intl';
 import { ReactNode } from 'react';
+import LoginDialog from '../layout/LoginDialog';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
+const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account', 'conversations'];
+const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing
 // New pages will default to requiring authenticated and public pages must be added to the array above
@@ -55,7 +57,16 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   // Page requires authenticated user
   if (unauthenticated && typeof window !== 'undefined') {
-    router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
+    if (shouldNotShowPreview.includes(pathHead)) {
+      router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
+    } else {
+      return (
+        <>
+          <LoginDialog />
+          {children}
+        </>
+      );
+    }
   }
 
   if (userId) {

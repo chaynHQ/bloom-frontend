@@ -1,12 +1,13 @@
 import Rollbar from 'rollbar';
+import { ENVIRONMENT } from './constants/common';
 
 const baseConfig = {
   captureUncaught: true,
   captureUnhandledRejections: true,
-  environment: process.env.NODE_ENV,
+  environment: ENVIRONMENT,
   captureIP: 'anonymize',
   payload: {
-    environment: process.env.NODE_ENV,
+    environment: ENVIRONMENT,
     client: {
       javascript: {
         source_map_enabled: true,

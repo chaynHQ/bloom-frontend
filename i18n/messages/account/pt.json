@@ -50,12 +50,13 @@
           "other": "Outro (por favor, especifique)",
           "preferNotToAnswer": "Prefiro não responder"
         },
-        "neurodivergentLabel": "Você se identifica como uma pessoa neurodivergente?",
-        "neurodivergentHelpText": "Construímos nossos serviços para que sejam inclusivos. Então, receber avaliações e comentários de pessoas neurodivergentes nos ajuda. ",
+        "neurodivergentLabel": "Você tem alguma característica neurológica que afeta a maneira como seu cérebro processa as informações? Isso pode ser uma dificuldade de aprendizagem (por exemplo, dislexia, dispraxia, discalculia), TDAH, transtorno de aprendizagem ou autismo.",
+        "neurodivergentHelpText": "Fazemos o possível para criar serviços inclusivos, portanto, saber isso nos ajuda.",
         "neurodivergentLabels": {
           "1": "Sim",
           "2": "Não",
-          "3": "Não tenho certeza"
+          "3": "Não tenho certeza",
+          "4": "Prefiro não responder"
         },
         "raceEthnNatnLabel": "Como você descreveria sua raça, etnia e nacionalidade? Por exemplo, como pessoa branca, hispânica, mexicana, indígena tâmil, etc.",
         "raceEthnNatnHelpText": "Sabemos que as experiências de raça e etnia variam muito de acordo com diferentes lugares. Então, escreva o que você acha que melhor descreve você pessoalmente",

@@ -49,7 +49,36 @@
         "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login</loginLink> par jaiye jaari rakhne ke liye.",
         "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya</resetLink> aur fir prayas kariya. ",
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
-      }
+      },
+      "phoneNumberLabel": "Phone Number",
+      "verificationCodeLabel": "Verification Code",
+      "mfaTriggerError": "SMS code bhejne mein truti. Kripya punah prayaas karein.",
+      "mfaVerificationIdMissing": "Kripya pehle SMS code ka anuroodh karein.",
+      "mfaEnrollError": "2FA mein naamaakon karne mein truti. Kripya punah prayaas karein.",
+      "mfaFinalizeError": "2FA setup ko antim roop dene mein truti. Kripya punah prayaas karein.",
+      "mfaError": "Amaany satyaapan code. Kripya punah prayaas karein.",
+      "emailNotVerified": "2FA setup karne se pehle kripya apne email ki pushti karein.",
+      "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
+      "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
+      "sendVerificationEmail": "Satyaapan Email Bhejein"
+    },
+    "verifyMFA": {
+      "title": "Do-Charan Praman Verify Karein",
+      "triggerSMS": "SMS Code Bhejein",
+      "verifyCode": "Code Verify Karein",
+      "phoneNumber": "Hum aapke registered phone number par ek verification code bhejenge: {phoneNumber}"
+    },
+    "setupMFA": {
+      "title": "Do-Charan Praman Setup Karein",
+      "pageTitle": "Apne Khaate ko Surakshit Karein",
+      "sendCode": "Verification Code Bhejein",
+      "verifyCode": "Code Verify Karein",
+      "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:"
+    },
+    "verifyEmail": {
+      "pageTitle": "Apna Email Verify Karein",
+      "instructions": "Kripya apne email ki jaanch karein aur jaari rakhne ke liye satyaapan link par click karein.",
+      "sendButton": "Satyaapan Email Punah Bhejein"
     }
   }
 }

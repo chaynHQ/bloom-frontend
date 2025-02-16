@@ -1,3 +1,5 @@
+import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+
 export const rowStyle = {
   display: 'flex',
   flexDirection: 'row',
@@ -64,3 +66,16 @@ export const staticFieldLabelStyle = {
     marginTop: 1,
   },
 };
+
+export const topBarSpacerStyle = {
+  height: { xs: '3rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8rem' },
+} as const;
+
+export const fullScreenContainerStyle = {
+  ...columnStyle,
+  minHeight: {
+    xs: `calc(100vh - ${topBarSpacerStyle.height.xs})`,
+    md: `calc(100vh - ${topBarSpacerStyle.height.md})`,
+  },
+  backgroundColor: 'background.default',
+} as const;

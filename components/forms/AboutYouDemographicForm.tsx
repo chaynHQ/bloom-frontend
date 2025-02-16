@@ -27,6 +27,7 @@ import {
   RadioGroup,
   TextField,
   Typography,
+  Button,
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
@@ -213,7 +214,7 @@ const AboutYouDemographicForm = () => {
             />
           )}
         />
-        <FormControl required fullWidth component="fieldset" id="neurodivergent" sx={{ mb: 4 }}>
+        <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mb: 4 }}>
           <FormLabel component="legend">{t('neurodivergentLabel')}</FormLabel>
           <RadioGroup
             sx={rowStyles}
@@ -222,27 +223,23 @@ const AboutYouDemographicForm = () => {
             onChange={(e) => setNeurodivergentInput(e.target.value)}
             value={neurodivergentInput}
           >
-            <FormControlLabel
-              value="Yes"
-              control={<Radio required />}
-              label={t('neurodivergentLabels.1')}
-            />
-            <FormControlLabel
-              value="No"
-              control={<Radio required />}
-              label={t('neurodivergentLabels.2')}
-            />
+            <FormControlLabel value="Yes" control={<Radio />} label={t('neurodivergentLabels.1')} />
+            <FormControlLabel value="No" control={<Radio />} label={t('neurodivergentLabels.2')} />
             <FormControlLabel
               value="Not sure"
-              control={<Radio required />}
+              control={<Radio />}
               label={t('neurodivergentLabels.3')}
+            />
+            <FormControlLabel
+              value="Prefer not to say"
+              control={<Radio />}
+              label={t('neurodivergentLabels.4')}
             />
           </RadioGroup>
           <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
             {t('neurodivergentHelpText')}
           </FormHelperText>
         </FormControl>
-
         <TextField
           id="raceEthnNatn"
           label={t.rich('raceEthnNatnLabel')}

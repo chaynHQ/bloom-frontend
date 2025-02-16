@@ -2192,10 +2192,10 @@
     uuid "^9.0.1"
     ws "^8.17.1"
 
-"@next/bundle-analyzer@15.1.5":
-  version "15.1.5"
-  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-15.1.5.tgz#a0b99f665e9e672588c4880f608506df3189c6f0"
-  integrity sha512-pCYMPgGRwf+FjEwUXFo3QF14VzBSPPsBHSFuXUpq5ifKcY8LbcmoF2xMVVMa2HoYgA1XuqPSAIfLJr4YXNa9xQ==
+"@next/bundle-analyzer@15.1.6":
+  version "15.1.6"
+  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-15.1.6.tgz#2cf07a38719a4bf43f412ac47e683c52e36cbb71"
+  integrity sha512-hGzQyDqJzFHcHNCyTqM3o05BpVq5tGnRODccZBVJDBf5Miv/26UJPMB0wh9L9j3ylgHC+0/v8BaBnBBek1rC6Q==
   dependencies:
     webpack-bundle-analyzer "4.10.1"
 
@@ -6995,10 +6995,10 @@ npm-run-path@^4.0.0, npm-run-path@^4.0.1:
   dependencies:
     path-key "^3.0.0"
 
-nuka-carousel@^8.0.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-8.1.1.tgz#a5833cbd4b651338b6c209fc2225c629abe60f66"
-  integrity sha512-pOXBwKJCOxAmGh3x5f3tYypbAYNKg1GqL0pXrWIwy+TxN2oskN4EGan8Pp+m/hk6DWgAKCXkfpiplIEQ/qZcSw==
+nuka-carousel@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-8.2.0.tgz#fd086423e02acec7643dd04d38aa3d891cc2bd6a"
+  integrity sha512-Wt6rAlSKnhQyZQETfdb5HGSzNc1hcnWls2pA+WpHqi6xq+F44k+oaldFEaSTxvSuVMz2Fo8LhDFGInlYlXepeQ==
 
 nwsapi@^2.2.2:
   version "2.2.16"

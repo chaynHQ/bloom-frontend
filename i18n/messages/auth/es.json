@@ -16,7 +16,9 @@
       "partnershipsTitle": "Nuestros socios",
       "partnershipsDescription": "Si fuiste referido a Bloom por parte de uno de nuestros socios, haz click en su logo a continuación."
     },
-    "resetPassword": { "title": "Recupera tu contraseña" },
+    "resetPassword": {
+      "title": "Recupera tu contraseña"
+    },
     "form": {
       "codeLabel": "código de acceso",
       "nameLabel": "Primer nombre/apodo",
@@ -47,7 +49,36 @@
         "emailAlreadyInUse": "Este email ya está registrado en Bloom. Ve al <loginLink>inicio de sesión</loginLink> para continuar.",
         "invalidCode": "Este link de recuperación de contraseña no es válido. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez.",
         "expiredCode": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez."
-      }
+      },
+      "phoneNumberLabel": "Número de teléfono",
+      "verificationCodeLabel": "Código de verificación",
+      "mfaTriggerError": "Error al enviar el código SMS. Por favor, inténtalo de nuevo.",
+      "mfaVerificationIdMissing": "Por favor, solicita primero un código SMS.",
+      "mfaEnrollError": "Error al inscribirse en la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+      "mfaFinalizeError": "Error al finalizar la configuración de la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+      "mfaError": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+      "emailNotVerified": "Por favor, verifica tu email antes de configurar la autenticación de dos factores.",
+      "emailVerificationError": "Error al enviar el email de verificación. Por favor, inténtalo de nuevo.",
+      "emailVerificationSent": "Email de verificación enviado. Por favor, revisa tu bandeja de entrada.",
+      "sendVerificationEmail": "Enviar email de verificación"
+    },
+    "verifyMFA": {
+      "title": "Verificar autenticación de dos factores",
+      "triggerSMS": "Enviar código SMS",
+      "verifyCode": "Verificar código",
+      "phoneNumber": "Enviaremos un código de verificación a tu número de teléfono registrado: {phoneNumber}"
+    },
+    "setupMFA": {
+      "title": "Configurar autenticación de dos factores",
+      "pageTitle": "Asegura tu cuenta",
+      "sendCode": "Enviar código de verificación",
+      "verifyCode": "Verificar código",
+      "enterCodeHelperText": "Por favor, introduce el código de verificación que hemos enviado a tu teléfono:"
+    },
+    "verifyEmail": {
+      "pageTitle": "Verifica tu email",
+      "instructions": "Por favor, revisa tu email y haz clic en el enlace de verificación para continuar.",
+      "sendButton": "Reenviar email de verificación"
     }
   }
 }

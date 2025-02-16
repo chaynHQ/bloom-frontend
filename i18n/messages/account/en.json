@@ -50,12 +50,13 @@
           "other": "Other (please state)",
           "preferNotToAnswer": "Prefer not to answer"
         },
-        "neurodivergentLabel": "Would you describe yourself as neurodivergent?",
-        "neurodivergentHelpText": "We design our services to be inclusive, so it’s helpful for us to hear feedback from people who are neurodivergent",
+        "neurodivergentLabel": "Do you have a neurotype that affects the way your brain processes information? This might be a learning difficulty (I.e. Dyslexia, Dyspraxia, Dyscalculia), ADHD, or Autism.",
+        "neurodivergentHelpText": "We do our best to design inclusive services, so it’s helpful to know this.",
         "neurodivergentLabels": {
           "1": "Yes",
           "2": "No",
-          "3": "Not sure"
+          "3": "Not sure",
+          "4": "Prefer not to say"
         },
         "raceEthnNatnLabel": "How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.",
         "raceEthnNatnHelpText": "We know that people's experiences of race and ethnicity vary widely based on where they live, so write what you feel best describes you personally.",
