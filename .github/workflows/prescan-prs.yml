@@ -41,19 +41,13 @@ jobs:
         run: yarn type-check
         continue-on-error: true
 
-      - name: View PR author
-        id: view-pr-author
-        env:
-          TEAM_MEMBER: ${{ github.event.pull_request.user.login == 'kyleecodes' }}
+      - name: View PR author 
         run: |
-          if [ $TEAM_MEMBER = true ]; 
-            echo "This PR is opened by a team member."
-            exit 0
-          else
-            echo "This PR is opened by a non-team member."
-            exit 1
-          fi
-
-      # - name: The PR author is not a team member
-      #   if: ${{ failure() && steps.view-pr-author.conclusion == 'failure' }}
-      #   run: echo "PR author is not a team member - checks failed"
+          run: |
+            if [ ${{ github.event.pull_request.user.login }} == 'kyleecodes' ]; then
+              echo "${{ github.event.pull_request.user.login }} - approved"
+              exit 0
+            else
+              echo "${{ github.event.pull_request.user.login }} - Not approved"
+              exit 1
+            fi
