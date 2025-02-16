@@ -71,7 +71,7 @@ const WhatsappUnsubscribeForm = () => {
         }),
       );
 
-      rollbar.error('Whatsapp unsubscribe error', unsubscribeResponse.error);
+      rollbar.error('WhatsApp unsubscribe error', unsubscribeResponse.error);
       logEvent(WHATSAPP_UNSUBSCRIBE_ERROR, { message: error });
       setLoading(false);
 

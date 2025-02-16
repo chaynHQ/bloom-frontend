@@ -1,7 +1,7 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "Enviamos mensajes a tu número de Whatsapp.",
+      "step1": "Enviamos mensajes a tu número de WhatsApp.",
       "step2": "Los mensajes se envían dos veces por semana, los miércoles y los domingos.",
       "step3": "Si cambias de opinión, puedes darte de baja o volver a suscribirte en cualquier momento."
     },
@@ -13,11 +13,11 @@
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
         "invalidNumber": "Tu número de teléfono parece ser inválido. Por favor, observa si hay errores e inténtalo de nuevo.",
-        "internal": "Hubo un error al suscribirte a Whatsapp. Intenta de nuevo más tarde y <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si sigues recibiendo el mismo error.",
-        "alreadyExists": "Ya existe una suscripción a whatsapp para tu usuario. Por favor <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si crees que es un error."
+        "internal": "Hubo un error al suscribirte a WhatsApp. Intenta de nuevo más tarde y <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si sigues recibiendo el mismo error.",
+        "alreadyExists": "Ya existe una suscripción a WhatsApp para tu usuario. Por favor <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si crees que es un error."
       },
       "unsubscribeErrors": {
-        "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "internal": "There was an error unsubscribing from WhatsApp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       }
     }
   }
