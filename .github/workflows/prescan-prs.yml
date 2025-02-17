@@ -1,0 +1,44 @@
+name: Prescan PRs
+
+on:
+  # workflow_dispatch: # enables manual trigger
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
+
+jobs:
+  check-pr-source:
+    runs-on: ubuntu-24.04
+    outputs:
+      is_org_member: ${{ steps.check-pr-author.outputs.is_org_member }}
+    steps:
+      - name: Check if PR Author is an Org Member
+        id: check-pr-author
+        env:
+          AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+        run: |
+          if [[ "$AUTHOR_ASSOCIATION" == "CONTRIBUTOR" || "$AUTHOR_ASSOCIATION" == "MEMBER" ]]; then
+            echo "PR opened by a Chayn org member."
+            echo "is_org_member=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          else
+            echo "PR opened by a non-org contributor."
+            echo "is_org_member=false" >> "$GITHUB_OUTPUT"
+            mkdir -p ./pr
+            echo ${{ github.event.number }} > ./pr/NR
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - name: Upload PR number
+        uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/
+      - name: Exit on non-org member
+        if: ${{ steps.check-pr-author.outputs.is_org_member == 'false' }}
+        run: exit 1

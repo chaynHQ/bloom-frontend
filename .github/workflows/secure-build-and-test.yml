@@ -1,17 +1,21 @@
-name: Build & test
+name: Secure Build & Test
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-  push:
-    branches: [develop]
+  workflow_run:
+    workflows: ['Forked Pull Request Labeler']
+    types:
+      - completed
+  # push:
+  #   branches: [develop]
 
 jobs:
-  build-and-test:
+  secure-build-and-test:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }} # This is dangerous without the first access check
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"

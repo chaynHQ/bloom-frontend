@@ -1,0 +1,32 @@
+documentation-changes:
+  - docs/**
+  - "**/*.md"
+
+tests-changes:
+  - cypress/**
+  - cypress-after.config.ts
+  - cypress.config.ts
+
+scripts-changes:
+  - scripts/**
+  - bin/**
+  - "*.sh"
+  - "*.py"
+
+dev-config-changes:
+  - "**/*.json"
+  - "**/*.lock"
+  - "**/*.yaml"
+  - "**/*.yml"
+  - .vscode/**
+  - .husky/**
+  - .gitignore
+  - .nycrc
+  - next.config.js
+  - middleware.ts
+  - next-env.d.ts
+  - jest.config.js
+  - .prettierrc
+
+workflow-changes:
+  - .github/**
