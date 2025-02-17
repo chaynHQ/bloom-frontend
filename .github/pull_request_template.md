@@ -7,12 +7,10 @@
 ### How did you find us? (GitHub, Google search, social media, etc.):
 
 <!---ABOUT RUNNING TESTS :->
-- Directions for running tests are in the README.md.
-- Tests are not required to pass. 
+- Directions in the /docs
 - Run unit tests
 - Run Cypress tests if required for contribution.
-- Some tests may require multiple runs before success.
-- Some test failures may not be due to your contribution and can be ignored. We are always upgrading testing performance.
+- Tests are not required to pass. 
 
 <!--- PR CHECKLIST: —>
 Before submitting, check that you have completed the following tasks:

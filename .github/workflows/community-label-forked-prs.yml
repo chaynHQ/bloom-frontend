@@ -1,0 +1,35 @@
+name: Prescan to Label Forked PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  check-fork:
+    runs-on: ubuntu-24.04
+    outputs:
+      is_fork: ${{ steps.check_fork.outputs.is_fork }}
+    steps:
+      - name: Determine if PR is from a Fork
+        id: check_fork
+        run: |
+          if [[ "${{ github.event.pull_request.head.repo.fork }}" == "true" ]]; then
+            echo "PR is from a fork. Proceeding with workflow."
+            echo "is_fork=true" >> $GITHUB_ENV
+            echo "::set-output name=is_fork::true"
+          else
+            echo "PR is internal. Skipping workflow."
+            echo "is_fork=false" >> $GITHUB_ENV
+            echo "::set-output name=is_fork::false"
+            exit 1
+
+  label-sensitive-files:
+    needs: check-fork
+    if: needs.check-fork.outputs.is_fork == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Label PR for Sensitive Files
+        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/configs/labeler.yml

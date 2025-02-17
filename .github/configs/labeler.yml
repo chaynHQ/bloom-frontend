@@ -1,19 +1,11 @@
-documentation-changes:
-  - docs/**
-  - "**/*.md"
-
-tests-changes:
+needs-file-review:
   - cypress/**
   - cypress-after.config.ts
   - cypress.config.ts
-
-scripts-changes:
   - scripts/**
   - bin/**
   - "*.sh"
   - "*.py"
-
-dev-config-changes:
   - "**/*.json"
   - "**/*.lock"
   - "**/*.yaml"
@@ -27,6 +19,4 @@ dev-config-changes:
   - next-env.d.ts
   - jest.config.js
   - .prettierrc
-
-workflow-changes:
   - .github/**
