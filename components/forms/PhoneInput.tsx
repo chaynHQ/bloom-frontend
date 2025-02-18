@@ -56,7 +56,7 @@ interface PhoneInputProps extends BaseTextFieldProps {
 const PhoneInput = (props: PhoneInputProps) => {
   const { value, onChange, ...restProps } = props;
 
-  // Note this component is only used on the whatsapp form currently
+  // Note this component is only used on the WhatsApp form currently
   // Phone number validation is not included in this component, see whatsapp example
   // Follows example https://github.com/goveo/react-international-phone/blob/master/src/stories/UiLibsExample/components/MuiPhone.tsx
   const t = useTranslations('Whatsapp.form');

@@ -42,7 +42,7 @@ describe('A logged in user should be able to subscribe to notes from bloom', () 
         `Illustration of a side profile of a person's face, with a flower`,
         'illustration_choose_therapist',
       );
-      cy.get('p').should('contain', 'We send messages to your Whatsapp number.');
+      cy.get('p').should('contain', 'We send messages to your WhatsApp number.');
       cy.get('h2').should('contain', 'Subscribe to Notes from Bloom');
       cy.get('label').contains('Phone number');
       cy.get('input[aria-hidden="true"]').should('exist').should('have.value', 'gb');

@@ -42,7 +42,7 @@ describe('Home page should display', () => {
     cy.checkLink('/grounding', '');
 
     cy.checkImage('notesIcon', 'icon_notes');
-    cy.get('h3').should('contain', 'Notes: Whatsapp messages from us');
+    cy.get('h3').should('contain', 'Notes: WhatsApp messages from us');
     cy.checkLink('/subscription/whatsapp', '');
 
     cy.checkLink('/auth/register', 'Get started');

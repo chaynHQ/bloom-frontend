@@ -61,9 +61,9 @@ describe('hasAccessToPage', () => {
           hasAccessToPage(true, false, ['Public'], [partnerAccess], emptyPartnerAdmin),
         ).toEqual(false);
       });
-      it('a public user with partner referall should have access', () => {
+      it('a public user with partner referral should not access', () => {
         expect(hasAccessToPage(true, false, ['Public'], [], emptyPartnerAdmin, 'Bumble')).toEqual(
-          true,
+          false,
         );
       });
     });
@@ -71,9 +71,9 @@ describe('hasAccessToPage', () => {
       it('a public user should not have access', () => {
         expect(hasAccessToPage(true, false, ['Bumble'], [], emptyPartnerAdmin)).toEqual(false);
       });
-      it('a public user with a referral partner should not have access', () => {
-        expect(hasAccessToPage(true, false, ['Bumble'], [], emptyPartnerAdmin, 'bumble')).toEqual(
-          false,
+      it('a public user with a referral partner should have access', () => {
+        expect(hasAccessToPage(false, true, ['Bumble'], [], emptyPartnerAdmin, 'bumble')).toEqual(
+          true,
         );
       });
       it('a partner user should have access', () => {

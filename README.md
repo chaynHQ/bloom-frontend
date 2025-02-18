@@ -15,7 +15,7 @@ Chayn's Bloom service offers several key features designed to support individual
 - **Multi-lingual Support:** All features are available in multiple languages including Spanish, Hindi, French, English, Portuguese, and German.
 - **Online Video Courses:** Provides healing educational video courses.
 - **1-to-1 Messaging:** Secure messaging service to share reflections, feelings, and questions with Chayn therapists.
-- **Supportive Messaging:** Receive tailored supportive messaging from Chayn through Whatsapp.
+- **Supportive Messaging:** Receive tailored supportive messaging from Chayn through WhatsApp.
 
 ## Bloom Frontend Technical Documentation
 
