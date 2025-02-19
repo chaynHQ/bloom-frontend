@@ -77,7 +77,7 @@ export default async function Page({ params }: { params: Params }) {
   const relatedCourse = await getStoryblokStories(
     locale,
     {},
-    story?.content.related_session[0].content.course,
+    story?.content.related_session.content.course,
   );
 
   if (!story || !relatedCourse) {

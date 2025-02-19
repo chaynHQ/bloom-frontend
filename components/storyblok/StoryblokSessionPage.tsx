@@ -8,6 +8,7 @@ import { SessionChat } from '@/components/session/SessionChat';
 import { SessionCompleteButton } from '@/components/session/SessionCompleteButton';
 import { SessionHeader } from '@/components/session/SessionHeader';
 import { SessionVideo } from '@/components/session/SessionVideo';
+import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
@@ -17,13 +18,13 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import { columnStyle } from '@/styles/common';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Link } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { ContentUnavailable } from '../common/ContentUnavailable';
 import LoadingContainer from '../common/LoadingContainer';
-import NoDataAvailable from '../common/NoDataAvailable';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -80,7 +81,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
 
-  const [incorrectAccess, setIncorrectAccess] = useState<boolean>();
+  const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -110,9 +111,14 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   useEffect(() => {
     const coursePartners = course.content.included_for_partners;
-    setIncorrectAccess(
-      !hasAccessToPage(isLoggedIn, false, coursePartners, partnerAccesses, partnerAdmin),
+    const userHasAccess = hasAccessToPage(
+      isLoggedIn,
+      false,
+      coursePartners,
+      partnerAccesses,
+      partnerAdmin,
     );
+    setUserAccess(userHasAccess);
   }, [
     isAlternateSessionPage,
     partnerAccesses,
@@ -125,8 +131,20 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
   }, [courses, course, storyId, storyUuid]);
 
-  if (incorrectAccess === undefined) return <LoadingContainer />;
-  if (!!incorrectAccess) return <NoDataAvailable />;
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess)
+    return (
+      <ContentUnavailable
+        title={t('accessGuard.title')}
+        message={t.rich('accessGuard.introduction', {
+          contactLink: (children) => (
+            <Link component={i18nLink} href="/courses">
+              {children}
+            </Link>
+          ),
+        })}
+      />
+    );
 
   return (
     <Box
