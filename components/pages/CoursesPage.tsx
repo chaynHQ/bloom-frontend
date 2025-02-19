@@ -10,6 +10,7 @@ import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import {
   EMAIL_REMINDERS_FREQUENCY,
   PROGRESS_STATUS,
@@ -28,7 +29,6 @@ import Cookies from 'js-cookie';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { useGetUserCoursesQuery } from '@/lib/api';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -57,7 +57,6 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const courses = useTypedSelector((state) => state.courses);
   const searchParams = useSearchParams();
   const sectionQueryParam = searchParams.get('section');
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -150,7 +149,15 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, partnerAdmin, courseStories, userCourses, shorts, entryPartnerReferral, userId]);
+  }, [
+    partnerAccesses,
+    partnerAdmin,
+    courseStories,
+    userCourses,
+    shorts,
+    entryPartnerReferral,
+    userId,
+  ]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
