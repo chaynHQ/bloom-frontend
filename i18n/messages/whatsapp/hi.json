@@ -1,7 +1,7 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "Hum aapko aapke Whatsapp number par messages bhejenge.",
+      "step1": "Hum aapko aapke WhatsApp number par messages bhejenge.",
       "step2": "Hum aapko hafte mein do baar messages bhejenge - Budhvaar (Wednesday) aur Ravivaar (Sunday).",
       "step3": "Agar aapka mann badal jaye, toh aap kabhi bhi unsubscribe ya resubscribe kar sakte hain."
     },
@@ -13,11 +13,11 @@
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
         "invalidNumber": "Apka phone number amaanya prateet hota hai. appears to be invalid. Kriya jo bhi error hai usko theek karein aur firse prayas kariye. ",
-        "internal": "Whatsapp ko subscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye</contactLink>.",
-        "alreadyExists": "Apke user ke liye whatsapp subscription pehle se he ho rakha hai. Yadi yeh ek galti hai, toh kripya <contactLink>Bloom team ko message kariye</contactLink>."
+        "internal": "WhatsApp ko subscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye</contactLink>.",
+        "alreadyExists": "Apke user ke liye WhatsApp subscription pehle se he ho rakha hai. Yadi yeh ek galti hai, toh kripya <contactLink>Bloom team ko message kariye</contactLink>."
       },
       "unsubscribeErrors": {
-        "internal": "There was an error unsubscribing from Whatsapp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "internal": "There was an error unsubscribing from WhatsApp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       }
     }
   }

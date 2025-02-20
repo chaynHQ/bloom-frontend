@@ -116,7 +116,7 @@
       "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
       "actions": {
         "title": "Account Actions",
-        "description": "Aapka account delete karne se aapka naam, email address aur dekhe gaye sessions ka history permanently delete ho jayega.",
+        "description": "Apna account delete karne se aapka naam, email address aur dekhe gaye sessions ki history permanently delete ho jayegi.",
         "button": {
           "resetPassword": "Password reset kijiye",
           "deleteAccount": "Account delete kijiye"

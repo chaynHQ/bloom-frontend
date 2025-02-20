@@ -16,22 +16,22 @@ const getKeys = (file, keys, prefix = '') => {
 };
 
 const getFileByPath = (dir, fileName) => {
-  const filePath = path.join(__dirname, '..', 'messages', dir, fileName);
+  const filePath = path.join(__dirname, '..', 'i18n', 'messages', dir, fileName);
   return require(filePath);
 };
 
-const directories = fs.readdirSync(path.join(__dirname, '..', 'messages'));
+const directories = fs.readdirSync(path.join(__dirname, '..', 'i18n', 'messages'));
 
 for (const directory of directories) {
   if (languages.includes(directory)) continue;
 
-  const files = fs.readdirSync(path.join(__dirname, '..', 'messages', directory));
+  const files = fs.readdirSync(path.join(__dirname, '..', 'i18n', 'messages', directory));
 
   const langFiles = files.filter((file) => languages.includes(file.split('.')[0]));
 
   if (langFiles.length !== languages.length) {
     console.warn(
-      `Missing translation files for directory ${directory}:`,
+      `Missing translation files for directory" /${directory}:`,
       languages.filter((lang) => !langFiles.includes(lang + '.json')),
     );
     continue;
@@ -49,7 +49,7 @@ for (const directory of directories) {
   }
 
   for (const langFile of langFiles) {
-    const filePath = path.join(__dirname, '..', 'messages', directory, langFile);
+    const filePath = path.join(__dirname, '..', 'i18n', 'messages', directory, langFile);
     const currKeys = getKeys(require(filePath));
 
     if (expectedKeys.size !== currKeys.size) {

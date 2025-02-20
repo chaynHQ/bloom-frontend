@@ -5,7 +5,7 @@
     "conversations": "Conversations",
     "shorts": "Courte",
     "completed": "Terminé",
-    "sessionDetail": "Ce clip provient de la session {sessionNumber}, {sessionName}, de notre cours {courseName}.",
+    "sessionDetail": "Ce clip est un extrait de la session {sessionNumber}, {sessionName}, diffusée dans le cours {courseName}.",
     "sessionButtonLabel": "Regarder la session complète",
     "videoTranscriptLink": "Regardez la vidéo ou lisez la <link>transcription</link>.",
     "conversationTranscriptLink": "Écoutez la conversation ou lisez la <link>transcription</link>.",

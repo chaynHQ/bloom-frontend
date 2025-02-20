@@ -71,7 +71,6 @@ export const getStoryblokStory = async (
     version: 'published',
     language: locale || 'en',
     ...(params && params),
-    ...(uuids && { by_uuids: uuids }),
   };
 
   try {
