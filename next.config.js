@@ -79,6 +79,63 @@ module.exports = withBundleAnalyzer(
           },
         ];
       },
+      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Crisp iframes, Rollbar, SimplyBook, and Zapier.
+      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Crisp.
+      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Crisp.
+      // font-src: Allows fonts from the same origin and Google's Fonts API.
+      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Crisp.
+      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Crisp, Firebase, Rollbar, SimplyBook, and Zapier.
+      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Crisp.
+      // object-src: Disallows all object sources.
+      // base-uri: Restricts the base URI to the same origin.
+      // form-action: Restricts form actions to the same origin.
+      // frame-ancestors: Restricts embedding to the same origin.
+      async headers() {
+        const headers = [
+          {
+            source: '/:path',
+            headers: [
+              {
+                key: 'Content-Security-Policy',
+                value: `
+                  default-src 'self';
+                  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.google-analytics.com https://identitytoolkit.googleapis.com https://*.hotjar.com https://*.storyblok.com https://*.newrelic.com https://*.nr-data.net https://*.crisp.chat https://*.googletagmanager.com https://vercel.live https://*.noembed.com https://*.youtube.com;
+                  child-src 'self' blob:;
+                  worker-src 'self' blob:;
+                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://static.hotjar.com https://app.storyblok.com https://client.crisp.chat https://*.google-analytics.com;
+                  font-src 'self' https://fonts.gstatic.com https://*.hotjar.com https://*.crisp.chat https://*.youtube.com;
+                  img-src 'self' data: https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat https://*.googletagmanager.com;
+                  connect-src 'self' https://*.hotjar.io https://identitytoolkit.googleapis.com https://*.storyblok.com https://*.rollbar.com https://*.simplybook.it https://*.zapier.com https://*.nr-data.net ${process.env.NEXT_PUBLIC_API_URL} wss://client.relay.crisp.chat https://*.crisp.chat https://*.google-analytics.com https://*.noembed.com https://*.googletagmanager.com;
+                  frame-src 'self' https://*.hotjar.com https://*.storyblok.com https://*.crisp.chat https://*.simplybook.it https://*.youtube.com;
+                  object-src 'none';
+                  base-uri 'self';
+                  form-action 'self';
+                  frame-ancestors 'self';
+                `
+                  .replace(/\s{2,}/g, ' ')
+                  .trim(),
+              },
+              {
+                key: 'Referrer-Policy',
+                value: 'origin-when-cross-origin',
+              },
+              {
+                key: 'X-Content-Type-Options',
+                value: 'nosniff',
+              },
+            ],
+          },
+        ];
+        // This enforces HTTPS for all requests so we don't want this for local development
+        if (process.env.NODE_ENV === 'production') {
+          headers[0].headers.push({
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          });
+        }
+
+        return headers;
+      },
     }),
   ),
 );
