@@ -2,7 +2,15 @@
  * @type {import('next').NextConfig}
  */
 const runtimeCaching = require('next-pwa/cache');
-const { scriptSrcUrls, workerSrcUrls, styleSrcUrls, fontSrcUrls } = require('./scriptUrls');
+const {
+  scriptSrcUrls,
+  workerSrcUrls,
+  styleSrcUrls,
+  fontSrcUrls,
+  imgSrcUrls,
+  connectSrcUrls,
+  frameSrcUrls,
+} = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
 const withPWA = require('next-pwa')({
