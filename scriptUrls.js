@@ -43,14 +43,18 @@ const fontSrcUrls = [
   'https://*.youtube.com',
 ];
 const imgSrcUrls = [
-  'data:',
   'https://*.hotjar.com',
   'https://*.storyblok.com',
   'https://*.crisp.chat',
   'https://*.googletagmanager.com',
+  'https://i.ytimg.com',
 ];
 const connectSrcUrls = [
-  'https://*.hotjar.io',
+  'https://*.hotjar.com',
+  'wss://ws.hotjar.com',
+  'https://*.googletagmanager.com',
+  'https://*.googleapis.com',
+  'https://*.google-analytics.com',
   'https://identitytoolkit.googleapis.com',
   'https://*.storyblok.com',
   'https://*.rollbar.com',
@@ -59,11 +63,10 @@ const connectSrcUrls = [
   'https://*.nr-data.net',
   'wss://client.relay.crisp.chat',
   'https://*.crisp.chat',
-  'https://*.google-analytics.com',
   'https://*.noembed.com',
-  'https://*.googletagmanager.com',
-  'https://*.googleapis.com',
-  'https://*.noembed.com',
+  'https://noembed.com',
+  'https://*.youtube.com',
+  'https://www.youtube.com',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
@@ -71,6 +74,7 @@ const frameSrcUrls = [
   'https://*.crisp.chat',
   'https://*.simplybook.it',
   'https://*.youtube.com',
+  'https://vercel.live',
 ];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
