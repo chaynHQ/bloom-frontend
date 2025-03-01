@@ -77,7 +77,11 @@ export default async function Page({ params }: { params: Params }) {
   const relatedCourse = await getStoryblokStories(
     locale,
     {},
-    story?.content.related_session.content.course,
+    // Related Session is misleading as it can also be a related course introduction
+    // During a migration from Multioption to single option I am leaving this array option
+    Array.isArray(story?.content.related_session)
+      ? story?.content.related_session[0].content?.course
+      : story?.content.related_session?.content?.course,
   );
 
   if (!story || !relatedCourse) {

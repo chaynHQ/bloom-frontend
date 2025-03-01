@@ -124,7 +124,9 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           storyId,
           name,
           resourceProgress,
-          relatedSession: related_session,
+          // during the migration from multiple related sessions to a single related session
+          // I am leaving this array option
+          relatedSession: Array.isArray(related_session) ? related_session[0] : related_session,
           relatedCourse: related_course,
           video,
           video_transcript,
