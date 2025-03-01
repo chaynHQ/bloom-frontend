@@ -61,7 +61,7 @@ const titleContainerStyle = {
 
 const titleStyle = {
   display: '-webkit-box',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 3,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
