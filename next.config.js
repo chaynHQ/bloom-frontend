@@ -2,6 +2,15 @@
  * @type {import('next').NextConfig}
  */
 const runtimeCaching = require('next-pwa/cache');
+const {
+  scriptSrcUrls,
+  workerSrcUrls,
+  styleSrcUrls,
+  fontSrcUrls,
+  imgSrcUrls,
+  connectSrcUrls,
+  frameSrcUrls,
+} = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
 const withPWA = require('next-pwa')({
@@ -78,6 +87,63 @@ module.exports = withBundleAnalyzer(
             destination: '/welcome/fruitz',
           },
         ];
+      },
+      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Crisp iframes, Rollbar, SimplyBook, and Zapier.
+      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Crisp.
+      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Crisp.
+      // font-src: Allows fonts from the same origin and Google's Fonts API.
+      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Crisp.
+      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Crisp, Firebase, Rollbar, SimplyBook, and Zapier.
+      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Crisp.
+      // object-src: Disallows all object sources.
+      // base-uri: Restricts the base URI to the same origin.
+      // form-action: Restricts form actions to the same origin.
+      // frame-ancestors: Restricts embedding to the same origin.
+      async headers() {
+        const headers = [
+          {
+            source: '/:path',
+            headers: [
+              {
+                key: 'Content-Security-Policy-Report-Only', // Leaving this as report only until we have caught all the CSP violations
+                value: `
+                  default-src 'self';
+                  script-src 'self' 'unsafe-eval' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
+                  child-src 'self' blob:;
+                  worker-src 'self' ${workerSrcUrls.join(' ')};
+                  style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
+                  font-src 'self' ${fontSrcUrls.join(' ')};
+                  img-src 'self' data: ${imgSrcUrls.join(' ')};
+                  connect-src 'self' ${connectSrcUrls.join(' ')};
+                  frame-src 'self' ${frameSrcUrls.join(' ')};
+                  object-src 'none';
+                  base-uri 'self';
+                  form-action 'self';
+                  frame-ancestors 'self';
+                `
+                  .replace(/\s{2,}/g, ' ')
+                  .trim(),
+              },
+              {
+                key: 'Referrer-Policy',
+                value: 'origin-when-cross-origin',
+              },
+              {
+                key: 'X-Content-Type-Options',
+                value: 'nosniff',
+              },
+            ],
+          },
+        ];
+        // This enforces HTTPS for all requests so we don't want this for local development
+        if (process.env.NODE_ENV === 'production') {
+          headers[0].headers.push({
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          });
+        }
+
+        return headers;
       },
     }),
   ),

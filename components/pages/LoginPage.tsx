@@ -43,7 +43,6 @@ const headerContentStyle = {
   alignItems: 'center',
   gap: 3,
   width: '100%',
-  maxWidth: 400,
 };
 
 const backButtonStyle = {
@@ -127,7 +126,7 @@ export default function LoginPage() {
           <KeyboardArrowLeftIcon sx={backIconStyle} />
         </IconButton>
         <Box sx={headerContentStyle}>
-          <Box>
+          <Box textAlign="center">
             <Typography variant="h1" component="h1" marginBottom={0}>
               {t('login.title')}
             </Typography>
