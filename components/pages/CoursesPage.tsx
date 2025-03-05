@@ -28,6 +28,7 @@ import Cookies from 'js-cookie';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { useWidth } from '@/lib/utils/useWidth';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -43,6 +44,9 @@ interface Props {
 export default function CoursesPage({ courseStories, conversations, shorts }: Props) {
   const locale = useLocale();
 
+  const width = useWidth();
+
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
@@ -63,6 +67,16 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const headerOffset = isSmallScreen ? 48 : 136;
 
   const t = useTranslations('Courses');
+
+  const slidesPerView = {
+    xs: 1,
+    sm: 2,
+    md: 3,
+    lg: 3,
+    xl: 3,
+  };
+
+  const cardsPerPage = slidesPerView[width];
 
   const headerProps = {
     title: t('title'),
@@ -208,13 +222,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="conversations"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
+                slidesPerView={slidesPerView}
                 items={conversations.map((conversation) => {
                   return (
                     <Box
@@ -249,16 +257,24 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="shorts"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
-                items={loadedShorts.map((short) => {
+                slidesPerView={slidesPerView}
+                afterSlideHandle={setCurrentSlide}
+                items={loadedShorts.map((short, index) => {
+                  let opacity: number = 0.5;
+                  if (
+                    index >= currentSlide * cardsPerPage &&
+                    index < (currentSlide + 0.7) * cardsPerPage
+                  ) {
+                    opacity = 1;
+                  }
                   return (
-                    <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
+                    <Box
+                      p={0.25}
+                      minWidth="260px"
+                      width="260px"
+                      key={short.name}
+                      sx={{opacity: currentSlide % 2 === 0 ? opacity : 1}}
+                    >
                       <ShortsCard
                         title={short.content.name}
                         category={RESOURCE_CATEGORIES.SHORT_VIDEO}
