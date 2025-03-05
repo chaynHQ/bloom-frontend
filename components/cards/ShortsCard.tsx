@@ -33,7 +33,7 @@ const overlay = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-}
+};
 
 interface ShortsCardProps {
   title: string;
@@ -77,9 +77,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
               fill
               alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
             />
-            <Box
-              className="overlay"
-              sx={overlay}>
+            <Box className="overlay" sx={overlay}>
               <IconButton
                 className="play-button"
                 sx={{
@@ -89,7 +87,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
                   transition: 'transform .3s ease',
                 }}
               >
-                <PlayArrowIcon sx={{ fontSize: 40, color: 'error.main' }} />
+                <PlayArrowIcon sx={{ fontSize: 35, color: 'error.main' }} />
               </IconButton>
             </Box>
           </Box>
