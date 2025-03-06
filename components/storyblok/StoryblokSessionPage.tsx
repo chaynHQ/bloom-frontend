@@ -116,7 +116,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     const coursePartners = course.content.included_for_partners;
     const userHasAccess = hasAccessToPage(
       isLoggedIn,
-      false,
+      true, // setting true here to allow preview. The login overlay will block interaction
       coursePartners,
       partnerAccesses,
       partnerAdmin,
