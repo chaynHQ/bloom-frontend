@@ -26,6 +26,8 @@ const cardStyle = {
   alignSelf: 'flex-start',
   width: '100%',
   backgroundColor: 'background.default',
+  display: 'flex',
+  flexDirection: 'column',
 } as const;
 
 const cardContentStyle = {
@@ -49,6 +51,20 @@ const imageContainerStyle = {
   width: '100%',
   maxHeight: '110px',
   minHeight: '72px',
+} as const;
+
+const titleContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+} as const;
+
+const titleStyle = {
+  display: '-webkit-box',
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 } as const;
 
 const collapseContentStyle = {
@@ -106,8 +122,8 @@ const CourseCard = (props: CourseCardProps) => {
                 }}
               />
             </Box>
-            <Box flex={[3, 2]}>
-              <Typography component="h3" variant="h3">
+            <Box flex={[3, 2]} sx={titleContainerStyle}>
+              <Typography component="h3" variant="h3" sx={expanded ? {} : titleStyle}>
                 {course.content.name}
               </Typography>
             </Box>
@@ -126,8 +142,8 @@ const CourseCard = (props: CourseCardProps) => {
               }}
             />
           </Box>
-          <Box flex={1}>
-            <Typography component="h3" variant="h3">
+          <Box flex={1} sx={titleContainerStyle}>
+            <Typography component="h3" variant="h3" sx={expanded ? {} : titleStyle}>
               {course.content.name}
             </Typography>
             {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
