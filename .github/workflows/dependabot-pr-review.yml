@@ -3,8 +3,8 @@
 # if any vulnerabilities or invalid licenses are introduced.
 # See for more info: https://github.com/actions/dependency-review-action
 
-name: 'Dependency Review'
-on: [pull_request]
+name: 'Dependabot PR Review'
+on: [pull_request_target]
 
 permissions:
   contents: read
@@ -15,8 +15,10 @@ jobs:
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v4
         with:
-          # fails when moderate vulnerabilities are deteched
+          # fails when moderate vulnerabilities are detected
           fail-on-severity: moderate
