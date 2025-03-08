@@ -35,7 +35,7 @@ const progressStyle = {
 } as const;
 
 export interface StoryblokResourceConversationPageProps {
-  storyId: number;
+  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -54,7 +54,7 @@ export interface StoryblokResourceConversationPageProps {
 
 const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {
   const {
-    storyId,
+    storyUuid,
     _uid,
     _editable,
     name,
@@ -83,13 +83,13 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     return {
       resource_category: RESOURCE_CATEGORIES.CONVERSATION,
       resource_name: name,
-      resource_storyblok_id: storyId,
+      resource_storyblok_uuid: storyUuid,
       resource_progress: resourceProgress,
     };
-  }, [name, storyId, resourceProgress]);
+  }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
-    const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
+    const userResource = resources.find((resource: Resource) => resource.storyblokUuid === storyUuid);
 
     if (userResource) {
       userResource.completed
@@ -99,7 +99,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     } else {
       setResourceProgress(PROGRESS_STATUS.NOT_STARTED);
     }
-  }, [resources, storyId]);
+  }, [resources, storyUuid]);
 
   useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
@@ -121,7 +121,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     >
       <ResourceConversationHeader
         {...{
-          storyId,
+          storyUuid,
           name,
           description,
           header_image,

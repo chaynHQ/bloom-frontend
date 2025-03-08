@@ -25,12 +25,12 @@ interface SessionVideoProps {
   eventData: { [key: string]: any };
   sessionProgress: PROGRESS_STATUS;
   name: string;
-  storyId: number;
+  storyUuid: string;
   video: { url: string };
   video_transcript: ISbRichtext;
 }
 export const SessionVideo = (props: SessionVideoProps) => {
-  const { eventData, storyId, sessionProgress, name, video_transcript, video } = props;
+  const { eventData, storyUuid, sessionProgress, name, video_transcript, video } = props;
   const t = useTranslations('Courses');
   const rollbar = useRollbar();
 
@@ -45,7 +45,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
     });
 
     const startSessionResponse = await startSession({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (startSessionResponse.data) {
