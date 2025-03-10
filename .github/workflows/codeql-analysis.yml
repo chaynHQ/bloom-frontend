@@ -31,8 +31,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript']
+        language: ['javascript-typescript', 'actions']
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+        # Support for actions is new and available for opt-in public preview. Learn more:
+        # https://github.blog/changelog/2024-12-17-find-and-fix-actions-workflows-vulnerabilities-with-codeql-public-preview/
         # Learn more about CodeQL language support at https://git.io/codeql-language-support
 
     steps:
