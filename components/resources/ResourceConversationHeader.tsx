@@ -18,7 +18,7 @@ const audioContainerStyle = {
 } as const;
 
 interface ResourceConversationHeaderProps {
-  storyId: number;
+  storyUuid: string;
   name: string;
   description: ISbRichtext;
   header_image: { filename: string; alt: string };
@@ -30,7 +30,7 @@ interface ResourceConversationHeaderProps {
 
 export const ResourceConversationHeader = (props: ResourceConversationHeaderProps) => {
   const {
-    storyId,
+    storyUuid,
     name,
     description,
     header_image,
@@ -52,7 +52,7 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
               eventData={eventData}
               resourceProgress={resourceProgress}
               name={name}
-              storyId={storyId}
+              storyUuid={storyUuid}
               audio={audio.filename}
               audio_transcript={audio_transcript}
             />

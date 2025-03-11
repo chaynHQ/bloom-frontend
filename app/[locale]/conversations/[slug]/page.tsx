@@ -77,7 +77,7 @@ export default async function Page({ params }: { params: Params }) {
   return (
     <StoryblokResourceConversationPage
       {...(story.content as StoryblokResourceConversationPageProps)}
-      storyId={story.id}
+      storyUuid={story.uuid}
     />
   );
 }

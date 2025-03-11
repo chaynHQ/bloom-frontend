@@ -92,7 +92,7 @@ export default async function Page({ params }: { params: Params }) {
     <StoryblokResourceShortPage
       {...(story.content as StoryblokResourceShortPageProps)}
       related_course={relatedCourse[0]}
-      storyId={story.id}
+      storyUuid={story.uuid}
     />
   );
 }

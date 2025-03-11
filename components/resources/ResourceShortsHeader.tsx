@@ -28,7 +28,7 @@ const headerLeftStyles = {
 } as const;
 
 interface ResourceShortHeaderProps {
-  storyId: number;
+  storyUuid: string;
   name: string;
   resourceProgress: PROGRESS_STATUS;
   relatedSession: ISbStoryData;
@@ -40,7 +40,7 @@ interface ResourceShortHeaderProps {
 
 export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
   const {
-    storyId,
+    storyUuid,
     name,
     relatedSession,
     relatedCourse,
@@ -80,7 +80,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             eventData={eventData}
             resourceProgress={resourceProgress}
             name={name}
-            storyId={storyId}
+            storyUuid={storyUuid}
             video={video}
             video_transcript={video_transcript}
           />
