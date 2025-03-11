@@ -71,11 +71,13 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const courses = useTypedSelector((state) => state.courses);
   const [userAccess, setUserAccess] = useState<boolean>();
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-  const { data: courses } = useGetUserCoursesQuery(undefined, {
+
+  useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
 

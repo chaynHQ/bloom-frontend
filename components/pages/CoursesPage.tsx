@@ -57,6 +57,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const courses = useTypedSelector((state) => state.courses);
   const searchParams = useSearchParams();
   const sectionQueryParam = searchParams.get('section');
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -71,7 +72,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     imageAlt: 'alt.personSitting',
   };
 
-  const { data: userCourses } = useGetUserCoursesQuery(undefined, {
+  useGetUserCoursesQuery(undefined, {
     skip: !userId,
   });
 
@@ -136,10 +137,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     setLoadedCourses(coursesWithAccess);
     setLoadedShorts(shortsWithAccess);
 
-    if (userCourses) {
+    if (courses) {
       let courseCoursesStarted: Array<number> = [];
       let courseCoursesCompleted: Array<number> = [];
-      userCourses.map((course) => {
+      courses.map((course) => {
         if (course.completed) {
           courseCoursesCompleted.push(course.storyblokId);
         } else {
@@ -149,15 +150,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [
-    partnerAccesses,
-    partnerAdmin,
-    courseStories,
-    userCourses,
-    shorts,
-    entryPartnerReferral,
-    userId,
-  ]);
+  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
 
   const getCourseProgress = (courseId: number) => {
     return coursesStarted.includes(courseId)
