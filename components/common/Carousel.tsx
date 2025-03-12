@@ -14,6 +14,7 @@ interface CarouselProps {
   arrowPosition?: 'side' | 'bottom';
   title?: string;
   slidesPerView?: { xs: number; sm: number; md: number; lg: number; xl: number };
+  afterSlideHandle?: (newSlideIndex: number) => void;
 }
 
 const numberSlidesToWidthMap: { [key: number]: string } = {
@@ -133,6 +134,7 @@ const Carousel = (props: CarouselProps) => {
       swiping={true}
       dots={<CustomDots showArrows={showArrows} arrowPosition={arrowPosition} />}
       title={title}
+      afterSlide={props.afterSlideHandle}
     >
       {items}
     </NukaCarousel>
