@@ -15,6 +15,10 @@ on:
 jobs:
   gather-gh-activity:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4 # https://github.com/actions/checkout
