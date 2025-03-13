@@ -8,6 +8,8 @@ jobs:
   newrelic:
     runs-on: ubuntu-24.04
     name: New Relic Release Tracking
+    permissions:
+      contents: read
     steps:
       # This step builds a var with the release tag value to use later
       - name: Set Release Version from Tag
