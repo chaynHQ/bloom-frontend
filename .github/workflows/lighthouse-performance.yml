@@ -12,6 +12,9 @@ jobs:
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-24.04
+    permissions:
+      deployments: read
+      statuses: read
     steps:
       - name: Wait for Vercel preview deployment to be ready
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
@@ -24,6 +27,10 @@ jobs:
   lighthouse-desktop:
     runs-on: ubuntu-24.04
     needs: wait-for-vercel-deployment
+    permissions:
+      contents: read
+      checks: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse
@@ -52,6 +59,10 @@ jobs:
   lighthouse-mobile:
     runs-on: ubuntu-24.04
     needs: wait-for-vercel-deployment
+    permissions:
+      contents: read
+      checks: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse
