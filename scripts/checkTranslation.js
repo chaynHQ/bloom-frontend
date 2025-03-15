@@ -22,18 +22,21 @@ const getFileByPath = (dir, fileName) => {
 
 const directories = fs.readdirSync(path.join(__dirname, '..', 'i18n', 'messages'));
 
+let allTranslationsValid = true;
+let verifiedLanguages = [];
+
 for (const directory of directories) {
   if (languages.includes(directory)) continue;
 
   const files = fs.readdirSync(path.join(__dirname, '..', 'i18n', 'messages', directory));
-
   const langFiles = files.filter((file) => languages.includes(file.split('.')[0]));
 
   if (langFiles.length !== languages.length) {
     console.warn(
-      `Missing translation files for directory" /${directory}:`,
+      `Missing translation files for directory /${directory}:`,
       languages.filter((lang) => !langFiles.includes(lang + '.json')),
     );
+    allTranslationsValid = false;
     continue;
   }
 
@@ -58,6 +61,23 @@ for (const directory of directories) {
           (key) => !currKeys.has(key),
         )}`,
       );
+      allTranslationsValid = false;
     }
   }
+
+  // If all translation files exist and are correct, add them to the verified list
+  if (allTranslationsValid) {
+    verifiedLanguages.push(directory);
+  }
+}
+
+// ✅ Display success message when everything is verified
+if (allTranslationsValid) {
+  console.log("\n✅ Translations in /i18n/messages verified:");
+  verifiedLanguages.forEach((dir) => {
+    console.log(`  - ${dir}`);
+  });
+  console.log("\n✔️ All translations are in place!\n");
+} else {
+  console.log("\n❌ Some translation issues were found. Please check the warnings above.\n");
 }
