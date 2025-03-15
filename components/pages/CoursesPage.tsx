@@ -10,6 +10,7 @@ import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import {
   EMAIL_REMINDERS_FREQUENCY,
   PROGRESS_STATUS,
@@ -70,6 +71,10 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     imageSrc: illustrationCourses,
     imageAlt: 'alt.personSitting',
   };
+
+  useGetUserCoursesQuery(undefined, {
+    skip: !userId,
+  });
 
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED);

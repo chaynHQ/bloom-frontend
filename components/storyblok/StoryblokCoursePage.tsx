@@ -6,6 +6,7 @@ import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
 import { Link as i18nLink } from '@/i18n/routing';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -69,12 +70,16 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const courses = useTypedSelector((state) => state.courses);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const courses = useTypedSelector((state) => state.courses);
   const [userAccess, setUserAccess] = useState<boolean>();
   const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
+
+  useGetUserCoursesQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   useEffect(() => {
     const storyPartners = included_for_partners;
@@ -91,7 +96,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
   useEffect(() => {
-    setCourseProgress(determineCourseProgress(courses, storyId));
+    setCourseProgress(determineCourseProgress(courses || [], storyId));
   }, [courses, storyId]);
 
   useEffect(() => {
