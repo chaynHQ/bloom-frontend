@@ -26,6 +26,7 @@ import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'f
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import SetupMFA from '../guards/SetupMFA';
 import VerifyMFA from '../guards/VerifyMFA';
 
 const LoginForm = () => {
@@ -37,12 +38,15 @@ const LoginForm = () => {
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const userLoadError = useTypedSelector((state) => state.user.loadError);
+  const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
+  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
 
   const [formError, setFormError] = useState<
     string | React.ReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
+  const [showSetupMFA, setShowSetupMFA] = useState(false);
   const [showVerifyMFA, setShowVerifyMFA] = useState<boolean>(false);
   const [mfaResolver, setMfaResolver] = useState<MultiFactorResolver>();
 
@@ -52,7 +56,20 @@ const LoginForm = () => {
     if (userId) {
       logEvent(GET_LOGIN_USER_SUCCESS);
     }
-  }, [userId]);
+
+    if (!userId) {
+      if (showSetupMFA) {
+        setShowSetupMFA(false);
+      }
+      return;
+    }
+
+    // Check if superadmin and complete extra 2FA/MFA steps
+    if (userIsSuperAdmin && !userMFAisSetup) {
+      setShowSetupMFA(true);
+      return;
+    }
+  }, [userId, showSetupMFA, userIsSuperAdmin, userMFAisSetup]);
 
   useEffect(() => {
     if (userLoadError) {
@@ -109,6 +126,8 @@ const LoginForm = () => {
       <form id="login-form" autoComplete="off" onSubmit={submitHandler}>
         {showVerifyMFA && mfaResolver ? (
           <VerifyMFA resolver={mfaResolver} />
+        ) : showSetupMFA ? (
+          <SetupMFA />
         ) : (
           <>
             <TextField
