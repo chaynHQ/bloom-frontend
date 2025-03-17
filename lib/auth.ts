@@ -117,13 +117,8 @@ export async function triggerInitialMFA(phoneNumber: string) {
     });
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
-    let session = null;
-
-    multiFactor(user)
-      .getSession()
-      .then(function (multiFactorSession) {
-        session = multiFactorSession;
-      });
+    const session = await multiFactor(user).getSession();
+    console.log('session exists', !!session);
 
     const phoneInfoOptions = {
       phoneNumber,
