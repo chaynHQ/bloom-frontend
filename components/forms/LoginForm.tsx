@@ -60,7 +60,7 @@ const LoginForm = () => {
       logEvent(GET_AUTH_USER_ERROR, { message: userLoadError });
 
       setFormError(
-        t.rich('form.firebase.getUserError', {
+        t.rich('form.getUserError', {
           contactLink: (children) => (
             <Link target="_blank" href={FEEDBACK_FORM_URL}>
               {children}
