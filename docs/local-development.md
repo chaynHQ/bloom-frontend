@@ -24,7 +24,7 @@ Additional Resources:
 
 ## Prerequisites
 
-- NodeJS 20.x
+- NodeJS 22.x
 - Yarn v1.x
 
 #### Recommended Minimum System Requirements:

@@ -91,6 +91,7 @@ export async function triggerVerifyMFA(resolver: MultiFactorResolver) {
     const phoneInfoOptions = {
       multiFactorHint: resolver.hints[0],
       session: resolver.session,
+      codeTime: 60000,
     };
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
@@ -116,9 +117,13 @@ export async function triggerInitialMFA(phoneNumber: string) {
     });
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
+    const phoneInfoOptions = {
+      phoneNumber,
+      codeTime: 60000,
+    };
     // Send SMS verification code
     const verificationId = await phoneAuthProvider.verifyPhoneNumber(
-      phoneNumber,
+      phoneInfoOptions,
       recaptchaVerifier,
     );
     return { verificationId, error: null };
