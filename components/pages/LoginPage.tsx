@@ -11,9 +11,8 @@ import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import UserResearchBanner from '../banner/UserResearchBanner';
-import SetupMFA from '../guards/SetupMFA';
 
 const imageContainerStyle = {
   position: 'relative',
@@ -66,11 +65,7 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = useTypedSelector((state) => state.user.id);
-  const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
-  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-
-  const [showSetupMFA, setShowSetupMFA] = useState(false);
 
   const headerProps = {
     imageSrc: illustrationLeafMix,
@@ -79,15 +74,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!userId) {
-      if (showSetupMFA) {
-        setShowSetupMFA(false);
-      }
-      return;
-    }
-
-    // Check if superadmin and complete extra 2FA/MFA steps
-    if (userIsSuperAdmin && !userMFAisSetup) {
-      setShowSetupMFA(true);
       return;
     }
 
@@ -101,15 +87,7 @@ export default function LoginPage() {
     } else {
       router.push('/courses');
     }
-  }, [
-    userId,
-    partnerAdmin?.active,
-    router,
-    searchParams,
-    showSetupMFA,
-    userIsSuperAdmin,
-    userMFAisSetup,
-  ]);
+  }, [partnerAdmin?.active, router, searchParams, userId]);
 
   return (
     <Box>
@@ -132,7 +110,9 @@ export default function LoginPage() {
             </Typography>
           </Box>
           <Card style={{ marginTop: 0, maxWidth: 400 }}>
-            <CardContent>{showSetupMFA ? <SetupMFA /> : <LoginForm />}</CardContent>
+            <CardContent>
+              <LoginForm />
+            </CardContent>
           </Card>
           <Box sx={imageContainerStyle}>
             <Image
