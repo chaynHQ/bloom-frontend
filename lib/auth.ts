@@ -3,6 +3,7 @@ import {
   MultiFactorError,
   MultiFactorResolver,
   PhoneAuthProvider,
+  PhoneInfoOptions,
   PhoneMultiFactorGenerator,
   RecaptchaVerifier,
   applyActionCode,
@@ -91,7 +92,6 @@ export async function triggerVerifyMFA(resolver: MultiFactorResolver) {
     const phoneInfoOptions = {
       multiFactorHint: resolver.hints[0],
       session: resolver.session,
-      codeTime: 60000,
     };
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
@@ -117,10 +117,14 @@ export async function triggerInitialMFA(phoneNumber: string) {
     });
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
+    const session = await multiFactor(user).getSession();
+    console.log('session exists', !!session);
+
     const phoneInfoOptions = {
       phoneNumber,
-      codeTime: 60000,
-    };
+      session,
+    } as PhoneInfoOptions;
+
     // Send SMS verification code
     const verificationId = await phoneAuthProvider.verifyPhoneNumber(
       phoneInfoOptions,
