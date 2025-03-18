@@ -29,7 +29,7 @@ const overlay = {
   left: 0,
   opacity: 0,
   transition: 'opacity .3s ease',
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  backgroundColor: 'overlayBackground',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -82,7 +82,7 @@ export const ShortsCard = (props: ShortsCardProps) => {
                 className="play-button"
                 sx={{
                   color: 'white',
-                  backgroundColor: 'rgb(255, 250, 250)',
+                  backgroundColor: 'palePrimaryLight',
                   transform: 'scale(0.75)',
                   transition: 'transform .3s ease',
                 }}
