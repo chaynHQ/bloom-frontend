@@ -27,7 +27,6 @@ import {
   RadioGroup,
   TextField,
   Typography,
-  Button,
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
@@ -283,29 +282,27 @@ const AboutYouDemographicForm = () => {
 
         <FormControl fullWidth component="fieldset" id="age">
           <FormLabel component="legend">{t('ageLabel')}</FormLabel>
-          <RadioGroup
-            sx={rowStyles}
-            aria-label="age options"
-            name="age-radio-buttons-group"
-            onChange={(e) => setAgeInput(e.target.value)}
+          <TextField
+            select
+            required
             value={ageInput}
+            onChange={(e) => setAgeInput(e.target.value)}
+            variant="standard"
+            SelectProps={{
+              native: true,
+            }}
+            helperText={t.raw('ageHelpText') || 'Please select your age group'}
+            InputLabelProps={{ shrink: true }}
           >
-            <FormControlLabel
-              value="Under 18"
-              control={<Radio required />}
-              label={t('ageLabels.1')}
-            />
-            <FormControlLabel value="18-25" control={<Radio required />} label={t('ageLabels.2')} />
-            <FormControlLabel value="25-35" control={<Radio required />} label={t('ageLabels.3')} />
-            <FormControlLabel value="35-45" control={<Radio required />} label={t('ageLabels.4')} />
-            <FormControlLabel value="45-55" control={<Radio required />} label={t('ageLabels.5')} />
-            <FormControlLabel value="55+" control={<Radio required />} label={t('ageLabels.6')} />
-            <FormControlLabel
-              value="Prefer not to say"
-              control={<Radio required />}
-              label={t('ageLabels.7')}
-            />
-          </RadioGroup>
+            <option value="">{t.raw('selectPlaceholder') || 'Please select an option'}</option>
+            <option value="Under 18">{t.raw('ageLabels.1') || 'Under 18'}</option>
+            <option value="18-25">{t.raw('ageLabels.2') || '18-25'}</option>
+            <option value="25-35">{t.raw('ageLabels.3') || '25-35'}</option>
+            <option value="35-45">{t.raw('ageLabels.4') || '35-45'}</option>
+            <option value="45-55">{t.raw('ageLabels.5') || '45-55'}</option>
+            <option value="55+">{t.raw('ageLabels.6') || '55+'}</option>
+            <option value="Prefer not to say">{t.raw('ageLabels.7') || 'Prefer not to say'}</option>
+          </TextField>
         </FormControl>
 
         {formError && (
