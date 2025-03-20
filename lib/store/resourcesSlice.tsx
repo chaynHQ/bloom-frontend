@@ -8,7 +8,6 @@ export interface Resource {
   name: string;
   slug: string;
   status: STORYBLOK_STORY_STATUS;
-  storyblokId: number;
   storyblokUuid: string;
   category: RESOURCE_CATEGORIES;
   completed: boolean;
@@ -31,7 +30,7 @@ export interface ResourceFeedback {
   feedbackDescription: string;
 }
 
-export interface Resources extends Array<Resource> {}
+export interface Resources extends Array<Resource> { }
 
 const initialState: Resources = [];
 

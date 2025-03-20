@@ -57,12 +57,12 @@ const cardActionStyle = {
 interface SessionCardProps {
   session: ISbStoryData;
   sessionSubtitle: string;
-  storyblokCourseId: number;
+  storyblokCourseUuid: string;
   isLoggedIn: boolean;
 }
 
 const SessionCard = (props: SessionCardProps) => {
-  const { session, sessionSubtitle, storyblokCourseId, isLoggedIn } = props;
+  const { session, sessionSubtitle, storyblokCourseUuid, isLoggedIn } = props;
   const [expanded, setExpanded] = useState<boolean>(false);
   const t = useTranslations('Courses');
   const locale = useLocale();
@@ -96,7 +96,7 @@ const SessionCard = (props: SessionCardProps) => {
       >
         <CardContent sx={cardContentStyle}>
           <Box sx={cardContentRowStyles}>
-            <SessionProgressDisplay sessionId={session.id} storyblokCourseId={storyblokCourseId} />
+            <SessionProgressDisplay sessionId={session.id} storyblokCourseUuid={storyblokCourseUuid} />
             <Typography flex={1} component="h3" variant="h3">
               {session.content.name}
             </Typography>

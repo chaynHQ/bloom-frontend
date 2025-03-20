@@ -26,12 +26,12 @@ const errorStyle = {
 
 interface ResourceCompleteButtonProps {
   category: RESOURCE_CATEGORIES;
-  storyId: number;
+  storyUuid: string;
   eventData: { [key: string]: any };
 }
 
 export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
-  const { category, storyId, eventData } = props;
+  const { category, storyUuid, eventData } = props;
 
   const t = useTranslations('Resources');
   const rollbar = useRollbar();
@@ -49,7 +49,7 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
     );
 
     const completeResourceResponse = await completeResource({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (completeResourceResponse.data) {

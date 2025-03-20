@@ -22,12 +22,12 @@ const errorStyle = {
 } as const;
 
 interface SessionCompleteButtonProps {
-  storyId: number;
+  storyUuid: string;
   eventData: { [key: string]: any };
 }
 
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
-  const { storyId, eventData } = props;
+  const { storyUuid, eventData } = props;
 
   const t = useTranslations('Courses');
   const rollbar = useRollbar();
@@ -40,7 +40,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
     logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
     const completeSessionResponse = await completeSession({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (completeSessionResponse.data) {
