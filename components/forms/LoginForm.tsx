@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from '@/i18n/routing';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
@@ -24,35 +25,76 @@ import { Box, Link, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import SetupMFA from '../guards/SetupMFA';
 import VerifyMFA from '../guards/VerifyMFA';
 
 const LoginForm = () => {
   const t = useTranslations('Auth');
   const dispatch = useAppDispatch();
   const rollbar = useRollbar();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
   const userLoadError = useTypedSelector((state) => state.user.loadError);
+  const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
+  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [formError, setFormError] = useState<
     string | React.ReactNode | React.ReactElement<any, string | React.JSXElementConstructor<any>>
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
+  const [showSetupMFA, setShowSetupMFA] = useState(false);
   const [showVerifyMFA, setShowVerifyMFA] = useState<boolean>(false);
   const [mfaResolver, setMfaResolver] = useState<MultiFactorResolver>();
 
   const [createEventLog] = useCreateEventLogMutation();
 
   useEffect(() => {
+    if (!userId || (userIsSuperAdmin && userMFAisSetup)) {
+      if (showSetupMFA) {
+        setShowSetupMFA(false);
+      }
+      return;
+    }
+
+    // Check if superadmin and complete extra 2FA/MFA steps
+    if (userIsSuperAdmin && !userMFAisSetup) {
+      setShowSetupMFA(true);
+      return;
+    }
+
     if (userId) {
       logEvent(GET_LOGIN_USER_SUCCESS);
     }
-  }, [userId]);
+
+    // Redirect if the user if login process is complete and userId loaded
+    const returnUrl = searchParams?.get('return_url');
+
+    if (partnerAdmin?.active) {
+      router.push('/partner-admin/create-access-code');
+    } else if (!!returnUrl) {
+      router.push(returnUrl);
+    } else {
+      router.push('/courses');
+    }
+  }, [userId, showSetupMFA, userIsSuperAdmin, userMFAisSetup, router, searchParams, partnerAdmin]);
+
+  useEffect(() => {}, [
+    partnerAdmin?.active,
+    router,
+    searchParams,
+    userId,
+    userIsSuperAdmin,
+    userMFAisSetup,
+  ]);
 
   useEffect(() => {
     if (userLoadError) {
@@ -109,6 +151,8 @@ const LoginForm = () => {
       <form id="login-form" autoComplete="off" onSubmit={submitHandler}>
         {showVerifyMFA && mfaResolver ? (
           <VerifyMFA resolver={mfaResolver} />
+        ) : showSetupMFA ? (
+          <SetupMFA />
         ) : (
           <>
             <TextField

@@ -11,11 +11,11 @@ import { useEffect, useState } from 'react';
 
 interface SessionProgressDisplayProps {
   sessionId: number;
-  storyblokCourseId: number;
+  storyblokCourseUuid: string;
 }
 
 export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
-  const { sessionId, storyblokCourseId } = props;
+  const { sessionId, storyblokCourseUuid } = props;
 
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -25,11 +25,12 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   useGetUserCoursesQuery(undefined);
 
   useEffect(() => {
-    const userCourse = courses?.find((course: Course) => course.storyblokId === storyblokCourseId);
+    const userCourse = courses?.find((course: Course) => course.storyblokUuid === storyblokCourseUuid);
+
 
     if (userCourse) {
       const matchingSession = userCourse.sessions?.find(
-        (userSession) => userSession.storyblokId === sessionId,
+        (userSession) => userSession.storyblokUuid === sessionId,
       );
 
       if (matchingSession) {
@@ -40,7 +41,7 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
         setSessionProgress(PROGRESS_STATUS.NOT_STARTED);
       }
     }
-  }, [courses, sessionId, storyblokCourseId]);
+  }, [courses, sessionId, storyblokCourseUuid]);
 
   return (
     <>

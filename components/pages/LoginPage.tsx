@@ -2,7 +2,6 @@
 
 import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
-import { useTypedSelector } from '@/lib/hooks/store';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -10,10 +9,7 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import UserResearchBanner from '../banner/UserResearchBanner';
-import SetupMFA from '../guards/SetupMFA';
 
 const imageContainerStyle = {
   position: 'relative',
@@ -64,52 +60,11 @@ export default function LoginPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const userId = useTypedSelector((state) => state.user.id);
-  const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);
-  const userMFAisSetup = useTypedSelector((state) => state.user.MFAisSetup);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-
-  const [showSetupMFA, setShowSetupMFA] = useState(false);
 
   const headerProps = {
     imageSrc: illustrationLeafMix,
     imageAlt: 'alt.leafMix',
   };
-
-  useEffect(() => {
-    if (!userId) {
-      if (showSetupMFA) {
-        setShowSetupMFA(false);
-      }
-      return;
-    }
-
-    // Check if superadmin and complete extra 2FA/MFA steps
-    if (userIsSuperAdmin && !userMFAisSetup) {
-      setShowSetupMFA(true);
-      return;
-    }
-
-    // Redirect if the user if login process is complete and userId loaded
-    const returnUrl = searchParams?.get('return_url');
-
-    if (partnerAdmin?.active) {
-      router.push('/partner-admin/create-access-code');
-    } else if (!!returnUrl) {
-      router.push(returnUrl);
-    } else {
-      router.push('/courses');
-    }
-  }, [
-    userId,
-    partnerAdmin?.active,
-    router,
-    searchParams,
-    showSetupMFA,
-    userIsSuperAdmin,
-    userMFAisSetup,
-  ]);
 
   return (
     <Box>
@@ -132,7 +87,9 @@ export default function LoginPage() {
             </Typography>
           </Box>
           <Card style={{ marginTop: 0, maxWidth: 400 }}>
-            <CardContent>{showSetupMFA ? <SetupMFA /> : <LoginForm />}</CardContent>
+            <CardContent>
+              <LoginForm />
+            </CardContent>
           </Card>
           <Box sx={imageContainerStyle}>
             <Image
