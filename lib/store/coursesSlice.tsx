@@ -88,6 +88,9 @@ const slice = createSlice({
     builder.addMatcher(api.endpoints.startSession.matchFulfilled, (state, { payload }) => {
       return mergeUpdatedCourse(state, payload);
     });
+    builder.addMatcher(api.endpoints.getUserCourses.matchFulfilled, (state, { payload }) => {
+      return payload;
+    });
   },
 });
 

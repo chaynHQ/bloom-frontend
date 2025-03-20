@@ -9,6 +9,7 @@ import { SessionCompleteButton } from '@/components/session/SessionCompleteButto
 import { SessionHeader } from '@/components/session/SessionHeader';
 import { SessionVideo } from '@/components/session/SessionVideo';
 import { Link as i18nLink } from '@/i18n/routing';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
@@ -77,7 +78,9 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const courses = useTypedSelector((state) => state.courses);
+  const { data: courses } = useGetUserCoursesQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
@@ -111,7 +114,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     const coursePartners = course.content.included_for_partners;
     const userHasAccess = hasAccessToPage(
       isLoggedIn,
-      false,
+      true, // setting true here to allow preview. The login overlay will block interaction
       coursePartners,
       partnerAccesses,
       partnerAdmin,
@@ -126,7 +129,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   ]);
 
   useEffect(() => {
-    getSessionCompletion(course, courses, storyUuid, setSessionProgress, setSessionId);
+    getSessionCompletion(course, courses || [], storyUuid, setSessionProgress, setSessionId);
   }, [courses, course, storyUuid]);
 
   if (userAccess === undefined) return <LoadingContainer />;

@@ -28,8 +28,8 @@ export interface StoryblokResourceShortPageProps {
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
-  related_session: ISbStoryData;
-  related_course: ISbStoryData;
+  related_session?: ISbStoryData;
+  related_course?: ISbStoryData;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -126,7 +126,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           resourceProgress,
           // during the migration from multiple related sessions to a single related session
           // I am leaving this array option
-          relatedSession: Array.isArray(related_session) ? related_session[0] : related_session,
+          relatedSession: related_session,
           relatedCourse: related_course,
           video,
           video_transcript,

@@ -2,6 +2,7 @@ import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '@/components/storyblok/StoryblokResourceShortPage';
 import { routing } from '@/i18n/routing';
+import { COURSE_CATEGORIES } from '@/lib/constants/enums';
 import { getStoryblokStories, getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
@@ -74,24 +75,45 @@ export default async function Page({ params }: { params: Params }) {
 
   const story = await getStory(locale, slug);
 
-  const relatedCourse = await getStoryblokStories(
-    locale,
-    {},
-    // Related Session is misleading as it can also be a related course introduction
-    // During a migration from Multioption to single option I am leaving this array option
-    Array.isArray(story?.content.related_session)
-      ? story?.content.related_session[0].content?.course
-      : story?.content.related_session?.content?.course,
-  );
-
-  if (!story || !relatedCourse) {
+  if (!story) {
     notFound();
+  }
+
+  const relatedSessionData = Array.isArray(story?.content.related_session)
+    ? story?.content.related_session[0]
+    : story?.content.related_session; // Some are published as arrays and others are just one. This is because a field changed type
+
+  console.log(relatedSessionData);
+  const relatedSessionType: COURSE_CATEGORIES =
+    relatedSessionData?.content?.component?.toLowerCase();
+
+  if (
+    relatedSessionType === COURSE_CATEGORIES.SESSION ||
+    relatedSessionType === COURSE_CATEGORIES.SESSION_IBA
+  ) {
+    // temporary fix for the fact that the course field is sometimes an object and sometimes a string
+    const courseIdentifierType = typeof relatedSessionData?.content?.course;
+    const courseId = courseIdentifierType === 'string' && relatedSessionData?.content?.course;
+    const relatedCourseSlug = relatedSessionData?.content?.course?.slug;
+    const relatedCourse = relatedCourseSlug
+      ? await getStoryblokStory(relatedCourseSlug, locale)
+      : await getStoryblokStories(locale, {}, courseId).then((stories) => stories && stories[0]);
+
+    return (
+      <StoryblokResourceShortPage
+        {...(story.content as StoryblokResourceShortPageProps)}
+        related_course={relatedCourse}
+        related_session={relatedSessionData}
+        storyId={story.id}
+      />
+    );
   }
 
   return (
     <StoryblokResourceShortPage
       {...(story.content as StoryblokResourceShortPageProps)}
-      related_course={relatedCourse[0]}
+      related_course={relatedSessionData}
+      related_session={undefined}
       storyUuid={story.uuid}
     />
   );

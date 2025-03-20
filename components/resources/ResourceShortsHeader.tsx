@@ -3,7 +3,7 @@
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
 import { Link as i18nLink } from '@/i18n/routing';
-import { COURSE_CATEGORIES, PROGRESS_STATUS } from '@/lib/constants/enums';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VISIT_SESSION } from '@/lib/constants/events';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
@@ -31,8 +31,8 @@ interface ResourceShortHeaderProps {
   storyUuid: string;
   name: string;
   resourceProgress: PROGRESS_STATUS;
-  relatedSession: ISbStoryData;
-  relatedCourse: ISbStoryData;
+  relatedSession?: ISbStoryData;
+  relatedCourse?: ISbStoryData;
   video: { url: string };
   video_transcript: ISbRichtext;
   eventData: { [key: string]: any };
@@ -93,16 +93,34 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
 
             <Typography component="h2" mb={2}>
               {t('sessionDetail', {
-                sessionNumber:
-                  relatedSession.content.component === COURSE_CATEGORIES.COURSE
-                    ? 0
-                    : relatedSession.position / 10 - 1,
+                sessionNumber: relatedSession.position / 10 - 1,
                 sessionName: relatedSession.content.name,
                 courseName: relatedCourse?.content.name,
               })}
             </Typography>
             <Button
               href={getDefaultFullSlug(relatedSession.full_slug, locale)}
+              component={i18nLink}
+              onClick={redirectToSession}
+              variant="contained"
+              color="secondary"
+              sx={{ mr: 'auto' }}
+            >
+              {t('sessionButtonLabel')}
+            </Button>
+          </Box>
+        )}
+        {relatedCourse && !relatedSession && (
+          <Box sx={headerRightStyle}>
+            <Typography component="h2" mb={2}>
+              {t('sessionDetail', {
+                sessionNumber: 0,
+                sessionName: relatedCourse.content.name,
+                courseName: relatedCourse.content.name,
+              })}
+            </Typography>
+            <Button
+              href={getDefaultFullSlug(relatedCourse.full_slug, locale)}
               component={i18nLink}
               onClick={redirectToSession}
               variant="contained"

@@ -25,6 +25,9 @@ jobs:
   assigned-comment:
     if: github.event.action == 'assigned'
     runs-on: ubuntu-24.04
+    permissions:
+      issues: write
+      contents: read
     steps:
       - name: Post assignee issue comment
         id: assigned-comment
@@ -51,8 +54,11 @@ jobs:
   #   'Label Stale Contributions' workflow runs
   # Returns: Posts warning comment tagging assignee
   stale-label-comment:
-    if: ${{ github.event.action == 'labeled' && github.event.label.name == 'stale' }}
+    if: ${{ (github.event.action == 'labeled' && github.event.label.name == 'stale') || github.event_name == 'workflow_run' }}
     runs-on: ubuntu-24.04
+    permissions:
+      issues: write
+      contents: read
     steps:
       - name: Post stale issue comment
         id: stale-label-comment

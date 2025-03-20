@@ -3,13 +3,13 @@ import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 
 export default function hasAccessToPage(
   loggedIn: boolean,
-  availablePreLogin: boolean,
+  availableForPreviewOrPreLogin: boolean,
   partnersWithAccess: Array<string>,
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
   referralPartner?: string | null,
 ): boolean {
-  if (!availablePreLogin && !loggedIn) {
+  if (!availableForPreviewOrPreLogin && !loggedIn) {
     return false;
   }
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Course } from '@/lib/store/coursesSlice';
@@ -19,11 +20,13 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-
   const courses = useTypedSelector((state) => state.courses);
 
+  useGetUserCoursesQuery(undefined);
+
   useEffect(() => {
-    const userCourse = courses.find((course: Course) => course.storyblokUuid === storyblokCourseUuid);
+    const userCourse = courses?.find((course: Course) => course.storyblokUuid === storyblokCourseUuid);
+
 
     if (userCourse) {
       const matchingSession = userCourse.sessions?.find(

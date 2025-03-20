@@ -9,6 +9,10 @@ updates:
       interval: 'weekly'
       time: '09:00'
       timezone: 'Europe/London'
+    assignees:
+      - kyleecodes
+    reviewers:
+      - kyleecodes
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: 'github-actions'
@@ -19,3 +23,7 @@ updates:
       interval: 'weekly'
       time: '09:00'
       timezone: 'Europe/London'
+    assignees:
+      - kyleecodes
+    reviewers:
+      - kyleecodes

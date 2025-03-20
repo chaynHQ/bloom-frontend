@@ -10,6 +10,7 @@ import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import {
   EMAIL_REMINDERS_FREQUENCY,
   PROGRESS_STATUS,
@@ -64,12 +65,24 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const t = useTranslations('Courses');
 
+  const slidesPerView = {
+    xs: 1,
+    sm: 2,
+    md: 3,
+    lg: 3,
+    xl: 3,
+  };
+
   const headerProps = {
     title: t('title'),
     introduction: t('introduction'),
     imageSrc: illustrationCourses,
     imageAlt: 'alt.personSitting',
   };
+
+  useGetUserCoursesQuery(undefined, {
+    skip: !userId,
+  });
 
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED);
@@ -208,13 +221,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="conversations"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
+                slidesPerView={slidesPerView}
                 items={conversations.map((conversation) => {
                   return (
                     <Box
@@ -249,14 +256,8 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="shorts"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
-                items={loadedShorts.map((short) => {
+                slidesPerView={slidesPerView}
+                items={loadedShorts.map((short, index) => {
                   return (
                     <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
                       <ShortsCard

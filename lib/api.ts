@@ -68,6 +68,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['UserCourses'],
   endpoints: (builder) => ({
     getUser: builder.query<GetUserResponse, string>({
       query(params) {
@@ -170,6 +171,7 @@ export const api = createApi({
           body,
         };
       },
+      invalidatesTags: [{ type: 'UserCourses' }],
     }),
     startResource: builder.mutation<Resource, StoryblokUuidActionPayload>({
       query(body) {
@@ -261,6 +263,15 @@ export const api = createApi({
         };
       },
     }),
+    getUserCourses: builder.query<Courses, void>({
+      query() {
+        return {
+          url: 'courses-user',
+          method: 'GET',
+        };
+      },
+      providesTags: [{ type: 'UserCourses' }],
+    }),
   }),
 });
 
@@ -287,4 +298,5 @@ export const {
   useCreateResourceFeedbackMutation,
   useStartResourceMutation,
   useCompleteResourceMutation,
+  useGetUserCoursesQuery,
 } = api;
