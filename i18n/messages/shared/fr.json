@@ -143,6 +143,15 @@
       "grounding": "Ancrage",
       "activities": "Activités",
       "minuteLabel": "minutes"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Installez l'application pour y accéder depuis votre écran d'accueil",
+      "desktopDescription": "Installez l'application pour accéder à Bloom depuis votre écran d'accueil",
+      "iosDescription": "Ajouter Bloom à votre écran d'accueil",
+      "iosStep1": "1. Appuyez sur le bouton de partage",
+      "iosStep2": "2. Appuyez sur “Ajouter à l’écran d’accueil”",
+      "button-decline-label": "Pas maintenant",
+      "button-install-label": "Installer"
     }
   }
 }

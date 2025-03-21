@@ -143,6 +143,15 @@
       "grounding-touching-and-feeling-textures": "Touching and feeling textures",
       "grouding-sound-of-claps": "Sound of claps",
       "grounding-affirming-ourselves": "Affirming ourselves (firm pressure)"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Install the app for access from your homescreen",
+      "desktopDescription": "Install the app to access Bloom from your homescreen",
+      "iosDescription": "Add Bloom to your homescreen",
+      "iosStep1": "1. Tap the share button",
+      "iosStep2": "2. Tap “Add To home Screen”",
+      "button-decline-label": "Not now",
+      "button-install-label": "Install"
     }
   }
 }
