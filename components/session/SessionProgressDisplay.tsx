@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 interface SessionProgressDisplayProps {
-  sessionId: number;
+  sessionId: string;
   storyblokCourseUuid: string;
 }
 
@@ -25,8 +25,9 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   useGetUserCoursesQuery(undefined);
 
   useEffect(() => {
-    const userCourse = courses?.find((course: Course) => course.storyblokUuid === storyblokCourseUuid);
-
+    const userCourse = courses?.find(
+      (course: Course) => course.storyblokUuid === storyblokCourseUuid,
+    );
 
     if (userCourse) {
       const matchingSession = userCourse.sessions?.find(
