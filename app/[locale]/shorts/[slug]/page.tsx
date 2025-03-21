@@ -104,7 +104,7 @@ export default async function Page({ params }: { params: Params }) {
         {...(story.content as StoryblokResourceShortPageProps)}
         related_course={relatedCourse}
         related_session={relatedSessionData}
-        storyId={story.id}
+        storyUuid={story.uuid}
       />
     );
   }
