@@ -36,9 +36,16 @@ describe.only('A course session user', () => {
     // Wait for button to be enabled before clicking
     cy.get('button').contains('Session complete').should('not.be.disabled').click(); //mark course as complete
 
-    // Wait for loading state to finish and feedback form to appear
+    // Wait for loading state to finish
     cy.get('button').contains('Session complete').should('not.be.disabled');
-    cy.get('h2', { timeout: 15000 }).contains('How was this session?').should('exist'); //feedback form available after course has started
+
+    // Wait for Redux store update by checking for container with feedback form
+    cy.get('div.MuiContainer-root')
+      .contains('How was this session?')
+      .parents('.MuiContainer-root')
+      .within(() => {
+        cy.get('h2').contains('How was this session?').should('exist');
+      });
 
     cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
 
