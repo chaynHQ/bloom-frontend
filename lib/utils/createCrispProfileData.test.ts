@@ -25,7 +25,7 @@ const course = {
       name: 'Session 1',
       id: 's1',
       slug: 'slug',
-      storyblokId: 1,
+      storyblokUuid: '1',
       status: STORYBLOK_STORY_STATUS.PUBLISHED,
     } as Session,
     {
@@ -33,7 +33,7 @@ const course = {
       name: 'Session 2',
       id: 's2',
       slug: 'slug',
-      storyblokId: 2,
+      storyblokUuid: '2',
       status: STORYBLOK_STORY_STATUS.PUBLISHED,
     },
     {
@@ -41,7 +41,7 @@ const course = {
       name: 'Session 3',
       id: 's3',
       slug: 'slug',
-      storyblokId: 3,
+      storyblokUuid: '3',
       status: STORYBLOK_STORY_STATUS.PUBLISHED,
     },
   ],

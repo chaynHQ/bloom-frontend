@@ -25,8 +25,8 @@ export interface GetUserResponse {
   subscriptions: Subscriptions;
 }
 
-interface StoryblokIdActionPayload {
-  storyblokId: number;
+interface StoryblokUuidActionPayload {
+  storyblokUuid: string;
 }
 
 interface WhatsappUnsubscribePayload {
@@ -154,7 +154,7 @@ export const api = createApi({
         };
       },
     }),
-    startSession: builder.mutation<Course, StoryblokIdActionPayload>({
+    startSession: builder.mutation<Course, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'session-user',
@@ -163,7 +163,7 @@ export const api = createApi({
         };
       },
     }),
-    completeSession: builder.mutation<Course, StoryblokIdActionPayload>({
+    completeSession: builder.mutation<Course, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'session-user/complete',
@@ -173,7 +173,7 @@ export const api = createApi({
       },
       invalidatesTags: [{ type: 'UserCourses' }],
     }),
-    startResource: builder.mutation<Resource, StoryblokIdActionPayload>({
+    startResource: builder.mutation<Resource, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'resource-user',
@@ -182,7 +182,7 @@ export const api = createApi({
         };
       },
     }),
-    completeResource: builder.mutation<Resource, StoryblokIdActionPayload>({
+    completeResource: builder.mutation<Resource, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'resource-user/complete',

@@ -46,8 +46,8 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-  const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
-  const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
+  const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
+  const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -146,13 +146,13 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     setLoadedShorts(shortsWithAccess);
 
     if (courses) {
-      let courseCoursesStarted: Array<number> = [];
-      let courseCoursesCompleted: Array<number> = [];
+      let courseCoursesStarted: Array<string> = [];
+      let courseCoursesCompleted: Array<string> = [];
       courses.map((course) => {
         if (course.completed) {
-          courseCoursesCompleted.push(course.storyblokId);
+          courseCoursesCompleted.push(course.storyblokUuid);
         } else {
-          courseCoursesStarted.push(course.storyblokId);
+          courseCoursesStarted.push(course.storyblokUuid);
         }
       });
       setCoursesStarted(courseCoursesStarted);
@@ -160,7 +160,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     }
   }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
 
-  const getCourseProgress = (courseId: number) => {
+  const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
       ? PROGRESS_STATUS.STARTED
       : coursesCompleted.includes(courseId)
@@ -191,7 +191,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
             justifyContent={['center', 'flex-start']}
           >
             {loadedCourses?.map((course) => {
-              const courseProgress = userId ? getCourseProgress(course.id) : null;
+              const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
                 <Grid
                   item

@@ -36,7 +36,7 @@ const cardsContainerStyle = {
 } as const;
 
 export interface StoryblokCoursePageProps {
-  storyId: number;
+  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -53,7 +53,7 @@ export interface StoryblokCoursePageProps {
 
 const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const {
-    storyId,
+    storyUuid,
     _uid,
     _editable,
     name,
@@ -96,8 +96,8 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
   useEffect(() => {
-    setCourseProgress(determineCourseProgress(courses || [], storyId));
-  }, [courses, storyId]);
+    setCourseProgress(determineCourseProgress(courses || [], storyUuid));
+  }, [courses, storyUuid]);
 
   useEffect(() => {
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
@@ -105,7 +105,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
 
   const eventData = {
     course_name: name,
-    course_storyblok_id: storyId,
+    course_storyblok_uuid: storyUuid,
     course_progress: courseProgress,
   };
 
@@ -174,7 +174,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
                           key={session.id}
                           session={session}
                           sessionSubtitle={position}
-                          storyblokCourseId={storyId}
+                          storyblokCourseUuid={storyUuid}
                           isLoggedIn={isLoggedIn}
                         />
                       );

@@ -79,7 +79,6 @@ export default async function Page({ params }: { params: Params }) {
   return (
     <StoryblokSessionPage
       {...content}
-      storyId={story.id}
       storyUuid={story.uuid}
       storyPosition={story.position}
     />
