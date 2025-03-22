@@ -35,6 +35,9 @@ describe.only('A course session user', () => {
 
     cy.get('button').contains('Session complete').click(); //mark course as complete
 
+    // Add wait to ensure API call completes
+    cy.wait(2000);
+
     cy.get('h2').contains('How was this session?').should('exist'); //feedback form available after course has started
 
     cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
