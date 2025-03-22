@@ -25,7 +25,15 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  getAuth,
+  onAuthStateChanged,
+  PhoneAuthProvider,
+  PhoneMultiFactorGenerator,
+  RecaptchaVerifier,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 
 const http = require('http');
 
@@ -229,7 +237,7 @@ const fbConfig = {
 const app = initializeApp(fbConfig);
 const auth = getAuth(app);
 
-const attachCustomCommands = (Cypress, auth) => {
+const attachCustomCommands = (Cypress) => {
   let currentUser = null;
   let token = null;
   onAuthStateChanged(auth, async (user) => {
@@ -257,6 +265,78 @@ const attachCustomCommands = (Cypress, auth) => {
       return user;
     });
   });
+
+  Cypress.Commands.add('loginAsSuperAdmin', (email, password, mfaCode) => {
+    return new Cypress.Promise((resolve, reject) => {
+      // Mock RecaptchaVerifier
+      auth.settings.appVerificationDisabledForTesting = true;
+      const mockRecaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'invisible',
+        callback: () => {
+          return Promise.resolve('mock-recaptcha-token');
+        },
+      });
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          throw new Error('Superadmin access requires 2FA');
+        })
+        .catch(async (error) => {
+          if (error.code === 'auth/multi-factor-auth-required') {
+            const resolver = error.resolver;
+            const phoneInfoOptions = {
+              multiFactorHint: resolver.hints[0],
+              session: resolver.session,
+            };
+            const phoneAuthProvider = new PhoneAuthProvider(auth);
+            phoneAuthProvider
+              .verifyPhoneNumber(phoneInfoOptions, mockRecaptchaVerifier)
+              .then((verificationId) => {
+                // In a real scenario, we'd wait for the SMS code here. For testing, we use the provided mfaCode.
+                const credential = PhoneAuthProvider.credential(verificationId, mfaCode);
+                const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(credential);
+                resolver
+                  .resolveSignIn(multiFactorAssertion)
+                  .then((userCredential) => {
+                    // Set the auth state
+                    cy.window().then((window) => {
+                      if (window.store) {
+                        window.store.dispatch({ type: 'user/setAuthStateLoading', payload: false });
+                        window.store.dispatch({
+                          type: 'user/setUserToken',
+                          payload: userCredential.user.getIdToken(),
+                        });
+                        window.store.dispatch({
+                          type: 'user/setUserVerifiedEmail',
+                          payload: userCredential.user.emailVerified,
+                        });
+                        window.store.dispatch({ type: 'user/setUserMFAisSetup', payload: true });
+                        window.store.dispatch({ type: 'user/setIsSuperAdmin', payload: true });
+                      }
+                    });
+                    resolve(userCredential);
+                  })
+                  .catch((error) => {
+                    cy.log('loginAsSuperAdmin failed on resolveSignIn');
+                    console.log('loginAsSuperAdmin failed on resolveSignIn');
+                    reject(error);
+                  });
+                return;
+              })
+              .catch((error) => {
+                cy.log('loginAsSuperAdmin failed on verifyPhoneNumber');
+                console.log('loginAsSuperAdmin failed on verifyPhoneNumber');
+                throw error;
+              });
+          } else {
+            cy.log('loginAsSuperAdmin failed on login error code');
+            console.log('loginAsSuperAdmin failed on login error code');
+            throw error;
+          }
+        });
+    });
+  });
+
   Cypress.Commands.add('logout', () => {
     return signOut(auth);
   });
