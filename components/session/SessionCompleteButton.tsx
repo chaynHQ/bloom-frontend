@@ -26,6 +26,13 @@ interface SessionCompleteButtonProps {
   eventData: { [key: string]: any };
 }
 
+// Define possible error types
+type SessionError = {
+  message: string;
+  code?: string;
+  status?: number;
+};
+
 export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
   const { storyUuid, eventData } = props;
 
@@ -33,28 +40,38 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
   const rollbar = useRollbar();
 
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [completeSession] = useCompleteSessionMutation();
 
   const completeSessionAction = async () => {
-    logEvent(SESSION_COMPLETE_REQUEST, eventData);
+    try {
+      setIsLoading(true);
+      setError(null);
 
-    const completeSessionResponse = await completeSession({
-      storyblokUuid: storyUuid,
-    });
+      logEvent(SESSION_COMPLETE_REQUEST, eventData);
 
-    if (completeSessionResponse.data) {
-      logEvent(SESSION_COMPLETE_SUCCESS, eventData);
-    }
+      const completeSessionResponse = await completeSession({
+        storyblokUuid: storyUuid,
+      });
 
-    if (completeSessionResponse.error) {
-      const error = completeSessionResponse.error;
+      if (completeSessionResponse.data) {
+        logEvent(SESSION_COMPLETE_SUCCESS, eventData);
+      }
 
-      logEvent(SESSION_COMPLETE_ERROR, eventData);
-      rollbar.error('Session complete error', error);
-
+      if (completeSessionResponse.error) {
+        const error = completeSessionResponse.error as SessionError;
+        logEvent(SESSION_COMPLETE_ERROR, { ...eventData, error });
+        rollbar.error('Session complete error', error);
+        setError(t('errors.completeSessionError'));
+      }
+    } catch (err) {
+      const error = err as Error;
+      logEvent(SESSION_COMPLETE_ERROR, { ...eventData, error: error.message });
+      rollbar.error('Unexpected session complete error', error);
       setError(t('errors.completeSessionError'));
-      throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +84,7 @@ export const SessionCompleteButton = (props: SessionCompleteButtonProps) => {
         variant="contained"
         onClick={completeSessionAction}
         startIcon={<CheckCircleIcon color="error" />}
+        disabled={isLoading}
       >
         {t('sessionDetail.sessionComplete')}
       </Button>

@@ -33,9 +33,12 @@ describe.only('A course session user', () => {
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 
-    cy.get('button').contains('Session complete').click(); //mark course as complete
+    // Wait for button to be enabled before clicking
+    cy.get('button').contains('Session complete').should('not.be.disabled').click(); //mark course as complete
 
-    cy.get('h2').contains('How was this session?').should('exist'); //feedback form available after course has started
+    // Wait for loading state to finish and feedback form to appear
+    cy.get('button').contains('Session complete').should('not.be.disabled');
+    cy.get('h2', { timeout: 15000 }).contains('How was this session?').should('exist'); //feedback form available after course has started
 
     cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
 
@@ -45,7 +48,9 @@ describe.only('A course session user', () => {
 
     cy.get('button').contains('Send').click(); //submit feedback
 
-    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
+    cy.get('h3', { timeout: 15000 })
+      .contains('Thank you for submitting your feedback')
+      .should('exist'); //check user feedback
   });
 
   after(() => {
