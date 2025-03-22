@@ -1,4 +1,4 @@
-# This workflow enables dependency scans on pull requests.
+# Enables dependency scans on pull requests.
 # When changes in dependencies are detected, it will raise an error
 # if any vulnerabilities or invalid licenses are introduced.
 # See for more info: https://github.com/actions/dependency-review-action

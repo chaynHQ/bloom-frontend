@@ -1,6 +1,5 @@
 # -----------------------------------------------------------------------------
-# GitHub Actions Workflow: Issue Comments
-# Description: Post issue comments
+# Post issue comments
 # Jobs:
 # - Assigned comment
 # - Stale label comment
