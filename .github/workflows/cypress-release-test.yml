@@ -3,6 +3,30 @@ name: Cypress release tests
 on:
   push:
     branches: [develop, dependabot/**, '*test*']
+  workflow_dispatch:
+    inputs:
+      test-suite:
+        description: 'Test suite to run'
+        required: true
+        type: choice
+        options:
+          - all
+          - auth
+          - admin
+          - public
+          - cleanup
+      spec-pattern:
+        description: 'Optional: Specific test pattern (e.g., "tests/auth/*.cy.ts")'
+        required: false
+        type: string
+      parallel:
+        description: 'Run tests in parallel'
+        type: boolean
+        default: true
+      record:
+        description: 'Record results to Cypress Cloud'
+        type: boolean
+        default: true
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -39,9 +63,8 @@ jobs:
       # https://github.com/cypress-io/github-action/issues/48
       fail-fast: false
       matrix:
-        # run 3 copies of the current job in parallel
-        # this will automatically load balance
-        containers: [1, 2, 3]
+        # Only create multiple containers if parallel is true
+        containers: ${{ github.event_name == 'push' || github.event.inputs.parallel == 'true' && fromJSON('[1, 2, 3]') || fromJSON('[1]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,8 +81,9 @@ jobs:
           browser: chrome
           config-file: cypress.config.ts
           headed: false
-          record: true # send results to cypress dashboard
-          parallel: true
+          record: ${{ github.event.inputs.record == 'true' || github.event_name == 'push' }}
+          parallel: ${{ github.event.inputs.parallel == 'true' || github.event_name == 'push' }}
+          spec: ${{ github.event.inputs.spec-pattern || (github.event.inputs.test-suite != 'all' && format('cypress/integration/tests/{0}/**/*.cy.ts', github.event.inputs.test-suite)) || '' }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci

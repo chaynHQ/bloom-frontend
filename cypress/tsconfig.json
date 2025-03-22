@@ -4,7 +4,9 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["cypress", "./support"],
     "baseUrl": ".",
-    "jsx": "react"
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
-  "include": ["**/*.tsx"]
+  "include": ["**/*.tsx", "**/*.ts", "**/*.json"]
 }
