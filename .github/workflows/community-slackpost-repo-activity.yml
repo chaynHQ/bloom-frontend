@@ -1,8 +1,7 @@
 # -----------------------------------------------------------------------------
-# GitHub Actions Workflow: Contributor Activity Slack Bot
-# Description: Posts biweekly open-source activity metrics to internal Slack channel
-# Triggers: bi-weekly schedule and manual
-# Job: runs './scripts/github-actions/communityActivitySlackPost.js'
+# Posts biweekly open-source activity metrics to internal Slack channel
+# Triggers: bi-weekly schedule and manual dispatch
+# Job: runs './scripts/github-actions/communityActivitySlackPost.js' script
 # -----------------------------------------------------------------------------
 
 name: Contributor Activity Slack Bot
