@@ -19,7 +19,7 @@ import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
 export interface StoryblokResourceShortPageProps {
-  storyId: number;
+  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -28,8 +28,8 @@ export interface StoryblokResourceShortPageProps {
   video: { url: string };
   video_transcript: ISbRichtext;
   page_sections: StoryblokPageSectionProps[];
-  related_session: ISbStoryData;
-  related_course: ISbStoryData;
+  related_session?: ISbStoryData;
+  related_course?: ISbStoryData;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -39,7 +39,7 @@ export interface StoryblokResourceShortPageProps {
 
 const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   const {
-    storyId,
+    storyUuid,
     _uid,
     _editable,
     name,
@@ -82,13 +82,15 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     return {
       resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
       resource_name: name,
-      resource_storyblok_id: storyId,
+      resource_storyblok_uuid: storyUuid,
       resource_progress: resourceProgress,
     };
-  }, [name, storyId, resourceProgress]);
+  }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
-    const userResource = resources.find((resource: Resource) => resource.storyblokId === storyId);
+    const userResource = resources.find(
+      (resource: Resource) => resource.storyblokUuid === storyUuid,
+    );
 
     if (userResource) {
       userResource.completed
@@ -98,7 +100,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     } else {
       setResourceProgress(PROGRESS_STATUS.NOT_STARTED);
     }
-  }, [resources, storyId]);
+  }, [resources, storyUuid]);
 
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
@@ -121,12 +123,12 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     >
       <ResourceShortHeader
         {...{
-          storyId,
+          storyUuid,
           name,
           resourceProgress,
           // during the migration from multiple related sessions to a single related session
           // I am leaving this array option
-          relatedSession: Array.isArray(related_session) ? related_session[0] : related_session,
+          relatedSession: related_session,
           relatedCourse: related_course,
           video,
           video_transcript,

@@ -9,6 +9,7 @@ import { SessionCompleteButton } from '@/components/session/SessionCompleteButto
 import { SessionHeader } from '@/components/session/SessionHeader';
 import { SessionVideo } from '@/components/session/SessionVideo';
 import { Link as i18nLink } from '@/i18n/routing';
+import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
@@ -37,7 +38,6 @@ const cardColumnStyle = {
 } as const;
 
 export interface StoryblokSessionPageProps {
-  storyId: number;
   storyUuid: string;
   storyPosition: number;
   _uid: string;
@@ -58,7 +58,6 @@ export interface StoryblokSessionPageProps {
 
 const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const {
-    storyId,
     storyUuid,
     storyPosition,
     _uid,
@@ -79,7 +78,9 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const courses = useTypedSelector((state) => state.courses);
+  const { data: courses } = useGetUserCoursesQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
@@ -99,10 +100,10 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
 
   const eventData = {
     session_name: name,
-    session_storyblok_id: storyId,
+    session_storyblok_uuid: storyUuid,
     session_progress: sessionProgress,
     course_name: course.name,
-    course_storyblok_id: course.id,
+    course_storyblok_uuid: course.uuid,
   };
 
   useEffect(() => {
@@ -128,8 +129,8 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   ]);
 
   useEffect(() => {
-    getSessionCompletion(course, courses, storyId, setSessionProgress, setSessionId);
-  }, [courses, course, storyId, storyUuid]);
+    getSessionCompletion(course, courses || [], storyUuid, setSessionProgress, setSessionId);
+  }, [courses, course, storyUuid]);
 
   if (userAccess === undefined) return <LoadingContainer />;
   if (!userAccess)
@@ -177,7 +178,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
             eventData={eventData}
             name={name}
             video={video}
-            storyId={storyId}
+            storyUuid={storyUuid}
             sessionProgress={sessionProgress}
             video_transcript={video_transcript}
           />
@@ -212,7 +213,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
           )}
           {liveChatAccess && <SessionChat eventData={eventData} />}
           {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-            <SessionCompleteButton storyId={storyId} eventData={eventData} />
+            <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
           )}
         </Box>
       </Container>

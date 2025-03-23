@@ -7,7 +7,7 @@ export interface Session {
   id: string;
   name: string;
   slug: string;
-  storyblokId: number;
+  storyblokUuid: string;
   status: STORYBLOK_STORY_STATUS;
   completed: boolean;
 }
@@ -17,7 +17,7 @@ export interface Course {
   name: string;
   slug: string;
   status: STORYBLOK_STORY_STATUS;
-  storyblokId: number;
+  storyblokUuid: string;
   completed: boolean;
   sessions: Session[];
 }
@@ -50,7 +50,7 @@ export interface SessionFeedback {
   feedbackDescription: string;
 }
 
-export interface Courses extends Array<Course> {}
+export interface Courses extends Array<Course> { }
 
 const initialState: Courses = [];
 
@@ -87,6 +87,9 @@ const slice = createSlice({
     });
     builder.addMatcher(api.endpoints.startSession.matchFulfilled, (state, { payload }) => {
       return mergeUpdatedCourse(state, payload);
+    });
+    builder.addMatcher(api.endpoints.getUserCourses.matchFulfilled, (state, { payload }) => {
+      return payload;
     });
   },
 });
