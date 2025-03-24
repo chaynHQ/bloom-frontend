@@ -33,19 +33,12 @@ describe.only('A course session user', () => {
 
     cy.get('h3').contains('Bonus content').click(); //open bonus content
 
-    // Wait for button to be enabled before clicking
-    cy.get('button').contains('Session complete').should('not.be.disabled').click(); //mark course as complete
+    cy.get('button').contains('Session complete').click(); //mark course as complete
 
-    // Wait for loading state to finish
-    cy.get('button').contains('Session complete').should('not.be.disabled');
+    // Add wait to ensure API call completes
+    cy.wait(2000);
 
-    // Wait for Redux store update by checking for container with feedback form
-    cy.get('div.MuiContainer-root')
-      .contains('How was this session?')
-      .parents('.MuiContainer-root')
-      .within(() => {
-        cy.get('h2').contains('How was this session?').should('exist');
-      });
+    cy.get('h2').contains('How was this session?').should('exist'); //feedback form available after course has started
 
     cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
 
@@ -55,9 +48,7 @@ describe.only('A course session user', () => {
 
     cy.get('button').contains('Send').click(); //submit feedback
 
-    cy.get('h3', { timeout: 15000 })
-      .contains('Thank you for submitting your feedback')
-      .should('exist'); //check user feedback
+    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
   });
 
   after(() => {
