@@ -15,7 +15,7 @@ describe.only('A course session user', () => {
       timeout: 8000,
     })
       .first()
-      .click(); //click on a course when link load
+      .click(); 
 
     // cy.getIframeBody().find('button').click(); Attempting to watch the session video. iframe isnt working at the moment
 
@@ -23,32 +23,31 @@ describe.only('A course session user', () => {
       timeout: 8000,
     })
       .first()
-      .click(); //click on a session when link loads
+      .click(); 
 
-    cy.contains('How was this session?').should('not.exist'); ///no feedback form shown before course has been started
+    cy.contains('How was this session?').should('not.exist'); 
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Activity').click(); //open activities
+    cy.get('h3').contains('Activity').click(); 
 
-    cy.get('h3').contains('Bonus content').click(); //open bonus content
+    cy.get('h3').contains('Bonus content').click();
 
-    cy.get('button').contains('Session complete').click(); //mark course as complete
+    cy.get('button').contains('Session complete').click();
 
-    // Add wait to ensure API call completes
     cy.wait(2000);
 
-    cy.get('h2').contains('How was this session?').should('exist'); //feedback form available after course has started
+    cy.get('h2').contains('How was this session?').should('exist'); 
 
-    cy.get('button').contains('Send').click(); //try to send feedback without selecting feedback option first
+    cy.get('button').contains('Send').click(); 
 
-    cy.get('p').contains('Please select a rating before sending.').should('exist'); //give warning to user
+    cy.get('p').contains('Please select a rating before sending.').should('exist'); 
 
-    cy.get('input[name="feedback-radio-buttons"').first().check(); //click feedback option
+    cy.get('input[name="feedback-radio-buttons"]').first().check(); 
 
-    cy.get('button').contains('Send').click(); //submit feedback
+    cy.get('button').contains('Send').click(); 
 
-    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); //check user feedback
+    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); 
   });
 
   after(() => {
