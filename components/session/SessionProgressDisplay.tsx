@@ -10,23 +10,25 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 interface SessionProgressDisplayProps {
-  sessionId: number;
+  sessionId: string;
   storyblokCourseUuid: string;
 }
 
 export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   const { sessionId, storyblokCourseUuid } = props;
+  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
 
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
   const courses = useTypedSelector((state) => state.courses);
 
-  useGetUserCoursesQuery(undefined);
+  useGetUserCoursesQuery(undefined, { skip: !isLoggedIn });
 
   useEffect(() => {
-    const userCourse = courses?.find((course: Course) => course.storyblokUuid === storyblokCourseUuid);
-
+    const userCourse = courses?.find(
+      (course: Course) => course.storyblokUuid === storyblokCourseUuid,
+    );
 
     if (userCourse) {
       const matchingSession = userCourse.sessions?.find(

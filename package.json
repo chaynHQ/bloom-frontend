@@ -41,7 +41,7 @@
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^6.4.3",
     "@next/third-parties": "^15.1.7",
-    "@reduxjs/toolkit": "^2.5.1",
+    "@reduxjs/toolkit": "^2.6.1",
     "@rollbar/react": "^0.12.0-beta",
     "@storyblok/react": "^4.3.3",
     "@vercel/analytics": "^1.5.0",
@@ -64,7 +64,8 @@
     "react-player": "^2.13.0",
     "react-redux": "^9.2.0",
     "rollbar": "^2.26.4",
-    "storyblok-rich-text-react-renderer": "^2.9.0"
+    "storyblok-rich-text-react-renderer": "^2.9.0",
+    "swr": "^2.3.3"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.13.12",
