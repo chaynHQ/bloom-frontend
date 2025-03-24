@@ -34,7 +34,7 @@ jobs:
           node-version: '22.x'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --non-interactive --ignore-engines
+        run: yarn install --frozen-lockfile --non-interactive
 
       - name: Run linting
         run: yarn lint
@@ -64,6 +64,7 @@ jobs:
         # run 3 copies of the current job in parallel
         # this will automatically load balance
         containers: [1, 2, 3]
+        node: [22]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
