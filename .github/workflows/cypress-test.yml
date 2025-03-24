@@ -64,10 +64,13 @@ jobs:
         # run 3 copies of the current job in parallel
         # this will automatically load balance
         containers: [1, 2, 3]
-        node: [22]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Use NodeJs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.16
         with:
