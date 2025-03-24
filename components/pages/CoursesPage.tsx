@@ -51,6 +51,8 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userId = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = Boolean(userId);
+
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
@@ -81,7 +83,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   };
 
   useGetUserCoursesQuery(undefined, {
-    skip: !userId,
+    skip: !isLoggedIn,
   });
 
   useEffect(() => {

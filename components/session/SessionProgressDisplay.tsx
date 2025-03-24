@@ -16,13 +16,14 @@ interface SessionProgressDisplayProps {
 
 export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   const { sessionId, storyblokCourseUuid } = props;
+  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
 
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
   const courses = useTypedSelector((state) => state.courses);
 
-  useGetUserCoursesQuery(undefined);
+  useGetUserCoursesQuery(undefined, { skip: !isLoggedIn });
 
   useEffect(() => {
     const userCourse = courses?.find(
