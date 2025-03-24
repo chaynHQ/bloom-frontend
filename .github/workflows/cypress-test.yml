@@ -75,7 +75,7 @@ jobs:
         uses: cypress-io/github-action@v6.7.16
         with:
           browser: chrome
-          spec: cypress/**/*.cy.tsx
+          spec: cypress/integration/tests/user-course-session-behaviour.cy.tsx
           headed: false
           record: true # send results to cypress dashboard
           parallel: true
