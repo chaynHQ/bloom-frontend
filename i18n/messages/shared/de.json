@@ -143,6 +143,15 @@
       "grounding-touching-and-feeling-textures": "Touching and feeling textures",
       "grouding-sound-of-claps": "Sound of claps",
       "grounding-affirming-ourselves": "Affirming ourselves (firm pressure)"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Installiere die App, um von deinem Startbildschirm aus darauf zuzugreifen",
+      "desktopDescription": "Installiere die App, um von deinem Startbildschirm aus auf Bloom zuzugreifen",
+      "iosDescription": "Füge Bloom zu deinem Startbildschirm hinzu",
+      "iosStep1": "1. Tippe auf den Teilen-Button",
+      "iosStep2": "2. Tippe auf “Zum Home-Bildschirm hinzufügen”",
+      "button-decline-label": "Jetzt nicht",
+      "button-install-label": "Installieren"
     }
   }
 }
