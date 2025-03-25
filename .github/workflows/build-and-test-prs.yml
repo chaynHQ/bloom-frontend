@@ -1,4 +1,4 @@
-name: Build & test
+name: Build & Test
 
 on:
   pull_request:
@@ -8,6 +8,8 @@ on:
 
 jobs:
   build-and-test:
+    # skip workflow if triggered by a forked pull request (no access to secrets)
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
     runs-on: ubuntu-24.04
     permissions:
       contents: read

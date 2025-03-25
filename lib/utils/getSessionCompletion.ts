@@ -6,15 +6,15 @@ import { Dispatch, SetStateAction } from 'react';
 export const getSessionCompletion = (
   course: ISbStoryData,
   courses: Courses,
-  storyId: number,
+  storyblokUuid: string,
   setSessionProgress: Dispatch<SetStateAction<PROGRESS_STATUS>>,
   setSessionId: Dispatch<SetStateAction<string | undefined>>,
 ) => {
-  const userCourse = courses.find((c: any) => Number(c.storyblokId) === course.id);
+  const userCourse = courses.find((c: any) => c.storyblokUuid === course.uuid);
 
   if (userCourse) {
     const userSession = userCourse.sessions.find(
-      (session: Session) => Number(session.storyblokId) === storyId,
+      (session: Session) => session.storyblokUuid === storyblokUuid,
     );
 
     if (userSession) {
