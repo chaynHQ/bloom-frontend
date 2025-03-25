@@ -32,7 +32,7 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.1",
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.11.4",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.5",
@@ -81,8 +81,8 @@
     "cypress": "^14.1.0",
     "dotenv": "^16.0.3",
     "eslint": "8.56.0",
-    "eslint-config-next": "15.1.7",
-    "eslint-config-prettier": "^10.0.1",
+    "eslint-config-next": "15.2.2",
+    "eslint-config-prettier": "^10.1.1",
     "husky": "^9.0.11",
     "identity-obj-proxy": "^3.0.0",
     "istanbul-lib-coverage": "^3.2.2",
