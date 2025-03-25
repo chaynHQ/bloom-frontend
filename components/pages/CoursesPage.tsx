@@ -46,11 +46,13 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-  const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
-  const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
+  const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
+  const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userId = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = Boolean(userId);
+
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
@@ -65,6 +67,14 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const t = useTranslations('Courses');
 
+  const slidesPerView = {
+    xs: 1,
+    sm: 2,
+    md: 3,
+    lg: 3,
+    xl: 3,
+  };
+
   const headerProps = {
     title: t('title'),
     introduction: t('introduction'),
@@ -73,7 +83,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   };
 
   useGetUserCoursesQuery(undefined, {
-    skip: !userId,
+    skip: !isLoggedIn,
   });
 
   useEffect(() => {
@@ -138,13 +148,13 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     setLoadedShorts(shortsWithAccess);
 
     if (courses) {
-      let courseCoursesStarted: Array<number> = [];
-      let courseCoursesCompleted: Array<number> = [];
+      let courseCoursesStarted: Array<string> = [];
+      let courseCoursesCompleted: Array<string> = [];
       courses.map((course) => {
         if (course.completed) {
-          courseCoursesCompleted.push(course.storyblokId);
+          courseCoursesCompleted.push(course.storyblokUuid);
         } else {
-          courseCoursesStarted.push(course.storyblokId);
+          courseCoursesStarted.push(course.storyblokUuid);
         }
       });
       setCoursesStarted(courseCoursesStarted);
@@ -152,7 +162,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     }
   }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
 
-  const getCourseProgress = (courseId: number) => {
+  const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
       ? PROGRESS_STATUS.STARTED
       : coursesCompleted.includes(courseId)
@@ -183,7 +193,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
             justifyContent={['center', 'flex-start']}
           >
             {loadedCourses?.map((course) => {
-              const courseProgress = userId ? getCourseProgress(course.id) : null;
+              const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
                 <Grid
                   item
@@ -213,13 +223,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="conversations"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
+                slidesPerView={slidesPerView}
                 items={conversations.map((conversation) => {
                   return (
                     <Box
@@ -254,14 +258,8 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
                 title="shorts"
                 theme="primary"
                 showArrows={true}
-                slidesPerView={{
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 3,
-                  xl: 3,
-                }}
-                items={loadedShorts.map((short) => {
+                slidesPerView={slidesPerView}
+                items={loadedShorts.map((short, index) => {
                   return (
                     <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
                       <ShortsCard

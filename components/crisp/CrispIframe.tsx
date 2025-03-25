@@ -20,7 +20,7 @@ const iframeContainerStyle = {
 } as const;
 
 const iframeStyle = {
-  marginTop: -110,
+  marginTop: -160,
   borderRadius: 16,
   maxHeight: 'calc(70vh + 158px)',
 } as const;

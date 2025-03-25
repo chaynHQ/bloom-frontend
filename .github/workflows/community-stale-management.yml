@@ -1,7 +1,5 @@
 # -----------------------------------------------------------------------------
-# GitHub Actions Workflow: Label Stale Contributions
-# Description: Labels stale contributions
-# Job: actions/stale
+# Labels stale contributions
 # -----------------------------------------------------------------------------
 
 name: Label Stale Contributions

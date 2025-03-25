@@ -80,6 +80,6 @@ export default async function Page({ params }: { params: Params }) {
   }
 
   return (
-    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyId={story.id} />
+    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyUuid={story.uuid} />
   );
 }

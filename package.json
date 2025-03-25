@@ -8,7 +8,7 @@
     "cross-spawn": "^7.0.5"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.x"
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -32,7 +32,7 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.1",
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.11.4",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.5",
@@ -41,7 +41,7 @@
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^6.4.3",
     "@next/third-parties": "^15.1.7",
-    "@reduxjs/toolkit": "^2.5.1",
+    "@reduxjs/toolkit": "^2.6.1",
     "@rollbar/react": "^0.12.0-beta",
     "@storyblok/react": "^4.3.3",
     "@vercel/analytics": "^1.5.0",
@@ -64,10 +64,11 @@
     "react-player": "^2.13.0",
     "react-redux": "^9.2.0",
     "rollbar": "^2.26.4",
-    "storyblok-rich-text-react-renderer": "^2.9.0"
+    "storyblok-rich-text-react-renderer": "^2.9.0",
+    "swr": "^2.3.3"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.13.11",
+    "@cypress/code-coverage": "^3.13.12",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@next/bundle-analyzer": "15.2.2",
@@ -80,8 +81,8 @@
     "cypress": "^14.1.0",
     "dotenv": "^16.0.3",
     "eslint": "8.56.0",
-    "eslint-config-next": "15.1.7",
-    "eslint-config-prettier": "^10.0.1",
+    "eslint-config-next": "15.2.2",
+    "eslint-config-prettier": "^10.1.1",
     "husky": "^9.0.11",
     "identity-obj-proxy": "^3.0.0",
     "istanbul-lib-coverage": "^3.2.2",
