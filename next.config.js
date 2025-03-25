@@ -56,8 +56,18 @@ module.exports = withBundleAnalyzer(
             permanent: false,
           },
           {
+            source: '/:locale(en|es|de|fr|pt|hi)/welcome',
+            destination: '/:locale/courses',
+            permanent: false,
+          },
+          {
             source: '/login',
             destination: '/courses',
+            permanent: false,
+          },
+          {
+            source: '/:locale(en|es|de|fr|pt|hi)/login',
+            destination: '/:locale/courses',
             permanent: false,
           },
           {
@@ -66,8 +76,18 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
+            source: '/:locale(en|es|de|fr|pt|hi)/partnership/:path*',
+            destination: '/:locale/welcome/:path*',
+            permanent: true,
+          },
+          {
             source: '/chat',
             destination: '/messaging',
+            permanent: true,
+          },
+          {
+            source: '/:locale(en|es|de|fr|pt|hi)/chat',
+            destination: '/:locale/messaging',
             permanent: true,
           },
         ];
