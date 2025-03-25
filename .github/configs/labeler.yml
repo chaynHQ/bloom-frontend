@@ -2,53 +2,58 @@
 # Labeler config for scan-and-label-forks.yml
 # -----------------------------------------------------------------------------
 
-# High-security files that require thorough review
-review-files:
-  - lib/firebase.ts
-  - lib/auth.ts
-  - lib/api.ts
-  - middleware.ts
-  - components/guards/AuthGuard.tsx
-  - components/guards/**
-  - next.config.js
-  - .env*
-  - "**/.env*"
-  - lib/constants/common.ts
+needs-review:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "lib/firebase.ts"
+          - "lib/auth.ts"
+          - "lib/api.ts"
+          - "middleware.ts"
+          - "components/guards/AuthGuard.tsx"
+          - "components/guards/**"
+          - "next.config.js"
+          - ".env*"
+          - "**/.env*"
+          - "lib/constants/common.ts"
 
-# Configuration files that affect application behavior and security
-config-sensitive:
-  - tsconfig.json
-  - package.json
-  - "**/*.lock"
-  - cypress-after.config.ts
-  - cypress.config.ts
-  - jest.config.js
-  - newrelic.js
-  - lib/rollbar.ts
-  - "**/*.json"
-  - "**/*.yaml"
-  - "**/*.yml"
+config-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tsconfig.json"
+          - "package.json"
+          - "**/*.lock"
+          - "cypress-after.config.ts"
+          - "cypress.config.ts"
+          - "jest.config.js"
+          - "newrelic.js"
+          - "lib/rollbar.ts"
+          - "**/*.json"
+          - "**/*.yaml"
+          - "**/*.yml"
 
-# Scripts and automation files that can perform sensitive operations
-automation-sensitive:
-  - scripts/**
-  - bin/**
-  - "*.sh"
-  - "*.py"
-  - .husky/**
-  - .github/**
+automation-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "scripts/**"
+          - "bin/**"
+          - "*.sh"
+          - "*.py"
+          - ".husky/**"
+          - ".github/**"
 
-# Development tooling and environment files
-dev-tooling:
-  - .vscode/**
-  - .gitignore
-  - .prettierrc
-  - .nycrc
-  - next-env.d.ts
+dev-tooling-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".vscode/**"
+          - ".gitignore"
+          - ".prettierrc"
+          - ".nycrc"
+          - "next-env.d.ts"
 
-# Files that affect testing and monitoring
-test-config:
-  - cypress/**
-  - cypress-after.config.ts
-  - cypress.config.ts
-  - jest.config.js
+test-config-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "cypress/**"
+          - "cypress-after.config.ts"
+          - "cypress.config.ts"
+          - "jest.config.js"
