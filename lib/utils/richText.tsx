@@ -6,6 +6,7 @@ import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokFaqs from '@/components/storyblok/StoryblokFaqs';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
+import StoryblokResourceCarousel from '@/components/storyblok/StoryblokResourceCarousel';
 import StoryblokRow from '@/components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
 import StoryblokSpacer from '@/components/storyblok/StoryblokSpacer';
@@ -41,6 +42,7 @@ export const RichTextOptions: RenderOptions = {
     ['team_members_cards']: (props: any) => <StoryblokTeamMembersCards {...props} />,
     ['carousel']: (props: any) => <StoryblokCarousel {...props} />,
     ['spacer']: (props: any) => <StoryblokSpacer {...props} />,
+    ['resource_carousel']: (props: any) => <StoryblokResourceCarousel {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
