@@ -36,10 +36,6 @@ const ResourceCarousel = ({
     version: 'published',
     sort_by: 'position:description',
   };
-  if (!resourceTypes && resources.length < 1) {
-    console.error('ResourceCarousel: resourceTypes or resources must be provided');
-    return null;
-  }
 
   const [carouselStories, setCarouselStories] = useState<ISbStoryData[]>([]);
   useEffect(() => {
@@ -106,6 +102,11 @@ const ResourceCarousel = ({
       setCarouselStories(resources);
     }
   }, []);
+
+  if (!resourceTypes && resources.length < 1) {
+    console.error('ResourceCarousel: resourceTypes or resources must be provided');
+    return null;
+  }
 
   const slidesPerView = {
     xs: 1,
