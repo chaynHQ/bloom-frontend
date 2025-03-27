@@ -89,7 +89,9 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
-    const userResource = resources.find((resource: Resource) => resource.storyblokUuid === storyUuid);
+    const userResource = resources.find(
+      (resource: Resource) => resource.storyblokUuid === storyUuid,
+    );
 
     if (userResource) {
       userResource.completed
