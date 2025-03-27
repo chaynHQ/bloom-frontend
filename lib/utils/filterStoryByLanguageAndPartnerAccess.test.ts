@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import filterResourcesForLocaleAndPartnerAccess from './filterStoryByLanguageAndPartnerAccess';
 
@@ -6,7 +7,7 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     {
       uuid: '1',
       content: {
-        languages: ['en', 'es'],
+        languages: ['default', 'es'],
         included_for_partners: ['partner1', 'partner2'],
       },
     },
@@ -20,7 +21,7 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     {
       uuid: '3',
       content: {
-        languages: ['en'],
+        languages: ['default'],
         included_for_partners: ['partner1'],
       },
     },
@@ -34,22 +35,22 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
   ] as unknown as ISbStoryData[];
 
   it('should filter resources by locale and partner access', () => {
-    const locale = 'en';
+    const locale = 'default';
     const userPartners = ['partner1', 'partner3'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
-
-    expect(result).equal([
+    console.log(result);
+    expect(result).toEqual([
       {
         uuid: '1',
         content: {
-          languages: ['en', 'es'],
+          languages: ['default', 'es'],
           included_for_partners: ['partner1', 'partner2'],
         },
       },
       {
         uuid: '3',
         content: {
-          languages: ['en'],
+          languages: ['default'],
           included_for_partners: ['partner1'],
         },
       },
@@ -61,27 +62,27 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     const userPartners = ['partner1', 'partner3'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
 
-    expect(result).equal([]);
+    expect(result).toEqual([]);
   });
 
   it('should return an empty array if no resources match the partner access', () => {
-    const locale = 'en';
+    const locale = 'default';
     const userPartners = ['partner5'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
 
-    expect(result).equal([]);
+    expect(result).toEqual([]);
   });
 
   it('should handle the "default" language for English locale', () => {
-    const locale = 'en';
+    const locale = 'default';
     const userPartners = ['partner2'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
 
-    expect(result).equal([
+    expect(result).toEqual([
       {
         uuid: '1',
         content: {
-          languages: ['en', 'es'],
+          languages: ['default', 'es'],
           included_for_partners: ['partner1', 'partner2'],
         },
       },
@@ -93,7 +94,7 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     const userPartners = ['PARTNER3'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
 
-    expect(result).equal([
+    expect(result).toEqual([
       {
         uuid: '2',
         content: {

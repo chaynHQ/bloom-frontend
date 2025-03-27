@@ -12,7 +12,7 @@ const filterResourcesForLocaleAndPartnerAccess = (
       userPartners.some((partner) => {
         return resource.content.included_for_partners
           .map((p: string) => p.toLowerCase())
-          .includes(partner);
+          .includes(partner.toLowerCase());
       })
     );
   });
