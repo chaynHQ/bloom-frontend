@@ -38,7 +38,6 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     const locale = 'default';
     const userPartners = ['partner1', 'partner3'];
     const result = filterResourcesForLocaleAndPartnerAccess(mockResources, locale, userPartners);
-    console.log(result);
     expect(result).toEqual([
       {
         uuid: '1',
