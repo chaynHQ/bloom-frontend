@@ -101,7 +101,7 @@ const ResourceCarousel = ({
     } else {
       setCarouselStories(resources);
     }
-  }, []);
+  }, [userId]);
 
   if (!resourceTypes && resources.length < 1) {
     console.error('ResourceCarousel: resourceTypes or resources must be provided');
