@@ -3,22 +3,14 @@
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import CourseCard from '@/components/cards/CourseCard';
-import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
-import { ShortsCard } from '@/components/cards/ShortsCard';
-import Carousel, { getSlideWidth } from '@/components/common/Carousel';
 import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
-import {
-  EMAIL_REMINDERS_FREQUENCY,
-  PROGRESS_STATUS,
-  RESOURCE_CATEGORIES,
-} from '@/lib/constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_LIST_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import illustrationCourses from '@/public/illustration_courses.svg';
@@ -29,6 +21,7 @@ import Cookies from 'js-cookie';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import ResourceCarousel from '../common/ResourceCarousel';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -46,11 +39,13 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-  const [coursesStarted, setCoursesStarted] = useState<Array<number>>([]);
-  const [coursesCompleted, setCoursesCompleted] = useState<Array<number>>([]);
+  const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
+  const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
 
   const userId = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = Boolean(userId);
+
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
@@ -81,7 +76,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   };
 
   useGetUserCoursesQuery(undefined, {
-    skip: !userId,
+    skip: !isLoggedIn,
   });
 
   useEffect(() => {
@@ -146,13 +141,13 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     setLoadedShorts(shortsWithAccess);
 
     if (courses) {
-      let courseCoursesStarted: Array<number> = [];
-      let courseCoursesCompleted: Array<number> = [];
+      let courseCoursesStarted: Array<string> = [];
+      let courseCoursesCompleted: Array<string> = [];
       courses.map((course) => {
         if (course.completed) {
-          courseCoursesCompleted.push(course.storyblokId);
+          courseCoursesCompleted.push(course.storyblokUuid);
         } else {
-          courseCoursesStarted.push(course.storyblokId);
+          courseCoursesStarted.push(course.storyblokUuid);
         }
       });
       setCoursesStarted(courseCoursesStarted);
@@ -160,7 +155,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     }
   }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
 
-  const getCourseProgress = (courseId: number) => {
+  const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
       ? PROGRESS_STATUS.STARTED
       : coursesCompleted.includes(courseId)
@@ -191,7 +186,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
             justifyContent={['center', 'flex-start']}
           >
             {loadedCourses?.map((course) => {
-              const courseProgress = userId ? getCourseProgress(course.id) : null;
+              const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
                 <Grid
                   item
@@ -217,30 +212,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               <Typography variant="h2" fontWeight={500}>
                 {t('conversationsHeading')}
               </Typography>
-              <Carousel
-                title="conversations"
-                theme="primary"
-                showArrows={true}
-                slidesPerView={slidesPerView}
-                items={conversations.map((conversation) => {
-                  return (
-                    <Box
-                      sx={{
-                        ...getSlideWidth(1, 2, 3),
-                      }}
-                      padding={1}
-                      key={conversation.name}
-                    >
-                      <RelatedContentCard
-                        title={conversation.name}
-                        href={getDefaultFullSlug(conversation.full_slug, locale)}
-                        category={RESOURCE_CATEGORIES.CONVERSATION}
-                        duration={conversation.content.duration}
-                      />
-                    </Box>
-                  );
-                })}
-              />
+              <ResourceCarousel title="conversations-carousel" resourceTypes={['conversations']} />
             </Column>
           </Row>
         </Container>
@@ -252,25 +224,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               <Typography variant="h2" fontWeight={500}>
                 {t('shortsHeading')}
               </Typography>
-              <Carousel
-                title="shorts"
-                theme="primary"
-                showArrows={true}
-                slidesPerView={slidesPerView}
-                items={loadedShorts.map((short, index) => {
-                  return (
-                    <Box p={0.25} minWidth="260px" width="260px" key={short.name}>
-                      <ShortsCard
-                        title={short.content.name}
-                        category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                        href={getDefaultFullSlug(short.full_slug, locale)}
-                        duration={short.content.duration}
-                        image={short.content.preview_image}
-                      />
-                    </Box>
-                  );
-                })}
-              />
+              <ResourceCarousel title="shorts-carousel" resourceTypes={['shorts']} />
             </Column>
           </Row>
         </Container>

@@ -118,7 +118,6 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
     const session = await multiFactor(user).getSession();
-    console.log('session exists', !!session);
 
     const phoneInfoOptions = {
       phoneNumber,

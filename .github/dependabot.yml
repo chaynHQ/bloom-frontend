@@ -1,5 +1,6 @@
 # This file contains the configs for dependabot.
-# See for more info: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# See for more info:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
@@ -13,10 +14,22 @@ updates:
       - kyleecodes
     reviewers:
       - kyleecodes
+    groups:
+      dev-deps:
+        dependency-type: 'development'
+        update-types: # Excludes major updates so we can review individually
+          - 'minor'
+          - 'patch'
+      prod-deps:
+        dependency-type: 'production'
+        update-types: # Excludes major updates so we can review individually
+          - 'minor'
+          - 'patch'
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: 'github-actions'
-    # Workflow files stored in the default location of `.github/workflows`. (You don't need to specify `/.github/workflows` for `directory`.
+    # Workflow files stored in the default location of `.github/workflows`.
+    # (You don't need to specify `/.github/workflows` for `directory`.
     # You can use `directory: "/"`.)
     directory: '/'
     schedule:
@@ -27,3 +40,8 @@ updates:
       - kyleecodes
     reviewers:
       - kyleecodes
+    groups:
+      actions-deps:
+        patterns:
+          - '*' # Group all GitHub Actions updates together
+

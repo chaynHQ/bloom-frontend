@@ -17,9 +17,10 @@ import courseIcon from '@/public/course_icon.svg';
 import groundingIcon from '@/public/grounding_icon.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
 import therapyIcon from '@/public/therapy_icon.svg';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { MobilePwaBanner } from '../banner/MobilePwaBanner';
 import { SecondaryNavIcon } from './SecondaryNav';
 
 const listStyle = {
@@ -82,8 +83,31 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const bannerRef = useRef(null);
 
   const [navigationLinks, setNavigationLinks] = useState<Array<SecondaryNavigationItem>>([]);
+  const [bannerIntersecting, setBannerIntersecting] = useState(false);
+
+  // Detect menu intersection to toggle sticky banners, preventing overflow issues.
+  const intersectionCb: IntersectionObserverCallback = (entries) => {
+    const [entry] = entries;
+    setBannerIntersecting(entry.isIntersecting);
+  };
+  const intersectionOptions: IntersectionObserverInit = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1,
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(intersectionCb, intersectionOptions);
+
+    if (bannerRef.current) observer.observe(bannerRef.current);
+
+    return () => {
+      if (bannerRef.current) observer.unobserve(bannerRef.current);
+    };
+  }, [bannerRef]);
 
   useEffect(() => {
     let links: Array<SecondaryNavigationItem> = [
@@ -139,28 +163,36 @@ const SecondaryNavigationDrawerLinks = (props: NavigationMenuProps) => {
   }, [t, userLoading, userId, partnerAccesses, partnerAdmin]);
 
   return (
-    <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
-      {navigationLinks.map((link, index) => (
-        <ListItem sx={listItemStyle} key={link.label} disablePadding>
-          <ListItemButton
-            sx={{
-              ...listButtonStyle,
-              borderColor: 'primary.dark',
-              borderBottom: index !== navigationLinks.length - 1 ? 1 : 0,
-            }}
-            href={link.href}
-            component={i18nLink}
-            target={link.target || '_self'}
-            onClick={() => {
-              logEvent(link.event);
-            }}
-          >
-            <ListItemIcon>{link.icon}</ListItemIcon>
-            <ListItemText sx={listItemTextStyle} primary={link.label} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+    <Box ref={bannerRef}>
+      <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
+        {navigationLinks.map((link, index) => (
+          <ListItem sx={listItemStyle} key={link.label} disablePadding>
+            <ListItemButton
+              sx={{
+                ...listButtonStyle,
+                borderColor: 'primary.dark',
+                borderBottom: index !== navigationLinks.length - 1 ? 1 : 0,
+              }}
+              href={link.href}
+              component={i18nLink}
+              target={link.target || '_self'}
+              onClick={() => {
+                logEvent(link.event);
+              }}
+            >
+              <ListItemIcon>{link.icon}</ListItemIcon>
+              <ListItemText sx={listItemTextStyle} primary={link.label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        <Box
+          sx={{ position: bannerIntersecting ? 'absolute' : 'fixed', bottom: 0, left: 0, width: 1 }}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <MobilePwaBanner />
+        </Box>
+      </List>
+    </Box>
   );
 };
 

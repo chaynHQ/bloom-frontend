@@ -8,7 +8,6 @@ export interface Resource {
   name: string;
   slug: string;
   status: STORYBLOK_STORY_STATUS;
-  storyblokId: number;
   storyblokUuid: string;
   category: RESOURCE_CATEGORIES;
   completed: boolean;

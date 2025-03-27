@@ -77,11 +77,6 @@ export default async function Page({ params }: { params: Params }) {
   const content = story.content as StoryblokSessionPageProps;
 
   return (
-    <StoryblokSessionPage
-      {...content}
-      storyId={story.id}
-      storyUuid={story.uuid}
-      storyPosition={story.position}
-    />
+    <StoryblokSessionPage {...content} storyUuid={story.uuid} storyPosition={story.position} />
   );
 }
