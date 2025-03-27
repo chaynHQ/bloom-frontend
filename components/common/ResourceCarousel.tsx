@@ -37,7 +37,10 @@ const ResourceCarousel = ({
     sort_by: 'position:description',
   };
 
+  const [shortStories, setShortStories] = useState<ISbStoryData[]>([]);
+  const [conversationStories, setConversationStories] = useState<ISbStoryData[]>([]);
   const [carouselStories, setCarouselStories] = useState<ISbStoryData[]>([]);
+
   useEffect(() => {
     if (resources.length < 1 && resourceTypes) {
       const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
@@ -54,12 +57,10 @@ const ResourceCarousel = ({
           starts_with: 'shorts/',
         })
           .then((shorts) => {
-            setCarouselStories([
-              ...carouselStories,
-              ...((shorts &&
-                filterResourcesForLocaleAndPartnerAccess(shorts, locale, userPartners)) ||
-                []),
-            ]);
+            setShortStories(
+              (shorts && filterResourcesForLocaleAndPartnerAccess(shorts, locale, userPartners)) ||
+                [],
+            );
           })
           .catch((error) => {
             console.error('Failed to fetch carousel shorts' + error);
@@ -74,38 +75,24 @@ const ResourceCarousel = ({
           starts_with: 'conversations/',
         })
           .then((conversations) => {
-            setCarouselStories([
-              ...carouselStories,
-              ...((conversations &&
+            setConversationStories(
+              (conversations &&
                 filterResourcesForLocaleAndPartnerAccess(conversations, locale, userPartners)) ||
-                []),
-            ]);
+                [],
+            );
           })
           .catch((error) => {
             console.error('Failed to fetch carousel conversation' + error);
           });
       }
-      // This is a placeholder for the courses carousel implementation
-      if (resourceTypes.includes('courses')) {
-        getStoryblokStories(locale, {
-          ...baseProps,
-          starts_with: 'courses/',
-        })
-          .then((courses) => {
-            setCarouselStories([...carouselStories, ...(courses || [])]);
-          })
-          .catch((error) => {
-            console.error('Failed to fetch carousel courses' + error);
-          });
-      }
     } else {
       setCarouselStories(resources);
     }
-  }, [userId]);
+  }, [userId, resources, resourceTypes]);
 
   if (!resourceTypes && resources.length < 1) {
     console.error('ResourceCarousel: resourceTypes or resources must be provided');
-    return null;
+    return <></>;
   }
 
   const slidesPerView = {
@@ -121,7 +108,7 @@ const ResourceCarousel = ({
       theme="primary"
       showArrows={true}
       slidesPerView={slidesPerView}
-      items={carouselStories.map((story) => {
+      items={[...carouselStories, ...shortStories, ...conversationStories].map((story) => {
         return (
           (story.content.component === 'resource_short_video' && (
             <Box p={0.25} minWidth="260px" width="260px" key={story.name}>

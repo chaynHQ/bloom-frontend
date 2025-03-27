@@ -83,7 +83,6 @@ export default async function Page({ params }: { params: Params }) {
     ? story?.content.related_session[0]
     : story?.content.related_session; // Some are published as arrays and others are just one. This is because a field changed type
 
-  console.log(relatedSessionData);
   const relatedSessionType: COURSE_CATEGORIES =
     relatedSessionData?.content?.component?.toLowerCase();
 
