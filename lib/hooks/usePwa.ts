@@ -1,9 +1,11 @@
 'use client';
 
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { setPwaDismissed } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useEffect, useMemo, useState } from 'react';
-import { setPwaDismissed } from '@/lib/store/userSlice';
-import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { PWA_INSTALLED } from '../constants/events';
+import logEvent from '../utils/logEvent';
 
 type UserChoice = Promise<{
   outcome: 'accepted' | 'dismissed';
@@ -36,6 +38,7 @@ export default function usePWA() {
       Cookies.set(PWA_DISMISSED, 'true');
     }
     setBannerState('Hidden');
+    logEvent(PWA_DISMISSED);
     await dispatch(setPwaDismissed(true));
   };
   const install = () => {
@@ -51,6 +54,7 @@ export default function usePWA() {
      * still return false momentarily, causing the banner to reappear.
      */
     window.beforeinstallpromptEvent = undefined;
+    logEvent(PWA_INSTALLED);
     setBannerState('Hidden');
   };
 
