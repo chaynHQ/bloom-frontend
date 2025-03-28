@@ -63,6 +63,8 @@
         "countryLabel": "In welchem Land lebst Du zur Zeit?",
         "countryHelpText": "Dies hilft uns zu verstehen, von wo aus Überlebende unser Angebot nutzen",
         "ageLabel": "Was ist Deine Altersgruppe?",
+        "ageHelpText": "Wählen Sie Ihre Altersgruppe aus.",
+        "selectPlaceholder": "Bitte wählen Sie eine Option aus.",
         "ageLabels": {
           "1": "Unter 18",
           "2": "18-25",

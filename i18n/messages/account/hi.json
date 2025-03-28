@@ -63,6 +63,8 @@
         "countryLabel": "Aap kaunse desh mein abhi reh rahe hain?",
         "countryHelpText": "Yeh samjhne mein humein madad karega ki survivors services kahan se le rahe hain",
         "ageLabel": "Apka age group kya hai?",
+        "ageHelpText": "Apna ayu varg chuniyen.",
+        "selectPlaceholder": "Kripya ek vikalp chuniyen.",
         "ageLabels": {
           "1": "18 ke neeche",
           "2": "18-25",
