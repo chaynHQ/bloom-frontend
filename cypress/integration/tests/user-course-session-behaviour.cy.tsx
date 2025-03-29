@@ -15,7 +15,7 @@ describe.only('A course session user', () => {
       timeout: 8000,
     })
       .first()
-      .click(); 
+      .click();
 
     // cy.getIframeBody().find('button').click(); Attempting to watch the session video. iframe isnt working at the moment
 
@@ -23,13 +23,13 @@ describe.only('A course session user', () => {
       timeout: 8000,
     })
       .first()
-      .click(); 
+      .click();
 
-    cy.contains('How was this session?').should('not.exist'); 
+    cy.contains('How was this session?').should('not.exist');
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Activity').click(); 
+    cy.get('h3').contains('Activity').click();
 
     cy.get('h3').contains('Bonus content').click();
 
@@ -37,17 +37,17 @@ describe.only('A course session user', () => {
 
     cy.wait(2000);
 
-    cy.get('h2').contains('How was this session?').should('exist'); 
+    cy.get('h2').contains('How was this session?').should('exist');
 
-    cy.get('button').contains('Send').click(); 
+    cy.get('button').contains('Send').click();
 
-    cy.get('p').contains('Please select a rating before sending.').should('exist'); 
+    cy.get('p').contains('Please select a rating before sending.').should('exist');
 
-    cy.get('input[name="feedback-radio-buttons"]').first().check(); 
+    cy.get('input[name="feedback-radio-buttons"]').first().check();
 
-    cy.get('button').contains('Send').click(); 
+    cy.get('button').contains('Send').click();
 
-    cy.get('h3').contains('Thank you for submitting your feedback').should('exist'); 
+    cy.get('h3').contains('Thank you for submitting your feedback').should('exist');
   });
 
   after(() => {

@@ -4,38 +4,38 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # same value for yarn
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # same value for yarn
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "weekly"
-      time: "09:00"
-      timezone: "Europe/London"
+      interval: 'weekly'
+      time: '09:00'
+      timezone: 'Europe/London'
     assignees:
       - kyleecodes
     reviewers:
       - kyleecodes
     groups:
       dev-deps:
-        dependency-type: "development"
+        dependency-type: 'development'
         update-types: # Excludes major updates so we can review individually
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       prod-deps:
-        dependency-type: "production"
+        dependency-type: 'production'
         update-types: # Excludes major updates so we can review individually
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Maintain dependencies for GitHub Actions
-  - package-ecosystem: "github-actions"
+  - package-ecosystem: 'github-actions'
     # Workflow files stored in the default location of `.github/workflows`.
     # (You don't need to specify `/.github/workflows` for `directory`.
     # You can use `directory: "/"`.)
-    directory: "/"
+    directory: '/'
     schedule:
-      interval: "weekly"
-      time: "09:00"
-      timezone: "Europe/London"
+      interval: 'weekly'
+      time: '09:00'
+      timezone: 'Europe/London'
     assignees:
       - kyleecodes
     reviewers:
@@ -43,5 +43,5 @@ updates:
     groups:
       actions-deps:
         patterns:
-          - "*" # Group all GitHub Actions updates together
+          - '*' # Group all GitHub Actions updates together
 
