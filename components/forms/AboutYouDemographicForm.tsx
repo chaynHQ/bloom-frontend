@@ -160,7 +160,7 @@ const AboutYouDemographicForm = () => {
 
           logEvent(ABOUT_YOU_DEMO_ERROR, {
             ...eventUserData,
-            message: error,
+            message: error?.message || 'Unknown error',
           });
           setLoading(false);
           throw error;
@@ -280,30 +280,56 @@ const AboutYouDemographicForm = () => {
           )}
         />
 
-        <FormControl fullWidth component="fieldset" id="age">
-          <FormLabel component="legend">{t('ageLabel')}</FormLabel>
-          <TextField
-            select
-            required
-            value={ageInput}
-            onChange={(e) => setAgeInput(e.target.value)}
-            variant="standard"
-            SelectProps={{
-              native: true,
-            }}
-            helperText={t.raw('ageHelpText') || 'Please select your age group'}
-            InputLabelProps={{ shrink: true }}
-          >
-            <option value="">{t.raw('selectPlaceholder') || 'Please select an option'}</option>
-            <option value="Under 18">{t.raw('ageLabels.1') || 'Under 18'}</option>
-            <option value="18-25">{t.raw('ageLabels.2') || '18-25'}</option>
-            <option value="25-35">{t.raw('ageLabels.3') || '25-35'}</option>
-            <option value="35-45">{t.raw('ageLabels.4') || '35-45'}</option>
-            <option value="45-55">{t.raw('ageLabels.5') || '45-55'}</option>
-            <option value="55+">{t.raw('ageLabels.6') || '55+'}</option>
-            <option value="Prefer not to say">{t.raw('ageLabels.7') || 'Prefer not to say'}</option>
-          </TextField>
-        </FormControl>
+        <Autocomplete
+          disablePortal
+          id="age"
+          options={[
+            { value: 'Under 18', label: t.raw('ageLabels.1') || 'Under 18' },
+            { value: '18-25', label: t.raw('ageLabels.2') || '18-25' },
+            { value: '25-35', label: t.raw('ageLabels.3') || '25-35' },
+            { value: '35-45', label: t.raw('ageLabels.4') || '35-45' },
+            { value: '45-55', label: t.raw('ageLabels.5') || '45-55' },
+            { value: '55+', label: t.raw('ageLabels.6') || '55+' },
+            { value: 'Prefer not to say', label: t.raw('ageLabels.7') || 'Prefer not to say' },
+          ]}
+          getOptionLabel={(option) => option.label}
+          value={
+            ageInput
+              ? {
+                  value: ageInput,
+                  label:
+                    t.raw(
+                      `ageLabels.${
+                        {
+                          'Under 18': 1,
+                          '18-25': 2,
+                          '25-35': 3,
+                          '35-45': 4,
+                          '45-55': 5,
+                          '55+': 6,
+                          'Prefer not to say': 7,
+                        }[ageInput]
+                      }`,
+                    ) || ageInput,
+                }
+              : null
+          }
+          onChange={(e, value) => {
+            setAgeInput(value?.value || '');
+          }}
+          popupIcon={<KeyboardArrowDown />}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              required
+              label={t('ageLabel')}
+              variant="standard"
+              helperText={t('ageHelpText')}
+              InputLabelProps={{ shrink: true }}
+              sx={staticFieldLabelStyle}
+            />
+          )}
+        />
 
         {formError && (
           <Typography color="error.main" mb={2}>
