@@ -1,0 +1,59 @@
+# -----------------------------------------------------------------------------
+# Labeler config for scan-and-label-forks.yml
+# -----------------------------------------------------------------------------
+
+needs-review:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "lib/firebase.ts"
+          - "lib/auth.ts"
+          - "lib/api.ts"
+          - "middleware.ts"
+          - "components/guards/AuthGuard.tsx"
+          - "components/guards/**"
+          - "next.config.js"
+          - ".env*"
+          - "**/.env*"
+          - "lib/constants/common.ts"
+
+config-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tsconfig.json"
+          - "package.json"
+          - "**/*.lock"
+          - "cypress-after.config.ts"
+          - "cypress.config.ts"
+          - "jest.config.js"
+          - "newrelic.js"
+          - "lib/rollbar.ts"
+          - "**/*.json"
+          - "**/*.yaml"
+          - "**/*.yml"
+
+automation-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "scripts/**"
+          - "bin/**"
+          - "*.sh"
+          - "*.py"
+          - ".husky/**"
+          - ".github/**"
+
+dev-tooling-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".vscode/**"
+          - ".gitignore"
+          - ".prettierrc"
+          - ".nycrc"
+          - "next-env.d.ts"
+
+test-config-changes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "cypress/**"
+          - "cypress-after.config.ts"
+          - "cypress.config.ts"
+          - "jest.config.js"

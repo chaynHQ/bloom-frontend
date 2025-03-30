@@ -12,6 +12,7 @@ declare module '@mui/material/styles' {
     palePrimaryLight?: string;
     paleSecondaryLight?: string;
     bloomGradient?: string;
+    overlayBackground?: string;
   }
 }
 // Create a theme instance.
@@ -35,6 +36,7 @@ let theme = createTheme({
     },
     palePrimaryLight: '#F9eded',
     paleSecondaryLight: '#FFF8F4',
+    overlayBackground: 'rgba(0, 0, 0, 0.4)',
     bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
   },
   shape: {

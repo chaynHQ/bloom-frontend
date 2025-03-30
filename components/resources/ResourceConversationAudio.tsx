@@ -26,13 +26,13 @@ interface ResourceConversationAudioProps {
   eventData: { [key: string]: any };
   resourceProgress: PROGRESS_STATUS;
   name: string;
-  storyId: number;
+  storyUuid: string;
   audio: string;
   audio_transcript: ISbRichtext;
 }
 
 export const ResourceConversationAudio = (props: ResourceConversationAudioProps) => {
-  const { eventData, storyId, resourceProgress, name, audio_transcript, audio } = props;
+  const { eventData, storyUuid, resourceProgress, name, audio_transcript, audio } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startResourceConversation] = useStartResourceMutation();
   const [completeResourceConversation] = useCompleteResourceMutation();
@@ -45,7 +45,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
     logEvent(RESOURCE_CONVERSATION_STARTED_REQUEST, eventData);
 
     const startResourceConversationResponse = await startResourceConversation({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (startResourceConversationResponse.data) {
@@ -60,13 +60,13 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
 
       throw error;
     }
-  }, [startResourceConversation, eventData, storyId, rollbar]);
+  }, [startResourceConversation, eventData, storyUuid, rollbar]);
 
   const callCompleteResourceConversation = useCallback(async () => {
     logEvent(RESOURCE_CONVERSATION_COMPLETE_REQUEST, eventData);
 
     const completeResourceConversationResponse = await completeResourceConversation({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (completeResourceConversationResponse.data) {
@@ -81,7 +81,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
 
       throw error;
     }
-  }, [completeResourceConversation, eventData, storyId, rollbar]);
+  }, [completeResourceConversation, eventData, storyUuid, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;

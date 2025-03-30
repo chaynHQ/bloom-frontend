@@ -26,13 +26,13 @@ interface ResourceShortVideoProps {
   eventData: { [key: string]: any };
   resourceProgress: PROGRESS_STATUS;
   name: string;
-  storyId: number;
+  storyUuid: string;
   video: { url: string };
   video_transcript: ISbRichtext;
 }
 
 export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
-  const { eventData, storyId, resourceProgress, name, video_transcript, video } = props;
+  const { eventData, storyUuid, resourceProgress, name, video_transcript, video } = props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startResourceShort] = useStartResourceMutation();
   const [completeResourceShort] = useCompleteResourceMutation();
@@ -45,7 +45,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
     logEvent(RESOURCE_SHORT_VIDEO_STARTED_REQUEST, eventData);
 
     const startResourceShortResponse = await startResourceShort({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (startResourceShortResponse.data) {
@@ -60,13 +60,13 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
 
       throw error;
     }
-  }, [startResourceShort, eventData, storyId, rollbar]);
+  }, [startResourceShort, eventData, storyUuid, rollbar]);
 
   const callCompleteResourceShort = useCallback(async () => {
     logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST, eventData);
 
     const completeResourceShortResponse = await completeResourceShort({
-      storyblokId: storyId,
+      storyblokUuid: storyUuid,
     });
 
     if (completeResourceShortResponse.data) {
@@ -81,7 +81,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
 
       throw error;
     }
-  }, [completeResourceShort, eventData, storyId, rollbar]);
+  }, [completeResourceShort, eventData, storyUuid, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
