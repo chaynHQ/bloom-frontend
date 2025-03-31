@@ -10,6 +10,7 @@ import StoryblokFaqs from './StoryblokFaqs';
 import StoryblokImage from './StoryblokImage';
 import StoryblokPageSection from './StoryblokPageSection';
 import StoryblokQuote from './StoryblokQuote';
+import StoryblokResourceCarousel from './StoryblokResourceCarousel';
 import StoryblokRow from './StoryblokRow';
 import StoryblokRowColumnBlock from './StoryblokRowColumnBlock';
 import StoryblokStatement from './StoryblokStatement';
@@ -32,6 +33,7 @@ const components: Component[] = [
   { name: 'faqs', component: StoryblokFaqs },
   { name: 'statement', component: StoryblokStatement },
   { name: 'carousel', component: StoryblokCarousel },
+  { name: 'resource_carousel', component: StoryblokResourceCarousel },
 ];
 
 interface DynamicComponentProps {
