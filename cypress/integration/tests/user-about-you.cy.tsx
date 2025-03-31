@@ -53,10 +53,7 @@ describe('User about you page should display', () => {
         .parents('label')
         .contains(neurodivergentOptions[index]);
     });
-    cy.get('p').should(
-      'contain',
-      `We do our best to design inclusive services, so it’s helpful to know this.`,
-    );
+    cy.get('fieldset#neurodivergent .MuiFormHelperText-root').should('exist');
 
     cy.get('label').contains(
       'How would you describe your race, ethnicity and nationality? E.g., White Hispanic Mexican, or Tamil Indian.',
@@ -77,15 +74,12 @@ describe('User about you page should display', () => {
       `This will help us understand where survivors are accessing our services from.`,
     );
 
-    cy.get('legend').contains('What is your age group?');
-    const ageOptions = ['Under 18', '18-25', '25-35', '35-45', '45-55', '55+', 'Prefer not to say'];
-    cy.get('input[name="age-radio-buttons-group"]').each(($option, index) => {
-      cy.wrap($option)
-        .should('have.value', ageOptions[index])
-        .should('have.prop', 'type', 'radio')
-        .parents('label')
-        .contains(ageOptions[index]);
-    });
+    cy.get('label.Mui-required').contains('What is your age group?');
+    cy.get('input[id="age"]')
+      .should('exist')
+      .should('have.prop', 'role', 'combobox')
+      .should('have.prop', 'required', true);
+    cy.get('#age-helper-text').should('exist');
 
     cy.get('button').contains('Submit').should('have.prop', 'type', 'submit');
   });
