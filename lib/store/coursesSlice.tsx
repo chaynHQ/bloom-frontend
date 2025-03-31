@@ -50,7 +50,7 @@ export interface SessionFeedback {
   feedbackDescription: string;
 }
 
-export interface Courses extends Array<Course> { }
+export interface Courses extends Array<Course> {}
 
 const initialState: Courses = [];
 

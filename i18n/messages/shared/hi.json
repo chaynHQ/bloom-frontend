@@ -143,6 +143,15 @@
       "grounding-touching-and-feeling-textures": "Textures ko mehsoos karna",
       "grouding-sound-of-claps": "Taaliyo ki awaz",
       "grounding-affirming-ourselves": "Jaadu ki jhappi!"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Apne homescreen se access ke liye app ko install karein",
+      "desktopDescription": "Apne homescreen se Bloom tak access pane ke liye app ko install karein",
+      "iosDescription": "Bloom ko apne homescreen mein kaise add karein",
+      "iosStep1": "1. Share button ko tap karein",
+      "iosStep2": "2. “Add To Home Screen” ko tap karein",
+      "button-decline-label": "Abhi nahi",
+      "button-install-label": "Install karein"
     }
   }
 }

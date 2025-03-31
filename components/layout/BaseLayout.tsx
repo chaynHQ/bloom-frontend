@@ -78,6 +78,13 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
               <ThemeProvider theme={theme}>
                 <StoryblokProvider>
                   <body>
+                    {/*
+                      PWA installation events (like `beforeinstallprompt`) must be captured 
+                      before React hydration. These events fire only once and are lost if not 
+                      handled early. That's why we include this script before hydration — 
+                      to bind the event listener in time.
+                    */}
+                    <script src="/deffer-pwa.js" async></script>
                     <TopBar />
                     <LeaveSiteButton />
                     <main>

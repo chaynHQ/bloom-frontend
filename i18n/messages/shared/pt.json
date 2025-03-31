@@ -143,6 +143,15 @@
       "grounding": "Aterramento",
       "activities": "Atividade",
       "minuteLabel": "minutos"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Instala o aplicativo para acessar a partir da tela inicial",
+      "desktopDescription": "Instala o aplicativo para acessar o Bloom a partir da tela inicial",
+      "iosDescription": "Adicione o Bloom à sua tela inicial",
+      "iosStep1": "1. Toque no botão de compartilhar",
+      "iosStep2": "2. Toque em “Adicionar à Tela Inicial”",
+      "button-decline-label": "Agora não",
+      "button-install-label": "Instalar"
     }
   }
 }

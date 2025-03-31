@@ -73,11 +73,11 @@ for (const directory of directories) {
 
 // ✅ Display success message when everything is verified
 if (allTranslationsValid) {
-  console.log("\n✅ Translations in /i18n/messages verified:");
+  console.log('\n✅ Translations in /i18n/messages verified:');
   verifiedLanguages.forEach((dir) => {
     console.log(`  - ${dir}`);
   });
-  console.log("\n✔️ All translations are in place!\n");
+  console.log('\n✔️ All translations are in place!\n');
 } else {
-  console.log("\n❌ Some translation issues were found. Please check the warnings above.\n");
+  console.log('\n❌ Some translation issues were found. Please check the warnings above.\n');
 }

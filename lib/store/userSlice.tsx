@@ -28,6 +28,7 @@ export interface User {
   entryPartnerAccessCode: string | null;
   entryPartnerReferral: string | null;
   cookiesAccepted: boolean;
+  pwaDismissed: boolean;
 }
 
 // GetUserDto is the response format of the Get User endpoint
@@ -90,6 +91,7 @@ const initialState: User = {
   entryPartnerAccessCode: null,
   entryPartnerReferral: null,
   cookiesAccepted: false,
+  pwaDismissed: false,
 };
 
 const slice = createSlice({
@@ -125,6 +127,9 @@ const slice = createSlice({
     },
     setLoadError(state, action: PayloadAction<string>) {
       state.loadError = action.payload;
+    },
+    setPwaDismissed(state, action: PayloadAction<boolean>) {
+      state.pwaDismissed = action.payload;
     },
   },
 
@@ -184,5 +189,6 @@ export const {
   setEntryPartnerReferral,
   setUserVerifiedEmail,
   setUserMFAisSetup,
+  setPwaDismissed,
 } = actions;
 export default reducer;

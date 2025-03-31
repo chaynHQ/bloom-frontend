@@ -30,7 +30,7 @@ export interface ResourceFeedback {
   feedbackDescription: string;
 }
 
-export interface Resources extends Array<Resource> { }
+export interface Resources extends Array<Resource> {}
 
 const initialState: Resources = [];
 
