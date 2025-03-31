@@ -25,19 +25,45 @@ import { render } from 'storyblok-rich-text-react-renderer';
 const containerStyle = {
   width: '100%',
   maxWidth: 725,
-  marginBottom: 5,
+  marginBottom: 0,
   marginX: 'auto',
 } as const;
 
 const accordionDetail = {
   textAlign: 'left',
+  backgroundColor: 'rgba(0, 0, 0, 0.09)',
 } as const;
 
 const themes = {
-  primary: {}, // uses default styling
+  primary: {
+    '&.MuiAccordion-root': {
+      margin: 0,
+      '&:before': {
+        display: 'none',
+      },
+    },
+    '&.Mui-expanded': {
+      '& .MuiAccordionDetails-root': {
+        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+      }
+    },
+
+  }, // uses default styling
   secondary: {
     '& .MuiAccordionSummary-expandIconWrapper': { color: 'primary.dark' },
     backgroundColor: 'paleSecondaryLight',
+    '&.MuiAccordion-root': {
+      margin: 0,
+      '&:before': {
+        display: 'none',
+      },
+    },
+    '&.Mui-expanded': {
+      '& .MuiAccordionDetails-root': {
+        backgroundColor: 'rgba(0, 0, 0, 0.09)',
+        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+      }
+    }
   },
 };
 
@@ -91,7 +117,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
           key={`panel${i}`}
-          defaultExpanded={accordionInUrl === ai.accordion_id ? true : false}
+          defaultExpanded={false}
           onChange={handleChange(ai.title)}
           sx={themes[theme]}
         >
