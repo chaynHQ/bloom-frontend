@@ -2519,25 +2519,25 @@
     ignore "^5.1.8"
     p-map "^4.0.0"
 
-"@storyblok/js@3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-3.2.2.tgz#0a5ab6d2107195b40272e81d6f493679fa5c18c0"
-  integrity sha512-JiBaHJRNl18vZdgf/aiv7DSMWW3pZNkEkAAxjIAXkrNDko1hn7L5YipJK8FpevNTPEIRiliNVxTMHTztlvEAbw==
+"@storyblok/js@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-3.3.1.tgz#96ed5e3ea17cdc93d1e8650a7a339a40477ff4fc"
+  integrity sha512-pMsH/J3yIDLShQePb0XcWrM1tZoPwlPqs0j+34jc4KEoDkpHhXCiROA4jvxWzHz+WVZKQe3FZ//C2Lork0aoeQ==
   dependencies:
-    "@storyblok/richtext" "3.0.2"
-    storyblok-js-client "6.10.7"
+    "@storyblok/richtext" "3.1.0"
+    storyblok-js-client "6.10.11"
 
-"@storyblok/react@^4.3.3":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-4.3.4.tgz#44ba6740cef5f0d6532ee64e8d18306286271721"
-  integrity sha512-rLId0aDR97vi9iM4FIgLHlt2+SsqyuRGrm48hW3AgG78ZEj5MuUmtW721BxZTtl346UqbDraQxDZOrQ2ZAq8rg==
+"@storyblok/react@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-4.5.3.tgz#55c7ccb16a1d30823e9b4d8bad2c3c359a1349d5"
+  integrity sha512-AYI6cW8jDS6D+pHupj5yOtJIiWjmV6CuPI3zdhIZjC6FIz2wdiX5ct9P45p+8t22mSQjTx2Eyiz5jshlTTVAZw==
   dependencies:
-    "@storyblok/js" "3.2.2"
+    "@storyblok/js" "3.3.1"
 
-"@storyblok/richtext@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@storyblok/richtext/-/richtext-3.0.2.tgz#98b85029aa62a79ea0191708f7d924e25d37f176"
-  integrity sha512-KBLx9ycNVMyVnNyPiwBH5g9uWmiJpMzp9YvpnnADXlPLoksusrwI56BusSM8HaIgJgcnB5RR0LvhySkPFdC8Zg==
+"@storyblok/richtext@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/richtext/-/richtext-3.1.0.tgz#b2f26545030b289954884226a25fc29569b6209e"
+  integrity sha512-QtH5G+F7w3YuGGnHAFldo71vPpBT5prndZWFPDihlIsWaW0rEWyE9iX+6fp2f4XDgbhi0vyF1HqajFplGOtFVg==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -8418,10 +8418,10 @@ stackframe@^1.3.4:
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.3.4.tgz#b881a004c8c149a5e8efef37d51b16e412943310"
   integrity sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==
 
-storyblok-js-client@6.10.7:
-  version "6.10.7"
-  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-6.10.7.tgz#b29e7e833f54d5f59e4579fcc85df6c0a14e3b5b"
-  integrity sha512-4AdVrJxemKowvsCi+gPIZCo3/5k7JDZzOZ7HBY+GqnhhutcfqE9GvtIeg4INsOibz77XdwcJ8J6u2+Cn7bMeuw==
+storyblok-js-client@6.10.11:
+  version "6.10.11"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-6.10.11.tgz#34b5523d8011d83ed44b5a3600492d76bba48205"
+  integrity sha512-4FuGbQ93X7Ok1hvTRvMy/p4bfX/3C+Uw/m7Mv+wGZyX22IGdCe01qdwgD3CP1F9l5C0lEFCsWxc2PloiM9NutA==
 
 storyblok-rich-text-react-renderer@^2.9.0:
   version "2.9.2"
@@ -8632,14 +8632,6 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
-
-swr@^2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-2.3.3.tgz#9d6a703355f15f9099f45114db3ef75764444788"
-  integrity sha512-dshNvs3ExOqtZ6kJBaAsabhPdHyeY4P2cKwRCniDVifBMoG/SVI7tfLWqPXriVspf2Rg4tPzXJTnwaihIeFw2A==
-  dependencies:
-    dequal "^2.0.3"
-    use-sync-external-store "^1.4.0"
 
 symbol-tree@^3.2.4:
   version "3.2.4"
