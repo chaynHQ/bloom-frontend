@@ -236,7 +236,10 @@ export const api = createApi({
         body: { active },
       }),
     }),
-    createEventLog: builder.mutation<EventLog, { event: EVENT_LOG_NAME }>({
+    createEventLog: builder.mutation<
+      EventLog,
+      { event: EVENT_LOG_NAME; metadata?: { title: string } }
+    >({
       query(body) {
         return {
           url: 'event-logger',
