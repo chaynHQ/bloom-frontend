@@ -1,15 +1,16 @@
 import { Box } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import ResourceCarousel from '../common/ResourceCarousel';
 
 export interface StoryBlokResourceCarouselProps {
-  resource_type: string[];
+  resources: ISbStoryData[];
   uuid: string;
 }
 
-const StoryblokResourceCarousel = ({ resource_type, uuid }: StoryBlokResourceCarouselProps) => {
+const StoryblokResourceCarousel = ({ uuid, resources }: StoryBlokResourceCarouselProps) => {
   return (
     <Box width="100%">
-      <ResourceCarousel resourceTypes={resource_type} title={uuid} />
+      <ResourceCarousel resources={resources || []} title={uuid} />
     </Box>
   );
 };

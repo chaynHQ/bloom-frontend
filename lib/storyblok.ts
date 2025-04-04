@@ -10,6 +10,7 @@ import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTea
 import StoryblokPage from '@/components/storyblok/StoryblokPage';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
+import StoryblokResourceCarousel from '@/components/storyblok/StoryblokResourceCarousel';
 import StoryblokRow from '@/components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
 import StoryblokSessionPage from '@/components/storyblok/StoryblokSessionPage';
@@ -52,6 +53,7 @@ export const getStoryblokApi = storyblokInit({
     session: StoryblokSessionPage,
     welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
+    resource_carousel: StoryblokResourceCarousel,
   },
 });
 
