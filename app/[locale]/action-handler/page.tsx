@@ -60,9 +60,10 @@ export default function Page() {
   }
   if (modeParam && modeParam === 'resetPassword') {
     redirect({
-      href: '/auth/reset-password',
-      // @ts-ignore
-      query: { oobCode },
+      href: {
+        pathname: '/auth/reset-password',
+        query: { oobCode },
+      },
       locale,
     });
   } else if (modeParam && modeParam === 'verifyEmail') {
