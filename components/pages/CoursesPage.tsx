@@ -212,7 +212,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               <Typography variant="h2" fontWeight={500}>
                 {t('conversationsHeading')}
               </Typography>
-              <ResourceCarousel title="conversations-carousel" resourceTypes={['conversations']} />
+              <ResourceCarousel title="conversations-carousel" resources={conversations} />
             </Column>
           </Row>
         </Container>
@@ -224,7 +224,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
               <Typography variant="h2" fontWeight={500}>
                 {t('shortsHeading')}
               </Typography>
-              <ResourceCarousel title="shorts-carousel" resourceTypes={['shorts']} />
+              <ResourceCarousel title="shorts-carousel" resources={shorts} />
             </Column>
           </Row>
         </Container>

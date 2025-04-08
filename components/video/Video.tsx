@@ -1,8 +1,11 @@
 'use client';
 
+import { useCreateEventLogMutation } from '@/lib/api';
+import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { OnProgressProps } from 'react-player/base';
 import { YouTubeConfig } from 'react-player/youtube';
@@ -29,6 +32,7 @@ interface VideoProps {
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;
   setVideoFinished?: Dispatch<SetStateAction<boolean>>;
   lightMode?: boolean;
+  title?: string;
 }
 
 const Video = (props: VideoProps) => {
@@ -41,7 +45,10 @@ const Video = (props: VideoProps) => {
     setVideoStarted,
     setVideoFinished,
     lightMode = true,
+    title,
   } = props;
+  const pathname = usePathname();
+  const [createEventLog] = useCreateEventLogMutation();
 
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
@@ -50,6 +57,12 @@ const Video = (props: VideoProps) => {
   const player = useRef<typeof ReactPlayer>(null);
   const videoStarted = () => {
     setVideoStarted && setVideoStarted(true);
+    if (pathname.includes('grounding')) {
+      createEventLog({
+        event: EVENT_LOG_NAME.GROUNDING_EXERCISE_STARTED,
+        metadata: { title: title || url },
+      });
+    }
     if (player.current) {
       logEvent(`${eventPrefix}_VIDEO_STARTED`, { ...eventData, video_duration: videoDuration });
     }

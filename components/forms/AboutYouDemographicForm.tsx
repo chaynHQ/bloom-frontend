@@ -18,6 +18,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
   Box,
+  Checkbox,
   Chip,
   FormControl,
   FormControlLabel,
@@ -27,7 +28,6 @@ import {
   RadioGroup,
   TextField,
   Typography,
-  Button,
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
@@ -172,114 +172,219 @@ const AboutYouDemographicForm = () => {
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <Autocomplete
-          id="gender"
-          multiple
-          value={genderInput}
-          inputValue={genderTextInput}
-          options={genderOptions.map((option) => t(`genderOptions.${option.translationLabel}`))}
-          freeSolo
-          onChange={(e, value) => {
-            setGenderInput(value);
-          }}
-          onInputChange={(e, value) => {
-            setGenderTextInput(value);
-          }}
-          onBlur={() => {
-            if (genderTextInput) {
-              setGenderInput([...genderInput, genderTextInput]);
-              setGenderTextInput('');
+        <FormControl fullWidth component="fieldset" sx={{ mb: 4 }}>
+          <FormLabel component="legend" sx={{ mb: 2 }}>
+            {t('genderLabel')}
+          </FormLabel>
+          <Autocomplete
+            id="gender"
+            multiple
+            value={genderInput}
+            inputValue={genderTextInput}
+            options={genderOptions.map((option) => t(`genderOptions.${option.translationLabel}`))}
+            freeSolo
+            onChange={(e, value) => {
+              setGenderInput(value);
+            }}
+            onInputChange={(e, value) => {
+              setGenderTextInput(value);
+            }}
+            onBlur={() => {
+              if (genderTextInput) {
+                setGenderInput([...genderInput, genderTextInput]);
+                setGenderTextInput('');
+              }
+            }}
+            renderTags={(value: readonly string[]) =>
+              value.map((option: string, index: number) => (
+                <Chip
+                  color="secondary"
+                  sx={{ marginBottom: 0.5, marginRight: 0.5 }}
+                  label={option}
+                  key={index}
+                />
+              ))
             }
-          }}
-          renderTags={(value: readonly string[]) =>
-            value.map((option: string, index: number) => (
-              <Chip
-                color="secondary"
-                sx={{ marginBottom: 0.5, marginRight: 0.5 }}
-                label={option}
-                key={index}
+            fullWidth
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                InputLabelProps={{ shrink: true }}
+                sx={staticFieldLabelStyle}
+                variant="standard"
+                required={genderInput.length === 0}
               />
-            ))
-          }
-          fullWidth
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              helperText={t('genderHelpText')}
-              InputLabelProps={{ shrink: true }}
-              sx={staticFieldLabelStyle}
-              variant="standard"
-              label={t('genderLabel')}
-              required={genderInput.length === 0} // required doesn't play nicely with an array value. It is expecting a string
-            />
-          )}
-        />
-        <FormControl fullWidth component="fieldset" id="neurodivergent" sx={{ mb: 4 }}>
-          <FormLabel component="legend">{t('neurodivergentLabel')}</FormLabel>
-          <RadioGroup
-            sx={rowStyles}
-            aria-label="neurodivergent options"
-            name="neurodivergent-radio-buttons-group"
-            onChange={(e) => setNeurodivergentInput(e.target.value)}
-            value={neurodivergentInput}
+            )}
+          />
+          <FormHelperText sx={{ m: 0, mt: '0 !important' }}>{t('genderHelpText')}</FormHelperText>
+        </FormControl>
+
+        <FormControl fullWidth component="fieldset" sx={{ mb: 4 }}>
+          <FormLabel component="legend" sx={{ mb: 2 }}>
+            {t('neurodivergentLabel')}
+          </FormLabel>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'nowrap',
+              gap: 2,
+              '& .MuiFormControlLabel-root': {
+                margin: 0,
+                flex: '0 0 auto',
+              },
+            }}
           >
-            <FormControlLabel value="Yes" control={<Radio />} label={t('neurodivergentLabels.1')} />
-            <FormControlLabel value="No" control={<Radio />} label={t('neurodivergentLabels.2')} />
             <FormControlLabel
-              value="Not sure"
-              control={<Radio />}
+              control={
+                <Checkbox
+                  checked={neurodivergentInput === 'Yes'}
+                  onChange={(e) => setNeurodivergentInput(e.target.checked ? 'Yes' : '')}
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                  }}
+                />
+              }
+              label={t('neurodivergentLabels.1')}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={neurodivergentInput === 'No'}
+                  onChange={(e) => setNeurodivergentInput(e.target.checked ? 'No' : '')}
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                  }}
+                />
+              }
+              label={t('neurodivergentLabels.2')}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={neurodivergentInput === 'Not sure'}
+                  onChange={(e) => setNeurodivergentInput(e.target.checked ? 'Not sure' : '')}
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                  }}
+                />
+              }
               label={t('neurodivergentLabels.3')}
             />
             <FormControlLabel
-              value="Prefer not to say"
-              control={<Radio />}
+              control={
+                <Checkbox
+                  checked={neurodivergentInput === 'Prefer not to say'}
+                  onChange={(e) =>
+                    setNeurodivergentInput(e.target.checked ? 'Prefer not to say' : '')
+                  }
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                    '&.Mui-checked:hover .MuiSvgIcon-root': {
+                      color: '#FF976A',
+                    },
+                  }}
+                />
+              }
               label={t('neurodivergentLabels.4')}
             />
-          </RadioGroup>
+          </Box>
           <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
             {t('neurodivergentHelpText')}
           </FormHelperText>
         </FormControl>
-        <TextField
-          id="raceEthnNatn"
-          label={t.rich('raceEthnNatnLabel')}
-          helperText={t('raceEthnNatnHelpText')}
-          onChange={(e) => setRaceEthnNatn(e.target.value)}
-          value={raceEthnNatn}
-          variant="standard"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          sx={staticFieldLabelStyle}
-        />
 
-        <Autocomplete
-          disablePortal
-          id="country"
-          options={countryList}
-          getOptionLabel={(option: { code: string; label: string }) => {
-            return option.label;
-          }}
-          inputValue={countryTextInput}
-          value={countryInput}
-          onInputChange={(event: any, newValue: string | null) => {
-            setCountryTextInput(newValue || '');
-          }}
-          onChange={(e, value) => {
-            setCountryInput(value || null);
-          }}
-          popupIcon={<KeyboardArrowDown />}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              required
-              label={t('countryLabel')}
-              variant="standard"
-              helperText={t('countryHelpText')}
-              InputLabelProps={{ shrink: true }}
-              sx={staticFieldLabelStyle}
-            />
-          )}
-        />
+        <FormControl fullWidth component="fieldset" sx={{ mb: 4 }}>
+          <FormLabel component="legend" sx={{ mb: 2 }}>
+            {t.rich('raceEthnNatnLabel')}
+          </FormLabel>
+          <TextField
+            id="raceEthnNatn"
+            onChange={(e) => setRaceEthnNatn(e.target.value)}
+            value={raceEthnNatn}
+            variant="standard"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            sx={staticFieldLabelStyle}
+          />
+          <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
+            {t('raceEthnNatnHelpText')}
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl fullWidth component="fieldset" sx={{ mb: 4 }}>
+          <FormLabel component="legend" sx={{ mb: 2 }}>
+            {t('countryLabel')}
+          </FormLabel>
+          <Autocomplete
+            disablePortal
+            id="country"
+            options={countryList}
+            getOptionLabel={(option: { code: string; label: string }) => {
+              return option.label;
+            }}
+            inputValue={countryTextInput}
+            value={countryInput}
+            onInputChange={(event: any, newValue: string | null) => {
+              setCountryTextInput(newValue || '');
+            }}
+            onChange={(e, value) => {
+              setCountryInput(value || null);
+            }}
+            popupIcon={<KeyboardArrowDown />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                required
+                variant="standard"
+                InputLabelProps={{ shrink: true }}
+                sx={staticFieldLabelStyle}
+              />
+            )}
+          />
+          <FormHelperText sx={{ m: 0, mt: '0 !important' }}>{t('countryHelpText')}</FormHelperText>
+        </FormControl>
 
         <FormControl fullWidth component="fieldset" id="age">
           <FormLabel component="legend">{t('ageLabel')}</FormLabel>
