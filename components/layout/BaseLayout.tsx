@@ -14,7 +14,7 @@ import '@/styles/hotjarNPS.css';
 import theme from '@/styles/theme';
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
 import { Analytics } from '@vercel/analytics/react';
 import newrelic from 'newrelic';
@@ -97,8 +97,10 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     )}
                     <Analytics />
                   </body>
-                  <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
-                  <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || ''} />
+                  <GoogleAnalytics
+                    debugMode={true}
+                    gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
+                  />
                 </StoryblokProvider>
               </ThemeProvider>
             </AppRouterCacheProvider>
