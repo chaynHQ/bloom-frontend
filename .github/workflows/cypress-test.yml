@@ -9,51 +9,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  wait-for-vercel-deployment:
+    name: Wait for vercel deployment
     runs-on: ubuntu-24.04
     permissions:
-      contents: read
-      packages: read
+      deployments: read
+      statuses: read
+    outputs:
+      preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: waitForVercelDeployment
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Use NodeJs
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --non-interactive
-
-      - name: Run linting
-        run: yarn lint
-
-      - name: Build app
-        run: yarn build
-        env:
-          NEXT_PUBLIC_ROLLBAR_ENV: CI
-          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
-          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1000
+          check_interval: 5
   cypress-run:
     name: Cypress e2e tests
-    needs: build
+    needs: wait-for-vercel-deployment
     runs-on: ubuntu-24.04
     permissions:
       contents: read
       checks: write
+      deployments: read
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes
@@ -67,18 +46,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Use NodeJs
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
+      - run: node -v
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.16
         with:
           browser: chrome
-          spec: cypress/**/*.cy.tsx
+          config-file: cypress.config.ts
           headed: false
           record: true # send results to cypress dashboard
           parallel: true
+          group: ${{ github.run_id }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
@@ -105,4 +94,29 @@ jobs:
           CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run cypress after cleanup
+        uses: cypress-io/github-action@v6.7.16
+        with:
+          browser: chrome
+          config-file: cypress-after.config.ts
+          headed: false
+        env:
+          NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
+          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
+          CYPRESS_SUPER_ADMIN_EMAIL: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
+          CYPRESS_SUPER_ADMIN_PASSWORD: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

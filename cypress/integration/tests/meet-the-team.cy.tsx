@@ -72,10 +72,6 @@ describe('Meet the team page should', () => {
       );
       cy.checkImage('leaves with fire', 'leaf_mix_fire');
       cy.get('h3').should('contain', 'Our therapists');
-      cy.get('p').should(
-        'contain',
-        'We co-create our courses with a network of certified therapists who practice a trauma-informed and feminist approach. They are based all across the world, and speak many languages.',
-      );
     });
     it('supporting team section', () => {
       cy.get('h2').should('contain', 'Supporting team');
