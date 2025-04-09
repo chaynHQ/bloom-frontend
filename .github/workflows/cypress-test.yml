@@ -25,44 +25,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1000
           check_interval: 5
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-24.04
-  #   permissions:
-  #     contents: read
-  #     packages: read
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Get yarn cache directory path
-  #       id: yarn-cache-dir-path
-  #       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-  #     - name: Cache node_modules
-  #       uses: actions/cache@v4
-  #       id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-  #       with:
-  #         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-yarn-
-  #     - name: Use NodeJs
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22.x'
-
-  #     - name: Install dependencies
-  #       run: yarn install --frozen-lockfile --non-interactive
-
-  #     - name: Run linting
-  #       run: yarn lint
-
-  #     - name: Build app
-  #       run: yarn build
-  #       env:
-  #         NEXT_PUBLIC_ROLLBAR_ENV: CI
-  #         NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
-  #         NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-  #         NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
-  #         NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
   cypress-run:
     name: Cypress e2e tests
     needs: wait-for-vercel-deployment
@@ -99,6 +61,7 @@ jobs:
           headed: false
           record: true # send results to cypress dashboard
           parallel: true
+          group: ${{ github.run_id }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
