@@ -12,6 +12,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { Session } from '@/lib/store/coursesSlice';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
 import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -78,10 +79,11 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const courseState = useTypedSelector((state) => state.courses);
   const { data: courses } = useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
-
+  const [showFeedbackForm, setShowFeedbackForm] = useState<boolean>();
   const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
@@ -127,6 +129,16 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     isLoggedIn,
     partnerAdmin,
   ]);
+
+  useEffect(() => {
+    const session = courseState.find((c: any) =>
+      c.sessions.find((s: Session) => s.storyblokUuid == storyUuid),
+    );
+    if (session) {
+      setShowFeedbackForm(!!session);
+      setSessionId(session.id);
+    }
+  }, [courseState]);
 
   useEffect(() => {
     getSessionCompletion(course, courses || [], storyUuid, setSessionProgress, setSessionId);
@@ -218,7 +230,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
         </Box>
       </Container>
 
-      {sessionId && (
+      {showFeedbackForm && sessionId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <SessionFeedbackForm sessionId={sessionId} />
         </Container>

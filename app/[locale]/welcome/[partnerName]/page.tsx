@@ -13,7 +13,9 @@ export const dynamic = 'force-dynamic';
 type Params = Promise<{ locale: string; partnerName: string }>;
 
 async function getStory(locale: string, partnerName: string) {
-  return await getStoryblokStory(`welcome/${partnerName}`, locale);
+  return await getStoryblokStory(`welcome/${partnerName}`, locale, {
+    resolve_relations: ['resource_carousel.resources'],
+  });
 }
 
 export async function generateMetadata({ params }: { params: Params }) {

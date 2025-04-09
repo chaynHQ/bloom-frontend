@@ -123,18 +123,20 @@ const Carousel = (props: CarouselProps) => {
     },
   } = props;
   const width = useWidth();
+  const currentSlidePerView = slidesPerView[width];
   const navigationEnabled = isNavigationEnabled(width, items.length, slidesPerView);
-
+  const scrollDistance =
+    currentSlidePerView < 2 || items.length / currentSlidePerView < 2 ? 'slide' : 'screen';
   return (
     <NukaCarousel
       id={title}
-      wrapMode="wrap"
       showArrows={navigationEnabled && showArrows && arrowPosition == 'side'}
       showDots={navigationEnabled}
       swiping={true}
       dots={<CustomDots showArrows={showArrows} arrowPosition={arrowPosition} />}
       title={title}
       afterSlide={props.afterSlideHandle}
+      scrollDistance={scrollDistance}
     >
       {items}
     </NukaCarousel>
