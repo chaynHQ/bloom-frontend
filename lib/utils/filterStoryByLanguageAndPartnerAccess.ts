@@ -8,7 +8,7 @@ const filterResourcesForLocaleAndPartnerAccess = (
   resources.filter((resource: ISbStoryData) => {
     const contentLanguagesString = locale === 'en' ? 'default' : locale;
     return (
-      resource.content.languages.includes(contentLanguagesString) &&
+      resource?.content?.languages?.includes(contentLanguagesString) &&
       userPartners.some((partner) => {
         return resource.content.included_for_partners
           .map((p: string) => p.toLowerCase())
