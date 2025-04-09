@@ -57,7 +57,6 @@ jobs:
         with:
           browser: chrome
           config-file: cypress.config.ts
-          spec: cypress/**/*.cy.tsx
           headed: false
           record: true # send results to cypress dashboard
           parallel: true
