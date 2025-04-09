@@ -46,11 +46,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Use NodeJs
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
       - run: node -v
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
 
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.16
