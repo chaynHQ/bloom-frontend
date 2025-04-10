@@ -104,7 +104,7 @@ export default function BookTherapyPage() {
 
   const headerProps = {
     title: t('title'),
-    introduction: `${t.rich('introduction', { partnerName: partnerAccess?.partner?.name })}`,
+    introduction: `${t.rich('introduction', { partnerName: partnerAccess?.partner?.name as string })}`,
     imageSrc: illustrationPerson4Peach,
     imageAlt: 'alt.personTea',
   };
