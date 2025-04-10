@@ -109,14 +109,14 @@ const RegisterForm = (props: RegisterFormProps) => {
       const error = getErrorMessage(validateCodeResponse.error);
 
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
-        setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerName }));
+        setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerName as string }));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
-        setFormError(t('codeErrors.expired', { partnerName: partnerName }));
+        setFormError(t('codeErrors.expired', { partnerName: partnerName as string }));
       } else if (
         error === PARTNER_ACCESS_CODE_STATUS.DOES_NOT_EXIST ||
         PARTNER_ACCESS_CODE_STATUS.INVALID_CODE
       ) {
-        setFormError(t('codeErrors.invalid', { partnerName: partnerName }));
+        setFormError(t('codeErrors.invalid', { partnerName: partnerName as string }));
       } else {
         setFormError(
           t.rich('codeErrors.internal', {
