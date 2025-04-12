@@ -3,18 +3,20 @@ import courseIcon from '@/public/course_icon_background.svg';
 import { Box, Button, Dialog, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'; // Import useState
 
 const LoginDialog = () => {
   const t = useTranslations('Shared');
   const tN = useTranslations('Navigation');
   const pathname = usePathname();
-  const router = useRouter(); 
+  const router = useRouter();
   const [open, setOpen] = useState(true); // Control dialog state
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)}> {/* Allow closing */}
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      {' '}
+      {/* Allow closing */}
       <Box
         style={{
           padding: 30,
@@ -25,20 +27,20 @@ const LoginDialog = () => {
         }}
       >
         {/* Back Button - Closes dialog or navigates back */}
-        <Button 
+        <Button
           onClick={() => {
             if (window.history.length > 1) {
               router.back(); // Go back if possible
             } else {
               setOpen(false); // Otherwise, just close modal
             }
-          }} 
-          size="small" 
-          variant="text" 
+          }}
+          size="small"
+          variant="text"
           color="primary"
-          style={{ alignSelf: 'flex-start' }} 
+          style={{ alignSelf: 'flex-start' }}
         >
-          ← {t('loginDialog.goBackButton')}
+          ←
         </Button>
 
         <Box display="flex" flexDirection="row" justifyContent="flex-start" gap={1}>
