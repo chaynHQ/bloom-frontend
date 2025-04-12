@@ -38,7 +38,9 @@ export default function Page() {
         {t('maintenanceBanner.title')}
       </Typography>
       <Typography maxWidth={650} mb={2} mx={'auto'}>
-        {t('maintenanceBanner.description', { hours: process.env.NEXT_PUBLIC_MAINTENANCE_HOURS })}
+        {t('maintenanceBanner.description', {
+          hours: process.env.NEXT_PUBLIC_MAINTENANCE_HOURS as string,
+        })}
       </Typography>
     </Container>
   );
