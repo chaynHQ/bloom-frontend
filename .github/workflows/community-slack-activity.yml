@@ -1,10 +1,10 @@
 # -----------------------------------------------------------------------------
 # Posts biweekly open-source activity metrics to internal Slack channel
 # Triggers: bi-weekly schedule and manual dispatch
-# Job: runs './scripts/github-actions/communityActivitySlackPost.js' script
+# Job: runs './scripts/github-actions/slackReport.js' script
 # -----------------------------------------------------------------------------
 
-name: Contributor Activity Slack Bot
+name: OSS Activity Slack Bot
 
 on:
   workflow_dispatch: # enables manual trigger
@@ -37,4 +37,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: |
-          node ./scripts/github_actions/communityActivitySlackPost.js
+          node ./scripts/github-actions/slackReport.js
