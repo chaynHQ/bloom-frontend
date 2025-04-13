@@ -38,7 +38,7 @@ const LoginDialog = () => {
           color="primary"
           style={{ alignSelf: 'flex-start' }} 
         >
-          ← {t('loginDialog.goBackButton')}
+          ← 
         </Button>
 
         <Box display="flex" flexDirection="row" justifyContent="flex-start" gap={1}>
