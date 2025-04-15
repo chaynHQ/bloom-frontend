@@ -13,6 +13,7 @@ import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -22,7 +23,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container, Link } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
@@ -85,6 +86,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   } = props;
 
   const t = useTranslations('Courses');
+  const locale = useLocale();
 
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   useGetUserCoursesQuery(undefined, {
@@ -228,7 +230,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
           {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
             <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
           )}
-          <Link href="/courses" sx={backToCourseLinkStyle}>
+          <Link href={getDefaultFullSlug(course.full_slug, locale)} sx={backToCourseLinkStyle}>
             <ArrowBack />
             <span>{t('backToCourse')}</span>
           </Link>
