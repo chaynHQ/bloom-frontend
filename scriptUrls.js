@@ -24,6 +24,8 @@ const scriptSrcUrls = [
   'https://client.crisp.chat',
   process.env.NEXT_PUBLIC_API_URL,
   'wss://client.relay.crisp.chat',
+  'https://apis.google.com',
+  'https://va.vercel-scripts.com/',
 ];
 
 const childSrcUrls = ['blob:'];
@@ -67,6 +69,7 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
+  process.env.NEXT_PUBLIC_API_BASE_URL, //new env by niksanand1717
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
@@ -75,6 +78,7 @@ const frameSrcUrls = [
   'https://*.simplybook.it',
   'https://*.youtube.com',
   'https://vercel.live',
+  'https://*.firebaseapp.com',
 ];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];

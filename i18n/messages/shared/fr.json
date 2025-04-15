@@ -30,6 +30,11 @@
       "title": "Bloom est en maintenance",
       "description": "Veuillez nous excuser pendant que nous effectuons une maintenance planifiée essentielle. Bloom devrait être disponible comme d'habitude dans {hours} heures."
     },
+    "fruitzRetirementBanner": {
+      "title": "Changement concernant vos cours",
+      "description": "L'application Fruitz sera retirée le mois prochain, mais votre accompagnement avec Bloom reste disponible. À partir du 22 avril, le cours « Rencontres, limites et relations » ne sera plus accessible, mais tous les autres services, y compris la messagerie 1:1, resteront inchangés.",
+      "dismiss": "Fermer"
+    },
     "videoTranscript": {
       "title": "Transcription de la vidéo",
       "description": "Lire la transcription de la vidéo- ",
