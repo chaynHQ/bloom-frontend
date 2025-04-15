@@ -37,6 +37,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
   const [videoStarted, setVideoStarted] = useState<boolean>(false);
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startSession] = useStartSessionMutation();
+
   async function callStartSession() {
     logEvent(SESSION_STARTED_REQUEST, {
       ...eventData,
@@ -61,6 +62,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
       throw error;
     }
   }
+
   useEffect(() => {
     if (openTranscriptModal === null) return;
 
