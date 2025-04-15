@@ -45,9 +45,8 @@ const themes = {
     '&.Mui-expanded': {
       '& .MuiAccordionDetails-root': {
         borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-      }
+      },
     },
-
   }, // uses default styling
   secondary: {
     '& .MuiAccordionSummary-expandIconWrapper': { color: 'primary.dark' },
@@ -62,8 +61,8 @@ const themes = {
       '& .MuiAccordionDetails-root': {
         backgroundColor: 'rgba(0, 0, 0, 0.09)',
         borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-      }
-    }
+      },
+    },
   },
 };
 
