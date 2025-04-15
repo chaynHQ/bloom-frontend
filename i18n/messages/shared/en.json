@@ -30,6 +30,11 @@
       "title": "Bloom is down for maintenance",
       "description": "Please bear with us whilst we complete some essential planned maintenance. Bloom should be available as usual within {hours} hours."
     },
+    "fruitzRetirementBanner": {
+      "title": "Change to your courses",
+      "description": "The Fruitz app is sunsetting next month, but your Bloom support remains. From April 22nd, the course ‘Dating, Boundaries, and Relationships’ will no longer be available, but all other services, including 1:1 messaging, will stay the same.",
+      "dismiss": "Dismiss"
+    },
     "videoTranscript": {
       "title": "Video transcript",
       "description": "Read the transcript for video - ",

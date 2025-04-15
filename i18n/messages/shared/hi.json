@@ -30,6 +30,11 @@
       "title": "Rakharakhaav ke lie Bloom band hai",
       "description": "jab tak ham kuchh aavashyak niyojit rakharakhaav poora kar len, krpaya hamaare saath bane rahen. bloom hamesha kee tarah kuchh hee {hours} ghanton mein upalabdh ho jaana chaahie."
     },
+    "fruitzRetirementBanner": {
+      "title": "Aapke course mein badlaav",
+      "description": "Fruitz app agle mahine band ho raha hai, lekin aapka Bloom support jaari rahega. 22 April se, ‘Dating, Boundaries, aur Relationships’ course uplabdh nahi rahega, lekin anya sabhi services, jismein 1:1 messaging shamil hai, pehle ki tarah chalu rahengi.",
+      "dismiss": "Band karein"
+    },
     "videoTranscript": {
       "title": "Video ki transcript",
       "description": "Video ki transcript padein - ",
