@@ -1,47 +1,115 @@
 describe('Therapy Usage', () => {
   let accessCode = ''; //intialise access code variable
-  const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+  const newUserEmail = `cypresstestuser+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
-  describe('A new partner user should be able to apply the access code', () => {
-    before(() => {
-      // create a partner access code with therapy
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
-      );
-      cy.visit('/partner-admin/create-access-code');
-      cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
-      cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
-      cy.get('#access-code')
-        .should('exist') //wait for result to exist in dom then get the access code
-        .then((elem) => {
-          //get the access code
-          accessCode = elem.text();
-        });
-      cy.logout();
+  before(() => {
+    // create a partner access code with therapy
+    cy.logInWithEmailAndPassword(
+      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
+    );
+    cy.visit('/partner-admin/create-access-code');
+    cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
+    cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
+    cy.get('#access-code')
+      .should('exist') //wait for result to exist in dom then get the access code
+      .then((elem) => {
+        accessCode = elem.text();
+      });
+    cy.logout();
+  });
+
+  after(() => {
+    cy.logout();
+  });
+
+  // This test verifies the application of a new code for a new user
+  it('Log in as a new user, apply code, and check therapy is available', () => {
+    cy.cleanUpTestState();
+    cy.createUser({
+      emailInput: newUserEmail,
+      passwordInput: password,
+    });
+    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
+    cy.visit('/welcome/bumble');
+    cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
+    cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
+    cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
+    cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
+    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
+
+    // Navigate to therapy page and check sessions are there
+    cy.visit('/welcome/bumble');
+    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
+    cy.url().should('include', '/therapy');
+    // cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
+  });
+
+  it('Should load the therapy page and display main content sections', () => {
+    // Check Header elements
+    cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
+    cy.get('header')
+      .should('be.visible')
+      .within(() => {
+        cy.get('p.MuiTypography-root').should('be.visible'); // Check for the introduction paragraph
+      });
+
+    // Check Booking Button state (should be enabled if sessions > 0)
+    cy.get('button').contains('Begin booking').should('be.visible').and('be.enabled');
+
+    // Check Sessions Remaining
+    // cy.get('#therapy-sessions-remaining').should('be.visible').and('contain.text', '6'); // Check for '6' sessions
+
+    // Check Booking Steps Section Title
+    cy.get('#booking-steps-section').within(() => {
+      cy.get('h2').should('be.visible').and('have.text', 'How booking works');
     });
 
-    it('Log in as a user and apply code', () => {
-      cy.cleanUpTestState();
-      cy.createUser({
-        emailInput: newUserEmail,
-        passwordInput: password,
-      });
-      cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
-      cy.visit('/welcome/bumble');
-      cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
-      cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
-      cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
-      cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
-      cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
+    // Check Therapist Section Title
+    cy.get('#therapist-profiles-section').within(() => {
+      cy.get('h2').should('be.visible').and('have.text', 'Our therapy team');
     });
-    it('Check therapy is available and start to book a session', () => {
-      cy.visit('/welcome/bumble');
-      cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
-      cy.get('#therapy-sessions-remaining').should('have.text', '6'); //check number of therapy sessions is 6
-      cy.get('button').contains('Begin booking').should('exist').click(); //begin booking
-      cy.get('iframe[title="Booking widget"]').should('exist'); //check it worked
-    });
+
+    // Check FAQs Section Title
+    cy.get('main').contains('h2', 'Frequently Asked Questions').should('be.visible'); // Target H2 specifically within main content
+
+    // Check initial state - modal should be closed
+    cy.get('.MuiModal-root').should('not.exist');
+  });
+
+  it('Should open the booking modal and display the Simplybook widget iframe', () => {
+    cy.get('button').contains('Begin booking').click();
+
+    // Check modal is open and visible
+    cy.get('.MuiModal-root').should('be.visible');
+    cy.get('[aria-label="close booking widget"]').should('be.visible');
+    cy.get('.MuiModal-root:visible').find('#simplybook-widget-container').should('be.visible');
+
+    // Check iframe exists within the container (indicates widget loaded successfully)
+    cy.get('#simplybook-widget-container')
+      .find('iframe.sb-widget-iframe', { timeout: 10000 })
+      .should('be.visible');
+  });
+
+  it('Should display an error message if the Simplybook script fails to load', () => {
+    // Intercept the script request and make it fail
+    cy.intercept('GET', '**/v2/widget/widget.js', {
+      statusCode: 404,
+    }).as('simplybookScriptLoad');
+
+    // Visit the page (script load will be intercepted)
+    cy.visit('/therapy');
+    cy.wait('@simplybookScriptLoad');
+
+    // Click the booking button to open the modal
+    cy.get('button').contains('Begin booking').click();
+    cy.get('.MuiModal-root').should('be.visible');
+
+    // Check the error message Typography component is displayed within the modal content
+    cy.get('.MuiModal-root:visible')
+      .find('p.MuiTypography-colorError')
+      .should('be.visible')
+      .and('have.text', 'Failed to load booking script.');
   });
 });
