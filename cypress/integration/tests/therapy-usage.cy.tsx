@@ -104,6 +104,11 @@ describe('Therapy Usage', () => {
     cy.get('button').contains('Begin booking').click();
     cy.get('.MuiModal-root').should('be.visible');
 
+    // Check iframe does not exist (indicates widget failed)
+    cy.get('#simplybook-widget-container')
+      .find('iframe.sb-widget-iframe', { timeout: 10000 })
+      .should('not.exist');
+
     // Check the error message Typography component is displayed within the modal content
     cy.get('.MuiModal-root:visible')
       .find('p.MuiTypography-colorError')
