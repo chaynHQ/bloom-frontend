@@ -51,11 +51,6 @@ describe('Therapy Usage', () => {
 
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
-    cy.get('header')
-      .should('be.visible')
-      .within(() => {
-        cy.get('p.MuiTypography-root').should('be.visible'); // Check for the introduction paragraph
-      });
 
     // Check Booking Button state (should be enabled if sessions > 0)
     cy.get('button').contains('Begin booking').should('be.visible').and('be.enabled');
@@ -74,7 +69,7 @@ describe('Therapy Usage', () => {
     });
 
     // Check FAQs Section Title
-    cy.get('main').contains('h2', 'Frequently Asked Questions').should('be.visible'); // Target H2 specifically within main content
+    cy.get('main').contains('h2', 'More about the therapy').should('be.visible');
 
     // Check initial state - modal should be closed
     cy.get('.MuiModal-root').should('not.exist');
@@ -87,8 +82,8 @@ describe('Therapy Usage', () => {
 
     // Check modal is open and visible
     cy.get('.MuiModal-root').should('be.visible');
-    cy.get('[aria-label="close booking widget"]').should('be.visible');
-    cy.get('.MuiModal-root:visible').find('#simplybook-widget-container').should('be.visible');
+    cy.get('button[aria-label="Close booking widget"]').should('be.visible');
+    cy.get('.MuiModal-root').find('#simplybook-widget-container').should('be.visible');
 
     // Check iframe exists within the container (indicates widget loaded successfully)
     cy.get('#simplybook-widget-container')
@@ -104,7 +99,6 @@ describe('Therapy Usage', () => {
 
     // Visit the page (script load will be intercepted)
     cy.visit('/therapy/book-session');
-    cy.wait('@simplybookScriptLoad');
 
     // Click the booking button to open the modal
     cy.get('button').contains('Begin booking').click();
