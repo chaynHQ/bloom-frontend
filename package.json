@@ -46,7 +46,7 @@
     "@mui/icons-material": "^5.17.1",
     "@mui/lab": "^5.0.0-alpha.176",
     "@mui/material": "^5.17.1",
-    "@mui/material-nextjs": "^6.4.3",
+    "@mui/material-nextjs": "^7.0.2",
     "@next/third-parties": "^15.3.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@rollbar/react": "^0.12.1",
