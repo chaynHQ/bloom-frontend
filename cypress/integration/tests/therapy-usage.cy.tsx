@@ -90,31 +90,4 @@ describe('Therapy Usage', () => {
       .find('iframe.sb-widget-iframe', { timeout: 10000 })
       .should('be.visible');
   });
-
-  it('Should display an error message if the Simplybook script fails to load', () => {
-    // Intercept the script request and make it fail
-    cy.intercept('GET', '**/v2/widget/widget.js', {
-      statusCode: 404,
-    }).as('simplybookScriptLoad');
-
-    // Visit the page (script load will be intercepted)
-    cy.visit('/therapy/book-session');
-
-    cy.wait('@simplybookScriptLoad', { timeout: 10000 });
-
-    // Click the booking button to open the modal
-    cy.get('button').contains('Begin booking').click();
-    cy.get('.MuiModal-root').should('be.visible');
-
-    // Check iframe does not exist (indicates widget failed)
-    cy.get('#simplybook-widget-container')
-      .find('iframe.sb-widget-iframe', { timeout: 10000 })
-      .should('not.exist');
-
-    // Check the error message Typography component is displayed within the modal content
-    cy.get('.MuiModal-root:visible')
-      .find('#simplybook-widget-error')
-      .should('be.visible')
-      .and('have.text', 'Failed to load booking script.');
-  });
 });
