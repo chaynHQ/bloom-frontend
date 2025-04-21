@@ -100,6 +100,8 @@ describe('Therapy Usage', () => {
     // Visit the page (script load will be intercepted)
     cy.visit('/therapy/book-session');
 
+    cy.wait('@simplybookScriptLoad', { timeout: 10000 });
+
     // Click the booking button to open the modal
     cy.get('button').contains('Begin booking').click();
     cy.get('.MuiModal-root').should('be.visible');
