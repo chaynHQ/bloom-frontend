@@ -111,7 +111,7 @@ describe('Therapy Usage', () => {
 
     // Check the error message Typography component is displayed within the modal content
     cy.get('.MuiModal-root:visible')
-      .find('p.MuiTypography-colorError')
+      .find('#simplybook-widget-error')
       .should('be.visible')
       .and('have.text', 'Failed to load booking script.');
   });

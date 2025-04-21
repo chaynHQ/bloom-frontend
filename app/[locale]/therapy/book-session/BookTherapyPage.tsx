@@ -335,7 +335,9 @@ export default function BookTherapyPage() {
 
           {widgetError && (
             <Box sx={{ p: 2, textAlign: 'center' }}>
-              <Typography color="error">{widgetError}</Typography>
+              <Typography id="simplybook-widget-error" color="error">
+                {widgetError}
+              </Typography>
             </Box>
           )}
 
