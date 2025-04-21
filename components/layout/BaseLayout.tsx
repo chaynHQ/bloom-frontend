@@ -24,6 +24,7 @@ import { Montserrat, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode } from 'react';
+import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -88,6 +89,8 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     <TopBar />
                     <LeaveSiteButton />
                     <main>
+                      <FruitzRetirementBanner />
+
                       <AuthGuard>{children}</AuthGuard>
                     </main>
                     <Footer />
