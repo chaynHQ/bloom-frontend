@@ -42,11 +42,13 @@ describe('Therapy Usage', () => {
     // Navigate to therapy page and check sessions are there
     cy.visit('/welcome/bumble');
     cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
-    cy.url().should('include', '/therapy');
+    cy.url().should('include', '/therapy/book-session');
     // cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
   });
 
   it('Should load the therapy page and display main content sections', () => {
+    cy.visit('/therapy/book-session');
+
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
     cy.get('header')
@@ -79,6 +81,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should open the booking modal and display the Simplybook widget iframe', () => {
+    cy.visit('/therapy/book-session');
+
     cy.get('button').contains('Begin booking').click();
 
     // Check modal is open and visible
@@ -99,7 +103,7 @@ describe('Therapy Usage', () => {
     }).as('simplybookScriptLoad');
 
     // Visit the page (script load will be intercepted)
-    cy.visit('/therapy');
+    cy.visit('/therapy/book-session');
     cy.wait('@simplybookScriptLoad');
 
     // Click the booking button to open the modal

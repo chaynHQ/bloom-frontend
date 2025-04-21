@@ -172,7 +172,7 @@ export default function BookTherapyPage() {
     title: t('title'),
     introduction: `${t.rich('introduction', { partnerName: partnerAccess?.partner?.name as string })}`,
     imageSrc: illustrationPerson4Peach,
-    imageAlt: tS('alt.personTea'),
+    imageAlt: 'alt.personTea',
   };
 
   const handleOpenWidgetModal = () => {
