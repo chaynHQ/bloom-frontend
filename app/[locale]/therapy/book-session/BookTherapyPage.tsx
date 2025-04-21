@@ -1,7 +1,7 @@
 'use client';
 
 import Faqs from '@/components/common/Faqs';
-import ImageTextGrid, { ImageTextItem } from '@/components/common/ImageTextRow';
+import ImageTextRow, { ImageTextItem } from '@/components/common/ImageTextRow';
 import Header from '@/components/layout/Header';
 // import TherapyBookings from '@/components/therapy/TherapyBookings';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
@@ -265,7 +265,7 @@ export default function BookTherapyPage() {
         </Typography>
 
         <Box my={3}>
-          <ImageTextGrid items={steps} translations="Therapy.steps" />
+          <ImageTextRow items={steps} translations="Therapy.steps" />
         </Box>
 
         {hasTherapyRemaining && (

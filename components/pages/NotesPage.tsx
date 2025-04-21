@@ -2,7 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ImageTextColumn from '@/components/common/ImageTextColumn';
-import { ImageTextRow } from '@/components/common/ImageTextRow';
+import { ImageTextItem } from '@/components/common/ImageTextRow';
 import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '@/components/layout/Header';
@@ -33,7 +33,7 @@ const formContainerStyle = {
   width: { xs: '100%', sm: '70%', md: '47%' },
 } as const;
 
-const steps: Array<ImageTextRow> = [
+const steps: Array<ImageTextItem> = [
   {
     text: 'step1',
     illustrationSrc: illustrationChooseTherapist,
