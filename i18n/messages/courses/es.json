@@ -59,6 +59,7 @@
     "errors": {
       "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."
     },
+    "backToCourse": "Volver al curso",
     "backToCourses": "Ir a cursos",
     "conversationsHeading": "Conversations",
     "shortsHeading": "Shorts"

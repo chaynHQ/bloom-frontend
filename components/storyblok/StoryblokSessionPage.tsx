@@ -13,15 +13,17 @@ import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getChatAccess } from '@/lib/utils/getChatAccess';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { columnStyle } from '@/styles/common';
+import { columnStyle, rowStyle } from '@/styles/common';
+import { ArrowBack } from '@mui/icons-material';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container, Link } from '@mui/material';
 import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
@@ -35,6 +37,16 @@ const cardColumnStyle = {
   ...columnStyle,
   alignItems: 'center',
   gap: { xs: 2, md: 3 },
+} as const;
+
+const backToCourseLinkStyle = {
+  ...rowStyle,
+  mt: 2,
+  mr: 'auto',
+  textDecoration: 'none',
+  alignItems: 'center',
+
+  svg: { fontSize: 20, mr: 0.5, color: 'primary.dark' },
 } as const;
 
 export interface StoryblokSessionPageProps {
@@ -74,13 +86,16 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   } = props;
 
   const t = useTranslations('Courses');
+  const locale = useLocale();
 
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const { data: courses } = useGetUserCoursesQuery(undefined, {
+  useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
+
+  const courses = useTypedSelector((state) => state.courses);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [userAccess, setUserAccess] = useState<boolean>();
   const [sessionId, setSessionId] = useState<string>(); // database Session id
@@ -215,6 +230,10 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
           {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
             <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
           )}
+          <Link href={getDefaultFullSlug(course.full_slug, locale)} sx={backToCourseLinkStyle}>
+            <ArrowBack />
+            <span>{t('backToCourse')}</span>
+          </Link>
         </Box>
       </Container>
 
