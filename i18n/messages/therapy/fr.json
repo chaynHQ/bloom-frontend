@@ -3,6 +3,18 @@
     "title": "Thérapie par la lecture",
     "introduction": "{partnerName} s'est associé à Bloom pour vous offrir un soutien gratuit et confidentiel. Bloom vous met en relation avec un·e thérapeute qui peut vous offrir un soutien personnalisé. Vous aurez accès à six sessions d'une heure avec le·a thérapeute de votre choix.",
     "bookingButton": "Commencer la réservation",
+    "bookingSectionTitle": "Comment fonctionne la réservation",
+    "therapistSectionTitle": "Notre équipe de thérapeutes",
+    "closeBookingWidget": "Fermer le widget de réservation",
+    "modalTitle": "Réserver une thérapie",
+    "modalDescription": "Widget SimplyBook.me pour planifier votre séance de thérapie.",
+    "error": {
+      "initializingWidget": "Erreur lors de l'initialisation du widget de réservation.",
+      "initializingWidgetRetry": "Erreur lors de l'initialisation du widget de réservation lors de la nouvelle tentative.",
+      "containerNotFoundRetry": "Impossible de charger le widget de réservation.",
+      "scriptNotLoaded": "Le script du widget de réservation n'est pas complètement chargé.",
+      "scriptLoadFailed": "Échec du chargement du script de réservation."
+    },
     "therapySessionsRemaining": "Vous avez <strongText>4</strongText> sessions de thérapie disponibles à réserver.",
     "noTherapySessionsRemaining": "Actuellement il ne vous reste aucune session disponible à réserver.",
     "steps": {

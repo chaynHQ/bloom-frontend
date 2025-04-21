@@ -2,7 +2,19 @@
   "Therapy": {
     "title": "Therapie buchen",
     "introduction": "{partnerName} kooperiert mit Bloom, um Dir kostenfrei vertrauliche Unterstützung anzubieten. Bloom vermittelt Dir Therapeut:innen, die auf Dich angepasste Unterstützung bieten können. Du hast Zugang zu sechs einstündigen Sitzungen mit einer Therapeutin oder einem Therapeuten Deiner Wahl. ",
-    "bookingButton": "Begin booking",
+    "bookingButton": "Eine Sitzung buchen",
+    "bookingSectionTitle": "So funktioniert die Buchung",
+    "therapistSectionTitle": "Unser Therapie-Team",
+    "closeBookingWidget": "Buchungs-Widget schließen",
+    "modalTitle": "Therapie buchen",
+    "modalDescription": "SimplyBook.me Widget zur Terminplanung Ihrer Therapiesitzung.",
+    "error": {
+      "initializingWidget": "Fehler beim Initialisieren des Buchungs-Widgets.",
+      "initializingWidgetRetry": "Fehler beim Initialisieren des Buchungs-Widgets beim erneuten Versuch.",
+      "containerNotFoundRetry": "Das Buchungs-Widget konnte nicht geladen werden.",
+      "scriptNotLoaded": "Das Skript für das Buchungs-Widget wurde nicht vollständig geladen.",
+      "scriptLoadFailed": "Fehler beim Laden des Buchungsskripts."
+    },
     "therapySessionsRemaining": "Du hast <strongText>4</strongText> Therapiesitzungen zum Buchen zur Verfügung.",
     "noTherapySessionsRemaining": "Du hast zur Zeit keine verfügbaren Sitzungen mehr zu buchen. ",
     "steps": {

@@ -3,6 +3,18 @@
     "title": "Agende uma sessão de terapia",
     "introduction": "{partnerName} fez uma parceria com a Bloom para oferecer suporte gratuito e confidencial. Bloom conecta você a uma pessoa terapeuta da sua escolha que pode oferecer suporte personalizado. Você terá acesso a seis sessões de uma hora.",
     "bookingButton": "Comece a agendar",
+    "bookingSectionTitle": "Como funciona o agendamento",
+    "therapistSectionTitle": "Nossa equipe de terapia",
+    "closeBookingWidget": "Fechar widget de agendamento",
+    "modalTitle": "Agendar terapia",
+    "modalDescription": "Widget SimplyBook.me para agendar sua sessão de terapia.",
+    "error": {
+      "initializingWidget": "Erro ao inicializar o widget de agendamento.",
+      "initializingWidgetRetry": "Erro ao inicializar o widget de agendamento na nova tentativa.",
+      "containerNotFoundRetry": "Não foi possível carregar o widget de agendamento.",
+      "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
+      "scriptLoadFailed": "Falha ao carregar o script de agendamento."
+    },
     "therapySessionsRemaining": "Você tem <strongText>4</strongText> sessões de terapia disponíveis para serem agendadas.",
     "noTherapySessionsRemaining": "No momento, você não tem mais sessões para agendar. ",
     "steps": {
