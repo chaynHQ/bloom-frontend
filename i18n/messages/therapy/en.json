@@ -3,8 +3,7 @@
     "title": "Book therapy",
     "introduction": "{partnerName} has partnered with Bloom to offer you free, confidential support. Bloom connects you to a therapist who can offer tailored support. You'll have access to six, hour-long sessions with a therapist of your choice.",
     "bookingButton": "Begin booking",
-    "therapySessionsRemaining": "You have <strongText>4</strongText> therapy sessions available to book.",
-    "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
+    "bookingSectionTitle": "How booking works",
     "steps": {
       "step1": "You choose from our carefully selected, multilingual therapists.",
       "step2": "Pick a date and time that works for you. All sessions are online.",
@@ -12,6 +11,21 @@
       "step4": "Everything you share remains strictly confidential, between you and the therapist."
     },
     "faqHeader": "More about the therapy",
+    "noSessionsRemaining": "You have no therapy sessions remaining.",
+    "therapistSectionTitle": "Our therapy team",
+    "closeBookingWidget": "Close booking widget",
+    "modalTitle": "Book therapy",
+    "modalDescription": "SimplyBook.me widget for scheduling your therapy session.",
+    "error": {
+      "initializingWidget": "Error initializing booking widget.",
+      "initializingWidgetRetry": "Error initializing booking widget on retry.",
+      "containerNotFoundRetry": "Could not load the booking widget.",
+      "scriptNotLoaded": "Booking widget script not fully loaded.",
+      "scriptLoadFailed": "Failed to load booking script."
+    },
+    "therapySessionsRemaining": "You have <upcomingTotal>4</upcomingTotal> therapy sessions upcoming and <remainingTotal>4</remainingTotal> available to book.",
+    "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
+
     "faqs": {
       "faqTitle0": "Who is this programme for?",
       "faqBody0": "The programme is available to any {partnerName} user who reports sexual abuse or assault to {partnerName}, regardless of your background, race, age, disability, religion or belief, sexuality, gender identity or expression, or life circumstances – we are here for you.",

@@ -3,6 +3,18 @@
     "title": "Therapy book kariye",
     "introduction": "{partnerName} ne Bloom ke saath bhagidari kari hai taki aapko muft aur gupniye sahayata mil sake. Bloom apko ek therapist se jodta hai vo anuroop sahayata pradaan kar sakta hai. Apke pas apni pasand ke therapist ke saath  che, ek ghante se sessions hain. ",
     "bookingButton": "Booking shuru kariye",
+    "bookingSectionTitle": "Booking kaise kaam kartī hai",
+    "therapistSectionTitle": "Hamārī therapy team",
+    "closeBookingWidget": "Booking widget band karein",
+    "modalTitle": "Therapī book karein",
+    "modalDescription": "Āpkī therapy session schedule karne ke liye SimplyBook.me widget.",
+    "error": {
+      "initializingWidget": "Booking widget initialize karne mein error.",
+      "initializingWidgetRetry": "Retry par booking widget initialize karne mein error.",
+      "containerNotFoundRetry": "Booking widget load nahīn ho sakā.",
+      "scriptNotLoaded": "Booking widget script pūrī tarah se load nahīn huā.",
+      "scriptLoadFailed": "Booking script load karne mein asafaltā."
+    },
     "therapySessionsRemaining": "Aapke paas <strongText>4</strongText> therapy sessions hain book karne ke liye.",
     "noTherapySessionsRemaining": "Abhi aapke paas book karne ke liye koi uplabdh session nahi hain. ",
     "steps": {
