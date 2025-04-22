@@ -3,7 +3,7 @@
 import Faqs from '@/components/common/Faqs';
 import ImageTextRow, { ImageTextItem } from '@/components/common/ImageTextRow';
 import Header from '@/components/layout/Header';
-// import TherapyBookings from '@/components/therapy/TherapyBookings';
+import TherapyBookings from '@/components/therapy/TherapyBookings';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
 import { therapyFaqs } from '@/lib/constants/faqs';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -256,7 +256,7 @@ export default function BookTherapyPage() {
         }
       ></Header>
       <Container sx={containerStyle}>
-        {/* <TherapyBookings therapySessionsRemaining={partnerAccess?.therapySessionsRemaining || 0} /> */}
+        <TherapyBookings therapySessionsRemaining={partnerAccess?.therapySessionsRemaining || 0} />
       </Container>
 
       <Container id="booking-steps-section" sx={bookingSectionStyle} maxWidth="md">

@@ -23,9 +23,28 @@
       "scriptNotLoaded": "Booking widget script not fully loaded.",
       "scriptLoadFailed": "Failed to load booking script."
     },
-    "therapySessionsRemaining": "You have <upcomingTotal>4</upcomingTotal> therapy sessions upcoming and <remainingTotal>4</remainingTotal> available to book.",
-    "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
-
+    "therapyBookings": {
+      "header": "Your therapy bookings",
+      "therapySessionsRemaining": "You have <upcomingTotal>{upcomingTotal}</upcomingTotal> therapy sessions upcoming and <remainingTotal>{remainingTotal}</remainingTotal> available to book.",
+      "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
+      "bookingSummary": "You have <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions remaining, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled.",
+      "noBookingSummary": "You have no therapy sessions remaining.",
+      "noBookings": "You have no therapy bookings at the moment.",
+      "cancelAlert": "Cancellation requested for booking ID: {id}. Implement actual cancellation logic."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Upcoming therapy session {relativeTime}",
+      "pastSessionTitle": "Past therapy session {date}",
+      "cancelledSessionTitle": "Cancelled session {date}",
+      "dateLabel": "Date",
+      "timeLabel": "Time",
+      "therapistLabel": "Therapist",
+      "videoLinkLabel": "Video call link",
+      "noVideoLink": "No link provided",
+      "cancelButton": "Cancel",
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
     "faqs": {
       "faqTitle0": "Who is this programme for?",
       "faqBody0": "The programme is available to any {partnerName} user who reports sexual abuse or assault to {partnerName}, regardless of your background, race, age, disability, religion or belief, sexuality, gender identity or expression, or life circumstances – we are here for you.",

@@ -15,13 +15,33 @@
       "scriptNotLoaded": "Booking widget script pūrī tarah se load nahīn huā.",
       "scriptLoadFailed": "Booking script load karne mein asafaltā."
     },
-    "therapySessionsRemaining": "Aapke paas <strongText>4</strongText> therapy sessions hain book karne ke liye.",
-    "noTherapySessionsRemaining": "Abhi aapke paas book karne ke liye koi uplabdh session nahi hain. ",
     "steps": {
       "step1": "Ap hamare dhaayn se chune hue, bahubhashi therapists se chun sakte hain. ",
       "step2": "Vo din aur samay chuniye jo apke liye sabse acha kaam karta hain. Saare sessions online hain. ",
       "step3": "Agar aap apka mann badal jata hain, toh kisi bhi samay aap apne sessions rok sakte hain ya therapist badal sakte hain. ",
       "step4": "Aap jo kuch bhi sajha karte hain vo apke aur therapist ke beech poori tarha gopniye rehta hai."
+    },
+    "therapyBookings": {
+      "header": "Aapki therapy bookings",
+      "therapySessionsRemaining": "Aapke paas <upcomingTotal>{upcomingTotal}</upcomingTotal> aane wale therapy sessions hain aur <remainingTotal>{remainingTotal}</remainingTotal> book karne ke liye uplabdh hain.",
+      "noTherapySessionsRemaining": "Aapke paas abhi book karne ke liye koi uplabdh sessions nahi bache hain.",
+      "bookingSummary": "Aapke paas <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions baaki hain, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled hain.",
+      "noBookingSummary": "Aapke paas koi therapy sessions baaki nahi hain.",
+      "noBookings": "Aapke paas abhi koi therapy bookings nahi hain.",
+      "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {id}. Vastavik cancellation logic implement karein."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Aane wala therapy session {relativeTime}",
+      "pastSessionTitle": "Pichhla therapy session {date}",
+      "cancelledSessionTitle": "Radd satra {date}",
+      "dateLabel": "Tareekh",
+      "timeLabel": "Samay",
+      "therapistLabel": "Therapist",
+      "videoLinkLabel": "Video call link",
+      "noVideoLink": "Koi link nahi diya gaya hai",
+      "cancelButton": "Cancel karein",
+      "expand": "Expand karein",
+      "collapse": "Collapse karein"
     },
     "faqHeader": "Therapy ke bare mein adhik jaankari",
     "faqs": {

@@ -43,7 +43,7 @@ describe('Therapy Usage', () => {
     cy.visit('/welcome/bumble');
     cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
     cy.url().should('include', '/therapy/book-session');
-    // cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
+    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
   });
 
   it('Should load the therapy page and display main content sections', () => {
@@ -56,7 +56,7 @@ describe('Therapy Usage', () => {
     cy.get('button').contains('Begin booking').should('be.visible').and('be.enabled');
 
     // Check Sessions Remaining
-    // cy.get('#therapy-sessions-remaining').should('be.visible').and('contain.text', '6'); // Check for '6' sessions
+    cy.get('#therapy-sessions-remaining').should('be.visible').and('contain.text', '6'); // Check for '6' sessions
 
     // Check Booking Steps Section Title
     cy.get('#booking-steps-section').within(() => {
