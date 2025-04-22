@@ -45,16 +45,14 @@ const UpdatePartnerAdminForm = () => {
       setAutocompleteSearchQueryIsLoading(true);
       const searchCriteria = {
         email: autocompleteSearchQuery,
-        partnerAdmin: { partnerAdminId: 'IS NOT NULL' },
+        partnerAdmin: true,
         include: ['partnerAdmin'],
-        limit: '10',
+        limit: 10,
       };
 
       const result = await dispatch(
         api.endpoints.getUsers.initiate(
-          {
-            searchCriteria: JSON.stringify(searchCriteria),
-          },
+          { searchCriteria: JSON.stringify(searchCriteria) },
           // We don't want this request cached as a user might use this request to check their updates have worked on the form
           { forceRefetch: true },
         ),
