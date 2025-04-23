@@ -52,15 +52,15 @@ export default async function Page({ params }: { params: Params }) {
 
   // ✅ NEW logic for filtering courses by Storyblok 'languages' config
   const courses = coursesStories?.filter((course: ISbStoryData) =>
-    course.content.languages?.includes(contentLanguagesString)
+    course.content.languages?.includes(contentLanguagesString),
   );
 
   const conversations = conversationsStories?.filter((conversation: ISbStoryData) =>
-    conversation.content.languages?.includes(contentLanguagesString)
+    conversation.content.languages?.includes(contentLanguagesString),
   );
 
   const shorts = shortsStories?.filter((short: ISbStoryData) =>
-    short.content.languages?.includes(contentLanguagesString)
+    short.content.languages?.includes(contentLanguagesString),
   );
 
   return <CoursesPage courseStories={courses} conversations={conversations} shorts={shorts} />;
