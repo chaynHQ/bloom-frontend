@@ -30,6 +30,11 @@
       "title": "Bloom ist vorübergehend nicht verfügbar",
       "description": "Bitte haben Sie Verständnis dafür, dass wir derzeit wichtige Wartungsarbeiten durchführen. Bloom sollte innerhalb von {hours} Stunden wieder wie gewohnt verfügbar sein."
     },
+    "fruitzRetirementBanner": {
+      "title": "Änderung bei deinen Kursen",
+      "description": "Die Fruitz-App wird nächsten Monat eingestellt, aber deine Unterstützung über Bloom bleibt bestehen. Ab dem 22. April wird der Kurs „Dating, Grenzen und Beziehungen“ nicht mehr verfügbar sein, aber alle anderen Dienste, einschließlich 1:1-Nachrichten, bleiben unverändert.",
+      "dismiss": "Schließen"
+    },
     "videoTranscript": {
       "title": "Video-Transcript",
       "description": "Lies das Transkript vom Video - ",
