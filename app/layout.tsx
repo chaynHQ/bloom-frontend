@@ -1,5 +1,6 @@
 'use client';
 
+import { PWA_LOADED, WEB_APP_LOADED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import { storePWAStatus, usePWAStatus } from '@/lib/utils/pwaDetection';
 import { ReactNode, useEffect } from 'react';
@@ -16,7 +17,7 @@ export default function RootLayout({ children }: Props) {
     if (pwaStatus) {
       // Store status for future reference
       storePWAStatus(pwaStatus);
-      pwaStatus.isInstalled ? logEvent('PWA_LOADED', '') : logEvent('WEB_APP_LOADED', '');
+      pwaStatus.isInstalled ? logEvent(PWA_LOADED) : logEvent(WEB_APP_LOADED);
     }
   }, [pwaStatus]);
   return children;
