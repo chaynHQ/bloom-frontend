@@ -14,7 +14,7 @@ import { PartnerAccess, PartnerAccesses } from './store/partnerAccessSlice';
 import { PartnerAdmin } from './store/partnerAdminSlice';
 import { Partner, PartnerFeature } from './store/partnersSlice';
 import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
-import { TherapySessions } from './store/therapySessionsSlice';
+import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 
 export interface GetUserResponse {
@@ -284,6 +284,15 @@ export const api = createApi({
         };
       },
     }),
+    cancelTherapySession: builder.mutation<TherapySession, TherapySession>({
+      query({ id }) {
+        return {
+          url: `therapy-session/${id}/cancel`,
+          method: 'PATCH',
+          body: '',
+        };
+      },
+    }),
   }),
 });
 
@@ -312,4 +321,5 @@ export const {
   useCompleteResourceMutation,
   useGetUserCoursesQuery,
   useGetTherapySessionsQuery,
+  useCancelTherapySessionMutation,
 } = api;

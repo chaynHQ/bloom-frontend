@@ -8,8 +8,8 @@ export interface TherapySession {
   clientTimezone?: string;
   serviceName?: string;
   serviceProviderName?: string;
-  startDateDime?: Date;
-  endDateDime?: Date;
+  startDateTime?: Date;
+  endDateTime?: Date;
   cancelledAt?: Date;
   rescheduledFrom?: Date;
   completedAt?: Date;
@@ -19,6 +19,18 @@ export interface TherapySession {
 export interface TherapySessions extends Array<TherapySession> {}
 
 const initialState: TherapySessions = [];
+
+const mergeUpdatedTherapySessions = (state: TherapySessions, payload: TherapySession) => {
+  const therapySession = state.filter((session) => session.id === payload.id);
+
+  if (therapySession) {
+    return state.map((session) =>
+      session.id === payload.id ? { ...session, ...payload } : session,
+    );
+  }
+
+  return [...state, payload];
+};
 
 const slice = createSlice({
   name: 'therapySessions',
@@ -32,6 +44,9 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.getTherapySessions.matchFulfilled, (state, { payload }) => {
       return payload;
+    });
+    builder.addMatcher(api.endpoints.cancelTherapySession.matchFulfilled, (state, { payload }) => {
+      return mergeUpdatedTherapySessions(state, payload);
     });
   },
 });

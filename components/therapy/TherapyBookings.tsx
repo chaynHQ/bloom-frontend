@@ -1,8 +1,13 @@
 'use client';
 
-import { SIMPLYBOOK_ACTION_ENUM } from '@/lib/constants/enums';
+import { useCancelTherapySessionMutation, useGetTherapySessionsQuery } from '@/lib/api';
+import { THERAPY_BOOKING_CANCELLED, THERAPY_BOOKING_CANCELLED_ERROR } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import { TherapySession } from '@/lib/store/therapySessionsSlice';
 import { getDateLocale } from '@/lib/utils/dates';
+import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
 import { CalendarMonth, Cancel, EventAvailable, ExpandMore } from '@mui/icons-material';
 import {
   Box,
@@ -14,90 +19,37 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { format, formatRelative } from 'date-fns';
+import { useRollbar } from '@rollbar/react';
+import { differenceInDays, format, formatRelative } from 'date-fns';
 import { useLocale, useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 
 type SessionStatus = 'upcoming' | 'past' | 'cancelled';
-
-const mockBookings: TherapySession[] = [
-  {
-    id: '1',
-    serviceName: 'Therapy Session',
-    serviceProviderName: 'Paola',
-    startDateDime: new Date('2025-04-24T17:00:00+01:00'),
-    endDateDime: new Date('2025-04-24T18:00:00+01:00'),
-    clientTimezone: 'Europe/London',
-    action: SIMPLYBOOK_ACTION_ENUM.NEW_BOOKING,
-  },
-  {
-    id: '2',
-    serviceName: 'Cognitive Behavioural Therapy',
-    serviceProviderName: 'Dr. Smith',
-    startDateDime: new Date('2025-04-28T10:00:00+01:00'),
-    endDateDime: new Date('2025-04-28T11:00:00+01:00'),
-    clientTimezone: 'Europe/London',
-    action: SIMPLYBOOK_ACTION_ENUM.NEW_BOOKING,
-  },
-  {
-    id: '3',
-    serviceName: 'Therapy Session',
-    serviceProviderName: 'Paola',
-    startDateDime: new Date('2025-02-17T14:00:00Z'),
-    endDateDime: new Date('2025-02-17T15:00:00Z'),
-    clientTimezone: 'Europe/London',
-    completedAt: new Date('2025-02-17T15:05:00Z'),
-    action: SIMPLYBOOK_ACTION_ENUM.NEW_BOOKING,
-  },
-  {
-    id: '4',
-    serviceName: 'Therapy Session',
-    serviceProviderName: 'Dr. Jones',
-    startDateDime: new Date('2025-02-08T09:30:00Z'),
-    endDateDime: new Date('2025-02-08T10:30:00Z'),
-    clientTimezone: 'Europe/London',
-    cancelledAt: new Date('2025-02-07T11:00:00Z'),
-    action: SIMPLYBOOK_ACTION_ENUM.NEW_BOOKING,
-  },
-  {
-    id: '5',
-    serviceName: 'Therapy Session',
-    serviceProviderName: 'Dr. Evans',
-    startDateDime: new Date('2025-04-23T09:00:00+01:00'),
-    endDateDime: new Date('2025-04-23T10:00:00+01:00'),
-    clientTimezone: 'Europe/London',
-    action: SIMPLYBOOK_ACTION_ENUM.NEW_BOOKING,
-  },
-];
 
 // Helper function to determine the status of a session
 const determineSessionStatus = (session: TherapySession, now: Date): SessionStatus => {
   if (session.cancelledAt) {
     return 'cancelled';
   }
-  // If startDateDime is missing or invalid, treat as past (or handle as error)
-  if (
-    !session.startDateDime ||
-    !(session.startDateDime instanceof Date) ||
-    isNaN(session.startDateDime.getTime())
-  ) {
-    console.warn(`Invalid or missing startDateDime for session ID: ${session.id}`);
-    return 'past';
-  }
-  if (session.startDateDime > now) {
+  if (new Date(session.startDateTime || 0) > now) {
     return 'upcoming';
   }
   return 'past';
 };
 interface BookingItemProps {
   session: TherapySession;
-  onCancel: (id: string) => void;
 }
 
-const BookingItem: React.FC<BookingItemProps> = ({ session, onCancel }) => {
+function BookingItem(props: BookingItemProps) {
+  const { session } = props;
   const t = useTranslations('Therapy.bookingItem');
   const currentLocaleString = useLocale();
   const dateLocale = getDateLocale(currentLocaleString);
+  const rollbar = useRollbar();
+  const [error, setError] = useState<string | null>(null);
+
+  const [cancelTherapySession] = useCancelTherapySessionMutation();
+
   const now = new Date();
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -108,34 +60,49 @@ const BookingItem: React.FC<BookingItemProps> = ({ session, onCancel }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleCancelClick = (event: React.MouseEvent) => {
+  const handleCancelClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
-    if (session.id) {
-      onCancel(session.id);
-    } else {
-      console.error('Cannot cancel session: ID is missing.');
+
+    const cancelTherapySessionResponse = await cancelTherapySession({
+      id: session.id,
+    });
+    if (cancelTherapySessionResponse.data) {
+      logEvent(THERAPY_BOOKING_CANCELLED);
+      window.scrollTo(0, 0);
+    }
+
+    if (cancelTherapySessionResponse.error) {
+      const error = cancelTherapySessionResponse.error;
+
+      logEvent(THERAPY_BOOKING_CANCELLED_ERROR);
+      rollbar.error('Resource complete error', error);
+
+      setError(t('cancelError'));
     }
   };
 
-  const isValidStartDate =
-    session.startDateDime instanceof Date && !isNaN(session.startDateDime.getTime());
-  const isValidEndDate =
-    session.endDateDime instanceof Date && !isNaN(session.endDateDime.getTime());
+  const startDateTime = new Date(session.startDateTime || 0);
+  const endDateTime = new Date(session.endDateTime || 0);
+
+  const isValidStartDate = startDateTime instanceof Date && !isNaN(startDateTime.getTime());
+  const isValidEndDate = endDateTime instanceof Date && !isNaN(endDateTime.getTime());
 
   const formattedDateDetails = isValidStartDate
-    ? format(session.startDateDime || 'NA', 'EEEE do MMMM', { locale: dateLocale })
+    ? format(startDateTime || 'NA', 'EEEE do MMMM', { locale: dateLocale })
     : t('invalidDate');
   const formattedStartTime = isValidStartDate
-    ? format(session.startDateDime || 'NA', 'p', { locale: dateLocale })
+    ? format(startDateTime || 'NA', 'p', { locale: dateLocale })
     : '--:--';
   const formattedEndTime = isValidEndDate
-    ? format(session.endDateDime || 'NA', 'p', { locale: dateLocale })
+    ? format(endDateTime || 'NA', 'p', { locale: dateLocale })
     : '--:--';
   const formattedDateTitle = isValidStartDate
-    ? format(session.startDateDime || 'NA', 'do MMMM', { locale: dateLocale })
+    ? format(startDateTime || 'NA', 'do MMMM', { locale: dateLocale })
     : t('invalidDate');
-  const relativeTimeText = isValidStartDate
-    ? formatRelative(session.startDateDime || 'NA', now, { locale: dateLocale })
+  const formattedDateTimeTitle = isValidStartDate
+    ? differenceInDays(startDateTime, now) > 6
+      ? format(startDateTime || 'NA', 'do MMMM', { locale: dateLocale })
+      : formatRelative(startDateTime || 'NA', now, { locale: dateLocale })
     : '';
 
   let titleText = '';
@@ -143,7 +110,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ session, onCancel }) => {
 
   switch (status) {
     case 'upcoming':
-      titleText = t('upcomingSessionTitle', { relativeTime: relativeTimeText });
+      titleText = t('upcomingSessionTitle', { relativeTime: formattedDateTimeTitle });
       IconComponent = CalendarMonth;
       break;
     case 'cancelled':
@@ -213,11 +180,19 @@ const BookingItem: React.FC<BookingItemProps> = ({ session, onCancel }) => {
               <strong>{t('timeLabel')}:</strong> {formattedStartTime} - {formattedEndTime}
             </Typography>
             <Typography variant="body2">
-              <strong>{t('therapistLabel')}:</strong>
+              <strong>{t('therapistLabel')}:</strong>{' '}
               {session.serviceProviderName || t('notAssigned')}
             </Typography>
+            <Typography variant="body2">
+              <strong>{t('videoLinkLabel')}:</strong> {t('videoLink')}
+            </Typography>
             {status === 'upcoming' && (
-              <Box sx={{ textAlign: 'right', pt: 1 }}>
+              <Box sx={{ ...rowStyle, justifyContent: 'flex-end', gap: 2, pt: 1 }}>
+                {error && (
+                  <Typography color="error.main" mb={2}>
+                    {error}
+                  </Typography>
+                )}
                 <Button
                   variant="outlined"
                   color="secondary"
@@ -234,29 +209,24 @@ const BookingItem: React.FC<BookingItemProps> = ({ session, onCancel }) => {
       </Collapse>
     </Paper>
   );
-};
-
-interface TherapyBookingsProps {
-  sessions?: TherapySession[] | null;
-  therapySessionsRemaining: number;
 }
 
-const TherapyBookings: React.FC<TherapyBookingsProps> = ({
-  sessions: initialSessions,
-  therapySessionsRemaining,
-}) => {
+interface TherapyBookingsProps {
+  partnerAccess: PartnerAccess;
+}
+
+export default function TherapyBookings(props: TherapyBookingsProps) {
+  const { partnerAccess } = props;
+
   const t = useTranslations('Therapy.therapyBookings');
   const now = new Date();
+  const sessions = useTypedSelector((state) => state.therapySessions);
+  const userId = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = Boolean(userId);
 
-  // Use mock data only if initialSessions is not provided
-  const sessions = initialSessions ?? mockBookings;
-
-  const handleCancelBooking = (id: string) => {
-    console.log('Cancel booking requested for ID:', id);
-    alert(t('cancelAlert', { id }));
-    // TODO: Implement actual API call to cancel the booking
-    // TODO: Update UI state upon successful cancellation (e.g., filter out the booking or refetch)
-  };
+  useGetTherapySessionsQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   // Memoize the sorted bookings to avoid recalculation on every render
   const { sortedBookings, totalUpcomingSessions } = useMemo(() => {
@@ -275,8 +245,8 @@ const TherapyBookings: React.FC<TherapyBookingsProps> = ({
       if (statusComparison !== 0) return statusComparison;
 
       // Within the same status group, sort by start date
-      const dateA = a.startDateDime instanceof Date ? a.startDateDime.getTime() : 0;
-      const dateB = b.startDateDime instanceof Date ? b.startDateDime.getTime() : 0;
+      const dateA = new Date(a.startDateTime || 0).getTime();
+      const dateB = new Date(b.startDateTime || 0).getTime();
 
       // Handle invalid dates (treat as earliest or latest depending on preference)
       if (dateA === 0 && dateB === 0) return 0;
@@ -302,10 +272,12 @@ const TherapyBookings: React.FC<TherapyBookingsProps> = ({
         {t('header')}
       </Typography>
       <Typography mb={'2rem !important'}>
-        {therapySessionsRemaining > 0
+        {partnerAccess.therapySessionsRemaining > 0
           ? t.rich('bookingSummary', {
               remainingTotal: () => (
-                <strong id="therapy-sessions-remaining">{therapySessionsRemaining}</strong>
+                <strong id="therapy-sessions-remaining">
+                  {partnerAccess.therapySessionsRemaining}
+                </strong>
               ),
               upcomingTotal: () => (
                 <strong id="therapy-sessions-upcoming">{totalUpcomingSessions}</strong>
@@ -316,17 +288,11 @@ const TherapyBookings: React.FC<TherapyBookingsProps> = ({
 
       {sortedBookings.length > 0 ? (
         sortedBookings.map((session) => (
-          <BookingItem
-            key={session.id || `session-${Math.random()}`}
-            session={session}
-            onCancel={handleCancelBooking}
-          />
+          <BookingItem key={session.id || `session-${Math.random()}`} session={session} />
         ))
       ) : (
         <Typography>{t('noBookings')}</Typography>
       )}
     </Box>
   );
-};
-
-export default TherapyBookings;
+}

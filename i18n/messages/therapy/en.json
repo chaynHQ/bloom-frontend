@@ -39,9 +39,11 @@
       "dateLabel": "Date",
       "timeLabel": "Time",
       "therapistLabel": "Therapist",
-      "videoLinkLabel": "Video call link",
+      "videoLinkLabel": "Video link",
+      "videoLink": "Join the call from the Google Meet calendar invite sent by email",
       "noVideoLink": "No link provided",
       "cancelButton": "Cancel",
+      "cancelError": "Error cancelling booking - please try again or get in touch with the team.",
       "expand": "Expand",
       "collapse": "Collapse"
     },

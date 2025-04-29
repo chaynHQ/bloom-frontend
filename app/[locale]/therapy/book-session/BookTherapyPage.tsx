@@ -256,7 +256,7 @@ export default function BookTherapyPage() {
         }
       ></Header>
       <Container sx={containerStyle}>
-        <TherapyBookings therapySessionsRemaining={partnerAccess?.therapySessionsRemaining || 0} />
+        {partnerAccess && <TherapyBookings partnerAccess={partnerAccess} />}
       </Container>
 
       <Container id="booking-steps-section" sx={bookingSectionStyle} maxWidth="md">
@@ -286,11 +286,11 @@ export default function BookTherapyPage() {
         )}
       </Container>
 
-      <Container id="therapist-profiles-section" sx={placeholderSectionStyle}>
+      {/* <Container id="therapist-profiles-section" sx={placeholderSectionStyle}>
         <Typography variant="h2" component="h2">
           {t('therapistSectionTitle')}
         </Typography>
-      </Container>
+      </Container> */}
 
       <Container sx={{ backgroundColor: 'background.default', py: 6 }}>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">
