@@ -19,13 +19,11 @@ describe('Therapy Usage', () => {
       });
     cy.logout();
 
-    cy.cleanUpTestState();
     cy.createUser({
       emailInput: newUserEmail,
       passwordInput: password,
     });
     cy.logInWithEmailAndPassword(newUserEmail, password); // Log in to test user
-    cy.visit('/welcome/bumble');
     cy.get('button#user-menu-button').should('exist').click(); // Check user menu exists and access it
     cy.get('a').contains('Apply a code').should('exist').click(); // Go to the apply code page
     cy.get('input#accessCode').should('exist').click().type(accessCode); // Populate the access code field
