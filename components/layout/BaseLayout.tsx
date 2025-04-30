@@ -100,7 +100,10 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     )}
                     <Analytics />
                   </body>
-                  <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
+                  <GoogleAnalytics
+                    debugMode={true}
+                    gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
+                  />
                 </StoryblokProvider>
               </ThemeProvider>
             </AppRouterCacheProvider>
