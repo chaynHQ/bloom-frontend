@@ -18,27 +18,32 @@ describe('Therapy Usage', () => {
         accessCode = elem.text();
       });
     cy.logout();
-
-    cy.createUser({
-      emailInput: newUserEmail,
-      passwordInput: password,
-    });
-    cy.logInWithEmailAndPassword(newUserEmail, password); // Log in to test user
-    cy.get('button#user-menu-button').should('exist').click(); // Check user menu exists and access it
-    cy.get('a').contains('Apply a code').should('exist').click(); // Go to the apply code page
-    cy.get('input#accessCode').should('exist').click().type(accessCode); // Populate the access code field
-    cy.get('button[type="submit"]').contains('Apply code').click(); // Submit form to add access code
-    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); // Check form submitted successfully
-
-    // Navigate to therapy page
-    cy.visit('/therapy/book-session');
-    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); // Find therapy button and click
-    cy.url().should('include', '/therapy/book-session');
-    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); // Check number of therapy sessions is 6
   });
 
   after(() => {
     cy.logout();
+  });
+
+  // This test verifies the application of a new code for a new user
+  it('Log in as a new user, apply code, and check therapy is available', () => {
+    cy.cleanUpTestState();
+    cy.createUser({
+      emailInput: newUserEmail,
+      passwordInput: password,
+    });
+    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
+    cy.visit('/welcome/bumble');
+    cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
+    cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
+    cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
+    cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
+    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
+
+    // Navigate to therapy page and check sessions are there
+    cy.visit('/welcome/bumble');
+    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
+    cy.url().should('include', '/therapy/book-session');
+    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
   });
 
   it('Should load the therapy page and display main content sections', () => {
