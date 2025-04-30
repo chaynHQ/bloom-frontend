@@ -94,7 +94,7 @@ describe('Therapy Usage', () => {
   it('Should display a therapy booking item', () => {
     cy.visit('/therapy/book-session');
 
-    cy.intercept('GET', '/api/therapy-sessions', [
+    cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'test-session-1',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
@@ -115,7 +115,7 @@ describe('Therapy Usage', () => {
   it('Should allow expanding and collapsing a therapy booking item', () => {
     cy.visit('/therapy/book-session');
 
-    cy.intercept('GET', '/api/therapy-sessions', [
+    cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'test-session-1',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
@@ -135,7 +135,7 @@ describe('Therapy Usage', () => {
   it('Should open and close the cancel confirmation dialog for an upcoming session', () => {
     cy.visit('/therapy/book-session');
 
-    cy.intercept('GET', '/api/therapy-sessions', [
+    cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'upcoming-session',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
@@ -170,7 +170,7 @@ describe('Therapy Usage', () => {
   it('Should not show cancel button for past or cancelled sessions', () => {
     cy.visit('/therapy/book-session');
 
-    cy.intercept('GET', '/api/therapy-sessions', [
+    cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'past-session',
         startDateTime: new Date(Date.now() - 86400000).toISOString(), // Yesterday
@@ -206,7 +206,7 @@ describe('Therapy Usage', () => {
   it('Should display an error message if cancelling a session fails', () => {
     cy.visit('/therapy/book-session');
 
-    cy.intercept('GET', '/api/therapy-sessions', [
+    cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'upcoming-session-with-error',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
@@ -217,7 +217,7 @@ describe('Therapy Usage', () => {
     cy.reload();
     cy.wait('@getTherapySessionsWithError');
 
-    cy.intercept('POST', '/api/therapy-sessions/upcoming-session-with-error/cancel', {
+    cy.intercept('POST', '/api/v1/therapy-session/upcoming-session-with-error/cancel', {
       statusCode: 500,
       body: { message: 'Failed to cancel session' },
     }).as('cancelTherapySessionError');
