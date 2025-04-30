@@ -47,6 +47,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should load the therapy page and display main content sections', () => {
+    cy.visit('/therapy/book-session');
+
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
 
@@ -74,6 +76,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should open the booking modal and display the Simplybook widget iframe', () => {
+    cy.visit('/therapy/book-session');
+
     cy.get('button').contains('Begin booking').click();
 
     // Check modal is open and visible
@@ -88,6 +92,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should display a therapy booking item', () => {
+    cy.visit('/therapy/book-session');
+
     cy.intercept('GET', '/api/therapy-sessions', [
       {
         id: 'test-session-1',
@@ -107,6 +113,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should allow expanding and collapsing a therapy booking item', () => {
+    cy.visit('/therapy/book-session');
+
     cy.intercept('GET', '/api/therapy-sessions', [
       {
         id: 'test-session-1',
@@ -125,6 +133,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should open and close the cancel confirmation dialog for an upcoming session', () => {
+    cy.visit('/therapy/book-session');
+
     cy.intercept('GET', '/api/therapy-sessions', [
       {
         id: 'upcoming-session',
@@ -158,6 +168,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should not show cancel button for past or cancelled sessions', () => {
+    cy.visit('/therapy/book-session');
+
     cy.intercept('GET', '/api/therapy-sessions', [
       {
         id: 'past-session',
@@ -192,6 +204,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Should display an error message if cancelling a session fails', () => {
+    cy.visit('/therapy/book-session');
+
     cy.intercept('GET', '/api/therapy-sessions', [
       {
         id: 'upcoming-session-with-error',
