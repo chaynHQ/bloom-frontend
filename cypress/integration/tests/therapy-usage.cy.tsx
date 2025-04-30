@@ -18,37 +18,39 @@ describe('Therapy Usage', () => {
         accessCode = elem.text();
       });
     cy.logout();
+
+    // Create and log in the new user
+    cy.cleanUpTestState();
+    cy.createUser({
+      emailInput: newUserEmail,
+      passwordInput: password,
+    });
+    cy.logInWithEmailAndPassword(newUserEmail, password); // Log in to test user
+    cy.visit('/welcome/bumble');
+    cy.get('button#user-menu-button').should('exist').click(); // Check user menu exists and access it
+    cy.get('a').contains('Apply a code').should('exist').click(); // Go to the apply code page
+    cy.get('input#accessCode').should('exist').click().type(accessCode); // Populate the access code field
+    cy.get('button[type="submit"]').contains('Apply code').click(); // Submit form to add access code
+    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); // Check form submitted successfully
+
+    // Navigate to therapy page
+    cy.visit('/therapy/book-session');
+    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); // Find therapy button and click
+    cy.url().should('include', '/therapy/book-session');
+    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); // Check number of therapy sessions is 6
+    cy.logout(); // Log out after setup, individual tests will log back in
+  });
+
+  beforeEach(() => {
+    cy.logInWithEmailAndPassword(newUserEmail, password); // Log in before each test
+    cy.visit('/therapy/book-session'); // Ensure we are on the therapy page for each test
   });
 
   after(() => {
     cy.logout();
   });
 
-  // This test verifies the application of a new code for a new user
-  it('Log in as a new user, apply code, and check therapy is available', () => {
-    cy.cleanUpTestState();
-    cy.createUser({
-      emailInput: newUserEmail,
-      passwordInput: password,
-    });
-    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
-    cy.visit('/welcome/bumble');
-    cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
-    cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
-    cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
-    cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
-    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
-
-    // Navigate to therapy page and check sessions are there
-    cy.visit('/welcome/bumble');
-    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); //Find therapy button and click
-    cy.url().should('include', '/therapy/book-session');
-    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); //check number of therapy sessions is 6
-  });
-
   it('Should load the therapy page and display main content sections', () => {
-    cy.visit('/therapy/book-session');
-
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
 
@@ -76,8 +78,6 @@ describe('Therapy Usage', () => {
   });
 
   it('Should open the booking modal and display the Simplybook widget iframe', () => {
-    cy.visit('/therapy/book-session');
-
     cy.get('button').contains('Begin booking').click();
 
     // Check modal is open and visible
@@ -91,15 +91,20 @@ describe('Therapy Usage', () => {
       .should('be.visible');
   });
 
-  it('Should display a therapy booking item', () => {
-    cy.visit('/therapy/book-session');
-
+  it('Should display a therapy booking item with all relevant data', () => {
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'test-session-1',
+        action: 'NEW_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Test Therapist',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
         endDateTime: new Date(Date.now() + 90000000).toISOString(),
-        serviceProviderName: 'Test Therapist',
+        cancelledAt: null,
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'test-access-id',
       },
     ]).as('getTherapySessions');
     cy.reload();
@@ -112,15 +117,20 @@ describe('Therapy Usage', () => {
     cy.get('[data-testid="therapy-booking-item"]').contains('Test Therapist').should('be.visible');
   });
 
-  it('Should allow expanding and collapsing a therapy booking item', () => {
-    cy.visit('/therapy/book-session');
-
+  it('Should allow expanding and collapsing a therapy booking item and display details', () => {
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'test-session-1',
+        action: 'NEW_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Test Therapist',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
         endDateTime: new Date(Date.now() + 90000000).toISOString(),
-        serviceProviderName: 'Test Therapist',
+        cancelledAt: null,
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'test-access-id',
       },
     ]).as('getTherapySessions');
     cy.reload();
@@ -128,19 +138,28 @@ describe('Therapy Usage', () => {
 
     cy.get('[data-testid="therapy-booking-item"]').should('exist').click();
     cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('be.visible');
+    cy.get('[data-testid="therapy-booking-item"]').contains('Time:').should('be.visible');
+    cy.get('[data-testid="therapy-booking-item"]')
+      .contains('Therapist: Test Therapist')
+      .should('be.visible');
     cy.get('[data-testid="therapy-booking-item"]').click();
     cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('not.be.visible');
   });
 
   it('Should open and close the cancel confirmation dialog for an upcoming session', () => {
-    cy.visit('/therapy/book-session');
-
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'upcoming-session',
+        action: 'NEW_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Test Therapist',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
         endDateTime: new Date(Date.now() + 90000000).toISOString(),
-        serviceProviderName: 'Test Therapist',
+        cancelledAt: null,
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'test-access-id',
       },
     ]).as('getTherapySessions');
     cy.reload();
@@ -168,23 +187,35 @@ describe('Therapy Usage', () => {
   });
 
   it('Should not show cancel button for past or cancelled sessions', () => {
-    cy.visit('/therapy/book-session');
-
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'past-session',
+        action: 'COMPLETED_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Past Therapist',
         startDateTime: new Date(Date.now() - 86400000).toISOString(), // Yesterday
         endDateTime: new Date(Date.now() - 82800000).toISOString(),
-        serviceProviderName: 'Past Therapist',
+        cancelledAt: null,
+        rescheduledFrom: null,
+        completedAt: new Date(Date.now() - 43200000).toISOString(),
+        partnerAccessId: 'past-access-id',
       },
       {
         id: 'cancelled-session',
+        action: 'CANCELLED_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Cancelled Therapist',
         startDateTime: new Date(Date.now() + 172800000).toISOString(), // In two days
         endDateTime: new Date(Date.now() + 176400000).toISOString(),
-        serviceProviderName: 'Cancelled Therapist',
-        status: 'cancelled',
+        cancelledAt: new Date(Date.now() + 86400000).toISOString(),
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'cancelled-access-id',
       },
     ]).as('getTherapySessions');
+
     cy.reload();
     cy.wait('@getTherapySessions');
 
@@ -204,14 +235,19 @@ describe('Therapy Usage', () => {
   });
 
   it('Should display an error message if cancelling a session fails', () => {
-    cy.visit('/therapy/book-session');
-
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
         id: 'upcoming-session-with-error',
+        action: 'NEW_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Error Therapist',
         startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
         endDateTime: new Date(Date.now() + 90000000).toISOString(),
-        serviceProviderName: 'Error Therapist',
+        cancelledAt: null,
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'error-access-id',
       },
     ]).as('getTherapySessionsWithError');
     cy.reload();
