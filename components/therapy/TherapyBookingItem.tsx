@@ -260,6 +260,7 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
           ...paperStyle,
           ...statusStyles,
         }}
+        data-testid="therapy-booking-item"
       >
         <Box
           sx={headerBoxStyle}
