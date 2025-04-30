@@ -21,7 +21,6 @@ describe('Therapy Usage', () => {
     cy.logout();
 
     // Create and log in the new user
-    cy.cleanUpTestState();
     cy.createUser({
       emailInput: newUserEmail,
       passwordInput: password,
