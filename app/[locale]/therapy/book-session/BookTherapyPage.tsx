@@ -286,11 +286,11 @@ export default function BookTherapyPage() {
         )}
       </Container>
 
-      {/* <Container id="therapist-profiles-section" sx={placeholderSectionStyle}>
+      <Container id="therapist-profiles-section" sx={placeholderSectionStyle}>
         <Typography variant="h2" component="h2">
           {t('therapistSectionTitle')}
         </Typography>
-      </Container> */}
+      </Container>
 
       <Container sx={{ backgroundColor: 'background.default', py: 6 }}>
         <Typography variant="h2" component="h2" mb={2} textAlign="center">

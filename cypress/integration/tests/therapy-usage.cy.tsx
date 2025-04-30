@@ -18,13 +18,7 @@ describe('Therapy Usage', () => {
         accessCode = elem.text();
       });
     cy.logout();
-  });
 
-  after(() => {
-    cy.logout();
-  });
-
-  beforeEach(() => {
     cy.cleanUpTestState();
     cy.createUser({
       emailInput: newUserEmail,
@@ -43,6 +37,10 @@ describe('Therapy Usage', () => {
     cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); // Find therapy button and click
     cy.url().should('include', '/therapy/book-session');
     cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); // Check number of therapy sessions is 6
+  });
+
+  after(() => {
+    cy.logout();
   });
 
   it('Should load the therapy page and display main content sections', () => {
