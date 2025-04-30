@@ -33,9 +33,9 @@
       "cancelAlert": "Cancellation requested for booking ID: {id}. Implement actual cancellation logic."
     },
     "bookingItem": {
-      "upcomingSessionTitle": "Upcoming therapy session {relativeTime}",
-      "pastSessionTitle": "Past therapy session {date}",
-      "cancelledSessionTitle": "Cancelled session {date}",
+      "upcomingSessionTitle": "Upcoming therapy session ",
+      "pastSessionTitle": "Past therapy session ",
+      "cancelledSessionTitle": "Cancelled session",
       "dateLabel": "Date",
       "timeLabel": "Time",
       "therapistLabel": "Therapist",
@@ -45,7 +45,13 @@
       "cancelButton": "Cancel",
       "cancelError": "Error cancelling booking - please try again or get in touch with the team.",
       "expand": "Expand",
-      "collapse": "Collapse"
+      "collapse": "Collapse",
+      "cancelDialog": {
+        "title": "Confirm Cancellation",
+        "description": "Are you sure you want to cancel your therapy session scheduled for {dateTime}? You can book a new appointment at a time that feels right for you.",
+        "keepButton": "Keep Session",
+        "confirmButton": "Cancel Session"
+      }
     },
     "faqs": {
       "faqTitle0": "Who is this programme for?",

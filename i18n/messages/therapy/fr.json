@@ -43,7 +43,13 @@
       "noVideoLink": "Aucun lien fourni",
       "cancelButton": "Annuler",
       "expand": "Développer",
-      "collapse": "Réduire"
+      "collapse": "Réduire",
+      "cancelDialog": {
+        "title": "Confirmer l'annulation",
+        "description": "Êtes-vous sûr de vouloir annuler votre séance de thérapie prévue pour le {dateTime} ? Vous pouvez prendre un nouveau rendez-vous à un moment qui vous convient.",
+        "keepButton": "Garder la séance",
+        "confirmButton": "Annuler la séance"
+      }
     },
     "faqHeader": "A propos de la thérapie",
     "faqs": {

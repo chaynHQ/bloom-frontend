@@ -43,7 +43,13 @@
       "noVideoLink": "Koi link nahi diya gaya hai",
       "cancelButton": "Cancel karein",
       "expand": "Expand karein",
-      "collapse": "Collapse karein"
+      "collapse": "Collapse karein",
+      "cancelDialog": {
+        "title": "Cancel karna confirm karein",
+        "description": "Kya aap vaakai apni {dateTime} ke lie nirdhaarit therapy satr radd karna chahte hain? Aap apni suvidhaanusaar ek naya appointment book kar sakte hain.",
+        "keepButton": "Session rakhein",
+        "confirmButton": "Session cancel karein"
+      }
     },
     "faqHeader": "Therapy ke bare mein adhik jaankari",
     "faqs": {

@@ -43,7 +43,13 @@
       "noVideoLink": "Kein Link angegeben",
       "cancelButton": "Stornieren",
       "expand": "Erweitern",
-      "collapse": "Einklappen"
+      "collapse": "Einklappen",
+      "cancelDialog": {
+        "title": "Stornierung bestätigen",
+        "description": "Sind Sie sicher, dass Sie Ihre für {dateTime} geplante Therapiesitzung absagen möchten? Sie können einen neuen Termin zu einem Zeitpunkt buchen, der sich für Sie richtig anfühlt.",
+        "keepButton": "Sitzung beibehalten",
+        "confirmButton": "Sitzung stornieren"
+      }
     },
     "faqHeader": "Mehr zur Therapie",
     "faqs": {

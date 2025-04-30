@@ -43,7 +43,13 @@
       "noVideoLink": "No se proporcionó ningún enlace",
       "cancelButton": "Cancelar",
       "expand": "Expandir",
-      "collapse": "Contraer"
+      "collapse": "Contraer",
+      "cancelDialog": {
+        "title": "Confirmar Cancelación",
+        "description": "¿Seguro que quieres cancelar tu sesión de terapia programada para el {dateTime}? Puedes reservar una nueva cita a una hora que te resulte adecuada.",
+        "keepButton": "Mantener Sesión",
+        "confirmButton": "Cancelar Sesión"
+      }
     },
     "faqHeader": "Más acerca de la terapia",
     "faqs": {
