@@ -1,9 +1,10 @@
 describe('Therapy Usage', () => {
-  let accessCode = ''; // Initialize access code variable
   const newUserEmail = `cypresstestuser+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
   before(() => {
+    let accessCode = ''; // Initialize access code variable
+
     // create a partner access code with therapy
     cy.logInWithEmailAndPassword(
       Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
