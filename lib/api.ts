@@ -275,6 +275,14 @@ export const api = createApi({
       },
       providesTags: [{ type: 'UserCourses' }],
     }),
+    getSubscriptions: builder.query<Subscriptions, void>({
+      query() {
+        return {
+          url: 'subscription-user',
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
@@ -302,4 +310,5 @@ export const {
   useStartResourceMutation,
   useCompleteResourceMutation,
   useGetUserCoursesQuery,
+  useGetSubscriptionsQuery,
 } = api;

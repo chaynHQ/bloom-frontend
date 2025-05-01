@@ -23,7 +23,6 @@ export interface User {
   isSuperAdmin: boolean;
   verifiedEmail: boolean;
   MFAisSetup: boolean;
-  activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
   entryPartnerAccessCode: string | null;
   entryPartnerReferral: string | null;
@@ -31,7 +30,6 @@ export interface User {
   pwaDismissed: boolean;
 }
 
-// GetUserDto is the response format of the Get User endpoint
 export interface GetUserDto {
   user: {
     id: string;
@@ -46,7 +44,6 @@ export interface GetUserDto {
     crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
-    activeSubscriptions?: ActiveSubscription[];
   };
   partnerAccesses: PartnerAccesses;
   partnerAdmin?: PartnerAdmin;
@@ -86,7 +83,6 @@ const initialState: User = {
   isSuperAdmin: false,
   verifiedEmail: false,
   MFAisSetup: false,
-  activeSubscriptions: [],
   authStateLoading: true,
   entryPartnerAccessCode: null,
   entryPartnerReferral: null,
@@ -135,47 +131,25 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
       return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
-      if (isSubscriptionActive(payload)) {
-        state.activeSubscriptions.push(payload);
-      }
-
-      return state;
+      // Remove logic for managing subscriptions here
     });
     builder.addMatcher(
       api.endpoints.unsubscribeFromWhatsapp.matchFulfilled,
       (state, { payload }) => {
-        state.activeSubscriptions = state.activeSubscriptions.filter(
-          (subscription) => subscription.id != payload.id,
-        );
         return state;
       },
     );
   },
 });
-
-const getActiveSubscriptions = (payload: GetUserResponse): ActiveSubscription[] => {
-  if (payload.subscriptions && payload.subscriptions.length > 0) {
-    return payload.subscriptions.filter(isSubscriptionActive);
-  }
-  return [];
-};
-
-const isSubscriptionActive = (subscription: Subscription): subscription is ActiveSubscription => {
-  return subscription.cancelledAt === null;
-};
 
 const { actions, reducer } = slice;
 export const {

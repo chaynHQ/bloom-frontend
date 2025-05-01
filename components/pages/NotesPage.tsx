@@ -7,13 +7,14 @@ import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
-import { useTypedSelector } from '@/lib/hooks/store';
+import { useGetSubscriptionsQuery } from '@/lib/api';
+import { RootState } from '@/lib/store';
 import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
@@ -56,18 +57,36 @@ interface Props {
 }
 
 export default function NotesPage({ story }: Props) {
-  const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
+  const token = useSelector((state: RootState) => state.user.token);
+  const isLoggedIn = Boolean(token);
 
-  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
-  const userId = useTypedSelector((state) => state.user.id);
-
-  useEffect(() => {
-    setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
-  }, [userActiveSubscriptions]);
+  const {
+    data: subscriptions,
+    isLoading,
+    error,
+  } = useGetSubscriptionsQuery(undefined, {
+    skip: !isLoggedIn, // Skip the query if not logged in
+  });
 
   if (!story) {
     return <NoDataAvailable />;
   }
+
+  if (isLoggedIn && isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isLoggedIn && (error || !subscriptions)) {
+    return <NoDataAvailable />;
+  }
+
+  const activeSubscriptions =
+    subscriptions?.map((sub) => ({
+      ...sub,
+      cancelledAt: sub.cancelledAt instanceof Date ? null : sub.cancelledAt, // Convert Date to null
+    })) ?? null;
+
+  const hasActiveWhatsappSub = hasWhatsappSubscription(activeSubscriptions);
 
   const headerProps: HeaderProps = {
     title: story.content.title,
@@ -79,8 +98,19 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Header {...headerProps} />
-      {!userId && <SignUpBanner />}
-      {userId && (
+      {/* Public page for logged-out users */}
+      {!isLoggedIn && (
+        <>
+          <Container sx={containerStyle}>
+            <Box sx={infoBoxStyle}>
+              <ImageTextColumn items={steps} translations="Whatsapp.steps" />
+            </Box>
+          </Container>
+          <SignUpBanner />
+        </>
+      )}
+      {/* Private page for logged-in users */}
+      {isLoggedIn && (subscriptions ?? []).length > 0 && (
         <Container sx={containerStyle}>
           <Box sx={infoBoxStyle}>
             <ImageTextColumn items={steps} translations="Whatsapp.steps" />
@@ -90,8 +120,7 @@ export default function NotesPage({ story }: Props) {
           </Box>
         </Container>
       )}
-      {userId &&
-        story.content.page_sections?.length > 0 &&
+      {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
