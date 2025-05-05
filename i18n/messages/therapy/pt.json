@@ -31,9 +31,9 @@
       "cancelAlert": "Cancelamento solicitado para o ID da reserva: {id}. Implemente a lógica de cancelamento real."
     },
     "bookingItem": {
-      "upcomingSessionTitle": "Próxima sessão de terapia {relativeTime}",
-      "pastSessionTitle": "Sessão de terapia passada {date}",
-      "cancelledSessionTitle": "Sessão cancelada {date}",
+      "upcomingSessionTitle": "Próxima sessão de terapia",
+      "pastSessionTitle": "Sessão de terapia anterior",
+      "cancelledSessionTitle": "Sessão cancelada",
       "dateLabel": "Data",
       "timeLabel": "Hora",
       "therapistLabel": "Terapeuta",

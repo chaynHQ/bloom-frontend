@@ -31,9 +31,9 @@
       "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
     },
     "bookingItem": {
-      "upcomingSessionTitle": "Anstehende Therapiesitzung {relativeTime}",
-      "pastSessionTitle": "Vergangene Therapiesitzung {date}",
-      "cancelledSessionTitle": "Abgesagte Sitzung {date}",
+      "upcomingSessionTitle": "Bevorstehende Therapiesitzung",
+      "pastSessionTitle": "Vergangene Therapiesitzung",
+      "cancelledSessionTitle": "Abgesagte Sitzung",
       "dateLabel": "Datum",
       "timeLabel": "Uhrzeit",
       "therapistLabel": "Therapeut/in",

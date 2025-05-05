@@ -31,9 +31,9 @@
       "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {id}. Vastavik cancellation logic implement karein."
     },
     "bookingItem": {
-      "upcomingSessionTitle": "Aane wala therapy session {relativeTime}",
-      "pastSessionTitle": "Pichhla therapy session {date}",
-      "cancelledSessionTitle": "Radd satra {date}",
+      "upcomingSessionTitle": "Aane wala therapy session",
+      "pastSessionTitle": "Pichhla therapy session",
+      "cancelledSessionTitle": "Radd satra",
       "dateLabel": "Tareekh",
       "timeLabel": "Samay",
       "therapistLabel": "Therapist",

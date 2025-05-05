@@ -58,7 +58,7 @@ describe('Therapy Usage', () => {
 
     // Check Therapist Section Title
     cy.get('#therapist-profiles-section').within(() => {
-      cy.get('h2').should('be.visible').and('have.text', 'Our therapy team');
+      cy.get('h2').should('be.visible').and('have.text', 'Meet our therapists');
     });
 
     // Check FAQs Section Title
