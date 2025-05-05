@@ -107,7 +107,7 @@ describe('Therapy Usage', () => {
 
     cy.get('[data-testid="therapy-booking-item"]').should('exist');
     cy.get('[data-testid="therapy-booking-item"]')
-      .contains('Upcoming Session')
+      .contains('Upcoming therapy session')
       .should('be.visible');
     cy.get('[data-testid="therapy-booking-item"]').contains('Test Therapist').should('be.visible');
   });
@@ -143,7 +143,7 @@ describe('Therapy Usage', () => {
     cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('not.be.visible');
   });
 
-  it('Should open and close the cancel confirmation dialog for an upcoming session', () => {
+  it('Should open and close the cancel confirmation dialog for an Upcoming therapy session', () => {
     cy.visit('/therapy/book-session');
 
     cy.intercept('GET', '/api/v1/therapy-session', [
@@ -165,7 +165,7 @@ describe('Therapy Usage', () => {
     cy.wait('@getTherapySessions');
 
     cy.get('[data-testid="therapy-booking-item"]')
-      .contains('Upcoming Session')
+      .contains('Upcoming therapy session')
       .should('exist')
       .click();
     cy.get('[data-testid="therapy-booking-item"]').find('button').contains('Cancel').click();
@@ -173,15 +173,18 @@ describe('Therapy Usage', () => {
     cy.get('[role="dialog"]').find('button').contains('Keep Session').click();
     cy.get('[role="dialog"]').should('not.exist');
 
-    cy.get('[data-testid="therapy-booking-item"]').contains('Upcoming Session').click();
+    cy.get('[data-testid="therapy-booking-item"]').contains('Upcoming therapy session').click();
     cy.get('[data-testid="therapy-booking-item"]').find('button').contains('Cancel').click();
     cy.get('[role="dialog"]').should('be.visible').and('contain', 'Confirm Cancellation');
     cy.get('[role="dialog"]').find('button').contains('Cancel Session').click();
 
     cy.wait('@cancelTherapySession').its('response.statusCode').should('eq', 200);
-    cy.get('[data-testid="therapy-booking-item"]').should('not.contain', 'Upcoming Session');
+    cy.get('[data-testid="therapy-booking-item"]').should(
+      'not.contain',
+      'Upcoming therapy session',
+    );
     cy.get('[data-testid="therapy-booking-item"]')
-      .contains('Cancelled Session')
+      .contains('Cancelled session')
       .should('be.visible');
   });
 
@@ -220,13 +223,16 @@ describe('Therapy Usage', () => {
     cy.reload();
     cy.wait('@getTherapySessions');
 
-    cy.get('[data-testid="therapy-booking-item"]').contains('Past Session').should('exist').click();
+    cy.get('[data-testid="therapy-booking-item"]')
+      .contains('Past therapy session')
+      .should('exist')
+      .click();
     cy.get('[data-testid="therapy-booking-item"]')
       .find('button')
       .contains('Cancel')
       .should('not.exist');
     cy.get('[data-testid="therapy-booking-item"]')
-      .contains('Cancelled Session')
+      .contains('Cancelled session')
       .should('exist')
       .click();
     cy.get('[data-testid="therapy-booking-item"]')
@@ -261,7 +267,7 @@ describe('Therapy Usage', () => {
       body: { message: 'Failed to cancel session' },
     }).as('cancelTherapySessionError');
 
-    cy.get('[data-testid="therapy-booking-item"]').contains('Upcoming Session').click();
+    cy.get('[data-testid="therapy-booking-item"]').contains('Upcoming therapy session').click();
     cy.get('[data-testid="therapy-booking-item"]').find('button').contains('Cancel').click();
     cy.get('[role="dialog"]').should('be.visible').and('contain', 'Confirm Cancellation');
     cy.get('[role="dialog"]').find('button').contains('Cancel Session').click();
