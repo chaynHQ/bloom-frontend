@@ -48,7 +48,8 @@
         "weakPassword": "Dein Passwort muss etwas länger sein, damit es sicherer ist.",
         "emailAlreadyInUse": "Diese Email ist bereits bei Bloom registriert, bitte geh zum <loginLink>Login-Bereich</loginLink> um fortzufahren.",
         "invalidCode": "Dieser Link zum Zurücksetzen des Passworts ist ungültig. Bitte <resetLink>starte den Prozess neu</resetLink> und versuche es noch einmal. ",
-        "expiredCode": "Dieser Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte <resetLink>starte den Vorgang neu</resetLink> und versuche es noch einmal. "
+        "expiredCode": "Dieser Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte <resetLink>starte den Vorgang neu</resetLink> und versuche es noch einmal. ",
+        "getUserError": "Beim Abrufen deines Kontos ist ein Fehler aufgetreten. Versuche es später nochmal und <contactLink>kontaktiere das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt."
       },
       "phoneNumberLabel": "Telefonnummer",
       "verificationCodeLabel": "Verifizierungscode",
