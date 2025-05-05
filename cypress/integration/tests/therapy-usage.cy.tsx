@@ -56,13 +56,13 @@ describe('Therapy Usage', () => {
       cy.get('h2').should('be.visible').and('have.text', 'How booking works');
     });
 
-    // Check Therapist Section Title
-    cy.get('#therapist-profiles-section').within(() => {
-      cy.get('h2').should('be.visible').and('have.text', 'Meet our therapists');
-    });
+    // Check Therapist Section
+    cy.get('h2').contains('Meet our therapists').should('be.visible');
+    cy.get('[data-testid="team-member-card"]').should('exist');
 
-    // Check FAQs Section Title
+    // Check FAQs Section
     cy.get('main').contains('h2', 'More about the therapy').should('be.visible');
+    cy.get('[data-testid="accordion-item"]').should('exist');
 
     // Check initial state - modal should be closed
     cy.get('.MuiModal-root').should('not.exist');
@@ -163,21 +163,19 @@ describe('Therapy Usage', () => {
       },
     ]).as('getTherapySessions');
 
-    cy.intercept('PATCH', '/api/v1/therapy-session/upcoming-session/cancel', [
-      {
-        id: 'upcoming-session',
-        action: 'CANCELLED_BOOKING',
-        clientTimezone: 'Europe/London',
-        serviceName: 'Individual Therapy Session',
-        serviceProviderName: 'Test Therapist',
-        startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
-        endDateTime: new Date(Date.now() + 90000000).toISOString(),
-        cancelledAt: new Date(Date.now()).toISOString(),
-        rescheduledFrom: null,
-        completedAt: null,
-        partnerAccessId: 'test-access-id',
-      },
-    ]).as('cancelTherapySession');
+    cy.intercept('PATCH', '/api/v1/therapy-session/upcoming-session/cancel', {
+      id: 'upcoming-session',
+      action: 'CANCELLED_BOOKING',
+      clientTimezone: 'Europe/London',
+      serviceName: 'Individual Therapy Session',
+      serviceProviderName: 'Test Therapist',
+      startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+      endDateTime: new Date(Date.now() + 90000000).toISOString(),
+      cancelledAt: new Date(Date.now()).toISOString(),
+      rescheduledFrom: null,
+      completedAt: null,
+      partnerAccessId: 'test-access-id',
+    }).as('cancelTherapySession');
 
     cy.reload();
     cy.wait('@getTherapySessions');

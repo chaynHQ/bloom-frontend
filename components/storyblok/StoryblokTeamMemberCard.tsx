@@ -79,7 +79,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
 
   return (
     <Card
-      data-testid="TeamMemberCard"
+      data-testid="team-member-card"
       sx={cardStyle}
       {...storyblokEditable({
         _uid,

@@ -95,6 +95,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
       {accordion_items.map((ai, i) => (
         <Accordion
+          data-testid="accordion-item"
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
           key={`panel${i}`}
