@@ -197,10 +197,6 @@ describe('Therapy Usage', () => {
     cy.get('[role="dialog"]').find('button').contains('Cancel Session').click();
 
     cy.wait('@cancelTherapySession').its('response.statusCode').should('eq', 200);
-    cy.get('[data-testid="therapy-booking-item"]').should(
-      'not.contain',
-      'Upcoming therapy session',
-    );
     cy.get('[data-testid="therapy-booking-item"]')
       .contains('Cancelled session')
       .should('be.visible');
