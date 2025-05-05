@@ -109,6 +109,7 @@ describe('Therapy Usage', () => {
     cy.get('[data-testid="therapy-booking-item"]')
       .contains('Upcoming therapy session')
       .should('be.visible');
+    cy.get('[data-testid="therapy-booking-item"]').click();
     cy.get('[data-testid="therapy-booking-item"]').contains('Test Therapist').should('be.visible');
   });
 
@@ -139,7 +140,7 @@ describe('Therapy Usage', () => {
     cy.get('[data-testid="therapy-booking-item"]')
       .contains('Therapist: Test Therapist')
       .should('be.visible');
-    cy.get('[data-testid="therapy-booking-item"]').click();
+    cy.get('[data-testid="therapy-booking-item"] > div[aria-expanded="true"]').click();
     cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('not.be.visible');
   });
 
@@ -161,6 +162,23 @@ describe('Therapy Usage', () => {
         partnerAccessId: 'test-access-id',
       },
     ]).as('getTherapySessions');
+
+    cy.intercept('PATCH', '/api/v1/therapy-session/upcoming-session/cancel', [
+      {
+        id: 'upcoming-session',
+        action: 'CANCELLED_BOOKING',
+        clientTimezone: 'Europe/London',
+        serviceName: 'Individual Therapy Session',
+        serviceProviderName: 'Test Therapist',
+        startDateTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+        endDateTime: new Date(Date.now() + 90000000).toISOString(),
+        cancelledAt: new Date(Date.now()).toISOString(),
+        rescheduledFrom: null,
+        completedAt: null,
+        partnerAccessId: 'test-access-id',
+      },
+    ]).as('cancelTherapySession');
+
     cy.reload();
     cy.wait('@getTherapySessions');
 
@@ -262,7 +280,7 @@ describe('Therapy Usage', () => {
     cy.reload();
     cy.wait('@getTherapySessionsWithError');
 
-    cy.intercept('POST', '/api/v1/therapy-session/upcoming-session-with-error/cancel', {
+    cy.intercept('PATCH', '/api/v1/therapy-session/upcoming-session-with-error/cancel', {
       statusCode: 500,
       body: { message: 'Failed to cancel session' },
     }).as('cancelTherapySessionError');
