@@ -2,6 +2,7 @@ import StoryblokResourceShortPage, {
   StoryblokResourceShortPageProps,
 } from '@/components/storyblok/StoryblokResourceShortPage';
 import { routing } from '@/i18n/routing';
+import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { COURSE_CATEGORIES } from '@/lib/constants/enums';
 import { getStoryblokStories, getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
@@ -45,7 +46,7 @@ export async function generateStaticParams() {
   const storyblokApi = getStoryblokApi();
 
   let sbParams: ISbStoriesParams = {
-    version: 'published',
+    version: STORYBLOK_ENVIRONMENT,
     starts_with: 'shorts/',
     filter_query: {
       component: {
