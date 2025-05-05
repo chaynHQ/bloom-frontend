@@ -57,7 +57,7 @@
     "firebase": "^11.6.1",
     "gemoji": "^8.1.0",
     "js-cookie": "^3.0.1",
-    "newrelic": "^12.18.0",
+    "newrelic": "^12.18.2",
     "next": "^15.3.1",
     "next-intl": "^4.1.0",
     "next-pwa": "^5.6.0",
