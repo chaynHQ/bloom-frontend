@@ -23,7 +23,7 @@ describe('Meet the team page should', () => {
     const checkCard = ({ name, title, languages, image, description, closed }: CheckCardProps) => {
       const expandIconTag = 'svg[data-testid="KeyboardArrowDownIcon"]';
       const cardContainer = cy
-        .get(`div[data-testid="TeamMemberCard"]:has(img[alt="${image.alt}"])`)
+        .get(`div[data-testid="team-member-card"]:has(img[alt="${image.alt}"])`)
         .first();
       cardContainer.within(() => {
         cy.get('h3').should('contain', name);
