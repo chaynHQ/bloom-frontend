@@ -2,6 +2,7 @@ import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/Storyb
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
+import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { notFound } from 'next/navigation';
@@ -34,7 +35,7 @@ export async function generateStaticParams() {
   const storyblokApi = getStoryblokApi();
 
   let sbParams: ISbStoriesParams = {
-    version: 'published',
+    version: STORYBLOK_ENVIRONMENT,
   };
 
   const { data } = await storyblokApi.get('cdn/links/', sbParams);
