@@ -1,10 +1,14 @@
 {
   "Therapy": {
     "title": "Therapie buchen",
-    "introduction": "{partnerName} kooperiert mit Bloom, um Dir kostenfrei vertrauliche Unterstützung anzubieten. Bloom vermittelt Dir Therapeut:innen, die auf Dich angepasste Unterstützung bieten können. Du hast Zugang zu sechs einstündigen Sitzungen mit einer Therapeutin oder einem Therapeuten Deiner Wahl. ",
     "bookingButton": "Eine Sitzung buchen",
     "bookingSectionTitle": "So funktioniert die Buchung",
-    "therapistSectionTitle": "Unser Therapie-Team",
+    "steps": {
+      "step1": "Du wählst aus unseren sorgfältig ausgewählten, mehrsprachigen Therapeut:innen aus.",
+      "step2": "Wähle ein Datum und eine Uhrzeit, die für Dich passen. Alle Sitzungen finden online statt. ",
+      "step3": "Wenn Du Deine Meinung änderst, kannst Du die Sitzung jederzeit abbrechen oder die Therapeutin oder den Therapeuten wechseln. ",
+      "step4": "Alles, was Du teilst, bleibt streng vertraulich zwischen Dir und den Therapeut:innen."
+    },
     "closeBookingWidget": "Buchungs-Widget schließen",
     "modalTitle": "Therapie buchen",
     "modalDescription": "SimplyBook.me Widget zur Terminplanung Ihrer Therapiesitzung.",
@@ -15,18 +19,10 @@
       "scriptNotLoaded": "Das Skript für das Buchungs-Widget wurde nicht vollständig geladen.",
       "scriptLoadFailed": "Fehler beim Laden des Buchungsskripts."
     },
-    "steps": {
-      "step1": "Du wählst aus unseren sorgfältig ausgewählten, mehrsprachigen Therapeut:innen aus.",
-      "step2": "Wähle ein Datum und eine Uhrzeit, die für Dich passen. Alle Sitzungen finden online statt. ",
-      "step3": "Wenn Du Deine Meinung änderst, kannst Du die Sitzung jederzeit abbrechen oder die Therapeutin oder den Therapeuten wechseln. ",
-      "step4": "Alles, was Du teilst, bleibt streng vertraulich zwischen Dir und den Therapeut:innen."
-    },
     "therapyBookings": {
       "header": "Deine Therapiebuchungen",
-      "therapySessionsRemaining": "Sie haben <upcomingTotal>{upcomingTotal}</upcomingTotal> bevorstehende Therapiesitzungen und <remainingTotal>{remainingTotal}</remainingTotal> zur Buchung verfügbar.",
-      "noTherapySessionsRemaining": "Sie haben derzeit keine verfügbaren Sitzungen mehr zum Buchen.",
       "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}</remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}</upcomingTotal> sind geplant.",
-      "noBookingSummary": "Du hast keine Therapiesitzungen mehr übrig.",
+      "noBookingSummary": "Sie haben alle Ihre verfügbaren Therapiesitzungen gebucht.",
       "noBookings": "Du hast im Moment keine Therapiebuchungen.",
       "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
     },
@@ -50,51 +46,6 @@
         "keepButton": "Sitzung beibehalten",
         "confirmButton": "Sitzung stornieren"
       }
-    },
-    "faqHeader": "Mehr zur Therapie",
-    "faqs": {
-      "faqTitle0": "Für wen ist dieses Programm gedacht?",
-      "faqBody0": "Das Programm steht allen Nutzer:innen von {partnerName}, die dort sexualisierte Gewalt melden, zur Verfügung, unabhängig von ethnischer Zugehörigkeit, Alter, Behinderung, Religion oder Glauben, sexueller Orientierung, Geschlechteridentität oder Lebensumständen - wir sind für Dich da. ",
-      "faqTitle1": "Muss ich für die Therapie bezahlen?",
-      "faqBody1": "Im Rahmen dieses Programms bietet Bloom eine Reihe von Angeboten für Nutzer:innen von {partnerName}, die von einer Erfahrung sexualisierter Gewalt heilen. Dies beinhaltet einen kostenlosen Zugang zu die Bibliothek mit Ressourcen, die von Überlebenden und Traumatherapeut:innen erstellt wurden, sowie die Möglichkeit für Messaging mit dem Bloom-Team. Für {partnerName}-Nutzer:innen, die schwere Traumatisierungen erlebt haben, werden sechs 50-minütige Therapiesitzungen kostenfrei zur Verfügung gestellt. ",
-      "faqTitle2": "Wie viele Therapiesitzungen kann ich in Anspruch nehmen?",
-      "faqBody2": "Für {partnerName}-Nutzer:innen, die schwer traumatische Erfahrungen gemacht haben, werden sechs 50-minütige Therapiesitzungen kostenfrei angeboten. ",
-      "faqTitle3": "Wie viel Zeit habe ich, um meine Therapiesitzungen zu buchen?",
-      "faqBody3": "Du kannst wählen, wie oft Du Deine Sitzungen haben möchtest, ob einmal pro Woche oder einmal im Monat. Es ist empfehlenswert, dass Du mit deiner Therapeutin oder deinem Therapeuten besprichst, was für Dich am besten ist. Bitte buche Deine erste Sitzung innerhalb von drei Monaten nach Erhalt des Zugangscodes. ",
-      "faqTitle4": "Kann ich die Sitzungen in Präsenz machen?",
-      "faqBody4": "Alle Sitzungen werden online per Videoanruf stattfinden. Bloom ist auf digitale Unterstützung spezialisiert. Die Therapeut:innen werden aufgrund ihrer Erfahrung und Fähigkeiten ausgewählt, um das Beste aus einer Online-Sitzung herauszuholen. ",
-      "faqTitle5": "Was passiert, wenn ich nicht zu meiner Therapiesitzung kommen kann?",
-      "faqBody5": "Verwende den Link aus Deiner Bestätigungsemail, um eine Therapiesitzung zu verschieben, und zwar so frühzeitig wie möglich. Eine Absage weniger als 48 Stunden vorher kann auf eine Deiner Therapiesitzungen angerechnet werden, also versuch bitte, den Termin rechtzeitig zu verschieben. ",
-      "faqTitle6": "Was mache ich, wenn ich keinen Termin für die Therapie finde, der für mich passt?",
-      "faqBody6": "Die Bloom-Kooperation mit {partnerName} und das Unterstützungsprogramm befinden sich noch in der Anfangsphase. Das bedeutet, dass wir möglicherweise noch kein komplettes Team von Therapeut:innen zur Verfügung haben. Wir sollten in den meisten Zeitzonen verfügbar sein, um Deinen Bedürfnissen gerecht zu werden. Wenn Du keine Therapeut:innen oder keine passende Uhrzeit finden kannst, lass es uns bitte über unser <faqLink>Kontaktformular</faqLink> wissen. So können wir Lücken oder Hürden bei unserem Angebot entsprechend bearbeiten. ",
-      "faqTitle7": "Was ist, wenn ich mit der Therapeutin oder dem Therapeuten nicht zurecht komme?",
-      "faqBody7": "Wir sind alle nur Menschen, also mach Dir keine Sorgen, wenn du mit der Therapeutin oder dem Therapeuten keine Verbindung gespürt hast. Du kannst Deine verbleibende(n) Sitzungen(en) bei anderen Therapeut:innen buchen. ",
-      "faqTitle8": "Was passiert, wenn meine sechs Sitzungen aufgebraucht sind?",
-      "faqBody8": "Sprich mit Deiner Therapeutin oder Deinem Therapeuten über Deine Bedürfnisse und ob sie meinen, dass Dir weitere Sitzungen helfen könnten. Bloom-Therapeut:innen können ihre Honorare mitteilen, und Du kannst entscheiden, ob Du weiter mit Ihnen arbeiten willst. ",
-      "faqTitle9": "Ich bin nicht zur Therapie gegangen, aber die Plattform zeigt eine Sitzung weniger an?",
-      "faqBody9": "Unsere Therapeut:innen halten Zeitfenster für Dich frei, also möchten wir ihre Zeit respektieren. Wenn Du nicht zu Deiner Therapiesitzung gekommen bist oder sie weniger als 48 Stunden vorher abgesagt oder verschoben hast, kann das leider auf eine Deiner Sitzungen angerechnet werden. Wenn Du glaubst, dass ein Fehler vorliegt, bitte schick uns eine Nachricht über unser <faqLink>Kontaktformular</faqLink>.",
-      "faqTitle10": "Ist das, was ich in den Therapiesitzungen bespreche, vertraulich?",
-      "faqBody10": "Ja. Alles, was du mit Therapeut:innen besprichst, wird streng vertraulich behandelt und bleibt zwischen dir und der Therapeutin oder dem Therapeuten. Zu keinem Zeitpunkt hat {partnerName} Zugang zu diesen Informationen. ",
-      "faqTitle11": "Ist die Unterstützung, die ich erhalte, vertraulich?",
-      "faqBody11": "Ja. Bloom ist ein Programm, das von der global tätigen Wohltätigkeitsorganisation Chayn angeboten wird. Alle Informationen darüber, wie viele Therapiesitzungen Du in Anspruch nimmst, werden streng vertraulich behandelt. Chayn gibt diese oder andere persönliche Informationen weder an {partnerName}, noch an Dritte weiter.",
-      "faqTitle12": "Haftungsbeschränkung",
-      "faqBody12": "Mit der Teilnahme an den Therapiesitzungen gehst Du eine Vereinbarung mit der Therapeutin oder dem Therapeuten über die von ihnen erbrachte Dienstleistung als freie Praktizierende ein. Dieser Haftungsverzicht schließt jedes Risiko ein, das mit der Teilnahme an der Therapie und den Therapiesitzungen verbunden ist. Bitte beachte die nachfolgenden Einzelheiten: ",
-      "faqList12Item1": "Nutzer:innen, die an Online-Therapiesitzungen teilnehmen, werden verstehen, dass diese kein Ersatz für klinische psychologische oder medizinische Betreuung sind, und nicht dazu gedacht sind, psychische Störungen oder medizinische Erkrankungen zu diagnostizieren, behandeln oder zu heilen. Du solltest auch verstehen, dass die Therapeut:innen, mit denen du arbeitest, nicht in der Rolle von medizinischem Fachpersonal sind. ",
-      "faqList12Item2": "Du verstehst und erklärst Dich damit einverstanden, dass Du während der Therapiesitzungen für Dein eigenes Wohlbefinden und dementsprechend auch für Deine Entscheidungen verantwortlich bist. ",
-      "faqList12Item3": "Du wirst verstehen, dass die Therapeut:innen sich bei ihrer Arbeit Notizen für die eigenen Unterlagen machen können. Nur die Therapeut:innen, die mit dir arbeiten, werden diese Notizen sehen. Das geschieht stets auf vertrauliche Weise, wobei deine Privatsphäre und deine Integrität gewahrt werden. ",
-      "faqList12Item4": "Du wirst auch verstehen, dass alle Kommentare und Ideen, die von Therapeut:innen angeboten werden, ausschließlich den Zweck haben, Dich bei Deinem Heilungsprozess zu unterstützen. Vor Beginn der Therapie wirst Du von Deiner Therapeutin oder Deinem Therapeuten über etwaige Schutzrichtlinien aufgeklärt, die dazu führen könnten, dass sie Informationen über Dich weitergeben, um Deine Sicherheit zu gewährleisten. ",
-      "faqList12Item5": "Du hast unsere Datenschutzrichtlinie gelesen und verstanden (https://www.notion.so/Privacy-policy-ad4a447bc1aa4d7294d9af5f8be7ae43).",
-      "faqList12Item6": "Du hast verstanden, dass der Einsatz von Technologie nicht immer sicher ist und akzeptierst die Vertraulichkeits-Risiken, die die Nutzung von Email, SMS, Telefon- und Videoanrufen und anderen Technologien haben. ",
-      "faqList12Item7": "Du entbindest hiermit Deine Therapeut:innen, Bumble, Chayn von allen Ansprüchen, Klagen, Forderungen oder Schadensersatzsprüchen, die sich aus Deinen eigenen Handlungen und Unterlassungen oder aus Handlungen und Unterlassungen Deiner Therapeut:innen als Folge von Ratschlägen ergeben, die anderweitig aus der therapeutischen Beziehung gemäß dieser Vereinbarung resultieren. Weiterhin versicherst Du, dass keine Versprechen, Anreize oder Vereinbarungen gemacht wurden, die nicht in dieser Vereinbarung zum Ausdruck kommen. ",
-      "faqList12Item8": "Deine Therapeut:innen halten sich das Recht vor, den Zugang zu ihren Dienstleistungen zu verweigern. Für alle internationalen Klient:innen werden alle Therapie- und Beratungsleistungen in Übereinstimmung mit den Gesetzen des Landes der jeweiligen Therapeutin oder des Therapeuten erbracht, und alle Streitigkeiten unterliegen dem Recht dieses Landes. ",
-      "faqTitle13": "Ich möchte Feedback geben",
-      "faqBody13": "Bloom möchte ein Unterstützungsprogramm für Traumata anbieten, das den Bedürfnissen von {partnerName}-Nutzer:innen entspricht. Wenn Du Feedback, Ideen oder Vorschläge hast, die uns helfen, uns zu verbessern, lass es uns bitte über dieses <faqLink>Kontaktformular</faqLink> wissen. Danke!"
-    },
-    "confirmation": {
-      "title": "Buchung erfolgreich!",
-      "introduction": "Deine Therapiesitzung ist gebucht. Wir wissen wie schwer es sein kann, diesen Schritt zu gehen, also Gratulation, dass Du es getan hast. Halte Ausschau nach einer Email von \"Bloom\", in der Du Datum, Uhrzeit und einen Link für den Video-Call zugeschickt bekommst. Solltest du den Termin nicht wahrnehmen können, enthält die Email auch einen Link zum Umbuchen. ",
-      "returnDescription": "Komm nach deiner Therapiesitzung wieder zu Bloom zurück, um die nächste zu buchen.",
-      "bookmarkDescription": "URLs zu vergessen ist einfach! Setz Dir ein Lesezeichen für diese Seite, um sie schnell aufrufen zu können: <bookingLink>bloom.chayn.co</bookingLink>"
     },
     "accessGuard": {
       "title": "Therapie nicht verfügbar",

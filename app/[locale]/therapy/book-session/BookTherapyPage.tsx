@@ -271,11 +271,9 @@ export default function BookTherapyPage({ story }: Props) {
         <Typography variant="h2" component="h2" gutterBottom>
           {t('bookingSectionTitle')}
         </Typography>
-
         <Box my={3}>
           <ImageTextRow items={steps} translations="Therapy.steps" />
         </Box>
-
         {hasTherapyRemaining && (
           <Button
             sx={bookingButtonStyle}
@@ -286,12 +284,7 @@ export default function BookTherapyPage({ story }: Props) {
           >
             {t('bookingButton')}
           </Button>
-        )}
-        {!hasTherapyRemaining && partnerAccess && (
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-            {t('noSessionsRemaining')}
-          </Typography>
-        )}
+        )}{' '}
       </Container>
 
       {story.content.page_sections?.length > 0 &&

@@ -62,7 +62,7 @@ describe('Therapy Usage', () => {
 
     // Check FAQs Section
     cy.get('main').contains('h2', 'More about the therapy').should('be.visible');
-    cy.get('[data-testid="data-testid="accordion-item"]').should('exist');
+    cy.get('[data-testid="accordion-item"]').should('exist');
 
     // Check initial state - modal should be closed
     cy.get('.MuiModal-root').should('not.exist');
