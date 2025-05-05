@@ -1,56 +1,47 @@
 describe('Therapy Usage', () => {
+  let accessCode = ''; //intialise access code variable
   const newUserEmail = `cypresstestuser+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
   before(() => {
-    let accessCode = ''; // Initialize access code variable
-
     // create a partner access code with therapy
     cy.logInWithEmailAndPassword(
       Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
       Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
     );
     cy.visit('/partner-admin/create-access-code');
-    cy.get('input[type="radio"]').should('exist').check('therapy'); // Select radio button on form
-    cy.get('button[type="submit"]').contains('Create access code').click(); // Submit form to create access code
+    cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
+    cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
     cy.get('#access-code')
-      .should('exist') // Wait for result to exist in dom then get the access code
+      .should('exist') //wait for result to exist in dom then get the access code
       .then((elem) => {
+        //get the access code
         accessCode = elem.text();
       });
     cy.logout();
-
-    // Create and log in the new user
-    cy.createUser({
-      emailInput: newUserEmail,
-      passwordInput: password,
-    });
-    cy.logInWithEmailAndPassword(newUserEmail, password); // Log in to test user
-    cy.visit('/welcome/bumble');
-    cy.get('button#user-menu-button').should('exist').click(); // Check user menu exists and access it
-    cy.get('a').contains('Apply a code').should('exist').click(); // Go to the apply code page
-    cy.get('input#accessCode').should('exist').click().type(accessCode); // Populate the access code field
-    cy.get('button[type="submit"]').contains('Apply code').click(); // Submit form to add access code
-    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); // Check form submitted successfully
-
-    // Navigate to therapy page
-    cy.visit('/therapy/book-session');
-    cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist').click(); // Find therapy button and click
-    cy.url().should('include', '/therapy/book-session');
-    cy.get('#therapy-sessions-remaining').should('be.visible').and('have.text', '6'); // Check number of therapy sessions is 6
-    cy.logout(); // Log out after setup, individual tests will log back in
-  });
-
-  beforeEach(() => {
-    cy.logInWithEmailAndPassword(newUserEmail, password); // Log in before each test
-    cy.visit('/therapy/book-session'); // Ensure we are on the therapy page for each test
   });
 
   after(() => {
     cy.logout();
   });
 
+  it('Log in as a user and apply code', () => {
+    cy.cleanUpTestState();
+    cy.createUser({
+      emailInput: newUserEmail,
+      passwordInput: password,
+    });
+    cy.logInWithEmailAndPassword(newUserEmail, password); //log in to test user
+    cy.visit('/welcome/bumble');
+    cy.get('button#user-menu-button').should('exist').click(); //check user menu exists and access it
+    cy.get('a').contains('Apply a code').should('exist').click(); //go to the apply code page
+    cy.get('input#accessCode').should('exist').click().type(accessCode); // populate the access code field
+    cy.get('button[type="submit"]').contains('Apply code').click(); // submit form to add access code
+    cy.get('p').contains('A Bumble code was applied to your account!').should('exist'); //check form submitted successfully
+  });
+
   it('Should load the therapy page and display main content sections', () => {
+    cy.visit('/therapy/book-session');
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
 
