@@ -123,10 +123,6 @@ interface Props {
 }
 
 export default function BookTherapyPage({ story }: Props) {
-  if (!story) {
-    return <NoDataAvailable />;
-  }
-
   const t = useTranslations('Therapy');
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
   const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
@@ -136,13 +132,6 @@ export default function BookTherapyPage({ story }: Props) {
 
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-
-  const headerProps: HeaderProps = {
-    title: story.content.title,
-    introduction: story.content.description,
-    imageSrc: story.content.header_image.filename,
-    translatedImageAlt: story.content.header_image.alt,
-  };
 
   function replacePartnerName(partnerName: string) {
     const accordionDetailsElements = document.querySelectorAll('.MuiAccordionDetails-root');
@@ -245,6 +234,17 @@ export default function BookTherapyPage({ story }: Props) {
       }
     };
   }, [isWidgetModalOpen, isScriptLoaded, user, t]); // Added t to dependencies
+
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
+  const headerProps: HeaderProps = {
+    title: story.content.title,
+    introduction: story.content.description,
+    imageSrc: story.content.header_image.filename,
+    translatedImageAlt: story.content.header_image.alt,
+  };
 
   return (
     <Box>
