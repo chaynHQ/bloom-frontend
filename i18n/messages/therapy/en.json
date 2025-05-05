@@ -23,9 +23,36 @@
       "scriptNotLoaded": "Booking widget script not fully loaded.",
       "scriptLoadFailed": "Failed to load booking script."
     },
-    "therapySessionsRemaining": "You have <upcomingTotal>4</upcomingTotal> therapy sessions upcoming and <remainingTotal>4</remainingTotal> available to book.",
-    "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
-
+    "therapyBookings": {
+      "header": "Your therapy bookings",
+      "therapySessionsRemaining": "You have <upcomingTotal>{upcomingTotal}</upcomingTotal> therapy sessions upcoming and <remainingTotal>{remainingTotal}</remainingTotal> available to book.",
+      "noTherapySessionsRemaining": "You don't currently have any available sessions left to book.",
+      "bookingSummary": "You have <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions remaining, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled.",
+      "noBookingSummary": "You have no therapy sessions remaining.",
+      "noBookings": "You have no therapy bookings at the moment.",
+      "cancelAlert": "Cancellation requested for booking ID: {id}. Implement actual cancellation logic."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Upcoming therapy session ",
+      "pastSessionTitle": "Past therapy session ",
+      "cancelledSessionTitle": "Cancelled session",
+      "dateLabel": "Date",
+      "timeLabel": "Time",
+      "therapistLabel": "Therapist",
+      "videoLinkLabel": "Video link",
+      "videoLink": "Join the call from the Google Meet calendar invite sent by email",
+      "noVideoLink": "No link provided",
+      "cancelButton": "Cancel",
+      "cancelError": "Error cancelling booking - please try again or get in touch with the team.",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "cancelDialog": {
+        "title": "Confirm Cancellation",
+        "description": "Are you sure you want to cancel your therapy session scheduled for {dateTime}? You can book a new appointment at a time that feels right for you.",
+        "keepButton": "Keep Session",
+        "confirmButton": "Cancel Session"
+      }
+    },
     "faqs": {
       "faqTitle0": "Who is this programme for?",
       "faqBody0": "The programme is available to any {partnerName} user who reports sexual abuse or assault to {partnerName}, regardless of your background, race, age, disability, religion or belief, sexuality, gender identity or expression, or life circumstances – we are here for you.",

@@ -15,13 +15,41 @@
       "scriptNotLoaded": "Le script du widget de réservation n'est pas complètement chargé.",
       "scriptLoadFailed": "Échec du chargement du script de réservation."
     },
-    "therapySessionsRemaining": "Vous avez <strongText>4</strongText> sessions de thérapie disponibles à réserver.",
-    "noTherapySessionsRemaining": "Actuellement il ne vous reste aucune session disponible à réserver.",
     "steps": {
       "step1": "Vous avez le choix parmi des thérapeutes multilingues soigneusement sélectionné·es.",
       "step2": "Choisissez la date et l'heure qui vous conviennent. Toutes les sessions sont en ligne.",
       "step3": "Si vous changez d'avis, vous pouvez à tout moment arrêter les sessions ou changer de thérapeute.",
       "step4": "Tout ce que vous partagez reste strictement confidentiel, entre vous et le·a thérapeute."
+    },
+    "therapyBookings": {
+      "header": "Vos réservations de thérapie",
+      "therapySessionsRemaining": "Vous avez <upcomingTotal>{upcomingTotal}</upcomingTotal> séances de thérapie à venir et <remainingTotal>{remainingTotal}</remainingTotal> disponibles à réserver.",
+      "noTherapySessionsRemaining": "Vous n'avez actuellement aucune séance disponible à réserver.",
+      "bookingSummary": "Il vous reste <remainingTotal>{remainingTotal}</remainingTotal> séances de thérapie, <upcomingTotal>{upcomingTotal}</upcomingTotal> sont programmées.",
+      "noBookingSummary": "Il ne vous reste plus de séances de thérapie.",
+      "noBookings": "Vous n'avez aucune réservation de thérapie pour le moment.",
+      "cancelAlert": "Annulation demandée pour la réservation ID : {id}. Implémentez la logique d'annulation réelle."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Prochaine séance de thérapie {relativeTime}",
+      "pastSessionTitle": "Séance de thérapie passée {date}",
+      "cancelledSessionTitle": "Séance annulée {date}",
+      "dateLabel": "Date",
+      "timeLabel": "Heure",
+      "therapistLabel": "Thérapeute",
+      "videoLinkLabel": "Lien vidéo",
+      "videoLink": "Rejoignez l'appel à partir de l'invitation de l'agenda Google Meet envoyée par e-mail.",
+      "cancelError": "Erreur lors de l'annulation de la réservation. Veuillez réessayer ou contacter l'équipe.",
+      "noVideoLink": "Aucun lien fourni",
+      "cancelButton": "Annuler",
+      "expand": "Développer",
+      "collapse": "Réduire",
+      "cancelDialog": {
+        "title": "Confirmer l'annulation",
+        "description": "Êtes-vous sûr de vouloir annuler votre séance de thérapie prévue pour le {dateTime} ? Vous pouvez prendre un nouveau rendez-vous à un moment qui vous convient.",
+        "keepButton": "Garder la séance",
+        "confirmButton": "Annuler la séance"
+      }
     },
     "faqHeader": "A propos de la thérapie",
     "faqs": {

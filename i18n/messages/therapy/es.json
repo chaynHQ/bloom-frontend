@@ -4,7 +4,6 @@
     "introduction": "{partnerName} se ha asociado con Bloom para ofrecerte apoyo gratuito y confidencial. Bloom te conecta con un terapeuta que puede ofrecer apoyo a tu medida. Tendrás acceso a 6 sesiones de terapia, de una hora cada una, con el terapeuta que tu escojas.",
     "bookingButton": "Empezar a reservar",
     "bookingSectionTitle": "Cómo funciona la reserva",
-    "therapySessionsRemaining": "Tienes <strongText>4</strongText> sesiones de terapia disponibles para reservar.",
     "therapistSectionTitle": "Nuestro equipo de terapia",
     "closeBookingWidget": "Cerrar widget",
     "modalTitle": "Reservar terapia",
@@ -15,6 +14,42 @@
       "containerNotFoundRetry": "No se pudo cargar el widget de reserva.",
       "scriptNotLoaded": "El script del widget de reserva no se cargó completamente.",
       "scriptLoadFailed": "Error al cargar el script de reserva."
+    },
+    "steps": {
+      "step1": "Eliges entre nuestros terapeutas multilingües cuidadosamente seleccionados.",
+      "step2": "Elige una fecha y hora que te funcione. Todas las sesiones son en línea.",
+      "step3": "Si cambias de opinión, puedes detener las sesiones o cambiar de terapeuta en cualquier momento.",
+      "step4": "Todo lo que compartas permanece estrictamente confidencial, entre tú y el terapeuta."
+    },
+    "therapyBookings": {
+      "header": "Tus reservas de terapia",
+      "therapySessionsRemaining": "Tienes <upcomingTotal>{upcomingTotal}</upcomingTotal> sesiones de terapia próximas y <remainingTotal>{remainingTotal}</remainingTotal> disponibles para reservar.",
+      "noTherapySessionsRemaining": "Actualmente no tienes sesiones disponibles para reservar.",
+      "bookingSummary": "Te quedan <remainingTotal>{remainingTotal}</remainingTotal> sesiones de terapia, <upcomingTotal>{upcomingTotal}</upcomingTotal> programadas.",
+      "noBookingSummary": "No te quedan sesiones de terapia.",
+      "noBookings": "No tienes reservas de terapia en este momento.",
+      "cancelAlert": "Cancelación solicitada para la reserva ID: {id}. Implementa la lógica de cancelación real."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Próxima sesión de terapia {relativeTime}",
+      "pastSessionTitle": "Sesión de terapia pasada {date}",
+      "cancelledSessionTitle": "Sesión cancelada {date}",
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "therapistLabel": "Terapeuta",
+      "videoLinkLabel": "Enlace del vídeo",
+      "videoLink": "Únete a la llamada desde la invitación del calendario de Google Meet enviada por correo electrónico.",
+      "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
+      "noVideoLink": "No se proporcionó ningún enlace",
+      "cancelButton": "Cancelar",
+      "expand": "Expandir",
+      "collapse": "Contraer",
+      "cancelDialog": {
+        "title": "Confirmar Cancelación",
+        "description": "¿Seguro que quieres cancelar tu sesión de terapia programada para el {dateTime}? Puedes reservar una nueva cita a una hora que te resulte adecuada.",
+        "keepButton": "Mantener Sesión",
+        "confirmButton": "Cancelar Sesión"
+      }
     },
     "faqHeader": "Más acerca de la terapia",
     "faqs": {

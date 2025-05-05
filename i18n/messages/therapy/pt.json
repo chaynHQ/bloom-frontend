@@ -15,13 +15,41 @@
       "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
       "scriptLoadFailed": "Falha ao carregar o script de agendamento."
     },
-    "therapySessionsRemaining": "Você tem <strongText>4</strongText> sessões de terapia disponíveis para serem agendadas.",
-    "noTherapySessionsRemaining": "No momento, você não tem mais sessões para agendar. ",
     "steps": {
       "step1": "Escolha entre as opções disponíveis de terapeutas multilíngues, que passaram por uma cuidadosa seleção.",
       "step2": "Escolha a data e hora que melhor funcionar para você. Todas as sessões são virtuais.",
       "step3": "Se você mudar de ideia, poderá suspender as sessões ou trocar de profissional a qualquer momento. ",
       "step4": "Tudo o que você compartilhar, permanecerá estritamente confidencial entre você a pessoa que te acompanha como terapeuta."
+    },
+    "therapyBookings": {
+      "header": "Suas reservas de terapia",
+      "therapySessionsRemaining": "Você tem <upcomingTotal>{upcomingTotal}</upcomingTotal> sessões de terapia futuras e <remainingTotal>{remainingTotal}</remainingTotal> disponíveis para agendar.",
+      "noTherapySessionsRemaining": "No momento, você não tem sessões disponíveis para agendar.",
+      "bookingSummary": "Você tem <remainingTotal>{remainingTotal}</remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}</upcomingTotal> agendadas.",
+      "noBookingSummary": "Você não tem mais sessões de terapia restantes.",
+      "noBookings": "Você não tem reservas de terapia no momento.",
+      "cancelAlert": "Cancelamento solicitado para o ID da reserva: {id}. Implemente a lógica de cancelamento real."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Próxima sessão de terapia {relativeTime}",
+      "pastSessionTitle": "Sessão de terapia passada {date}",
+      "cancelledSessionTitle": "Sessão cancelada {date}",
+      "dateLabel": "Data",
+      "timeLabel": "Hora",
+      "therapistLabel": "Terapeuta",
+      "videoLinkLabel": "Link do vídeo",
+      "videoLink": "Participe na chamada a partir do convite do calendário do Google Meet enviado por e-mail.",
+      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
+      "noVideoLink": "Nenhum link fornecido",
+      "cancelButton": "Cancelar",
+      "expand": "Expandir",
+      "collapse": "Recolher",
+      "cancelDialog": {
+        "title": "Confirmar Cancelamento",
+        "description": "Tem certeza de que deseja cancelar sua sessão de terapia agendada para {dateTime}? Você pode agendar uma nova consulta em um horário que lhe seja conveniente.",
+        "keepButton": "Manter Sessão",
+        "confirmButton": "Cancelar Sessão"
+      }
     },
     "faqHeader": "Mais sobre a terapia",
     "faqs": {

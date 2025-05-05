@@ -15,13 +15,41 @@
       "scriptNotLoaded": "Das Skript für das Buchungs-Widget wurde nicht vollständig geladen.",
       "scriptLoadFailed": "Fehler beim Laden des Buchungsskripts."
     },
-    "therapySessionsRemaining": "Du hast <strongText>4</strongText> Therapiesitzungen zum Buchen zur Verfügung.",
-    "noTherapySessionsRemaining": "Du hast zur Zeit keine verfügbaren Sitzungen mehr zu buchen. ",
     "steps": {
       "step1": "Du wählst aus unseren sorgfältig ausgewählten, mehrsprachigen Therapeut:innen aus.",
       "step2": "Wähle ein Datum und eine Uhrzeit, die für Dich passen. Alle Sitzungen finden online statt. ",
       "step3": "Wenn Du Deine Meinung änderst, kannst Du die Sitzung jederzeit abbrechen oder die Therapeutin oder den Therapeuten wechseln. ",
       "step4": "Alles, was Du teilst, bleibt streng vertraulich zwischen Dir und den Therapeut:innen."
+    },
+    "therapyBookings": {
+      "header": "Deine Therapiebuchungen",
+      "therapySessionsRemaining": "Sie haben <upcomingTotal>{upcomingTotal}</upcomingTotal> bevorstehende Therapiesitzungen und <remainingTotal>{remainingTotal}</remainingTotal> zur Buchung verfügbar.",
+      "noTherapySessionsRemaining": "Sie haben derzeit keine verfügbaren Sitzungen mehr zum Buchen.",
+      "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}</remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}</upcomingTotal> sind geplant.",
+      "noBookingSummary": "Du hast keine Therapiesitzungen mehr übrig.",
+      "noBookings": "Du hast im Moment keine Therapiebuchungen.",
+      "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Anstehende Therapiesitzung {relativeTime}",
+      "pastSessionTitle": "Vergangene Therapiesitzung {date}",
+      "cancelledSessionTitle": "Abgesagte Sitzung {date}",
+      "dateLabel": "Datum",
+      "timeLabel": "Uhrzeit",
+      "therapistLabel": "Therapeut/in",
+      "videoLinkLabel": "Video-Link",
+      "videoLink": "Nehmen Sie am Anruf über die Google Meet-Kalendereinladung teil, die per E-Mail gesendet wurde.",
+      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
+      "noVideoLink": "Kein Link angegeben",
+      "cancelButton": "Stornieren",
+      "expand": "Erweitern",
+      "collapse": "Einklappen",
+      "cancelDialog": {
+        "title": "Stornierung bestätigen",
+        "description": "Sind Sie sicher, dass Sie Ihre für {dateTime} geplante Therapiesitzung absagen möchten? Sie können einen neuen Termin zu einem Zeitpunkt buchen, der sich für Sie richtig anfühlt.",
+        "keepButton": "Sitzung beibehalten",
+        "confirmButton": "Sitzung stornieren"
+      }
     },
     "faqHeader": "Mehr zur Therapie",
     "faqs": {
