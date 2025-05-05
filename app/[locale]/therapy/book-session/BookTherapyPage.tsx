@@ -1,11 +1,11 @@
 'use client';
 
-import Faqs from '@/components/common/Faqs';
 import ImageTextRow, { ImageTextItem } from '@/components/common/ImageTextRow';
-import Header from '@/components/layout/Header';
+import NoDataAvailable from '@/components/common/NoDataAvailable';
+import Header, { HeaderProps } from '@/components/layout/Header';
+import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import TherapyBookings from '@/components/therapy/TherapyBookings';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
-import { therapyFaqs } from '@/lib/constants/faqs';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getSimplybookWidgetConfig } from '@/lib/simplybook';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
@@ -14,24 +14,16 @@ import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
 import illustrationConfidential from '@/public/illustration_confidential.svg';
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
-import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
-import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Container, IconButton, Modal, Typography } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
 const containerStyle = {
   pt: '0 !important',
   backgroundColor: 'secondary.light',
-} as const;
-
-const faqsContainerStyle = {
-  maxWidth: '680px !important',
-  margin: 'auto',
-  textAlign: 'center',
 } as const;
 
 const bookingButtonStyle = {
@@ -41,14 +33,6 @@ const bookingButtonStyle = {
 
 const bookingSectionStyle = {
   backgroundColor: 'background.default',
-  textAlign: 'center',
-  paddingTop: 4,
-  paddingBottom: 4,
-} as const;
-
-const placeholderSectionStyle = {
-  backgroundColor: 'primary.light',
-  minHeight: '300px',
   textAlign: 'center',
   paddingTop: 4,
   paddingBottom: 4,
@@ -134,9 +118,16 @@ const steps: Array<ImageTextItem> = [
   },
 ];
 
-export default function BookTherapyPage() {
+interface Props {
+  story: ISbStoryData | undefined;
+}
+
+export default function BookTherapyPage({ story }: Props) {
+  if (!story) {
+    return <NoDataAvailable />;
+  }
+
   const t = useTranslations('Therapy');
-  const tS = useTranslations('Shared');
   const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
   const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
@@ -145,6 +136,32 @@ export default function BookTherapyPage() {
 
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+
+  const headerProps: HeaderProps = {
+    title: story.content.title,
+    introduction: story.content.description,
+    imageSrc: story.content.header_image.filename,
+    translatedImageAlt: story.content.header_image.alt,
+  };
+
+  function replacePartnerName(partnerName: string) {
+    const accordionDetailsElements = document.querySelectorAll('.MuiAccordionDetails-root');
+    const introductionElement = document.querySelector('h1 + .MuiTypography-root');
+
+    accordionDetailsElements.forEach((detailsElement) => {
+      const paragraphElements = detailsElement.querySelectorAll('p');
+
+      [...paragraphElements, introductionElement].forEach((paragraph) => {
+        if (!paragraph) return;
+        const currentText = paragraph.textContent;
+
+        // Replace all instances of '{partnerName}' with the provided partnerName
+        const newText = currentText?.replace(/\{partnerName\}/g, partnerName);
+
+        paragraph.textContent = newText || null;
+      });
+    });
+  }
 
   useEffect(() => {
     let currentPartnerAccess = partnerAccesses.find(
@@ -161,19 +178,13 @@ export default function BookTherapyPage() {
 
     if (currentPartnerAccess?.partner.name) {
       setPartnerAccess(currentPartnerAccess);
+      replacePartnerName(currentPartnerAccess?.partner.name);
     }
   }, [setPartnerAccess, partnerAccesses]);
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED);
   }, []);
-
-  const headerProps = {
-    title: t('title'),
-    introduction: `${t.rich('introduction', { partnerName: partnerAccess?.partner?.name as string })}`,
-    imageSrc: illustrationPerson4Peach,
-    imageAlt: 'alt.personTea',
-  };
 
   const handleOpenWidgetModal = () => {
     logEvent(THERAPY_BOOKING_OPENED);
@@ -238,10 +249,7 @@ export default function BookTherapyPage() {
   return (
     <Box>
       <Header
-        title={headerProps.title}
-        introduction={headerProps.introduction}
-        imageSrc={headerProps.imageSrc}
-        imageAlt={headerProps.imageAlt}
+        {...headerProps}
         cta={
           <Button
             sx={{ mt: -2 }}
@@ -254,7 +262,7 @@ export default function BookTherapyPage() {
             {t('bookingButton')}
           </Button>
         }
-      ></Header>
+      />
       <Container sx={containerStyle}>
         {partnerAccess && <TherapyBookings partnerAccess={partnerAccess} />}
       </Container>
@@ -286,27 +294,10 @@ export default function BookTherapyPage() {
         )}
       </Container>
 
-      <Container id="therapist-profiles-section" sx={placeholderSectionStyle}>
-        <Typography variant="h2" component="h2">
-          {t('therapistSectionTitle')}
-        </Typography>
-      </Container>
-
-      <Container sx={{ backgroundColor: 'background.default', py: 6 }}>
-        <Typography variant="h2" component="h2" mb={2} textAlign="center">
-          {t('faqHeader')}
-        </Typography>
-        <Box textAlign="center">
-          <Image alt={tS('alt.leafMix')} src={illustrationLeafMix} width={125} height={100} />
-        </Box>
-        <Box sx={faqsContainerStyle}>
-          <Faqs
-            faqList={therapyFaqs(tS('feedbackTypeform'))}
-            translations="Therapy.faqs"
-            partner={partnerAccess?.partner}
-          />
-        </Box>
-      </Container>
+      {story.content.page_sections?.length > 0 &&
+        story.content.page_sections.map((section: any, index: number) => (
+          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+        ))}
 
       <Modal
         open={isWidgetModalOpen}

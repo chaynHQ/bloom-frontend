@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 const cardStyle = {
+  textAlign: 'left',
   alignSelf: 'flex-start',
   width: '100%',
   backgroundColor: 'background.default',
