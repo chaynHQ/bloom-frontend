@@ -9,6 +9,7 @@ export const ENVIRONMENT =
 export const BASE_URL =
   ENVIRONMENT === 'staging' ? VERCEL_PREVIEW_URL : process.env.NEXT_PUBLIC_BASE_URL;
 export const FEEDBACK_FORM_URL = process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#';
+export const STORYBLOK_ENVIRONMENT = ENVIRONMENT === 'production' ? 'published' : 'draft';
 
 export type ErrorDisplay =
   | string

@@ -1,3 +1,5 @@
+import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { FeatureFlag } from '@/lib/featureFlag';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
@@ -20,7 +22,7 @@ export default async function Page({ params }: { params: Params }) {
 
   const baseProps: Partial<ISbStoriesParams> = {
     language: locale,
-    version: 'published',
+    version: STORYBLOK_ENVIRONMENT,
     sort_by: 'position:description',
   };
 
