@@ -90,6 +90,11 @@ module.exports = withBundleAnalyzer(
             destination: '/:locale/messaging',
             permanent: true,
           },
+          {
+            source: '/about-our-courses',
+            destination: '/courses',
+            permanent: false,
+          },
         ];
       },
       async rewrites() {
