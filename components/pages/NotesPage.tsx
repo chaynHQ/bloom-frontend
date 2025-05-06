@@ -8,13 +8,12 @@ import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm'
 import Header, { HeaderProps } from '@/components/layout/Header';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { useGetSubscriptionsQuery } from '@/lib/api';
-import { RootState } from '@/lib/store';
+import { useTypedSelector } from '@/lib/hooks/store';
 import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useSelector } from 'react-redux';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
@@ -57,8 +56,8 @@ interface Props {
 }
 
 export default function NotesPage({ story }: Props) {
-  const token = useSelector((state: RootState) => state.user.token);
-  const isLoggedIn = Boolean(token);
+  const userId = useTypedSelector((state) => state.user.id);
+  const isLoggedIn = Boolean(userId);
 
   const {
     data: subscriptions,
@@ -98,19 +97,8 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Header {...headerProps} />
-      {/* Public page for logged-out users */}
-      {!isLoggedIn && (
-        <>
-          <Container sx={containerStyle}>
-            <Box sx={infoBoxStyle}>
-              <ImageTextColumn items={steps} translations="Whatsapp.steps" />
-            </Box>
-          </Container>
-          <SignUpBanner />
-        </>
-      )}
-      {/* Private page for logged-in users */}
-      {isLoggedIn && (subscriptions ?? []).length > 0 && (
+      {!isLoggedIn && <SignUpBanner />}
+      {isLoggedIn && (
         <Container sx={containerStyle}>
           <Box sx={infoBoxStyle}>
             <ImageTextColumn items={steps} translations="Whatsapp.steps" />
@@ -120,7 +108,8 @@ export default function NotesPage({ story }: Props) {
           </Box>
         </Container>
       )}
-      {story.content.page_sections?.length > 0 &&
+      {isLoggedIn &&
+        story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} />
         ))}
