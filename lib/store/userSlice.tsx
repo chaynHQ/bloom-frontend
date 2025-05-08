@@ -164,7 +164,7 @@ const slice = createSlice({
         return state;
       },
     );
-    builder.addMatcher(api.endpoints.getSubscriptions.matchFulfilled, (state, { payload }) => {
+    builder.addMatcher(api.endpoints.getSubscriptionsUser.matchFulfilled, (state, { payload }) => {
       state.activeSubscriptions = getActiveSubscriptions(payload);
       return state;
     });
