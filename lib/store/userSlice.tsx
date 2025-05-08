@@ -135,9 +135,7 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload.subscriptions);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
       return Object.assign({}, state, payload);
@@ -149,7 +147,6 @@ const slice = createSlice({
       if (isSubscriptionActive(payload)) {
         state.activeSubscriptions.push(payload);
       }
-
       return state;
     });
     builder.addMatcher(
