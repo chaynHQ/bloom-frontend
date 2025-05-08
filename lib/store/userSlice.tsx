@@ -134,18 +134,15 @@ const slice = createSlice({
   },
 
   extraReducers: (builder) => {
-    // builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-    //   const activeSubscriptions = getActiveSubscriptions(payload);
+    builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
+      const activeSubscriptions = getActiveSubscriptions(payload.subscriptions);
 
-    //   return Object.assign({}, state, payload.user, { activeSubscriptions });
-    // });
+      return Object.assign({}, state, payload.user, { activeSubscriptions });
+    });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
       return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      // const activeSubscriptions = getActiveSubscriptions(payload);
-
-      // return Object.assign({}, state, payload.user, { activeSubscriptions });
       return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
