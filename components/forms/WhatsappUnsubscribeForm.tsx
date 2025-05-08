@@ -1,12 +1,13 @@
 'use client';
 
-import { useGetSubscriptionsQuery, useUnsubscribeFromWhatsappMutation } from '@/lib/api';
+import { useUnsubscribeFromWhatsappMutation } from '@/lib/api';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
   WHATSAPP_UNSUBSCRIBE_SUCCESS,
 } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { findWhatsappSubscription } from '@/lib/utils/whatsappUtils';
@@ -25,8 +26,7 @@ const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const rollbar = useRollbar();
 
-  const { data: subscriptions, isLoading, error } = useGetSubscriptionsQuery();
-
+  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -35,14 +35,12 @@ const WhatsappUnsubscribeForm = () => {
   const [formError, setFormError] = useState<ErrorDisplay>();
 
   useEffect(() => {
-    if (subscriptions && !isLoading && !error) {
-      const activeWhatsappSubscription = findWhatsappSubscription(subscriptions);
-      if (activeWhatsappSubscription) {
-        setPhoneNumber(activeWhatsappSubscription.subscriptionInfo!);
-        setSubscriptionId(activeWhatsappSubscription.id!);
-      }
+    const activeWhatsappSubscription = findWhatsappSubscription(userActiveSubscriptions);
+    if (activeWhatsappSubscription) {
+      setPhoneNumber(activeWhatsappSubscription.subscriptionInfo!);
+      setSubscriptionId(activeWhatsappSubscription.id!);
     }
-  }, [subscriptions, isLoading, error]);
+  }, [userActiveSubscriptions]);
 
   const unsubscribeHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

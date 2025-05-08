@@ -1,17 +1,15 @@
-import { ActiveSubscription, Subscriptions } from '@/lib/store/userSlice';
+import { ActiveSubscription } from '@/lib/store/userSlice';
 
 export const findWhatsappSubscription = (
-  subs: Subscriptions | null,
+  subs: ActiveSubscription[] | null,
 ): ActiveSubscription | undefined => {
   if (subs && subs.length > 0) {
-    return subs
-      .filter((sub): sub is ActiveSubscription => sub.cancelledAt === null) // Filter active subscriptions
-      .find((sub) => sub.subscriptionName === 'whatsapp');
+    return subs.find((sub) => sub.subscriptionName === 'whatsapp');
   }
 
   return undefined;
 };
 
-export const hasWhatsappSubscription = (subs: Subscriptions | null): boolean => {
+export const hasWhatsappSubscription = (subs: ActiveSubscription[] | null): boolean => {
   return !!findWhatsappSubscription(subs);
 };

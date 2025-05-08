@@ -14,6 +14,7 @@ import illustrationChooseTherapist from '@/public/illustration_choose_therapist.
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
+import { useEffect, useState } from 'react';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
@@ -56,36 +57,22 @@ interface Props {
 }
 
 export default function NotesPage({ story }: Props) {
-  const userId = useTypedSelector((state) => state.user.id);
-  const isLoggedIn = Boolean(userId);
+  const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
-  const {
-    data: subscriptions,
-    isLoading,
-    error,
-  } = useGetSubscriptionsQuery(undefined, {
-    skip: !isLoggedIn, // Skip the query if not logged in
+  const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
+  const userId = useTypedSelector((state) => state.user.id);
+
+  const { data: subscriptions } = useGetSubscriptionsQuery(undefined, {
+    skip: !userId,
   });
+
+  useEffect(() => {
+    setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
+  }, [userActiveSubscriptions]);
 
   if (!story) {
     return <NoDataAvailable />;
   }
-
-  if (isLoggedIn && isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isLoggedIn && (error || !subscriptions)) {
-    return <NoDataAvailable />;
-  }
-
-  const activeSubscriptions =
-    subscriptions?.map((sub) => ({
-      ...sub,
-      cancelledAt: sub.cancelledAt instanceof Date ? null : sub.cancelledAt, // Convert Date to null
-    })) ?? null;
-
-  const hasActiveWhatsappSub = hasWhatsappSubscription(activeSubscriptions);
 
   const headerProps: HeaderProps = {
     title: story.content.title,
@@ -97,8 +84,8 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Header {...headerProps} />
-      {!isLoggedIn && <SignUpBanner />}
-      {isLoggedIn && (
+      {!userId && <SignUpBanner />}
+      {userId && (
         <Container sx={containerStyle}>
           <Box sx={infoBoxStyle}>
             <ImageTextColumn items={steps} translations="Whatsapp.steps" />
@@ -108,7 +95,7 @@ export default function NotesPage({ story }: Props) {
           </Box>
         </Container>
       )}
-      {isLoggedIn &&
+      {userId &&
         story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} />
