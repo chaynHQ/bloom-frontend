@@ -5,7 +5,7 @@
     "conversations": "Bātcīt",
     "shorts": "Clips",
     "completed": "Pūra",
-    "sessionDetail": "Yah clip Session {sessionNumber}, {sessionName}, hamāre {courseName} course se hai.",
+    "sessionDetail": "Yah clip Session: {sessionName}, hamāre Course: {courseName} se hai",
     "sessionButtonLabel": "Pūrī session dekhen",
     "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
     "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",

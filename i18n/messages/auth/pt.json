@@ -48,7 +48,8 @@
         "weakPassword": "Sua senha precisa ser um pouco mais longa para ser mais segura.",
         "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
         "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
-        "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente."
+        "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
+        "getUserError": "Ocorreu um erro ao tentar recuperar sua conta. Por favor, tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o erro persistir."
       },
       "phoneNumberLabel": "Número de telefone",
       "verificationCodeLabel": "Código de verificação",

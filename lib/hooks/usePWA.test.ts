@@ -5,6 +5,14 @@ import { setPwaDismissed } from '../store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
 import usePWA from './usePwa';
 
+// Mocking track functions for vercel and GA4
+jest.mock('@vercel/analytics/react', () => ({
+  track: jest.fn(),
+}));
+jest.mock('@next/third-parties/google', () => ({
+  sendGAEvent: jest.fn(),
+}));
+
 jest.mock('js-cookie');
 jest.mock('./store', () => ({
   useTypedSelector: jest.fn(),

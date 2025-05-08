@@ -1,4 +1,4 @@
-import { api, GetUserResponse } from '@/lib/api';
+import { api } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, LANGUAGES } from '@/lib/constants/enums';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PartnerAccesses } from './partnerAccessSlice';
@@ -135,23 +135,18 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.updateUser.matchFulfilled, (state, { payload }) => {
       return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      const activeSubscriptions = getActiveSubscriptions(payload);
-
-      return Object.assign({}, state, payload.user, { activeSubscriptions });
+      return Object.assign({}, state, payload.user);
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
       if (isSubscriptionActive(payload)) {
         state.activeSubscriptions.push(payload);
       }
-
       return state;
     });
     builder.addMatcher(
@@ -163,12 +158,16 @@ const slice = createSlice({
         return state;
       },
     );
+    builder.addMatcher(api.endpoints.getSubscriptionsUser.matchFulfilled, (state, { payload }) => {
+      state.activeSubscriptions = getActiveSubscriptions(payload);
+      return state;
+    });
   },
 });
 
-const getActiveSubscriptions = (payload: GetUserResponse): ActiveSubscription[] => {
-  if (payload.subscriptions && payload.subscriptions.length > 0) {
-    return payload.subscriptions.filter(isSubscriptionActive);
+const getActiveSubscriptions = (subscriptions: Subscriptions): ActiveSubscription[] => {
+  if (subscriptions && subscriptions.length > 0) {
+    return subscriptions.filter(isSubscriptionActive);
   }
   return [];
 };

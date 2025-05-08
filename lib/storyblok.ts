@@ -27,6 +27,7 @@ import {
   StoryblokClient,
   storyblokInit,
 } from '@storyblok/react/rsc';
+import { STORYBLOK_ENVIRONMENT } from './constants/common';
 
 export const getStoryblokApi = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
@@ -68,9 +69,7 @@ export const getStoryblokStory = async (
   }
 
   const sbParams: ISbStoriesParams = {
-    // TODO: fix draft
-    // version: ENVIRONMENT === ENVIRONMENTS.PRODUCTION ? 'published' : 'draft',
-    version: 'published',
+    version: STORYBLOK_ENVIRONMENT,
     language: locale || 'en',
     ...(params && params),
   };
@@ -93,9 +92,7 @@ export const getStoryblokStories = async (
   uuids?: string,
 ) => {
   const sbParams: ISbStoriesParams = {
-    // TODO: fix draft
-    // version: ENVIRONMENT === ENVIRONMENTS.PRODUCTION ? 'published' : 'draft',
-    version: 'published',
+    version: STORYBLOK_ENVIRONMENT,
     language: locale || 'en',
     ...(params && params),
     ...(uuids && { by_uuids: uuids }),

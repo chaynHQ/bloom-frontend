@@ -48,7 +48,8 @@
         "weakPassword": "Your password needs to be a little longer, so it's more secure.",
         "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
         "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
-        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
+        "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       },
       "phoneNumberLabel": "Phone Number",
       "verificationCodeLabel": "Verification Code",

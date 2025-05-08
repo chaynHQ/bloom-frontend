@@ -48,7 +48,8 @@
         "weakPassword": "Aapke password ko thoda aur lamba hone ki zaroorat hai taki vo aur surakshit ho.",
         "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login</loginLink> par jaiye jaari rakhne ke liye.",
         "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya</resetLink> aur fir prayas kariya. ",
-        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again."
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
+        "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. "
       },
       "phoneNumberLabel": "Phone Number",
       "verificationCodeLabel": "Verification Code",

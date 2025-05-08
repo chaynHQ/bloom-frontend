@@ -8,7 +8,7 @@ import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { breadcrumbButtonStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import CircleIcon from '@mui/icons-material/Circle';
-import { Button, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -36,6 +36,7 @@ export const SessionHeader = (props: SessionHeaderProps) => {
 
   const t = useTranslations('Courses');
   const locale = useLocale();
+
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [weekString, setWeekString] = useState<string>('');
@@ -69,21 +70,47 @@ export const SessionHeader = (props: SessionHeaderProps) => {
       imageAlt={headerProps.imageAlt}
       progressStatus={sessionProgress}
     >
-      <Button variant="contained" href="/courses" sx={breadcrumbButtonStyle} size="small">
-        {t('courses')}
-      </Button>
-
-      <CircleIcon color="error" sx={{ ...dotStyle, marginX: 1 }} />
-
-      <Button
-        variant="contained"
-        sx={breadcrumbButtonStyle}
-        href={getDefaultFullSlug(course.full_slug, locale)}
-        component={i18nLink}
-        size="small"
+      <Box
+        component="nav"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: isSmallScreen ? 'wrap' : 'nowrap',
+          overflowX: isSmallScreen ? 'visible' : 'auto',
+          gap: 1,
+        }}
       >
-        {courseNameEllipses}
-      </Button>
+        <Button
+          size="small"
+          variant="contained"
+          href="/courses"
+          sx={{
+            ...breadcrumbButtonStyle,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {t('courses')}
+        </Button>
+
+        <CircleIcon color="error" sx={dotStyle} />
+
+        <Button
+          size="small"
+          variant="contained"
+          component={i18nLink}
+          href={getDefaultFullSlug(course.full_slug, locale)}
+          sx={{
+            ...breadcrumbButtonStyle,
+            flexShrink: 1,
+            minWidth: 0,
+            whiteSpace: isSmallScreen ? 'normal' : 'nowrap',
+            wordBreak: 'break-word',
+          }}
+        >
+          {courseNameEllipses}
+        </Button>
+      </Box>
+
       <Typography sx={sessionSubtitleStyle} variant="body2">
         {weekString} -{' '}
         {storyPosition !== undefined ? `${t('session')} ${storyPosition / 10 - 1}` : subtitle}
