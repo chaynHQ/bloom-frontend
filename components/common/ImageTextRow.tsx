@@ -12,19 +12,20 @@ export interface ImageTextItem {
   illustrationAlt: string;
 }
 
-interface ImageTextGridProps {
+interface ImageTextRowProps {
   items: Array<ImageTextItem>;
   translations: string;
 }
 
 const containerStyle = {
   ...rowStyle,
-  width: { xs: '100%', md: '60%' },
+  width: 'calc(100% + 2rem)',
+  mx: '-1rem',
 } as const;
 
 const itemContainerStyle = {
   position: 'relative',
-  width: { xs: '100%', sm: '50%' },
+  width: { xs: '100%', sm: '50%', md: '25%' },
   paddingX: 2,
   paddingY: 1,
   alignText: 'center',
@@ -34,13 +35,13 @@ const imageContainerStyle = {
   position: 'relative',
   width: 100,
   height: 100,
-  marginY: 3,
+  marginY: '1rem !important',
   marginX: 'auto',
 
   ...richtextContentStyle,
 } as const;
 
-const ImageTextGrid = (props: ImageTextGridProps) => {
+const ImageTextRow = (props: ImageTextRowProps) => {
   const { items, translations } = props;
 
   const t = useTranslations(translations);
@@ -61,11 +62,11 @@ const ImageTextGrid = (props: ImageTextGridProps) => {
               }}
             />
           </Box>
-          <Typography>{t(item.text)}</Typography>
+          <Typography variant="body2">{t(item.text)}</Typography>
         </Box>
       ))}
     </Box>
   );
 };
 
-export default ImageTextGrid;
+export default ImageTextRow;

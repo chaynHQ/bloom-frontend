@@ -31,7 +31,6 @@ const containerStyle = {
 
 const accordionDetail = {
   textAlign: 'left',
-  backgroundColor: 'rgba(0, 0, 0, 0.09)',
 } as const;
 
 const themes = {
@@ -42,27 +41,10 @@ const themes = {
         display: 'none',
       },
     },
-    '&.Mui-expanded': {
-      '& .MuiAccordionDetails-root': {
-        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-      },
-    },
   }, // uses default styling
   secondary: {
     '& .MuiAccordionSummary-expandIconWrapper': { color: 'primary.dark' },
     backgroundColor: 'paleSecondaryLight',
-    '&.MuiAccordion-root': {
-      margin: 0,
-      '&:before': {
-        display: 'none',
-      },
-    },
-    '&.Mui-expanded': {
-      '& .MuiAccordionDetails-root': {
-        backgroundColor: 'rgba(0, 0, 0, 0.09)',
-        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-      },
-    },
   },
 };
 
@@ -113,6 +95,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
       {accordion_items.map((ai, i) => (
         <Accordion
+          data-testid="accordion-item"
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
           key={`panel${i}`}

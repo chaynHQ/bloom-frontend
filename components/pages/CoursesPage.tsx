@@ -18,7 +18,7 @@ import theme from '@/styles/theme';
 import { Box, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import ResourceCarousel from '../common/ResourceCarousel';
@@ -35,8 +35,6 @@ interface Props {
   shorts: ISbStoryData[];
 }
 export default function CoursesPage({ courseStories, conversations, shorts }: Props) {
-  const locale = useLocale();
-
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
@@ -59,14 +57,6 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
   const headerOffset = isSmallScreen ? 48 : 136;
 
   const t = useTranslations('Courses');
-
-  const slidesPerView = {
-    xs: 1,
-    sm: 2,
-    md: 3,
-    lg: 3,
-    xl: 3,
-  };
 
   const headerProps = {
     title: t('title'),

@@ -5,6 +5,7 @@ import partnerAccessesReducer from './store/partnerAccessSlice';
 import partnerAdminReducer from './store/partnerAdminSlice';
 import partnersReducer from './store/partnersSlice';
 import resourceReducer from './store/resourcesSlice';
+import therapySessionsReducer from './store/therapySessionsSlice';
 import userReducer from './store/userSlice';
 
 export const makeStore = () => {
@@ -17,6 +18,7 @@ export const makeStore = () => {
       partnerAdmin: partnerAdminReducer,
       partners: partnersReducer,
       resources: resourceReducer,
+      therapySessions: therapySessionsReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
