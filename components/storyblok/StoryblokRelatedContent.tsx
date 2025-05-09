@@ -15,10 +15,10 @@ import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
   content:
-  | StoryblokCoursePageProps
-  | StoryblokSessionPageProps
-  | StoryblokResourceConversationPageProps
-  | StoryblokResourceShortPageProps;
+    | StoryblokCoursePageProps
+    | StoryblokSessionPageProps
+    | StoryblokResourceConversationPageProps
+    | StoryblokResourceShortPageProps;
 }
 
 export interface StoryblokRelatedContentProps {
@@ -36,31 +36,33 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
     locale === 'de'
       ? [] // exercises are not currently available in german so we'll return an empty list for 'de'
       : relatedExercises.map((relatedExerciseId) => {
-        const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
-          ? EXERCISE_CATEGORIES.GROUNDING
-          : EXERCISE_CATEGORIES.ACTIVITIES;
+          const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
+            ? EXERCISE_CATEGORIES.GROUNDING
+            : EXERCISE_CATEGORIES.ACTIVITIES;
 
-        return {
-          id: relatedExerciseId,
-          name: tExerciseNames(relatedExerciseId),
-          href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
-          category: exerciseCategory,
-        };
-      });
+          return {
+            id: relatedExerciseId,
+            name: tExerciseNames(relatedExerciseId),
+            href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
+            category: exerciseCategory,
+          };
+        });
 
   const filteredRelatedContent = useMemo(() => {
     return relatedContent.filter((story) => {
       const localeString = locale === 'en' ? 'default' : locale || 'default';
       const storyAvailableForLocale =
-        story.content?.languages?.length > 0 ? story.content.languages.includes(localeString) : true
+        story.content?.languages?.length > 0
+          ? story.content.languages.includes(localeString)
+          : true;
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
-            story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
-          )
-          : true
-      return storyAvailableForLocale && storyIncludedForUserPartners
-    })
+              story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
+            )
+          : true;
+      return storyAvailableForLocale && storyIncludedForUserPartners;
+    });
   }, [relatedContent, locale, userContentPartners]);
 
   const items = filteredRelatedContent
