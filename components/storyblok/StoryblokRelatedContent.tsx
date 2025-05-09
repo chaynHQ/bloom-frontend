@@ -48,8 +48,6 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
           };
         });
 
-  const disabledCoursesString = process.env.FF_DISABLED_COURSES;
-
   const filteredRelatedContent = useMemo(() => {
     return relatedContent.filter((story) => {
       const localeString = locale === 'en' ? 'default' : locale || 'default';
@@ -57,18 +55,17 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
         story.content?.languages?.length > 0
           ? story.content.languages.includes(localeString)
           : true;
-      const storyDisabled = disabledCoursesString?.includes(story.full_slug);
       const storyIncludedForUserPartners =
         story.content?.included_for_partners?.length > 0
           ? userContentPartners.some((partner) =>
               story.content?.included_for_partners?.map((p) => p.toLowerCase()).includes(partner),
             )
           : true;
-      return storyAvailableForLocale && storyIncludedForUserPartners && !storyDisabled;
+      return storyAvailableForLocale && storyIncludedForUserPartners;
     });
-  }, [relatedContent, disabledCoursesString, locale, userContentPartners]);
+  }, [relatedContent, locale, userContentPartners]);
 
-  let items = filteredRelatedContent
+  const items = filteredRelatedContent
     .map((relatedContentItem) => (
       <RelatedContentCard
         key={`related_content_${relatedContentItem.id}`}
