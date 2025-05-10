@@ -45,7 +45,7 @@ module.exports = withBundleAnalyzer(
         emotion: true,
       },
       images: {
-        domains: ['a.storyblok.com'],
+        remotePatterns: [{ protocol: 'https', hostname: 'a.storyblok.com' }],
       },
       serverExternalPackages: ['newrelic'],
       async redirects() {
