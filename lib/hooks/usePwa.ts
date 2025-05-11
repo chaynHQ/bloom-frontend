@@ -1,9 +1,9 @@
 'use client';
 
-import Cookies from 'js-cookie';
-import { useEffect, useMemo, useState } from 'react';
-import { setPwaDismissed } from '@/lib/store/userSlice';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { setPwaDismissed } from '@/lib/store/userSlice';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 
 type UserChoice = Promise<{
   outcome: 'accepted' | 'dismissed';
@@ -23,13 +23,8 @@ export default function usePWA() {
   const [bannerState, setBannerState] = useState<PwaBannerState>('Generic');
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
-
   const user = useTypedSelector((state) => state.user);
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
-  const isIos = useMemo(
-    () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase()),
-    [],
-  );
 
   const declineInstallation = async () => {
     if (userCookiesAccepted) {
@@ -58,6 +53,9 @@ export default function usePWA() {
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_DISMISSED));
     const isStandalone =
       typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const isIos =
+      typeof window !== 'undefined' && /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+
     const isHidden =
       pwaBannerDismissedCookie ||
       user.pwaDismissed ||
@@ -72,7 +70,7 @@ export default function usePWA() {
     return () => {
       window.removeEventListener('appinstalled', appInstalledCb);
     };
-  }, [isIos, user.pwaDismissed, installAttempted, bannerState]);
+  }, [user.pwaDismissed, installAttempted, bannerState]);
 
   return {
     declineInstallation,
