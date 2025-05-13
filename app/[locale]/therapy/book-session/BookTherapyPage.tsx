@@ -67,6 +67,7 @@ const widgetContainerStyle = {
   height: '100%',
   overflowY: 'auto',
   overflowX: 'hidden',
+  mt: 8,
   '& iframe': {
     width: '100%',
     border: 'none',
