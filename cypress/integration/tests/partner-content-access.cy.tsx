@@ -21,7 +21,6 @@ describe('users signing up through partner channels can properly access partner-
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.wait(4000); // Waiting for dom to rerender
 
-    // cy.get('a', { timeout: 8000 }).should('contain',/Skip to courses/i);
     cy.visit('/courses');
 
     cy.wait(4000); // Waiting for dom to rerender
