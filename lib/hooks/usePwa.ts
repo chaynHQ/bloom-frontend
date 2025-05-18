@@ -20,7 +20,7 @@ interface BeforeInstallPromptEvent extends Event {
 const PWA_DISMISSED = 'pwaBannerDismissed';
 
 export default function usePWA() {
-  const [bannerState, setBannerState] = useState<PwaBannerState>('Generic');
+  const [bannerState, setBannerState] = useState<PwaBannerState>('Hidden');
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
@@ -64,6 +64,7 @@ export default function usePWA() {
 
     if (isHidden && bannerState !== 'Hidden') setBannerState('Hidden');
     if (installAttempted && isIos && bannerState !== 'Ios') setBannerState('Ios');
+    if (!isHidden && !installAttempted && bannerState !== 'Generic') setBannerState('Generic');
 
     window.addEventListener('appinstalled', appInstalledCb);
 
