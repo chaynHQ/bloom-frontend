@@ -21,16 +21,14 @@ export const DesktopPwaBanner = () => {
         px: 2,
         py: 1.5,
         display: 'flex',
-        minHeight: '3.35rem',
         alignItems: 'center',
         gap: bannerState === 'Generic' ? 0 : '1rem',
         justifyContent: bannerState === 'Generic' ? 'space-between' : 'flex-start',
         backgroundColor: 'common.white',
-        borderRadius: 0.6,
         width: '100%',
       }}
     >
-      <Typography variant="body1" sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
         {t(bannerState === 'Generic' ? 'mobileDescription' : 'iosDescription')}
       </Typography>
 
@@ -39,6 +37,7 @@ export const DesktopPwaBanner = () => {
           <Button
             onClick={declineInstallation}
             variant="outlined"
+            color="secondary"
             size="small"
             sx={{ px: 2, minWidth: 'auto', whiteSpace: 'nowrap' }}
           >
@@ -47,6 +46,7 @@ export const DesktopPwaBanner = () => {
           <Button
             onClick={install}
             variant="contained"
+            color="secondary"
             size="small"
             sx={{ px: 2, minWidth: 'auto', whiteSpace: 'nowrap' }}
           >
