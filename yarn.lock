@@ -8700,10 +8700,10 @@ storyblok-js-client@6.10.11:
   resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-6.10.11.tgz#34b5523d8011d83ed44b5a3600492d76bba48205"
   integrity sha512-4FuGbQ93X7Ok1hvTRvMy/p4bfX/3C+Uw/m7Mv+wGZyX22IGdCe01qdwgD3CP1F9l5C0lEFCsWxc2PloiM9NutA==
 
-storyblok-rich-text-react-renderer@^2.9.0:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/storyblok-rich-text-react-renderer/-/storyblok-rich-text-react-renderer-2.9.2.tgz#3450a11d6b2a2f55fd849e7a5564f2480be499f1"
-  integrity sha512-ELOuDVoPDpThM0/yYRgZlh1yP2ELSN6N1mh9/i4Z0qwwzQ7mK+mrhGeOJACx1FB7kuaLzFhtDEjVttu0OPYI2A==
+storyblok-rich-text-react-renderer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/storyblok-rich-text-react-renderer/-/storyblok-rich-text-react-renderer-3.0.1.tgz#13171bd703d38235d310545864ddb7a2fd0b5a19"
+  integrity sha512-gd1nvjc95LEMLT4kVVXlN3p1qQUcIb/K4+LYnyAypX3MDP3dr2+DAX64nZb4CNbd8qHd+lM6SLxIxO53hgmK2Q==
 
 streamroller@^3.1.5:
   version "3.1.5"
