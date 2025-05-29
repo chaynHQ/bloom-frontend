@@ -29,28 +29,31 @@ export default function usePWA() {
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
 
   const getPwaMetaData = useMemo(() => {
-    const userAgent = window.navigator.userAgent;
-    const platform = userAgent.includes('Win')
-      ? 'Windows'
-      : userAgent.includes('Mac')
-        ? 'MacOS'
-        : userAgent.includes('Linux')
-          ? 'Linux'
-          : 'Unknown OS';
+    if (typeof window !== 'undefined') {
+      const userAgent = window.navigator.userAgent;
+      const platform = userAgent.includes('Win')
+        ? 'Windows'
+        : userAgent.includes('Mac')
+          ? 'MacOS'
+          : userAgent.includes('Linux')
+            ? 'Linux'
+            : 'Unknown OS';
 
-    const browser = userAgent.includes('Chrome')
-      ? 'Chrome'
-      : userAgent.includes('Firefox')
-        ? 'Firefox'
-        : userAgent.includes('Safari')
-          ? 'Safari'
-          : userAgent.includes('Edge')
-            ? 'Edge'
+      const browser = userAgent.includes('Chrome')
+        ? 'Chrome'
+        : userAgent.includes('Firefox')
+          ? 'Firefox'
+          : userAgent.includes('Safari')
+            ? 'Safari'
             : userAgent.includes('Edge')
-              ? 'Opera'
-              : 'Unknown Browser';
+              ? 'Edge'
+              : userAgent.includes('Edge')
+                ? 'Opera'
+                : 'Unknown Browser';
 
-    return { browser, platform };
+      return { browser, platform };
+    }
+    return { browser: 'Unknown Browser', platform: 'Unknown OS' };
   }, []);
 
   const declineInstallation = async () => {
@@ -85,7 +88,8 @@ export default function usePWA() {
     const isStandalone =
       typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
-      typeof window !== 'undefined' && /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+      typeof window !== 'undefined' &&
+      /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
 
     const isHidden =
       pwaBannerDismissedCookie ||
