@@ -284,6 +284,14 @@ export const api = createApi({
         };
       },
     }),
+    getSubscriptionsUser: builder.query<Subscriptions, void>({
+      query() {
+        return {
+          url: 'subscription-user',
+          method: 'GET',
+        };
+      },
+    }),
     cancelTherapySession: builder.mutation<TherapySession, TherapySession>({
       query({ id }) {
         return {
@@ -322,4 +330,5 @@ export const {
   useGetUserCoursesQuery,
   useGetTherapySessionsQuery,
   useCancelTherapySessionMutation,
+  useGetSubscriptionsUserQuery,
 } = api;
