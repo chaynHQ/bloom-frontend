@@ -13,6 +13,7 @@ import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 
 export interface HeaderProps {
   title: string;
@@ -106,6 +107,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyle}>
+      <DesktopPwaBanner />
       <Box sx={textContainerStyle}>
         <IconButton
           sx={backButtonStyle}

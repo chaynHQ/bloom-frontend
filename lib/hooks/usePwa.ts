@@ -1,9 +1,11 @@
 'use client';
 
+import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { setPwaDismissed } from '@/lib/store/userSlice';
+import logEvent from '@/lib/utils/logEvent';
 import Cookies from 'js-cookie';
 import { useEffect, useMemo, useState } from 'react';
-import { setPwaDismissed } from '@/lib/store/userSlice';
-import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { PWA_DISMISSED, PWA_INSTALLED } from '../constants/events';
 
 type UserChoice = Promise<{
   outcome: 'accepted' | 'dismissed';
@@ -17,23 +19,44 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-const PWA_DISMISSED = 'pwaBannerDismissed';
+const PWA_BANNER_DISMISSED = 'pwaBannerDismissed';
 
 export default function usePWA() {
-  const [bannerState, setBannerState] = useState<PwaBannerState>('Generic');
+  const [bannerState, setBannerState] = useState<PwaBannerState>('Hidden');
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
-
   const user = useTypedSelector((state) => state.user);
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
-  const isIos = useMemo(
-    () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase()),
-    [],
-  );
+
+  const getPwaMetaData = useMemo(() => {
+    const userAgent = window.navigator.userAgent;
+    const platform = userAgent.includes('Win')
+      ? 'Windows'
+      : userAgent.includes('Mac')
+        ? 'MacOS'
+        : userAgent.includes('Linux')
+          ? 'Linux'
+          : 'Unknown OS';
+
+    const browser = userAgent.includes('Chrome')
+      ? 'Chrome'
+      : userAgent.includes('Firefox')
+        ? 'Firefox'
+        : userAgent.includes('Safari')
+          ? 'Safari'
+          : userAgent.includes('Edge')
+            ? 'Edge'
+            : userAgent.includes('Edge')
+              ? 'Opera'
+              : 'Unknown Browser';
+
+    return { browser, platform };
+  }, []);
 
   const declineInstallation = async () => {
     if (userCookiesAccepted) {
-      Cookies.set(PWA_DISMISSED, 'true');
+      Cookies.set(PWA_BANNER_DISMISSED, 'true');
+      logEvent(PWA_DISMISSED, getPwaMetaData);
     }
     setBannerState('Hidden');
     await dispatch(setPwaDismissed(true));
@@ -50,14 +73,20 @@ export default function usePWA() {
      * immediately after installation. In some cases, isStandalone might
      * still return false momentarily, causing the banner to reappear.
      */
+    if (userCookiesAccepted) {
+      logEvent(PWA_INSTALLED, getPwaMetaData);
+    }
     window.beforeinstallpromptEvent = undefined;
     setBannerState('Hidden');
   };
 
   useEffect(() => {
-    const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_DISMISSED));
+    const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
     const isStandalone =
       typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const isIos =
+      typeof window !== 'undefined' && /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+
     const isHidden =
       pwaBannerDismissedCookie ||
       user.pwaDismissed ||
@@ -66,13 +95,14 @@ export default function usePWA() {
 
     if (isHidden && bannerState !== 'Hidden') setBannerState('Hidden');
     if (installAttempted && isIos && bannerState !== 'Ios') setBannerState('Ios');
+    if (!isHidden && !installAttempted && bannerState !== 'Generic') setBannerState('Generic');
 
     window.addEventListener('appinstalled', appInstalledCb);
 
     return () => {
       window.removeEventListener('appinstalled', appInstalledCb);
     };
-  }, [isIos, user.pwaDismissed, installAttempted, bannerState]);
+  }, [user.pwaDismissed, installAttempted, bannerState]);
 
   return {
     declineInstallation,

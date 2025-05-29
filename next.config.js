@@ -45,7 +45,7 @@ module.exports = withBundleAnalyzer(
         emotion: true,
       },
       images: {
-        domains: ['a.storyblok.com'],
+        remotePatterns: [{ protocol: 'https', hostname: 'a.storyblok.com' }],
       },
       serverExternalPackages: ['newrelic'],
       async redirects() {
@@ -89,6 +89,11 @@ module.exports = withBundleAnalyzer(
             source: '/:locale(en|es|de|fr|pt|hi)/chat',
             destination: '/:locale/messaging',
             permanent: true,
+          },
+          {
+            source: '/about-our-courses',
+            destination: '/courses',
+            permanent: false,
           },
         ];
       },

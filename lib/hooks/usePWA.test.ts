@@ -5,6 +5,14 @@ import { setPwaDismissed } from '../store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
 import usePWA from './usePwa';
 
+// Mocking track functions for vercel and GA4
+jest.mock('@vercel/analytics/react', () => ({
+  track: jest.fn(),
+}));
+jest.mock('@next/third-parties/google', () => ({
+  sendGAEvent: jest.fn(),
+}));
+
 jest.mock('js-cookie');
 jest.mock('./store', () => ({
   useTypedSelector: jest.fn(),
@@ -38,11 +46,6 @@ describe('usePWA hook', () => {
       })),
     });
 
-    Object.defineProperty(window, 'navigator', {
-      value: { userAgent: 'iphone' },
-      writable: true,
-    });
-
     Cookies.get = jest.fn();
     Cookies.set = jest.fn();
 
@@ -63,6 +66,7 @@ describe('usePWA hook', () => {
   });
 
   it('should show Generic banner initially', () => {
+    (window as any).beforeinstallpromptEvent = {};
     Cookies.get = jest.fn().mockReturnValue(undefined);
 
     const { result } = renderHook(() => usePWA());
@@ -143,8 +147,10 @@ describe('usePWA hook', () => {
     const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
     const { result } = renderHook(() => usePWA());
 
-    // Simulate install event
     act(() => {
+      // Simulate user click on pwa banner (custom banner ui) install button - this will open the native browser install modal
+      result.current.install();
+      // Simulate user clicked on install on native pwa modal - this will fire an appinstalled event.
       const handler = addEventListenerSpy.mock.calls.find(
         ([event]) => event === 'appinstalled',
       )?.[1] as EventListener;

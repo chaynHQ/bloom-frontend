@@ -39,7 +39,11 @@ const Faqs = (props: FaqsProps) => {
   return (
     <Box>
       {faqList.map((faq, i) => (
-        <Accordion key={`panel${i}`} onChange={handleChange(faq.title)}>
+        <Accordion
+          key={`panel${i}`}
+          onChange={handleChange(faq.title)}
+          sx={{ backgroundColor: 'secondary.light' }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}-content`}

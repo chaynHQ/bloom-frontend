@@ -2,11 +2,12 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ImageTextColumn from '@/components/common/ImageTextColumn';
-import { ImageTextItem } from '@/components/common/ImageTextGrid';
+import { ImageTextItem } from '@/components/common/ImageTextRow';
 import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { useGetSubscriptionsUserQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
 import illustrationChange from '@/public/illustration_change.svg';
 import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
@@ -60,6 +61,10 @@ export default function NotesPage({ story }: Props) {
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const userId = useTypedSelector((state) => state.user.id);
+
+  const { data: subscriptions } = useGetSubscriptionsUserQuery(undefined, {
+    skip: !userId,
+  });
 
   useEffect(() => {
     setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
