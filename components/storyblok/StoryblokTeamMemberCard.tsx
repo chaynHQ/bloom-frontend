@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 const cardStyle = {
+  textAlign: 'left',
   alignSelf: 'flex-start',
   width: '100%',
   backgroundColor: 'background.default',
@@ -78,7 +79,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
 
   return (
     <Card
-      data-testid="TeamMemberCard"
+      data-testid="team-member-card"
       sx={cardStyle}
       {...storyblokEditable({
         _uid,
