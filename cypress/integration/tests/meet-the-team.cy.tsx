@@ -77,7 +77,7 @@ describe('Meet the team page should', () => {
       cy.get('h2').should('contain', 'Supporting team');
       cy.get('p').should(
         'contain',
-        'Our wider team has helped us edit, write, and record our course videos, and some of them also provide support over 1-1 chat. They bring with them a wealth of knowledge and life experience, and have been trained by Chayn. You may even come across someone who is based in the same place as you!',
+        'Our wider team has helped us edit, write, and record our course videos, and some of them also provide support over our messaging service. They bring with them a wealth of knowledge and life experience, and have been trained by Chayn. You may even come across someone who is based in the same place as you!',
       );
       cy.fixture('meet-the-team').then((data: { supporting: CheckCardProps[] }) => {
         data.supporting.forEach((supportingMember) => {
