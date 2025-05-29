@@ -76,9 +76,9 @@ export const RichTextOptions: RenderOptions = {
       if (href)
         return (
           <Link
-            component={href.includes(BASE_URL) ? i18nLink : 'a'}
+            component={href.includes(BASE_URL) || href.startsWith('/') ? i18nLink : 'a'}
             href={href}
-            target={href?.match(/^(https?:)?\/\//) && '_blank'}
+            target={target || '_blank'}
           >
             {children}
           </Link>
