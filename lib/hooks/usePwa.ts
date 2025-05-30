@@ -47,13 +47,12 @@ export default function usePWA() {
             ? 'Safari'
             : userAgent.includes('Edge')
               ? 'Edge'
-              : userAgent.includes('Edge')
+              : userAgent.includes('Opera')
                 ? 'Opera'
                 : 'Unknown Browser';
-
       return { browser, platform };
     }
-    return { browser: 'Unknown Browser', platform: 'Unknown OS' };
+    return undefined;
   }, []);
 
   const declineInstallation = async () => {
