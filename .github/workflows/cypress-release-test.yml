@@ -13,6 +13,8 @@ jobs:
     permissions:
       deployments: read
       statuses: read
+      contents: read
+      pull-requests: read
     outputs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
