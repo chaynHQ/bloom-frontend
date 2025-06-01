@@ -14,6 +14,7 @@ const cardColumnStyle = {
 
 const cardColumnRowStyle = {
   ...rowStyle,
+  width: '100%',
   marginTop: { xs: 2, md: 5 },
 } as const;
 
@@ -38,7 +39,7 @@ const StoryblokTeamMembersCards = (props: StoryblokTeamMembersCardsProps) => {
       <Box sx={cardColumnStyle}>
         {leftTeamMemberCards.map((teamMemberCard) => (
           <StoryblokTeamMemberCard
-            key={`${teamMemberCard.name}_team_member`}
+            key={`${teamMemberCard._uid}_team_member`}
             {...teamMemberCard}
             cardExpandable={cards_expandable}
           />
@@ -47,7 +48,7 @@ const StoryblokTeamMembersCards = (props: StoryblokTeamMembersCardsProps) => {
       <Box sx={cardColumnStyle}>
         {rightTeamMemberCards.map((teamMemberCard) => (
           <StoryblokTeamMemberCard
-            key={`${teamMemberCard.name}_team_member`}
+            key={`${teamMemberCard._uid}_team_member`}
             {...teamMemberCard}
             cardExpandable={cards_expandable}
           />
