@@ -50,6 +50,13 @@ export enum STORYBLOK_STORY_STATUS {
   DELETED = 'deleted',
 }
 
+export enum SIMPLYBOOK_ACTION_ENUM {
+  NEW_BOOKING = 'NEW_BOOKING',
+  CANCELLED_BOOKING = 'CANCELLED_BOOKING',
+  UPDATED_BOOKING = 'UPDATED_BOOKING',
+  COMPLETED_BOOKING = 'COMPLETED_BOOKING', // currently not in use as no webhook available - could be updated in cron job
+}
+
 export enum PARTNER_ACCESS_CODE_STATUS {
   VALID = 'VALID',
   INVALID_CODE = 'INVALID_CODE',
