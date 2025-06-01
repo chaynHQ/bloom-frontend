@@ -136,19 +136,27 @@ export default function BookTherapyPage({ story }: Props) {
 
   function replacePartnerName(partnerName: string) {
     const accordionDetailsElements = document.querySelectorAll('.MuiAccordionDetails-root');
-    const introductionElement = document.querySelector('h1 + .MuiTypography-root');
+    const introductionElement: HTMLParagraphElement | null = document.querySelector('h1 + p');
 
     accordionDetailsElements.forEach((detailsElement) => {
       const paragraphElements = detailsElement.querySelectorAll('p');
 
-      [...paragraphElements, introductionElement].forEach((paragraph) => {
-        if (!paragraph) return;
-        const currentText = paragraph.textContent;
+      const allElementsToProcess = [...paragraphElements];
+      if (introductionElement) {
+        allElementsToProcess.push(introductionElement);
+      }
+
+      allElementsToProcess.forEach((element) => {
+        if (!element) return;
+
+        // Use innerHTML to preserve embedded HTML elements
+        const currentHtml = element.innerHTML;
 
         // Replace all instances of '{partnerName}' with the provided partnerName
-        const newText = currentText?.replace(/\{partnerName\}/g, partnerName);
+        const escapedPartnerName = partnerName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const newHtml = currentHtml.replace(/\{partnerName\}/g, escapedPartnerName);
 
-        paragraph.textContent = newText || null;
+        element.innerHTML = newHtml;
       });
     });
   }

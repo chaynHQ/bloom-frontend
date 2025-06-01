@@ -73,7 +73,7 @@
     "react-player": "^2.13.0",
     "react-redux": "^9.2.0",
     "rollbar": "^2.26.4",
-    "storyblok-rich-text-react-renderer": "^2.9.0"
+    "storyblok-rich-text-react-renderer": "^3.0.1"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.2",
