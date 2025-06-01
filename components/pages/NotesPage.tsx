@@ -2,7 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ImageTextColumn from '@/components/common/ImageTextColumn';
-import { ImageTextItem } from '@/components/common/ImageTextGrid';
+import { ImageTextItem } from '@/components/common/ImageTextRow';
 import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
 import Header, { HeaderProps } from '@/components/layout/Header';
