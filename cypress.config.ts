@@ -22,9 +22,5 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
     experimentalMemoryManagement: true,
     chromeWebSecurity: false,
-    video: false,
-    screenshotOnRunFailure: false,
-    numTestsKeptInMemory: 0,
-    modifyObstructiveCode: false,
   },
 });
