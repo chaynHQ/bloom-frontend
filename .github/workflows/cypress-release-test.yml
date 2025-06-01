@@ -15,6 +15,7 @@ jobs:
       statuses: read
       contents: read
       pull-requests: read
+      checks: read
     outputs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
