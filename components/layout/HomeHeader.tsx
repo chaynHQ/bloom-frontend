@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
+import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 
 interface HeaderProps {
   title:
@@ -74,6 +75,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
+      <DesktopPwaBanner />
       <Box sx={textContainerStyle}>
         <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1" mb={3}>
