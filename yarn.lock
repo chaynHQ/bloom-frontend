@@ -2162,10 +2162,10 @@
     clsx "^2.1.0"
     prop-types "^15.8.1"
 
-"@mui/material-nextjs@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@mui/material-nextjs/-/material-nextjs-7.1.0.tgz#a0dc8bac7e4e7c96899062536606accefc6c9f69"
-  integrity sha512-8gV+nsoK9mPZPK9+E8ecYvWaLn7FZgqdCt2/C8hWAKb/I6e7Kt3zbjACffEIEeO3G/aybIi1Is7FoWspRI74nQ==
+"@mui/material-nextjs@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@mui/material-nextjs/-/material-nextjs-7.1.1.tgz#20efac1a4690c17d4a4af8ef65b4457f8db050b2"
+  integrity sha512-6/tjmViYMI7XIqDTqK+n4t5B07YfVDq72emdBy/o8FLHsV7u477Ro0Aago2MQu8FrBQWDvzvvRkynIb02GjDBQ==
   dependencies:
     "@babel/runtime" "^7.27.1"
 
