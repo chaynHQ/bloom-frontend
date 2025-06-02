@@ -51,7 +51,7 @@
     "@next/third-parties": "^15.3.3",
     "@reduxjs/toolkit": "^2.8.2",
     "@rollbar/react": "^0.12.1",
-    "@storyblok/react": "^4.6.1",
+    "@storyblok/react": "^5.0.0",
     "@vercel/analytics": "^1.5.0",
     "axios": "^1.9.0",
     "cross-spawn": "^7.0.0",
