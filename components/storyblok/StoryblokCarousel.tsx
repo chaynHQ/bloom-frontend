@@ -1,8 +1,7 @@
 'use client';
 
 import Carousel, { getSlideWidth } from '@/components/common/Carousel';
-import { useWidth } from '@/lib/utils/useWidth';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { Component as DynamicComponent } from './DynamicComponent';
 import StoryblokImage from './StoryblokImage';
@@ -33,8 +32,6 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
     number_mobile_slides,
     number_desktop_slides,
   } = props;
-  const siteTheme = useTheme();
-  const width = useWidth();
   return (
     <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
       <Carousel
@@ -46,6 +43,7 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
           xl: number_desktop_slides || 1,
         }}
         theme={theme}
+        title={_uid}
         items={items.map((item, index: number) => {
           const component = components.find((c) => c.name === item.component);
           if (component) {
