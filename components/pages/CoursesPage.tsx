@@ -3,9 +3,7 @@
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import CourseCard from '@/components/cards/CourseCard';
-import Column from '@/components/common/Column';
 import LoadingContainer from '@/components/common/LoadingContainer';
-import Row from '@/components/common/Row';
 import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -197,26 +195,18 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       </Container>
       {conversations.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.main' }} ref={setConversationsSectionRef}>
-          <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
-            <Column width="full-width">
-              <Typography variant="h2" fontWeight={500}>
-                {t('conversationsHeading')}
-              </Typography>
-              <ResourceCarousel title="conversations-carousel" resources={conversations} />
-            </Column>
-          </Row>
+          <Typography variant="h2" fontWeight={500}>
+            {t('conversationsHeading')}
+          </Typography>
+          <ResourceCarousel title="conversations-carousel" resources={conversations} />
         </Container>
       )}
       {loadedShorts && loadedShorts?.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
-          <Row numberOfColumns={1} horizontalAlignment="left" verticalAlignment="center">
-            <Column width="full-width">
-              <Typography variant="h2" fontWeight={500}>
-                {t('shortsHeading')}
-              </Typography>
-              <ResourceCarousel title="shorts-carousel" resources={shorts} />
-            </Column>
-          </Row>
+          <Typography variant="h2" fontWeight={500}>
+            {t('shortsHeading')}
+          </Typography>
+          <ResourceCarousel title="shorts-carousel" resources={shorts} />
         </Container>
       )}
 
