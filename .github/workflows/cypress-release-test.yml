@@ -10,9 +10,6 @@ jobs:
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-24.04
-    permissions:
-      deployments: read
-      statuses: read
     outputs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
