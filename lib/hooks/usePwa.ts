@@ -29,6 +29,9 @@ export default function usePWA() {
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
 
   const getPwaMetaData = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return { browser: 'Unknown Browser', platform: 'Unknown OS' };
+    }
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'
@@ -85,7 +88,8 @@ export default function usePWA() {
     const isStandalone =
       typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
-      typeof window !== 'undefined' && /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+      typeof window !== 'undefined' &&
+      /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
 
     const isHidden =
       pwaBannerDismissedCookie ||
