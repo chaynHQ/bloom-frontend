@@ -24,18 +24,30 @@ const numberSlidesToWidthMap: { [key: number]: string } = {
   4: '25%',
 };
 
+const tabletSlidesToWidthMap: { [key: number]: string } = {
+  1: '100%',
+  2: '50%',
+  3: '25%',
+};
+
 // Dots and arrows in 1 component because of the design
 const CustomDots = ({
   showArrows = false,
   arrowPosition = 'bottom',
+  carouselTheme = 'primary',
 }: {
   showArrows: boolean;
   arrowPosition: 'side' | 'bottom';
+  carouselTheme: 'primary' | 'secondary';
 }) => {
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
 
   const getBackground = (index: number) =>
-    currentPage === index ? theme.palette.primary.dark : theme.palette.grey[100];
+    currentPage === index
+      ? theme.palette.primary.dark
+      : carouselTheme == 'primary'
+        ? theme.palette.grey[100]
+        : theme.palette.common.white;
 
   return (
     <Box
@@ -114,6 +126,7 @@ const Carousel = (props: CarouselProps) => {
     showArrows = false,
     arrowPosition = 'bottom',
     title = 'carousel',
+    theme = 'primary',
     slidesPerView = {
       xs: 1,
       sm: 1,
@@ -133,7 +146,9 @@ const Carousel = (props: CarouselProps) => {
       showArrows={navigationEnabled && showArrows && arrowPosition == 'side'}
       showDots={navigationEnabled}
       swiping={true}
-      dots={<CustomDots showArrows={showArrows} arrowPosition={arrowPosition} />}
+      dots={
+        <CustomDots showArrows={showArrows} arrowPosition={arrowPosition} carouselTheme={theme} />
+      }
       title={title}
       afterSlide={props.afterSlideHandle}
       scrollDistance={scrollDistance}
@@ -144,7 +159,9 @@ const Carousel = (props: CarouselProps) => {
 };
 
 export default Carousel;
-
+// Note that if you use this function, the carousel will be buggy in some screen sizes as it struggles to calculate the width
+// of slides correctly when the parent container has a flex layout. Avoid using this function if possible.
+// Use it when you can't set a fixed width for the slides, like in the StoryblokCarousel component.
 export const getSlideWidth = (
   numberMobileSlides: number,
   numberTabletSlides: number,
@@ -153,16 +170,17 @@ export const getSlideWidth = (
   return {
     width: [
       numberSlidesToWidthMap[numberMobileSlides || 1],
-      numberSlidesToWidthMap[numberTabletSlides || 1],
+      tabletSlidesToWidthMap[numberTabletSlides || 1],
       numberSlidesToWidthMap[numberDesktopSlides || 1],
     ],
     minWidth: [
       numberSlidesToWidthMap[numberMobileSlides || 1],
-      numberSlidesToWidthMap[numberTabletSlides || 1],
+      tabletSlidesToWidthMap[numberTabletSlides || 1],
       numberSlidesToWidthMap[numberDesktopSlides || 1],
     ],
   };
 };
+
 const isNavigationEnabled = (
   currentBreakpoint: Breakpoint,
   numberOfSlides: number,
