@@ -12,6 +12,7 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import StoryblokNotesFromBloomPromo from '../storyblok/StoryblokNotesFromBloomPromo';
 
 interface Props {
   story: ISbStoryData | undefined;
@@ -61,9 +62,14 @@ export default function HomePage({ story }: Props) {
         }
       />
       {story.content.page_sections?.length > 0 &&
-        story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
-        ))}
+        story.content.page_sections.map((section: any, index: number) => {
+          if (section.component === 'notes_from_bloom_promo') {
+            return (
+              <StoryblokNotesFromBloomPromo key={`notes_from_bloom_promo_${index}`} {...section} />
+            );
+          }
+          return <StoryblokPageSection key={`page_section_${index}`} {...section} />;
+        })}
     </Box>
   );
 }

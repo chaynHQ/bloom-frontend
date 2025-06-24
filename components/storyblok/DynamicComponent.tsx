@@ -8,6 +8,7 @@ import StoryblokCard from './StoryblokCard';
 import StoryblokCarousel from './StoryblokCarousel';
 import StoryblokFaqs from './StoryblokFaqs';
 import StoryblokImage from './StoryblokImage';
+import StoryblokNotesFromBloomPromo from './StoryblokNotesFromBloomPromo';
 import StoryblokPageSection from './StoryblokPageSection';
 import StoryblokQuote from './StoryblokQuote';
 import StoryblokResourceCarousel from './StoryblokResourceCarousel';
@@ -33,7 +34,8 @@ const components: Component[] = [
   { name: 'faqs', component: StoryblokFaqs },
   { name: 'statement', component: StoryblokStatement },
   { name: 'carousel', component: StoryblokCarousel },
-  { name: 'resource_carousel', component: StoryblokResourceCarousel },
+  { name: 'resource_carousel', component: StoryblokResourceCarousel }, //
+  { name: 'notes_from_bloom_promo', component: StoryblokNotesFromBloomPromo }, // Placeholder for spacer
 ];
 
 interface DynamicComponentProps {

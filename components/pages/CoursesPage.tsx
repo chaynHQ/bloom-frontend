@@ -19,6 +19,7 @@ import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import ResourceCarousel from '../common/ResourceCarousel';
 
 const containerStyle = {
@@ -209,7 +210,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
           <ResourceCarousel title="shorts-carousel" resources={shorts} />
         </Container>
       )}
-
+      {userId && <NotesFromBloomPromo />}
       {!userId && <SignUpBanner />}
       {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
