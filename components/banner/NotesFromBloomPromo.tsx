@@ -65,7 +65,7 @@ const NotesFromBloomPromo = () => {
             <Button
               link="/subscribe/whatsapp"
               color={STORYBLOK_COLORS.PRIMARY_DARK}
-              text={'Subscribe'}
+              text={t('buttonText')}
               size="medium"
               style={{ marginBottom: 0, marginTop: 1.5 }}
             />
