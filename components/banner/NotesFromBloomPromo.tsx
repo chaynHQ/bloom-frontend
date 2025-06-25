@@ -63,7 +63,7 @@ const NotesFromBloomPromo = () => {
           </Box>
           <Box display={['flex', 'flex', 'none']} justifyContent="flex-end">
             <Button
-              link="/subscribe/whatsapp"
+              link="/subscription/whatsapp"
               color={STORYBLOK_COLORS.PRIMARY_DARK}
               text={t('buttonText')}
               size="medium"
@@ -76,7 +76,7 @@ const NotesFromBloomPromo = () => {
         </Box>
         <Box display={['none', 'none', 'flex']} justifyContent="flex-end">
           <Button
-            link="/subscribe/whatsapp"
+            link="/subscription/whatsapp"
             color={STORYBLOK_COLORS.PRIMARY_DARK}
             text={t('buttonText')}
             size="small"
