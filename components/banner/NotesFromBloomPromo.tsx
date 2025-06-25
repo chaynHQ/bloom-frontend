@@ -68,6 +68,9 @@ const NotesFromBloomPromo = () => {
               text={t('buttonText')}
               size="medium"
               style={{ marginBottom: 0, marginTop: 1.5 }}
+              clickHandler={() => {
+                logEvent(NOTES_FROM_BLOOM_PROMO_CLICKED, eventUserData);
+              }}
             />
           </Box>
         </Box>
