@@ -34,7 +34,7 @@ const components: Component[] = [
   { name: 'faqs', component: StoryblokFaqs },
   { name: 'statement', component: StoryblokStatement },
   { name: 'carousel', component: StoryblokCarousel },
-  { name: 'resource_carousel', component: StoryblokResourceCarousel }, //
+  { name: 'resource_carousel', component: StoryblokResourceCarousel },
   { name: 'notes_from_bloom_promo', component: StoryblokNotesFromBloomPromo }, // Placeholder for spacer
 ];
 
