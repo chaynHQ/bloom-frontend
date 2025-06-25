@@ -79,7 +79,9 @@ const ResourceCarousel = ({
             <Box
               sx={{
                 ...getSlideWidth(1, 2, 3),
+                minWidth: '300px',
               }}
+              p={0.25}
               padding={1}
               key={story.name}
             >
