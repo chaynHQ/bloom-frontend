@@ -157,6 +157,11 @@
       "iosStep2": "2. Tippe auf “Zum Home-Bildschirm hinzufügen”",
       "button-decline-label": "Jetzt nicht",
       "button-install-label": "Installieren"
+    },
+    "notesFromBloomPromo": {
+      "title": "Kostenlose unterstützende Nachrichten",
+      "description": "Erhalten Sie zweimal wöchentlich Nachrichten direkt auf Ihr WhatsApps",
+      "buttonText": "Abonnieren"
     }
   }
 }

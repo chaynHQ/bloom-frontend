@@ -157,6 +157,11 @@
       "iosStep2": "2. Tap “Add To home Screen”",
       "button-decline-label": "Not now",
       "button-install-label": "Install"
+    },
+    "notesFromBloomPromo": {
+      "title": "Free supportive messages",
+      "description": "Receive twice weekly messages direct to your WhatsApp",
+      "buttonText": "Subscribe"
     }
   }
 }

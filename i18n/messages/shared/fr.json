@@ -157,6 +157,11 @@
       "iosStep2": "2. Appuyez sur “Ajouter à l’écran d’accueil”",
       "button-decline-label": "Pas maintenant",
       "button-install-label": "Installer"
+    },
+    "notesFromBloomPromo": {
+      "title": "Messages de soutien gratuits",
+      "description": "Recevez des messages deux fois par semaine directement sur votre WhatsApp",
+      "buttonText": "S'abonner"
     }
   }
 }

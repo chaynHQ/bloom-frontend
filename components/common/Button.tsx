@@ -12,10 +12,11 @@ interface BloomButtonProps {
   link: string;
   size: 'small' | 'medium' | 'large' | undefined;
   clickHandler?: () => void;
+  style?: React.CSSProperties;
 }
 
 const BloomButton = (props: BloomButtonProps) => {
-  const { clickHandler, text, color = 'secondary.main', link, size = 'medium' } = props;
+  const { clickHandler, text, color = 'secondary.main', link, size = 'medium', style = {} } = props;
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -24,7 +25,8 @@ const BloomButton = (props: BloomButtonProps) => {
   if (!link) return <></>;
 
   const buttonStyle = {
-    marginY: 2,
+    marginTop: 2,
+    marginBottom: 2,
     backgroundColor:
       color === 'background.default'
         ? 'secondary.main'
@@ -34,6 +36,7 @@ const BloomButton = (props: BloomButtonProps) => {
             ? 'secondary.main'
             : color,
     color: color === 'primary.dark' ? 'common.white' : 'text.primary',
+    ...style,
   } as const;
 
   return (

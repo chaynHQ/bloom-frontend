@@ -157,6 +157,11 @@
       "iosStep2": "2. “Add To Home Screen” ko tap karein",
       "button-decline-label": "Abhi nahi",
       "button-install-label": "Install karein"
+    },
+    "notesFromBloomPromo": {
+      "title": "Nihshulk sahaayak sandesh",
+      "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
+      "buttonText": "Sadasyata len"
     }
   }
 }
