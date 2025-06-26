@@ -1,15 +1,15 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "We send messages to your WhatsApp number.",
-      "step2": "The messages are sent twice a week, on Wednesdays and Sundays.",
-      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time."
+      "step1": "We send messages to your WhatsApp number",
+      "step2": "The messages are sent twice a week, on Wednesdays and Sundays",
+      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time"
     },
     "form": {
-      "subscribeTitle": "Subscribe to Notes from Bloom",
+      "subscribeTitle": "Subscribe to Notes",
       "subscribe": "Subscribe",
       "phoneNumber": "Phone number",
-      "unsubscribeTitle": "Manage your subscription",
+      "unsubscribeTitle": "You're subscribed to Notes",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
         "invalidNumber": "Your phone number appears to be invalid. Please fix any errors and try again.",
@@ -19,6 +19,22 @@
       "unsubscribeErrors": {
         "internal": "There was an error unsubscribing from WhatsApp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       }
+    },
+    "notes": {
+      "title": "Sign up to Notes from Bloom",
+      "description": "The path to healing can be lonely and sometimes thorny. Our Notes from Bloom are twice-weekly reminders, encouragement, affirmations, and activities from our courses, sent directly to your phone to help you continue your healing journey.",
+      "createAccount": "Create an account",
+      "createAccountDescription": "Sign up to Notes from Bloom and access our platform of resources.",
+      "haveAccount": "Have an account?",
+      "login": "Login",
+      "createAccountButton": "Create account",
+      "howItWorks": "How Notes from Bloom works",
+      "step1": "We send messages to your WhatsApp number",
+      "step2": "Twice a week, every Wednesday and Sunday",
+      "step3": "We share affirmations, activities and reflections",
+      "step4": "Unsubscribe any time if you change your mind",
+      "subscribeDescription": "Subscribe to Notes from Bloom to start receiving whatsapp messages. Unsubscribe here anytime.",
+      "unsubscribeDescription": "Unsubscribe from Notes from Bloom to stop receiving whatsapp messages, or to update your number. Subscribe again anytime."
     }
   }
 }

@@ -12,15 +12,11 @@ import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { findWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Card, CardContent, Link, TextField, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-
-const containerStyle = {
-  marginY: 3,
-} as const;
 
 const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
@@ -80,41 +76,34 @@ const WhatsappUnsubscribeForm = () => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h2" component="h2">
-          {t('unsubscribeTitle')}
-        </Typography>
-        <Box sx={containerStyle}>
-          <form autoComplete="off" onSubmit={unsubscribeHandler}>
-            <TextField
-              key="phoneNumber-unsubscribe"
-              label={t('phoneNumber')}
-              variant="standard"
-              type="text"
-              sx={{ width: '15rem' }}
-              value={phoneNumber}
-              disabled
-            />
-            {formError && (
-              <Typography color="error.main" mb={2}>
-                {formError}
-              </Typography>
-            )}
-            <LoadingButton
-              sx={{ mt: 2, mr: 1.5 }}
-              variant="contained"
-              fullWidth
-              color="secondary"
-              type="submit"
-              loading={loading}
-            >
-              {t('unsubscribe')}
-            </LoadingButton>
-          </form>
+    <Box>
+      <form autoComplete="off" onSubmit={unsubscribeHandler}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" mb={0.5}>
+            Phone number
+          </Typography>
+          <Typography variant="body1" fontWeight="medium">
+            {phoneNumber}
+          </Typography>
         </Box>
-      </CardContent>
-    </Card>
+
+        {formError && (
+          <Typography color="error.main" mb={2}>
+            {formError}
+          </Typography>
+        )}
+
+        <LoadingButton
+          sx={{ width: '100%', borderRadius: 100 }}
+          variant="contained"
+          color="secondary"
+          type="submit"
+          loading={loading}
+        >
+          {t('unsubscribe')}
+        </LoadingButton>
+      </form>
+    </Box>
   );
 };
 

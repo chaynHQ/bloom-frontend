@@ -1,24 +1,40 @@
 {
   "Whatsapp": {
     "steps": {
-      "step1": "Nous envoyons des messages à votre numéro WhatsApp.",
-      "step2": "Les messages sont envoyés deux fois par semaine, le mercredi et le dimanche.",
-      "step3": "Si vous changez d'avis, vous pouvez vous désinscrire ou vous réinscrire à tout moment."
+      "step1": "Nous envoyons des messages à votre numéro WhatsApp",
+      "step2": "Les messages sont envoyés deux fois par semaine, le mercredi et le dimanche",
+      "step3": "Si vous changez d'avis, vous pouvez vous désinscrire ou vous réinscrire à tout moment"
     },
     "form": {
-      "subscribeTitle": "S'abonner pour recevoir les Notes de Bloom",
-      "subscribe": "Subscribe",
+      "subscribeTitle": "S'abonner aux Notes",
+      "subscribe": "S'abonner",
       "phoneNumber": "Numéro de téléphone",
-      "unsubscribeTitle": "Manage your subscription",
-      "unsubscribe": "Unsubscribe",
+      "unsubscribeTitle": "Vous êtes abonné aux Notes",
+      "unsubscribe": "Se désabonner",
       "subscribeErrors": {
         "invalidNumber": "Votre numéro de téléphone n'est pas valide. Veuillez corriger les erreurs éventuelles et réessayer.",
         "internal": "Une erreur s'est produite lors de l'inscription à WhatsApp. Réessayez plus tard et <contactLink> contactez l'équipe Bloom</contactLink> si vous obtenez toujours cette erreur.",
         "alreadyExists": "Un abonnement WhatsApp existe déjà pour votre utilisateur. Veuillez envoyer un message <contactLink> à l'équipe Bloom</contactLink> si vous pensez qu'il s'agit d'une erreur."
       },
       "unsubscribeErrors": {
-        "internal": "There was an error unsubscribing from WhatsApp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "internal": "Une erreur s'est produite lors de la désinscription de WhatsApp. Réessayez plus tard et <contactLink>contactez l'équipe Bloom</contactLink> si vous obtenez toujours cette erreur."
       }
+    },
+    "notes": {
+      "title": "Inscrivez-vous aux Notes de Bloom",
+      "description": "Le chemin vers la guérison peut être solitaire et parfois épineux. Nos Notes de Bloom sont des rappels bihebdomadaires, des encouragements, des affirmations et des activités issues de nos cours, envoyés directement sur votre téléphone pour vous aider à poursuivre votre parcours de guérison.",
+      "createAccount": "Créer un compte",
+      "createAccountDescription": "Inscrivez-vous aux Notes de Bloom et accédez à notre plateforme de ressources.",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "login": "Connexion",
+      "createAccountButton": "Créer un compte",
+      "howItWorks": "Comment fonctionnent les Notes de Bloom",
+      "step1": "Nous envoyons des messages à votre numéro WhatsApp",
+      "step2": "Deux fois par semaine, chaque mercredi et dimanche",
+      "step3": "Nous partageons des affirmations, des activités et des réflexions",
+      "step4": "Désabonnez-vous à tout moment si vous changez d'avis",
+      "subscribeDescription": "Abonnez-vous aux Notes de Bloom pour commencer à recevoir des messages WhatsApp. Désabonnez-vous ici à tout moment.",
+      "unsubscribeDescription": "Désabonnez-vous des Notes de Bloom pour arrêter de recevoir des messages WhatsApp, ou pour mettre à jour votre numéro. Réabonnez-vous à tout moment."
     }
   }
 }
