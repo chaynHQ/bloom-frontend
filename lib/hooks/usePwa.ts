@@ -27,7 +27,7 @@ export default function usePWA() {
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
-
+  const isWindowDefined = typeof window !== 'undefined';
   const getPwaMetaData = useMemo(() => {
     if (typeof window === 'undefined') {
       return { browser: 'Unknown Browser', platform: 'Unknown OS' };
@@ -54,7 +54,7 @@ export default function usePWA() {
               : 'Unknown Browser';
 
     return { browser, platform };
-  }, []);
+  }, [isWindowDefined]);
 
   const declineInstallation = async () => {
     if (userCookiesAccepted) {
@@ -85,8 +85,7 @@ export default function usePWA() {
 
   useEffect(() => {
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
-    const isStandalone =
-      typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
       typeof window !== 'undefined' &&
       /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
