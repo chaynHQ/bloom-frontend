@@ -4,7 +4,6 @@ import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
-import StoryblokFaqs from '@/components/storyblok/StoryblokFaqs';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
 import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTeamPage';
 import StoryblokNotesFromBloomPromo from '@/components/storyblok/StoryblokNotesFromBloomPromo';
@@ -44,7 +43,6 @@ export const getStoryblokApi = storyblokInit({
     quote: StoryblokQuote,
     card: StoryblokCard,
     button: StoryblokButton,
-    faq_list: StoryblokFaqs,
     statement: StoryblokStatement,
     accordion: StoryblokAccordion,
     carousel: StoryblokCarousel,
