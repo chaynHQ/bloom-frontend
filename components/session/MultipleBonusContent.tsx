@@ -4,8 +4,7 @@ import SessionContentCard from '@/components/cards/SessionContentCard';
 import { Dots } from '@/components/common/Dots';
 import { RichTextOptions } from '@/lib/utils/richText';
 import LinkIcon from '@mui/icons-material/Link';
-import { ISbRichtext } from '@storyblok/react/rsc';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 export type BonusContent = {
   _uid: string;
@@ -31,7 +30,7 @@ const MultipleBonusContent = (props: MultipleBonusContentProps) => {
           eventPrefix="SESSION_BONUS_CONTENT"
           eventData={eventData}
         >
-          <>{render(bonus.content as ISbRichtext, RichTextOptions)}</>
+          <>{render(bonus.content as StoryblokRichtext, RichTextOptions)}</>
         </SessionContentCard>
       ))}
     </>

@@ -17,9 +17,9 @@ import logEvent from '@/lib/utils/logEvent';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import { Link as MuiLink, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface SessionVideoProps {
   eventData: { [key: string]: any };
@@ -27,7 +27,7 @@ interface SessionVideoProps {
   name: string;
   storyUuid: string;
   video: { url: string };
-  video_transcript: ISbRichtext;
+  video_transcript: StoryblokRichtext;
 }
 export const SessionVideo = (props: SessionVideoProps) => {
   const { eventData, storyUuid, sessionProgress, name, video_transcript, video } = props;

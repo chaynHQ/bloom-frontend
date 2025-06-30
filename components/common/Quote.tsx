@@ -2,10 +2,10 @@
 
 import { richtextContentStyle } from '@/styles/common';
 import { Box } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react/rsc';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface QuoteProps {
-  text: ISbRichtext | string;
+  text: StoryblokRichtext | string;
   textSize: string;
   iconColor: string;
 }

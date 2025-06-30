@@ -15,22 +15,22 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface StoryblokCardProps {
   _uid: string;
   _editable: string;
   image: { filename: string; alt: string };
-  content: ISbRichtext;
+  content: StoryblokRichtext;
   alignment: string;
   background: string;
   style: string;
   dropdown_button?: boolean;
-  dropdown_content?: ISbRichtext;
+  dropdown_content?: StoryblokRichtext;
   card_link?: { url: string; cached_url: string };
 }
 
