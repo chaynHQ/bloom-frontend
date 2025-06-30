@@ -36,7 +36,11 @@ export default function usePWA() {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const isWindowDefined = typeof window !== 'undefined';
   const getPwaMetaData = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return { browser: 'Unknown Browser', platform: 'Unknown OS' };
+    }
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'
@@ -59,7 +63,8 @@ export default function usePWA() {
               : 'Unknown Browser';
 
     return { browser, platform };
-  }, []);
+  }, [isWindowDefined]);
+  
   const analyticsPayload = useMemo(() => {
     return {
       ...eventUserData,
@@ -105,8 +110,7 @@ export default function usePWA() {
 
   useEffect(() => {
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
-    const isStandalone =
-      typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
       typeof window !== 'undefined' &&
       /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());

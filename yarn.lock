@@ -2713,20 +2713,20 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@storyblok/js@3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-3.4.0.tgz#90a278c44d22aac6713247eeebda7497e4052192"
-  integrity sha512-naOamqsJREFPgM8bTVg3ycc78NBPSkDhnQMf/3G4w8qD1qN5yhInI3q2OEr0gPp3+NT8FyfLB78sOyHdNnwvsA==
+"@storyblok/js@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-4.0.0.tgz#44ed674fe7012ca870a7951e4104d211dda1cfae"
+  integrity sha512-D3EB9LQ9P9I9WTauwUaBkZ6J8qMVnpUAxPZRbarL7SdDKILD4CAVR9Bn+T6H5znu45J4Zq9P7OvxH+sQZPvgXw==
   dependencies:
     "@storyblok/richtext" "3.2.0"
-    storyblok-js-client "6.10.11"
+    storyblok-js-client "7.0.0"
 
-"@storyblok/react@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-4.6.1.tgz#fb098dc7cffe80553fa2208186eb320d8031091c"
-  integrity sha512-1v9pIbEymqT5lQCSAAhH7QdAfJVYDSz217n7WO3GiNJB+U5fmz49eBD673oXzLDriZN9oFqhFiM6tOUstW+Xiw==
+"@storyblok/react@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-5.0.0.tgz#4e06db55f0182b81937cd2d78f748b0bcb42e4bf"
+  integrity sha512-AoVMGP/u6SDIkxGMUTAvHs2gurIp2u7HJIoadSWPha7+pWWd2eY+30XckVqsUvchmf0Q9OMTFTTBvTNidieusQ==
   dependencies:
-    "@storyblok/js" "3.4.0"
+    "@storyblok/js" "4.0.0"
 
 "@storyblok/richtext@3.2.0":
   version "3.2.0"
@@ -6980,9 +6980,9 @@ magic-string@^0.25.0, magic-string@^0.25.7:
     sourcemap-codec "^1.4.8"
 
 mailslurp-client@^15.22.1:
-  version "15.22.1"
-  resolved "https://registry.yarnpkg.com/mailslurp-client/-/mailslurp-client-15.22.1.tgz#0e7c0de2affb161f9a7b4ebbd8545fe1db5f2d82"
-  integrity sha512-cyHY72lUYctShX+5yeo3k9I9O1PmZ65HoZKhCzokbHrV+Ru7ykenztwQhjvIEJ/wm6uFPHZ2/H0lk3ooT5AkaQ==
+  version "15.24.1"
+  resolved "https://registry.yarnpkg.com/mailslurp-client/-/mailslurp-client-15.24.1.tgz#673c64b2aad81140d77d30e85eecbdd6dce8bf01"
+  integrity sha512-QGafQxjxYXJWUDpCYdMSO/uYX64F10oowa1mF5bZZ8mLL3vXiqsAhb/AFgoMGK7vFYoN7zANZAFXOa2ICi5Oxg==
   dependencies:
     cross-fetch "^4.1.0"
 
@@ -8624,10 +8624,10 @@ stackframe@^1.3.4:
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.3.4.tgz#b881a004c8c149a5e8efef37d51b16e412943310"
   integrity sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==
 
-storyblok-js-client@6.10.11:
-  version "6.10.11"
-  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-6.10.11.tgz#34b5523d8011d83ed44b5a3600492d76bba48205"
-  integrity sha512-4FuGbQ93X7Ok1hvTRvMy/p4bfX/3C+Uw/m7Mv+wGZyX22IGdCe01qdwgD3CP1F9l5C0lEFCsWxc2PloiM9NutA==
+storyblok-js-client@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-7.0.0.tgz#b0d0bface4868cd7497d535bc6a8bf187a8fb85b"
+  integrity sha512-00zWW3jscL4W1kek9QCrInq1jw4xwjeM0jXuKg4sa/bCT8QuLGaGU9Wn3hat/hkvZLRFC09fV4sJRxDqwsFaKQ==
 
 storyblok-rich-text-react-renderer@^3.0.1:
   version "3.0.1"
@@ -8861,9 +8861,9 @@ tapable@^2.2.0:
   integrity sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==
 
 tar-fs@^2.1.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.2.tgz#425f154f3404cb16cb8ff6e671d45ab2ed9596c5"
-  integrity sha512-EsaAXwxmx8UB7FRKqeozqEPop69DXcmYwTQwXvyAPF352HJsPdkVhvTaDPYqfNgruveJIJy3TA2l+2zj8LJIJA==
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-2.1.3.tgz#fb3b8843a26b6f13a08e606f7922875eb1fbbf92"
+  integrity sha512-090nwYJDmlhwFwEW3QQl+vaNnxsO2yVsd45eTKRBzSzu+hlb1w2K9inVq5b0ngXuLVqQ4ApvsUHHnu/zQNkWAg==
   dependencies:
     chownr "^1.1.1"
     mkdirp-classic "^0.5.2"

@@ -9,9 +9,10 @@ import { breadcrumbButtonStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Box, Button, Typography, useMediaQuery } from '@mui/material';
-import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const sessionSubtitleStyle = {
   marginTop: '0.75rem !important',
@@ -22,7 +23,7 @@ const dotStyle = {
 } as const;
 
 interface SessionHeaderProps {
-  description: string | ISbRichtext;
+  description: string | StoryblokRichtext;
   name: string;
   sessionProgress: PROGRESS_STATUS;
   course: ISbStoryData;

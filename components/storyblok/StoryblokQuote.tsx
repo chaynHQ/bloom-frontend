@@ -3,8 +3,9 @@
 import Quote from '@/components/common/Quote';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { Box } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const containerStyle = {
   display: 'flex',
@@ -32,7 +33,7 @@ const imageContainerStyle = {
 interface StoryblokQuoteProps {
   _uid: string;
   _editable: string;
-  text: ISbRichtext;
+  text: StoryblokRichtext;
   text_size: string;
   icon_color: string;
   image?: { alt: string; filename: string };

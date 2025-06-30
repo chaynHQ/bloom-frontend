@@ -7,11 +7,13 @@ declare module '@mui/material/styles' {
   interface Palette {
     palePrimaryLight: string;
     bloomGradient: string;
+    bloomGradientVertical: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
     paleSecondaryLight?: string;
     bloomGradient?: string;
+    bloomGradientVertical?: string;
     overlayBackground?: string;
   }
 }
@@ -38,6 +40,7 @@ let theme = createTheme({
     paleSecondaryLight: '#FFF8F4',
     overlayBackground: 'rgba(0, 0, 0, 0.4)',
     bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
+    bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
   },
   shape: {
     borderRadius: 20,

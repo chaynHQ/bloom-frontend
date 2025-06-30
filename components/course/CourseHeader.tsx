@@ -5,12 +5,12 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { breadcrumbButtonStyle } from '@/styles/common';
 import { Button } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface CourseHeaderProps {
   name: string;
-  description: ISbRichtext;
+  description: StoryblokRichtext;
   image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
   eventData: { [key: string]: any };

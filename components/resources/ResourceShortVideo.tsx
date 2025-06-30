@@ -18,9 +18,9 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface ResourceShortVideoProps {
   eventData: { [key: string]: any };
@@ -28,7 +28,7 @@ interface ResourceShortVideoProps {
   name: string;
   storyUuid: string;
   video: { url: string };
-  video_transcript: ISbRichtext;
+  video_transcript: StoryblokRichtext;
 }
 
 export const ResourceShortVideo = (props: ResourceShortVideoProps) => {

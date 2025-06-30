@@ -2,19 +2,19 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import Header from '@/components/layout/Header';
-import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import { StoryblokPageSectionProps } from './StoryblokPageSection';
+import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import DynamicComponent from './DynamicComponent';
 
 export interface StoryblokPageProps {
   _uid: string;
   _editable: string;
   title: string;
-  description: ISbRichtext;
+  description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
-  page_sections: StoryblokPageSectionProps[];
+  page_sections: SbBlokData[];
 }
 
 const StoryblokPage = (props: StoryblokPageProps) => {
@@ -45,8 +45,8 @@ const StoryblokPage = (props: StoryblokPageProps) => {
       {!userId && isPartiallyPublicPage && <SignUpBanner />}
       {userId &&
         page_sections?.length > 0 &&
-        page_sections.map((section: StoryblokPageSectionProps, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+        page_sections.map((section: SbBlokData, index: number) => (
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
         ))}
     </main>
   );

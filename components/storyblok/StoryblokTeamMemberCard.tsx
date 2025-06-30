@@ -6,11 +6,11 @@ import { columnStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Card, CardActionArea, CardContent, Collapse, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const cardStyle = {
   textAlign: 'left',
@@ -57,7 +57,7 @@ export interface StoryblokTeamMemberCardProps {
   name: string;
   role: string;
   languages: string;
-  bio: ISbRichtext;
+  bio: StoryblokRichtext;
   image: { filename: string; alt: string };
   cardExpandable?: boolean;
 }

@@ -10,39 +10,6 @@
       },
       "description": "Hera Hussain is the founder and CEO of Chayn. She has years of experience supporting survivors. She’s our Safeguarding Lead. Hera was raised in Pakistan and came to the UK to study Psychology and Economics. Hera was on the Forbes 30 Under 30 and MIT Technology Review’s Innovators Under 35 list, and was awarded the British Empire Medal by the Queen.",
       "closed": false
-    },
-    {
-      "name": "Francesca Jarvis",
-      "title": "Survivor Services Lead",
-      "languages": "English",
-      "image": {
-        "alt": "Picture of Francesca",
-        "src": "img-20220609-wa0009"
-      },
-      "description": "Francesca grew up in the UK and lives in London. Before joining Chayn as the Survivor Services Lead for our Bloom project, Francesca worked in frontline support services for survivors of sexual violence and youth work. She has a lot of experience supporting survivors around and through the criminal legal system, managing teams of frontline workers, and developing ways of working.",
-      "closed": false
-    },
-    {
-      "name": "Carolina Cal",
-      "title": "Survivor Services Facilitator",
-      "languages": "English, Portuguese, Spanish",
-      "image": {
-        "alt": "Carolina is a white women with long brown hair wearing a black top with leaves on it. She stands in front of a large green bush that fills the entire frame.",
-        "src": "carolina-headshot"
-      },
-      "description": "Carolina is from São Paulo in Brazil. She worked for Latin American Women’s Rights organisations in community engagement before joining Chayn and has extensive experience in facilitating wellbeing activities and engaging migrant women in conversations surrounding notions of migration, identity, gendered violence & intersectionality. Carolina has a MA in Applied Theatre from Central School of Speech & Drama and is passionate about using the arts to co-create social change with women from the Global Majority.",
-      "closed": false
-    },
-    {
-      "name": "Abbie Tshola",
-      "title": "Survivor Services Administrator",
-      "languages": "English, French",
-      "image": {
-        "alt": "Abbie is a Black woman taking a selfie. She is wearing a black top and has black hair. She is standing in front of a brick wall with a clock on it.",
-        "src": "abbie-headshot"
-      },
-      "description": "Abbie is from London, UK. Having recently graduated from the London School of Economics with an MSc Political Sociology degree, Abbie has considerable experience researching higher education through a decolonial and black feminist lens and has advocated for policies that improves the experience of marginalised students. Abbie also enjoys exploring UX Design and is currently building a portfolio which centres black feminist values in digital spaces.",
-      "closed": false
     }
   ],
   "supporting": [
@@ -54,7 +21,7 @@
         "alt": "Picture of Paz",
         "src": "paz2"
       },
-      "description": "Paz Romero is a Latina, queer woman from Rio de la Plata. She was born south of Buenos Aires, Argentina and she’s a grassroots activist for women and sexual diversities rights. She coordinated a regional feminist organization; she’s a translator, proofreader, QC and project manager. Paz has provided us a lot of project support at Chayn, facilitated some of our Spanish-language Bloom videos, and is one of our 1-2-1 chat facilitators.",
+      "description": "Paz",
       "closed": true
     }
   ]

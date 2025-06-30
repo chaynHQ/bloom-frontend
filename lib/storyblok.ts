@@ -4,9 +4,9 @@ import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
-import StoryblokFaqs from '@/components/storyblok/StoryblokFaqs';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
 import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTeamPage';
+import StoryblokNotesFromBloomPromo from '@/components/storyblok/StoryblokNotesFromBloomPromo';
 import StoryblokPage from '@/components/storyblok/StoryblokPage';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
@@ -43,7 +43,6 @@ export const getStoryblokApi = storyblokInit({
     quote: StoryblokQuote,
     card: StoryblokCard,
     button: StoryblokButton,
-    faq_list: StoryblokFaqs,
     statement: StoryblokStatement,
     accordion: StoryblokAccordion,
     carousel: StoryblokCarousel,
@@ -55,6 +54,7 @@ export const getStoryblokApi = storyblokInit({
     welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
     resource_carousel: StoryblokResourceCarousel,
+    notes_from_bloom_promo: StoryblokNotesFromBloomPromo,
   },
 });
 
