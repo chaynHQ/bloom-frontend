@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1000
-          check_interval: 5
+          check_interval: 20
 
   cypress-run:
     name: Cypress e2e tests
