@@ -30,7 +30,7 @@ export const DesktopPwaBanner = () => {
     if (!isSmallScreen) {
       logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
     }
-  }, [analyticsPayload, isSmallScreen]);
+  }, [isSmallScreen]);
 
   if (isSmallScreen || bannerState === 'Hidden') return null;
 
