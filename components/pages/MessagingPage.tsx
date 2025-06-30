@@ -4,7 +4,6 @@ import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import { CrispIframe } from '@/components/crisp/CrispIframe';
 import Header, { HeaderProps } from '@/components/layout/Header';
-import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
@@ -13,6 +12,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import DynamicComponent from '../storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,
@@ -73,7 +73,7 @@ export default function MessagingPage({ story }: Props) {
           </Container>
           {story.content.page_sections?.length > 0 &&
             story.content.page_sections.map((section: SbBlokData, index: number) => (
-              <StoryblokPageSection key={`page_section_${index}`} {...section} />
+              <DynamicComponent key={`page_section_${index}`} blok={section} />
             ))}
         </>
       ) : (
