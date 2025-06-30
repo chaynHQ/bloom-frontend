@@ -1,16 +1,36 @@
 'use client';
 
+import { PWA_DESKTOP_BANNER_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import usePWA from '@/lib/hooks/usePwa';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Button, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useEffect, useMemo } from 'react';
 
 export const DesktopPwaBanner = () => {
-  const { bannerState, declineInstallation, install } = usePWA();
+  const { bannerState, declineInstallation, install, getPwaMetaData } = usePWA();
   const t = useTranslations('Shared.pwaBanner');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const analyticsPayload = useMemo(() => {
+    return {
+      ...eventUserData,
+      ...getPwaMetaData,
+    };
+  }, [eventUserData, getPwaMetaData]);
+
+  useEffect(() => {
+    if (!isSmallScreen) {
+      logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
+    }
+  }, [isSmallScreen]);
 
   if (isSmallScreen || bannerState === 'Hidden') return null;
 
