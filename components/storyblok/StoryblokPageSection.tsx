@@ -4,13 +4,13 @@ import PageSection from '@/components/common/PageSection';
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { storyblokEditable } from '@storyblok/react/rsc';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 export interface StoryblokPageSectionProps {
   _uid: string;
   _editable: string;
-  content: ISbRichtext;
+  content: StoryblokRichtext;
   color: STORYBLOK_COLORS;
   alignment: string;
 }

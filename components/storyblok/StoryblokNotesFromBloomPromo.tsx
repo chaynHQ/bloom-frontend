@@ -3,7 +3,6 @@
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 
 const StoryblokNotesFromBloomPromo = () => {
-
   return <NotesFromBloomPromo />;
 };
 

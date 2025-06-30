@@ -10,7 +10,7 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react/rsc';
+import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -72,7 +72,7 @@ export default function MessagingPage({ story }: Props) {
             </Box>
           </Container>
           {story.content.page_sections?.length > 0 &&
-            story.content.page_sections.map((section: any, index: number) => (
+            story.content.page_sections.map((section: SbBlokData, index: number) => (
               <StoryblokPageSection key={`page_section_${index}`} {...section} />
             ))}
         </>

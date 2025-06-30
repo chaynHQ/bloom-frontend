@@ -22,10 +22,10 @@ import { ArrowBack } from '@mui/icons-material';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container, Link } from '@mui/material';
-import { ISbRichtext, ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
 import LoadingContainer from '../common/LoadingContainer';
 
@@ -59,10 +59,10 @@ export interface StoryblokSessionPageProps {
   subtitle: string;
   description: string;
   video: { url: string };
-  video_transcript: ISbRichtext;
-  video_outro: ISbRichtext;
-  activity: ISbRichtext;
-  bonus: ISbRichtext | BonusContent[];
+  video_transcript: StoryblokRichtext;
+  video_outro: StoryblokRichtext;
+  activity: StoryblokRichtext;
+  bonus: StoryblokRichtext | BonusContent[];
   languages: string[];
   component: 'Session' | 'session_iba';
   included_for_partners: string[];
@@ -102,12 +102,11 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
-  const [liveChatAccess, setLiveChatAccess] = useState<boolean>(false);
 
   // This component handles both "session" and alternative "session_iba" page blocks
   // "session_iba" page blocks have a multi-block bonus field, and omit the coming soon fields
   const isAlternateSessionPage = Array.isArray(bonus);
-  const richtextBonusContent = !isAlternateSessionPage ? (bonus as ISbRichtext) : null;
+  const richtextBonusContent = !isAlternateSessionPage ? (bonus as StoryblokRichtext) : null;
   const multipleBonusContent = isAlternateSessionPage ? (bonus as BonusContent[]) : null;
   const showRichtextBonusContent =
     richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
