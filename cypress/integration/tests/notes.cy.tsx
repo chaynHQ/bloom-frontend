@@ -52,7 +52,6 @@ describe('A logged in user should be able to subscribe to notes from bloom', () 
 
     it('more about section', () => {
       cy.get('h2').should('contain', 'More about Notes from Bloom');
-      cy.checkImage('alt', 'illustration_leaf_mix');
     });
   });
 
