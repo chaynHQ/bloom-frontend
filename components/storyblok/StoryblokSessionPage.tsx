@@ -12,7 +12,6 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getChatAccess } from '@/lib/utils/getChatAccess';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -121,10 +120,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   };
 
   useEffect(() => {
-    getChatAccess(partnerAccesses, setLiveChatAccess);
-  }, [partnerAccesses, partnerAdmin]);
-
-  useEffect(() => {
     const coursePartners = course.content.included_for_partners;
     const userHasAccess = hasAccessToPage(
       isLoggedIn,
@@ -225,7 +220,7 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
           {showMultipleBonusContent && (
             <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
           )}
-          {liveChatAccess && <SessionChat eventData={eventData} />}
+          <SessionChat eventData={eventData} />
           {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
             <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
           )}
