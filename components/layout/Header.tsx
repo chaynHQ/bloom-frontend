@@ -9,15 +9,14 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import { columnStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 
 export interface HeaderProps {
   title: string;
-  introduction?: TextNode | ISbRichtext;
+  introduction?: TextNode | StoryblokRichtext;
   imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -99,7 +98,7 @@ const Header = (props: HeaderProps) => {
     if (typeof introduction === 'string') {
       return <Typography fontSize="1rem !important">{introduction}</Typography>;
     } else if (typeof introduction === 'object' && 'content' in introduction) {
-      return render(introduction as ISbRichtext, RichTextOptions);
+      return render(introduction, RichTextOptions);
     } else {
       return introduction;
     }

@@ -9,9 +9,9 @@ import {
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Link as MuiLink, Typography } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const containerStyle = {
   ...rowStyle,
@@ -26,7 +26,7 @@ const introductionContainerStyle = {
 interface CourseIntroductionProps {
   video: { url: string };
   name: string;
-  video_transcript: ISbRichtext;
+  video_transcript: StoryblokRichtext;
   eventData: { [key: string]: any };
 }
 

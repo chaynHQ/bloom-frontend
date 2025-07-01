@@ -8,9 +8,8 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import { breadcrumbButtonStyle } from '@/styles/common';
 import { Box, Button } from '@mui/material';
-import { ISbRichtext } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const audioContainerStyle = {
   mt: { xs: 4, md: 6 },
@@ -20,11 +19,11 @@ const audioContainerStyle = {
 interface ResourceConversationHeaderProps {
   storyUuid: string;
   name: string;
-  description: ISbRichtext;
+  description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   resourceProgress: PROGRESS_STATUS;
   audio: { filename: string };
-  audio_transcript: ISbRichtext;
+  audio_transcript: StoryblokRichtext;
   eventData: { [key: string]: any };
 }
 

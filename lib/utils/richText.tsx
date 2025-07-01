@@ -3,7 +3,6 @@ import StoryblokAudio from '@/components/storyblok/StoryblokAudio';
 import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
-import StoryblokFaqs from '@/components/storyblok/StoryblokFaqs';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
 import StoryblokResourceCarousel from '@/components/storyblok/StoryblokResourceCarousel';
@@ -36,7 +35,6 @@ export const RichTextOptions: RenderOptions = {
     ['quote']: (props: any) => <StoryblokQuote {...props} />,
     ['card']: (props: any) => <StoryblokCard {...props} />,
     ['button']: (props: any) => <StoryblokButton {...props} />,
-    ['faq_list']: (props: any) => <StoryblokFaqs {...props} />,
     ['statement']: (props: any) => <StoryblokStatement {...props} />,
     ['accordion']: (props: any) => <StoryblokAccordion {...props} />,
     ['team_members_cards']: (props: any) => <StoryblokTeamMembersCards {...props} />,

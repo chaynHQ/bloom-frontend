@@ -6,9 +6,10 @@ import { MEET_THE_TEAM_VIEWED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Container, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { useEffect } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
 import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
 
@@ -27,10 +28,10 @@ export interface StoryblokMeetTheTeamPageProps {
   description: string;
   header_image: { filename: string; alt: string };
   core_team_title: string;
-  core_team_description: ISbRichtext;
+  core_team_description: StoryblokRichtext;
   core_team_members: StoryblokTeamMemberCardProps[];
   supporting_team_title: string;
-  supporting_team_description: ISbRichtext;
+  supporting_team_description: StoryblokRichtext;
   supporting_team_members: StoryblokTeamMemberCardProps[];
   page_section_1: StoryblokPageSectionProps[];
   page_section_2: StoryblokPageSectionProps[];
@@ -114,6 +115,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
       </Container>
 
       {page_section_3?.length > 0 && <StoryblokPageSection {...page_section_3[0]} />}
+      <NotesFromBloomPromo />
     </Box>
   );
 };
