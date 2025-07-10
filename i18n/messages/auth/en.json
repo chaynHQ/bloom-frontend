@@ -24,7 +24,7 @@
       "nameLabel": "First name/nickname",
       "emailLabel": "Email",
       "passwordLabel": "Password",
-      "contactPermissionLabel": "Join our community of survivors sharing their thoughts on Bloom",
+      "contactPermissionLabel": "Receive emails about new resources and opportunities to share your feedback with us",
       "registerSubmit": "Create account",
       "resetPasswordStep1": "We'll send you an email to begin resetting your password.",
       "resetPasswordStep2": "Almost there! You can now set your new password.",
