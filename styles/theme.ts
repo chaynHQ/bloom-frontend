@@ -50,7 +50,7 @@ let theme = createTheme({
     h1: {
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: '1.75rem',
     },
     h2: {
@@ -67,7 +67,7 @@ let theme = createTheme({
     },
     h4: {
       fontSize: '1rem',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     subtitle1: {
       fontSize: '1.375rem',
@@ -76,12 +76,14 @@ let theme = createTheme({
     },
     body1: {
       fontSize: '1rem',
+      lineHeight: 1.5,
       '@media (min-width:1200px)': {
         fontSize: '1.125rem',
       },
     },
     body2: {
       fontSize: '0.875rem',
+      lineHeight: 1.5,
       '@media (min-width:1200px)': {
         fontSize: '1rem',
       },
@@ -105,12 +107,14 @@ theme = createTheme(theme, {
           maxWidth: '100% !important',
           paddingTop: 60,
           paddingBottom: 60,
+          paddingLeft: '1.5rem !important',
+          paddingRight: '1.5rem !important',
 
           [theme.breakpoints.up('sm')]: {
             paddingTop: 80,
             paddingBottom: 80,
-            paddingLeft: '5% !important',
-            paddingRight: '5% !important',
+            paddingLeft: '2rem !important',
+            paddingRight: '2rem !important',
           },
           [theme.breakpoints.up('lg')]: {
             paddingTop: 100,

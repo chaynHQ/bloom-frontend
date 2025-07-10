@@ -10,6 +10,7 @@ import {
 } from '@/lib/constants/events';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -95,24 +96,25 @@ const WhatsappSubscribeForm = () => {
   return (
     <Box>
       <form autoComplete="off" onSubmit={subscribeHandler}>
-        <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
+        <Box sx={rowStyle}>
+          <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
 
-        {formError && (
-          <Typography color="error.main" mb={2}>
-            {formError}
-          </Typography>
-        )}
-
-        <LoadingButton
-          sx={{ mt: 2, width: '100%', borderRadius: 100 }}
-          variant="contained"
-          color="secondary"
-          type="submit"
-          loading={loading}
-        >
-          {t('subscribe')}
-        </LoadingButton>
+          <LoadingButton
+            sx={{ height: 40, mt: 2 }}
+            variant="contained"
+            color="secondary"
+            type="submit"
+            loading={loading}
+          >
+            {t('subscribe')}
+          </LoadingButton>
+        </Box>
       </form>
+      {formError && (
+        <Typography color="error.main" mb={2}>
+          {formError}
+        </Typography>
+      )}
     </Box>
   );
 };

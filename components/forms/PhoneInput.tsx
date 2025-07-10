@@ -18,7 +18,7 @@ import {
 } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-const inputStyles = { width: '15rem', '.MuiInput-root': { mt: 2.5 } } as const;
+const inputStyles = { width: '100%', '.MuiInput-root': { mt: 2.5 } } as const;
 
 const selectStyles = {
   width: 'max-content',

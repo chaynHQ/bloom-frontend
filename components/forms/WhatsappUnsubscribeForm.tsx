@@ -11,6 +11,7 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { findWhatsappSubscription } from '@/lib/utils/whatsappUtils';
+import { rowStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -78,31 +79,32 @@ const WhatsappUnsubscribeForm = () => {
   return (
     <Box>
       <form autoComplete="off" onSubmit={unsubscribeHandler}>
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="body2" color="text.secondary" mb={0.5}>
-            Phone number
-          </Typography>
-          <Typography variant="body1" fontWeight="medium">
-            {phoneNumber}
-          </Typography>
+        <Box sx={rowStyle}>
+          <Box>
+            <Typography variant="body2" color="text.secondary" mb={0.5}>
+              Phone number
+            </Typography>
+            <Typography variant="body1" color={'text.secondary'}>
+              {phoneNumber}
+            </Typography>
+          </Box>
+
+          <LoadingButton
+            sx={{ height: 40, mt: 'auto' }}
+            variant="contained"
+            color="secondary"
+            type="submit"
+            loading={loading}
+          >
+            {t('unsubscribe')}
+          </LoadingButton>
         </Box>
-
-        {formError && (
-          <Typography color="error.main" mb={2}>
-            {formError}
-          </Typography>
-        )}
-
-        <LoadingButton
-          sx={{ width: '100%', borderRadius: 100 }}
-          variant="contained"
-          color="secondary"
-          type="submit"
-          loading={loading}
-        >
-          {t('unsubscribe')}
-        </LoadingButton>
       </form>
+      {formError && (
+        <Typography color="error.main" mb={2}>
+          {formError}
+        </Typography>
+      )}
     </Box>
   );
 };

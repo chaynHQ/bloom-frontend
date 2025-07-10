@@ -155,6 +155,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         <FormControl>
           <FormControlLabel
             label={t('contactPermissionLabel')}
+            sx={{ span: { fontSize: '1rem !important' } }}
             control={
               <Checkbox
                 sx={contactCheckboxStyle}

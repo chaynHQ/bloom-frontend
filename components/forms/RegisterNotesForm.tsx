@@ -29,6 +29,20 @@ import PhoneInput from './PhoneInput';
 const formStyle = {
   display: 'flex',
   flexDirection: 'column',
+  gap: 1,
+  maxWidth: { xs: 400, md: 600 },
+} as const;
+
+const contactPermissionLabelStyle = {
+  mr: 0,
+  span: { fontSize: { xs: '0.875rem', md: '1rem !important' } },
+} as const;
+
+const actionButtonsStyle = {
+  display: 'flex',
+  flexDirection: { xs: 'column-reverse', md: 'row' },
+  justifyContent: 'space-between',
+  alignItems: 'center',
   gap: 2,
 } as const;
 
@@ -114,7 +128,7 @@ const RegisterNotesForm = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ pt: '0.75rem !important' }}>
             <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
           </Grid>
         </Grid>
@@ -144,9 +158,10 @@ const RegisterNotesForm = () => {
           </Grid>
         </Grid>
 
-        <FormControl>
+        <FormControl sx={{ mb: 1 }}>
           <FormControlLabel
             label={t('contactPermissionLabel')}
+            sx={contactPermissionLabelStyle}
             control={
               <Checkbox
                 aria-label={t('contactPermissionLabel')}
@@ -156,7 +171,7 @@ const RegisterNotesForm = () => {
           />
         </FormControl>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={actionButtonsStyle}>
           <Typography variant="body2">
             {tNotes('haveAccount')}{' '}
             <Link component={i18nLink} href="/auth/login">
@@ -169,7 +184,7 @@ const RegisterNotesForm = () => {
             color="secondary"
             type="submit"
             loading={loading || userLoading}
-            sx={{ borderRadius: 100 }}
+            sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: 240 }}
           >
             {tNotes('createAccountButton')}
           </LoadingButton>

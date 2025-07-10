@@ -1,28 +1,30 @@
 'use client';
 
+import NoDataAvailable from '@/components/common/NoDataAvailable';
 import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
 import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import { useRouter } from '@/i18n/routing';
 import { useGetSubscriptionsUserQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import illustrationActivites from '@/public/illustration_activites.svg';
 import notesExample from '@/public/notes_example.png';
-import { Box, Card, CardContent, Container, Typography } from '@mui/material';
+import { rowStyle } from '@/styles/common';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { Box, Card, CardContent, Container, IconButton, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import NoDataAvailable from '@/components/common/NoDataAvailable';
-import { rowStyle } from '@/styles/common';
 const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: '0', md: '6.5rem ' },
+  paddingTop: { xs: 0, md: '6.5rem ' },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
     md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
@@ -41,25 +43,28 @@ const headerContentStyle = {
 
 const textContentStyle = {
   flex: 1,
-  maxWidth: 720,
+  maxWidth: 700,
 } as const;
 
 const illustrationStyle = {
   position: 'relative',
-  width: { xs: 200, md: 280 },
-  height: { xs: 200, md: 280 },
+  mt: { xs: 0, md: 6 },
+  width: { xs: 200, md: 300 },
+  height: { xs: 200, md: 300 },
   flexShrink: 0,
 } as const;
 
 const formContainerStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
-  alignItems: { xs: 'center', md: 'flex-end' },
-  gap: { xs: 4, md: 6 },
+  alignItems: { xs: 'center', md: 'flex-start' },
+  justifyContent: 'space-around',
+  gap: { xs: 4, lg: 6 },
   margin: '0 auto',
 } as const;
 
 const formCardStyle = {
+  maxWidth: 600,
   marginTop: 0,
 } as const;
 
@@ -89,11 +94,26 @@ const phoneImageStyle = {
   justifyContent: 'center',
 } as const;
 
+const backButtonStyle = {
+  display: { md: 'none' },
+  width: '2.5rem',
+  marginLeft: '-0.675rem',
+  marginY: { xs: 1.5, sm: 2 },
+  paddingRight: '1rem',
+} as const;
+
+const backIconStyle = {
+  height: '1.75rem',
+  width: '1.75rem',
+  color: 'primary.dark',
+} as const;
+
 interface Props {
   story: ISbStoryData | undefined;
 }
 
 export default function NotesPage({ story }: Props) {
+  const router = useRouter();
   const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
@@ -119,7 +139,7 @@ export default function NotesPage({ story }: Props) {
       // Unauthenticated user - show registration form
       return (
         <Box sx={formContainerStyle}>
-          <Box sx={illustrationStyle}>
+          <Box sx={{ ...illustrationStyle, my: 'auto' }}>
             <Image
               alt={tS('alt.bloomHomeIllustration')}
               src={illustrationActivites}
@@ -133,7 +153,9 @@ export default function NotesPage({ story }: Props) {
               <Typography variant="h2" component="h2">
                 {t('notes.createAccount')}
               </Typography>
-              <Typography mb={3}>{t('notes.createAccountDescription')}</Typography>
+              <Typography variant="body2" pb={2}>
+                {t('notes.createAccountDescription')}
+              </Typography>
               <RegisterNotesForm />
             </CardContent>
           </Card>
@@ -157,7 +179,9 @@ export default function NotesPage({ story }: Props) {
               <Typography variant="h2" component="h2">
                 {t('form.subscribeTitle')}
               </Typography>
-              <Typography mb={3}>{t('notes.subscribeDescription')}</Typography>
+              <Typography variant="body2" pb={2}>
+                {t('notes.subscribeDescription')}
+              </Typography>
               <WhatsappSubscribeForm />
             </CardContent>
           </Card>
@@ -182,7 +206,9 @@ export default function NotesPage({ story }: Props) {
             <Typography variant="h2" component="h2">
               {t('form.unsubscribeTitle')}
             </Typography>
-            <Typography mb={3}>{t('notes.unsubscribeDescription')}</Typography>
+            <Typography variant="body2" pb={2}>
+              {t('notes.unsubscribeDescription')}
+            </Typography>
             <WhatsappUnsubscribeForm />
           </CardContent>
         </Card>
@@ -193,6 +219,13 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Container sx={headerContainerStyle}>
+        <IconButton
+          sx={backButtonStyle}
+          onClick={() => router.back()}
+          aria-label={tS('navigateBack')}
+        >
+          <KeyboardArrowLeftIcon sx={backIconStyle} />
+        </IconButton>
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>
             <Typography variant="h1" component="h1">
