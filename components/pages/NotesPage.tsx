@@ -1,5 +1,6 @@
 'use client';
 
+import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
 import WhatsappSubscribeForm from '@/components/forms/WhatsappSubscribeForm';
 import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm';
@@ -8,11 +9,8 @@ import { useGetSubscriptionsUserQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
-import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
-import illustrationChange from '@/public/illustration_change.svg';
-import illustrationChooseTherapist from '@/public/illustration_choose_therapist.svg';
-import illustrationDateSelector from '@/public/illustration_date_selector.svg';
-import notesExample from '@/public/notes_example.jpeg';
+import illustrationActivites from '@/public/illustration_activites.svg';
+import notesExample from '@/public/notes_example.png';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
@@ -20,6 +18,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import NoDataAvailable from '@/components/common/NoDataAvailable';
+import { rowStyle } from '@/styles/common';
 const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
@@ -42,7 +41,7 @@ const headerContentStyle = {
 
 const textContentStyle = {
   flex: 1,
-  maxWidth: '700px',
+  maxWidth: 720,
 } as const;
 
 const illustrationStyle = {
@@ -64,49 +63,30 @@ const formCardStyle = {
   marginTop: 0,
 } as const;
 
-const howItWorksStyle = {
-  backgroundColor: 'background.default',
+const howItWorksContainerStyle = {
+  backgroundColor: 'secondary.light',
 } as const;
 
 const howItWorksContentStyle = {
-  maxWidth: 1200,
+  ...rowStyle,
+  flexDirection: { xs: 'column', sm: 'row' },
+  maxWidth: 1000,
   margin: '0 auto',
-  display: 'flex',
-  flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: 4, md: 6 },
-  paddingTop: { xs: 4, md: 6 },
-  alignItems: { xs: 'flex-start', md: 'flex-start' },
-} as const;
-
-const stepsContainerStyle = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 3,
-} as const;
-
-const stepStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2,
-} as const;
-
-const stepIconContainerStyle = {
-  width: 60,
-  height: 60,
-  borderRadius: '50%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-  position: 'relative',
+  gap: { xs: 8, sm: 2, md: 14 },
+  paddingTop: { xs: 4, md: 9 },
+  alignItems: { xs: 'center', md: 'flex-start' },
+  justifyContent: { xs: 'center' },
 } as const;
 
 const phoneImageStyle = {
   position: 'relative',
-  width: { xs: 280, md: 320 },
-  height: { xs: 400, md: 450 },
-  flexShrink: 0,
+  width: { xs: '85vw', sm: 350, md: 350 },
+  height: { xs: 'calc(85vw * 1.6)', sm: 500, md: 580 },
+  maxWidth: { xs: 380, sm: '45%', md: 500 },
+  maxHeight: 620,
+  flex: { md: 1 },
+  display: 'flex',
+  justifyContent: 'center',
 } as const;
 
 interface Props {
@@ -134,13 +114,6 @@ export default function NotesPage({ story }: Props) {
     return <NoDataAvailable />;
   }
 
-  const headerProps = {
-    title: story.content.title,
-    introduction: story.content.description,
-    imageSrc: story.content.header_image?.filename,
-    translatedImageAlt: story.content.header_image?.alt,
-  };
-
   const renderFormSection = () => {
     if (!userId) {
       // Unauthenticated user - show registration form
@@ -149,7 +122,7 @@ export default function NotesPage({ story }: Props) {
           <Box sx={illustrationStyle}>
             <Image
               alt={tS('alt.bloomHomeIllustration')}
-              src={illustrationBloomHeadYellow}
+              src={illustrationActivites}
               fill
               sizes={getImageSizes(illustrationStyle.width)}
               style={{ objectFit: 'contain' }}
@@ -157,7 +130,7 @@ export default function NotesPage({ story }: Props) {
           </Box>
           <Card sx={formCardStyle}>
             <CardContent>
-              <Typography variant="h2" component="h2" mb={2}>
+              <Typography variant="h2" component="h2">
                 {t('notes.createAccount')}
               </Typography>
               <Typography mb={3}>{t('notes.createAccountDescription')}</Typography>
@@ -173,7 +146,7 @@ export default function NotesPage({ story }: Props) {
           <Box sx={illustrationStyle}>
             <Image
               alt={tS('alt.bloomHomeIllustration')}
-              src={illustrationBloomHeadYellow}
+              src={illustrationActivites}
               fill
               sizes={getImageSizes(illustrationStyle.width)}
               style={{ objectFit: 'contain' }}
@@ -181,7 +154,7 @@ export default function NotesPage({ story }: Props) {
           </Box>
           <Card sx={formCardStyle}>
             <CardContent>
-              <Typography variant="h2" component="h2" mb={2}>
+              <Typography variant="h2" component="h2">
                 {t('form.subscribeTitle')}
               </Typography>
               <Typography mb={3}>{t('notes.subscribeDescription')}</Typography>
@@ -198,7 +171,7 @@ export default function NotesPage({ story }: Props) {
         <Box sx={illustrationStyle}>
           <Image
             alt={tS('alt.bloomHomeIllustration')}
-            src={illustrationBloomHeadYellow}
+            src={illustrationActivites}
             fill
             sizes={getImageSizes(illustrationStyle.width)}
             style={{ objectFit: 'contain' }}
@@ -206,7 +179,7 @@ export default function NotesPage({ story }: Props) {
         </Box>
         <Card sx={formCardStyle}>
           <CardContent>
-            <Typography variant="h2" component="h2" mb={2}>
+            <Typography variant="h2" component="h2">
               {t('form.unsubscribeTitle')}
             </Typography>
             <Typography mb={3}>{t('notes.unsubscribeDescription')}</Typography>
@@ -222,7 +195,7 @@ export default function NotesPage({ story }: Props) {
       <Container sx={headerContainerStyle}>
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>
-            <Typography variant="h1" component="h1" mb={2}>
+            <Typography variant="h1" component="h1">
               {t('notes.title')}
             </Typography>
             <Typography>{t('notes.description')}</Typography>
@@ -231,65 +204,13 @@ export default function NotesPage({ story }: Props) {
         {renderFormSection()}
       </Container>
 
-      <Container sx={howItWorksStyle}>
-        <Typography variant="h2" component="h2" mb={4} textAlign="center">
+      <Container sx={howItWorksContainerStyle}>
+        <Typography variant="h2" component="h2" textAlign="center">
           {t('notes.howItWorks')}
         </Typography>
 
         <Box sx={howItWorksContentStyle}>
-          <Box sx={stepsContainerStyle}>
-            <Box sx={stepStyle}>
-              <Box sx={stepIconContainerStyle}>
-                <Image
-                  alt={tS('alt.chooseTherapist')}
-                  src={illustrationChooseTherapist}
-                  fill
-                  sizes={getImageSizes(stepIconContainerStyle.width)}
-                  style={{ objectFit: 'contain' }}
-                />
-              </Box>
-              <Typography>{t('notes.step1')}</Typography>
-            </Box>
-
-            <Box sx={stepStyle}>
-              <Box sx={stepIconContainerStyle}>
-                <Image
-                  alt={tS('alt.dateSelector')}
-                  src={illustrationDateSelector}
-                  fill
-                  sizes={getImageSizes(stepIconContainerStyle.width)}
-                  style={{ objectFit: 'contain' }}
-                />
-              </Box>
-              <Typography>{t('notes.step2')}</Typography>
-            </Box>
-
-            <Box sx={stepStyle}>
-              <Box sx={stepIconContainerStyle}>
-                <Image
-                  alt={tS('alt.personTea')}
-                  src={illustrationChange}
-                  fill
-                  sizes={getImageSizes(stepIconContainerStyle.width)}
-                  style={{ objectFit: 'contain' }}
-                />
-              </Box>
-              <Typography>{t('notes.step3')}</Typography>
-            </Box>
-
-            <Box sx={stepStyle}>
-              <Box sx={stepIconContainerStyle}>
-                <Image
-                  alt={tS('alt.change')}
-                  src={illustrationChange}
-                  fill
-                  sizes={getImageSizes(stepIconContainerStyle.width)}
-                  style={{ objectFit: 'contain' }}
-                />
-              </Box>
-              <Typography>{t('notes.step4')}</Typography>
-            </Box>
-          </Box>
+          <NotesSteps />
 
           <Box sx={phoneImageStyle}>
             <Image
