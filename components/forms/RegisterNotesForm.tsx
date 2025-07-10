@@ -73,6 +73,8 @@ const RegisterNotesForm = () => {
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     // Validate phone number first
     const validatedNumber = validatePhoneNumber(phoneNumber);
     if (!validatedNumber) {
@@ -88,7 +90,7 @@ const RegisterNotesForm = () => {
       contactPermission: contactPermissionInput,
     });
 
-    if (success && validatedNumber) {
+    if (success) {
       // Subscribe to WhatsApp after successful registration
       logEvent(WHATSAPP_SUBSCRIBE_REQUEST);
       const subscribeResponse = await subscribeToWhatsapp({
@@ -96,6 +98,7 @@ const RegisterNotesForm = () => {
       });
 
       if (subscribeResponse.data) {
+        console.log('WhatsApp subscription successful:', subscribeResponse.data);
         logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
       } else if (subscribeResponse.error) {
         const error = getErrorMessage(subscribeResponse.error);

@@ -24,8 +24,10 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import BaseRegisterForm, { useRegisterFormLogic } from './BaseRegisterForm';
 
-const containerStyle = {
-  marginY: 3,
+const contactPermissionLabelStyle = {
+  mr: 0,
+  mt: 1,
+  span: { fontSize: { xs: '0.875rem', md: '1rem !important' } },
 } as const;
 
 const contactCheckboxStyle = {
@@ -70,6 +72,7 @@ const RegisterForm = (props: RegisterFormProps) => {
     if (validateCodeResponse.error) {
       const error = getErrorMessage(validateCodeResponse.error);
 
+      if (!error) return true;
       if (error === PARTNER_ACCESS_CODE_STATUS.ALREADY_IN_USE) {
         setFormError(t('codeErrors.alreadyInUse', { partnerName: partnerName as string }));
       } else if (error === PARTNER_ACCESS_CODE_STATUS.CODE_EXPIRED) {
@@ -91,15 +94,25 @@ const RegisterForm = (props: RegisterFormProps) => {
         );
         rollbar.error('Validate code error', validateCodeResponse.error);
         logEvent(VALIDATE_ACCESS_CODE_ERROR, { partner: partnerName, message: error });
-        return;
+        return false;
       }
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
     } else {
       logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
     }
+    return false;
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (includeCodeField) {
+      const validCode = await validateAccessCode();
+      if (!validCode) {
+        return;
+      }
+    }
+
     await handleSubmit(event, {
       partnerAccessCode: codeInput,
       name: nameInput,
@@ -108,8 +121,6 @@ const RegisterForm = (props: RegisterFormProps) => {
       contactPermission: contactPermissionInput,
       partnerId: partnerId,
     });
-
-    includeCodeField && (await validateAccessCode());
   };
 
   return (
@@ -155,7 +166,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         <FormControl>
           <FormControlLabel
             label={t('contactPermissionLabel')}
-            sx={{ span: { fontSize: '1rem !important' } }}
+            sx={contactPermissionLabelStyle}
             control={
               <Checkbox
                 sx={contactCheckboxStyle}
@@ -167,7 +178,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         </FormControl>
 
         <LoadingButton
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 1, mr: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"

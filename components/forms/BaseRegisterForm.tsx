@@ -164,7 +164,7 @@ const BaseRegisterForm = ({ children, onSubmit, formError, loading }: BaseRegist
       {children}
 
       {formError && (
-        <Typography color="error.main" mb={2}>
+        <Typography color="error.main" mb={2} pt={2}>
           {formError}
         </Typography>
       )}

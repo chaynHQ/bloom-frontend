@@ -204,7 +204,7 @@ export default function RegisterPage() {
               ) : (
                 <RegisterForm />
               )}
-              <Typography variant="body2" component="p" textAlign="center" mb={1}>
+              <Typography variant="body2" component="p" textAlign="center" mb={1} pt={2}>
                 {t.rich('register.loginRedirect', {
                   loginLink: (children) => (
                     <Link component={i18nLink} href="/auth/login">

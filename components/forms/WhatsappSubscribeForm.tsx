@@ -97,7 +97,9 @@ const WhatsappSubscribeForm = () => {
     <Box>
       <form autoComplete="off" onSubmit={subscribeHandler}>
         <Box sx={rowStyle}>
-          <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
+          <Box>
+            <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
+          </Box>
 
           <LoadingButton
             sx={{ height: 40, mt: 2 }}

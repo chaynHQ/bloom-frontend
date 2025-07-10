@@ -118,6 +118,7 @@ export default function NotesPage({ story }: Props) {
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const userId = useTypedSelector((state) => state.user.id);
+  const userLoading = useTypedSelector((state) => state.user.loading);
 
   const { data: subscriptions } = useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,
@@ -135,7 +136,7 @@ export default function NotesPage({ story }: Props) {
   }
 
   const renderFormSection = () => {
-    if (!userId) {
+    if (!userId || userLoading) {
       // Unauthenticated user - show registration form
       return (
         <Box sx={formContainerStyle}>
