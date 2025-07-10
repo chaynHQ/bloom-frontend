@@ -85,7 +85,8 @@ export default function usePWA() {
     const isStandalone =
       typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
-      typeof window !== 'undefined' && /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+      typeof window !== 'undefined' &&
+      /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
 
     const isHidden =
       pwaBannerDismissedCookie ||

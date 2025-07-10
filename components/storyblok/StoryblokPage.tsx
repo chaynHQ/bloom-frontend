@@ -43,10 +43,9 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         translatedImageAlt={headerProps.translatedImageAlt}
       />
       {!userId && isPartiallyPublicPage && <SignUpBanner />}
-      {userId &&
-        page_sections?.length > 0 &&
+      {page_sections?.length > 0 &&
         page_sections.map((section: StoryblokPageSectionProps, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!userId} />
         ))}
     </main>
   );

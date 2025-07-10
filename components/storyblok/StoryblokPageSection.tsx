@@ -8,17 +8,30 @@ import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 export interface StoryblokPageSectionProps {
+  isLoggedIn: boolean;
   _uid: string;
   _editable: string;
   content: ISbRichtext;
   color: STORYBLOK_COLORS;
   alignment: string;
+  authenticated_hide: boolean;
+  unauthenticated_hide: boolean;
 }
 
 const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
-  const { _uid, _editable, content, color, alignment } = props;
+  const {
+    isLoggedIn,
+    _uid,
+    _editable,
+    content,
+    color,
+    alignment,
+    authenticated_hide,
+    unauthenticated_hide,
+  } = props;
 
-  if (!content) return <></>;
+  if (!content || (isLoggedIn && authenticated_hide) || (!isLoggedIn && unauthenticated_hide))
+    return <></>;
 
   return (
     <Box {...storyblokEditable({ _uid, _editable, content, color, alignment })}>

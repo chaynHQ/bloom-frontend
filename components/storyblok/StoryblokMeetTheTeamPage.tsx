@@ -3,6 +3,7 @@
 import Header from '@/components/layout/Header';
 import { StoryblokTeamMemberCardProps } from '@/components/storyblok/StoryblokTeamMemberCard';
 import { MEET_THE_TEAM_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Container, Typography } from '@mui/material';
@@ -55,6 +56,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     page_section_3,
   } = props;
 
+  const userId = useTypedSelector((state) => state.user.id);
+
   useEffect(() => {
     logEvent(MEET_THE_TEAM_VIEWED);
   }, []);
@@ -84,7 +87,9 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         imageSrc={header_image.filename}
         translatedImageAlt={header_image.alt}
       />
-      {page_section_1?.length > 0 && <StoryblokPageSection {...page_section_1[0]} />}
+      {page_section_1?.length > 0 && (
+        <StoryblokPageSection {...page_section_1[0]} isLoggedIn={!!userId} />
+      )}
       <Container sx={coreContainerStyle}>
         <Typography variant="h2" component="h2">
           {core_team_title}
@@ -98,7 +103,9 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         <StoryblokTeamMembersCards team_member_items={core_team_members} cards_expandable={false} />
       </Container>
 
-      {page_section_2?.length > 0 && <StoryblokPageSection {...page_section_2[0]} />}
+      {page_section_2?.length > 0 && (
+        <StoryblokPageSection {...page_section_2[0]} isLoggedIn={!!userId} />
+      )}
 
       <Container sx={supportingContainerStyle}>
         <Typography variant="h2" component="h2">
@@ -113,7 +120,9 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         />
       </Container>
 
-      {page_section_3?.length > 0 && <StoryblokPageSection {...page_section_3[0]} />}
+      {page_section_3?.length > 0 && (
+        <StoryblokPageSection {...page_section_3[0]} isLoggedIn={!!userId} />
+      )}
     </Box>
   );
 };

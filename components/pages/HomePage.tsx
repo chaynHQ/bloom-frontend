@@ -21,6 +21,7 @@ interface Props {
 export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
+  const userId = useTypedSelector((state) => state.user.id);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
@@ -64,11 +65,15 @@ export default function HomePage({ story }: Props) {
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => {
           if (section.component === 'notes_from_bloom_promo') {
-            return (
-              <StoryblokNotesFromBloomPromo key={`notes_from_bloom_promo_${index}`} />
-            );
+            return <StoryblokNotesFromBloomPromo key={`notes_from_bloom_promo_${index}`} />;
           }
-          return <StoryblokPageSection key={`page_section_${index}`} {...section} />;
+          return (
+            <StoryblokPageSection
+              key={`page_section_${index}`}
+              {...section}
+              isLoggedIn={!!userId}
+            />
+          );
         })}
     </Box>
   );

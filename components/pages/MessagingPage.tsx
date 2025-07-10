@@ -73,7 +73,11 @@ export default function MessagingPage({ story }: Props) {
           </Container>
           {story.content.page_sections?.length > 0 &&
             story.content.page_sections.map((section: any, index: number) => (
-              <StoryblokPageSection key={`page_section_${index}`} {...section} />
+              <StoryblokPageSection
+                key={`page_section_${index}`}
+                {...section}
+                isLoggedIn={!!userId}
+              />
             ))}
         </>
       ) : (
