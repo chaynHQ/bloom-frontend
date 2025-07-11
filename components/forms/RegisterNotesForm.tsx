@@ -1,6 +1,7 @@
 'use client';
 import { Link as i18nLink } from '@/i18n/routing';
 import { useSubscribeToWhatsappMutation } from '@/lib/api';
+import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '@/lib/constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -98,14 +99,20 @@ const RegisterNotesForm = () => {
       });
 
       if (subscribeResponse.data) {
-        console.log('WhatsApp subscription successful:', subscribeResponse.data);
         logEvent(WHATSAPP_SUBSCRIBE_SUCCESS);
       } else if (subscribeResponse.error) {
         const error = getErrorMessage(subscribeResponse.error);
         if (error === WHATSAPP_SUBSCRIPTION_STATUS.ALREADY_EXISTS) {
-          setFormError(tWhatsapp('subscribeErrors.alreadyExists'));
         } else {
-          setFormError(tWhatsapp('subscribeErrors.internal'));
+          setFormError(
+            tWhatsapp.rich('subscribeErrors.internal', {
+              contactLink: (children) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {children}
+                </Link>
+              ),
+            }),
+          );
         }
         logEvent(WHATSAPP_SUBSCRIBE_ERROR, { message: error });
       }

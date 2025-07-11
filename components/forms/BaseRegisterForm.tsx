@@ -144,9 +144,9 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
     setFormError('');
     logEvent(REGISTER_REQUEST);
 
-    await createUserRecord(formData);
+    const isSuccess = await createUserRecord(formData);
     setLoading(false);
-    return true;
+    return isSuccess;
   };
 
   return {
