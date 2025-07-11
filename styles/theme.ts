@@ -319,6 +319,9 @@ theme = createTheme(theme, {
         root: {
           backgroundColor: theme.palette.common.white,
           marginTop: 20,
+          boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+
+          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             marginTop: 0,
@@ -329,8 +332,10 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
+          backgroundColor: theme.palette.background.default,
           padding: 24,
           paddingTop: 30,
+          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             padding: 40,
@@ -347,11 +352,11 @@ theme = createTheme(theme, {
         root: {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.main,
-            opacity: 0.2,
+            opacity: 0.4,
           },
         },
         focusHighlight: {
-          backgroundColor: theme.palette.primary.dark,
+          backgroundColor: theme.palette.secondary.main,
         },
       },
     },
