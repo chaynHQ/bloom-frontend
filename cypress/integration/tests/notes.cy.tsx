@@ -1,6 +1,7 @@
 describe('Notes from Bloom page', () => {
   const SUBSCRIPTION_WHATSAPP_PAGE_URL = '/subscription/whatsapp';
   const INVALID_PHONE = '0101';
+  const VALID_PHONE = '7123456789';
 
   describe('Unauthenticated user', () => {
     beforeEach(() => {
@@ -33,9 +34,13 @@ describe('Notes from Bloom page', () => {
     const TEST_EMAIL = `cypresstestemail+${Date.now()}@chayn.co`;
     const TEST_PASSWORD = 'testpassword123';
 
-    beforeEach(() => {
+    before(() => {
       cy.cleanUpTestState();
       cy.createUser({ emailInput: TEST_EMAIL, passwordInput: TEST_PASSWORD });
+    });
+
+    beforeEach(() => {
+      cy.cleanUpTestState();
       cy.logInWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD);
 
       // Mock empty subscriptions response
@@ -68,21 +73,19 @@ describe('Notes from Bloom page', () => {
     });
 
     it('should handle successful subscription', () => {
-      const validPhoneNumber = '+447700900000';
-
       // Mock successful subscription response
       cy.intercept('POST', '**/subscription-user/whatsapp', {
         statusCode: 200,
         body: {
           id: 'test-subscription-id',
           subscriptionName: 'whatsapp',
-          subscriptionInfo: validPhoneNumber,
+          subscriptionInfo: VALID_PHONE,
           createdAt: new Date().toISOString(),
           cancelledAt: null,
         },
       }).as('subscribeToWhatsapp');
 
-      cy.get('input[type="tel"]').type(validPhoneNumber);
+      cy.get('input[type="tel"]').type(VALID_PHONE);
       cy.get('button[type="submit"]').contains('Subscribe').click();
 
       cy.wait('@subscribeToWhatsapp');
@@ -93,7 +96,7 @@ describe('Notes from Bloom page', () => {
         {
           id: 'test-subscription-id',
           subscriptionName: 'whatsapp',
-          subscriptionInfo: validPhoneNumber,
+          subscriptionInfo: VALID_PHONE,
           createdAt: new Date().toISOString(),
           cancelledAt: null,
         },
@@ -116,9 +119,13 @@ describe('Notes from Bloom page', () => {
     const TEST_PASSWORD = 'testpassword123';
     const PHONE_NUMBER = '+447700900000';
 
-    beforeEach(() => {
+    before(() => {
       cy.cleanUpTestState();
       cy.createUser({ emailInput: TEST_EMAIL, passwordInput: TEST_PASSWORD });
+    });
+
+    beforeEach(() => {
+      cy.cleanUpTestState();
       cy.logInWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD);
 
       // Mock subscriptions response with active WhatsApp subscription

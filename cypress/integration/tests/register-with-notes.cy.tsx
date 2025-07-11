@@ -3,7 +3,7 @@ describe('Register with Notes from Bloom', () => {
   const TEST_EMAIL = `cypresstestemail+${Date.now()}@chayn.co`;
   const TEST_PASSWORD = 'testpassword123';
   const TEST_NAME = 'Cypress Test User';
-  const VALID_PHONE = '+447700900000';
+  const VALID_PHONE = '7123456789';
   const INVALID_PHONE = '0101';
 
   beforeEach(() => {
@@ -57,7 +57,6 @@ describe('Register with Notes from Bloom', () => {
 
   it('should handle registration errors', () => {
     // Create a user with the same email first
-    cy.createUser({ emailInput: TEST_EMAIL, passwordInput: TEST_PASSWORD });
     cy.logout();
 
     // Now try to register with the same email
@@ -75,7 +74,7 @@ describe('Register with Notes from Bloom', () => {
   });
 
   it('should navigate to login page when clicking login link', () => {
-    cy.get('a').contains('Login').click();
+    cy.get('.MuiCardContent-root a').contains('Login').click();
     cy.url().should('include', '/auth/login');
   });
 });

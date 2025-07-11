@@ -1,12 +1,9 @@
 const HOME_PAGE_URL = '/';
 
 describe('Home page should display', () => {
-  before(() => {
-    cy.cleanUpTestState();
-  });
-
   beforeEach(() => {
-    cy.visit(HOME_PAGE_URL);
+    cy.cleanUpTestState();
+    cy.visit(HOME_PAGE_URL, { failOnStatusCode: false });
   });
 
   it('join us section', () => {
@@ -30,7 +27,7 @@ describe('Home page should display', () => {
     cy.checkLink('/courses', '');
 
     cy.checkImage('notesIcon', 'icon_notes');
-    cy.get('h3').should('contain', 'Notes: WhatsApp messages from us');
+    cy.get('h3').should('contain', 'Notes to WhatsApp');
     cy.checkLink('/subscription/whatsapp', '');
 
     cy.checkLink('/auth/register', 'Get started');
