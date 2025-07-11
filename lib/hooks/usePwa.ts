@@ -29,6 +29,7 @@ export default function usePWA() {
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
 
   const getPwaMetaData = useMemo(() => {
+    if (!window) return { browser: 'Unknown', platform: 'Unknown' };
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'

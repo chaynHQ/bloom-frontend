@@ -56,7 +56,7 @@ const Column = (props: ColumnProps) => {
                       : width === 'mobile-med-desktop-full'
                         ? { xs: `40%`, md: '100%' }
                         : { xs: `100%`, md: 'auto' },
-    ...(!width ? { flex: { md: 1 } } : {}),
+    ...(!width && { flex: { md: 1 } }),
   };
   return <Box sx={columnStyles}>{children}</Box>;
 };

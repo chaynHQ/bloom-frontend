@@ -1,6 +1,7 @@
 'use client';
 
 import usePWA from '@/lib/hooks/usePwa';
+import { rowStyle } from '@/styles/common';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Button, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -14,26 +15,30 @@ export const DesktopPwaBanner = () => {
 
   if (isSmallScreen || bannerState === 'Hidden') return null;
 
+  const bannerStyle = {
+    ...rowStyle,
+    position: 'fixed',
+    zIndex: 1000,
+    px: 2,
+    py: 1.5,
+    maxWidth: { md: 720, lg: 800 },
+    minWidth: { md: 640, lg: 800 },
+    top: { md: 150, lg: 160 },
+    alignItems: 'center',
+    gap: 2,
+    justifyContent: bannerState === 'Generic' ? 'space-between' : 'flex-start',
+    backgroundColor: 'common.white',
+    width: 'auto',
+  } as const;
+
   return (
-    <Paper
-      elevation={1}
-      sx={{
-        px: 2,
-        py: 1.5,
-        display: 'flex',
-        alignItems: 'center',
-        gap: bannerState === 'Generic' ? 0 : '1rem',
-        justifyContent: bannerState === 'Generic' ? 'space-between' : 'flex-start',
-        backgroundColor: 'common.white',
-        width: '100%',
-      }}
-    >
+    <Paper elevation={1} sx={bannerStyle}>
       <Typography variant="body2" sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
         {t(bannerState === 'Generic' ? 'mobileDescription' : 'iosDescription')}
       </Typography>
 
       {bannerState === 'Generic' ? (
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={1}>
           <Button
             onClick={declineInstallation}
             variant="outlined"
