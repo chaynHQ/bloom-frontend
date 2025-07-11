@@ -2,10 +2,10 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const cardStyle = {
   mt: 0,
@@ -46,7 +46,7 @@ interface ShortsCardProps {
 const categoryStyle = {
   fontFamily: 'Montserrat, sans-serif',
   fontSize: '0.875rem !important',
-  fontWeight: 600,
+  fontweight: 500,
   textTransform: 'uppercase',
   mb: '0.5rem !important',
   '& .before-dot:before': {
