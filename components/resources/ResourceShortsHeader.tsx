@@ -10,8 +10,9 @@ import logEvent from '@/lib/utils/logEvent';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Box, Button, Container, Typography } from '@mui/material';
-import { ISbRichtext, ISbStoryData } from '@storyblok/react/rsc';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
 const headerRightStyle = {
@@ -34,7 +35,7 @@ interface ResourceShortHeaderProps {
   relatedSession?: ISbStoryData;
   relatedCourse?: ISbStoryData;
   video: { url: string };
-  video_transcript: ISbRichtext;
+  video_transcript: StoryblokRichtext;
   eventData: { [key: string]: any };
 }
 

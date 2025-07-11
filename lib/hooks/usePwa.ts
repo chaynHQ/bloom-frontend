@@ -2,10 +2,15 @@
 
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import { setPwaDismissed } from '@/lib/store/userSlice';
-import logEvent from '@/lib/utils/logEvent';
 import Cookies from 'js-cookie';
-import { useEffect, useMemo, useState } from 'react';
-import { PWA_DISMISSED, PWA_INSTALLED } from '../constants/events';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  PWA_DISMISS_CLICKED,
+  PWA_DISMISSED,
+  PWA_INSTALL_CLICKED,
+  PWA_INSTALLED,
+} from '../constants/events';
+import logEvent, { getEventUserData } from '../utils/logEvent';
 
 type UserChoice = Promise<{
   outcome: 'accepted' | 'dismissed';
@@ -27,9 +32,16 @@ export default function usePWA() {
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
-
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const isWindowDefined = typeof window !== 'undefined';
   const getPwaMetaData = useMemo(() => {
-    if (!window) return { browser: 'Unknown', platform: 'Unknown' };
+    if (typeof window === 'undefined') {
+      return { browser: 'Unknown Browser', platform: 'Unknown OS' };
+    }
+
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'
@@ -52,7 +64,14 @@ export default function usePWA() {
               : 'Unknown Browser';
 
     return { browser, platform };
-  }, []);
+  }, [isWindowDefined]);
+
+  const analyticsPayload = useMemo(() => {
+    return {
+      ...eventUserData,
+      ...getPwaMetaData,
+    };
+  }, [eventUserData, getPwaMetaData]);
 
   const declineInstallation = async () => {
     if (userCookiesAccepted) {
@@ -61,12 +80,18 @@ export default function usePWA() {
     }
     setBannerState('Hidden');
     await dispatch(setPwaDismissed(true));
+
+    // Log the event for dismissing the installation
+    logEvent(PWA_DISMISS_CLICKED, analyticsPayload);
   };
   const install = () => {
     (window?.beforeinstallpromptEvent as BeforeInstallPromptEvent)?.prompt();
     setInstallAttempted(true);
+
+    // Log the event for clicking the install button
+    logEvent(PWA_INSTALL_CLICKED, analyticsPayload);
   };
-  const appInstalledCb = () => {
+  const appInstalledCb = useCallback(() => {
     /**
      * Clear the cached beforeinstallpromptEvent after installation.
      *
@@ -79,12 +104,14 @@ export default function usePWA() {
     }
     window.beforeinstallpromptEvent = undefined;
     setBannerState('Hidden');
-  };
+
+    // Log the event for app installation
+    logEvent(PWA_INSTALLED, analyticsPayload);
+  }, [userCookiesAccepted, getPwaMetaData, analyticsPayload]);
 
   useEffect(() => {
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
-    const isStandalone =
-      typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
+    const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
       typeof window !== 'undefined' &&
       /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
@@ -104,11 +131,12 @@ export default function usePWA() {
     return () => {
       window.removeEventListener('appinstalled', appInstalledCb);
     };
-  }, [user.pwaDismissed, installAttempted, bannerState]);
+  }, [user.pwaDismissed, installAttempted, bannerState, appInstalledCb]);
 
   return {
     declineInstallation,
     install,
     bannerState,
+    getPwaMetaData,
   };
 }

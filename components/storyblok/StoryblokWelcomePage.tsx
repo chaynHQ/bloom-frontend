@@ -9,7 +9,7 @@ import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
 } from '@/lib/constants/events';
-import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
+import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import logEvent from '@/lib/utils/logEvent';
@@ -17,11 +17,11 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -46,7 +46,7 @@ export interface StoryblokWelcomePageProps {
   _editable: string;
   storySlug: string;
   title: string;
-  introduction: ISbRichtext;
+  introduction: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   page_sections: StoryblokPageSectionProps[];
 }

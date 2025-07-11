@@ -15,10 +15,11 @@ import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Container, Link, Typography } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
+import { storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import LoadingContainer from '../common/LoadingContainer';
 
 const containerStyle = {
@@ -40,11 +41,11 @@ export interface StoryblokCoursePageProps {
   _uid: string;
   _editable: string;
   name: string;
-  description: ISbRichtext;
+  description: StoryblokRichtext;
   image: { filename: string; alt: string };
   image_with_background: { filename: string; alt: string };
   video: { url: string };
-  video_transcript: ISbRichtext;
+  video_transcript: StoryblokRichtext;
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
   included_for_partners: string[];
   languages: string[]; // TODO: implement this field - currently uses FF_DISABLED_COURSES env var

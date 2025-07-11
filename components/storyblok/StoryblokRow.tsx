@@ -4,14 +4,14 @@ import Column from '@/components/common/Column';
 import Row from '@/components/common/Row';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box } from '@mui/material';
-import { ISbRichtext, storyblokEditable } from '@storyblok/react/rsc';
-import { render } from 'storyblok-rich-text-react-renderer';
+import { storyblokEditable } from '@storyblok/react/rsc';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokBlok, StoryblokColumn } from './StoryblokTypes';
 
 interface StoryblokRowProps {
   _uid: string;
   _editable: string;
-  columns: StoryblokColumn | StoryblokColumn[] | ISbRichtext;
+  columns: StoryblokColumn | StoryblokColumn[] | StoryblokRichtext;
   horizontal_alignment: string;
   vertical_alignment: string;
 }
