@@ -57,7 +57,7 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '1.875rem',
       fontWeight: 400,
-      marginBottom: '1rem',
+      marginBottom: '1.25rem',
     },
     h3: {
       fontFamily: 'var(--font-montserrat)',
@@ -112,11 +112,21 @@ theme = createTheme(theme, {
             paddingLeft: '5% !important',
             paddingRight: '5% !important',
           },
-          [theme.breakpoints.up('lg')]: {
+          [theme.breakpoints.up('md')]: {
             paddingTop: 100,
             paddingBottom: 100,
+            paddingLeft: '2rem !important',
+            paddingRight: '2rem !important',
+          },
+          [theme.breakpoints.up('lg')]: {
+            paddingTop: 120,
+            paddingBottom: 120,
             paddingLeft: 'calc((100vw - 1000px) / 2) !important',
             paddingRight: 'calc((100vw - 1000px) / 2) !important',
+            ':first-of-type': {
+              paddingTop: 100,
+              paddingBottom: 100,
+            },
           },
         },
       },
@@ -314,6 +324,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           backgroundColor: theme.palette.common.white,
+          boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
           marginTop: 20,
 
           [theme.breakpoints.up('md')]: {
