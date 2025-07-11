@@ -1,10 +1,5 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "We send messages to your WhatsApp number",
-      "step2": "The messages are sent twice a week, on Wednesdays and Sundays",
-      "step3": "If you change your mind, you can un-subscribe or resubscribe at any time"
-    },
     "form": {
       "subscribeTitle": "Subscribe to Notes",
       "subscribe": "Subscribe",

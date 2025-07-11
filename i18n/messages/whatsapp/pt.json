@@ -1,10 +1,5 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Enviamos mensagens para o seu número de WhatsApp",
-      "step2": "As mensagens são enviadas duas vezes por semana, às quartas e domingos",
-      "step3": "Se mudar de ideia, você pode cancelar a assinatura ou assinar novamente a qualquer momento"
-    },
     "form": {
       "subscribeTitle": "Assine as Notas",
       "subscribe": "Assinar",

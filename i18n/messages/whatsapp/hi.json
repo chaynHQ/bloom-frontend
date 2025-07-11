@@ -1,10 +1,5 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Hum aapko aapke WhatsApp number par messages bhejenge",
-      "step2": "Hum aapko hafte mein do baar messages bhejenge - Budhvaar (Wednesday) aur Ravivaar (Sunday)",
-      "step3": "Agar aapka mann badal jaye, toh aap kabhi bhi unsubscribe ya resubscribe kar sakte hain"
-    },
     "form": {
       "subscribeTitle": "Notes ke liye Subscribe karein",
       "subscribe": "Subscribe",

@@ -1,10 +1,5 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Enviamos mensajes a tu número de WhatsApp",
-      "step2": "Los mensajes se envían dos veces por semana, los miércoles y los domingos",
-      "step3": "Si cambias de opinión, puedes darte de baja o volver a suscribirte en cualquier momento"
-    },
     "form": {
       "subscribeTitle": "Suscríbete a Notas",
       "subscribe": "Suscribirse",

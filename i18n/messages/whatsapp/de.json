@@ -1,10 +1,5 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Wir senden Nachrichten an Deine WhatsApp-Nummer",
-      "step2": "Die Nachrichten werden zweimal pro Woche verschickt, mittwochs und sonntags",
-      "step3": "Wenn Du Deine Meinung änderst, kannst Du Dich jederzeit abmelden oder neu anmelden"
-    },
     "form": {
       "subscribeTitle": "Abonniere Notes",
       "subscribe": "Abonnieren",
