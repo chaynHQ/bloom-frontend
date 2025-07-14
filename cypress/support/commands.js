@@ -195,6 +195,19 @@ Cypress.Commands.add('visitFrenchPage', (url) => {
   });
 });
 
+Cypress.Commands.add('visitPortuguesePage', (url) => {
+  cy.visit(`/pt/${url}`, {
+    onBeforeLoad(win) {
+      Object.defineProperty(win.navigator, 'language', { value: 'pt-PT' });
+      Object.defineProperty(win.navigator, 'languages', { value: ['pt'] });
+      Object.defineProperty(win.navigator, 'accept_languages', { value: ['pt'] });
+    },
+    headers: {
+      'Accept-Language': 'pt',
+    },
+  });
+});
+
 Cypress.Commands.add('checkImage', (alt, subSrc) => {
   const image = cy.get(`img[alt="${alt}"]`);
   image.should('exist');
