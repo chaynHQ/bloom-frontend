@@ -10,7 +10,7 @@ describe('Notes from Bloom page', () => {
     });
 
     it('should display the page header and title', () => {
-      cy.get('h1').should('contain', 'Sign up to Notes from Bloom');
+      cy.get('h1').should('contain', 'Subscribe to Notes from Bloom');
       cy.get('p').should('contain', 'The path to healing can be lonely and sometimes thorny');
     });
 
