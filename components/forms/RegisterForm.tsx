@@ -99,6 +99,7 @@ const RegisterForm = (props: RegisterFormProps) => {
       logEvent(VALIDATE_ACCESS_CODE_INVALID, { partner: partnerName, message: error });
     } else {
       logEvent(VALIDATE_ACCESS_CODE_SUCCESS, { partner: partnerName });
+      return true;
     }
     return false;
   };
