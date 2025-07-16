@@ -2,6 +2,9 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import { RELATED_CONTENT_CARD_CLICK } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -35,12 +38,25 @@ interface RelatedContentProps {
 
 export const RelatedContentCard = (props: RelatedContentProps) => {
   const { title, href, category, duration } = props;
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
   const t = useTranslations('Shared.relatedContent');
+  const handleClick = () => {
+    logEvent(RELATED_CONTENT_CARD_CLICK, eventUserData);
+  };
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={href} component={i18nLink}>
+      <CardActionArea
+        href={href}
+        component={i18nLink}
+        onClick={() => {
+          handleClick();
+        }}
+      >
         <CardContent sx={{ minHeight: 238 }}>
           <Box position="relative" width="100%" paddingRight={3}>
             <Box>
