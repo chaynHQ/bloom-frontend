@@ -152,7 +152,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       </Container>
       {page_sections?.length > 0 &&
         page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!userId} />
         ))}
     </Box>
   );

@@ -24,7 +24,7 @@
       "nameLabel": "Nome/apelido",
       "emailLabel": "E-mail",
       "passwordLabel": "Senha",
-      "contactPermissionLabel": "Podemos enviar um e-mail para saber sua opinião sobre como melhorar o Bloom?",
+      "contactPermissionLabel": "Receba e-mails sobre novos recursos e oportunidades para partilhar o seu feedback connosco.",
       "registerSubmit": "Criar uma conta",
       "resetPasswordStep1": "Enviaremos um e-mail para você começar a redefinir sua senha.",
       "resetPasswordStep2": "Estamos quase lá! Agora você pode definir sua nova senha.",
