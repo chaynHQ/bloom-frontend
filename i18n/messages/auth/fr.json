@@ -25,6 +25,7 @@
       "emailLabel": "E-mail",
       "passwordLabel": "Mot de passe",
       "contactPermissionLabel": "Recevez des e-mails concernant les nouvelles ressources et les opportunités de partager vos commentaires avec nous.",
+      "registerSubmit": "Créer un compte",
       "resetPasswordStep1": "Nous vous enverrons un lien pour réinitialiser votre mot de passe.",
       "resetPasswordStep2": "Vous y êtes presque ! Vous pouvez maintenant créer un nouveau mot de passe.",
       "resetPasswordSubmit": "Réinitialiser le mot de passe",
