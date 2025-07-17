@@ -6,6 +6,7 @@ import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import DynamicComponent from './DynamicComponent';
 
 export interface StoryblokPageProps {
@@ -42,6 +43,7 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
       />
+      {!userId && isPartiallyPublicPage && <NotesFromBloomPromo />}
       {!userId && isPartiallyPublicPage && <SignUpBanner />}
       {userId &&
         page_sections?.length > 0 &&
