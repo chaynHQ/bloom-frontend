@@ -1,9 +1,7 @@
 'use client';
 
 import PartnerHeader from '@/components/layout/PartnerHeader';
-import StoryblokPageSection, {
-  StoryblokPageSectionProps,
-} from '@/components/storyblok/StoryblokPageSection';
+import { StoryblokPageSectionProps } from '@/components/storyblok/StoryblokPageSection';
 import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
 import {
   generatePartnerPromoGetStartedEvent,
@@ -22,6 +20,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import DynamicComponent from './DynamicComponent';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -152,7 +151,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       </Container>
       {page_sections?.length > 0 &&
         page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!userId} />
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
         ))}
     </Box>
   );

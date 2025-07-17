@@ -12,6 +12,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import DynamicComponent from '../storyblok/DynamicComponent';
 
 const messageRowStyle = {
@@ -77,7 +78,10 @@ export default function MessagingPage({ story }: Props) {
             ))}
         </>
       ) : (
-        <SignUpBanner />
+        <>
+          <NotesFromBloomPromo />
+          <SignUpBanner />
+        </>
       )}
     </Box>
   );
