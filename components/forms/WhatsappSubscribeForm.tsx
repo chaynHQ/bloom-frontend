@@ -10,8 +10,9 @@ import {
 } from '@/lib/constants/events';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
+import { rowStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Card, CardContent, Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
@@ -19,10 +20,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'react-international-phone/style.css';
 import PhoneInput from './PhoneInput';
-
-const containerStyle = {
-  marginY: 3,
-} as const;
 
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
@@ -97,33 +94,30 @@ const WhatsappSubscribeForm = () => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography variant="h2" component="h2">
-          {t('subscribeTitle')}
-        </Typography>
-        <Box sx={containerStyle}>
-          <form autoComplete="off" onSubmit={subscribeHandler}>
-            <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} />
-            {formError && (
-              <Typography color="error.main" mb={2}>
-                {formError}
-              </Typography>
-            )}
-            <LoadingButton
-              sx={{ mt: 2, mr: 1.5 }}
-              variant="contained"
-              fullWidth
-              color="secondary"
-              type="submit"
-              loading={loading}
-            >
-              {t('subscribe')}
-            </LoadingButton>
-          </form>
+    <Box>
+      <form autoComplete="off" onSubmit={subscribeHandler}>
+        <Box sx={rowStyle}>
+          <Box>
+            <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
+          </Box>
+
+          <LoadingButton
+            sx={{ height: 40, mt: 2 }}
+            variant="contained"
+            color="secondary"
+            type="submit"
+            loading={loading}
+          >
+            {t('subscribe')}
+          </LoadingButton>
         </Box>
-      </CardContent>
-    </Card>
+      </form>
+      {formError && (
+        <Typography color="error.main" mb={2}>
+          {formError}
+        </Typography>
+      )}
+    </Box>
   );
 };
 

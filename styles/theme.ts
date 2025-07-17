@@ -50,7 +50,7 @@ let theme = createTheme({
     h1: {
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
-      fontWeight: 500,
+      fontWeight: 400,
       marginBottom: '1.75rem',
     },
     h2: {
@@ -67,7 +67,7 @@ let theme = createTheme({
     },
     h4: {
       fontSize: '1rem',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     subtitle1: {
       fontSize: '1.375rem',
@@ -76,12 +76,14 @@ let theme = createTheme({
     },
     body1: {
       fontSize: '1rem',
+      lineHeight: 1.5,
       '@media (min-width:1200px)': {
         fontSize: '1.125rem',
       },
     },
     body2: {
       fontSize: '0.875rem',
+      lineHeight: 1.5,
       '@media (min-width:1200px)': {
         fontSize: '1rem',
       },
@@ -105,12 +107,14 @@ theme = createTheme(theme, {
           maxWidth: '100% !important',
           paddingTop: 60,
           paddingBottom: 60,
+          paddingLeft: '1.5rem !important',
+          paddingRight: '1.5rem !important',
 
           [theme.breakpoints.up('sm')]: {
             paddingTop: 80,
             paddingBottom: 80,
-            paddingLeft: '5% !important',
-            paddingRight: '5% !important',
+            paddingLeft: '2rem !important',
+            paddingRight: '2rem !important',
           },
           [theme.breakpoints.up('lg')]: {
             paddingTop: 100,
@@ -315,6 +319,9 @@ theme = createTheme(theme, {
         root: {
           backgroundColor: theme.palette.common.white,
           marginTop: 20,
+          boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+
+          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             marginTop: 0,
@@ -325,8 +332,10 @@ theme = createTheme(theme, {
     MuiCardContent: {
       styleOverrides: {
         root: {
+          backgroundColor: theme.palette.background.default,
           padding: 24,
           paddingTop: 30,
+          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             padding: 40,
@@ -343,11 +352,11 @@ theme = createTheme(theme, {
         root: {
           '& .MuiTouchRipple-root span': {
             backgroundColor: theme.palette.primary.main,
-            opacity: 0.2,
+            opacity: 0.4,
           },
         },
         focusHighlight: {
-          backgroundColor: theme.palette.primary.dark,
+          backgroundColor: theme.palette.secondary.main,
         },
       },
     },
