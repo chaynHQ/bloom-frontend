@@ -48,7 +48,7 @@ const tabStyle = {
   flexDirection: 'row',
   textTransform: 'none',
   fontSize: theme.typography.body1.fontSize,
-  fontWeight: 600,
+  fontweight: 500,
   padding: 0.25,
   color: 'text.primary',
   '& .material-icons ': { mb: 0, mr: 1.5 },

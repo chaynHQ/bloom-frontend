@@ -28,7 +28,7 @@ import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
+  weight: ['300', '400', '500'],
   variable: '--font-open-sans',
   display: 'swap',
 });
