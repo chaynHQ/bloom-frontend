@@ -210,7 +210,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
           <ResourceCarousel title="shorts-carousel" resources={shorts} />
         </Container>
       )}
-      {userId && <NotesFromBloomPromo />}
+      <NotesFromBloomPromo />
       {!userId && <SignUpBanner />}
       {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
