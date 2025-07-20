@@ -43,6 +43,9 @@ const themes = {
     },
   }, // uses default styling
   secondary: {
+    backgroundColor: 'secondary.light',
+  },
+  default: {
     '& .MuiAccordionSummary-expandIconWrapper': { color: 'primary.dark' },
     backgroundColor: 'paleSecondaryLight',
   },

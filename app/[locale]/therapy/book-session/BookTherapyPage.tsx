@@ -298,7 +298,7 @@ export default function BookTherapyPage({ story }: Props) {
 
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+          <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!user.id} />
         ))}
 
       <Modal

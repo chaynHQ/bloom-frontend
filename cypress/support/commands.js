@@ -130,7 +130,7 @@ Cypress.Commands.add('deleteCypressAccessCodes', () => {
 });
 
 Cypress.Commands.add('cleanUpTestState', () => {
-  cy.visit('/');
+  cy.visit('/', { failOnStatusCode: false });
   cy.getAuthEmail().then((email) => {
     if (email) {
       cy.logout();

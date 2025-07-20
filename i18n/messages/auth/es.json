@@ -24,7 +24,7 @@
       "nameLabel": "Primer nombre/apodo",
       "emailLabel": "Email",
       "passwordLabel": "Contraseña",
-      "contactPermissionLabel": "¿Podemos enviarte correos sobre tu opinión acerca de cómo mejorar Bloom?",
+      "contactPermissionLabel": "Reciba correos electrónicos sobre nuevos recursos y oportunidades para compartir sus comentarios con nosotros.",
       "registerSubmit": "Crea una cuenta",
       "resetPasswordStep1": "Te enviaremos un email para empezar a recuperar tu contraseña.",
       "resetPasswordStep2": "¡Ya casi! Ahora puedes crear tu nueva contraseña.",

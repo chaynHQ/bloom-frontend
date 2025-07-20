@@ -1,24 +1,35 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Hum aapko aapke WhatsApp number par messages bhejenge.",
-      "step2": "Hum aapko hafte mein do baar messages bhejenge - Budhvaar (Wednesday) aur Ravivaar (Sunday).",
-      "step3": "Agar aapka mann badal jaye, toh aap kabhi bhi unsubscribe ya resubscribe kar sakte hain."
-    },
     "form": {
-      "subscribeTitle": "Subscribe kariye Notes from Bloom ke messages ke liye.",
+      "subscribeTitle": "Notes ke liye Subscribe karein",
       "subscribe": "Subscribe",
       "phoneNumber": "Phone number",
-      "unsubscribeTitle": "Manage your subscription",
+      "unsubscribeTitle": "Aap Notes ke liye subscribed hain",
       "unsubscribe": "Unsubscribe",
       "subscribeErrors": {
-        "invalidNumber": "Apka phone number amaanya prateet hota hai. appears to be invalid. Kriya jo bhi error hai usko theek karein aur firse prayas kariye. ",
+        "invalidNumber": "Apka phone number amaanya prateet hota hai. Kriya jo bhi error hai usko theek karein aur firse prayas kariye.",
         "internal": "WhatsApp ko subscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye</contactLink>.",
         "alreadyExists": "Apke user ke liye WhatsApp subscription pehle se he ho rakha hai. Yadi yeh ek galti hai, toh kripya <contactLink>Bloom team ko message kariye</contactLink>."
       },
       "unsubscribeErrors": {
-        "internal": "There was an error unsubscribing from WhatsApp. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "internal": "WhatsApp se unsubscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye</contactLink>."
       }
+    },
+    "notes": {
+      "title": "Bloom se Notes ke liye sign up karein",
+      "description": "Healing ka raasta akela aur kabhi-kabhi kathin ho sakta hai. Hamare Bloom se Notes hafte mein do baar aane wale reminders, encouragement, affirmations, aur hamare courses se activities hain, jo seedhe aapke phone par bheje jaate hain taaki aapki healing journey mein madad mil sake.",
+      "createAccount": "Account banayein",
+      "createAccountDescription": "Bloom se Notes ke liye sign up karein aur hamari resources ki platform tak pahunch prapt karein.",
+      "haveAccount": "Pehle se account hai?",
+      "login": "Login",
+      "createAccountButton": "Account banayein",
+      "howItWorks": "Bloom se Notes kaise kaam karte hain",
+      "step1": "Hum aapke WhatsApp number par messages bhejte hain",
+      "step2": "Har hafte do baar, har Budhvaar aur Ravivaar",
+      "step3": "Hum affirmations, activities aur reflections share karte hain",
+      "step4": "Agar aap apna mann badlein toh kisi bhi samay unsubscribe kar sakte hain",
+      "subscribeDescription": "WhatsApp messages prapt karna shuru karne ke liye Bloom se Notes ke liye subscribe karein. Yahan kabhi bhi unsubscribe karein.",
+      "unsubscribeDescription": "WhatsApp messages band karne ke liye ya apna number update karne ke liye Bloom se Notes se unsubscribe karein. Kabhi bhi dobara subscribe kar sakte hain."
     }
   }
 }

@@ -19,7 +19,7 @@ const cardStyle = {
 const categoryStyle = {
   fontFamily: 'Montserrat, sans-serif',
   fontSize: '0.875rem !important',
-  fontWeight: 600,
+  fontweight: 500,
   textTransform: 'uppercase',
   mb: '0.5rem !important',
   '& .before-dot:before': {

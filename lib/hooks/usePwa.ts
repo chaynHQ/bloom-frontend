@@ -41,6 +41,7 @@ export default function usePWA() {
     if (typeof window === 'undefined') {
       return { browser: 'Unknown Browser', platform: 'Unknown OS' };
     }
+
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'
@@ -64,7 +65,7 @@ export default function usePWA() {
 
     return { browser, platform };
   }, [isWindowDefined]);
-  
+
   const analyticsPayload = useMemo(() => {
     return {
       ...eventUserData,
