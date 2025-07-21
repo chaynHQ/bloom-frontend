@@ -61,7 +61,9 @@
       "emailNotVerified": "2FA setup karne se pehle kripya apne email ki pushti karein.",
       "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
       "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
-      "sendVerificationEmail": "Satyaapan Email Bhejein"
+      "sendVerificationEmail": "Satyaapan Email Bhejein",
+      "passwordRequired": "Punah praman ke liye password aavashyak hai.",
+      "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
     },
     "verifyMFA": {
       "title": "Do-Charan Praman Verify Karein",
@@ -74,7 +76,12 @@
       "pageTitle": "Apne Khaate ko Surakshit Karein",
       "sendCode": "Verification Code Bhejein",
       "verifyCode": "Code Verify Karein",
-      "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:"
+      "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",
+      "reauthTitle": "Apni Pehchaan Confirm Karein",
+      "reauthDescription": "Suraksha ke karanon se, kripya do-charan praman setup jari rakhne ke liye apna password darj karein.",
+      "cancelReauth": "Cancel Karein",
+      "confirmReauth": "Confirm Karein",
+      "reauthenticating": "Confirm kar rahe hain..."
     },
     "verifyEmail": {
       "pageTitle": "Apna Email Verify Karein",

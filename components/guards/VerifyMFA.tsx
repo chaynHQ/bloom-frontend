@@ -7,7 +7,7 @@ import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const buttonStyle = {
   display: 'block',
@@ -28,7 +28,18 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const [error, setError] = useState('');
   const router = useRouter();
   const rollbar = useRollbar();
+  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+  const hasRecaptchaRendered = useRef(false);
 
+  // Clean up reCAPTCHA on unmount
+  useEffect(() => {
+    return () => {
+      if (hasRecaptchaRendered.current && recaptchaContainerRef.current) {
+        recaptchaContainerRef.current.innerHTML = '';
+        hasRecaptchaRendered.current = false;
+      }
+    };
+  }, []);
   useEffect(() => {
     // Get the phone number from the resolver
     const hint = resolver.hints[0];
@@ -40,12 +51,20 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
 
   const handleTriggerMFA = async () => {
     setError('');
+    
+    // Clear any existing reCAPTCHA before creating a new one
+    if (recaptchaContainerRef.current) {
+      recaptchaContainerRef.current.innerHTML = '';
+      hasRecaptchaRendered.current = false;
+    }
+    
     const { verificationId, error } = await triggerVerifyMFA(resolver);
     if (error) {
       rollbar.error('MFA trigger error:', error);
       setError(t('form.mfaTriggerError'));
     } else {
       setVerificationId(verificationId);
+      hasRecaptchaRendered.current = true;
     }
   };
 
@@ -92,7 +111,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
           {error}
         </Typography>
       )}
-      <div id="recaptcha-container"></div>
+      <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
     </Box>
   );
 };

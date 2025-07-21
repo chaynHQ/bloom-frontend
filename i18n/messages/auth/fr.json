@@ -61,7 +61,9 @@
       "emailNotVerified": "Veuillez vérifier votre email avant de configurer l'authentification à deux facteurs.",
       "emailVerificationError": "Erreur lors de l'envoi de l'email de vérification. Veuillez réessayer.",
       "emailVerificationSent": "Email de vérification envoyé. Veuillez vérifier votre boîte de réception.",
-      "sendVerificationEmail": "Envoyer l'email de vérification"
+      "sendVerificationEmail": "Envoyer l'email de vérification",
+      "passwordRequired": "Le mot de passe est requis pour la réauthentification.",
+      "reauthenticationError": "Échec de la réauthentification. Veuillez réessayer."
     },
 
     "verifyMFA": {
@@ -75,7 +77,12 @@
       "pageTitle": "Sécurisez votre compte",
       "sendCode": "Envoyer le code de vérification",
       "verifyCode": "Vérifier le code",
-      "enterCodeHelperText": "Veuillez entrer le code de vérification que nous avons envoyé à votre téléphone :"
+      "enterCodeHelperText": "Veuillez entrer le code de vérification que nous avons envoyé à votre téléphone :",
+      "reauthTitle": "Confirmez votre identité",
+      "reauthDescription": "Pour des raisons de sécurité, veuillez entrer votre mot de passe pour continuer la configuration de l'authentification à deux facteurs.",
+      "cancelReauth": "Annuler",
+      "confirmReauth": "Confirmer",
+      "reauthenticating": "Confirmation..."
     },
     "verifyEmail": {
       "pageTitle": "Vérifiez votre email",
