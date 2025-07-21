@@ -1,13 +1,13 @@
 'use client';
 
 import { triggerVerifyMFA, verifyMFA } from '@/lib/auth';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const buttonStyle = {
   display: 'block',
@@ -24,6 +24,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const [verificationId, setVerificationId] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState('');
   const router = useRouter();
@@ -38,8 +39,10 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
     }
   }, [resolver]);
 
-  const handleTriggerMFA = async () => {
+  const handleTriggerMFA = useCallback(async () => {
     setError('');
+    setIsLoading(true);
+    
     const { verificationId, error } = await triggerVerifyMFA(resolver);
     if (error) {
       rollbar.error('MFA trigger error:', error);
@@ -47,14 +50,20 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
     } else {
       setVerificationId(verificationId);
     }
-  };
+    
+    setIsLoading(false);
+  }, [resolver, rollbar, t]);
 
-  const handleVerifyMFA = async () => {
+  const handleVerifyMFA = useCallback(async () => {
     setError('');
+    setIsLoading(true);
+    
     if (!verificationId) {
       setError(t('form.mfaVerificationIdMissing'));
+      setIsLoading(false);
       return;
     }
+    
     const { success, error } = await verifyMFA(verificationId, verificationCode, resolver);
     if (success) {
       router.push('/admin/dashboard');
@@ -62,14 +71,29 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
       rollbar.error('MFA verify error:', error || ' Undefined');
       setError(t('form.mfaError'));
     }
-  };
+    
+    setIsLoading(false);
+  }, [verificationId, verificationCode, resolver, router, rollbar, t]);
 
   return (
     <Box>
       <Typography variant="h3">{t('verifyMFA.title')}</Typography>
       {phoneNumber && <Typography>{t('verifyMFA.phoneNumber', { phoneNumber })}</Typography>}
+      
+      {error && (
+        <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+      
       {!verificationId ? (
-        <Button onClick={handleTriggerMFA} variant="contained" color="secondary" sx={buttonStyle}>
+        <Button 
+          onClick={handleTriggerMFA} 
+          variant="contained" 
+          color="secondary" 
+          sx={buttonStyle}
+          disabled={isLoading}
+        >
           {t('verifyMFA.triggerSMS')}
         </Button>
       ) : (
@@ -82,15 +106,16 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
             variant="standard"
             margin="normal"
           />
-          <Button onClick={handleVerifyMFA} variant="contained" color="secondary" sx={buttonStyle}>
+          <Button 
+            onClick={handleVerifyMFA} 
+            variant="contained" 
+            color="secondary" 
+            sx={buttonStyle}
+            disabled={isLoading || !verificationCode}
+          >
             {t('verifyMFA.verifyCode')}
           </Button>
         </>
-      )}
-      {error && (
-        <Typography color="error" mt="1rem !important">
-          {error}
-        </Typography>
       )}
       <div id="recaptcha-container"></div>
     </Box>
