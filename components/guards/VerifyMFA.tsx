@@ -51,13 +51,13 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
 
   const handleTriggerMFA = async () => {
     setError('');
-    
+
     // Clear any existing reCAPTCHA before creating a new one
     if (recaptchaContainerRef.current) {
       recaptchaContainerRef.current.innerHTML = '';
       hasRecaptchaRendered.current = false;
     }
-    
+
     const { verificationId, error } = await triggerVerifyMFA(resolver);
     if (error) {
       rollbar.error('MFA trigger error:', error);

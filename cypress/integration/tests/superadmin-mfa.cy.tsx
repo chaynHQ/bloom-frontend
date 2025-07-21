@@ -51,14 +51,14 @@ describe('Superadmin MFA Flow', () => {
     it('should block non-superadmin users from accessing admin pages', () => {
       const regularUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
       const password = 'testpassword';
-      
+
       cy.createUser({ emailInput: regularUserEmail, passwordInput: password });
       cy.logInWithEmailAndPassword(regularUserEmail, password);
-      
+
       cy.visit('/admin/dashboard', { failOnStatusCode: false });
       cy.get('h2').should('contain', 'Access required');
       cy.get('p').should('contain', 'Your account does not include access to these pages');
-      
+
       cy.logout();
     });
 
@@ -68,7 +68,7 @@ describe('Superadmin MFA Flow', () => {
         if (win.store) {
           win.store.dispatch({
             type: 'user/setUserToken',
-            payload: 'mock-token'
+            payload: 'mock-token',
           });
           win.store.dispatch({
             type: 'user/getUser/fulfilled',
@@ -83,7 +83,7 @@ describe('Superadmin MFA Flow', () => {
               partnerAdmin: { id: null },
               courses: [],
               resources: [],
-            }
+            },
           });
         }
       });
@@ -111,11 +111,11 @@ describe('Superadmin MFA Flow', () => {
 
     it('should handle phone number input and SMS sending', () => {
       cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
-      
+
       // Enter phone number
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should show verification code input
       cy.get('p').should('contain', 'Please enter the verification code we sent to your phone');
       cy.get('input[id="verificationCode"]').should('exist');
@@ -126,11 +126,11 @@ describe('Superadmin MFA Flow', () => {
       // Enter phone number
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Enter verification code
       cy.get('input[id="verificationCode"]').type(testVerificationCode);
       cy.get('button').contains('Verify Code').click();
-      
+
       // Should redirect to admin dashboard
       cy.url().should('include', '/admin/dashboard');
       cy.get('h2').should('contain', 'Superadmin dashboard');
@@ -145,7 +145,7 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should show reauthentication form
       cy.get('h3').should('contain', 'Confirm your password');
       cy.get('p').should('contain', 'Please enter your password before continuing');
@@ -163,11 +163,11 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Enter password for reauthentication
       cy.get('input[type="password"]').type(superAdminPassword);
       cy.get('button').contains('Confirm').click();
-      
+
       // Should return to MFA setup form
       cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
       cy.get('input[type="tel"]').should('have.value', ''); // Form should be reset
@@ -182,11 +182,11 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Enter wrong password
       cy.get('input[type="password"]').type('wrongpassword');
       cy.get('button').contains('Confirm').click();
-      
+
       // Should show error message
       cy.get('.MuiAlert-message').should('contain', 'The password is invalid');
     });
@@ -200,10 +200,10 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Cancel reauthentication
       cy.get('button').contains('Cancel').click();
-      
+
       // Should return to MFA setup form
       cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
       cy.get('input[type="tel"]').should('exist');
@@ -218,10 +218,10 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       cy.get('input[id="verificationCode"]').type('000000'); // Wrong code
       cy.get('button').contains('Verify Code').click();
-      
+
       // Should show error message
       cy.get('.MuiAlert-message').should('contain', 'Error finalizing 2FA setup');
     });
@@ -232,14 +232,14 @@ describe('Superadmin MFA Flow', () => {
         if (win.store) {
           win.store.dispatch({
             type: 'user/setUserVerifiedEmail',
-            payload: false
+            payload: false,
           });
         }
       });
 
       cy.visit('/auth/login');
       cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
-      
+
       // Should show email verification requirement
       cy.get('p').should('contain', 'Please verify your email before setting up 2FA');
       cy.get('button').contains('Send Verification Email').should('exist');
@@ -258,7 +258,7 @@ describe('Superadmin MFA Flow', () => {
       cy.get('#email').type(superAdminEmail);
       cy.get('#password').type(superAdminPassword);
       cy.get('button[type="submit"]').click();
-      
+
       // Should show MFA verification form
       cy.get('h3').should('contain', 'Verify Two-Factor Authentication');
       cy.get('button').contains('Send SMS Code').should('exist');
@@ -275,14 +275,14 @@ describe('Superadmin MFA Flow', () => {
       cy.get('#email').type(superAdminEmail);
       cy.get('#password').type(superAdminPassword);
       cy.get('button[type="submit"]').click();
-      
+
       // Trigger SMS
       cy.get('button').contains('Send SMS Code').click();
-      
+
       // Enter verification code
       cy.get('input[id="verificationCode"]').type(testVerificationCode);
       cy.get('button').contains('Verify Code').click();
-      
+
       // Should redirect to admin dashboard
       cy.url().should('include', '/admin/dashboard');
     });
@@ -306,7 +306,7 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should show generic error message
       cy.get('.MuiAlert-message').should('contain', 'Error enrolling in 2FA');
     });
@@ -320,19 +320,19 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Mock too many requests during reauthentication
       cy.window().then((win) => {
         if (win.firebase && win.firebase.auth) {
           win.firebase.auth().currentUser.reauthenticateWithCredential = cy.stub().rejects({
-            code: 'auth/too-many-requests'
+            code: 'auth/too-many-requests',
           });
         }
       });
-      
+
       cy.get('input[type="password"]').type('anypassword');
       cy.get('button').contains('Confirm').click();
-      
+
       // Should show rate limiting error
       cy.get('.MuiAlert-message').should('contain', 'Too many failed login attempts');
     });
@@ -348,10 +348,12 @@ describe('Superadmin MFA Flow', () => {
       cy.get('button').contains('Send Verification Code').click();
       cy.get('button').contains('Send Verification Code').click();
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should not have reCAPTCHA already rendered errors
-      cy.get('@consoleError').should('not.have.been.calledWith', 
-        Cypress.sinon.match(/reCAPTCHA has already been rendered/));
+      cy.get('@consoleError').should(
+        'not.have.been.calledWith',
+        Cypress.sinon.match(/reCAPTCHA has already been rendered/),
+      );
     });
   });
 
@@ -366,7 +368,7 @@ describe('Superadmin MFA Flow', () => {
 
     it('should show loading states during operations', () => {
       cy.get('input[type="tel"]').type(testPhoneNumber);
-      
+
       // Mock slow response to test loading state
       cy.intercept('POST', '**/auth/phone/verify', (req) => {
         return new Promise((resolve) => {
@@ -377,7 +379,7 @@ describe('Superadmin MFA Flow', () => {
       }).as('slowSMS');
 
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Button should be disabled during loading
       cy.get('button').contains('Send Verification Code').should('be.disabled');
     });
@@ -386,7 +388,7 @@ describe('Superadmin MFA Flow', () => {
       // Enter invalid phone number
       cy.get('input[type="tel"]').type('123');
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should show validation error (this depends on your phone validation)
       // Adjust based on your actual validation implementation
     });
@@ -394,10 +396,10 @@ describe('Superadmin MFA Flow', () => {
     it('should validate verification code format', () => {
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Try to submit without entering code
       cy.get('button').contains('Verify Code').click();
-      
+
       // Should require verification code
       cy.get('input[id="verificationCode"]').should('have.attr', 'required');
     });
@@ -411,13 +413,13 @@ describe('Superadmin MFA Flow', () => {
 
       cy.get('input[type="tel"]').type('invalid');
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Should show error
       cy.get('.MuiAlert-message').should('exist');
-      
+
       // Clear input and try again - error should be cleared
       cy.get('input[type="tel"]').clear().type(testPhoneNumber);
-      
+
       // Mock successful response
       cy.intercept('POST', '**/auth/phone/verify', {
         statusCode: 200,
@@ -425,7 +427,7 @@ describe('Superadmin MFA Flow', () => {
       }).as('successSMS');
 
       cy.get('button').contains('Send Verification Code').click();
-      
+
       // Error should be cleared
       cy.get('.MuiAlert-message').should('not.exist');
     });

@@ -1,6 +1,11 @@
 'use client';
 
-import { sendVerificationEmail, triggerInitialMFA, verifyMFA, reauthenticateUser } from '@/lib/auth';
+import {
+  sendVerificationEmail,
+  triggerInitialMFA,
+  verifyMFA,
+  reauthenticateUser,
+} from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
@@ -81,7 +86,7 @@ const SetupMFA = () => {
     }
 
     setError('');
-    
+
     // Clear any existing reCAPTCHA before creating a new one
     if (recaptchaContainerRef.current) {
       recaptchaContainerRef.current.innerHTML = '';
@@ -135,7 +140,7 @@ const SetupMFA = () => {
       <Box>
         <Typography variant="h3">{t('setupMFA.reauthTitle')}</Typography>
         <Typography mb={2}>{t('setupMFA.reauthDescription')}</Typography>
-        
+
         <TextField
           id="password"
           type="password"
@@ -147,13 +152,13 @@ const SetupMFA = () => {
           margin="normal"
           required
         />
-        
+
         {error && (
           <Alert severity="error" sx={{ mt: 2 }}>
             {error}
           </Alert>
         )}
-        
+
         <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
           <Button
             variant="outlined"
