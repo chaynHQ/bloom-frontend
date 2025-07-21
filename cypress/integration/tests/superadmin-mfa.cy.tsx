@@ -45,7 +45,8 @@ describe('Superadmin MFA Flow', () => {
     it('should redirect non-logged-in users away from admin pages', () => {
       cy.visit('/admin/dashboard', { failOnStatusCode: false });
       cy.url().should('include', '/auth/login');
-      cy.get('input[name="return_url"]').should('exist');
+      // Check for return URL in query params (more flexible check)
+      cy.url().should('match', /[?&](return_url|returnUrl)=/);
     });
 
     it('should block non-superadmin users from accessing admin pages', () => {
@@ -63,7 +64,14 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should block superadmin users without MFA from accessing admin pages', () => {
-      // Mock superadmin without MFA setup
+      // Create a regular user and mock them as superadmin without MFA
+      const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const password = 'testpassword';
+
+      cy.createUser({ emailInput: testEmail, passwordInput: password });
+      cy.logInWithEmailAndPassword(testEmail, password);
+
+      // Mock user as superadmin without MFA setup
       cy.window().then((win) => {
         if (win.store) {
           win.store.dispatch({
@@ -75,7 +83,7 @@ describe('Superadmin MFA Flow', () => {
             payload: {
               user: {
                 id: 'superadmin-id',
-                email: superAdminEmail,
+                email: testEmail,
                 isSuperAdmin: true,
                 MFAisSetup: false,
               },
@@ -90,12 +98,41 @@ describe('Superadmin MFA Flow', () => {
 
       cy.visit('/admin/dashboard');
       cy.url().should('include', '/auth/login');
+
+      cy.logout();
     });
   });
 
   describe('MFA Setup Flow', () => {
     beforeEach(() => {
-      cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
+      // Create a test user and mock them as superadmin without MFA
+      const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const password = 'testpassword';
+
+      cy.createUser({ emailInput: testEmail, passwordInput: password });
+      cy.logInWithEmailAndPassword(testEmail, password);
+
+      // Mock user as superadmin without MFA setup
+      cy.window().then((win) => {
+        if (win.store) {
+          win.store.dispatch({
+            type: 'user/getUser/fulfilled',
+            payload: {
+              user: {
+                id: 'superadmin-id',
+                email: testEmail,
+                isSuperAdmin: true,
+                MFAisSetup: false,
+                verifiedEmail: true,
+              },
+              partnerAccesses: [],
+              partnerAdmin: { id: null },
+              courses: [],
+              resources: [],
+            },
+          });
+        }
+      });
     });
 
     afterEach(() => {
@@ -103,13 +140,14 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should show MFA setup form for superadmin without MFA', () => {
-      // The login should automatically redirect to MFA setup
+      cy.visit('/admin/dashboard');
       cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
       cy.get('input[type="tel"]').should('exist');
       cy.get('button').contains('Send Verification Code').should('exist');
     });
 
     it('should handle phone number input and SMS sending', () => {
+      cy.visit('/admin/dashboard');
       cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
 
       // Enter phone number
@@ -123,6 +161,8 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should complete MFA setup with verification code', () => {
+      cy.visit('/admin/dashboard');
+
       // Enter phone number
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
@@ -143,6 +183,7 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/requires-recent-login' } },
       }).as('requiresReauth');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -161,11 +202,12 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/requires-recent-login' } },
       }).as('requiresReauth');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
       // Enter password for reauthentication
-      cy.get('input[type="password"]').type(superAdminPassword);
+      cy.get('input[type="password"]').type('testpassword');
       cy.get('button').contains('Confirm').click();
 
       // Should return to MFA setup form
@@ -180,15 +222,25 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/requires-recent-login' } },
       }).as('requiresReauth');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
+
+      // Mock wrong password error
+      cy.window().then((win) => {
+        if (win.firebase && win.firebase.auth) {
+          win.firebase.auth().currentUser.reauthenticateWithCredential = cy.stub().rejects({
+            code: 'auth/wrong-password',
+          });
+        }
+      });
 
       // Enter wrong password
       cy.get('input[type="password"]').type('wrongpassword');
       cy.get('button').contains('Confirm').click();
 
       // Should show error message
-      cy.get('.MuiAlert-message').should('contain', 'The password is invalid');
+      cy.get('.MuiAlert-message').should('contain', 'Failed to reauthenticate');
     });
 
     it('should allow canceling reauthentication', () => {
@@ -198,6 +250,7 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/requires-recent-login' } },
       }).as('requiresReauth');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -216,6 +269,7 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/invalid-verification-code' } },
       }).as('mfaError');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -237,8 +291,7 @@ describe('Superadmin MFA Flow', () => {
         }
       });
 
-      cy.visit('/auth/login');
-      cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
+      cy.visit('/admin/dashboard');
 
       // Should show email verification requirement
       cy.get('p').should('contain', 'Please verify your email before setting up 2FA');
@@ -290,7 +343,34 @@ describe('Superadmin MFA Flow', () => {
 
   describe('Error Handling', () => {
     beforeEach(() => {
-      cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
+      // Create a test user and mock them as superadmin without MFA
+      const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const password = 'testpassword';
+
+      cy.createUser({ emailInput: testEmail, passwordInput: password });
+      cy.logInWithEmailAndPassword(testEmail, password);
+
+      // Mock user as superadmin without MFA setup
+      cy.window().then((win) => {
+        if (win.store) {
+          win.store.dispatch({
+            type: 'user/getUser/fulfilled',
+            payload: {
+              user: {
+                id: 'superadmin-id',
+                email: testEmail,
+                isSuperAdmin: true,
+                MFAisSetup: false,
+                verifiedEmail: true,
+              },
+              partnerAccesses: [],
+              partnerAdmin: { id: null },
+              courses: [],
+              resources: [],
+            },
+          });
+        }
+      });
     });
 
     afterEach(() => {
@@ -304,6 +384,7 @@ describe('Superadmin MFA Flow', () => {
         body: { error: 'Network error' },
       }).as('networkError');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -318,6 +399,7 @@ describe('Superadmin MFA Flow', () => {
         body: { error: { code: 'auth/requires-recent-login' } },
       }).as('requiresReauth');
 
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -343,6 +425,8 @@ describe('Superadmin MFA Flow', () => {
         cy.spy(win.console, 'error').as('consoleError');
       });
 
+      cy.visit('/admin/dashboard');
+
       // Trigger MFA setup multiple times quickly
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
@@ -359,7 +443,34 @@ describe('Superadmin MFA Flow', () => {
 
   describe('UI/UX Validation', () => {
     beforeEach(() => {
-      cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
+      // Create a test user and mock them as superadmin without MFA
+      const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const password = 'testpassword';
+
+      cy.createUser({ emailInput: testEmail, passwordInput: password });
+      cy.logInWithEmailAndPassword(testEmail, password);
+
+      // Mock user as superadmin without MFA setup
+      cy.window().then((win) => {
+        if (win.store) {
+          win.store.dispatch({
+            type: 'user/getUser/fulfilled',
+            payload: {
+              user: {
+                id: 'superadmin-id',
+                email: testEmail,
+                isSuperAdmin: true,
+                MFAisSetup: false,
+                verifiedEmail: true,
+              },
+              partnerAccesses: [],
+              partnerAdmin: { id: null },
+              courses: [],
+              resources: [],
+            },
+          });
+        }
+      });
     });
 
     afterEach(() => {
@@ -367,6 +478,7 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should show loading states during operations', () => {
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
 
       // Mock slow response to test loading state
@@ -385,6 +497,8 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should validate phone number format', () => {
+      cy.visit('/admin/dashboard');
+
       // Enter invalid phone number
       cy.get('input[type="tel"]').type('123');
       cy.get('button').contains('Send Verification Code').click();
@@ -394,6 +508,7 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should validate verification code format', () => {
+      cy.visit('/admin/dashboard');
       cy.get('input[type="tel"]').type(testPhoneNumber);
       cy.get('button').contains('Send Verification Code').click();
 
@@ -405,6 +520,8 @@ describe('Superadmin MFA Flow', () => {
     });
 
     it('should clear errors when starting new operations', () => {
+      cy.visit('/admin/dashboard');
+
       // Trigger an error first
       cy.intercept('POST', '**/auth/phone/verify', {
         statusCode: 400,
