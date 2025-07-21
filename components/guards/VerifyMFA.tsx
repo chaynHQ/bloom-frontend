@@ -1,7 +1,7 @@
 'use client';
 
 import { triggerVerifyMFA, verifyMFA } from '@/lib/auth';
-import { Box, Button, TextField, Typography, Alert } from '@mui/material';
+import { Box, Button, TextField, Typography, Alert, CircularProgress } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
@@ -30,6 +30,24 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const router = useRouter();
   const rollbar = useRollbar();
 
+  // Clean up reCAPTCHA on component unmount
+  useEffect(() => {
+    return () => {
+      const recaptchaContainer = document.getElementById('recaptcha-container');
+      if (recaptchaContainer) {
+        recaptchaContainer.innerHTML = '';
+      }
+      
+      // Clear any global reCAPTCHA instances
+      if ((window as any).grecaptcha) {
+        try {
+          (window as any).grecaptcha.reset();
+        } catch (e) {
+          // Ignore reset errors
+        }
+      }
+    };
+  }, []);
   useEffect(() => {
     // Get the phone number from the resolver
     const hint = resolver.hints[0];
@@ -93,6 +111,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
           color="secondary" 
           sx={buttonStyle}
           disabled={isLoading}
+          startIcon={isLoading ? <CircularProgress size={20} /> : undefined}
         >
           {t('verifyMFA.triggerSMS')}
         </Button>
@@ -105,6 +124,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
             fullWidth
             variant="standard"
             margin="normal"
+            inputProps={{ maxLength: 6 }}
           />
           <Button 
             onClick={handleVerifyMFA} 
@@ -112,6 +132,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
             color="secondary" 
             sx={buttonStyle}
             disabled={isLoading || !verificationCode}
+            startIcon={isLoading ? <CircularProgress size={20} /> : undefined}
           >
             {t('verifyMFA.verifyCode')}
           </Button>

@@ -129,28 +129,40 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
 
-    // Clear any existing reCAPTCHA container
+    // Clear any existing reCAPTCHA container and verifier instances
     const existingContainer = document.getElementById('recaptcha-container');
     if (existingContainer) {
       existingContainer.innerHTML = '';
     }
 
+    // Clear any existing global reCAPTCHA instances
+    if ((window as any).grecaptcha) {
+      try {
+        (window as any).grecaptcha.reset();
+      } catch (e) {
+        // Ignore reset errors
+      }
+    }
     let recaptchaVerifier;
     try {
       recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
         size: 'invisible',
       });
     } catch (recaptchaError: any) {
-      if (recaptchaError.message?.includes('already been rendered')) {
-        // If reCAPTCHA already exists, try to reuse it or clear and recreate
-        if (existingContainer) {
-          existingContainer.innerHTML = '';
-        }
+      // If reCAPTCHA creation fails, clear everything and try once more
+      if (existingContainer) {
+        existingContainer.innerHTML = '';
+      }
+      
+      // Wait a bit for cleanup
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      try {
         recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
           size: 'invisible',
         });
-      } else {
-        throw recaptchaError;
+      } catch (secondError) {
+        throw new Error('Failed to initialize reCAPTCHA after retry');
       }
     }
 

@@ -3,11 +3,11 @@
 import { sendVerificationEmail, triggerInitialMFA, verifyMFA, reauthenticateUser } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { Box, Button, TextField, Typography, Alert } from '@mui/material';
+import { Box, Button, TextField, Typography, Alert, CircularProgress } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PhoneInput from '../forms/PhoneInput';
 
 const buttonStyle = {
@@ -30,18 +30,35 @@ const SetupMFA = () => {
   const [requiresReauth, setRequiresReauth] = useState(false);
   const [reauthPassword, setReauthPassword] = useState('');
   const [isReauthenticating, setIsReauthenticating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [step, setStep] = useState<'phone' | 'code' | 'reauth'>('phone');
 
-  // Clean up reCAPTCHA on component unmount
+  // Clean up reCAPTCHA on component unmount and when step changes
   useEffect(() => {
-    return () => {
+    const cleanup = () => {
       const recaptchaContainer = document.getElementById('recaptcha-container');
       if (recaptchaContainer) {
         recaptchaContainer.innerHTML = '';
       }
+      
+      // Clear any global reCAPTCHA instances
+      if ((window as any).grecaptcha) {
+        try {
+          (window as any).grecaptcha.reset();
+        } catch (e) {
+          // Ignore reset errors
+        }
+      }
     };
-  }, []);
 
-  const handleEnrollMFA = async () => {
+    cleanup();
+
+    return () => {
+      cleanup();
+    };
+  }, [step]);
+
+  const handleEnrollMFA = useCallback(async () => {
     if (!userVerifiedEmail) {
       setError(t('form.emailNotVerified'));
       rollbar.error('MFA setup page reached before email is verified');
@@ -49,23 +66,29 @@ const SetupMFA = () => {
     }
 
     setError('');
+    setIsLoading(true);
+    
     const { verificationId, error } = await triggerInitialMFA(phoneNumber);
+    setIsLoading(false);
+    
     if (error) {
       if (error.code === 'auth/requires-recent-login') {
         setRequiresReauth(true);
-        setError(t('form.mfaRequiresRecentLogin'));
+        setStep('reauth');
+        setError('');
       } else {
         setError(t('form.mfaEnrollError'));
         rollbar.error('MFA enrollment trigger error:', error);
       }
     } else {
       setVerificationId(verificationId!);
+      setStep('code');
     }
-  };
+  }, [phoneNumber, userVerifiedEmail, t, rollbar]);
 
-  const handleReauthenticate = async () => {
+  const handleReauthenticate = useCallback(async () => {
     if (!reauthPassword) {
-      setError(t('form.mfaReauthPasswordRequired'));
+      setError('Please enter your password');
       return;
     }
 
@@ -77,33 +100,39 @@ const SetupMFA = () => {
     if (success) {
       setRequiresReauth(false);
       setReauthPassword('');
-      // Now try MFA enrollment again
-      await handleEnrollMFA();
+      setStep('phone');
+      setError('');
     } else {
       if (error?.code === 'auth/wrong-password') {
-        setError(t('form.mfaReauthWrongPassword'));
+        setError('Incorrect password. Please try again.');
       } else {
-        setError(t('form.mfaReauthError'));
+        setError('Authentication failed. Please try again.');
         rollbar.error('Reauthentication error:', error);
       }
     }
     
     setIsReauthenticating(false);
-  };
+  }, [reauthPassword, rollbar]);
 
-  const handleFinalizeMFA = async () => {
+  const handleFinalizeMFA = useCallback(async () => {
     setError('');
+    setIsLoading(true);
+    
     const { success, error } = await verifyMFA(verificationId, verificationCode);
+    setIsLoading(false);
+    
     if (success) {
       router.push('/admin/dashboard');
     } else {
       rollbar.error('MFA enrollment verify error:', error || ' Undefined');
       setError(t('form.mfaFinalizeError'));
     }
-  };
+  }, [verificationId, verificationCode, router, rollbar, t]);
 
-  const handleSendVerificationEmail = async () => {
+  const handleSendVerificationEmail = useCallback(async () => {
     setError('');
+    setIsLoading(true);
+    
     const user = auth.currentUser;
     if (user) {
       const { error } = await sendVerificationEmail(user);
@@ -111,12 +140,11 @@ const SetupMFA = () => {
         setError(t('form.emailVerificationError'));
         rollbar.error('Send verification email error:', error);
       } else {
-        // This is actually a success message, not an error
-        setError(''); // Clear any previous errors
-        // You might want to show a success message instead
+        setError('');
       }
     }
-  };
+    setIsLoading(false);
+  }, [t, rollbar]);
 
   return (
     <Box>
@@ -136,13 +164,17 @@ const SetupMFA = () => {
             color="secondary"
             sx={{ ...buttonStyle, mt: 2 }}
             onClick={handleSendVerificationEmail}
+            disabled={isLoading}
+            startIcon={isLoading ? <CircularProgress size={20} /> : undefined}
           >
             {t('form.sendVerificationEmail')}
           </Button>
         </Box>
-      ) : requiresReauth ? (
+      ) : step === 'reauth' ? (
         <Box>
-          <Typography sx={{ mb: 2 }}>{t('form.mfaReauthInstructions')}</Typography>
+          <Typography sx={{ mb: 2 }}>
+            For security reasons, please re-enter your password to continue setting up 2FA.
+          </Typography>
           <TextField
             value={reauthPassword}
             onChange={(e) => setReauthPassword(e.target.value)}
@@ -159,18 +191,29 @@ const SetupMFA = () => {
             sx={buttonStyle}
             onClick={handleReauthenticate}
             disabled={isReauthenticating || !reauthPassword}
+            startIcon={isReauthenticating ? <CircularProgress size={20} /> : undefined}
           >
-            {isReauthenticating ? t('form.mfaReauthenticating') : t('form.mfaReauthenticate')}
+            {isReauthenticating ? 'Authenticating...' : 'Continue'}
           </Button>
         </Box>
-      ) : !verificationId ? (
+      ) : step === 'phone' ? (
         <>
+          <Typography sx={{ mb: 2 }}>
+            Enter your phone number to receive SMS verification codes for secure access.
+          </Typography>
           <PhoneInput value={phoneNumber} onChange={(value) => setPhoneNumber(value)} />
-          <Button variant="contained" color="secondary" sx={buttonStyle} onClick={handleEnrollMFA}>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            sx={buttonStyle} 
+            onClick={handleEnrollMFA}
+            disabled={isLoading || !phoneNumber}
+            startIcon={isLoading ? <CircularProgress size={20} /> : undefined}
+          >
             {t('setupMFA.sendCode')}
           </Button>
         </>
-      ) : (
+      ) : step === 'code' ? (
         <>
           <Typography>{t('setupMFA.enterCodeHelperText')}</Typography>
           <TextField
@@ -180,16 +223,20 @@ const SetupMFA = () => {
             fullWidth
             variant="standard"
             margin="normal"
+            inputProps={{ maxLength: 6 }}
           />
           <Button
             variant="contained"
             color="secondary"
             sx={buttonStyle}
             onClick={handleFinalizeMFA}
+            disabled={isLoading || !verificationCode}
+            startIcon={isLoading ? <CircularProgress size={20} /> : undefined}
           >
             {t('setupMFA.verifyCode')}
           </Button>
         </>
+      ) : null}
       )}
       <div id="recaptcha-container"></div>
     </Box>
