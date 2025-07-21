@@ -13,8 +13,6 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
   type User,
 } from 'firebase/auth';
 import { auth } from './firebase';
@@ -43,21 +41,6 @@ export async function getAuthToken() {
     return { token, error: null };
   } catch (error) {
     return { error: error as FirebaseError };
-  }
-}
-
-export async function reauthenticateUser(password: string) {
-  try {
-    const user = auth.currentUser;
-    if (!user || !user.email) {
-      throw new Error('No user logged in or email not available');
-    }
-
-    const credential = EmailAuthProvider.credential(user.email, password);
-    await reauthenticateWithCredential(user, credential);
-    return { success: true, error: null };
-  } catch (error) {
-    return { success: false, error: error as FirebaseError };
   }
 }
 
@@ -129,43 +112,9 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
 
-    // Clear any existing reCAPTCHA container and verifier instances
-    const existingContainer = document.getElementById('recaptcha-container');
-    if (existingContainer) {
-      existingContainer.innerHTML = '';
-    }
-
-    // Clear any existing global reCAPTCHA instances
-    if ((window as any).grecaptcha) {
-      try {
-        (window as any).grecaptcha.reset();
-      } catch (e) {
-        // Ignore reset errors
-      }
-    }
-    let recaptchaVerifier;
-    try {
-      recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-        size: 'invisible',
-      });
-    } catch (recaptchaError: any) {
-      // If reCAPTCHA creation fails, clear everything and try once more
-      if (existingContainer) {
-        existingContainer.innerHTML = '';
-      }
-      
-      // Wait a bit for cleanup
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      try {
-        recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-          size: 'invisible',
-        });
-      } catch (secondError) {
-        throw new Error('Failed to initialize reCAPTCHA after retry');
-      }
-    }
-
+    const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+    });
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
     const session = await multiFactor(user).getSession();
