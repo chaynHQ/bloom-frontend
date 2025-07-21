@@ -78,7 +78,7 @@
       "verifyCode": "Verify Code",
       "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
       "reauthTitle": "Confirm Your Identity",
-      "reauthDescription": "For security reasons, please enter your password to continue setting up two-factor authentication.",
+      "reauthDescription": "Please enter your password before continuing",
       "cancelReauth": "Cancel",
       "confirmReauth": "Confirm",
       "reauthenticating": "Confirming..."

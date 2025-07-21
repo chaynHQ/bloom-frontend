@@ -78,7 +78,7 @@
       "verifyCode": "Code Verify Karein",
       "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",
       "reauthTitle": "Apni Pehchaan Confirm Karein",
-      "reauthDescription": "Suraksha ke karanon se, kripya do-charan praman setup jari rakhne ke liye apna password darj karein.",
+      "reauthDescription": "Kripya aage badhne se pehle apna password darj karein",
       "cancelReauth": "Cancel Karein",
       "confirmReauth": "Confirm Karein",
       "reauthenticating": "Confirm kar rahe hain..."

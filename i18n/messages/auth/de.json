@@ -78,7 +78,7 @@
       "verifyCode": "Code verifizieren",
       "enterCodeHelperText": "Bitte geben Sie den Verifizierungscode ein, den wir an Ihr Telefon gesendet haben:",
       "reauthTitle": "Bestätigen Sie Ihre Identität",
-      "reauthDescription": "Aus Sicherheitsgründen geben Sie bitte Ihr Passwort ein, um mit der Einrichtung der Zwei-Faktor-Authentifizierung fortzufahren.",
+      "reauthDescription": "Bitte geben Sie Ihr Passwort ein, bevor Sie fortfahren",
       "cancelReauth": "Abbrechen",
       "confirmReauth": "Bestätigen",
       "reauthenticating": "Bestätige..."
