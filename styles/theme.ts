@@ -330,7 +330,6 @@ theme = createTheme(theme, {
           backgroundColor: theme.palette.common.white,
           boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
           marginTop: 20,
-          boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
 
           '&:hover': { backgroundColor: theme.palette.common.white },
 
