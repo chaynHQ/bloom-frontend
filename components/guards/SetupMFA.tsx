@@ -1,249 +1,188 @@
-'use client';
-
+import type { FirebaseError } from 'firebase/app';
 import {
-  reauthenticateUser,
-  sendVerificationEmail,
-  triggerInitialMFA,
-  verifyMFA,
-} from '@/lib/auth';
-import { auth } from '@/lib/firebase';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { Alert, Box, Button, TextField, Typography } from '@mui/material';
-import { useRollbar } from '@rollbar/react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import PhoneInput from '../forms/PhoneInput';
+  MultiFactorError,
+  MultiFactorResolver,
+  PhoneAuthProvider,
+  PhoneInfoOptions,
+  PhoneMultiFactorGenerator,
+  RecaptchaVerifier,
+  applyActionCode,
+  confirmPasswordReset,
+  multiFactor,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  type User,
+} from 'firebase/auth';
+import { auth } from './firebase';
 
-const buttonStyle = {
-  display: 'block',
-  mx: 'auto',
-  mt: 1,
-} as const;
+export async function login(email: string, password: string) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return { user: userCredential.user, error: null };
+  } catch (error) {
+    return { user: null, error: error as FirebaseError | MultiFactorError };
+  }
+}
 
-const SetupMFA = () => {
-  const t = useTranslations('Auth');
-  const router = useRouter();
-  const rollbar = useRollbar();
+export async function logout() {
+  try {
+    await signOut(auth);
+    return { error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
 
-  const userVerifiedEmail = useTypedSelector((state) => state.user.verifiedEmail);
+export async function getAuthToken() {
+  try {
+    const token = await auth.currentUser?.getIdToken(true);
+    return { token, error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
 
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [verificationId, setVerificationId] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
-  const [error, setError] = useState('');
-  const [showReauth, setShowReauth] = useState(false);
-  const [password, setPassword] = useState('');
-  const [isReauthenticating, setIsReauthenticating] = useState(false);
-  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
-  const hasRecaptchaRendered = useRef(false);
+export async function reauthenticateUser(password: string) {
+  try {
+    const user = auth.currentUser;
+    if (!user || !user.email) {
+      throw new Error('No user logged in or email not available');
+    }
 
-  // Clean up reCAPTCHA on unmount
-  useEffect(() => {
-    return () => {
-      if (hasRecaptchaRendered.current && recaptchaContainerRef.current) {
-        recaptchaContainerRef.current.innerHTML = '';
-        hasRecaptchaRendered.current = false;
-      }
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+    return { error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
+
+export async function sendAuthPasswordResetEmail(email: string) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    return { error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
+
+export async function confirmAuthPasswordReset(codeParam: string, password: string) {
+  try {
+    await confirmPasswordReset(auth, codeParam, password);
+    return { error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
+
+export async function sendVerificationEmail(user: User) {
+  try {
+    // Triggers sending an email to the user with a link to verify their email
+    // The link will direct to our /action-handler page where we call confirmEmailVerified
+    await sendEmailVerification(user);
+    return { error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
+
+export async function confirmEmailVerified(codeParam: string) {
+  try {
+    // Confirms the user has verified their email using a link with a valid oobCode
+    await applyActionCode(auth, codeParam);
+    return { success: true, error: null };
+  } catch (error) {
+    return { success: false, error: error as FirebaseError };
+  }
+}
+
+// Triggers sending the user an SMS for 2FA/MFA for login process
+export async function triggerVerifyMFA(resolver: MultiFactorResolver) {
+  try {
+    const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+    });
+    const phoneInfoOptions = {
+      multiFactorHint: resolver.hints[0],
+      session: resolver.session,
     };
-  }, []);
+    const phoneAuthProvider = new PhoneAuthProvider(auth);
 
-  const handleReauthentication = async () => {
-    if (!password.trim()) {
-      setError(t('form.passwordRequired'));
-      return;
+    // Send SMS verification code
+    const verificationId = await phoneAuthProvider.verifyPhoneNumber(
+      phoneInfoOptions,
+      recaptchaVerifier,
+    );
+    return { verificationId, error: null };
+  } catch (error) {
+    return { verificationId: null, error: error as FirebaseError };
+  }
+}
+
+// Triggers sending the user an SMS for 2FA/MFA for enrollment process
+export async function triggerInitialMFA(phoneNumber: string) {
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user logged in');
+
+    // Clean up any existing reCAPTCHA verifiers
+    const existingContainer = document.getElementById('recaptcha-container');
+    if (existingContainer) {
+      existingContainer.innerHTML = '';
     }
 
-    setIsReauthenticating(true);
-    setError('');
+    const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+    });
+    const phoneAuthProvider = new PhoneAuthProvider(auth);
 
-    try {
-      await reauthenticateUser(password);
-      setShowReauth(false);
-      setPassword('');
-      // Reset the MFA setup process
-      setVerificationId('');
-      setVerificationCode('');
-      setPhoneNumber('');
-    } catch (error: any) {
-      rollbar.error('Reauthentication error:', error);
-      if (error.code === 'auth/wrong-password') {
-        setError(t('form.firebase.wrongPassword'));
-      } else if (error.code === 'auth/too-many-requests') {
-        setError(t('form.firebase.tooManyAttempts'));
-      } else {
-        setError(t('form.reauthenticationError'));
-      }
-    } finally {
-      setIsReauthenticating(false);
-    }
-  };
-  const handleEnrollMFA = async () => {
-    if (!userVerifiedEmail) {
-      setError(t('form.emailNotVerified'));
-      rollbar.error('MFA setup page reached before email is verified');
-      return;
-    }
+    const session = await multiFactor(user).getSession();
 
-    setError('');
+    const phoneInfoOptions = {
+      phoneNumber,
+      session,
+    } as PhoneInfoOptions;
 
     // Clear any existing reCAPTCHA completely before creating a new one
-    if (recaptchaContainerRef.current) {
-      recaptchaContainerRef.current.innerHTML = '';
-      hasRecaptchaRendered.current = false;
-      
+    const verificationId = await phoneAuthProvider.verifyPhoneNumber(
+      phoneInfoOptions,
+      recaptchaVerifier,
+
       // Also clear any global reCAPTCHA instances
-      if (window.grecaptcha) {
-        try {
-          window.grecaptcha.reset();
-        } catch (e) {
-          // Ignore reset errors
-        }
-      }
-    }
-
-    const { verificationId, error } = await triggerInitialMFA(phoneNumber);
-    if (error) {
-      if (error.code === 'auth/requires-recent-login') {
-        setShowReauth(true);
-        setError('');
-      } else {
-        setError(t('form.mfaEnrollError'));
-        rollbar.error('MFA enrollment trigger error:', error);
-      }
-    } else {
-      setVerificationId(verificationId!);
-      hasRecaptchaRendered.current = true;
-    }
-  };
-
-  const handleFinalizeMFA = async () => {
-    setError('');
-    const { success, error } = await verifyMFA(verificationId, verificationCode);
-    if (success) {
-      router.push('/admin/dashboard');
-    } else {
-      rollbar.error('MFA enrollment verify error:', error || ' Undefined');
-      setError(t('form.mfaFinalizeError'));
-    }
-  };
-
-  const handleSendVerificationEmail = async () => {
-    setError('');
-    const user = auth.currentUser;
-    if (user) {
-      const { error } = await sendVerificationEmail(user);
-      if (error) {
-        rollbar.error('Send verification email error:', error);
-        setError(t('form.emailVerificationError'));
-      } else {
-        // Show success message instead of error
-        setError('');
-        // You might want to show a success state here instead
-      }
-    }
-  };
-
-  if (showReauth) {
-    return (
-      <Box>
-        <Typography variant="h3">{t('setupMFA.reauthTitle')}</Typography>
-        <Typography mb={2}>{t('setupMFA.reauthDescription')}</Typography>
-
-        <TextField
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          label={t('form.passwordLabel')}
-          fullWidth
-          variant="standard"
-          margin="normal"
-          required
-        />
-
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setShowReauth(false);
-              setPassword('');
-              setError('');
-            }}
-            disabled={isReauthenticating}
-          >
-            {t('setupMFA.cancelReauth')}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleReauthentication}
-            disabled={isReauthenticating || !password.trim()}
-          >
-            {isReauthenticating ? t('setupMFA.reauthenticating') : t('setupMFA.confirmReauth')}
-          </Button>
-        </Box>
-      </Box>
-    );
+  } catch (error) {
+    return { verificationId: null, error: error as FirebaseError };
   }
-  return (
-    <Box>
-      <Typography variant="h3">{t('setupMFA.title')}</Typography>
-      {!userVerifiedEmail ? (
-        <Box>
-          <Typography>{t('form.emailNotVerified')}</Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{ ...buttonStyle, mt: 2 }}
-            onClick={handleSendVerificationEmail}
-          >
-            {t('form.sendVerificationEmail')}
-          </Button>
-        </Box>
-      ) : !verificationId ? (
-        <>
-          <PhoneInput value={phoneNumber} onChange={(value) => setPhoneNumber(value)} />
-          <Button variant="contained" color="secondary" sx={buttonStyle} onClick={handleEnrollMFA}>
-            {t('setupMFA.sendCode')}
-          </Button>
-        </>
-      ) : (
-        <>
-          <Typography>{t('setupMFA.enterCodeHelperText')}</Typography>
-          <TextField
-            id="verificationCode"
-            value={verificationCode}
-            onChange={(e) => setVerificationCode(e.target.value)}
-            label={t('form.verificationCodeLabel')}
-            fullWidth
-            variant="standard"
-            margin="normal"
-          />
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={buttonStyle}
-            onClick={handleFinalizeMFA}
-          >
-            {t('setupMFA.verifyCode')}
-          </Button>
-        </>
-      )}
-      {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
-      <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
-    </Box>
-  );
-};
+}
 
-export default SetupMFA;
+// Validates 2FA/MFA code received by SMS
+export async function verifyMFA(
+  verificationId: string,
+  verificationCode: string,
+    // Add a small delay to ensure cleanup is complete
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+  resolver?: MultiFactorResolver,
+) {
+  try {
+    const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
+    const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(credential);
+
+    if (resolver) {
+      // This is for verification during login
+      await resolver.resolveSignIn(multiFactorAssertion);
+    } else {
+      // This is for initial enrollment
+      const user = auth.currentUser;
+      if (!user) throw new Error('No user logged in');
+      await multiFactor(user).enroll(multiFactorAssertion, 'Phone Number');
+    }
+
+    return { success: true, error: null };
+  } catch (error) {
+    return { success: false, error: error as FirebaseError };
+  }
+}
