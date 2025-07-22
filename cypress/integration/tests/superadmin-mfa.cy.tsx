@@ -76,7 +76,7 @@ describe('Superadmin MFA Flow', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
 
-    // // Mock Firebase MFA enrollment endpoints
+    // Mock Firebase MFA enrollment endpoints
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
       body: {
@@ -94,6 +94,15 @@ describe('Superadmin MFA Flow', () => {
       },
     }).as('mfaEnrollmentFinalize');
 
+    // Mock reCAPTCHA to prevent rendering issues
+    cy.window().then((win) => {
+      win.grecaptcha = {
+        render: cy.stub().returns('mock-widget-id'),
+        reset: cy.stub(),
+        getResponse: cy.stub().returns('mock-response'),
+        execute: cy.stub().resolves('mock-token'),
+      };
+    });
     // Mock superadmin user without MFA
     cy.intercept('GET', '**/user/me', {
       statusCode: 200,
@@ -138,26 +147,9 @@ describe('Superadmin MFA Flow', () => {
     // Click send verification code button
     cy.get('button').contains('Send Verification Code').should('be.visible').click();
 
-    // Handle reCAPTCHA - validate it exists then remove it to prevent blocking
-    cy.get('body').then(($body) => {
-      // Check if reCAPTCHA container exists (validates it was triggered)
-      if ($body.find('#recaptcha-container').length > 0) {
-        cy.log('reCAPTCHA container found - removing to prevent test blocking');
-        // Remove reCAPTCHA elements that might block the UI
-        cy.get('#recaptcha-container').invoke('empty');
-        // Also remove any reCAPTCHA iframes that might be present
-        cy.get('iframe[src*="recaptcha"]').then(($iframes) => {
-          if ($iframes.length > 0) {
-            cy.wrap($iframes).invoke('remove');
-          }
-        });
-      }
-    });
-
-    cy.get('button').contains('Send Verification Code').click();
-
     // Wait for the MFA enrollment to start
     cy.wait('@mfaEnrollmentStart');
+    
     // Enter verification code
     cy.get('input[id="verificationCode"]').should('be.visible').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();

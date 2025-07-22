@@ -36,14 +36,17 @@ const SetupMFA = () => {
   const [password, setPassword] = useState('');
   const [isReauthenticating, setIsReauthenticating] = useState(false);
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
-  const hasRecaptchaRendered = useRef(false);
+  const recaptchaCleanupRef = useRef<(() => void) | null>(null);
 
   // Clean up reCAPTCHA on unmount
   useEffect(() => {
     return () => {
-      if (hasRecaptchaRendered.current && recaptchaContainerRef.current) {
+      if (recaptchaContainerRef.current) {
         recaptchaContainerRef.current.innerHTML = '';
-        hasRecaptchaRendered.current = false;
+      }
+      if (recaptchaCleanupRef.current) {
+        recaptchaCleanupRef.current();
+        recaptchaCleanupRef.current = null;
       }
     };
   }, []);
@@ -87,13 +90,16 @@ const SetupMFA = () => {
 
     setError('');
 
-    // Clear any existing reCAPTCHA before creating a new one
+    // Clean up any existing reCAPTCHA before creating a new one
     if (recaptchaContainerRef.current) {
       recaptchaContainerRef.current.innerHTML = '';
-      hasRecaptchaRendered.current = false;
+    }
+    if (recaptchaCleanupRef.current) {
+      recaptchaCleanupRef.current();
+      recaptchaCleanupRef.current = null;
     }
 
-    const { verificationId, error } = await triggerInitialMFA(phoneNumber);
+    const { verificationId, error, cleanup } = await triggerInitialMFA(phoneNumber);
     if (error) {
       if (error.code === 'auth/requires-recent-login') {
         setShowReauth(true);
@@ -104,7 +110,9 @@ const SetupMFA = () => {
       }
     } else {
       setVerificationId(verificationId!);
-      hasRecaptchaRendered.current = true;
+      if (cleanup) {
+        recaptchaCleanupRef.current = cleanup;
+      }
     }
   };
 

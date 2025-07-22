@@ -129,15 +129,33 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
 
-    // Clean up any existing reCAPTCHA verifiers
+    // Clean up any existing reCAPTCHA verifiers before creating new one
     const existingContainer = document.getElementById('recaptcha-container');
     if (existingContainer) {
       existingContainer.innerHTML = '';
     }
 
+    // Clear any existing reCAPTCHA widgets
+    if ((window as any).grecaptcha) {
+      try {
+        (window as any).grecaptcha.reset();
+      } catch (e) {
+        // Ignore reset errors
+      }
+    }
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',
     });
+    
+    // Store cleanup function
+    const cleanup = () => {
+      try {
+        recaptchaVerifier.clear();
+      } catch (e) {
+        // Ignore cleanup errors
+      }
+    };
+
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
     const session = await multiFactor(user).getSession();
@@ -152,9 +170,9 @@ export async function triggerInitialMFA(phoneNumber: string) {
       phoneInfoOptions,
       recaptchaVerifier,
     );
-    return { verificationId, error: null };
+    return { verificationId, error: null, cleanup };
   } catch (error) {
-    return { verificationId: null, error: error as FirebaseError };
+    return { verificationId: null, error: error as FirebaseError, cleanup: null };
   }
 }
 
