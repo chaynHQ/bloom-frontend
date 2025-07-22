@@ -50,14 +50,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: []
+          activeSubscriptions: [],
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: []
-      }
+        subscriptions: [],
+      },
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -81,17 +81,17 @@ describe('Superadmin MFA Flow', () => {
       statusCode: 200,
       body: {
         phoneSessionInfo: {
-          sessionInfo: 'mock-session-info'
-        }
-      }
+          sessionInfo: 'mock-session-info',
+        },
+      },
     }).as('mfaEnrollmentStart');
 
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:finalize*', {
       statusCode: 200,
       body: {
         idToken: 'mock-id-token',
-        refreshToken: 'mock-refresh-token'
-      }
+        refreshToken: 'mock-refresh-token',
+      },
     }).as('mfaEnrollmentFinalize');
 
     // Mock superadmin user without MFA
@@ -113,14 +113,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: []
+          activeSubscriptions: [],
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: []
-      }
+        subscriptions: [],
+      },
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -155,33 +155,25 @@ describe('Superadmin MFA Flow', () => {
         error: {
           code: 400,
           message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
-          errors: [{
-            message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
-            domain: 'global',
-            reason: 'invalid'
-          }]
-        }
-      }
+          errors: [
+            {
+              message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
+              domain: 'global',
+              reason: 'invalid',
+            },
+          ],
+        },
+      },
     }).as('mfaEnrollmentRequiresReauth');
-
-    // Mock successful reauthentication
-    cy.intercept('POST', '**/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword*', {
-      statusCode: 200,
-      body: {
-        idToken: 'mock-reauth-token',
-        refreshToken: 'mock-refresh-token',
-        localId: 'mock-user-id'
-      }
-    }).as('reauthentication');
 
     // Mock successful MFA enrollment after reauthentication
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
       body: {
         phoneSessionInfo: {
-          sessionInfo: 'mock-session-info-after-reauth'
-        }
-      }
+          sessionInfo: 'mock-session-info-after-reauth',
+        },
+      },
     }).as('mfaEnrollmentAfterReauth');
 
     // Mock superadmin user without MFA
@@ -203,14 +195,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: []
+          activeSubscriptions: [],
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: []
-      }
+        subscriptions: [],
+      },
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -261,14 +253,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: []
+          activeSubscriptions: [],
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: []
-      }
+        subscriptions: [],
+      },
     }).as('getUserUnverified');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });

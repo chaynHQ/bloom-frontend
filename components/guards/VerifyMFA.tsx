@@ -7,7 +7,7 @@ import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const buttonStyle = {
   display: 'block',
@@ -94,6 +94,7 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
       ) : (
         <>
           <TextField
+            id="verificationCode"
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}
             label={t('form.verificationCodeLabel')}
