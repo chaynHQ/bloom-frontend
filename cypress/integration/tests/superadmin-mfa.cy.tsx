@@ -129,13 +129,39 @@ describe('Superadmin MFA Flow', () => {
 
     cy.visit('/admin/dashboard');
 
+    // Verify MFA setup form is displayed
+    cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
+    
     // Enter phone number
-    cy.get('input[type="tel"]').type(testPhoneNumber);
-    cy.get('button').contains('Send Verification Code').click();
-
-    // Enter verification code (this will be mocked in the component)
-    cy.get('input[id="verificationCode"]').type(testVerificationCode);
+    cy.get('input[type="tel"]').should('be.visible').type(testPhoneNumber);
+    
+    // Click send verification code button
+    cy.get('button').contains('Send Verification Code').should('be.visible').click();
+    
+    // Wait for the MFA enrollment to start
+    cy.wait('@mfaEnrollmentStart');
+    
+    // Handle reCAPTCHA - validate it exists then remove it to prevent blocking
+    cy.get('body').then(($body) => {
+      // Check if reCAPTCHA container exists (validates it was triggered)
+      if ($body.find('#recaptcha-container').length > 0) {
+        cy.log('reCAPTCHA container found - removing to prevent test blocking');
+        // Remove reCAPTCHA elements that might block the UI
+        cy.get('#recaptcha-container').invoke('empty');
+        // Also remove any reCAPTCHA iframes that might be present
+        cy.get('iframe[src*="recaptcha"]').then(($iframes) => {
+          if ($iframes.length > 0) {
+            cy.wrap($iframes).invoke('remove');
+          }
+        });
+      }
+    });
+    
+    // Enter verification code
+    cy.get('input[id="verificationCode"]').should('be.visible').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();
+
+    cy.wait('@mfaEnrollmentFinalize');
 
     // Should redirect to admin dashboard
     cy.url().should('include', '/admin/dashboard');
