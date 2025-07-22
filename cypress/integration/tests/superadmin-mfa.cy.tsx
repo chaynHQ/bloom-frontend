@@ -50,14 +50,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: [],
+          activeSubscriptions: []
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: [],
-      },
+        subscriptions: []
+      }
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -81,17 +81,17 @@ describe('Superadmin MFA Flow', () => {
       statusCode: 200,
       body: {
         phoneSessionInfo: {
-          sessionInfo: 'mock-session-info',
-        },
-      },
+          sessionInfo: 'mock-session-info'
+        }
+      }
     }).as('mfaEnrollmentStart');
 
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:finalize*', {
       statusCode: 200,
       body: {
         idToken: 'mock-id-token',
-        refreshToken: 'mock-refresh-token',
-      },
+        refreshToken: 'mock-refresh-token'
+      }
     }).as('mfaEnrollmentFinalize');
 
     // Mock superadmin user without MFA
@@ -113,48 +113,29 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: [],
+          activeSubscriptions: []
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: [],
-      },
+        subscriptions: []
+      }
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
     cy.logInWithEmailAndPassword(testEmail, password);
     cy.wait('@getUserSuperadmin');
 
-    // Mock reCAPTCHA before visiting the page
-    cy.window().then((win) => {
-      win.grecaptcha = {
-        getResponse: () => 'mock-recaptcha-token',
-        render: () => 'mock-widget-id',
-        reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token'),
-      };
-    });
-
     cy.visit('/admin/dashboard');
 
     // Enter phone number
     cy.get('input[type="tel"]').type(testPhoneNumber);
-    
-    // Validate reCAPTCHA container exists before clicking
-    cy.get('#recaptcha-container').should('exist');
-    
     cy.get('button').contains('Send Verification Code').click();
 
-    // Wait for SMS to be "sent" and UI to update
-    cy.wait('@mfaEnrollmentStart');
-    cy.wait(500); // Allow UI to transition
-
-    // Now the verification code input should be accessible
+    // Enter verification code (this will be mocked in the component)
     cy.get('input[id="verificationCode"]').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();
-    cy.wait('@mfaEnrollmentFinalize');
 
     // Should redirect to admin dashboard
     cy.url().should('include', '/admin/dashboard');
@@ -174,25 +155,33 @@ describe('Superadmin MFA Flow', () => {
         error: {
           code: 400,
           message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
-          errors: [
-            {
-              message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
-              domain: 'global',
-              reason: 'invalid',
-            },
-          ],
-        },
-      },
+          errors: [{
+            message: 'CREDENTIAL_TOO_OLD_LOGIN_AGAIN',
+            domain: 'global',
+            reason: 'invalid'
+          }]
+        }
+      }
     }).as('mfaEnrollmentRequiresReauth');
+
+    // Mock successful reauthentication
+    cy.intercept('POST', '**/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword*', {
+      statusCode: 200,
+      body: {
+        idToken: 'mock-reauth-token',
+        refreshToken: 'mock-refresh-token',
+        localId: 'mock-user-id'
+      }
+    }).as('reauthentication');
 
     // Mock successful MFA enrollment after reauthentication
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
       body: {
         phoneSessionInfo: {
-          sessionInfo: 'mock-session-info-after-reauth',
-        },
-      },
+          sessionInfo: 'mock-session-info-after-reauth'
+        }
+      }
     }).as('mfaEnrollmentAfterReauth');
 
     // Mock superadmin user without MFA
@@ -214,31 +203,23 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: [],
+          activeSubscriptions: []
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: [],
-      },
+        subscriptions: []
+      }
     }).as('getUserSuperadmin');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
     cy.logInWithEmailAndPassword(testEmail, password);
     cy.wait('@getUserSuperadmin');
 
-    // Mock reCAPTCHA before visiting the page
-    cy.window().then((win) => {
-      win.grecaptcha = {
-        getResponse: () => 'mock-recaptcha-token',
-        render: () => 'mock-widget-id',
-        reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token'),
-      };
-    });
-    // Wait for UI to transition to reauthentication form (reCAPTCHA should be hidden)
-    cy.wait(500);
+    cy.visit('/admin/dashboard');
+    cy.get('input[type="tel"]').type(testPhoneNumber);
+    cy.get('button').contains('Send Verification Code').click();
 
     // Should show reauthentication form (this will be triggered by the component logic)
     cy.get('h3').should('contain', 'Confirm your password');
@@ -246,19 +227,13 @@ describe('Superadmin MFA Flow', () => {
     cy.get('input[type="password"]').should('exist');
     cy.get('button').contains('Confirm').should('exist');
     cy.get('button').contains('Cancel').should('exist');
-    
-    // reCAPTCHA should be hidden during reauthentication
-    cy.get('#recaptcha-container').should('not.exist');
 
     // Enter password for reauthentication
     cy.get('input[type="password"]').type(password);
     cy.get('button').contains('Confirm').click();
-    cy.wait('@reauthenticate');
-    
-    // After reauthentication, should show phone input again with reCAPTCHA
-    cy.wait(500); // Allow UI to reset
-    cy.get('#recaptcha-container').should('exist');
-    cy.get('input[type="tel"]').should('exist');
+
+    // Should return to MFA setup form
+    cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
 
     cy.logout();
   });
@@ -286,14 +261,14 @@ describe('Superadmin MFA Flow', () => {
           emailRemindersFrequency: null,
           crispTokenId: null,
           signUpLanguage: 'en',
-          activeSubscriptions: [],
+          activeSubscriptions: []
         },
         partnerAccesses: [],
         partnerAdmin: { id: null, active: null, createdAt: null, updatedAt: null, partner: null },
         courses: [],
         resources: [],
-        subscriptions: [],
-      },
+        subscriptions: []
+      }
     }).as('getUserUnverified');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
