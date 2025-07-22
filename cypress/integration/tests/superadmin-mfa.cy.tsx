@@ -76,16 +76,6 @@ describe('Superadmin MFA Flow', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
 
-    // Mock reCAPTCHA globally for this test
-    cy.window().then((win) => {
-      win.grecaptcha = {
-        getResponse: () => 'mock-recaptcha-token',
-        render: () => 'mock-widget-id',
-        reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token'),
-      };
-    });
-
     // Mock Firebase MFA enrollment endpoints
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
@@ -137,21 +127,34 @@ describe('Superadmin MFA Flow', () => {
     cy.logInWithEmailAndPassword(testEmail, password);
     cy.wait('@getUserSuperadmin');
 
+    // Mock reCAPTCHA before visiting the page
+    cy.window().then((win) => {
+      win.grecaptcha = {
+        getResponse: () => 'mock-recaptcha-token',
+        render: () => 'mock-widget-id',
+        reset: () => {},
+        execute: () => Promise.resolve('mock-recaptcha-token'),
+      };
+    });
+
     cy.visit('/admin/dashboard');
 
     // Enter phone number
     cy.get('input[type="tel"]').type(testPhoneNumber);
+    
+    // Validate reCAPTCHA container exists before clicking
+    cy.get('#recaptcha-container').should('exist');
+    
     cy.get('button').contains('Send Verification Code').click();
 
-    // Validate reCAPTCHA was triggered and handle it
-    cy.get('#recaptcha-container').should('exist');
+    // Wait for SMS to be "sent" and UI to update
+    cy.wait('@mfaEnrollmentStart');
+    cy.wait(500); // Allow UI to transition
 
-    // Wait for the UI to update after reCAPTCHA
-    cy.wait(1000);
-
-    // Enter verification code (this will be mocked in the component)
+    // Now the verification code input should be accessible
     cy.get('input[id="verificationCode"]').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();
+    cy.wait('@mfaEnrollmentFinalize');
 
     // Should redirect to admin dashboard
     cy.url().should('include', '/admin/dashboard');
@@ -163,16 +166,6 @@ describe('Superadmin MFA Flow', () => {
   it('should handle reauthentication requirement during MFA setup', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
-
-    // Mock reCAPTCHA globally for this test
-    cy.window().then((win) => {
-      win.grecaptcha = {
-        getResponse: () => 'mock-recaptcha-token',
-        render: () => 'mock-widget-id',
-        reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token'),
-      };
-    });
 
     // Mock Firebase MFA enrollment to require reauthentication first
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
@@ -235,9 +228,17 @@ describe('Superadmin MFA Flow', () => {
     cy.logInWithEmailAndPassword(testEmail, password);
     cy.wait('@getUserSuperadmin');
 
-    cy.visit('/admin/dashboard');
-    cy.get('input[type="tel"]').type(testPhoneNumber);
-    cy.get('button').contains('Send Verification Code').click();
+    // Mock reCAPTCHA before visiting the page
+    cy.window().then((win) => {
+      win.grecaptcha = {
+        getResponse: () => 'mock-recaptcha-token',
+        render: () => 'mock-widget-id',
+        reset: () => {},
+        execute: () => Promise.resolve('mock-recaptcha-token'),
+      };
+    });
+    // Wait for UI to transition to reauthentication form (reCAPTCHA should be hidden)
+    cy.wait(500);
 
     // Should show reauthentication form (this will be triggered by the component logic)
     cy.get('h3').should('contain', 'Confirm your password');
@@ -245,14 +246,18 @@ describe('Superadmin MFA Flow', () => {
     cy.get('input[type="password"]').should('exist');
     cy.get('button').contains('Confirm').should('exist');
     cy.get('button').contains('Cancel').should('exist');
+    
+    // reCAPTCHA should be hidden during reauthentication
+    cy.get('#recaptcha-container').should('not.exist');
 
     // Enter password for reauthentication
     cy.get('input[type="password"]').type(password);
     cy.get('button').contains('Confirm').click();
-    // Validate reCAPTCHA was triggered initially
+    cy.wait('@reauthenticate');
+    
+    // After reauthentication, should show phone input again with reCAPTCHA
+    cy.wait(500); // Allow UI to reset
     cy.get('#recaptcha-container').should('exist');
-
-    // Should show phone input again (reset after reauthentication)
     cy.get('input[type="tel"]').should('exist');
 
     cy.logout();

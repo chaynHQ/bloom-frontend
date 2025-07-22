@@ -35,6 +35,7 @@ const SetupMFA = () => {
   const [showReauth, setShowReauth] = useState(false);
   const [password, setPassword] = useState('');
   const [isReauthenticating, setIsReauthenticating] = useState(false);
+  const [showRecaptcha, setShowRecaptcha] = useState(true);
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
   const hasRecaptchaRendered = useRef(false);
 
@@ -65,6 +66,7 @@ const SetupMFA = () => {
       setVerificationId('');
       setVerificationCode('');
       setPhoneNumber('');
+      setShowRecaptcha(true); // Show reCAPTCHA again for new MFA attempt
     } catch (error: any) {
       rollbar.error('Reauthentication error:', error);
       if (error.code === 'auth/wrong-password') {
@@ -78,6 +80,7 @@ const SetupMFA = () => {
       setIsReauthenticating(false);
     }
   };
+
   const handleEnrollMFA = async () => {
     if (!userVerifiedEmail) {
       setError(t('form.emailNotVerified'));
@@ -97,6 +100,7 @@ const SetupMFA = () => {
     if (error) {
       if (error.code === 'auth/requires-recent-login') {
         setShowReauth(true);
+        setShowRecaptcha(false); // Hide reCAPTCHA during reauthentication
         // Clear reCAPTCHA when showing reauthentication
         if (recaptchaContainerRef.current) {
           recaptchaContainerRef.current.innerHTML = '';
@@ -109,6 +113,7 @@ const SetupMFA = () => {
       }
     } else {
       setVerificationId(verificationId!);
+      setShowRecaptcha(false); // Hide reCAPTCHA after SMS is sent
       hasRecaptchaRendered.current = true;
     }
   };
@@ -175,6 +180,7 @@ const SetupMFA = () => {
               setVerificationId('');
               setVerificationCode('');
               setPhoneNumber('');
+              setShowRecaptcha(true); // Show reCAPTCHA again
             }}
             disabled={isReauthenticating}
           >
@@ -189,10 +195,10 @@ const SetupMFA = () => {
             {isReauthenticating ? t('setupMFA.reauthenticating') : t('setupMFA.confirmReauth')}
           </Button>
         </Box>
-        {/* No reCAPTCHA during reauthentication */}
       </Box>
     );
   }
+
   return (
     <Box>
       <Typography variant="h3">{t('setupMFA.title')}</Typography>
@@ -214,7 +220,7 @@ const SetupMFA = () => {
           <Button variant="contained" color="secondary" sx={buttonStyle} onClick={handleEnrollMFA}>
             {t('setupMFA.sendCode')}
           </Button>
-          <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
+          {showRecaptcha && <div id="recaptcha-container" ref={recaptchaContainerRef}></div>}
         </>
       ) : (
         <>
@@ -235,7 +241,6 @@ const SetupMFA = () => {
           >
             {t('setupMFA.verifyCode')}
           </Button>
-          {/* No reCAPTCHA during verification code entry */}
         </>
       )}
       {error && (
