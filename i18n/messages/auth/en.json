@@ -61,7 +61,9 @@
       "emailNotVerified": "Please verify your email before setting up 2FA.",
       "emailVerificationError": "Error sending verification email. Please try again.",
       "emailVerificationSent": "Verification email sent. Please check your inbox.",
-      "sendVerificationEmail": "Send Verification Email"
+      "sendVerificationEmail": "Send Verification Email",
+      "passwordRequired": "Password is required for reauthentication.",
+      "reauthenticationError": "Failed to reauthenticate. Please try again."
     },
     "verifyMFA": {
       "title": "Verify Two-Factor Authentication",
@@ -74,7 +76,12 @@
       "pageTitle": "Secure Your Account",
       "sendCode": "Send Verification Code",
       "verifyCode": "Verify Code",
-      "enterCodeHelperText": "Please enter the verification code we sent to your phone:"
+      "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
+      "reauthTitle": "Confirm your password",
+      "reauthDescription": "Please enter your password before continuing",
+      "cancelReauth": "Cancel",
+      "confirmReauth": "Confirm",
+      "reauthenticating": "Confirming..."
     },
     "verifyEmail": {
       "pageTitle": "Verify Your Email",
