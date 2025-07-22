@@ -87,10 +87,19 @@ const SetupMFA = () => {
 
     setError('');
 
-    // Clear any existing reCAPTCHA before creating a new one
+    // Clear any existing reCAPTCHA completely before creating a new one
     if (recaptchaContainerRef.current) {
       recaptchaContainerRef.current.innerHTML = '';
       hasRecaptchaRendered.current = false;
+      
+      // Also clear any global reCAPTCHA instances
+      if (window.grecaptcha) {
+        try {
+          window.grecaptcha.reset();
+        } catch (e) {
+          // Ignore reset errors
+        }
+      }
     }
 
     const { verificationId, error } = await triggerInitialMFA(phoneNumber);
