@@ -1,5 +1,6 @@
 import type { FirebaseError } from 'firebase/app';
 import {
+  EmailAuthProvider,
   MultiFactorError,
   MultiFactorResolver,
   PhoneAuthProvider,
@@ -9,12 +10,11 @@ import {
   applyActionCode,
   confirmPasswordReset,
   multiFactor,
+  reauthenticateWithCredential,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
   type User,
 } from 'firebase/auth';
 import { auth } from './firebase';
@@ -135,26 +135,9 @@ export async function triggerInitialMFA(phoneNumber: string) {
       existingContainer.innerHTML = '';
     }
 
-    // Clear any existing reCAPTCHA widgets
-    if ((window as any).grecaptcha) {
-      try {
-        (window as any).grecaptcha.reset();
-      } catch (e) {
-        // Ignore reset errors
-      }
-    }
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',
     });
-    
-    // Store cleanup function
-    const cleanup = () => {
-      try {
-        recaptchaVerifier.clear();
-      } catch (e) {
-        // Ignore cleanup errors
-      }
-    };
 
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
@@ -170,9 +153,9 @@ export async function triggerInitialMFA(phoneNumber: string) {
       phoneInfoOptions,
       recaptchaVerifier,
     );
-    return { verificationId, error: null, cleanup };
+    return { verificationId, error: null };
   } catch (error) {
-    return { verificationId: null, error: error as FirebaseError, cleanup: null };
+    return { verificationId: null, error: error as FirebaseError };
   }
 }
 

@@ -99,7 +99,7 @@ const SetupMFA = () => {
       recaptchaCleanupRef.current = null;
     }
 
-    const { verificationId, error, cleanup } = await triggerInitialMFA(phoneNumber);
+    const { verificationId, error } = await triggerInitialMFA(phoneNumber);
     if (error) {
       if (error.code === 'auth/requires-recent-login') {
         setShowReauth(true);
@@ -110,9 +110,6 @@ const SetupMFA = () => {
       }
     } else {
       setVerificationId(verificationId!);
-      if (cleanup) {
-        recaptchaCleanupRef.current = cleanup;
-      }
     }
   };
 
