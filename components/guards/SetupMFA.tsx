@@ -1,18 +1,18 @@
 'use client';
 
 import {
+  reauthenticateUser,
   sendVerificationEmail,
   triggerInitialMFA,
   verifyMFA,
-  reauthenticateUser,
 } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { Box, Button, TextField, Typography, Alert } from '@mui/material';
+import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PhoneInput from '../forms/PhoneInput';
 
 const buttonStyle = {
@@ -209,6 +209,7 @@ const SetupMFA = () => {
         <>
           <Typography>{t('setupMFA.enterCodeHelperText')}</Typography>
           <TextField
+            id="verificationCode"
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}
             label={t('form.verificationCodeLabel')}
