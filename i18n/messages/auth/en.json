@@ -77,7 +77,7 @@
       "sendCode": "Send Verification Code",
       "verifyCode": "Verify Code",
       "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
-      "reauthTitle": "Confirm Your Identity",
+      "reauthTitle": "Confirm your password",
       "reauthDescription": "Please enter your password before continuing",
       "cancelReauth": "Cancel",
       "confirmReauth": "Confirm",

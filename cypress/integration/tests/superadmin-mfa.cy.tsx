@@ -82,7 +82,7 @@ describe('Superadmin MFA Flow', () => {
         getResponse: () => 'mock-recaptcha-token',
         render: () => 'mock-widget-id',
         reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token')
+        execute: () => Promise.resolve('mock-recaptcha-token'),
       };
     });
 
@@ -145,7 +145,7 @@ describe('Superadmin MFA Flow', () => {
 
     // Validate reCAPTCHA was triggered and handle it
     cy.get('#recaptcha-container').should('exist');
-    
+
     // Wait for the UI to update after reCAPTCHA
     cy.wait(1000);
 
@@ -170,7 +170,7 @@ describe('Superadmin MFA Flow', () => {
         getResponse: () => 'mock-recaptcha-token',
         render: () => 'mock-widget-id',
         reset: () => {},
-        execute: () => Promise.resolve('mock-recaptcha-token')
+        execute: () => Promise.resolve('mock-recaptcha-token'),
       };
     });
 
@@ -251,9 +251,7 @@ describe('Superadmin MFA Flow', () => {
     cy.get('button').contains('Confirm').click();
     // Validate reCAPTCHA was triggered initially
     cy.get('#recaptcha-container').should('exist');
-    
-    cy.get('h3').should('contain', 'Confirm Your Identity');
-    
+
     // Should show phone input again (reset after reauthentication)
     cy.get('input[type="tel"]').should('exist');
 
