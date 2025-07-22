@@ -251,6 +251,15 @@ describe('Superadmin MFA Flow', () => {
     cy.get('button').contains('Confirm').click();
     // Validate reCAPTCHA was triggered initially
     cy.get('#recaptcha-container').should('exist');
+    
+    cy.get('h3').should('contain', 'Confirm Your Identity');
+    
+    // Should show phone input again (reset after reauthentication)
+    cy.get('input[type="tel"]').should('exist');
+
+    cy.logout();
+  });
+
   it('should require email verification before MFA setup', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
@@ -281,7 +290,7 @@ describe('Superadmin MFA Flow', () => {
         courses: [],
         resources: [],
         subscriptions: [],
-    cy.get('h3').should('contain', 'Confirm Your Identity');
+      },
     }).as('getUserUnverified');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -293,9 +302,6 @@ describe('Superadmin MFA Flow', () => {
     // Should show email verification requirement
     cy.get('p').should('contain', 'Please verify your email before setting up 2FA');
     cy.get('button').contains('Send Verification Email').should('exist');
-    
-    // Should show phone input again (reset after reauthentication)
-    cy.get('input[type="tel"]').should('exist');
 
     cy.logout();
   });
