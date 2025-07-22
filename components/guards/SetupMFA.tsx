@@ -153,6 +153,7 @@ export async function triggerInitialMFA(phoneNumber: string) {
       recaptchaVerifier,
 
       // Also clear any global reCAPTCHA instances
+    )
   } catch (error) {
     return { verificationId: null, error: error as FirebaseError };
   }
