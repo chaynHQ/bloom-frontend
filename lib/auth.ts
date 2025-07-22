@@ -129,23 +129,11 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
 
-    // Clean up any existing reCAPTCHA verifiers more thoroughly
+    // Clean up any existing reCAPTCHA verifiers
     const existingContainer = document.getElementById('recaptcha-container');
     if (existingContainer) {
       existingContainer.innerHTML = '';
-      
-      // Clear any global reCAPTCHA instances
-      if (window.grecaptcha) {
-        try {
-          window.grecaptcha.reset();
-        } catch (e) {
-          // Ignore reset errors
-        }
-      }
     }
-
-    // Add a small delay to ensure cleanup is complete
-    await new Promise(resolve => setTimeout(resolve, 100));
 
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',

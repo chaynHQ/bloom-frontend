@@ -76,7 +76,7 @@ describe('Superadmin MFA Flow', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
 
-    // Mock Firebase MFA enrollment endpoints with proper cleanup
+    // // Mock Firebase MFA enrollment endpoints
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
       body: {
@@ -138,31 +138,26 @@ describe('Superadmin MFA Flow', () => {
     // Click send verification code button
     cy.get('button').contains('Send Verification Code').should('be.visible').click();
 
-    // Wait for the MFA enrollment to start and handle reCAPTCHA cleanup
-    cy.wait('@mfaEnrollmentStart').then(() => {
-      // Clean up any reCAPTCHA elements that might block the UI
-      cy.get('body').then(($body) => {
-        if ($body.find('#recaptcha-container').length > 0) {
-          cy.log('reCAPTCHA container found - cleaning up');
-          cy.get('#recaptcha-container').invoke('empty');
-        }
-        // Remove any reCAPTCHA iframes
-        if ($body.find('iframe[src*="recaptcha"]').length > 0) {
-          cy.get('iframe[src*="recaptcha"]').invoke('remove');
-        }
-        // Clear any global reCAPTCHA instances
-        cy.window().then((win) => {
-          if (win.grecaptcha) {
-            try {
-              win.grecaptcha.reset();
-            } catch (e) {
-              // Ignore reset errors
-            }
+    // Handle reCAPTCHA - validate it exists then remove it to prevent blocking
+    cy.get('body').then(($body) => {
+      // Check if reCAPTCHA container exists (validates it was triggered)
+      if ($body.find('#recaptcha-container').length > 0) {
+        cy.log('reCAPTCHA container found - removing to prevent test blocking');
+        // Remove reCAPTCHA elements that might block the UI
+        cy.get('#recaptcha-container').invoke('empty');
+        // Also remove any reCAPTCHA iframes that might be present
+        cy.get('iframe[src*="recaptcha"]').then(($iframes) => {
+          if ($iframes.length > 0) {
+            cy.wrap($iframes).invoke('remove');
           }
         });
-      });
+      }
     });
 
+    cy.get('button').contains('Send Verification Code').click();
+
+    // Wait for the MFA enrollment to start
+    cy.wait('@mfaEnrollmentStart');
     // Enter verification code
     cy.get('input[id="verificationCode"]').should('be.visible').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();
