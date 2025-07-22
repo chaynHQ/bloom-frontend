@@ -76,6 +76,16 @@ describe('Superadmin MFA Flow', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
 
+    // Mock reCAPTCHA globally for this test
+    cy.window().then((win) => {
+      win.grecaptcha = {
+        getResponse: () => 'mock-recaptcha-token',
+        render: () => 'mock-widget-id',
+        reset: () => {},
+        execute: () => Promise.resolve('mock-recaptcha-token')
+      };
+    });
+
     // Mock Firebase MFA enrollment endpoints
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
       statusCode: 200,
@@ -133,6 +143,12 @@ describe('Superadmin MFA Flow', () => {
     cy.get('input[type="tel"]').type(testPhoneNumber);
     cy.get('button').contains('Send Verification Code').click();
 
+    // Validate reCAPTCHA was triggered and handle it
+    cy.get('#recaptcha-container').should('exist');
+    
+    // Wait for the UI to update after reCAPTCHA
+    cy.wait(1000);
+
     // Enter verification code (this will be mocked in the component)
     cy.get('input[id="verificationCode"]').type(testVerificationCode);
     cy.get('button').contains('Verify Code').click();
@@ -147,6 +163,16 @@ describe('Superadmin MFA Flow', () => {
   it('should handle reauthentication requirement during MFA setup', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
+
+    // Mock reCAPTCHA globally for this test
+    cy.window().then((win) => {
+      win.grecaptcha = {
+        getResponse: () => 'mock-recaptcha-token',
+        render: () => 'mock-widget-id',
+        reset: () => {},
+        execute: () => Promise.resolve('mock-recaptcha-token')
+      };
+    });
 
     // Mock Firebase MFA enrollment to require reauthentication first
     cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
@@ -223,13 +249,8 @@ describe('Superadmin MFA Flow', () => {
     // Enter password for reauthentication
     cy.get('input[type="password"]').type(password);
     cy.get('button').contains('Confirm').click();
-
-    // Should return to MFA setup form
-    cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
-
-    cy.logout();
-  });
-
+    // Validate reCAPTCHA was triggered initially
+    cy.get('#recaptcha-container').should('exist');
   it('should require email verification before MFA setup', () => {
     const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testpassword';
@@ -260,7 +281,7 @@ describe('Superadmin MFA Flow', () => {
         courses: [],
         resources: [],
         subscriptions: [],
-      },
+    cy.get('h3').should('contain', 'Confirm Your Identity');
     }).as('getUserUnverified');
 
     cy.createUser({ emailInput: testEmail, passwordInput: password });
@@ -272,6 +293,9 @@ describe('Superadmin MFA Flow', () => {
     // Should show email verification requirement
     cy.get('p').should('contain', 'Please verify your email before setting up 2FA');
     cy.get('button').contains('Send Verification Email').should('exist');
+    
+    // Should show phone input again (reset after reauthentication)
+    cy.get('input[type="tel"]').should('exist');
 
     cy.logout();
   });

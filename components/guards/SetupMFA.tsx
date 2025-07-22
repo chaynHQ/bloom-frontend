@@ -97,6 +97,11 @@ const SetupMFA = () => {
     if (error) {
       if (error.code === 'auth/requires-recent-login') {
         setShowReauth(true);
+        // Clear reCAPTCHA when showing reauthentication
+        if (recaptchaContainerRef.current) {
+          recaptchaContainerRef.current.innerHTML = '';
+          hasRecaptchaRendered.current = false;
+        }
         setError('');
       } else {
         setError(t('form.mfaEnrollError'));
@@ -166,6 +171,10 @@ const SetupMFA = () => {
               setShowReauth(false);
               setPassword('');
               setError('');
+              // Reset MFA state when canceling reauthentication
+              setVerificationId('');
+              setVerificationCode('');
+              setPhoneNumber('');
             }}
             disabled={isReauthenticating}
           >
@@ -180,6 +189,7 @@ const SetupMFA = () => {
             {isReauthenticating ? t('setupMFA.reauthenticating') : t('setupMFA.confirmReauth')}
           </Button>
         </Box>
+        {/* No reCAPTCHA during reauthentication */}
       </Box>
     );
   }
@@ -204,6 +214,7 @@ const SetupMFA = () => {
           <Button variant="contained" color="secondary" sx={buttonStyle} onClick={handleEnrollMFA}>
             {t('setupMFA.sendCode')}
           </Button>
+          <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
         </>
       ) : (
         <>
@@ -224,6 +235,7 @@ const SetupMFA = () => {
           >
             {t('setupMFA.verifyCode')}
           </Button>
+          {/* No reCAPTCHA during verification code entry */}
         </>
       )}
       {error && (
@@ -231,7 +243,6 @@ const SetupMFA = () => {
           {error}
         </Alert>
       )}
-      <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
     </Box>
   );
 };
