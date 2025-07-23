@@ -51,8 +51,8 @@
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
         "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. "
       },
-      "phoneNumberLabel": "Phone Number",
-      "verificationCodeLabel": "Verification Code",
+      "phoneNumberLabel": "Phone number",
+      "verificationCodeLabel": "Verification code",
       "mfaTriggerError": "SMS code bhejne mein truti. Kripya punah prayaas karein.",
       "mfaVerificationIdMissing": "Kripya pehle SMS code ka anuroodh karein.",
       "mfaEnrollError": "2FA mein naamaakon karne mein truti. Kripya punah prayaas karein.",
@@ -62,8 +62,8 @@
       "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
       "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
       "emailVerificationSpamCheck": "Agar aapko email nahi dikh raha, kripya apne spam folder ki jaanch karein.",
-      "sendVerificationEmail": "Satyaapan Email Bhejein",
-      "resendVerificationEmail": "Satyaapan Email Punah Bhejein",
+      "sendVerificationEmail": "Satyaapan email bhejein",
+      "resendVerificationEmail": "Satyaapan email punah bhejein",
       "passwordRequired": "Punah praman ke liye password aavashyak hai.",
       "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
     },
@@ -75,7 +75,6 @@
     },
     "setupMFA": {
       "title": "Do-charan praman setup karein",
-      "pageTitle": "Apne Khaate ko Surakshit Karein",
       "sendCode": "Verification code bhejein",
       "verifyCode": "Code verify karein",
       "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",

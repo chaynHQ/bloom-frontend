@@ -75,7 +75,6 @@
     },
     "setupMFA": {
       "title": "Configurar autenticación de dos factores",
-      "pageTitle": "Asegura tu cuenta",
       "sendCode": "Enviar código de verificación",
       "verifyCode": "Verificar código",
       "enterCodeHelperText": "Por favor, introduce el código de verificación que hemos enviado a tu teléfono:",

@@ -62,8 +62,8 @@
       "emailVerificationError": "Fehler beim Senden der Verifizierungs-E-Mail. Bitte versuche es erneut.",
       "emailVerificationSent": "Verifizierungs-E-Mail wurde gesendet. Bitte überprüfe deinen Posteingang.",
       "emailVerificationSpamCheck": "Wenn du die E-Mail nicht siehst, überprüfe bitte deinen Spam-Ordner.",
-      "sendVerificationEmail": "Verifizierungs-E-Mail senden",
-      "resendVerificationEmail": "Verifizierungs-E-Mail erneut senden",
+      "sendVerificationEmail": "Verifizierungs-e-mail senden",
+      "resendVerificationEmail": "Verifizierungs-e-mail erneut senden",
       "passwordRequired": "Passwort ist für die erneute Authentifizierung erforderlich.",
       "reauthenticationError": "Erneute Authentifizierung fehlgeschlagen. Bitte versuche es erneut."
     },
@@ -75,7 +75,6 @@
     },
     "setupMFA": {
       "title": "Zwei-faktor-authentifizierung einrichten",
-      "pageTitle": "Sichern Sie Ihr Konto",
       "sendCode": "Verifizierungscode senden",
       "verifyCode": "Code verifizieren",
       "enterCodeHelperText": "Bitte geben Sie den Verifizierungscode ein, den wir an Ihr Telefon gesendet haben:",

@@ -51,8 +51,8 @@
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
         "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       },
-      "phoneNumberLabel": "Phone Number",
-      "verificationCodeLabel": "Verification Code",
+      "phoneNumberLabel": "Phone number",
+      "verificationCodeLabel": "Verification code",
       "mfaTriggerError": "Error sending SMS code. Please try again.",
       "mfaVerificationIdMissing": "Please request an SMS code first.",
       "mfaEnrollError": "Error enrolling in 2FA. Please try again.",
@@ -64,6 +64,8 @@
       "emailVerificationSpamCheck": "If you don't see the email, please check your spam folder.",
       "sendVerificationEmail": "Send Verification Email",
       "resendVerificationEmail": "Resend Verification Email",
+      "sendVerificationEmail": "Send verification email",
+      "resendVerificationEmail": "Resend verification email",
       "passwordRequired": "Password is required for reauthentication.",
       "reauthenticationError": "Failed to reauthenticate. Please try again."
     },
@@ -75,7 +77,6 @@
     },
     "setupMFA": {
       "title": "Set up two-factor authentication",
-      "pageTitle": "Secure Your Account",
       "sendCode": "Send verification code",
       "verifyCode": "Verify code",
       "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
