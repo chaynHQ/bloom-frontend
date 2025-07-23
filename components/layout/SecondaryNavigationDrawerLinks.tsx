@@ -43,7 +43,7 @@ const listItemStyle = {
 const listItemTextStyle = {
   span: {
     fontSize: 16,
-    fontWeight: 600,
+    fontweight: 600,
   },
 } as const;
 

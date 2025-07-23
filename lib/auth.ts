@@ -1,5 +1,6 @@
 import type { FirebaseError } from 'firebase/app';
 import {
+  EmailAuthProvider,
   MultiFactorError,
   MultiFactorResolver,
   PhoneAuthProvider,
@@ -9,6 +10,7 @@ import {
   applyActionCode,
   confirmPasswordReset,
   multiFactor,
+  reauthenticateWithCredential,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -39,6 +41,21 @@ export async function getAuthToken() {
   try {
     const token = await auth.currentUser?.getIdToken(true);
     return { token, error: null };
+  } catch (error) {
+    return { error: error as FirebaseError };
+  }
+}
+
+export async function reauthenticateUser(password: string) {
+  try {
+    const user = auth.currentUser;
+    if (!user || !user.email) {
+      throw new Error('No user logged in or email not available');
+    }
+
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+    return { error: null };
   } catch (error) {
     return { error: error as FirebaseError };
   }
@@ -112,9 +129,16 @@ export async function triggerInitialMFA(phoneNumber: string) {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
 
+    // Clean up any existing reCAPTCHA verifiers before creating new one
+    const existingContainer = document.getElementById('recaptcha-container');
+    if (existingContainer) {
+      existingContainer.innerHTML = '';
+    }
+
     const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',
     });
+
     const phoneAuthProvider = new PhoneAuthProvider(auth);
 
     const session = await multiFactor(user).getSession();

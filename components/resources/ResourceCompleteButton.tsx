@@ -21,7 +21,7 @@ import { useRollbar } from '@rollbar/react';
 const errorStyle = {
   color: 'primary.dark',
   marginTop: 2,
-  fontWeight: 600,
+  fontweight: 500,
 } as const;
 
 interface ResourceCompleteButtonProps {
