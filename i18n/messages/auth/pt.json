@@ -61,32 +61,28 @@
       "emailNotVerified": "Por favor, verifique seu e-mail antes de configurar a autenticação de dois fatores.",
       "emailVerificationError": "Erro ao enviar e-mail de verificação. Por favor, tente novamente.",
       "emailVerificationSent": "E-mail de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "emailVerificationSpamCheck": "Se você não vir o e-mail, verifique sua pasta de spam.",
       "sendVerificationEmail": "Enviar e-mail de verificação",
+      "resendVerificationEmail": "Reenviar e-mail de verificação",
       "passwordRequired": "Senha é necessária para reautenticação.",
       "reauthenticationError": "Falha na reautenticação. Por favor, tente novamente."
     },
     "verifyMFA": {
-      "title": "Verificar Autenticação de Dois Fatores",
-      "triggerSMS": "Enviar Código SMS",
-      "verifyCode": "Verificar Código",
+      "title": "Verificar autenticação de dois fatores",
+      "triggerSMS": "Enviar código SMS",
+      "verifyCode": "Verificar código",
       "phoneNumber": "Enviaremos um código de verificação para o seu número de telefone registrado: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Configurar Autenticação de Dois Fatores",
-      "pageTitle": "Proteja sua Conta",
-      "sendCode": "Enviar Código de Verificação",
-      "verifyCode": "Verificar Código",
+      "title": "Configurar autenticação de dois fatores",
+      "sendCode": "Enviar código de verificação",
+      "verifyCode": "Verificar código",
       "enterCodeHelperText": "Por favor, digite o código de verificação que enviamos para o seu telefone:",
       "reauthTitle": "Confirme sua Identidade",
       "reauthDescription": "Por favor digite sua senha antes de continuar",
       "cancelReauth": "Cancelar",
       "confirmReauth": "Confirmar",
       "reauthenticating": "Confirmando..."
-    },
-    "verifyEmail": {
-      "pageTitle": "Verifique seu e-mail",
-      "instructions": "Por favor, verifique seu e-mail e clique no link de verificação para continuar.",
-      "sendButton": "Reenviar e-mail de verificação"
     }
   }
 }

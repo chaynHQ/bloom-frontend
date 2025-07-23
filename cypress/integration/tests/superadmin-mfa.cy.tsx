@@ -122,28 +122,9 @@ describe('Superadmin MFA Flow', () => {
 
     // We can't mock the reCAPTCHA in Cypress, so we will skip this step that tests the actual sms sending and mfa setup
 
-    // Mock Firebase MFA enrollment endpoints
-    // cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:start*', {
-    //   statusCode: 200,
-    //   body: {
-    //     phoneSessionInfo: {
-    //       sessionInfo: 'mock-session-info',
-    //     },
-    //   },
-    // }).as('mfaEnrollmentStart');
-
-    // cy.intercept('POST', '**/identitytoolkit.googleapis.com/v2/accounts/mfaEnrollment:finalize*', {
-    //   statusCode: 200,
-    //   body: {
-    //     idToken: 'mock-id-token',
-    //     refreshToken: 'mock-refresh-token',
-    //   },
-    // }).as('mfaEnrollmentFinalize');
     // // Enter verification code
     // cy.get('input[id="verificationCode"]').should('be.visible').type(testVerificationCode);
     // cy.get('button').contains('Verify Code').click();
-
-    // cy.wait('@mfaEnrollmentFinalize');
 
     // // Should redirect to admin dashboard
     // cy.url().should('include', '/admin/dashboard');

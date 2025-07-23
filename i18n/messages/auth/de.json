@@ -61,19 +61,20 @@
       "emailNotVerified": "Bitte verifiziere deine E-Mail-Adresse, bevor du die Zwei-Faktor-Authentifizierung einrichtest.",
       "emailVerificationError": "Fehler beim Senden der Verifizierungs-E-Mail. Bitte versuche es erneut.",
       "emailVerificationSent": "Verifizierungs-E-Mail wurde gesendet. Bitte überprüfe deinen Posteingang.",
-      "sendVerificationEmail": "Verifizierungs-E-Mail senden",
+      "emailVerificationSpamCheck": "Wenn du die E-Mail nicht siehst, überprüfe bitte deinen Spam-Ordner.",
+      "sendVerificationEmail": "Verifizierungs-e-mail senden",
+      "resendVerificationEmail": "Verifizierungs-e-mail erneut senden",
       "passwordRequired": "Passwort ist für die erneute Authentifizierung erforderlich.",
       "reauthenticationError": "Erneute Authentifizierung fehlgeschlagen. Bitte versuche es erneut."
     },
     "verifyMFA": {
-      "title": "Zwei-Faktor-Authentifizierung verifizieren",
-      "triggerSMS": "SMS-Code senden",
+      "title": "Zwei-faktor-authentifizierung verifizieren",
+      "triggerSMS": "SMS-code senden",
       "verifyCode": "Code verifizieren",
       "phoneNumber": "Wir senden einen Verifizierungscode an Ihre registrierte Telefonnummer: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Zwei-Faktor-Authentifizierung einrichten",
-      "pageTitle": "Sichern Sie Ihr Konto",
+      "title": "Zwei-faktor-authentifizierung einrichten",
       "sendCode": "Verifizierungscode senden",
       "verifyCode": "Code verifizieren",
       "enterCodeHelperText": "Bitte geben Sie den Verifizierungscode ein, den wir an Ihr Telefon gesendet haben:",
@@ -82,11 +83,6 @@
       "cancelReauth": "Abbrechen",
       "confirmReauth": "Bestätigen",
       "reauthenticating": "Bestätige..."
-    },
-    "verifyEmail": {
-      "pageTitle": "E-Mail-Adresse verifizieren",
-      "instructions": "Bitte überprüfe deine E-Mails und klicke auf den Verifizierungslink, um fortzufahren.",
-      "sendButton": "Verifizierungs-E-Mail erneut senden"
     }
   }
 }
