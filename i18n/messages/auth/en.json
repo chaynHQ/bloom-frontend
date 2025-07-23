@@ -61,7 +61,9 @@
       "emailNotVerified": "Please verify your email before setting up 2FA.",
       "emailVerificationError": "Error sending verification email. Please try again.",
       "emailVerificationSent": "Verification email sent. Please check your inbox.",
+      "emailVerificationSpamCheck": "If you don't see the email, please check your spam folder.",
       "sendVerificationEmail": "Send Verification Email",
+      "resendVerificationEmail": "Resend Verification Email",
       "passwordRequired": "Password is required for reauthentication.",
       "reauthenticationError": "Failed to reauthenticate. Please try again."
     },

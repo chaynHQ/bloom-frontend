@@ -61,7 +61,9 @@
       "emailNotVerified": "2FA setup karne se pehle kripya apne email ki pushti karein.",
       "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
       "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
+      "emailVerificationSpamCheck": "Agar aapko email nahi dikh raha, kripya apne spam folder ki jaanch karein.",
       "sendVerificationEmail": "Satyaapan Email Bhejein",
+      "resendVerificationEmail": "Satyaapan Email Punah Bhejein",
       "passwordRequired": "Punah praman ke liye password aavashyak hai.",
       "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
     },

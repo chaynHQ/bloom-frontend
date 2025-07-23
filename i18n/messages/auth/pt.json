@@ -61,7 +61,9 @@
       "emailNotVerified": "Por favor, verifique seu e-mail antes de configurar a autenticação de dois fatores.",
       "emailVerificationError": "Erro ao enviar e-mail de verificação. Por favor, tente novamente.",
       "emailVerificationSent": "E-mail de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "emailVerificationSpamCheck": "Se você não vir o e-mail, verifique sua pasta de spam.",
       "sendVerificationEmail": "Enviar e-mail de verificação",
+      "resendVerificationEmail": "Reenviar e-mail de verificação",
       "passwordRequired": "Senha é necessária para reautenticação.",
       "reauthenticationError": "Falha na reautenticação. Por favor, tente novamente."
     },
