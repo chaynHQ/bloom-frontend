@@ -232,7 +232,9 @@ const SetupMFA = () => {
             onClick={handleSendVerificationEmail}
             disabled={emailVerificationSent}
           >
-            {emailVerificationSent ? t('form.resendVerificationEmail') : t('form.sendVerificationEmail')}
+            {emailVerificationSent
+              ? t('form.resendVerificationEmail')
+              : t('form.sendVerificationEmail')}
           </Button>
         </Box>
       ) : !verificationId ? (
