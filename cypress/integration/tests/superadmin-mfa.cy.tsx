@@ -65,9 +65,9 @@ describe('Superadmin MFA Flow', () => {
     cy.wait('@getUserSuperadmin');
 
     cy.visit('/admin/dashboard');
-    cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
+    cy.get('h3').should('contain', 'Set up two-factor authentication');
     cy.get('input[type="tel"]').should('exist');
-    cy.get('button').contains('Send Verification Code').should('exist');
+    cy.get('button').contains('Send verification code').should('exist');
 
     cy.logout();
   });
@@ -112,13 +112,13 @@ describe('Superadmin MFA Flow', () => {
     cy.visit('/admin/dashboard');
 
     // Verify MFA setup form is displayed
-    cy.get('h3').should('contain', 'Set up Two-Factor Authentication');
+    cy.get('h3').should('contain', 'Set up two-factor authentication');
 
     // Enter phone number
     cy.get('input[type="tel"]').should('be.visible').type(testPhoneNumber);
 
     // Click send verification code button
-    cy.get('button').contains('Send Verification Code').should('be.visible').click();
+    cy.get('button').contains('Send verification code').should('be.visible').click();
 
     // We can't mock the reCAPTCHA in Cypress, so we will skip this step that tests the actual sms sending and mfa setup
 
@@ -174,7 +174,7 @@ describe('Superadmin MFA Flow', () => {
 
     // Should show email verification requirement
     cy.get('p').should('contain', 'Please verify your email before setting up 2FA');
-    cy.get('button').contains('Send Verification Email').should('exist');
+    cy.get('button').contains('Send verification email').should('exist');
 
     cy.logout();
   });

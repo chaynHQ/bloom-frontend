@@ -62,8 +62,6 @@
       "emailVerificationError": "Error sending verification email. Please try again.",
       "emailVerificationSent": "Verification email sent. Please check your inbox.",
       "emailVerificationSpamCheck": "If you don't see the email, please check your spam folder.",
-      "sendVerificationEmail": "Send Verification Email",
-      "resendVerificationEmail": "Resend Verification Email",
       "sendVerificationEmail": "Send verification email",
       "resendVerificationEmail": "Resend verification email",
       "passwordRequired": "Password is required for reauthentication.",
