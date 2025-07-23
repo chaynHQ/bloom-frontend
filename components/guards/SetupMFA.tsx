@@ -29,9 +29,12 @@ const SetupMFA = () => {
   const userVerifiedEmail = useTypedSelector((state) => state.user.verifiedEmail);
 
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [storedPhoneNumber, setStoredPhoneNumber] = useState('');
   const [verificationId, setVerificationId] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
+  const [emailVerificationSent, setEmailVerificationSent] = useState(false);
+  const [emailVerificationSuccess, setEmailVerificationSuccess] = useState('');
   const [showReauth, setShowReauth] = useState(false);
   const [password, setPassword] = useState('');
   const [isReauthenticating, setIsReauthenticating] = useState(false);
@@ -51,6 +54,20 @@ const SetupMFA = () => {
     };
   }, []);
 
+  // Store phone number when user enters it
+  useEffect(() => {
+    if (phoneNumber && !storedPhoneNumber) {
+      setStoredPhoneNumber(phoneNumber);
+    }
+  }, [phoneNumber, storedPhoneNumber]);
+
+  // Restore phone number after reauthentication
+  useEffect(() => {
+    if (!showReauth && storedPhoneNumber && !phoneNumber) {
+      setPhoneNumber(storedPhoneNumber);
+    }
+  }, [showReauth, storedPhoneNumber, phoneNumber]);
+
   const handleReauthentication = async () => {
     if (!password.trim()) {
       setError(t('form.passwordRequired'));
@@ -67,7 +84,7 @@ const SetupMFA = () => {
       // Reset the MFA setup process
       setVerificationId('');
       setVerificationCode('');
-      setPhoneNumber('');
+      // Don't reset phone number - it will be restored from storedPhoneNumber
     } catch (error: any) {
       rollbar.error('Reauthentication error:', error);
       if (error.code === 'auth/wrong-password') {
@@ -81,6 +98,7 @@ const SetupMFA = () => {
       setIsReauthenticating(false);
     }
   };
+
   const handleEnrollMFA = async () => {
     if (!userVerifiedEmail) {
       setError(t('form.emailNotVerified'));
@@ -126,16 +144,20 @@ const SetupMFA = () => {
 
   const handleSendVerificationEmail = async () => {
     setError('');
+    setEmailVerificationSuccess('');
     const user = auth.currentUser;
     if (user) {
       const { error } = await sendVerificationEmail(user);
       if (error) {
+        if (error.code === 'auth/too-many-requests') {
+          setError(t('form.firebase.tooManyAttempts'));
+        } else {
+          setError(t('form.emailVerificationError'));
+        }
         rollbar.error('Send verification email error:', error);
-        setError(t('form.emailVerificationError'));
       } else {
-        // Show success message instead of error
-        setError('');
-        // You might want to show a success state here instead
+        setEmailVerificationSent(true);
+        setEmailVerificationSuccess(t('form.emailVerificationSent'));
       }
     }
   };
@@ -188,19 +210,31 @@ const SetupMFA = () => {
       </Box>
     );
   }
+
   return (
     <Box>
       <Typography variant="h3">{t('setupMFA.title')}</Typography>
       {!userVerifiedEmail ? (
         <Box>
           <Typography>{t('form.emailNotVerified')}</Typography>
+          {emailVerificationSuccess && (
+            <Alert severity="success" sx={{ mt: 2, mb: 2 }}>
+              {emailVerificationSuccess}
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                {t('form.emailVerificationSpamCheck')}
+              </Typography>
+            </Alert>
+          )}
           <Button
             variant="contained"
             color="secondary"
             sx={{ ...buttonStyle, mt: 2 }}
             onClick={handleSendVerificationEmail}
+            disabled={emailVerificationSent}
           >
-            {t('form.sendVerificationEmail')}
+            {emailVerificationSent
+              ? t('form.resendVerificationEmail')
+              : t('form.sendVerificationEmail')}
           </Button>
         </Box>
       ) : !verificationId ? (

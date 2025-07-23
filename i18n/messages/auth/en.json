@@ -51,8 +51,8 @@
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
         "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
       },
-      "phoneNumberLabel": "Phone Number",
-      "verificationCodeLabel": "Verification Code",
+      "phoneNumberLabel": "Phone number",
+      "verificationCodeLabel": "Verification code",
       "mfaTriggerError": "Error sending SMS code. Please try again.",
       "mfaVerificationIdMissing": "Please request an SMS code first.",
       "mfaEnrollError": "Error enrolling in 2FA. Please try again.",
@@ -61,32 +61,28 @@
       "emailNotVerified": "Please verify your email before setting up 2FA.",
       "emailVerificationError": "Error sending verification email. Please try again.",
       "emailVerificationSent": "Verification email sent. Please check your inbox.",
-      "sendVerificationEmail": "Send Verification Email",
+      "emailVerificationSpamCheck": "If you don't see the email, please check your spam folder.",
+      "sendVerificationEmail": "Send verification email",
+      "resendVerificationEmail": "Resend verification email",
       "passwordRequired": "Password is required for reauthentication.",
       "reauthenticationError": "Failed to reauthenticate. Please try again."
     },
     "verifyMFA": {
-      "title": "Verify Two-Factor Authentication",
-      "triggerSMS": "Send SMS Code",
-      "verifyCode": "Verify Code",
+      "title": "Verify two-factor authentication",
+      "triggerSMS": "Send SMS code",
+      "verifyCode": "Verify code",
       "phoneNumber": "We will send a verification code to your registered phone number: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Set up Two-Factor Authentication",
-      "pageTitle": "Secure Your Account",
-      "sendCode": "Send Verification Code",
-      "verifyCode": "Verify Code",
+      "title": "Set up two-factor authentication",
+      "sendCode": "Send verification code",
+      "verifyCode": "Verify code",
       "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
       "reauthTitle": "Confirm your password",
       "reauthDescription": "Please enter your password before continuing",
       "cancelReauth": "Cancel",
       "confirmReauth": "Confirm",
       "reauthenticating": "Confirming..."
-    },
-    "verifyEmail": {
-      "pageTitle": "Verify Your Email",
-      "instructions": "Please check your email and click the verification link to continue.",
-      "sendButton": "Resend Verification Email"
     }
   }
 }
