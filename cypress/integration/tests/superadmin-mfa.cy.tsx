@@ -67,7 +67,7 @@ describe('Superadmin MFA Flow', () => {
     cy.visit('/admin/dashboard');
     cy.get('h3').should('contain', 'Set up two-factor authentication');
     cy.get('input[type="tel"]').should('exist');
-    cy.get('button').contains('Send Verification Code').should('exist');
+    cy.get('button').contains('Send verification code').should('exist');
 
     cy.logout();
   });
