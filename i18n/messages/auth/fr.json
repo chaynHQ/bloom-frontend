@@ -85,11 +85,6 @@
       "cancelReauth": "Annuler",
       "confirmReauth": "Confirmer",
       "reauthenticating": "Confirmation..."
-    },
-    "verifyEmail": {
-      "pageTitle": "Vérifiez votre email",
-      "instructions": "Veuillez vérifier votre email et cliquer sur le lien de vérification pour continuer.",
-      "sendButton": "Renvoyer l'email de vérification"
     }
   }
 }

@@ -68,27 +68,22 @@
       "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
     },
     "verifyMFA": {
-      "title": "Do-Charan Praman Verify Karein",
-      "triggerSMS": "SMS Code Bhejein",
-      "verifyCode": "Code Verify Karein",
+      "title": "Do-charan praman verify karein",
+      "triggerSMS": "SMS code bhejein",
+      "verifyCode": "Code verify karein",
       "phoneNumber": "Hum aapke registered phone number par ek verification code bhejenge: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Do-Charan Praman Setup Karein",
+      "title": "Do-charan praman setup karein",
       "pageTitle": "Apne Khaate ko Surakshit Karein",
-      "sendCode": "Verification Code Bhejein",
-      "verifyCode": "Code Verify Karein",
+      "sendCode": "Verification code bhejein",
+      "verifyCode": "Code verify karein",
       "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",
       "reauthTitle": "Apni Pehchaan Confirm Karein",
       "reauthDescription": "Kripya aage badhne se pehle apna password darj karein",
       "cancelReauth": "Cancel Karein",
       "confirmReauth": "Confirm Karein",
       "reauthenticating": "Confirm kar rahe hain..."
-    },
-    "verifyEmail": {
-      "pageTitle": "Apna Email Verify Karein",
-      "instructions": "Kripya apne email ki jaanch karein aur jaari rakhne ke liye satyaapan link par click karein.",
-      "sendButton": "Satyaapan Email Punah Bhejein"
     }
   }
 }

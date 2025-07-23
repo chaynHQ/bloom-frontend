@@ -68,13 +68,13 @@
       "reauthenticationError": "Erneute Authentifizierung fehlgeschlagen. Bitte versuche es erneut."
     },
     "verifyMFA": {
-      "title": "Zwei-Faktor-Authentifizierung verifizieren",
-      "triggerSMS": "SMS-Code senden",
+      "title": "Zwei-faktor-authentifizierung verifizieren",
+      "triggerSMS": "SMS-code senden",
       "verifyCode": "Code verifizieren",
       "phoneNumber": "Wir senden einen Verifizierungscode an Ihre registrierte Telefonnummer: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Zwei-Faktor-Authentifizierung einrichten",
+      "title": "Zwei-faktor-authentifizierung einrichten",
       "pageTitle": "Sichern Sie Ihr Konto",
       "sendCode": "Verifizierungscode senden",
       "verifyCode": "Code verifizieren",
@@ -84,11 +84,6 @@
       "cancelReauth": "Abbrechen",
       "confirmReauth": "Bestätigen",
       "reauthenticating": "Bestätige..."
-    },
-    "verifyEmail": {
-      "pageTitle": "E-Mail-Adresse verifizieren",
-      "instructions": "Bitte überprüfe deine E-Mails und klicke auf den Verifizierungslink, um fortzufahren.",
-      "sendButton": "Verifizierungs-E-Mail erneut senden"
     }
   }
 }

@@ -68,27 +68,22 @@
       "reauthenticationError": "Failed to reauthenticate. Please try again."
     },
     "verifyMFA": {
-      "title": "Verify Two-Factor Authentication",
-      "triggerSMS": "Send SMS Code",
-      "verifyCode": "Verify Code",
+      "title": "Verify two-factor authentication",
+      "triggerSMS": "Send SMS code",
+      "verifyCode": "Verify code",
       "phoneNumber": "We will send a verification code to your registered phone number: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Set up Two-Factor Authentication",
+      "title": "Set up two-factor authentication",
       "pageTitle": "Secure Your Account",
-      "sendCode": "Send Verification Code",
-      "verifyCode": "Verify Code",
+      "sendCode": "Send verification code",
+      "verifyCode": "Verify code",
       "enterCodeHelperText": "Please enter the verification code we sent to your phone:",
       "reauthTitle": "Confirm your password",
       "reauthDescription": "Please enter your password before continuing",
       "cancelReauth": "Cancel",
       "confirmReauth": "Confirm",
       "reauthenticating": "Confirming..."
-    },
-    "verifyEmail": {
-      "pageTitle": "Verify Your Email",
-      "instructions": "Please check your email and click the verification link to continue.",
-      "sendButton": "Resend Verification Email"
     }
   }
 }
