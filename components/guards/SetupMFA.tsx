@@ -230,7 +230,6 @@ const SetupMFA = () => {
             color="secondary"
             sx={{ ...buttonStyle, mt: 2 }}
             onClick={handleSendVerificationEmail}
-            disabled={emailVerificationSent}
           >
             {emailVerificationSent
               ? t('form.resendVerificationEmail')
