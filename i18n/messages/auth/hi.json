@@ -42,6 +42,7 @@
         "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh {partnerName} ki team se sampark karein. "
       },
       "firebase": {
+        "wrongPassword": "Galat password, kripya phir se koshish karein ya logout karein aur apna password reset karein.",
         "authError": "Humein uss email aur password ke combination ka koi account nahi mila. Apna email aur password check keejiye. ",
         "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
         "tooManyAttempts": "Bahut saare viphal login prayaas, krpaya kuchh minat prateeksha karen ya apana paasavard abhee reeset karen.",
