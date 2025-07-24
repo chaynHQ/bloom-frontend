@@ -42,6 +42,7 @@
         "alreadyInUse": "Dieser Code wurde bereits verwendet. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team von {partnerName}."
       },
       "firebase": {
+        "wrongPassword": "Falsches Passwort, bitte versuchen Sie es erneut oder melden Sie sich ab und setzen Sie Ihr Passwort zurück.",
         "authError": "Wir konnten kein Konto für diese Kombination aus Email und Passwort finden. Überprüfe Deine Email und Dein Passwort. ",
         "invalidEmail": "Deine Email-Adresse scheint ungültig zu sein. Korrigiere alle Tippfehler, um fortzufahren.",
         "tooManyAttempts": "Zu viele fehlgeschlagene Login-Versuche. Bitte warten Sie einige Minuten oder setzen Sie Ihr Passwort jetzt zurück.",

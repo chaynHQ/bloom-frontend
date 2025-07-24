@@ -42,6 +42,7 @@
         "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
       },
       "firebase": {
+        "wrongPassword": "Incorrect password, please try again or logout and reset your password.",
         "authError": "We couldn't find an account for that email and password combination. Check your email and password.",
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "tooManyAttempts": "Too many failed login attempts, please wait a few minutes or reset your password now.",
