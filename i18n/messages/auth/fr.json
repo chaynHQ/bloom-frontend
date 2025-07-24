@@ -42,6 +42,7 @@
         "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez l'équipe de {partnerName}."
       },
       "firebase": {
+        "wrongPassword": "Mot de passe incorrect, veuillez réessayer ou vous déconnecter et réinitialiser votre mot de passe.",
         "authError": "Aucun compte correspondant à cette combinaison d'adresse électronique et de mot de passe n'a été trouvé. Vérifiez votre adresse électronique et votre mot de passe.",
         "invalidEmail": "Votre email semble être invalide, corrigez les erreurs de frappe pour continuer.",
         "tooManyAttempts": "Trop de tentatives de connexion infructueuses. Veuillez patienter quelques minutes ou réinitialiser votre mot de passe maintenant.",
