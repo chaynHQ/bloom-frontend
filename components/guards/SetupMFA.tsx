@@ -78,22 +78,27 @@ const SetupMFA = () => {
     setError('');
 
     try {
-      await reauthenticateUser(password);
+      const reauthenticateResponse = await reauthenticateUser(password);
+      if (reauthenticateResponse.error) {
+        rollbar.error('Reauthentication error:', error);
+        if (reauthenticateResponse.error.code === 'auth/wrong-password') {
+          setError(t('form.firebase.wrongPassword'));
+        } else if (reauthenticateResponse.error.code === 'auth/too-many-requests') {
+          setError(t('form.firebase.tooManyAttempts'));
+        } else {
+          setError(t('form.reauthenticationError'));
+        }
+        return;
+      }
+      // Reauthenticate success
       setShowReauth(false);
       setPassword('');
       // Reset the MFA setup process
       setVerificationId('');
       setVerificationCode('');
-      // Don't reset phone number - it will be restored from storedPhoneNumber
     } catch (error: any) {
       rollbar.error('Reauthentication error:', error);
-      if (error.code === 'auth/wrong-password') {
-        setError(t('form.firebase.wrongPassword'));
-      } else if (error.code === 'auth/too-many-requests') {
-        setError(t('form.firebase.tooManyAttempts'));
-      } else {
-        setError(t('form.reauthenticationError'));
-      }
+      setError(t('form.reauthenticationError'));
     } finally {
       setIsReauthenticating(false);
     }
@@ -230,7 +235,6 @@ const SetupMFA = () => {
             color="secondary"
             sx={{ ...buttonStyle, mt: 2 }}
             onClick={handleSendVerificationEmail}
-            disabled={emailVerificationSent}
           >
             {emailVerificationSent
               ? t('form.resendVerificationEmail')
