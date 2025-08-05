@@ -75,7 +75,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_conversation' && (
-              <CarouselItemContainer slidesPerScreen={[1, 2, 3]} index={story.id}>
+              <CarouselItemContainer slidesPerScreen={[1, 2, 3]} index={index}>
                 <RelatedContentCard
                   title={story.name}
                   href={getDefaultFullSlug(story.full_slug, locale)}
