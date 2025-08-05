@@ -43,7 +43,7 @@ export const getSlideWidth = (
 
 // Dots and arrows in 1 component because of the design
 const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 'secondary' }) => {
-  // totalPages are not calculated correctly in the nuka-carousel so causes a bug .
+  // totalPages are not calculated correctly in the nuka-carousel so causes a bug.
   // In the case that the scroll width is less than 1.5 times the screen width, it will round down the number of pages
   // and cause the dot count to be incorrect.
   // If you go into useMeasurements hook in nuka-carousel, you can see that it calculates the total pages and rounds down the number of pages.
