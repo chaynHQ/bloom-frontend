@@ -151,7 +151,6 @@ export default Carousel;
 type CarouselItemContainerProps = {
   children: React.ReactNode;
   slidesPerScreen?: number[]; // [mobile, tablet, desktop]
-  index: number;
   customPadding?: number;
   customWidth?: string | Array<string>;
 };
@@ -160,7 +159,6 @@ export const CarouselItemContainer = ({
   children,
   slidesPerScreen = [1, 2, 3],
   customPadding = 0.5,
-  index,
   customWidth,
 }: CarouselItemContainerProps) => {
   return (

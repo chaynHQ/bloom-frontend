@@ -49,7 +49,7 @@ const StoryblokCarousel = (props: StoryblokCarouselProps) => {
                   number_desktop_slides || 1,
                   number_desktop_slides || 1,
                 ]}
-                index={index}
+                key={index}
               >
                 <Component {...item} key={index} />
               </CarouselItemContainer>

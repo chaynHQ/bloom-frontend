@@ -93,7 +93,7 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
     <Carousel
       theme="primary"
       items={items.map((item, index) => (
-        <CarouselItemContainer key={index} slidesPerScreen={[1, 2, 3]} index={index}>
+        <CarouselItemContainer key={index} slidesPerScreen={[1, 2, 3]}>
           {item}
         </CarouselItemContainer>
       ))}
