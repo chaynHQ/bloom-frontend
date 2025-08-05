@@ -182,7 +182,6 @@ export const CarouselItemContainer = ({
               ),
             }),
       }}
-      key={index}
     >
       {children}
     </Box>
