@@ -12,7 +12,7 @@ interface CarouselProps {
   title?: string;
 }
 
-// lthese are purposely not exactly half or third of the screen width
+// These are purposely not exactly half or third of the screen width
 // because nuka-carousel struggles to calculate the width of slides correctly
 // when the parent container has a flex layout. This is a workaround to avoid that issue.
 const numSlidesToWidthMap: { [key: number]: string } = {
