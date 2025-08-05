@@ -1,46 +1,56 @@
 'use client';
 
-import { useWidth } from '@/lib/utils/useWidth';
 import theme from '@/styles/theme';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Breakpoint, IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { Carousel as NukaCarousel, useCarousel } from 'nuka-carousel';
 
 interface CarouselProps {
   items: Array<React.ReactNode>;
   theme: 'primary' | 'secondary';
-  showArrows?: boolean;
-  arrowPosition?: 'side' | 'bottom';
   title?: string;
-  slidesPerView?: { xs: number; sm: number; md: number; lg: number; xl: number };
-  afterSlideHandle?: (newSlideIndex: number) => void;
 }
 
-const numberSlidesToWidthMap: { [key: number]: string } = {
+// lthese are purposely not exactly half or third of the screen width
+// because nuka-carousel struggles to calculate the width of slides correctly
+// when the parent container has a flex layout. This is a workaround to avoid that issue.
+const numSlidesToWidthMap: { [key: number]: string } = {
   1: '100%',
-  2: '50%',
-  3: '33.33%',
-  4: '25%',
+  2: '50.01%',
+  3: '33.34%',
+  4: '25.01%',
 };
 
-const tabletSlidesToWidthMap: { [key: number]: string } = {
-  1: '100%',
-  2: '50%',
-  3: '25%',
+export const getSlideWidth = (
+  numMobileSlides: number,
+  numTabletSlides: number,
+  numDesktopSlides: number,
+) => {
+  return {
+    width: [
+      numSlidesToWidthMap[numMobileSlides || 1],
+      numSlidesToWidthMap[numTabletSlides || 1],
+      numSlidesToWidthMap[numDesktopSlides || 1],
+    ],
+    minWidth: [
+      numSlidesToWidthMap[numMobileSlides || 1],
+      numSlidesToWidthMap[numTabletSlides || 1],
+      numSlidesToWidthMap[numDesktopSlides || 1],
+    ],
+  };
 };
 
 // Dots and arrows in 1 component because of the design
-const CustomDots = ({
-  showArrows = false,
-  arrowPosition = 'bottom',
-  carouselTheme = 'primary',
-}: {
-  showArrows: boolean;
-  arrowPosition: 'side' | 'bottom';
-  carouselTheme: 'primary' | 'secondary';
-}) => {
+const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 'secondary' }) => {
+  // totalPages are not calculated correctly in the nuka-carousel so causes a bug .
+  // In the case that the scroll width is less than 1.5 times the screen width, it will round down the number of pages
+  // and cause the dot count to be incorrect.
+  // If you go into useMeasurements hook in nuka-carousel, you can see that it calculates the total pages and rounds down the number of pages.
+  // This is particularly an issue if you have 1.4 pages, this means the dots will not render!
+  // Deciding to park this issue for now as it needs a bug report to nuka-carousel.
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
+  if (totalPages < 2) return <></>;
 
   const getBackground = (index: number) =>
     currentPage === index
@@ -61,23 +71,21 @@ const CustomDots = ({
       display="flex"
       marginTop={2}
     >
-      {showArrows && arrowPosition == 'bottom' && (
-        <Box alignContent="center">
-          <IconButton
-            onClick={goBack}
-            sx={{
-              backgroundColor: theme.palette.primary.dark,
-              color: theme.palette.common.white,
-              '&:hover': {
-                backgroundColor: theme.palette.common.white,
-                color: theme.palette.primary.dark,
-              },
-            }}
-          >
-            <KeyboardArrowLeft></KeyboardArrowLeft>
-          </IconButton>
-        </Box>
-      )}
+      <Box alignContent="center">
+        <IconButton
+          onClick={goBack}
+          sx={{
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.common.white,
+            '&:hover': {
+              backgroundColor: theme.palette.common.white,
+              color: theme.palette.primary.dark,
+            },
+          }}
+        >
+          <KeyboardArrowLeft></KeyboardArrowLeft>
+        </IconButton>
+      </Box>
       <Box>
         <Box display="flex" gap={1} alignContent="center" width="100%">
           {[...Array(totalPages)].map((_, index) => (
@@ -99,59 +107,36 @@ const CustomDots = ({
           ))}
         </Box>
       </Box>
-      {showArrows && arrowPosition == 'bottom' && (
-        <Box alignContent="center">
-          <IconButton
-            onClick={goForward}
-            sx={{
-              backgroundColor: theme.palette.primary.dark,
-              color: theme.palette.common.white,
-              '&:hover': {
-                backgroundColor: theme.palette.common.white,
-                color: theme.palette.primary.dark,
-              },
-            }}
-          >
-            <KeyboardArrowRight></KeyboardArrowRight>
-          </IconButton>
-        </Box>
-      )}
+      <Box alignContent="center">
+        <IconButton
+          onClick={goForward}
+          sx={{
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.common.white,
+            '&:hover': {
+              backgroundColor: theme.palette.common.white,
+              color: theme.palette.primary.dark,
+            },
+          }}
+        >
+          <KeyboardArrowRight></KeyboardArrowRight>
+        </IconButton>
+      </Box>
     </Box>
   );
 };
 
 const Carousel = (props: CarouselProps) => {
-  const {
-    items,
-    showArrows = false,
-    arrowPosition = 'bottom',
-    title = 'carousel',
-    theme = 'primary',
-    slidesPerView = {
-      xs: 1,
-      sm: 1,
-      md: 1,
-      lg: 1,
-      xl: 1,
-    },
-  } = props;
-  const width = useWidth();
-  const currentSlidePerView = slidesPerView[width];
-  const navigationEnabled = isNavigationEnabled(width, items.length, slidesPerView);
-  const scrollDistance =
-    currentSlidePerView < 2 || items.length / currentSlidePerView < 2 ? 'slide' : 'screen';
+  const { items, title = 'carousel', theme = 'primary' } = props;
+
   return (
     <NukaCarousel
       id={title}
-      showArrows={navigationEnabled && showArrows && arrowPosition == 'side'}
-      showDots={navigationEnabled}
+      showDots={true}
       swiping={true}
-      dots={
-        <CustomDots showArrows={showArrows} arrowPosition={arrowPosition} carouselTheme={theme} />
-      }
+      dots={<CustomDots carouselTheme={theme} />}
       title={title}
-      afterSlide={props.afterSlideHandle}
-      scrollDistance={scrollDistance}
+      scrollDistance={'screen'}
     >
       {items}
     </NukaCarousel>
@@ -162,30 +147,44 @@ export default Carousel;
 // Note that if you use this function, the carousel will be buggy in some screen sizes as it struggles to calculate the width
 // of slides correctly when the parent container has a flex layout. Avoid using this function if possible.
 // Use it when you can't set a fixed width for the slides, like in the StoryblokCarousel component.
-export const getSlideWidth = (
-  numberMobileSlides: number,
-  numberTabletSlides: number,
-  numberDesktopSlides: number,
-) => {
-  return {
-    width: [
-      numberSlidesToWidthMap[numberMobileSlides || 1],
-      tabletSlidesToWidthMap[numberTabletSlides || 1],
-      numberSlidesToWidthMap[numberDesktopSlides || 1],
-    ],
-    minWidth: [
-      numberSlidesToWidthMap[numberMobileSlides || 1],
-      tabletSlidesToWidthMap[numberTabletSlides || 1],
-      numberSlidesToWidthMap[numberDesktopSlides || 1],
-    ],
-  };
+
+type CarouselItemContainerProps = {
+  children: React.ReactNode;
+  slidesPerScreen?: number[]; // [mobile, tablet, desktop]
+  index: number;
+  customPadding?: number;
+  customWidth?: string | Array<string>;
 };
 
-const isNavigationEnabled = (
-  currentBreakpoint: Breakpoint,
-  numberOfSlides: number,
-  slidesPerBreakpoint: Record<Breakpoint, number>,
-) => {
-  const currentSlidesPerBreakpoint = slidesPerBreakpoint[currentBreakpoint];
-  return currentSlidesPerBreakpoint < numberOfSlides;
+export const CarouselItemContainer = ({
+  children,
+  slidesPerScreen = [1, 2, 3],
+  customPadding = 0.5,
+  index,
+  customWidth,
+}: CarouselItemContainerProps) => {
+  return (
+    <Box
+      sx={{
+        boxSizing: 'border-box', // Ensure padding is included in width calculation
+        padding: customPadding,
+        display: 'inline-block',
+        ':first-of-type': {
+          paddingLeft: ['0 !important', '0 !important', '0 !important'],
+        },
+        ...(customWidth
+          ? { minWidth: customWidth, width: customWidth }
+          : {
+              ...getSlideWidth(
+                slidesPerScreen[0] || 1,
+                slidesPerScreen[1] || 1,
+                slidesPerScreen[2] || 1,
+              ),
+            }),
+      }}
+      key={index}
+    >
+      {children}
+    </Box>
+  );
 };
