@@ -1,10 +1,9 @@
 'use client';
 
 import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
-import Carousel, { getSlideWidth } from '@/components/common/Carousel';
+import Carousel, { CarouselItemContainer } from '@/components/common/Carousel';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -91,30 +90,13 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
     );
 
   return (
-    <Box width="100%">
-      <Carousel
-        showArrows={true}
-        arrowPosition="bottom"
-        slidesPerView={{
-          xs: 1,
-          sm: 2,
-          md: 3,
-          lg: 3,
-          xl: 3,
-        }}
-        items={items.map((item, index) => (
-          <Box
-            sx={{
-              ...(getSlideWidth(1, 2, 3) as any),
-            }}
-            padding={[0.25, 0.5]}
-            key={index}
-          >
-            {item}
-          </Box>
-        ))}
-        theme="primary"
-      />
-    </Box>
+    <Carousel
+      theme="primary"
+      items={items.map((item, index) => (
+        <CarouselItemContainer key={index} slidesPerScreen={[1, 2, 3]}>
+          {item}
+        </CarouselItemContainer>
+      ))}
+    />
   );
 };

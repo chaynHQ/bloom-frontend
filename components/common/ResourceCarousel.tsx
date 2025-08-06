@@ -11,7 +11,7 @@ import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import { ShortsCard } from '../cards/ShortsCard';
-import Carousel, { getSlideWidth } from './Carousel';
+import Carousel, { CarouselItemContainer } from './Carousel';
 
 export interface ResourceCarouselProps {
   resourceTypes?: string[];
@@ -57,45 +57,37 @@ const ResourceCarousel = ({
   }
 
   return (
-    <Carousel
-      title={title}
-      theme="primary"
-      showArrows={true}
-      slidesPerView={slidesPerView}
-      items={carouselStories.map((story) => {
-        return (
-          (story.content.component === 'resource_short_video' && (
-            <Box p={0.25} minWidth="260px" width="260px" key={story.name}>
-              <ShortsCard
-                title={story.content.name}
-                category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                href={getDefaultFullSlug(story.full_slug, locale)}
-                duration={story.content.duration}
-                image={story.content.preview_image}
-              />
-            </Box>
-          )) ||
-          (story.content.component === 'resource_conversation' && (
-            <Box
-              sx={{
-                ...getSlideWidth(1, 2, 3),
-                minWidth: '300px',
-              }}
-              p={0.25}
-              padding={1}
-              key={story.name}
-            >
-              <RelatedContentCard
-                title={story.name}
-                href={getDefaultFullSlug(story.full_slug, locale)}
-                category={RESOURCE_CATEGORIES.CONVERSATION}
-                duration={story.content.duration}
-              />
-            </Box>
-          ))
-        );
-      })}
-    />
+    <Box sx={{ width: '100%' }}>
+      <Carousel
+        title={title}
+        theme="primary"
+        items={carouselStories.map((story, index) => {
+          return (
+            (story.content.component === 'resource_short_video' && (
+              <CarouselItemContainer customWidth={'260px'} key={index}>
+                <ShortsCard
+                  title={story.content.name}
+                  category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                  href={getDefaultFullSlug(story.full_slug, locale)}
+                  duration={story.content.duration}
+                  image={story.content.preview_image}
+                />
+              </CarouselItemContainer>
+            )) ||
+            (story.content.component === 'resource_conversation' && (
+              <CarouselItemContainer slidesPerScreen={[1, 2, 3]} key={index}>
+                <RelatedContentCard
+                  title={story.name}
+                  href={getDefaultFullSlug(story.full_slug, locale)}
+                  category={RESOURCE_CATEGORIES.CONVERSATION}
+                  duration={story.content.duration}
+                />
+              </CarouselItemContainer>
+            ))
+          );
+        })}
+      />
+    </Box>
   );
 };
 
