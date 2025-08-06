@@ -29,6 +29,11 @@ const categoryStyle = {
   },
 } as const;
 
+const cardContentStyle = {
+  minHeight: 200,
+  padding: ['24px !important', '24px !important', '36px !important'],
+} as const;
+
 interface RelatedContentProps {
   title: string;
   href: string;
@@ -57,7 +62,7 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
           handleClick();
         }}
       >
-        <CardContent sx={{ minHeight: 238 }}>
+        <CardContent sx={cardContentStyle}>
           <Box position="relative" width="100%" paddingRight={3}>
             <Box>
               <Typography sx={categoryStyle}>
