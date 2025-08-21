@@ -2,7 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { RESOURCE_SINGLE_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
@@ -11,7 +11,6 @@ import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerCon
 import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ResourceSingleVideoHeader } from '../resources/ResourceSingleVideoHeader';
@@ -35,6 +34,7 @@ export interface StoryblokResourceSingleVideoPageProps {
   references: StoryblokReferenceProps[];
   languages: string[];
   component: 'resource_single_video';
+  tags: STORYBLOK_TAGS[];
 }
 
 const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPageProps) => {
@@ -51,9 +51,8 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
     related_content,
     related_exercises,
     references,
+    tags,
   } = props;
-
-  const tS = useTranslations('Shared');
 
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -138,6 +137,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
           references,
           eventData,
           nextResourceHref,
+          tags,
         }}
       />
       {resourceId && (

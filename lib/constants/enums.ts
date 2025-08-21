@@ -77,6 +77,10 @@ export enum PROGRESS_STATUS {
   NOT_STARTED = 'Not started',
 }
 
+export enum STORYBLOK_TAGS {
+  SOMATICS = 'somatics',
+}
+
 export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',

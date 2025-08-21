@@ -3,6 +3,7 @@ import StoryblokResourceSingleVideoPage, {
 } from '@/components/storyblok/StoryblokResourceSingleVideoPage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
@@ -82,6 +83,7 @@ export default async function Page({ params }: { params: Params }) {
   return (
     <StoryblokResourceSingleVideoPage
       {...(story.content as StoryblokResourceSingleVideoPageProps)}
+      tags={story.tag_list as STORYBLOK_TAGS[]}
       storyUuid={story.uuid}
     />
   );

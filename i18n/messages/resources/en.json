@@ -2,7 +2,8 @@
   "Resources": {
     "backToConversations": "Back to conversations",
     "backToShorts": "Back to shorts",
-    "backToVideos": "Back to somatics",
+    "backToVideos": "Back to videos",
+    "backToSomatics": "Back to somatics",
     "nextVideoButtonLabel": "Next video",
     "conversations": "Conversations",
     "shorts": "Shorts",
@@ -44,7 +45,7 @@
     },
     "references": {
       "title": "Resources",
-      "keyResources": "Key resources from this session (full list at the end of the transcript):",
+      "keyReferences": "Key resources from this session (full list at the end of the transcript):",
       "books": "Books",
       "articles": "Articles",
       "video_practices": "Video practices"

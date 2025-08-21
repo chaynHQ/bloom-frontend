@@ -3,6 +3,7 @@
     "backToConversations": "Zurück zu den Gesprächen",
     "backToShorts": "Zurück zu den Kurzfilmen",
     "backToVideos": "Zurück zu den Videos",
+    "backToSomatics": "Zurück zu den Somatik",
     "nextVideoButtonLabel": "Nächstes Video",
     "conversations": "Gespräche",
     "shorts": "Kurzfilme",
@@ -44,7 +45,7 @@
     },
     "references": {
       "title": "Ressourcen",
-      "keyResources": "Wichtige Ressourcen aus dieser Sitzung (vollständige Liste am Ende des Transkripts):",
+      "keyReferences": "Wichtige Ressourcen aus dieser Sitzung (vollständige Liste am Ende des Transkripts):",
       "books": "Bücher",
       "articles": "Artikel",
       "video_practices": "Video-Übungen"

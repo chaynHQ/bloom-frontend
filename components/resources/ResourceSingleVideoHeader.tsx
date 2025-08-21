@@ -3,7 +3,7 @@
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceSingleVideo } from '@/components/resources/ResourceSingleVideo';
 import { Link as i18nLink } from '@/i18n/routing';
-import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { PROGRESS_STATUS, STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -39,6 +39,7 @@ interface ResourceSingleVideoHeaderProps {
   references: StoryblokReferenceProps[];
   eventData: { [key: string]: any };
   nextResourceHref: string | undefined;
+  tags: STORYBLOK_TAGS[];
 }
 
 export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps) => {
@@ -53,19 +54,22 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
     references,
     eventData,
     nextResourceHref,
+    tags,
   } = props;
   const t = useTranslations('Resources');
+
+  const hasSomaticsTag = tags.includes(STORYBLOK_TAGS.SOMATICS);
 
   return (
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
         variant="contained"
         sx={{ ...breadcrumbButtonStyle, mb: 4 }}
-        href="/courses?section=somatics"
+        href={hasSomaticsTag ? '/courses?section=somatics' : '/courses'}
         component={i18nLink}
         size="small"
       >
-        {t('backToVideos')}
+        {t(hasSomaticsTag ? 'backToSomatics' : 'backToVideos')}
       </Button>
       <Box mb={4}>
         <Typography variant="h1" maxWidth={600} mb={1}>
@@ -96,7 +100,9 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
           {render(description, RichTextOptions)}
           {references.length > 0 && (
             <Box mt={2}>
-              <Typography sx={{ mb: '0.75rem !important' }}>{t('references')}</Typography>
+              <Typography sx={{ mb: '0.75rem !important' }}>
+                {t('references.keyReferences')}
+              </Typography>
               <References references={references.filter((r) => r.is_key_reference)} />
             </Box>
           )}

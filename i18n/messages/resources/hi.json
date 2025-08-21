@@ -3,6 +3,7 @@
     "backToConversations": "Conversations par vaapas jaaen",
     "backToShorts": "Clips par vaapas jaaen",
     "backToVideos": "Videos par wapas jaein",
+    "backToSomatics": "Somatics par wapas jaein",
     "nextVideoButtonLabel": "Agle video",
     "conversations": "Bātcīt",
     "shorts": "Clips",
@@ -44,7 +45,7 @@
     },
     "references": {
       "title": "Sansadhan",
-      "keyResources": "Is session ke mukhya sansadhan (purn soochi transcript ke ant mein):",
+      "keyReferences": "Is session ke mukhya sansadhan (purn soochi transcript ke ant mein):",
       "books": "Kitaben",
       "articles": "Lekh",
       "video_practices": "Video abhyaas"

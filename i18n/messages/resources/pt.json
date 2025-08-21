@@ -3,6 +3,7 @@
     "backToConversations": "Voltar às conversas",
     "backToShorts": "Voltar às curtas",
     "backToVideos": "Voltar aos vídeos",
+    "backToSomatics": "Voltar aos somática",
     "nextVideoButtonLabel": "Próximo vídeo",
     "conversations": "Conversas",
     "shorts": "Curtas",
@@ -44,7 +45,7 @@
     },
     "references": {
       "title": "Recursos",
-      "keyResources": "Recursos-chave desta sessão (lista completa no final da transcrição):",
+      "keyReferences": "Recursos-chave desta sessão (lista completa no final da transcrição):",
       "books": "Livros",
       "articles": "Artigos",
       "video_practices": "Práticas em vídeo"

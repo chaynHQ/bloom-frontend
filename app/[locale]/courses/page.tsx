@@ -1,4 +1,5 @@
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
@@ -52,6 +53,7 @@ export default async function Page({ params }: { params: Params }) {
     ...baseProps,
     starts_with: 'videos/',
     language: locale,
+    with_tag: STORYBLOK_TAGS.SOMATICS,
   };
 
   const coursesStories = (await getStoryblokStories(locale, sbCoursesParams)) || [];
