@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Resources",
     "metadata": {
       "title": "Join us on your healing journey",
       "description": "Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.",
@@ -90,7 +91,10 @@
       "cookieCat": "Illustration of a resting cat with a cookie",
       "fruitzLogo": "Fruitz logo",
       "bloomFruitzLogo": "Bloom in partnership with Fruitz logo",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Book icon",
+      "articleIcon": "Article icon",
+      "videoIcon": "Video icon"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Survivor",
@@ -111,18 +115,6 @@
       "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
       "loginButton": "Log in",
       "registerButton": "Create account"
-    },
-    "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",

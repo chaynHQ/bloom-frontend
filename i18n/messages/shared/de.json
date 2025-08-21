@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Ressourcen",
     "metadata": {
       "title": "Begleite uns während deines Heilungsprozesses",
       "description": "Bloom ist dafür da, damit du Lernen, Heilen und Wachsen kannst, hin zu einer selbstbewussten Zukunft. Es wird dir von Chayn angeboten, einer globalen Non-Profit-Organisation, geführt von Überlebenden und Verbündeten aus der ganzen Welt.",
@@ -89,7 +90,10 @@
       "cookieCat": "Illustration einer ruhenden Katze mit einem Keks",
       "fruitzLogo": "Fruitz Logo",
       "bloomFruitzLogo": "Bloom in Kooperation mit Fruitz Logo",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Buch-Symbol",
+      "articleIcon": "Artikel-Symbol",
+      "videoIcon": "Video-Symbol"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Überlebende:r",
@@ -110,18 +114,6 @@
       "description": "Melden Sie sich kostenlos an, um auf alle unsere Inhalte zuzugreifen und alles zu entdecken, was Bloom zu bieten hat",
       "loginButton": "Anmelden",
       "registerButton": "Konto erstellen"
-    },
-    "relatedContent": {
-      "title": "Verwandte Inhalte",
-      "resource_short_video": "Ansehen",
-      "resource_conversation": "Audio",
-      "short_video": "Ansehen",
-      "course": "Kurs",
-      "session": "Sitzung",
-      "session_iba": "Sitzung",
-      "grounding": "Stabilisierung",
-      "activities": "Übungen",
-      "minuteLabel": "Minuten"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",

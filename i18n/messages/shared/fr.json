@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Ressources",
     "metadata": {
       "title": "Rejoins-nous sur ton chemin de guérison",
       "description": "Bloom est là pour te permettre d’apprendre, de guérir et d’évoluer vers un avenir confiant. Il vous est proposé par Chayn, une organisation mondiale à but non lucratif, dirigée par des survivants et des alliés du monde entier.",
@@ -89,7 +90,10 @@
       "cookieCat": "Illustration d'un chat au repos avec un cookie",
       "fruitzLogo": "Logo de Fruitz",
       "bloomFruitzLogo": "Logo du partenariat de Bloom avec Fruitz",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Icône de livre",
+      "articleIcon": "Icône d'article",
+      "videoIcon": "Icône de vidéo"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/WP73HFzz",
     "survivor": "Survivant·e",
@@ -136,18 +140,6 @@
       "grounding-touching-and-feeling-textures": "Toucher et sentir les textures",
       "grouding-sound-of-claps": "Bruit des applaudissements",
       "grounding-affirming-ourselves": "S'affirmer (pression ferme)"
-    },
-    "relatedContent": {
-      "title": "Contenu associé",
-      "resource_short_video": "Regarder",
-      "resource_conversation": "Écouter",
-      "short_video": "Regarder",
-      "course": "Cours",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Ancrage",
-      "activities": "Activités",
-      "minuteLabel": "minutes"
     },
     "pwaBanner": {
       "mobileDescription": "Installez l'application pour y accéder depuis votre écran d'accueil",

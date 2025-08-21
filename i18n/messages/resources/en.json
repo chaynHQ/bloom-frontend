@@ -2,6 +2,8 @@
   "Resources": {
     "backToConversations": "Back to conversations",
     "backToShorts": "Back to shorts",
+    "backToVideos": "Back to videos",
+    "nextVideoButtonLabel": "Next video",
     "conversations": "Conversations",
     "shorts": "Shorts",
     "completed": "Completed",
@@ -9,6 +11,18 @@
     "sessionButtonLabel": "Watch full session",
     "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
     "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_single_video": "Watch",
+      "resource_conversation": "Audio",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
+    },
     "resourceFeedback": {
       "title": "How was this session?",
       "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
@@ -26,6 +40,13 @@
       "errors": {
         "feedbackTagError": "Please select a rating before sending."
       }
+    },
+    "references": {
+      "title": "Resources",
+      "keyResources": "Key resources from this session (full list at the end of the transcript):",
+      "books": "Books",
+      "articles": "Articles",
+      "video_practices": "Video practices"
     }
   }
 }

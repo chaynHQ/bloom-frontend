@@ -2,6 +2,8 @@
   "Resources": {
     "backToConversations": "Zurück zu den Gesprächen",
     "backToShorts": "Zurück zu den Kurzfilmen",
+    "backToVideos": "Zurück zu den Videos",
+    "nextVideoButtonLabel": "Nächstes Video",
     "conversations": "Gespräche",
     "shorts": "Kurzfilme",
     "completed": "Abgeschlossen",
@@ -9,6 +11,18 @@
     "sessionButtonLabel": "Ganze Sitzung ansehen",
     "videoTranscriptLink": "Sehen Sie sich das Video an oder lesen Sie die <link>Transkription</link>.",
     "conversationTranscriptLink": "Hören Sie sich das Gespräch an oder lesen Sie die <link>Transkription</link>.",
+    "relatedContent": {
+      "title": "Verwandte Inhalte",
+      "resource_short_video": "Ansehen",
+      "resource_single_video": "Ansehen",
+      "resource_conversation": "Audio",
+      "course": "Kurs",
+      "session": "Sitzung",
+      "session_iba": "Sitzung",
+      "grounding": "Stabilisierung",
+      "activities": "Übungen",
+      "minuteLabel": "Minuten"
+    },
     "resourceFeedback": {
       "title": "Wie war dieses Lernen?",
       "subtitle": "Wir würden gerne hören, wie Sie dieses Lernen gefunden haben. Ihr Feedback hilft uns, unsere Ressourcen zu verbessern.",
@@ -26,6 +40,13 @@
       "errors": {
         "feedbackTagError": "Bitte wählen Sie eine Bewertung, bevor Sie senden."
       }
+    },
+    "references": {
+      "title": "Ressourcen",
+      "keyResources": "Wichtige Ressourcen aus dieser Sitzung (vollständige Liste am Ende des Transkripts):",
+      "books": "Bücher",
+      "articles": "Artikel",
+      "video_practices": "Video-Übungen"
     }
   }
 }

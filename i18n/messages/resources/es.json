@@ -2,6 +2,8 @@
   "Resources": {
     "backToConversations": "Ir a las conversaciones",
     "backToShorts": "Ir a los cortos",
+    "backToVideos": "Volver a los vídeos",
+    "nextVideoButtonLabel": "Siguiente vídeo",
     "conversations": "Conversaciones",
     "shorts": "Cortos",
     "completed": "Completado",
@@ -9,6 +11,18 @@
     "sessionButtonLabel": "Ver sesión completa",
     "videoTranscriptLink": "Mira el video o lee la <link>transcripción</link>.",
     "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción</link>.",
+    "relatedContent": {
+      "title": "Contenido relacionado",
+      "resource_short_video": "Ver",
+      "resource_single_video": "Ver",
+      "resource_conversation": "Escuchar",
+      "course": "Curso",
+      "session": "Sesión",
+      "session_iba": "Sesión",
+      "grounding": "Anclaje",
+      "activities": "Actividad",
+      "minuteLabel": "minutos"
+    },
     "resourceFeedback": {
       "title": "¿Cómo fue esta sesión?",
       "subtitle": "Nos encantaría saber cómo encontraste esta sesión. Tu opinión nos ayuda a mejorar nuestros cursos.",
@@ -26,6 +40,13 @@
       "errors": {
         "feedbackTagError": "Por favor selecciona una calificación antes de enviar."
       }
+    },
+    "references": {
+      "title": "Recursos",
+      "keyResources": "Recursos clave de esta sesión (lista completa al final de la transcripción):",
+      "books": "Libros",
+      "articles": "Artículos",
+      "video_practices": "Prácticas en vídeo"
     }
   }
 }

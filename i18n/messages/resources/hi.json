@@ -2,6 +2,8 @@
   "Resources": {
     "backToConversations": "Conversations par vaapas jaaen",
     "backToShorts": "Clips par vaapas jaaen",
+    "backToVideos": "Videos par wapas jaein",
+    "nextVideoButtonLabel": "Agle video",
     "conversations": "Bātcīt",
     "shorts": "Clips",
     "completed": "Pūra",
@@ -9,6 +11,18 @@
     "sessionButtonLabel": "Pūrī session dekhen",
     "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
     "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_single_video": "Watch",
+      "resource_conversation": "Audio",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
+    },
     "resourceFeedback": {
       "title": "Yeh session kaisa aapko kaisa laga?",
       "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
@@ -26,6 +40,13 @@
       "errors": {
         "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
       }
+    },
+    "references": {
+      "title": "Sansadhan",
+      "keyResources": "Is session ke mukhya sansadhan (purn soochi transcript ke ant mein):",
+      "books": "Kitaben",
+      "articles": "Lekh",
+      "video_practices": "Video abhyaas"
     }
   }
 }

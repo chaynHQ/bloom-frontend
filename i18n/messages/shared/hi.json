@@ -1,6 +1,8 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Sansadhan",
+
     "metadata": {
       "title": "Apne healing ke safar par humein join kariye",
       "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
@@ -89,7 +91,10 @@
       "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
       "fruitzLogo": "Fruitz logo",
       "bloomFruitzLogo": "Bloom ki partnership Fruitz logo ke saath",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Kitab ka icon",
+      "articleIcon": "Lekh ka icon",
+      "videoIcon": "Video ka icon"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/oHbPDvL2",
     "survivor": "Survivor",
@@ -110,18 +115,6 @@
       "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
       "loginButton": "Log in",
       "registerButton": "Account banayein"
-    },
-    "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Personal diary",
