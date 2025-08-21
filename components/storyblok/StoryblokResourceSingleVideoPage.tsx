@@ -3,85 +3,84 @@
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
+import { RESOURCE_SINGLE_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { rowStyle } from '@/styles/common';
 import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
+import { ResourceSingleVideoHeader } from '../resources/ResourceSingleVideoHeader';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import { StoryblokReferenceProps } from './StoryblokTypes';
 
-const audioContainerStyle = {
-  mt: { xs: 4, md: 6 },
-  mb: 3,
-} as const;
-
-const progressStyle = {
-  ...rowStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 3,
-  mt: 2,
-  '.MuiBox-root': {
-    mt: 0,
-  },
-} as const;
-
-export interface StoryblokResourceConversationPageProps {
+export interface StoryblokResourceSingleVideoPageProps {
   storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
+  subtitle: string;
   description: StoryblokRichtext;
-  header_image: { filename: string; alt: string };
   duration: string;
-  audio: { filename: string };
-  audio_transcript: StoryblokRichtext;
+  video: { url: string };
+  video_transcript: StoryblokRichtext;
   page_sections: StoryblokPageSectionProps[];
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
+  references: StoryblokReferenceProps[];
   languages: string[];
-  component: 'resource_conversation';
-  included_for_partners: string[];
+  component: 'resource_single_video';
 }
 
-const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {
+const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPageProps) => {
   const {
     storyUuid,
     _uid,
     _editable,
     name,
+    subtitle,
     description,
-    header_image,
-    audio,
-    audio_transcript,
+    video,
+    video_transcript,
     page_sections,
     related_content,
     related_exercises,
+    references,
   } = props;
 
   const tS = useTranslations('Shared');
-  const userId = useTypedSelector((state) => state.user.id);
 
+  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
+  const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
   const [resourceId, setResourceId] = useState<string>();
 
+  const getContentPartners = useMemo(() => {
+    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
+
+    return userHasAccessToPartnerContent(
+      partnerAdmin?.partner,
+      partnerAccesses,
+      referralPartner,
+      userId,
+    );
+  }, [entryPartnerReferral, partnerAccesses, partnerAdmin, userId]);
+
   const eventData = useMemo(() => {
     return {
-      resource_category: RESOURCE_CATEGORIES.CONVERSATION,
+      resource_category: RESOURCE_CATEGORIES.SINGLE_VIDEO,
       resource_name: name,
       resource_storyblok_uuid: storyUuid,
       resource_progress: resourceProgress,
@@ -104,7 +103,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   }, [resources, storyUuid]);
 
   useEffect(() => {
-    logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
+    logEvent(RESOURCE_SINGLE_VIDEO_VIEWED, eventData);
   }, []);
 
   return (
@@ -113,23 +112,25 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         _uid,
         _editable,
         name,
+        subtitle,
         description,
-        audio,
-        audio_transcript,
+        video,
+        video_transcript,
         page_sections,
         related_content,
         related_exercises,
       })}
     >
-      <ResourceConversationHeader
+      <ResourceSingleVideoHeader
         {...{
           storyUuid,
           name,
+          subtitle,
           description,
-          header_image,
           resourceProgress,
-          audio,
-          audio_transcript,
+          video,
+          video_transcript,
+          references,
           eventData,
         }}
       />
@@ -137,23 +138,20 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
             resourceId={resourceId}
-            category={RESOURCE_CATEGORIES.CONVERSATION}
+            category={RESOURCE_CATEGORIES.SINGLE_VIDEO}
           />
         </Container>
       )}
+
       <StoryblokRelatedContent
         relatedContent={related_content}
         relatedExercises={related_exercises}
-        userContentPartners={userHasAccessToPartnerContent(
-          partnerAdmin?.partner,
-          partnerAccesses,
-          null,
-          userId,
-        )}
+        userContentPartners={getContentPartners}
       />
+
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };
 
-export default StoryblokResourceConversationPage;
+export default StoryblokResourceSingleVideoPage;

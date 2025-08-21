@@ -86,7 +86,7 @@ export default function LoginPage() {
               {t('login.title')}
             </Typography>
           </Box>
-          <Card style={{ marginTop: 0, maxWidth: 400 }}>
+          <Card style={{ marginTop: 0, maxWidth: '48%' }}>
             <CardContent>
               <LoginForm />
             </CardContent>

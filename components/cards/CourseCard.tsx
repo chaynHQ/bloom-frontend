@@ -5,7 +5,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getImageSizes } from '@/lib/utils/imageSizes';
-import { iconTextRowStyle, rowStyle } from '@/styles/common';
+import { rowStyle } from '@/styles/common';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -28,61 +28,54 @@ const cardStyle = {
   backgroundColor: 'background.default',
   display: 'flex',
   flexDirection: 'column',
+  '&:hover': {
+    backgroundColor: 'background.default',
+  },
 } as const;
 
-const cardContentStyle = {
+const cardHeaderStyle = {
   ...rowStyle,
-  gap: 2,
-  padding: { xs: 2, md: 3 },
-  paddingBottom: '0rem !important',
+  gap: 3,
+  alignItems: 'center',
+  padding: { xs: 2, sm: 3 },
+  paddingBottom: '0.5rem !important',
   minHeight: { xs: 124, md: 136 },
 } as const;
 
 const cardActionStyle = {
+  borderRadius: 0,
+  borderBottom: '2px solid background.default',
   '&:hover': {
-    borderBottom: '2px solid grey',
     borderBottomColor: 'primary.main',
-    marginBottom: '-2px',
   },
 } as const;
 
-const imageContainerStyle = {
-  position: 'relative',
-  width: '100%',
-  maxHeight: '110px',
-  minHeight: '72px',
-} as const;
-
-const titleContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-} as const;
-
-const titleStyle = {
-  display: '-webkit-box',
-  WebkitLineClamp: 3,
-  WebkitBoxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-} as const;
-
 const collapseContentStyle = {
+  background: 'white',
   padding: { xs: 2, md: 3 },
   paddingTop: { xs: 0, md: 0 },
 } as const;
 
 const cardActionsStyle = {
   paddingLeft: 4,
-  paddingTop: 0,
+  paddingTop: 1,
+  gap: 1,
   justifyContent: 'flex-end',
   alignItems: 'center',
+  borderTop: '2px solid background.default',
+  color: 'text.secondary',
+  fontFamily: 'merriweather',
+
+  '&:hover': {
+    backgroundColor: 'white',
+    borderTopColor: 'primary.main',
+  },
 } as const;
 
-const statusRowStyle = {
-  ...iconTextRowStyle,
-  marginTop: 0,
-  marginLeft: 1,
+const imageContainerStyle = {
+  position: 'relative',
+  width: { xs: 100, md: 100, lg: 120 },
+  height: { xs: 100, md: 100, lg: 120 },
 };
 
 interface CourseCardProps {
@@ -101,6 +94,25 @@ const CourseCard = (props: CourseCardProps) => {
     setExpanded(!expanded);
   };
 
+  const cardHeader = (
+    <CardContent sx={cardHeaderStyle}>
+      <Box sx={imageContainerStyle}>
+        <Image
+          alt={course.content.image_with_background.alt}
+          src={course.content.image_with_background.filename}
+          fill
+          sizes={getImageSizes(imageContainerStyle.width)}
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
+      <Typography component="h3" variant="h3" flex={1} mb={0}>
+        {course.content.name}
+      </Typography>
+    </CardContent>
+  );
+
   return (
     <Card sx={cardStyle}>
       {clickable ? (
@@ -110,55 +122,19 @@ const CourseCard = (props: CourseCardProps) => {
           href={getDefaultFullSlug(course.full_slug, locale)}
           aria-label={`${t('navigateToCourse')} ${course.content.name}`}
         >
-          <CardContent sx={cardContentStyle}>
-            <Box flex={[2, 1]} sx={imageContainerStyle}>
-              <Image
-                alt={course.content.image_with_background.alt}
-                src={course.content.image_with_background.filename}
-                fill
-                sizes={getImageSizes(imageContainerStyle.width)}
-                style={{
-                  objectFit: 'contain',
-                }}
-              />
-            </Box>
-            <Box flex={[3, 2]} sx={titleContainerStyle}>
-              <Typography component="h3" variant="h3" sx={expanded ? {} : titleStyle}>
-                {course.content.name}
-              </Typography>
-            </Box>
-          </CardContent>
+          {cardHeader}
         </CardActionArea>
       ) : (
-        <CardContent sx={cardContentStyle}>
-          <Box sx={imageContainerStyle}>
-            <Image
-              alt={course.content.image.alt}
-              src={course.content.image.filename}
-              fill
-              sizes={getImageSizes(imageContainerStyle.width)}
-              style={{
-                objectFit: 'contain',
-              }}
-            />
-          </Box>
-          <Box flex={1} sx={titleContainerStyle}>
-            <Typography component="h3" variant="h3" sx={expanded ? {} : titleStyle}>
-              {course.content.name}
-            </Typography>
-            {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
-              <ProgressStatus status={courseProgress} />
-            )}
-          </Box>
-        </CardContent>
+        <>{cardHeader}</>
       )}
-      <CardActions sx={cardActionsStyle}>
+      <CardActions
+        sx={{ ...cardActionsStyle, backgroundColor: expanded ? 'white' : 'background.default' }}
+      >
         {!!courseProgress && courseProgress !== PROGRESS_STATUS.NOT_STARTED && (
           <ProgressStatus status={courseProgress} />
         )}
-
         <IconButton
-          sx={{ marginLeft: 'auto' }}
+          sx={{ marginLeft: 'auto', transform: expanded ? 'rotate(180deg)' : 'none' }}
           aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"

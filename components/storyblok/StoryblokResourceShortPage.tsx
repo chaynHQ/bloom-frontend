@@ -1,15 +1,14 @@
 'use client';
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
-import PageSection from '@/components/common/PageSection';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -145,20 +144,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
         </Container>
       )}
 
-      <PageSection alignment="flex-start" color={STORYBLOK_COLORS.SECONDARY_MAIN}>
-        <Typography variant="h2" fontWeight={500}>
-          {tS('relatedContent.title')}
-        </Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-          userContentPartners={getContentPartners}
-        />
-      </PageSection>
+      <StoryblokRelatedContent
+        relatedContent={related_content}
+        relatedExercises={related_exercises}
+        userContentPartners={getContentPartners}
+      />
 
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };
-
-export default StoryblokResourceShortPage;

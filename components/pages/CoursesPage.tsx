@@ -12,8 +12,9 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import illustrationCourses from '@/public/illustration_courses.svg';
+import { rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
-import { Box, Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -25,15 +26,27 @@ import ResourceCarousel from '../common/ResourceCarousel';
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 2, md: 2 },
-  paddingBottom: { xs: 6, sm: 6, md: 8 },
+  paddingBottom: '0 !important',
+} as const;
+
+const courseCardsContainer = {
+  ...rowStyle,
+  mb: 0,
+  flexDirection: { xs: 'column', md: 'row' },
+  gap: { xs: 1, md: 2 },
+} as const;
+
+const courseCardContainer = {
+  width: { xs: '100%', md: 'calc(50% - 8px)' },
 } as const;
 
 interface Props {
   courseStories: ISbStoryData[];
   conversations: ISbStoryData[];
   shorts: ISbStoryData[];
+  somatics: ISbStoryData[];
 }
-export default function CoursesPage({ courseStories, conversations, shorts }: Props) {
+export default function CoursesPage({ courseStories, conversations, shorts, somatics }: Props) {
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
@@ -85,7 +98,17 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
 
   const setConversationsSectionRef = useCallback(
     (node: HTMLDivElement | null) => {
-      if (sectionQueryParam === 'conversations' && node && loadedCourses) {
+      if (sectionQueryParam === 'conversations' && node) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset, loadedCourses],
+  );
+
+  const setSomaticsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (sectionQueryParam === 'somatics' && node) {
         const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
         window.scrollTo({ top: scrollToY, behavior: 'smooth' });
       }
@@ -168,51 +191,42 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
             <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Grid
-            container
-            columnSpacing={2}
-            rowSpacing={[0, 2]}
-            justifyContent={['center', 'flex-start']}
-          >
+          <Box sx={courseCardsContainer}>
             {loadedCourses?.map((course) => {
               const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height="100%"
-                  maxWidth="400px"
-                  key={course.id}
-                >
+                <Box sx={courseCardContainer}>
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
-                </Grid>
+                </Box>
               );
             })}
-          </Grid>
+          </Box>
         )}
       </Container>
+
+      {somatics.length > 0 && (
+        <Container sx={{ backgroundColor: 'secondary.light' }} ref={setSomaticsSectionRef}>
+          <Typography variant="h2">{t('somaticsHeading')}</Typography>
+          <Typography pb={4}>{t('somaticsDescription')}</Typography>
+          <ResourceCarousel title="somatics-carousel" resources={somatics} />
+        </Container>
+      )}
+
       {conversations.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.main' }} ref={setConversationsSectionRef}>
-          <Typography variant="h2" fontWeight={500}>
-            {t('conversationsHeading')}
-          </Typography>
+          <Typography variant="h2">{t('conversationsHeading')}</Typography>
           <ResourceCarousel title="conversations-carousel" resources={conversations} />
         </Container>
       )}
       {loadedShorts && loadedShorts?.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
-          <Typography variant="h2" fontWeight={500}>
-            {t('shortsHeading')}
-          </Typography>
+          <Typography variant="h2">{t('shortsHeading')}</Typography>
           <ResourceCarousel title="shorts-carousel" resources={shorts} />
         </Container>
       )}
-      <NotesFromBloomPromo />
       {!userId && <SignUpBanner />}
       {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      <NotesFromBloomPromo />
     </Box>
   );
 }

@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const cardStyle = {
   mt: 0,
-  width: '250px',
+  width: '268px',
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
@@ -35,7 +35,7 @@ const overlay = {
   alignItems: 'center',
 };
 
-interface ShortsCardProps {
+interface ResourceCardProps {
   title: string;
   href: string;
   duration?: string;
@@ -46,7 +46,6 @@ interface ShortsCardProps {
 const categoryStyle = {
   fontFamily: 'Montserrat, sans-serif',
   fontSize: '0.875rem !important',
-  fontweight: 500,
   textTransform: 'uppercase',
   mb: '0.5rem !important',
   '& .before-dot:before': {
@@ -56,17 +55,17 @@ const categoryStyle = {
   },
 } as const;
 
-export const ShortsCard = (props: ShortsCardProps) => {
+export const ResourceCard = (props: ResourceCardProps) => {
   const { title, href, duration, category, image } = props;
 
-  const t = useTranslations('Shared');
+  const t = useTranslations('Resources');
 
   return (
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent
           sx={{
-            minHeight: 335,
+            minHeight: 310,
             padding: '0 !important',
           }}
         >
@@ -101,7 +100,9 @@ export const ShortsCard = (props: ShortsCardProps) => {
               )}
             </Typography>
             <Box>
-              <Typography variant="h3">{title}</Typography>
+              <Typography variant="h3" mb={0}>
+                {title}
+              </Typography>
             </Box>
           </Box>
         </CardContent>

@@ -27,7 +27,7 @@ a span {
 }
 
 ul > li::marker {
-  color: #ea0050 !important;
+  color: #ff976a !important;
 }
 
 ul,
@@ -61,7 +61,7 @@ ol > li {
 }
 
 ol > li::marker {
-  color: #ea0050;
+  color: #ff976a;
   font-weight: bold;
 }
 
