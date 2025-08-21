@@ -6,6 +6,7 @@
     "nextVideoButtonLabel": "Siguiente vídeo",
     "conversations": "Conversaciones",
     "shorts": "Cortos",
+    "videos": "Vídeos",
     "completed": "Completado",
     "sessionDetail": "Este clip es de la Sesión: {sessionName}, de nuestro Curso: {courseName}",
     "sessionButtonLabel": "Ver sesión completa",

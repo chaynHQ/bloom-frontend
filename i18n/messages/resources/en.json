@@ -2,10 +2,11 @@
   "Resources": {
     "backToConversations": "Back to conversations",
     "backToShorts": "Back to shorts",
-    "backToVideos": "Back to videos",
+    "backToVideos": "Back to somatics",
     "nextVideoButtonLabel": "Next video",
     "conversations": "Conversations",
     "shorts": "Shorts",
+    "videos": "Videos",
     "completed": "Completed",
     "sessionDetail": "This clip is from Session: {sessionName}, from our Course: {courseName}",
     "sessionButtonLabel": "Watch full session",
