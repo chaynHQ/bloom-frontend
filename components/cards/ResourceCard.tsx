@@ -92,7 +92,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
           </Box>
           <Box minHeight="100px" p={3}>
             <Typography sx={categoryStyle}>
-              {t(`relatedContent.${category}`)}
+              {t(`relatedContent.resource_${category}`)}
               {duration && (
                 <span className="before-dot">
                   {` ${duration} ${t('relatedContent.minuteLabel')}`}

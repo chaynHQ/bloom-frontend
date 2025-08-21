@@ -38,6 +38,7 @@ interface ResourceSingleVideoHeaderProps {
   video_transcript: StoryblokRichtext;
   references: StoryblokReferenceProps[];
   eventData: { [key: string]: any };
+  nextResourceHref: string | undefined;
 }
 
 export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps) => {
@@ -51,10 +52,10 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
     video_transcript,
     references,
     eventData,
+    nextResourceHref,
   } = props;
   const t = useTranslations('Resources');
 
-  const nextVideoHref = '';
   return (
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
@@ -99,16 +100,18 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
               <References references={references.filter((r) => r.is_key_reference)} />
             </Box>
           )}
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{ mt: 2, width: 'fit-content' }}
-            href={nextVideoHref}
-            endIcon={<ArrowForward />}
-            component={i18nLink}
-          >
-            {t('nextVideoButtonLabel')}
-          </Button>
+          {nextResourceHref && (
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ mt: 2, width: 'fit-content' }}
+              href={nextResourceHref}
+              endIcon={<ArrowForward />}
+              component={i18nLink}
+            >
+              {t('nextVideoButtonLabel')}
+            </Button>
+          )}
         </Box>
       </Box>
     </Container>

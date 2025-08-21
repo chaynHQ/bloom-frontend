@@ -78,6 +78,11 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
     );
   }, [entryPartnerReferral, partnerAccesses, partnerAdmin, userId]);
 
+  const nextResourceHref = useMemo(() => {
+    const nextResourceSlug = related_content[0]?.full_slug;
+    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
+  }, []);
+
   const eventData = useMemo(() => {
     return {
       resource_category: RESOURCE_CATEGORIES.SINGLE_VIDEO,
@@ -132,6 +137,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
           video_transcript,
           references,
           eventData,
+          nextResourceHref,
         }}
       />
       {resourceId && (
