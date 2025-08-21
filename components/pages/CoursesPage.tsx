@@ -26,20 +26,23 @@ import ResourceCarousel from '../common/ResourceCarousel';
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 2, md: 2 },
-  paddingBottom: '0 !important',
 } as const;
 
 const courseCardsContainer = {
   ...rowStyle,
   mb: 0,
   flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: 1, md: 2 },
+  gap: 2,
 } as const;
 
 const courseCardContainer = {
   width: { xs: '100%', md: 'calc(50% - 8px)' },
 } as const;
 
+const sectionDescription = {
+  pb: 4,
+  maxWidth: 650,
+} as const;
 interface Props {
   courseStories: ISbStoryData[];
   conversations: ISbStoryData[];
@@ -205,9 +208,12 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
       </Container>
 
       {somatics.length > 0 && (
-        <Container sx={{ backgroundColor: 'secondary.light' }} ref={setSomaticsSectionRef}>
+        <Container
+          sx={{ backgroundColor: 'secondary.light', pt: '2rem !important' }}
+          ref={setSomaticsSectionRef}
+        >
           <Typography variant="h2">{t('somaticsHeading')}</Typography>
-          <Typography pb={4}>{t('somaticsDescription')}</Typography>
+          <Typography sx={sectionDescription}>{t('somaticsDescription')}</Typography>
           <ResourceCarousel title="somatics-carousel" resources={somatics} />
         </Container>
       )}
@@ -215,12 +221,14 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
       {conversations.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.main' }} ref={setConversationsSectionRef}>
           <Typography variant="h2">{t('conversationsHeading')}</Typography>
+          <Typography sx={sectionDescription}>{t('conversationsDescription')}</Typography>
           <ResourceCarousel title="conversations-carousel" resources={conversations} />
         </Container>
       )}
       {loadedShorts && loadedShorts?.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
           <Typography variant="h2">{t('shortsHeading')}</Typography>
+          <Typography sx={sectionDescription}>{t('shortsDescription')}</Typography>
           <ResourceCarousel title="shorts-carousel" resources={shorts} />
         </Container>
       )}

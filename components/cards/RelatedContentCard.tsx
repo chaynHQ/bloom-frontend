@@ -30,7 +30,7 @@ const categoryStyle = {
 } as const;
 
 const cardContentStyle = {
-  minHeight: 190,
+  minHeight: { xs: 160, md: 190 },
   paddingY: { xs: '1.5rem', md: '2rem !important' },
   paddingX: { xs: '1.5rem', md: '1.75rem !important' },
 } as const;

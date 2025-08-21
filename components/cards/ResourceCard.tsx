@@ -21,6 +21,11 @@ const cardStyle = {
   flex: 0,
 } as const;
 
+const cardContentStyle = {
+  minHeight: 290,
+  padding: '0 !important',
+} as const;
+
 const overlay = {
   position: 'absolute',
   right: 0,
@@ -63,12 +68,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
   return (
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
-        <CardContent
-          sx={{
-            minHeight: 310,
-            padding: '0 !important',
-          }}
-        >
+        <CardContent sx={cardContentStyle}>
           <Box height="130px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
@@ -90,7 +90,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
               </IconButton>
             </Box>
           </Box>
-          <Box minHeight="100px" p={3}>
+          <Box p={3}>
             <Typography sx={categoryStyle}>
               {t(`relatedContent.resource_${category}`)}
               {duration && (

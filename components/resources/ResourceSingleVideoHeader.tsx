@@ -14,7 +14,11 @@ import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import References from '../common/References';
 import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 
-const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
+const headerStyle = {
+  ...rowStyle,
+  flexWrap: { xs: 'wrap', md: 'no-wrap' },
+  gap: { xs: 3, md: 5 },
+} as const;
 
 const headerLeftStyles = {
   width: 514, // >515px enables the "watch on youtube" button
@@ -26,6 +30,13 @@ const headerRightStyle = {
   justifyContent: 'flex-start',
   flex: { md: 1 },
   width: { md: '100%' },
+} as const;
+
+const referencesNextColumnStyle = {
+  ...columnStyle,
+  flexDirection: { xs: 'column-reverse', md: 'column' },
+  mt: { xs: 4, md: 3 },
+  gap: { xs: 4, md: 3 },
 } as const;
 
 interface ResourceSingleVideoHeaderProps {
@@ -98,26 +109,28 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
         <Box sx={headerRightStyle}>
           {/* Description field is not currently displayed */}
           {render(description, RichTextOptions)}
-          {references.length > 0 && (
-            <Box mt={2}>
-              <Typography sx={{ mb: '0.75rem !important' }}>
-                {t('references.keyReferences')}
-              </Typography>
-              <References references={references.filter((r) => r.is_key_reference)} />
-            </Box>
-          )}
-          {nextResourceHref && (
-            <Button
-              variant="contained"
-              color="secondary"
-              sx={{ mt: 2, width: 'fit-content' }}
-              href={nextResourceHref}
-              endIcon={<ArrowForward />}
-              component={i18nLink}
-            >
-              {t('nextVideoButtonLabel')}
-            </Button>
-          )}
+          <Box sx={referencesNextColumnStyle}>
+            {references.length > 0 && (
+              <Box>
+                <Typography sx={{ mb: '0.75rem !important' }}>
+                  {t('references.keyReferences')}
+                </Typography>
+                <References references={references.filter((r) => r.is_key_reference)} />
+              </Box>
+            )}
+            {nextResourceHref && (
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ width: 'fit-content' }}
+                href={nextResourceHref}
+                endIcon={<ArrowForward />}
+                component={i18nLink}
+              >
+                {t('nextVideoButtonLabel')}
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </Container>

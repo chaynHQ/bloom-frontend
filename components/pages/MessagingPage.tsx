@@ -17,14 +17,15 @@ import DynamicComponent from '../storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,
-  flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: '2rem', md: '10%' },
+  flexDirection: { xs: 'column-reverse', md: 'row' },
+  gap: { xs: 0, md: '10%' },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: '40%', md: 260 },
-  height: { xs: '40%', md: 260 },
+  margin: 'auto',
+  width: { xs: '60%', md: 260 },
+  height: { xs: '60%', md: 260 },
 } as const;
 
 interface Props {

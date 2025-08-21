@@ -28,6 +28,7 @@ const cardStyle = {
   backgroundColor: 'background.default',
   display: 'flex',
   flexDirection: 'column',
+  mt: 0,
   '&:hover': {
     backgroundColor: 'background.default',
   },

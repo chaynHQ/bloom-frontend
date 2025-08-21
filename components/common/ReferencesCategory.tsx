@@ -47,7 +47,7 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
         </Typography>
       </Box>
       <List sx={listStyle}>
-        {[...references, ...references].map((reference, index) => (
+        {references.map((reference, index) => (
           <ListItem sx={listItemStyle}>
             <Typography
               key={`reference_${reference.category}_${index}`}
@@ -67,7 +67,7 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
                 color="textSecondary"
                 component="span"
                 fontStyle="normal"
-                ml={0.75}
+                ml={0.5}
               >
                 {reference.attribution}
               </Typography>
