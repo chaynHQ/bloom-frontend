@@ -7,6 +7,7 @@ import { columnStyle, rowStyle } from '@/styles/common';
 import { KeyboardArrowUp } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
+import LinkIcon from '@mui/icons-material/Link';
 import { Box, Card, CardActionArea, CardContent, Collapse, Link, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
@@ -191,7 +192,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             )}
             {show_short_bio && website?.url && (
               <Box sx={{ ...iconRowStyles, ...fadeOut }}>
-                <LanguageIcon color="error" sx={iconStyles} />
+                <LinkIcon color="error" sx={iconStyles} />
                 <Link variant="body2" href={website.url} sx={{ textDecoration: 'none' }}>
                   {websiteTitle}
                 </Link>
@@ -200,9 +201,9 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             {cardExpandable && (
               <Box sx={expandButtonContainerStyles}>
                 {expanded ? (
-                  <KeyboardArrowDownIcon color="error" />
-                ) : (
                   <KeyboardArrowUp color="error" />
+                ) : (
+                  <KeyboardArrowDownIcon color="error" />
                 )}
               </Box>
             )}
@@ -224,7 +225,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
           )}
           {!show_short_bio && website?.url && (
             <Link href={website.url} target="_blank" sx={{ ...iconRowStyles, mt: 2, mb: 0 }}>
-              <LanguageIcon color="error" />
+              <LinkIcon color="error" sx={iconStyles} />
               {websiteTitle}
             </Link>
           )}
