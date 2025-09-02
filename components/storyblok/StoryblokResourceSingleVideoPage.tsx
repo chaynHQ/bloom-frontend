@@ -14,8 +14,12 @@ import Cookies from 'js-cookie';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ResourceSingleVideoHeader } from '../resources/ResourceSingleVideoHeader';
+import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import StoryblokTeamMembersSection, {
+  StoryblokTeamMembersSectionProps,
+} from './StoryblokTeamMembersSection';
 import { StoryblokReferenceProps } from './StoryblokTypes';
 
 export interface StoryblokResourceSingleVideoPageProps {
@@ -29,6 +33,7 @@ export interface StoryblokResourceSingleVideoPageProps {
   video: { url: string };
   video_transcript: StoryblokRichtext;
   page_sections: StoryblokPageSectionProps[];
+  team_members_section: StoryblokTeamMembersSectionProps[];
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   references: StoryblokReferenceProps[];
@@ -48,6 +53,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
     video,
     video_transcript,
     page_sections,
+    team_members_section,
     related_content,
     related_exercises,
     references,
@@ -60,7 +66,6 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -109,7 +114,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   useEffect(() => {
     logEvent(RESOURCE_SINGLE_VIDEO_VIEWED, eventData);
   }, []);
-
+  const teamMembersSectionProps = team_members_section[0];
   return (
     <Box
       {...storyblokEditable({
@@ -121,6 +126,8 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
         video,
         video_transcript,
         page_sections,
+        team_members_section,
+        references,
         related_content,
         related_exercises,
       })}
@@ -140,6 +147,11 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
           tags,
         }}
       />
+      {team_members_section && <StoryblokTeamMembersSection {...teamMembersSectionProps} />}
+      {page_sections?.length > 0 &&
+        page_sections.map((section: any, index: number) => (
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
+        ))}
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm

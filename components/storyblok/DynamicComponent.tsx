@@ -19,6 +19,7 @@ import StoryblokSpacer from './StoryblokSpacer';
 import StoryblokStatement from './StoryblokStatement';
 import StoryblokTeamMemberCard from './StoryblokTeamMemberCard';
 import StoryblokTeamMembersCards from './StoryblokTeamMembersCards';
+import StoryblokTeamMembersSection from './StoryblokTeamMembersSection';
 import StoryblokVideo from './StoryblokVideo';
 
 export interface Component {
@@ -45,6 +46,7 @@ const components: Component[] = [
   { name: 'carousel', component: StoryblokCarousel },
   { name: 'resource_carousel', component: StoryblokResourceCarousel },
   { name: 'notes_from_bloom_promo', component: StoryblokNotesFromBloomPromo },
+  { name: 'team_members_section', component: StoryblokTeamMembersSection },
 ];
 
 interface DynamicComponentProps {
