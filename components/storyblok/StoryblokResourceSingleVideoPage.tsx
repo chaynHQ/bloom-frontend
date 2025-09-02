@@ -2,17 +2,26 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_TAGS } from '@/lib/constants/enums';
+import {
+  LANGUAGES,
+  PROGRESS_STATUS,
+  RESOURCE_CATEGORIES,
+  STORYBLOK_TAGS,
+} from '@/lib/constants/enums';
 import { RESOURCE_SINGLE_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
+import { useLocale } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { ContentUnavailable } from '../common/ContentUnavailable';
+import LoadingContainer from '../common/LoadingContainer';
 import { ResourceSingleVideoHeader } from '../resources/ResourceSingleVideoHeader';
 import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -38,6 +47,7 @@ export interface StoryblokResourceSingleVideoPageProps {
   related_exercises: string[];
   references: StoryblokReferenceProps[];
   languages: string[];
+  included_for_partners: string[];
   component: 'resource_single_video';
   tags: STORYBLOK_TAGS[];
 }
@@ -57,15 +67,19 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
     related_content,
     related_exercises,
     references,
+    languages,
+    included_for_partners,
     tags,
   } = props;
 
+  const locale = useLocale();
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const [userAccess, setUserAccess] = useState<boolean>();
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -97,6 +111,20 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
+    const userHasAccess =
+      hasAccessToPage(
+        isLoggedIn,
+        true, // setting true here to allow preview. The login overlay will block interaction
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ) &&
+      (locale === LANGUAGES.en || languages.includes(locale));
+
+    setUserAccess(userHasAccess);
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin]);
+
+  useEffect(() => {
     const userResource = resources.find(
       (resource: Resource) => resource.storyblokUuid === storyUuid,
     );
@@ -114,7 +142,10 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   useEffect(() => {
     logEvent(RESOURCE_SINGLE_VIDEO_VIEWED, eventData);
   }, []);
-  const teamMembersSectionProps = team_members_section[0];
+
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess) return <ContentUnavailable />;
+
   return (
     <Box
       {...storyblokEditable({
@@ -147,7 +178,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
           tags,
         }}
       />
-      {team_members_section && <StoryblokTeamMembersSection {...teamMembersSectionProps} />}
+      {team_members_section && <StoryblokTeamMembersSection {...team_members_section[0]} />}
       {page_sections?.length > 0 &&
         page_sections.map((section: any, index: number) => (
           <DynamicComponent key={`page_section_${index}`} blok={section} />

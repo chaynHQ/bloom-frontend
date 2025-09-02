@@ -6,14 +6,17 @@ import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { ContentUnavailable } from '../common/ContentUnavailable';
+import LoadingContainer from '../common/LoadingContainer';
 import { ResourceShortHeader } from '../resources/ResourceShortsHeader';
 import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -52,16 +55,17 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     related_course,
     related_content,
     related_exercises,
+    languages,
+    included_for_partners,
   } = props;
-
-  const tS = useTranslations('Shared');
-
+  const locale = useLocale();
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const [userAccess, setUserAccess] = useState<boolean>();
 
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
@@ -89,6 +93,20 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
+    const userHasAccess =
+      hasAccessToPage(
+        isLoggedIn,
+        true, // setting true here to allow preview. The login overlay will block interaction
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ) &&
+      (locale === LANGUAGES.en || languages.includes(locale));
+
+    setUserAccess(userHasAccess);
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin]);
+
+  useEffect(() => {
     const userResource = resources.find(
       (resource: Resource) => resource.storyblokUuid === storyUuid,
     );
@@ -106,6 +124,9 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
   useEffect(() => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
+
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess) return <ContentUnavailable />;
 
   return (
     <Box
