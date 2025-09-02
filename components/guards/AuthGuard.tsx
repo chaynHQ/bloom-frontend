@@ -12,7 +12,14 @@ import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account', 'conversations'];
+const authenticatedPathHeads = [
+  'admin',
+  'partner-admin',
+  'therapy',
+  'account',
+  'conversations',
+  'videos',
+];
 const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing

@@ -115,7 +115,8 @@
       "title": "Login or Create an account",
       "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
       "loginButton": "Log in",
-      "registerButton": "Create account"
+      "registerButton": "Create account",
+      "backButton": "Go back"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",

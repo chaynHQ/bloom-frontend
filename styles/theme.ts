@@ -165,7 +165,6 @@ theme = createTheme(theme, {
           },
           button: {
             color: '#000000',
-            fontSize: '1.125rem',
             '&:hover': {
               backgroundColor: lighten(theme.palette.secondary.main, 0.1),
             },
