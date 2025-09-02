@@ -46,7 +46,10 @@
       "completed": "Completo",
       "notStarted": "Sin empezar"
     },
-    "meetTheTeam": { "expandTeamMember": "Expandir biografía para {name}" },
+    "meetTheTeam": {
+      "fullBioButton": "Leer la biografía completa de {name}",
+      "expandTeamMember": "Expandir biografía para {name}"
+    },
     "noDataAvailable": {
       "title": "Se produjo un problema al cargar esta página. Vuelva a intentarlo pronto o póngase en contacto con nosotros."
     },
@@ -111,7 +114,8 @@
       "title": "Iniciar sesión o crear una cuenta",
       "description": "Regístrate gratis para acceder a todo nuestro contenido y explorar todo lo que Bloom tiene para ofrecer",
       "loginButton": "Iniciar sesión",
-      "registerButton": "Crear cuenta"
+      "registerButton": "Crear cuenta",
+      "backButton": "Cancelar"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Diarios de pensamientos",

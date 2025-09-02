@@ -47,6 +47,7 @@
       "notStarted": "Noch nicht begonnen"
     },
     "meetTheTeam": {
+      "fullBioButton": "Lesen Sie die vollständige Biografie von {name}",
       "expandTeamMember": "Bio für {name} erweitern"
     },
     "noDataAvailable": {
@@ -113,7 +114,8 @@
       "title": "Anmelden oder Konto erstellen",
       "description": "Melden Sie sich kostenlos an, um auf alle unsere Inhalte zuzugreifen und alles zu entdecken, was Bloom zu bieten hat",
       "loginButton": "Anmelden",
-      "registerButton": "Konto erstellen"
+      "registerButton": "Konto erstellen",
+      "backButton": "Stornieren"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",
