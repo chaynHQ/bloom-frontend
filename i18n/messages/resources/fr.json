@@ -48,7 +48,8 @@
       "keyReferences": "Ressources clés de cette session (liste complète à la fin de la transcription) :",
       "books": "Livres",
       "articles": "Articles",
-      "video_practices": "Pratiques vidéo"
+      "video_practices": "Pratiques vidéo",
+      "audios": "Podcasts"
     }
   }
 }

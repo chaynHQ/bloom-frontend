@@ -64,6 +64,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
   const [books, setBooks] = useState<StoryblokReferenceProps[]>([]);
   const [videoPractices, setVideoPractices] = useState<StoryblokReferenceProps[]>([]);
   const [articles, setArticles] = useState<StoryblokReferenceProps[]>([]);
+  const [audios, setAudios] = useState<StoryblokReferenceProps[]>([]);
   const tS = useTranslations('Shared');
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
       setArticles(
         references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
       );
+      setAudios(references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.AUDIO));
     }
   }, [references]);
 
@@ -124,6 +126,12 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
                 <ReferencesCategory
                   category={STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE}
                   references={videoPractices}
+                />
+              )}
+              {audios.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.AUDIO}
+                  references={audios}
                 />
               )}
             </>
