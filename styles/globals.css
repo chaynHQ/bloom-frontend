@@ -35,6 +35,16 @@ ol {
   padding-left: 1.75rem;
 }
 
+h1 > b,
+h2 > b,
+h3 > b,
+h1 > span,
+h2 > span,
+h3 > span {
+  font-weight: 400;
+  color: #000 !important;
+}
+
 p:only-child,
 ol:only-child,
 ul:only-child {

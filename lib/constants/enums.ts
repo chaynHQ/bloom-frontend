@@ -95,7 +95,7 @@ export enum STORYBLOK_COLORS {
 export enum STORYBLOK_REFERENCE_CATEGORIES {
   BOOK = 'book',
   ARTICLE = 'article',
-  VIDEO_PRACTICES = 'video_practices',
+  VIDEO_PRACTICE = 'video_practice',
 }
 
 export enum SURVEY_FORMS {

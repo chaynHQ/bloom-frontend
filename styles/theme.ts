@@ -63,6 +63,7 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '1.375rem',
       marginBottom: '1rem',
+      fontWeight: 400,
       lineHeight: 1.4,
     },
     h4: {

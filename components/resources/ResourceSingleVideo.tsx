@@ -134,7 +134,7 @@ export const ResourceSingleVideo = (props: ResourceSingleVideoProps) => {
         <VideoTranscriptModal
           videoName={name}
           content={video_transcript}
-          references={references}
+          references={references.filter((r) => !r.is_key_reference)}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />

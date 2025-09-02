@@ -64,7 +64,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
     if (references?.length) {
       setBooks(references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.BOOK));
       setVideoPractices(
-        references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICES),
+        references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE),
       );
       setArticles(
         references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
@@ -96,24 +96,31 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
             {tS('videoTranscript.description')}
             {videoName}
           </Typography>
-          <div>{render(content, RichTextOptions)}</div>
-          <Typography variant="h3" mt={4} mb={2}>
-            {tS('references')}
-          </Typography>
-          {books.length > 0 && (
-            <ReferencesCategory category={STORYBLOK_REFERENCE_CATEGORIES.BOOK} references={books} />
-          )}
-          {articles.length > 0 && (
-            <ReferencesCategory
-              category={STORYBLOK_REFERENCE_CATEGORIES.ARTICLE}
-              references={articles}
-            />
-          )}
-          {videoPractices.length > 0 && (
-            <ReferencesCategory
-              category={STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICES}
-              references={videoPractices}
-            />
+          <Box>{render(content, RichTextOptions)}</Box>
+          {references && (
+            <>
+              <Typography variant="h3" mt={4} mb={2}>
+                {tS('references')}
+              </Typography>
+              {books.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.BOOK}
+                  references={books}
+                />
+              )}
+              {articles.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.ARTICLE}
+                  references={articles}
+                />
+              )}
+              {videoPractices.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE}
+                  references={videoPractices}
+                />
+              )}
+            </>
           )}
         </Box>
       </Box>
