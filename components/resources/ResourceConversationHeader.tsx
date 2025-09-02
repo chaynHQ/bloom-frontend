@@ -58,7 +58,7 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
           </Box>
         </Box>
       }
-      imageSrc={header_image ? header_image.filename : illustrationCourses}
+      imageSrc={header_image?.filename || illustrationCourses}
       progressStatus={resourceProgress}
     >
       <Button
