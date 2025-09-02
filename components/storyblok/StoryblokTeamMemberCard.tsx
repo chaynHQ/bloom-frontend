@@ -3,7 +3,7 @@
 import { Link as i18nLink } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { rowStyle } from '@/styles/common';
+import { columnStyle, rowStyle } from '@/styles/common';
 import { KeyboardArrowUp } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -18,6 +18,7 @@ const cardStyle = {
   textAlign: 'left',
   alignSelf: 'flex-start',
   width: '100%',
+  maxWidth: 550,
   backgroundColor: 'background.default',
 } as const;
 
@@ -29,16 +30,21 @@ const cardContentStyle = {
 } as const;
 
 const cardHeaderStyle = {
+  ...columnStyle,
   flex: 1,
   padding: { xs: 2, md: 2.5 },
   paddingRight: { xs: 1, md: 2 },
   paddingBottom: { xs: 0.5, md: 0.75 },
   overflow: 'hidden',
+  ' p': {
+    mx: '0 !important',
+  },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
   width: { xs: '30%', md: '40%' },
+  maxWidth: 350,
   minHeight: { xs: 120, sm: 140, md: 180 },
   minWidth: 120,
 } as const;
@@ -79,6 +85,11 @@ const iconStyles = {
   height: { xs: 20, md: 24 },
 } as const;
 
+const expandButtonContainerStyles = {
+  textAlign: 'right',
+  mt: 'auto',
+};
+
 export interface StoryblokTeamMemberCardProps {
   _uid: string;
   _editable: string;
@@ -91,6 +102,7 @@ export interface StoryblokTeamMemberCardProps {
   show_short_bio: boolean;
   hide_languages: boolean;
   website: { url: string };
+  team_page_section: 'core' | 'somatics' | 'supporting';
   cardExpandable?: boolean;
 }
 
@@ -107,6 +119,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
     show_short_bio,
     hide_languages,
     website,
+    team_page_section,
     cardExpandable = false,
   } = props;
 
@@ -159,14 +172,18 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             />
           </Box>
           <Box sx={cardHeaderStyle}>
-            <Typography component="h3" variant="h3" mb={0.5}>
+            <Typography component="h3" variant="h3" mb={0.5} ml={0}>
               {name}
             </Typography>
-            <Typography fontStyle={'italic'}>{role}</Typography>
+            <Typography fontStyle={'italic'} ml={0}>
+              {role}
+            </Typography>
             {!hide_languages && (
               <Box sx={iconRowStyles}>
                 <LanguageIcon color="error" sx={iconStyles} />
-                <Typography variant="body2">{languages}</Typography>
+                <Typography variant="body2" ml={0}>
+                  {languages}
+                </Typography>
               </Box>
             )}
             {show_short_bio && website?.url && (
@@ -178,7 +195,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               </Box>
             )}
             {cardExpandable && (
-              <Box textAlign="right">
+              <Box sx={expandButtonContainerStyles}>
                 {expanded ? (
                   <KeyboardArrowDownIcon color="error" />
                 ) : (
@@ -193,7 +210,12 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
         <CardContent sx={collapseContentStyle}>
           <Box>{render(show_short_bio ? short_bio : bio, RichTextOptions)}</Box>
           {show_short_bio && (
-            <Link component={i18nLink} href="/meet-the-team" mt={2} display="block">
+            <Link
+              component={i18nLink}
+              href={`/meet-the-team${team_page_section ? `?section=${team_page_section}` : ''}`}
+              mt={2}
+              display="block"
+            >
               {t.rich('fullBioButton', { name: name })}
             </Link>
           )}

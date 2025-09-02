@@ -106,7 +106,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         window.scrollTo({ top: scrollToY, behavior: 'smooth' });
       }
     },
-    [sectionQueryParam, headerOffset, loadedCourses],
+    [sectionQueryParam, headerOffset],
   );
 
   const setSomaticsSectionRef = useCallback(
@@ -116,7 +116,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         window.scrollTo({ top: scrollToY, behavior: 'smooth' });
       }
     },
-    [sectionQueryParam, headerOffset, loadedCourses],
+    [sectionQueryParam, headerOffset],
   );
 
   useEffect(() => {
