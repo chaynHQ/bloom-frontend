@@ -159,3 +159,5 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     </Box>
   );
 };
+
+export default StoryblokResourceShortPage;

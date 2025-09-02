@@ -52,6 +52,7 @@ interface Props {
 export default function CoursesPage({ courseStories, conversations, shorts, somatics }: Props) {
   const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
   const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
+  const [loadedSomatics, setLoadedSomatics] = useState<ISbStoryData[] | null>(null);
   const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
   const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
   const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
@@ -152,8 +153,12 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
       }),
     );
 
+    const somaticsWithAccess =
+      userPartners.filter((up) => up !== 'public').length > 0 ? null : somatics; // no partners have access to somatics
+
     setLoadedCourses(coursesWithAccess);
     setLoadedShorts(shortsWithAccess);
+    setLoadedSomatics(somaticsWithAccess);
 
     if (courses) {
       let courseCoursesStarted: Array<string> = [];
@@ -168,7 +173,16 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
       setCoursesStarted(courseCoursesStarted);
       setCoursesCompleted(courseCoursesCompleted);
     }
-  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
+  }, [
+    partnerAccesses,
+    partnerAdmin,
+    courseStories,
+    courses,
+    shorts,
+    somatics,
+    entryPartnerReferral,
+    userId,
+  ]);
 
   const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
@@ -207,14 +221,14 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         )}
       </Container>
 
-      {somatics.length > 0 && (
+      {loadedSomatics && loadedSomatics.length > 0 && (
         <Container
           sx={{ backgroundColor: 'secondary.light', pt: '2rem !important' }}
           ref={setSomaticsSectionRef}
         >
           <Typography variant="h2">{t('somaticsHeading')}</Typography>
           <Typography sx={sectionDescription}>{t('somaticsDescription')}</Typography>
-          <ResourceCarousel title="somatics-carousel" resources={somatics} />
+          <ResourceCarousel title="somatics-carousel" resources={loadedSomatics} />
         </Container>
       )}
 
@@ -229,7 +243,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
           <Typography variant="h2">{t('shortsHeading')}</Typography>
           <Typography sx={sectionDescription}>{t('shortsDescription')}</Typography>
-          <ResourceCarousel title="shorts-carousel" resources={shorts} />
+          <ResourceCarousel title="shorts-carousel" resources={loadedShorts} />
         </Container>
       )}
       {!userId && <SignUpBanner />}
