@@ -200,9 +200,9 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             {cardExpandable && (
               <Box sx={expandButtonContainerStyles}>
                 {expanded ? (
-                  <KeyboardArrowDownIcon color="error" />
-                ) : (
                   <KeyboardArrowUp color="error" />
+                ) : (
+                  <KeyboardArrowDownIcon color="error" />
                 )}
               </Box>
             )}
