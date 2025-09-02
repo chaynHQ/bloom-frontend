@@ -48,7 +48,7 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
       </Box>
       <List sx={listStyle}>
         {references.map((reference, index) => (
-          <ListItem sx={listItemStyle}>
+          <ListItem key={`reference_cat_${index}`} sx={listItemStyle}>
             <Typography
               key={`reference_${reference.category}_${index}`}
               variant="body2"

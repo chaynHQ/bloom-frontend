@@ -122,7 +122,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
       (locale === LANGUAGES.en || languages.includes(locale));
 
     setUserAccess(userHasAccess);
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin]);
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
 
   useEffect(() => {
     const userResource = resources.find(

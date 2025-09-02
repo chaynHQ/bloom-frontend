@@ -209,10 +209,10 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
           </Box>
         ) : (
           <Box sx={courseCardsContainer}>
-            {loadedCourses?.map((course) => {
+            {loadedCourses?.map((course, index) => {
               const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
-                <Box sx={courseCardContainer}>
+                <Box key={`course_${index}`} sx={courseCardContainer}>
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
                 </Box>
               );

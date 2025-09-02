@@ -2,7 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
@@ -104,7 +104,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
       (locale === LANGUAGES.en || languages.includes(locale));
 
     setUserAccess(userHasAccess);
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin]);
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
 
   useEffect(() => {
     const userResource = resources.find(

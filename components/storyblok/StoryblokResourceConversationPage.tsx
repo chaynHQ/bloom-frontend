@@ -89,10 +89,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       ) &&
       (locale === LANGUAGES.en || languages.includes(locale));
     setUserAccess(userHasAccess);
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin]);
-
-  if (userAccess === undefined) return <LoadingContainer />;
-  if (!userAccess) return <ContentUnavailable />;
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
 
   useEffect(() => {
     const userResource = resources.find(
@@ -112,6 +109,9 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
   }, []);
+
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess) return <ContentUnavailable />;
 
   return (
     <Box
