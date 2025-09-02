@@ -47,6 +47,7 @@
       "notStarted": "Not started"
     },
     "meetTheTeam": {
+      "fullBioButton": "Read {name}'s full bio",
       "expandTeamMember": "Expand bio for {name}"
     },
     "noDataAvailable": {

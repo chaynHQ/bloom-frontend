@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
+import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
@@ -133,6 +134,10 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           eventData,
         }}
       />
+      {page_sections?.length > 0 &&
+        page_sections.map((section: any, index: number) => (
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
+        ))}
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
