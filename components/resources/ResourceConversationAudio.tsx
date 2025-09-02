@@ -132,7 +132,7 @@ export const ResourceConversationAudio = (props: ResourceConversationAudioProps)
       </Typography>
 
       <VideoTranscriptModal
-        videoName={name}
+        title={name}
         content={audio_transcript}
         setOpenTranscriptModal={setOpenTranscriptModal}
         openTranscriptModal={openTranscriptModal}

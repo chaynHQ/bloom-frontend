@@ -121,7 +121,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
           containerStyles={{ mx: 'auto', my: 2 }}
         />
         <VideoTranscriptModal
-          videoName={name}
+          title={name}
           content={video_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}

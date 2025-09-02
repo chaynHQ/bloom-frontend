@@ -96,6 +96,7 @@ export enum STORYBLOK_REFERENCE_CATEGORIES {
   BOOK = 'book',
   ARTICLE = 'article',
   VIDEO_PRACTICE = 'video_practice',
+  AUDIO = 'audio',
 }
 
 export enum SURVEY_FORMS {
