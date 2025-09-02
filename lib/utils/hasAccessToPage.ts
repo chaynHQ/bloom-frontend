@@ -16,7 +16,7 @@ export default function hasAccessToPage(
   const isPublicUser = !partnerAccesses.length && !partnerAdmin.id && !referralPartner;
 
   if (isPublicUser) {
-    if (partnersWithAccess.includes('Public') || []) {
+    if (partnersWithAccess.includes('Public')) {
       return true;
     }
     return false;
