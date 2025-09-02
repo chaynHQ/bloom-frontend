@@ -127,7 +127,7 @@ const RegisterNotesForm = () => {
     <BaseRegisterForm onSubmit={submitHandler} formError={formError} loading={loading}>
       <Box sx={formStyle}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               id="name"
               onChange={(e) => setNameInput(e.target.value)}
@@ -138,12 +138,12 @@ const RegisterNotesForm = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} sx={{ pt: '0.75rem !important' }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ pt: '0.75rem !important' }}>
             <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               id="email"
               onChange={(e) => setEmailInput(e.target.value)}
@@ -155,7 +155,7 @@ const RegisterNotesForm = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               id="password"
               onChange={(e) => setPasswordInput(e.target.value)}

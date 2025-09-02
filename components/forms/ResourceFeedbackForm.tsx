@@ -33,7 +33,12 @@ const fieldBoxStyle: SxProps<Theme> = {
 };
 
 const radioGroupStyle = {
-  padding: '20px 0px',
+  width: '100%',
+  py: { xs: 1, md: 2 },
+  label: {
+    margin: 0,
+    minWidth: { xs: '31%', sm: 150 },
+  },
 } as const;
 
 const imageContainerStyle = {

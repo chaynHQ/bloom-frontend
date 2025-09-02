@@ -1,39 +1,25 @@
 'use client';
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
-import PageSection from '@/components/common/PageSection';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { rowStyle } from '@/styles/common';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { ContentUnavailable } from '../common/ContentUnavailable';
+import LoadingContainer from '../common/LoadingContainer';
 import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
+import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-
-const audioContainerStyle = {
-  mt: { xs: 4, md: 6 },
-  mb: 3,
-} as const;
-
-const progressStyle = {
-  ...rowStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 3,
-  mt: 2,
-  '.MuiBox-root': {
-    mt: 0,
-  },
-} as const;
 
 export interface StoryblokResourceConversationPageProps {
   storyUuid: string;
@@ -66,15 +52,18 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     page_sections,
     related_content,
     related_exercises,
+    languages,
+    included_for_partners,
   } = props;
 
-  const tS = useTranslations('Shared');
+  const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
-
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const [userAccess, setUserAccess] = useState<boolean>();
+
   const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
     PROGRESS_STATUS.NOT_STARTED,
   );
@@ -88,6 +77,19 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
       resource_progress: resourceProgress,
     };
   }, [name, storyUuid, resourceProgress]);
+
+  useEffect(() => {
+    const userHasAccess =
+      hasAccessToPage(
+        isLoggedIn,
+        true, // setting true here to allow preview. The login overlay will block interaction
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ) &&
+      (locale === LANGUAGES.en || languages.includes(locale));
+    setUserAccess(userHasAccess);
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
 
   useEffect(() => {
     const userResource = resources.find(
@@ -107,6 +109,9 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
   }, []);
+
+  if (userAccess === undefined) return <LoadingContainer />;
+  if (!userAccess) return <ContentUnavailable />;
 
   return (
     <Box
@@ -134,6 +139,10 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           eventData,
         }}
       />
+      {page_sections?.length > 0 &&
+        page_sections.map((section: any, index: number) => (
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
+        ))}
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
@@ -142,21 +151,16 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           />
         </Container>
       )}
-      <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
-        <Typography variant="h2" fontWeight={500}>
-          {tS('relatedContent.title')}
-        </Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-          userContentPartners={userHasAccessToPartnerContent(
-            partnerAdmin?.partner,
-            partnerAccesses,
-            null,
-            userId,
-          )}
-        />
-      </PageSection>
+      <StoryblokRelatedContent
+        relatedContent={related_content}
+        relatedExercises={related_exercises}
+        userContentPartners={userHasAccessToPartnerContent(
+          partnerAdmin?.partner,
+          partnerAccesses,
+          null,
+          userId,
+        )}
+      />
       {!isLoggedIn && <SignUpBanner />}
     </Box>
   );

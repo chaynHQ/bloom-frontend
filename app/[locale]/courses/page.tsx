@@ -1,5 +1,5 @@
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { FeatureFlag } from '@/lib/featureFlag';
+import { STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
@@ -29,6 +29,7 @@ export default async function Page({ params }: { params: Params }) {
   const sbCoursesParams: ISbStoriesParams = {
     ...baseProps,
     starts_with: 'courses/',
+    language: locale,
     filter_query: {
       component: {
         in: 'Course',
@@ -39,20 +40,29 @@ export default async function Page({ params }: { params: Params }) {
   const sbConversationsParams: ISbStoriesParams = {
     ...baseProps,
     starts_with: 'conversations/',
+    language: locale,
   };
 
   const sbShortsParams: ISbStoriesParams = {
     ...baseProps,
     starts_with: 'shorts/',
+    language: locale,
+  };
+
+  const sbSingleVideoParams: ISbStoriesParams = {
+    ...baseProps,
+    starts_with: 'videos/',
+    language: locale,
+    with_tag: STORYBLOK_TAGS.SOMATICS,
   };
 
   const coursesStories = (await getStoryblokStories(locale, sbCoursesParams)) || [];
   const conversationsStories = (await getStoryblokStories(locale, sbConversationsParams)) || [];
   const shortsStories = (await getStoryblokStories(locale, sbShortsParams)) || [];
+  const somaticsStories = (await getStoryblokStories(locale, sbSingleVideoParams)) || [];
 
   const contentLanguagesString = locale === 'en' ? 'default' : locale;
 
-  // ✅ NEW logic for filtering courses by Storyblok 'languages' config
   const courses = coursesStories?.filter((course: ISbStoryData) =>
     course.content.languages?.includes(contentLanguagesString),
   );
@@ -65,5 +75,16 @@ export default async function Page({ params }: { params: Params }) {
     short.content.languages?.includes(contentLanguagesString),
   );
 
-  return <CoursesPage courseStories={courses} conversations={conversations} shorts={shorts} />;
+  const somatics = somaticsStories?.filter((video: ISbStoryData) =>
+    video.content.languages?.includes(contentLanguagesString),
+  );
+
+  return (
+    <CoursesPage
+      courseStories={courses}
+      conversations={conversations}
+      shorts={shorts}
+      somatics={somatics}
+    />
+  );
 }

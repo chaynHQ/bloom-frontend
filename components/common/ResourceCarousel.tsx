@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
-import { ShortsCard } from '../cards/ShortsCard';
+import { ResourceCard } from '../cards/ResourceCard';
 import Carousel, { CarouselItemContainer } from './Carousel';
 
 export interface ResourceCarouselProps {
@@ -48,7 +48,6 @@ const ResourceCarousel = ({
     setCarouselStories(
       filterResourcesForLocaleAndPartnerAccess(resources, locale, userPartners) || [],
     );
-    // }
   }, [userId, partnerAccesses, locale]);
 
   if (resources.length < 1 || carouselStories.length === 0) {
@@ -64,10 +63,21 @@ const ResourceCarousel = ({
         items={carouselStories.map((story, index) => {
           return (
             (story.content.component === 'resource_short_video' && (
-              <CarouselItemContainer customWidth={'260px'} key={index}>
-                <ShortsCard
+              <CarouselItemContainer customWidth={'280px'} key={index}>
+                <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+                  href={getDefaultFullSlug(story.full_slug, locale)}
+                  duration={story.content.duration}
+                  image={story.content.preview_image}
+                />
+              </CarouselItemContainer>
+            )) ||
+            (story.content.component === 'resource_single_video' && (
+              <CarouselItemContainer customWidth={'280px'} key={index}>
+                <ResourceCard
+                  title={story.content.name}
+                  category={RESOURCE_CATEGORIES.SINGLE_VIDEO}
                   href={getDefaultFullSlug(story.full_slug, locale)}
                   duration={story.content.duration}
                   image={story.content.preview_image}

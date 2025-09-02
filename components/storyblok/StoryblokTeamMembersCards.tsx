@@ -8,8 +8,8 @@ import StoryblokTeamMemberCard, { StoryblokTeamMemberCardProps } from './Storybl
 const cardColumnStyle = {
   ...columnStyle,
   justifyContent: 'flex-start',
-  width: { xs: '100%', sm: 'calc(50% - 1rem)' },
-  gap: { xs: 0, sm: 2, md: 4 },
+  width: { xs: '100%', md: 'calc(50% - 1rem)' },
+  gap: { xs: 0, md: 4 },
 } as const;
 
 const cardColumnRowStyle = {

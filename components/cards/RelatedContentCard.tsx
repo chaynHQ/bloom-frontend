@@ -12,6 +12,7 @@ import { useTranslations } from 'next-intl';
 const cardStyle = {
   mt: 0,
   width: '100%',
+  minWidth: { xs: '100%', md: '17rem' },
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
 } as const;
@@ -19,7 +20,6 @@ const cardStyle = {
 const categoryStyle = {
   fontFamily: 'Montserrat, sans-serif',
   fontSize: '0.875rem !important',
-  fontweight: 500,
   textTransform: 'uppercase',
   mb: '0.5rem !important',
   '& .before-dot:before': {
@@ -30,8 +30,9 @@ const categoryStyle = {
 } as const;
 
 const cardContentStyle = {
-  minHeight: 200,
-  padding: ['24px !important', '24px !important', '36px !important'],
+  minHeight: { xs: 160, md: 190 },
+  paddingY: { xs: '1.5rem', md: '2rem !important' },
+  paddingX: { xs: '1.5rem', md: '1.75rem !important' },
 } as const;
 
 interface RelatedContentProps {
@@ -48,7 +49,7 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  const t = useTranslations('Shared.relatedContent');
+  const t = useTranslations('Resources.relatedContent');
   const handleClick = () => {
     logEvent(RELATED_CONTENT_CARD_CLICK, eventUserData);
   };
@@ -63,7 +64,7 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
         }}
       >
         <CardContent sx={cardContentStyle}>
-          <Box position="relative" width="100%" paddingRight={3}>
+          <Box position="relative" width="100%" paddingRight={1}>
             <Box>
               <Typography sx={categoryStyle}>
                 {t(category)}

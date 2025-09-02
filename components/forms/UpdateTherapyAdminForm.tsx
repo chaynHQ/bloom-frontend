@@ -228,23 +228,19 @@ const TherapySessionField = ({
   const therapySessionsTotal = therapySessionsRedeemed + therapySessionsRemaining;
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography variant="caption">{email}</Typography>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid size={6}>
         <Typography> {t('therapySessionsRedeemed')}: </Typography>
       </Grid>
-      <Grid item xs={6}>
-        {therapySessionsRedeemed}
-      </Grid>
-      <Grid item xs={6}>
+      <Grid size={6}>{therapySessionsRedeemed}</Grid>
+      <Grid size={6}>
         <Typography> {t('therapySessionsTotal')}: </Typography>
       </Grid>
-      <Grid item xs={6}>
-        {therapySessionsTotal + therapySessionAdjustmentValue}
-      </Grid>
-      <Grid item xs={12}>
+      <Grid size={6}>{therapySessionsTotal + therapySessionAdjustmentValue}</Grid>
+      <Grid size={12}>
         <IconButton onClick={onRemove} aria-label="delete">
           <RemoveIcon />
         </IconButton>

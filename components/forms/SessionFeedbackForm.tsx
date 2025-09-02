@@ -33,7 +33,13 @@ const fieldBoxStyle: SxProps<Theme> = {
 };
 
 const radioGroupStyle = {
+  width: '100%',
   padding: '20px 0px',
+  label: {
+    margin: 0,
+    padding: 1,
+    width: { xs: '50%', sm: '33%', md: '16.5%' },
+  },
 } as const;
 
 interface SessionFeedbackFormProps {
