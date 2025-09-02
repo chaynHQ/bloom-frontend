@@ -102,6 +102,7 @@ export interface StoryblokTeamMemberCardProps {
   show_short_bio: boolean;
   hide_languages: boolean;
   website: { url: string };
+  website_title: string;
   team_page_section: 'core' | 'somatics' | 'supporting';
   cardExpandable?: boolean;
 }
@@ -119,6 +120,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
     show_short_bio,
     hide_languages,
     website,
+    website_title,
     team_page_section,
     cardExpandable = false,
   } = props;
@@ -130,8 +132,9 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
     setExpanded(!expanded);
   };
 
-  const websiteUrl = useMemo(() => {
+  const websiteTitle = useMemo(() => {
     if (!website || !website.url) return undefined;
+    if (website_title) return website_title;
     let url = website.url.endsWith('/') ? website.url.slice(0, -1) : website.url;
     return url.replace('https://', '').replace('www.', '');
   }, [website]);
@@ -190,7 +193,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               <Box sx={{ ...iconRowStyles, ...fadeOut }}>
                 <LanguageIcon color="error" sx={iconStyles} />
                 <Link variant="body2" href={website.url} sx={{ textDecoration: 'none' }}>
-                  {websiteUrl}
+                  {websiteTitle}
                 </Link>
               </Box>
             )}
@@ -220,8 +223,9 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             </Link>
           )}
           {!show_short_bio && website?.url && (
-            <Link href={website.url} mt={2} display="block">
-              {websiteUrl}
+            <Link href={website.url} target="_blank" sx={{ ...iconRowStyles, mt: 2, mb: 0 }}>
+              <LanguageIcon color="error" />
+              {websiteTitle}
             </Link>
           )}
         </CardContent>
