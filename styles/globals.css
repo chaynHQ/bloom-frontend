@@ -35,14 +35,23 @@ ol {
   padding-left: 1.75rem;
 }
 
-h1 > b,
-h2 > b,
-h3 > b,
-h1 > span,
-h2 > span,
-h3 > span {
+h1 b,
+h2 b,
+h3 b,
+h1 span,
+h2 span,
+h3 span,
+h1 b span,
+h2 b span,
+h3 b span {
   font-weight: 400;
   color: #000 !important;
+}
+
+h1 br,
+h2 br,
+h3 br {
+  display: none;
 }
 
 p > b,

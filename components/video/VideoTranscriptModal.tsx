@@ -12,10 +12,10 @@ import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 const modalStyle = {
   position: 'absolute',
   top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: { xs: 'calc(100vw - 2rem)', sm: '90%' },
-  maxWidth: '1000px',
+  right: { xs: 0, sm: 'unset' },
+  left: { xs: 'unset', sm: '50%' },
+  transform: { xs: 'translate(0, -50%)', sm: 'translate(-50%, -50%)' },
+  width: { xs: 'calc(100vw - 1rem)', sm: '90%', md: 800 },
   maxHeight: '75vh',
   overflowY: 'scroll',
   borderTopLeftRadius: 30,
@@ -24,10 +24,9 @@ const modalStyle = {
 } as const;
 
 const modalContentStyle = {
-  maxWidth: 800,
   margin: 'auto',
-  paddingX: { xs: 2, sm: 4 },
-  paddingY: { xs: 4, sm: 6 },
+  paddingX: { xs: 4, sm: 6 },
+  paddingY: { xs: 6, sm: 8 },
 } as const;
 
 const closeModalStyle = {
@@ -51,7 +50,7 @@ const screenReaderOnly = {
 } as const;
 
 interface TranscriptModalProps {
-  videoName: string;
+  title: string;
   content: StoryblokRichtext;
   references?: StoryblokReferenceProps[];
   openTranscriptModal: boolean | null;
@@ -59,7 +58,7 @@ interface TranscriptModalProps {
 }
 
 const VideoTranscriptModal = (props: TranscriptModalProps) => {
-  const { videoName, content, references, openTranscriptModal, setOpenTranscriptModal } = props;
+  const { title, content, references, openTranscriptModal, setOpenTranscriptModal } = props;
 
   const [books, setBooks] = useState<StoryblokReferenceProps[]>([]);
   const [videoPractices, setVideoPractices] = useState<StoryblokReferenceProps[]>([]);
@@ -97,12 +96,9 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
           {tS('videoTranscript.closeModal')}
         </Button>
         <Box sx={modalContentStyle}>
-          <Typography id="modal-title" component="h2" variant="h2" sx={screenReaderOnly}>
-            {tS('videoTranscript.title')}
-          </Typography>
-          <Typography id="modal-description" fontStyle="italic" sx={screenReaderOnly}>
-            {tS('videoTranscript.description')}
-            {videoName}
+          <Typography sx={screenReaderOnly}>{tS('videoTranscript.title')}</Typography>
+          <Typography id="modal-title" component="h2" variant="h1">
+            {title}
           </Typography>
           <Box>{render(content, RichTextOptions)}</Box>
           {references && (
