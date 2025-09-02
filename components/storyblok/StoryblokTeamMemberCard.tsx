@@ -20,7 +20,6 @@ const cardStyle = {
   alignSelf: 'flex-start',
   width: '100%',
   maxWidth: 550,
-  backgroundColor: 'background.default',
 } as const;
 
 const cardContentStyle = {
@@ -39,6 +38,13 @@ const cardHeaderStyle = {
   overflow: 'hidden',
   ' p': {
     mx: '0 !important',
+  },
+  ':hover': {
+    a: {
+      ':after': {
+        background: 'linear-gradient(90deg,rgba(254, 246, 242, 0) 0%, rgba(249, 237, 237, 1) 100%)',
+      },
+    },
   },
 } as const;
 
@@ -89,7 +95,14 @@ const iconStyles = {
 const expandButtonContainerStyles = {
   textAlign: 'right',
   mt: 'auto',
-};
+} as const;
+
+const websiteHeaderLinkStyle = {
+  textDecoration: 'none',
+  ':hover': {
+    textDecoration: 'underline',
+  },
+} as const;
 
 export interface StoryblokTeamMemberCardProps {
   _uid: string;
@@ -191,9 +204,14 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               </Box>
             )}
             {show_short_bio && website?.url && (
-              <Box sx={{ ...iconRowStyles, ...fadeOut }}>
+              <Box sx={{ ...iconRowStyles }}>
                 <LinkIcon color="error" sx={iconStyles} />
-                <Link variant="body2" href={website.url} sx={{ textDecoration: 'none' }}>
+                <Link
+                  id="website-link"
+                  variant="body2"
+                  href={website.url}
+                  sx={{ ...websiteHeaderLinkStyle, ...fadeOut }}
+                >
                   {websiteTitle}
                 </Link>
               </Box>

@@ -1,6 +1,5 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import {
   LANGUAGES,
@@ -197,8 +196,6 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
         relatedExercises={related_exercises}
         userContentPartners={getContentPartners}
       />
-
-      {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };

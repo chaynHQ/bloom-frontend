@@ -1,6 +1,5 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
@@ -161,7 +160,6 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           userId,
         )}
       />
-      {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };
