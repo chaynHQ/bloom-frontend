@@ -38,11 +38,17 @@ const closeModalStyle = {
   borderBottomLeftRadius: 20,
 } as const;
 
-const transcriptDescriptionStyle = {
-  '&:last-of-type': {
-    marginBottom: '1em',
-  },
-};
+const screenReaderOnly = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: '0',
+  margin: '1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: '0',
+} as const;
 
 interface TranscriptModalProps {
   videoName: string;
@@ -89,10 +95,10 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
           {tS('videoTranscript.closeModal')}
         </Button>
         <Box sx={modalContentStyle}>
-          <Typography id="modal-title" component="h2" variant="h2">
+          <Typography id="modal-title" component="h2" variant="h2" sx={screenReaderOnly}>
             {tS('videoTranscript.title')}
           </Typography>
-          <Typography id="modal-description" fontStyle="italic" sx={transcriptDescriptionStyle}>
+          <Typography id="modal-description" fontStyle="italic" sx={screenReaderOnly}>
             {tS('videoTranscript.description')}
             {videoName}
           </Typography>
