@@ -70,7 +70,7 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
         references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
       );
     }
-  }, []);
+  }, [references]);
 
   return (
     <Modal

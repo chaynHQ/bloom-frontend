@@ -99,7 +99,7 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   const nextResourceHref = useMemo(() => {
     const nextResourceSlug = related_content[0]?.full_slug;
     return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
-  }, []);
+  }, [related_content]);
 
   const eventData = useMemo(() => {
     return {
