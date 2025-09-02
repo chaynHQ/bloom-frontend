@@ -45,6 +45,11 @@ h3 > span {
   color: #000 !important;
 }
 
+p > b,
+span > b {
+  font-weight: 500;
+}
+
 p:only-child,
 ol:only-child,
 ul:only-child {

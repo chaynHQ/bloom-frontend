@@ -51,7 +51,12 @@ export const RichTextOptions: RenderOptions = {
     [NODE_HEADING]: (children: ReactNode | null, { level }) => {
       const headerLevel = level === 1 ? 'h1' : level === 2 ? 'h2' : level === 3 ? 'h3' : 'h4';
       return (
-        <Typography variant={headerLevel} component={headerLevel} maxWidth={800}>
+        <Typography
+          variant={headerLevel}
+          component={headerLevel}
+          maxWidth={800}
+          sx={{ mt: 5, ':first-child': { mt: 0 } }}
+        >
           {children}
         </Typography>
       );
