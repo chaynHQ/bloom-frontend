@@ -8,7 +8,6 @@ import { SessionChat } from '@/components/session/SessionChat';
 import { SessionCompleteButton } from '@/components/session/SessionCompleteButton';
 import { SessionHeader } from '@/components/session/SessionHeader';
 import { SessionVideo } from '@/components/session/SessionVideo';
-import { Link as i18nLink } from '@/i18n/routing';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -129,32 +128,14 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
       partnerAdmin,
     );
     setUserAccess(userHasAccess);
-  }, [
-    isAlternateSessionPage,
-    partnerAccesses,
-    course.content.included_for_partners,
-    isLoggedIn,
-    partnerAdmin,
-  ]);
+  }, [partnerAccesses, course.content.included_for_partners, isLoggedIn, partnerAdmin]);
 
   useEffect(() => {
     getSessionCompletion(course, courses || [], storyUuid, setSessionProgress, setSessionId);
   }, [courses, course, storyUuid]);
 
   if (userAccess === undefined) return <LoadingContainer />;
-  if (!userAccess)
-    return (
-      <ContentUnavailable
-        title={t('accessGuard.title')}
-        message={t.rich('accessGuard.introduction', {
-          contactLink: (children) => (
-            <Link component={i18nLink} href="/courses">
-              {children}
-            </Link>
-          ),
-        })}
-      />
-    );
+  if (!userAccess) return <ContentUnavailable />;
 
   return (
     <Box

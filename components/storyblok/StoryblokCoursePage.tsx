@@ -5,7 +5,6 @@ import SessionCard from '@/components/cards/SessionCard';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
-import { Link as i18nLink } from '@/i18n/routing';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
@@ -14,7 +13,7 @@ import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -113,18 +112,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   if (userAccess === undefined) return <LoadingContainer />;
 
   if (!userAccess) {
-    return (
-      <ContentUnavailable
-        title={t('accessGuard.title')}
-        message={t.rich('accessGuard.introduction', {
-          contactLink: (children) => (
-            <Link component={i18nLink} href="/courses">
-              {children}
-            </Link>
-          ),
-        })}
-      />
-    );
+    return <ContentUnavailable />;
   }
 
   return (

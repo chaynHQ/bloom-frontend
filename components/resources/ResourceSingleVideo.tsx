@@ -5,14 +5,14 @@ import VideoTranscriptModal from '@/components/video/VideoTranscriptModal';
 import { useCompleteResourceMutation, useStartResourceMutation } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import {
-  RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
-  RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
-  RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
-  RESOURCE_SHORT_VIDEO_STARTED_ERROR,
-  RESOURCE_SHORT_VIDEO_STARTED_REQUEST,
-  RESOURCE_SHORT_VIDEO_STARTED_SUCCESS,
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_ERROR,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_REQUEST,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_SUCCESS,
+  RESOURCE_SINGLE_VIDEO_STARTED_ERROR,
+  RESOURCE_SINGLE_VIDEO_STARTED_REQUEST,
+  RESOURCE_SINGLE_VIDEO_STARTED_SUCCESS,
+  RESOURCE_SINGLE_VIDEO_TRANSCRIPT_CLOSED,
+  RESOURCE_SINGLE_VIDEO_TRANSCRIPT_OPENED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
@@ -21,91 +21,94 @@ import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 
-interface ResourceShortVideoProps {
+interface ResourceSingleVideoProps {
   eventData: { [key: string]: any };
   resourceProgress: PROGRESS_STATUS;
   name: string;
+  references: StoryblokReferenceProps[];
   storyUuid: string;
   video: { url: string };
   video_transcript: StoryblokRichtext;
 }
 
-export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
-  const { eventData, storyUuid, resourceProgress, name, video_transcript, video } = props;
+export const ResourceSingleVideo = (props: ResourceSingleVideoProps) => {
+  const { eventData, storyUuid, resourceProgress, name, references, video_transcript, video } =
+    props;
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
-  const [startResourceShort] = useStartResourceMutation();
-  const [completeResourceShort] = useCompleteResourceMutation();
+  const [startResourceVideo] = useStartResourceMutation();
+  const [completeResourceVideo] = useCompleteResourceMutation();
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const rollbar = useRollbar();
 
   const t = useTranslations('Resources');
 
-  const callStartResourceShort = useCallback(async () => {
-    logEvent(RESOURCE_SHORT_VIDEO_STARTED_REQUEST, eventData);
+  const callStartResourceVideo = useCallback(async () => {
+    logEvent(RESOURCE_SINGLE_VIDEO_STARTED_REQUEST, eventData);
 
-    const startResourceShortResponse = await startResourceShort({
+    const startResourceVideoResponse = await startResourceVideo({
       storyblokUuid: storyUuid,
     });
 
-    if (startResourceShortResponse.data) {
-      logEvent(RESOURCE_SHORT_VIDEO_STARTED_SUCCESS, eventData);
+    if (startResourceVideoResponse.data) {
+      logEvent(RESOURCE_SINGLE_VIDEO_STARTED_SUCCESS, eventData);
     }
 
-    if (startResourceShortResponse.error) {
-      const error = startResourceShortResponse.error;
+    if (startResourceVideoResponse.error) {
+      const error = startResourceVideoResponse.error;
 
-      logEvent(RESOURCE_SHORT_VIDEO_STARTED_ERROR, eventData);
-      rollbar.error('ResourceShort started error', error);
+      logEvent(RESOURCE_SINGLE_VIDEO_STARTED_ERROR, eventData);
+      rollbar.error('ResourceSingleVideo started error', error);
 
       throw error;
     }
-  }, [startResourceShort, eventData, storyUuid, rollbar]);
+  }, [startResourceVideo, eventData, storyUuid, rollbar]);
 
-  const callCompleteResourceShort = useCallback(async () => {
-    logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST, eventData);
+  const callCompleteResourceVideo = useCallback(async () => {
+    logEvent(RESOURCE_SINGLE_VIDEO_COMPLETE_REQUEST, eventData);
 
-    const completeResourceShortResponse = await completeResourceShort({
+    const completeResourceVideoResponse = await completeResourceVideo({
       storyblokUuid: storyUuid,
     });
 
-    if (completeResourceShortResponse.data) {
-      logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS, eventData);
+    if (completeResourceVideoResponse.data) {
+      logEvent(RESOURCE_SINGLE_VIDEO_COMPLETE_SUCCESS, eventData);
     }
 
-    if (completeResourceShortResponse.error) {
-      const error = completeResourceShortResponse.error;
+    if (completeResourceVideoResponse.error) {
+      const error = completeResourceVideoResponse.error;
 
-      logEvent(RESOURCE_SHORT_VIDEO_COMPLETE_ERROR, eventData);
-      rollbar.error('ResourceShort completed error', error);
+      logEvent(RESOURCE_SINGLE_VIDEO_COMPLETE_ERROR, eventData);
+      rollbar.error('ResourceSingleVideo completed error', error);
 
       throw error;
     }
-  }, [completeResourceShort, eventData, storyUuid, rollbar]);
+  }, [completeResourceVideo, eventData, storyUuid, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
 
     logEvent(
       openTranscriptModal
-        ? RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED
-        : RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
+        ? RESOURCE_SINGLE_VIDEO_TRANSCRIPT_OPENED
+        : RESOURCE_SINGLE_VIDEO_TRANSCRIPT_CLOSED,
       eventData,
     );
     if (isLoggedIn && openTranscriptModal && resourceProgress === PROGRESS_STATUS.NOT_STARTED) {
-      callStartResourceShort();
+      callStartResourceVideo();
     }
-  }, [callStartResourceShort, openTranscriptModal, eventData, name, resourceProgress, isLoggedIn]);
+  }, [callStartResourceVideo, openTranscriptModal, eventData, name, resourceProgress, isLoggedIn]);
 
   const videoStarted = () => {
     if (isLoggedIn && resourceProgress === PROGRESS_STATUS.NOT_STARTED) {
-      callStartResourceShort();
+      callStartResourceVideo();
     }
   };
 
   const videoFinished = () => {
     if (isLoggedIn && resourceProgress !== PROGRESS_STATUS.COMPLETED) {
-      callCompleteResourceShort();
+      callCompleteResourceVideo();
     }
   };
 
@@ -117,7 +120,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
           setVideoStarted={videoStarted}
           setVideoFinished={videoFinished}
           eventData={eventData}
-          eventPrefix="RESOURCE_SHORT"
+          eventPrefix="RESOURCE_SINGLE_VIDEO"
           autoplay={true}
           lightMode={true}
         />
@@ -131,6 +134,7 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
         <VideoTranscriptModal
           title={name}
           content={video_transcript}
+          references={references.filter((r) => !r.is_key_reference)}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />

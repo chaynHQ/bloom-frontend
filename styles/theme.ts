@@ -51,7 +51,8 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
       fontWeight: 400,
-      marginBottom: '1.75rem',
+      marginBottom: '1.5rem',
+      lineHeight: 1.4,
     },
     h2: {
       fontFamily: 'var(--font-montserrat)',
@@ -63,6 +64,7 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '1.375rem',
       marginBottom: '1rem',
+      fontWeight: 400,
       lineHeight: 1.4,
     },
     h4: {
@@ -77,16 +79,10 @@ let theme = createTheme({
     body1: {
       fontSize: '1rem',
       lineHeight: 1.5,
-      '@media (min-width:1200px)': {
-        fontSize: '1.125rem',
-      },
     },
     body2: {
       fontSize: '0.875rem',
       lineHeight: 1.5,
-      '@media (min-width:1200px)': {
-        fontSize: '1rem',
-      },
     },
   },
 });
@@ -165,7 +161,6 @@ theme = createTheme(theme, {
           },
           button: {
             color: '#000000',
-            fontSize: '1.125rem',
             '&:hover': {
               backgroundColor: lighten(theme.palette.secondary.main, 0.1),
             },
@@ -327,11 +322,9 @@ theme = createTheme(theme, {
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: theme.palette.common.white,
+          backgroundColor: theme.palette.background.default,
           boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
           marginTop: 20,
-
-          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             marginTop: 0,
@@ -339,13 +332,12 @@ theme = createTheme(theme, {
         },
       },
     },
+
     MuiCardContent: {
       styleOverrides: {
         root: {
-          backgroundColor: theme.palette.background.default,
           padding: 24,
           paddingTop: 30,
-          '&:hover': { backgroundColor: theme.palette.common.white },
 
           [theme.breakpoints.up('md')]: {
             padding: 40,
@@ -360,9 +352,11 @@ theme = createTheme(theme, {
     MuiCardActionArea: {
       styleOverrides: {
         root: {
+          backgroundColor: theme.palette.background.default,
+          '&:hover': { backgroundColor: theme.palette.common.white },
+          '.Mui-disabled &:hover': { backgroundColor: theme.palette.common.white },
           '& .MuiTouchRipple-root span': {
-            backgroundColor: theme.palette.primary.main,
-            opacity: 0.4,
+            display: 'none',
           },
         },
         focusHighlight: {

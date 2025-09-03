@@ -4,7 +4,6 @@ import { PWA_DESKTOP_BANNER_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import usePWA from '@/lib/hooks/usePwa';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import { rowStyle } from '@/styles/common';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Button, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -36,29 +35,23 @@ export const DesktopPwaBanner = () => {
   if (isSmallScreen || bannerState === 'Hidden') return null;
 
   const bannerStyle = {
-    ...rowStyle,
     position: 'fixed',
     zIndex: 1000,
-    px: 2,
-    py: 1.5,
-    maxWidth: { md: 720, lg: 800 },
-    minWidth: { md: 640, lg: 800 },
-    top: { md: 150, lg: 160 },
-    alignItems: 'center',
-    gap: 2,
-    justifyContent: bannerState === 'Generic' ? 'space-between' : 'flex-start',
+    p: 2.5,
+    width: 250,
+    right: { md: 16, lg: 80 },
+    bottom: { md: 16, lg: 40 },
     backgroundColor: 'common.white',
-    width: 'auto',
   } as const;
 
   return (
     <Paper elevation={1} sx={bannerStyle}>
-      <Typography variant="body2" sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" fontWeight={500}>
         {t(bannerState === 'Generic' ? 'mobileDescription' : 'iosDescription')}
       </Typography>
 
       {bannerState === 'Generic' ? (
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} mt={1.5} ml="auto">
           <Button
             onClick={declineInstallation}
             variant="outlined"

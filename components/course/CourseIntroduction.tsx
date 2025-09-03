@@ -81,7 +81,7 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           })}
         </Typography>
         <VideoTranscriptModal
-          videoName={name}
+          title={name}
           content={video_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}

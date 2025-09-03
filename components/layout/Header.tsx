@@ -29,9 +29,9 @@ const headerContainerStyle = {
   ...rowStyle,
   alignItems: 'flex-start',
   minHeight: { xs: 220, lg: 360 },
-  paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: '0', md: '6.5rem ' },
-  gap: 4,
+  paddingBottom: { xs: '1.5rem !important', md: '5rem !important' },
+  paddingTop: { xs: '2.5rem !important', md: '6.5rem !important' },
+  gap: { xs: 1, md: 4 },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
     md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
@@ -40,8 +40,8 @@ const headerContainerStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 200, sm: 150, md: 250 },
-  height: { xs: 200, sm: 150, md: 250 },
+  width: { xs: 150, md: 210 },
+  height: { xs: 150, md: 210 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: '1rem', md: '8%' },
   marginTop: 0,
@@ -117,7 +117,7 @@ const Header = (props: HeaderProps) => {
         </IconButton>
         {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>
-          <Typography variant="h1" component="h1" marginBottom={{ md: '2.5rem' }}>
+          <Typography variant="h1" component="h1">
             {title}
           </Typography>
           {getIntroduction()}
