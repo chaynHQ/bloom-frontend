@@ -4,16 +4,17 @@ import Header from '@/components/layout/Header';
 import { ResourceConversationAudio } from '@/components/resources/ResourceConversationAudio';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import { RichTextOptions } from '@/lib/utils/richText';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import { breadcrumbButtonStyle } from '@/styles/common';
+import { ArrowForward } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const audioContainerStyle = {
   mt: { xs: 4, md: 6 },
-  mb: 3,
 } as const;
 
 interface ResourceConversationHeaderProps {
@@ -24,6 +25,7 @@ interface ResourceConversationHeaderProps {
   resourceProgress: PROGRESS_STATUS;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
+  nextResourceHref: string | undefined;
   eventData: { [key: string]: any };
 }
 
@@ -36,6 +38,7 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
     resourceProgress,
     audio,
     audio_transcript,
+    nextResourceHref,
     eventData,
   } = props;
   const t = useTranslations('Resources');
@@ -56,6 +59,18 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
               audio_transcript={audio_transcript}
             />
           </Box>
+          {nextResourceHref && (
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: 'fit-content', ml: 'auto' }}
+              href={nextResourceHref}
+              endIcon={<ArrowForward />}
+              component={i18nLink}
+            >
+              {t(getNextResourceButtonLabel(nextResourceHref))}
+            </Button>
+          )}
         </Box>
       }
       imageSrc={header_image?.filename || illustrationCourses}

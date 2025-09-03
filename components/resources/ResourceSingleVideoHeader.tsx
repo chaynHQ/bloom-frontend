@@ -4,6 +4,7 @@ import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceSingleVideo } from '@/components/resources/ResourceSingleVideo';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS, STORYBLOK_TAGS } from '@/lib/constants/enums';
+import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
@@ -127,7 +128,7 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
                 endIcon={<ArrowForward />}
                 component={i18nLink}
               >
-                {t('nextVideoButtonLabel')}
+                {t(getNextResourceButtonLabel(nextResourceHref))}
               </Button>
             )}
           </Box>

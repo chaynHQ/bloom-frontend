@@ -125,6 +125,11 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
   }, []);
 
+  const nextResourceHref = useMemo(() => {
+    const nextResourceSlug = related_content[0]?.full_slug;
+    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
+  }, [related_content]);
+
   if (userAccess === undefined) return <LoadingContainer />;
   if (!userAccess) return <ContentUnavailable />;
 
@@ -154,6 +159,7 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
           relatedCourse: related_course,
           video,
           video_transcript,
+          nextResourceHref,
           eventData,
         }}
       />

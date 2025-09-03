@@ -109,6 +109,11 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
   }, []);
 
+  const nextResourceHref = useMemo(() => {
+    const nextResourceSlug = related_content[0]?.full_slug;
+    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
+  }, [related_content]);
+
   if (userAccess === undefined) return <LoadingContainer />;
   if (!userAccess) return <ContentUnavailable />;
 
@@ -135,6 +140,7 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           resourceProgress,
           audio,
           audio_transcript,
+          nextResourceHref,
           eventData,
         }}
       />
