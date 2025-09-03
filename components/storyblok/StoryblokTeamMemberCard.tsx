@@ -208,7 +208,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
                 {expanded ? (
                   <KeyboardArrowUp color="error" />
                 ) : (
-                  <KeyboardArrowDownIcon color="error" />
+                  <KeyboardArrowDownIcon data-testid="KeyboardArrowDownIcon" color="error" />
                 )}
               </Box>
             )}

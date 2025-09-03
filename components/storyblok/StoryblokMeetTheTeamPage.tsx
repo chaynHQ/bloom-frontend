@@ -10,7 +10,7 @@ import theme from '@/styles/theme';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import StoryblokPageSection, { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -76,37 +76,31 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
 
+  const coreSectionRef = useRef<HTMLDivElement>(null);
+  const somaticsSectionRef = useRef<HTMLDivElement>(null);
+  const supportingSectionRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     logEvent(MEET_THE_TEAM_VIEWED);
   }, []);
 
-  const setCoreSectionRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (sectionQueryParam === 'core' && node) {
-        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
-    },
-    [sectionQueryParam, headerOffset],
-  );
-  const setSomaticsSectionRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (sectionQueryParam === 'somatics' && node) {
-        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
-    },
-    [sectionQueryParam, headerOffset],
-  );
-  const setSupportingSectionRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (sectionQueryParam === 'supporting' && node) {
-        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
-    },
-    [sectionQueryParam, headerOffset],
-  );
+  useEffect(() => {
+    const sectionMap = {
+      core: coreSectionRef,
+      somatics: somaticsSectionRef,
+      supporting: supportingSectionRef,
+    };
+
+    const targetRef = sectionQueryParam
+      ? sectionMap[sectionQueryParam as keyof typeof sectionMap]
+      : null;
+
+    if (targetRef?.current) {
+      const scrollToY =
+        targetRef.current.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+    }
+  }, []);
 
   return (
     <Box
@@ -139,16 +133,15 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
       {page_section_1?.length > 0 && (
         <StoryblokPageSection {...page_section_1[0]} isLoggedIn={!!userId} />
       )}
-      <Container ref={setCoreSectionRef} sx={coreContainerStyle}>
+
+      {/* CHANGED: Apply the new refs */}
+      <Container ref={coreSectionRef} sx={coreContainerStyle}>
         <Typography variant="h2" component="h2">
           {core_team_title}
         </Typography>
-        {core_team_description &&
-          // this was clearly expecting a string in the code but it was causing an error because an object was coming through from storyblok.
-          // This is a patch to help with release but should be readdressed
-          typeof core_team_description === 'string' && (
-            <Typography maxWidth={650}>{core_team_description}</Typography>
-          )}
+        {core_team_description && typeof core_team_description === 'string' && (
+          <Typography maxWidth={650}>{core_team_description}</Typography>
+        )}
         <StoryblokTeamMembersCards team_member_items={core_team_members} cards_expandable={false} />
       </Container>
 
@@ -156,7 +149,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         <StoryblokPageSection {...page_section_2[0]} isLoggedIn={!!userId} />
       )}
 
-      <Container ref={setSomaticsSectionRef} sx={somaticsContainerStyle}>
+      {/* CHANGED: Apply the new refs */}
+      <Container ref={somaticsSectionRef} sx={somaticsContainerStyle}>
         <Typography variant="h2" component="h2">
           {somatics_team_title}
         </Typography>
@@ -169,7 +163,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         />
       </Container>
 
-      <Container ref={setSupportingSectionRef} sx={supportingContainerStyle}>
+      {/* CHANGED: Apply the new refs */}
+      <Container ref={supportingSectionRef} sx={supportingContainerStyle}>
         <Typography variant="h2" component="h2">
           {supporting_team_title}
         </Typography>
