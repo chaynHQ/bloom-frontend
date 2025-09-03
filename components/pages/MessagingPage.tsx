@@ -52,7 +52,7 @@ export default function MessagingPage({ story }: Props) {
       <Header {...headerProps} />
       {userId ? (
         <>
-          <Container sx={{ backgroundColor: 'secondary.light', pt: 2 }}>
+          <Container sx={{ backgroundColor: 'secondary.light', pt: 0 }}>
             <Typography variant="h2" sx={{ mb: { xs: 4, md: 8 } }}>
               {t('messageHeading')}
             </Typography>

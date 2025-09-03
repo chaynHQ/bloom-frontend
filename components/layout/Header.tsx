@@ -40,8 +40,8 @@ const headerContainerStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 150, md: 250 },
-  height: { xs: 150, md: 250 },
+  width: { xs: 150, md: 210 },
+  height: { xs: 150, md: 210 },
   marginLeft: { xs: 'auto', md: 0 },
   marginRight: { xs: '1rem', md: '8%' },
   marginTop: 0,
@@ -117,7 +117,7 @@ const Header = (props: HeaderProps) => {
         </IconButton>
         {children && <Box sx={childrenContentStyle}>{children}</Box>}
         <Box sx={textContentStyle}>
-          <Typography variant="h1" component="h1" marginBottom={{ md: '2.5rem' }}>
+          <Typography variant="h1" component="h1">
             {title}
           </Typography>
           {getIntroduction()}

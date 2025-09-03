@@ -102,7 +102,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
           key={`panel${i}`}
-          defaultExpanded={false}
+          defaultExpanded={accordionInUrl === ai.accordion_id}
           onChange={handleChange(ai.title)}
           sx={themes[theme]}
         >

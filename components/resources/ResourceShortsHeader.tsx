@@ -6,9 +6,11 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VISIT_SESSION } from '@/lib/constants/events';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import logEvent from '@/lib/utils/logEvent';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
+import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
@@ -36,6 +38,7 @@ interface ResourceShortHeaderProps {
   relatedCourse?: ISbStoryData;
   video: { url: string };
   video_transcript: StoryblokRichtext;
+  nextResourceHref: string | undefined;
   eventData: { [key: string]: any };
 }
 
@@ -48,6 +51,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
     resourceProgress,
     video,
     video_transcript,
+    nextResourceHref,
     eventData,
   } = props;
   const t = useTranslations('Resources');
@@ -131,6 +135,18 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               {t('sessionButtonLabel')}
             </Button>
           </Box>
+        )}
+        {!relatedCourse && !relatedSession && nextResourceHref && (
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{ width: 'fit-content' }}
+            href={nextResourceHref}
+            endIcon={<ArrowForward />}
+            component={i18nLink}
+          >
+            {t(getNextResourceButtonLabel(nextResourceHref))}
+          </Button>
         )}
       </Box>
     </Container>
