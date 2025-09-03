@@ -73,19 +73,6 @@ const iconRowStyles = {
   position: 'relative',
 } as const;
 
-const fadeOut = {
-  ':after': {
-    content: '""',
-    background: 'linear-gradient(90deg,rgba(254, 246, 242, 0) 0%, rgba(254, 246, 242, 1) 100%)',
-    opacity: 0.9,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    width: 20,
-    height: '100%',
-  },
-};
-
 const iconStyles = {
   mt: { xs: 0.25, md: 0 },
   width: { xs: 20, md: 24 },
@@ -136,7 +123,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
     website,
     website_title,
     team_page_section,
-    cardExpandable = false,
+    cardExpandable = true,
   } = props;
 
   const [expanded, setExpanded] = useState<boolean>(!cardExpandable);
@@ -204,13 +191,13 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
               </Box>
             )}
             {show_short_bio && website?.url && (
-              <Box sx={{ ...iconRowStyles }}>
+              <Box sx={iconRowStyles}>
                 <LinkIcon color="error" sx={iconStyles} />
                 <Link
                   id="website-link"
                   variant="body2"
                   href={website.url}
-                  sx={{ ...websiteHeaderLinkStyle, ...fadeOut }}
+                  sx={websiteHeaderLinkStyle}
                 >
                   {websiteTitle}
                 </Link>

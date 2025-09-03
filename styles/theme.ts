@@ -51,7 +51,8 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
       fontWeight: 400,
-      marginBottom: '1.75rem',
+      marginBottom: '1.5rem',
+      lineHeight: 1.4,
     },
     h2: {
       fontFamily: 'var(--font-montserrat)',
@@ -78,16 +79,10 @@ let theme = createTheme({
     body1: {
       fontSize: '1rem',
       lineHeight: 1.5,
-      '@media (min-width:1200px)': {
-        fontSize: '1.125rem',
-      },
     },
     body2: {
       fontSize: '0.875rem',
       lineHeight: 1.5,
-      '@media (min-width:1200px)': {
-        fontSize: '1rem',
-      },
     },
   },
 });

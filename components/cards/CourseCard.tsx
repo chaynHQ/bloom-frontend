@@ -75,8 +75,8 @@ const cardActionsStyle = {
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: 100, md: 100, lg: 120 },
-  height: { xs: 100, md: 100, lg: 120 },
+  width: 100,
+  height: 100,
 };
 
 interface CourseCardProps {
