@@ -69,10 +69,11 @@ export const ResourceCard = (props: ResourceCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent sx={cardContentStyle}>
-          <Box height="130px" position="relative" width="100%" overflow="hidden">
+          <Box height="140px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
               objectFit="cover"
+              objectPosition="top"
               fill
               alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
             />
