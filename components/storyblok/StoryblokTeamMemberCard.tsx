@@ -184,7 +184,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             </Typography>
             {!hide_languages && (
               <Box sx={iconRowStyles}>
-                <LanguageIcon color="error" sx={iconStyles} />
+                <LanguageIcon data-testid="LanguageIcon" color="error" sx={iconStyles} />
                 <Typography variant="body2" ml={0}>
                   {languages}
                 </Typography>

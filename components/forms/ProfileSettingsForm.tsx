@@ -121,7 +121,9 @@ const ProfileSettingsForm = () => {
           loading={isLoading}
           color="secondary"
           type="submit"
-          endIcon={isSuccess ? <CheckCircleOutlined /> : undefined}
+          endIcon={
+            isSuccess ? <CheckCircleOutlined data-testid="CheckCircleOutlinedIcon" /> : undefined
+          }
           disabled={isSuccess || !diffExists}
         >
           {t('profileSettings.submitLabel')}
