@@ -41,6 +41,7 @@ export const breadcrumbButtonStyle = {
   ':hover': {
     background: 'white',
   },
+  mt: { xs: -10, md: -20 },
 } as const;
 
 export const scaleTitleStyle = {

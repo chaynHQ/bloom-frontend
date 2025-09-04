@@ -16,7 +16,13 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-const headerStyle = { ...rowStyle, flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 5 } as const;
+const headerStyle = {
+  ...rowStyle,
+  flexWrap: { xs: 'wrap', md: 'no-wrap' },
+  gap: 5,
+  mt: { md: -2.5 },
+} as const;
+
 const headerRightStyle = {
   ...columnStyle,
   justifyContent: 'flex-end',
@@ -69,18 +75,19 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
         variant="contained"
-        sx={{ ...breadcrumbButtonStyle, mb: 4 }}
+        sx={breadcrumbButtonStyle}
         href="/courses?section=shorts"
         component={i18nLink}
         size="small"
       >
         {t('backToShorts')}
       </Button>
-      <Typography variant="h1" maxWidth={600}>
-        {name}
-      </Typography>
+
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>
+          <Typography variant="h1" maxWidth={600}>
+            {name}
+          </Typography>
           <ResourceShortVideo
             eventData={eventData}
             resourceProgress={resourceProgress}
