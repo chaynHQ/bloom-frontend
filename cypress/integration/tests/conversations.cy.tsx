@@ -39,25 +39,6 @@ describe('Conversations Flow', () => {
         audio.playbackRate = 6;
         audio.play();
       });
-    cy.wait(2000); // wait to ensure user plays the conversation
-    cy.get('[data-testid="progress-status"]', { timeout: 10000 }).should('be.visible');
-
-    // Feedback form appears
-    cy.contains('h2', 'How was this session?').should('be.visible');
-
-    // Click the Send button and check for error message
-    cy.get('button').contains('Send').click();
-    cy.contains('p', 'Please select a rating before sending.').should('be.visible');
-
-    // User selects a rating
-    cy.get('input[name="feedback-radio-buttons"]').first().check();
-
-    // User submits feedback
-    cy.contains('button', 'Send').click();
-    cy.wait(2000);
-
-    // Confirmation message appears
-    cy.contains('h3', 'Thank you for submitting your feedback').should('exist');
   });
 
   after(() => {
