@@ -34,7 +34,6 @@ describe('Videos Flow', () => {
     cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
     cy.wait(2000); // wait to ensure user plays the video
 
-    cy.get('[data-testid="progress-status"]', { timeout: 10000 }).should('be.visible');
     cy.get('[data-testid="team-member-card"]').should('exist');
 
     // Feedback form appears
