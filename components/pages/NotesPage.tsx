@@ -20,11 +20,11 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { backButtonStyle, backIconStyle } from '../layout/Header';
 
 const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: 0, md: '6.5rem ' },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
     md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
@@ -39,6 +39,7 @@ const headerContentStyle = {
   paddingBottom: { xs: 4, md: 6 },
   maxWidth: 1200,
   margin: '0 auto',
+  mt: { md: -2.5 },
 } as const;
 
 const textContentStyle = {
@@ -92,20 +93,6 @@ const phoneImageStyle = {
   flex: { md: 1 },
   display: 'flex',
   justifyContent: 'center',
-} as const;
-
-const backButtonStyle = {
-  display: { md: 'none' },
-  width: '2.5rem',
-  marginLeft: '-0.675rem',
-  marginY: { xs: 1.5, sm: 2 },
-  paddingRight: '1rem',
-} as const;
-
-const backIconStyle = {
-  height: '1.75rem',
-  width: '1.75rem',
-  color: 'primary.dark',
 } as const;
 
 interface Props {
