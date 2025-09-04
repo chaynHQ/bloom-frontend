@@ -117,16 +117,16 @@ theme = createTheme(theme, {
             paddingBottom: 100,
             paddingLeft: '2rem !important',
             paddingRight: '2rem !important',
+            ':first-of-type': {
+              paddingTop: 120,
+              paddingBottom: 120,
+            },
           },
           [theme.breakpoints.up('lg')]: {
             paddingTop: 120,
             paddingBottom: 120,
             paddingLeft: 'calc((100vw - 1000px) / 2) !important',
             paddingRight: 'calc((100vw - 1000px) / 2) !important',
-            ':first-of-type': {
-              paddingTop: 100,
-              paddingBottom: 100,
-            },
           },
         },
       },

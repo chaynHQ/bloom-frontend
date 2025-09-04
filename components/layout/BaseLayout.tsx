@@ -24,6 +24,7 @@ import { Montserrat, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode } from 'react';
+import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
 const openSans = Open_Sans({
@@ -88,6 +89,8 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     <script src="/deffer-pwa.js" async></script>
                     <TopBar />
                     <LeaveSiteButton />
+                    <DesktopPwaBanner />
+
                     <main>
                       <FruitzRetirementBanner />
 

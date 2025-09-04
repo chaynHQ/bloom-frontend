@@ -19,6 +19,7 @@ const headerStyle = {
   ...rowStyle,
   flexWrap: { xs: 'wrap', md: 'no-wrap' },
   gap: { xs: 3, md: 5 },
+  mt: { md: -2.5 },
 } as const;
 
 const headerLeftStyles = {
@@ -76,7 +77,7 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
         variant="contained"
-        sx={{ ...breadcrumbButtonStyle, mb: 4 }}
+        sx={breadcrumbButtonStyle}
         href={hasSomaticsTag ? '/courses?section=somatics' : '/courses'}
         component={i18nLink}
         size="small"

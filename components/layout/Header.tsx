@@ -6,13 +6,12 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { TextNode } from '@/lib/types/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { columnStyle, rowStyle } from '@/styles/common';
+import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 
 export interface HeaderProps {
   title: string;
@@ -26,19 +25,17 @@ export interface HeaderProps {
 }
 
 const headerContainerStyle = {
-  ...rowStyle,
-  alignItems: 'flex-start',
   minHeight: { xs: 220, lg: 360 },
   paddingBottom: { xs: '1.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: '2.5rem !important', md: '6.5rem !important' },
-  gap: { xs: 1, md: 4 },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
     md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
   },
 };
 
-const imageContainerStyle = {
+const headerStyle = { ...rowStyle, alignItems: 'flex-start', gap: { xs: 3, md: 4 } } as const;
+
+const rightHeaderStyle = {
   position: 'relative',
   width: { xs: 150, md: 210 },
   height: { xs: 150, md: 210 },
@@ -47,31 +44,22 @@ const imageContainerStyle = {
   marginTop: 0,
 } as const;
 
-const textContainerStyle = {
+const leftHeaderStyle = {
   ...columnStyle,
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
   maxWidth: { xs: '100%', sm: '80%', md: '55%' },
+  mt: { md: -2.5 },
 } as const;
 
-const childrenContentStyle = {
-  marginBottom: 4,
-} as const;
-
-const textContentStyle = {
-  marginTop: 'auto',
-  mb: 2,
-} as const;
-
-const backButtonStyle = {
+export const backButtonStyle = {
   display: { md: 'none' },
   width: '2.5rem',
-  marginLeft: '-0.675rem',
-  marginY: { xs: 1.5, sm: 2 },
-  paddingRight: '1rem',
+  height: '2.5rem',
+  ...breadcrumbButtonStyle,
 } as const;
 
-const backIconStyle = {
+export const backIconStyle = {
   height: '1.75rem',
   width: '1.75rem',
   color: 'primary.dark',
@@ -106,8 +94,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyle}>
-      <DesktopPwaBanner />
-      <Box sx={textContainerStyle}>
+      {!children && (
         <IconButton
           sx={backButtonStyle}
           onClick={() => router.back()}
@@ -115,26 +102,28 @@ const Header = (props: HeaderProps) => {
         >
           <KeyboardArrowLeftIcon sx={backIconStyle} />
         </IconButton>
-        {children && <Box sx={childrenContentStyle}>{children}</Box>}
-        <Box sx={textContentStyle}>
+      )}
+      {children && <>{children}</>}
+      <Box sx={headerStyle}>
+        <Box sx={leftHeaderStyle}>
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
           {getIntroduction()}
+          {progressStatus && <ProgressStatus status={progressStatus} />}
+          {cta && <Box mt={4}>{cta}</Box>}
         </Box>
-        {progressStatus && <ProgressStatus status={progressStatus} />}
-        {cta && <Box mt={4}>{cta}</Box>}
-      </Box>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={imageAltText}
-          src={imageSrc}
-          fill
-          sizes={getImageSizes(imageContainerStyle.width)}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
+        <Box sx={rightHeaderStyle}>
+          <Image
+            alt={imageAltText}
+            src={imageSrc}
+            fill
+            sizes={getImageSizes(rightHeaderStyle.width)}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
       </Box>
     </Container>
   );

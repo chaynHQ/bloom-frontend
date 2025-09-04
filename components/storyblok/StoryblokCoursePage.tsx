@@ -32,7 +32,7 @@ const sessionsContainerStyle = {
 const cardsContainerStyle = {
   ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
-  gap: 4,
+  gap: { xs: 0, md: 4 },
 } as const;
 
 export interface StoryblokCoursePageProps {

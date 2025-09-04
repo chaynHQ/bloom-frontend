@@ -15,11 +15,12 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const containerStyle = {
   ...rowStyle,
+  flexDirection: { xs: 'column', md: 'row' },
   gap: 5,
 } as const;
 
 const introductionContainerStyle = {
-  maxWidth: '50%',
+  maxWidth: { xs: '100%', md: '50%' },
   flex: 1,
 } as const;
 
