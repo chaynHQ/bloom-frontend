@@ -32,7 +32,7 @@ jobs:
       checks: write
       actions: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Audit URLs using Lighthouse
         id: lighthouseDesktop
         continue-on-error: true
@@ -64,7 +64,7 @@ jobs:
       checks: write
       actions: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Audit URLs using Lighthouse
         id: lighthouseMobile
         continue-on-error: true
