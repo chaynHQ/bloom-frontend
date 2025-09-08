@@ -22,7 +22,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/stale@v9 # https://github.com/actions/stale
+      - uses: actions/stale@v10 # https://github.com/actions/stale
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-label: 'stale'
