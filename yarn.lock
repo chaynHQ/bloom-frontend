@@ -2812,10 +2812,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@reduxjs/toolkit@^2.8.2":
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.8.2.tgz#f4e9f973c6fc930c1e0f3bf462cc95210c28f5f9"
-  integrity sha512-MYlOhQ0sLdw4ud48FoC5w0dH9VfWQjtCjreKwYTT3l+r427qYC5Y8PihNutepr8XrNaBUDQo9khWUwQxZaqt5A==
+"@reduxjs/toolkit@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.9.0.tgz#d4b12b90c27716a6a507193f8c3b2880729b97d5"
+  integrity sha512-fSfQlSRu9Z5yBkvsNhYF2rPS8cGXn/TZVrlwN1948QyZ8xMZ0JvP50S2acZNaf+o63u6aEeMjipFyksjIcWrog==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@standard-schema/utils" "^0.3.0"
@@ -2924,25 +2924,25 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@storyblok/js@4.2.5":
-  version "4.2.5"
-  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-4.2.5.tgz#e3d192c6e3c83fe54500c28095ef3a7e9c47f2ff"
-  integrity sha512-oeZPAzNcI3H43ak83S24E6d7Kf28rvBTAPv8sml3RVtwS7CesF6uySFp+Q3THyu+TzBYScxOwOIFYMsOLz6BkQ==
+"@storyblok/js@4.2.7":
+  version "4.2.7"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-4.2.7.tgz#98fb3e45cfe67067b38b12f7ed11a17060aaeecc"
+  integrity sha512-hIDgJcIqCyTh59Sd6K+wVi6UG62/h6OkVLpz5unCxyMKTvhcAnaut58NJYBCV7rFJCkFTKftNQ0NQSyyCvaw2g==
   dependencies:
-    "@storyblok/richtext" "3.7.0"
+    "@storyblok/richtext" "3.7.2"
     storyblok-js-client "7.1.4"
 
-"@storyblok/react@^5.0.0":
-  version "5.4.5"
-  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-5.4.5.tgz#86bd143d3fa58a1fb2a7e7536b5715b03cf9bcfa"
-  integrity sha512-pID7NlrVaOIXvifvjcYaryFW4IA5GBLC41O2bJkJT+G9JhttZjUGhdBQiVzfxfRBfh9W/m3SBlUkJdFkbvVhSw==
+"@storyblok/react@^5.4.8":
+  version "5.4.8"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-5.4.8.tgz#552d1716e448dff963a8994fdd22fc568329f923"
+  integrity sha512-jeIW13p9zku03VigcpJHJGUyjHb7UJ1PNm26rJnxpiya7UkZhlrvge/xvogFpuguc9N21URBtF6ZbhCSmaPpJw==
   dependencies:
-    "@storyblok/js" "4.2.5"
+    "@storyblok/js" "4.2.7"
 
-"@storyblok/richtext@3.7.0":
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/@storyblok/richtext/-/richtext-3.7.0.tgz#e8511560e5796af735197cb96791e7f5d96e1a64"
-  integrity sha512-TAk7v7RUMV2uL942AErdDjsInJB0HsKXJIZBIU+M8W014kf4xbF2Qg0b/WAHEf4jfnjdJpGEglLEktHe/tLmcw==
+"@storyblok/richtext@3.7.2":
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/@storyblok/richtext/-/richtext-3.7.2.tgz#fbd3184cfc80e312c34fc14f27e9f6e28d131d1d"
+  integrity sha512-w5HMqN85zmrHHOX7HteJ4aGeVEL33mtjDK2v5nwAMxEvU3jHJ5JqnYP6UKhNMtI7uu9WVXWDF12CBAkGZpczEg==
   dependencies:
     markdown-it "^14.1.0"
     markdown-it-github "^0.5.0"
@@ -3151,10 +3151,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.12.tgz#b5d76568485b02a307238270bfe96cb51ee2a044"
   integrity sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==
 
-"@types/react@19.1.4":
-  version "19.1.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.1.4.tgz#4d125f014d6ac26b4759775698db118701e314fe"
-  integrity sha512-EB1yiiYdvySuIITtD5lhW4yPyJ31RkJkkDw794LaQYrxCSaQV/47y5o1FMC4zF9ZyjUjzJMZwbovEnT5yHTW6g==
+"@types/react@19.1.12":
+  version "19.1.12"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.1.12.tgz#7bfaa76aabbb0b4fe0493c21a3a7a93d33e8937b"
+  integrity sha512-cMoR+FoAf/Jyq6+Df2/Z41jISvGZZ2eTlnsaJRptmZ76Caldwy1odD4xTr/gNV9VLj0AWgg/nmkevIyUfIIq5w==
   dependencies:
     csstype "^3.0.2"
 
@@ -7627,14 +7627,14 @@ newrelic@^12.20.0:
     "@newrelic/native-metrics" "^11.1.0"
     "@prisma/prisma-fmt-wasm" "^4.17.0-16.27eb2449f178cd9fe1a4b892d732cc4795f75085"
 
-next-intl@^4.1.0:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-4.3.5.tgz#bb0cde49cdfb16535ce1a6dcd023c60ee35267ed"
-  integrity sha512-tT3SltfpPOCAQ9kVNr+8t6FUtVf8G0WFlJcVc8zj4WCMfuF8XFk4gZCN/MtjgDgkUISw5aKamOClJB4EsV95WQ==
+next-intl@^4.3.6:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-4.3.6.tgz#f904783a6e5e14669d9d8c6a98493b47b2a36b52"
+  integrity sha512-CLKbucu4w9WyX7qqVe+AJSn6q8EYAci+uA0+j3O/fRNTfP0QyNdRvXUwwdf7ZhgLS48K68gn8y1X8QNSuljVTQ==
   dependencies:
     "@formatjs/intl-localematcher" "^0.5.4"
     negotiator "^1.0.0"
-    use-intl "^4.3.5"
+    use-intl "^4.3.6"
 
 next-pwa@^5.6.0:
   version "5.6.0"
@@ -8353,10 +8353,10 @@ react-cookie-consent@^9.0.0:
   dependencies:
     js-cookie "^2.2.1"
 
-react-dom@19.1.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.0.tgz#133558deca37fa1d682708df8904b25186793623"
-  integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
+react-dom@19.1.1:
+  version "19.1.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.1.tgz#2daa9ff7f3ae384aeb30e76d5ee38c046dc89893"
+  integrity sha512-Dlq/5LAZgF0Gaz6yiqZCf6VCcZs1ghAJyrsu84Q/GT0gV+mCxbfmKNoGRKBYMJ8IEdGPqu49YWXD02GCknEDkw==
   dependencies:
     scheduler "^0.26.0"
 
@@ -8419,10 +8419,10 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@19.1.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-19.1.0.tgz#926864b6c48da7627f004795d6cce50e90793b75"
-  integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==
+react@19.1.1:
+  version "19.1.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.1.1.tgz#06d9149ec5e083a67f9a1e39ce97b06a03b644af"
+  integrity sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ==
 
 readable-stream@^2.0.2, readable-stream@^2.2.2:
   version "2.3.8"
@@ -9795,10 +9795,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-intl@^4.3.5:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-4.3.5.tgz#4ee9b3c5bb34012bef5efbe20650b9478cdd1e1d"
-  integrity sha512-qyL1TZNesVbzj/75ZbYsi+xzNSiFqp5rIVsiAN0JT8rPMSjX0/3KQz76aJIrngI1/wIQdVYFVdImWh5yAv+dWA==
+use-intl@^4.3.6:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-4.3.6.tgz#176d8d00cac4aa3ed2c5a0fc75f96343d1af1790"
+  integrity sha512-MXB26v/U9JQimCHXWHPZAjqYGpOJf9aIGr6GeTzAemvHC0HecExVExp9LMhn1S8IY+O2OSoFzTSKHLknQSDKvw==
   dependencies:
     "@formatjs/fast-memoize" "^2.2.0"
     "@schummar/icu-type-parser" "1.21.5"
