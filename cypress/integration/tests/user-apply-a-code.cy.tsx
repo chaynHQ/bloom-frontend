@@ -32,7 +32,6 @@ describe('User apply a code page should display', () => {
     cy.get('p').should('contain', 'Read more about our partnerships by clicking on their logo.');
     cy.checkImage('Bumble logo', 'bumble_logo');
     cy.checkImage('Badoo logo', 'badoo_logo');
-    cy.checkImage('Fruitz logo', 'fruitz_logo');
   });
 
   it('apply a code panel', () => {
