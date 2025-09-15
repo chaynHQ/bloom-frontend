@@ -26,8 +26,8 @@ const CreatePartnerAdminForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedPartner, setSelectedPartner] = useState<string>('');
-  const [email, setEmail] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>('');
+  const [name, setName] = useState<string | null>('');
 
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [addPartnerAdmin] = useAddPartnerAdminMutation();

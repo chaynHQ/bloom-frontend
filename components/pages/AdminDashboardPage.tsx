@@ -4,12 +4,13 @@ import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
 import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
 import UpdateTherapyAdminForm from '@/components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '@/lib/constants/events';
+import { ADMIN_DASHBOARD_VIEWED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import UpdatePartnerActiveForm from '../forms/UpdatePartnerActiveForm';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -29,7 +30,7 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED);
+    logEvent(ADMIN_DASHBOARD_VIEWED);
   }, []);
 
   return (
@@ -71,9 +72,17 @@ export default function AdminDashboardPage() {
         <Card sx={cardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
-              {t('updatePartner.title')}
+              {t('updatePartnerAdmin.title')}
             </Typography>
             <UpdatePartnerAdminForm />
+          </CardContent>
+        </Card>
+        <Card sx={cardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t('updatePartner.title')}
+            </Typography>
+            <UpdatePartnerActiveForm />
           </CardContent>
         </Card>
       </Container>

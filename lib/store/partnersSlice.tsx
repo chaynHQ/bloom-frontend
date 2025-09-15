@@ -15,16 +15,14 @@ export interface PartnerFeature {
 }
 export interface Partner {
   id: string;
-  name: string; // rename to display name to show value is intended for display and can be upper case
+  name: string;
   partnerFeature: PartnerFeature[];
+  isActive: boolean;
 }
 const initialState: Partner[] = [];
 
 const mergeUserPartnerState = (partnerAccesses: PartnerAccess[]) => {
-  return partnerAccesses.map((partnerAccess) => {
-    const partner = partnerAccess.partner;
-    return { id: partner.id, name: partner.name, partnerFeature: partner.partnerFeature };
-  });
+  return partnerAccesses.map((partnerAccess) => partnerAccess.partner);
 };
 
 // This state slice stores all the Partner data the user has access to. Super admins can see all
@@ -56,6 +54,13 @@ const slice = createSlice({
         return partners.concat(payload);
       }
     });
+    builder.addMatcher(api.endpoints.updatePartnerActive.matchFulfilled, (state, { payload }) => {
+      if (payload) {
+        const partners = state.filter((p) => p.id !== payload.id);
+        // ensure list of partners is unique
+        return partners.concat(payload);
+      }
+    });
     builder.addMatcher(
       api.endpoints.getAutomaticAccessCodeFeatureForPartner.matchFulfilled,
       (state, { payload, meta }) => {
@@ -77,6 +82,7 @@ const slice = createSlice({
             id: payload.partnerId,
             name: partnerName,
             partnerFeature: [payload],
+            isActive: true,
           });
         }
       },
