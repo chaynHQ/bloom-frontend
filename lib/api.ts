@@ -237,10 +237,15 @@ export const api = createApi({
         body: { active },
       }),
     }),
-    createEventLog: builder.mutation<
-      EventLog,
-      { event: EVENT_LOG_NAME; metadata?: { title: string } }
-    >({
+
+    updatePartnerActive: builder.mutation<Partner, { id: string; active: boolean }>({
+      query: ({ id, active }) => ({
+        url: `partner/${id}`,
+        method: 'PATCH',
+        body: { active },
+      }),
+    }),
+    createEventLog: builder.mutation<EventLog, { event: EVENT_LOG_NAME }>({
       query(body) {
         return {
           url: 'event-logger',
@@ -322,6 +327,7 @@ export const {
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
   useUpdatePartnerAdminMutation,
+  useUpdatePartnerActiveMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
   useCreateResourceFeedbackMutation,

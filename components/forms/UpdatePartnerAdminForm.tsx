@@ -25,7 +25,7 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 const UpdatePartnerAdminForm = () => {
   const rollbar = useRollbar();
 
-  const t = useTranslations('Admin.updatePartner');
+  const t = useTranslations('Admin.updatePartnerAdmin');
   const dispatch: any = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,14 +45,16 @@ const UpdatePartnerAdminForm = () => {
       setAutocompleteSearchQueryIsLoading(true);
       const searchCriteria = {
         email: autocompleteSearchQuery,
-        partnerAdmin: true,
+        partnerAdmin: { partnerAdminId: 'IS NOT NULL' },
         include: ['partnerAdmin'],
         limit: 10,
       };
 
       const result = await dispatch(
         api.endpoints.getUsers.initiate(
-          { searchCriteria: JSON.stringify(searchCriteria) },
+          {
+            searchCriteria: JSON.stringify(searchCriteria),
+          },
           // We don't want this request cached as a user might use this request to check their updates have worked on the form
           { forceRefetch: true },
         ),
