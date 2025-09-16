@@ -14,6 +14,7 @@ export interface PartnerAccess {
   therapySessionsRemaining: number;
   therapySessionsRedeemed: number;
   partner: PartnerContent & Partner; // Note static import of partner as well as db
+  active: boolean;
 }
 
 export interface PartnerAccesses extends Array<PartnerAccess> {}

@@ -98,5 +98,5 @@ export const getPartnerContent = (partnerName: string) => {
 };
 
 export const getAllPartnersContent = () => {
-  return [bumbleContent, badooContent, fruitzContent];
+  return [bumbleContent, badooContent];
 };

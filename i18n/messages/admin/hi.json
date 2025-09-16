@@ -8,7 +8,7 @@
     "createPartnerAdmin": {
       "title": "Create an admin account",
       "description": "Admin accounts are able to generate therapy codes",
-      "partnerNameLabel": "Select the partner",
+      "partnerNameLabel": "Select partner",
       "submit": "Create admin account",
       "successDescription": "Partner Admin created! Email them to say they have an account and will need to use the 'Forgot password' flow to choose a password and be able to login for the first time.",
       "emailAddressLabel": "Email address",
@@ -18,7 +18,7 @@
     },
     "updateTherapy": {
       "title": "Update therapy sessions",
-      "emailLabel": "Type a user's email address",
+      "emailLabel": "Search by user email",
       "therapySessionsRedeemed": "Number of therapy sessions redeemed",
       "therapySessionsTotal": "Total number of therapy sessions",
       "submit": "Update therapy sessions",
@@ -26,14 +26,29 @@
       "error": "Error updating therapy sessions: ",
       "reset": "Update another user"
     },
-    "updatePartner": {
+    "updatePartnerAdmin": {
       "title": "Update partner admin",
-      "emailLabel": "Type at least 4 letters",
+      "emailLabel": "Search by admin email",
       "activeAdminLabel": "Partner admin is currently active",
       "successDescription": "Partner admin updated!",
       "formError": "Make sure you have selected a partner user",
       "error": "Error updating partner admin: ",
       "reset": "Update another partner admin"
+    },
+    "updatePartner": {
+      "title": "Update partner active status",
+      "activeLabel": "Deactivate {partner}",
+      "inactiveLabel": "Reactivate {partner}",
+      "partnerNameLabel": "Select partner",
+      "partnerActiveLabel": "Partner is active",
+      "successDescription": "{partner} successfully updated to {status}",
+      "inactiveDescription": "{partner} is currently inactive. Reactivating {partner} will restore the partner and all previous partner admins and users",
+      "activeDescription": "{partner} is currently active. Deactivating {partner} will also deactivate partner admins and users, making them public users. All partner data and user data will be retained and the partner can be reactivated later.",
+      "inactiveSuccess": "{partner} admins and partner users have also been updated and will now access Bloom as public users",
+      "activeSuccess": "Previous {partner} admins and partner users have also been updated and will now have access to Bloom as partner users",
+      "formError": "Make sure you have selected a partner",
+      "error": "Error updating partner active status: ",
+      "reset": "Reset form"
     }
   }
 }
