@@ -176,7 +176,7 @@ export const CarouselItemContainer = ({
             slidesPerScreen[2] || 1,
           ),
         }),
-  };
+  } as const;
 
   return <Box sx={carouselItemContainerStyle}>{children}</Box>;
 };
