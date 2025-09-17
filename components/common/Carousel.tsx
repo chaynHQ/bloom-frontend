@@ -52,6 +52,15 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
   if (totalPages < 2) return <></>;
 
+  const iconButtonStyle = {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.primary.dark,
+    },
+  };
+
   const getBackground = (index: number) =>
     currentPage === index
       ? theme.palette.primary.dark
@@ -108,17 +117,7 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
         </Box>
       </Box>
       <Box alignContent="center">
-        <IconButton
-          onClick={goForward}
-          sx={{
-            backgroundColor: theme.palette.primary.dark,
-            color: theme.palette.common.white,
-            '&:hover': {
-              backgroundColor: theme.palette.common.white,
-              color: theme.palette.primary.dark,
-            },
-          }}
-        >
+        <IconButton onClick={goForward} sx={iconButtonStyle}>
           <KeyboardArrowRight></KeyboardArrowRight>
         </IconButton>
       </Box>
@@ -130,16 +129,18 @@ const Carousel = (props: CarouselProps) => {
   const { items, title = 'carousel', theme = 'primary' } = props;
 
   return (
-    <NukaCarousel
-      id={title}
-      showDots={true}
-      swiping={true}
-      dots={<CustomDots carouselTheme={theme} />}
-      title={title}
-      scrollDistance={'screen'}
-    >
-      {items}
-    </NukaCarousel>
+    <Box sx={{ mx: -1 }}>
+      <NukaCarousel
+        id={title}
+        showDots={true}
+        swiping={true}
+        dots={<CustomDots carouselTheme={theme} />}
+        title={title}
+        scrollDistance={'screen'}
+      >
+        {items}
+      </NukaCarousel>
+    </Box>
   );
 };
 
@@ -158,30 +159,24 @@ type CarouselItemContainerProps = {
 export const CarouselItemContainer = ({
   children,
   slidesPerScreen = [1, 2, 3],
-  customPadding = 0.5,
+  customPadding = 1,
   customWidth,
 }: CarouselItemContainerProps) => {
-  return (
-    <Box
-      sx={{
-        boxSizing: 'border-box', // Ensure padding is included in width calculation
-        padding: customPadding,
-        display: 'inline-block',
-        ':first-of-type': {
-          paddingLeft: ['0 !important', '0 !important', '0 !important'],
-        },
-        ...(customWidth
-          ? { minWidth: customWidth, width: customWidth }
-          : {
-              ...getSlideWidth(
-                slidesPerScreen[0] || 1,
-                slidesPerScreen[1] || 1,
-                slidesPerScreen[2] || 1,
-              ),
-            }),
-      }}
-    >
-      {children}
-    </Box>
-  );
+  const carouselItemContainerStyle = {
+    boxSizing: 'border-box', // Ensure padding is included in width calculation
+    px: customPadding,
+    display: 'inline-block',
+
+    ...(customWidth
+      ? { minWidth: customWidth, width: customWidth }
+      : {
+          ...getSlideWidth(
+            slidesPerScreen[0] || 1,
+            slidesPerScreen[1] || 1,
+            slidesPerScreen[2] || 1,
+          ),
+        }),
+  } as const;
+
+  return <Box sx={carouselItemContainerStyle}>{children}</Box>;
 };

@@ -63,7 +63,7 @@ const ResourceCarousel = ({
         items={carouselStories.map((story, index) => {
           return (
             (story.content.component === 'resource_short_video' && (
-              <CarouselItemContainer customWidth={'280px'} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SHORT_VIDEO}
@@ -74,7 +74,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_single_video' && (
-              <CarouselItemContainer customWidth={'280px'} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SINGLE_VIDEO}
