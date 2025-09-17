@@ -52,6 +52,15 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
   if (totalPages < 2) return <></>;
 
+  const iconButtonStyle = {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.primary.dark,
+    },
+  };
+
   const getBackground = (index: number) =>
     currentPage === index
       ? theme.palette.primary.dark
@@ -108,17 +117,7 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
         </Box>
       </Box>
       <Box alignContent="center">
-        <IconButton
-          onClick={goForward}
-          sx={{
-            backgroundColor: theme.palette.primary.dark,
-            color: theme.palette.common.white,
-            '&:hover': {
-              backgroundColor: theme.palette.common.white,
-              color: theme.palette.primary.dark,
-            },
-          }}
-        >
+        <IconButton onClick={goForward} sx={iconButtonStyle}>
           <KeyboardArrowRight></KeyboardArrowRight>
         </IconButton>
       </Box>
@@ -151,37 +150,37 @@ export default Carousel;
 type CarouselItemContainerProps = {
   children: React.ReactNode;
   slidesPerScreen?: number[]; // [mobile, tablet, desktop]
-  customPadding?: number;
+  customMargin?: number;
   customWidth?: string | Array<string>;
 };
 
 export const CarouselItemContainer = ({
   children,
   slidesPerScreen = [1, 2, 3],
-  customPadding = 0.5,
+  customMargin = 0.75,
   customWidth,
 }: CarouselItemContainerProps) => {
-  return (
-    <Box
-      sx={{
-        boxSizing: 'border-box', // Ensure padding is included in width calculation
-        padding: customPadding,
-        display: 'inline-block',
-        ':first-of-type': {
-          paddingLeft: ['0 !important', '0 !important', '0 !important'],
-        },
-        ...(customWidth
-          ? { minWidth: customWidth, width: customWidth }
-          : {
-              ...getSlideWidth(
-                slidesPerScreen[0] || 1,
-                slidesPerScreen[1] || 1,
-                slidesPerScreen[2] || 1,
-              ),
-            }),
-      }}
-    >
-      {children}
-    </Box>
-  );
+  const carouselItemContainerStyle = {
+    boxSizing: 'border-box', // Ensure padding is included in width calculation
+    mx: customMargin,
+    display: 'inline-block',
+    ':first-of-type': {
+      ml: 0,
+    },
+    ':last-of-type': {
+      mr: 0,
+    },
+
+    ...(customWidth
+      ? { minWidth: customWidth, width: customWidth }
+      : {
+          ...getSlideWidth(
+            slidesPerScreen[0] || 1,
+            slidesPerScreen[1] || 1,
+            slidesPerScreen[2] || 1,
+          ),
+        }),
+  };
+
+  return <Box sx={carouselItemContainerStyle}>{children}</Box>;
 };

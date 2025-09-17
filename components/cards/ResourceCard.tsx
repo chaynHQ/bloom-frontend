@@ -7,9 +7,11 @@ import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
+export const resourceCardWidth = '276px';
+
 const cardStyle = {
   mt: 0,
-  width: '268px',
+  width: resourceCardWidth,
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
@@ -18,11 +20,12 @@ const cardStyle = {
   '&:hover .play-button': {
     transform: 'scale(1)',
   },
+  padding: '0 !important',
   flex: 0,
 } as const;
 
 const cardContentStyle = {
-  minHeight: 290,
+  minHeight: 315,
   padding: '0 !important',
 } as const;
 
