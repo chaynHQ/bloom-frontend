@@ -7,11 +7,12 @@ import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-export const resourceCardWidth = '276px';
+export const resourceCardWidth = '317px';
 
 const cardStyle = {
   mt: 0,
   width: resourceCardWidth,
+  minHeight: 340,
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
@@ -25,7 +26,6 @@ const cardStyle = {
 } as const;
 
 const cardContentStyle = {
-  minHeight: 315,
   padding: '0 !important',
 } as const;
 
@@ -72,7 +72,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent sx={cardContentStyle}>
-          <Box height="140px" position="relative" width="100%" overflow="hidden">
+          <Box height="170px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
               objectFit="cover"

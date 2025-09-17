@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
-import { ResourceCard, resourceCardWidth } from '../cards/ResourceCard';
+import { ResourceCard } from '../cards/ResourceCard';
 import Carousel, { CarouselItemContainer } from './Carousel';
 
 export interface ResourceCarouselProps {
@@ -63,7 +63,7 @@ const ResourceCarousel = ({
         items={carouselStories.map((story, index) => {
           return (
             (story.content.component === 'resource_short_video' && (
-              <CarouselItemContainer customWidth={resourceCardWidth} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SHORT_VIDEO}
@@ -74,7 +74,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_single_video' && (
-              <CarouselItemContainer customWidth={resourceCardWidth} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SINGLE_VIDEO}

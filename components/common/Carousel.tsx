@@ -129,16 +129,18 @@ const Carousel = (props: CarouselProps) => {
   const { items, title = 'carousel', theme = 'primary' } = props;
 
   return (
-    <NukaCarousel
-      id={title}
-      showDots={true}
-      swiping={true}
-      dots={<CustomDots carouselTheme={theme} />}
-      title={title}
-      scrollDistance={'screen'}
-    >
-      {items}
-    </NukaCarousel>
+    <Box sx={{ mx: -1 }}>
+      <NukaCarousel
+        id={title}
+        showDots={true}
+        swiping={true}
+        dots={<CustomDots carouselTheme={theme} />}
+        title={title}
+        scrollDistance={'screen'}
+      >
+        {items}
+      </NukaCarousel>
+    </Box>
   );
 };
 
@@ -150,26 +152,20 @@ export default Carousel;
 type CarouselItemContainerProps = {
   children: React.ReactNode;
   slidesPerScreen?: number[]; // [mobile, tablet, desktop]
-  customMargin?: number;
+  customPadding?: number;
   customWidth?: string | Array<string>;
 };
 
 export const CarouselItemContainer = ({
   children,
   slidesPerScreen = [1, 2, 3],
-  customMargin = 0.75,
+  customPadding = 1,
   customWidth,
 }: CarouselItemContainerProps) => {
   const carouselItemContainerStyle = {
     boxSizing: 'border-box', // Ensure padding is included in width calculation
-    mx: customMargin,
+    px: customPadding,
     display: 'inline-block',
-    ':first-of-type': {
-      ml: 0,
-    },
-    ':last-of-type': {
-      mr: 0,
-    },
 
     ...(customWidth
       ? { minWidth: customWidth, width: customWidth }
