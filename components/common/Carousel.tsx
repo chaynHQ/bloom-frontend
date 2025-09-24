@@ -47,8 +47,8 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
   // In the case that the scroll width is less than 1.5 times the screen width, it will round down the number of pages
   // and cause the dot count to be incorrect.
   // If you go into useMeasurements hook in nuka-carousel, you can see that it calculates the total pages and rounds down the number of pages.
-  // This is particularly an issue if you have 1.4 pages, this means the dots will not render!
-  // Deciding to park this issue for now as it needs a bug report to nuka-carousel.
+  // This requires a bug report to nuka-carousel
+  // In the meantime we do a workaround below `items.length % 3 === 2 &&` to add an extra slide when required
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
   if (totalPages < 2) return <></>;
 
@@ -128,6 +128,7 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
 const Carousel = (props: CarouselProps) => {
   const { items, title = 'carousel', theme = 'primary' } = props;
 
+  console.log('calc', items.length % 3 === 1);
   return (
     <Box sx={{ mx: -1 }}>
       <NukaCarousel
@@ -139,6 +140,11 @@ const Carousel = (props: CarouselProps) => {
         scrollDistance={'screen'}
       >
         {items}
+        {items.length % 3 === 1 && (
+          <CarouselItemContainer>
+            <></>
+          </CarouselItemContainer>
+        )}
       </NukaCarousel>
     </Box>
   );

@@ -51,7 +51,6 @@ const ResourceCarousel = ({
   }, [userId, partnerAccesses, locale]);
 
   if (resources.length < 1 || carouselStories.length === 0) {
-    console.error('ResourceCarousel: resources must be provided');
     return <div></div>;
   }
 
@@ -85,7 +84,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_conversation' && (
-              <CarouselItemContainer slidesPerScreen={[1, 2, 3]} key={index}>
+              <CarouselItemContainer key={index}>
                 <RelatedContentCard
                   title={story.name}
                   href={getDefaultFullSlug(story.full_slug, locale)}

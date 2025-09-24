@@ -7,12 +7,12 @@ import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-export const resourceCardWidth = '317px';
-
 const cardStyle = {
-  mt: 0,
-  width: resourceCardWidth,
+  width: { xs: '100%' },
+  maxWidth: { xs: '360px' },
   minHeight: 340,
+  mx: 'auto',
+  mt: 0,
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
