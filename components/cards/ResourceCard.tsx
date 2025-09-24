@@ -8,8 +8,11 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 const cardStyle = {
+  width: { xs: '100%' },
+  maxWidth: { xs: '360px' },
+  minHeight: 340,
+  mx: 'auto',
   mt: 0,
-  width: '268px',
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
@@ -18,11 +21,11 @@ const cardStyle = {
   '&:hover .play-button': {
     transform: 'scale(1)',
   },
+  padding: '0 !important',
   flex: 0,
 } as const;
 
 const cardContentStyle = {
-  minHeight: 290,
   padding: '0 !important',
 } as const;
 
@@ -69,7 +72,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent sx={cardContentStyle}>
-          <Box height="140px" position="relative" width="100%" overflow="hidden">
+          <Box height="170px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
               objectFit="cover"

@@ -51,7 +51,6 @@ const ResourceCarousel = ({
   }, [userId, partnerAccesses, locale]);
 
   if (resources.length < 1 || carouselStories.length === 0) {
-    console.error('ResourceCarousel: resources must be provided');
     return <div></div>;
   }
 
@@ -63,7 +62,7 @@ const ResourceCarousel = ({
         items={carouselStories.map((story, index) => {
           return (
             (story.content.component === 'resource_short_video' && (
-              <CarouselItemContainer customWidth={'280px'} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SHORT_VIDEO}
@@ -74,7 +73,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_single_video' && (
-              <CarouselItemContainer customWidth={'280px'} key={index}>
+              <CarouselItemContainer key={index}>
                 <ResourceCard
                   title={story.content.name}
                   category={RESOURCE_CATEGORIES.SINGLE_VIDEO}
@@ -85,7 +84,7 @@ const ResourceCarousel = ({
               </CarouselItemContainer>
             )) ||
             (story.content.component === 'resource_conversation' && (
-              <CarouselItemContainer slidesPerScreen={[1, 2, 3]} key={index}>
+              <CarouselItemContainer key={index}>
                 <RelatedContentCard
                   title={story.name}
                   href={getDefaultFullSlug(story.full_slug, locale)}

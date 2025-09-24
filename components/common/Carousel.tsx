@@ -47,10 +47,19 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
   // In the case that the scroll width is less than 1.5 times the screen width, it will round down the number of pages
   // and cause the dot count to be incorrect.
   // If you go into useMeasurements hook in nuka-carousel, you can see that it calculates the total pages and rounds down the number of pages.
-  // This is particularly an issue if you have 1.4 pages, this means the dots will not render!
-  // Deciding to park this issue for now as it needs a bug report to nuka-carousel.
+  // This requires a bug report to nuka-carousel
+  // In the meantime we do a workaround below `items.length % 3 === 2 &&` to add an extra slide when required
   const { currentPage, totalPages, goBack, goForward, goToPage } = useCarousel();
   if (totalPages < 2) return <></>;
+
+  const iconButtonStyle = {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.primary.dark,
+    },
+  };
 
   const getBackground = (index: number) =>
     currentPage === index
@@ -108,17 +117,7 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
         </Box>
       </Box>
       <Box alignContent="center">
-        <IconButton
-          onClick={goForward}
-          sx={{
-            backgroundColor: theme.palette.primary.dark,
-            color: theme.palette.common.white,
-            '&:hover': {
-              backgroundColor: theme.palette.common.white,
-              color: theme.palette.primary.dark,
-            },
-          }}
-        >
+        <IconButton onClick={goForward} sx={iconButtonStyle}>
           <KeyboardArrowRight></KeyboardArrowRight>
         </IconButton>
       </Box>
@@ -129,17 +128,25 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
 const Carousel = (props: CarouselProps) => {
   const { items, title = 'carousel', theme = 'primary' } = props;
 
+  console.log('calc', items.length % 3 === 1);
   return (
-    <NukaCarousel
-      id={title}
-      showDots={true}
-      swiping={true}
-      dots={<CustomDots carouselTheme={theme} />}
-      title={title}
-      scrollDistance={'screen'}
-    >
-      {items}
-    </NukaCarousel>
+    <Box sx={{ mx: -1 }}>
+      <NukaCarousel
+        id={title}
+        showDots={true}
+        swiping={true}
+        dots={<CustomDots carouselTheme={theme} />}
+        title={title}
+        scrollDistance={'screen'}
+      >
+        {items}
+        {items.length % 3 === 1 && (
+          <CarouselItemContainer>
+            <></>
+          </CarouselItemContainer>
+        )}
+      </NukaCarousel>
+    </Box>
   );
 };
 
@@ -158,30 +165,24 @@ type CarouselItemContainerProps = {
 export const CarouselItemContainer = ({
   children,
   slidesPerScreen = [1, 2, 3],
-  customPadding = 0.5,
+  customPadding = 1,
   customWidth,
 }: CarouselItemContainerProps) => {
-  return (
-    <Box
-      sx={{
-        boxSizing: 'border-box', // Ensure padding is included in width calculation
-        padding: customPadding,
-        display: 'inline-block',
-        ':first-of-type': {
-          paddingLeft: ['0 !important', '0 !important', '0 !important'],
-        },
-        ...(customWidth
-          ? { minWidth: customWidth, width: customWidth }
-          : {
-              ...getSlideWidth(
-                slidesPerScreen[0] || 1,
-                slidesPerScreen[1] || 1,
-                slidesPerScreen[2] || 1,
-              ),
-            }),
-      }}
-    >
-      {children}
-    </Box>
-  );
+  const carouselItemContainerStyle = {
+    boxSizing: 'border-box', // Ensure padding is included in width calculation
+    px: customPadding,
+    display: 'inline-block',
+
+    ...(customWidth
+      ? { minWidth: customWidth, width: customWidth }
+      : {
+          ...getSlideWidth(
+            slidesPerScreen[0] || 1,
+            slidesPerScreen[1] || 1,
+            slidesPerScreen[2] || 1,
+          ),
+        }),
+  } as const;
+
+  return <Box sx={carouselItemContainerStyle}>{children}</Box>;
 };
