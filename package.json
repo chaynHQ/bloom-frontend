@@ -101,7 +101,7 @@
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^29.7.0",
     "knip": "^5.56.0",
-    "mailslurp-client": "^15.22.1",
+    "mailslurp-client": "^16.0.0",
     "nyc": "^17.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^3.5.3",
