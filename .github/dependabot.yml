@@ -4,16 +4,16 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm' # same value for yarn
+  - package-ecosystem: 'yarn' # same value for yarn
     directory: '/' # Location of package manifests
     schedule:
       interval: 'weekly'
       time: '09:00'
       timezone: 'Europe/London'
     assignees:
-      - kyleecodes
+      - annarhughes
     reviewers:
-      - kyleecodes
+      - annarhughes
     groups:
       dev-deps:
         dependency-type: 'development'
@@ -37,9 +37,9 @@ updates:
       time: '09:00'
       timezone: 'Europe/London'
     assignees:
-      - kyleecodes
+      - annarhughes
     reviewers:
-      - kyleecodes
+      - annarhughes
     groups:
       actions-deps:
         patterns:

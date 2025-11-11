@@ -22,7 +22,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import LanguageMenu from './LanguageMenu';
-import NavigationDrawer from './NavigationDrawer';
+import MobileNavigationDrawer from './MobileNavigationDrawer';
 import NavigationMenu from './NavigationMenu';
 import SecondaryNav from './SecondaryNav';
 import UserMenu from './UserMenu';
@@ -38,15 +38,36 @@ const appBarContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
   alignContent: 'center',
-  height: { xs: 48, sm: 64 },
+  height: { xs: 52, sm: 64 },
   padding: '0 !important',
 } as const;
 
 const logoContainerStyle = {
   position: 'relative',
   width: { xs: 80, sm: 120 },
-  marginLeft: { xs: 4, md: 0 },
+  marginLeft: { xs: 3, md: 0 },
   height: 48,
+} as const;
+
+const menusContainerStyle = {
+  ...rowStyle,
+  alignItems: 'center',
+  alignContent: 'center',
+  mr: { xs: 1, sm: -1 },
+} as const;
+
+export const navDrawerButtonStyle = {
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
+  '& .MuiButton-startIcon': { mx: 0 },
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
+  px: 1,
+  minWidth: 'unset',
+  width: 38,
+  height: 38,
 } as const;
 
 const TopBar = () => {
@@ -93,10 +114,11 @@ const TopBar = () => {
               }}
             />
           </Link>
-          <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
+          <Box sx={menusContainerStyle}>
             {!isSmallScreen && <NavigationMenu />}
+            {isSmallScreen && <LanguageMenu />}
             {userId && !isMaintenanceMode && <UserMenu />}
-            <LanguageMenu />
+            {!isSmallScreen && <LanguageMenu />}
             {!isMaintenanceMode && (
               <>
                 {!isSmallScreen && !userId && (
@@ -114,7 +136,7 @@ const TopBar = () => {
                     {t('login')}
                   </Button>
                 )}
-                {isSmallScreen && <NavigationDrawer />}
+                {isSmallScreen && <MobileNavigationDrawer />}
               </>
             )}
           </Box>
