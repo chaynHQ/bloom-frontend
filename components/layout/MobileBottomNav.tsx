@@ -137,7 +137,7 @@ const MobileBottomNav = () => {
   const isMaintenanceMode = getIsMaintenanceMode();
 
   // Don't render if not mobile, user not logged in, or in maintenance mode
-  if (!isMobile || !userId || isMaintenanceMode) {
+  if (!isMobile || isMaintenanceMode) {
     return null;
   }
 

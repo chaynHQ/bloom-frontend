@@ -90,7 +90,7 @@ const MobileNavigationDrawer = () => {
   useEffect(() => {
     let links: Array<NavigationItem> = [];
 
-    if (!userLoading && userId) {
+    if (!userLoading) {
       if (partnerAdmin && partnerAdmin.partner) {
         links.push({
           title: t('admin'),
