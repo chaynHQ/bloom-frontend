@@ -1,28 +1,16 @@
 'use client';
 
 import { usePathname, useRouter } from '@/i18n/routing';
-import activitiesIcon from '@/public/activities_icon.svg';
-import chatIcon from '@/public/chat_icon.svg';
-import courseIcon from '@/public/course_icon.svg';
-import groundingIcon from '@/public/grounding_icon.svg';
-import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
-import { Box, ButtonBase, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import {
-  SECONDARY_HEADER_ACTIVITIES_CLICKED,
-  SECONDARY_HEADER_CHAT_CLICKED,
-  SECONDARY_HEADER_COURSES_CLICKED,
-  SECONDARY_HEADER_GROUNDING_CLICKED,
-  SECONDARY_HEADER_NOTES_CLICKED,
-} from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
+import { getMainNavItems, MainNavItem } from '@/lib/navigation/navigationConfig';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 
-interface MobileNavItem {
+interface ProcessedMobileNavItem {
   label: string;
   href: string;
   icon: string;
@@ -35,6 +23,7 @@ interface MobileNavItem {
 const illustrationSize = 40;
 
 const mobileBottomNavStyle = {
+  display: { xs: 'flex', md: 'none' },
   position: 'fixed',
   bottom: 0,
   left: 0,
@@ -45,7 +34,7 @@ const mobileBottomNavStyle = {
   boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
   zIndex: 1100,
   py: 1,
-  pt: 0.5,
+  overflow: 'scroll',
 } as const;
 
 const navContainerStyle = {
@@ -61,18 +50,15 @@ const navItemStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   flex: 1,
-  p: 1,
+  px: 0.25,
+  py: 1,
   textDecoration: 'none',
   borderRadius: 2,
   transition: 'all 0.2s ease-in-out',
   position: 'relative',
   color: 'text.primary',
 
-  // Default state
-  backgroundColor: 'transparent',
-
-  // Hover state
-  '&:hover': {
+  '&:hover, &:active': {
     transform: 'scale(1.05)',
     '& .nav-icon': {
       transform: 'scale(1.1)',
@@ -81,22 +67,18 @@ const navItemStyle = {
 
   // Focus state for accessibility
   '&:focus-visible': {
-    outline: '2px solid',
-    outlineColor: 'primary.main',
-    outlineOffset: '2px',
-  },
-
-  // Active/pressed state
-  '&:active': {
-    transform: 'scale(0.98)',
+    '& .nav-label': {
+      color: 'text.primary',
+      backgroundColor: 'white',
+      fontWeight: 500,
+      outline: '1px solid',
+      outlineColor: 'primary.dark',
+      outlineOffset: '2px',
+    },
   },
 
   // Selected (current page) state
   '&.selected': {
-    '& .nav-icon': {
-      borderRadius: 5,
-      filter: 'brightness(1.1)',
-    },
     '& .nav-label': {
       color: 'text.primary',
       backgroundColor: 'white',
@@ -128,68 +110,33 @@ const navLabelStyle = {
 const MobileBottomNav = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const userId = useTypedSelector((state) => state.user.id);
   const t = useTranslations('Navigation');
 
   const isMaintenanceMode = getIsMaintenanceMode();
 
-  // Don't render if not mobile, user not logged in, or in maintenance mode
-  if (!isMobile || isMaintenanceMode) {
+  if (isMaintenanceMode) {
     return null;
   }
 
-  const navItems: MobileNavItem[] = [
-    {
-      label: t('courses'),
-      href: '/courses',
-      icon: courseIcon,
-      iconAlt: t('alt.courseIcon'),
-      ariaLabel: t('courses'),
-      event: SECONDARY_HEADER_COURSES_CLICKED,
-      qaId: 'mobile-nav-courses-button',
-    },
-    {
-      label: t('messaging'),
-      href: '/messaging',
-      icon: chatIcon,
-      iconAlt: t('alt.chatIcon'),
-      ariaLabel: t('messaging'),
-      event: SECONDARY_HEADER_CHAT_CLICKED,
-      qaId: 'mobile-nav-messaging-button',
-    },
-    {
-      label: t('activities'),
-      href: '/activities',
-      icon: activitiesIcon,
-      iconAlt: t('alt.activitiesIcon'),
-      ariaLabel: t('activities'),
-      event: SECONDARY_HEADER_ACTIVITIES_CLICKED,
-      qaId: 'mobile-nav-activities-button',
-    },
-    {
-      label: t('grounding'),
-      href: '/grounding',
-      icon: groundingIcon,
-      iconAlt: t('alt.groundingIcon'),
-      ariaLabel: t('grounding'),
-      event: SECONDARY_HEADER_GROUNDING_CLICKED,
-      qaId: 'mobile-nav-grounding-button',
-    },
-    {
-      label: t('notes'),
-      href: '/subscription/whatsapp',
-      icon: notesFromBloomIcon,
-      iconAlt: t('alt.notesIcon'),
-      ariaLabel: t('notes'),
-      event: SECONDARY_HEADER_NOTES_CLICKED,
-      qaId: 'mobile-nav-notes-button',
-    },
-  ];
+  // Get navigation items using shared configuration (excluding therapy for mobile)
+  const navigationItems = getMainNavItems({
+    includeTherapy: false, // Therapy moved to UserMenu on mobile
+    qaIdSuffix: 'mobile-nav',
+    isMobile: true,
+  });
 
-  const handleNavClick = (navItem: MobileNavItem) => {
+  // Transform navigation items for mobile component
+  const navItems: ProcessedMobileNavItem[] = navigationItems.map((item: MainNavItem) => ({
+    label: t(item.translationKey as any),
+    href: item.href,
+    icon: item.icon,
+    iconAlt: t(item.altTranslationKey as any),
+    ariaLabel: t(item.translationKey as any),
+    event: item.event,
+    qaId: `mobile-nav-${item.qaIdPrefix}-button`,
+  }));
+
+  const handleNavClick = (navItem: ProcessedMobileNavItem) => {
     router.push(navItem.href);
     logEvent(navItem.event);
   };

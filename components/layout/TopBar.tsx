@@ -21,10 +21,10 @@ import {
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import DesktopMainNav from './DesktopMainNav';
+import DesktopTopNav from './DesktopTopNav';
 import LanguageMenu from './LanguageMenu';
-import MobileNavigationDrawer from './MobileNavigationDrawer';
-import NavigationMenu from './NavigationMenu';
-import SecondaryNav from './SecondaryNav';
+import MobileTopNav from './MobileTopNav';
 import UserMenu from './UserMenu';
 
 const isMaintenanceMode = getIsMaintenanceMode();
@@ -115,7 +115,7 @@ const TopBar = () => {
             />
           </Link>
           <Box sx={menusContainerStyle}>
-            {!isSmallScreen && <NavigationMenu />}
+            {!isSmallScreen && <DesktopTopNav />}
             {isSmallScreen && <LanguageMenu />}
             {userId && !isMaintenanceMode && <UserMenu />}
             {!isSmallScreen && <LanguageMenu />}
@@ -136,12 +136,12 @@ const TopBar = () => {
                     {t('login')}
                   </Button>
                 )}
-                {isSmallScreen && <MobileNavigationDrawer />}
+                {isSmallScreen && <MobileTopNav />}
               </>
             )}
           </Box>
         </Container>
-        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav />}
+        {!isSmallScreen && !isMaintenanceMode && <DesktopMainNav />}
       </AppBar>
       <Box sx={topBarSpacerStyle} marginTop={0} />
     </>

@@ -1,12 +1,8 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
-import {
-  HEADER_ADMIN_CLICKED,
-  HEADER_IMMEDIATE_HELP_CLICKED,
-  HEADER_OUR_BLOOM_TEAM_CLICKED,
-} from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { getTopNavItems, TopNavItem } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
@@ -14,7 +10,7 @@ import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 const listStyle = {
-  display: 'flex',
+  display: { xs: 'none', md: 'flex' },
   flexDirection: { xs: 'column', md: 'row' },
   height: '100%',
   marginLeft: { xs: 0, md: 0.5 },
@@ -48,69 +44,33 @@ const listButtonStyle = {
   },
 } as const;
 
-interface NavigationItem {
-  title: string;
-  href: string;
-  target?: string;
-  event: string;
-  qaId?: string;
-}
-
-interface NavigationMenuProps {
+interface DesktopTopNavProps {
   setAnchorEl?: Dispatch<SetStateAction<null | HTMLElement>>;
 }
 
-const NavigationMenu = (props: NavigationMenuProps) => {
+const DesktopTopNav = (props: DesktopTopNavProps) => {
   const { setAnchorEl } = props;
   const t = useTranslations('Navigation');
 
-  const userLoading = useTypedSelector((state) => state.user.loading);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const isMaintenanceMode = getIsMaintenanceMode();
 
-  const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
+  const [navigationLinks, setNavigationLinks] = useState<Array<TopNavItem>>([]);
 
   useEffect(() => {
-    let links: Array<NavigationItem> = [];
-
-    if (!userLoading) {
-      if (!isMaintenanceMode) {
-        if (partnerAdmin && partnerAdmin.partner) {
-          links.push({
-            title: t('admin'),
-            href: '/partner-admin/create-access-code',
-            event: HEADER_ADMIN_CLICKED,
-            qaId: 'partner-admin-menu-button',
-          });
-        }
-
-        links.push({
-          title: t('meetTheTeam'),
-          href: '/meet-the-team',
-          event: HEADER_OUR_BLOOM_TEAM_CLICKED,
-          qaId: 'meet-team-menu-button',
-        });
-      }
-      if (!partnerAdmin.partner) {
-        links.push({
-          title: t('immediateHelp'),
-          qaId: 'immediate-help-menu-button',
-          href: 'https://www.chayn.co/help',
-          target: '_blank',
-          event: HEADER_IMMEDIATE_HELP_CLICKED,
-        });
-      }
+    if (isMaintenanceMode) {
+      setNavigationLinks([]);
+      return;
     }
 
+    const links = getTopNavItems(partnerAdmin, false);
     setNavigationLinks(links);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, userLoading, partnerAccesses, partnerAdmin]);
+  }, [partnerAdmin, isMaintenanceMode]);
 
   return (
     <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
       {navigationLinks.map((link) => (
-        <ListItem sx={listItemStyle} key={link.title} disablePadding>
+        <ListItem sx={listItemStyle} key={link.key} disablePadding>
           <ListItemButton
             sx={listButtonStyle}
             component={i18nLink}
@@ -121,7 +81,7 @@ const NavigationMenu = (props: NavigationMenuProps) => {
               logEvent(link.event);
             }}
           >
-            <ListItemText sx={listItemTextStyle} primary={link.title} />
+            <ListItemText sx={listItemTextStyle} primary={t(link.translationKey)} />
           </ListItemButton>
         </ListItem>
       ))}
@@ -129,4 +89,4 @@ const NavigationMenu = (props: NavigationMenuProps) => {
   );
 };
 
-export default NavigationMenu;
+export default DesktopTopNav;

@@ -2,14 +2,12 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import {
-  DRAWER_ADMIN_CLICKED,
-  DRAWER_IMMEDIATE_HELP_CLICKED,
   DRAWER_LOGIN_CLICKED,
-  DRAWER_OUR_BLOOM_TEAM_CLICKED,
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { getTopNavItems, TopNavItem } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -58,14 +56,7 @@ const loginButtonStyle = {
   color: 'text.primary !important',
 } as const;
 
-interface NavigationItem {
-  title: string;
-  href: string;
-  target?: string;
-  event: string;
-}
-
-const MobileNavigationDrawer = () => {
+const MobileTopNav = () => {
   const t = useTranslations('Navigation');
 
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -74,7 +65,7 @@ const MobileNavigationDrawer = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [navigationLinks, setNavigationLinks] = useState<Array<NavigationItem>>([]);
+  const [navigationLinks, setNavigationLinks] = useState<Array<TopNavItem>>([]);
 
   const open = Boolean(anchorEl);
 
@@ -88,36 +79,10 @@ const MobileNavigationDrawer = () => {
   };
 
   useEffect(() => {
-    let links: Array<NavigationItem> = [];
-
-    if (!userLoading) {
-      if (partnerAdmin && partnerAdmin.partner) {
-        links.push({
-          title: t('admin'),
-          href: '/partner-admin/create-access-code',
-          event: DRAWER_ADMIN_CLICKED,
-        });
-      }
-
-      links.push({
-        title: t('meetTheTeam'),
-        href: '/meet-the-team',
-        event: DRAWER_OUR_BLOOM_TEAM_CLICKED,
-      });
-
-      if (!partnerAdmin.partner) {
-        links.push({
-          title: t('immediateHelp'),
-          href: 'https://www.chayn.co/help',
-          target: '_blank',
-          event: DRAWER_IMMEDIATE_HELP_CLICKED,
-        });
-      }
-    }
-
+    const links = getTopNavItems(partnerAdmin, true);
     setNavigationLinks(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, userId, userLoading, partnerAccesses, partnerAdmin]);
+  }, [partnerAdmin]);
 
   return (
     <Box>
@@ -151,15 +116,17 @@ const MobileNavigationDrawer = () => {
       >
         <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
           {navigationLinks.map((link) => (
-            <ListItem sx={listItemStyle} key={link.title} disablePadding>
+            <ListItem sx={listItemStyle} key={link.key} disablePadding>
               <ListItemButton
                 sx={listButtonStyle}
                 component={link.href.startsWith('/') ? i18nLink : 'a'}
                 href={link.href}
                 target={link.target || '_self'}
-                onClick={() => {}}
+                onClick={() => {
+                  logEvent(link.event);
+                }}
               >
-                <ListItemText sx={listItemTextStyle} primary={link.title} />
+                <ListItemText sx={listItemTextStyle} primary={t(link.translationKey)} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -184,4 +151,4 @@ const MobileNavigationDrawer = () => {
     </Box>
   );
 };
-export default MobileNavigationDrawer;
+export default MobileTopNav;
