@@ -32,7 +32,7 @@ interface MobileNavItem {
   qaId: string;
 }
 
-const illustrationSize = 38;
+const illustrationSize = 40;
 
 const mobileBottomNavStyle = {
   position: 'fixed',
@@ -60,16 +60,13 @@ const navItemStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 0.25,
   flex: 1,
-  px: 1,
-  py: 1,
-  minHeight: 7,
+  p: 1,
   textDecoration: 'none',
   borderRadius: 2,
   transition: 'all 0.2s ease-in-out',
   position: 'relative',
-  color: 'text.secondary',
+  color: 'text.primary',
 
   // Default state
   backgroundColor: 'transparent',
@@ -97,22 +94,18 @@ const navItemStyle = {
   // Selected (current page) state
   '&.selected': {
     '& .nav-icon': {
-      backgroundColor: 'background.default',
       borderRadius: 5,
       filter: 'brightness(1.1)',
     },
     '& .nav-label': {
       color: 'text.primary',
+      backgroundColor: 'white',
       fontWeight: 500,
     },
   },
 } as const;
 
 const navIconStyle = {
-  width: illustrationSize * 1.2,
-  height: illustrationSize * 1.2,
-  p: 0.5,
-  pt: 0.625,
   marginBottom: 0.5,
   position: 'relative',
   transition: 'transform 0.2s ease-in-out',
@@ -121,6 +114,9 @@ const navIconStyle = {
 const navLabelStyle = {
   fontSize: '10px',
   lineHeight: 1.2,
+  px: 1,
+  py: 0.5,
+  borderRadius: 3,
   textAlign: 'center',
   maxWidth: '100%',
   overflow: 'hidden',
