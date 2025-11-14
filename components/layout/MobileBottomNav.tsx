@@ -33,7 +33,7 @@ const mobileBottomNavStyle = {
   borderColor: 'background.paper',
   boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
   zIndex: 1100,
-  py: 1,
+  py: 1.5,
   overflow: 'scroll',
 } as const;
 
@@ -51,7 +51,6 @@ const navItemStyle = {
   justifyContent: 'center',
   flex: 1,
   px: 0.25,
-  py: 1,
   textDecoration: 'none',
   borderRadius: 2,
   transition: 'all 0.2s ease-in-out',
@@ -94,7 +93,7 @@ const navIconStyle = {
 } as const;
 
 const navLabelStyle = {
-  fontSize: '10px',
+  fontSize: '0.75rem',
   lineHeight: 1.2,
   px: 1,
   py: 0.5,
@@ -105,6 +104,9 @@ const navLabelStyle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   transition: 'font-weight 0.2s ease-in-out',
+  '@media (max-width: 349px)': {
+    fontSize: '0.625rem',
+  },
 } as const;
 
 const MobileBottomNav = () => {
@@ -118,14 +120,12 @@ const MobileBottomNav = () => {
     return null;
   }
 
-  // Get navigation items using shared configuration (excluding therapy for mobile)
   const navigationItems = getMainNavItems({
-    includeTherapy: false, // Therapy moved to UserMenu on mobile
+    includeTherapy: false, // Therapy link is in UserMenu on mobile
     qaIdSuffix: 'mobile-nav',
     isMobile: true,
   });
 
-  // Transform navigation items for mobile component
   const navItems: ProcessedMobileNavItem[] = navigationItems.map((item: MainNavItem) => ({
     label: t(item.translationKey as any),
     href: item.href,
