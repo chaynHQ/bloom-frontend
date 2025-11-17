@@ -1,8 +1,8 @@
 import { AuthGuard } from '@/components/guards/AuthGuard';
-import Consent from '@/components/layout/CookieConsent';
+import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
-import MobileBottomNav from '@/components/layout/MobileBottomNav';
+import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
 import TopBar from '@/components/layout/TopBar';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
@@ -10,7 +10,6 @@ import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
 import { clientConfig } from '@/lib/rollbar';
-import { mobileBottomNavSpacerStyle } from '@/styles/common';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import theme from '@/styles/theme';
@@ -99,9 +98,9 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       <AuthGuard>{children}</AuthGuard>
                     </main>
                     <Footer />
-                    <Box sx={mobileBottomNavSpacerStyle} />
+                    <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
                     <MobileBottomNav />
-                    <Consent />
+                    <CookieBanner />
                     {!!process.env.NEXT_PUBLIC_HOTJAR_ID && ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
                       <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
                     )}
