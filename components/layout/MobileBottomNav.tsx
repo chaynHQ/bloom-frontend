@@ -10,6 +10,8 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 
+export const mobileBottomNavHeight = 100;
+
 interface ProcessedMobileNavItem {
   label: string;
   href: string;
@@ -33,7 +35,7 @@ const mobileBottomNavStyle = {
   borderColor: 'background.paper',
   boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
   zIndex: 1100,
-  py: 1.5,
+  height: mobileBottomNavHeight,
   overflow: 'scroll',
 } as const;
 
