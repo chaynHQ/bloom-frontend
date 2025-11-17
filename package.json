@@ -74,7 +74,7 @@
     "react-international-phone": "^4.0.4",
     "react-player": "^2.13.0",
     "react-redux": "^9.2.0",
-    "rollbar": "^2.26.4",
+    "rollbar": "^2.26.5",
     "storyblok-rich-text-react-renderer": "^3.0.1"
   },
   "devDependencies": {
