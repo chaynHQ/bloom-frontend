@@ -19,15 +19,9 @@
 }
 
 @media (max-width: 479px) {
-  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1r7qyl6.css-1r7qyl6 * {
+  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu.css-1xaw8mu * {
     bottom: 6.25rem;
     height: 2.75rem;
-  }
-}
-
-@media (min-width: 480px) {
-  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1r7qyl6.css-1r7qyl6 * {
-    bottom: 1.5rem;
   }
 }
 
