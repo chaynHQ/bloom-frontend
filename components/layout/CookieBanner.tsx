@@ -23,10 +23,10 @@ const CookieBanner = () => {
 
   const consentBoxStyle: React.CSSProperties = {
     backgroundColor: theme.palette.secondary.light,
-    maxWidth: isMobileScreen ? 'none' : theme.spacing(50),
+    maxWidth: isMobileScreen ? 'none' : theme.spacing(54),
     maxHeight: theme.spacing(35),
     position: 'fixed',
-    left: isMobileScreen ? 0 : theme.spacing(2),
+    right: isMobileScreen ? 0 : theme.spacing(2),
     bottom: isMobileScreen
       ? mobileBottomNavHeight
       : isTabletScreen
@@ -36,23 +36,28 @@ const CookieBanner = () => {
     boxShadow: `${alpha(theme.palette.common.black, 0.2)} 0px ${theme.spacing(1)} ${theme.spacing(
       4,
     )} 0px`,
-    textAlign: 'center',
     lineHeight: 1.5,
     marginRight: isMobileScreen ? 0 : theme.spacing(2),
-    padding: isMobileScreen
-      ? `${theme.spacing(3)} ${theme.spacing(2)} `
-      : `${theme.spacing(2)} ${theme.spacing(4)}`,
+    padding: `${theme.spacing(3)} ${theme.spacing(2)} `,
     zIndex: 5,
   };
+
+  const rowContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 2,
+  } as const;
+
   const acceptButtonStyle = {
     backgroundColor: 'secondary.main',
+    marginLeft: '0.5rem',
     float: 'inline-end',
     ':hover': {
       backgroundColor: 'secondary.dark',
     },
   };
   const declineButtonStyle = {
-    float: 'inline-start',
+    float: 'inline-end',
     fontWeight: 'normal',
     color: theme.palette.text.primary,
   };
@@ -121,28 +126,30 @@ const CookieBanner = () => {
       ariaDeclineLabel={tS('cookieConsent.declineLabel')}
       flipButtons={true}
     >
-      <Box width={[50, 70]} margin="auto" mb={1}>
-        <Image
-          alt={tS('alt.cookieCat')}
-          src={IllustrationCookieCat}
-          sizes={getImageSizes(70)}
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      </Box>
-      <Box mb={2}>
-        <Typography fontSize={'0.875rem !important'}>
-          {tS('cookieConsent.cookieConsentExplainer')}
-          <Link
-            target="_blank"
-            href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
-          >
-            {tS('cookieConsent.cookieConsentPolicy')}
-          </Link>
-          .
-        </Typography>
+      <Box sx={rowContainerStyle}>
+        <Box width={50}>
+          <Image
+            alt={tS('alt.cookieCat')}
+            src={IllustrationCookieCat}
+            sizes={getImageSizes(50)}
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+          />
+        </Box>
+        <Box mb={2} flex={1}>
+          <Typography fontSize={'0.875rem !important'}>
+            {tS('cookieConsent.cookieConsentExplainer')}
+            <Link
+              target="_blank"
+              href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
+            >
+              {tS('cookieConsent.cookieConsentPolicy')}
+            </Link>
+            .
+          </Typography>
+        </Box>
       </Box>
     </CookieConsent>
   );

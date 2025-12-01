@@ -18,6 +18,13 @@
   color: #000000 !important;
 }
 
+@media (max-width: 479px) {
+  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1r7qyl6.css-1r7qyl6 * {
+    bottom: 6.25rem;
+    height: 2.75rem;
+  }
+}
+
 @media (min-width: 480px) {
   ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1r7qyl6.css-1r7qyl6 * {
     bottom: 1.5rem;
@@ -32,6 +39,9 @@
 /* Primary button styles */
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button'],
+._hj-widget-container
+  ._hj-s3UIi__styles__globalStyles
+  .css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49,
 ._hj-widget-container
   ._hj-s3UIi__styles__globalStyles
   .css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4,
