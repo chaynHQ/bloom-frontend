@@ -32,11 +32,12 @@ const mobileBottomNavStyle = {
   right: 0,
   background: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
   borderTop: 2,
-  borderColor: 'background.paper',
+  borderColor: 'common.white',
   boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
   zIndex: 1100,
   height: mobileBottomNavHeight,
-  overflow: 'scroll',
+  overflowX: 'scroll',
+  overflowY: 'hidden',
 } as const;
 
 const navContainerStyle = {
