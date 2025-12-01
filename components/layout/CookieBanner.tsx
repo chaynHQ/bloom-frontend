@@ -46,6 +46,7 @@ const CookieBanner = () => {
     display: 'flex',
     alignItems: 'center',
     gap: 2,
+    mb: 1,
   } as const;
 
   const acceptButtonStyle = {
@@ -127,7 +128,7 @@ const CookieBanner = () => {
       flipButtons={true}
     >
       <Box sx={rowContainerStyle}>
-        <Box width={50}>
+        <Box width={50} height={50}>
           <Image
             alt={tS('alt.cookieCat')}
             src={IllustrationCookieCat}
@@ -138,7 +139,7 @@ const CookieBanner = () => {
             }}
           />
         </Box>
-        <Box mb={2} flex={1}>
+        <Box flex={1}>
           <Typography fontSize={'0.875rem !important'}>
             {tS('cookieConsent.cookieConsentExplainer')}
             <Link
