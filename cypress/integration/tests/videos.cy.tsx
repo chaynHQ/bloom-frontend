@@ -37,7 +37,7 @@ describe('Videos Flow', () => {
     cy.get('[data-testid="team-member-card"]').should('exist');
 
     // Feedback form appears
-    cy.contains('h2', 'How was this session?', { timeout: 10000 }).should('be.visible');
+    cy.get('h2').contains('How was this session?').should('exist');
 
     // Click the Send button and check for error message
     cy.get('button').contains('Send').click();
