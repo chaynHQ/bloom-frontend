@@ -32,6 +32,7 @@ const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
   minHeight: { xs: 220, lg: 360 },
+  pt: 10,
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: 1,
   background: theme.palette.bloomGradient,
@@ -51,8 +52,6 @@ const imageContainerStyle = {
 
 const textContainerStyle = {
   ...columnStyle,
-  pl: { xs: 3, sm: 0 },
-  pr: { xs: 6, sm: 0 },
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
   maxWidth: { xs: '100%', sm: '50%', md: '60%' },
