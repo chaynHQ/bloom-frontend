@@ -19,9 +19,9 @@
 }
 
 @media (max-width: 479px) {
-  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu.css-1xaw8mu * {
-    bottom: 6.25rem;
-    height: 2.75rem;
+  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu {
+    bottom: 6.25rem !important;
+    height: 2.75rem !important;
   }
 }
 
