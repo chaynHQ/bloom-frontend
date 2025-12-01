@@ -18,11 +18,10 @@
   color: #000000 !important;
 }
 
-@media (max-width: 479px) {
-  ._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu {
-    bottom: 6.25rem !important;
-    height: 2.75rem !important;
-  }
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu,
+._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu.css-1xaw8mu {
+  bottom: 6.25rem !important;
+  height: 2.75rem !important;
 }
 
 /* Hotjar branding */
