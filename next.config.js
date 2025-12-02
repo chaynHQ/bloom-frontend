@@ -130,7 +130,7 @@ module.exports = withBundleAnalyzer(
             source: '/:path',
             headers: [
               {
-                key: 'Content-Security-Policy-Report-Only', // Leaving this as report only until we have caught all the CSP violations
+                key: 'Content-Security-Policy',
                 value: `
                   default-src 'self';
                   script-src 'self' 'unsafe-eval' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
