@@ -6,6 +6,7 @@ const partnerData = {
   id: 'partner',
   name: 'partnerName',
   partnerFeature: [],
+  isActive: true,
 } as Partner;
 
 const accessCodePartnerFeature = {

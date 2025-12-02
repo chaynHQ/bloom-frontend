@@ -128,7 +128,6 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
 const Carousel = (props: CarouselProps) => {
   const { items, title = 'carousel', theme = 'primary' } = props;
 
-  console.log('calc', items.length % 3 === 1);
   return (
     <Box sx={{ mx: -1 }}>
       <NukaCarousel

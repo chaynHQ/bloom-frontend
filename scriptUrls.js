@@ -17,6 +17,7 @@ const scriptSrcUrls = [
   'https://*.hotjar.io',
   'https://*.rollbar.com',
   'https://*.simplybook.it',
+  'https://widget.simplybook.it',
   'https://*.zapier.com',
   'https://fonts.googleapis.com',
   'https://static.hotjar.com',
@@ -69,7 +70,8 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
-  process.env.NEXT_PUBLIC_API_BASE_URL, //new env by niksanand1717
+  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:35001'] : []),
+  process.env.NEXT_PUBLIC_API_BASE_URL,
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
