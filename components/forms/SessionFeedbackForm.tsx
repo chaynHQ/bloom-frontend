@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateSessionFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS } from '@/lib/constants/enums';
 import { SessionFeedback } from '@/lib/store/coursesSlice';
@@ -14,7 +15,6 @@ import {
   Radio,
   RadioGroup,
   SxProps,
-  TextField,
   Theme,
   Typography,
 } from '@mui/material';
@@ -147,10 +147,10 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           </RadioGroup>
         </FormControl>
 
-        <TextField
+        <SanitizedTextField
           id="feedbackDescription"
           placeholder={t.rich('textboxDefaultText')?.toString()}
-          onChange={(e) => setFeedbackDescription(e.target.value)}
+          onChange={setFeedbackDescription}
           value={feedbackDescription}
           sx={fieldBoxStyle}
           variant="filled"

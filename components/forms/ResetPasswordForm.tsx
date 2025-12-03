@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { Link as i18nLink } from '@/i18n/routing';
 import { confirmAuthPasswordReset, logout, sendAuthPasswordResetEmail } from '@/lib/auth';
 import { ErrorDisplay } from '@/lib/constants/common';
@@ -11,7 +12,7 @@ import {
 import { auth } from '@/lib/firebase';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -58,10 +59,10 @@ export const EmailForm = () => {
     <Box>
       <Typography mb={2}>{t('resetPasswordStep1')}</Typography>
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
-        <TextField
+        <SanitizedTextField
           id="email"
           inputProps={{ 'qa-id': 'passwordResetEmailInput' }}
-          onChange={(e) => setEmailInput(e.target.value)}
+          onChange={setEmailInput}
           label={t('emailLabel')}
           variant="standard"
           type="email"
@@ -187,9 +188,9 @@ export const PasswordForm = (props: PasswordFormProps) => {
     <Box>
       <Typography mb={2}>{t('resetPasswordStep2')}</Typography>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <TextField
+        <SanitizedTextField
           id="password"
-          onChange={(e) => setPasswordInput(e.target.value)}
+          onChange={setPasswordInput}
           label={t('passwordLabel')}
           type="password"
           variant="standard"

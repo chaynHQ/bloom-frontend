@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useAddPartnerAdminMutation, useGetPartnersQuery } from '@/lib/api';
 import {
   CREATE_PARTNER_ADMIN_ERROR,
@@ -10,7 +11,7 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -102,14 +103,14 @@ const CreatePartnerAdminForm = () => {
 
   return (
     <form autoComplete="off" onSubmit={submitHandler}>
-      <TextField
+      <SanitizedTextField
         id="selectPartner"
         name="selectPartner"
         key="select-partner"
         fullWidth
         select
         label={t('partnerNameLabel')}
-        onChange={(e) => setSelectedPartner(e.target.value)}
+        onChange={setSelectedPartner}
         variant="standard"
         required
         value={selectedPartner}
@@ -119,13 +120,13 @@ const CreatePartnerAdminForm = () => {
             {option.name}
           </MenuItem>
         ))}
-      </TextField>
+      </SanitizedTextField>
 
-      <TextField
+      <SanitizedTextField
         id="email"
         name="email"
         key="email-input"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={setEmail}
         label={t('emailAddressLabel')}
         variant="standard"
         type="email"
@@ -133,11 +134,11 @@ const CreatePartnerAdminForm = () => {
         required
         value={email}
       />
-      <TextField
+      <SanitizedTextField
         id="name"
         name="name"
         key="name-input"
-        onChange={(e) => setName(e.target.value)}
+        onChange={setName}
         label={t('nameLabel')}
         variant="standard"
         type="text"
