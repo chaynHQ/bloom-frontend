@@ -30,8 +30,8 @@ interface SanitizedTextFieldProps
   maxLength?: number; // Manual override
   showCharacterCount?: boolean; // Optional character counter
   inputProps?: TextFieldProps['inputProps'];
-  value?: string;
-  defaultValue?: string;
+  value?: string | null;
+  defaultValue?: string | null;
 }
 
 const SanitizedTextField = ({
@@ -80,7 +80,7 @@ const SanitizedTextField = ({
 
   // Determine which value to use for character counting
   const effectiveValue = value !== undefined ? value : defaultValue || '';
-  const currentLength = effectiveValue.toString().length || 0;
+  const currentLength = effectiveValue?.toString().length || 0;
   const shouldShowCounter =
     showCharacterCount || (restProps.multiline && currentLength > fieldMaxLength * 0.8);
 

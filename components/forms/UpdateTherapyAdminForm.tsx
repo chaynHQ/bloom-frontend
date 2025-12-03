@@ -171,6 +171,7 @@ const UpdateTherapyAdminForm = () => {
             {...params}
             label={t('emailLabel')}
             variant="standard"
+            // @ts-ignore
             value={autocompleteInputValue}
           />
         )}
