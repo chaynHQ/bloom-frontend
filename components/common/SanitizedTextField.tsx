@@ -10,6 +10,7 @@ const FIELD_VALIDATION_RULES = {
   email: { maxLength: 255 },
   password: { maxLength: 128 },
   partnerAccessCode: { maxLength: 6 },
+  mfaVerificationCode: { maxLength: 6 },
   accessCode: { maxLength: 6 },
   partnerId: { maxLength: 36 },
   signUpLanguage: { maxLength: 10 },

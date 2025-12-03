@@ -8,11 +8,12 @@ import {
 } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import SanitizedTextField from '../common/SanitizedTextField';
 import PhoneInput from '../forms/PhoneInput';
 
 const buttonStyle = {
@@ -173,11 +174,11 @@ const SetupMFA = () => {
         <Typography variant="h3">{t('setupMFA.reauthTitle')}</Typography>
         <Typography mb={2}>{t('setupMFA.reauthDescription')}</Typography>
 
-        <TextField
+        <SanitizedTextField
           id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={setPassword}
           label={t('form.passwordLabel')}
           fullWidth
           variant="standard"
@@ -251,10 +252,10 @@ const SetupMFA = () => {
       ) : (
         <>
           <Typography>{t('setupMFA.enterCodeHelperText')}</Typography>
-          <TextField
-            id="verificationCode"
+          <SanitizedTextField
+            id="mfaVerificationCode"
             value={verificationCode}
-            onChange={(e) => setVerificationCode(e.target.value)}
+            onChange={setVerificationCode}
             label={t('form.verificationCodeLabel')}
             fullWidth
             variant="standard"
