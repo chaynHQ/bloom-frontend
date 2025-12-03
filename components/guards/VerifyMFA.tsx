@@ -13,7 +13,7 @@ import SanitizedTextField from '../common/SanitizedTextField';
 const buttonStyle = {
   display: 'block',
   mx: 'auto',
-  mt: 1,
+  mt: 2,
 } as const;
 
 interface VerifyMFAProps {

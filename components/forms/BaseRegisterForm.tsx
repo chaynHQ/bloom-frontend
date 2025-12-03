@@ -116,7 +116,7 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
       } else if (errorMessage === CREATE_USER_INVALID_EMAIL) {
         setFormError(t('firebase.invalidEmail'));
       } else {
-        logEvent(REGISTER_ERROR, { message: errorMessage });
+        logEvent(REGISTER_ERROR, { message: String(errorMessage) });
         rollbar.error('User register create user error', error);
         setFormError(
           t.rich('createUserError', {
