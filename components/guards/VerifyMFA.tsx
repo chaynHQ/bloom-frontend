@@ -1,18 +1,19 @@
 'use client';
 
 import { triggerVerifyMFA, verifyMFA } from '@/lib/auth';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import SanitizedTextField from '../common/SanitizedTextField';
 
 const buttonStyle = {
   display: 'block',
   mx: 'auto',
-  mt: 1,
+  mt: 2,
 } as const;
 
 interface VerifyMFAProps {
@@ -93,9 +94,10 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
         </Button>
       ) : (
         <>
-          <TextField
+          <SanitizedTextField
+            id="mfaVerificationCode"
             value={verificationCode}
-            onChange={(e) => setVerificationCode(e.target.value)}
+            onChange={setVerificationCode}
             label={t('form.verificationCodeLabel')}
             fullWidth
             variant="standard"

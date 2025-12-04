@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useRouter } from '@/i18n/routing';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
@@ -21,7 +22,7 @@ import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import { setAuthStateLoading } from '@/lib/store/userSlice';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, TextField, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
@@ -155,18 +156,18 @@ const LoginForm = () => {
           <SetupMFA />
         ) : (
           <>
-            <TextField
+            <SanitizedTextField
               id="email"
-              onChange={(e) => setEmailInput(e.target.value)}
+              onChange={setEmailInput}
               label={t('form.emailLabel')}
               variant="standard"
               type="email"
               fullWidth
               required
             />
-            <TextField
+            <SanitizedTextField
               id="password"
-              onChange={(e) => setPasswordInput(e.target.value)}
+              onChange={setPasswordInput}
               label={t('form.passwordLabel')}
               type="password"
               variant="standard"
