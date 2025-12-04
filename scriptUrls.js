@@ -1,4 +1,4 @@
-const API_URL = URL(process.env.NEXT_PUBLIC_API_URL).hostname;
+const API_URL = new URL(process.env.NEXT_PUBLIC_API_URL).hostname;
 
 const scriptSrcUrls = [
   API_URL,
