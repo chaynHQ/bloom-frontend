@@ -156,6 +156,7 @@
       "title": "Mensagens de apoio gratuitas",
       "description": "Receba mensagens duas vezes por semana diretamente no seu WhatsApp",
       "buttonText": "Inscrever-se"
-    }
+    },
+    "characterCount": "{current}/{max} caracteres"
   }
 }

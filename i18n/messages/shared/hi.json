@@ -157,6 +157,7 @@
       "title": "Nihshulk sahaayak sandesh",
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
-    }
+    },
+    "characterCount": "{current}/{max} अक्षर"
   }
 }

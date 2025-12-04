@@ -24,14 +24,14 @@ const EmailSettingsForm = () => {
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
+  
+  const [contactPermissionValue, setContactPermissionValue] = useState(contactPermission);
+  const [serviceEmailsPermissionValue, setServiceEmailsPermissionValue] = useState(serviceEmailsPermission);
 
   const onSubmit = useCallback(
     async (ev: React.FormEvent<HTMLFormElement>) => {
-      const formData = new FormData(ev.currentTarget);
       ev.preventDefault();
 
-      const contactPermissionValue = formData.get('contactPermission') === 'on';
-      const serviceEmailsPermissionValue = formData.get('serviceEmailsPermission') === 'on';
       const payload = {
         contactPermission: contactPermissionValue,
         serviceEmailsPermission: serviceEmailsPermissionValue,
@@ -53,7 +53,7 @@ const EmailSettingsForm = () => {
         );
       }
     },
-    [updateUser, t],
+    [updateUser, t, contactPermissionValue, serviceEmailsPermissionValue],
   );
 
   return (
@@ -63,23 +63,27 @@ const EmailSettingsForm = () => {
           label={t('serviceEmailsPermissionLabel')}
           control={
             <Checkbox
-              name="serviceEmailsPermission"
+              checked={serviceEmailsPermissionValue}
+              onChange={(e) => {
+                setServiceEmailsPermissionValue(e.target.checked);
+                setIsSuccess(false);
+              }}
               aria-label={t('serviceEmailsPermissionLabel')}
-              defaultChecked={serviceEmailsPermission}
             />
           }
-          onInput={() => setIsSuccess(false)}
         />
         <FormControlLabel
           label={t('contactPermissionLabel')}
           control={
             <Checkbox
-              name="contactPermission"
+              checked={contactPermissionValue}
+              onChange={(e) => {
+                setContactPermissionValue(e.target.checked);
+                setIsSuccess(false);
+              }}
               aria-label={t('contactPermissionLabel')}
-              defaultChecked={contactPermission}
             />
           }
-          onInput={() => setIsSuccess(false)}
         />
         {error && <Typography color="error.main">{error}</Typography>}
       </FormControl>

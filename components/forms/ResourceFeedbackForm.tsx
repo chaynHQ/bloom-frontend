@@ -29,6 +29,9 @@ const fieldBoxStyle: SxProps<Theme> = {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '12px 12px',
+    '&:hover': {
+      backgroundColor: 'background.default',
+    },
   },
 };
 

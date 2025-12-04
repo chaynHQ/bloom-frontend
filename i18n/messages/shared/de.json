@@ -156,6 +156,7 @@
       "title": "Kostenlose unterstützende Nachrichten",
       "description": "Erhalten Sie zweimal wöchentlich Nachrichten direkt auf Ihr WhatsApps",
       "buttonText": "Abonnieren"
-    }
+    },
+    "characterCount": "{current}/{max} Zeichen"
   }
 }
