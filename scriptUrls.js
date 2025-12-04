@@ -1,4 +1,5 @@
 const scriptSrcUrls = [
+  process.env.NEXT_PUBLIC_API_URL,
   'https://*.google-analytics.com',
   'https://identitytoolkit.googleapis.com',
   'https://*.hotjar.com',
@@ -23,7 +24,6 @@ const scriptSrcUrls = [
   'https://static.hotjar.com',
   'https://app.storyblok.com',
   'https://client.crisp.chat',
-  process.env.NEXT_PUBLIC_API_URL,
   'wss://client.relay.crisp.chat',
   'https://apis.google.com',
   'https://va.vercel-scripts.com/',
@@ -71,7 +71,7 @@ const connectSrcUrls = [
   'https://*.youtube.com',
   'https://www.youtube.com',
   ...(process.env.NODE_ENV === 'development' ? ['http://localhost:35001'] : []),
-  process.env.NEXT_PUBLIC_API_BASE_URL,
+  process.env.NEXT_PUBLIC_API_URL,
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
