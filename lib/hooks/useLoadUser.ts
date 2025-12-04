@@ -85,7 +85,6 @@ export default function useLoadUser() {
   // 3a. Handle get user success
   useEffect(() => {
     if (userResourceIsSuccess) {
-      console.log('User resource loaded:', userResource);
       if (!userResource.user?.id) {
         setIsInvalidUserResourceResponse(true);
         return;

@@ -1,5 +1,7 @@
+const API_URL = URL(process.env.NEXT_PUBLIC_API_URL).hostname;
+
 const scriptSrcUrls = [
-  process.env.NEXT_PUBLIC_API_URL,
+  API_URL,
   'https://*.google-analytics.com',
   'https://identitytoolkit.googleapis.com',
   'https://*.hotjar.com',
@@ -53,6 +55,7 @@ const imgSrcUrls = [
   'https://i.ytimg.com',
 ];
 const connectSrcUrls = [
+  API_URL,
   'https://*.hotjar.com',
   'wss://ws.hotjar.com',
   'https://*.googletagmanager.com',
@@ -70,8 +73,7 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
-  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:35001'] : []),
-  process.env.NEXT_PUBLIC_API_URL,
+  'https://vercel.live',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
