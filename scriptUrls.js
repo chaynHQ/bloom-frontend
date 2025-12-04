@@ -1,4 +1,7 @@
-const API_URL = new URL(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:35001').hostname;
+const API_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:35001'
+    : new URL(process.env.NEXT_PUBLIC_API_URL).hostname;
 
 const scriptSrcUrls = [
   API_URL,

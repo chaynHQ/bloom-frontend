@@ -46,18 +46,6 @@ Cypress.Commands.add('uiLogout', (e) => {
   cy.wait(1000);
 });
 
-// TODO maybe delete  this helper - keeping for now but could potentially not be useful
-Cypress.Commands.add('uiCreateAccessCode', () => {
-  cy.get('input[type="radio"').should('exist').check('therapy'); //select radio button on form
-  cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
-  cy.get('#access-code')
-    .should('exist') //wait for result to exist in dom then get the access code
-    .then(function ($elem) {
-      //get the access code
-      return $elem.text();
-    });
-});
-
 Cypress.Commands.add('createAccessCode', (accessCode) => {
   cy.getAccessToken().then((token) => {
     return cy.request({

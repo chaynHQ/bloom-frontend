@@ -117,7 +117,7 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
         setFormError(t('firebase.invalidEmail'));
       } else {
         logEvent(REGISTER_ERROR, { message: String(errorMessage) });
-        rollbar.error('User register create user error', error);
+        rollbar.error('User register create user error', errorMessage);
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => (
