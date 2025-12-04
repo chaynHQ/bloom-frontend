@@ -23,8 +23,10 @@ const FIELD_VALIDATION_RULES = {
   default: { maxLength: 500 },
 } as const;
 
-interface SanitizedTextFieldProps
-  extends Omit<TextFieldProps, 'onChange' | 'inputProps' | 'value' | 'defaultValue'> {
+interface SanitizedTextFieldProps extends Omit<
+  TextFieldProps,
+  'onChange' | 'inputProps' | 'value' | 'defaultValue'
+> {
   onChange?: (value: string) => void;
   allowedTags?: string[];
   allowedAttributes?: string[];

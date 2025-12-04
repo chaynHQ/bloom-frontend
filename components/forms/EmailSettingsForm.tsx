@@ -24,9 +24,10 @@ const EmailSettingsForm = () => {
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
-  
+
   const [contactPermissionValue, setContactPermissionValue] = useState(contactPermission);
-  const [serviceEmailsPermissionValue, setServiceEmailsPermissionValue] = useState(serviceEmailsPermission);
+  const [serviceEmailsPermissionValue, setServiceEmailsPermissionValue] =
+    useState(serviceEmailsPermission);
 
   const onSubmit = useCallback(
     async (ev: React.FormEvent<HTMLFormElement>) => {
