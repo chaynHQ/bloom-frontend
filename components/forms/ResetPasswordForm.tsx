@@ -57,7 +57,7 @@ export const EmailForm = () => {
   };
   return (
     <Box>
-      <Typography mb={2}>{t('resetPasswordStep1')}</Typography>
+      <Typography mb={3}>{t('resetPasswordStep1')}</Typography>
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
         <SanitizedTextField
           id="email"
