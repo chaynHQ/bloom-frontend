@@ -1,4 +1,17 @@
-const API_URL = new URL(process.env.NEXT_PUBLIC_API_URL).hostname;
+const extractDomain = (url) => {
+  // 1. Remove protocol (http, https, ftp, etc.)
+  let domain = url.replace(/^[a-zA-Z]+:\/\//, '');
+
+  // 2. Remove everything after the first slash
+  domain = domain.split('/')[0];
+
+  // 3. Remove query parameters if no slash existed (e.g. example.com?q=1)
+  domain = domain.split('?')[0];
+
+  return domain;
+};
+
+const API_URL = extractDomain(process.env.NEXT_PUBLIC_API_URL);
 
 const scriptSrcUrls = [
   API_URL,
