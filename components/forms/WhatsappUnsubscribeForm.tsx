@@ -101,7 +101,7 @@ const WhatsappUnsubscribeForm = () => {
         </Box>
       </form>
       {formError && (
-        <Typography color="error.main" mb={2}>
+        <Typography color="error.main" my={2}>
           {formError}
         </Typography>
       )}
