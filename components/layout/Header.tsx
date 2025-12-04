@@ -109,7 +109,7 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          {getIntroduction()}
+          <Box mb={2}>{getIntroduction()}</Box>
           {progressStatus && <ProgressStatus status={progressStatus} />}
           {cta && <Box mt={4}>{cta}</Box>}
         </Box>

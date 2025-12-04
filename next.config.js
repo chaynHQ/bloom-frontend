@@ -125,15 +125,15 @@ module.exports = withBundleAnalyzer(
       // form-action: Restricts form actions to the same origin.
       // frame-ancestors: Restricts embedding to the same origin.
       async headers() {
-        const headers = [
+        return [
           {
             source: '/:path',
             headers: [
               {
-                key: 'Content-Security-Policy-Report-Only', // Leaving this as report only until we have caught all the CSP violations
+                key: 'Content-Security-Policy',
                 value: `
                   default-src 'self';
-                  script-src 'self' 'unsafe-eval' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
+                  script-src 'self' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
                   child-src 'self' blob:;
                   worker-src 'self' ${workerSrcUrls.join(' ')};
                   style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
@@ -145,30 +145,47 @@ module.exports = withBundleAnalyzer(
                   base-uri 'self';
                   form-action 'self';
                   frame-ancestors 'self';
+                  upgrade-insecure-requests;
                 `
                   .replace(/\s{2,}/g, ' ')
                   .trim(),
               },
               {
                 key: 'Referrer-Policy',
-                value: 'origin-when-cross-origin',
+                value: 'strict-origin-when-cross-origin',
               },
               {
                 key: 'X-Content-Type-Options',
                 value: 'nosniff',
               },
+              {
+                key: 'X-Frame-Options',
+                value: 'DENY',
+              },
+              {
+                key: 'X-XSS-Protection',
+                value: '1; mode=block',
+              },
+              {
+                key: 'Permissions-Policy',
+                value:
+                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=()',
+              },
+              {
+                key: 'Cross-Origin-Opener-Policy',
+                value: 'same-origin-allow-popups',
+              },
+              ...(process.env.NODE_ENV === 'production'
+                ? [
+                    {
+                      key: 'Strict-Transport-Security',
+                      value: 'max-age=31536000; includeSubDomains; preload',
+                    },
+                  ]
+                : []),
             ],
           },
         ];
-        // This enforces HTTPS for all requests so we don't want this for local development
-        if (process.env.NODE_ENV === 'production') {
-          headers[0].headers.push({
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload',
-          });
-        }
-
-        return headers;
       },
     }),
   ),
