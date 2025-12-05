@@ -1,7 +1,7 @@
 const API_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:35001'
-    : new URL(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:35001').hostname;
+    : `https://${new URL(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:35001').hostname}`;
 
 const scriptSrcUrls = [
   API_URL,
@@ -60,6 +60,7 @@ const imgSrcUrls = [
 const connectSrcUrls = [
   API_URL,
   'https://*.hotjar.com',
+  'https://*.hotjar.io',
   'wss://ws.hotjar.com',
   'https://*.googletagmanager.com',
   'https://*.googleapis.com',
