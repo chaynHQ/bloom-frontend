@@ -28,7 +28,7 @@ describe('Superadmin MFA Flow', () => {
   });
 
   it('should show MFA setup form for superadmin without MFA', () => {
-    const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+    const testEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
     const password = 'testpassword';
 
     // Mock the user API response to return a superadmin without MFA
@@ -73,7 +73,7 @@ describe('Superadmin MFA Flow', () => {
   });
 
   it('should complete MFA setup with phone number and verification code', () => {
-    const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+    const testEmail = `cypresstestemail+${Date.now() + 2}@chayn.co`;
     const password = 'testpassword';
 
     // Mock superadmin user without MFA
@@ -134,7 +134,7 @@ describe('Superadmin MFA Flow', () => {
   });
 
   it('should require email verification before MFA setup', () => {
-    const testEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+    const testEmail = `cypresstestemail+${Date.now() + 3}@chayn.co`;
     const password = 'testpassword';
 
     // Mock superadmin user with unverified email
