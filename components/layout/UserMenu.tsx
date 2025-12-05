@@ -3,7 +3,6 @@
 import { Link as i18nLink } from '@/i18n/routing';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import Logout from '@mui/icons-material/Logout';
-import LocalHospital from '@mui/icons-material/LocalHospital';
 import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
@@ -19,6 +18,7 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
+import { Event } from '@mui/icons-material';
 import { navDrawerButtonStyle } from './TopBar';
 
 const menuItemStyle = {
@@ -95,11 +95,11 @@ export default function UserMenu() {
           </MenuItem>
         )}
         {!!therapyAccess && (
-          <MenuItem sx={menuItemStyle}>
+          <MenuItem sx={{ ...menuItemStyle, display: { xs: 'block', md: 'none' } }}>
             <Button
               href="/therapy/book-session"
               component={i18nLink}
-              startIcon={<LocalHospital />}
+              startIcon={<Event />}
               onClick={() => {
                 logEvent(SECONDARY_HEADER_THERAPY_CLICKED);
                 handleClose();

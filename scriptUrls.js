@@ -1,4 +1,10 @@
+const API_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:35001'
+    : `https://${new URL(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:35001').hostname}`;
+
 const scriptSrcUrls = [
+  API_URL,
   'https://*.google-analytics.com',
   'https://identitytoolkit.googleapis.com',
   'https://*.hotjar.com',
@@ -23,7 +29,6 @@ const scriptSrcUrls = [
   'https://static.hotjar.com',
   'https://app.storyblok.com',
   'https://client.crisp.chat',
-  process.env.NEXT_PUBLIC_API_URL,
   'wss://client.relay.crisp.chat',
   'https://apis.google.com',
   'https://va.vercel-scripts.com/',
@@ -53,7 +58,9 @@ const imgSrcUrls = [
   'https://i.ytimg.com',
 ];
 const connectSrcUrls = [
+  API_URL,
   'https://*.hotjar.com',
+  'https://*.hotjar.io',
   'wss://ws.hotjar.com',
   'https://*.googletagmanager.com',
   'https://*.googleapis.com',
@@ -70,8 +77,7 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
-  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:35001'] : []),
-  process.env.NEXT_PUBLIC_API_BASE_URL,
+  'https://vercel.live',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',

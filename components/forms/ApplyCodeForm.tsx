@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useAssignPartnerAccessMutation } from '@/lib/api';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { PARTNER_ACCESS_CODE_STATUS } from '@/lib/constants/enums';
@@ -11,7 +12,7 @@ import {
 } from '@/lib/constants/events';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, List, ListItem, TextField, Typography } from '@mui/material';
+import { Box, Link, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -135,9 +136,9 @@ const ApplyCodeForm = () => {
       <Typography mb={2}>{t('formIntroduction')}</Typography>
 
       <form autoComplete="off" onSubmit={submitHandler}>
-        <TextField
+        <SanitizedTextField
           id="accessCode"
-          onChange={(e) => setCodeInput(e.target.value)}
+          onChange={setCodeInput}
           label={t.rich('form.codeLabel')}
           variant="standard"
           fullWidth

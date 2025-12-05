@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useGetPartnersQuery, useUpdatePartnerActiveMutation } from '@/lib/api';
 import {
   UPDATE_PARTNER_ACTIVE_ERROR,
@@ -10,7 +11,7 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -35,10 +36,10 @@ const UpdatePartnerActiveForm = () => {
   >();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const selectPartner = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const selectPartner = (value: string) => {
     setLoading(true);
-    setSelectedPartner(event.target.value);
-    const partner = partners.find((partner) => partner.id === event.target.value);
+    setSelectedPartner(value);
+    const partner = partners.find((partner) => partner.id === value);
     if (partner) {
       setIsActive(partner.isActive);
       setSelectedPartnerName(partner.name);
@@ -117,7 +118,7 @@ const UpdatePartnerActiveForm = () => {
 
   return (
     <form autoComplete="off" onSubmit={submitHandler}>
-      <TextField
+      <SanitizedTextField
         id="selectPartner"
         name="selectPartner"
         key="select-partner"
@@ -134,7 +135,7 @@ const UpdatePartnerActiveForm = () => {
             {option.name}
           </MenuItem>
         ))}
-      </TextField>
+      </SanitizedTextField>
 
       {formError && <Typography color="error.main">{formError}</Typography>}
 

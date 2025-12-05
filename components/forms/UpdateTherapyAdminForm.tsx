@@ -3,6 +3,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { api, useUpdatePartnerAccessMutation } from '@/lib/api';
 import { UPDATE_THERAPY_SESSIONS, UPDATE_THERAPY_SESSIONS_ERROR } from '@/lib/constants/events';
 import { useAppDispatch } from '@/lib/hooks/store';
@@ -10,16 +11,7 @@ import { GetUserDto } from '@/lib/store/userSlice';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  debounce,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, debounce, Grid, IconButton, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { SyntheticEvent, useEffect, useState } from 'react';
@@ -175,10 +167,11 @@ const UpdateTherapyAdminForm = () => {
         id="user-email-address-search"
         includeInputInList
         renderInput={(params) => (
-          <TextField
+          <SanitizedTextField
             {...params}
             label={t('emailLabel')}
             variant="standard"
+            // @ts-ignore
             value={autocompleteInputValue}
           />
         )}

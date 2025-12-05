@@ -45,7 +45,7 @@ function getDescriptionContainerStyle(totalPartners: number) {
 
 const footerContainerStyle = {
   backgroundColor: 'common.white',
-  paddingY: { xs: 6, md: 10 },
+  paddingY: { xs: 6, md: 8 },
 } as const;
 
 const footerContentRowStyle = {
@@ -157,6 +157,14 @@ const Footer = () => {
               target="_blank"
             >
               {tS('footer.policies')}
+            </Link>
+            <Link
+              display="block"
+              mt={2}
+              href="https://app.eu.vanta.com/chayn.co/trust/yrbp5r3nj96a1dlq15h0y"
+              target="_blank"
+            >
+              {tS('footer.trustCenter')}
             </Link>
           </Box>
           <Box sx={partnersContainerStyle}>

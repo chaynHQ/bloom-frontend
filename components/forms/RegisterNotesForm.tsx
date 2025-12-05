@@ -1,4 +1,5 @@
 'use client';
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { Link as i18nLink } from '@/i18n/routing';
 import { useSubscribeToWhatsappMutation } from '@/lib/api';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
@@ -18,7 +19,6 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  TextField,
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -128,9 +128,9 @@ const RegisterNotesForm = () => {
       <Box sx={formStyle}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField
+            <SanitizedTextField
               id="name"
-              onChange={(e) => setNameInput(e.target.value)}
+              onChange={setNameInput}
               label={t('nameLabel')}
               variant="standard"
               fullWidth
@@ -144,9 +144,9 @@ const RegisterNotesForm = () => {
         </Grid>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField
+            <SanitizedTextField
               id="email"
-              onChange={(e) => setEmailInput(e.target.value)}
+              onChange={setEmailInput}
               label={t('emailLabel')}
               variant="standard"
               type="email"
@@ -156,9 +156,9 @@ const RegisterNotesForm = () => {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField
+            <SanitizedTextField
               id="password"
-              onChange={(e) => setPasswordInput(e.target.value)}
+              onChange={setPasswordInput}
               label={t('passwordLabel')}
               type="password"
               variant="standard"

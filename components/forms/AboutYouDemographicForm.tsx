@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { usePathname, useRouter } from '@/i18n/routing';
 import countries from '@/lib/constants/countries';
 import { LANGUAGES } from '@/lib/constants/enums';
@@ -26,7 +27,6 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-  TextField,
   Typography,
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -207,7 +207,7 @@ const AboutYouDemographicForm = () => {
             }
             fullWidth
             renderInput={(params) => (
-              <TextField
+              <SanitizedTextField
                 {...params}
                 InputLabelProps={{ shrink: true }}
                 sx={staticFieldLabelStyle}
@@ -330,7 +330,7 @@ const AboutYouDemographicForm = () => {
               label={t('neurodivergentLabels.4')}
             />
           </Box>
-          <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
+          <FormHelperText sx={{ m: 0, mt: '0.5rem !important' }}>
             {t('neurodivergentHelpText')}
           </FormHelperText>
         </FormControl>
@@ -339,9 +339,9 @@ const AboutYouDemographicForm = () => {
           <FormLabel component="legend" sx={{ mb: 2 }}>
             {t.rich('raceEthnNatnLabel')}
           </FormLabel>
-          <TextField
+          <SanitizedTextField
             id="raceEthnNatn"
-            onChange={(e) => setRaceEthnNatn(e.target.value)}
+            onChange={setRaceEthnNatn}
             value={raceEthnNatn}
             variant="standard"
             fullWidth
@@ -374,7 +374,7 @@ const AboutYouDemographicForm = () => {
             }}
             popupIcon={<KeyboardArrowDown />}
             renderInput={(params) => (
-              <TextField
+              <SanitizedTextField
                 {...params}
                 required
                 variant="standard"

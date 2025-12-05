@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useUpdateUserMutation } from '@/lib/api';
 import { logout } from '@/lib/auth';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
@@ -7,7 +8,7 @@ import { UPDATE_USER_ALREADY_EXISTS } from '@/lib/constants/errors';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Box, Link, TextField, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import ConfirmDialog from './ConfirmDialog';
@@ -85,7 +86,7 @@ const ProfileSettingsForm = () => {
   return (
     <Box sx={containerStyle}>
       <form onSubmit={onSubmit}>
-        <TextField
+        <SanitizedTextField
           id="name"
           name="name"
           value={nameInput}
@@ -93,12 +94,12 @@ const ProfileSettingsForm = () => {
           variant="standard"
           fullWidth
           required
-          onChange={(ev) => {
-            setNameInput(ev.target.value);
+          onChange={(newValue) => {
+            setNameInput(newValue);
             setIsSuccess(false);
           }}
         />
-        <TextField
+        <SanitizedTextField
           id="email"
           name="email"
           defaultValue={email}
@@ -107,8 +108,8 @@ const ProfileSettingsForm = () => {
           type="email"
           fullWidth
           required
-          onChange={(ev) => {
-            setEmailInput(ev.target.value);
+          onChange={(newValue) => {
+            setEmailInput(newValue);
             setIsSuccess(false);
           }}
         />
