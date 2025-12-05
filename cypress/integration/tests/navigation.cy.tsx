@@ -46,7 +46,7 @@ describe('Navigation', () => {
 
   describe('A logged in bumble user', () => {
     before(() => {
-      const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const newUserEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
       const password = 'testpassword';
       cy.cleanUpTestState();
 
@@ -92,7 +92,7 @@ describe('Navigation', () => {
 
   describe('A logged in badoo user with therapy access', () => {
     before(() => {
-      const newUserEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+      const newUserEmail = `cypresstestemail+${Date.now() + 2}@chayn.co`;
       const password = 'testpassword';
       cy.cleanUpTestState();
 

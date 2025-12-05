@@ -28,7 +28,7 @@ describe('User account settings page', () => {
   });
 
   it('Should successfully update email', () => {
-    const newEmail = `cypresstestemail+${Date.now()}@chayn.co`;
+    const newEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
     cy.visit('/account/settings');
     cy.get('#email').clear().type(newEmail);
     cy.get('#profile-settings-submit').click();
