@@ -78,6 +78,7 @@ const connectSrcUrls = [
   'https://*.youtube.com',
   'https://www.youtube.com',
   'https://vercel.live',
+  process.env.NEXT_PUBLIC_API_URL,
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
