@@ -2871,10 +2871,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@reduxjs/toolkit@^2.8.2":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.11.0.tgz#71930f79d22d37bcc779ec424b393ceb07c8fd07"
-  integrity sha512-hBjYg0aaRL1O2Z0IqWhnTLytnjDIxekmRxm1snsHjHaKVmIF1HiImWqsq+PuEbn6zdMlkIj9WofK1vR8jjx+Xw==
+"@reduxjs/toolkit@^2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.11.1.tgz#69553cb3f7d60582c7a96682c381a38de98de9f4"
+  integrity sha512-HjhlEREguAyBTGNzRlGNiDHGQ2EjLSPWwdhhpoEqHYy8hWak3Dp6/fU72OfqVsiMb8S6rbfPsWUF24fxpilrVA==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@standard-schema/utils" "^0.3.0"
@@ -2983,20 +2983,20 @@
   resolved "https://registry.yarnpkg.com/@standard-schema/utils/-/utils-0.3.0.tgz#3d5e608f16c2390c10528e98e59aef6bf73cae7b"
   integrity sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==
 
-"@storyblok/js@4.4.2":
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-4.4.2.tgz#8ff2dba2c57edd36df4e6afec733b2e1385e0b7c"
-  integrity sha512-0bO8i5j62JcofFyhxlAZVII9wjnBYUPeE+8Km/HlhmsRm/d6VV7Gd5NiquaNma/VZXxzZUw/n1Uppardyfu+/g==
+"@storyblok/js@4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-4.4.3.tgz#67131bcb40eab304c860c2fe712e65fce450046b"
+  integrity sha512-EBJicZkDjAQ2iep5UOE3pOnCIYCr7Qm7mue2gKVk1u5QGgupHTBvTgnfZFYJit+ochDxN/bYfIlXlBrF975nNA==
   dependencies:
     "@storyblok/richtext" "3.8.2"
-    storyblok-js-client "7.2.0"
+    storyblok-js-client "7.2.1"
 
-"@storyblok/react@^5.0.0":
-  version "5.4.19"
-  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-5.4.19.tgz#c054a6fa4013213c296d2ab93584d482b5eda8ff"
-  integrity sha512-0T6zJOmJbnfMMJ4BHbTtYLns6CYbWcBBvTcud3Y0N4fPId8XtlleFe8h219hnX2MmX+KSX+dBCtJVqmryhVXYQ==
+"@storyblok/react@^5.4.20":
+  version "5.4.20"
+  resolved "https://registry.yarnpkg.com/@storyblok/react/-/react-5.4.20.tgz#fda0596ee12c4126a47d0170c74072d5cb57d9c0"
+  integrity sha512-X49OvDJwVyCxKb+MQk2py0wY/IWy3yF0zaxGZw9aOq2U4kuBxH/34BQiUKtxhhMOBFeNacUm0HvcW6bg6DCmMg==
   dependencies:
-    "@storyblok/js" "4.4.2"
+    "@storyblok/js" "4.4.3"
 
 "@storyblok/richtext@3.8.2":
   version "3.8.2"
@@ -3298,12 +3298,12 @@
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.12.tgz#b5d76568485b02a307238270bfe96cb51ee2a044"
   integrity sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==
 
-"@types/react@19.1.4":
-  version "19.1.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.1.4.tgz#4d125f014d6ac26b4759775698db118701e314fe"
-  integrity sha512-EB1yiiYdvySuIITtD5lhW4yPyJ31RkJkkDw794LaQYrxCSaQV/47y5o1FMC4zF9ZyjUjzJMZwbovEnT5yHTW6g==
+"@types/react@19.2.7":
+  version "19.2.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.7.tgz#84e62c0f23e8e4e5ac2cadcea1ffeacccae7f62f"
+  integrity sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==
   dependencies:
-    csstype "^3.0.2"
+    csstype "^3.2.2"
 
 "@types/resolve@1.17.1":
   version "1.17.1"
@@ -4539,7 +4539,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.2, csstype@^3.1.3:
+csstype@^3.0.2, csstype@^3.1.3, csstype@^3.2.2:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.2.3.tgz#ec48c0f3e993e50648c86da559e2610995cf989a"
   integrity sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==
@@ -8243,10 +8243,10 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
-phone@^3.1.59:
-  version "3.1.67"
-  resolved "https://registry.yarnpkg.com/phone/-/phone-3.1.67.tgz#ead28333463f97c35d56d53b8099f61f0c1d9db8"
-  integrity sha512-7XdKmQYhKcoDXQWM8lnnPMhcLrPEIo2uQByJu4Seo2ZfvOgonr2tP9ueBjZRdxIhfm8X1VeZU0+JRrEyJSs1SQ==
+phone@^3.1.68:
+  version "3.1.68"
+  resolved "https://registry.yarnpkg.com/phone/-/phone-3.1.68.tgz#aa1482decf7793eccb9164d21c28d9bc75843563"
+  integrity sha512-fuRcczfzmpf6tC5erj7Mpn+pgReC4OM75JCzYYAaNGf/2RgcEK19sT8raXOhBqT6ZQtiRhzG+GJ3Kdypj5nzfA==
 
 picocolors@1.1.1, picocolors@^1.0.0, picocolors@^1.1.1:
   version "1.1.1"
@@ -8494,12 +8494,12 @@ react-cookie-consent@^9.0.0:
   dependencies:
     js-cookie "^2.2.1"
 
-react-dom@19.1.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.0.tgz#133558deca37fa1d682708df8904b25186793623"
-  integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
+react-dom@19.2.1:
+  version "19.2.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.2.1.tgz#ce3527560bda4f997e47d10dab754825b3061f59"
+  integrity sha512-ibrK8llX2a4eOskq1mXKu/TGZj9qzomO+sNfO98M6d9zIPOEhlBkMkBUBLd1vgS0gQsLDBzA+8jJBVXDnfHmJg==
   dependencies:
-    scheduler "^0.26.0"
+    scheduler "^0.27.0"
 
 react-fast-compare@^3.0.1:
   version "3.2.2"
@@ -8560,10 +8560,10 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@19.1.0:
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-19.1.0.tgz#926864b6c48da7627f004795d6cce50e90793b75"
-  integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==
+react@19.2.1:
+  version "19.2.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.2.1.tgz#8600fa205e58e2e807f6ef431c9f6492591a2700"
+  integrity sha512-DGrYcCWK7tvYMnWh79yrPHt+vdx9tY+1gPZa7nJQtO/p8bLTDaHp4dzwEhQB7pZ4Xe3ok4XKuEPrVuc+wlpkmw==
 
 readable-stream@^2.0.2, readable-stream@^2.2.2:
   version "2.3.8"
@@ -8898,10 +8898,10 @@ saxes@^6.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-scheduler@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.26.0.tgz#4ce8a8c2a2095f13ea11bf9a445be50c555d6337"
-  integrity sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==
+scheduler@^0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.27.0.tgz#0c4ef82d67d1e5c1e359e8fc76d3a87f045fe5bd"
+  integrity sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==
 
 schema-utils@^2.6.5:
   version "2.7.1"
@@ -9228,10 +9228,10 @@ stop-iteration-iterator@^1.1.0:
     es-errors "^1.3.0"
     internal-slot "^1.1.0"
 
-storyblok-js-client@7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-7.2.0.tgz#217ffe76990f58c17d383f91c5cbb506990db803"
-  integrity sha512-FoZVoVZK2/s50EyfSZ0RKu5o3Zt8aaCMtpfXUKYeXFi8wS9bxkn7/hBh3ytz5dM6yZ6Q2oUQQQ/jmhw7KdB7Jg==
+storyblok-js-client@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-7.2.1.tgz#b96a940fc3ffec65a9c960a1648878c26f67179a"
+  integrity sha512-dx6BOkzFcClubN2pXHAFLAMXBsTzcHVlDbKVJtUSNw17ftfyiq12mj92HiYtXlIPw+3I0U6VTPBxoYAEIPEK0Q==
 
 storyblok-rich-text-react-renderer@^3.0.1:
   version "3.0.1"
