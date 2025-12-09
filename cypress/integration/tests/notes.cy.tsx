@@ -115,7 +115,7 @@ describe('Notes from Bloom page', () => {
   });
 
   describe('Authenticated user - subscribed', () => {
-    const TEST_EMAIL = `cypresstestemail+${Date.now()}@chayn.co`;
+    const TEST_EMAIL = `cypresstestemail+${Date.now() + 1}@chayn.co`;
     const TEST_PASSWORD = 'testpassword123';
     const PHONE_NUMBER = '+447700900000';
 

@@ -26,7 +26,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "Partnership mein",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Humari policies"
+      "policies": "Humari policies",
+      "trustCenter": "Trust Center"
     },
     "maintenanceBanner": {
       "title": "Rakharakhaav ke lie Bloom band hai",
@@ -157,6 +158,7 @@
       "title": "Nihshulk sahaayak sandesh",
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
-    }
+    },
+    "characterCount": "{current}/{max} अक्षर"
   }
 }

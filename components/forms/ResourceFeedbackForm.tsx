@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateResourceFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { ResourceFeedback } from '@/lib/store/resourcesSlice';
@@ -14,7 +15,6 @@ import {
   Radio,
   RadioGroup,
   SxProps,
-  TextField,
   Theme,
   Typography,
 } from '@mui/material';
@@ -29,6 +29,9 @@ const fieldBoxStyle: SxProps<Theme> = {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '12px 12px',
+    '&:hover': {
+      backgroundColor: 'background.default',
+    },
   },
 };
 
@@ -149,10 +152,10 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
           </RadioGroup>
         </FormControl>
 
-        <TextField
+        <SanitizedTextField
           id="feedbackDescription"
           placeholder={t.rich('textboxDefaultText')?.toString()}
-          onChange={(e) => setFeedbackDescription(e.target.value)}
+          onChange={setFeedbackDescription}
           value={feedbackDescription}
           sx={fieldBoxStyle}
           variant="filled"

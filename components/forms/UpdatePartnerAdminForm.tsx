@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { api, useUpdatePartnerAdminMutation } from '@/lib/api';
 import { UPDATE_PARTNER_ADMIN, UPDATE_PARTNER_ADMIN_ERROR } from '@/lib/constants/events';
 import { useAppDispatch } from '@/lib/hooks/store';
@@ -15,7 +16,6 @@ import {
   debounce,
   FormControl,
   FormControlLabel,
-  TextField,
   Typography,
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
@@ -160,10 +160,11 @@ const UpdatePartnerAdminForm = () => {
         includeInputInList
         isOptionEqualToValue={(option, value) => option.user.id === value.user.id}
         renderInput={(params) => (
-          <TextField
+          <SanitizedTextField
             {...params}
             label={t('emailLabel')}
             variant="standard"
+            // @ts-ignore
             value={autocompleteInputValue}
           />
         )}

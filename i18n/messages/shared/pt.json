@@ -25,7 +25,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "Em parceria com ",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Nossas políticas"
+      "policies": "Nossas políticas",
+      "trustCenter": "Centro de Confiança"
     },
     "maintenanceBanner": {
       "title": "Bloom está em manutenção",
@@ -156,6 +157,7 @@
       "title": "Mensagens de apoio gratuitas",
       "description": "Receba mensagens duas vezes por semana diretamente no seu WhatsApp",
       "buttonText": "Inscrever-se"
-    }
+    },
+    "characterCount": "{current}/{max} caracteres"
   }
 }
