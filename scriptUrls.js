@@ -20,6 +20,7 @@ const scriptSrcUrls = [
   'https://*.googleapis.com',
   'https://noembed.com',
   'https://www.youtube.com',
+  'https://i.ytimg.com',
   'https://*.hotjar.io',
   'https://*.rollbar.com',
   'https://*.simplybook.it',
@@ -56,6 +57,7 @@ const imgSrcUrls = [
   'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
+  'https://cdnjs.cloudflare.com',
 ];
 const connectSrcUrls = [
   API_URL,
@@ -77,6 +79,7 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
+  'https://i.ytimg.com',
   'https://vercel.live',
 ];
 const frameSrcUrls = [
