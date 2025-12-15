@@ -45,7 +45,7 @@ const appBarContainerStyles = {
 const logoContainerStyle = {
   position: 'relative',
   width: { xs: 80, sm: 120 },
-  marginLeft: { xs: 3, md: 0 },
+  marginLeft: { xs: 3, sm: 0 },
   height: 48,
 } as const;
 
@@ -53,24 +53,8 @@ const menusContainerStyle = {
   ...rowStyle,
   alignItems: 'center',
   alignContent: 'center',
-  mr: { xs: 1, sm: -1 },
-} as const;
-
-export const navDrawerButtonStyle = {
-  color: 'common.white',
-  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
-  '& .MuiButton-startIcon': {
-    mx: 0,
-    '& svg': { fontSize: { xs: '1.25rem', sm: '1.5rem' } },
-  },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
-  },
-  px: { xs: 0.75, sm: 1 },
-  minWidth: 'unset',
-  width: { xs: 32, sm: 38 },
-  height: { xs: 32, sm: 38 },
+  gap: { xs: 1, sm: 1.5 },
+  pr: { xs: 2, sm: 0 },
 } as const;
 
 const TopBar = () => {
@@ -80,6 +64,9 @@ const TopBar = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
+  const userLoading = useTypedSelector(
+    (state) => state.user.authStateLoading || state.user.loading,
+  );
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -120,11 +107,11 @@ const TopBar = () => {
           <Box sx={menusContainerStyle}>
             {!isSmallScreen && <DesktopTopNav />}
             {isSmallScreen && <LanguageMenu />}
-            {userId && !isMaintenanceMode && <UserMenu />}
+            {!userLoading && userId && !isMaintenanceMode && <UserMenu />}
             {!isSmallScreen && <LanguageMenu />}
             {!isMaintenanceMode && (
               <>
-                {!userId && (
+                {!userLoading && !userId && (
                   <Button
                     variant="contained"
                     size={isSmallScreen ? 'small' : 'medium'}
@@ -133,7 +120,6 @@ const TopBar = () => {
                       width: 'auto',
                       height: { xs: 32, sm: 38 },
                       ml: 1,
-                      mr: { xs: 1, md: 0 },
                       px: { xs: 1.5, sm: 2 },
                       fontSize: { xs: '0.75rem', sm: '0.875rem' },
                     }}
@@ -146,9 +132,9 @@ const TopBar = () => {
                     {t('login')}
                   </Button>
                 )}
-                {isSmallScreen && <MobileTopNav />}
               </>
             )}
+            {isSmallScreen && <MobileTopNav />}
           </Box>
         </Container>
         {!isSmallScreen && !isMaintenanceMode && <DesktopMainNav />}
