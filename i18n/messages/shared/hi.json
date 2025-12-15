@@ -159,6 +159,9 @@
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
     },
-    "characterCount": "{current}/{max} अक्षर"
+    "characterCount": "{current}/{max} अक्षर",
+    "scrollToSignUp": {
+      "button": "Muft mein sign up karein"
+    }
   }
 }

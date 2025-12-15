@@ -2,6 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { CrispIframe } from '@/components/crisp/CrispIframe';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -45,6 +46,7 @@ export default function MessagingPage({ story }: Props) {
     introduction: story.content.description,
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
+    cta: !userId ? <ScrollToSignUpButton /> : undefined,
   };
 
   return (
