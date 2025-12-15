@@ -59,15 +59,18 @@ const menusContainerStyle = {
 export const navDrawerButtonStyle = {
   color: 'common.white',
   ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
-  '& .MuiButton-startIcon': { mx: 0 },
+  '& .MuiButton-startIcon': {
+    mx: 0,
+    '& svg': { fontSize: { xs: '1.25rem', sm: '1.5rem' } },
+  },
   '& .MuiTouchRipple-root span': {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  px: 1,
+  px: { xs: 0.75, sm: 1 },
   minWidth: 'unset',
-  width: 38,
-  height: 38,
+  width: { xs: 32, sm: 38 },
+  height: { xs: 32, sm: 38 },
 } as const;
 
 const TopBar = () => {
@@ -121,12 +124,19 @@ const TopBar = () => {
             {!isSmallScreen && <LanguageMenu />}
             {!isMaintenanceMode && (
               <>
-                {!isSmallScreen && !userId && (
+                {!userId && (
                   <Button
                     variant="contained"
-                    size="medium"
+                    size={isSmallScreen ? 'small' : 'medium'}
                     qa-id="login-menu-button"
-                    sx={{ width: 'auto', ml: 1 }}
+                    sx={{
+                      width: 'auto',
+                      height: { xs: 32, sm: 38 },
+                      ml: 1,
+                      mr: { xs: 1, md: 0 },
+                      px: { xs: 1.5, sm: 2 },
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    }}
                     component={i18nLink}
                     href="/auth/login"
                     onClick={() => {

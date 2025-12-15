@@ -291,7 +291,6 @@ export default function BookTherapyPage({ story }: Props) {
         {...headerProps}
         cta={
           <Button
-            sx={{ mt: -2 }}
             variant="contained"
             color="secondary"
             size="large"

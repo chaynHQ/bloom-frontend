@@ -2,7 +2,6 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import {
-  DRAWER_LOGIN_CLICKED,
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
 } from '@/lib/constants/events';
@@ -49,19 +48,9 @@ const listButtonStyle = {
   },
 } as const;
 
-const loginButtonStyle = {
-  width: 'auto',
-  ml: 2,
-  mt: 1,
-  color: 'text.primary !important',
-} as const;
-
 const MobileTopNav = () => {
   const t = useTranslations('Navigation');
 
-  const userLoading = useTypedSelector((state) => state.user.loading);
-  const userId = useTypedSelector((state) => state.user.id);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -130,22 +119,6 @@ const MobileTopNav = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          {!userLoading && !userId && (
-            <li>
-              <Button
-                variant="contained"
-                size="large"
-                sx={loginButtonStyle}
-                href="/auth/login"
-                component={i18nLink}
-                onClick={() => {
-                  logEvent(DRAWER_LOGIN_CLICKED);
-                }}
-              >
-                {t('login')}
-              </Button>
-            </li>
-          )}
         </List>
       </Drawer>
     </Box>
