@@ -42,8 +42,8 @@ export const breadcrumbButtonStyle = {
   },
   position: 'fixed',
   px: 2,
-  left: { xs: 16, lg: 80 },
-  top: { xs: 68, sm: 80, md: 150, lg: 160 },
+  left: { xs: 16, lg: '8%' },
+  top: { xs: 68, sm: 80, md: 160 },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
 } as const;
