@@ -6,17 +6,19 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { breadcrumbButtonStyle } from '@/styles/common';
-import theme from '@/styles/theme';
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const breadcrumbButtonsStyle = {
-  display: { xs: 'flex', md: 'block' },
-  flexDirection: 'column',
-  gap: 1,
+  ...breadcrumbButtonStyle,
+  maxWidth: 'calc(100vw - 190px)',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  display: 'block',
 } as const;
 
 interface SessionHeaderProps {
@@ -34,8 +36,6 @@ export const SessionHeader = (props: SessionHeaderProps) => {
 
   const t = useTranslations('Courses');
   const locale = useLocale();
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [weekString, setWeekString] = useState<string>('');
 
@@ -64,10 +64,6 @@ export const SessionHeader = (props: SessionHeaderProps) => {
     });
   }, [storyUuid, course.content.weeks]);
 
-  const courseNameEllipses =
-    isSmallScreen && course.content.name.length > 20
-      ? `${course.content.name.substring(0, 20)}...`
-      : course.content.name;
   return (
     <Header
       title={headerProps.title}
@@ -82,13 +78,9 @@ export const SessionHeader = (props: SessionHeaderProps) => {
           variant="contained"
           component={i18nLink}
           href={getDefaultFullSlug(course.full_slug, locale)}
-          sx={{
-            ...breadcrumbButtonStyle,
-            whiteSpace: isSmallScreen ? 'normal' : 'nowrap',
-            wordBreak: 'break-word',
-          }}
+          sx={breadcrumbButtonsStyle}
         >
-          {courseNameEllipses}
+          {course.content.name}
         </Button>
       </Box>
     </Header>

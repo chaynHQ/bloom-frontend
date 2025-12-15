@@ -14,7 +14,23 @@ import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } fro
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { navDrawerButtonStyle } from './TopBar';
+
+export const navDrawerButtonStyle = {
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
+  '& .MuiButton-startIcon': {
+    mx: 0,
+    '& svg': { fontSize: { xs: '1.25rem', sm: '1.5rem' } },
+  },
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
+  px: { xs: 0.75, sm: 1 },
+  minWidth: 'unset',
+  width: { xs: 32, sm: 38 },
+  height: { xs: 32, sm: 38 },
+} as const;
 
 const listStyle = {
   display: 'flex',
