@@ -54,7 +54,7 @@ const leftHeaderStyle = {
 
 const leftMetaStyle = {
   ...columnStyle,
-  gap: 2,
+  gap: 3,
 } as const;
 
 export const backButtonStyle = {
