@@ -188,7 +188,7 @@ export default function BookTherapyPage({ story }: Props) {
     logEvent(THERAPY_BOOKING_OPENED);
     setWidgetError(null);
     setIsWidgetModalOpen(true);
-    
+
     // Trigger script loading if not already loaded
     if (!isScriptLoaded && typeof (window as any).SimplybookWidget === 'undefined') {
       const existingScript = document.getElementById('widget-js');
@@ -249,9 +249,12 @@ export default function BookTherapyPage({ story }: Props) {
       } else if (retryCount < maxRetries && isWidgetModalOpen) {
         // Script not loaded yet, retry with exponential backoff
         retryCount++;
-        timeoutId = setTimeout(() => {
-          initializeWidget();
-        }, Math.min(1000 * Math.pow(2, retryCount - 1), 5000));
+        timeoutId = setTimeout(
+          () => {
+            initializeWidget();
+          },
+          Math.min(1000 * Math.pow(2, retryCount - 1), 5000),
+        );
       } else {
         setWidgetError(t('error.scriptNotLoaded'));
       }
