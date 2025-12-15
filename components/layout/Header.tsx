@@ -111,7 +111,7 @@ const Header = (props: HeaderProps) => {
           </Typography>
           <Box mb={2}>{getIntroduction()}</Box>
           {progressStatus && <ProgressStatus status={progressStatus} />}
-          {cta && <Box mt={4}>{cta}</Box>}
+          {cta && <Box>{cta}</Box>}
         </Box>
         <Box sx={rightHeaderStyle}>
           <Image
