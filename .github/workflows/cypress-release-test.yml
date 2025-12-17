@@ -2,7 +2,7 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**, '*test*', 'sanitize-form-fields']
+    branches: [develop, dependabot/**, '*test*', 'upgrade-nextjs']
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
