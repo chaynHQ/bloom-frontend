@@ -35,7 +35,6 @@ export default function usePWA() {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const isWindowDefined = typeof window !== 'undefined';
   const getPwaMetaData = useMemo(() => {
     if (typeof window === 'undefined') {
       return { browser: 'Unknown Browser', platform: 'Unknown OS' };
@@ -108,25 +107,30 @@ export default function usePWA() {
 
   // Derive banner state from conditions
   const bannerState = useMemo((): PwaBannerState => {
+    // Return Hidden during SSR to prevent window access
+    if (typeof window === 'undefined') {
+      return 'Hidden';
+    }
+
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
-    const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
-    const isIos =
-      typeof window !== 'undefined' &&
-      /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
 
     const isHidden =
       pwaBannerDismissedCookie ||
       user.pwaDismissed ||
       isStandalone ||
-      (window?.beforeinstallpromptEvent === undefined && !isIos);
+      (window.beforeinstallpromptEvent === undefined && !isIos);
 
     if (isHidden) return 'Hidden';
     if (installAttempted && isIos) return 'Ios';
     return 'Generic';
-  }, [user.pwaDismissed, installAttempted, isWindowDefined]);
+  }, [user.pwaDismissed, installAttempted]);
 
   // Set up appinstalled event listener
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     window.addEventListener('appinstalled', appInstalledCb);
 
     return () => {

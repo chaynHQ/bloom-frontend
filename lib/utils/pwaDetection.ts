@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 export interface PWAStatus {
   isInstalled: boolean;
@@ -89,12 +89,10 @@ export const detectPWA = (): PWAStatus | null => {
 
 /**
  * Hook to monitor PWA installation status
+ * Uses useSyncExternalStore to properly handle SSR and hydration
  */
 export const usePWAStatus = () => {
-  // Use lazy initialization to avoid calling detectPWA on every render
-  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(() => detectPWA());
-
-  useEffect(() => {
+  const subscribe = useCallback((onStoreChange: () => void) => {
     // Set up listeners for display mode changes
     const modeQueries = [
       window.matchMedia('(display-mode: standalone)'),
@@ -103,22 +101,23 @@ export const usePWAStatus = () => {
       window.matchMedia('(display-mode: window-controls-overlay)'),
     ];
 
-    const handleDisplayModeChange = () => {
-      setPwaStatus(detectPWA());
-    };
-
     modeQueries.forEach((query) => {
-      query.addEventListener('change', handleDisplayModeChange);
+      query.addEventListener('change', onStoreChange);
     });
 
     return () => {
       modeQueries.forEach((query) => {
-        query.removeEventListener('change', handleDisplayModeChange);
+        query.removeEventListener('change', onStoreChange);
       });
     };
   }, []);
 
-  return pwaStatus;
+  const getSnapshot = useCallback(() => detectPWA(), []);
+
+  // Return null during SSR
+  const getServerSnapshot = useCallback(() => null, []);
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };
 
 /**
