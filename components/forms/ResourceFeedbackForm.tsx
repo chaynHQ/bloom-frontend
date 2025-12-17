@@ -3,6 +3,8 @@
 import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateResourceFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { RESOURCE_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { ResourceFeedback } from '@/lib/store/resourcesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
@@ -97,31 +99,30 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
       await sendFeedback(feedbackData);
     }
 
+    logEvent(RESOURCE_FEEDBACK_SUBMITTED, { category, feedbackTags: selectedFeedbackTag });
     setLoading(false);
     setFormSubmitSuccess(true);
   };
 
-  const FormSuccess = () => (
-    <Box sx={containerStyle}>
-      <Typography component="h3" variant="h3">
-        {t('submissionText')}
-      </Typography>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={tS('alt.personTea')}
-          src={illustrationPerson4Peach}
-          fill
-          sizes={getImageSizes(imageContainerStyle.width)}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
-      </Box>
-    </Box>
-  );
-
   if (formSubmitSuccess) {
-    return <FormSuccess />;
+    return (
+      <Box sx={containerStyle}>
+        <Typography component="h3" variant="h3">
+          {t('submissionText')}
+        </Typography>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={tS('alt.personTea')}
+            src={illustrationPerson4Peach}
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+      </Box>
+    );
   }
 
   return (
@@ -142,7 +143,7 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
           >
             {Object.entries(FEEDBACK_TAGS).map(([_, tagText]) => (
               <FormControlLabel
-                key={`feedbackTags.${tagText}`}
+                key={`feedbackTags.${_}`}
                 value={tagText}
                 control={<Radio />}
                 label={t(`feedbackTags.${tagText}`)}

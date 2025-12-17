@@ -138,7 +138,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
     if (website_title) return website_title;
     let url = website.url.endsWith('/') ? website.url.slice(0, -1) : website.url;
     return url.replace('https://', '').replace('www.', '');
-  }, [website]);
+  }, [website, website_title]);
 
   return (
     <Card

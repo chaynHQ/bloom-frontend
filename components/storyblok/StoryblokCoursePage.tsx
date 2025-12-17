@@ -6,7 +6,6 @@ import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
 import { useGetUserCoursesQuery } from '@/lib/api';
-import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
@@ -17,9 +16,8 @@ import { Box, Container, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import LoadingContainer from '../common/LoadingContainer';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -72,19 +70,16 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const courses = useTypedSelector((state) => state.courses);
-  const [userAccess, setUserAccess] = useState<boolean>();
-  const [courseProgress, setCourseProgress] = useState<PROGRESS_STATUS>(
-    PROGRESS_STATUS.NOT_STARTED,
-  );
 
   useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
 
-  useEffect(() => {
+  // Derive user access from partner settings
+  const userAccess = useMemo(() => {
     const storyPartners = included_for_partners;
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-    const userHasAccess = hasAccessToPage(
+    return hasAccessToPage(
       isLoggedIn,
       true,
       storyPartners,
@@ -92,16 +87,13 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
       partnerAdmin,
       referralPartner,
     );
-    setUserAccess(userHasAccess);
   }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
 
-  useEffect(() => {
-    setCourseProgress(determineCourseProgress(courses || [], storyUuid));
-  }, [courses, storyUuid]);
-
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, []);
+  // Derive course progress from courses state
+  const courseProgress = useMemo(
+    () => determineCourseProgress(courses || [], storyUuid),
+    [courses, storyUuid],
+  );
 
   const eventData = {
     course_name: name,
@@ -109,7 +101,9 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     course_progress: courseProgress,
   };
 
-  if (userAccess === undefined) return <LoadingContainer />;
+  useEffect(() => {
+    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
+  });
 
   if (!userAccess) {
     return <ContentUnavailable />;

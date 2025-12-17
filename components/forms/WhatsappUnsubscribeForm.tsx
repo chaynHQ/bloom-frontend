@@ -17,7 +17,7 @@ import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
@@ -26,17 +26,15 @@ const WhatsappUnsubscribeForm = () => {
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
 
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [subscriptionId, setSubscriptionId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<ErrorDisplay>();
 
-  useEffect(() => {
+  const { phoneNumber, subscriptionId } = useMemo(() => {
     const activeWhatsappSubscription = findWhatsappSubscription(userActiveSubscriptions);
-    if (activeWhatsappSubscription) {
-      setPhoneNumber(activeWhatsappSubscription.subscriptionInfo!);
-      setSubscriptionId(activeWhatsappSubscription.id!);
-    }
+    return {
+      phoneNumber: activeWhatsappSubscription?.subscriptionInfo ?? '',
+      subscriptionId: activeWhatsappSubscription?.id ?? '',
+    };
   }, [userActiveSubscriptions]);
 
   const unsubscribeHandler = async (event: React.FormEvent<HTMLFormElement>) => {

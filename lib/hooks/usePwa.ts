@@ -27,7 +27,6 @@ interface BeforeInstallPromptEvent extends Event {
 const PWA_BANNER_DISMISSED = 'pwaBannerDismissed';
 
 export default function usePWA() {
-  const [bannerState, setBannerState] = useState<PwaBannerState>('Hidden');
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
@@ -64,7 +63,7 @@ export default function usePWA() {
               : 'Unknown Browser';
 
     return { browser, platform };
-  }, [isWindowDefined]);
+  }, []);
 
   const analyticsPayload = useMemo(() => {
     return {
@@ -78,7 +77,6 @@ export default function usePWA() {
       Cookies.set(PWA_BANNER_DISMISSED, 'true');
       logEvent(PWA_DISMISSED, getPwaMetaData);
     }
-    setBannerState('Hidden');
     await dispatch(setPwaDismissed(true));
 
     // Log the event for dismissing the installation
@@ -103,13 +101,13 @@ export default function usePWA() {
       logEvent(PWA_INSTALLED, getPwaMetaData);
     }
     window.beforeinstallpromptEvent = undefined;
-    setBannerState('Hidden');
 
     // Log the event for app installation
     logEvent(PWA_INSTALLED, analyticsPayload);
   }, [userCookiesAccepted, getPwaMetaData, analyticsPayload]);
 
-  useEffect(() => {
+  // Derive banner state from conditions
+  const bannerState = useMemo((): PwaBannerState => {
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
     const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
     const isIos =
@@ -122,16 +120,19 @@ export default function usePWA() {
       isStandalone ||
       (window?.beforeinstallpromptEvent === undefined && !isIos);
 
-    if (isHidden && bannerState !== 'Hidden') setBannerState('Hidden');
-    if (installAttempted && isIos && bannerState !== 'Ios') setBannerState('Ios');
-    if (!isHidden && !installAttempted && bannerState !== 'Generic') setBannerState('Generic');
+    if (isHidden) return 'Hidden';
+    if (installAttempted && isIos) return 'Ios';
+    return 'Generic';
+  }, [user.pwaDismissed, installAttempted, isWindowDefined]);
 
+  // Set up appinstalled event listener
+  useEffect(() => {
     window.addEventListener('appinstalled', appInstalledCb);
 
     return () => {
       window.removeEventListener('appinstalled', appInstalledCb);
     };
-  }, [user.pwaDismissed, installAttempted, bannerState, appInstalledCb]);
+  }, [appInstalledCb]);
 
   return {
     declineInstallation,

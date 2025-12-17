@@ -2,7 +2,7 @@
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { usePathname, useRouter } from '@/i18n/routing';
-import countries from '@/lib/constants/countries';
+import { countries } from '@/lib/constants/countries';
 import { LANGUAGES } from '@/lib/constants/enums';
 import {
   ABOUT_YOU_DEMO_ERROR,
@@ -32,7 +32,6 @@ import {
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from 'react';
 
 const rowStyles = {
@@ -54,7 +53,6 @@ const AboutYouDemographicForm = () => {
   const t = useTranslations('Account.aboutYou.demographicForm');
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const rollbar = useRollbar();
   const locale = useLocale();
 

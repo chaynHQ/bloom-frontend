@@ -89,31 +89,25 @@ const UpdatePartnerActiveForm = () => {
     setIsActive(null);
   };
 
-  const FormResetButton = () => (
-    <Box>
-      <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
-        {t('reset')}
-      </Button>
-    </Box>
-  );
-
-  const FormSuccess = () => (
-    <Box>
-      <Typography fontWeight={500} mb={1}>
-        {t.rich('successDescription', {
-          status: isActive ? 'inactive' : 'active',
-          partner: selectedPartnerName || 'partner',
-        })}
-      </Typography>
-      <Typography>
-        {t.rich(isActive ? 'inactiveSuccess' : 'activeSuccess', { partner: selectedPartnerName })}
-      </Typography>
-      <FormResetButton />
-    </Box>
-  );
-
   if (isSuccess) {
-    return <FormSuccess />;
+    return (
+      <Box>
+        <Typography fontWeight={500} mb={1}>
+          {t.rich('successDescription', {
+            status: isActive ? 'inactive' : 'active',
+            partner: selectedPartnerName || 'partner',
+          })}
+        </Typography>
+        <Typography>
+          {t.rich(isActive ? 'inactiveSuccess' : 'activeSuccess', { partner: selectedPartnerName })}
+        </Typography>
+        <Box>
+          <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
+            {t('reset')}
+          </Button>
+        </Box>
+      </Box>
+    );
   }
 
   return (

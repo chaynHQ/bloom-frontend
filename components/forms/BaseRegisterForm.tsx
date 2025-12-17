@@ -82,7 +82,8 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
           router.push(redirectPath);
           return true;
         }
-      } catch (err) {
+      } catch (error) {
+        rollbar.error('User register login error', JSON.stringify(error));
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => (
@@ -158,7 +159,7 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
   };
 };
 
-const BaseRegisterForm = ({ children, onSubmit, formError, loading }: BaseRegisterFormProps) => {
+const BaseRegisterForm = ({ children, onSubmit, formError }: BaseRegisterFormProps) => {
   return (
     <form autoComplete="off" onSubmit={onSubmit}>
       {children}

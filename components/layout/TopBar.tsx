@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import DesktopMainNav from './DesktopMainNav';
 import DesktopTopNav from './DesktopTopNav';
 import LanguageMenu from './LanguageMenu';
@@ -62,7 +62,6 @@ const TopBar = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
@@ -71,14 +70,15 @@ const TopBar = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  useEffect(() => {
+  const welcomeUrl = useMemo(() => {
     if (partnerAdmin && partnerAdmin.partner) {
-      setWelcomeUrl(`/welcome/${partnerAdmin.partner.name.toLowerCase()}`);
+      return `/welcome/${partnerAdmin.partner.name.toLowerCase()}`;
     }
     if (partnerAccesses.length > 0) {
-      setWelcomeUrl(`/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`);
+      return `/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`;
     }
-  }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
+    return '/';
+  }, [partnerAccesses, partnerAdmin]);
 
   return (
     <>

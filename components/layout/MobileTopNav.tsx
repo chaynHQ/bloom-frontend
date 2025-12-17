@@ -6,14 +6,14 @@ import {
   HEADER_NAVIGATION_MENU_OPENED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getTopNavItems, TopNavItem } from '@/lib/navigation/navigationConfig';
+import { getTopNavItems } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 export const navDrawerButtonStyle = {
   color: 'common.white',
@@ -70,7 +70,8 @@ const MobileTopNav = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [navigationLinks, setNavigationLinks] = useState<Array<TopNavItem>>([]);
+
+  const navigationLinks = useMemo(() => getTopNavItems(partnerAdmin, true), [partnerAdmin]);
 
   const open = Boolean(anchorEl);
 
@@ -82,12 +83,6 @@ const MobileTopNav = () => {
     setAnchorEl(null);
     logEvent(HEADER_NAVIGATION_MENU_CLOSED);
   };
-
-  useEffect(() => {
-    const links = getTopNavItems(partnerAdmin, true);
-    setNavigationLinks(links);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partnerAdmin]);
 
   return (
     <Box>

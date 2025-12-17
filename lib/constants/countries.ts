@@ -1,4 +1,4 @@
-export default [
+export const countries = [
   {
     code: 'AF',
     label: {

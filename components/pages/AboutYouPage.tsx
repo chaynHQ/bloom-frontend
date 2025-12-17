@@ -13,7 +13,7 @@ import { rowStyle } from '@/styles/common';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 
 const containerStyle = {
   ...rowStyle,
@@ -41,19 +41,12 @@ const getForm = (formLabel: string) => {
 };
 
 export default function AboutYouPage() {
-  const [questionSetParam, setQuestionSetParam] = useState<string>(SURVEY_FORMS.default);
   const searchParams = useSearchParams();
   const qParam = searchParams.get('q');
   const return_url = searchParams.get('return_url');
   const t = useTranslations('Account.aboutYou');
 
-  useEffect(() => {
-    if (qParam) {
-      setQuestionSetParam(qParam + '');
-    } else {
-      setQuestionSetParam(SURVEY_FORMS.default);
-    }
-  }, [qParam]);
+  const questionSetParam = useMemo(() => (qParam ? qParam : SURVEY_FORMS.default), [qParam]);
 
   useEffect(() => {
     logEvent(ABOUT_YOU_VIEWED);

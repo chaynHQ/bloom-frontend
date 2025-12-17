@@ -4,7 +4,7 @@ import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
 import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '@/lib/constants/events';
-import { PartnerContent, getAllPartnersContent } from '@/lib/constants/partners';
+import { getAllPartnersContent } from '@/lib/constants/partners';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
@@ -12,7 +12,7 @@ import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const containerStyle = {
   ...rowStyle,
@@ -50,11 +50,7 @@ export default function ApplyACodePage() {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
-
-  useEffect(() => {
-    setAllPartnersContent(getAllPartnersContent());
-  }, []);
+  const allPartnersContent = useMemo(() => getAllPartnersContent(), []);
 
   useEffect(() => {
     logEvent(ASSIGN_NEW_PARTNER_VIEWED);
