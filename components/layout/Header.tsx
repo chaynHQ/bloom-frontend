@@ -52,16 +52,18 @@ const leftHeaderStyle = {
   mt: { md: -2.5 },
 } as const;
 
+const leftMetaStyle = {
+  ...columnStyle,
+  gap: 3,
+} as const;
+
 export const backButtonStyle = {
-  display: { md: 'none' },
-  width: '2.5rem',
-  height: '2.5rem',
   ...breadcrumbButtonStyle,
+  display: { md: 'none' },
+  px: 'auto',
 } as const;
 
 export const backIconStyle = {
-  height: '1.75rem',
-  width: '1.75rem',
   color: 'primary.dark',
 } as const;
 
@@ -99,6 +101,7 @@ const Header = (props: HeaderProps) => {
           sx={backButtonStyle}
           onClick={() => router.back()}
           aria-label={tS('navigateBack')}
+          size="small"
         >
           <KeyboardArrowLeftIcon sx={backIconStyle} />
         </IconButton>
@@ -109,9 +112,11 @@ const Header = (props: HeaderProps) => {
           <Typography variant="h1" component="h1">
             {title}
           </Typography>
-          <Box mb={2}>{getIntroduction()}</Box>
-          {progressStatus && <ProgressStatus status={progressStatus} />}
-          {cta && <Box mt={4}>{cta}</Box>}
+          <Box sx={leftMetaStyle}>
+            <Box>{getIntroduction()}</Box>
+            {progressStatus && <ProgressStatus status={progressStatus} />}
+            {cta && <Box>{cta}</Box>}
+          </Box>
         </Box>
         <Box sx={rightHeaderStyle}>
           <Image

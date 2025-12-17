@@ -17,6 +17,9 @@ const containerStyle = {
 
 export const SignUpBanner = () => {
   const t = useTranslations('Shared');
+  const userLoading = useTypedSelector(
+    (state) => state.user.authStateLoading || state.user.loading,
+  );
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const [registerPath, setRegisterPath] = useState('/auth/register');
 
@@ -27,6 +30,10 @@ export const SignUpBanner = () => {
       setRegisterPath(`/auth/register?partner=${referralPartner}`);
     }
   }, [entryPartnerReferral]);
+
+  if (userLoading) {
+    return null;
+  }
 
   return (
     <Container id="signup-banner" sx={containerStyle}>

@@ -51,7 +51,7 @@ let theme = createTheme({
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
       fontWeight: 400,
-      marginBottom: '1.5rem',
+      marginBottom: '1.25rem',
       lineHeight: 1.4,
     },
     h2: {
@@ -101,7 +101,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           maxWidth: '100% !important',
-          paddingTop: 60,
+          paddingTop: 78,
           paddingBottom: 60,
           paddingLeft: '1.5rem !important',
           paddingRight: '1.5rem !important',

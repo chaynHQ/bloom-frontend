@@ -158,6 +158,9 @@
       "description": "Recevez des messages deux fois par semaine directement sur votre WhatsApp",
       "buttonText": "S'abonner"
     },
-    "characterCount": "{current}/{max} caractères"
+    "characterCount": "{current}/{max} caractères",
+    "scrollToSignUp": {
+      "button": "Inscris-toi gratuitement"
+    }
   }
 }
