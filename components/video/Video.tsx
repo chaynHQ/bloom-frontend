@@ -6,11 +6,10 @@ import logEvent from '@/lib/utils/logEvent';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { OnProgressProps } from 'react-player/base';
-import { YouTubeConfig } from 'react-player/youtube';
+import { Dispatch, SetStateAction, SyntheticEvent, useRef, useState } from 'react';
+import { Config } from 'react-player/types';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
-const ReactPlayer = dynamic(() => import('react-player/youtube'), { ssr: false });
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 export const videoContainerStyle = {
   position: 'relative',
@@ -54,7 +53,7 @@ const Video = (props: VideoProps) => {
   const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
   const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
 
-  const player = useRef<typeof ReactPlayer>(null);
+  const player = useRef<HTMLVideoElement>(null);
   const videoStarted = () => {
     setVideoStarted && setVideoStarted(true);
     if (pathname.includes('grounding')) {
@@ -98,29 +97,21 @@ const Video = (props: VideoProps) => {
       }
     }
   };
-  const handleProgress: ((state: OnProgressProps) => void) | undefined = debounce(
-    (state: OnProgressProps) => {
-      setVideoTimePlayed(state.playedSeconds);
-    },
-    300,
-  );
+  const handleTimeUpdate = debounce((event: SyntheticEvent<HTMLMediaElement>) => {
+    setVideoTimePlayed(event.currentTarget.currentTime);
+  }, 300);
 
   const containerStyle = {
     ...containerStyles,
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
   } as const;
 
-  const getVideoConfig = (url: string): YouTubeConfig | undefined => {
+  const getVideoConfig = (url: string): Config | undefined => {
     return url.indexOf('youtu.be') > -1 || url.indexOf('youtube') > -1
       ? {
-          embedOptions: {
-            host: 'https://www.youtube-nocookie.com',
+          youtube: {
+            rel: 0, // don't show related videos
           },
-          ...(autoplay && {
-            playerVars: {
-              autoplay: 1, // note this doesnt work consistently as autoplay is often blocked by browsers
-            },
-          }),
         }
       : undefined;
   };
@@ -133,18 +124,18 @@ const Video = (props: VideoProps) => {
         <ReactPlayer
           ref={player}
           light={lightMode}
-          onDuration={(duration) => setVideoDuration(duration)}
+          autoPlay={autoplay}
+          onDurationChange={(event) => setVideoDuration(event.currentTarget.duration)}
           onStart={videoStarted}
           onEnded={videoEnded}
           onPause={() => videoPausedOrPlayed(false)}
           onPlay={() => videoPausedOrPlayed(true)}
-          onProgress={handleProgress}
+          onTimeUpdate={handleTimeUpdate}
           style={videoStyle}
           width="100%"
           height="100%"
-          url={url}
+          src={url}
           controls
-          modestbranding={1}
           config={videoConfig}
         />
       </Box>
