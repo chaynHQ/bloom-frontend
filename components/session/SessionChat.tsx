@@ -8,7 +8,6 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
-const chatDetailIntroStyle = { marginTop: 3, marginBottom: 1.5 } as const;
 const listItemStyle = {
   display: 'list-item',
   color: 'primary.dark',

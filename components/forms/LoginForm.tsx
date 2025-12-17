@@ -28,7 +28,7 @@ import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'f
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import SetupMFA from '../guards/SetupMFA';
 import VerifyMFA from '../guards/VerifyMFA';
 
@@ -52,67 +52,73 @@ const LoginForm = () => {
   >();
   const [emailInput, setEmailInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
-  const [showSetupMFA, setShowSetupMFA] = useState(false);
   const [showVerifyMFA, setShowVerifyMFA] = useState<boolean>(false);
   const [mfaResolver, setMfaResolver] = useState<MultiFactorResolver>();
 
   const [createEventLog] = useCreateEventLogMutation();
 
+  // Derive showSetupMFA from user state instead of using useState + useEffect
+  const showSetupMFA = useMemo(() => {
+    if (!userId) return false;
+    if (userIsSuperAdmin && userMFAisSetup) return false;
+    return userIsSuperAdmin && !userMFAisSetup;
+  }, [userId, userIsSuperAdmin, userMFAisSetup]);
+
+  // Track if we've already logged success and redirected to prevent duplicate side effects
+  const hasHandledLoginRef = useRef(false);
+
   useEffect(() => {
-    if (!userId || (userIsSuperAdmin && userMFAisSetup)) {
-      if (showSetupMFA) {
-        setShowSetupMFA(false);
-      }
+    // Reset ref when user logs out
+    if (!userId) {
+      hasHandledLoginRef.current = false;
       return;
     }
 
-    // Check if superadmin and complete extra 2FA/MFA steps
-    if (userIsSuperAdmin && !userMFAisSetup) {
-      setShowSetupMFA(true);
-      return;
-    }
+    // Don't redirect if showing MFA setup
+    if (showSetupMFA) return;
 
-    if (userId) {
-      logEvent(GET_LOGIN_USER_SUCCESS);
-    }
+    // Prevent duplicate handling
+    if (hasHandledLoginRef.current) return;
+    hasHandledLoginRef.current = true;
 
-    // Redirect if the user if login process is complete and userId loaded
+    logEvent(GET_LOGIN_USER_SUCCESS);
+
+    // Redirect if the user login process is complete and userId loaded
     const returnUrl = searchParams?.get('return_url');
 
     if (partnerAdmin?.active) {
       router.push('/partner-admin/create-access-code');
-    } else if (!!returnUrl) {
+    } else if (returnUrl) {
       router.push(returnUrl);
     } else {
       router.push('/courses');
     }
-  }, [userId, showSetupMFA, userIsSuperAdmin, userMFAisSetup, router, searchParams, partnerAdmin]);
+  }, [userId, showSetupMFA, router, searchParams, partnerAdmin]);
 
-  useEffect(() => {}, [
-    partnerAdmin?.active,
-    router,
-    searchParams,
-    userId,
-    userIsSuperAdmin,
-    userMFAisSetup,
-  ]);
+  // Derive error message from userLoadError
+  const userLoadErrorMessage = useMemo(() => {
+    if (!userLoadError) return null;
+    return t.rich('form.getUserError', {
+      contactLink: (children) => (
+        <Link target="_blank" href={FEEDBACK_FORM_URL}>
+          {children}
+        </Link>
+      ),
+    });
+  }, [userLoadError, t]);
 
+  // Track previous error to log only on change
+  const prevUserLoadErrorRef = useRef(userLoadError);
   useEffect(() => {
-    if (userLoadError) {
+    if (userLoadError && userLoadError !== prevUserLoadErrorRef.current) {
       logEvent(GET_LOGIN_USER_ERROR, { message: userLoadError });
       logEvent(GET_AUTH_USER_ERROR, { message: userLoadError });
-
-      setFormError(
-        t.rich('form.getUserError', {
-          contactLink: (children) => (
-            <Link target="_blank" href={FEEDBACK_FORM_URL}>
-              {children}
-            </Link>
-          ),
-        }),
-      );
     }
-  }, [userLoadError, t]);
+    prevUserLoadErrorRef.current = userLoadError;
+  }, [userLoadError]);
+
+  // Combined error display (form submission errors + user load errors)
+  const displayError = formError || userLoadErrorMessage;
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -174,9 +180,9 @@ const LoginForm = () => {
               fullWidth
               required
             />
-            {formError && (
+            {displayError && (
               <Typography color="error.main" mb={'1rem !important'}>
-                {formError}
+                {displayError}
               </Typography>
             )}
 

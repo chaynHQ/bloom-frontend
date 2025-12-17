@@ -82,23 +82,17 @@ const CreatePartnerAdminForm = () => {
     setName(null);
   };
 
-  const FormResetButton = () => (
-    <Box>
-      <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
-        {t('reset')}
-      </Button>
-    </Box>
-  );
-
-  const FormSuccess = () => (
-    <Box>
-      <Typography>{t('successDescription')}</Typography>
-      <FormResetButton />
-    </Box>
-  );
-
   if (formSubmitSuccess) {
-    return <FormSuccess />;
+    return (
+      <Box>
+        <Typography>{t('successDescription')}</Typography>
+        <Box>
+          <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
+            {t('reset')}
+          </Button>
+        </Box>
+      </Box>
+    );
   }
 
   return (

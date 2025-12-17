@@ -11,7 +11,7 @@ import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import StoryblokNotesFromBloomPromo from '../storyblok/StoryblokNotesFromBloomPromo';
 
 interface Props {
@@ -23,14 +23,10 @@ export default function HomePage({ story }: Props) {
 
   const userId = useTypedSelector((state) => state.user.id);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const [registerPath, setRegisterPath] = useState('/auth/register');
 
-  useEffect(() => {
+  const registerPath = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    if (referralPartner) {
-      setRegisterPath(`/auth/register?partner=${referralPartner}`);
-    }
+    return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
   }, [entryPartnerReferral]);
 
   if (!story) {

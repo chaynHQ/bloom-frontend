@@ -53,15 +53,6 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
     );
   }, [openTranscriptModal, name, eventData]);
 
-  const IntroductionVideo = () => (
-    <Video
-      url={video.url}
-      eventData={eventData}
-      eventPrefix="COURSE_INTRO"
-      containerStyles={{ width: { xs: '100%' }, flex: 1 }}
-    />
-  );
-
   return (
     <Box sx={containerStyle}>
       <Box sx={introductionContainerStyle}>
@@ -88,7 +79,12 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           openTranscriptModal={openTranscriptModal}
         />
       </Box>
-      <IntroductionVideo />
+      <Video
+        url={video.url}
+        eventData={eventData}
+        eventPrefix="COURSE_INTRO"
+        containerStyles={{ width: { xs: '100%' }, flex: 1 }}
+      />
     </Box>
   );
 };

@@ -32,7 +32,7 @@ const slice = createSlice({
   name: 'partners',
   initialState: initialState,
   reducers: {
-    clearPartnersSlice: (state) => {
+    clearPartnersSlice: () => {
       return initialState;
     },
   },

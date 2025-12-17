@@ -30,6 +30,7 @@ export const DesktopPwaBanner = () => {
     if (!isSmallScreen) {
       logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSmallScreen]);
 
   if (isSmallScreen || bannerState === 'Hidden') return null;

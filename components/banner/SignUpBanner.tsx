@@ -8,7 +8,7 @@ import theme from '@/styles/theme';
 import { Button, Container, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -21,14 +21,10 @@ export const SignUpBanner = () => {
     (state) => state.user.authStateLoading || state.user.loading,
   );
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const [registerPath, setRegisterPath] = useState('/auth/register');
 
-  useEffect(() => {
+  const registerPath = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    if (referralPartner) {
-      setRegisterPath(`/auth/register?partner=${referralPartner}`);
-    }
+    return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
   }, [entryPartnerReferral]);
 
   if (userLoading) {

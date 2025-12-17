@@ -72,7 +72,7 @@ export const api = createApi({
   tagTypes: ['UserCourses'],
   endpoints: (builder) => ({
     getUser: builder.query<GetUserResponse, string>({
-      query(params) {
+      query() {
         return {
           url: 'user/me',
           method: 'GET',

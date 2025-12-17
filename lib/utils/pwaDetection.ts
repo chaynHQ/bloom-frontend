@@ -91,12 +91,10 @@ export const detectPWA = (): PWAStatus | null => {
  * Hook to monitor PWA installation status
  */
 export const usePWAStatus = () => {
-  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(null);
+  // Use lazy initialization to avoid calling detectPWA on every render
+  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(() => detectPWA());
 
   useEffect(() => {
-    // Initial check
-    setPwaStatus(detectPWA());
-
     // Set up listeners for display mode changes
     const modeQueries = [
       window.matchMedia('(display-mode: standalone)'),

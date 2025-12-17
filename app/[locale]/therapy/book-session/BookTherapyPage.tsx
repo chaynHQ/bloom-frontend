@@ -16,6 +16,7 @@ import illustrationConfidential from '@/public/illustration_confidential.svg';
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Container, IconButton, Modal, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Script from 'next/script';
@@ -130,6 +131,7 @@ export default function BookTherapyPage({ story }: Props) {
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [widgetError, setWidgetError] = useState<string | null>(null);
+  const rollbar = useRollbar();
 
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -227,6 +229,7 @@ export default function BookTherapyPage({ story }: Props) {
           try {
             new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
           } catch (error) {
+            rollbar.error('Simplybook widget initialization error', JSON.stringify(error));
             setWidgetError(t('error.initializingWidget'));
           }
         } else {
@@ -238,6 +241,10 @@ export default function BookTherapyPage({ story }: Props) {
               try {
                 new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
               } catch (error) {
+                rollbar.error(
+                  'Simplybook widget initialization error after retry',
+                  JSON.stringify(error),
+                );
                 setWidgetError(t('error.initializingWidgetRetry'));
               }
             } else {
@@ -272,7 +279,7 @@ export default function BookTherapyPage({ story }: Props) {
         clearTimeout(timeoutId);
       }
     };
-  }, [isWidgetModalOpen, isScriptLoaded, user, t]); // Added t to dependencies
+  }, [isWidgetModalOpen, isScriptLoaded, user, rollbar, t]); // Added t to dependencies
 
   if (!story) {
     return <NoDataAvailable />;

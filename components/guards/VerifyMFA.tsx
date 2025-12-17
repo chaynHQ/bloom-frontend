@@ -7,7 +7,7 @@ import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import SanitizedTextField from '../common/SanitizedTextField';
 
 const buttonStyle = {
@@ -24,7 +24,6 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const t = useTranslations('Auth');
   const [verificationId, setVerificationId] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
 
   const [error, setError] = useState('');
   const router = useRouter();
@@ -32,23 +31,26 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
   const hasRecaptchaRendered = useRef(false);
 
+  // Derive phone number from resolver
+  const phoneNumber = useMemo(() => {
+    const hint = resolver.hints[0];
+    if (hint.factorId === 'phone') {
+      // @ts-ignore
+      return hint.phoneNumber || '';
+    }
+    return '';
+  }, [resolver]);
+
   // Clean up reCAPTCHA on unmount
   useEffect(() => {
+    const recaptchaContainer = recaptchaContainerRef.current;
     return () => {
-      if (hasRecaptchaRendered.current && recaptchaContainerRef.current) {
-        recaptchaContainerRef.current.innerHTML = '';
+      if (hasRecaptchaRendered.current && recaptchaContainer) {
+        recaptchaContainer.innerHTML = '';
         hasRecaptchaRendered.current = false;
       }
     };
   }, []);
-  useEffect(() => {
-    // Get the phone number from the resolver
-    const hint = resolver.hints[0];
-    if (hint.factorId === 'phone') {
-      // @ts-ignore
-      setPhoneNumber(hint.phoneNumber || '');
-    }
-  }, [resolver]);
 
   const handleTriggerMFA = async () => {
     setError('');
