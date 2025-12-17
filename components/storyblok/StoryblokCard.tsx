@@ -109,7 +109,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     ...(style == 'slim' ? slimPadding : {}),
   } as const;
 
-  const CardMainContent = () => (
+  const CardMainContent = (
     <CardContent sx={cardContentStyle}>
       {image && image.filename && (
         <Box sx={imageContainerStyle}>
@@ -138,10 +138,10 @@ const StoryblokCard = (props: StoryblokCardProps) => {
             href={card_link.cached_url}
             aria-label={`${tS('navigateTo')} ${card_link.cached_url}`}
           >
-            <CardMainContent />
+            {CardMainContent}
           </CardActionArea>
         ) : (
-          <CardMainContent />
+          <>{CardMainContent}</>
         )}
         {dropdown_button && (
           <CardActions sx={cardActionsStyle}>

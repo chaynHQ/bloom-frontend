@@ -22,10 +22,9 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container, Link } from '@mui/material';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
-import LoadingContainer from '../common/LoadingContainer';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -95,10 +94,22 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  const [userAccess, setUserAccess] = useState<boolean>();
-  const [sessionId, setSessionId] = useState<string>(); // database Session id
-  const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
-    PROGRESS_STATUS.NOT_STARTED,
+  // Derive user access from partner settings
+  const userAccess = useMemo(() => {
+    const coursePartners = course.content.included_for_partners;
+    return hasAccessToPage(
+      isLoggedIn,
+      true, // setting true here to allow preview. The login overlay will block interaction
+      coursePartners,
+      partnerAccesses,
+      partnerAdmin,
+    );
+  }, [partnerAccesses, course.content.included_for_partners, isLoggedIn, partnerAdmin]);
+
+  // Derive session progress and ID from courses state
+  const { sessionProgress, sessionId } = useMemo(
+    () => getSessionCompletion(course, courses || [], storyUuid),
+    [courses, course, storyUuid],
   );
 
   // This component handles both "session" and alternative "session_iba" page blocks
@@ -118,23 +129,6 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     course_storyblok_uuid: course.uuid,
   };
 
-  useEffect(() => {
-    const coursePartners = course.content.included_for_partners;
-    const userHasAccess = hasAccessToPage(
-      isLoggedIn,
-      true, // setting true here to allow preview. The login overlay will block interaction
-      coursePartners,
-      partnerAccesses,
-      partnerAdmin,
-    );
-    setUserAccess(userHasAccess);
-  }, [partnerAccesses, course.content.included_for_partners, isLoggedIn, partnerAdmin]);
-
-  useEffect(() => {
-    getSessionCompletion(course, courses || [], storyUuid, setSessionProgress, setSessionId);
-  }, [courses, course, storyUuid]);
-
-  if (userAccess === undefined) return <LoadingContainer />;
   if (!userAccess) return <ContentUnavailable />;
 
   return (

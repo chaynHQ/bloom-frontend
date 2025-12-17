@@ -25,7 +25,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "In Kooperation mit",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Unsere Richtlinien"
+      "policies": "Unsere Richtlinien",
+      "trustCenter": "Vertrauenszentrum"
     },
     "maintenanceBanner": {
       "title": "Bloom ist vorübergehend nicht verfügbar",
@@ -94,7 +95,8 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Buch-Symbol",
       "articleIcon": "Artikel-Symbol",
-      "videoIcon": "Video-Symbol"
+      "videoIcon": "Video-Symbol",
+      "notes": "Illustration einer Notes"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Überlebende:r",
@@ -156,6 +158,10 @@
       "title": "Kostenlose unterstützende Nachrichten",
       "description": "Erhalten Sie zweimal wöchentlich Nachrichten direkt auf Ihr WhatsApps",
       "buttonText": "Abonnieren"
+    },
+    "characterCount": "{current}/{max} Zeichen",
+    "scrollToSignUp": {
+      "button": "Kostenlos anmelden"
     }
   }
 }

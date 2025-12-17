@@ -1,6 +1,5 @@
 import { rowStyle } from '@/styles/common';
 import { Box, Link, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
 import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 import { ReferenceIcon } from './ReferenceIcon';
 
@@ -24,8 +23,6 @@ interface ReferencesProps {
 
 const References = (props: ReferencesProps) => {
   const { references } = props;
-
-  const tS = useTranslations('Shared');
 
   return (
     <>

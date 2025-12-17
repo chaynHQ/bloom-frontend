@@ -1,7 +1,10 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateSessionFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS } from '@/lib/constants/enums';
+import { SESSION_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { SessionFeedback } from '@/lib/store/coursesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
@@ -14,7 +17,6 @@ import {
   Radio,
   RadioGroup,
   SxProps,
-  TextField,
   Theme,
   Typography,
 } from '@mui/material';
@@ -29,6 +31,9 @@ const fieldBoxStyle: SxProps<Theme> = {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '12px 12px',
+    '&:hover': {
+      backgroundColor: 'background.default',
+    },
   },
 };
 
@@ -92,31 +97,30 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
       await sendFeedback(feedbackData);
     }
 
+    logEvent(SESSION_FEEDBACK_SUBMITTED, { feedbackTags: selectedFeedbackTag });
     setLoading(false);
     setFormSubmitSuccess(true);
   };
 
-  const FormSuccess = () => (
-    <Box sx={containerStyle}>
-      <Typography component="h3" variant="h3">
-        {t('submissionText')}
-      </Typography>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={tS('alt.personTea')}
-          src={illustrationPerson4Peach}
-          fill
-          sizes={getImageSizes(imageContainerStyle.width)}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
-      </Box>
-    </Box>
-  );
-
   if (formSubmitSuccess) {
-    return <FormSuccess />;
+    return (
+      <Box sx={containerStyle}>
+        <Typography component="h3" variant="h3">
+          {t('submissionText')}
+        </Typography>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={tS('alt.personTea')}
+            src={illustrationPerson4Peach}
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+      </Box>
+    );
   }
 
   return (
@@ -137,7 +141,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           >
             {Object.entries(FEEDBACK_TAGS).map(([_, tagText]) => (
               <FormControlLabel
-                key={`feedbackTags.${tagText}`}
+                key={`feedbackTags.${_}`}
                 value={tagText}
                 control={<Radio />}
                 label={t(`feedbackTags.${tagText}`)}
@@ -147,10 +151,10 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           </RadioGroup>
         </FormControl>
 
-        <TextField
+        <SanitizedTextField
           id="feedbackDescription"
           placeholder={t.rich('textboxDefaultText')?.toString()}
-          onChange={(e) => setFeedbackDescription(e.target.value)}
+          onChange={setFeedbackDescription}
           value={feedbackDescription}
           sx={fieldBoxStyle}
           variant="filled"

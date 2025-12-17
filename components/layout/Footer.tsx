@@ -16,7 +16,7 @@ import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
@@ -45,7 +45,7 @@ function getDescriptionContainerStyle(totalPartners: number) {
 
 const footerContainerStyle = {
   backgroundColor: 'common.white',
-  paddingY: { xs: 6, md: 10 },
+  paddingY: { xs: 6, md: 8 },
 } as const;
 
 const footerContentRowStyle = {
@@ -92,23 +92,21 @@ const fundingLogosContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
-  const [partners, setPartners] = useState<PartnerContent[]>([]);
   const searchParams = useSearchParams();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
-    if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
-      const partnerContentResult = getPartnerContent(partnerName);
-      if (partnerContentResult) partnersList.push(partnerContentResult);
-    }
-  };
+  const partners = useMemo(() => {
+    const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
+      if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
+        const partnerContentResult = getPartnerContent(partnerName);
+        if (partnerContentResult) partnersList.push(partnerContentResult);
+      }
+    };
 
-  useEffect(() => {
-    let partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
+    const partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
 
     if (partnerAdmin && partnerAdmin.partner) {
       addUniquePartner(partnersList, partnerAdmin.partner.name);
@@ -130,8 +128,8 @@ const Footer = () => {
       addUniquePartner(partnersList, referralPartner);
     }
 
-    setPartners(partnersList);
-  }, [partnerAccesses, userCreatedAt, searchParams, entryPartnerReferral, partnerAdmin]);
+    return partnersList;
+  }, [partnerAccesses, searchParams, entryPartnerReferral, partnerAdmin]);
 
   return (
     <>
@@ -157,6 +155,14 @@ const Footer = () => {
               target="_blank"
             >
               {tS('footer.policies')}
+            </Link>
+            <Link
+              display="block"
+              mt={2}
+              href="https://app.eu.vanta.com/chayn.co/trust/yrbp5r3nj96a1dlq15h0y"
+              target="_blank"
+            >
+              {tS('footer.trustCenter')}
             </Link>
           </Box>
           <Box sx={partnersContainerStyle}>

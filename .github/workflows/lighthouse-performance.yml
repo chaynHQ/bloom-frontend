@@ -32,7 +32,7 @@ jobs:
       checks: write
       actions: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Audit URLs using Lighthouse
         id: lighthouseDesktop
         continue-on-error: true
@@ -51,7 +51,7 @@ jobs:
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: desktop-lighthouse-report
           path: ${{ steps.lighthouseDesktop.outputs.resultsPath }}
@@ -64,7 +64,7 @@ jobs:
       checks: write
       actions: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Audit URLs using Lighthouse
         id: lighthouseMobile
         continue-on-error: true
@@ -83,7 +83,7 @@ jobs:
           budgetPath: ./lighthouse_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: mobile-lighthouse-report
           path: ${{ steps.lighthouseMobile.outputs.resultsPath }}

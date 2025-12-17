@@ -3,10 +3,9 @@
 import logEvent from '@/lib/utils/logEvent';
 import { debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
-import { OnProgressProps } from 'react-player/base';
+import { Dispatch, SetStateAction, SyntheticEvent, useRef, useState } from 'react';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 interface AudioProps {
   url: string;
@@ -22,7 +21,7 @@ const Audio = (props: AudioProps) => {
   const [audioCompleted, setAudioCompleted] = useState<boolean>(false);
   const [audioTimePlayed, setAudioTimePlayed] = useState<number>(0);
 
-  const player = useRef<typeof ReactPlayer>(null);
+  const player = useRef<HTMLVideoElement>(null);
   const audioStarted = () => {
     setAudioStarted && setAudioStarted(true);
     if (player.current) {
@@ -60,25 +59,22 @@ const Audio = (props: AudioProps) => {
       }
     }
   };
-  const handleProgress: ((state: OnProgressProps) => void) | undefined = debounce(
-    (state: OnProgressProps) => {
-      setAudioTimePlayed(state.playedSeconds);
-    },
-    300,
-  );
+  const handleTimeUpdate = debounce((event: SyntheticEvent<HTMLMediaElement>) => {
+    setAudioTimePlayed(event.currentTarget.currentTime);
+  }, 300);
 
   return (
     <ReactPlayer
       ref={player}
-      onDuration={(duration) => setAudioDuration(duration)}
+      onDurationChange={(event) => setAudioDuration(event.currentTarget.duration)}
       onStart={audioStarted}
       onEnded={audioEnded}
       onPause={() => audioPausedOrPlayed(false)}
       onPlay={() => audioPausedOrPlayed(true)}
-      onProgress={handleProgress}
+      onTimeUpdate={handleTimeUpdate}
       width="100%"
       height="50px"
-      url={url}
+      src={url}
       controls
     />
   );

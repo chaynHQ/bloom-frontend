@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
@@ -18,10 +19,10 @@ import hasAutomaticAccessFeature from '@/lib/utils/hasAutomaticAccessCodeFeature
 import logEvent from '@/lib/utils/logEvent';
 import theme from '@/styles/theme';
 import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, FormControl, FormControlLabel, Link, TextField } from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, Link } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import BaseRegisterForm, { useRegisterFormLogic } from './BaseRegisterForm';
 
 const contactPermissionLabelStyle = {
@@ -128,9 +129,9 @@ const RegisterForm = (props: RegisterFormProps) => {
     <BaseRegisterForm onSubmit={submitHandler} formError={formError} loading={loading}>
       <Box>
         {includeCodeField && (
-          <TextField
+          <SanitizedTextField
             id="partnerAccessCode"
-            onChange={(e) => setCodeInput(e.target.value)}
+            onChange={setCodeInput}
             value={codeInput}
             label={`${partnerName} ${t('codeLabel')}`}
             variant="standard"
@@ -138,26 +139,26 @@ const RegisterForm = (props: RegisterFormProps) => {
             required={!!partnerName}
           />
         )}
-        <TextField
+        <SanitizedTextField
           id="name"
-          onChange={(e) => setNameInput(e.target.value)}
+          onChange={setNameInput}
           label={t('nameLabel')}
           variant="standard"
           fullWidth
           required
         />
-        <TextField
+        <SanitizedTextField
           id="email"
-          onChange={(e) => setEmailInput(e.target.value)}
+          onChange={setEmailInput}
           label={t('emailLabel')}
           variant="standard"
           type="email"
           fullWidth
           required
         />
-        <TextField
+        <SanitizedTextField
           id="password"
-          onChange={(e) => setPasswordInput(e.target.value)}
+          onChange={setPasswordInput}
           label={t('passwordLabel')}
           type="password"
           variant="standard"
@@ -200,17 +201,16 @@ interface PartnerRegisterFormProps {
 
 export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
   const partners = useTypedSelector((state) => state.partners);
-  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(false);
-  const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
 
   useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
 
-  useEffect(() => {
+  const { partnerId, accessCodeRequired } = useMemo(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
-    if (partnerData) setPartnerId(partnerData.id);
-    if (partnerData && hasAutomaticAccessFeature(partnerData) === false) {
-      setAccessCodeRequired(true);
-    }
+    const requiresCode = partnerData ? hasAutomaticAccessFeature(partnerData) === false : false;
+    return {
+      partnerId: partnerData?.id,
+      accessCodeRequired: requiresCode,
+    };
   }, [partners, partnerName]);
 
   return (

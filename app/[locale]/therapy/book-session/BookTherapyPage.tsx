@@ -16,6 +16,7 @@ import illustrationConfidential from '@/public/illustration_confidential.svg';
 import illustrationDateSelector from '@/public/illustration_date_selector.svg';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Container, IconButton, Modal, Typography } from '@mui/material';
+import { useRollbar } from '@rollbar/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Script from 'next/script';
@@ -130,6 +131,7 @@ export default function BookTherapyPage({ story }: Props) {
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [widgetError, setWidgetError] = useState<string | null>(null);
+  const rollbar = useRollbar();
 
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -188,6 +190,24 @@ export default function BookTherapyPage({ story }: Props) {
     logEvent(THERAPY_BOOKING_OPENED);
     setWidgetError(null);
     setIsWidgetModalOpen(true);
+
+    // Trigger script loading if not already loaded
+    if (!isScriptLoaded && typeof (window as any).SimplybookWidget === 'undefined') {
+      const existingScript = document.getElementById('widget-js');
+      if (existingScript) {
+        existingScript.remove();
+      }
+      // Re-create script to force immediate loading
+      const script = document.createElement('script');
+      script.id = 'widget-js-immediate';
+      script.src = '//widget.simplybook.it/v2/widget/widget.js';
+      script.onload = () => setIsScriptLoaded(true);
+      script.onerror = () => {
+        console.error('Failed to load Simplybook widget script immediately');
+        setWidgetError(t('error.scriptLoadFailed'));
+      };
+      document.head.appendChild(script);
+    }
   };
 
   const handleCloseWidgetModal = () => {
@@ -197,6 +217,8 @@ export default function BookTherapyPage({ story }: Props) {
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null;
+    let retryCount = 0;
+    const maxRetries = 5;
 
     const initializeWidget = () => {
       if (typeof (window as any).SimplybookWidget === 'function') {
@@ -207,6 +229,7 @@ export default function BookTherapyPage({ story }: Props) {
           try {
             new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
           } catch (error) {
+            rollbar.error('Simplybook widget initialization error', JSON.stringify(error));
             setWidgetError(t('error.initializingWidget'));
           }
         } else {
@@ -218,6 +241,10 @@ export default function BookTherapyPage({ story }: Props) {
               try {
                 new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
               } catch (error) {
+                rollbar.error(
+                  'Simplybook widget initialization error after retry',
+                  JSON.stringify(error),
+                );
                 setWidgetError(t('error.initializingWidgetRetry'));
               }
             } else {
@@ -226,15 +253,25 @@ export default function BookTherapyPage({ story }: Props) {
             }
           }, 1000);
         }
+      } else if (retryCount < maxRetries && isWidgetModalOpen) {
+        // Script not loaded yet, retry with exponential backoff
+        retryCount++;
+        timeoutId = setTimeout(
+          () => {
+            initializeWidget();
+          },
+          Math.min(1000 * Math.pow(2, retryCount - 1), 5000),
+        );
       } else {
         setWidgetError(t('error.scriptNotLoaded'));
       }
     };
 
-    if (isWidgetModalOpen && isScriptLoaded) {
+    if (isWidgetModalOpen) {
       initializeWidget();
-    } else if (!isWidgetModalOpen) {
+    } else {
       setWidgetError(null);
+      retryCount = 0;
     }
 
     return () => {
@@ -242,7 +279,7 @@ export default function BookTherapyPage({ story }: Props) {
         clearTimeout(timeoutId);
       }
     };
-  }, [isWidgetModalOpen, isScriptLoaded, user, t]); // Added t to dependencies
+  }, [isWidgetModalOpen, isScriptLoaded, user, rollbar, t]); // Added t to dependencies
 
   if (!story) {
     return <NoDataAvailable />;
@@ -261,7 +298,6 @@ export default function BookTherapyPage({ story }: Props) {
         {...headerProps}
         cta={
           <Button
-            sx={{ mt: -2 }}
             variant="contained"
             color="secondary"
             size="large"

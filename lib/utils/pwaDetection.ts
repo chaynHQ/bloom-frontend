@@ -91,10 +91,12 @@ export const detectPWA = (): PWAStatus | null => {
  * Hook to monitor PWA installation status
  */
 export const usePWAStatus = () => {
+  // Initialize as null for SSR safety
   const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(null);
 
   useEffect(() => {
-    // Initial check
+    // Detect initial PWA status on client
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPwaStatus(detectPWA());
 
     // Set up listeners for display mode changes

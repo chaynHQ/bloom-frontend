@@ -1,6 +1,7 @@
 'use client';
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -42,6 +43,7 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
+        cta={isPartiallyPublicPage && !userId ? <ScrollToSignUpButton /> : undefined}
       />
       {!userId && isPartiallyPublicPage && <NotesFromBloomPromo />}
       {!userId && isPartiallyPublicPage && <SignUpBanner />}

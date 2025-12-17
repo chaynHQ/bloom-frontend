@@ -1,6 +1,0 @@
-{
-  "extends": ["next", "prettier"],
-  "rules": {
-    "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }]
-  }
-}

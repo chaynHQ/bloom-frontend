@@ -12,45 +12,55 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent';
+import { mobileBottomNavHeight } from './MobileBottomNav';
 
-const Consent = () => {
+const CookieBanner = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const tS = useTranslations('Shared');
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTabletScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const consentBoxStyle: React.CSSProperties = {
     backgroundColor: theme.palette.secondary.light,
-    maxWidth: theme.spacing(50),
+    maxWidth: isMobileScreen ? 'none' : theme.spacing(54),
     maxHeight: theme.spacing(35),
     position: 'fixed',
-    left: isMobileScreen ? theme.spacing(1) : theme.spacing(2),
-    bottom: isMobileScreen ? theme.spacing(1) : theme.spacing(2),
-    borderRadius: theme.spacing(2),
+    right: isMobileScreen ? 0 : theme.spacing(2),
+    bottom: isMobileScreen
+      ? mobileBottomNavHeight
+      : isTabletScreen
+        ? mobileBottomNavHeight + 20
+        : theme.spacing(2),
+    borderRadius: isMobileScreen ? 0 : theme.spacing(2),
     boxShadow: `${alpha(theme.palette.common.black, 0.2)} 0px ${theme.spacing(1)} ${theme.spacing(
       4,
     )} 0px`,
-    textAlign: 'center',
     lineHeight: 1.5,
-    marginRight: isMobileScreen ? theme.spacing(1) : theme.spacing(2),
-    padding: isMobileScreen
-      ? `${theme.spacing(1)} ${theme.spacing(3)}`
-      : `${theme.spacing(2)} ${theme.spacing(4)}`,
+    marginRight: isMobileScreen ? 0 : theme.spacing(2),
+    padding: `${theme.spacing(3)} ${theme.spacing(2)} `,
     zIndex: 5,
   };
+
+  const rowContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 2,
+    mb: 1,
+  } as const;
+
   const acceptButtonStyle = {
     backgroundColor: 'secondary.main',
-    marginBottom: theme.spacing(1),
+    marginLeft: '0.5rem',
+    float: 'inline-end',
     ':hover': {
       backgroundColor: 'secondary.dark',
     },
   };
   const declineButtonStyle = {
-    fontSize: theme.typography.caption.fontSize,
+    float: 'inline-end',
     fontWeight: 'normal',
-    margin: 'auto',
-    display: 'block',
-    color: theme.palette.common.black,
+    color: theme.palette.text.primary,
   };
 
   const handleDecline = () => {
@@ -117,31 +127,33 @@ const Consent = () => {
       ariaDeclineLabel={tS('cookieConsent.declineLabel')}
       flipButtons={true}
     >
-      <Box width={[60, 70]} margin="auto" mb={1}>
-        <Image
-          alt={tS('alt.cookieCat')}
-          src={IllustrationCookieCat}
-          sizes={getImageSizes(70)}
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      </Box>
-      <Box mb={2}>
-        <Typography fontSize={'1rem !important'}>
-          {tS('cookieConsent.cookieConsentExplainer')}
-          <Link
-            target="_blank"
-            href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
-          >
-            {tS('cookieConsent.cookieConsentPolicy')}
-          </Link>
-          .
-        </Typography>
+      <Box sx={rowContainerStyle}>
+        <Box width={50} height={50}>
+          <Image
+            alt={tS('alt.cookieCat')}
+            src={IllustrationCookieCat}
+            sizes={getImageSizes(50)}
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+          />
+        </Box>
+        <Box flex={1}>
+          <Typography fontSize={'0.875rem !important'}>
+            {tS('cookieConsent.cookieConsentExplainer')}
+            <Link
+              target="_blank"
+              href="https://chayn.notion.site/Cookie-Policy-e478b184ea6a4002ba660d052f332c5a"
+            >
+              {tS('cookieConsent.cookieConsentPolicy')}
+            </Link>
+            .
+          </Typography>
+        </Box>
       </Box>
     </CookieConsent>
   );
 };
 
-export default Consent;
+export default CookieBanner;

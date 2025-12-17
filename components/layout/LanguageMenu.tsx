@@ -26,10 +26,11 @@ const languageMap: { [key: string]: string } = {
 };
 
 const buttonStyle = {
-  height: 40,
-  minWidth: { xs: 40, md: 64 },
-  paddingX: 1,
-  gap: 0.75,
+  height: { xs: 32, sm: 38 },
+  minWidth: { xs: 32, sm: 64 },
+  paddingX: { xs: 0.75, sm: 1 },
+  gap: { xs: 0.5, sm: 0.75 },
+  fontSize: { xs: '0.75rem', sm: '0.875rem' },
   fontWeight: 400,
   color: 'common.white',
   ':hover': { backgroundColor: 'primary.light', color: 'primary.dark' },
@@ -38,7 +39,11 @@ const buttonStyle = {
     backgroundColor: 'primary.main',
     opacity: 0.2,
   },
-  '& .MuiButton-startIcon': { display: 'inline-flex', mx: 0 },
+  '& .MuiButton-startIcon': {
+    display: 'inline-flex',
+    mx: 0,
+    '& svg': { fontSize: { xs: '1.1rem', sm: '1.5rem' } },
+  },
 } as const;
 
 export default function LanguageMenu() {

@@ -2,7 +2,7 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**, '*test*']
+    branches: [develop, dependabot/**, '*test*', 'upgrade-nextjs']
 
 jobs:
   # vercel will redeploy the develop/staging app on creating a PR to main
@@ -31,10 +31,10 @@ jobs:
       deployments: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22.x'
       - run: node -v
