@@ -7844,23 +7844,23 @@ newrelic@^12.20.0:
     "@newrelic/native-metrics" "^11.1.0"
     "@prisma/prisma-fmt-wasm" "^4.17.0-16.27eb2449f178cd9fe1a4b892d732cc4795f75085"
 
-next-intl-swc-plugin-extractor@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/next-intl-swc-plugin-extractor/-/next-intl-swc-plugin-extractor-4.6.0.tgz#1a9333a0fabda8fb43eea21a648ed9a8a55e94cd"
-  integrity sha512-H0Qd44LfvVWRidzmtDHicWPANrAsiLIR2jPwCVck3tNuf7H/F6g4JwucmR1TWrd/X6wOJe8pbYHRA9THhjc4vQ==
+next-intl-swc-plugin-extractor@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/next-intl-swc-plugin-extractor/-/next-intl-swc-plugin-extractor-4.6.1.tgz#5edb5a714bd71a29bd97a5e6d819ecfd7f7dad51"
+  integrity sha512-+HHNeVERfSvuPDF7LYVn3pxst5Rf7EYdUTw7C7WIrYhcLaKiZ1b9oSRkTQddAN3mifDMCfHqO4kAQ/pcKiBl3A==
 
-next-intl@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-4.6.0.tgz#bf5da06887e503fac0426b6a03d78dd5e3788b6f"
-  integrity sha512-Z2LUrIwqMt1/pnh7LwU0OUju17Q0eO1b75I2hAsVU5zZhOkxRP7dRKabgDPg4Hy4EoEx70jNqLVKll+BT1wz0w==
+next-intl@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-4.6.1.tgz#111d7c13e3189dd54f30958df942a4a22fd1da6e"
+  integrity sha512-KlWgWtKLBPUsTPgxqwyjws1wCMD2QKxLlVjeeGj53DC1JWfKmBShKOrhIP0NznZrRQ0GleeoDUeHSETmyyIFeA==
   dependencies:
     "@formatjs/intl-localematcher" "^0.5.4"
     "@parcel/watcher" "^2.4.1"
     "@swc/core" "^1.15.2"
     negotiator "^1.0.0"
-    next-intl-swc-plugin-extractor "^4.6.0"
+    next-intl-swc-plugin-extractor "^4.6.1"
     po-parser "^2.0.0"
-    use-intl "^4.6.0"
+    use-intl "^4.6.1"
 
 next-pwa@^5.6.0:
   version "5.6.0"
@@ -10018,10 +10018,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-intl@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-4.6.0.tgz#782effb1a75c5400c96224445d8f9bdf6037fdda"
-  integrity sha512-eEV2y3jpwH0DqGuc7iCRikH4D7tBrN4gHQD8uSNT3KGQSNJ9erHnfUdLkuWTSO8dJGpru3jbOmT4Xev/eqh7lg==
+use-intl@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-4.6.1.tgz#8a6978cb6d79656c8869ab6c8e2a32d53726ca2a"
+  integrity sha512-mUIj6QvJZ7Rk33mLDxRziz1YiBBAnIji8YW4TXXMdYHtaPEbVucrXD3iKQGAqJhbVn0VnjrEtIKYO1B18mfSJw==
   dependencies:
     "@formatjs/fast-memoize" "^2.2.0"
     "@schummar/icu-type-parser" "1.21.5"
