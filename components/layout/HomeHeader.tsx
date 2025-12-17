@@ -39,6 +39,7 @@ const headerContainerStyles = {
 };
 
 const ctaContainerStyle = {
+  mt: 2,
   width: 'auto',
 } as const;
 

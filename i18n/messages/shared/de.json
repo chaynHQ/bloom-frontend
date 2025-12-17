@@ -159,6 +159,9 @@
       "description": "Erhalten Sie zweimal wöchentlich Nachrichten direkt auf Ihr WhatsApps",
       "buttonText": "Abonnieren"
     },
-    "characterCount": "{current}/{max} Zeichen"
+    "characterCount": "{current}/{max} Zeichen",
+    "scrollToSignUp": {
+      "button": "Kostenlos anmelden"
+    }
   }
 }

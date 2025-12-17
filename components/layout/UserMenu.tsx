@@ -19,7 +19,7 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Event } from '@mui/icons-material';
-import { navDrawerButtonStyle } from './TopBar';
+import { navDrawerButtonStyle } from './MobileTopNav';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
