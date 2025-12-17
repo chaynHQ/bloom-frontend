@@ -106,6 +106,20 @@ const Video = (props: VideoProps) => {
     maxWidth: 514, // <515px prevents the "Watch on youtube" button
   } as const;
 
+  // Convert YouTube URLs to privacy-enhanced youtube-nocookie.com domain
+  const getPrivacyEnhancedUrl = (url: string): string => {
+    // Handle standard youtube.com URLs
+    if (url.includes('youtube.com') && !url.includes('youtube-nocookie.com')) {
+      return url.replace('youtube.com', 'youtube-nocookie.com');
+    }
+    // Handle youtu.be short URLs - convert to youtube-nocookie.com format
+    const youtuBeMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (youtuBeMatch) {
+      return `https://www.youtube-nocookie.com/watch?v=${youtuBeMatch[1]}`;
+    }
+    return url;
+  };
+
   const getVideoConfig = (url: string): Config | undefined => {
     return url.indexOf('youtu.be') > -1 || url.indexOf('youtube') > -1
       ? {
@@ -116,6 +130,7 @@ const Video = (props: VideoProps) => {
       : undefined;
   };
 
+  const videoSrc = getPrivacyEnhancedUrl(url);
   const videoConfig = getVideoConfig(url);
 
   return (
@@ -134,7 +149,7 @@ const Video = (props: VideoProps) => {
           style={videoStyle}
           width="100%"
           height="100%"
-          src={url}
+          src={videoSrc}
           controls
           config={videoConfig}
         />
