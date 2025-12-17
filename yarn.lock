@@ -2967,10 +2967,10 @@
     redux-thunk "^3.1.0"
     reselect "^5.1.0"
 
-"@rollbar/react@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@rollbar/react/-/react-0.12.1.tgz#2c8ac9a06b1f6ba75d67346f55fee3c120100865"
-  integrity sha512-qi1ahC4WRXTrqh7hkBM0H5cSKh4TBA5A9jKliokphxikmZsAfbQEvwjIM6IFkqEljeWt1nAfuuFC5w32sLqoTg==
+"@rollbar/react@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rollbar/react/-/react-1.0.0.tgz#0e4bf731e0c345127294e12db83da05cdf845f89"
+  integrity sha512-e3S9K9k1BLNuqAFA/AD8XH4kcypClYWoMBuW5LO7fnu5Jy1/qiRFIgS5cFZpAFWQqJaSPQAqrLP6n41sH08X9A==
   dependencies:
     tiny-invariant "^1.1.0"
 
