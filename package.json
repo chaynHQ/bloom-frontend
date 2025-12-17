@@ -51,7 +51,7 @@
     "@mui/material-nextjs": "^7.1.0",
     "@next/third-parties": "^15.3.3",
     "@reduxjs/toolkit": "^2.11.2",
-    "@rollbar/react": "^0.12.1",
+    "@rollbar/react": "^1.0.0",
     "@storyblok/react": "^5.4.20",
     "@types/dompurify": "^3.0.5",
     "@vercel/analytics": "^1.5.0",
