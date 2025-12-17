@@ -3,6 +3,8 @@
 import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateSessionFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS } from '@/lib/constants/enums';
+import { SESSION_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { SessionFeedback } from '@/lib/store/coursesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
@@ -95,6 +97,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
       await sendFeedback(feedbackData);
     }
 
+    logEvent(SESSION_FEEDBACK_SUBMITTED, { feedbackTags: selectedFeedbackTag });
     setLoading(false);
     setFormSubmitSuccess(true);
   };
@@ -138,7 +141,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           >
             {Object.entries(FEEDBACK_TAGS).map(([_, tagText]) => (
               <FormControlLabel
-                key={`feedbackTags.${tagText}`}
+                key={`feedbackTags.${_}`}
                 value={tagText}
                 control={<Radio />}
                 label={t(`feedbackTags.${tagText}`)}

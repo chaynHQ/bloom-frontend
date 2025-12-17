@@ -5,7 +5,7 @@ import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick } from '@/lib/constants/events';
 import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
-import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
@@ -23,7 +23,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
@@ -74,10 +74,8 @@ export default function RegisterPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
-  const locale = useLocale();
   const searchParams = useSearchParams();
   const theme = useTheme();
-  const dispatch = useAppDispatch();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);

@@ -27,8 +27,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-const http = require('http');
-
 Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
   cy.wait(4000);
@@ -38,7 +36,7 @@ Cypress.Commands.add('uiLogin', (email, password) => {
   cy.get('#password', { timeout: 10000 }).should('not.exist');
 });
 
-Cypress.Commands.add('uiLogout', (e) => {
+Cypress.Commands.add('uiLogout', () => {
   cy.get('#user-menu-button').click({ force: true });
   cy.wait(1000);
 
@@ -253,10 +251,8 @@ const attachCustomCommands = (Cypress, auth) => {
   });
   Cypress.Commands.add('clearUserState', () => {
     cy.window().then((window) => {
-      // @ts-ignore
       if (window.store) {
-        // @ts-ignore
-        const result = window.store.dispatch({ type: 'user/clearUserSlice' });
+        window.store.dispatch({ type: 'user/clearUserSlice' });
       }
     });
   });

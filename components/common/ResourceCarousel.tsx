@@ -19,13 +19,6 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-const slidesPerView = {
-  xs: 1,
-  sm: 2,
-  md: 3,
-  lg: 3,
-  xl: 3,
-};
 const ResourceCarousel = ({
   title = 'resource-category-carousel',
   resources = [],

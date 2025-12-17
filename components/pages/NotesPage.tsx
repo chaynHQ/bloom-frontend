@@ -107,7 +107,7 @@ export default function NotesPage({ story }: Props) {
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
 
-  const { data: subscriptions } = useGetSubscriptionsUserQuery(undefined, {
+  useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,
   });
 

@@ -1,6 +1,5 @@
 describe('Superadmin MFA Flow', () => {
   const testPhoneNumber = '+447700900123';
-  const testVerificationCode = '123456';
 
   beforeEach(() => {
     cy.cleanUpTestState();

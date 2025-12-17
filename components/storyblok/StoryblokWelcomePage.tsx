@@ -8,7 +8,7 @@ import {
   generatePartnerPromoGoToCoursesEvent,
 } from '@/lib/constants/events';
 import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
-import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -16,7 +16,7 @@ import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -63,10 +63,8 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   };
 
   const router = useRouter();
-  const locale = useLocale();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const dispatch: any = useAppDispatch();
   const t = useTranslations('Welcome');
   useReferralPartner();
 

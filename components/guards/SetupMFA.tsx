@@ -203,11 +203,7 @@ const SetupMFA = () => {
         )}
 
         <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
-          <Button
-            variant="outlined"
-            onClick={handleReauthDismiss}
-            disabled={isReauthenticating}
-          >
+          <Button variant="outlined" onClick={handleReauthDismiss} disabled={isReauthenticating}>
             {t('setupMFA.cancelReauth')}
           </Button>
           <Button

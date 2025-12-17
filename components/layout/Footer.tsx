@@ -94,7 +94,6 @@ const Footer = () => {
   const tS = useTranslations('Shared');
   const searchParams = useSearchParams();
 
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);

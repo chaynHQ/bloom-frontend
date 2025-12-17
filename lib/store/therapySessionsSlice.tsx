@@ -36,7 +36,7 @@ const slice = createSlice({
   name: 'therapySessions',
   initialState: initialState,
   reducers: {
-    clearTherapySessionsSlice: (state) => {
+    clearTherapySessionsSlice: () => {
       return initialState;
     },
   },

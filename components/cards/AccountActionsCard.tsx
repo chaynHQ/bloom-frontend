@@ -18,7 +18,7 @@ const cardStyle = {
 const AccountActionsCard = () => {
   const t = useTranslations('Account.accountSettings');
   const router = useRouter();
-  const [deleteUser, { isLoading }] = useDeleteUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
 
   const [resetPasswordConfirmationRequired, setResetPasswordConfirmationRequired] =
