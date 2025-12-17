@@ -2,7 +2,7 @@
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { usePathname, useRouter } from '@/i18n/routing';
-import countries from '@/lib/constants/countries';
+import { countries } from '@/lib/constants/countries';
 import { LANGUAGES } from '@/lib/constants/enums';
 import {
   ABOUT_YOU_DEMO_ERROR,

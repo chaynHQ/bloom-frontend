@@ -44,30 +44,36 @@ const SetupMFA = () => {
 
   // Clean up reCAPTCHA on unmount
   useEffect(() => {
+    const recaptchaContainer = recaptchaContainerRef.current;
+    const recaptchaCleanup = recaptchaCleanupRef.current;
     return () => {
-      if (recaptchaContainerRef.current) {
-        recaptchaContainerRef.current.innerHTML = '';
+      if (recaptchaContainer) {
+        recaptchaContainer.innerHTML = '';
       }
-      if (recaptchaCleanupRef.current) {
-        recaptchaCleanupRef.current();
-        recaptchaCleanupRef.current = null;
+      if (recaptchaCleanup) {
+        recaptchaCleanup();
       }
     };
   }, []);
 
-  // Store phone number when user enters it
-  useEffect(() => {
-    if (phoneNumber && !storedPhoneNumber) {
-      setStoredPhoneNumber(phoneNumber);
+  // Handle phone number change - also store it for restoration after reauth
+  const handlePhoneNumberChange = (value: string) => {
+    setPhoneNumber(value);
+    if (value) {
+      setStoredPhoneNumber(value);
     }
-  }, [phoneNumber, storedPhoneNumber]);
+  };
 
-  // Restore phone number after reauthentication
-  useEffect(() => {
-    if (!showReauth && storedPhoneNumber && !phoneNumber) {
+  // Handle reauth dismissal - restore phone number
+  const handleReauthDismiss = () => {
+    setShowReauth(false);
+    setPassword('');
+    setError('');
+    // Restore stored phone number
+    if (storedPhoneNumber) {
       setPhoneNumber(storedPhoneNumber);
     }
-  }, [showReauth, storedPhoneNumber, phoneNumber]);
+  };
 
   const handleReauthentication = async () => {
     if (!password.trim()) {
@@ -97,6 +103,10 @@ const SetupMFA = () => {
       // Reset the MFA setup process
       setVerificationId('');
       setVerificationCode('');
+      // Restore stored phone number
+      if (storedPhoneNumber) {
+        setPhoneNumber(storedPhoneNumber);
+      }
     } catch (error: any) {
       rollbar.error('Reauthentication error:', error);
       setError(t('form.reauthenticationError'));
@@ -195,11 +205,7 @@ const SetupMFA = () => {
         <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
           <Button
             variant="outlined"
-            onClick={() => {
-              setShowReauth(false);
-              setPassword('');
-              setError('');
-            }}
+            onClick={handleReauthDismiss}
             disabled={isReauthenticating}
           >
             {t('setupMFA.cancelReauth')}
@@ -244,7 +250,7 @@ const SetupMFA = () => {
         </Box>
       ) : !verificationId ? (
         <>
-          <PhoneInput value={phoneNumber} onChange={(value) => setPhoneNumber(value)} />
+          <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} />
           <Button variant="contained" color="secondary" sx={buttonStyle} onClick={handleEnrollMFA}>
             {t('setupMFA.sendCode')}
           </Button>

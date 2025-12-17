@@ -4,7 +4,7 @@ import { STORYBLOK_REFERENCE_CATEGORIES } from '@/lib/constants/enums';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import ReferencesCategory from '../common/ReferencesCategory';
 import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
@@ -60,23 +60,20 @@ interface TranscriptModalProps {
 const VideoTranscriptModal = (props: TranscriptModalProps) => {
   const { title, content, references, openTranscriptModal, setOpenTranscriptModal } = props;
 
-  const [books, setBooks] = useState<StoryblokReferenceProps[]>([]);
-  const [videoPractices, setVideoPractices] = useState<StoryblokReferenceProps[]>([]);
-  const [articles, setArticles] = useState<StoryblokReferenceProps[]>([]);
-  const [audios, setAudios] = useState<StoryblokReferenceProps[]>([]);
   const tS = useTranslations('Shared');
 
-  useEffect(() => {
-    if (references?.length) {
-      setBooks(references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.BOOK));
-      setVideoPractices(
-        references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE),
-      );
-      setArticles(
-        references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
-      );
-      setAudios(references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.AUDIO));
+  const { books, videoPractices, articles, audios } = useMemo(() => {
+    if (!references?.length) {
+      return { books: [], videoPractices: [], articles: [], audios: [] };
     }
+    return {
+      books: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.BOOK),
+      videoPractices: references.filter(
+        (ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE,
+      ),
+      articles: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
+      audios: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.AUDIO),
+    };
   }, [references]);
 
   return (

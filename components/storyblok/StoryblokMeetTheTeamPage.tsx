@@ -100,7 +100,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         targetRef.current.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top: scrollToY, behavior: 'smooth' });
     }
-  }, []);
+  });
 
   return (
     <Box

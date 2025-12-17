@@ -4,7 +4,7 @@ import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterFo
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick } from '@/lib/constants/events';
-import { PartnerContent, getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
+import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -26,7 +26,7 @@ import {
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 const containerStyle = {
   ...rowStyle,
@@ -83,39 +83,55 @@ export default function RegisterPage() {
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   useReferralPartner();
 
-  const [codeParam, setCodeParam] = useState<string>('');
-  const [partnerContent, setPartnerContent] = useState<PartnerContent | null>(null);
-  const [allPartnersContent, setAllPartnersContent] = useState<PartnerContent[]>([]);
+  const code = searchParams.get('code');
+  const partner = searchParams.get('partner');
 
-  // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
-  useEffect(() => {
-    const code = searchParams.get('code');
-    const partner = searchParams.get('partner');
-
+  // Derive partner content and code param from URL and state
+  const { partnerContent, codeParam, allPartnersContent } = useMemo(() => {
     if (partner) {
       const partnerContentResult = getPartnerContent(partner + '');
       if (partnerContentResult) {
-        setPartnerContent(partnerContentResult);
-
-        if (code) {
-          // code in url query
-          setCodeParam(code + '');
-        } else if (
-          entryPartnerReferral === partnerContentResult.name.toLowerCase() &&
-          entryPartnerAccessCode
-        ) {
-          // Entry code in state, add to url query in case of refresh
-          router.push({
-            pathname: '/auth/register',
-            query: { code: entryPartnerAccessCode, partner: partner },
-          });
-          setCodeParam(entryPartnerAccessCode);
-        }
+        // If code is in URL, use it; otherwise check if we have entry code for this partner
+        const effectiveCode = code
+          ? code + ''
+          : entryPartnerReferral === partnerContentResult.name.toLowerCase() &&
+              entryPartnerAccessCode
+            ? entryPartnerAccessCode
+            : '';
+        return {
+          partnerContent: partnerContentResult,
+          codeParam: effectiveCode,
+          allPartnersContent: [],
+        };
       }
-    } else {
-      setAllPartnersContent(getAllPartnersContent());
     }
-  }, [router, locale, dispatch, entryPartnerAccessCode, entryPartnerReferral, searchParams]);
+    return {
+      partnerContent: null,
+      codeParam: '',
+      allPartnersContent: getAllPartnersContent(),
+    };
+  }, [partner, code, entryPartnerReferral, entryPartnerAccessCode]);
+
+  // Handle URL update for entry code (navigation side effect)
+  const hasUpdatedUrl = useRef(false);
+
+  useEffect(() => {
+    if (
+      partner &&
+      partnerContent &&
+      !code &&
+      entryPartnerReferral === partnerContent.name.toLowerCase() &&
+      entryPartnerAccessCode &&
+      !hasUpdatedUrl.current
+    ) {
+      hasUpdatedUrl.current = true;
+      // Entry code in state, add to url query in case of refresh
+      router.push({
+        pathname: '/auth/register',
+        query: { code: entryPartnerAccessCode, partner: partner },
+      });
+    }
+  }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
   const headerProps = {
     partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,
@@ -123,59 +139,56 @@ export default function RegisterPage() {
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
   };
-
-  const ExtraContent = () => {
-    return (
-      <>
-        <Box sx={imageContainerStyle}>
-          <Image
-            alt={tS('alt.leafMixDots')}
-            src={illustrationLeafMixDots}
-            fill
-            sizes={getImageSizes(imageContainerStyle.width)}
-          />
-        </Box>
-        {!partnerContent && (
-          // Show the public bloom and all other partner's welcome page links
-          <>
-            <Card sx={publicCardStyle}>
-              <CardContent>
-                <Typography variant="h3" component="h3">
-                  {t('register.partnershipsTitle')}
-                </Typography>
-                <Typography>{t('register.partnershipsDescription')}</Typography>
-                <Box sx={logosContainerStyle}>
-                  {allPartnersContent?.map((partner) => (
-                    <Link
-                      component={i18nLink}
-                      sx={logoContainerStyle}
-                      key={`${partner.name}-link`}
-                      aria-label={tS(partner.logoAlt)}
-                      mt="1rem !important"
-                      onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.name))}
-                      href={`/welcome/${partner.name.toLowerCase()}${
-                        codeParam && '?code=' + codeParam
-                      }`}
-                    >
-                      <Image
-                        alt={tS(partner.logoAlt)}
-                        src={partner.logo}
-                        fill
-                        sizes={getImageSizes(logoContainerStyle.maxWidth)}
-                        style={{
-                          objectFit: 'contain',
-                        }}
-                      />
-                    </Link>
-                  ))}
-                </Box>
-              </CardContent>
-            </Card>
-          </>
-        )}
-      </>
-    );
-  };
+  const ExtraContent = (
+    <>
+      <Box sx={imageContainerStyle}>
+        <Image
+          alt={tS('alt.leafMixDots')}
+          src={illustrationLeafMixDots}
+          fill
+          sizes={getImageSizes(imageContainerStyle.width)}
+        />
+      </Box>
+      {!partnerContent && (
+        // Show the public bloom and all other partner's welcome page links
+        <>
+          <Card sx={publicCardStyle}>
+            <CardContent>
+              <Typography variant="h3" component="h3">
+                {t('register.partnershipsTitle')}
+              </Typography>
+              <Typography>{t('register.partnershipsDescription')}</Typography>
+              <Box sx={logosContainerStyle}>
+                {allPartnersContent?.map((partner) => (
+                  <Link
+                    component={i18nLink}
+                    sx={logoContainerStyle}
+                    key={`${partner.name}-link`}
+                    aria-label={tS(partner.logoAlt)}
+                    mt="1rem !important"
+                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.name))}
+                    href={`/welcome/${partner.name.toLowerCase()}${
+                      codeParam && '?code=' + codeParam
+                    }`}
+                  >
+                    <Image
+                      alt={tS(partner.logoAlt)}
+                      src={partner.logo}
+                      fill
+                      sizes={getImageSizes(logoContainerStyle.maxWidth)}
+                      style={{
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </Link>
+                ))}
+              </Box>
+            </CardContent>
+          </Card>
+        </>
+      )}
+    </>
+  );
 
   return (
     <Box>
@@ -190,7 +203,7 @@ export default function RegisterPage() {
           <Typography pb={2} variant="subtitle1" component="p">
             {t('introduction')}
           </Typography>
-          {!isSmallScreen && <ExtraContent />}
+          {!isSmallScreen && <>{ExtraContent}</>}
         </Box>
         <Box sx={cardContainerStyle}>
           <Card>
@@ -230,11 +243,7 @@ export default function RegisterPage() {
           </Card>
         </Box>
       </Container>
-      {isSmallScreen && (
-        <Container>
-          <ExtraContent />
-        </Container>
-      )}
+      {isSmallScreen && <Container>{ExtraContent}</Container>}
     </Box>
   );
 }

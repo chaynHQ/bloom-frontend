@@ -27,7 +27,7 @@ import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import { sendGAEvent } from '@next/third-parties/google';
 import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {
@@ -37,8 +37,6 @@ export default function useLoadUser() {
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
 
   const [createEventLog] = useCreateEventLogMutation();
-  const [isInvalidUserResourceResponse, setIsInvalidUserResourceResponse] =
-    useState<boolean>(false);
 
   const rollbar = useRollbar();
   const { clearState } = useStateUtils();
@@ -82,13 +80,15 @@ export default function useLoadUser() {
     skip: !userToken || !!userAuthLoading || isMaintenanceMode,
   });
 
+  // Derive if the user resource response is invalid (success but missing user ID)
+  const isInvalidUserResourceResponse = useMemo(
+    () => userResourceIsSuccess && !userResource?.user?.id,
+    [userResourceIsSuccess, userResource?.user?.id],
+  );
+
   // 3a. Handle get user success
   useEffect(() => {
-    if (userResourceIsSuccess) {
-      if (!userResource.user?.id) {
-        setIsInvalidUserResourceResponse(true);
-        return;
-      }
+    if (userResourceIsSuccess && userResource?.user?.id) {
       dispatch(setUserLoading(false));
 
       // Sets GA user data on global scope https://developers.google.com/tag-platform/gtagjs/reference

@@ -22,7 +22,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Checkbox, FormControl, FormControlLabel, Link } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import BaseRegisterForm, { useRegisterFormLogic } from './BaseRegisterForm';
 
 const contactPermissionLabelStyle = {
@@ -201,17 +201,16 @@ interface PartnerRegisterFormProps {
 
 export const PartnerRegisterForm = ({ partnerName, codeParam }: PartnerRegisterFormProps) => {
   const partners = useTypedSelector((state) => state.partners);
-  const [accessCodeRequired, setAccessCodeRequired] = useState<boolean>(false);
-  const [partnerId, setPartnerId] = useState<string | undefined>(undefined);
 
   useGetAutomaticAccessCodeFeatureForPartnerQuery(partnerName);
 
-  useEffect(() => {
+  const { partnerId, accessCodeRequired } = useMemo(() => {
     const partnerData = partners.find((p) => p.name.toLowerCase() === partnerName.toLowerCase());
-    if (partnerData) setPartnerId(partnerData.id);
-    if (partnerData && hasAutomaticAccessFeature(partnerData) === false) {
-      setAccessCodeRequired(true);
-    }
+    const requiresCode = partnerData ? hasAutomaticAccessFeature(partnerData) === false : false;
+    return {
+      partnerId: partnerData?.id,
+      accessCodeRequired: requiresCode,
+    };
   }, [partners, partnerName]);
 
   return (

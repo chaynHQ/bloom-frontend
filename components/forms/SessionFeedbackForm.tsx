@@ -99,27 +99,25 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
     setFormSubmitSuccess(true);
   };
 
-  const FormSuccess = () => (
-    <Box sx={containerStyle}>
-      <Typography component="h3" variant="h3">
-        {t('submissionText')}
-      </Typography>
-      <Box sx={imageContainerStyle}>
-        <Image
-          alt={tS('alt.personTea')}
-          src={illustrationPerson4Peach}
-          fill
-          sizes={getImageSizes(imageContainerStyle.width)}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
-      </Box>
-    </Box>
-  );
-
   if (formSubmitSuccess) {
-    return <FormSuccess />;
+    return (
+      <Box sx={containerStyle}>
+        <Typography component="h3" variant="h3">
+          {t('submissionText')}
+        </Typography>
+        <Box sx={imageContainerStyle}>
+          <Image
+            alt={tS('alt.personTea')}
+            src={illustrationPerson4Peach}
+            fill
+            sizes={getImageSizes(imageContainerStyle.width)}
+            style={{
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+      </Box>
+    );
   }
 
   return (

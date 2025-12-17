@@ -16,8 +16,8 @@
     "build": "next build",
     "start": "NODE_OPTIONS='-r newrelic' next start",
     "https:proxy": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "type-check": "tsc -p tsconfig.json",
     "format": "prettier . --write",
     "format:precommit": "prettier --write .",
@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.2",
+    "@eslint/eslintrc": "^3.3.3",
     "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@next/bundle-analyzer": "16.0.10",

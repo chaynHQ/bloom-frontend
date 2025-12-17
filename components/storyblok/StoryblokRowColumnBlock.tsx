@@ -57,7 +57,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
             <Column
               width={column.width}
               horizontalAlignment={column.horizontal_alignment}
-              key={`row_column_${index}_${Math.random() * 100}`}
+              key={`row_column_${index}_${column._uid}`}
             >
               {render(column.content, RichTextOptions)}
             </Column>
