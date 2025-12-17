@@ -4,6 +4,7 @@ import { EmailRemindersSettingsBanner } from '@/components/banner/EmailReminders
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import CourseCard from '@/components/cards/CourseCard';
 import LoadingContainer from '@/components/common/LoadingContainer';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -199,6 +200,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        cta={!userId ? <ScrollToSignUpButton /> : undefined}
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (

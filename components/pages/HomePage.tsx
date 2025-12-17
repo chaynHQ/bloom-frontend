@@ -48,7 +48,6 @@ export default function HomePage({ story }: Props) {
         cta={
           <Button
             id="primary-get-started-button"
-            sx={{ mt: 3 }}
             variant="contained"
             color="secondary"
             onClick={() => {

@@ -2,7 +2,6 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import {
-  DRAWER_LOGIN_CLICKED,
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
 } from '@/lib/constants/events';
@@ -15,7 +14,23 @@ import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } fro
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { navDrawerButtonStyle } from './TopBar';
+
+export const navDrawerButtonStyle = {
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
+  '& .MuiButton-startIcon': {
+    mx: 0,
+    '& svg': { fontSize: { xs: '1.25rem', sm: '1.5rem' } },
+  },
+  '& .MuiTouchRipple-root span': {
+    backgroundColor: 'primary.main',
+    opacity: 0.2,
+  },
+  px: { xs: 0.75, sm: 1 },
+  minWidth: 'unset',
+  width: { xs: 32, sm: 38 },
+  height: { xs: 32, sm: 38 },
+} as const;
 
 const listStyle = {
   display: 'flex',
@@ -49,19 +64,9 @@ const listButtonStyle = {
   },
 } as const;
 
-const loginButtonStyle = {
-  width: 'auto',
-  ml: 2,
-  mt: 1,
-  color: 'text.primary !important',
-} as const;
-
 const MobileTopNav = () => {
   const t = useTranslations('Navigation');
 
-  const userLoading = useTypedSelector((state) => state.user.loading);
-  const userId = useTypedSelector((state) => state.user.id);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -130,22 +135,6 @@ const MobileTopNav = () => {
               </ListItemButton>
             </ListItem>
           ))}
-          {!userLoading && !userId && (
-            <li>
-              <Button
-                variant="contained"
-                size="large"
-                sx={loginButtonStyle}
-                href="/auth/login"
-                component={i18nLink}
-                onClick={() => {
-                  logEvent(DRAWER_LOGIN_CLICKED);
-                }}
-              >
-                {t('login')}
-              </Button>
-            </li>
-          )}
         </List>
       </Drawer>
     </Box>
