@@ -121,7 +121,7 @@ const Video = (props: VideoProps) => {
         return `${parsed.protocol}//www.youtube-nocookie.com${parsed.pathname}${parsed.search}${parsed.hash}`;
       }
       // Handle youtu.be short URLs
-      if (parsed.hostname === "youtu.be") {
+      if (parsed.hostname === 'youtu.be') {
         const videoId = parsed.pathname.slice(1); // remove leading slash
         if (videoId) {
           return `https://www.youtube-nocookie.com/watch?v=${videoId}`;
