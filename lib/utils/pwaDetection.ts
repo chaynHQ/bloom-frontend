@@ -91,10 +91,14 @@ export const detectPWA = (): PWAStatus | null => {
  * Hook to monitor PWA installation status
  */
 export const usePWAStatus = () => {
-  // Use lazy initialization to avoid calling detectPWA on every render
-  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(() => detectPWA());
+  // Initialize as null for SSR safety
+  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(null);
 
   useEffect(() => {
+    // Detect initial PWA status on client
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPwaStatus(detectPWA());
+
     // Set up listeners for display mode changes
     const modeQueries = [
       window.matchMedia('(display-mode: standalone)'),
