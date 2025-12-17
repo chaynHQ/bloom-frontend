@@ -3203,10 +3203,10 @@
     picocolors "1.1.1"
     pretty-format "^27.0.2"
 
-"@testing-library/react@^16.3.0":
-  version "16.3.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.3.0.tgz#3a85bb9bdebf180cd76dba16454e242564d598a6"
-  integrity sha512-kFSyxiEDwv1WLl2fgsq6pPBbw5aWKrsY2/noi1Id0TK0UParSF62oFQFGHXIyaG4pp2tEub/Zlel+fjjZILDsw==
+"@testing-library/react@^16.3.1":
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.3.1.tgz#60a9f1f6a930399d9e41b506a8bf68dbf4831fe8"
+  integrity sha512-gr4KtAWqIOQoucWYD/f6ki+j5chXfcPc74Col/6poTyqTmn7zRmodWahWRCp8tYd+GMqBonw6hstNzqjbs6gjw==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
@@ -7391,10 +7391,10 @@ keyv@^4.5.4:
   dependencies:
     json-buffer "3.0.1"
 
-knip@^5.73.4:
-  version "5.73.4"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.73.4.tgz#b3a3da7f3155a95b7373796c2196d309a380b0b0"
-  integrity sha512-q0DDgqsRMa4z2IMEPEblns0igitG8Fu7exkvEgQx1QMLKEqSvcvKP9fMk+C1Ehy+Ux6oayl6zfAEGt6DvFtidw==
+knip@^5.75.1:
+  version "5.75.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.75.1.tgz#cc59061ca85cee0ac093bfa2bfbbe90db9a1219d"
+  integrity sha512-raguBFxTUO5JKrv8rtC8wrOtzrDwWp/fOu1F1GhrHD1F3TD2fqI1Z74JB+PyFZubL+RxqOkhGStdPAvaaXSOWQ==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
