@@ -108,16 +108,30 @@ const Video = (props: VideoProps) => {
 
   // Convert YouTube URLs to privacy-enhanced youtube-nocookie.com domain
   const getPrivacyEnhancedUrl = (url: string): string => {
-    // Handle standard youtube.com URLs
-    if (url.includes('youtube.com') && !url.includes('youtube-nocookie.com')) {
-      return url.replace('youtube.com', 'youtube-nocookie.com');
+    try {
+      const parsed = new URL(url);
+      // Handle standard YouTube URLs by exact host match
+      const youtubeHostnames = ['youtube.com', 'www.youtube.com', 'm.youtube.com'];
+      const nocookieHostnames = ['youtube-nocookie.com', 'www.youtube-nocookie.com'];
+      if (
+        youtubeHostnames.includes(parsed.hostname) &&
+        !nocookieHostnames.includes(parsed.hostname)
+      ) {
+        // Replace the host with youtube-nocookie.com, preserving protocol and path
+        return `${parsed.protocol}//www.youtube-nocookie.com${parsed.pathname}${parsed.search}${parsed.hash}`;
+      }
+      // Handle youtu.be short URLs
+      if (parsed.hostname === "youtu.be") {
+        const videoId = parsed.pathname.slice(1); // remove leading slash
+        if (videoId) {
+          return `https://www.youtube-nocookie.com/watch?v=${videoId}`;
+        }
+      }
+      return url;
+    } catch {
+      // If URL parsing fails, return the original string
+      return url;
     }
-    // Handle youtu.be short URLs - convert to youtube-nocookie.com format
-    const youtuBeMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-    if (youtuBeMatch) {
-      return `https://www.youtube-nocookie.com/watch?v=${youtuBeMatch[1]}`;
-    }
-    return url;
   };
 
   const getVideoConfig = (url: string): Config | undefined => {
