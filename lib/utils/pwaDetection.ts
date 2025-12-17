@@ -93,6 +93,11 @@ export const detectPWA = (): PWAStatus | null => {
  */
 export const usePWAStatus = () => {
   const subscribe = useCallback((onStoreChange: () => void) => {
+    // Guard for SSR - subscribe is only called on client, but adding guard for safety
+    if (typeof window === 'undefined') {
+      return () => {};
+    }
+
     // Set up listeners for display mode changes
     const modeQueries = [
       window.matchMedia('(display-mode: standalone)'),
