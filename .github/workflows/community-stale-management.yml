@@ -34,7 +34,7 @@ jobs:
           # only scan assigned issues
           include-only-assigned: true
           # ignore issues assigned to staff and bots
-          exempt-assignees: 'kyleecodes, swetha-charles, eleanorreem, annarhughes, tarebyte, dependabot[bot], dependabot, github-actions[bot], github-actions'
+          exempt-assignees: 'eleanorreem, annarhughes, dependabot[bot], dependabot, github-actions[bot], github-actions'
           # disable removing stale label due to irrelevant activity (like branch updates)
           remove-stale-when-updated: false
           # exempt dependabot prs from going stale
