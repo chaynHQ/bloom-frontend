@@ -91,16 +91,16 @@ const StoryblokCard = (props: StoryblokCardProps) => {
       alignment === 'right' ? 'row-reverse' : alignment === 'center' ? 'column' : 'row',
     alignItems: alignment === 'right' ? 'flex-end' : alignment === 'center' ? 'center' : 'center',
     textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
-    gap: 3,
+    gap: isSlimStyle ? 2 : 3,
     backgroundColor: background,
   } as const;
 
   const imageContainerStyle = {
     position: 'relative',
-    width: { xs: 80, ...(isSlimStyle && { md: 100 }) },
-    height: { xs: 80, ...(isSlimStyle && { md: 100 }) },
-    minWidth: { xs: 80, ...(isSlimStyle && { md: 100 }) },
-    minHeight: { xs: 80, ...(isSlimStyle && { md: 100 }) },
+    width: 84,
+    height: 84,
+    minWidth: 84,
+    minHeight: 84,
   } as const;
 
   const collapseContentStyle = {
@@ -109,7 +109,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     ...(style == 'slim' ? slimPadding : {}),
   } as const;
 
-  const CardMainContent = () => (
+  const CardMainContent = (
     <CardContent sx={cardContentStyle}>
       {image && image.filename && (
         <Box sx={imageContainerStyle}>
@@ -138,10 +138,10 @@ const StoryblokCard = (props: StoryblokCardProps) => {
             href={card_link.cached_url}
             aria-label={`${tS('navigateTo')} ${card_link.cached_url}`}
           >
-            <CardMainContent />
+            {CardMainContent}
           </CardActionArea>
         ) : (
-          <CardMainContent />
+          <>{CardMainContent}</>
         )}
         {dropdown_button && (
           <CardActions sx={cardActionsStyle}>

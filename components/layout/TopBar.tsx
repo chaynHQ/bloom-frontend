@@ -20,11 +20,11 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import DesktopMainNav from './DesktopMainNav';
+import DesktopTopNav from './DesktopTopNav';
 import LanguageMenu from './LanguageMenu';
-import NavigationDrawer from './NavigationDrawer';
-import NavigationMenu from './NavigationMenu';
-import SecondaryNav from './SecondaryNav';
+import MobileTopNav from './MobileTopNav';
 import UserMenu from './UserMenu';
 
 const isMaintenanceMode = getIsMaintenanceMode();
@@ -38,15 +38,23 @@ const appBarContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
   alignContent: 'center',
-  height: { xs: 48, sm: 64 },
+  height: { xs: 52, sm: 64 },
   padding: '0 !important',
 } as const;
 
 const logoContainerStyle = {
   position: 'relative',
   width: { xs: 80, sm: 120 },
-  marginLeft: { xs: 4, md: 0 },
+  marginLeft: { xs: 3, sm: 0 },
   height: 48,
+} as const;
+
+const menusContainerStyle = {
+  ...rowStyle,
+  alignItems: 'center',
+  alignContent: 'center',
+  gap: { xs: 1, sm: 1.5 },
+  pr: { xs: 2, sm: 0 },
 } as const;
 
 const TopBar = () => {
@@ -54,20 +62,23 @@ const TopBar = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [welcomeUrl, setWelcomeUrl] = useState<string>('/');
 
+  const userLoading = useTypedSelector(
+    (state) => state.user.authStateLoading || state.user.loading,
+  );
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  useEffect(() => {
+  const welcomeUrl = useMemo(() => {
     if (partnerAdmin && partnerAdmin.partner) {
-      setWelcomeUrl(`/welcome/${partnerAdmin.partner.name.toLowerCase()}`);
+      return `/welcome/${partnerAdmin.partner.name.toLowerCase()}`;
     }
     if (partnerAccesses.length > 0) {
-      setWelcomeUrl(`/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`);
+      return `/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`;
     }
-  }, [setWelcomeUrl, partnerAccesses, partnerAdmin]);
+    return '/';
+  }, [partnerAccesses, partnerAdmin]);
 
   return (
     <>
@@ -93,18 +104,25 @@ const TopBar = () => {
               }}
             />
           </Link>
-          <Box sx={{ ...rowStyle, alignItems: 'center', alignContent: 'center' }}>
-            {!isSmallScreen && <NavigationMenu />}
-            {userId && !isMaintenanceMode && <UserMenu />}
-            <LanguageMenu />
+          <Box sx={menusContainerStyle}>
+            {!isSmallScreen && <DesktopTopNav />}
+            {isSmallScreen && <LanguageMenu />}
+            {!userLoading && userId && !isMaintenanceMode && <UserMenu />}
+            {!isSmallScreen && <LanguageMenu />}
             {!isMaintenanceMode && (
               <>
-                {!isSmallScreen && !userId && (
+                {!userLoading && !userId && (
                   <Button
                     variant="contained"
-                    size="medium"
+                    size={isSmallScreen ? 'small' : 'medium'}
                     qa-id="login-menu-button"
-                    sx={{ width: 'auto', ml: 1 }}
+                    sx={{
+                      width: 'auto',
+                      height: { xs: 32, sm: 38 },
+                      ml: 1,
+                      px: { xs: 1.5, sm: 2 },
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    }}
                     component={i18nLink}
                     href="/auth/login"
                     onClick={() => {
@@ -114,12 +132,12 @@ const TopBar = () => {
                     {t('login')}
                   </Button>
                 )}
-                {isSmallScreen && <NavigationDrawer />}
               </>
             )}
+            {isSmallScreen && <MobileTopNav />}
           </Box>
         </Container>
-        {!isSmallScreen && !isMaintenanceMode && <SecondaryNav />}
+        {!isSmallScreen && !isMaintenanceMode && <DesktopMainNav />}
       </AppBar>
       <Box sx={topBarSpacerStyle} marginTop={0} />
     </>

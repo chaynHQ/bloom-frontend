@@ -2,13 +2,31 @@
   "Resources": {
     "backToConversations": "Revenir aux conversations",
     "backToShorts": "Revenir aux courtes",
+    "backToVideos": "Retour aux vidéos",
+    "backToSomatics": "Retour aux Somatique",
+    "nextVideoButtonLabel": "Vidéo suivante",
+    "nextConversationButtonLabel": "Conversation suivante",
+    "nextSessionButtonLabel": "Session suivante",
     "conversations": "Conversations",
     "shorts": "Courte",
+    "videos": "Vidéos",
     "completed": "Terminé",
     "sessionDetail": "Cet extrait est de la Session : {sessionName}, de notre Cours : {courseName}",
     "sessionButtonLabel": "Regarder la session complète",
     "videoTranscriptLink": "Regardez la vidéo ou lisez la <link>transcription</link>.",
     "conversationTranscriptLink": "Écoutez la conversation ou lisez la <link>transcription</link>.",
+    "relatedContent": {
+      "title": "Contenu associé",
+      "resource_short_video": "Regarder",
+      "resource_single_video": "Regarder",
+      "resource_conversation": "Écouter",
+      "course": "Cours",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Ancrage",
+      "activities": "Activités",
+      "minuteLabel": "minutes"
+    },
     "resourceFeedback": {
       "title": "Comment s’est déroulée la session? ",
       "subtitle": "Nous aimerions connaître votre avis sur cette session. Vos retours nous aident à améliorer nos cours.",
@@ -26,6 +44,14 @@
       "errors": {
         "feedbackTagError": "Veuillez sélectionner une note avant d'envoyer."
       }
+    },
+    "references": {
+      "title": "Ressources",
+      "keyReferences": "Ressources clés de cette session (liste complète à la fin de la transcription) :",
+      "books": "Livres",
+      "articles": "Articles",
+      "video_practices": "Pratiques vidéo",
+      "audios": "Podcasts"
     }
   }
 }

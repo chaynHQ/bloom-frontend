@@ -2,14 +2,11 @@
 
 import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
-import { CREATE_PARTNER_ACCESS_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -30,10 +27,6 @@ export default function CreateAccessCodePage() {
     partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
     partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
   };
-
-  useEffect(() => {
-    logEvent(CREATE_PARTNER_ACCESS_VIEWED);
-  }, []);
 
   return (
     <Box>

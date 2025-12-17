@@ -43,6 +43,7 @@ const cardActionsStyle = {
 const cardContentRowStyles = {
   ...rowStyle,
   justifyContent: 'flex-start',
+  alignItems: 'center',
   gap: 1.5,
 } as const;
 
@@ -95,16 +96,16 @@ const SessionCard = (props: SessionCardProps) => {
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>
+          <Typography flex={1} component="h3" variant="h3" mb={1}>
+            {session.content.name}
+          </Typography>
           <Box sx={cardContentRowStyles}>
+            <Typography color="grey.700">{sessionSubtitle}</Typography>
             <SessionProgressDisplay
               sessionId={session.uuid}
               storyblokCourseUuid={storyblokCourseUuid}
             />
-            <Typography flex={1} component="h3" variant="h3">
-              {session.content.name}
-            </Typography>
           </Box>
-          <Typography color="grey.700">{sessionSubtitle}</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>

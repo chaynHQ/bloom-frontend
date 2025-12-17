@@ -24,7 +24,7 @@
       "nameLabel": "Vorname/Nickname",
       "emailLabel": "Email",
       "passwordLabel": "Passwort",
-      "contactPermissionLabel": "Werde Teil unserer Community von Überlebenden, die ihre Gedanken zu Bloom teilen. ",
+      "contactPermissionLabel": "Erhalten Sie E-Mails über neue Ressourcen und Gelegenheiten, uns Ihr Feedback mitzuteilen.",
       "registerSubmit": "Konto anlegen",
       "resetPasswordStep1": "Wir schicken Dir eine Email, damit Du Dein Passwort zurücksetzen kannst.",
       "resetPasswordStep2": "Fast geschafft! Du kannst jetzt Dein neues Passwort festlegen.",
@@ -42,6 +42,7 @@
         "alreadyInUse": "Dieser Code wurde bereits verwendet. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team von {partnerName}."
       },
       "firebase": {
+        "wrongPassword": "Falsches Passwort, bitte versuchen Sie es erneut oder melden Sie sich ab und setzen Sie Ihr Passwort zurück.",
         "authError": "Wir konnten kein Konto für diese Kombination aus Email und Passwort finden. Überprüfe Deine Email und Dein Passwort. ",
         "invalidEmail": "Deine Email-Adresse scheint ungültig zu sein. Korrigiere alle Tippfehler, um fortzufahren.",
         "tooManyAttempts": "Zu viele fehlgeschlagene Login-Versuche. Bitte warten Sie einige Minuten oder setzen Sie Ihr Passwort jetzt zurück.",
@@ -61,25 +62,28 @@
       "emailNotVerified": "Bitte verifiziere deine E-Mail-Adresse, bevor du die Zwei-Faktor-Authentifizierung einrichtest.",
       "emailVerificationError": "Fehler beim Senden der Verifizierungs-E-Mail. Bitte versuche es erneut.",
       "emailVerificationSent": "Verifizierungs-E-Mail wurde gesendet. Bitte überprüfe deinen Posteingang.",
-      "sendVerificationEmail": "Verifizierungs-E-Mail senden"
+      "emailVerificationSpamCheck": "Wenn du die E-Mail nicht siehst, überprüfe bitte deinen Spam-Ordner.",
+      "sendVerificationEmail": "Verifizierungs-e-mail senden",
+      "resendVerificationEmail": "Verifizierungs-e-mail erneut senden",
+      "passwordRequired": "Passwort ist für die erneute Authentifizierung erforderlich.",
+      "reauthenticationError": "Erneute Authentifizierung fehlgeschlagen. Bitte versuche es erneut."
     },
     "verifyMFA": {
-      "title": "Zwei-Faktor-Authentifizierung verifizieren",
-      "triggerSMS": "SMS-Code senden",
+      "title": "Zwei-faktor-authentifizierung verifizieren",
+      "triggerSMS": "SMS-code senden",
       "verifyCode": "Code verifizieren",
       "phoneNumber": "Wir senden einen Verifizierungscode an Ihre registrierte Telefonnummer: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Zwei-Faktor-Authentifizierung einrichten",
-      "pageTitle": "Sichern Sie Ihr Konto",
+      "title": "Zwei-faktor-authentifizierung einrichten",
       "sendCode": "Verifizierungscode senden",
       "verifyCode": "Code verifizieren",
-      "enterCodeHelperText": "Bitte geben Sie den Verifizierungscode ein, den wir an Ihr Telefon gesendet haben:"
-    },
-    "verifyEmail": {
-      "pageTitle": "E-Mail-Adresse verifizieren",
-      "instructions": "Bitte überprüfe deine E-Mails und klicke auf den Verifizierungslink, um fortzufahren.",
-      "sendButton": "Verifizierungs-E-Mail erneut senden"
+      "enterCodeHelperText": "Bitte geben Sie den Verifizierungscode ein, den wir an Ihr Telefon gesendet haben:",
+      "reauthTitle": "Bestätigen Sie Ihre Identität",
+      "reauthDescription": "Bitte geben Sie Ihr Passwort ein, bevor Sie fortfahren",
+      "cancelReauth": "Abbrechen",
+      "confirmReauth": "Bestätigen",
+      "reauthenticating": "Bestätige..."
     }
   }
 }

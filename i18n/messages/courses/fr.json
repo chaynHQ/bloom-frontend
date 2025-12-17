@@ -1,7 +1,7 @@
 {
   "Courses": {
     "title": "Nos cours",
-    "introduction": "Les cours Bloom informent, encouragent et offrent des outils adaptés pour nous aider à faire face aux traumatismes. Ils nous aident à comprendre, à réfléchir et à traiter ce que nous avons vécu et la façon dont cela a pu nous affecter, le tout dans un espace sûr et stimulant.",
+    "introduction": "Les cours de Bloom offrent des informations, des outils et du soutien adaptés pour nous aider à faire face au trauma. Ils nous encouragent à comprendre, à réfléchir et à traiter ce que nous avons vécu et comment cela a pu nous affecter, le tout dans un espace de sécurité et d’empouvoirement.",
     "session": "Session",
     "course": "Cours",
     "courses": "Cours",
@@ -62,6 +62,10 @@
     "backToCourse": "Revenir au cours",
     "backToCourses": "Revenir aux cours",
     "conversationsHeading": "Conversations",
-    "shortsHeading": "Extraits"
+    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
+    "shortsHeading": "Extraits",
+    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
+    "somaticsHeading": "Somatique : La guérison par le corps",
+    "somaticsDescription": "Découvrez comment les approches douces et basées sur le corps peuvent aider à guérir de la violence, du stress et de la peur. Cette collection de ressources offre des conseils clairs et pratiques pour nous aider à nous reconnecter à notre corps, à renforcer notre résilience et à explorer ce que la sécurité et l'aisance peuvent signifier."
   }
 }

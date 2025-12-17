@@ -36,11 +36,16 @@ export const richtextContentStyle = {
 } as const;
 
 export const breadcrumbButtonStyle = {
-  backgroundColor: 'background.default',
-  boxShadow: 'none !important',
+  backgroundColor: 'white',
   ':hover': {
     background: 'white',
   },
+  position: 'fixed',
+  px: 2,
+  left: { xs: 16, lg: '8%' },
+  top: { xs: 68, sm: 80, md: 160 },
+  zIndex: 100,
+  boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
 } as const;
 
 export const scaleTitleStyle = {
@@ -69,6 +74,10 @@ export const staticFieldLabelStyle = {
 
 export const topBarSpacerStyle = {
   height: { xs: '3rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8rem' },
+} as const;
+
+export const mobileBottomNavSpacerStyle = {
+  height: { xs: 9, md: 0 }, // Approximately 72px in MUI spacing units
 } as const;
 
 export const fullScreenContainerStyle = {

@@ -2,13 +2,31 @@
   "Resources": {
     "backToConversations": "Conversations par vaapas jaaen",
     "backToShorts": "Clips par vaapas jaaen",
+    "backToVideos": "Videos par wapas jaein",
+    "backToSomatics": "Somatics par wapas jaein",
+    "nextVideoButtonLabel": "Agla video",
+    "nextConversationButtonLabel": "Agli conversation",
+    "nextSessionButtonLabel": "Agla session",
     "conversations": "Bātcīt",
     "shorts": "Clips",
+    "videos": "Videos",
     "completed": "Pūra",
     "sessionDetail": "Yah clip Session: {sessionName}, hamāre Course: {courseName} se hai",
     "sessionButtonLabel": "Pūrī session dekhen",
     "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
     "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+    "relatedContent": {
+      "title": "Related content",
+      "resource_short_video": "Watch",
+      "resource_single_video": "Watch",
+      "resource_conversation": "Listen",
+      "course": "Course",
+      "session": "Session",
+      "session_iba": "Session",
+      "grounding": "Grounding",
+      "activities": "Activity",
+      "minuteLabel": "minutes"
+    },
     "resourceFeedback": {
       "title": "Yeh session kaisa aapko kaisa laga?",
       "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
@@ -26,6 +44,14 @@
       "errors": {
         "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
       }
+    },
+    "references": {
+      "title": "Sansadhan",
+      "keyReferences": "Is session ke mukhya sansadhan (purn soochi transcript ke ant mein):",
+      "books": "Kitaben",
+      "articles": "Lekh",
+      "video_practices": "Video abhyaas",
+      "audios": "Podcasts"
     }
   }
 }

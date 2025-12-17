@@ -18,7 +18,7 @@ import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import { Link as MuiLink, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface SessionVideoProps {
@@ -38,7 +38,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
   const [openTranscriptModal, setOpenTranscriptModal] = useState<boolean | null>(null);
   const [startSession] = useStartSessionMutation();
 
-  async function callStartSession() {
+  const callStartSession = useCallback(async () => {
     logEvent(SESSION_STARTED_REQUEST, {
       ...eventData,
       session_name: name,
@@ -61,7 +61,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
 
       throw error;
     }
-  }
+  }, [eventData, name, storyUuid, startSession, rollbar]);
 
   useEffect(() => {
     if (openTranscriptModal === null) return;
@@ -77,7 +77,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
     if (openTranscriptModal && sessionProgress === PROGRESS_STATUS.NOT_STARTED) {
       callStartSession();
     }
-  }, [openTranscriptModal]);
+  }, [openTranscriptModal, eventData, name, sessionProgress, callStartSession]);
 
   useEffect(() => {
     if (!videoStarted || sessionProgress !== PROGRESS_STATUS.NOT_STARTED) return;
@@ -85,11 +85,11 @@ export const SessionVideo = (props: SessionVideoProps) => {
     if (videoStarted) {
       callStartSession();
     }
-  }, [videoStarted]);
+  }, [videoStarted, callStartSession, sessionProgress]);
 
   useEffect(() => {
     logEvent(SESSION_VIEWED, eventData);
-  }, []);
+  });
 
   return (
     video && (
@@ -121,7 +121,7 @@ export const SessionVideo = (props: SessionVideoProps) => {
           containerStyles={{ mx: 'auto', my: 2 }}
         />
         <VideoTranscriptModal
-          videoName={name}
+          title={name}
           content={video_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}

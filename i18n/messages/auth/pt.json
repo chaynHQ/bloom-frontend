@@ -24,7 +24,7 @@
       "nameLabel": "Nome/apelido",
       "emailLabel": "E-mail",
       "passwordLabel": "Senha",
-      "contactPermissionLabel": "Podemos enviar um e-mail para saber sua opinião sobre como melhorar o Bloom?",
+      "contactPermissionLabel": "Receba e-mails sobre novos recursos e oportunidades para partilhar o seu feedback connosco.",
       "registerSubmit": "Criar uma conta",
       "resetPasswordStep1": "Enviaremos um e-mail para você começar a redefinir sua senha.",
       "resetPasswordStep2": "Estamos quase lá! Agora você pode definir sua nova senha.",
@@ -42,6 +42,7 @@
         "alreadyInUse": "Este código já foi utilizado. Se você acha que houve um engano, entre em contato com a equipe de {partnerName}."
       },
       "firebase": {
+        "wrongPassword": "Palavra-passe incorreta, por favor tente novamente ou termine a sessão e reponha a sua palavra-passe.",
         "authError": "Não foi possível encontrar uma conta para essa combinação de e-mail e senha. Verifique se seu e-mail e senha estão corretos.",
         "invalidEmail": "Seu e-mail parece estar inválido. Por favor, corrija os erros de digitação para continuar.",
         "tooManyAttempts": "Muitas tentativas de login falharam. Aguarde alguns minutos ou redefina sua senha agora.",
@@ -61,25 +62,28 @@
       "emailNotVerified": "Por favor, verifique seu e-mail antes de configurar a autenticação de dois fatores.",
       "emailVerificationError": "Erro ao enviar e-mail de verificação. Por favor, tente novamente.",
       "emailVerificationSent": "E-mail de verificação enviado. Por favor, verifique sua caixa de entrada.",
-      "sendVerificationEmail": "Enviar e-mail de verificação"
+      "emailVerificationSpamCheck": "Se você não vir o e-mail, verifique sua pasta de spam.",
+      "sendVerificationEmail": "Enviar e-mail de verificação",
+      "resendVerificationEmail": "Reenviar e-mail de verificação",
+      "passwordRequired": "Senha é necessária para reautenticação.",
+      "reauthenticationError": "Falha na reautenticação. Por favor, tente novamente."
     },
     "verifyMFA": {
-      "title": "Verificar Autenticação de Dois Fatores",
-      "triggerSMS": "Enviar Código SMS",
-      "verifyCode": "Verificar Código",
+      "title": "Verificar autenticação de dois fatores",
+      "triggerSMS": "Enviar código SMS",
+      "verifyCode": "Verificar código",
       "phoneNumber": "Enviaremos um código de verificação para o seu número de telefone registrado: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Configurar Autenticação de Dois Fatores",
-      "pageTitle": "Proteja sua Conta",
-      "sendCode": "Enviar Código de Verificação",
-      "verifyCode": "Verificar Código",
-      "enterCodeHelperText": "Por favor, digite o código de verificação que enviamos para o seu telefone:"
-    },
-    "verifyEmail": {
-      "pageTitle": "Verifique seu e-mail",
-      "instructions": "Por favor, verifique seu e-mail e clique no link de verificação para continuar.",
-      "sendButton": "Reenviar e-mail de verificação"
+      "title": "Configurar autenticação de dois fatores",
+      "sendCode": "Enviar código de verificação",
+      "verifyCode": "Verificar código",
+      "enterCodeHelperText": "Por favor, digite o código de verificação que enviamos para o seu telefone:",
+      "reauthTitle": "Confirme sua Identidade",
+      "reauthDescription": "Por favor digite sua senha antes de continuar",
+      "cancelReauth": "Cancelar",
+      "confirmReauth": "Confirmar",
+      "reauthenticating": "Confirmando..."
     }
   }
 }

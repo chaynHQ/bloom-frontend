@@ -15,11 +15,12 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const containerStyle = {
   ...rowStyle,
+  flexDirection: { xs: 'column', md: 'row' },
   gap: 5,
 } as const;
 
 const introductionContainerStyle = {
-  maxWidth: '50%',
+  maxWidth: { xs: '100%', md: '50%' },
   flex: 1,
 } as const;
 
@@ -52,15 +53,6 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
     );
   }, [openTranscriptModal, name, eventData]);
 
-  const IntroductionVideo = () => (
-    <Video
-      url={video.url}
-      eventData={eventData}
-      eventPrefix="COURSE_INTRO"
-      containerStyles={{ width: { xs: '100%' }, flex: 1 }}
-    />
-  );
-
   return (
     <Box sx={containerStyle}>
       <Box sx={introductionContainerStyle}>
@@ -81,13 +73,18 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
           })}
         </Typography>
         <VideoTranscriptModal
-          videoName={name}
+          title={name}
           content={video_transcript}
           setOpenTranscriptModal={setOpenTranscriptModal}
           openTranscriptModal={openTranscriptModal}
         />
       </Box>
-      <IntroductionVideo />
+      <Video
+        url={video.url}
+        eventData={eventData}
+        eventPrefix="COURSE_INTRO"
+        containerStyles={{ width: { xs: '100%' }, flex: 1 }}
+      />
     </Box>
   );
 };

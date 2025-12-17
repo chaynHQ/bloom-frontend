@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Recursos",
     "metadata": {
       "title": "Acompáñanos en tu viaje de sanación",
       "description": "Bloom está aquí para que aprendas, sanes y crezcas hacia un futuro seguro. Es traído a ti por Chayn, una organización global sin fines de lucro, dirigida por sobrevivientes y aliados de todo el mundo.",
@@ -24,7 +25,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "En asociación con",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Nuestras políticas"
+      "policies": "Nuestras políticas",
+      "trustCenter": "Centro de Confianza"
     },
     "maintenanceBanner": {
       "title": "Bloom está en mantenimiento",
@@ -32,7 +34,7 @@
     },
     "fruitzRetirementBanner": {
       "title": "Cambio en tus cursos",
-      "description": "La aplicación Fruitz dejará de estar disponible el próximo mes, pero tu apoyo en Bloom continúa. A partir del 22 de abril, el curso ‘Citas, límites y relaciones’ ya no estará disponible, pero todos los demás servicios, incluido el envío de mensajes 1:1, seguirán funcionando con normalidad.",
+      "description": "La colaboración Fruitz x Bloom llega a su fin, pero tu apoyo en Bloom continúa. A partir del 19 de agosto, el curso ‘Citas, límites y relaciones’ ya no estará disponible, pero todos los demás servicios, incluido el envío de mensajes 1:1, seguirán funcionando con normalidad.",
       "dismiss": "Cerrar"
     },
     "videoTranscript": {
@@ -45,7 +47,10 @@
       "completed": "Completo",
       "notStarted": "Sin empezar"
     },
-    "meetTheTeam": { "expandTeamMember": "Expandir biografía para {name}" },
+    "meetTheTeam": {
+      "fullBioButton": "Leer la biografía completa de {name}",
+      "expandTeamMember": "Expandir biografía para {name}"
+    },
     "noDataAvailable": {
       "title": "Se produjo un problema al cargar esta página. Vuelva a intentarlo pronto o póngase en contacto con nosotros."
     },
@@ -87,7 +92,10 @@
       "cookieCat": "Ilustración de un gato descansando con una galleta",
       "fruitzLogo": "Logo de Fruitz",
       "bloomFruitzLogo": "Logo de Bloom para Fruitz",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Icono de libro",
+      "articleIcon": "Icono de artículo",
+      "videoIcon": "Icono de vídeo"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/smGSjlCo",
     "survivor": "Sobreviviente",
@@ -107,7 +115,8 @@
       "title": "Iniciar sesión o crear una cuenta",
       "description": "Regístrate gratis para acceder a todo nuestro contenido y explorar todo lo que Bloom tiene para ofrecer",
       "loginButton": "Iniciar sesión",
-      "registerButton": "Crear cuenta"
+      "registerButton": "Crear cuenta",
+      "backButton": "Cancelar"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Diarios de pensamientos",
@@ -135,18 +144,6 @@
       "grouding-sound-of-claps": "El sonido de los aplausos",
       "grounding-affirming-ourselves": "Reafirmarnos (presión firme)"
     },
-    "relatedContent": {
-      "title": "Contenido relacionado",
-      "resource_short_video": "Ver",
-      "resource_conversation": "Escuchar",
-      "short_video": "Ver",
-      "course": "Curso",
-      "session": "Sesión",
-      "session_iba": "Sesión",
-      "grounding": "Anclaje",
-      "activities": "Actividad",
-      "minuteLabel": "minutos"
-    },
     "pwaBanner": {
       "mobileDescription": "Instala la app para acceder desde tu pantalla de inicio",
       "desktopDescription": "Instala la app para acceder a Bloom desde tu pantalla de inicio",
@@ -160,6 +157,10 @@
       "title": "Mensajes de apoyo gratis",
       "description": "Recibe mensajes dos veces por semana directamente en tu WhatsApp",
       "buttonText": "Suscríbete"
+    },
+    "characterCount": "{current}/{max} caracteres",
+    "scrollToSignUp": {
+      "button": "Regístrate gratis"
     }
   }
 }

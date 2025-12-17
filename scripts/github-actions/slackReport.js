@@ -19,7 +19,6 @@ const config = {
     lookbackDays: 14,
     staffUsernames: [
       'annarhughes',
-      'kyleecodes',
       'eleanorreem',
       'github-actions[bot]',
       'dependabot[bot]',

@@ -10,12 +10,6 @@ import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-const containerStyle = {
-  backgroundColor: 'primary.main',
-  pt: '2rem !important',
-  pb: '0 !important',
-} as const;
-
 const alertStyle = {
   backgroundColor: 'secondary.light',
   color: 'text.primary',
@@ -44,15 +38,23 @@ export const FruitzRetirementBanner = () => {
   });
 
   const isTargetPage = !pathname.includes('auth');
+  const isFruitzWelcomePage = pathname.includes('fruitz');
 
   const showBanner =
-    isBannerFeatureEnabled && isFruitzUser && isTargetPage && isBannerNotInteracted;
+    (isBannerFeatureEnabled && isFruitzUser && isTargetPage && isBannerNotInteracted) ||
+    isFruitzWelcomePage;
 
   const handleClickDeclined = () => {
     Cookies.set(FRUITZ_RETIREMENT_BANNER_INTERACTED, 'true');
     logEvent(FRUITZ_RETIREMENT_BANNER_DISMISSED);
     setOpen(false);
   };
+  const containerStyle = {
+    backgroundColor: isFruitzWelcomePage ? 'white' : 'primary.main',
+    pt: '2rem !important',
+    pb: '0 !important',
+  } as const;
+
   if (!showBanner) return null;
 
   return (

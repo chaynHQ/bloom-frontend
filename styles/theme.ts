@@ -50,24 +50,26 @@ let theme = createTheme({
     h1: {
       fontFamily: 'var(--font-montserrat)',
       fontSize: '2.25rem',
-      fontWeight: 500,
-      marginBottom: '1.75rem',
+      fontWeight: 400,
+      marginBottom: '1.25rem',
+      lineHeight: 1.4,
     },
     h2: {
       fontFamily: 'var(--font-montserrat)',
       fontSize: '1.875rem',
       fontWeight: 400,
-      marginBottom: '1rem',
+      marginBottom: '1.25rem',
     },
     h3: {
       fontFamily: 'var(--font-montserrat)',
       fontSize: '1.375rem',
       marginBottom: '1rem',
+      fontWeight: 400,
       lineHeight: 1.4,
     },
     h4: {
       fontSize: '1rem',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     subtitle1: {
       fontSize: '1.375rem',
@@ -76,15 +78,11 @@ let theme = createTheme({
     },
     body1: {
       fontSize: '1rem',
-      '@media (min-width:1200px)': {
-        fontSize: '1.125rem',
-      },
+      lineHeight: 1.5,
     },
     body2: {
       fontSize: '0.875rem',
-      '@media (min-width:1200px)': {
-        fontSize: '1rem',
-      },
+      lineHeight: 1.5,
     },
   },
 });
@@ -103,18 +101,30 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           maxWidth: '100% !important',
-          paddingTop: 60,
+          paddingTop: 78,
           paddingBottom: 60,
+          paddingLeft: '1.5rem !important',
+          paddingRight: '1.5rem !important',
 
           [theme.breakpoints.up('sm')]: {
             paddingTop: 80,
             paddingBottom: 80,
-            paddingLeft: '5% !important',
-            paddingRight: '5% !important',
+            paddingLeft: '2rem !important',
+            paddingRight: '2rem !important',
           },
-          [theme.breakpoints.up('lg')]: {
+          [theme.breakpoints.up('md')]: {
             paddingTop: 100,
             paddingBottom: 100,
+            paddingLeft: '2rem !important',
+            paddingRight: '2rem !important',
+            ':first-of-type': {
+              paddingTop: 120,
+              paddingBottom: 120,
+            },
+          },
+          [theme.breakpoints.up('lg')]: {
+            paddingTop: 120,
+            paddingBottom: 120,
             paddingLeft: 'calc((100vw - 1000px) / 2) !important',
             paddingRight: 'calc((100vw - 1000px) / 2) !important',
           },
@@ -151,7 +161,6 @@ theme = createTheme(theme, {
           },
           button: {
             color: '#000000',
-            fontSize: '1.125rem',
             '&:hover': {
               backgroundColor: lighten(theme.palette.secondary.main, 0.1),
             },
@@ -313,7 +322,8 @@ theme = createTheme(theme, {
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: theme.palette.common.white,
+          backgroundColor: theme.palette.background.default,
+          boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
           marginTop: 20,
 
           [theme.breakpoints.up('md')]: {
@@ -322,6 +332,7 @@ theme = createTheme(theme, {
         },
       },
     },
+
     MuiCardContent: {
       styleOverrides: {
         root: {
@@ -341,13 +352,15 @@ theme = createTheme(theme, {
     MuiCardActionArea: {
       styleOverrides: {
         root: {
+          backgroundColor: theme.palette.background.default,
+          '&:hover': { backgroundColor: theme.palette.common.white },
+          '.Mui-disabled &:hover': { backgroundColor: theme.palette.common.white },
           '& .MuiTouchRipple-root span': {
-            backgroundColor: theme.palette.primary.main,
-            opacity: 0.2,
+            display: 'none',
           },
         },
         focusHighlight: {
-          backgroundColor: theme.palette.primary.dark,
+          backgroundColor: theme.palette.secondary.main,
         },
       },
     },

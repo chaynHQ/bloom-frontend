@@ -27,7 +27,6 @@ interface BeforeInstallPromptEvent extends Event {
 const PWA_BANNER_DISMISSED = 'pwaBannerDismissed';
 
 export default function usePWA() {
-  const [bannerState, setBannerState] = useState<PwaBannerState>('Hidden');
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.user);
@@ -36,11 +35,11 @@ export default function usePWA() {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
-  const isWindowDefined = typeof window !== 'undefined';
   const getPwaMetaData = useMemo(() => {
     if (typeof window === 'undefined') {
       return { browser: 'Unknown Browser', platform: 'Unknown OS' };
     }
+
     const userAgent = window.navigator.userAgent;
     const platform = userAgent.includes('Win')
       ? 'Windows'
@@ -63,8 +62,8 @@ export default function usePWA() {
               : 'Unknown Browser';
 
     return { browser, platform };
-  }, [isWindowDefined]);
-  
+  }, []);
+
   const analyticsPayload = useMemo(() => {
     return {
       ...eventUserData,
@@ -77,7 +76,6 @@ export default function usePWA() {
       Cookies.set(PWA_BANNER_DISMISSED, 'true');
       logEvent(PWA_DISMISSED, getPwaMetaData);
     }
-    setBannerState('Hidden');
     await dispatch(setPwaDismissed(true));
 
     // Log the event for dismissing the installation
@@ -102,35 +100,43 @@ export default function usePWA() {
       logEvent(PWA_INSTALLED, getPwaMetaData);
     }
     window.beforeinstallpromptEvent = undefined;
-    setBannerState('Hidden');
 
     // Log the event for app installation
     logEvent(PWA_INSTALLED, analyticsPayload);
   }, [userCookiesAccepted, getPwaMetaData, analyticsPayload]);
 
-  useEffect(() => {
+  // Derive banner state from conditions
+  const bannerState = useMemo((): PwaBannerState => {
+    // Return Hidden during SSR to prevent window access
+    if (typeof window === 'undefined') {
+      return 'Hidden';
+    }
+
     const pwaBannerDismissedCookie = Boolean(Cookies.get(PWA_BANNER_DISMISSED));
-    const isStandalone = isWindowDefined && window.matchMedia('(display-mode: standalone)').matches;
-    const isIos =
-      typeof window !== 'undefined' &&
-      /iphone|ipad|ipod/.test(window?.navigator.userAgent.toLowerCase());
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
 
     const isHidden =
       pwaBannerDismissedCookie ||
       user.pwaDismissed ||
       isStandalone ||
-      (window?.beforeinstallpromptEvent === undefined && !isIos);
+      (window.beforeinstallpromptEvent === undefined && !isIos);
 
-    if (isHidden && bannerState !== 'Hidden') setBannerState('Hidden');
-    if (installAttempted && isIos && bannerState !== 'Ios') setBannerState('Ios');
-    if (!isHidden && !installAttempted && bannerState !== 'Generic') setBannerState('Generic');
+    if (isHidden) return 'Hidden';
+    if (installAttempted && isIos) return 'Ios';
+    return 'Generic';
+  }, [user.pwaDismissed, installAttempted]);
+
+  // Set up appinstalled event listener
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
 
     window.addEventListener('appinstalled', appInstalledCb);
 
     return () => {
       window.removeEventListener('appinstalled', appInstalledCb);
     };
-  }, [user.pwaDismissed, installAttempted, bannerState, appInstalledCb]);
+  }, [appInstalledCb]);
 
   return {
     declineInstallation,

@@ -1,24 +1,35 @@
 {
   "Whatsapp": {
-    "steps": {
-      "step1": "Wir schicken Nachrichten an Deine WhatsApp-Nummer. ",
-      "step2": "Die Nachrichten werden zweimal pro Woche verschickt, mittwochs und sonntags. ",
-      "step3": "Wenn Du Deine Meinung änderst, kannst Du Dich jederzeit abmelden oder neu anmelden. "
-    },
     "form": {
-      "subscribeTitle": "Notes von Bloom abonnieren",
+      "subscribeTitle": "Abonniere Notes",
       "subscribe": "Abonnieren",
       "phoneNumber": "Telefonnummer",
-      "unsubscribeTitle": "Abonnement verwalten",
+      "unsubscribeTitle": "Du hast Notes abonniert",
       "unsubscribe": "Abmelden",
       "subscribeErrors": {
-        "invalidNumber": "Deine Telefonnummer scheint ungültig zu sein. Bitte behebe alle Fehler und versuche es erneut. ",
-        "internal": "Es ist ein Fehler beim abonnieren von WhatsApp aufgetreten. Versuch es später nochmal und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt. ",
-        "alreadyExists": "Für dieses Konto existiert bereits ein WhatsApp Abonnement. Bitte <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn Du glaubst, hier liegt ein Fehler vor. "
+        "invalidNumber": "Deine Telefonnummer scheint ungültig zu sein. Bitte behebe alle Fehler und versuche es erneut.",
+        "internal": "Es ist ein Fehler beim abonnieren von WhatsApp aufgetreten. Versuch es später nochmal und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt.",
+        "alreadyExists": "Für dieses Konto existiert bereits ein WhatsApp Abonnement. Bitte <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn Du glaubst, hier liegt ein Fehler vor."
       },
       "unsubscribeErrors": {
-        "internal": "Es ist ein Fehler beim Abmelden von WhatsApp aufgetreten. Versuch es später erneut und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt. "
+        "internal": "Es ist ein Fehler beim Abmelden von WhatsApp aufgetreten. Versuch es später erneut und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt."
       }
+    },
+    "notes": {
+      "title": "Melde dich für Notes von Bloom an",
+      "description": "Der Weg zur Heilung kann einsam und manchmal dornig sein. Unsere Notes von Bloom sind zweimal wöchentliche Erinnerungen, Ermutigungen, Affirmationen und Aktivitäten aus unseren Kursen, die direkt an dein Handy gesendet werden, um dir zu helfen, deinen Heilungsweg fortzusetzen.",
+      "createAccount": "Konto erstellen",
+      "createAccountDescription": "Melde dich für Notes von Bloom an und erhalte Zugang zu unserer Ressourcenplattform.",
+      "haveAccount": "Hast du bereits ein Konto?",
+      "login": "Anmelden",
+      "createAccountButton": "Konto erstellen",
+      "howItWorks": "Wie Notes von Bloom funktioniert",
+      "step1": "Wir senden Nachrichten an deine WhatsApp-Nummer",
+      "step2": "Zweimal pro Woche, jeden Mittwoch und Sonntag",
+      "step3": "Wir teilen Affirmationen, Aktivitäten und Reflexionen",
+      "step4": "Melde dich jederzeit ab, wenn du deine Meinung änderst",
+      "subscribeDescription": "Abonniere Notes von Bloom, um WhatsApp-Nachrichten zu erhalten. Du kannst dich hier jederzeit abmelden.",
+      "unsubscribeDescription": "Melde dich von Notes von Bloom ab, um keine WhatsApp-Nachrichten mehr zu erhalten oder um deine Nummer zu aktualisieren. Du kannst dich jederzeit wieder anmelden."
     }
   }
 }

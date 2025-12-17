@@ -1,5 +1,6 @@
 'use client';
 
+import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { useUpdateUserMutation } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
@@ -19,7 +20,7 @@ import { ScaleFieldItem } from '@/lib/utils/interfaces';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, FormControl, Slider, TextField, Typography } from '@mui/material';
+import { Box, FormControl, Slider, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
@@ -144,10 +145,10 @@ const AboutYouSetAForm = () => {
   return (
     <Box mt={3}>
       <form autoComplete="off" onSubmit={submitHandler}>
-        <TextField
+        <SanitizedTextField
           id="hopes"
           label={t.rich('hopesLabel')}
-          onChange={(e) => setHopesInput(e.target.value)}
+          onChange={setHopesInput}
           value={hopesInput}
           variant="standard"
           fullWidth

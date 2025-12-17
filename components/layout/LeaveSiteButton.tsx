@@ -3,15 +3,15 @@
 import { usePathname } from '@/i18n/routing';
 import { LEAVE_SITE_BUTTON_CLICKED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
-import { Box, Button } from '@mui/material';
+import { breadcrumbButtonStyle } from '@/styles/common';
+import { Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
-const leaveThisSiteStyles = {
-  position: 'fixed',
-  textAlign: 'right',
+const buttonStyle = {
+  ...breadcrumbButtonStyle,
+  left: 'unset',
   right: { xs: 16, lg: 80 },
-  zIndex: 100,
-  top: { xs: 60, sm: 80, md: 150, lg: 160 },
+  backgroundColor: 'primary.dark',
 } as const;
 
 const LeaveSiteButton = () => {
@@ -31,11 +31,9 @@ const LeaveSiteButton = () => {
   }
 
   return (
-    <Box sx={leaveThisSiteStyles}>
-      <Button onClick={hideSite} variant="contained" color="error">
-        {tS('button')}
-      </Button>
-    </Box>
+    <Button sx={buttonStyle} onClick={hideSite} variant="contained" color="error" size="small">
+      {tS('button')}
+    </Button>
   );
 };
 

@@ -1,4 +1,10 @@
+const API_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:35001'
+    : `https://${new URL(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:35001').hostname}`;
+
 const scriptSrcUrls = [
+  API_URL,
   'https://*.google-analytics.com',
   'https://identitytoolkit.googleapis.com',
   'https://*.hotjar.com',
@@ -14,15 +20,16 @@ const scriptSrcUrls = [
   'https://*.googleapis.com',
   'https://noembed.com',
   'https://www.youtube.com',
+  'https://i.ytimg.com',
   'https://*.hotjar.io',
   'https://*.rollbar.com',
   'https://*.simplybook.it',
+  'https://widget.simplybook.it',
   'https://*.zapier.com',
   'https://fonts.googleapis.com',
   'https://static.hotjar.com',
   'https://app.storyblok.com',
   'https://client.crisp.chat',
-  process.env.NEXT_PUBLIC_API_URL,
   'wss://client.relay.crisp.chat',
   'https://apis.google.com',
   'https://va.vercel-scripts.com/',
@@ -50,9 +57,12 @@ const imgSrcUrls = [
   'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
+  'https://cdnjs.cloudflare.com',
 ];
 const connectSrcUrls = [
+  API_URL,
   'https://*.hotjar.com',
+  'https://*.hotjar.io',
   'wss://ws.hotjar.com',
   'https://*.googletagmanager.com',
   'https://*.googleapis.com',
@@ -69,7 +79,8 @@ const connectSrcUrls = [
   'https://noembed.com',
   'https://*.youtube.com',
   'https://www.youtube.com',
-  process.env.NEXT_PUBLIC_API_BASE_URL, //new env by niksanand1717
+  'https://i.ytimg.com',
+  'https://vercel.live',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',

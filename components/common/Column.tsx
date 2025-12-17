@@ -42,7 +42,7 @@ const Column = (props: ColumnProps) => {
         : width === 'small'
           ? { xs: '100%', md: '20%' }
           : width === 'small-medium'
-            ? { xs: '100%', sm: '45%', md: '30%' }
+            ? { xs: '100%', md: '30%' }
             : width === 'medium'
               ? { xs: '100%', md: '40%' }
               : width === 'large'
@@ -56,7 +56,7 @@ const Column = (props: ColumnProps) => {
                       : width === 'mobile-med-desktop-full'
                         ? { xs: `40%`, md: '100%' }
                         : { xs: `100%`, md: 'auto' },
-    ...(!width ? { flex: { md: 1 } } : {}),
+    ...(!width && { flex: { md: 1 } }),
   };
   return <Box sx={columnStyles}>{children}</Box>;
 };

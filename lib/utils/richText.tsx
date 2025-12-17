@@ -10,6 +10,7 @@ import StoryblokRow from '@/components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
 import StoryblokSpacer from '@/components/storyblok/StoryblokSpacer';
 import StoryblokStatement from '@/components/storyblok/StoryblokStatement';
+import StoryblokTeamMemberCard from '@/components/storyblok/StoryblokTeamMemberCard';
 import StoryblokTeamMembersCards from '@/components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '@/components/storyblok/StoryblokVideo';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -37,6 +38,7 @@ export const RichTextOptions: RenderOptions = {
     ['button']: (props: any) => <StoryblokButton {...props} />,
     ['statement']: (props: any) => <StoryblokStatement {...props} />,
     ['accordion']: (props: any) => <StoryblokAccordion {...props} />,
+    ['team_member']: (props: any) => <StoryblokTeamMemberCard {...props} />,
     ['team_members_cards']: (props: any) => <StoryblokTeamMembersCards {...props} />,
     ['carousel']: (props: any) => <StoryblokCarousel {...props} />,
     ['spacer']: (props: any) => <StoryblokSpacer {...props} />,
@@ -51,7 +53,12 @@ export const RichTextOptions: RenderOptions = {
     [NODE_HEADING]: (children: ReactNode | null, { level }) => {
       const headerLevel = level === 1 ? 'h1' : level === 2 ? 'h2' : level === 3 ? 'h3' : 'h4';
       return (
-        <Typography variant={headerLevel} component={headerLevel} maxWidth={800}>
+        <Typography
+          variant={headerLevel}
+          component={headerLevel}
+          maxWidth={800}
+          sx={{ mt: 5, ':first-child': { mt: 0 } }}
+        >
           {children}
         </Typography>
       );

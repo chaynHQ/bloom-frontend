@@ -1,6 +1,8 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Sansadhan",
+
     "metadata": {
       "title": "Apne healing ke safar par humein join kariye",
       "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
@@ -24,7 +26,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "Partnership mein",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Humari policies"
+      "policies": "Humari policies",
+      "trustCenter": "Trust Center"
     },
     "maintenanceBanner": {
       "title": "Rakharakhaav ke lie Bloom band hai",
@@ -32,7 +35,7 @@
     },
     "fruitzRetirementBanner": {
       "title": "Aapke course mein badlaav",
-      "description": "Fruitz app agle mahine band ho raha hai, lekin aapka Bloom support jaari rahega. 22 April se, ‘Dating, Boundaries, aur Relationships’ course uplabdh nahi rahega, lekin anya sabhi services, jismein 1:1 messaging shamil hai, pehle ki tarah chalu rahengi.",
+      "description": "Fruitz app x Bloom saajhedaaree samaapt ho rahee hai, lekin aapka Bloom support jaari rahega. 19 agast se, ‘Dating, Boundaries, aur Relationships’ course uplabdh nahi rahega, lekin anya sabhi services, jismein 1:1 messaging shamil hai, pehle ki tarah chalu rahengi.",
       "dismiss": "Band karein"
     },
     "videoTranscript": {
@@ -46,6 +49,7 @@
       "notStarted": "Shuru nahi hua"
     },
     "meetTheTeam": {
+      "fullBioButton": "{name} ki poori jeevani padhein",
       "expandTeamMember": "Bio bada kariye {name} ke liye"
     },
     "noDataAvailable": {
@@ -89,7 +93,10 @@
       "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
       "fruitzLogo": "Fruitz logo",
       "bloomFruitzLogo": "Bloom ki partnership Fruitz logo ke saath",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Kitab ka icon",
+      "articleIcon": "Lekh ka icon",
+      "videoIcon": "Video ka icon"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/oHbPDvL2",
     "survivor": "Survivor",
@@ -109,19 +116,8 @@
       "title": "Bloom mein login karein ya ek naya account banayein",
       "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
       "loginButton": "Log in",
-      "registerButton": "Account banayein"
-    },
-    "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
+      "registerButton": "Account banayein",
+      "backButton": "Cancel"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Personal diary",
@@ -162,6 +158,10 @@
       "title": "Nihshulk sahaayak sandesh",
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
+    },
+    "characterCount": "{current}/{max} अक्षर",
+    "scrollToSignUp": {
+      "button": "Muft mein sign up karein"
     }
   }
 }

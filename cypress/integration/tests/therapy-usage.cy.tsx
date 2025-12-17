@@ -70,6 +70,7 @@ describe('Therapy Usage', () => {
 
   it('Should open the booking modal and display the Simplybook widget iframe', () => {
     cy.visit('/therapy/book-session');
+    cy.wait(4000); // wait for the page to load as there are issues with page rerendering in cypress tests
 
     cy.get('button').contains('Begin booking').click();
 

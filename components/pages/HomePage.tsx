@@ -11,7 +11,7 @@ import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import StoryblokNotesFromBloomPromo from '../storyblok/StoryblokNotesFromBloomPromo';
 
 interface Props {
@@ -21,15 +21,12 @@ interface Props {
 export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
+  const userId = useTypedSelector((state) => state.user.id);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const [registerPath, setRegisterPath] = useState('/auth/register');
 
-  useEffect(() => {
+  const registerPath = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    if (referralPartner) {
-      setRegisterPath(`/auth/register?partner=${referralPartner}`);
-    }
+    return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
   }, [entryPartnerReferral]);
 
   if (!story) {
@@ -47,7 +44,6 @@ export default function HomePage({ story }: Props) {
         cta={
           <Button
             id="primary-get-started-button"
-            sx={{ mt: 3 }}
             variant="contained"
             color="secondary"
             onClick={() => {
@@ -66,7 +62,13 @@ export default function HomePage({ story }: Props) {
           if (section.component === 'notes_from_bloom_promo') {
             return <StoryblokNotesFromBloomPromo key={`notes_from_bloom_promo_${index}`} />;
           }
-          return <StoryblokPageSection key={`page_section_${index}`} {...section} />;
+          return (
+            <StoryblokPageSection
+              key={`page_section_${index}`}
+              {...section}
+              isLoggedIn={!!userId}
+            />
+          );
         })}
     </Box>
   );

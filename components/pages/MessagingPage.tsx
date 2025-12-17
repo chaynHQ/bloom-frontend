@@ -2,6 +2,7 @@
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { CrispIframe } from '@/components/crisp/CrispIframe';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -12,18 +13,20 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import DynamicComponent from '../storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,
-  flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: '2rem', md: '10%' },
+  flexDirection: { xs: 'column-reverse', md: 'row' },
+  gap: { xs: 0, md: '10%' },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
-  width: { xs: '40%', md: 260 },
-  height: { xs: '40%', md: 260 },
+  margin: 'auto',
+  width: { xs: '60%', md: 260 },
+  height: { xs: '60%', md: 260 },
 } as const;
 
 interface Props {
@@ -43,6 +46,7 @@ export default function MessagingPage({ story }: Props) {
     introduction: story.content.description,
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
+    cta: !userId ? <ScrollToSignUpButton /> : undefined,
   };
 
   return (
@@ -50,7 +54,7 @@ export default function MessagingPage({ story }: Props) {
       <Header {...headerProps} />
       {userId ? (
         <>
-          <Container sx={{ backgroundColor: 'secondary.light', pt: 2 }}>
+          <Container sx={{ backgroundColor: 'secondary.light', pt: 0 }}>
             <Typography variant="h2" sx={{ mb: { xs: 4, md: 8 } }}>
               {t('messageHeading')}
             </Typography>
@@ -77,7 +81,10 @@ export default function MessagingPage({ story }: Props) {
             ))}
         </>
       ) : (
-        <SignUpBanner />
+        <>
+          <NotesFromBloomPromo />
+          <SignUpBanner />
+        </>
       )}
     </Box>
   );

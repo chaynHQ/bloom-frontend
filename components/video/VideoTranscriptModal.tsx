@@ -1,18 +1,21 @@
 'use client';
 
+import { STORYBLOK_REFERENCE_CATEGORIES } from '@/lib/constants/enums';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import ReferencesCategory from '../common/ReferencesCategory';
+import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 
 const modalStyle = {
   position: 'absolute',
   top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: { xs: 'calc(100vw - 2rem)', sm: '90%' },
-  maxWidth: '1000px',
+  right: { xs: 0, sm: 'unset' },
+  left: { xs: 'unset', sm: '50%' },
+  transform: { xs: 'translate(0, -50%)', sm: 'translate(-50%, -50%)' },
+  width: { xs: 'calc(100vw - 1rem)', sm: '90%', md: 800 },
   maxHeight: '75vh',
   overflowY: 'scroll',
   borderTopLeftRadius: 30,
@@ -21,10 +24,9 @@ const modalStyle = {
 } as const;
 
 const modalContentStyle = {
-  maxWidth: 800,
   margin: 'auto',
-  paddingX: { xs: 2, sm: 4 },
-  paddingY: { xs: 4, sm: 6 },
+  paddingX: { xs: 4, sm: 6 },
+  paddingY: { xs: 6, sm: 8 },
 } as const;
 
 const closeModalStyle = {
@@ -35,22 +37,44 @@ const closeModalStyle = {
   borderBottomLeftRadius: 20,
 } as const;
 
-const transcriptDescriptionStyle = {
-  '&:last-of-type': {
-    marginBottom: '1em',
-  },
-};
+const screenReaderOnly = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: '0',
+  margin: '1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: '0',
+} as const;
+
 interface TranscriptModalProps {
-  videoName: string;
+  title: string;
   content: StoryblokRichtext;
+  references?: StoryblokReferenceProps[];
   openTranscriptModal: boolean | null;
   setOpenTranscriptModal: Dispatch<SetStateAction<boolean | null>>;
 }
 
 const VideoTranscriptModal = (props: TranscriptModalProps) => {
-  const { videoName, content, openTranscriptModal, setOpenTranscriptModal } = props;
+  const { title, content, references, openTranscriptModal, setOpenTranscriptModal } = props;
 
   const tS = useTranslations('Shared');
+
+  const { books, videoPractices, articles, audios } = useMemo(() => {
+    if (!references?.length) {
+      return { books: [], videoPractices: [], articles: [], audios: [] };
+    }
+    return {
+      books: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.BOOK),
+      videoPractices: references.filter(
+        (ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE,
+      ),
+      articles: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.ARTICLE),
+      audios: references.filter((ref) => ref.category === STORYBLOK_REFERENCE_CATEGORIES.AUDIO),
+    };
+  }, [references]);
 
   return (
     <Modal
@@ -69,14 +93,42 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
           {tS('videoTranscript.closeModal')}
         </Button>
         <Box sx={modalContentStyle}>
-          <Typography id="modal-title" component="h2" variant="h2">
-            {tS('videoTranscript.title')}
+          <Typography sx={screenReaderOnly}>{tS('videoTranscript.title')}</Typography>
+          <Typography id="modal-title" component="h2" variant="h1">
+            {title}
           </Typography>
-          <Typography id="modal-description" fontStyle="italic" sx={transcriptDescriptionStyle}>
-            {tS('videoTranscript.description')}
-            {videoName}
-          </Typography>
-          <div>{render(content, RichTextOptions)}</div>
+          <Box>{render(content, RichTextOptions)}</Box>
+          {references && references.length > 0 && (
+            <>
+              <Typography variant="h3" mt={5} mb={2}>
+                {tS('references')}
+              </Typography>
+              {books.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.BOOK}
+                  references={books}
+                />
+              )}
+              {articles.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.ARTICLE}
+                  references={articles}
+                />
+              )}
+              {videoPractices.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.VIDEO_PRACTICE}
+                  references={videoPractices}
+                />
+              )}
+              {audios.length > 0 && (
+                <ReferencesCategory
+                  category={STORYBLOK_REFERENCE_CATEGORIES.AUDIO}
+                  references={audios}
+                />
+              )}
+            </>
+          )}
         </Box>
       </Box>
     </Modal>

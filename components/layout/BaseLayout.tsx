@@ -1,7 +1,8 @@
 import { AuthGuard } from '@/components/guards/AuthGuard';
-import Consent from '@/components/layout/CookieConsent';
+import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
+import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
 import TopBar from '@/components/layout/TopBar';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
@@ -12,7 +13,7 @@ import { clientConfig } from '@/lib/rollbar';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import theme from '@/styles/theme';
-import { ThemeProvider } from '@mui/material';
+import { Box, ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
@@ -24,11 +25,12 @@ import { Montserrat, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode } from 'react';
+import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
+  weight: ['300', '400', '500'],
   variable: '--font-open-sans',
   display: 'swap',
 });
@@ -88,13 +90,17 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     <script src="/deffer-pwa.js" async></script>
                     <TopBar />
                     <LeaveSiteButton />
+                    <DesktopPwaBanner />
+
                     <main>
                       <FruitzRetirementBanner />
 
                       <AuthGuard>{children}</AuthGuard>
                     </main>
                     <Footer />
-                    <Consent />
+                    <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
+                    <MobileBottomNav />
+                    <CookieBanner />
                     {!!process.env.NEXT_PUBLIC_HOTJAR_ID && ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
                       <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
                     )}

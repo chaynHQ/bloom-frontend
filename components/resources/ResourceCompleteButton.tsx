@@ -8,6 +8,9 @@ import {
   RESOURCE_SHORT_VIDEO_COMPLETE_ERROR,
   RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST,
   RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_ERROR,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_REQUEST,
+  RESOURCE_SINGLE_VIDEO_COMPLETE_SUCCESS,
 } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -21,7 +24,7 @@ import { useRollbar } from '@rollbar/react';
 const errorStyle = {
   color: 'primary.dark',
   marginTop: 2,
-  fontWeight: 600,
+  fontweight: 500,
 } as const;
 
 interface ResourceCompleteButtonProps {
@@ -44,7 +47,9 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
     logEvent(
       category === RESOURCE_CATEGORIES.SHORT_VIDEO
         ? RESOURCE_SHORT_VIDEO_COMPLETE_REQUEST
-        : RESOURCE_CONVERSATION_COMPLETE_REQUEST,
+        : category === RESOURCE_CATEGORIES.SINGLE_VIDEO
+          ? RESOURCE_SINGLE_VIDEO_COMPLETE_REQUEST
+          : RESOURCE_CONVERSATION_COMPLETE_REQUEST,
       eventData,
     );
 
@@ -56,7 +61,9 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
       logEvent(
         category === RESOURCE_CATEGORIES.SHORT_VIDEO
           ? RESOURCE_SHORT_VIDEO_COMPLETE_SUCCESS
-          : RESOURCE_CONVERSATION_COMPLETE_SUCCESS,
+          : category === RESOURCE_CATEGORIES.SINGLE_VIDEO
+            ? RESOURCE_SINGLE_VIDEO_COMPLETE_SUCCESS
+            : RESOURCE_CONVERSATION_COMPLETE_SUCCESS,
         eventData,
       );
       window.scrollTo(0, 0);
@@ -68,7 +75,9 @@ export const ResourceCompleteButton = (props: ResourceCompleteButtonProps) => {
       logEvent(
         category === RESOURCE_CATEGORIES.SHORT_VIDEO
           ? RESOURCE_SHORT_VIDEO_COMPLETE_ERROR
-          : RESOURCE_CONVERSATION_COMPLETE_ERROR,
+          : category === RESOURCE_CATEGORIES.SINGLE_VIDEO
+            ? RESOURCE_SINGLE_VIDEO_COMPLETE_ERROR
+            : RESOURCE_CONVERSATION_COMPLETE_ERROR,
         eventData,
       );
       rollbar.error('Resource complete error', error);

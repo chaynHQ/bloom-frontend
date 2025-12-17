@@ -72,7 +72,7 @@ export const api = createApi({
   tagTypes: ['UserCourses'],
   endpoints: (builder) => ({
     getUser: builder.query<GetUserResponse, string>({
-      query(params) {
+      query() {
         return {
           url: 'user/me',
           method: 'GET',
@@ -237,6 +237,14 @@ export const api = createApi({
         body: { active },
       }),
     }),
+
+    updatePartnerActive: builder.mutation<Partner, { id: string; active: boolean }>({
+      query: ({ id, active }) => ({
+        url: `partner/${id}`,
+        method: 'PATCH',
+        body: { active },
+      }),
+    }),
     createEventLog: builder.mutation<
       EventLog,
       { event: EVENT_LOG_NAME; metadata?: { title: string } }
@@ -322,6 +330,7 @@ export const {
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
   useUpdatePartnerAdminMutation,
+  useUpdatePartnerActiveMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
   useCreateResourceFeedbackMutation,

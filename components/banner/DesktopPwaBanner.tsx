@@ -30,30 +30,29 @@ export const DesktopPwaBanner = () => {
     if (!isSmallScreen) {
       logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSmallScreen]);
 
   if (isSmallScreen || bannerState === 'Hidden') return null;
 
+  const bannerStyle = {
+    position: 'fixed',
+    zIndex: 1000,
+    p: 2.5,
+    width: 250,
+    right: { md: 16, lg: 80 },
+    bottom: { md: 16, lg: 40 },
+    backgroundColor: 'common.white',
+  } as const;
+
   return (
-    <Paper
-      elevation={1}
-      sx={{
-        px: 2,
-        py: 1.5,
-        display: 'flex',
-        alignItems: 'center',
-        gap: bannerState === 'Generic' ? 0 : '1rem',
-        justifyContent: bannerState === 'Generic' ? 'space-between' : 'flex-start',
-        backgroundColor: 'common.white',
-        width: '100%',
-      }}
-    >
-      <Typography variant="body2" sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}>
+    <Paper elevation={1} sx={bannerStyle}>
+      <Typography variant="body2" fontWeight={500}>
         {t(bannerState === 'Generic' ? 'mobileDescription' : 'iosDescription')}
       </Typography>
 
       {bannerState === 'Generic' ? (
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={1} mt={1.5} ml="auto">
           <Button
             onClick={declineInstallation}
             variant="outlined"

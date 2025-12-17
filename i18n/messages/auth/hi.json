@@ -24,7 +24,7 @@
       "nameLabel": "Pehla naam/Apnaam",
       "emailLabel": "Email",
       "passwordLabel": "Password",
-      "contactPermissionLabel": "Kya hum Bloom ko behtar banane ke bare mein feedback ke liye aapko email kar sakte hain?",
+      "contactPermissionLabel": "Naye sansadhanon aur humein apni pratikriya dene ke avsaron ke baare mein email prapt karein.",
       "registerSubmit": "Account Banao",
       "resetPasswordStep1": "Hum aapko ek email bhejenge taki aap apna password reset kar sakein. ",
       "resetPasswordStep2": "Bas aap anth tak pahuchne wale hain! Ab aap apna naya password set kar sakte hain. ",
@@ -42,6 +42,7 @@
         "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh {partnerName} ki team se sampark karein. "
       },
       "firebase": {
+        "wrongPassword": "Galat password, kripya phir se koshish karein ya logout karein aur apna password reset karein.",
         "authError": "Humein uss email aur password ke combination ka koi account nahi mila. Apna email aur password check keejiye. ",
         "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
         "tooManyAttempts": "Bahut saare viphal login prayaas, krpaya kuchh minat prateeksha karen ya apana paasavard abhee reeset karen.",
@@ -51,8 +52,8 @@
         "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
         "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. "
       },
-      "phoneNumberLabel": "Phone Number",
-      "verificationCodeLabel": "Verification Code",
+      "phoneNumberLabel": "Phone number",
+      "verificationCodeLabel": "Verification code",
       "mfaTriggerError": "SMS code bhejne mein truti. Kripya punah prayaas karein.",
       "mfaVerificationIdMissing": "Kripya pehle SMS code ka anuroodh karein.",
       "mfaEnrollError": "2FA mein naamaakon karne mein truti. Kripya punah prayaas karein.",
@@ -61,25 +62,28 @@
       "emailNotVerified": "2FA setup karne se pehle kripya apne email ki pushti karein.",
       "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
       "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
-      "sendVerificationEmail": "Satyaapan Email Bhejein"
+      "emailVerificationSpamCheck": "Agar aapko email nahi dikh raha, kripya apne spam folder ki jaanch karein.",
+      "sendVerificationEmail": "Satyaapan email bhejein",
+      "resendVerificationEmail": "Satyaapan email punah bhejein",
+      "passwordRequired": "Punah praman ke liye password aavashyak hai.",
+      "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
     },
     "verifyMFA": {
-      "title": "Do-Charan Praman Verify Karein",
-      "triggerSMS": "SMS Code Bhejein",
-      "verifyCode": "Code Verify Karein",
+      "title": "Do-charan praman verify karein",
+      "triggerSMS": "SMS code bhejein",
+      "verifyCode": "Code verify karein",
       "phoneNumber": "Hum aapke registered phone number par ek verification code bhejenge: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "Do-Charan Praman Setup Karein",
-      "pageTitle": "Apne Khaate ko Surakshit Karein",
-      "sendCode": "Verification Code Bhejein",
-      "verifyCode": "Code Verify Karein",
-      "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:"
-    },
-    "verifyEmail": {
-      "pageTitle": "Apna Email Verify Karein",
-      "instructions": "Kripya apne email ki jaanch karein aur jaari rakhne ke liye satyaapan link par click karein.",
-      "sendButton": "Satyaapan Email Punah Bhejein"
+      "title": "Do-charan praman setup karein",
+      "sendCode": "Verification code bhejein",
+      "verifyCode": "Code verify karein",
+      "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",
+      "reauthTitle": "Apni Pehchaan Confirm Karein",
+      "reauthDescription": "Kripya aage badhne se pehle apna password darj karein",
+      "cancelReauth": "Cancel Karein",
+      "confirmReauth": "Confirm Karein",
+      "reauthenticating": "Confirm kar rahe hain..."
     }
   }
 }

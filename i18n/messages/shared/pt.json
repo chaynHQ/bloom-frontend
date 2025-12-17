@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Recursos",
     "metadata": {
       "title": "Junte-se a nós em sua jornada de recuperação",
       "description": "Bloom está aqui para que você aprenda, se recupere e se mova em direção a um futuro confiante. É trazido a você por Chayn, uma organização global sem fins lucrativos, dirigida por sobreviventes e aliados de todo o mundo.",
@@ -24,7 +25,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "Em parceria com ",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Nossas políticas"
+      "policies": "Nossas políticas",
+      "trustCenter": "Centro de Confiança"
     },
     "maintenanceBanner": {
       "title": "Bloom está em manutenção",
@@ -32,7 +34,7 @@
     },
     "fruitzRetirementBanner": {
       "title": "Alteração nos seus cursos",
-      "description": "O aplicativo Fruitz será descontinuado no próximo mês, mas o seu suporte com a Bloom continua. A partir de 22 de abril, o curso ‘Namoro, Limites e Relacionamentos’ não estará mais disponível, mas todos os outros serviços, incluindo as mensagens 1:1, continuarão funcionando normalmente.",
+      "description": "A parceria Fruitz x Bloom está chegando ao fim, mas o seu suporte com a Bloom continua. A partir de 19 de agosto, o curso ‘Namoro, Limites e Relacionamentos’ não estará mais disponível, mas todos os outros serviços, incluindo as mensagens 1:1, continuarão funcionando normalmente.",
       "dismiss": "Fechar"
     },
     "videoTranscript": {
@@ -46,6 +48,7 @@
       "notStarted": "Not started"
     },
     "meetTheTeam": {
+      "fullBioButton": "Ler a biografia completa de {name}",
       "expandTeamMember": "Expandir a biografia para {name}"
     },
     "noDataAvailable": {
@@ -89,7 +92,10 @@
       "cookieCat": "Ilustração de um gato descansando com um biscoito",
       "fruitzLogo": "Logotipo do Fruitz",
       "bloomFruitzLogo": "Logotipo da parceria entre Bloom e Fruitz",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Ícone de livro",
+      "articleIcon": "Ícone de artigo",
+      "videoIcon": "Ícone de vídeo"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/ZGoDbg20",
     "survivor": "Survivor",
@@ -109,7 +115,8 @@
       "title": "Faça login ou crie uma conta",
       "description": "Inscreva-se gratuitamente para acessar todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer",
       "loginButton": "Entrar",
-      "registerButton": "Criar conta"
+      "registerButton": "Criar conta",
+      "backButton": "Cancelar"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Diários de reflexão",
@@ -137,18 +144,6 @@
       "grouding-sound-of-claps": "Som de palmas",
       "grounding-affirming-ourselves": "Nos reafirmarmos (pressão firme)"
     },
-    "relatedContent": {
-      "title": "Conteúdo relacionado",
-      "resource_short_video": "Assistir",
-      "resource_conversation": "Áudio",
-      "short_video": "Assistir",
-      "course": "Curso",
-      "session": "Sessão",
-      "session_iba": "Sessão",
-      "grounding": "Aterramento",
-      "activities": "Atividade",
-      "minuteLabel": "minutos"
-    },
     "pwaBanner": {
       "mobileDescription": "Instala o aplicativo para acessar a partir da tela inicial",
       "desktopDescription": "Instala o aplicativo para acessar o Bloom a partir da tela inicial",
@@ -162,6 +157,10 @@
       "title": "Mensagens de apoio gratuitas",
       "description": "Receba mensagens duas vezes por semana diretamente no seu WhatsApp",
       "buttonText": "Inscrever-se"
+    },
+    "characterCount": "{current}/{max} caracteres",
+    "scrollToSignUp": {
+      "button": "Inscreva-se grátis"
     }
   }
 }

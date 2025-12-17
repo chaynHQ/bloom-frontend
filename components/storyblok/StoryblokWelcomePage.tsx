@@ -1,16 +1,14 @@
 'use client';
 
 import PartnerHeader from '@/components/layout/PartnerHeader';
-import StoryblokPageSection, {
-  StoryblokPageSectionProps,
-} from '@/components/storyblok/StoryblokPageSection';
+import { StoryblokPageSectionProps } from '@/components/storyblok/StoryblokPageSection';
 import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
 import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
 } from '@/lib/constants/events';
 import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
-import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -18,10 +16,11 @@ import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import DynamicComponent from './DynamicComponent';
 
 const introContainerStyle = {
   backgroundColor: 'secondary.light',
@@ -63,12 +62,9 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
     imageAlt: 'alt.bloomHead',
   };
 
-  const [codeParam, setCodeParam] = useState<string>('');
   const router = useRouter();
-  const locale = useLocale();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const dispatch: any = useAppDispatch();
   const t = useTranslations('Welcome');
   useReferralPartner();
 
@@ -76,34 +72,43 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
-  // Ensure partner access codes are stored in state and url query, to handle app refreshes and redirects
-  useEffect(() => {
-    const code = searchParams.get('code');
-    const partner = searchParams.get('partner');
+  const code = searchParams.get('code');
+  const partner = searchParams.get('partner');
 
-    if (code) {
-      // code in url query
-      setCodeParam(code + '');
-    } else if (
+  // Derive codeParam from URL or entry state
+  const codeParam = useMemo(() => {
+    if (code) return code + '';
+    if (entryPartnerReferral === partnerContent.name.toLowerCase() && entryPartnerAccessCode) {
+      return entryPartnerAccessCode;
+    }
+    return '';
+  }, [code, entryPartnerReferral, partnerContent.name, entryPartnerAccessCode]);
+
+  // Handle URL update for entry code (navigation side effect)
+  const hasUpdatedUrl = useRef(false);
+
+  useEffect(() => {
+    if (
+      !code &&
       entryPartnerReferral === partnerContent.name.toLowerCase() &&
-      entryPartnerAccessCode
+      entryPartnerAccessCode &&
+      !hasUpdatedUrl.current
     ) {
+      hasUpdatedUrl.current = true;
       // Entry code in state, add to url query in case of refresh
       router.push({
         pathname,
         query: { code: entryPartnerAccessCode, partner },
       });
-      setCodeParam(entryPartnerAccessCode);
     }
   }, [
-    dispatch,
     router,
-    locale,
-    entryPartnerAccessCode,
+    pathname,
+    partner,
+    code,
     entryPartnerReferral,
     partnerContent.name,
-    pathname,
-    searchParams,
+    entryPartnerAccessCode,
   ]);
 
   const logPromoEvent = () => {
@@ -152,7 +157,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
       </Container>
       {page_sections?.length > 0 &&
         page_sections.map((section: any, index: number) => (
-          <StoryblokPageSection key={`page_section_${index}`} {...section} />
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
         ))}
     </Box>
   );

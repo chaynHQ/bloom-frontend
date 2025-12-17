@@ -4,6 +4,7 @@ import { EmailRemindersSettingsBanner } from '@/components/banner/EmailReminders
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import CourseCard from '@/components/cards/CourseCard';
 import LoadingContainer from '@/components/common/LoadingContainer';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -12,34 +13,44 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import illustrationCourses from '@/public/illustration_courses.svg';
+import { rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
-import { Box, Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import ResourceCarousel from '../common/ResourceCarousel';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
   paddingTop: { xs: 2, sm: 2, md: 2 },
-  paddingBottom: { xs: 6, sm: 6, md: 8 },
 } as const;
 
+const courseCardsContainer = {
+  ...rowStyle,
+  mb: 0,
+  flexDirection: { xs: 'column', md: 'row' },
+  gap: 2,
+} as const;
+
+const courseCardContainer = {
+  width: { xs: '100%', md: 'calc(50% - 8px)' },
+} as const;
+
+const sectionDescription = {
+  pb: 4,
+  maxWidth: 650,
+} as const;
 interface Props {
   courseStories: ISbStoryData[];
   conversations: ISbStoryData[];
   shorts: ISbStoryData[];
+  somatics: ISbStoryData[];
 }
-export default function CoursesPage({ courseStories, conversations, shorts }: Props) {
-  const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
-  const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-  const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
-  const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
-  const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
-
+export default function CoursesPage({ courseStories, conversations, shorts, somatics }: Props) {
   const userId = useTypedSelector((state) => state.user.id);
   const isLoggedIn = Boolean(userId);
 
@@ -72,37 +83,8 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
     logEvent(COURSE_LIST_VIEWED);
   }, []);
 
-  const setShortsSectionRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (!node) return;
-      if (sectionQueryParam === 'shorts' && node && loadedCourses) {
-        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
-    },
-    [sectionQueryParam, headerOffset, loadedCourses],
-  );
-
-  const setConversationsSectionRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (sectionQueryParam === 'conversations' && node && loadedCourses) {
-        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-      }
-    },
-    [sectionQueryParam, headerOffset, loadedCourses],
-  );
-
-  useEffect(() => {
-    if (
-      userEmailRemindersFrequency &&
-      userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER
-    ) {
-      setShowEmailRemindersBanner(true);
-    }
-  }, [userEmailRemindersFrequency]);
-
-  useEffect(() => {
+  // Derive loaded content based on user access
+  const { loadedCourses, loadedShorts, loadedSomatics } = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
     const userPartners = userHasAccessToPartnerContent(
       partnerAdmin?.partner,
@@ -126,23 +108,76 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
       }),
     );
 
-    setLoadedCourses(coursesWithAccess);
-    setLoadedShorts(shortsWithAccess);
+    const somaticsWithAccess =
+      userPartners.filter((up) => up !== 'public').length > 0 ? null : somatics; // no partners have access to somatics
 
-    if (courses) {
-      let courseCoursesStarted: Array<string> = [];
-      let courseCoursesCompleted: Array<string> = [];
-      courses.map((course) => {
-        if (course.completed) {
-          courseCoursesCompleted.push(course.storyblokUuid);
-        } else {
-          courseCoursesStarted.push(course.storyblokUuid);
-        }
-      });
-      setCoursesStarted(courseCoursesStarted);
-      setCoursesCompleted(courseCoursesCompleted);
-    }
-  }, [partnerAccesses, partnerAdmin, courseStories, courses, shorts, entryPartnerReferral, userId]);
+    return {
+      loadedCourses: coursesWithAccess,
+      loadedShorts: shortsWithAccess,
+      loadedSomatics: somaticsWithAccess,
+    };
+  }, [
+    partnerAccesses,
+    partnerAdmin,
+    courseStories,
+    shorts,
+    somatics,
+    entryPartnerReferral,
+    userId,
+  ]);
+
+  // Derive course progress from courses state
+  const { coursesStarted, coursesCompleted } = useMemo(() => {
+    if (!courses) return { coursesStarted: [], coursesCompleted: [] };
+
+    const started: Array<string> = [];
+    const completed: Array<string> = [];
+    courses.forEach((course) => {
+      if (course.completed) {
+        completed.push(course.storyblokUuid);
+      } else {
+        started.push(course.storyblokUuid);
+      }
+    });
+    return { coursesStarted: started, coursesCompleted: completed };
+  }, [courses]);
+
+  // Derive email reminders banner visibility
+  const showEmailRemindersBanner = useMemo(
+    () => userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER,
+    [userEmailRemindersFrequency],
+  );
+
+  const setShortsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (!node) return;
+      if (sectionQueryParam === 'shorts' && node && loadedCourses) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset, loadedCourses],
+  );
+
+  const setConversationsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (sectionQueryParam === 'conversations' && node) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset],
+  );
+
+  const setSomaticsSectionRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (sectionQueryParam === 'somatics' && node) {
+        const scrollToY = node.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+      }
+    },
+    [sectionQueryParam, headerOffset],
+  );
 
   const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
@@ -159,6 +194,7 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        cta={!userId ? <ScrollToSignUpButton /> : undefined}
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
@@ -168,51 +204,47 @@ export default function CoursesPage({ courseStories, conversations, shorts }: Pr
             <Typography>{t('noCourses')}</Typography>
           </Box>
         ) : (
-          <Grid
-            container
-            columnSpacing={2}
-            rowSpacing={[0, 2]}
-            justifyContent={['center', 'flex-start']}
-          >
-            {loadedCourses?.map((course) => {
+          <Box sx={courseCardsContainer}>
+            {loadedCourses?.map((course, index) => {
               const courseProgress = userId ? getCourseProgress(course.uuid) : null;
               return (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height="100%"
-                  maxWidth="400px"
-                  key={course.id}
-                >
+                <Box key={`course_${index}`} sx={courseCardContainer}>
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
-                </Grid>
+                </Box>
               );
             })}
-          </Grid>
+          </Box>
         )}
       </Container>
+
+      {loadedSomatics && loadedSomatics.length > 0 && (
+        <Container
+          sx={{ backgroundColor: 'secondary.light', pt: '2rem !important' }}
+          ref={setSomaticsSectionRef}
+        >
+          <Typography variant="h2">{t('somaticsHeading')}</Typography>
+          <Typography sx={sectionDescription}>{t('somaticsDescription')}</Typography>
+          <ResourceCarousel title="somatics-carousel" resources={loadedSomatics} />
+        </Container>
+      )}
+
       {conversations.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.main' }} ref={setConversationsSectionRef}>
-          <Typography variant="h2" fontWeight={500}>
-            {t('conversationsHeading')}
-          </Typography>
+          <Typography variant="h2">{t('conversationsHeading')}</Typography>
+          <Typography sx={sectionDescription}>{t('conversationsDescription')}</Typography>
           <ResourceCarousel title="conversations-carousel" resources={conversations} />
         </Container>
       )}
       {loadedShorts && loadedShorts?.length > 0 && (
         <Container sx={{ backgroundColor: 'secondary.light' }} ref={setShortsSectionRef}>
-          <Typography variant="h2" fontWeight={500}>
-            {t('shortsHeading')}
-          </Typography>
-          <ResourceCarousel title="shorts-carousel" resources={shorts} />
+          <Typography variant="h2">{t('shortsHeading')}</Typography>
+          <Typography sx={sectionDescription}>{t('shortsDescription')}</Typography>
+          <ResourceCarousel title="shorts-carousel" resources={loadedShorts} />
         </Container>
       )}
-      {userId && <NotesFromBloomPromo />}
       {!userId && <SignUpBanner />}
       {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      <NotesFromBloomPromo />
     </Box>
   );
 }

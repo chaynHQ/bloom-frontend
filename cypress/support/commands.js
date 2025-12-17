@@ -27,8 +27,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-const http = require('http');
-
 Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
   cy.wait(4000);
@@ -38,24 +36,12 @@ Cypress.Commands.add('uiLogin', (email, password) => {
   cy.get('#password', { timeout: 10000 }).should('not.exist');
 });
 
-Cypress.Commands.add('uiLogout', (e) => {
+Cypress.Commands.add('uiLogout', () => {
   cy.get('#user-menu-button').click({ force: true });
   cy.wait(1000);
 
   cy.get('#logout-button').click({ force: true });
   cy.wait(1000);
-});
-
-// TODO maybe delete  this helper - keeping for now but could potentially not be useful
-Cypress.Commands.add('uiCreateAccessCode', () => {
-  cy.get('input[type="radio"').should('exist').check('therapy'); //select radio button on form
-  cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
-  cy.get('#access-code')
-    .should('exist') //wait for result to exist in dom then get the access code
-    .then(function ($elem) {
-      //get the access code
-      return $elem.text();
-    });
 });
 
 Cypress.Commands.add('createAccessCode', (accessCode) => {
@@ -130,7 +116,7 @@ Cypress.Commands.add('deleteCypressAccessCodes', () => {
 });
 
 Cypress.Commands.add('cleanUpTestState', () => {
-  cy.visit('/');
+  cy.visit('/', { failOnStatusCode: false });
   cy.getAuthEmail().then((email) => {
     if (email) {
       cy.logout();
@@ -278,10 +264,8 @@ const attachCustomCommands = (Cypress, auth) => {
   });
   Cypress.Commands.add('clearUserState', () => {
     cy.window().then((window) => {
-      // @ts-ignore
       if (window.store) {
-        // @ts-ignore
-        const result = window.store.dispatch({ type: 'user/clearUserSlice' });
+        window.store.dispatch({ type: 'user/clearUserSlice' });
       }
     });
   });

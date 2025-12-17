@@ -7,7 +7,7 @@ describe('Conversations Flow', () => {
     cy.createUser({ emailInput: email, passwordInput: password });
   });
 
-  it('Should allow a user to navigate to Courses, select a conversation, log in, play audio, and submit feedback.', () => {
+  it('Should allow a user to navigate to Courses, select a conversation, log in and play audio', () => {
     // User visits the home page
     cy.visit('/');
 
@@ -28,7 +28,7 @@ describe('Conversations Flow', () => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
     cy.get('button[type=submit]').click();
-    cy.wait(2000); // wait to ensure user is redirected to the session
+    cy.wait(2000); // wait to ensure user is redirected to the conversation
 
     // User plays the conversation
     cy.get('audio')
@@ -39,7 +39,6 @@ describe('Conversations Flow', () => {
         audio.playbackRate = 6;
         audio.play();
       });
-    cy.wait(2000); // wait to ensure user plays the session
   });
 
   after(() => {

@@ -34,7 +34,7 @@ describe('Meet the team page should', () => {
         if (closed) {
           cy.get(expandIconTag).should('exist');
           cy.root().click();
-          cy.get(expandIconTag).should('exist');
+          cy.get(expandIconTag).should('not.exist');
         } else {
           cy.get(expandIconTag).should('not.exist');
         }

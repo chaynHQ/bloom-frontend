@@ -122,7 +122,9 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
 
   const [cancelTherapySession] = useCancelTherapySessionMutation();
 
-  const now = new Date();
+  // Memoize 'now' to prevent it from changing on every render
+  // Note: This means 'now' won't update during the component's lifecycle
+  const now = useMemo(() => new Date(), []);
   const status = getTherapySessionStatus(session, now);
 
   const { startDateTime, endDateTime, isValidStartDate, isValidEndDate } = useMemo(() => {

@@ -2,14 +2,17 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const cardStyle = {
+  width: { xs: '100%' },
+  maxWidth: { xs: '360px' },
+  minHeight: 340,
+  mx: 'auto',
   mt: 0,
-  width: '250px',
   mb: { xs: '1rem', sm: '1.5rem' },
   backgroundColor: 'paleSecondaryLight',
   '&:hover .overlay': {
@@ -18,7 +21,12 @@ const cardStyle = {
   '&:hover .play-button': {
     transform: 'scale(1)',
   },
+  padding: '0 !important',
   flex: 0,
+} as const;
+
+const cardContentStyle = {
+  padding: '0 !important',
 } as const;
 
 const overlay = {
@@ -35,7 +43,7 @@ const overlay = {
   alignItems: 'center',
 };
 
-interface ShortsCardProps {
+interface ResourceCardProps {
   title: string;
   href: string;
   duration?: string;
@@ -46,7 +54,6 @@ interface ShortsCardProps {
 const categoryStyle = {
   fontFamily: 'Montserrat, sans-serif',
   fontSize: '0.875rem !important',
-  fontWeight: 600,
   textTransform: 'uppercase',
   mb: '0.5rem !important',
   '& .before-dot:before': {
@@ -56,24 +63,20 @@ const categoryStyle = {
   },
 } as const;
 
-export const ShortsCard = (props: ShortsCardProps) => {
+export const ResourceCard = (props: ResourceCardProps) => {
   const { title, href, duration, category, image } = props;
 
-  const t = useTranslations('Shared');
+  const t = useTranslations('Resources');
 
   return (
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
-        <CardContent
-          sx={{
-            minHeight: 335,
-            padding: '0 !important',
-          }}
-        >
-          <Box height="130px" position="relative" width="100%" overflow="hidden">
+        <CardContent sx={cardContentStyle}>
+          <Box height="170px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
               objectFit="cover"
+              objectPosition="top"
               fill
               alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
             />
@@ -91,9 +94,9 @@ export const ShortsCard = (props: ShortsCardProps) => {
               </IconButton>
             </Box>
           </Box>
-          <Box minHeight="100px" p={3}>
+          <Box p={3}>
             <Typography sx={categoryStyle}>
-              {t(`relatedContent.${category}`)}
+              {t(`relatedContent.resource_${category}`)}
               {duration && (
                 <span className="before-dot">
                   {` ${duration} ${t('relatedContent.minuteLabel')}`}
@@ -101,7 +104,9 @@ export const ShortsCard = (props: ShortsCardProps) => {
               )}
             </Typography>
             <Box>
-              <Typography variant="h3">{title}</Typography>
+              <Typography variant="h3" mb={0}>
+                {title}
+              </Typography>
             </Box>
           </Box>
         </CardContent>

@@ -1,11 +1,13 @@
 'use client';
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import DynamicComponent from './DynamicComponent';
 
 export interface StoryblokPageProps {
@@ -41,7 +43,9 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
+        cta={isPartiallyPublicPage && !userId ? <ScrollToSignUpButton /> : undefined}
       />
+      {!userId && isPartiallyPublicPage && <NotesFromBloomPromo />}
       {!userId && isPartiallyPublicPage && <SignUpBanner />}
       {userId &&
         page_sections?.length > 0 &&

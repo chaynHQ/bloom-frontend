@@ -1,6 +1,7 @@
 {
   "Shared": {
     "bloom": "Bloom",
+    "references": "Resources",
     "metadata": {
       "title": "Join us on your healing journey",
       "description": "Bloom is here for you to learn, heal and grow towards a confident future. It is bought to you by Chayn, a global non-profit, run by survivors and allies from around the world.",
@@ -11,7 +12,7 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "Navigate back to previous page",
+    "navigateBack": "Navigate back",
     "navigateTo": "Navigate to",
     "footer": {
       "fundedByTitle": "Funded by",
@@ -24,7 +25,8 @@
       "badooLine2": "BADOO LTD",
       "fruitzLine1": "In partnership with",
       "fruitzLine2": "FRUITZ LTD",
-      "policies": "Our policies"
+      "policies": "Our policies",
+      "trustCenter": "Trust Center"
     },
     "maintenanceBanner": {
       "title": "Bloom is down for maintenance",
@@ -32,12 +34,11 @@
     },
     "fruitzRetirementBanner": {
       "title": "Change to your courses",
-      "description": "The Fruitz app is sunsetting next month, but your Bloom support remains. From April 22nd, the course ‘Dating, Boundaries, and Relationships’ will no longer be available, but all other services, including 1:1 messaging, will stay the same.",
+      "description": "The Fruitz x Bloom partnership is coming to an end, but your Bloom support remains. From August 19th, the course ‘Dating, Boundaries, and Relationships’ will no longer be available, but all other services, including 1:1 messaging, will stay the same.",
       "dismiss": "Dismiss"
     },
     "videoTranscript": {
       "title": "Video transcript",
-      "description": "Read the transcript for video - ",
       "closeModal": "Close transcript"
     },
     "progressStatus": {
@@ -46,6 +47,7 @@
       "notStarted": "Not started"
     },
     "meetTheTeam": {
+      "fullBioButton": "Read {name}'s full bio",
       "expandTeamMember": "Expand bio for {name}"
     },
     "noDataAvailable": {
@@ -85,11 +87,15 @@
       "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
       "dateSelector": "Illustration of a calendar with a heart in the middle",
       "change": "Illustration of a cycle - three suns in a circle with arrows between them",
+      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
       "confidential": "Illustration of a document with a lock in the corner",
       "cookieCat": "Illustration of a resting cat with a cookie",
       "fruitzLogo": "Fruitz logo",
       "bloomFruitzLogo": "Bloom in partnership with Fruitz logo",
-      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower"
+      "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+      "bookIcon": "Book icon",
+      "articleIcon": "Article icon",
+      "videoIcon": "Video icon"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Survivor",
@@ -109,19 +115,8 @@
       "title": "Login or Create an account",
       "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
       "loginButton": "Log in",
-      "registerButton": "Create account"
-    },
-    "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_conversation": "Audio",
-      "short_video": "Watch",
-      "course": "Course",
-      "session": "Session",
-      "session_iba": "Session",
-      "grounding": "Grounding",
-      "activities": "Activity",
-      "minuteLabel": "minutes"
+      "registerButton": "Create account",
+      "backButton": "Go back"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Thought diaries",
@@ -162,6 +157,10 @@
       "title": "Free supportive messages",
       "description": "Receive twice weekly messages direct to your WhatsApp",
       "buttonText": "Subscribe"
+    },
+    "characterCount": "{current}/{max} characters",
+    "scrollToSignUp": {
+      "button": "Sign up for free"
     }
   }
 }

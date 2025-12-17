@@ -20,7 +20,7 @@ describe.skip('Admin dashboard page should display', () => {
     cy.get('h2').should('contain', 'Create an admin account');
     cy.get('p').should('contain', 'Admin accounts are able to generate therapy codes');
 
-    cy.get('label.Mui-required').contains('Select the partner');
+    cy.get('label.Mui-required').contains('Select partner');
     cy.get('input[name="selectPartner"]').should('exist');
 
     cy.get('label.Mui-required').contains('Email address');
@@ -35,7 +35,7 @@ describe.skip('Admin dashboard page should display', () => {
   it('update therapy sessions panel', () => {
     cy.get('h2').should('contain', 'Update therapy sessions');
 
-    cy.get('label').contains(`Type a user's email address`);
+    cy.get('label').contains(`Search by user email`);
     cy.get('input[id="user-email-address-search"]').should('exist');
 
     cy.get('button').contains('Update therapy sessions');
@@ -44,7 +44,7 @@ describe.skip('Admin dashboard page should display', () => {
   it('update partner admin panel', () => {
     cy.get('h2').should('contain', 'Update partner admin');
 
-    cy.get('label').contains('Type at least 4 letters');
+    cy.get('label').contains('Search by admin email');
     cy.get('input[id="partnerAdmin"]').should('exist');
 
     cy.get('button').contains('Update partner admin');

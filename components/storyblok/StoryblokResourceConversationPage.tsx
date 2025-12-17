@@ -1,39 +1,23 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
-import PageSection from '@/components/common/PageSection';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES, STORYBLOK_COLORS } from '@/lib/constants/enums';
+import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
+import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { rowStyle } from '@/styles/common';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
+import { useLocale } from 'next-intl';
+import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { ContentUnavailable } from '../common/ContentUnavailable';
 import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
+import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
-
-const audioContainerStyle = {
-  mt: { xs: 4, md: 6 },
-  mb: 3,
-} as const;
-
-const progressStyle = {
-  ...rowStyle,
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  gap: 3,
-  mt: 2,
-  '.MuiBox-root': {
-    mt: 0,
-  },
-} as const;
 
 export interface StoryblokResourceConversationPageProps {
   storyUuid: string;
@@ -66,19 +50,48 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     page_sections,
     related_content,
     related_exercises,
+    languages,
+    included_for_partners,
   } = props;
 
-  const tS = useTranslations('Shared');
+  const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
-
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
-    PROGRESS_STATUS.NOT_STARTED,
-  );
-  const [resourceId, setResourceId] = useState<string>();
+
+  const userAccess = useMemo(() => {
+    return (
+      hasAccessToPage(
+        isLoggedIn,
+        true, // setting true here to allow preview. The login overlay will block interaction
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ) &&
+      (locale === LANGUAGES.en || languages.includes(locale))
+    );
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
+
+  const { resourceProgress, resourceId } = useMemo(() => {
+    const userResource = resources.find(
+      (resource: Resource) => resource.storyblokUuid === storyUuid,
+    );
+
+    if (userResource) {
+      return {
+        resourceProgress: userResource.completed
+          ? PROGRESS_STATUS.COMPLETED
+          : PROGRESS_STATUS.STARTED,
+        resourceId: userResource.id,
+      };
+    }
+    return {
+      resourceProgress: PROGRESS_STATUS.NOT_STARTED,
+      resourceId: undefined,
+    };
+  }, [resources, storyUuid]);
 
   const eventData = useMemo(() => {
     return {
@@ -90,23 +103,15 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
-    const userResource = resources.find(
-      (resource: Resource) => resource.storyblokUuid === storyUuid,
-    );
-
-    if (userResource) {
-      userResource.completed
-        ? setResourceProgress(PROGRESS_STATUS.COMPLETED)
-        : setResourceProgress(PROGRESS_STATUS.STARTED);
-      setResourceId(userResource.id);
-    } else {
-      setResourceProgress(PROGRESS_STATUS.NOT_STARTED);
-    }
-  }, [resources, storyUuid]);
-
-  useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
-  }, []);
+  });
+
+  const nextResourceHref = useMemo(() => {
+    const nextResourceSlug = related_content[0]?.full_slug;
+    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
+  }, [related_content]);
+
+  if (!userAccess) return <ContentUnavailable />;
 
   return (
     <Box
@@ -131,9 +136,14 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           resourceProgress,
           audio,
           audio_transcript,
+          nextResourceHref,
           eventData,
         }}
       />
+      {page_sections?.length > 0 &&
+        page_sections.map((section: any, index: number) => (
+          <DynamicComponent key={`page_section_${index}`} blok={section} />
+        ))}
       {resourceId && (
         <Container sx={{ bgcolor: 'background.paper' }}>
           <ResourceFeedbackForm
@@ -142,22 +152,16 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
           />
         </Container>
       )}
-      <PageSection color={STORYBLOK_COLORS.SECONDARY_MAIN} alignment="left">
-        <Typography variant="h2" fontWeight={500}>
-          {tS('relatedContent.title')}
-        </Typography>
-        <StoryblokRelatedContent
-          relatedContent={related_content}
-          relatedExercises={related_exercises}
-          userContentPartners={userHasAccessToPartnerContent(
-            partnerAdmin?.partner,
-            partnerAccesses,
-            null,
-            userId,
-          )}
-        />
-      </PageSection>
-      {!isLoggedIn && <SignUpBanner />}
+      <StoryblokRelatedContent
+        relatedContent={related_content}
+        relatedExercises={related_exercises}
+        userContentPartners={userHasAccessToPartnerContent(
+          partnerAdmin?.partner,
+          partnerAccesses,
+          null,
+          userId,
+        )}
+      />
     </Box>
   );
 };

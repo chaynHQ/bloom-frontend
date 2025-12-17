@@ -14,9 +14,12 @@ import {
   HEADER_ACCOUNT_ICON_CLICKED,
   HEADER_APPLY_A_CODE_CLICKED,
   LOGOUT_REQUEST,
+  SECONDARY_HEADER_THERAPY_CLICKED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
+import { Event } from '@mui/icons-material';
+import { navDrawerButtonStyle } from './MobileTopNav';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
@@ -25,23 +28,14 @@ const menuItemStyle = {
   },
 } as const;
 
-const buttonStyle = {
-  paddingX: 1,
-  minWidth: { xs: 40, md: 64 },
-  height: 40,
-  fontWeight: 400,
-  color: 'common.white',
-  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
-  },
-  '& .MuiButton-startIcon': { mx: 0 },
-} as const;
-
 export default function UserMenu() {
   const t = useTranslations('Navigation');
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
+  const therapyAccess = partnerAccesses.find(
+    (partnerAccess) => partnerAccess.featureTherapy === true,
+  );
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -73,14 +67,14 @@ export default function UserMenu() {
         color="inherit"
         onClick={handleClick}
         startIcon={<Person />}
-        size="medium"
-        sx={buttonStyle}
+        sx={navDrawerButtonStyle}
       />
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         elevation={1}
+        sx={{ mt: 0.5 }}
         MenuListProps={{
           id: 'user-menu',
         }}
@@ -97,6 +91,21 @@ export default function UserMenu() {
               }}
             >
               {t('applyCode')}
+            </Button>
+          </MenuItem>
+        )}
+        {!!therapyAccess && (
+          <MenuItem sx={{ ...menuItemStyle, display: { xs: 'block', md: 'none' } }}>
+            <Button
+              href="/therapy/book-session"
+              component={i18nLink}
+              startIcon={<Event />}
+              onClick={() => {
+                logEvent(SECONDARY_HEADER_THERAPY_CLICKED);
+                handleClose();
+              }}
+            >
+              {t('therapy')}
             </Button>
           </MenuItem>
         )}

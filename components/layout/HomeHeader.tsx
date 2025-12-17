@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import * as React from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
-import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 
 interface HeaderProps {
   title:
@@ -25,7 +24,6 @@ interface HeaderProps {
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
-  children?: any;
   cta?: any;
 }
 
@@ -33,12 +31,14 @@ const headerContainerStyles = {
   ...rowStyle,
   alignItems: 'center',
   minHeight: { xs: 220, lg: 360 },
+  pt: 10,
   paddingBottom: { xs: '3rem !important', sm: '4rem !important' },
   gap: 1,
   background: theme.palette.bloomGradient,
 };
 
 const ctaContainerStyle = {
+  mt: 2,
   width: 'auto',
 } as const;
 
@@ -52,8 +52,6 @@ const imageContainerStyle = {
 
 const textContainerStyle = {
   ...columnStyle,
-  pl: { xs: 3, sm: 0 },
-  pr: { xs: 6, sm: 0 },
   justifyContent: 'space-between',
   width: { xs: '100%', sm: 'auto' },
   maxWidth: { xs: '100%', sm: '50%', md: '60%' },
@@ -64,7 +62,7 @@ const textContentStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, children, cta } = props;
+  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, cta } = props;
 
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt
@@ -75,7 +73,6 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <DesktopPwaBanner />
       <Box sx={textContainerStyle}>
         <Box sx={textContentStyle}>
           <Typography variant="h1" component="h1" mb={3}>
