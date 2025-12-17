@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface PWAStatus {
   isInstalled: boolean;
@@ -89,14 +89,15 @@ export const detectPWA = (): PWAStatus | null => {
 
 /**
  * Hook to monitor PWA installation status
- * Uses useSyncExternalStore to properly handle SSR and hydration
  */
 export const usePWAStatus = () => {
-  const subscribe = useCallback((onStoreChange: () => void) => {
-    // Guard for SSR - subscribe is only called on client, but adding guard for safety
-    if (typeof window === 'undefined') {
-      return () => {};
-    }
+  // Initialize as null for SSR safety
+  const [pwaStatus, setPwaStatus] = useState<PWAStatus | null>(null);
+
+  useEffect(() => {
+    // Detect initial PWA status on client
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPwaStatus(detectPWA());
 
     // Set up listeners for display mode changes
     const modeQueries = [
@@ -106,23 +107,22 @@ export const usePWAStatus = () => {
       window.matchMedia('(display-mode: window-controls-overlay)'),
     ];
 
+    const handleDisplayModeChange = () => {
+      setPwaStatus(detectPWA());
+    };
+
     modeQueries.forEach((query) => {
-      query.addEventListener('change', onStoreChange);
+      query.addEventListener('change', handleDisplayModeChange);
     });
 
     return () => {
       modeQueries.forEach((query) => {
-        query.removeEventListener('change', onStoreChange);
+        query.removeEventListener('change', handleDisplayModeChange);
       });
     };
   }, []);
 
-  const getSnapshot = useCallback(() => detectPWA(), []);
-
-  // Return null during SSR
-  const getServerSnapshot = useCallback(() => null, []);
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return pwaStatus;
 };
 
 /**
