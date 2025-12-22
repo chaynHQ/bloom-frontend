@@ -33,16 +33,6 @@ jobs:
       contents: read
       checks: write
       deployments: read
-    strategy:
-      # when one test fails, DO NOT cancel the other
-      # containers, because this will kill Cypress processes
-      # leaving Cypress Cloud hanging ...
-      # https://github.com/cypress-io/github-action/issues/48
-      fail-fast: false
-      matrix:
-        # run 3 copies of the current job in parallel
-        # this will automatically load balance
-        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -59,8 +49,7 @@ jobs:
           # Disable running of tests within install job
           runTests: false
 
-      # Cleanup runs automatically via after:run hook in cypress.config.ts
-      # Each parallel container will run cleanup when it finishes (idempotent operation)
+      # Cleanup spec (_cleanup.cy.tsx) runs first alphabetically
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.16
         with:
@@ -68,8 +57,6 @@ jobs:
           config-file: cypress.config.ts
           headed: false
           record: true # send results to cypress dashboard
-          parallel: true
-          group: ${{ github.run_id }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}

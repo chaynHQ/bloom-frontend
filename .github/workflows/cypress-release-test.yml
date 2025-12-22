@@ -39,8 +39,7 @@ jobs:
           node-version: '22.x'
       - run: node -v
 
-      # Cleanup runs automatically via after:run hook in cypress.config.ts
-      # This ensures cleanup happens even if tests fail
+      # Cleanup spec (_cleanup.cy.tsx) runs first alphabetically
       - name: Run cypress
         uses: cypress-io/github-action@v6.7.16
         with:
