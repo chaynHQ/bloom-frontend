@@ -54,8 +54,11 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
 
   let browserTimingHeader = undefined;
 
-  // @ts-ignore - newrelic types don't match runtime API
-  if (ENVIRONMENT === ENVIRONMENTS.PRODUCTION && typeof newrelic.getBrowserTimingHeader === 'function') {
+  if (
+    ENVIRONMENT === ENVIRONMENTS.PRODUCTION &&
+    // @ts-ignore - newrelic types don't match runtime API
+    typeof newrelic.getBrowserTimingHeader === 'function'
+  ) {
     // @ts-ignore
     if (newrelic.agent?.collector.isConnected() === false) {
       await new Promise((resolve) => {
