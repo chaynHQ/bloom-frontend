@@ -15,7 +15,9 @@ describe('Shorts Flow', () => {
     cy.contains('Sex after trauma', { timeout: 10000 }).should('be.visible').click();
 
     // User plays the short video
-    cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
+    cy.get('[role="button"][aria-label*="Play video"]', { timeout: 10000 })
+      .should('be.visible')
+      .click();
     cy.wait(2000); // wait to ensure user plays the short
 
     // User clicks on a related session titled "Sexuality and desire"
@@ -31,7 +33,9 @@ describe('Shorts Flow', () => {
     cy.wait(2000); // wait to ensure user is redirected to and plays the session
 
     // User is redirected to and plays the session
-    cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
+    cy.get('[role="button"][aria-label*="Play video"]', { timeout: 10000 })
+      .should('be.visible')
+      .click();
     cy.wait(2000); // wait to ensure user is redirected to and plays the session
 
     // User clicks the button to complete session

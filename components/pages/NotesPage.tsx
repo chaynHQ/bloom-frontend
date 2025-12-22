@@ -105,9 +105,6 @@ export default function NotesPage({ story }: Props) {
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const userId = useTypedSelector((state) => state.user.id);
-  const userLoading = useTypedSelector(
-    (state) => state.user.authStateLoading || state.user.loading,
-  );
 
   useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,
@@ -125,7 +122,7 @@ export default function NotesPage({ story }: Props) {
   }
 
   const renderFormSection = () => {
-    if (!userId || userLoading) {
+    if (!userId) {
       // Unauthenticated user - show registration form
       return (
         <Box sx={formContainerStyle}>
@@ -138,19 +135,17 @@ export default function NotesPage({ story }: Props) {
               style={{ objectFit: 'contain' }}
             />
           </Box>
-          {!userLoading && (
-            <Card sx={formCardStyle}>
-              <CardContent>
-                <Typography variant="h2" component="h2">
-                  {t('notes.createAccount')}
-                </Typography>
-                <Typography variant="body2" pb={2}>
-                  {t('notes.createAccountDescription')}
-                </Typography>
-                <RegisterNotesForm />
-              </CardContent>
-            </Card>
-          )}
+          <Card sx={formCardStyle}>
+            <CardContent>
+              <Typography variant="h2" component="h2">
+                {t('notes.createAccount')}
+              </Typography>
+              <Typography variant="body2" pb={2}>
+                {t('notes.createAccountDescription')}
+              </Typography>
+              <RegisterNotesForm />
+            </CardContent>
+          </Card>
         </Box>
       );
     } else if (!hasActiveWhatsappSub) {
