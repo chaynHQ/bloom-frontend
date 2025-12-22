@@ -25,6 +25,7 @@
     "cypress": "cypress open",
     "cypress:headless": "cypress run --headless true --browser chrome",
     "cypress:headless-spec": "cypress run --headless true --browser chrome --spec $SPEC",
+    "cypress:coverage": "npx nyc report --reporter=text-summary",
     "cypress:auth": "cypress run --spec \"cypress/integration/tests/auth-redirect.cy.tsx,cypress/integration/tests/create-user*.cy.tsx,cypress/integration/tests/reset-password.cy.tsx\"",
     "cypress:user-accounts": "cypress run --spec \"cypress/integration/tests/delete-user.cy.tsx,cypress/integration/tests/user-account-settings.cy.tsx,cypress/integration/tests/user-disable-service-emails.cy.tsx,cypress/integration/tests/user-about-you.cy.tsx,cypress/integration/tests/user-update-email.cy.tsx,cypress/integration/tests/user-apply-a-code.cy.tsx\"",
     "cypress:admin": "cypress run --spec \"cypress/integration/tests/admin-dashboard.cy.tsx,cypress/integration/tests/partner-admin.cy.tsx\"",
@@ -79,6 +80,7 @@
     "storyblok-rich-text-react-renderer": "^3.0.1"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.14.0",
     "@eslint/eslintrc": "^3.3.3",
     "@next/bundle-analyzer": "16.0.10",
     "@testing-library/dom": "^10.4.0",
@@ -88,6 +90,7 @@
     "@types/newrelic": "^9.14.8",
     "@types/node": "^25.0.3",
     "@types/react": "19.2.7",
+    "babel-plugin-istanbul": "^7.0.0",
     "cypress": "^15.8.0",
     "dotenv": "^17.2.3",
     "eslint": "9.39.2",
@@ -99,6 +102,7 @@
     "jest-environment-jsdom": "^30.2.0",
     "knip": "^5.75.1",
     "mailslurp-client": "^16.0.0",
+    "nyc": "^17.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"

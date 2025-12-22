@@ -1,0 +1,7 @@
+{
+  "all": true,
+  "include": ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
+  "exclude": ["**/*.d.ts", "**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}"],
+  "reporter": ["text-summary", "html"],
+  "report-dir": "coverage"
+}
