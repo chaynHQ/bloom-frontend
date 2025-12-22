@@ -69,7 +69,10 @@ describe('Register with Notes from Bloom', () => {
     cy.get('button[type="submit"]').contains('Create account').click();
 
     // Check that error message is displayed
-    cy.get('p', { timeout: 10000 }).should('contain', 'This email is already registered with Bloom');
+    cy.get('p', { timeout: 10000 }).should(
+      'contain',
+      'This email is already registered with Bloom',
+    );
   });
 
   it('should navigate to login page when clicking login link', () => {
