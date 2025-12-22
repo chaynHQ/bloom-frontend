@@ -106,39 +106,36 @@ const CreateAccessCodeForm = () => {
     setSelectedTier(null);
   };
 
-  const FormResetButton = () => (
-    <Box>
-      <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
-        {t('form.reset')}
-      </Button>
-    </Box>
-  );
+  if (formSubmitSuccess) {
+    return (
+      <Box>
+        <Typography variant="h3" component="h3" mb={1}>
+          {t('therapyAccess')}
+        </Typography>
+        <Typography>
+          {t.rich('resultLink', {
+            welcomeURL: () => (
+              <Link component={i18nLink} id="access-code-url" href={welcomeURL}>
+                {welcomeURL}
+              </Link>
+            ),
+          })}
+        </Typography>
+        <Typography mt={2}>
+          {t.rich('resultCode', {
+            partnerAccessCode: () => <strong id="access-code">{partnerAccessCode}</strong>,
+          })}
+        </Typography>
 
-  const FormSuccess = () => (
-    <Box>
-      <Typography variant="h3" component="h3" mb={1}>
-        {t('therapyAccess')}
-      </Typography>
-      <Typography>
-        {t.rich('resultLink', {
-          welcomeURL: () => (
-            <Link component={i18nLink} id="access-code-url" href={welcomeURL}>
-              {welcomeURL}
-            </Link>
-          ),
-        })}
-      </Typography>
-      <Typography mt={2}>
-        {t.rich('resultCode', {
-          partnerAccessCode: () => <strong id="access-code">{partnerAccessCode}</strong>,
-        })}
-      </Typography>
-
-      <FormResetButton />
-    </Box>
-  );
-
-  const Form = () => (
+        <Box>
+          <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
+            {t('form.reset')}
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
+  return (
     <form autoComplete="off" onSubmit={submitHandler}>
       <FormControl fullWidth component="fieldset">
         <FormLabel component="legend">{t('form.featuresLabel')}</FormLabel>
@@ -163,11 +160,6 @@ const CreateAccessCodeForm = () => {
       </LoadingButton>
     </form>
   );
-
-  if (formSubmitSuccess) {
-    return <FormSuccess />;
-  }
-  return <Form />;
 };
 
 export default CreateAccessCodeForm;

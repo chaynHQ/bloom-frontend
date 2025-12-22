@@ -71,6 +71,8 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
   } = props;
 
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && !!userId;
   const searchParams = useSearchParams();
   const sectionQueryParam = searchParams.get('section');
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -100,7 +102,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         targetRef.current.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top: scrollToY, behavior: 'smooth' });
     }
-  }, []);
+  });
 
   return (
     <Box
@@ -131,7 +133,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
         translatedImageAlt={header_image.alt}
       />
       {page_section_1?.length > 0 && (
-        <StoryblokPageSection {...page_section_1[0]} isLoggedIn={!!userId} />
+        <StoryblokPageSection {...page_section_1[0]} isLoggedIn={isLoggedIn} />
       )}
 
       {/* CHANGED: Apply the new refs */}
@@ -146,7 +148,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
       </Container>
 
       {page_section_2?.length > 0 && (
-        <StoryblokPageSection {...page_section_2[0]} isLoggedIn={!!userId} />
+        <StoryblokPageSection {...page_section_2[0]} isLoggedIn={isLoggedIn} />
       )}
 
       {/* CHANGED: Apply the new refs */}
@@ -178,7 +180,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
       </Container>
 
       {page_section_3?.length > 0 && (
-        <StoryblokPageSection {...page_section_3[0]} isLoggedIn={!!userId} />
+        <StoryblokPageSection {...page_section_3[0]} isLoggedIn={isLoggedIn} />
       )}
       <NotesFromBloomPromo />
     </Box>

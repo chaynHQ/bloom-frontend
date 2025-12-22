@@ -2,13 +2,13 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import theme from '@/styles/theme';
 import { Button, Container, Typography } from '@mui/material';
-import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -20,16 +20,11 @@ export const SignUpBanner = () => {
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
   );
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const [registerPath, setRegisterPath] = useState('/auth/register');
+  const referralPartner = useCookieReferralPartner();
 
-  useEffect(() => {
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    if (referralPartner) {
-      setRegisterPath(`/auth/register?partner=${referralPartner}`);
-    }
-  }, [entryPartnerReferral]);
+  const registerPath = useMemo(() => {
+    return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
+  }, [referralPartner]);
 
   if (userLoading) {
     return null;

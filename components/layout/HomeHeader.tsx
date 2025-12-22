@@ -24,7 +24,6 @@ interface HeaderProps {
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
-  children?: any;
   cta?: any;
 }
 
@@ -63,7 +62,7 @@ const textContentStyle = {
 } as const;
 
 const Header = (props: HeaderProps) => {
-  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, children, cta } = props;
+  const { title, introduction, imageAlt, translatedImageAlt, imageSrc, cta } = props;
 
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt

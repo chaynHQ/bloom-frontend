@@ -29,7 +29,6 @@ const ProfileSettingsForm = () => {
 
   const diffExists = name !== nameInput || email !== emailInput;
 
-  const tS = useTranslations('Shared');
   const t = useTranslations('Account.accountSettings');
 
   const generatePayload = (newEmail?: string | null, newName?: string | null) => ({

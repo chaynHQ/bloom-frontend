@@ -11,10 +11,9 @@ import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerCon
 import { Box, Container } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
-import LoadingContainer from '../common/LoadingContainer';
 import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
 import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -57,16 +56,43 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
 
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
-  const [userAccess, setUserAccess] = useState<boolean>();
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
-  const [resourceProgress, setResourceProgress] = useState<PROGRESS_STATUS>(
-    PROGRESS_STATUS.NOT_STARTED,
-  );
-  const [resourceId, setResourceId] = useState<string>();
+  const userAccess = useMemo(() => {
+    return (
+      hasAccessToPage(
+        isLoggedIn,
+        true, // setting true here to allow preview. The login overlay will block interaction
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ) &&
+      (locale === LANGUAGES.en || languages.includes(locale))
+    );
+  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
+
+  const { resourceProgress, resourceId } = useMemo(() => {
+    const userResource = resources.find(
+      (resource: Resource) => resource.storyblokUuid === storyUuid,
+    );
+
+    if (userResource) {
+      return {
+        resourceProgress: userResource.completed
+          ? PROGRESS_STATUS.COMPLETED
+          : PROGRESS_STATUS.STARTED,
+        resourceId: userResource.id,
+      };
+    }
+    return {
+      resourceProgress: PROGRESS_STATUS.NOT_STARTED,
+      resourceId: undefined,
+    };
+  }, [resources, storyUuid]);
 
   const eventData = useMemo(() => {
     return {
@@ -78,43 +104,14 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
   }, [name, storyUuid, resourceProgress]);
 
   useEffect(() => {
-    const userHasAccess =
-      hasAccessToPage(
-        isLoggedIn,
-        true, // setting true here to allow preview. The login overlay will block interaction
-        included_for_partners,
-        partnerAccesses,
-        partnerAdmin,
-      ) &&
-      (locale === LANGUAGES.en || languages.includes(locale));
-    setUserAccess(userHasAccess);
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
-
-  useEffect(() => {
-    const userResource = resources.find(
-      (resource: Resource) => resource.storyblokUuid === storyUuid,
-    );
-
-    if (userResource) {
-      userResource.completed
-        ? setResourceProgress(PROGRESS_STATUS.COMPLETED)
-        : setResourceProgress(PROGRESS_STATUS.STARTED);
-      setResourceId(userResource.id);
-    } else {
-      setResourceProgress(PROGRESS_STATUS.NOT_STARTED);
-    }
-  }, [resources, storyUuid]);
-
-  useEffect(() => {
     logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
-  }, []);
+  });
 
   const nextResourceHref = useMemo(() => {
     const nextResourceSlug = related_content[0]?.full_slug;
     return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
   }, [related_content]);
 
-  if (userAccess === undefined) return <LoadingContainer />;
   if (!userAccess) return <ContentUnavailable />;
 
   return (

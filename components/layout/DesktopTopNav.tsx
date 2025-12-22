@@ -2,12 +2,12 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getTopNavItems, TopNavItem } from '@/lib/navigation/navigationConfig';
+import { getTopNavItems } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
 const listStyle = {
   display: { xs: 'none', md: 'flex' },
@@ -55,16 +55,9 @@ const DesktopTopNav = (props: DesktopTopNavProps) => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const isMaintenanceMode = getIsMaintenanceMode();
 
-  const [navigationLinks, setNavigationLinks] = useState<Array<TopNavItem>>([]);
-
-  useEffect(() => {
-    if (isMaintenanceMode) {
-      setNavigationLinks([]);
-      return;
-    }
-
-    const links = getTopNavItems(partnerAdmin, false);
-    setNavigationLinks(links);
+  const navigationLinks = useMemo(() => {
+    if (isMaintenanceMode) return [];
+    return getTopNavItems(partnerAdmin, false);
   }, [partnerAdmin, isMaintenanceMode]);
 
   return (

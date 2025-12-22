@@ -20,6 +20,7 @@ const StoryblokImage = (props: StoryblokImageProps) => {
   if (!image || !image.filename) return <></>;
 
   const imageContainerStyle = {
+    position: 'relative',
     width:
       size === 'extra-small'
         ? { xs: 40, md: 80 }

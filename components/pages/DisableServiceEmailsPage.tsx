@@ -9,7 +9,7 @@ import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson5Yellow from '@/public/illustration_leaf_mix_bee.svg';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function DisableServiceEmailsPage() {
   const t = useTranslations('Account.disableServiceEmails');
@@ -20,24 +20,29 @@ export default function DisableServiceEmailsPage() {
   const [error, setError] = useState<ErrorDisplay>();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
 
+  // Track if we've already attempted to disable emails
+  const hasAttemptedDisable = useRef(false);
+
   useEffect(() => {
-    if (userServiceEmailsPermission === true) {
-      try {
-        updateUser({ serviceEmailsPermission: false });
-        logEvent(USER_DISABLED_SERVICE_EMAILS);
-      } catch (error) {
-        setError(
-          t.rich('error', {
-            link: (content) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
-                {content}
-              </Link>
-            ),
-          }),
-        );
-      }
+    if (userServiceEmailsPermission === true && !hasAttemptedDisable.current) {
+      hasAttemptedDisable.current = true;
+      updateUser({ serviceEmailsPermission: false })
+        .then(() => {
+          logEvent(USER_DISABLED_SERVICE_EMAILS);
+        })
+        .catch(() => {
+          setError(
+            t.rich('error', {
+              link: (content) => (
+                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                  {content}
+                </Link>
+              ),
+            }),
+          );
+        });
     }
-  }, []);
+  }, [userServiceEmailsPermission, updateUser, t]);
 
   const headerProps = {
     title: t('title'),

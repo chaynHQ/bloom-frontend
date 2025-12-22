@@ -27,7 +27,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const radioGroupStyle = {
   ...rowStyle,
@@ -43,7 +43,7 @@ const radioGroupStyle = {
 
 interface EmailRemindersSettingsFormControlProps {
   selectedInput: EMAIL_REMINDERS_FREQUENCY | undefined;
-  setSelectedInput: Dispatch<SetStateAction<EMAIL_REMINDERS_FREQUENCY | undefined>>;
+  setSelectedInput: (value: EMAIL_REMINDERS_FREQUENCY) => void;
 }
 
 export const EmailRemindersSettingsFormControl = (
@@ -98,17 +98,12 @@ const EmailRemindersSettingsForm = () => {
   const pathname = usePathname();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
 
-  useEffect(() => {
-    // Reset success and error states if new input selected
-    if (selectedInput) {
-      if (isSuccess) {
-        setIsSuccess(false);
-      }
-      if (error) {
-        setError(undefined);
-      }
-    }
-  }, [selectedInput, isSuccess, error]);
+  // Handle input selection change - reset success/error states
+  const handleSelectedInputChange = (value: EMAIL_REMINDERS_FREQUENCY) => {
+    setSelectedInput(value);
+    if (isSuccess) setIsSuccess(false);
+    if (error) setError(undefined);
+  };
 
   const onSubmit = useCallback(
     async (ev: React.FormEvent<HTMLFormElement>) => {
@@ -154,7 +149,7 @@ const EmailRemindersSettingsForm = () => {
     <form onSubmit={onSubmit}>
       <EmailRemindersSettingsFormControl
         selectedInput={selectedInput}
-        setSelectedInput={setSelectedInput}
+        setSelectedInput={handleSelectedInputChange}
       />
       {error && (
         <Typography variant="body2" color={'error.main'}>

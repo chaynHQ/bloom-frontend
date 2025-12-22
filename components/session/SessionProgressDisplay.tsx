@@ -7,7 +7,7 @@ import { Course } from '@/lib/store/coursesSlice';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 interface SessionProgressDisplayProps {
   sessionId: string;
@@ -18,14 +18,11 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   const { sessionId, storyblokCourseUuid } = props;
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
 
-  const [sessionProgress, setSessionProgress] = useState<PROGRESS_STATUS>(
-    PROGRESS_STATUS.NOT_STARTED,
-  );
   const courses = useTypedSelector((state) => state.courses);
 
   useGetUserCoursesQuery(undefined, { skip: !isLoggedIn });
 
-  useEffect(() => {
+  const sessionProgress = useMemo(() => {
     const userCourse = courses?.find(
       (course: Course) => course.storyblokUuid === storyblokCourseUuid,
     );
@@ -36,13 +33,10 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
       );
 
       if (matchingSession) {
-        matchingSession.completed
-          ? setSessionProgress(PROGRESS_STATUS.COMPLETED)
-          : setSessionProgress(PROGRESS_STATUS.STARTED);
-      } else {
-        setSessionProgress(PROGRESS_STATUS.NOT_STARTED);
+        return matchingSession.completed ? PROGRESS_STATUS.COMPLETED : PROGRESS_STATUS.STARTED;
       }
     }
+    return PROGRESS_STATUS.NOT_STARTED;
   }, [courses, sessionId, storyblokCourseUuid]);
 
   return (

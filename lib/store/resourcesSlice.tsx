@@ -51,7 +51,7 @@ const slice = createSlice({
   name: 'resources',
   initialState: initialState,
   reducers: {
-    clearResourcesSlice: (state) => {
+    clearResourcesSlice: () => {
       return initialState;
     },
   },

@@ -59,7 +59,7 @@ const formContainerStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', md: 'row' },
   alignItems: { xs: 'center', md: 'flex-start' },
-  justifyContent: 'space-around',
+  justifyContent: 'space-between',
   gap: { xs: 4, lg: 6 },
   margin: '0 auto',
 } as const;
@@ -105,9 +105,8 @@ export default function NotesPage({ story }: Props) {
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const userId = useTypedSelector((state) => state.user.id);
-  const userLoading = useTypedSelector((state) => state.user.loading);
 
-  const { data: subscriptions } = useGetSubscriptionsUserQuery(undefined, {
+  useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,
   });
 
@@ -123,11 +122,11 @@ export default function NotesPage({ story }: Props) {
   }
 
   const renderFormSection = () => {
-    if (!userId || userLoading) {
+    if (!userId) {
       // Unauthenticated user - show registration form
       return (
         <Box sx={formContainerStyle}>
-          <Box sx={{ ...illustrationStyle, my: 'auto' }}>
+          <Box sx={illustrationStyle}>
             <Image
               alt={tS('alt.bloomHomeIllustration')}
               src={illustrationActivites}

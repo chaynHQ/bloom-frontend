@@ -1,3 +1,5 @@
+'use client';
+
 import { Link as i18nLink, usePathname } from '@/i18n/routing';
 import courseIcon from '@/public/course_icon_background.svg';
 import { rowStyle } from '@/styles/common';
@@ -6,6 +8,7 @@ import { Box, Button, Dialog, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const headerContainerStyles = {
   ...rowStyle,
@@ -19,6 +22,12 @@ const LoginDialog = () => {
   const tN = useTranslations('Navigation');
   const pathname = usePathname();
   const router = useRouter();
+  const [canGoBack, setCanGoBack] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCanGoBack(window.history.length > 1);
+  }, []);
 
   return (
     <Dialog open={true}>
@@ -40,7 +49,7 @@ const LoginDialog = () => {
         <Typography variant="body2">{t('loginDialog.description')}</Typography>
         <Box sx={rowStyle}>
           {/* Back Button - Closes dialog or navigates back */}
-          {window.history.length > 1 && (
+          {canGoBack && (
             <Button
               qa-id="dialogBackButton"
               color="secondary"

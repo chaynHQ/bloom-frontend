@@ -12,7 +12,6 @@ const cardStyle = {
 
 const ProfileSettingsCard = () => {
   const t = useTranslations('Account.accountSettings');
-  const tS = useTranslations('Shared');
 
   return (
     <Card sx={cardStyle}>

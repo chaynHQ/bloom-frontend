@@ -9,6 +9,7 @@ import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_LIST_VIEWED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
@@ -17,10 +18,9 @@ import { rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import ResourceCarousel from '../common/ResourceCarousel';
 
@@ -51,20 +51,14 @@ interface Props {
   somatics: ISbStoryData[];
 }
 export default function CoursesPage({ courseStories, conversations, shorts, somatics }: Props) {
-  const [loadedCourses, setLoadedCourses] = useState<ISbStoryData[] | null>(null);
-  const [loadedShorts, setLoadedShorts] = useState<ISbStoryData[] | null>(null);
-  const [loadedSomatics, setLoadedSomatics] = useState<ISbStoryData[] | null>(null);
-  const [coursesStarted, setCoursesStarted] = useState<Array<string>>([]);
-  const [coursesCompleted, setCoursesCompleted] = useState<Array<string>>([]);
-  const [showEmailRemindersBanner, setShowEmailRemindersBanner] = useState<boolean>(false);
-
   const userId = useTypedSelector((state) => state.user.id);
-  const isLoggedIn = Boolean(userId);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -89,6 +83,62 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
   useEffect(() => {
     logEvent(COURSE_LIST_VIEWED);
   }, []);
+
+  // Derive loaded content based on user access
+  const { loadedCourses, loadedShorts, loadedSomatics } = useMemo(() => {
+    const userPartners = userHasAccessToPartnerContent(
+      partnerAdmin?.partner,
+      partnerAccesses,
+      referralPartner,
+      userId,
+    );
+
+    const coursesWithAccess = courseStories.filter((story) =>
+      userPartners.some((partner) => {
+        return story.content.included_for_partners
+          .map((p: string) => p.toLowerCase())
+          .includes(partner);
+      }),
+    );
+    const shortsWithAccess = shorts.filter((short) =>
+      userPartners.some((partner) => {
+        return short.content.included_for_partners
+          .map((p: string) => p.toLowerCase())
+          .includes(partner);
+      }),
+    );
+
+    const somaticsWithAccess =
+      userPartners.filter((up) => up !== 'public').length > 0 ? null : somatics; // no partners have access to somatics
+
+    return {
+      loadedCourses: coursesWithAccess,
+      loadedShorts: shortsWithAccess,
+      loadedSomatics: somaticsWithAccess,
+    };
+  }, [partnerAccesses, partnerAdmin, courseStories, shorts, somatics, referralPartner, userId]);
+
+  // Derive course progress from courses state
+  const { coursesStarted, coursesCompleted } = useMemo(() => {
+    if (!courses) return { coursesStarted: [], coursesCompleted: [] };
+
+    const started: Array<string> = [];
+    const completed: Array<string> = [];
+    courses.forEach((course) => {
+      if (course.completed) {
+        completed.push(course.storyblokUuid);
+      } else {
+        started.push(course.storyblokUuid);
+      }
+    });
+    return { coursesStarted: started, coursesCompleted: completed };
+  }, [courses]);
+
+  // Derive email reminders banner visibility
+  const showEmailRemindersBanner = useMemo(
+    () => userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER,
+    [userEmailRemindersFrequency],
+  );
 
   const setShortsSectionRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -121,70 +171,6 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
     [sectionQueryParam, headerOffset],
   );
 
-  useEffect(() => {
-    if (
-      userEmailRemindersFrequency &&
-      userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER
-    ) {
-      setShowEmailRemindersBanner(true);
-    }
-  }, [userEmailRemindersFrequency]);
-
-  useEffect(() => {
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-    const userPartners = userHasAccessToPartnerContent(
-      partnerAdmin?.partner,
-      partnerAccesses,
-      referralPartner,
-      userId,
-    );
-
-    const coursesWithAccess = courseStories.filter((story) =>
-      userPartners.some((partner) => {
-        return story.content.included_for_partners
-          .map((p: string) => p.toLowerCase())
-          .includes(partner);
-      }),
-    );
-    const shortsWithAccess = shorts.filter((short) =>
-      userPartners.some((partner) => {
-        return short.content.included_for_partners
-          .map((p: string) => p.toLowerCase())
-          .includes(partner);
-      }),
-    );
-
-    const somaticsWithAccess =
-      userPartners.filter((up) => up !== 'public').length > 0 ? null : somatics; // no partners have access to somatics
-
-    setLoadedCourses(coursesWithAccess);
-    setLoadedShorts(shortsWithAccess);
-    setLoadedSomatics(somaticsWithAccess);
-
-    if (courses) {
-      let courseCoursesStarted: Array<string> = [];
-      let courseCoursesCompleted: Array<string> = [];
-      courses.map((course) => {
-        if (course.completed) {
-          courseCoursesCompleted.push(course.storyblokUuid);
-        } else {
-          courseCoursesStarted.push(course.storyblokUuid);
-        }
-      });
-      setCoursesStarted(courseCoursesStarted);
-      setCoursesCompleted(courseCoursesCompleted);
-    }
-  }, [
-    partnerAccesses,
-    partnerAdmin,
-    courseStories,
-    courses,
-    shorts,
-    somatics,
-    entryPartnerReferral,
-    userId,
-  ]);
-
   const getCourseProgress = (courseId: string) => {
     return coursesStarted.includes(courseId)
       ? PROGRESS_STATUS.STARTED
@@ -200,7 +186,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
-        cta={!userId ? <ScrollToSignUpButton /> : undefined}
+        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
@@ -212,7 +198,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         ) : (
           <Box sx={courseCardsContainer}>
             {loadedCourses?.map((course, index) => {
-              const courseProgress = userId ? getCourseProgress(course.uuid) : null;
+              const courseProgress = isLoggedIn ? getCourseProgress(course.uuid) : null;
               return (
                 <Box key={`course_${index}`} sx={courseCardContainer}>
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
@@ -248,8 +234,8 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
           <ResourceCarousel title="shorts-carousel" resources={loadedShorts} />
         </Container>
       )}
-      {!userId && <SignUpBanner />}
-      {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      {!isLoggedIn && <SignUpBanner />}
+      {isLoggedIn && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
       <NotesFromBloomPromo />
     </Box>
   );

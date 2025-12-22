@@ -5,13 +5,13 @@ import HomeHeader from '@/components/layout/HomeHeader';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROMO_GET_STARTED_CLICKED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, Button } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import StoryblokNotesFromBloomPromo from '../storyblok/StoryblokNotesFromBloomPromo';
 
 interface Props {
@@ -22,16 +22,12 @@ export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
   const userId = useTypedSelector((state) => state.user.id);
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const [registerPath, setRegisterPath] = useState('/auth/register');
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const referralPartner = useCookieReferralPartner();
 
-  useEffect(() => {
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
-    if (referralPartner) {
-      setRegisterPath(`/auth/register?partner=${referralPartner}`);
-    }
-  }, [entryPartnerReferral]);
+  const registerPath = useMemo(() => {
+    return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
+  }, [referralPartner]);
 
   if (!story) {
     return <NoDataAvailable />;
@@ -70,7 +66,7 @@ export default function HomePage({ story }: Props) {
             <StoryblokPageSection
               key={`page_section_${index}`}
               {...section}
-              isLoggedIn={!!userId}
+              isLoggedIn={!authStateLoading && !!userId}
             />
           );
         })}

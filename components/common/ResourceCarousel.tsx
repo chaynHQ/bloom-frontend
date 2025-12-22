@@ -1,14 +1,14 @@
 'use client';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import filterResourcesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import { ResourceCard } from '../cards/ResourceCard';
 import Carousel, { CarouselItemContainer } from './Carousel';
@@ -19,36 +19,25 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-const slidesPerView = {
-  xs: 1,
-  sm: 2,
-  md: 3,
-  lg: 3,
-  xl: 3,
-};
 const ResourceCarousel = ({
   title = 'resource-category-carousel',
   resources = [],
 }: ResourceCarouselProps) => {
   const userId = useTypedSelector((state) => state.user.id);
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const locale = useLocale(); // Get the current locale
-  const [carouselStories, setCarouselStories] = useState<ISbStoryData[]>([]);
-  const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
+  const referralPartner = useCookieReferralPartner();
 
-  useEffect(() => {
+  const carouselStories = useMemo(() => {
     const userPartners = userHasAccessToPartnerContent(
       partnerAdmin?.partner,
       partnerAccesses,
       referralPartner,
       userId,
     );
-    setCarouselStories(
-      filterResourcesForLocaleAndPartnerAccess(resources, locale, userPartners) || [],
-    );
-  }, [userId, partnerAccesses, locale]);
+    return filterResourcesForLocaleAndPartnerAccess(resources, locale, userPartners) || [];
+  }, [userId, partnerAccesses, locale, partnerAdmin?.partner, referralPartner, resources]);
 
   if (resources.length < 1 || carouselStories.length === 0) {
     return <div></div>;
