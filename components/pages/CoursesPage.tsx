@@ -9,6 +9,7 @@ import Header from '@/components/layout/Header';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
 import { COURSE_LIST_VIEWED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
@@ -17,7 +18,6 @@ import { rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -58,7 +58,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const courses = useTypedSelector((state) => state.courses);
@@ -86,7 +86,6 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
 
   // Derive loaded content based on user access
   const { loadedCourses, loadedShorts, loadedSomatics } = useMemo(() => {
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
     const userPartners = userHasAccessToPartnerContent(
       partnerAdmin?.partner,
       partnerAccesses,
@@ -117,15 +116,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
       loadedShorts: shortsWithAccess,
       loadedSomatics: somaticsWithAccess,
     };
-  }, [
-    partnerAccesses,
-    partnerAdmin,
-    courseStories,
-    shorts,
-    somatics,
-    entryPartnerReferral,
-    userId,
-  ]);
+  }, [partnerAccesses, partnerAdmin, courseStories, shorts, somatics, referralPartner, userId]);
 
   // Derive course progress from courses state
   const { coursesStarted, coursesCompleted } = useMemo(() => {

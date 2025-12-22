@@ -3,7 +3,15 @@
 import logEvent from '@/lib/utils/logEvent';
 import { debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { Dispatch, SetStateAction, SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 

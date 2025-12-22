@@ -7,7 +7,15 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction, SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type { Config } from 'react-player/types';
 
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -21,6 +29,31 @@ export const videoStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
+} as const;
+
+const videoThumbnailStyle = {
+  ...videoStyle,
+  width: '100%',
+  height: '100%',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+} as const;
+
+const videoThumbnailButtonStyle = {
+  width: 68,
+  height: 68,
+  borderRadius: '50%',
+  backgroundColor: 'secondary.light',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+  transition: 'transform 0.2s',
+  '&:hover': { transform: 'scale(1.1)' },
 } as const;
 
 interface VideoProps {
@@ -42,7 +75,10 @@ const getYouTubeVideoId = (url: string): string | null => {
     if (parsed.hostname === 'youtu.be') {
       return parsed.pathname.slice(1);
     }
-    if (parsed.hostname.includes('youtube.com') || parsed.hostname.includes('youtube-nocookie.com')) {
+    if (
+      parsed.hostname.includes('youtube.com') ||
+      parsed.hostname.includes('youtube-nocookie.com')
+    ) {
       return parsed.searchParams.get('v');
     }
   } catch {
@@ -70,8 +106,7 @@ const getPrivacyEnhancedUrl = (url: string): string => {
   return url;
 };
 
-const isYouTubeUrl = (url: string): boolean =>
-  url.includes('youtu.be') || url.includes('youtube');
+const isYouTubeUrl = (url: string): boolean => url.includes('youtu.be') || url.includes('youtube');
 
 const Video = ({
   url,
@@ -108,7 +143,16 @@ const Video = ({
       });
     }
     logEvent(`${eventPrefix}_VIDEO_STARTED`, { ...eventData, video_duration: videoDuration });
-  }, [pathname, createEventLog, title, url, eventPrefix, eventData, videoDuration, setVideoStarted]);
+  }, [
+    pathname,
+    createEventLog,
+    title,
+    url,
+    eventPrefix,
+    eventData,
+    videoDuration,
+    setVideoStarted,
+  ]);
 
   const videoEnded = useCallback(() => {
     if (videoCompleted) return;
@@ -172,38 +216,16 @@ const Video = ({
         {!showPlayer && thumbnailUrl ? (
           <Box
             onClick={handlePlayClick}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handlePlayClick())}
+            onKeyDown={(e) =>
+              (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handlePlayClick())
+            }
             role="button"
             tabIndex={0}
             aria-label={title ? `Play video: ${title}` : 'Play video'}
-            sx={{
-              ...videoStyle,
-              width: '100%',
-              height: '100%',
-              backgroundImage: `url(${thumbnailUrl})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            sx={{ ...videoThumbnailStyle, backgroundImage: `url(${thumbnailUrl})` }}
           >
-            <Box
-              sx={{
-                width: 68,
-                height: 68,
-                borderRadius: '50%',
-                backgroundColor: 'primary.main',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-                transition: 'transform 0.2s',
-                '&:hover': { transform: 'scale(1.1)' },
-              }}
-            >
-              <PlayArrowIcon sx={{ fontSize: 40, color: 'primary.contrastText', ml: '4px' }} />
+            <Box sx={videoThumbnailButtonStyle}>
+              <PlayArrowIcon sx={{ fontSize: 40, color: 'primary.dark' }} />
             </Box>
           </Box>
         ) : (

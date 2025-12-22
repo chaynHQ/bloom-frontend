@@ -92,10 +92,7 @@ const frameSrcUrls = [
   'https://vercel.live',
   'https://*.firebaseapp.com',
 ];
-const mediaSrcUrls = [
-  'https://*.storyblok.com',
-  'https://a.storyblok.com',
-];
+const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
 const formActionUrls = ['self'];
