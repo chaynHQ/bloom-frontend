@@ -10,10 +10,12 @@ export default defineConfig({
   responseTimeout: 10000,
   env: process.env, // Uses project environment variables set in .env
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config);
+      // Code coverage - only active when CYPRESS_COVERAGE=true
+      if (process.env.CYPRESS_COVERAGE === 'true') {
+        require('@cypress/code-coverage/task')(on, config);
+      }
+
       return config;
     },
     specPattern: ['cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}'],

@@ -1,6 +1,8 @@
 import Rollbar from 'rollbar';
 import { ENVIRONMENT } from './constants/common';
 
+const isCypressTest = typeof window !== 'undefined' && !!(window as any).Cypress;
+
 const baseConfig = {
   captureUncaught: true,
   captureUnhandledRejections: true,
@@ -20,6 +22,7 @@ const baseConfig = {
 
 export const clientConfig = {
   accessToken: process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN,
+  enabled: !isCypressTest,
   ...baseConfig,
 };
 
