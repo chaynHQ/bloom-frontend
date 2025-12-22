@@ -10,6 +10,7 @@ const {
   imgSrcUrls,
   connectSrcUrls,
   frameSrcUrls,
+  mediaSrcUrls,
 } = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
@@ -126,6 +127,7 @@ module.exports = withBundleAnalyzer(
                   style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
                   font-src 'self' ${fontSrcUrls.join(' ')};
                   img-src 'self' data: ${imgSrcUrls.join(' ')};
+                  media-src 'self' ${mediaSrcUrls.join(' ')};
                   connect-src 'self' ${connectSrcUrls.join(' ')};
                   frame-src 'self' ${frameSrcUrls.join(' ')};
                   object-src 'none';
@@ -156,7 +158,7 @@ module.exports = withBundleAnalyzer(
               {
                 key: 'Permissions-Policy',
                 value:
-                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=()',
+                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
               },
               {
                 key: 'Cross-Origin-Opener-Policy',

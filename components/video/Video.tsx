@@ -3,17 +3,18 @@
 import { useCreateEventLogMutation } from '@/lib/api';
 import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import logEvent from '@/lib/utils/logEvent';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction, SyntheticEvent, useRef, useState } from 'react';
-import { Config } from 'react-player/types';
-// See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
+import { Dispatch, SetStateAction, SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react';
+import type { Config } from 'react-player/types';
+
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 export const videoContainerStyle = {
   position: 'relative',
-  paddingTop: '56.25%',
+  paddingTop: '56.25%', // 16:9 aspect ratio
 } as const;
 
 export const videoStyle = {
@@ -34,139 +35,196 @@ interface VideoProps {
   title?: string;
 }
 
-const Video = (props: VideoProps) => {
-  const {
-    url,
-    autoplay = false,
-    eventData,
-    eventPrefix,
-    containerStyles,
-    setVideoStarted,
-    setVideoFinished,
-    lightMode = true,
-    title,
-  } = props;
+// Extract video ID from various YouTube URL formats
+const getYouTubeVideoId = (url: string): string | null => {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname === 'youtu.be') {
+      return parsed.pathname.slice(1);
+    }
+    if (parsed.hostname.includes('youtube.com') || parsed.hostname.includes('youtube-nocookie.com')) {
+      return parsed.searchParams.get('v');
+    }
+  } catch {
+    // Invalid URL
+  }
+  return null;
+};
+
+// Convert YouTube URLs to privacy-enhanced youtube-nocookie.com domain
+const getPrivacyEnhancedUrl = (url: string): string => {
+  try {
+    const parsed = new URL(url);
+    const youtubeHostnames = ['youtube.com', 'www.youtube.com', 'm.youtube.com'];
+
+    if (youtubeHostnames.includes(parsed.hostname)) {
+      return `${parsed.protocol}//www.youtube-nocookie.com${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+    if (parsed.hostname === 'youtu.be') {
+      const videoId = parsed.pathname.slice(1);
+      return videoId ? `https://www.youtube-nocookie.com/watch?v=${videoId}` : url;
+    }
+  } catch {
+    // Invalid URL
+  }
+  return url;
+};
+
+const isYouTubeUrl = (url: string): boolean =>
+  url.includes('youtu.be') || url.includes('youtube');
+
+const Video = ({
+  url,
+  eventData,
+  eventPrefix,
+  containerStyles,
+  setVideoStarted,
+  setVideoFinished,
+  lightMode = true,
+  title,
+}: VideoProps) => {
   const pathname = usePathname();
   const [createEventLog] = useCreateEventLogMutation();
-
-  const [videoDuration, setVideoDuration] = useState<number>(0);
-  const [videoCompleted, setVideoCompleted] = useState<boolean>(false);
-  const [videoTimePlayed, setVideoTimePlayed] = useState<number>(0);
-
   const player = useRef<HTMLVideoElement>(null);
-  const videoStarted = () => {
-    setVideoStarted && setVideoStarted(true);
+
+  const [videoDuration, setVideoDuration] = useState(0);
+  const [videoCompleted, setVideoCompleted] = useState(false);
+  const [videoTimePlayed, setVideoTimePlayed] = useState(0);
+  const [showPlayer, setShowPlayer] = useState(!lightMode);
+
+  const debouncedSetVideoTimePlayed = useMemo(
+    () => debounce((time: number) => setVideoTimePlayed(time), 300),
+    [],
+  );
+
+  const handlePlayClick = useCallback(() => setShowPlayer(true), []);
+
+  const videoStarted = useCallback(() => {
+    setVideoStarted?.(true);
     if (pathname.includes('grounding')) {
       createEventLog({
         event: EVENT_LOG_NAME.GROUNDING_EXERCISE_STARTED,
         metadata: { title: title || url },
       });
     }
-    if (player.current) {
-      logEvent(`${eventPrefix}_VIDEO_STARTED`, { ...eventData, video_duration: videoDuration });
-    }
-  };
+    logEvent(`${eventPrefix}_VIDEO_STARTED`, { ...eventData, video_duration: videoDuration });
+  }, [pathname, createEventLog, title, url, eventPrefix, eventData, videoDuration, setVideoStarted]);
 
-  const videoEnded = () => {
-    if (!!videoCompleted) return;
-
-    setVideoFinished && setVideoFinished(true);
-
-    if (player.current) {
-      logEvent(`${eventPrefix}_VIDEO_FINISHED`, {
-        ...eventData,
-        video_duration: videoDuration,
-      });
-    }
+  const videoEnded = useCallback(() => {
+    if (videoCompleted) return;
+    setVideoFinished?.(true);
+    logEvent(`${eventPrefix}_VIDEO_FINISHED`, { ...eventData, video_duration: videoDuration });
     setVideoCompleted(true);
-  };
+  }, [videoCompleted, setVideoFinished, eventPrefix, eventData, videoDuration]);
 
-  const videoPausedOrPlayed = (played: boolean) => {
-    if (player.current) {
+  const videoPausedOrPlayed = useCallback(
+    (played: boolean) => {
       const playedPercentage = Math.round((videoTimePlayed / videoDuration) * 100);
-
       logEvent(played ? `${eventPrefix}_VIDEO_PLAYED` : `${eventPrefix}_VIDEO_PAUSED`, {
         ...eventData,
         video_duration: videoDuration,
         video_current_time: videoTimePlayed,
         video_current_percentage: playedPercentage,
       });
-
       if (!played && playedPercentage > 95) {
         videoEnded();
       }
-    }
-  };
-  const handleTimeUpdate = debounce((event: SyntheticEvent<HTMLMediaElement>) => {
-    setVideoTimePlayed(event.currentTarget.currentTime);
-  }, 300);
+    },
+    [videoTimePlayed, videoDuration, eventPrefix, eventData, videoEnded],
+  );
 
-  const containerStyle = {
-    ...containerStyles,
-    maxWidth: 514, // <515px prevents the "Watch on youtube" button
-  } as const;
-
-  // Convert YouTube URLs to privacy-enhanced youtube-nocookie.com domain
-  const getPrivacyEnhancedUrl = (url: string): string => {
-    try {
-      const parsed = new URL(url);
-      // Handle standard YouTube URLs by exact host match
-      const youtubeHostnames = ['youtube.com', 'www.youtube.com', 'm.youtube.com'];
-      const nocookieHostnames = ['youtube-nocookie.com', 'www.youtube-nocookie.com'];
-      if (
-        youtubeHostnames.includes(parsed.hostname) &&
-        !nocookieHostnames.includes(parsed.hostname)
-      ) {
-        // Replace the host with youtube-nocookie.com, preserving protocol and path
-        return `${parsed.protocol}//www.youtube-nocookie.com${parsed.pathname}${parsed.search}${parsed.hash}`;
+  const handleTimeUpdate = useCallback(
+    (event: SyntheticEvent<HTMLMediaElement>) => {
+      const currentTime = event.currentTarget?.currentTime;
+      if (typeof currentTime === 'number') {
+        debouncedSetVideoTimePlayed(currentTime);
       }
-      // Handle youtu.be short URLs
-      if (parsed.hostname === 'youtu.be') {
-        const videoId = parsed.pathname.slice(1); // remove leading slash
-        if (videoId) {
-          return `https://www.youtube-nocookie.com/watch?v=${videoId}`;
-        }
-      }
-      return url;
-    } catch {
-      // If URL parsing fails, return the original string
-      return url;
-    }
-  };
+    },
+    [debouncedSetVideoTimePlayed],
+  );
 
-  const getVideoConfig = (url: string): Config | undefined => {
-    return url.indexOf('youtu.be') > -1 || url.indexOf('youtube') > -1
-      ? {
-          youtube: {
-            rel: 0, // don't show related videos
-          },
-        }
-      : undefined;
-  };
+  const handleDurationChange = useCallback((event: SyntheticEvent<HTMLVideoElement>) => {
+    const duration = event.currentTarget?.duration;
+    if (typeof duration === 'number' && !isNaN(duration)) {
+      setVideoDuration(duration);
+    }
+  }, []);
 
   const videoSrc = getPrivacyEnhancedUrl(url);
-  const videoConfig = getVideoConfig(url);
+  const videoId = getYouTubeVideoId(url);
+  const thumbnailUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
+
+  const videoConfig: Config | undefined = isYouTubeUrl(url)
+    ? {
+        youtube: {
+          autoplay: 1,
+          rel: 0, // No related videos at end
+          modestbranding: 1, // Minimal YouTube branding
+        } as Config['youtube'],
+      }
+    : undefined;
+
+  const containerStyle = { ...containerStyles, maxWidth: 514 } as const;
 
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
-        <ReactPlayer
-          ref={player}
-          light={lightMode}
-          autoPlay={autoplay}
-          onDurationChange={(event) => setVideoDuration(event.currentTarget.duration)}
-          onStart={videoStarted}
-          onEnded={videoEnded}
-          onPause={() => videoPausedOrPlayed(false)}
-          onPlay={() => videoPausedOrPlayed(true)}
-          onTimeUpdate={handleTimeUpdate}
-          style={videoStyle}
-          width="100%"
-          height="100%"
-          src={videoSrc}
-          controls
-          config={videoConfig}
-        />
+        {!showPlayer && thumbnailUrl ? (
+          <Box
+            onClick={handlePlayClick}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handlePlayClick())}
+            role="button"
+            tabIndex={0}
+            aria-label={title ? `Play video: ${title}` : 'Play video'}
+            sx={{
+              ...videoStyle,
+              width: '100%',
+              height: '100%',
+              backgroundImage: `url(${thumbnailUrl})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                width: 68,
+                height: 68,
+                borderRadius: '50%',
+                backgroundColor: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                transition: 'transform 0.2s',
+                '&:hover': { transform: 'scale(1.1)' },
+              }}
+            >
+              <PlayArrowIcon sx={{ fontSize: 40, color: 'primary.contrastText', ml: '4px' }} />
+            </Box>
+          </Box>
+        ) : (
+          <ReactPlayer
+            ref={player}
+            wrapper="div"
+            autoPlay
+            controls
+            src={videoSrc}
+            config={videoConfig}
+            style={videoStyle}
+            width="100%"
+            height="100%"
+            onDurationChange={handleDurationChange}
+            onStart={videoStarted}
+            onEnded={videoEnded}
+            onPause={() => videoPausedOrPlayed(false)}
+            onPlay={() => videoPausedOrPlayed(true)}
+            onTimeUpdate={handleTimeUpdate}
+          />
+        )}
       </Box>
     </Box>
   );
