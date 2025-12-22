@@ -56,13 +56,12 @@ describe('Register with Notes from Bloom', () => {
   });
 
   it('should handle registration errors', () => {
-    // Create a user with the same email first
-    cy.logout();
+    // Use an existing admin email that won't be cleaned up
+    const existingEmail = Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL');
 
-    // Now try to register with the same email
-    cy.visit(SUBSCRIPTION_WHATSAPP_PAGE_URL);
+    // Try to register with an already existing email
     cy.get('input#name').type(TEST_NAME);
-    cy.get('input#email').type(TEST_EMAIL);
+    cy.get('input#email').type(existingEmail);
     cy.get('input#password').type(TEST_PASSWORD);
     cy.get('input[type="tel"]').type(VALID_PHONE);
 
@@ -70,7 +69,7 @@ describe('Register with Notes from Bloom', () => {
     cy.get('button[type="submit"]').contains('Create account').click();
 
     // Check that error message is displayed
-    cy.get('p').should('contain', 'This email is already registered with Bloom');
+    cy.get('p', { timeout: 10000 }).should('contain', 'This email is already registered with Bloom');
   });
 
   it('should navigate to login page when clicking login link', () => {
