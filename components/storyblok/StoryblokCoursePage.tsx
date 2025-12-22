@@ -7,6 +7,7 @@ import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -14,7 +15,6 @@ import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -65,10 +65,12 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   } = props;
 
   const t = useTranslations('Courses');
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
   const courses = useTypedSelector((state) => state.courses);
 
   useGetUserCoursesQuery(undefined, {
@@ -78,7 +80,6 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   // Derive user access from partner settings
   const userAccess = useMemo(() => {
     const storyPartners = included_for_partners;
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
     return hasAccessToPage(
       isLoggedIn,
       true,
@@ -87,7 +88,7 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
       partnerAdmin,
       referralPartner,
     );
-  }, [partnerAccesses, partnerAdmin, included_for_partners, entryPartnerReferral, isLoggedIn]);
+  }, [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isLoggedIn]);
 
   // Derive course progress from courses state
   const courseProgress = useMemo(

@@ -4,6 +4,7 @@ import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -11,7 +12,6 @@ import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -58,23 +58,22 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     included_for_partners,
   } = props;
   const locale = useLocale();
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const getContentPartners = useMemo(() => {
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
     return userHasAccessToPartnerContent(
       partnerAdmin?.partner,
       partnerAccesses,
       referralPartner,
       userId,
     );
-  }, [entryPartnerReferral, partnerAccesses, partnerAdmin, userId]);
+  }, [referralPartner, partnerAccesses, partnerAdmin, userId]);
 
   const userAccess = useMemo(() => {
     return (
