@@ -72,13 +72,20 @@ interface VideoProps {
 const getYouTubeVideoId = (url: string): string | null => {
   try {
     const parsed = new URL(url);
+    const allowedYouTubeHostnames = [
+      'youtu.be',
+      'youtube.com',
+      'www.youtube.com',
+      'm.youtube.com',
+      'youtube-nocookie.com',
+      'www.youtube-nocookie.com',
+    ];
+
     if (parsed.hostname === 'youtu.be') {
       return parsed.pathname.slice(1);
     }
-    if (
-      parsed.hostname.includes('youtube.com') ||
-      parsed.hostname.includes('youtube-nocookie.com')
-    ) {
+
+    if (allowedYouTubeHostnames.includes(parsed.hostname)) {
       return parsed.searchParams.get('v');
     }
   } catch {
