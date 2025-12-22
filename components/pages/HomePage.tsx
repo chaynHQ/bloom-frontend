@@ -22,6 +22,7 @@ export default function HomePage({ story }: Props) {
   const t = useTranslations('Welcome');
 
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
 
   const registerPath = useMemo(() => {
@@ -66,7 +67,7 @@ export default function HomePage({ story }: Props) {
             <StoryblokPageSection
               key={`page_section_${index}`}
               {...section}
-              isLoggedIn={!!userId}
+              isLoggedIn={!authStateLoading && !!userId}
             />
           );
         })}

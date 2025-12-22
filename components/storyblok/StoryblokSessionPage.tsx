@@ -85,7 +85,9 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
   const t = useTranslations('Courses');
   const locale = useLocale();
 
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
   useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });

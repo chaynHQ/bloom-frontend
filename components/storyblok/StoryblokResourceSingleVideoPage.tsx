@@ -76,7 +76,8 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const userId = useTypedSelector((state) => state.user.id);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const getContentPartners = useMemo(() => {
     const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;

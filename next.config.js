@@ -127,7 +127,7 @@ module.exports = withBundleAnalyzer(
       async headers() {
         return [
           {
-            source: '/:path',
+            source: '/(.*)',
             headers: [
               {
                 key: 'Content-Security-Policy',

@@ -68,7 +68,9 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
   const courses = useTypedSelector((state) => state.courses);
 
   useGetUserCoursesQuery(undefined, {

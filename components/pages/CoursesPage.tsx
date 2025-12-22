@@ -52,7 +52,8 @@ interface Props {
 }
 export default function CoursesPage({ courseStories, conversations, shorts, somatics }: Props) {
   const userId = useTypedSelector((state) => state.user.id);
-  const isLoggedIn = Boolean(userId);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
@@ -194,7 +195,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
-        cta={!userId ? <ScrollToSignUpButton /> : undefined}
+        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
       <Container sx={containerStyle}>
         {loadedCourses === null ? (
@@ -206,7 +207,7 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
         ) : (
           <Box sx={courseCardsContainer}>
             {loadedCourses?.map((course, index) => {
-              const courseProgress = userId ? getCourseProgress(course.uuid) : null;
+              const courseProgress = isLoggedIn ? getCourseProgress(course.uuid) : null;
               return (
                 <Box key={`course_${index}`} sx={courseCardContainer}>
                   <CourseCard key={course.id} course={course} courseProgress={courseProgress} />
@@ -242,8 +243,8 @@ export default function CoursesPage({ courseStories, conversations, shorts, soma
           <ResourceCarousel title="shorts-carousel" resources={loadedShorts} />
         </Container>
       )}
-      {!userId && <SignUpBanner />}
-      {!!userId && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
+      {!isLoggedIn && <SignUpBanner />}
+      {isLoggedIn && !!showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
       <NotesFromBloomPromo />
     </Box>
   );
