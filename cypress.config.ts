@@ -64,8 +64,6 @@ export default defineConfig({
   env: process.env, // Uses project environment variables set in .env
   e2e: {
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config);
-
       // Run cleanup after all tests complete (runs even if tests fail)
       on('after:run', async () => {
         console.log('Running post-test cleanup...');
