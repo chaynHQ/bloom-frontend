@@ -88,6 +88,7 @@ const frameSrcUrls = [
   'https://*.crisp.chat',
   'https://*.simplybook.it',
   'https://*.youtube.com',
+  'https://www.youtube-nocookie.com/',
   'https://vercel.live',
   'https://*.firebaseapp.com',
 ];

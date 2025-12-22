@@ -6,6 +6,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, Card, CardActionArea, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { getImageSizes } from '@/lib/utils/imageSizes';
 
 const cardStyle = {
   width: { xs: '100%' },
@@ -75,10 +76,13 @@ export const ResourceCard = (props: ResourceCardProps) => {
           <Box height="170px" position="relative" width="100%" overflow="hidden">
             <Image
               src={image?.filename || '/bloom_shorts.png'}
-              objectFit="cover"
-              objectPosition="top"
               fill
+              sizes={getImageSizes(360)}
               alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'top',
+              }}
             />
             <Box className="overlay" sx={overlay}>
               <IconButton

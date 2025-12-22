@@ -8,9 +8,10 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Button, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const DesktopPwaBanner = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const { bannerState, declineInstallation, install, getPwaMetaData } = usePWA();
   const t = useTranslations('Shared.pwaBanner');
   const theme = useTheme();
@@ -27,13 +28,17 @@ export const DesktopPwaBanner = () => {
   }, [eventUserData, getPwaMetaData]);
 
   useEffect(() => {
-    if (!isSmallScreen) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && !isSmallScreen) {
       logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSmallScreen]);
+  }, [isMounted, isSmallScreen]);
 
-  if (isSmallScreen || bannerState === 'Hidden') return null;
+  if (!isMounted || isSmallScreen || bannerState === 'Hidden') return null;
 
   const bannerStyle = {
     position: 'fixed',
