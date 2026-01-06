@@ -59,7 +59,7 @@ const imgSrcUrls = [
   'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
-  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
+  'https://cdnjs.cloudflare.com/',
 ];
 const connectSrcUrls = [
   API_URL,
@@ -83,7 +83,7 @@ const connectSrcUrls = [
   'https://www.youtube.com',
   'https://i.ytimg.com',
   'https://vercel.live',
-  'https://cdnjs.cloudflare.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
