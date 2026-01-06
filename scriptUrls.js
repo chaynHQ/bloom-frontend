@@ -33,6 +33,8 @@ const scriptSrcUrls = [
   'wss://client.relay.crisp.chat',
   'https://apis.google.com',
   'https://va.vercel-scripts.com/',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
 ];
 
 const childSrcUrls = ['blob:'];
@@ -57,7 +59,7 @@ const imgSrcUrls = [
   'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
-  'https://cdnjs.cloudflare.com',
+  'https://cdnjs.cloudflare.com/',
 ];
 const connectSrcUrls = [
   API_URL,
@@ -81,6 +83,7 @@ const connectSrcUrls = [
   'https://www.youtube.com',
   'https://i.ytimg.com',
   'https://vercel.live',
+  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
@@ -91,6 +94,8 @@ const frameSrcUrls = [
   'https://www.youtube-nocookie.com/',
   'https://vercel.live',
   'https://*.firebaseapp.com',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
 ];
 const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
