@@ -95,6 +95,8 @@ const frameSrcUrls = [
   'https://www.youtube-nocookie.com/',
   'https://vercel.live',
   'https://*.firebaseapp.com',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
 ];
 const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
