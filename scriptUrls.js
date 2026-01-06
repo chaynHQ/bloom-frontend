@@ -84,6 +84,8 @@ const connectSrcUrls = [
   'https://i.ytimg.com',
   'https://vercel.live',
   'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
+  'https://www.google.com/recaptcha/',
+  'https://www.gstatic.com/recaptcha/',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
