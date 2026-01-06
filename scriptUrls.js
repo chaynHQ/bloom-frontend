@@ -83,7 +83,7 @@ const connectSrcUrls = [
   'https://www.youtube.com',
   'https://i.ytimg.com',
   'https://vercel.live',
-  'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
+  'https://cdnjs.cloudflare.com',
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
