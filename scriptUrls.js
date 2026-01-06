@@ -84,7 +84,6 @@ const connectSrcUrls = [
   'https://i.ytimg.com',
   'https://vercel.live',
   'https://cdnjs.cloudflare.com/ajax/libs/twemoji/',
-  process.env.NEXT_PUBLIC_API_URL,
 ];
 const frameSrcUrls = [
   'https://*.hotjar.com',
