@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import {
   Dispatch,
+  ReactElement,
   SetStateAction,
   SyntheticEvent,
   useCallback,
@@ -21,6 +22,8 @@ import type { Config } from 'react-player/types';
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 export const videoContainerStyle = {
+  borderRadius: 1,
+  overflow: 'hidden',
   position: 'relative',
   paddingTop: '56.25%', // 16:9 aspect ratio
 } as const;
@@ -31,19 +34,7 @@ export const videoStyle = {
   left: 0,
 } as const;
 
-const videoThumbnailStyle = {
-  ...videoStyle,
-  width: '100%',
-  height: '100%',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-} as const;
-
-const videoThumbnailButtonStyle = {
+const playIconStyle = {
   width: 68,
   height: 68,
   borderRadius: '50%',
@@ -58,13 +49,11 @@ const videoThumbnailButtonStyle = {
 
 interface VideoProps {
   url: string;
-  autoplay?: boolean;
   eventData: { [key: string]: any };
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
   setVideoStarted?: Dispatch<SetStateAction<boolean>>;
   setVideoFinished?: Dispatch<SetStateAction<boolean>>;
-  lightMode?: boolean;
   title?: string;
 }
 
@@ -122,7 +111,6 @@ const Video = ({
   containerStyles,
   setVideoStarted,
   setVideoFinished,
-  lightMode = true,
   title,
 }: VideoProps) => {
   const pathname = usePathname();
@@ -132,14 +120,11 @@ const Video = ({
   const [videoDuration, setVideoDuration] = useState(0);
   const [videoCompleted, setVideoCompleted] = useState(false);
   const [videoTimePlayed, setVideoTimePlayed] = useState(0);
-  const [showPlayer, setShowPlayer] = useState(!lightMode);
 
   const debouncedSetVideoTimePlayed = useMemo(
     () => debounce((time: number) => setVideoTimePlayed(time), 300),
     [],
   );
-
-  const handlePlayClick = useCallback(() => setShowPlayer(true), []);
 
   const videoStarted = useCallback(() => {
     setVideoStarted?.(true);
@@ -203,57 +188,54 @@ const Video = ({
 
   const videoSrc = getPrivacyEnhancedUrl(url);
   const videoId = getYouTubeVideoId(url);
-  const thumbnailUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
+  const thumbnailUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : true;
 
   const videoConfig: Config | undefined = isYouTubeUrl(url)
     ? {
         youtube: {
-          autoplay: 1,
           rel: 0, // No related videos at end
           modestbranding: 1, // Minimal YouTube branding
         } as Config['youtube'],
       }
-    : undefined;
+    : ({
+        file: {
+          attributes: {
+            preload: 'none', // Prevent preloading to save user data
+          },
+        },
+      } as Config);
 
   const containerStyle = { ...containerStyles, maxWidth: 514 } as const;
+
+  // Custom play icon for light mode
+  const customPlayIcon: ReactElement = (
+    <Box sx={playIconStyle}>
+      <PlayArrowIcon sx={{ fontSize: 40, color: 'primary.dark' }} />
+    </Box>
+  );
 
   return (
     <Box sx={containerStyle}>
       <Box sx={videoContainerStyle}>
-        {!showPlayer && thumbnailUrl ? (
-          <Box
-            onClick={handlePlayClick}
-            onKeyDown={(e) =>
-              (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handlePlayClick())
-            }
-            role="button"
-            tabIndex={0}
-            aria-label={title ? `Play video: ${title}` : 'Play video'}
-            sx={{ ...videoThumbnailStyle, backgroundImage: `url(${thumbnailUrl})` }}
-          >
-            <Box sx={videoThumbnailButtonStyle}>
-              <PlayArrowIcon sx={{ fontSize: 40, color: 'primary.dark' }} />
-            </Box>
-          </Box>
-        ) : (
-          <ReactPlayer
-            ref={player}
-            wrapper="div"
-            autoPlay
-            controls
-            src={videoSrc}
-            config={videoConfig}
-            style={videoStyle}
-            width="100%"
-            height="100%"
-            onDurationChange={handleDurationChange}
-            onStart={videoStarted}
-            onEnded={videoEnded}
-            onPause={() => videoPausedOrPlayed(false)}
-            onPlay={() => videoPausedOrPlayed(true)}
-            onTimeUpdate={handleTimeUpdate}
-          />
-        )}
+        <ReactPlayer
+          ref={player}
+          light={thumbnailUrl} // Show thumbnail and prevent preloading until clicked
+          playIcon={customPlayIcon}
+          autoPlay
+          wrapper="div"
+          controls
+          src={videoSrc}
+          config={videoConfig}
+          style={videoStyle}
+          width="100%"
+          height="100%"
+          onDurationChange={handleDurationChange}
+          onStart={videoStarted}
+          onEnded={videoEnded}
+          onPause={() => videoPausedOrPlayed(false)}
+          onPlay={() => videoPausedOrPlayed(true)}
+          onTimeUpdate={handleTimeUpdate}
+        />
       </Box>
     </Box>
   );

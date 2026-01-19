@@ -118,8 +118,6 @@ export const ResourceShortVideo = (props: ResourceShortVideoProps) => {
           setVideoFinished={videoFinished}
           eventData={eventData}
           eventPrefix="RESOURCE_SHORT"
-          autoplay={true}
-          lightMode={true}
         />
         <Typography sx={{ my: '1rem !important' }}>
           {t.rich('videoTranscriptLink', {
