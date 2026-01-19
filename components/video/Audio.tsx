@@ -111,7 +111,6 @@ const Audio = (props: AudioProps) => {
       height="50px"
       src={url}
       controls
-      autoPlay
       config={audioConfig}
     />
   );

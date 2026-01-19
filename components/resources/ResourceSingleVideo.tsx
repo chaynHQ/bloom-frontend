@@ -121,7 +121,6 @@ export const ResourceSingleVideo = (props: ResourceSingleVideoProps) => {
           setVideoFinished={videoFinished}
           eventData={eventData}
           eventPrefix="RESOURCE_SINGLE_VIDEO"
-          autoplay={true}
           lightMode={true}
         />
         <Typography sx={{ my: '1rem !important' }}>

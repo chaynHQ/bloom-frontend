@@ -58,7 +58,6 @@ const videoThumbnailButtonStyle = {
 
 interface VideoProps {
   url: string;
-  autoplay?: boolean;
   eventData: { [key: string]: any };
   eventPrefix: string;
   containerStyles?: SxProps<Theme>;
@@ -244,7 +243,6 @@ const Video = ({
           <ReactPlayer
             ref={player}
             wrapper="div"
-            autoPlay
             controls
             src={videoSrc}
             config={videoConfig}
