@@ -208,12 +208,17 @@ const Video = ({
   const videoConfig: Config | undefined = isYouTubeUrl(url)
     ? {
         youtube: {
-          autoplay: 1,
           rel: 0, // No related videos at end
           modestbranding: 1, // Minimal YouTube branding
         } as Config['youtube'],
       }
-    : undefined;
+    : ({
+        file: {
+          attributes: {
+            preload: 'none', // Prevent preloading to save user data
+          },
+        },
+      } as Config);
 
   const containerStyle = { ...containerStyles, maxWidth: 514 } as const;
 

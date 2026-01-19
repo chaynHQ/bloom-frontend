@@ -12,6 +12,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import type { Config } from 'react-player/types';
 // See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
@@ -89,6 +90,14 @@ const Audio = (props: AudioProps) => {
     }
   }, []);
 
+  const audioConfig: Config = {
+    file: {
+      attributes: {
+        preload: 'none', // Prevent preloading to save user data
+      },
+    },
+  } as Config;
+
   return (
     <ReactPlayer
       ref={player}
@@ -102,6 +111,8 @@ const Audio = (props: AudioProps) => {
       height="50px"
       src={url}
       controls
+      autoPlay
+      config={audioConfig}
     />
   );
 };
