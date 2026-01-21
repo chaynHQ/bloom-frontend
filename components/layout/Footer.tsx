@@ -11,7 +11,7 @@ import tiktokLogo from '@/public/tiktok.svg';
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -231,7 +231,7 @@ const Footer = () => {
                         target="_blank"
                         onClick={() => logEvent(socialLinkEvent, { social_account: 'Twitter' })}
                       >
-                        <TwitterIcon />
+                        <XIcon />
                       </IconButton>
                     )}
                     {partner.youtube && (
