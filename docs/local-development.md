@@ -127,6 +127,6 @@ In addition to unit and integration testing, contributors should ensure their ha
 
 Create new branches from the `develop` base branch. There is no need to run the build command before pushing changes to GitHub, simply push and create a pull request for the new branch. GitHub Actions will run build and linting tasks automatically. Rebase and merge feature/bug branches into `develop`.
 
-This will trigger an automatic deployment to the staging app by Heroku.
+This will trigger an automatic deployment to the staging app by Vercel.
 
-When changes have been tested in staging, merge `develop` into `main`. This will trigger an automatic deployment to the production app by Heroku.
+When changes have been tested in staging, merge `develop` into `main`. This will trigger an automatic deployment to the production app by Vercel.
