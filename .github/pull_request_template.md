@@ -13,10 +13,12 @@
 - Run Cypress tests if required for contribution.
 - Some tests may require multiple runs before success.
 - Some test failures may not be due to your contribution and can be ignored. We are always upgrading testing performance.
+<!-->
 
-<!--- PR CHECKLIST: —>
+### PR CHECKLIST:
 Before submitting, check that you have completed the following tasks:
 - [ ] Answered the questions above.
 - [ ] Enabled "Allow edits and access to secrets by maintainers" on this PR.
 - [ ] If applicable, include images in the description.
-After submitting, please be available for discussion. Thank you!
+
+<!-- After submitting, please be available for discussion. Thank you! -->
