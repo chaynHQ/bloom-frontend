@@ -7,6 +7,7 @@ import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import TherapyBookings from '@/components/therapy/TherapyBookings';
 import { THERAPY_BOOKING_OPENED, THERAPY_BOOKING_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import useStoryblokWithPartnerName from '@/lib/hooks/useStoryblokWithPartnerName';
 import { getSimplybookWidgetConfig } from '@/lib/simplybook';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import logEvent from '@/lib/utils/logEvent';
@@ -136,33 +137,6 @@ export default function BookTherapyPage({ story }: Props) {
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
 
-  function replacePartnerName(partnerName: string) {
-    const accordionDetailsElements = document.querySelectorAll('.MuiAccordionDetails-root');
-    const introductionElement: HTMLParagraphElement | null = document.querySelector('h1 + p');
-
-    accordionDetailsElements.forEach((detailsElement) => {
-      const paragraphElements = detailsElement.querySelectorAll('p');
-
-      const allElementsToProcess = [...paragraphElements];
-      if (introductionElement) {
-        allElementsToProcess.push(introductionElement);
-      }
-
-      allElementsToProcess.forEach((element) => {
-        if (!element) return;
-
-        // Use innerHTML to preserve embedded HTML elements
-        const currentHtml = element.innerHTML;
-
-        // Replace all instances of '{partnerName}' with the provided partnerName
-        const escapedPartnerName = partnerName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        const newHtml = currentHtml.replace(/\{partnerName\}/g, escapedPartnerName);
-
-        element.innerHTML = newHtml;
-      });
-    });
-  }
-
   useEffect(() => {
     let currentPartnerAccess = partnerAccesses.find(
       (pa) => pa.featureTherapy === true && pa.therapySessionsRemaining > 0,
@@ -178,9 +152,8 @@ export default function BookTherapyPage({ story }: Props) {
 
     if (currentPartnerAccess?.partner.name) {
       setPartnerAccess(currentPartnerAccess);
-      replacePartnerName(currentPartnerAccess?.partner.name);
     }
-  }, [setPartnerAccess, partnerAccesses]);
+  }, [partnerAccesses]);
 
   useEffect(() => {
     logEvent(THERAPY_BOOKING_VIEWED);
@@ -281,15 +254,18 @@ export default function BookTherapyPage({ story }: Props) {
     };
   }, [isWidgetModalOpen, isScriptLoaded, user, rollbar, t]); // Added t to dependencies
 
-  if (!story) {
+  // Process story content to replace {partnerName} placeholders
+  const processedStory = useStoryblokWithPartnerName(story, partnerAccess?.partner.name);
+
+  if (!processedStory) {
     return <NoDataAvailable />;
   }
 
   const headerProps: HeaderProps = {
-    title: story.content.title,
-    introduction: story.content.description,
-    imageSrc: story.content.header_image.filename,
-    translatedImageAlt: story.content.header_image.alt,
+    title: processedStory.content.title,
+    introduction: processedStory.content.description,
+    imageSrc: processedStory.content.header_image.filename,
+    translatedImageAlt: processedStory.content.header_image.alt,
   };
 
   return (
@@ -332,8 +308,8 @@ export default function BookTherapyPage({ story }: Props) {
         )}{' '}
       </Container>
 
-      {story.content.page_sections?.length > 0 &&
-        story.content.page_sections.map((section: any, index: number) => (
+      {processedStory.content.page_sections?.length > 0 &&
+        processedStory.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!user.id} />
         ))}
 

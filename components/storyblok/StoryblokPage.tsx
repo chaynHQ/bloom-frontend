@@ -23,6 +23,8 @@ const StoryblokPage = (props: StoryblokPageProps) => {
   const { _uid, _editable, title, description, header_image, page_sections } = props;
 
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && !!userId;
   const pathname = usePathname();
 
   const headerProps = {
@@ -43,11 +45,11 @@ const StoryblokPage = (props: StoryblokPageProps) => {
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
-        cta={isPartiallyPublicPage && !userId ? <ScrollToSignUpButton /> : undefined}
+        cta={isPartiallyPublicPage && !isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
-      {!userId && isPartiallyPublicPage && <NotesFromBloomPromo />}
-      {!userId && isPartiallyPublicPage && <SignUpBanner />}
-      {userId &&
+      {!isLoggedIn && isPartiallyPublicPage && <NotesFromBloomPromo />}
+      {!isLoggedIn && isPartiallyPublicPage && <SignUpBanner />}
+      {isLoggedIn &&
         page_sections?.length > 0 &&
         page_sections.map((section: SbBlokData, index: number) => (
           <DynamicComponent key={`page_section_${index}`} blok={section} />

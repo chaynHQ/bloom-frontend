@@ -56,10 +56,11 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
 
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const userAccess = useMemo(() => {
     return (

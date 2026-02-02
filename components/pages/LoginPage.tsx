@@ -9,6 +9,7 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
+import { getImageSizes } from '@/lib/utils/imageSizes';
 import UserResearchBanner from '../banner/UserResearchBanner';
 
 const imageContainerStyle = {
@@ -96,6 +97,7 @@ export default function LoginPage() {
               src={headerProps.imageSrc}
               alt={headerProps.imageAlt}
               fill
+              sizes={getImageSizes(imageContainerStyle.width)}
               style={{
                 objectFit: 'contain',
               }}

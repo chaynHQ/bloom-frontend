@@ -30,7 +30,7 @@ describe('Videos Flow', () => {
     cy.get('button[type=submit]').click();
     cy.wait(2000); // wait to ensure user is redirected to the video
 
-    // User plays the short video
+    // User plays the short video by clicking the react-player preview
     cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
     cy.wait(2000); // wait to ensure user plays the video
 

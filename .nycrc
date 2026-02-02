@@ -1,7 +1,7 @@
 {
-  "extends": "@istanbuljs/nyc-config-babel",
+  "all": true,
+  "include": ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
+  "exclude": ["**/*.d.ts", "**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}"],
   "reporter": ["text-summary", "html"],
-  "include": ["pages/**/*.ts", "pages/**/*.tsx", "components/**/*.ts", "components/**/*.tsx"],
-  "instrument": true,
-  "all": true
+  "report-dir": "coverage"
 }

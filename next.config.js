@@ -10,6 +10,7 @@ const {
   imgSrcUrls,
   connectSrcUrls,
   frameSrcUrls,
+  mediaSrcUrls,
 } = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
@@ -28,19 +29,6 @@ module.exports = withBundleAnalyzer(
   withNextIntl(
     withPWA({
       reactStrictMode: true,
-      publicRuntimeConfig: {
-        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-        NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-        NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
-        NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
-        NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
-        NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: process.env.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN,
-        NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL: process.env.NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL,
-        NEXT_PUBLIC_CRISP_WEBSITE_ID: process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID,
-        NEXT_PUBLIC_HOTJAR_ID: process.env.NEXT_PUBLIC_HOTJAR_ID,
-        NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-        NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
-      },
       compiler: {
         emotion: true,
       },
@@ -127,7 +115,7 @@ module.exports = withBundleAnalyzer(
       async headers() {
         return [
           {
-            source: '/:path',
+            source: '/(.*)',
             headers: [
               {
                 key: 'Content-Security-Policy',
@@ -139,6 +127,7 @@ module.exports = withBundleAnalyzer(
                   style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
                   font-src 'self' ${fontSrcUrls.join(' ')};
                   img-src 'self' data: ${imgSrcUrls.join(' ')};
+                  media-src 'self' ${mediaSrcUrls.join(' ')};
                   connect-src 'self' ${connectSrcUrls.join(' ')};
                   frame-src 'self' ${frameSrcUrls.join(' ')};
                   object-src 'none';
@@ -169,7 +158,7 @@ module.exports = withBundleAnalyzer(
               {
                 key: 'Permissions-Policy',
                 value:
-                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=()',
+                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
               },
               {
                 key: 'Cross-Origin-Opener-Policy',

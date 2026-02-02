@@ -69,8 +69,11 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   useReferralPartner();
 
   const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
+
+  const isLoggedIn = !authStateLoading && !!userId;
 
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');
@@ -112,7 +115,7 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
   ]);
 
   const logPromoEvent = () => {
-    if (userId) {
+    if (isLoggedIn) {
       logEvent(generatePartnerPromoGoToCoursesEvent(partnerContent.name));
     } else {
       logEvent(generatePartnerPromoGetStartedEvent(partnerContent.name));
@@ -147,12 +150,12 @@ const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
           onClick={logPromoEvent}
           component={i18nLink}
           href={
-            userId
+            isLoggedIn
               ? '/courses'
               : `/auth/register?partner=${partnerContent.name.toLocaleLowerCase()}${codeParam && '&code=' + codeParam}`
           }
         >
-          {t(userId ? 'goToCourses' : 'getStarted')}
+          {t(isLoggedIn ? 'goToCourses' : 'getStarted')}
         </Button>
       </Container>
       {page_sections?.length > 0 &&

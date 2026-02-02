@@ -1,12 +1,12 @@
 'use client';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import filterResourcesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
@@ -24,11 +24,10 @@ const ResourceCarousel = ({
   resources = [],
 }: ResourceCarouselProps) => {
   const userId = useTypedSelector((state) => state.user.id);
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const locale = useLocale(); // Get the current locale
-  const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
+  const referralPartner = useCookieReferralPartner();
 
   const carouselStories = useMemo(() => {
     const userPartners = userHasAccessToPartnerContent(

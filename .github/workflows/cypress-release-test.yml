@@ -2,11 +2,15 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**, '*test*', 'upgrade-nextjs']
+    branches: [develop, dependabot/**, '*test*']
+
+# Cancel in-progress runs when a new run is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # vercel will redeploy the develop/staging app on creating a PR to main
-  # wait for new deployment to complete before running tests
+  # Wait for Vercel deployment to complete before running tests
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-24.04
@@ -21,14 +25,31 @@ jobs:
           max_timeout: 1000
           check_interval: 20
 
+  # Parallel test execution using matrix strategy
   cypress-run:
-    name: Cypress e2e tests
+    name: Cypress E2E Tests - ${{ matrix.group.name }}
     needs: wait-for-vercel-deployment
     runs-on: ubuntu-24.04
     permissions:
       contents: read
       checks: write
       deployments: read
+    strategy:
+      fail-fast: false # Don't cancel other jobs if one fails
+      matrix:
+        group:
+          - name: 'Auth flows'
+            spec: 'cypress/integration/auth/**/*.cy.tsx'
+          - name: 'User account flows'
+            spec: 'cypress/integration/user-accounts/**/*.cy.tsx'
+          - name: 'User content flows'
+            spec: 'cypress/integration/user-content/**/*.cy.tsx'
+          - name: 'Partner user flows'
+            spec: 'cypress/integration/partners/**/*.cy.tsx'
+          - name: 'Admin flows'
+            spec: 'cypress/integration/admin/**/*.cy.tsx'
+          - name: 'System flows'
+            spec: 'cypress/integration/system/**/*.cy.tsx'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -37,15 +58,32 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22.x'
-      - run: node -v
+          cache: 'yarn'
 
-      - name: Run cypress
+      # Cache Cypress binary to speed up installation (~500MB, saves 1-2 min per job)
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6.7.16
         with:
+          install: false # Already installed above
           browser: chrome
           config-file: cypress.config.ts
           headed: false
-          record: true # send results to cypress dashboard
+          record: true
+          parallel: true # Enable Cypress Dashboard parallelization
+          group: ${{ matrix.group.name }}
+          spec: ${{ matrix.group.spec }}
+          ci-build-id: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
@@ -75,12 +113,58 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run cypress after cleanup
+      # Upload artifacts only on failure to reduce log size
+      - name: Upload screenshots (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.group.name }}
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload videos (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos-${{ matrix.group.name }}
+          path: cypress/videos
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Separate job to catch any ungrouped tests
+  check-ungrouped:
+    name: Check for ungrouped tests
+    needs: wait-for-vercel-deployment
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for ungrouped test files
+        id: check
+        run: |
+          if ls cypress/integration/*.cy.{tsx,ts,jsx,js} 1> /dev/null 2>&1; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "⚠️  Found ungrouped tests - they should be organized into folders"
+            ls cypress/integration/*.cy.{tsx,ts,jsx,js} 2>/dev/null || true
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "✅ No ungrouped tests found"
+          fi
+
+      - name: Run ungrouped tests (if any)
+        if: steps.check.outputs.found == 'true'
         uses: cypress-io/github-action@v6.7.16
         with:
           browser: chrome
-          config-file: cypress-after.config.ts
+          config-file: cypress.config.ts
           headed: false
+          record: true
+          parallel: true
+          group: 'Ungrouped Tests'
+          spec: 'cypress/integration/*.cy.tsx'
+          ci-build-id: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
@@ -96,6 +180,16 @@ jobs:
           NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
+          CYPRESS_MAIL_SLURP_API_KEY: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
+          CYPRESS_INBOX_ID: ${{secrets.CYPRESS_INBOX_ID}}
           CYPRESS_SUPER_ADMIN_EMAIL: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
           CYPRESS_SUPER_ADMIN_PASSWORD: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BUMBLE_ADMIN_EMAIL}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BUMBLE_ADMIN_PASSWORD}}
+          CYPRESS_BADOO_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BADOO_ADMIN_EMAIL}}
+          CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BADOO_ADMIN_PASSWORD}}
+          CYPRESS_PUBLIC_EMAIL: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
+          CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
+          CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

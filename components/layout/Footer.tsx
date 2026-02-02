@@ -2,6 +2,7 @@
 
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
@@ -21,7 +22,6 @@ import { useMemo } from 'react';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
-import Cookies from 'js-cookie';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
@@ -94,9 +94,9 @@ const Footer = () => {
   const tS = useTranslations('Shared');
   const searchParams = useSearchParams();
 
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const referralPartner = useCookieReferralPartner();
 
   const partners = useMemo(() => {
     const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
@@ -122,14 +122,12 @@ const Footer = () => {
       addUniquePartner(partnersList, partner + '');
     }
 
-    const referralPartner = Cookies.get('referralPartner') || entryPartnerReferral;
-
     if (referralPartner) {
       addUniquePartner(partnersList, referralPartner);
     }
 
     return partnersList;
-  }, [partnerAccesses, searchParams, entryPartnerReferral, partnerAdmin]);
+  }, [partnerAccesses, searchParams, partnerAdmin, referralPartner]);
 
   return (
     <>

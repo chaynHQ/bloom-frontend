@@ -124,7 +124,7 @@ const RegisterNotesForm = () => {
   };
 
   return (
-    <BaseRegisterForm onSubmit={submitHandler} formError={formError} loading={loading}>
+    <BaseRegisterForm onSubmit={submitHandler} loading={loading}>
       <Box sx={formStyle}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
@@ -135,6 +135,7 @@ const RegisterNotesForm = () => {
               variant="standard"
               fullWidth
               required
+              sx={{ mt: 2 }}
             />
           </Grid>
 
@@ -180,6 +181,12 @@ const RegisterNotesForm = () => {
             }
           />
         </FormControl>
+
+        {formError && (
+          <Typography color="error.main" mb={2}>
+            {formError}
+          </Typography>
+        )}
 
         <Box sx={actionButtonsStyle}>
           <Typography variant="body2">
