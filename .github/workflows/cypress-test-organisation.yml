@@ -1,4 +1,4 @@
-name: Check test organization
+name: Cypress test organisation
 
 # Run on PRs that touch test files
 on:
@@ -12,9 +12,6 @@ on:
 jobs:
   check-ungrouped-tests:
     name: Check for ungrouped tests
-    permissions:
-      contents: read
-      issues: write
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -24,10 +21,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22.x'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Check for ungrouped test files
         run: |
-          npm run cypress:check-ungrouped
+          yarn run cypress:check-ungrouped
 
       - name: Comment on PR if ungrouped tests found
         if: failure()
