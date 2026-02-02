@@ -38,17 +38,17 @@ jobs:
       fail-fast: false # Don't cancel other jobs if one fails
       matrix:
         group:
-          - name: 'Auth & Registration'
+          - name: 'Auth flows'
             spec: 'cypress/integration/auth/**/*.cy.tsx'
-          - name: 'User Accounts'
+          - name: 'User account flows'
             spec: 'cypress/integration/user-accounts/**/*.cy.tsx'
-          - name: 'Admin & Partners'
-            spec: 'cypress/integration/admin/**/*.cy.tsx'
-          - name: 'User Content'
+          - name: 'User content flows'
             spec: 'cypress/integration/user-content/**/*.cy.tsx'
-          - name: 'Partner Experiences'
+          - name: 'Partner user flows'
             spec: 'cypress/integration/partners/**/*.cy.tsx'
-          - name: 'System'
+          - name: 'Admin flows'
+            spec: 'cypress/integration/admin/**/*.cy.tsx'
+          - name: 'System flows'
             spec: 'cypress/integration/system/**/*.cy.tsx'
     steps:
       - name: Checkout
