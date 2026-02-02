@@ -1,0 +1,39 @@
+name: Check test organization
+
+# Run on PRs that touch test files
+on:
+  pull_request:
+    paths:
+      - 'cypress/integration/tests/**/*.cy.tsx'
+      - 'cypress/integration/tests/**/*.cy.ts'
+      - 'cypress/integration/tests/**/*.cy.jsx'
+      - 'cypress/integration/tests/**/*.cy.js'
+
+jobs:
+  check-ungrouped-tests:
+    name: Check for ungrouped tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22.x'
+
+      - name: Check for ungrouped test files
+        run: |
+          npm run cypress:check-ungrouped
+
+      - name: Comment on PR if ungrouped tests found
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ **Ungrouped Cypress tests detected!**\n\nPlease organize your test files into the appropriate folder:\n\n- `auth/` - Authentication & Registration\n- `user-accounts/` - User account management\n- `admin/` - Admin & partner management\n- `user-content/` - User content (notes, activities, etc.)\n- `partners/` - Partner experiences\n- `public/` - Public-facing content\n- `system/` - System functionality\n\nSee `cypress/integration/tests/README.md` for details.\n\nRun `npm run cypress:check-ungrouped` locally to check.'
+            })

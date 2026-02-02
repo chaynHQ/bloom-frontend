@@ -2,11 +2,15 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**, '*test*', 'upgrade-nextjs']
+    branches: [develop, dependabot/**, '*test*']
+
+# Cancel in-progress runs when a new run is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # vercel will redeploy the develop/staging app on creating a PR to main
-  # wait for new deployment to complete before running tests
+  # Wait for Vercel deployment to complete before running tests
   wait-for-vercel-deployment:
     name: Wait for vercel deployment
     runs-on: ubuntu-24.04
@@ -21,14 +25,33 @@ jobs:
           max_timeout: 1000
           check_interval: 20
 
+  # Parallel test execution using matrix strategy
   cypress-run:
-    name: Cypress e2e tests
+    name: Cypress E2E Tests - ${{ matrix.group.name }}
     needs: wait-for-vercel-deployment
     runs-on: ubuntu-24.04
     permissions:
       contents: read
       checks: write
       deployments: read
+    strategy:
+      fail-fast: false # Don't cancel other jobs if one fails
+      matrix:
+        group:
+          - name: 'Auth & Registration'
+            spec: 'cypress/integration/tests/auth/**/*.cy.tsx'
+          - name: 'User Accounts'
+            spec: 'cypress/integration/tests/user-accounts/**/*.cy.tsx'
+          - name: 'Admin & Partners'
+            spec: 'cypress/integration/tests/admin/**/*.cy.tsx'
+          - name: 'User Content'
+            spec: 'cypress/integration/tests/user-content/**/*.cy.tsx'
+          - name: 'Partner Experiences'
+            spec: 'cypress/integration/tests/partners/**/*.cy.tsx'
+          - name: 'Public Content'
+            spec: 'cypress/integration/tests/public/**/*.cy.tsx'
+          - name: 'System'
+            spec: 'cypress/integration/tests/system/**/*.cy.tsx'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -37,16 +60,113 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22.x'
-      - run: node -v
+          cache: 'npm'
 
-      # Cleanup spec (_cleanup.cy.tsx) runs first alphabetically
-      - name: Run cypress
+      # Cache Cypress binary to speed up installation (~500MB, saves 1-2 min per job)
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6.7.16
+        with:
+          install: false # Already installed above
+          browser: chrome
+          config-file: cypress.config.ts
+          headed: false
+          record: true
+          parallel: true # Enable Cypress Dashboard parallelization
+          group: ${{ matrix.group.name }}
+          spec: ${{ matrix.group.spec }}
+          ci-build-id: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+        env:
+          NEXT_PUBLIC_ROLLBAR_ENV: CI
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN: ${{ secrets.NEXT_PUBLIC_ROLLBAR_CLIENT_TOKEN }}
+          NEXT_PUBLIC_STORYBLOK_TOKEN: ${{ secrets.NEXT_PUBLIC_STORYBLOK_TOKEN }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-vercel-deployment.outputs.preview_url }}
+          CYPRESS_MAIL_SLURP_API_KEY: ${{secrets.CYPRESS_MAIL_SLURP_API_KEY}}
+          CYPRESS_INBOX_ID: ${{secrets.CYPRESS_INBOX_ID}}
+          CYPRESS_SUPER_ADMIN_EMAIL: ${{secrets.CYPRESS_SUPER_ADMIN_EMAIL}}
+          CYPRESS_SUPER_ADMIN_PASSWORD: ${{secrets.CYPRESS_SUPER_ADMIN_PASSWORD}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BUMBLE_ADMIN_EMAIL}}
+          CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BUMBLE_ADMIN_PASSWORD}}
+          CYPRESS_BADOO_PARTNER_ADMIN_EMAIL: ${{secrets.CYPRESS_BADOO_ADMIN_EMAIL}}
+          CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD: ${{secrets.CYPRESS_BADOO_ADMIN_PASSWORD}}
+          CYPRESS_PUBLIC_EMAIL: ${{secrets.CYPRESS_PUBLIC_EMAIL}}
+          CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
+          CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Upload artifacts only on failure to reduce log size
+      - name: Upload screenshots (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.group.name }}
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload videos (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos-${{ matrix.group.name }}
+          path: cypress/videos
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Separate job to catch any ungrouped tests
+  check-ungrouped:
+    name: Check for ungrouped tests
+    needs: wait-for-vercel-deployment
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for ungrouped test files
+        id: check
+        run: |
+          if ls cypress/integration/tests/*.cy.{tsx,ts,jsx,js} 1> /dev/null 2>&1; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "⚠️  Found ungrouped tests - they should be organized into folders"
+            ls cypress/integration/tests/*.cy.{tsx,ts,jsx,js} 2>/dev/null || true
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "✅ No ungrouped tests found"
+          fi
+
+      - name: Run ungrouped tests (if any)
+        if: steps.check.outputs.found == 'true'
         uses: cypress-io/github-action@v6.7.16
         with:
           browser: chrome
           config-file: cypress.config.ts
           headed: false
-          record: true # send results to cypress dashboard
+          record: true
+          parallel: true
+          group: 'Ungrouped Tests'
+          spec: 'cypress/integration/tests/*.cy.tsx'
+          ci-build-id: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
           NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: ci
