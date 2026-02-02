@@ -12,6 +12,9 @@ on:
 jobs:
   check-ungrouped-tests:
     name: Check for ungrouped tests
+    permissions:
+      contents: read
+      issues: write
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
