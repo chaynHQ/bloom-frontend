@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TESTS_DIR = path.join(__dirname, '../cypress/integration/tests');
+const TESTS_DIR = path.join(__dirname, '../cypress/integration');
 const TEST_PATTERN = /\.cy\.(tsx?|jsx?)$/;
 
 console.log('🔍 Checking for ungrouped Cypress tests...\n');
@@ -48,7 +48,7 @@ try {
   console.log('   - public/            # Public-facing content');
   console.log('   - system/            # System functionality\n');
 
-  console.log('💡 See cypress/integration/tests/README.md for details.\n');
+  console.log('💡 See cypress/integration/README.md for details.\n');
 
   process.exit(1);
 } catch (error) {

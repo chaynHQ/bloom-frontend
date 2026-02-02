@@ -19,8 +19,8 @@ export default defineConfig({
       return config;
     },
     specPattern: [
-      'cypress/integration/tests/**/*.cy.{js,jsx,ts,tsx}',
-      'cypress/integration/tests/*.cy.{js,jsx,ts,tsx}', // Catch ungrouped tests in root
+      'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
+      'cypress/integration/*.cy.{js,jsx,ts,tsx}', // Catch ungrouped tests in root
     ],
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     supportFile: 'cypress/support/index.js',

@@ -4,10 +4,10 @@ name: Cypress test organisation
 on:
   pull_request:
     paths:
-      - 'cypress/integration/tests/**/*.cy.tsx'
-      - 'cypress/integration/tests/**/*.cy.ts'
-      - 'cypress/integration/tests/**/*.cy.jsx'
-      - 'cypress/integration/tests/**/*.cy.js'
+      - 'cypress/integration/**/*.cy.tsx'
+      - 'cypress/integration/**/*.cy.ts'
+      - 'cypress/integration/**/*.cy.jsx'
+      - 'cypress/integration/**/*.cy.js'
 
 jobs:
   check-ungrouped-tests:
@@ -39,5 +39,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '⚠️ **Ungrouped Cypress tests detected!**\n\nPlease organize your test files into the appropriate folder:\n\n- `auth/` - Authentication & Registration\n- `user-accounts/` - User account management\n- `admin/` - Admin & partner management\n- `user-content/` - User content (notes, activities, etc.)\n- `partners/` - Partner experiences\n- `public/` - Public-facing content\n- `system/` - System functionality\n\nSee `cypress/integration/tests/README.md` for details.\n\nRun `npm run cypress:check-ungrouped` locally to check.'
+              body: '⚠️ **Ungrouped Cypress tests detected!**\n\nPlease organize your test files into the appropriate folder:\n\n- `auth/` - Authentication & Registration\n- `user-accounts/` - User account management\n- `admin/` - Admin & partner management\n- `user-content/` - User content (notes, activities, etc.)\n- `partners/` - Partner experiences\n- `public/` - Public-facing content\n- `system/` - System functionality\n\nSee `cypress/integration/README.md` for details.\n\nRun `npm run cypress:check-ungrouped` locally to check.'
             })

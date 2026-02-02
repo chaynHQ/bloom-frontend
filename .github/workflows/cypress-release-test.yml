@@ -39,19 +39,17 @@ jobs:
       matrix:
         group:
           - name: 'Auth & Registration'
-            spec: 'cypress/integration/tests/auth/**/*.cy.tsx'
+            spec: 'cypress/integration/auth/**/*.cy.tsx'
           - name: 'User Accounts'
-            spec: 'cypress/integration/tests/user-accounts/**/*.cy.tsx'
+            spec: 'cypress/integration/user-accounts/**/*.cy.tsx'
           - name: 'Admin & Partners'
-            spec: 'cypress/integration/tests/admin/**/*.cy.tsx'
+            spec: 'cypress/integration/admin/**/*.cy.tsx'
           - name: 'User Content'
-            spec: 'cypress/integration/tests/user-content/**/*.cy.tsx'
+            spec: 'cypress/integration/user-content/**/*.cy.tsx'
           - name: 'Partner Experiences'
-            spec: 'cypress/integration/tests/partners/**/*.cy.tsx'
-          - name: 'Public Content'
-            spec: 'cypress/integration/tests/public/**/*.cy.tsx'
+            spec: 'cypress/integration/partners/**/*.cy.tsx'
           - name: 'System'
-            spec: 'cypress/integration/tests/system/**/*.cy.tsx'
+            spec: 'cypress/integration/system/**/*.cy.tsx'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -146,10 +144,10 @@ jobs:
       - name: Check for ungrouped test files
         id: check
         run: |
-          if ls cypress/integration/tests/*.cy.{tsx,ts,jsx,js} 1> /dev/null 2>&1; then
+          if ls cypress/integration/*.cy.{tsx,ts,jsx,js} 1> /dev/null 2>&1; then
             echo "found=true" >> $GITHUB_OUTPUT
             echo "⚠️  Found ungrouped tests - they should be organized into folders"
-            ls cypress/integration/tests/*.cy.{tsx,ts,jsx,js} 2>/dev/null || true
+            ls cypress/integration/*.cy.{tsx,ts,jsx,js} 2>/dev/null || true
           else
             echo "found=false" >> $GITHUB_OUTPUT
             echo "✅ No ungrouped tests found"
@@ -165,7 +163,7 @@ jobs:
           record: true
           parallel: true
           group: 'Ungrouped Tests'
-          spec: 'cypress/integration/tests/*.cy.tsx'
+          spec: 'cypress/integration/*.cy.tsx'
           ci-build-id: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
         env:
           NEXT_PUBLIC_ROLLBAR_ENV: CI
