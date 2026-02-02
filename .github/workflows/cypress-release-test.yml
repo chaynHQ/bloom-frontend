@@ -14,7 +14,7 @@ jobs:
       preview_url: ${{ steps.waitForVercelDeployment.outputs.url }}
     steps:
       - name: Wait for Vercel preview deployment to be ready
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         id: waitForVercelDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +41,7 @@ jobs:
 
       # Cleanup spec (_cleanup.cy.tsx) runs first alphabetically
       - name: Run cypress
-        uses: cypress-io/github-action@v6.7.16
+        uses: cypress-io/github-action@v7
         with:
           browser: chrome
           config-file: cypress.config.ts
