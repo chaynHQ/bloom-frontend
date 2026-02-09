@@ -73,7 +73,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v7.1.1
+        uses: cypress-io/github-action@v7.1.2
         with:
           install: false # Already installed above
           browser: chrome
@@ -155,7 +155,7 @@ jobs:
 
       - name: Run ungrouped tests (if any)
         if: steps.check.outputs.found == 'true'
-        uses: cypress-io/github-action@v7.1.1
+        uses: cypress-io/github-action@v7.1.2
         with:
           browser: chrome
           config-file: cypress.config.ts
