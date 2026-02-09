@@ -46,7 +46,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.7",
-    "@mui/lab": "^7.0.1-beta.20",
+    "@mui/lab": "^7.0.1-beta.21",
     "@mui/material": "^7.3.7",
     "@mui/material-nextjs": "^7.3.7",
     "@next/third-parties": "16.1.6",
