@@ -63,7 +63,7 @@
     "firebase": "^12.9.0",
     "gemoji": "^8.1.0",
     "js-cookie": "^3.0.1",
-    "minimatch": "^10.2.2",
+    "minimatch": "^10.2.3",
     "newrelic": "^13.13.0",
     "next": "16.1.6",
     "next-intl": "^4.8.3",
