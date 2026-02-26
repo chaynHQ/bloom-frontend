@@ -6,6 +6,8 @@
     "continueCourses": "Continua con Bloom",
     "continueCoursesDescription": "Continua donde lo habías dejado.",
     "goToCourses": "Ir a cursos",
-    "form": { "codeLabel": "Código de acceso de {partnerName}" }
+    "form": {
+      "codeLabel": "Código de acceso de {partnerName}"
+    }
   }
 }
