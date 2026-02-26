@@ -12,6 +12,9 @@ const buttonStyle = {
   left: 'unset',
   right: { xs: 16, lg: 80 },
   backgroundColor: 'primary.dark',
+  '&:hover': {
+    color: 'primary.dark',
+  },
 } as const;
 
 const LeaveSiteButton = () => {
