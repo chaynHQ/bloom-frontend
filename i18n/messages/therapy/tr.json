@@ -1,0 +1,55 @@
+{
+  "Therapy": {
+    "title": "Book therapy",
+    "bookingButton": "Begin booking",
+    "bookingSectionTitle": "How booking works",
+    "steps": {
+      "step1": "You choose from our carefully selected, multilingual therapists.",
+      "step2": "Pick a date and time that works for you. All sessions are online.",
+      "step3": "If you change your mind, you can stop the sessions or change therapist at any point.",
+      "step4": "Everything you share remains strictly confidential, between you and the therapist."
+    },
+    "closeBookingWidget": "Close booking widget",
+    "modalTitle": "Book therapy",
+    "modalDescription": "SimplyBook.me widget for scheduling your therapy session.",
+    "error": {
+      "initializingWidget": "Error initializing booking widget.",
+      "initializingWidgetRetry": "Error initializing booking widget on retry.",
+      "containerNotFoundRetry": "Could not load the booking widget.",
+      "scriptNotLoaded": "Booking widget script not fully loaded.",
+      "scriptLoadFailed": "Failed to load booking script."
+    },
+    "therapyBookings": {
+      "header": "Your therapy bookings",
+      "bookingSummary": "You have <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions remaining, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled.",
+      "noBookingSummary": "You have booked all of your available therapy sessions.",
+      "noBookings": "You have no therapy bookings at the moment.",
+      "cancelAlert": "Cancellation requested for booking ID: {id}. Implement actual cancellation logic."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Upcoming therapy session ",
+      "pastSessionTitle": "Past therapy session ",
+      "cancelledSessionTitle": "Cancelled session",
+      "dateLabel": "Date",
+      "timeLabel": "Time",
+      "therapistLabel": "Therapist",
+      "videoLinkLabel": "Video link",
+      "videoLink": "Join the call from the Google Meet calendar invite sent by email",
+      "noVideoLink": "No link provided",
+      "cancelButton": "Cancel",
+      "cancelError": "Error cancelling booking - please try again or get in touch with the team.",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "cancelDialog": {
+        "title": "Confirm Cancellation",
+        "description": "Are you sure you want to cancel your therapy session scheduled for {dateTime}? You can book a new appointment at a time that feels right for you.",
+        "keepButton": "Keep Session",
+        "confirmButton": "Cancel Session"
+      }
+    },
+    "accessGuard": {
+      "title": "Therapy not available",
+      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+    }
+  }
+}
