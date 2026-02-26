@@ -123,17 +123,17 @@
           "resetPassword": "Passwort zurücksetzen",
           "deleteAccount": "Konto löschen"
         },
-        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
         "confirmDialogCancel": "Stornieren",
+        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
         "deleteAccountConfirmDialogTitle": "Bitte bestätigen Sie, dass Sie Ihr Konto löschen möchten",
         "deleteAccountConfirmDialogDescription": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht."
       },
       "emailSettings": {
         "title": "E-Mail-Einstellungen",
         "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
+        "submitLabel": "E-Mail-Einstellungen speichern",
         "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
         "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
-        "submitLabel": "E-Mail-Einstellungen speichern",
         "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
       },
       "emailRemindersSettings": {
