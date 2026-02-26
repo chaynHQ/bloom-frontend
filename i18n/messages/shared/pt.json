@@ -39,7 +39,6 @@
     },
     "videoTranscript": {
       "title": "Video transcript",
-      "description": "Read the transcript for video - ",
       "closeModal": "Close transcript"
     },
     "progressStatus": {
@@ -72,9 +71,9 @@
       "bumbleLogo": "Logotipo do Bumble",
       "bloomBumbleLogo": "Logotipo da parceria entre Bloom e Bumble",
       "badooLogo": "Logotipo de Badoo",
+      "bloomBadooLogo": "Logotipo da parceria entre Bloom e Badoo",
       "comicReliefLogo": "Logotipo de Comic Relief",
       "communityFundLogo": "Logotipo de Community Fund",
-      "bloomBadooLogo": "Logotipo da parceria entre Bloom e Badoo",
       "welcomeToBloom": "Boas-vindas ao Bloom",
       "tiktokLogo": "Logotipo do Tiktok",
       "githubLogo": "Github logo",
@@ -88,6 +87,7 @@
       "chooseTherapist": "Ilustração do rosto de uma pessoa de perfil, com uma flor",
       "dateSelector": "Ilustração de um calendário com um coração no meio",
       "change": "Ilustração de um ciclo- três sóis em um círculo com flechas entre eles",
+      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
       "confidential": "Ilustração de um documento com um cadeado em um dos cantos",
       "cookieCat": "Ilustração de um gato descansando com um biscoito",
       "fruitzLogo": "Logotipo do Fruitz",
