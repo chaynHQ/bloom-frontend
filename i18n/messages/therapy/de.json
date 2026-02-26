@@ -35,9 +35,9 @@
       "therapistLabel": "Therapeut/in",
       "videoLinkLabel": "Video-Link",
       "videoLink": "Nehmen Sie am Anruf über die Google Meet-Kalendereinladung teil, die per E-Mail gesendet wurde.",
-      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
       "noVideoLink": "Kein Link angegeben",
       "cancelButton": "Stornieren",
+      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
       "expand": "Erweitern",
       "collapse": "Einklappen",
       "cancelDialog": {
