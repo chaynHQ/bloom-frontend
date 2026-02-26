@@ -39,7 +39,6 @@
     },
     "videoTranscript": {
       "title": "Video-Transcript",
-      "description": "Lies das Transkript vom Video - ",
       "closeModal": "Transkript schließen"
     },
     "progressStatus": {
@@ -88,6 +87,7 @@
       "chooseTherapist": "Illustration eines Gesichts im Seitenprofil, mit einer Blume",
       "dateSelector": "Illustration eines Kalenders mit einem Herz in der Mitte",
       "change": "Illustration eines Zyklus - drei Sonnen im Kreis mit Pfeilen zwischen ihnen",
+      "notes": "Illustration einer Notes",
       "confidential": "Illustration eines Dokuments mit einem Schloss in der Ecke",
       "cookieCat": "Illustration einer ruhenden Katze mit einem Keks",
       "fruitzLogo": "Fruitz Logo",
@@ -95,8 +95,7 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Buch-Symbol",
       "articleIcon": "Artikel-Symbol",
-      "videoIcon": "Video-Symbol",
-      "notes": "Illustration einer Notes"
+      "videoIcon": "Video-Symbol"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Überlebende:r",
