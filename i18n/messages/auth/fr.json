@@ -68,7 +68,6 @@
       "passwordRequired": "Le mot de passe est requis pour la réauthentification.",
       "reauthenticationError": "Échec de la réauthentification. Veuillez réessayer."
     },
-
     "verifyMFA": {
       "title": "Vérifier l'authentification à deux facteurs",
       "triggerSMS": "Envoyer le code SMS",
