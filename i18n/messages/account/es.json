@@ -131,9 +131,9 @@
       "emailSettings": {
         "title": "Preferencias de correo electrónico",
         "description": "Avísanos si podemos enviarte correos electrónicos:",
+        "submitLabel": "Guardar preferencias de correo electrónico",
         "serviceEmailsPermissionLabel": "Sobre tus servicios o cambios en tu cuenta",
         "contactPermissionLabel": "Cuando haya un nuevo curso, servicio o idioma disponible",
-        "submitLabel": "Guardar preferencias de correo electrónico",
         "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.</link>"
       },
       "emailRemindersSettings": {
