@@ -51,7 +51,7 @@ jobs:
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
       - name: Upload artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: desktop-lighthouse-report
           path: ${{ steps.lighthouseDesktop.outputs.resultsPath }}
@@ -83,7 +83,7 @@ jobs:
           budgetPath: ./lighthouse_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
       - name: Upload artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: mobile-lighthouse-report
           path: ${{ steps.lighthouseMobile.outputs.resultsPath }}
