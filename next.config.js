@@ -11,6 +11,7 @@ const {
   connectSrcUrls,
   frameSrcUrls,
   mediaSrcUrls,
+  frameAncestorsUrls,
 } = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
@@ -133,7 +134,7 @@ module.exports = withBundleAnalyzer(
                   object-src 'none';
                   base-uri 'self';
                   form-action 'self';
-                  frame-ancestors 'self';
+                  frame-ancestors ${frameAncestorsUrls.join(' ')};
                   upgrade-insecure-requests;
                 `
                   .replace(/\s{2,}/g, ' ')
@@ -149,7 +150,7 @@ module.exports = withBundleAnalyzer(
               },
               {
                 key: 'X-Frame-Options',
-                value: 'DENY',
+                value: 'SAMEORIGIN',
               },
               {
                 key: 'X-XSS-Protection',
