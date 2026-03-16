@@ -1,0 +1,526 @@
+name: Detect Suspicious Fork Patterns
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  analyze-fork-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if PR is from Fork
+        id: fork-check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Only analyze fork PRs
+            if (!pr.head.repo || !pr.head.repo.fork) {
+              core.setOutput('is-fork', 'false');
+              return;
+            }
+
+            core.setOutput('is-fork', 'true');
+            core.setOutput('fork-owner', pr.head.repo.owner.login);
+            core.setOutput('fork-repo', pr.head.repo.name);
+
+      - name: Analyze Fork Owner Account
+        if: steps.fork-check.outputs.is-fork == 'true'
+        id: account-analysis
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const suspiciousFlags = [];
+            let suspicionScore = 0;
+
+            // Get fork owner details
+            const forkOwner = await github.rest.users.getByUsername({
+              username: pr.head.repo.owner.login
+            });
+
+            // Get fork repository details
+            const forkRepo = await github.rest.repos.get({
+              owner: pr.head.repo.owner.login,
+              repo: pr.head.repo.name
+            });
+
+            // FLAG 1: Very new account (< 7 days)
+            const createdDate = new Date(forkOwner.created_at);
+            const daysSinceCreation = (new Date() - createdDate) / (1000 * 60 * 60 * 24);
+            if (daysSinceCreation < 7) {
+              suspicionScore += 30;
+              suspiciousFlags.push(`Account created ${Math.round(daysSinceCreation)} days ago`);
+            }
+
+            // FLAG 2: Zero followers and minimal repos
+            if (forkOwner.followers === 0 && forkOwner.public_repos <= 2) {
+              suspicionScore += 25;
+              suspiciousFlags.push(`No followers, only ${forkOwner.public_repos} public repos`);
+            }
+
+            // FLAG 3: Fork created very recently (< 24 hours)
+            const forkAge = (new Date() - new Date(forkRepo.created_at)) / (1000 * 60 * 60 * 24);
+            if (forkAge < 1) {
+              suspicionScore += 35;
+              suspiciousFlags.push(`Fork created ${forkAge.toFixed(2)} hours ago`);
+            }
+
+            // FLAG 4: Bot-like username patterns
+            const botPatterns = ['bot', 'ai-', '-ai', 'auto-', 'generated', 'script', 'assistant', 'agent'];
+            const isBotName = botPatterns.some(pattern => 
+              pr.head.repo.owner.login.toLowerCase().includes(pattern)
+            );
+            if (isBotName) {
+              suspicionScore += 30;
+              suspiciousFlags.push(`Bot-like username: "${pr.head.repo.owner.login}"`);
+            }
+
+            // FLAG 5: Bot or AI mention in bio
+            const bio = forkOwner.bio || '';
+            if (/bot|ai|automated|script|generated/i.test(bio)) {
+              suspicionScore += 25;
+              suspiciousFlags.push(`Profile bio indicates bot/automation: "${bio}"`);
+            }
+
+            // FLAG 6: Account type is Bot
+            if (forkOwner.type === 'Bot') {
+              suspicionScore += 50;
+              suspiciousFlags.push(`Account type is officially classified as Bot`);
+            }
+
+            // FLAG 7: Fork is private
+            if (forkRepo.private) {
+              suspicionScore += 20;
+              suspiciousFlags.push(`Fork repository is set to private`);
+            }
+
+            // FLAG 8: No update in last 24 hours (suggests fresh setup)
+            const updated = new Date(forkOwner.updated_at);
+            const hoursSinceUpdate = (new Date() - updated) / (1000 * 60 * 60);
+            if (hoursSinceUpdate < 24) {
+              suspicionScore += 15;
+              suspiciousFlags.push(`Account updated within last 24 hours`);
+            }
+
+            core.setOutput('account-score', suspicionScore);
+            core.setOutput('account-flags', suspiciousFlags.join('\n'));
+            core.setOutput('account-flags-count', suspiciousFlags.length);
+
+      - name: Analyze Commit Patterns
+        if: steps.fork-check.outputs.is-fork == 'true'
+        id: commit-analysis
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const suspiciousPatterns = [];
+            let suspicionScore = 0;
+
+            const commits = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100
+            });
+
+            if (commits.data.length === 0) {
+              core.setOutput('commit-score', '0');
+              core.setOutput('commit-patterns', 'No commits to analyze');
+              return;
+            }
+
+            // PATTERN 1: Very low commit message diversity
+            const messages = commits.data.map(c => c.commit.message.split('\n')[0].trim());
+            const uniqueMessages = new Set(messages);
+            const messageUniqueness = uniqueMessages.size / messages.length;
+
+            if (messageUniqueness < 0.3 && messages.length > 2) {
+              suspicionScore += 30;
+              suspiciousPatterns.push(`Low message diversity: ${uniqueMessages.size}/${messages.length} unique`);
+            } else if (messageUniqueness < 0.6 && messages.length > 2) {
+              suspicionScore += 15;
+              suspiciousPatterns.push(`Some message repetition: ${uniqueMessages.size}/${messages.length} unique`);
+            }
+
+            // PATTERN 2: Generic/repetitive commit messages
+            const genericWords = ['update', 'fix', 'add', 'change', 'modify', 'remove', 'refactor'];
+            const genericCount = messages.filter(msg => 
+              genericWords.some(word => msg.toLowerCase().includes(word))
+            ).length;
+
+            const genericPercentage = (genericCount / messages.length) * 100;
+            if (genericPercentage > 80) {
+              suspicionScore += 25;
+              suspiciousPatterns.push(`${Math.round(genericPercentage)}% generic commit messages`);
+            } else if (genericPercentage > 60) {
+              suspicionScore += 10;
+              suspiciousPatterns.push(`Many generic messages: ${Math.round(genericPercentage)}%`);
+            }
+
+            // PATTERN 3: Suspiciously consistent timing intervals
+            const timestamps = commits.data.map(c => 
+              new Date(c.commit.author.date).getTime()
+            );
+
+            if (timestamps.length > 2) {
+              const intervals = [];
+              for (let i = 1; i < timestamps.length; i++) {
+                intervals.push(timestamps[i] - timestamps[i-1]);
+              }
+              
+              const avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
+              const variance = intervals.reduce((sum, val) => sum + Math.pow(val - avgInterval, 2), 0) / intervals.length;
+              const stdDev = Math.sqrt(variance);
+              const coeffVariation = stdDev / avgInterval;
+              
+              // Low coefficient of variation suggests robotic timing
+              if (coeffVariation < 0.15 && intervals.length >= 3) {
+                suspicionScore += 30;
+                suspiciousPatterns.push(`Suspiciously regular commit timing (CV: ${coeffVariation.toFixed(2)})`);
+              }
+            }
+
+      - name: Calculate Total Suspicion Score
+        if: steps.fork-check.outputs.is-fork == 'true'
+        id: final-score
+        run: |
+          ACCOUNT_SCORE=$((${{ steps.account-analysis.outputs.account-score || 0 }}))
+          COMMIT_SCORE=$((${{ steps.commit-analysis.outputs.commit-score || 0 }}))
+          TOTAL_SCORE=$((ACCOUNT_SCORE + COMMIT_SCORE))
+
+          echo "account-score=$ACCOUNT_SCORE" >> $GITHUB_OUTPUT
+          echo "commit-score=$COMMIT_SCORE" >> $GITHUB_OUTPUT
+          echo "total-score=$TOTAL_SCORE" >> $GITHUB_OUTPUT
+
+          if [ $TOTAL_SCORE -ge 50 ]; then
+            echo "action=suspicious" >> $GITHUB_OUTPUT
+          elif [ $TOTAL_SCORE -ge 25 ]; then
+            echo "action=flag" >> $GITHUB_OUTPUT
+          else
+            echo "action=normal" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Apply Labels - Suspicious
+        if: steps.final-score.outputs.action == 'suspicious'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = ['🚩-suspicious-fork', 'requires-manual-review'];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.addLabels({
+                  issue_number: context.payload.pull_request.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: [label]
+                });
+              } catch (error) {
+                console.log(`Could not add label ${label}:`, error.message);
+              }
+            }
+
+      - name: Apply Labels - Flagged
+        if: steps.final-score.outputs.action == 'flag'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = ['🔍-flagged-fork'];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.addLabels({
+                  issue_number: context.payload.pull_request.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  labels: [label]
+                });
+              } catch (error) {
+                console.log(`Could not add label ${label}:`, error.message);
+              }
+            }
+
+      - name: Post Analysis Report
+        if: steps.fork-check.outputs.is-fork == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const accountScore = parseInt('${{ steps.final-score.outputs.account-score }}') || 0;
+            const commitScore = parseInt('${{ steps.final-score.outputs.commit-score }}') || 0;
+            const totalScore = parseInt('${{ steps.final-score.outputs.total-score }}') || 0;
+            const action = '${{ steps.final-score.outputs.action }}';
+
+            const accountFlags = `${{ steps.account-analysis.outputs.account-flags }}`;
+            const commitPatterns = `${{ steps.commit-analysis.outputs.commit-patterns }}`;
+            const totalCommits = '${{ steps.commit-analysis.outputs.total-commits }}';
+
+            let reportEmoji = '🟢';
+            let reportTitle = 'Fork PR - Standard Review';
+
+            if (action === 'suspicious') {
+              reportEmoji = '🚩';
+              reportTitle = 'SUSPICIOUS FORK PATTERN DETECTED';
+            } else if (action === 'flag') {
+              reportEmoji = '🔍';
+              reportTitle = 'Fork Pattern Flagged';
+            }
+
+            let report = `## ${reportEmoji} Fork Analysis Report\n\n`;
+            report += `**Suspicion Score: ${totalScore}/100**\n`;
+            report += `**Classification: ${reportTitle}**\n\n`;
+
+            report += `### Account Analysis (Score: ${accountScore})\n`;
+            if (accountFlags) {
+              const flags = accountFlags.split('\n').filter(f => f.trim());
+              if (flags.length > 0) {
+                flags.forEach(flag => report += `- ${flag}\n`);
+              } else {
+                report += `✅ No suspicious account patterns detected\n`;
+              }
+            } else {
+              report += `✅ No suspicious account patterns detected\n`;
+            }
+
+            report += `\n### Commit Pattern Analysis (Score: ${commitScore})\n`;
+            if (commitPatterns) {
+              const patterns = commitPatterns.split('\n').filter(p => p.trim());
+              if (patterns.length > 0) {
+                patterns.forEach(pattern => report += `- ${pattern}\n`);
+              } else {
+                report += `✅ No suspicious commit patterns detected (${totalCommits} commits)\n`;
+              }
+            } else {
+              report += `✅ No suspicious commit patterns detected (${totalCommits} commits)\n`;
+            }
+
+            report += `\n### What This Checks\n`;
+            report += `**Account Indicators:**\n`;
+            report += `- Account age and creation date\n`;
+            report += `- Followers and public repositories\n`;
+            report += `- Fork age and metadata\n`;
+            report += `- Bot-like username patterns\n`;
+            report += `- Profile bio for bot/AI mentions\n`;
+            report += `- Official bot account classification\n`;
+
+            report += `\n**Commit Indicators:**\n`;
+            report += `- Commit message diversity and repetition\n`;
+            report += `- Generic vs unique commit messages\n`;
+            report += `- Timing patterns and intervals\n`;
+            report += `- Bot email addresses\n`;
+            report += `- Bot account authorship\n`;
+
+            report += `\n### Next Steps\n`;
+            if (totalScore >= 50) {
+              report += `⚠️ **Requires Manual Review:** Please verify this PR's legitimacy before merging.\n`;
+              report += `- Check fork owner's profile and contribution history\n`;
+              report += `- Verify code quality and project relevance\n`;
+              report += `- Ensure AI assistance is disclosed if applicable\n`;
+            } else if (totalScore >= 25) {
+              report += `🔍 **Standard Review:** Monitor this PR during code review.\n`;
+            } else {
+              report += `✅ **Proceed with Standard Review:** No significant suspicious patterns detected.\n`;
+            }
+
+            await github.rest.issues.createComment({
+              issue_number: pr.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+  detect-bot-issue-comments:
+    if: github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Analyze Commenter Account
+        id: commenter-analysis
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment;
+            const issue = context.payload.issue;
+
+            // Get commenter details
+            const commenter = await github.rest.users.getByUsername({
+              username: comment.user.login
+            });
+
+            const suspiciousFlags = [];
+            let suspicionScore = 0;
+
+            // FLAG 1: Official GitHub bot types
+            const officialBots = ['Bot', 'EnterpriseManaged'];
+            if (officialBots.includes(commenter.type)) {
+              // Only flag if not Dependabot or known helpful bots
+              const knownHelpfulBots = ['dependabot', 'renovate', 'github-actions'];
+              if (!knownHelpfulBots.some(b => comment.user.login.toLowerCase().includes(b))) {
+                suspicionScore += 50;
+                suspiciousFlags.push(`Official bot account: ${commenter.type}`);
+              }
+            }
+
+            // FLAG 2: Very new account
+            const createdDate = new Date(commenter.created_at);
+            const daysSinceCreation = (new Date() - createdDate) / (1000 * 60 * 60 * 24);
+            if (daysSinceCreation < 7) {
+              suspicionScore += 25;
+              suspiciousFlags.push(`Account created ${Math.round(daysSinceCreation)} days ago`);
+            }
+
+            // FLAG 3: Zero followers and minimal repos
+            if (commenter.followers === 0 && commenter.public_repos <= 2) {
+              suspicionScore += 20;
+              suspiciousFlags.push(`No followers, only ${commenter.public_repos} public repos`);
+            }
+
+            // FLAG 4: Bot-like username
+            const botPatterns = ['bot', 'ai-', '-ai', 'auto-', 'generated', 'script'];
+            const isBotName = botPatterns.some(pattern => 
+              comment.user.login.toLowerCase().includes(pattern)
+            );
+            if (isBotName) {
+              suspicionScore += 25;
+              suspiciousFlags.push(`Bot-like username: "${comment.user.login}"`);
+            }
+
+            // FLAG 5: Bot mention in bio
+            const bio = commenter.bio || '';
+            if (/bot|ai|automated|script|generated|assistant/i.test(bio)) {
+              suspicionScore += 25;
+              suspiciousFlags.push(`Profile bio indicates bot/automation: "${bio}"`);
+            }
+
+            core.setOutput('score', suspicionScore);
+            core.setOutput('flags', suspiciousFlags.join('\n'));
+            core.setOutput('commenter', comment.user.login);
+            core.setOutput('is-suspicious', suspicionScore >= 25 ? 'true' : 'false');
+
+      - name: Analyze Comment Content
+        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        id: comment-content-analysis
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment;
+            const contentFlags = [];
+            let contentScore = 0;
+
+            const text = comment.body.toLowerCase();
+
+            // FLAG 1: AI service indicators in comment
+            const aiIndicators = [
+              'generated by', 'ai generated', 'copilot', 'chatgpt', 'claude', 'gpt-',
+              'codeium', 'tabnine', 'powered by', 'ai assistant', 'language model'
+            ];
+
+            const hasAIIndicators = aiIndicators.some(indicator => text.includes(indicator));
+            if (hasAIIndicators) {
+              contentScore += 20;
+              contentFlags.push(`Comment mentions AI/LLM services`);
+            }
+
+            // FLAG 2: Suspiciously perfect or generic response
+            const genericPhrases = [
+              'great work', 'looks good', 'nice job', 'well done',
+              'thanks for contributing', 'appreciate the pr', 'good catch'
+            ];
+
+            const hasGenericPhrases = genericPhrases.some(phrase => text.includes(phrase));
+            if (hasGenericPhrases && comment.body.length < 100) {
+              contentScore += 15;
+              contentFlags.push(`Generic/template-like comment`);
+            }
+
+            // FLAG 3: Copy-paste indicators
+            if (text.includes('<!--') || text.includes('-->') || 
+                (comment.body.match(/\n/g) || []).length > 10) {
+              contentScore += 10;
+              contentFlags.push(`Comment may be auto-generated or templated`);
+            }
+
+            // FLAG 4: Same comment repeated on multiple issues
+            // Note: This would require checking comment history across issues
+
+            core.setOutput('content-score', contentScore);
+            core.setOutput('content-flags', contentFlags.join('\n'));
+
+      - name: Determine Action on Suspicious Comments
+        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        id: determine-action
+        run: |
+          COMMENTER_SCORE=$((${{ steps.commenter-analysis.outputs.score || 0 }}))
+          CONTENT_SCORE=$((${{ steps.comment-content-analysis.outputs.content-score || 0 }}))
+          TOTAL_SCORE=$((COMMENTER_SCORE + CONTENT_SCORE))
+
+          echo "total-score=$TOTAL_SCORE" >> $GITHUB_OUTPUT
+
+          if [ $TOTAL_SCORE -ge 50 ]; then
+            echo "action=suspicious" >> $GITHUB_OUTPUT
+          else
+            echo "action=flag" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Bot Comment Alert
+        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const comment = context.payload.comment;
+            const action = '${{ steps.determine-action.outputs.action }}';
+            const totalScore = '${{ steps.determine-action.outputs.total-score }}';
+            const commenterScore = '${{ steps.commenter-analysis.outputs.score }}';
+            const contentScore = '${{ steps.comment-content-analysis.outputs.content-score || 0 }}';
+
+            const commenterFlags = `${{ steps.commenter-analysis.outputs.flags }}`;
+            const contentFlags = `${{ steps.comment-content-analysis.outputs.content-flags }}`;
+            const commenter = '${{ steps.commenter-analysis.outputs.commenter }}';
+
+            let reportEmoji = '🔍';
+            let reportTitle = 'Flagged Comment';
+
+            if (action === 'suspicious') {
+              reportEmoji = '🚩';
+              reportTitle = 'SUSPICIOUS BOT COMMENT DETECTED';
+            }
+
+            let report = `${reportEmoji} **Bot Detection Alert: ${reportTitle}**\n\n`;
+            report += `**Suspicion Score: ${totalScore}/100**\n`;
+            report += `Commenter: [@${commenter}](https://github.com/${commenter})\n\n`;
+
+            report += `### Account Analysis (Score: ${commenterScore})\n`;
+            if (commenterFlags) {
+              const flags = commenterFlags.split('\n').filter(f => f.trim());
+              flags.forEach(flag => report += `- ${flag}\n`);
+            }
+
+            if (contentScore > 0) {
+              report += `\n### Comment Content Analysis (Score: ${contentScore})\n`;
+              if (contentFlags) {
+                const flags = contentFlags.split('\n').filter(f => f.trim());
+                flags.forEach(flag => report += `- ${flag}\n`);
+              }
+            }
+
+            report += `\n⚠️ **Note:** This comment appears to be from a bot or AI assistant. Please verify its relevance and accuracy.`;
+
+            // Add a reply to the comment
+            await github.rest.issues.createComment({
+              issue_number: issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
