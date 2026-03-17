@@ -44,7 +44,11 @@ interface Props {
   related_session?: ISbStoryData;
 }
 
-const StoryblokResourceShortPage = ({ story: initialStory, related_course, related_session }: Props) => {
+const StoryblokResourceShortPage = ({
+  story: initialStory,
+  related_course,
+  related_session,
+}: Props) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
