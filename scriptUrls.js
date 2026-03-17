@@ -103,7 +103,7 @@ const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
 const formActionUrls = ['self'];
-const frameAncestorsUrls = ['self'];
+const frameAncestorsUrls = ["'self'", 'https://app.storyblok.com'];
 
 module.exports = {
   scriptSrcUrls,
