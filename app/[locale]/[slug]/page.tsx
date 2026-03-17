@@ -1,4 +1,4 @@
-import StoryblokPage, { StoryblokPageProps } from '@/components/storyblok/StoryblokPage';
+import StoryblokPage from '@/components/storyblok/StoryblokPage';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 
 import { routing } from '@/i18n/routing';
@@ -75,5 +75,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokPage {...(story.content as StoryblokPageProps)} />;
+  return <StoryblokPage story={story} />;
 }

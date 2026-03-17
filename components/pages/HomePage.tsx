@@ -9,6 +9,7 @@ import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, Button } from '@mui/material';
+import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -18,7 +19,8 @@ interface Props {
   story: ISbStoryData | undefined;
 }
 
-export default function HomePage({ story }: Props) {
+export default function HomePage({ story: initialStory }: Props) {
+  const story = useStoryblokState(initialStory ?? null) ?? initialStory;
   const t = useTranslations('Welcome');
 
   const userId = useTypedSelector((state) => state.user.id);
