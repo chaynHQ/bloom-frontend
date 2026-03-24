@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Check if PR is from Fork
         id: fork-check
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -50,7 +50,7 @@ jobs:
       - name: Skip Known Automation Services
         id: check-automation-service
         if: steps.fork-check.outputs.is-fork == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
         with:
@@ -73,7 +73,7 @@ jobs:
       - name: Analyze Fork Owner Account
         if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: account-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -156,7 +156,7 @@ jobs:
       - name: Analyze Commit Patterns
         if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: commit-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -253,7 +253,7 @@ jobs:
 
       - name: Apply Labels - Suspicious
         if: steps.final-score.outputs.action == 'suspicious'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const labels = ['🚩-suspicious-fork', 'requires-manual-review'];
@@ -273,7 +273,7 @@ jobs:
 
       - name: Apply Labels - Flagged
         if: steps.final-score.outputs.action == 'flag'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const labels = ['🔍-flagged-fork'];
@@ -293,7 +293,7 @@ jobs:
 
       - name: Post Analysis Report
         if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -387,7 +387,7 @@ jobs:
     steps:
       - name: Analyze Commenter Account
         id: commenter-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
         with:
@@ -453,7 +453,7 @@ jobs:
       - name: Analyze Comment Content
         if: steps.commenter-analysis.outputs.is-suspicious == 'true'
         id: comment-content-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const comment = context.payload.comment;
@@ -517,7 +517,7 @@ jobs:
 
       - name: Post Bot Comment Alert
         if: steps.commenter-analysis.outputs.is-suspicious == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const issue = context.payload.issue;
