@@ -1,6 +1,4 @@
-import StoryblokSessionPage, {
-  StoryblokSessionPageProps,
-} from '@/components/storyblok/StoryblokSessionPage';
+import StoryblokSessionPage from '@/components/storyblok/StoryblokSessionPage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -75,9 +73,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  const content = story.content as StoryblokSessionPageProps;
-
-  return (
-    <StoryblokSessionPage {...content} storyUuid={story.uuid} storyPosition={story.position} />
-  );
+  return <StoryblokSessionPage story={story} />;
 }

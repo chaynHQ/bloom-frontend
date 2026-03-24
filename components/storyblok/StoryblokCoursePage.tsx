@@ -14,7 +14,8 @@ import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -34,7 +35,6 @@ const cardsContainerStyle = {
 } as const;
 
 export interface StoryblokCoursePageProps {
-  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -49,9 +49,9 @@ export interface StoryblokCoursePageProps {
   component: 'Course';
 }
 
-const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
+const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    storyUuid,
     _uid,
     _editable,
     name,
@@ -62,7 +62,8 @@ const StoryblokCoursePage = (props: StoryblokCoursePageProps) => {
     video_transcript,
     weeks,
     included_for_partners,
-  } = props;
+  } = story.content as StoryblokCoursePageProps;
+  const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
   const referralPartner = useCookieReferralPartner();

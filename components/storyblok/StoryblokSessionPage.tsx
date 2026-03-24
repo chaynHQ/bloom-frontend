@@ -20,6 +20,7 @@ import { ArrowBack } from '@mui/icons-material';
 import LinkIcon from '@mui/icons-material/Link';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { Box, Container, Link } from '@mui/material';
+import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -47,8 +48,6 @@ const backToCourseLinkStyle = {
 } as const;
 
 export interface StoryblokSessionPageProps {
-  storyUuid: string;
-  storyPosition: number;
   _uid: string;
   _editable: string;
   course: ISbStoryData;
@@ -65,10 +64,9 @@ export interface StoryblokSessionPageProps {
   included_for_partners: string[];
 }
 
-const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
+const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    storyUuid,
-    storyPosition,
     _uid,
     _editable,
     course,
@@ -80,7 +78,9 @@ const StoryblokSessionPage = (props: StoryblokSessionPageProps) => {
     video_outro,
     activity,
     bonus,
-  } = props;
+  } = story.content as StoryblokSessionPageProps;
+  const storyUuid = story.uuid;
+  const storyPosition = story.position;
 
   const t = useTranslations('Courses');
   const locale = useLocale();

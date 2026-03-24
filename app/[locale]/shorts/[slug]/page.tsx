@@ -1,6 +1,4 @@
-import StoryblokResourceShortPage, {
-  StoryblokResourceShortPageProps,
-} from '@/components/storyblok/StoryblokResourceShortPage';
+import StoryblokResourceShortPage from '@/components/storyblok/StoryblokResourceShortPage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { COURSE_CATEGORIES } from '@/lib/constants/enums';
@@ -101,20 +99,18 @@ export default async function Page({ params }: { params: Params }) {
 
     return (
       <StoryblokResourceShortPage
-        {...(story.content as StoryblokResourceShortPageProps)}
+        story={story}
         related_course={relatedCourse}
         related_session={relatedSessionData}
-        storyUuid={story.uuid}
       />
     );
   }
 
   return (
     <StoryblokResourceShortPage
-      {...(story.content as StoryblokResourceShortPageProps)}
+      story={story}
       related_course={relatedSessionData}
       related_session={undefined}
-      storyUuid={story.uuid}
     />
   );
 }
