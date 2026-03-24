@@ -5,7 +5,8 @@ import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
 import DynamicComponent from './DynamicComponent';
@@ -19,8 +20,10 @@ export interface StoryblokPageProps {
   page_sections: SbBlokData[];
 }
 
-const StoryblokPage = (props: StoryblokPageProps) => {
-  const { _uid, _editable, title, description, header_image, page_sections } = props;
+const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
+  const { _uid, _editable, title, description, header_image, page_sections } =
+    story.content as StoryblokPageProps;
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);

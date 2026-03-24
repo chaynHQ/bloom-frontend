@@ -1,7 +1,5 @@
 import NoDataAvailable from '@/components/common/NoDataAvailable';
-import StoryblokMeetTheTeamPage, {
-  StoryblokMeetTheTeamPageProps,
-} from '@/components/storyblok/StoryblokMeetTheTeamPage';
+import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTeamPage';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 
@@ -33,5 +31,5 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
     return <NoDataAvailable />;
   }
 
-  return <StoryblokMeetTheTeamPage {...(story.content as StoryblokMeetTheTeamPageProps)} />;
+  return <StoryblokMeetTheTeamPage story={story} />;
 }

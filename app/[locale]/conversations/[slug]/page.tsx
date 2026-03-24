@@ -1,6 +1,4 @@
-import StoryblokResourceConversationPage, {
-  StoryblokResourceConversationPageProps,
-} from '@/components/storyblok/StoryblokResourceConversationPage';
+import StoryblokResourceConversationPage from '@/components/storyblok/StoryblokResourceConversationPage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -75,10 +73,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return (
-    <StoryblokResourceConversationPage
-      {...(story.content as StoryblokResourceConversationPageProps)}
-      storyUuid={story.uuid}
-    />
-  );
+  return <StoryblokResourceConversationPage story={story} />;
 }
