@@ -11,6 +11,19 @@ permissions:
   issues: write
   contents: read
 
+env:
+  # Centralized list of known automation services to exclude from analysis
+  KNOWN_AUTOMATION_BOTS: |
+    codecov
+    codeql
+    cypress
+    dependabot
+    github-actions
+    lighthouse
+    newrelic
+    pre-commit-ci
+    vercel
+    
 jobs:
   analyze-fork-pr:
     if: github.event_name == 'pull_request'
@@ -19,7 +32,7 @@ jobs:
     steps:
       - name: Check if PR is from Fork
         id: fork-check
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -34,10 +47,33 @@ jobs:
             core.setOutput('fork-owner', pr.head.repo.owner.login);
             core.setOutput('fork-repo', pr.head.repo.name);
 
-      - name: Analyze Fork Owner Account
+      - name: Skip Known Automation Services
+        id: check-automation-service
         if: steps.fork-check.outputs.is-fork == 'true'
+        uses: actions/github-script@v8
+        env:
+          AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const automationServices = process.env.AUTOMATION_BOTS.split('\n').filter(s => s.trim());
+            
+            const forkOwner = pr.head.repo.owner.login.toLowerCase();
+            const isAutomationService = automationServices.some(service => 
+              forkOwner.includes(service.toLowerCase().trim())
+            );
+            
+            if (isAutomationService) {
+              core.setOutput('skip-analysis', 'true');
+              console.log(`Skipping analysis for known automation service: ${forkOwner}`);
+            } else {
+              core.setOutput('skip-analysis', 'false');
+            }
+
+      - name: Analyze Fork Owner Account
+        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: account-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -118,9 +154,9 @@ jobs:
             core.setOutput('account-flags-count', suspiciousFlags.length);
 
       - name: Analyze Commit Patterns
-        if: steps.fork-check.outputs.is-fork == 'true'
+        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: commit-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -191,8 +227,12 @@ jobs:
               }
             }
 
+            core.setOutput('commit-score', suspicionScore);
+            core.setOutput('commit-patterns', suspiciousPatterns.join('\n'));
+            core.setOutput('total-commits', commits.data.length);
+
       - name: Calculate Total Suspicion Score
-        if: steps.fork-check.outputs.is-fork == 'true'
+        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: final-score
         run: |
           ACCOUNT_SCORE=$((${{ steps.account-analysis.outputs.account-score || 0 }}))
@@ -213,7 +253,7 @@ jobs:
 
       - name: Apply Labels - Suspicious
         if: steps.final-score.outputs.action == 'suspicious'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const labels = ['🚩-suspicious-fork', 'requires-manual-review'];
@@ -233,7 +273,7 @@ jobs:
 
       - name: Apply Labels - Flagged
         if: steps.final-score.outputs.action == 'flag'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const labels = ['🔍-flagged-fork'];
@@ -252,8 +292,8 @@ jobs:
             }
 
       - name: Post Analysis Report
-        if: steps.fork-check.outputs.is-fork == 'true'
-        uses: actions/github-script@v7
+        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
+        uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
@@ -347,7 +387,9 @@ jobs:
     steps:
       - name: Analyze Commenter Account
         id: commenter-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
+        env:
+          AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
         with:
           script: |
             const comment = context.payload.comment;
@@ -364,9 +406,9 @@ jobs:
             // FLAG 1: Official GitHub bot types
             const officialBots = ['Bot', 'EnterpriseManaged'];
             if (officialBots.includes(commenter.type)) {
-              // Only flag if not Dependabot or known helpful bots
-              const knownHelpfulBots = ['dependabot', 'renovate', 'github-actions'];
-              if (!knownHelpfulBots.some(b => comment.user.login.toLowerCase().includes(b))) {
+              // Only flag if not a known helpful bot
+              const knownHelpfulBots = process.env.AUTOMATION_BOTS.split('\n').filter(s => s.trim());
+              if (!knownHelpfulBots.some(b => comment.user.login.toLowerCase().includes(b.toLowerCase().trim()))) {
                 suspicionScore += 50;
                 suspiciousFlags.push(`Official bot account: ${commenter.type}`);
               }
@@ -411,7 +453,7 @@ jobs:
       - name: Analyze Comment Content
         if: steps.commenter-analysis.outputs.is-suspicious == 'true'
         id: comment-content-analysis
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const comment = context.payload.comment;
@@ -475,7 +517,7 @@ jobs:
 
       - name: Post Bot Comment Alert
         if: steps.commenter-analysis.outputs.is-suspicious == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const issue = context.payload.issue;
