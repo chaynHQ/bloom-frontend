@@ -59,6 +59,13 @@ Documentation contributions will only be accepted under these circumstances:
 
 Unwanted documentation changes, such as summarizations, white space edits, or minor grammatical edits will be DENIED (unless there is evidence provided that these changes are for accessibility).
 
+**🤖 AI-Generated Contributions**
+
+Chayn's open source community is built around humans, bringing together survivors,
+allies, and contributors who offer lived experience, care, and collaboration. While
+many contributors use AI tools as part of their workflow, fully automated contributions
+are not in the spirit of this community and will not be accepted.
+
 # Issue Policies
 
 ### Issue Limit Policy:
