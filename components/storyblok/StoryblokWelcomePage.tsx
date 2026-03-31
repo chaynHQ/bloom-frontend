@@ -15,7 +15,8 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
@@ -43,15 +44,17 @@ const introTextStyle = {
 export interface StoryblokWelcomePageProps {
   _uid: string;
   _editable: string;
-  storySlug: string;
   title: string;
   introduction: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   page_sections: StoryblokPageSectionProps[];
 }
 
-const StoryblokWelcomePage = (props: StoryblokWelcomePageProps) => {
-  const { _uid, _editable, storySlug, title, introduction, header_image, page_sections } = props;
+const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
+  const { _uid, _editable, title, introduction, header_image, page_sections } =
+    story.content as StoryblokWelcomePageProps;
+  const storySlug = story.slug;
 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 

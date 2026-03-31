@@ -8,7 +8,8 @@ import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import theme from '@/styles/theme';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -49,7 +50,8 @@ export interface StoryblokMeetTheTeamPageProps {
   page_section_3: StoryblokPageSectionProps[];
 }
 
-const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
+const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
     _editable,
@@ -68,7 +70,7 @@ const StoryblokMeetTheTeamPage = (props: StoryblokMeetTheTeamPageProps) => {
     page_section_1,
     page_section_2,
     page_section_3,
-  } = props;
+  } = story.content as StoryblokMeetTheTeamPageProps;
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);

@@ -1,6 +1,4 @@
-import StoryblokWelcomePage, {
-  StoryblokWelcomePageProps,
-} from '@/components/storyblok/StoryblokWelcomePage';
+import StoryblokWelcomePage from '@/components/storyblok/StoryblokWelcomePage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -69,10 +67,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return (
-    <StoryblokWelcomePage
-      {...(story.content as StoryblokWelcomePageProps)}
-      storySlug={story.slug}
-    />
-  );
+  return <StoryblokWelcomePage story={story} />;
 }

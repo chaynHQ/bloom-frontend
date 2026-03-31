@@ -14,8 +14,20 @@ import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import illustrationActivites from '@/public/illustration_activites.svg';
 import notesExample from '@/public/notes_example.png';
 import { rowStyle } from '@/styles/common';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Card, CardContent, Container, IconButton, Typography } from '@mui/material';
+import SmsFailedOutlined from '@mui/icons-material/SmsFailedOutlined';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Card,
+  CardContent,
+  Container,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -53,6 +65,34 @@ const illustrationStyle = {
   width: { xs: 200, md: 300 },
   height: { xs: 200, md: 300 },
   flexShrink: 0,
+} as const;
+
+const usNoticeStyle = {
+  mw: 600,
+  mb: 2,
+  backgroundColor: 'secondary.light',
+  borderRadius: '20px !important',
+  boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+  '&::before': { display: 'none' },
+  '& .MuiAccordionSummary-root': {
+    py: 1,
+    pl: 1,
+    borderRadius: 20,
+    '&.Mui-expanded': {
+      minHeight: 'auto !important',
+      margin: '0 !important',
+    },
+  },
+  '& .MuiAccordionSummary-content': {
+    margin: '0.5rem !important',
+    alignItems: 'flex-start',
+  },
+  '& .MuiAccordionSummary-expandIconWrapper': {
+    marginTop: '2px',
+  },
+  '& .MuiAccordionDetails-root': {
+    pt: 0,
+  },
 } as const;
 
 const formContainerStyle = {
@@ -121,6 +161,18 @@ export default function NotesPage({ story }: Props) {
     return <NoDataAvailable />;
   }
 
+  const usNotice = (
+    <Accordion sx={usNoticeStyle}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <SmsFailedOutlined color="error" sx={{ mr: 1.25, mt: '1px' }} />
+        <Typography variant="body1">{t('notes.usNoticeTitle')}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Typography variant="body2">{t('notes.usNoticeDescription')}</Typography>
+      </AccordionDetails>
+    </Accordion>
+  );
+
   const renderFormSection = () => {
     if (!userId) {
       // Unauthenticated user - show registration form
@@ -135,17 +187,20 @@ export default function NotesPage({ story }: Props) {
               style={{ objectFit: 'contain' }}
             />
           </Box>
-          <Card sx={formCardStyle}>
-            <CardContent>
-              <Typography variant="h2" component="h2">
-                {t('notes.createAccount')}
-              </Typography>
-              <Typography variant="body2" pb={2}>
-                {t('notes.createAccountDescription')}
-              </Typography>
-              <RegisterNotesForm />
-            </CardContent>
-          </Card>
+          <Box sx={{ maxWidth: 600 }}>
+            {usNotice}
+            <Card sx={formCardStyle}>
+              <CardContent>
+                <Typography variant="h2" component="h2">
+                  {t('notes.createAccount')}
+                </Typography>
+                <Typography variant="body2" pb={2}>
+                  {t('notes.createAccountDescription')}
+                </Typography>
+                <RegisterNotesForm />
+              </CardContent>
+            </Card>
+          </Box>
         </Box>
       );
     } else if (!hasActiveWhatsappSub) {
@@ -161,17 +216,20 @@ export default function NotesPage({ story }: Props) {
               style={{ objectFit: 'contain' }}
             />
           </Box>
-          <Card sx={formCardStyle}>
-            <CardContent>
-              <Typography variant="h2" component="h2">
-                {t('form.subscribeTitle')}
-              </Typography>
-              <Typography variant="body2" pb={2}>
-                {t('notes.subscribeDescription')}
-              </Typography>
-              <WhatsappSubscribeForm />
-            </CardContent>
-          </Card>
+          <Box sx={{ maxWidth: 600 }}>
+            {usNotice}
+            <Card sx={formCardStyle}>
+              <CardContent>
+                <Typography variant="h2" component="h2">
+                  {t('form.subscribeTitle')}
+                </Typography>
+                <Typography variant="body2" pb={2}>
+                  {t('notes.subscribeDescription')}
+                </Typography>
+                <WhatsappSubscribeForm />
+              </CardContent>
+            </Card>
+          </Box>
         </Box>
       );
     }
@@ -188,17 +246,20 @@ export default function NotesPage({ story }: Props) {
             style={{ objectFit: 'contain' }}
           />
         </Box>
-        <Card sx={formCardStyle}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('form.unsubscribeTitle')}
-            </Typography>
-            <Typography variant="body2" pb={2}>
-              {t('notes.unsubscribeDescription')}
-            </Typography>
-            <WhatsappUnsubscribeForm />
-          </CardContent>
-        </Card>
+        <Box sx={{ maxWidth: 600 }}>
+          {usNotice}
+          <Card sx={formCardStyle}>
+            <CardContent>
+              <Typography variant="h2" component="h2">
+                {t('form.unsubscribeTitle')}
+              </Typography>
+              <Typography variant="body2" pb={2}>
+                {t('notes.unsubscribeDescription')}
+              </Typography>
+              <WhatsappUnsubscribeForm />
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
     );
   };

@@ -1,6 +1,4 @@
-import StoryblokCoursePage, {
-  StoryblokCoursePageProps,
-} from '@/components/storyblok/StoryblokCoursePage';
+import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -80,7 +78,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return (
-    <StoryblokCoursePage {...(story.content as StoryblokCoursePageProps)} storyUuid={story.uuid} />
-  );
+  return <StoryblokCoursePage story={story} />;
 }

@@ -15,7 +15,8 @@ import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -30,7 +31,6 @@ import StoryblokTeamMembersSection, {
 import { StoryblokReferenceProps } from './StoryblokTypes';
 
 export interface StoryblokResourceSingleVideoPageProps {
-  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -47,12 +47,11 @@ export interface StoryblokResourceSingleVideoPageProps {
   languages: string[];
   included_for_partners: string[];
   component: 'resource_single_video';
-  tags: STORYBLOK_TAGS[];
 }
 
-const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPageProps) => {
+const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    storyUuid,
     _uid,
     _editable,
     name,
@@ -67,8 +66,9 @@ const StoryblokResourceSingleVideoPage = (props: StoryblokResourceSingleVideoPag
     references,
     languages,
     included_for_partners,
-    tags,
-  } = props;
+  } = story.content as StoryblokResourceSingleVideoPageProps;
+  const storyUuid = story.uuid;
+  const tags = story.tag_list as STORYBLOK_TAGS[];
 
   const locale = useLocale();
   const referralPartner = useCookieReferralPartner();

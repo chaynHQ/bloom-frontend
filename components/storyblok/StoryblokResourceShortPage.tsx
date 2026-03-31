@@ -11,6 +11,7 @@ import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
+import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
@@ -22,7 +23,6 @@ import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
 export interface StoryblokResourceShortPageProps {
-  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -31,8 +31,6 @@ export interface StoryblokResourceShortPageProps {
   video: { url: string };
   video_transcript: StoryblokRichtext;
   page_sections: StoryblokPageSectionProps[];
-  related_session?: ISbStoryData;
-  related_course?: ISbStoryData;
   related_content: StoryblokRelatedContentStory[];
   related_exercises: string[];
   languages: string[];
@@ -40,9 +38,19 @@ export interface StoryblokResourceShortPageProps {
   included_for_partners: string[];
 }
 
-const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
+interface Props {
+  story: ISbStoryData;
+  related_course?: ISbStoryData;
+  related_session?: ISbStoryData;
+}
+
+const StoryblokResourceShortPage = ({
+  story: initialStory,
+  related_course,
+  related_session,
+}: Props) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    storyUuid,
     _uid,
     _editable,
     name,
@@ -50,13 +58,13 @@ const StoryblokResourceShortPage = (props: StoryblokResourceShortPageProps) => {
     video,
     video_transcript,
     page_sections,
-    related_session,
-    related_course,
     related_content,
     related_exercises,
     languages,
     included_for_partners,
-  } = props;
+  } = story.content as StoryblokResourceShortPageProps;
+  const storyUuid = story.uuid;
+
   const locale = useLocale();
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);

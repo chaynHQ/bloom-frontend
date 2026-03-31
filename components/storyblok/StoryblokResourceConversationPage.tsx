@@ -9,7 +9,8 @@ import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box, Container } from '@mui/material';
-import { storyblokEditable } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -20,7 +21,6 @@ import { StoryblokPageSectionProps } from './StoryblokPageSection';
 import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 
 export interface StoryblokResourceConversationPageProps {
-  storyUuid: string;
   _uid: string;
   _editable: string;
   name: string;
@@ -37,9 +37,9 @@ export interface StoryblokResourceConversationPageProps {
   included_for_partners: string[];
 }
 
-const StoryblokResourceConversationPage = (props: StoryblokResourceConversationPageProps) => {
+const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    storyUuid,
     _uid,
     _editable,
     name,
@@ -52,7 +52,8 @@ const StoryblokResourceConversationPage = (props: StoryblokResourceConversationP
     related_exercises,
     languages,
     included_for_partners,
-  } = props;
+  } = story.content as StoryblokResourceConversationPageProps;
+  const storyUuid = story.uuid;
 
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
