@@ -30,7 +30,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Skip Known Automation Bots (PR Author)
+        id: skip-automation
+        uses: actions/github-script@v8
+        env:
+          AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const automationServices = process.env.AUTOMATION_BOTS.split('\n').filter(s => s.trim());
+
+            const prAuthor = pr.user.login.toLowerCase();
+            const isAutomationBot = automationServices.some(service => 
+              prAuthor.includes(service.toLowerCase().trim())
+            );
+
+            if (isAutomationBot) {
+              core.setOutput('skip-all', 'true');
+              console.log(`Skipping analysis for known automation bot: ${pr.user.login}`);
+            } else {
+              core.setOutput('skip-all', 'false');
+            }
+
       - name: Check if PR is from Fork
+        if: steps.skip-automation.outputs.skip-all == 'false'
         id: fork-check
         uses: actions/github-script@v8
         with:
@@ -71,7 +94,7 @@ jobs:
             }
 
       - name: Analyze Fork Owner Account
-        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: account-analysis
         uses: actions/github-script@v8
         with:
@@ -154,7 +177,7 @@ jobs:
             core.setOutput('account-flags-count', suspiciousFlags.length);
 
       - name: Analyze Commit Patterns
-        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: commit-analysis
         uses: actions/github-script@v8
         with:
@@ -232,7 +255,7 @@ jobs:
             core.setOutput('total-commits', commits.data.length);
 
       - name: Calculate Total Suspicion Score
-        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         id: final-score
         run: |
           ACCOUNT_SCORE=$((${{ steps.account-analysis.outputs.account-score || 0 }}))
@@ -252,7 +275,7 @@ jobs:
           fi
 
       - name: Apply Labels - Suspicious
-        if: steps.final-score.outputs.action == 'suspicious'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.final-score.outputs.action == 'suspicious'
         uses: actions/github-script@v8
         with:
           script: |
@@ -272,7 +295,7 @@ jobs:
             }
 
       - name: Apply Labels - Flagged
-        if: steps.final-score.outputs.action == 'flag'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.final-score.outputs.action == 'flag'
         uses: actions/github-script@v8
         with:
           script: |
@@ -292,7 +315,7 @@ jobs:
             }
 
       - name: Post Analysis Report
-        if: steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.fork-check.outputs.is-fork == 'true' && steps.check-automation-service.outputs.skip-analysis == 'false'
         uses: actions/github-script@v8
         with:
           script: |
@@ -385,7 +408,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Skip Known Automation Bots (Comment Author)
+        id: skip-automation
+        uses: actions/github-script@v8
+        env:
+          AUTOMATION_BOTS: ${{ env.KNOWN_AUTOMATION_BOTS }}
+        with:
+          script: |
+            const comment = context.payload.comment;
+            const automationServices = process.env.AUTOMATION_BOTS.split('\n').filter(s => s.trim());
+
+            const commentAuthor = comment.user.login.toLowerCase();
+            const isAutomationBot = automationServices.some(service => 
+              commentAuthor.includes(service.toLowerCase().trim())
+            );
+
+            if (isAutomationBot) {
+              core.setOutput('skip-all', 'true');
+              console.log(`Skipping analysis for known automation bot: ${comment.user.login}`);
+            } else {
+              core.setOutput('skip-all', 'false');
+            }
+
       - name: Analyze Commenter Account
+        if: steps.skip-automation.outputs.skip-all == 'false'
         id: commenter-analysis
         uses: actions/github-script@v8
         env:
@@ -451,7 +497,7 @@ jobs:
             core.setOutput('is-suspicious', suspicionScore >= 25 ? 'true' : 'false');
 
       - name: Analyze Comment Content
-        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.commenter-analysis.outputs.is-suspicious == 'true'
         id: comment-content-analysis
         uses: actions/github-script@v8
         with:
@@ -500,7 +546,7 @@ jobs:
             core.setOutput('content-flags', contentFlags.join('\n'));
 
       - name: Determine Action on Suspicious Comments
-        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.commenter-analysis.outputs.is-suspicious == 'true'
         id: determine-action
         run: |
           COMMENTER_SCORE=$((${{ steps.commenter-analysis.outputs.score || 0 }}))
@@ -516,7 +562,7 @@ jobs:
           fi
 
       - name: Post Bot Comment Alert
-        if: steps.commenter-analysis.outputs.is-suspicious == 'true'
+        if: steps.skip-automation.outputs.skip-all == 'false' && steps.commenter-analysis.outputs.is-suspicious == 'true'
         uses: actions/github-script@v8
         with:
           script: |
