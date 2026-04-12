@@ -55,7 +55,7 @@
     "@storyblok/react": "^5.4.22",
     "@types/dompurify": "^3.0.5",
     "@vercel/analytics": "^1.5.0",
-    "axios": "^1.14.0",
+    "axios": "^1.15.0",
     "brace-expansion": "^4.0.1",
     "cross-spawn": "^7.0.0",
     "date-fns": "^4.1.0",
