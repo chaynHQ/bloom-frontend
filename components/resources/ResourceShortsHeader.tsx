@@ -46,6 +46,7 @@ interface ResourceShortHeaderProps {
   video_transcript: StoryblokRichtext;
   nextResourceHref: string | undefined;
   eventData: { [key: string]: any };
+  cta?: React.ReactNode;
 }
 
 export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
@@ -59,6 +60,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
     video_transcript,
     nextResourceHref,
     eventData,
+    cta,
   } = props;
   const t = useTranslations('Resources');
   const locale = useLocale();
@@ -97,6 +99,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             video_transcript={video_transcript}
           />
           {resourceProgress && <ProgressStatus status={resourceProgress} />}
+          {cta && <Box>{cta}</Box>}
         </Box>
         {relatedSession && (
           <Box sx={headerRightStyle}>

@@ -39,8 +39,8 @@ community include:
 🤖 AI-Generated Contributions
 
 Chayn's open source community is built around humans, bringing together survivors,
-allies, and contributors who offer lived experience, care, and collaboration. While 
-many contributors use AI tools as part of their workflow, fully automated contributions 
+allies, and contributors who offer lived experience, care, and collaboration. While
+many contributors use AI tools as part of their workflow, fully automated contributions
 are not in the spirit of this community and will not be accepted.
 
 ## 📣 Enforcement Responsibilities
