@@ -23,7 +23,7 @@ env:
     newrelic
     pre-commit-ci
     vercel
-    
+
 jobs:
   analyze-fork-pr:
     if: github.event_name == 'pull_request'
@@ -80,12 +80,12 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const automationServices = process.env.AUTOMATION_BOTS.split('\n').filter(s => s.trim());
-            
+
             const forkOwner = pr.head.repo.owner.login.toLowerCase();
             const isAutomationService = automationServices.some(service => 
               forkOwner.includes(service.toLowerCase().trim())
             );
-            
+
             if (isAutomationService) {
               core.setOutput('skip-analysis', 'true');
               console.log(`Skipping analysis for known automation service: ${forkOwner}`);
