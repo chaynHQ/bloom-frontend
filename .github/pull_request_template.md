@@ -8,7 +8,7 @@
 
 <!---ABOUT RUNNING TESTS :->
 - Directions for running tests are in the README.md.
-- Tests are not required to pass. 
+- Tests are not required to pass.
 - Run unit tests
 - Run Cypress tests if required for contribution.
 - Some tests may require multiple runs before success.
@@ -16,7 +16,9 @@
 <!-->
 
 ### PR CHECKLIST:
+
 Before submitting, check that you have completed the following tasks:
+
 - [ ] Answered the questions above.
 - [ ] Enabled "Allow edits and access to secrets by maintainers" on this PR.
 - [ ] If applicable, include images in the description.
