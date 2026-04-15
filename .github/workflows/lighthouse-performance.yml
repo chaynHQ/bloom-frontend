@@ -31,7 +31,7 @@ jobs:
 
           for i in $(seq 1 $MAX_ATTEMPTS); do
             RESPONSE=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
-              "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_TEAM_ID}&meta-githubCommitSha=${COMMIT_SHA}&limit=1")
+              "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_TEAM_ID}&sha=${COMMIT_SHA}&limit=1")
 
             STATE=$(echo "$RESPONSE" | jq -r '.deployments[0].state // empty')
             URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
