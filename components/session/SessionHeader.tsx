@@ -29,10 +29,12 @@ interface SessionHeaderProps {
   subtitle?: string;
   storyUuid: string;
   storyPosition?: number;
+  cta?: React.ReactNode;
 }
 
 export const SessionHeader = (props: SessionHeaderProps) => {
-  const { description, name, sessionProgress, course, subtitle, storyUuid, storyPosition } = props;
+  const { description, name, sessionProgress, course, subtitle, storyUuid, storyPosition, cta } =
+    props;
 
   const t = useTranslations('Courses');
   const locale = useLocale();
@@ -71,6 +73,7 @@ export const SessionHeader = (props: SessionHeaderProps) => {
       imageSrc={headerProps.imageSrc}
       imageAlt={headerProps.imageAlt}
       progressStatus={sessionProgress}
+      cta={cta}
     >
       <Box>
         <Button
