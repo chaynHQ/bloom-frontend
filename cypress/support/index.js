@@ -29,7 +29,11 @@ if (bypassSecret) {
   });
 
   beforeEach(() => {
-    cy.setCookie('x-vercel-protection-bypass', bypassSecret);
+    // Re-establish the Vercel bypass cookie before each test, in case
+    // cy.clearAllCookies() removed it (e.g. in cleanUpTestState).
+    // The cy.visit override adds the bypass query params automatically,
+    // which tells Vercel to set the _vercel_jwt session cookie.
+    cy.visit('/', { failOnStatusCode: false });
   });
 }
 
