@@ -137,6 +137,7 @@ jobs:
           CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_VERCEL_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Upload artifacts only on failure to reduce log size
@@ -218,4 +219,5 @@ jobs:
           CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_VERCEL_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
