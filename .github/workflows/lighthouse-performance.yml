@@ -16,13 +16,39 @@ jobs:
       deployments: read
       statuses: read
     steps:
-      - name: Wait for Vercel preview deployment to be ready
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
+      - name: Wait for Vercel deployment
         id: waitForVercelDeployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 1000
-          check_interval: 5
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+        run: |
+          COMMIT_SHA="${GITHUB_SHA}"
+          MAX_ATTEMPTS=50
+          INTERVAL=20
+
+          echo "Waiting for Vercel deployment for commit ${COMMIT_SHA}..."
+
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+              "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_TEAM_ID}&meta-githubCommitSha=${COMMIT_SHA}&limit=1")
+
+            STATE=$(echo "$RESPONSE" | jq -r '.deployments[0].state // empty')
+            URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
+
+            if [ "$STATE" = "READY" ] && [ -n "$URL" ]; then
+              FULL_URL="https://${URL}"
+              echo "Deployment ready: ${FULL_URL}"
+              echo "url=${FULL_URL}" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "Attempt ${i}/${MAX_ATTEMPTS}: state=${STATE:-not found}, waiting ${INTERVAL}s..."
+            sleep $INTERVAL
+          done
+
+          echo "::error::Timed out waiting for Vercel deployment"
+          exit 1
 
   lighthouse-desktop:
     runs-on: ubuntu-24.04
