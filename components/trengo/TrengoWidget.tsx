@@ -36,9 +36,7 @@ export const TrengoWidget = () => {
   useEffect(() => {
     const fetchFieldIds = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/trengo/custom-field-ids`,
-        );
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trengo/custom-field-ids`);
         if (res.ok) {
           fieldIdsRef.current = await res.json();
         }

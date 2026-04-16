@@ -101,7 +101,11 @@ const frameSrcUrls = [
   'https://www.google.com/recaptcha/',
   'https://www.gstatic.com/recaptcha/',
 ];
-const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com', 'https://static.widget.trengo.eu'];
+const mediaSrcUrls = [
+  'https://*.storyblok.com',
+  'https://a.storyblok.com',
+  'https://static.widget.trengo.eu',
+];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
 const formActionUrls = ['self'];
