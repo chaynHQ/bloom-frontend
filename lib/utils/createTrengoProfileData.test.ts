@@ -1,7 +1,7 @@
 import { STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
 import { Course, Session } from '@/lib/store/coursesSlice';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
-import { createCrispProfileData } from '@/lib/utils/createCrispProfileData';
+import { createTrengoProfileData } from '@/lib/utils/createTrengoProfileData';
 import { expect } from '@jest/globals';
 
 const partnerAccess = {
@@ -47,10 +47,10 @@ const course = {
   ],
 } as Course;
 
-describe('createCrispProfileData', () => {
-  describe('createCrispProfileData should return correctly ', () => {
+describe('createTrengoProfileData', () => {
+  describe('createTrengoProfileData should return correctly ', () => {
     it('when supplied with user with no partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData([], [])).toEqual([
+      expect(createTrengoProfileData([], [])).toEqual([
         ['partners', ''],
         ['feature_live_chat', true],
         ['feature_therapy', false],
@@ -59,7 +59,7 @@ describe('createCrispProfileData', () => {
       ]);
     });
     it('when supplied with user with two partneraccess , it should return correctly', () => {
-      expect(createCrispProfileData([partnerAccess, partnerAccess], [])).toEqual([
+      expect(createTrengoProfileData([partnerAccess, partnerAccess], [])).toEqual([
         ['partners', 'partner; partner'],
         ['feature_live_chat', true],
         ['feature_therapy', true],
@@ -68,7 +68,7 @@ describe('createCrispProfileData', () => {
       ]);
     });
     it('when supplied with user with a course , it should return correctly', () => {
-      expect(createCrispProfileData([], [course])).toEqual([
+      expect(createTrengoProfileData([], [course])).toEqual([
         ['partners', ''],
         ['feature_live_chat', true],
         ['feature_therapy', false],

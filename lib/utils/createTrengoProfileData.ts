@@ -17,7 +17,7 @@ const formatSessionKey = (courseName: string, status: PROGRESS_STATUS) => {
   return `course_${getAcronym(courseName)}_sessions_${status.toLowerCase()}`;
 };
 
-export const createCrispProfileData = (
+export const createTrengoProfileData = (
   partnerAccesses: PartnerAccesses,
   course: Course[],
 ): [string, string | boolean | number][] => {

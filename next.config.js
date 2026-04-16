@@ -102,13 +102,13 @@ module.exports = withBundleAnalyzer(
           },
         ];
       },
-      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Crisp iframes, Rollbar, SimplyBook, and Zapier.
-      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Crisp.
-      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Crisp.
+      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Trengo widget, Rollbar, SimplyBook, and Zapier.
+      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Trengo.
+      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Trengo.
       // font-src: Allows fonts from the same origin and Google's Fonts API.
-      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Crisp.
-      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Crisp, Firebase, Rollbar, SimplyBook, and Zapier.
-      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Crisp.
+      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Trengo.
+      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Trengo, Firebase, Rollbar, SimplyBook, and Zapier.
+      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Trengo.
       // object-src: Disallows all object sources.
       // base-uri: Restricts the base URI to the same origin.
       // form-action: Restricts form actions to the same origin.
