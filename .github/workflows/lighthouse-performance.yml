@@ -77,7 +77,9 @@ jobs:
             https://bloom-frontend-git-develop-chaynhq.vercel.app/welcome/bumble
           budgetPath: ./lighthouse_desktop_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-desktop-rc.yml' # set lighthouse config
+          extraHeaders: '{"x-ci-firewall-bypass": "${{ secrets.CI_FIREWALL_BYPASS }}"}'
       - name: Upload artifact
+        if: steps.lighthouseDesktop.outputs.resultsPath != ''
         uses: actions/upload-artifact@v7
         with:
           name: desktop-lighthouse-report
@@ -109,7 +111,9 @@ jobs:
             https://bloom-frontend-git-develop-chaynhq.vercel.app/welcome/bumble
           budgetPath: ./lighthouse_budget.json # test performance budgets
           configPath: '.github/configs/lighthouse-rc.yml' # set lighthouse config
+          extraHeaders: '{"x-ci-firewall-bypass": "${{ secrets.CI_FIREWALL_BYPASS }}"}'
       - name: Upload artifact
+        if: steps.lighthouseMobile.outputs.resultsPath != ''
         uses: actions/upload-artifact@v7
         with:
           name: mobile-lighthouse-report
