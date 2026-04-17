@@ -35,19 +35,29 @@ jobs:
 
             STATE=$(echo "$RESPONSE" | jq -r '.deployments[0].state // empty')
             DEPLOYMENT_ID=$(echo "$RESPONSE" | jq -r '.deployments[0].uid // empty')
-            UNIQUE_URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
 
             if [ "$STATE" = "READY" ] && [ -n "$DEPLOYMENT_ID" ]; then
-              # Prefer the stable branch alias over the unique deployment URL — the
-              # unique URL hits stricter Vercel edge rate limits under automated load.
-              DETAILS=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
-                "https://api.vercel.com/v13/deployments/${DEPLOYMENT_ID}?teamId=${VERCEL_TEAM_ID}")
-              BRANCH_ALIAS=$(echo "$DETAILS" | jq -r '.alias[]? | select(contains("-git-"))' | head -n 1)
-              URL="${BRANCH_ALIAS:-$UNIQUE_URL}"
+              echo "Deployment READY (id: ${DEPLOYMENT_ID}). Waiting for branch alias assignment..."
 
-              FULL_URL="https://${URL}"
-              echo "Deployment ready: ${FULL_URL}"
-              echo "url=${FULL_URL}" >> "$GITHUB_OUTPUT"
+              for j in $(seq 1 15); do
+                DETAILS=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+                  "https://api.vercel.com/v13/deployments/${DEPLOYMENT_ID}?teamId=${VERCEL_TEAM_ID}")
+                BRANCH_ALIAS=$(echo "$DETAILS" | jq -r '[.alias[]? | select(contains("-git-"))][0] // empty')
+
+                if [ -n "$BRANCH_ALIAS" ] && [ "$BRANCH_ALIAS" != "null" ]; then
+                  echo "url=https://${BRANCH_ALIAS}" >> "$GITHUB_OUTPUT"
+                  echo "✓ Branch alias ready: https://${BRANCH_ALIAS}"
+                  exit 0
+                fi
+
+                echo "  Alias attempt ${j}/15: not yet assigned, waiting 3s..."
+                sleep 3
+              done
+
+              UNIQUE_URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url')
+              echo "::error::Branch alias never assigned after 45s. Full alias array: $(echo "$DETAILS" | jq -c '.alias')"
+              echo "::warning::Falling back to unique URL: https://${UNIQUE_URL}"
+              echo "url=https://${UNIQUE_URL}" >> "$GITHUB_OUTPUT"
               exit 0
             fi
 
