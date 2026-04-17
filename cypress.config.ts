@@ -8,6 +8,7 @@ export default defineConfig({
   defaultCommandTimeout: 10000,
   requestTimeout: 10000,
   responseTimeout: 10000,
+  retries: { runMode: 2, openMode: 0 },
   env: process.env, // Uses project environment variables set in .env
   e2e: {
     setupNodeEvents(on, config) {
