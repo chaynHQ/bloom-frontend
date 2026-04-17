@@ -34,9 +34,17 @@ jobs:
               "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_TEAM_ID}&sha=${COMMIT_SHA}&limit=1")
 
             STATE=$(echo "$RESPONSE" | jq -r '.deployments[0].state // empty')
-            URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
+            DEPLOYMENT_ID=$(echo "$RESPONSE" | jq -r '.deployments[0].uid // empty')
+            UNIQUE_URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
 
-            if [ "$STATE" = "READY" ] && [ -n "$URL" ]; then
+            if [ "$STATE" = "READY" ] && [ -n "$DEPLOYMENT_ID" ]; then
+              # Prefer the stable branch alias over the unique deployment URL — the
+              # unique URL hits stricter Vercel edge rate limits under automated load.
+              DETAILS=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+                "https://api.vercel.com/v13/deployments/${DEPLOYMENT_ID}?teamId=${VERCEL_TEAM_ID}")
+              BRANCH_ALIAS=$(echo "$DETAILS" | jq -r '.alias[]? | select(contains("-git-"))' | head -n 1)
+              URL="${BRANCH_ALIAS:-$UNIQUE_URL}"
+
               FULL_URL="https://${URL}"
               echo "Deployment ready: ${FULL_URL}"
               echo "url=${FULL_URL}" >> "$GITHUB_OUTPUT"
