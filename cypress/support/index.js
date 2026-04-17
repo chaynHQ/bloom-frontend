@@ -8,10 +8,9 @@ const customCommands = require('./commands.js');
 const firewallBypass = Cypress.env('CI_FIREWALL_BYPASS');
 if (firewallBypass) {
   // Cookie covers navigation and asset requests (cookies are auto-sent by the browser).
-  Cypress.Commands.overwrite('visit', (originalFn, ...args) => {
-    cy.setCookie('ci-firewall-bypass', firewallBypass);
-    return originalFn(...args);
-  });
+  Cypress.Commands.overwrite('visit', (originalFn, ...args) =>
+    cy.setCookie('ci-firewall-bypass', firewallBypass).then(() => originalFn(...args)),
+  );
 
   // Header covers cy.request (cookies from cy.setCookie aren't always sent with it).
   Cypress.Commands.overwrite('request', (originalFn, ...args) => {
