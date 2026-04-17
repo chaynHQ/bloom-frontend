@@ -8,7 +8,7 @@
 
 ### Summary
 
-We use [Cypress](https://learn.cypress.io/) for integration testing and [MailSlurp](https://www.mailslurp.com/) for email tesitng. Integration tests run locally with Chrome. In GitHub Action CI workflows, it runs against the staging backend. Cypress tests require the frontend running on `localhost:3000` port and backend running with populated database.
+We use [Cypress](https://learn.cypress.io/) for integration testing and [MailSlurp](https://www.mailslurp.com/) for email testing. Integration tests run locally with Chrome. In GitHub Action CI workflows, it runs against the staging backend. Cypress tests require the frontend running on `localhost:3000` port and backend running with populated database.
 
 ## Set-Up:
 
