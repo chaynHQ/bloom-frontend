@@ -4,7 +4,7 @@
     "getStartedBloom": "Bloom ke saath shuruat karte hain",
     "getStartedWith": "{partnerName} code ke saath shuru karte hain",
     "loginLink": "Aapke paas pehle se he account hai? <loginLink>Login kariye</loginLink>",
-    "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <policiesLink>Sevao ki Sharte aur Privacy Policy</policiesLink> sweekaar kar rahe hain.",
+    "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <termsLink>Sevao ki Sharte</termsLink> aur <privacyLink>Privacy Policy</privacyLink> sweekaar kar rahe hain.",
     "login": {
       "title": "Vapas se swagat hai",
       "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here</resetLink>",
