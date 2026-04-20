@@ -174,10 +174,7 @@ module.exports = withBundleAnalyzer(
         return [
           {
             source: '/(.*)',
-            headers: [
-              { key: 'Content-Security-Policy', value: buildCsp() },
-              ...sharedHeaders,
-            ],
+            headers: [{ key: 'Content-Security-Policy', value: buildCsp() }, ...sharedHeaders],
           },
           {
             // Trengo's widget uses Vue's standalone build, which requires 'unsafe-eval'.
