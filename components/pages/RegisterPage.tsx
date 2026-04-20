@@ -228,20 +228,12 @@ export default function RegisterPage() {
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {
                   termsLink: (children) => (
-                    <Link
-                      target="_blank"
-                      component={i18nLink}
-                      href="https://www.chayn.co/policies/terms-of-service"
-                    >
+                    <Link target="_blank" component={i18nLink} href="/policies/terms-of-service">
                       {children}
                     </Link>
                   ),
                   privacyLink: (children) => (
-                    <Link
-                      target="_blank"
-                      component={i18nLink}
-                      href="https://www.chayn.co/policies/privacy-policy"
-                    >
+                    <Link target="_blank" href="https://www.chayn.co/policies/privacy-policy">
                       {children}
                     </Link>
                   ),
