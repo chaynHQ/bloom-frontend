@@ -227,10 +227,20 @@ export default function RegisterPage() {
 
               <Typography variant="body2" component="p" textAlign="center">
                 {t.rich('terms', {
-                  policiesLink: (children) => (
+                  termsLink: (children) => (
                     <Link
+                      target="_blank"
                       component={i18nLink}
-                      href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
+                      href="https://www.chayn.co/policies/terms-of-service"
+                    >
+                      {children}
+                    </Link>
+                  ),
+                  privacyLink: (children) => (
+                    <Link
+                      target="_blank"
+                      component={i18nLink}
+                      href="https://www.chayn.co/policies/privacy-policy"
                     >
                       {children}
                     </Link>
