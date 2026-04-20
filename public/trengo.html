@@ -5,6 +5,31 @@
     <title>Bloom messaging</title>
     <meta name="description" content="Bloom messaging" />
     <meta name="keywords" content="Bloom messaging" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      /* Hide the floating chat launcher — the panel is always visible inline. */
+      .TrengoWidgetLauncher__iframe {
+        display: none !important;
+      }
+      /* Stretch the chat panel iframe to fill the host container. */
+      .TrengoWidgetPanel__iframe {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        border: none !important;
+        border-radius: 0 !important;
+      }
+    </style>
     <script type="text/javascript">
       window.Trengo = window.Trengo || {};
     </script>

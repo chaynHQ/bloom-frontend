@@ -95,8 +95,8 @@ const slice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    clearUserSlice: () => {
-      return initialState;
+    clearUserSlice: (state) => {
+      return { ...initialState, loadError: state.loadError };
     },
     setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;

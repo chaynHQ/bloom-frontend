@@ -40,6 +40,7 @@ const childSrcUrls = ['blob:'];
 const workerSrcUrls = ['blob:', 'https://*.youtube.com'];
 const styleSrcUrls = [
   'https://fonts.googleapis.com',
+  'https://fonts.bunny.net',
   'https://static.hotjar.com',
   'https://app.storyblok.com',
   'https://static.widget.trengo.eu',
@@ -77,6 +78,7 @@ const connectSrcUrls = [
   'https://*.zapier.com',
   'https://*.nr-data.net',
   'https://api.widget.trengo.eu',
+  'https://static.widget.trengo.eu',
   'wss://ws-eu.pusher.com',
   'https://ipinfo.io',
   'https://*.noembed.com',

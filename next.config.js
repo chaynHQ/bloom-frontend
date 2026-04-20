@@ -114,65 +114,94 @@ module.exports = withBundleAnalyzer(
       // form-action: Restricts form actions to the same origin.
       // frame-ancestors: Restricts embedding to the same origin.
       async headers() {
+        const buildCsp = ({ unsafeEval } = {}) =>
+          `
+            default-src 'self';
+            script-src 'self' 'unsafe-inline' ${unsafeEval ? "'unsafe-eval' " : ''}${scriptSrcUrls.join(' ')};
+            child-src 'self' blob:;
+            worker-src 'self' ${workerSrcUrls.join(' ')};
+            style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
+            font-src 'self' ${fontSrcUrls.join(' ')};
+            img-src 'self' data: ${imgSrcUrls.join(' ')};
+            media-src 'self' ${mediaSrcUrls.join(' ')};
+            connect-src 'self' ${connectSrcUrls.join(' ')};
+            frame-src 'self' ${frameSrcUrls.join(' ')};
+            object-src 'none';
+            base-uri 'self';
+            form-action 'self';
+            frame-ancestors ${frameAncestorsUrls.join(' ')};
+            upgrade-insecure-requests;
+          `
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+
+        const sharedHeaders = [
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Permissions-Policy',
+            value:
+              'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
+          },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin-allow-popups',
+          },
+          ...(process.env.NODE_ENV === 'production'
+            ? [
+                {
+                  key: 'Strict-Transport-Security',
+                  value: 'max-age=31536000; includeSubDomains; preload',
+                },
+              ]
+            : []),
+        ];
+
         return [
           {
             source: '/(.*)',
             headers: [
-              {
-                key: 'Content-Security-Policy',
-                value: `
-                  default-src 'self';
-                  script-src 'self' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
-                  child-src 'self' blob:;
-                  worker-src 'self' ${workerSrcUrls.join(' ')};
-                  style-src 'self' 'unsafe-inline' ${styleSrcUrls.join(' ')};
-                  font-src 'self' ${fontSrcUrls.join(' ')};
-                  img-src 'self' data: ${imgSrcUrls.join(' ')};
-                  media-src 'self' ${mediaSrcUrls.join(' ')};
-                  connect-src 'self' ${connectSrcUrls.join(' ')};
-                  frame-src 'self' ${frameSrcUrls.join(' ')};
-                  object-src 'none';
-                  base-uri 'self';
-                  form-action 'self';
-                  frame-ancestors ${frameAncestorsUrls.join(' ')};
-                  upgrade-insecure-requests;
-                `
-                  .replace(/\s{2,}/g, ' ')
-                  .trim(),
-              },
-              {
-                key: 'Referrer-Policy',
-                value: 'strict-origin-when-cross-origin',
-              },
-              {
-                key: 'X-Content-Type-Options',
-                value: 'nosniff',
-              },
-              {
-                key: 'X-Frame-Options',
-                value: 'SAMEORIGIN',
-              },
-              {
-                key: 'X-XSS-Protection',
-                value: '1; mode=block',
-              },
-              {
-                key: 'Permissions-Policy',
-                value:
-                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
-              },
-              {
-                key: 'Cross-Origin-Opener-Policy',
-                value: 'same-origin-allow-popups',
-              },
-              ...(process.env.NODE_ENV === 'production'
-                ? [
-                    {
-                      key: 'Strict-Transport-Security',
-                      value: 'max-age=31536000; includeSubDomains; preload',
-                    },
-                  ]
-                : []),
+              { key: 'Content-Security-Policy', value: buildCsp() },
+              ...sharedHeaders,
+            ],
+          },
+          {
+            // Trengo's widget uses Vue's standalone build, which requires 'unsafe-eval'.
+            // The widget runs inside an iframe that loads /trengo.html, so the relaxed
+            // CSP must apply there as well as on /messaging routes that host the iframe.
+            // These rules must come AFTER the catch-all so they override it for matching paths.
+            source: '/trengo.html',
+            headers: [
+              { key: 'Content-Security-Policy', value: buildCsp({ unsafeEval: true }) },
+              ...sharedHeaders,
+            ],
+          },
+          {
+            source: '/:locale(en|es|de|fr|pt|hi)?/messaging/:path*',
+            headers: [
+              { key: 'Content-Security-Policy', value: buildCsp({ unsafeEval: true }) },
+              ...sharedHeaders,
+            ],
+          },
+          {
+            source: '/:locale(en|es|de|fr|pt|hi)?/messaging',
+            headers: [
+              { key: 'Content-Security-Policy', value: buildCsp({ unsafeEval: true }) },
+              ...sharedHeaders,
             ],
           },
         ];

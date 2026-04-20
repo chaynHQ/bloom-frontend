@@ -2,25 +2,22 @@
 
 import { CHAT_MESSAGE_COMPOSED, CHAT_MESSAGE_SENT, CHAT_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import logEvent from '@/lib/utils/logEvent';
 import { createTrengoProfileData } from '@/lib/utils/createTrengoProfileData';
+import logEvent from '@/lib/utils/logEvent';
 import { Box } from '@mui/material';
 import { useEffect, useRef } from 'react';
 
 const iframeContainerStyle = {
   width: '100%',
   height: '450px',
-  marginTop: { md: -2 },
-  marginBottom: 3,
   maxHeight: '70vh',
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
-  borderTop: '4px solid white',
   overflow: 'hidden',
 } as const;
 
 const iframeStyle = {
-  marginTop: -160,
+  marginTop: -230,
   borderRadius: 16,
   maxHeight: 'calc(70vh + 158px)',
 } as const;
