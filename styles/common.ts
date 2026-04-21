@@ -35,17 +35,21 @@ export const richtextContentStyle = {
   },
 } as const;
 
-export const breadcrumbButtonStyle = {
-  backgroundColor: 'white',
-  ':hover': {
-    background: 'white',
-  },
+export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
   left: { xs: 16, lg: '8%' },
   top: { xs: 68, sm: 80, md: 160 },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
+} as const;
+
+export const breadcrumbButtonStyle = {
+  ...breadcrumbPositionStyle,
+  backgroundColor: 'white',
+  ':hover': {
+    backgroundColor: 'white',
+  },
 } as const;
 
 export const scaleTitleStyle = {
