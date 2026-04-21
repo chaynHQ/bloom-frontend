@@ -1,10 +1,9 @@
 import StoryblokPage from '@/components/storyblok/StoryblokPage';
-import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
-
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
@@ -13,7 +12,7 @@ export const revalidate = 14400; // invalidate every 4 hours
 type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
-  return await getStoryblokStory(slug, locale);
+  return await getStoryblokStory(`policies/${slug}`, locale);
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
@@ -36,29 +35,17 @@ export async function generateStaticParams() {
 
   let sbParams: ISbStoriesParams = {
     version: STORYBLOK_ENVIRONMENT,
+    starts_with: 'policies/',
   };
 
   const { data } = await storyblokApi.get('cdn/links/', sbParams);
 
-  const excludePaths: string[] = [
-    'home',
-    'welcome',
-    'meet-the-team',
-    'courses',
-    'about-our-courses',
-    'messaging',
-    'shorts',
-    'videos',
-    'conversations',
-    'policies',
-  ];
-
   Object.keys(data.links).forEach((linkKey) => {
     const story = data.links[linkKey];
-    const slug = story.slug;
-    const basePath = slug.split('/')[0];
 
-    if (story.is_folder || !story.published || excludePaths.includes(basePath)) return;
+    if (story.is_folder || !story.slug || !story.published) return;
+
+    const slug = story.slug.split('/')[1];
 
     for (const locale of locales) {
       paths.push({ slug, locale });
