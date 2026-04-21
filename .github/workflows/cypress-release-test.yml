@@ -2,7 +2,6 @@ name: Cypress release tests
 
 on:
   push:
-    branches: [develop, dependabot/**, '*test*']
 
 # Cancel in-progress runs when a new run is triggered
 concurrency:
@@ -33,14 +32,16 @@ jobs:
           for i in $(seq 1 $MAX_ATTEMPTS); do
             RESPONSE=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
               "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&teamId=${VERCEL_TEAM_ID}&sha=${COMMIT_SHA}&limit=1")
-
             STATE=$(echo "$RESPONSE" | jq -r '.deployments[0].state // empty')
-            URL=$(echo "$RESPONSE" | jq -r '.deployments[0].url // empty')
+            DEPLOYMENT_ID=$(echo "$RESPONSE" | jq -r '.deployments[0].uid // empty')
 
-            if [ "$STATE" = "READY" ] && [ -n "$URL" ]; then
-              FULL_URL="https://${URL}"
-              echo "Deployment ready: ${FULL_URL}"
-              echo "url=${FULL_URL}" >> "$GITHUB_OUTPUT"
+            if [ "$STATE" = "READY" ] && [ -n "$DEPLOYMENT_ID" ]; then
+              # Prefer the branch alias (readable in test logs) over the unique URL.
+              URL=$(curl -s -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+                "https://api.vercel.com/v13/deployments/${DEPLOYMENT_ID}?teamId=${VERCEL_TEAM_ID}" \
+                | jq -r '[.alias[]? | select(contains("-git-"))][0] // .url')
+              echo "url=https://${URL}" >> "$GITHUB_OUTPUT"
+              echo "Deployment ready: https://${URL}"
               exit 0
             fi
 
@@ -137,7 +138,7 @@ jobs:
           CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_VERCEL_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          CYPRESS_CI_FIREWALL_BYPASS: ${{ secrets.CI_FIREWALL_BYPASS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Upload artifacts only on failure to reduce log size
@@ -219,5 +220,5 @@ jobs:
           CYPRESS_PUBLIC_PASSWORD: ${{secrets.CYPRESS_PUBLIC_PASSWORD}}
           CYPRESS_PUBLIC_NAME: ${{secrets.CYPRESS_PUBLIC_NAME}}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_VERCEL_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          CYPRESS_CI_FIREWALL_BYPASS: ${{ secrets.CI_FIREWALL_BYPASS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
