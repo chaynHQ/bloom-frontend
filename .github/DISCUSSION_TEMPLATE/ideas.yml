@@ -1,0 +1,9 @@
+body:
+- type: input
+  id: ideas
+  attributes:
+    label: ideas
+    description: "How might we make this project better?"
+    placeholder: "Adding a puppy picture would be nice."
+  validations:
+    required: true
