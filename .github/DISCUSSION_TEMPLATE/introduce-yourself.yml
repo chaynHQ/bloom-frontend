@@ -39,7 +39,7 @@ body:
   - type: textarea
     id: links
     attributes:
-      label: 'Links (optional)'
+      label: '🔗 Links (optional)'
       description: 'If you want, share a personal website, blog, or social handle.'
       placeholder: |
         https://your-site.example
