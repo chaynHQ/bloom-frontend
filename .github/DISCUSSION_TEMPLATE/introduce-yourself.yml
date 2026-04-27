@@ -30,7 +30,7 @@ body:
   - type: textarea
     id: emojis
     attributes:
-      label: '😄 What are your favorite emoji(s)?'
+      label: '🌺 What are your favorite emoji(s)?'
       description: 'Share your all time favorites, your most used ones or '
     validations:
       required: false
