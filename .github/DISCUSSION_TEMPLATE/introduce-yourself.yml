@@ -52,7 +52,7 @@ body:
   - type: textarea
     id: anything_else
     attributes:
-      label: '🎨 Anything else you’d like to share?'
+      label: '➕  Anything else you’d like to share?'
       description: 'This can be anything you feel like sharing'
       placeholder: |
         Favorite music 🎶
