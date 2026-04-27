@@ -4,7 +4,7 @@
     "getStartedBloom": "Mit Bloom beginnen",
     "getStartedWith": "Mit dem Code von {partnerName} beginnen",
     "loginLink": "Du hast bereits ein Konto? <loginLink>Zur Anmeldung gehen</loginLink>",
-    "terms": "Indem Du fortfährst, erklärst Du Dich mit unseren <policiesLink>Nutzungsbedingungen und Datenschutzbestimmungen</policiesLink> einverstanden. ",
+    "terms": "Indem Du fortfährst, erklärst Du Dich mit unseren <termsLink>Nutzungsbedingungen</termsLink> und <privacyLink>Datenschutzbestimmungen</privacyLink> einverstanden.",
     "login": {
       "title": "Willkommen zurück",
       "resetPasswordLink": "Passwort vergessen? <resetLink>Hier zurücksetzen</resetLink>",

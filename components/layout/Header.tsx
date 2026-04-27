@@ -119,15 +119,17 @@ const Header = (props: HeaderProps) => {
           </Box>
         </Box>
         <Box sx={rightHeaderStyle}>
-          <Image
-            alt={imageAltText}
-            src={imageSrc}
-            fill
-            sizes={getImageSizes(rightHeaderStyle.width)}
-            style={{
-              objectFit: 'contain',
-            }}
-          />
+          {imageSrc && (
+            <Image
+              alt={imageAltText}
+              src={imageSrc}
+              fill
+              sizes={getImageSizes(rightHeaderStyle.width)}
+              style={{
+                objectFit: 'contain',
+              }}
+            />
+          )}
         </Box>
       </Box>
     </Container>

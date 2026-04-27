@@ -3,6 +3,7 @@
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import SessionCard from '@/components/cards/SessionCard';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
 import { useGetUserCoursesQuery } from '@/lib/api';
@@ -132,6 +133,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
         image_with_background={image_with_background}
         eventData={eventData}
         courseProgress={courseProgress}
+        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
       <Container sx={containerStyle}>
         <>

@@ -14,10 +14,11 @@ interface CourseHeaderProps {
   image_with_background: { filename: string; alt: string };
   courseProgress: PROGRESS_STATUS;
   eventData: { [key: string]: any };
+  cta?: React.ReactNode;
 }
 
 const CourseHeader = (props: CourseHeaderProps) => {
-  const { name, description, image_with_background, courseProgress } = props;
+  const { name, description, image_with_background, courseProgress, cta } = props;
 
   const headerProps = {
     title: name,
@@ -25,6 +26,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
     imageSrc: image_with_background?.filename,
     translatedImageAlt: image_with_background?.alt,
     progressStatus: courseProgress,
+    cta,
   };
 
   const t = useTranslations('Courses');
