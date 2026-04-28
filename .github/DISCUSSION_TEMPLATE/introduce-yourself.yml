@@ -1,0 +1,65 @@
+labels: ['introduce-yourself', 'source:ui']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome! We’re glad you’re here. Feel free to share a bit about yourself so we can get to know each other and connect.
+        - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
+        - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
+        - Feel free to share as much or as little as you like 💛.
+
+  # Found Chayn
+  - type: textarea
+    id: found_chayn
+    attributes:
+      label: '🌱 How did you find this repository or the Chayn organization?'
+      description: '(e.g. through a friend, social media, searching for open source projects, etc.)'
+    validations:
+      required: false
+
+  # Motivation
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 'What makes you want to contribute to the organization Chayn and/or to this specific repository?'
+    validations:
+      required: false
+
+  # Emojis
+  - type: textarea
+    id: emojis
+    attributes:
+      label: '🌺 What are your favorite emoji(s)?'
+      description: 'Share your all time favorites, your most used ones or '
+    validations:
+      required: false
+
+  # LINKS
+  - type: textarea
+    id: links
+    attributes:
+      label: '🔗 Links (optional)'
+      description: 'If you want, share a personal website, blog, or social handle.'
+      placeholder: |
+        https://your-site.example
+        https://your-blog.example
+        @your-handle
+    validations:
+      required: false
+
+  # Anything
+  - type: textarea
+    id: anything_else
+    attributes:
+      label: '➕ Anything else you’d like to share?'
+      description: 'This can be anything you feel like sharing'
+      placeholder: |
+        Favorite music 🎶
+        Favorite food 🍜
+        Favorite color 🌈 
+        Hobbies or interests 🧩
+        What you’re currently learning 📚
+        Your motivations or goals right now 🌍
+    validations:
+      required: false

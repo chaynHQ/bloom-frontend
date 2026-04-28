@@ -165,6 +165,8 @@ jobs:
     name: Check for ungrouped tests
     needs: wait-for-vercel-deployment
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
