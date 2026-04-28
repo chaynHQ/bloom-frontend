@@ -1,6 +1,7 @@
 'use client';
 
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
@@ -163,6 +164,7 @@ const StoryblokResourceShortPage = ({
           video_transcript,
           nextResourceHref,
           eventData,
+          cta: !isLoggedIn ? <ScrollToSignUpButton /> : undefined,
         }}
       />
       {page_sections?.length > 0 &&
