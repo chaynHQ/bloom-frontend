@@ -38,6 +38,7 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   };
   const partiallyPublicPages = ['/activities', '/grounding'];
   const isPartiallyPublicPage = partiallyPublicPages.includes(pathname);
+  const isFullyPublicPage = pathname.startsWith('/policies');
 
   return (
     <main
@@ -52,7 +53,7 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
       />
       {!isLoggedIn && isPartiallyPublicPage && <NotesFromBloomPromo />}
       {!isLoggedIn && isPartiallyPublicPage && <SignUpBanner />}
-      {isLoggedIn &&
+      {(isLoggedIn || isFullyPublicPage) &&
         page_sections?.length > 0 &&
         page_sections.map((section: SbBlokData, index: number) => (
           <DynamicComponent key={`page_section_${index}`} blok={section} />
