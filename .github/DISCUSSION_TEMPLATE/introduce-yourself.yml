@@ -13,7 +13,7 @@ body:
   - type: textarea
     id: found_chayn
     attributes:
-      label: '🌱 How did you find this repository or the Chayn organization?'
+      label: '🔍 How did you find this repository or the Chayn organization?'
       description: '(e.g. through a friend, social media, searching for open source projects, etc.)'
     validations:
       required: false
