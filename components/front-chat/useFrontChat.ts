@@ -38,6 +38,7 @@ interface UseFrontChatResult {
     kind: 'image' | 'voice',
     displayText: string,
   ) => Promise<void>;
+  markAsRead: () => Promise<void>;
 }
 
 const OPTIMISTIC_RECONCILE_MS = 30_000;
@@ -60,35 +61,21 @@ export function useFrontChat(): UseFrontChatResult {
     });
   }, []);
 
-  const seedHistory = useCallback(async () => {
-    const { token, error } = await getAuthToken();
-    if (!token || error) return;
-    try {
-      const response = await fetch(`${apiUrl}/front-chat/messages`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) {
-        rollbar.warning('FrontChat history fetch non-OK', {
-          status: response.status,
-          url: `${apiUrl}/front-chat/messages`,
-        });
-        historySeededRef.current = false;
-        return;
-      }
-      const json = (await response.json()) as {
-        messages: Array<{
-          id: string;
-          direction: 'user' | 'agent';
-          text: string;
-          authorName?: string;
-          createdAt: number;
-        }>;
-      };
+  type HistoryEntry = {
+    id: string;
+    direction: 'user' | 'agent';
+    text: string;
+    authorName?: string;
+    createdAt: number;
+  };
+
+  const mergeHistoryEntries = useCallback(
+    (entries: HistoryEntry[]) => {
       setMessages((prev) => {
         const knownIds = new Set(prev.map((m) => m.id));
         const next: ChatMessage[] = prev.slice();
 
-        for (const serverMsg of json.messages) {
+        for (const serverMsg of entries) {
           if (knownIds.has(serverMsg.id)) continue;
 
           const optimisticIdx = next.findIndex(
@@ -120,10 +107,31 @@ export function useFrontChat(): UseFrontChatResult {
 
         return next.sort((a, b) => a.createdAt - b.createdAt);
       });
+    },
+    [],
+  );
+
+  const seedHistory = useCallback(async () => {
+    const { token, error } = await getAuthToken();
+    if (!token || error) return;
+    try {
+      const response = await fetch(`${apiUrl}/front-chat/messages`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) {
+        rollbar.warning('FrontChat history fetch non-OK', {
+          status: response.status,
+          url: `${apiUrl}/front-chat/messages`,
+        });
+        historySeededRef.current = false;
+        return;
+      }
+      const json = (await response.json()) as { messages: HistoryEntry[] };
+      mergeHistoryEntries(json.messages);
     } catch (err) {
       rollbar.warning('FrontChat history fetch failed', { message: (err as Error).message });
     }
-  }, [rollbar]);
+  }, [rollbar, mergeHistoryEntries]);
 
   useEffect(() => {
     const origin = getSocketOrigin();
@@ -162,6 +170,11 @@ export function useFrontChat(): UseFrontChatResult {
       socket.on('connect_error', (err) => {
         rollbar.warning('FrontChat connect_error', { message: err.message });
         setConnectionState('error');
+      });
+
+      socket.on('history', (payload: { messages: HistoryEntry[] }) => {
+        if (!payload?.messages?.length) return;
+        mergeHistoryEntries(payload.messages);
       });
 
       socket.on('agent_reply', (payload: AgentReplyPayload) => {
@@ -203,7 +216,7 @@ export function useFrontChat(): UseFrontChatResult {
       unsubscribe();
       tearDown();
     };
-  }, [rollbar, upsertMessage, seedHistory]);
+  }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries]);
 
   const sendText = useCallback(
     async (text: string) => {
@@ -243,11 +256,15 @@ export function useFrontChat(): UseFrontChatResult {
   const sendAttachment = useCallback(
     async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
       const id = generateId();
+      const previewUrl = kind === 'image' && file instanceof File
+        ? URL.createObjectURL(file)
+        : undefined;
       const optimistic: ChatMessage = {
         id,
         direction: 'user',
         kind: kind === 'image' ? 'image' : 'voice',
-        text: displayText,
+        text: file instanceof File ? file.name : displayText,
+        previewUrl,
         createdAt: Date.now(),
         status: 'sending',
       };
@@ -291,5 +308,18 @@ export function useFrontChat(): UseFrontChatResult {
     [rollbar, upsertMessage],
   );
 
-  return { messages, connectionState, sendText, sendAttachment };
+  const markAsRead = useCallback(async () => {
+    const { token, error } = await getAuthToken();
+    if (!token || error) return;
+    try {
+      await fetch(`${apiUrl}/front-chat/read`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      // Fire-and-forget — read receipt failure is non-critical
+    }
+  }, []);
+
+  return { messages, connectionState, sendText, sendAttachment, markAsRead };
 }

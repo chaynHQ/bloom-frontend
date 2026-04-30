@@ -12,6 +12,8 @@ export interface ChatMessage {
   authorName?: string;
   createdAt: number;
   status: MessageStatus;
+  /** Object URL for local image preview — only populated on outgoing image messages before page reload */
+  previewUrl?: string;
 }
 
 export interface AgentReplyPayload {

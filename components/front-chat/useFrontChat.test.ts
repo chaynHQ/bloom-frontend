@@ -163,4 +163,36 @@ describe('useFrontChat', () => {
     expect((thrown as Error).message).toBe('FILE_TOO_LARGE');
     expect(fetchSpy).not.toHaveBeenCalled();
   });
+
+  it('markAsRead calls PATCH /front-chat/read with the auth token', async () => {
+    const fetchSpy = jest.fn().mockResolvedValue({ ok: true });
+    (global as any).fetch = fetchSpy;
+    const { useFrontChat } = require('./useFrontChat');
+    const { result } = renderHook(() => useFrontChat());
+
+    await act(async () => {
+      await result.current.markAsRead();
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      'http://localhost:35001/api/v1/front-chat/read',
+      expect.objectContaining({
+        method: 'PATCH',
+        headers: expect.objectContaining({ Authorization: 'Bearer firebase-token' }),
+      }),
+    );
+  });
+
+  it('markAsRead does not throw when the request fails', async () => {
+    const fetchSpy = jest.fn().mockRejectedValue(new Error('network error'));
+    (global as any).fetch = fetchSpy;
+    const { useFrontChat } = require('./useFrontChat');
+    const { result } = renderHook(() => useFrontChat());
+
+    await expect(
+      act(async () => {
+        await result.current.markAsRead();
+      }),
+    ).resolves.not.toThrow();
+  });
 });

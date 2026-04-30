@@ -1,28 +1,33 @@
 {
   "Messaging": {
-    "messageHeading": "Sagen Sie uns, was Ihnen auf dem Herzen liegt",
+    "messageHeading": "Sag uns, was dir auf dem Herzen liegt",
     "frontChat": {
-      "ariaChat": "Bloom messaging",
-      "empty": "Send a message and a Bloom team member will reply soon.",
-      "placeholder": "Write a message…",
-      "send": "Send",
-      "attachImage": "Attach image",
-      "imageAttachment": "Image",
-      "voiceNote": "Voice note",
-      "startRecording": "Record voice note",
-      "stopRecording": "Stop and send voice note",
-      "messageSending": "Sending…",
-      "messageFailed": "Couldn’t send. Please try again.",
+      "ariaChat": "Bloom-Chat",
+      "welcomeAuthor": "Bloom Team",
+      "welcomeMessage": "Hallo! Hier kannst du mit Überlebenden und Verbündeten aus unserem Bloom-Team chatten, die Erfahrung darin haben, einander zu unterstützen. Wir sind für dich da, um deine Fragen, Gefühle und Gedanken zu teilen, während du unsere Kurse in deinem eigenen Tempo bearbeitest.\n\nWenn du unmittelbar gefährdet bist, rufe bitte den Notruf an, sofern du dazu in der Lage bist und es für dich sicher ist. Wir bieten zwar keine Krisenhilfe an, können dir aber helfen, den für dich passenden Unterstützungsdienst zu finden. In unserem weltweiten Verzeichnis kannst du nach Hilfsangeboten in deiner Nähe suchen: c.chayn.co/directory.\n\nDu kannst mit uns auf Englisch, Französisch, Deutsch, Hindi, Portugiesisch und Spanisch chatten.\n\nWir bemühen uns immer, innerhalb von 1–2 Tagen auf deine Nachricht zu antworten.",
+      "empty": "Schreibe unten deine erste Nachricht, und unser Team wird sich bald bei dir melden.",
+      "placeholder": "Schreibe eine Nachricht …",
+      "send": "Nachricht senden",
+      "attachImage": "Bild anhängen",
+      "imageAttachment": "Bild",
+      "voiceNote": "Sprachnachricht",
+      "startRecording": "Sprachnachricht aufnehmen",
+      "stopRecording": "Aufnahme beenden und senden",
+      "cancelRecording": "Aufnahme abbrechen",
+      "recordingInProgress": "Aufnahme läuft",
+      "messageSending": "Wird gesendet",
+      "messageFailed": "Nachricht konnte nicht gesendet werden – bitte versuche es erneut.",
       "status": {
-        "connecting": "Connecting to chat…",
-        "disconnected": "Reconnecting…",
-        "error": "Chat is currently unavailable. Please try again later."
+        "connecting": "Verbinden …",
+        "disconnected": "Neu verbinden …",
+        "error": "Verbindung fehlgeschlagen. Bitte versuche es später noch einmal."
       },
       "errors": {
-        "unsupportedImage": "Only JPG, PNG, GIF or WebP images are supported.",
-        "fileTooLarge": "Files must be under 25 MB.",
-        "uploadFailed": "Upload failed. Please try again.",
-        "micPermission": "Microphone permission was denied."
+        "unsupportedImage": "Es werden nur JPG-, PNG-, GIF- oder WebP-Bilder unterstützt.",
+        "fileTooLarge": "Dateien müssen kleiner als 25 MB sein.",
+        "uploadFailed": "Hochladen fehlgeschlagen. Bitte versuche es erneut.",
+        "micPermission": "Zugriff auf das Mikrofon verweigert. Um eine Sprachnachricht aufzunehmen, erlaube den Mikrofonzugriff in deinen Browsereinstellungen und versuche es erneut.",
+        "micUnavailable": "Kein Zugriff auf dein Mikrofon. Bitte überprüfe, ob es angeschlossen ist, und versuche es erneut."
       }
     }
   }
