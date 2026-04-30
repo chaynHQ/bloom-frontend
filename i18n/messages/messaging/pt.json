@@ -1,5 +1,29 @@
 {
   "Messaging": {
-    "messageHeading": "Diga-nos o que está pensando"
+    "messageHeading": "Diga-nos o que está pensando",
+    "frontChat": {
+      "ariaChat": "Bloom messaging",
+      "empty": "Send a message and a Bloom team member will reply soon.",
+      "placeholder": "Write a message…",
+      "send": "Send",
+      "attachImage": "Attach image",
+      "imageAttachment": "Image",
+      "voiceNote": "Voice note",
+      "startRecording": "Record voice note",
+      "stopRecording": "Stop and send voice note",
+      "messageSending": "Sending…",
+      "messageFailed": "Couldn’t send. Please try again.",
+      "status": {
+        "connecting": "Connecting to chat…",
+        "disconnected": "Reconnecting…",
+        "error": "Chat is currently unavailable. Please try again later."
+      },
+      "errors": {
+        "unsupportedImage": "Only JPG, PNG, GIF or WebP images are supported.",
+        "fileTooLarge": "Files must be under 25 MB.",
+        "uploadFailed": "Upload failed. Please try again.",
+        "micPermission": "Microphone permission was denied."
+      }
+    }
   }
 }

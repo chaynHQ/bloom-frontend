@@ -11,7 +11,6 @@ const scriptSrcUrls = [
   'https://*.storyblok.com',
   'https://*.newrelic.com',
   'https://*.nr-data.net',
-  'https://chat-assets.frontapp.com',
   'https://*.googletagmanager.com',
   'https://vercel.live',
   'https://*.noembed.com',
@@ -44,17 +43,10 @@ const styleSrcUrls = [
   'https://app.storyblok.com',
   'https://*.google-analytics.com',
 ];
-const fontSrcUrls = [
-  'https://fonts.gstatic.com',
-  'https://*.hotjar.com',
-  'https://chat-assets.frontapp.com',
-  'https://*.youtube.com',
-];
+const fontSrcUrls = ['https://fonts.gstatic.com', 'https://*.hotjar.com', 'https://*.youtube.com'];
 const imgSrcUrls = [
   'https://*.hotjar.com',
   'https://*.storyblok.com',
-  'https://chat.frontapp.com',
-  'https://chat-assets.frontusercontent.com',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
   'https://cdnjs.cloudflare.com/',
@@ -73,12 +65,8 @@ const connectSrcUrls = [
   'https://*.simplybook.it',
   'https://*.zapier.com',
   'https://*.nr-data.net',
-  'https://chat-assets.frontapp.com',
-  'https://chat.frontapp.com',
-  'https://*.chat-server.frontapp.com',
-  'https://chat-webhook.frontapp.com',
-  'wss://front-us-realtime.ably.io',
-  'wss://front-eu-realtime.ably.io',
+  'ws://localhost:35001',
+  'https://sessions.bugsnag.com/',
   'https://*.noembed.com',
   'https://noembed.com',
   'https://*.youtube.com',

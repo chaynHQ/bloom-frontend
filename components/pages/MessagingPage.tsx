@@ -3,7 +3,7 @@
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { FrontChatIframe } from '@/components/front-chat/FrontChatIframe';
+import { FrontChat } from '@/components/front-chat/FrontChat';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -71,7 +71,7 @@ export default function MessagingPage({ story }: Props) {
                 />
               </Box>
               <Box flex={1}>
-                <FrontChatIframe />
+                <FrontChat />
               </Box>
             </Box>
           </Container>

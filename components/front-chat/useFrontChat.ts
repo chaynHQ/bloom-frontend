@@ -1,0 +1,295 @@
+'use client';
+
+import { getAuthToken } from '@/lib/auth';
+import { auth } from '@/lib/firebase';
+import { useRollbar } from '@rollbar/react';
+import { onIdTokenChanged } from 'firebase/auth';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { AgentReplyPayload, ChatMessage } from './types';
+
+export const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024; // 25 MB
+
+type ConnectionState = 'idle' | 'connecting' | 'connected' | 'disconnected' | 'error';
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
+
+const getSocketOrigin = (): string => {
+  try {
+    return new URL(apiUrl).origin;
+  } catch {
+    return '';
+  }
+};
+
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
+interface UseFrontChatResult {
+  messages: ChatMessage[];
+  connectionState: ConnectionState;
+  sendText: (text: string) => Promise<void>;
+  sendAttachment: (
+    file: File | Blob,
+    kind: 'image' | 'voice',
+    displayText: string,
+  ) => Promise<void>;
+}
+
+const OPTIMISTIC_RECONCILE_MS = 30_000;
+
+export function useFrontChat(): UseFrontChatResult {
+  const rollbar = useRollbar();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [connectionState, setConnectionState] = useState<ConnectionState>('idle');
+  const socketRef = useRef<Socket | null>(null);
+  const seenAgentIdsRef = useRef<Set<string>>(new Set());
+  const historySeededRef = useRef(false);
+
+  const upsertMessage = useCallback((message: ChatMessage) => {
+    setMessages((prev) => {
+      const existing = prev.findIndex((m) => m.id === message.id);
+      if (existing === -1) return [...prev, message];
+      const next = prev.slice();
+      next[existing] = message;
+      return next;
+    });
+  }, []);
+
+  const seedHistory = useCallback(async () => {
+    const { token, error } = await getAuthToken();
+    if (!token || error) return;
+    try {
+      const response = await fetch(`${apiUrl}/front-chat/messages`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) {
+        rollbar.warning('FrontChat history fetch non-OK', {
+          status: response.status,
+          url: `${apiUrl}/front-chat/messages`,
+        });
+        historySeededRef.current = false;
+        return;
+      }
+      const json = (await response.json()) as {
+        messages: Array<{
+          id: string;
+          direction: 'user' | 'agent';
+          text: string;
+          authorName?: string;
+          createdAt: number;
+        }>;
+      };
+      setMessages((prev) => {
+        const knownIds = new Set(prev.map((m) => m.id));
+        const next: ChatMessage[] = prev.slice();
+
+        for (const serverMsg of json.messages) {
+          if (knownIds.has(serverMsg.id)) continue;
+
+          const optimisticIdx = next.findIndex(
+            (local) =>
+              local.direction === serverMsg.direction &&
+              local.text === serverMsg.text &&
+              Math.abs(local.createdAt - serverMsg.createdAt) < OPTIMISTIC_RECONCILE_MS &&
+              !local.id.startsWith('msg_'),
+          );
+
+          const seeded: ChatMessage = {
+            id: serverMsg.id,
+            direction: serverMsg.direction,
+            kind: 'text',
+            text: serverMsg.text,
+            authorName: serverMsg.authorName,
+            createdAt: serverMsg.createdAt,
+            status: 'sent',
+          };
+
+          if (optimisticIdx >= 0) {
+            next[optimisticIdx] = seeded;
+          } else {
+            next.push(seeded);
+          }
+          knownIds.add(serverMsg.id);
+          if (serverMsg.direction === 'agent') seenAgentIdsRef.current.add(serverMsg.id);
+        }
+
+        return next.sort((a, b) => a.createdAt - b.createdAt);
+      });
+    } catch (err) {
+      rollbar.warning('FrontChat history fetch failed', { message: (err as Error).message });
+    }
+  }, [rollbar]);
+
+  useEffect(() => {
+    const origin = getSocketOrigin();
+    if (!origin) {
+      setConnectionState('error');
+      return;
+    }
+
+    let activeSocket: Socket | null = null;
+
+    const tearDown = () => {
+      activeSocket?.disconnect();
+      activeSocket = null;
+      socketRef.current = null;
+    };
+
+    const buildSocket = () => {
+      setConnectionState('connecting');
+      const socket = io(`${origin}/front-chat`, {
+        auth: async (cb) => {
+          const { token } = await getAuthToken();
+          cb({ token: token ?? '' });
+        },
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 10000,
+      });
+      activeSocket = socket;
+      socketRef.current = socket;
+
+      socket.on('connect', () => {
+        setConnectionState('connected');
+      });
+      socket.on('disconnect', () => setConnectionState('disconnected'));
+      socket.on('connect_error', (err) => {
+        rollbar.warning('FrontChat connect_error', { message: err.message });
+        setConnectionState('error');
+      });
+
+      socket.on('agent_reply', (payload: AgentReplyPayload) => {
+        if (!payload || typeof payload.body !== 'string') return;
+        const id = payload.id ?? generateId();
+        if (payload.id) {
+          if (seenAgentIdsRef.current.has(payload.id)) return;
+          seenAgentIdsRef.current.add(payload.id);
+        }
+        upsertMessage({
+          id,
+          direction: 'agent',
+          kind: 'text',
+          text: payload.body,
+          authorName: payload.authorName,
+          createdAt: payload.emittedAt ? payload.emittedAt * 1000 : Date.now(),
+          status: 'sent',
+        });
+      });
+    };
+
+    const unsubscribe = onIdTokenChanged(auth, (firebaseUser) => {
+      if (!firebaseUser) {
+        tearDown();
+        setMessages([]);
+        seenAgentIdsRef.current.clear();
+        historySeededRef.current = false;
+        setConnectionState('idle');
+        return;
+      }
+      if (!historySeededRef.current) {
+        historySeededRef.current = true;
+        seedHistory();
+      }
+      if (!activeSocket) buildSocket();
+    });
+
+    return () => {
+      unsubscribe();
+      tearDown();
+    };
+  }, [rollbar, upsertMessage, seedHistory]);
+
+  const sendText = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) return;
+
+      const socket = socketRef.current;
+      const id = generateId();
+      const optimistic: ChatMessage = {
+        id,
+        direction: 'user',
+        kind: 'text',
+        text: trimmed,
+        createdAt: Date.now(),
+        status: 'sending',
+      };
+      upsertMessage(optimistic);
+
+      if (!socket || !socket.connected) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        return;
+      }
+
+      socket
+        .timeout(10_000)
+        .emit('send_message', { text: trimmed }, (timeoutErr: Error | null, ack: unknown) => {
+          if (timeoutErr || !(ack as { ok?: boolean })?.ok) {
+            upsertMessage({ ...optimistic, status: 'failed' });
+            return;
+          }
+          upsertMessage({ ...optimistic, status: 'sent' });
+        });
+    },
+    [upsertMessage],
+  );
+
+  const sendAttachment = useCallback(
+    async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
+      const id = generateId();
+      const optimistic: ChatMessage = {
+        id,
+        direction: 'user',
+        kind: kind === 'image' ? 'image' : 'voice',
+        text: displayText,
+        createdAt: Date.now(),
+        status: 'sending',
+      };
+      upsertMessage(optimistic);
+
+      if (file.size > MAX_ATTACHMENT_BYTES) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        throw new Error('FILE_TOO_LARGE');
+      }
+
+      const { token, error } = await getAuthToken();
+      if (!token || error) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        throw new Error('AUTH_FAILED');
+      }
+
+      const form = new FormData();
+      const filename =
+        file instanceof File ? file.name : kind === 'voice' ? 'voice-note.webm' : 'image';
+      form.append('file', file, filename);
+
+      try {
+        const response = await fetch(`${apiUrl}/front-chat/attachments`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: form,
+        });
+        if (!response.ok) {
+          upsertMessage({ ...optimistic, status: 'failed' });
+          throw new Error(`UPLOAD_FAILED_${response.status}`);
+        }
+        upsertMessage({ ...optimistic, status: 'sent' });
+      } catch (err) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        rollbar.warning('FrontChat attachment upload failed', {
+          message: (err as Error).message,
+        });
+        throw err;
+      }
+    },
+    [rollbar, upsertMessage],
+  );
+
+  return { messages, connectionState, sendText, sendAttachment };
+}
