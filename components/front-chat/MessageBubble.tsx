@@ -69,7 +69,10 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
   return (
     <Box sx={isUser ? userBubbleStyle : agentBubbleStyle}>
       {!isUser && message.authorName && (
-        <Typography variant="caption" sx={{ display: 'block', fontWeight: 700, mb: 0.5, opacity: 0.75 }}>
+        <Typography
+          variant="caption"
+          sx={{ display: 'block', fontWeight: 700, mb: 0.5, opacity: 0.75 }}
+        >
           {message.authorName}
         </Typography>
       )}
@@ -77,7 +80,12 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
       {message.kind === 'image' ? (
         <>
           {message.previewUrl && (
-            <Box component="img" src={message.previewUrl} alt={message.text ?? ''} sx={imagePreviewStyle} />
+            <Box
+              component="img"
+              src={message.previewUrl}
+              alt={message.text ?? ''}
+              sx={imagePreviewStyle}
+            />
           )}
           <Box sx={filenameRowStyle}>
             <ImageIcon sx={{ fontSize: 14, flexShrink: 0, opacity: 0.7 }} aria-hidden="true" />

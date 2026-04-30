@@ -72,7 +72,9 @@ const pulseDotStyle = {
 } as const;
 
 const formatDuration = (seconds: number): string => {
-  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const m = Math.floor(seconds / 60)
+    .toString()
+    .padStart(2, '0');
   const s = (seconds % 60).toString().padStart(2, '0');
   return `${m}:${s}`;
 };
@@ -80,7 +82,8 @@ const formatDuration = (seconds: number): string => {
 // NotAllowedError means the browser has blocked or the user previously denied permission.
 // Any other DOMException means hardware/availability issue — show a different message.
 const isMicPermissionError = (err: unknown): boolean =>
-  err instanceof DOMException && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError');
+  err instanceof DOMException &&
+  (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError');
 
 interface Props {
   isDisabled: boolean;
@@ -196,11 +199,20 @@ export const ChatComposer = ({
           // Recording mode: pill-shaped indicator + timer + cancel/stop
           <Box sx={recordingRowStyle}>
             <Box sx={pulseDotStyle} aria-hidden="true" />
-            <Typography variant="body2" color="error.dark" sx={{ flex: 1, fontWeight: 500 }} aria-live="polite">
+            <Typography
+              variant="body2"
+              color="error.dark"
+              sx={{ flex: 1, fontWeight: 500 }}
+              aria-live="polite"
+            >
               {t('recordingInProgress')} · {formatDuration(recordingSeconds)}
             </Typography>
             <Tooltip title={t('cancelRecording')}>
-              <IconButton aria-label={t('cancelRecording')} onClick={handleVoiceCancel} size="small">
+              <IconButton
+                aria-label={t('cancelRecording')}
+                onClick={handleVoiceCancel}
+                size="small"
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Tooltip>

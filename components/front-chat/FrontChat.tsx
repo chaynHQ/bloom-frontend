@@ -2,7 +2,16 @@
 
 import { CHAT_VIEWED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
-import { Alert, Avatar, Box, CircularProgress, Divider, Fade, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  Avatar,
+  Box,
+  CircularProgress,
+  Divider,
+  Fade,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { ChatComposer } from './ChatComposer';
@@ -87,7 +96,9 @@ interface WelcomeMessageProps {
 
 const WelcomeMessage = ({ author, message }: WelcomeMessageProps) => (
   <Box sx={welcomeStyle} role="note">
-    <Avatar sx={welcomeAvatarStyle} aria-hidden="true">B</Avatar>
+    <Avatar sx={welcomeAvatarStyle} aria-hidden="true">
+      B
+    </Avatar>
     <Box>
       <Typography variant="body2" sx={{ fontWeight: 700, mb: 0.5 }}>
         {author}
@@ -173,7 +184,11 @@ export const FrontChat = () => {
 
       {/* Inline error alert from attachment/voice operations */}
       {error && (
-        <Alert severity="error" onClose={() => setError(null)} sx={{ borderRadius: 0, flexShrink: 0 }}>
+        <Alert
+          severity="error"
+          onClose={() => setError(null)}
+          sx={{ borderRadius: 0, flexShrink: 0 }}
+        >
           {error}
         </Alert>
       )}

@@ -69,47 +69,44 @@ export function useFrontChat(): UseFrontChatResult {
     createdAt: number;
   };
 
-  const mergeHistoryEntries = useCallback(
-    (entries: HistoryEntry[]) => {
-      setMessages((prev) => {
-        const knownIds = new Set(prev.map((m) => m.id));
-        const next: ChatMessage[] = prev.slice();
+  const mergeHistoryEntries = useCallback((entries: HistoryEntry[]) => {
+    setMessages((prev) => {
+      const knownIds = new Set(prev.map((m) => m.id));
+      const next: ChatMessage[] = prev.slice();
 
-        for (const serverMsg of entries) {
-          if (knownIds.has(serverMsg.id)) continue;
+      for (const serverMsg of entries) {
+        if (knownIds.has(serverMsg.id)) continue;
 
-          const optimisticIdx = next.findIndex(
-            (local) =>
-              local.direction === serverMsg.direction &&
-              local.text === serverMsg.text &&
-              Math.abs(local.createdAt - serverMsg.createdAt) < OPTIMISTIC_RECONCILE_MS &&
-              !local.id.startsWith('msg_'),
-          );
+        const optimisticIdx = next.findIndex(
+          (local) =>
+            local.direction === serverMsg.direction &&
+            local.text === serverMsg.text &&
+            Math.abs(local.createdAt - serverMsg.createdAt) < OPTIMISTIC_RECONCILE_MS &&
+            !local.id.startsWith('msg_'),
+        );
 
-          const seeded: ChatMessage = {
-            id: serverMsg.id,
-            direction: serverMsg.direction,
-            kind: 'text',
-            text: serverMsg.text,
-            authorName: serverMsg.authorName,
-            createdAt: serverMsg.createdAt,
-            status: 'sent',
-          };
+        const seeded: ChatMessage = {
+          id: serverMsg.id,
+          direction: serverMsg.direction,
+          kind: 'text',
+          text: serverMsg.text,
+          authorName: serverMsg.authorName,
+          createdAt: serverMsg.createdAt,
+          status: 'sent',
+        };
 
-          if (optimisticIdx >= 0) {
-            next[optimisticIdx] = seeded;
-          } else {
-            next.push(seeded);
-          }
-          knownIds.add(serverMsg.id);
-          if (serverMsg.direction === 'agent') seenAgentIdsRef.current.add(serverMsg.id);
+        if (optimisticIdx >= 0) {
+          next[optimisticIdx] = seeded;
+        } else {
+          next.push(seeded);
         }
+        knownIds.add(serverMsg.id);
+        if (serverMsg.direction === 'agent') seenAgentIdsRef.current.add(serverMsg.id);
+      }
 
-        return next.sort((a, b) => a.createdAt - b.createdAt);
-      });
-    },
-    [],
-  );
+      return next.sort((a, b) => a.createdAt - b.createdAt);
+    });
+  }, []);
 
   const seedHistory = useCallback(async () => {
     const { token, error } = await getAuthToken();
@@ -256,9 +253,8 @@ export function useFrontChat(): UseFrontChatResult {
   const sendAttachment = useCallback(
     async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
       const id = generateId();
-      const previewUrl = kind === 'image' && file instanceof File
-        ? URL.createObjectURL(file)
-        : undefined;
+      const previewUrl =
+        kind === 'image' && file instanceof File ? URL.createObjectURL(file) : undefined;
       const optimistic: ChatMessage = {
         id,
         direction: 'user',
