@@ -32,7 +32,7 @@ Technologies Used:
 - [Material UI / MUI](https://mui.com/) - React UI library for prebuilt components
 - [Storyblok](https://www.storyblok.com/) - Headless CMS for pages and courses content
 - [Simplybook](https://simplybook.me/en/) - Appointment booking system used for therapy
-- [Front](https://front.com/) - User messaging
+- [Front](https://front.com/) - 1:1 messaging via a custom WebSocket widget (Application Channel API)
 - [Rollbar](https://rollbar.com/) - Error reporting
 - [New Relic](https://newrelic.com/) - Performance monitoring
 - [GitHub Actions](https://github.com/features/actions) - CI pipeline

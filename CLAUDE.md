@@ -82,7 +82,7 @@ MUI v7 with Emotion is the UI library. Theme is at `styles/theme.ts`. Fonts: Ope
 | Firebase    | Auth                                                 | `lib/firebase.ts`, `NEXT_PUBLIC_FIREBASE_*` env vars     |
 | Storyblok   | CMS                                                  | `lib/storyblok.ts`, `NEXT_PUBLIC_STORYBLOK_TOKEN`        |
 | Simplybook  | Therapy booking                                      | `lib/simplybook.ts`, `NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL` |
-| Front       | 1:1 chat via Application Channel API (custom widget) | `components/live-chat/`                                  |
+| Front       | 1:1 chat via custom WebSocket widget (Application Channel API); backend proxies all Front API calls; Socket.IO namespace `/front-chat`; access gated by `featureLiveChat` on partner access | `components/front-chat/`                                 |
 | Rollbar     | Error tracking                                       | `lib/rollbar.ts`                                         |
 | New Relic   | Performance (prod only)                              | `newrelic.js`, injected via `BaseLayout`                 |
 

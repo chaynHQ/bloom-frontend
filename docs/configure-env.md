@@ -97,6 +97,10 @@ If creating new environment variables, please tag Chayn staff developers in PR /
 
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
+#### Front Chat (1:1 Messaging):
+
+The Front chat integration uses a custom WebSocket widget — no additional frontend environment variables are required. The frontend connects to the backend via `NEXT_PUBLIC_API_URL` (already required above). The backend holds all Front API credentials and proxies messages over a Socket.IO connection. The chat widget is only shown to users whose partner access includes `featureLiveChat: true`.
+
 #### How to Import Environment Variables with Vercel (Chayn team only):
 
 - Chayn staff can import all environment variables from Vercel. Ask the team for access, then proceed to the [Vercel Environment Variable Import](#vercel-environment-variable-import) for directions. Environment variables are defined and stored in Vercel for each of the environments: development, preview and production. Read more about Vercel environment variables [here](https://vercel.com/docs/concepts/projects/environment-variables). These environment variables can be imported using the Vercel CLI.
