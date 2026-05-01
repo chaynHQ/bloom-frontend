@@ -4,8 +4,6 @@ import SanitizedTextField from '@/components/common/SanitizedTextField';
 import {
   MigrationError,
   MigrationOptions,
-  MigrationProgress,
-  MigrationStatusResponse,
   useGetCrispMigrationStatusQuery,
   useRunCrispMigrationMutation,
 } from '@/lib/api';
@@ -38,7 +36,7 @@ import {
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const defaultOptions: MigrationOptions = {
   dryRun: true,
@@ -57,17 +55,9 @@ const statusColor = {
   running: 'info',
   completed: 'success',
   failed: 'error',
-} as const satisfies Record<MigrationStatusResponse['status'], string>;
+} as const;
 
-function ProgressRow({
-  label,
-  processed,
-  total,
-}: {
-  label: string;
-  processed: number;
-  total: number;
-}) {
+function ProgressRow({ label, processed, total }: { label: string; processed: number; total: number }) {
   const pct = total > 0 ? Math.round((processed / total) * 100) : 0;
   return (
     <Box mb={1.5}>
@@ -87,30 +77,32 @@ const CrispToFrontMigrationForm = () => {
   const rollbar = useRollbar();
 
   const [options, setOptions] = useState<MigrationOptions>(defaultOptions);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [isPolling, setIsPolling] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const { data: status } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval: isPolling ? 3000 : 0,
-  });
-
+  // Declare mutation first so isLoading can drive polling below
   const [runMigration, { isLoading }] = useRunCrispMigrationMutation();
 
-  useEffect(() => {
-    if (!status) return;
-    if (status.status === 'running' || status.status === 'pending') {
-      setHasStarted(true);
-      setIsPolling(true);
-    } else if (status.status === 'completed' || status.status === 'failed') {
-      setIsPolling(false);
-    }
-  }, [status?.status]);
+  // Always fetch once on mount (detects an in-progress migration from another session).
+  // Poll every 3s while our mutation is in flight.
+  const { data: status } = useGetCrispMigrationStatusQuery(undefined, {
+    pollingInterval: submitted && isLoading ? 3000 : 0,
+  });
+
+  const serverStatus = status?.status ?? 'idle';
+  const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
+  const isDone = !isLoading && (serverStatus === 'completed' || serverStatus === 'failed');
+  const errors: MigrationError[] = status?.errors ?? [];
+  const progress = status?.progress;
+
+  // Detect a migration running in another session (page-load case)
+  const externallyRunning = !submitted && isActiveOnServer;
 
   const submitMigration = async () => {
     setShowConfirm(false);
     setFormError(null);
+    setSubmitted(true);
 
     const body: MigrationOptions = {
       dryRun: options.dryRun,
@@ -124,20 +116,18 @@ const CrispToFrontMigrationForm = () => {
     };
 
     logEvent(CRISP_MIGRATION_RUN_REQUEST, { dryRun: body.dryRun });
-    setHasStarted(true);
-    setIsPolling(true);
 
     const result = await runMigration(body);
 
     if (result.error) {
       const msg =
         'status' in result.error
-          ? ((result.error.data as any)?.message ?? String(result.error.status))
+          ? ((result.error.data as { message?: string })?.message ?? String(result.error.status))
           : 'Unknown error';
       setFormError(t('runError') + msg);
       rollbar.error('Crisp migration failed to start: ' + msg);
       logEvent(CRISP_MIGRATION_RUN_ERROR, { error: msg });
-      setIsPolling(false);
+      setSubmitted(false);
       return;
     }
 
@@ -157,22 +147,22 @@ const CrispToFrontMigrationForm = () => {
   };
 
   const reset = () => {
-    setHasStarted(false);
-    setIsPolling(false);
+    setSubmitted(false);
     setFormError(null);
     setOptions(defaultOptions);
   };
 
-  const currentStatus = status?.status ?? 'idle';
-  const isActive = currentStatus === 'running' || currentStatus === 'pending' || isLoading;
-  const isDone = currentStatus === 'completed' || currentStatus === 'failed';
-  const progress = status?.progress;
-  const errors: MigrationError[] = status?.errors ?? [];
-
   return (
     <Box>
-      {/* ── Form (hidden once migration starts) ── */}
-      {!hasStarted && (
+      {/* ── Banner: migration running in another session ── */}
+      {externallyRunning && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          {t('alreadyRunning')}
+        </Alert>
+      )}
+
+      {/* ── Form (shown until user submits) ── */}
+      {!submitted && (
         <Box>
           {!options.dryRun && (
             <Alert severity="warning" sx={{ mb: 2 }}>
@@ -285,16 +275,16 @@ const CrispToFrontMigrationForm = () => {
         </Box>
       )}
 
-      {/* ── Status panel (shown once started) ── */}
-      {hasStarted && status && currentStatus !== 'idle' && (
+      {/* ── Status panel (shown after submit) ── */}
+      {submitted && (
         <Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
             <Typography variant="h3" component="h3" sx={{ mb: 0 }}>
               {t('progress.title')}
             </Typography>
             <Chip
-              label={t(`status.${currentStatus}`)}
-              color={statusColor[currentStatus] ?? 'default'}
+              label={t(`status.${isLoading ? 'running' : serverStatus}`)}
+              color={statusColor[isLoading ? 'running' : serverStatus] ?? 'default'}
               size="small"
             />
           </Box>
@@ -305,7 +295,7 @@ const CrispToFrontMigrationForm = () => {
             </Alert>
           )}
 
-          {isActive && <LinearProgress sx={{ mb: 2 }} />}
+          {isLoading && <LinearProgress sx={{ mb: 2 }} />}
 
           {progress && (
             <Box mb={2}>
@@ -343,12 +333,10 @@ const CrispToFrontMigrationForm = () => {
 
           {isDone && (
             <Alert
-              severity={
-                currentStatus === 'completed' && errors.length === 0 ? 'success' : 'warning'
-              }
+              severity={serverStatus === 'completed' && errors.length === 0 ? 'success' : 'warning'}
               sx={{ mb: 2 }}
             >
-              {currentStatus === 'failed'
+              {serverStatus === 'failed'
                 ? t('result.failure')
                 : options.dryRun
                   ? t('result.dryRunSuccess')

@@ -37,9 +37,9 @@ export async function logout() {
   }
 }
 
-export async function getAuthToken() {
+export async function getAuthToken(forceRefresh = false) {
   try {
-    const token = await auth.currentUser?.getIdToken(true);
+    const token = await auth.currentUser?.getIdToken(forceRefresh);
     return { token, error: null };
   } catch (error) {
     return { error: error as FirebaseError };
