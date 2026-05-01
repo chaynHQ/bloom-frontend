@@ -27,7 +27,7 @@ const containerStyle = {
   height: '540px',
   maxHeight: '72vh',
   marginBottom: 3,
-  borderRadius: 2,
+  borderRadius: 1,
   border: '1.5px solid',
   borderColor: 'secondary.main',
   backgroundColor: 'common.white',
@@ -141,7 +141,11 @@ export const FrontChat = () => {
       {/* Message transcript */}
       <Box ref={transcriptRef} sx={transcriptStyle} role="log" aria-live="polite">
         {/* Welcome notice is always pinned at the top of the conversation */}
-        <WelcomeMessage author={t('welcomeAuthor')} message={t('welcomeMessage')} sx={welcomeStyle} />
+        <WelcomeMessage
+          author={t('welcomeAuthor')}
+          message={t('welcomeMessage')}
+          sx={welcomeStyle}
+        />
 
         {messages.length > 0 && <Divider sx={{ my: 0.5, opacity: 0.5 }} />}
 

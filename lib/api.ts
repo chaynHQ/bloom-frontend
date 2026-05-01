@@ -17,6 +17,52 @@ import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
 import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 
+export interface MigrationProgress {
+  totalContacts: number;
+  processedContacts: number;
+  totalConversations: number;
+  processedConversations: number;
+  totalMessages: number;
+  processedMessages: number;
+  totalAttachments: number;
+  processedAttachments: number;
+  totalNotes: number;
+  processedNotes: number;
+}
+
+export interface MigrationError {
+  sessionId?: string;
+  email?: string;
+  error: string;
+  timestamp: string;
+}
+
+export interface MigrationResult {
+  success: boolean;
+  progress: MigrationProgress;
+  errors: MigrationError[];
+}
+
+export interface MigrationStatusResponse {
+  status: 'idle' | 'pending' | 'running' | 'completed' | 'failed';
+  progress?: MigrationProgress;
+  errors?: MigrationError[];
+  startedAt?: string;
+  completedAt?: string;
+  estimatedTimeRemaining?: number;
+}
+
+export interface MigrationOptions {
+  dryRun?: boolean;
+  skipAttachments?: boolean;
+  skipNotes?: boolean;
+  startDate?: string;
+  specificEmail?: string;
+  specificSessionId?: string;
+  emailDomainFilter?: string;
+  continueOnError?: boolean;
+}
+
 export interface GetUserResponse {
   user: User;
   partnerAccesses: PartnerAccesses;
@@ -309,6 +355,23 @@ export const api = createApi({
         };
       },
     }),
+    runCrispMigration: builder.mutation<MigrationResult, MigrationOptions>({
+      query(body) {
+        return {
+          url: 'v1/crisp-migration/run',
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    getCrispMigrationStatus: builder.query<MigrationStatusResponse, void>({
+      query() {
+        return {
+          url: 'v1/crisp-migration/status',
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
@@ -340,4 +403,6 @@ export const {
   useGetTherapySessionsQuery,
   useCancelTherapySessionMutation,
   useGetSubscriptionsUserQuery,
+  useRunCrispMigrationMutation,
+  useGetCrispMigrationStatusQuery,
 } = api;

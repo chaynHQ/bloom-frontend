@@ -60,7 +60,13 @@ const AuthenticatedImage = ({ src, alt }: { src: string; alt: string }) => {
   return <Box component="img" src={blobUrl} alt={alt} sx={imagePreviewStyle} />;
 };
 
-const AuthenticatedAudio = ({ src, unavailableLabel }: { src: string; unavailableLabel: string }) => {
+const AuthenticatedAudio = ({
+  src,
+  unavailableLabel,
+}: {
+  src: string;
+  unavailableLabel: string;
+}) => {
   const { blobUrl, loading } = useAuthenticatedBlobUrl(src);
 
   if (loading) return <CircularProgress size={16} sx={{ mt: 0.5 }} />;
@@ -174,7 +180,12 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
             <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
             <Typography variant="body2">{message.text}</Typography>
           </Box>
-          {message.attachmentUrl && <AuthenticatedAudio src={message.attachmentUrl} unavailableLabel={t('audioUnavailable')} />}
+          {message.attachmentUrl && (
+            <AuthenticatedAudio
+              src={message.attachmentUrl}
+              unavailableLabel={t('audioUnavailable')}
+            />
+          )}
         </Box>
       ) : (
         <Typography variant="body2">{message.text}</Typography>
