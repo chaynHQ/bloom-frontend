@@ -41,6 +41,8 @@ const stubStream = { getTracks: () => [{ stop: trackStop }] } as unknown as Medi
 beforeEach(() => {
   trackStop.mockClear();
   StubMediaRecorder.instances = [];
+  StubMediaRecorder.isTypeSupported = (type: string) =>
+    type === 'audio/webm;codecs=opus' || type === 'audio/webm';
   (global as any).MediaRecorder = StubMediaRecorder;
   Object.defineProperty(global.navigator, 'mediaDevices', {
     configurable: true,
@@ -96,5 +98,20 @@ describe('useVoiceRecorder', () => {
     await act(async () => {
       await expect(result.current.start()).rejects.toThrow('UNSUPPORTED');
     });
+  });
+
+  it('stops audio stream tracks when unmounted while recording', async () => {
+    const { result, unmount } = renderHook(() => useVoiceRecorder());
+
+    await act(async () => {
+      await result.current.start();
+    });
+    expect(result.current.state).toBe('recording');
+
+    act(() => {
+      unmount();
+    });
+
+    expect(trackStop).toHaveBeenCalled();
   });
 });

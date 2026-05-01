@@ -2,6 +2,8 @@
 
 import { getAuthToken } from '@/lib/auth';
 import { auth } from '@/lib/firebase';
+import { CHAT_MESSAGE_SENT } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -32,7 +34,7 @@ const generateId = (): string => {
 interface UseFrontChatResult {
   messages: ChatMessage[];
   connectionState: ConnectionState;
-  sendText: (text: string) => Promise<void>;
+  sendText: (text: string) => void;
   sendAttachment: (
     file: File | Blob,
     kind: 'image' | 'voice',
@@ -129,6 +131,7 @@ export function useFrontChat(): UseFrontChatResult {
       const json = (await response.json()) as { messages: HistoryEntry[] };
       mergeHistoryEntries(json.messages);
     } catch (err) {
+      historySeededRef.current = false;
       rollbar.warning('FrontChat history fetch failed', { message: (err as Error).message });
     }
   }, [rollbar, mergeHistoryEntries]);
@@ -234,7 +237,7 @@ export function useFrontChat(): UseFrontChatResult {
   }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries, markAsRead]);
 
   const sendText = useCallback(
-    async (text: string) => {
+    (text: string) => {
       const trimmed = text.trim();
       if (!trimmed) return;
 
@@ -263,6 +266,7 @@ export function useFrontChat(): UseFrontChatResult {
             return;
           }
           upsertMessage({ ...optimistic, status: 'sent' });
+          logEvent(CHAT_MESSAGE_SENT, { kind: 'text' });
         });
     },
     [upsertMessage],
@@ -311,6 +315,7 @@ export function useFrontChat(): UseFrontChatResult {
           throw new Error(`UPLOAD_FAILED_${response.status}`);
         }
         upsertMessage({ ...optimistic, status: 'sent' });
+        logEvent(CHAT_MESSAGE_SENT, { kind });
       } catch (err) {
         upsertMessage({ ...optimistic, status: 'failed' });
         rollbar.warning('FrontChat attachment upload failed', {

@@ -95,6 +95,7 @@ interface Props {
   ) => Promise<void>;
   onError: (message: string) => void;
   maxAttachmentBytes: number;
+  onCompose?: () => void;
 }
 
 export const ChatComposer = ({
@@ -103,12 +104,14 @@ export const ChatComposer = ({
   onSendAttachment,
   onError,
   maxAttachmentBytes,
+  onCompose,
 }: Props) => {
   const t = useTranslations('Messaging.frontChat');
   const recorder = useVoiceRecorder();
   const [draft, setDraft] = useState('');
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const hasComposedRef = useRef(false);
 
   // Only run the interval timer while actively recording; reset happens in start/cancel
   useEffect(() => {
@@ -117,12 +120,22 @@ export const ChatComposer = ({
     return () => clearInterval(id);
   }, [recorder.state]);
 
+  const handleDraftChange = (value: string) => {
+    setDraft(value);
+    if (onCompose && !hasComposedRef.current && value.trim()) {
+      hasComposedRef.current = true;
+      onCompose();
+    }
+    if (!value) hasComposedRef.current = false;
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const trimmed = draft.trim();
     if (!trimmed || isDisabled) return;
     onSendText(trimmed);
     setDraft('');
+    hasComposedRef.current = false;
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -195,7 +208,7 @@ export const ChatComposer = ({
       />
 
       <Box sx={controlRowStyle}>
-        {isRecording ? (
+        {isRecording || isStopping ? (
           // Recording mode: pill-shaped indicator + timer + cancel/stop
           <Box sx={recordingRowStyle}>
             <Box sx={pulseDotStyle} aria-hidden="true" />
@@ -261,7 +274,7 @@ export const ChatComposer = ({
 
             <TextField
               value={draft}
-              onChange={(e) => setDraft(e.target.value)}
+              onChange={(e) => handleDraftChange(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={t('placeholder')}
               aria-label={t('placeholder')}

@@ -4,6 +4,7 @@ import { getAuthToken } from '@/lib/auth';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { ChatMessage } from './types';
 
@@ -53,19 +54,20 @@ const useAuthenticatedBlobUrl = (src: string) => {
 };
 
 const AuthenticatedImage = ({ src, alt }: { src: string; alt: string }) => {
-  const { blobUrl } = useAuthenticatedBlobUrl(src);
+  const { blobUrl, loading } = useAuthenticatedBlobUrl(src);
+  if (loading) return <CircularProgress size={20} />;
   if (!blobUrl) return <ImageIcon sx={{ fontSize: 32, opacity: 0.5 }} aria-hidden="true" />;
   return <Box component="img" src={blobUrl} alt={alt} sx={imagePreviewStyle} />;
 };
 
-const AuthenticatedAudio = ({ src }: { src: string }) => {
+const AuthenticatedAudio = ({ src, unavailableLabel }: { src: string; unavailableLabel: string }) => {
   const { blobUrl, loading } = useAuthenticatedBlobUrl(src);
 
   if (loading) return <CircularProgress size={16} sx={{ mt: 0.5 }} />;
   if (!blobUrl)
     return (
       <Typography variant="caption" sx={{ opacity: 0.5, mt: 0.5, display: 'block' }}>
-        Audio unavailable
+        {unavailableLabel}
       </Typography>
     );
   return (
@@ -125,7 +127,16 @@ interface Props {
 }
 
 export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => {
+  const t = useTranslations('Messaging.frontChat');
   const isUser = message.direction === 'user';
+
+  useEffect(() => {
+    const url = message.previewUrl;
+    if (!url) return;
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [message.previewUrl]);
 
   return (
     <Box sx={isUser ? userBubbleStyle : agentBubbleStyle}>
@@ -163,7 +174,7 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
             <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
             <Typography variant="body2">{message.text}</Typography>
           </Box>
-          {message.attachmentUrl && <AuthenticatedAudio src={message.attachmentUrl} />}
+          {message.attachmentUrl && <AuthenticatedAudio src={message.attachmentUrl} unavailableLabel={t('audioUnavailable')} />}
         </Box>
       ) : (
         <Typography variant="body2">{message.text}</Typography>

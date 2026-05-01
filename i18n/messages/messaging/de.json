@@ -17,6 +17,7 @@
       "recordingInProgress": "Aufnahme läuft",
       "messageSending": "Wird gesendet",
       "messageFailed": "Nachricht konnte nicht gesendet werden – bitte versuche es erneut.",
+      "audioUnavailable": "Audio nicht verfügbar",
       "status": {
         "connecting": "Verbinden …",
         "disconnected": "Neu verbinden …",

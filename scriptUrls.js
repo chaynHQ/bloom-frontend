@@ -54,6 +54,9 @@ const imgSrcUrls = [
 ];
 const connectSrcUrls = [
   API_URL,
+  process.env.NEXT_PUBLIC_API_URL
+    ? `wss://${new URL(process.env.NEXT_PUBLIC_API_URL).hostname}`
+    : 'ws://localhost:35001',
   'https://*.hotjar.com',
   'https://*.hotjar.io',
   'wss://ws.hotjar.com',

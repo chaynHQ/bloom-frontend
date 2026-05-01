@@ -17,6 +17,7 @@
       "recordingInProgress": "Enregistrement en cours",
       "messageSending": "Envoi en cours",
       "messageFailed": "Impossible d'envoyer le message. Veuillez réessayer.",
+      "audioUnavailable": "Audio non disponible",
       "status": {
         "connecting": "Connexion…",
         "disconnected": "Reconnexion…",

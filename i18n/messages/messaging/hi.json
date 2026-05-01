@@ -1,33 +1,34 @@
 {
   "Messaging": {
-    "messageHeading": "Compartilhe o que você está sentindo",
+    "messageHeading": "हमें बताएं आपके मन में क्या है",
     "frontChat": {
-      "ariaChat": "Chat do Bloom",
-      "welcomeAuthor": "Equipe Bloom",
-      "welcomeMessage": "Olá, aqui você pode conversar com sobreviventes e pessoas aliadas da nossa equipe Bloom, que têm experiência em apoiar umas às outras. Estamos aqui para que você compartilhe suas dúvidas, sentimentos e reflexões à medida que avança em nossos cursos.\n\nSe você estiver em risco imediato, ligue para os serviços de emergência, se puder e se for seguro para você. Embora não ofereçamos apoio em situações de crise, podemos ajudar a conectar você com o tipo de serviço de apoio de que necessita. Você pode procurar serviços de apoio na sua região em nosso diretório global aqui: c.chayn.co/directory.\n\nVocê pode conversar conosco em inglês, francês, alemão, hindi, português e espanhol.\n\nNosso objetivo é sempre responder à sua mensagem no prazo de 1 a 2 dias.",
-      "empty": "Envie sua primeira mensagem abaixo e nossa equipe responderá em breve.",
-      "placeholder": "Escreva uma mensagem…",
-      "send": "Enviar mensagem",
-      "attachImage": "Anexar imagem",
-      "imageAttachment": "Imagem",
-      "voiceNote": "Mensagem de voz",
-      "startRecording": "Gravar uma mensagem de voz",
-      "stopRecording": "Parar e enviar mensagem de voz",
-      "cancelRecording": "Cancelar gravação",
-      "recordingInProgress": "Gravando",
-      "messageSending": "Enviando",
-      "messageFailed": "Não foi possível enviar — por favor, tente novamente.",
+      "ariaChat": "Bloom संदेश सेवा",
+      "welcomeAuthor": "Bloom टीम",
+      "welcomeMessage": "नमस्ते, यहाँ आप हमारी Bloom टीम के बचे हुए लोगों और सहयोगियों से बात कर सकते हैं, जिन्हें एक-दूसरे का साथ देने का अनुभव है। हम यहाँ हैं ताकि आप अपने सवाल, भावनाएँ और विचार साझा कर सकें, जैसे-जैसे आप हमारे कोर्स से गुज़रते हैं।\n\nयदि आप तत्काल खतरे में हैं, तो कृपया आपातकालीन सेवाओं को कॉल करें, यदि आप कर सकते हैं और यदि यह आपके लिए सुरक्षित है। हालाँकि हम संकट सहायता नहीं देते, हम आपको उस प्रकार की सहायता सेवा से जोड़ने में मदद कर सकते हैं जिसकी आपको ज़रूरत है। आप हमारे वैश्विक निर्देशिका में अपने क्षेत्र की सहायता सेवाएँ देख सकते हैं: c.chayn.co/directory।\n\nआप हमसे अंग्रेज़ी, फ्रेंच, जर्मन, हिंदी, पुर्तगाली और स्पेनिश में बात कर सकते हैं।\n\nहम हमेशा 1-2 दिनों के भीतर आपके संदेश का जवाब देने का प्रयास करते हैं।",
+      "empty": "नीचे अपना पहला संदेश भेजें और हमारी टीम जल्द ही आपसे संपर्क करेगी।",
+      "placeholder": "एक संदेश लिखें…",
+      "send": "संदेश भेजें",
+      "attachImage": "छवि संलग्न करें",
+      "imageAttachment": "छवि",
+      "voiceNote": "वॉइस नोट",
+      "startRecording": "वॉइस नोट रिकॉर्ड करें",
+      "stopRecording": "रोकें और वॉइस नोट भेजें",
+      "cancelRecording": "रिकॉर्डिंग रद्द करें",
+      "recordingInProgress": "रिकॉर्ड हो रहा है",
+      "messageSending": "भेजा जा रहा है",
+      "messageFailed": "भेजा नहीं जा सका — कृपया पुनः प्रयास करें।",
+      "audioUnavailable": "ऑडियो उपलब्ध नहीं है",
       "status": {
-        "connecting": "Conectando…",
-        "disconnected": "Reconectando…",
-        "error": "Não foi possível conectar. Por favor, tente novamente mais tarde."
+        "connecting": "जुड़ रहा है…",
+        "disconnected": "पुनः जुड़ रहा है…",
+        "error": "कनेक्ट नहीं हो पाया। कृपया बाद में पुनः प्रयास करें।"
       },
       "errors": {
-        "unsupportedImage": "Apenas imagens JPG, PNG, GIF ou WebP são suportadas.",
-        "fileTooLarge": "Os arquivos devem ter menos de 25 MB.",
-        "uploadFailed": "Falha no envio. Por favor, tente novamente.",
-        "micPermission": "O acesso ao microfone foi negado. Para gravar uma mensagem de voz, permita o acesso ao microfone nas configurações do seu navegador e tente novamente.",
-        "micUnavailable": "Não foi possível acessar o seu microfone. Por favor, verifique se ele está conectado e tente novamente."
+        "unsupportedImage": "केवल JPG, PNG, GIF या WebP छवियाँ समर्थित हैं।",
+        "fileTooLarge": "फ़ाइलें 25 MB से कम होनी चाहिए।",
+        "uploadFailed": "अपलोड विफल हुआ। कृपया पुनः प्रयास करें।",
+        "micPermission": "माइक्रोफ़ोन की अनुमति अस्वीकार कर दी गई। वॉइस नोट रिकॉर्ड करने के लिए, अपने ब्राउज़र सेटिंग में माइक्रोफ़ोन की अनुमति दें और पुनः प्रयास करें।",
+        "micUnavailable": "आपके माइक्रोफ़ोन तक पहुँच नहीं हो सकी। कृपया जाँचें कि यह जुड़ा हुआ है और पुनः प्रयास करें।"
       }
     }
   }

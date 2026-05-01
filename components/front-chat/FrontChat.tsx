@@ -1,6 +1,6 @@
 'use client';
 
-import { CHAT_VIEWED } from '@/lib/constants/events';
+import { CHAT_MESSAGE_COMPOSED, CHAT_VIEWED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import {
   Alert,
@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { ChatComposer } from './ChatComposer';
@@ -44,14 +45,10 @@ const transcriptStyle = {
   backgroundColor: 'common.white',
 } as const;
 
-// Welcome banner is the visual anchor at the top of every conversation.
-// Uses the brand gradient to distinguish it from regular messages.
-// Peach gradient using the secondary palette — warm, on-brand, distinct
-const welcomeStyle = {
+const welcomeStyleBase = {
   display: 'flex',
   gap: 2,
   alignSelf: 'stretch',
-  background: 'linear-gradient(135deg, #FFD4BE 0%, #FFEAE1 100%)',
   borderRadius: 2,
   padding: '14px 16px',
   flexShrink: 0,
@@ -92,10 +89,11 @@ const emptyPromptStyle = {
 interface WelcomeMessageProps {
   author: string;
   message: string;
+  sx?: object;
 }
 
-const WelcomeMessage = ({ author, message }: WelcomeMessageProps) => (
-  <Box sx={welcomeStyle} role="note">
+const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
+  <Box sx={{ ...welcomeStyleBase, ...sx }} role="note">
     <Avatar sx={welcomeAvatarStyle} aria-hidden="true">
       B
     </Avatar>
@@ -116,9 +114,14 @@ const WelcomeMessage = ({ author, message }: WelcomeMessageProps) => (
 
 export const FrontChat = () => {
   const t = useTranslations('Messaging.frontChat');
+  const theme = useTheme();
   const { messages, connectionState, sendText, sendAttachment, markAsRead } = useFrontChat();
   const [error, setError] = useState<string | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
+
+  const welcomeStyle = {
+    background: `linear-gradient(135deg, ${theme.palette.secondary.main} 0%, ${theme.palette.secondary.light} 100%)`,
+  };
 
   useEffect(() => {
     logEvent(CHAT_VIEWED);
@@ -138,7 +141,7 @@ export const FrontChat = () => {
       {/* Message transcript */}
       <Box ref={transcriptRef} sx={transcriptStyle} role="log" aria-live="polite">
         {/* Welcome notice is always pinned at the top of the conversation */}
-        <WelcomeMessage author={t('welcomeAuthor')} message={t('welcomeMessage')} />
+        <WelcomeMessage author={t('welcomeAuthor')} message={t('welcomeMessage')} sx={welcomeStyle} />
 
         {messages.length > 0 && <Divider sx={{ my: 0.5, opacity: 0.5 }} />}
 
@@ -199,6 +202,7 @@ export const FrontChat = () => {
         onSendAttachment={sendAttachment}
         onError={setError}
         maxAttachmentBytes={MAX_ATTACHMENT_BYTES}
+        onCompose={() => logEvent(CHAT_MESSAGE_COMPOSED)}
       />
     </Stack>
   );
