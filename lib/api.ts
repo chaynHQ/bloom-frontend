@@ -358,7 +358,7 @@ export const api = createApi({
     runCrispMigration: builder.mutation<MigrationResult, MigrationOptions>({
       query(body) {
         return {
-          url: 'v1/crisp-migration/run',
+          url: 'crisp-migration/run',
           method: 'POST',
           body,
         };
@@ -367,7 +367,7 @@ export const api = createApi({
     getCrispMigrationStatus: builder.query<MigrationStatusResponse, void>({
       query() {
         return {
-          url: 'v1/crisp-migration/status',
+          url: 'crisp-migration/status',
           method: 'GET',
         };
       },

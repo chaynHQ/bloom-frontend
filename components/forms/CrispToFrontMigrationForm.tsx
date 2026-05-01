@@ -57,7 +57,15 @@ const statusColor = {
   failed: 'error',
 } as const;
 
-function ProgressRow({ label, processed, total }: { label: string; processed: number; total: number }) {
+function ProgressRow({
+  label,
+  processed,
+  total,
+}: {
+  label: string;
+  processed: number;
+  total: number;
+}) {
   const pct = total > 0 ? Math.round((processed / total) * 100) : 0;
   return (
     <Box mb={1.5}>
