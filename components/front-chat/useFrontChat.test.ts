@@ -195,4 +195,35 @@ describe('useFrontChat', () => {
       }),
     ).resolves.not.toThrow();
   });
+
+  it('calls markAsRead when an agent_reply arrives while the widget is open', async () => {
+    const fetchSpy = jest.fn().mockResolvedValue({ ok: true });
+    (global as any).fetch = fetchSpy;
+    const { useFrontChat } = require('./useFrontChat');
+    const { result } = renderHook(() => useFrontChat());
+
+    await act(async () => {
+      triggerTokenChange({ uid: 'fb-uid' });
+    });
+    await waitFor(() => expect(mockIo).toHaveBeenCalled());
+
+    act(() => {
+      lastSocket.handlers['connect']?.();
+    });
+
+    act(() => {
+      lastSocket.handlers['agent_reply']?.({
+        id: 'msg_agent_1',
+        body: 'Hello from agent',
+        emittedAt: 1700000000,
+      });
+    });
+
+    await waitFor(() => expect(result.current.messages).toHaveLength(1));
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      'http://localhost:35001/api/v1/front-chat/read',
+      expect.objectContaining({ method: 'PATCH' }),
+    );
+  });
 });

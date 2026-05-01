@@ -64,7 +64,9 @@ export function useFrontChat(): UseFrontChatResult {
   type HistoryEntry = {
     id: string;
     direction: 'user' | 'agent';
+    kind?: 'image' | 'voice';
     text: string;
+    attachmentUrl?: string;
     authorName?: string;
     createdAt: number;
   };
@@ -88,11 +90,12 @@ export function useFrontChat(): UseFrontChatResult {
         const seeded: ChatMessage = {
           id: serverMsg.id,
           direction: serverMsg.direction,
-          kind: 'text',
+          kind: serverMsg.kind ?? 'text',
           text: serverMsg.text,
           authorName: serverMsg.authorName,
           createdAt: serverMsg.createdAt,
           status: 'sent',
+          ...(serverMsg.attachmentUrl && { attachmentUrl: `${apiUrl}${serverMsg.attachmentUrl}` }),
         };
 
         if (optimisticIdx >= 0) {
@@ -129,6 +132,19 @@ export function useFrontChat(): UseFrontChatResult {
       rollbar.warning('FrontChat history fetch failed', { message: (err as Error).message });
     }
   }, [rollbar, mergeHistoryEntries]);
+
+  const markAsRead = useCallback(async () => {
+    const { token, error } = await getAuthToken();
+    if (!token || error) return;
+    try {
+      await fetch(`${apiUrl}/front-chat/read`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      // Fire-and-forget — read receipt failure is non-critical
+    }
+  }, []);
 
   useEffect(() => {
     const origin = getSocketOrigin();
@@ -190,6 +206,8 @@ export function useFrontChat(): UseFrontChatResult {
           createdAt: payload.emittedAt ? payload.emittedAt * 1000 : Date.now(),
           status: 'sent',
         });
+        // Widget is mounted and visible — mark as read immediately.
+        markAsRead();
       });
     };
 
@@ -213,7 +231,7 @@ export function useFrontChat(): UseFrontChatResult {
       unsubscribe();
       tearDown();
     };
-  }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries]);
+  }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries, markAsRead]);
 
   const sendText = useCallback(
     async (text: string) => {
@@ -303,19 +321,6 @@ export function useFrontChat(): UseFrontChatResult {
     },
     [rollbar, upsertMessage],
   );
-
-  const markAsRead = useCallback(async () => {
-    const { token, error } = await getAuthToken();
-    if (!token || error) return;
-    try {
-      await fetch(`${apiUrl}/front-chat/read`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    } catch {
-      // Fire-and-forget — read receipt failure is non-critical
-    }
-  }, []);
 
   return { messages, connectionState, sendText, sendAttachment, markAsRead };
 }

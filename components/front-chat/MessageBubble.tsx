@@ -1,9 +1,79 @@
 'use client';
 
+import { getAuthToken } from '@/lib/auth';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { ChatMessage } from './types';
+
+const imagePreviewStyle = {
+  display: 'block',
+  maxWidth: '100%',
+  maxHeight: 120,
+  borderRadius: '8px',
+  mb: 0.75,
+  objectFit: 'contain',
+} as const;
+
+const useAuthenticatedBlobUrl = (src: string) => {
+  const [blobUrl, setBlobUrl] = useState<string>();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    let objectUrl = '';
+
+    getAuthToken()
+      .then(({ token }) => {
+        if (cancelled || !token) throw new Error('cancelled');
+        return fetch(src, { headers: { Authorization: `Bearer ${token}` } });
+      })
+      .then((res) => {
+        if (!res.ok) throw new Error(`${res.status}`);
+        return res.blob();
+      })
+      .then((blob) => {
+        if (cancelled) return;
+        objectUrl = URL.createObjectURL(blob);
+        setBlobUrl(objectUrl);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [src]);
+
+  return { blobUrl, loading };
+};
+
+const AuthenticatedImage = ({ src, alt }: { src: string; alt: string }) => {
+  const { blobUrl } = useAuthenticatedBlobUrl(src);
+  if (!blobUrl) return <ImageIcon sx={{ fontSize: 32, opacity: 0.5 }} aria-hidden="true" />;
+  return <Box component="img" src={blobUrl} alt={alt} sx={imagePreviewStyle} />;
+};
+
+const AuthenticatedAudio = ({ src }: { src: string }) => {
+  const { blobUrl, loading } = useAuthenticatedBlobUrl(src);
+
+  if (loading) return <CircularProgress size={16} sx={{ mt: 0.5 }} />;
+  if (!blobUrl)
+    return (
+      <Typography variant="caption" sx={{ opacity: 0.5, mt: 0.5, display: 'block' }}>
+        Audio unavailable
+      </Typography>
+    );
+  return (
+    <Box sx={{ mt: 0.5 }}>
+      <audio src={blobUrl} controls style={{ height: 32, maxWidth: 220, display: 'block' }} />
+    </Box>
+  );
+};
 
 const formatTime = (ts: number) =>
   new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' }).format(new Date(ts));
@@ -42,15 +112,6 @@ const metaRowStyle = {
   justifyContent: 'flex-end',
 } as const;
 
-const imagePreviewStyle = {
-  display: 'block',
-  maxWidth: '100%',
-  maxHeight: 180,
-  borderRadius: '8px',
-  mb: 0.75,
-  objectFit: 'contain',
-} as const;
-
 const filenameRowStyle = {
   display: 'flex',
   alignItems: 'center',
@@ -79,14 +140,16 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
 
       {message.kind === 'image' ? (
         <>
-          {message.previewUrl && (
+          {message.previewUrl ? (
             <Box
               component="img"
               src={message.previewUrl}
               alt={message.text ?? ''}
               sx={imagePreviewStyle}
             />
-          )}
+          ) : message.attachmentUrl ? (
+            <AuthenticatedImage src={message.attachmentUrl} alt={message.text ?? ''} />
+          ) : null}
           <Box sx={filenameRowStyle}>
             <ImageIcon sx={{ fontSize: 14, flexShrink: 0, opacity: 0.7 }} aria-hidden="true" />
             <Typography variant="caption" sx={{ opacity: 0.8, wordBreak: 'break-all' }}>
@@ -95,9 +158,12 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
           </Box>
         </>
       ) : message.kind === 'voice' ? (
-        <Box sx={filenameRowStyle}>
-          <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
-          <Typography variant="body2">{message.text}</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+          <Box sx={filenameRowStyle}>
+            <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
+            <Typography variant="body2">{message.text}</Typography>
+          </Box>
+          {message.attachmentUrl && <AuthenticatedAudio src={message.attachmentUrl} />}
         </Box>
       ) : (
         <Typography variant="body2">{message.text}</Typography>

@@ -14,6 +14,8 @@ export interface ChatMessage {
   status: MessageStatus;
   /** Object URL for local image preview — only populated on outgoing image messages before page reload */
   previewUrl?: string;
+  /** Backend proxy URL for historical image/audio messages loaded from Front */
+  attachmentUrl?: string;
 }
 
 export interface AgentReplyPayload {

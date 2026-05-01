@@ -52,7 +52,7 @@ const recordingRowStyle = {
   flex: 1,
   px: 1,
   py: 0.5,
-  bgcolor: 'error.light',
+  bgcolor: 'secondary.main',
   borderRadius: 1.5,
   overflow: 'hidden',
 } as const;
@@ -62,7 +62,7 @@ const pulseDotStyle = {
   width: 10,
   height: 10,
   borderRadius: '50%',
-  backgroundColor: 'error.main',
+  backgroundColor: 'primary.dark',
   flexShrink: 0,
   '@keyframes chatRecordingPulse': {
     '0%, 100%': { opacity: 1 },
@@ -201,8 +201,7 @@ export const ChatComposer = ({
             <Box sx={pulseDotStyle} aria-hidden="true" />
             <Typography
               variant="body2"
-              color="error.dark"
-              sx={{ flex: 1, fontWeight: 500 }}
+              sx={{ flex: 1, fontWeight: 500, color: 'text.primary' }}
               aria-live="polite"
             >
               {t('recordingInProgress')} · {formatDuration(recordingSeconds)}
@@ -221,7 +220,6 @@ export const ChatComposer = ({
                 aria-label={t('stopRecording')}
                 onClick={handleVoiceStop}
                 disabled={isStopping}
-                color="error"
                 size="small"
               >
                 <StopIcon fontSize="small" />

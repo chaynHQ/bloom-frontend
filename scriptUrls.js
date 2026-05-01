@@ -45,6 +45,7 @@ const styleSrcUrls = [
 ];
 const fontSrcUrls = ['https://fonts.gstatic.com', 'https://*.hotjar.com', 'https://*.youtube.com'];
 const imgSrcUrls = [
+  'blob:',
   'https://*.hotjar.com',
   'https://*.storyblok.com',
   'https://*.googletagmanager.com',
@@ -88,7 +89,7 @@ const frameSrcUrls = [
   'https://www.google.com/recaptcha/',
   'https://www.gstatic.com/recaptcha/',
 ];
-const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
+const mediaSrcUrls = ['blob:', 'https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
 const formActionUrls = ['self'];

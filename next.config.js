@@ -159,7 +159,7 @@ module.exports = withBundleAnalyzer(
               {
                 key: 'Permissions-Policy',
                 value:
-                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
+                  'camera=(), microphone=(self), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
               },
               {
                 key: 'Cross-Origin-Opener-Policy',
