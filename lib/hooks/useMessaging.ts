@@ -1,5 +1,11 @@
 'use client';
 
+import {
+  AgentReplyPayload,
+  ChatMessage,
+  ConnectionState,
+  HistoryEntry,
+} from '@/components/messaging/types';
 import { getAuthToken } from '@/lib/auth';
 import { CHAT_MESSAGE_SENT } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
@@ -8,28 +14,9 @@ import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { AgentReplyPayload, ChatMessage } from '../../components/messaging/types';
+import { API_URL } from '../constants/common';
 
 export const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024; // 25 MB
-
-type ConnectionState = 'idle' | 'connecting' | 'connected' | 'disconnected' | 'error';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-
-const getSocketOrigin = (): string => {
-  try {
-    return new URL(apiUrl).origin;
-  } catch {
-    return '';
-  }
-};
-
-const generateId = (): string => {
-  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-    return crypto.randomUUID();
-  }
-  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-};
 
 interface UseMessagingResult {
   messages: ChatMessage[];
@@ -43,8 +30,33 @@ interface UseMessagingResult {
   markAsRead: () => Promise<void>;
 }
 
+// Max gap (ms) between an optimistic message's timestamp and the server's version
+// when deciding whether they represent the same message during history reconciliation.
 const OPTIMISTIC_RECONCILE_MS = 30_000;
 
+const MESSAGING_ENDPOINTS = {
+  messages: `${API_URL}/front-chat/messages`,
+  read: `${API_URL}/front-chat/read`,
+  attachments: `${API_URL}/front-chat/attachments`,
+  socketNs: '/front-chat',
+} as const;
+
+const getSocketOrigin = (): string => {
+  try {
+    return new URL(API_URL).origin;
+  } catch {
+    return '';
+  }
+};
+
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
+// Cypress can't use a real WebSocket — this stub lets tests drive socket events via window.__messagingSocket
 type CypressSocketStub = {
   connected: boolean;
   on: (event: string, cb: (...args: unknown[]) => void) => CypressSocketStub;
@@ -88,6 +100,7 @@ export function useMessaging(): UseMessagingResult {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [connectionState, setConnectionState] = useState<ConnectionState>('idle');
   const socketRef = useRef<Socket | null>(null);
+  // Tracks agent message IDs to prevent duplicates from socket replays after reconnection
   const seenAgentIdsRef = useRef<Set<string>>(new Set());
   const historySeededRef = useRef(false);
 
@@ -101,16 +114,6 @@ export function useMessaging(): UseMessagingResult {
     });
   }, []);
 
-  type HistoryEntry = {
-    id: string;
-    direction: 'user' | 'agent';
-    kind?: 'image' | 'voice';
-    text: string;
-    attachmentUrl?: string;
-    authorName?: string;
-    createdAt: number;
-  };
-
   const mergeHistoryEntries = useCallback((entries: HistoryEntry[]) => {
     setMessages((prev) => {
       const knownIds = new Set(prev.map((m) => m.id));
@@ -119,6 +122,7 @@ export function useMessaging(): UseMessagingResult {
       for (const serverMsg of entries) {
         if (knownIds.has(serverMsg.id)) continue;
 
+        // Skip messages that already carry a real server ID (e.g. delivered via agent_reply)
         const optimisticIdx = next.findIndex(
           (local) =>
             local.direction === serverMsg.direction &&
@@ -135,10 +139,13 @@ export function useMessaging(): UseMessagingResult {
           authorName: serverMsg.authorName,
           createdAt: serverMsg.createdAt,
           status: 'sent',
-          ...(serverMsg.attachmentUrl && { attachmentUrl: `${apiUrl}${serverMsg.attachmentUrl}` }),
+          ...(serverMsg.attachmentUrl && { attachmentUrl: `${API_URL}${serverMsg.attachmentUrl}` }),
         };
 
         if (optimisticIdx >= 0) {
+          // Revoke the local object URL now that we have the backend-served URL
+          const old = next[optimisticIdx];
+          if (old.previewUrl) URL.revokeObjectURL(old.previewUrl);
           next[optimisticIdx] = seeded;
         } else {
           next.push(seeded);
@@ -155,13 +162,13 @@ export function useMessaging(): UseMessagingResult {
     const { token, error } = await getAuthToken();
     if (!token || error) return;
     try {
-      const response = await fetch(`${apiUrl}/front-chat/messages`, {
+      const response = await fetch(MESSAGING_ENDPOINTS.messages, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) {
         rollbar.warning('Messaging history fetch non-OK', {
           status: response.status,
-          url: `${apiUrl}/front-chat/messages`,
+          url: MESSAGING_ENDPOINTS.messages,
         });
         historySeededRef.current = false;
         return;
@@ -178,7 +185,7 @@ export function useMessaging(): UseMessagingResult {
     const { token, error } = await getAuthToken();
     if (!token || error) return;
     try {
-      await fetch(`${apiUrl}/front-chat/read`, {
+      await fetch(MESSAGING_ENDPOINTS.read, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -186,6 +193,94 @@ export function useMessaging(): UseMessagingResult {
       // Fire-and-forget — read receipt failure is non-critical
     }
   }, []);
+
+  const sendText = useCallback(
+    (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) return;
+
+      const socket = socketRef.current;
+      const id = generateId();
+      const optimistic: ChatMessage = {
+        id,
+        direction: 'user',
+        kind: 'text',
+        text: trimmed,
+        createdAt: Date.now(),
+        status: 'sending',
+      };
+      upsertMessage(optimistic);
+
+      if (!socket || !socket.connected) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        return;
+      }
+
+      socket
+        .timeout(10_000)
+        .emit('send_message', { text: trimmed }, (timeoutErr: Error | null, ack: unknown) => {
+          if (timeoutErr || !(ack as { ok?: boolean })?.ok) {
+            upsertMessage({ ...optimistic, status: 'failed' });
+            return;
+          }
+          upsertMessage({ ...optimistic, status: 'sent' });
+          logEvent(CHAT_MESSAGE_SENT, { kind: 'text' });
+        });
+    },
+    [upsertMessage],
+  );
+
+  const sendAttachment = useCallback(
+    async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
+      const id = generateId();
+      const previewUrl =
+        kind === 'image' && file instanceof File ? URL.createObjectURL(file) : undefined;
+      const optimistic: ChatMessage = {
+        id,
+        direction: 'user',
+        kind,
+        text: file instanceof File ? file.name : displayText,
+        previewUrl,
+        createdAt: Date.now(),
+        status: 'sending',
+      };
+      upsertMessage(optimistic);
+
+      if (file.size > MAX_ATTACHMENT_BYTES) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        throw new Error('FILE_TOO_LARGE');
+      }
+
+      const { token, error } = await getAuthToken();
+      if (!token || error) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        throw new Error('AUTH_FAILED');
+      }
+
+      const form = new FormData();
+      const filename =
+        file instanceof File ? file.name : kind === 'voice' ? 'voice-note.webm' : 'image';
+      form.append('file', file, filename);
+
+      try {
+        const response = await fetch(MESSAGING_ENDPOINTS.attachments, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: form,
+        });
+        if (!response.ok) throw new Error(`UPLOAD_FAILED_${response.status}`);
+        upsertMessage({ ...optimistic, status: 'sent' });
+        logEvent(CHAT_MESSAGE_SENT, { kind });
+      } catch (err) {
+        upsertMessage({ ...optimistic, status: 'failed' });
+        rollbar.warning('Messaging attachment upload failed', {
+          message: (err as Error).message,
+        });
+        throw err;
+      }
+    },
+    [rollbar, upsertMessage],
+  );
 
   useEffect(() => {
     const origin = getSocketOrigin();
@@ -210,7 +305,7 @@ export function useMessaging(): UseMessagingResult {
         (window as any).__messagingSocket = stub;
         socket = stub as unknown as Socket;
       } else {
-        socket = io(`${origin}/front-chat`, {
+        socket = io(`${origin}${MESSAGING_ENDPOINTS.socketNs}`, {
           auth: async (cb) => {
             const { token } = await getAuthToken();
             cb({ token: token ?? '' });
@@ -262,7 +357,12 @@ export function useMessaging(): UseMessagingResult {
     const unsubscribe = onIdTokenChanged(auth, (firebaseUser) => {
       if (!firebaseUser) {
         tearDown();
-        setMessages([]);
+        setMessages((prev) => {
+          prev.forEach((m) => {
+            if (m.previewUrl) URL.revokeObjectURL(m.previewUrl);
+          });
+          return [];
+        });
         seenAgentIdsRef.current.clear();
         historySeededRef.current = false;
         setConnectionState('idle');
@@ -280,97 +380,6 @@ export function useMessaging(): UseMessagingResult {
       tearDown();
     };
   }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries, markAsRead]);
-
-  const sendText = useCallback(
-    (text: string) => {
-      const trimmed = text.trim();
-      if (!trimmed) return;
-
-      const socket = socketRef.current;
-      const id = generateId();
-      const optimistic: ChatMessage = {
-        id,
-        direction: 'user',
-        kind: 'text',
-        text: trimmed,
-        createdAt: Date.now(),
-        status: 'sending',
-      };
-      upsertMessage(optimistic);
-
-      if (!socket || !socket.connected) {
-        upsertMessage({ ...optimistic, status: 'failed' });
-        return;
-      }
-
-      socket
-        .timeout(10_000)
-        .emit('send_message', { text: trimmed }, (timeoutErr: Error | null, ack: unknown) => {
-          if (timeoutErr || !(ack as { ok?: boolean })?.ok) {
-            upsertMessage({ ...optimistic, status: 'failed' });
-            return;
-          }
-          upsertMessage({ ...optimistic, status: 'sent' });
-          logEvent(CHAT_MESSAGE_SENT, { kind: 'text' });
-        });
-    },
-    [upsertMessage],
-  );
-
-  const sendAttachment = useCallback(
-    async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
-      const id = generateId();
-      const previewUrl =
-        kind === 'image' && file instanceof File ? URL.createObjectURL(file) : undefined;
-      const optimistic: ChatMessage = {
-        id,
-        direction: 'user',
-        kind: kind === 'image' ? 'image' : 'voice',
-        text: file instanceof File ? file.name : displayText,
-        previewUrl,
-        createdAt: Date.now(),
-        status: 'sending',
-      };
-      upsertMessage(optimistic);
-
-      if (file.size > MAX_ATTACHMENT_BYTES) {
-        upsertMessage({ ...optimistic, status: 'failed' });
-        throw new Error('FILE_TOO_LARGE');
-      }
-
-      const { token, error } = await getAuthToken();
-      if (!token || error) {
-        upsertMessage({ ...optimistic, status: 'failed' });
-        throw new Error('AUTH_FAILED');
-      }
-
-      const form = new FormData();
-      const filename =
-        file instanceof File ? file.name : kind === 'voice' ? 'voice-note.webm' : 'image';
-      form.append('file', file, filename);
-
-      try {
-        const response = await fetch(`${apiUrl}/front-chat/attachments`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          body: form,
-        });
-        if (!response.ok) {
-          upsertMessage({ ...optimistic, status: 'failed' });
-          throw new Error(`UPLOAD_FAILED_${response.status}`);
-        }
-        upsertMessage({ ...optimistic, status: 'sent' });
-        logEvent(CHAT_MESSAGE_SENT, { kind });
-      } catch (err) {
-        upsertMessage({ ...optimistic, status: 'failed' });
-        rollbar.warning('Messaging attachment upload failed', {
-          message: (err as Error).message,
-        });
-        throw err;
-      }
-    },
-    [rollbar, upsertMessage],
-  );
 
   return { messages, connectionState, sendText, sendAttachment, markAsRead };
 }

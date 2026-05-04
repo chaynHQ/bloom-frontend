@@ -13,8 +13,8 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
-import DynamicComponent from '../storyblok/DynamicComponent';
+import NotesFromBloomPromo from '@/components/banner/NotesFromBloomPromo';
+import DynamicComponent from '@/components/storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,

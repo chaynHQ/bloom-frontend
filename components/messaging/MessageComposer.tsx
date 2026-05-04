@@ -1,5 +1,6 @@
 'use client';
 
+import { useVoiceRecorder } from '@/lib/hooks/useVoiceRecorder';
 import CloseIcon from '@mui/icons-material/Close';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
@@ -8,14 +9,14 @@ import StopIcon from '@mui/icons-material/Stop';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { useVoiceRecorder } from '../../lib/hooks/useVoiceRecorder';
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 const composerStyle = {
   borderTop: '2px solid',
   borderColor: 'secondary.main',
-  padding: '10px 12px',
+  paddingX: 1.25,
+  paddingY: 1.5,
   backgroundColor: 'secondary.light',
   flexShrink: 0,
 } as const;
@@ -26,7 +27,6 @@ const controlRowStyle = {
   gap: 0.75,
 } as const;
 
-// Tinted background so secondary action buttons read as interactive, not decorative
 const actionButtonStyle = {
   bgcolor: 'secondary.light',
   color: 'text.primary',
@@ -57,7 +57,6 @@ const recordingRowStyle = {
   overflow: 'hidden',
 } as const;
 
-// CSS keyframe animation defined inline for the pulsing recording dot
 const pulseDotStyle = {
   width: 10,
   height: 10,
@@ -69,6 +68,17 @@ const pulseDotStyle = {
     '50%': { opacity: 0.2 },
   },
   animation: 'messagingRecordingPulse 1.2s ease-in-out infinite',
+} as const;
+
+const textFieldStyle = {
+  mb: 0,
+  '& .MuiOutlinedInput-root': {
+    backgroundColor: 'common.white',
+    '& fieldset': { borderColor: 'secondary.main' },
+    '&:hover fieldset': { borderColor: 'secondary.dark' },
+    '&.Mui-focused fieldset': { borderColor: 'secondary.dark', borderWidth: '1.5px' },
+    '&.Mui-disabled fieldset': { borderColor: 'divider' },
+  },
 } as const;
 
 const formatDuration = (seconds: number): string => {
@@ -129,8 +139,7 @@ export const MessageComposer = ({
     if (!value) hasComposedRef.current = false;
   };
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const submitDraft = () => {
     const trimmed = draft.trim();
     if (!trimmed || isDisabled) return;
     onSendText(trimmed);
@@ -138,10 +147,15 @@ export const MessageComposer = ({
     hasComposedRef.current = false;
   };
 
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    submitDraft();
+  };
+
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      handleSubmit(event as unknown as FormEvent);
+      submitDraft();
     }
   };
 
@@ -283,16 +297,7 @@ export const MessageComposer = ({
               fullWidth
               size="small"
               disabled={isDisabled}
-              sx={{
-                mb: 0,
-                '& .MuiOutlinedInput-root': {
-                  backgroundColor: 'common.white',
-                  '& fieldset': { borderColor: 'secondary.main' },
-                  '&:hover fieldset': { borderColor: 'secondary.dark' },
-                  '&.Mui-focused fieldset': { borderColor: 'secondary.dark', borderWidth: '1.5px' },
-                  '&.Mui-disabled fieldset': { borderColor: 'divider' },
-                },
-              }}
+              sx={textFieldStyle}
               slotProps={{ htmlInput: { maxLength: 10_000 } }}
             />
 

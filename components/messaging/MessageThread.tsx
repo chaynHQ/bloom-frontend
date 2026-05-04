@@ -1,6 +1,7 @@
 'use client';
 
 import { CHAT_MESSAGE_COMPOSED, CHAT_VIEWED } from '@/lib/constants/events';
+import { MAX_ATTACHMENT_BYTES, useMessaging } from '@/lib/hooks/useMessaging';
 import logEvent from '@/lib/utils/logEvent';
 import {
   Alert,
@@ -12,19 +13,16 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-import { MAX_ATTACHMENT_BYTES, useMessaging } from '../../lib/hooks/useMessaging';
-import { MessageComposer } from './MessageComposer';
 import { MessageBubble } from './MessageBubble';
-
-// ── Styles ────────────────────────────────────────────────────────────────────
+import { MessageComposer } from './MessageComposer';
 
 const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
-  height: '540px',
+  height: 540,
   maxHeight: '72vh',
   marginBottom: 3,
   borderRadius: 1,
@@ -50,7 +48,7 @@ const welcomeStyleBase = {
   gap: 2,
   alignSelf: 'stretch',
   borderRadius: 2,
-  padding: '14px 16px',
+  padding: 2,
   flexShrink: 0,
 } as const;
 
@@ -84,12 +82,10 @@ const emptyPromptStyle = {
   opacity: 0.7,
 } as const;
 
-// ── Welcome message ───────────────────────────────────────────────────────────
-
 interface WelcomeMessageProps {
   author: string;
   message: string;
-  sx?: object;
+  sx?: SxProps<Theme>;
 }
 
 const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
@@ -109,8 +105,6 @@ const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
     </Box>
   </Box>
 );
-
-// ── Main component ────────────────────────────────────────────────────────────
 
 export const MessageThread = () => {
   const t = useTranslations('Messaging.frontChat');
@@ -138,7 +132,6 @@ export const MessageThread = () => {
 
   return (
     <Stack sx={containerStyle} aria-label={t('ariaChat')}>
-      {/* Message transcript */}
       <Box ref={transcriptRef} sx={transcriptStyle} role="log" aria-live="polite">
         {/* Welcome notice is always pinned at the top of the conversation */}
         <WelcomeMessage
@@ -165,8 +158,8 @@ export const MessageThread = () => {
         )}
       </Box>
 
-      {/* Subtle connection status — sits just above the composer, not a jarring top banner */}
-      <Fade in={connectionState !== 'connected'}>
+      {/* Subtle connection status — sits just above the composer */}
+      <Fade in={connectionState !== 'connected'} unmountOnExit>
         <Box sx={connectionStatusStyle} aria-live="polite">
           {(connectionState === 'connecting' || connectionState === 'idle') && (
             <>

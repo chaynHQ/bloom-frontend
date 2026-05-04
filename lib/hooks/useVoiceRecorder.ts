@@ -28,6 +28,7 @@ interface UseVoiceRecorderResult {
 
 export function useVoiceRecorder(): UseVoiceRecorderResult {
   const [state, setState] = useState<RecordingState>('idle');
+  // useSyncExternalStore with a noop subscribe gives SSR-safe browser capability detection
   const isSupported = useSyncExternalStore(noopSubscribe, getIsSupported, getServerIsSupported);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -45,7 +46,13 @@ export function useVoiceRecorder(): UseVoiceRecorderResult {
 
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     streamRef.current = stream;
-    const recorder = new MediaRecorder(stream, { mimeType });
+    let recorder: MediaRecorder;
+    try {
+      recorder = new MediaRecorder(stream, { mimeType });
+    } catch (err) {
+      releaseStream();
+      throw err;
+    }
     chunksRef.current = [];
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) chunksRef.current.push(event.data);

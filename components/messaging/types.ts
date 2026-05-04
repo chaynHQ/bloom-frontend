@@ -2,7 +2,9 @@ export type MessageDirection = 'user' | 'agent';
 
 export type MessageStatus = 'sending' | 'sent' | 'failed';
 
-export type MessageKind = 'text' | 'image' | 'voice' | 'attachment';
+export type MessageKind = 'text' | 'image' | 'voice';
+
+export type ConnectionState = 'idle' | 'connecting' | 'connected' | 'disconnected' | 'error';
 
 export interface ChatMessage {
   id: string;
@@ -24,4 +26,15 @@ export interface AgentReplyPayload {
   authorEmail?: string;
   authorName?: string;
   emittedAt: number;
+}
+
+/** Raw message shape returned by the /front-chat/messages history endpoint */
+export interface HistoryEntry {
+  id: string;
+  direction: 'user' | 'agent';
+  kind?: 'image' | 'voice';
+  text: string;
+  attachmentUrl?: string;
+  authorName?: string;
+  createdAt: number;
 }
