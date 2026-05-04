@@ -2,7 +2,6 @@
 
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
-import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
@@ -26,8 +25,6 @@ export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
 
-  const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
-
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isEnglish = locale === 'en';
@@ -35,7 +32,7 @@ export default function UserResearchBanner() {
   const showBanner = isBannerFeatureEnabled && isEnglish && isBannerNotInteracted;
 
   const handleClickAccepted = () => {
-    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
     logEvent(USER_BANNER_INTERESTED);
     setOpen(false);
 
@@ -43,7 +40,7 @@ export default function UserResearchBanner() {
   };
 
   const handleClickDeclined = () => {
-    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
     logEvent(USER_BANNER_DISMISSED);
     setOpen(false);
   };
