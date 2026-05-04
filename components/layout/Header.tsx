@@ -12,6 +12,7 @@ import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import UserResearchBanner from '../banner/UserResearchBanner';
 
 export interface HeaderProps {
   title: string;
@@ -96,6 +97,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyle}>
+      <UserResearchBanner />
       {!children && (
         <IconButton
           sx={backButtonStyle}

@@ -100,7 +100,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v7.1.8
+        uses: cypress-io/github-action@v7.1.9
         with:
           install: false # Already installed above
           browser: chrome
@@ -165,6 +165,8 @@ jobs:
     name: Check for ungrouped tests
     needs: wait-for-vercel-deployment
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -183,7 +185,7 @@ jobs:
 
       - name: Run ungrouped tests (if any)
         if: steps.check.outputs.found == 'true'
-        uses: cypress-io/github-action@v7.1.8
+        uses: cypress-io/github-action@v7.1.9
         with:
           browser: chrome
           config-file: cypress.config.ts
