@@ -25,6 +25,75 @@ describe('A logged in public user can', () => {
     );
   });
 
+  describe('FrontChat widget', () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/front-chat/messages', { body: { messages: [] } }).as('getHistory');
+      cy.intercept('PATCH', '**/front-chat/read', { statusCode: 204 }).as('markRead');
+    });
+
+    const connectSocket = () => {
+      cy.window().should((win) => {
+        expect((win as any).__frontChatSocket).to.exist;
+      });
+      cy.window().then((win) => {
+        const socket = (win as any).__frontChatSocket;
+        socket.connected = true;
+        socket.trigger('connect');
+      });
+    };
+
+    it('renders the welcome message and enables the composer when connected', () => {
+      cy.visit('/messaging');
+      connectSocket();
+      cy.contains('Bloom Team').should('be.visible');
+      cy.get('[aria-label="Write a message…"]').should('not.be.disabled');
+    });
+
+    it('displays history messages fetched from the API', () => {
+      cy.intercept('GET', '**/front-chat/messages', {
+        body: {
+          messages: [
+            { id: 'h1', direction: 'user', text: 'Hello there', createdAt: Date.now() - 60000 },
+            {
+              id: 'h2',
+              direction: 'agent',
+              text: 'Hi! How can I help?',
+              authorName: 'Alex',
+              createdAt: Date.now() - 50000,
+            },
+          ],
+        },
+      }).as('getHistory');
+      cy.visit('/messaging');
+      connectSocket();
+      cy.contains('Hello there').should('be.visible');
+      cy.contains('Hi! How can I help?').should('be.visible');
+    });
+
+    it('sends a text message and shows it as sent', () => {
+      cy.visit('/messaging');
+      connectSocket();
+      cy.get('[aria-label="Write a message…"]').type('Hi from Cypress');
+      cy.get('button[aria-label="Send message"]').click();
+      cy.contains('Hi from Cypress').should('be.visible');
+      cy.contains("Couldn't send").should('not.exist');
+    });
+
+    it('displays an incoming agent reply', () => {
+      cy.visit('/messaging');
+      connectSocket();
+      cy.window().then((win) => {
+        (win as any).__frontChatSocket.trigger('agent_reply', {
+          id: 'msg_agent_1',
+          body: 'How are you doing today?',
+          authorName: 'Bloom Team',
+          emittedAt: Date.now() / 1000,
+        });
+      });
+      cy.contains('How are you doing today?').should('be.visible');
+    });
+  });
+
   after(() => {
     cy.logout();
   });

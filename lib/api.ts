@@ -17,7 +17,7 @@ import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
 import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 
-export interface MigrationProgress {
+interface MigrationProgress {
   totalContacts: number;
   processedContacts: number;
   totalConversations: number;
@@ -37,7 +37,7 @@ export interface MigrationError {
   timestamp: string;
 }
 
-export interface MigrationResult {
+interface MigrationResult {
   success: boolean;
   progress: MigrationProgress;
   errors: MigrationError[];

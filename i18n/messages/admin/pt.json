@@ -35,58 +35,6 @@
       "error": "Error updating partner admin: ",
       "reset": "Update another partner admin"
     },
-    "crispMigration": {
-      "title": "Crisp → Front migration",
-      "description": "Migrate conversations from Crisp to Front. Always run a dry run first to validate before running the full live migration.",
-      "warning": "WARNING: Dry run is disabled. This will permanently import data into Front and cannot be easily undone. Only proceed if you are certain.",
-      "options": {
-        "dryRun": "Dry run — validate without writing data (recommended)",
-        "skipAttachments": "Skip attachments",
-        "skipNotes": "Skip notes / internal comments",
-        "continueOnError": "Continue on error (skip failed conversations)",
-        "startDate": "Only migrate conversations after this date (optional)",
-        "specificEmail": "Specific contact email — migrates only this contact (optional)",
-        "specificSessionId": "Specific session ID — migrates only this conversation (optional)",
-        "emailDomainFilter": "Email domain filter — e.g. @chayn.co (optional)"
-      },
-      "submit": "Run live migration",
-      "submitDryRun": "Run dry run",
-      "confirmTitle": "Confirm live migration",
-      "confirmDescription": "You are about to run a LIVE migration. This will permanently import conversations from Crisp into Front. This action cannot be easily undone. Are you sure you want to proceed?",
-      "confirmCancel": "Cancel",
-      "confirmRun": "Yes, run live migration",
-      "status": {
-        "idle": "Idle",
-        "pending": "Pending",
-        "running": "Running",
-        "completed": "Completed",
-        "failed": "Failed"
-      },
-      "progress": {
-        "title": "Migration progress",
-        "contacts": "Contacts",
-        "conversations": "Conversations",
-        "messages": "Messages",
-        "attachments": "Attachments",
-        "notes": "Notes"
-      },
-      "errors": {
-        "title": "Errors ({count})",
-        "session": "Session ID",
-        "email": "Email",
-        "error": "Error",
-        "timestamp": "Timestamp"
-      },
-      "result": {
-        "success": "Migration completed successfully — no errors.",
-        "successWithErrors": "Migration completed with {count} error(s). Review the errors below.",
-        "dryRunSuccess": "Dry run completed — no data was written to Front.",
-        "dryRunMode": "DRY RUN — no data will be written to Front",
-        "failure": "Migration failed. See errors below."
-      },
-      "reset": "Reset and run another migration",
-      "runError": "Error starting migration: "
-    },
     "updatePartner": {
       "title": "Update partner active status",
       "activeLabel": "Deactivate {partner}",

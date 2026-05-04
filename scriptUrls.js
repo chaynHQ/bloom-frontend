@@ -54,9 +54,9 @@ const imgSrcUrls = [
 ];
 const connectSrcUrls = [
   API_URL,
-  process.env.NEXT_PUBLIC_API_URL
-    ? `wss://${new URL(process.env.NEXT_PUBLIC_API_URL).hostname}`
-    : 'ws://localhost:35001',
+  process.env.NEXT_PUBLIC_ENV === 'development'
+    ? 'ws://localhost:35001'
+    : `wss://${new URL(process.env.NEXT_PUBLIC_API_URL).hostname}`,
   'https://*.hotjar.com',
   'https://*.hotjar.io',
   'wss://ws.hotjar.com',
@@ -69,7 +69,6 @@ const connectSrcUrls = [
   'https://*.simplybook.it',
   'https://*.zapier.com',
   'https://*.nr-data.net',
-  'ws://localhost:35001',
   'https://sessions.bugsnag.com/',
   'https://*.noembed.com',
   'https://noembed.com',

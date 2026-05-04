@@ -45,6 +45,44 @@ interface UseFrontChatResult {
 
 const OPTIMISTIC_RECONCILE_MS = 30_000;
 
+type CypressSocketStub = {
+  connected: boolean;
+  on: (event: string, cb: (...args: unknown[]) => void) => CypressSocketStub;
+  emit: (event: string, ...args: unknown[]) => CypressSocketStub;
+  timeout: (ms: number) => CypressSocketStub;
+  disconnect: () => void;
+  trigger: (event: string, payload?: unknown) => void;
+};
+
+function createCypressStubSocket(): CypressSocketStub {
+  const handlers: Record<string, (...args: unknown[]) => void> = {};
+  const stub: CypressSocketStub = {
+    connected: false,
+    on(event, cb) {
+      handlers[event] = cb;
+      return stub;
+    },
+    emit(event, ...args) {
+      if (event === 'send_message') {
+        const ack = args[args.length - 1];
+        if (typeof ack === 'function')
+          (ack as (err: null, res: { ok: true }) => void)(null, { ok: true });
+      }
+      return stub;
+    },
+    timeout(_ms) {
+      return stub;
+    },
+    disconnect() {
+      stub.connected = false;
+    },
+    trigger(event, payload) {
+      handlers[event]?.(payload);
+    },
+  };
+  return stub;
+}
+
 export function useFrontChat(): UseFrontChatResult {
   const rollbar = useRollbar();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -166,16 +204,23 @@ export function useFrontChat(): UseFrontChatResult {
 
     const buildSocket = () => {
       setConnectionState('connecting');
-      const socket = io(`${origin}/front-chat`, {
-        auth: async (cb) => {
-          const { token } = await getAuthToken();
-          cb({ token: token ?? '' });
-        },
-        transports: ['websocket', 'polling'],
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 10000,
-      });
+      let socket: Socket;
+      if (typeof window !== 'undefined' && !!(window as any).Cypress) {
+        const stub = createCypressStubSocket();
+        (window as any).__frontChatSocket = stub;
+        socket = stub as unknown as Socket;
+      } else {
+        socket = io(`${origin}/front-chat`, {
+          auth: async (cb) => {
+            const { token } = await getAuthToken();
+            cb({ token: token ?? '' });
+          },
+          transports: ['websocket', 'polling'],
+          reconnection: true,
+          reconnectionDelay: 1000,
+          reconnectionDelayMax: 10000,
+        });
+      }
       activeSocket = socket;
       socketRef.current = socket;
 

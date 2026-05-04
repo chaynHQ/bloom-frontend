@@ -39,8 +39,6 @@ Additional Resources:
 
 See [Bloom's backend repo](https://github.com/chaynHQ/bloom-backend) for instructions. You will need to run this in the background for the frontend to be functional.
 
-> **Front chat:** The 1:1 messaging widget connects to the backend via WebSocket (`/front-chat` Socket.IO namespace). The chat widget will not function locally unless the backend is configured with valid Front API credentials. This is a Chayn-internal integration — contributors working on unrelated features can safely ignore it.
-
 ## Configure Environment Variables
 
 See [configure-env.md](configure-env.md) for instructions on configuring environment variables.
