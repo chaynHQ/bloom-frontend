@@ -136,6 +136,7 @@ export default function RegisterPage() {
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
+    showWelcomeSubtext: partnerContent === null,
   };
   const ExtraContent = (
     <>
@@ -195,6 +196,7 @@ export default function RegisterPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={containerStyle}>
         <Box sx={textContainerStyle}>

@@ -2,7 +2,7 @@
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { rowStyle } from '@/styles/common';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
@@ -29,11 +29,16 @@ const logoContainerStyle = {
   marginTop: { xs: 4, lg: 2 },
 } as const;
 
+const welcomeTextStyle = {
+  fontSize: { xs: '1.25rem !important', sm: '1.5rem !important', lg: '1.75rem !important' },
+} as const;
+
 interface HeaderProps {
   partnerLogoSrc: StaticImageData;
   partnerLogoAlt: string;
   imageSrc: StaticImageData;
   imageAlt: string;
+  showWelcomeSubtext?: boolean;
 }
 
 const PartnerHeader = (props: HeaderProps) => {
@@ -43,6 +48,11 @@ const PartnerHeader = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={logoContainerStyle}>
+        {props.showWelcomeSubtext && (
+          <Typography variant="subtitle1" sx={welcomeTextStyle}>
+            Welcome to
+          </Typography>
+        )}
         <Image
           alt={tS(partnerLogoAlt)}
           src={partnerLogoSrc}
