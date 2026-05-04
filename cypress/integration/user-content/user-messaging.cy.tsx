@@ -25,7 +25,7 @@ describe('A logged in public user can', () => {
     );
   });
 
-  describe('FrontChat widget', () => {
+  describe('Messaging widget', () => {
     beforeEach(() => {
       cy.intercept('GET', '**/front-chat/messages', { body: { messages: [] } }).as('getHistory');
       cy.intercept('PATCH', '**/front-chat/read', { statusCode: 204 }).as('markRead');
@@ -33,10 +33,10 @@ describe('A logged in public user can', () => {
 
     const connectSocket = () => {
       cy.window().should((win) => {
-        expect((win as any).__frontChatSocket).to.exist;
+        expect((win as any).__messagingSocket).to.exist;
       });
       cy.window().then((win) => {
-        const socket = (win as any).__frontChatSocket;
+        const socket = (win as any).__messagingSocket;
         socket.connected = true;
         socket.trigger('connect');
       });
@@ -83,7 +83,7 @@ describe('A logged in public user can', () => {
       cy.visit('/messaging');
       connectSocket();
       cy.window().then((win) => {
-        (win as any).__frontChatSocket.trigger('agent_reply', {
+        (win as any).__messagingSocket.trigger('agent_reply', {
           id: 'msg_agent_1',
           body: 'How are you doing today?',
           authorName: 'Bloom Team',
@@ -92,9 +92,72 @@ describe('A logged in public user can', () => {
       });
       cy.contains('How are you doing today?').should('be.visible');
     });
+
+    it('records a voice note and sends it as a message', () => {
+      cy.intercept('POST', '**/front-chat/attachments', { statusCode: 204 }).as('uploadVoice');
+      cy.visit('/messaging', {
+        onBeforeLoad(win) {
+          const mockStream = { getTracks: () => [{ stop: () => {} }] };
+          (win.navigator as any).mediaDevices = {
+            getUserMedia: () => Promise.resolve(mockStream),
+          };
+          class StubRecorder {
+            static isTypeSupported() {
+              return true;
+            }
+            state = 'inactive';
+            mimeType: string;
+            ondataavailable: ((e: { data: Blob }) => void) | null = null;
+            onstop: (() => void) | null = null;
+            constructor(_stream: unknown, opts: { mimeType: string }) {
+              this.mimeType = opts?.mimeType ?? 'audio/webm';
+            }
+            start() {
+              this.state = 'recording';
+            }
+            stop() {
+              this.state = 'inactive';
+              this.ondataavailable?.({ data: new Blob(['audio'], { type: this.mimeType }) });
+              this.onstop?.();
+            }
+          }
+          (win as any).MediaRecorder = StubRecorder;
+        },
+      });
+      connectSocket();
+      cy.get('button[aria-label="Record a voice note"]').click();
+      cy.contains('Recording').should('be.visible');
+      cy.get('button[aria-label="Stop and send voice note"]').click();
+      cy.wait('@uploadVoice');
+      cy.contains('Voice note').should('be.visible');
+    });
+
+    it('attaches an image and sends it as a message', () => {
+      cy.intercept('POST', '**/front-chat/attachments', { statusCode: 204 }).as('uploadImage');
+      cy.visit('/messaging');
+      connectSocket();
+      cy.get('input[type="file"]').selectFile(
+        {
+          contents: Cypress.Buffer.from('fake-image'),
+          fileName: 'photo.jpg',
+          mimeType: 'image/jpeg',
+        },
+        { force: true },
+      );
+      cy.wait('@uploadImage');
+      cy.contains('photo.jpg').should('be.visible');
+    });
   });
 
   after(() => {
     cy.logout();
+  });
+});
+
+describe('A logged out user visiting the messaging page', () => {
+  it('sees the sign-up banner instead of the chat widget', () => {
+    cy.visit('/messaging');
+    cy.get('#signup-banner').should('be.visible');
+    cy.get('[aria-label="Bloom messaging"]').should('not.exist');
   });
 });

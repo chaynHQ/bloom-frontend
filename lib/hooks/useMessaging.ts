@@ -1,14 +1,14 @@
 'use client';
 
 import { getAuthToken } from '@/lib/auth';
-import { auth } from '@/lib/firebase';
 import { CHAT_MESSAGE_SENT } from '@/lib/constants/events';
+import { auth } from '@/lib/firebase';
 import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { AgentReplyPayload, ChatMessage } from './types';
+import { AgentReplyPayload, ChatMessage } from '../../components/messaging/types';
 
 export const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024; // 25 MB
 
@@ -31,7 +31,7 @@ const generateId = (): string => {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 };
 
-interface UseFrontChatResult {
+interface UseMessagingResult {
   messages: ChatMessage[];
   connectionState: ConnectionState;
   sendText: (text: string) => void;
@@ -83,7 +83,7 @@ function createCypressStubSocket(): CypressSocketStub {
   return stub;
 }
 
-export function useFrontChat(): UseFrontChatResult {
+export function useMessaging(): UseMessagingResult {
   const rollbar = useRollbar();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [connectionState, setConnectionState] = useState<ConnectionState>('idle');
@@ -159,7 +159,7 @@ export function useFrontChat(): UseFrontChatResult {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) {
-        rollbar.warning('FrontChat history fetch non-OK', {
+        rollbar.warning('Messaging history fetch non-OK', {
           status: response.status,
           url: `${apiUrl}/front-chat/messages`,
         });
@@ -170,7 +170,7 @@ export function useFrontChat(): UseFrontChatResult {
       mergeHistoryEntries(json.messages);
     } catch (err) {
       historySeededRef.current = false;
-      rollbar.warning('FrontChat history fetch failed', { message: (err as Error).message });
+      rollbar.warning('Messaging history fetch failed', { message: (err as Error).message });
     }
   }, [rollbar, mergeHistoryEntries]);
 
@@ -207,7 +207,7 @@ export function useFrontChat(): UseFrontChatResult {
       let socket: Socket;
       if (typeof window !== 'undefined' && !!(window as any).Cypress) {
         const stub = createCypressStubSocket();
-        (window as any).__frontChatSocket = stub;
+        (window as any).__messagingSocket = stub;
         socket = stub as unknown as Socket;
       } else {
         socket = io(`${origin}/front-chat`, {
@@ -229,7 +229,7 @@ export function useFrontChat(): UseFrontChatResult {
       });
       socket.on('disconnect', () => setConnectionState('disconnected'));
       socket.on('connect_error', (err) => {
-        rollbar.warning('FrontChat connect_error', { message: err.message });
+        rollbar.warning('Messaging connect_error', { message: err.message });
         setConnectionState('error');
       });
 
@@ -363,7 +363,7 @@ export function useFrontChat(): UseFrontChatResult {
         logEvent(CHAT_MESSAGE_SENT, { kind });
       } catch (err) {
         upsertMessage({ ...optimistic, status: 'failed' });
-        rollbar.warning('FrontChat attachment upload failed', {
+        rollbar.warning('Messaging attachment upload failed', {
           message: (err as Error).message,
         });
         throw err;

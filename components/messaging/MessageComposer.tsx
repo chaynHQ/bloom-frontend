@@ -8,7 +8,7 @@ import StopIcon from '@mui/icons-material/Stop';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { useVoiceRecorder } from './useVoiceRecorder';
+import { useVoiceRecorder } from '../../lib/hooks/useVoiceRecorder';
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
@@ -64,11 +64,11 @@ const pulseDotStyle = {
   borderRadius: '50%',
   backgroundColor: 'primary.dark',
   flexShrink: 0,
-  '@keyframes chatRecordingPulse': {
+  '@keyframes messagingRecordingPulse': {
     '0%, 100%': { opacity: 1 },
     '50%': { opacity: 0.2 },
   },
-  animation: 'chatRecordingPulse 1.2s ease-in-out infinite',
+  animation: 'messagingRecordingPulse 1.2s ease-in-out infinite',
 } as const;
 
 const formatDuration = (seconds: number): string => {
@@ -98,7 +98,7 @@ interface Props {
   onCompose?: () => void;
 }
 
-export const ChatComposer = ({
+export const MessageComposer = ({
   isDisabled,
   onSendText,
   onSendAttachment,

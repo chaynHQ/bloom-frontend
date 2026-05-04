@@ -15,9 +15,9 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
-import { ChatComposer } from './ChatComposer';
+import { MAX_ATTACHMENT_BYTES, useMessaging } from '../../lib/hooks/useMessaging';
+import { MessageComposer } from './MessageComposer';
 import { MessageBubble } from './MessageBubble';
-import { MAX_ATTACHMENT_BYTES, useFrontChat } from './useFrontChat';
 
 // ── Styles ────────────────────────────────────────────────────────────────────
 
@@ -112,10 +112,10 @@ const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export const FrontChat = () => {
+export const MessageThread = () => {
   const t = useTranslations('Messaging.frontChat');
   const theme = useTheme();
-  const { messages, connectionState, sendText, sendAttachment, markAsRead } = useFrontChat();
+  const { messages, connectionState, sendText, sendAttachment, markAsRead } = useMessaging();
   const [error, setError] = useState<string | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
 
@@ -200,7 +200,7 @@ export const FrontChat = () => {
         </Alert>
       )}
 
-      <ChatComposer
+      <MessageComposer
         isDisabled={isDisabled}
         onSendText={sendText}
         onSendAttachment={sendAttachment}
