@@ -7,7 +7,7 @@ import {
   HistoryEntry,
 } from '@/components/messaging/types';
 import { getAuthToken } from '@/lib/auth';
-import { CHAT_MESSAGE_SENT } from '@/lib/constants/events';
+import { CHAT_MESSAGE_RECEIVED, CHAT_MESSAGE_SENT } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
 import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
@@ -32,10 +32,9 @@ interface UseMessagingResult {
 
 // Max gap (ms) between an optimistic message's timestamp and the server's version
 // when deciding whether they represent the same message during history reconciliation.
-const OPTIMISTIC_RECONCILE_MS = 30_000;
+const OPTIMISTIC_RECONCILE_MS = 10_000;
 
 const MESSAGING_ENDPOINTS = {
-  messages: `${API_URL}/front-chat/messages`,
   read: `${API_URL}/front-chat/read`,
   attachments: `${API_URL}/front-chat/attachments`,
   socketNs: '/front-chat',
@@ -82,7 +81,7 @@ function createCypressStubSocket(): CypressSocketStub {
       }
       return stub;
     },
-    timeout(_ms) {
+    timeout() {
       return stub;
     },
     disconnect() {
@@ -100,9 +99,21 @@ export function useMessaging(): UseMessagingResult {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [connectionState, setConnectionState] = useState<ConnectionState>('idle');
   const socketRef = useRef<Socket | null>(null);
-  // Tracks agent message IDs to prevent duplicates from socket replays after reconnection
+  // Tracks agent message IDs to prevent duplicates when Front retries a webhook delivery.
   const seenAgentIdsRef = useRef<Set<string>>(new Set());
-  const historySeededRef = useRef(false);
+  const markAsReadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevMessagesRef = useRef<ChatMessage[]>([]);
+
+  useEffect(() => {
+    const prev = prevMessagesRef.current;
+    prevMessagesRef.current = messages;
+    for (const m of prev) {
+      if (!m.previewUrl) continue;
+      if (!messages.some((c) => c.previewUrl === m.previewUrl)) {
+        URL.revokeObjectURL(m.previewUrl);
+      }
+    }
+  }, [messages]);
 
   const upsertMessage = useCallback((message: ChatMessage) => {
     setMessages((prev) => {
@@ -122,7 +133,6 @@ export function useMessaging(): UseMessagingResult {
       for (const serverMsg of entries) {
         if (knownIds.has(serverMsg.id)) continue;
 
-        // Skip messages that already carry a real server ID (e.g. delivered via agent_reply)
         const optimisticIdx = next.findIndex(
           (local) =>
             local.direction === serverMsg.direction &&
@@ -143,9 +153,6 @@ export function useMessaging(): UseMessagingResult {
         };
 
         if (optimisticIdx >= 0) {
-          // Revoke the local object URL now that we have the backend-served URL
-          const old = next[optimisticIdx];
-          if (old.previewUrl) URL.revokeObjectURL(old.previewUrl);
           next[optimisticIdx] = seeded;
         } else {
           next.push(seeded);
@@ -157,29 +164,6 @@ export function useMessaging(): UseMessagingResult {
       return next.sort((a, b) => a.createdAt - b.createdAt);
     });
   }, []);
-
-  const seedHistory = useCallback(async () => {
-    const { token, error } = await getAuthToken();
-    if (!token || error) return;
-    try {
-      const response = await fetch(MESSAGING_ENDPOINTS.messages, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) {
-        rollbar.warning('Messaging history fetch non-OK', {
-          status: response.status,
-          url: MESSAGING_ENDPOINTS.messages,
-        });
-        historySeededRef.current = false;
-        return;
-      }
-      const json = (await response.json()) as { messages: HistoryEntry[] };
-      mergeHistoryEntries(json.messages);
-    } catch (err) {
-      historySeededRef.current = false;
-      rollbar.warning('Messaging history fetch failed', { message: (err as Error).message });
-    }
-  }, [rollbar, mergeHistoryEntries]);
 
   const markAsRead = useCallback(async () => {
     const { token, error } = await getAuthToken();
@@ -295,6 +279,10 @@ export function useMessaging(): UseMessagingResult {
       activeSocket?.disconnect();
       activeSocket = null;
       socketRef.current = null;
+      if (markAsReadTimerRef.current) {
+        clearTimeout(markAsReadTimerRef.current);
+        markAsReadTimerRef.current = null;
+      }
     };
 
     const buildSocket = () => {
@@ -336,21 +324,22 @@ export function useMessaging(): UseMessagingResult {
       socket.on('agent_reply', (payload: AgentReplyPayload) => {
         if (!payload || typeof payload.body !== 'string') return;
         const id = payload.id ?? generateId();
-        if (payload.id) {
-          if (seenAgentIdsRef.current.has(payload.id)) return;
-          seenAgentIdsRef.current.add(payload.id);
-        }
+        if (seenAgentIdsRef.current.has(id)) return;
+        seenAgentIdsRef.current.add(id);
         upsertMessage({
           id,
           direction: 'agent',
-          kind: 'text',
+          kind: payload.kind ?? 'text',
           text: payload.body,
           authorName: payload.authorName,
+          // Backend sends seconds (matching Front's emitted_at convention); multiply to get ms.
           createdAt: payload.emittedAt ? payload.emittedAt * 1000 : Date.now(),
           status: 'sent',
+          ...(payload.attachmentUrl && { attachmentUrl: `${API_URL}${payload.attachmentUrl}` }),
         });
-        // Widget is mounted and visible — mark as read immediately.
-        markAsRead();
+        logEvent(CHAT_MESSAGE_RECEIVED, { kind: payload.kind ?? 'text' });
+        if (markAsReadTimerRef.current) clearTimeout(markAsReadTimerRef.current);
+        markAsReadTimerRef.current = setTimeout(() => markAsRead(), 500);
       });
     };
 
@@ -364,13 +353,8 @@ export function useMessaging(): UseMessagingResult {
           return [];
         });
         seenAgentIdsRef.current.clear();
-        historySeededRef.current = false;
         setConnectionState('idle');
         return;
-      }
-      if (!historySeededRef.current) {
-        historySeededRef.current = true;
-        seedHistory();
       }
       if (!activeSocket) buildSocket();
     });
@@ -379,7 +363,7 @@ export function useMessaging(): UseMessagingResult {
       unsubscribe();
       tearDown();
     };
-  }, [rollbar, upsertMessage, seedHistory, mergeHistoryEntries, markAsRead]);
+  }, [rollbar, upsertMessage, mergeHistoryEntries, markAsRead]);
 
   return { messages, connectionState, sendText, sendAttachment, markAsRead };
 }

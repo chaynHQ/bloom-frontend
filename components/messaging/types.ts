@@ -21,11 +21,15 @@ export interface ChatMessage {
 }
 
 export interface AgentReplyPayload {
-  id?: string;
+  id: string;
   body: string;
   authorEmail?: string;
   authorName?: string;
+  /** Unix timestamp in seconds (multiply by 1000 to get ms) */
   emittedAt: number;
+  /** Relative proxy path — prefix with API_URL before use */
+  attachmentUrl?: string;
+  kind?: 'image' | 'voice';
 }
 
 /** Raw message shape returned by the /front-chat/messages history endpoint */

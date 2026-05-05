@@ -47,7 +47,7 @@ const welcomeStyleBase = {
   display: 'flex',
   gap: 2,
   alignSelf: 'stretch',
-  borderRadius: 2,
+  borderRadius: 1,
   padding: 2,
   flexShrink: 0,
 } as const;

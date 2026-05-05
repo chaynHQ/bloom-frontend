@@ -87,7 +87,11 @@ const useBlobUrl = (src: string) => {
 
     return () => {
       cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        setBlobUrl(undefined);
+        setLoading(true);
+      }
     };
   }, [src, token]);
 
@@ -98,7 +102,16 @@ const ImageAttachment = ({ src, alt }: { src: string; alt: string }) => {
   const { blobUrl, loading } = useBlobUrl(src);
   if (loading) return <CircularProgress size={20} />;
   if (!blobUrl) return <ImageIcon sx={{ fontSize: 32, opacity: 0.5 }} aria-hidden="true" />;
-  return <Box component="img" src={blobUrl} alt={alt} sx={imagePreviewStyle} />;
+  return (
+    <Box
+      component="a"
+      href={blobUrl}
+      download={alt || 'image'}
+      sx={{ display: 'block', lineHeight: 0 }}
+    >
+      <Box component="img" src={blobUrl} alt={alt} sx={imagePreviewStyle} />
+    </Box>
+  );
 };
 
 const AudioAttachment = ({ src, unavailableLabel }: { src: string; unavailableLabel: string }) => {
@@ -128,14 +141,6 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
   const t = useTranslations('Messaging.frontChat');
   const locale = useLocale();
   const isUser = message.direction === 'user';
-
-  useEffect(() => {
-    const url = message.previewUrl;
-    if (!url) return;
-    return () => {
-      URL.revokeObjectURL(url);
-    };
-  }, [message.previewUrl]);
 
   return (
     <Box sx={isUser ? userBubbleStyle : agentBubbleStyle}>
