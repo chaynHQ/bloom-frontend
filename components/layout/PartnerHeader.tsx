@@ -47,6 +47,7 @@ interface HeaderProps {
 
 const PartnerHeader = (props: HeaderProps) => {
   const { partnerLogoSrc, partnerLogoAlt, imageAlt, imageSrc } = props;
+  const t = useTranslations('Welcome');
   const tS = useTranslations('Shared');
 
   return (
@@ -54,7 +55,7 @@ const PartnerHeader = (props: HeaderProps) => {
       <Box>
         {props.showWelcomeSubtext && (
           <Typography variant="subtitle1" sx={welcomeTextStyle}>
-            Welcome to
+            {t('WelcomeTo')}
           </Typography>
         )}
         <Box sx={logoContainerStyle}>

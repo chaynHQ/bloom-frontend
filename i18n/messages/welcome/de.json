@@ -8,6 +8,7 @@
     "goToCourses": "Zu den Kursen",
     "form": {
       "codeLabel": "{partnerName} Zugangscode"
-    }
+    },
+    "WelcomeTo": "Willkommen bei"
   }
 }
