@@ -291,7 +291,9 @@ const CrispToFrontMigrationForm = () => {
             </Typography>
             <Chip
               label={t(`status.${isMutating || isActiveOnServer ? 'running' : serverStatus}`)}
-              color={statusColor[isMutating || isActiveOnServer ? 'running' : serverStatus] ?? 'default'}
+              color={
+                statusColor[isMutating || isActiveOnServer ? 'running' : serverStatus] ?? 'default'
+              }
               size="small"
             />
           </Box>
@@ -341,11 +343,7 @@ const CrispToFrontMigrationForm = () => {
           {isDone && (
             <Alert
               severity={
-                serverStatus === 'failed'
-                  ? 'error'
-                  : errors.length === 0
-                    ? 'success'
-                    : 'warning'
+                serverStatus === 'failed' ? 'error' : errors.length === 0 ? 'success' : 'warning'
               }
               sx={{ mb: 2 }}
             >
