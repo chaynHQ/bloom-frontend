@@ -3,7 +3,7 @@
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
 const headerContainerStyles = {
@@ -34,7 +34,6 @@ const logoStyle = {
   objectFit: 'contain',
   width: '100%',
   height: 'auto',
-  paddingBottom: 60,
 } as const;
 
 interface HeaderProps {
@@ -49,15 +48,18 @@ const PartnerHeader = (props: HeaderProps) => {
   const { partnerLogoSrc, partnerLogoAlt, imageAlt, imageSrc } = props;
   const t = useTranslations('Welcome');
   const tS = useTranslations('Shared');
+  const locale = useLocale();
+
+  const welcomeText = (
+    <Typography variant="subtitle1" sx={welcomeTextStyle}>
+      {t('WelcomeTo')}
+    </Typography>
+  );
 
   return (
     <Container sx={headerContainerStyles}>
-      <Box>
-        {props.showWelcomeSubtext && (
-          <Typography variant="subtitle1" sx={welcomeTextStyle}>
-            {t('WelcomeTo')}
-          </Typography>
-        )}
+      <Box sx={{ paddingBottom: 6 }}>
+        {props.showWelcomeSubtext && locale !== 'hi' && welcomeText}
         <Box sx={logoContainerStyle}>
           <Image
             alt={tS(partnerLogoAlt)}
@@ -66,6 +68,7 @@ const PartnerHeader = (props: HeaderProps) => {
             style={logoStyle}
           />
         </Box>
+        {props.showWelcomeSubtext && locale === 'hi' && welcomeText}
       </Box>
       <Box sx={imageContainerStyle}>
         <Image
