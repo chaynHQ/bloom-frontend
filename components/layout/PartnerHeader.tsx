@@ -30,6 +30,13 @@ const welcomeTextStyle = {
   fontSize: { xs: '1.25rem !important', sm: '1.5rem !important', lg: '1.75rem !important' },
 } as const;
 
+const logoStyle = {
+  objectFit: 'contain',
+  width: '100%',
+  height: 'auto',
+  paddingBottom: 60,
+} as const;
+
 interface HeaderProps {
   partnerLogoSrc: StaticImageData;
   partnerLogoAlt: string;
@@ -55,12 +62,7 @@ const PartnerHeader = (props: HeaderProps) => {
             alt={tS(partnerLogoAlt)}
             src={partnerLogoSrc}
             sizes={getImageSizes(logoContainerStyle.width)}
-            style={{
-              objectFit: 'contain',
-              width: '100%',
-              height: 'auto',
-              paddingBottom: 60,
-            }}
+            style={logoStyle}
           />
         </Box>
       </Box>
