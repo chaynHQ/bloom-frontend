@@ -95,7 +95,8 @@ const CrispToFrontMigrationForm = () => {
   // Poll every 3s while submitted — stops when user resets. The POST returns immediately
   // so we can't use the mutation's isLoading to drive polling.
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval: submitted ? 3000 : 0,
+    pollingInterval:
+      submitted && status?.status !== 'completed' && status?.status !== 'failed' ? 3000 : 0,
   });
 
   const serverStatus = status?.status ?? 'idle';
