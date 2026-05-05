@@ -89,18 +89,18 @@ const CrispToFrontMigrationForm = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  // Declare mutation first so isLoading can drive polling below
-  const [runMigration, { isLoading }] = useRunCrispMigrationMutation();
+  const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
 
   // Always fetch once on mount (detects an in-progress migration from another session).
-  // Poll every 3s while our mutation is in flight.
-  const { data: status } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval: submitted && isLoading ? 3000 : 0,
+  // Poll every 3s while submitted — stops when user resets. The POST returns immediately
+  // so we can't use the mutation's isLoading to drive polling.
+  const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
+    pollingInterval: submitted ? 3000 : 0,
   });
 
   const serverStatus = status?.status ?? 'idle';
   const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
-  const isDone = !isLoading && (serverStatus === 'completed' || serverStatus === 'failed');
+  const isDone = submitted && (serverStatus === 'completed' || serverStatus === 'failed');
   const errors: MigrationError[] = status?.errors ?? [];
   const progress = status?.progress;
 
@@ -139,11 +139,10 @@ const CrispToFrontMigrationForm = () => {
       return;
     }
 
-    logEvent(CRISP_MIGRATION_RUN_SUCCESS, {
-      dryRun: body.dryRun,
-      success: result.data?.success,
-      errorCount: result.data?.errors?.length ?? 0,
-    });
+    // POST returned immediately — kick off a status fetch now so the panel
+    // shows 'pending'/'running' without waiting for the next poll interval.
+    refetchStatus();
+    logEvent(CRISP_MIGRATION_RUN_SUCCESS, { dryRun: body.dryRun });
   };
 
   const handleRunClick = () => {
@@ -274,7 +273,7 @@ const CrispToFrontMigrationForm = () => {
           <LoadingButton
             variant="contained"
             color={options.dryRun ? 'secondary' : 'error'}
-            loading={isLoading}
+            loading={isMutating}
             onClick={handleRunClick}
             sx={{ mt: 1 }}
           >
@@ -291,8 +290,8 @@ const CrispToFrontMigrationForm = () => {
               {t('progress.title')}
             </Typography>
             <Chip
-              label={t(`status.${isLoading ? 'running' : serverStatus}`)}
-              color={statusColor[isLoading ? 'running' : serverStatus] ?? 'default'}
+              label={t(`status.${isMutating || isActiveOnServer ? 'running' : serverStatus}`)}
+              color={statusColor[isMutating || isActiveOnServer ? 'running' : serverStatus] ?? 'default'}
               size="small"
             />
           </Box>
@@ -303,7 +302,7 @@ const CrispToFrontMigrationForm = () => {
             </Alert>
           )}
 
-          {isLoading && <LinearProgress sx={{ mb: 2 }} />}
+          {(isMutating || isActiveOnServer) && <LinearProgress sx={{ mb: 2 }} />}
 
           {progress && (
             <Box mb={2}>
@@ -341,7 +340,13 @@ const CrispToFrontMigrationForm = () => {
 
           {isDone && (
             <Alert
-              severity={serverStatus === 'completed' && errors.length === 0 ? 'success' : 'warning'}
+              severity={
+                serverStatus === 'failed'
+                  ? 'error'
+                  : errors.length === 0
+                    ? 'success'
+                    : 'warning'
+              }
               sx={{ mb: 2 }}
             >
               {serverStatus === 'failed'

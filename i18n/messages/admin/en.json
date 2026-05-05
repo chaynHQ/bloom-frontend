@@ -84,6 +84,7 @@
         "dryRunMode": "DRY RUN — no data will be written to Front",
         "failure": "Migration failed. See errors below."
       },
+      "alreadyRunning": "A migration is already in progress (started in another session). Poll the status below or wait for it to complete before starting a new one.",
       "reset": "Reset and run another migration",
       "runError": "Error starting migration: "
     },

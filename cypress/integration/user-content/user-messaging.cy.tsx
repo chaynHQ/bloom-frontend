@@ -27,7 +27,6 @@ describe('A logged in public user can', () => {
 
   describe('Messaging widget', () => {
     beforeEach(() => {
-      cy.intercept('GET', '**/front-chat/messages', { body: { messages: [] } }).as('getHistory');
       cy.intercept('PATCH', '**/front-chat/read', { statusCode: 204 }).as('markRead');
     });
 
@@ -50,8 +49,10 @@ describe('A logged in public user can', () => {
     });
 
     it('displays history messages fetched from the API', () => {
-      cy.intercept('GET', '**/front-chat/messages', {
-        body: {
+      cy.visit('/messaging');
+      connectSocket();
+      cy.window().then((win) => {
+        (win as any).__messagingSocket.trigger('history', {
           messages: [
             { id: 'h1', direction: 'user', text: 'Hello there', createdAt: Date.now() - 60000 },
             {
@@ -62,10 +63,8 @@ describe('A logged in public user can', () => {
               createdAt: Date.now() - 50000,
             },
           ],
-        },
-      }).as('getHistory');
-      cy.visit('/messaging');
-      connectSocket();
+        });
+      });
       cy.contains('Hello there').should('be.visible');
       cy.contains('Hi! How can I help?').should('be.visible');
     });

@@ -38,12 +38,6 @@ export interface MigrationError {
   timestamp: string;
 }
 
-interface MigrationResult {
-  success: boolean;
-  progress: MigrationProgress;
-  errors: MigrationError[];
-}
-
 export interface MigrationStatusResponse {
   status: 'idle' | 'pending' | 'running' | 'completed' | 'failed';
   progress?: MigrationProgress;
@@ -356,7 +350,7 @@ export const api = createApi({
         };
       },
     }),
-    runCrispMigration: builder.mutation<MigrationResult, MigrationOptions>({
+    runCrispMigration: builder.mutation<{ status: 'started' }, MigrationOptions>({
       query(body) {
         return {
           url: 'crisp-migration/run',
