@@ -4,7 +4,7 @@ import { richtextContentStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 
 interface RowProps {
-  children: any;
+  children: React.ReactNode;
   numberOfColumns: number;
   horizontalAlignment: string;
   verticalAlignment: string;

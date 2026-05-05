@@ -6,7 +6,7 @@ import theme from '@/styles/theme';
 import { Container } from '@mui/material';
 
 interface PageSectionProps {
-  children: any;
+  children: React.ReactNode;
   color: STORYBLOK_COLORS;
   alignment: string;
   width?: 'default' | 'wide' | 'full';

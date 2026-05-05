@@ -3,7 +3,7 @@
 import { Box } from '@mui/material';
 
 interface ColumnProps {
-  children: any;
+  children: React.ReactNode;
   width?: string;
   horizontalAlignment?: string;
 }
