@@ -136,7 +136,8 @@ export default function BookTherapyPage({ story }: Props) {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
 
   const hasTherapyRemaining = useMemo(
-    () => partnerAccesses.some((pa) => pa.featureTherapy === true && pa.therapySessionsRemaining > 0),
+    () =>
+      partnerAccesses.some((pa) => pa.featureTherapy === true && pa.therapySessionsRemaining > 0),
     [partnerAccesses],
   );
 
