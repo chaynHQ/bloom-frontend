@@ -23,10 +23,7 @@ const imageContainerStyle = {
 } as const;
 
 const logoContainerStyle = {
-  position: 'relative',
   width: { xs: 160, sm: 180, md: 200, lg: 220 },
-  height: { xs: 160, sm: 180, md: 200, lg: 220 },
-  marginTop: { xs: 4, lg: 2 },
 } as const;
 
 const welcomeTextStyle = {
@@ -47,21 +44,25 @@ const PartnerHeader = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <Box sx={logoContainerStyle}>
+      <Box>
         {props.showWelcomeSubtext && (
           <Typography variant="subtitle1" sx={welcomeTextStyle}>
             Welcome to
           </Typography>
         )}
-        <Image
-          alt={tS(partnerLogoAlt)}
-          src={partnerLogoSrc}
-          fill
-          sizes={getImageSizes(logoContainerStyle.width)}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
+        <Box sx={logoContainerStyle}>
+          <Image
+            alt={tS(partnerLogoAlt)}
+            src={partnerLogoSrc}
+            sizes={getImageSizes(logoContainerStyle.width)}
+            style={{
+              objectFit: 'contain',
+              width: '100%',
+              height: 'auto',
+              paddingBottom: 60,
+            }}
+          />
+        </Box>
       </Box>
       <Box sx={imageContainerStyle}>
         <Image

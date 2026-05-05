@@ -9,9 +9,9 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
+import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '@/public/illustration_leaf_mix_dots.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import {
   Box,
@@ -132,7 +132,7 @@ export default function RegisterPage() {
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
   const headerProps = {
-    partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,
+    partnerLogoSrc: partnerContent?.partnershipLogo || bloomLogo,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
