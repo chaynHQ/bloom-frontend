@@ -8,7 +8,7 @@ body:
 
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
         - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
-        
+
   # Found Chayn
   - type: textarea
     id: found_chayn
@@ -49,7 +49,7 @@ body:
     id: anything_else
     attributes:
       label: '➕ Anything else you’d like to share?'
-      description:  |
+      description: |
         This can be anything you feel like sharing:
         Favorite music 🎶
         Favorite food 🍜

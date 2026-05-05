@@ -21,7 +21,7 @@ import { useRollbar } from '@rollbar/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Script from 'next/script';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const containerStyle = {
   pt: '0 !important',
@@ -127,8 +127,6 @@ interface Props {
 
 export default function BookTherapyPage({ story }: Props) {
   const t = useTranslations('Therapy');
-  const [partnerAccess, setPartnerAccess] = useState<PartnerAccess | null>(null);
-  const [hasTherapyRemaining, setHasTherapyRemaining] = useState<boolean>(false);
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [widgetError, setWidgetError] = useState<string | null>(null);
@@ -137,22 +135,23 @@ export default function BookTherapyPage({ story }: Props) {
   const user = useTypedSelector((state) => state.user);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
 
-  useEffect(() => {
-    let currentPartnerAccess = partnerAccesses.find(
+  const hasTherapyRemaining = useMemo(
+    () => partnerAccesses.some((pa) => pa.featureTherapy === true && pa.therapySessionsRemaining > 0),
+    [partnerAccesses],
+  );
+
+  const partnerAccess = useMemo<PartnerAccess | null>(() => {
+    const withRemaining = partnerAccesses.find(
       (pa) => pa.featureTherapy === true && pa.therapySessionsRemaining > 0,
     );
-    if (currentPartnerAccess) {
-      setHasTherapyRemaining(true);
-    } else {
-      const redeemedAccesses = partnerAccesses.filter(
-        (pa) => !!pa.featureTherapy && pa.therapySessionsRedeemed > 0,
-      );
-      currentPartnerAccess = redeemedAccesses[redeemedAccesses.length - 1];
+    if (withRemaining) {
+      return withRemaining.partner.name ? withRemaining : null;
     }
-
-    if (currentPartnerAccess?.partner.name) {
-      setPartnerAccess(currentPartnerAccess);
-    }
+    const redeemedAccesses = partnerAccesses.filter(
+      (pa) => !!pa.featureTherapy && pa.therapySessionsRedeemed > 0,
+    );
+    const lastRedeemed = redeemedAccesses[redeemedAccesses.length - 1];
+    return lastRedeemed?.partner.name ? lastRedeemed : null;
   }, [partnerAccesses]);
 
   useEffect(() => {
@@ -243,6 +242,7 @@ export default function BookTherapyPage({ story }: Props) {
     if (isWidgetModalOpen) {
       initializeWidget();
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWidgetError(null);
       retryCount = 0;
     }

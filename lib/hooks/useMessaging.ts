@@ -269,6 +269,7 @@ export function useMessaging(): UseMessagingResult {
   useEffect(() => {
     const origin = getSocketOrigin();
     if (!origin) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConnectionState('error');
       return;
     }

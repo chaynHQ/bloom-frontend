@@ -60,7 +60,7 @@ export function useVoiceRecorder(): UseVoiceRecorderResult {
     recorder.start();
     recorderRef.current = recorder;
     setState('recording');
-  }, [state]);
+  }, [state, releaseStream]);
 
   const stop = useCallback(
     () =>
