@@ -121,7 +121,11 @@ const CrispToFrontMigrationForm = () => {
     setSubmitted(true);
     // Optimistically mark cache as running so a stale 'completed' from a prior run
     // doesn't cause isDone to fire before the new migration starts
-    dispatch(api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'running' as const }));
+    dispatch(
+      api.util.upsertQueryData('getCrispMigrationStatus', undefined, {
+        status: 'running' as const,
+      }),
+    );
 
     const body: MigrationOptions = {
       dryRun: options.dryRun,
@@ -146,7 +150,9 @@ const CrispToFrontMigrationForm = () => {
       setFormError(t('runError') + msg);
       rollbar.error('Crisp migration failed to start: ' + msg);
       logEvent(CRISP_MIGRATION_RUN_ERROR, { error: msg });
-      dispatch(api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'idle' as const }));
+      dispatch(
+        api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'idle' as const }),
+      );
       setSubmitted(false);
       return;
     }
