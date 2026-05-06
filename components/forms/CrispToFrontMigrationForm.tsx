@@ -4,11 +4,9 @@ import SanitizedTextField from '@/components/common/SanitizedTextField';
 import {
   MigrationError,
   MigrationOptions,
-  api,
   useGetCrispMigrationStatusQuery,
   useRunCrispMigrationMutation,
 } from '@/lib/api';
-import { useAppDispatch } from '@/lib/hooks/store';
 import {
   CRISP_MIGRATION_RUN_ERROR,
   CRISP_MIGRATION_RUN_REQUEST,
@@ -88,20 +86,20 @@ const CrispToFrontMigrationForm = () => {
 
   const [options, setOptions] = useState<MigrationOptions>(defaultOptions);
   const [submitted, setSubmitted] = useState(false);
+  const [seenRunning, setSeenRunning] = useState(false);
+  const [submittedDryRun, setSubmittedDryRun] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
-  const dispatch = useAppDispatch();
   const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
-  const [migrationCompleted, setMigrationCompleted] = useState(false);
 
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval: submitted && !migrationCompleted ? 3000 : 0,
+    pollingInterval: submitted ? 3000 : 0,
   });
 
   const serverStatus = status?.status ?? 'idle';
   const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
-  const isDone = submitted && (serverStatus === 'completed' || serverStatus === 'failed');
+  const isDone = submitted && seenRunning && (serverStatus === 'completed' || serverStatus === 'failed');
   const errors: MigrationError[] = status?.errors ?? [];
   const progress = status?.progress;
 
@@ -110,22 +108,18 @@ const CrispToFrontMigrationForm = () => {
     setSubmitted(true);
   }
 
-  // Stop polling once backend reports a terminal status
-  if (isDone && !migrationCompleted) {
-    setMigrationCompleted(true);
+  // Only mark done after we've observed the migration actually running.
+  // This prevents a stale 'completed' cache from a prior run triggering isDone on resubmit.
+  if (submitted && isActiveOnServer && !seenRunning) {
+    setSeenRunning(true);
   }
 
   const submitMigration = async () => {
     setShowConfirm(false);
     setFormError(null);
     setSubmitted(true);
-    // Optimistically mark cache as running so a stale 'completed' from a prior run
-    // doesn't cause isDone to fire before the new migration starts
-    dispatch(
-      api.util.upsertQueryData('getCrispMigrationStatus', undefined, {
-        status: 'running' as const,
-      }),
-    );
+    setSeenRunning(false);
+    setSubmittedDryRun(options.dryRun ?? true);
 
     const body: MigrationOptions = {
       dryRun: options.dryRun,
@@ -150,9 +144,6 @@ const CrispToFrontMigrationForm = () => {
       setFormError(t('runError') + msg);
       rollbar.error('Crisp migration failed to start: ' + msg);
       logEvent(CRISP_MIGRATION_RUN_ERROR, { error: msg });
-      dispatch(
-        api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'idle' as const }),
-      );
       setSubmitted(false);
       return;
     }
@@ -171,7 +162,7 @@ const CrispToFrontMigrationForm = () => {
 
   const reset = () => {
     setSubmitted(false);
-    setMigrationCompleted(false);
+    setSeenRunning(false);
     setFormError(null);
     setOptions(defaultOptions);
   };
@@ -306,7 +297,7 @@ const CrispToFrontMigrationForm = () => {
             />
           </Box>
 
-          {options.dryRun && (
+          {submittedDryRun && (
             <Alert severity="info" sx={{ mb: 2 }}>
               {t('result.dryRunMode')}
             </Alert>
@@ -357,7 +348,7 @@ const CrispToFrontMigrationForm = () => {
             >
               {serverStatus === 'failed'
                 ? t('result.failure')
-                : options.dryRun
+                : submittedDryRun
                   ? t('result.dryRunSuccess')
                   : errors.length === 0
                     ? t('result.success')
