@@ -4,9 +4,11 @@ import SanitizedTextField from '@/components/common/SanitizedTextField';
 import {
   MigrationError,
   MigrationOptions,
+  api,
   useGetCrispMigrationStatusQuery,
   useRunCrispMigrationMutation,
 } from '@/lib/api';
+import { useAppDispatch } from '@/lib/hooks/store';
 import {
   CRISP_MIGRATION_RUN_ERROR,
   CRISP_MIGRATION_RUN_REQUEST,
@@ -89,12 +91,10 @@ const CrispToFrontMigrationForm = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
+  const dispatch = useAppDispatch();
   const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
   const [migrationCompleted, setMigrationCompleted] = useState(false);
 
-  // Always fetch once on mount (detects an in-progress migration from another session).
-  // Polls every 3s while submitted and not yet finished. The POST returns immediately
-  // so we can't use the mutation's isLoading to drive polling.
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
     pollingInterval: submitted && !migrationCompleted ? 3000 : 0,
   });
@@ -105,22 +105,23 @@ const CrispToFrontMigrationForm = () => {
   const errors: MigrationError[] = status?.errors ?? [];
   const progress = status?.progress;
 
-  // Stop polling when the backend reports a terminal status. This uses React's
-  // "store information from previous renders" pattern — calling setState during render
-  // causes React to discard and immediately re-render rather than schedule another pass.
-  // The submitted guard prevents this firing on mount if a previous migration's completed
-  // status is still in the backend's in-memory state.
+  // Auto-show status panel when a migration is already running from another session
+  if (!submitted && isActiveOnServer) {
+    setSubmitted(true);
+  }
+
+  // Stop polling once backend reports a terminal status
   if (isDone && !migrationCompleted) {
     setMigrationCompleted(true);
   }
-
-  // Detect a migration running in another session (page-load case)
-  const externallyRunning = !submitted && isActiveOnServer;
 
   const submitMigration = async () => {
     setShowConfirm(false);
     setFormError(null);
     setSubmitted(true);
+    // Optimistically mark cache as running so a stale 'completed' from a prior run
+    // doesn't cause isDone to fire before the new migration starts
+    dispatch(api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'running' as const }));
 
     const body: MigrationOptions = {
       dryRun: options.dryRun,
@@ -145,12 +146,11 @@ const CrispToFrontMigrationForm = () => {
       setFormError(t('runError') + msg);
       rollbar.error('Crisp migration failed to start: ' + msg);
       logEvent(CRISP_MIGRATION_RUN_ERROR, { error: msg });
+      dispatch(api.util.upsertQueryData('getCrispMigrationStatus', undefined, { status: 'idle' as const }));
       setSubmitted(false);
       return;
     }
 
-    // POST returned immediately — kick off a status fetch now so the panel
-    // shows 'pending'/'running' without waiting for the next poll interval.
     refetchStatus();
     logEvent(CRISP_MIGRATION_RUN_SUCCESS, { dryRun: body.dryRun });
   };
@@ -172,14 +172,6 @@ const CrispToFrontMigrationForm = () => {
 
   return (
     <Box>
-      {/* ── Banner: migration running in another session ── */}
-      {externallyRunning && (
-        <Alert severity="info" sx={{ mb: 2 }}>
-          {t('alreadyRunning')}
-        </Alert>
-      )}
-
-      {/* ── Form (shown until user submits) ── */}
       {!submitted && (
         <Box>
           {!options.dryRun && (
@@ -293,7 +285,6 @@ const CrispToFrontMigrationForm = () => {
         </Box>
       )}
 
-      {/* ── Status panel (shown after submit) ── */}
       {submitted && (
         <Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
@@ -412,7 +403,6 @@ const CrispToFrontMigrationForm = () => {
         </Box>
       )}
 
-      {/* ── Confirmation dialog for live migrations ── */}
       <Dialog open={showConfirm} onClose={() => setShowConfirm(false)} maxWidth="sm" fullWidth>
         <DialogTitle>{t('confirmTitle')}</DialogTitle>
         <DialogContent>
