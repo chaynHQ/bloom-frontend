@@ -36,7 +36,7 @@ import {
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const defaultOptions: MigrationOptions = {
   dryRun: true,
@@ -90,29 +90,27 @@ const CrispToFrontMigrationForm = () => {
   const [formError, setFormError] = useState<string | null>(null);
 
   const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
-
-  // Tracks the last-seen status so the pollingInterval condition can reference it
-  // without a circular dependency on the hook's own return value.
-  const lastStatusRef = useRef<string | undefined>(undefined);
+  const [migrationCompleted, setMigrationCompleted] = useState(false);
 
   // Always fetch once on mount (detects an in-progress migration from another session).
-  // Poll every 3s while submitted and not yet finished. The POST returns immediately
+  // Polls every 3s while submitted and not yet finished. The POST returns immediately
   // so we can't use the mutation's isLoading to drive polling.
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval:
-      submitted && lastStatusRef.current !== 'completed' && lastStatusRef.current !== 'failed'
-        ? 3000
-        : 0,
+    pollingInterval: submitted && !migrationCompleted ? 3000 : 0,
   });
-
-  // Keep ref in sync for the next render's pollingInterval calculation
-  lastStatusRef.current = status?.status;
 
   const serverStatus = status?.status ?? 'idle';
   const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
   const isDone = submitted && (serverStatus === 'completed' || serverStatus === 'failed');
   const errors: MigrationError[] = status?.errors ?? [];
   const progress = status?.progress;
+
+  // Stop polling when the backend reports a terminal status. This uses React's
+  // "store information from previous renders" pattern — calling setState during render
+  // causes React to discard and immediately re-render rather than schedule another pass.
+  if (!migrationCompleted && (serverStatus === 'completed' || serverStatus === 'failed')) {
+    setMigrationCompleted(true);
+  }
 
   // Detect a migration running in another session (page-load case)
   const externallyRunning = !submitted && isActiveOnServer;
@@ -165,6 +163,7 @@ const CrispToFrontMigrationForm = () => {
 
   const reset = () => {
     setSubmitted(false);
+    setMigrationCompleted(false);
     setFormError(null);
     setOptions(defaultOptions);
   };
