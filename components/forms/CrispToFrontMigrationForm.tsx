@@ -87,19 +87,21 @@ const CrispToFrontMigrationForm = () => {
   const [options, setOptions] = useState<MigrationOptions>(defaultOptions);
   const [submitted, setSubmitted] = useState(false);
   const [seenRunning, setSeenRunning] = useState(false);
-  const [submittedDryRun, setSubmittedDryRun] = useState(true);
+  const [migrationDone, setMigrationDone] = useState(false);
+  const [submittedDryRun, setSubmittedDryRun] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
 
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
-    pollingInterval: submitted ? 3000 : 0,
+    pollingInterval: submitted && !migrationDone ? 3000 : 0,
   });
 
   const serverStatus = status?.status ?? 'idle';
   const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
-  const isDone = submitted && seenRunning && (serverStatus === 'completed' || serverStatus === 'failed');
+  const isDone =
+    submitted && seenRunning && (serverStatus === 'completed' || serverStatus === 'failed');
   const errors: MigrationError[] = status?.errors ?? [];
   const progress = status?.progress;
 
@@ -114,12 +116,18 @@ const CrispToFrontMigrationForm = () => {
     setSeenRunning(true);
   }
 
+  // Stop polling once the migration reaches a terminal state
+  if (isDone && !migrationDone) {
+    setMigrationDone(true);
+  }
+
   const submitMigration = async () => {
     setShowConfirm(false);
     setFormError(null);
     setSubmitted(true);
     setSeenRunning(false);
-    setSubmittedDryRun(options.dryRun ?? true);
+    setMigrationDone(false);
+    setSubmittedDryRun(options.dryRun ?? false);
 
     const body: MigrationOptions = {
       dryRun: options.dryRun,
@@ -163,6 +171,7 @@ const CrispToFrontMigrationForm = () => {
   const reset = () => {
     setSubmitted(false);
     setSeenRunning(false);
+    setMigrationDone(false);
     setFormError(null);
     setOptions(defaultOptions);
   };
