@@ -36,7 +36,7 @@ import {
 } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const defaultOptions: MigrationOptions = {
   dryRun: true,
@@ -91,13 +91,22 @@ const CrispToFrontMigrationForm = () => {
 
   const [runMigration, { isLoading: isMutating }] = useRunCrispMigrationMutation();
 
+  // Tracks the last-seen status so the pollingInterval condition can reference it
+  // without a circular dependency on the hook's own return value.
+  const lastStatusRef = useRef<string | undefined>(undefined);
+
   // Always fetch once on mount (detects an in-progress migration from another session).
-  // Poll every 3s while submitted — stops when user resets. The POST returns immediately
+  // Poll every 3s while submitted and not yet finished. The POST returns immediately
   // so we can't use the mutation's isLoading to drive polling.
   const { data: status, refetch: refetchStatus } = useGetCrispMigrationStatusQuery(undefined, {
     pollingInterval:
-      submitted && status?.status !== 'completed' && status?.status !== 'failed' ? 3000 : 0,
+      submitted && lastStatusRef.current !== 'completed' && lastStatusRef.current !== 'failed'
+        ? 3000
+        : 0,
   });
+
+  // Keep ref in sync for the next render's pollingInterval calculation
+  lastStatusRef.current = status?.status;
 
   const serverStatus = status?.status ?? 'idle';
   const isActiveOnServer = serverStatus === 'running' || serverStatus === 'pending';
