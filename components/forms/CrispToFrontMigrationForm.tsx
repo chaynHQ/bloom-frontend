@@ -108,7 +108,9 @@ const CrispToFrontMigrationForm = () => {
   // Stop polling when the backend reports a terminal status. This uses React's
   // "store information from previous renders" pattern — calling setState during render
   // causes React to discard and immediately re-render rather than schedule another pass.
-  if (!migrationCompleted && (serverStatus === 'completed' || serverStatus === 'failed')) {
+  // The submitted guard prevents this firing on mount if a previous migration's completed
+  // status is still in the backend's in-memory state.
+  if (isDone && !migrationCompleted) {
     setMigrationCompleted(true);
   }
 
