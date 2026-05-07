@@ -27,7 +27,6 @@ interface UseMessagingResult {
     kind: 'image' | 'voice',
     displayText: string,
   ) => Promise<void>;
-  markAsRead: () => Promise<void>;
 }
 
 // Max gap (ms) between an optimistic message's timestamp and the server's version
@@ -150,6 +149,7 @@ export function useMessaging(): UseMessagingResult {
           createdAt: serverMsg.createdAt,
           status: 'sent',
           ...(serverMsg.attachmentUrl && { attachmentUrl: `${API_URL}${serverMsg.attachmentUrl}` }),
+          ...(serverMsg.attachmentName && { attachmentName: serverMsg.attachmentName }),
         };
 
         if (optimisticIdx >= 0) {
@@ -217,8 +217,11 @@ export function useMessaging(): UseMessagingResult {
   const sendAttachment = useCallback(
     async (file: File | Blob, kind: 'image' | 'voice', displayText: string) => {
       const id = generateId();
+      // Optimistic preview for both images and voice notes — the bubble renders this
+      // immediately so the sender sees their own attachment without waiting for the
+      // server's authenticated proxy URL on the next history refresh.
       const previewUrl =
-        kind === 'image' && file instanceof File ? URL.createObjectURL(file) : undefined;
+        kind === 'image' || kind === 'voice' ? URL.createObjectURL(file) : undefined;
       const optimistic: ChatMessage = {
         id,
         direction: 'user',
@@ -320,6 +323,9 @@ export function useMessaging(): UseMessagingResult {
       socket.on('history', (payload: { messages: HistoryEntry[] }) => {
         if (!payload?.messages?.length) return;
         mergeHistoryEntries(payload.messages);
+        // User has (re)entered the page and there are messages to view — mark them read
+        // so lastMessageReadAt advances past the latest received agent message.
+        markAsRead();
       });
 
       socket.on('agent_reply', (payload: AgentReplyPayload) => {
@@ -337,6 +343,7 @@ export function useMessaging(): UseMessagingResult {
           createdAt: payload.emittedAt ? payload.emittedAt * 1000 : Date.now(),
           status: 'sent',
           ...(payload.attachmentUrl && { attachmentUrl: `${API_URL}${payload.attachmentUrl}` }),
+          ...(payload.attachmentName && { attachmentName: payload.attachmentName }),
         });
         logEvent(CHAT_MESSAGE_RECEIVED, { kind: payload.kind ?? 'text' });
         if (markAsReadTimerRef.current) clearTimeout(markAsReadTimerRef.current);
@@ -366,5 +373,5 @@ export function useMessaging(): UseMessagingResult {
     };
   }, [rollbar, upsertMessage, mergeHistoryEntries, markAsRead]);
 
-  return { messages, connectionState, sendText, sendAttachment, markAsRead };
+  return { messages, connectionState, sendText, sendAttachment };
 }

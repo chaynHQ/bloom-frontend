@@ -109,7 +109,7 @@ const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
 export const MessageThread = () => {
   const t = useTranslations('Messaging.frontChat');
   const theme = useTheme();
-  const { messages, connectionState, sendText, sendAttachment, markAsRead } = useMessaging();
+  const { messages, connectionState, sendText, sendAttachment } = useMessaging();
   const [error, setError] = useState<string | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
 
@@ -119,8 +119,7 @@ export const MessageThread = () => {
 
   useEffect(() => {
     logEvent(CHAT_VIEWED);
-    markAsRead();
-  }, [markAsRead]);
+  }, []);
 
   // Scroll to latest message whenever messages update
   useEffect(() => {

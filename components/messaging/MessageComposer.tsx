@@ -1,11 +1,10 @@
 'use client';
 
 import { useVoiceRecorder } from '@/lib/hooks/useVoiceRecorder';
-import CloseIcon from '@mui/icons-material/Close';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
 import SendIcon from '@mui/icons-material/Send';
-import StopIcon from '@mui/icons-material/Stop';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
@@ -48,13 +47,27 @@ const sendButtonStyle = {
 const recordingRowStyle = {
   display: 'flex',
   alignItems: 'center',
+  gap: 1,
+  flex: 1,
+  overflow: 'hidden',
+} as const;
+
+const recordingIndicatorStyle = {
+  display: 'flex',
+  alignItems: 'center',
   gap: 1.5,
   flex: 1,
-  px: 1,
-  py: 0.5,
+  px: 1.25,
+  py: 0.75,
   bgcolor: 'secondary.main',
   borderRadius: 1.5,
   overflow: 'hidden',
+} as const;
+
+const deleteRecordingButtonStyle = {
+  color: 'error.main',
+  flexShrink: 0,
+  '&:hover': { bgcolor: 'error.light' },
 } as const;
 
 const pulseDotStyle = {
@@ -223,34 +236,42 @@ export const MessageComposer = ({
 
       <Box sx={controlRowStyle}>
         {isRecording || isStopping ? (
-          // Recording mode: pill-shaped indicator + timer + cancel/stop
+          // Recording mode: [delete] [pulse + timer] [send] — WhatsApp-style spatial
+          // separation makes the destructive vs. send actions unambiguous.
           <Box sx={recordingRowStyle}>
-            <Box sx={pulseDotStyle} aria-hidden="true" />
-            <Typography
-              variant="body2"
-              sx={{ flex: 1, fontWeight: 500, color: 'text.primary' }}
-              aria-live="polite"
-            >
-              {t('recordingInProgress')} · {formatDuration(recordingSeconds)}
-            </Typography>
             <Tooltip title={t('cancelRecording')}>
               <IconButton
                 aria-label={t('cancelRecording')}
                 onClick={handleVoiceCancel}
-                size="small"
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={t('stopRecording')}>
-              <IconButton
-                aria-label={t('stopRecording')}
-                onClick={handleVoiceStop}
                 disabled={isStopping}
                 size="small"
+                sx={deleteRecordingButtonStyle}
               >
-                <StopIcon fontSize="small" />
+                <DeleteOutlineIcon fontSize="small" />
               </IconButton>
+            </Tooltip>
+            <Box sx={recordingIndicatorStyle}>
+              <Box sx={pulseDotStyle} aria-hidden="true" />
+              <Typography
+                variant="body2"
+                sx={{ flex: 1, fontWeight: 500, color: 'text.primary' }}
+                aria-live="polite"
+              >
+                {t('recordingInProgress')} · {formatDuration(recordingSeconds)}
+              </Typography>
+            </Box>
+            <Tooltip title={t('stopRecording')}>
+              <span>
+                <IconButton
+                  aria-label={t('stopRecording')}
+                  onClick={handleVoiceStop}
+                  disabled={isStopping}
+                  size="small"
+                  sx={sendButtonStyle}
+                >
+                  <SendIcon fontSize="small" />
+                </IconButton>
+              </span>
             </Tooltip>
           </Box>
         ) : (

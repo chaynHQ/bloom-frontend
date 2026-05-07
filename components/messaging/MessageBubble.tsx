@@ -1,9 +1,10 @@
 'use client';
 
 import { useTypedSelector } from '@/lib/hooks/store';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Link, Typography } from '@mui/material';
 import { getDateLocale } from '@/lib/utils/dates';
 import { format } from 'date-fns';
 import { useLocale, useTranslations } from 'next-intl';
@@ -114,6 +115,37 @@ const ImageAttachment = ({ src, alt }: { src: string; alt: string }) => {
   );
 };
 
+// Renders a clickable filename that downloads the file when clicked. Uses the same auth-aware
+// blob fetch as ImageAttachment so the bearer-protected proxy URL can be turned into a normal
+// downloadable link.
+const FileAttachment = ({ src, filename }: { src: string; filename: string }) => {
+  const { blobUrl, loading } = useBlobUrl(src);
+  if (loading) return <CircularProgress size={16} sx={{ mt: 0.5 }} />;
+  if (!blobUrl) {
+    return (
+      <Box sx={filenameRowStyle}>
+        <AttachFileIcon sx={{ fontSize: 15, flexShrink: 0, opacity: 0.7 }} aria-hidden="true" />
+        <Typography variant="body2" sx={{ wordBreak: 'break-all', opacity: 0.6 }}>
+          {filename}
+        </Typography>
+      </Box>
+    );
+  }
+  return (
+    <Box sx={filenameRowStyle}>
+      <AttachFileIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
+      <Link
+        href={blobUrl}
+        download={filename}
+        underline="hover"
+        sx={{ wordBreak: 'break-all', fontSize: '0.875rem' }}
+      >
+        {filename}
+      </Link>
+    </Box>
+  );
+};
+
 const AudioAttachment = ({ src, unavailableLabel }: { src: string; unavailableLabel: string }) => {
   const { blobUrl, loading } = useBlobUrl(src);
 
@@ -178,10 +210,23 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
             <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
             <Typography variant="body2">{message.text}</Typography>
           </Box>
-          {message.attachmentUrl && (
+          {message.previewUrl ? (
+            <Box sx={{ mt: 0.5 }}>
+              <audio
+                src={message.previewUrl}
+                controls
+                style={{ height: 32, maxWidth: 220, display: 'block' }}
+              />
+            </Box>
+          ) : message.attachmentUrl ? (
             <AudioAttachment src={message.attachmentUrl} unavailableLabel={t('audioUnavailable')} />
-          )}
+          ) : null}
         </Box>
+      ) : message.kind === 'file' && message.attachmentUrl ? (
+        <FileAttachment
+          src={message.attachmentUrl}
+          filename={message.attachmentName ?? message.text ?? 'attachment'}
+        />
       ) : (
         <Typography variant="body2">{message.text}</Typography>
       )}
