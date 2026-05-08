@@ -105,7 +105,7 @@
     "knip": "^5.87.0",
     "mailslurp-client": "^16.0.0",
     "nyc": "^18.0.0",
-    "pre-commit": "^1.2.2",
+    "pre-commit": "^2.0.0",
     "prettier": "^3.8.3",
     "typescript": "^5.8.3"
   }
