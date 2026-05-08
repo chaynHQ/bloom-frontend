@@ -102,13 +102,13 @@ module.exports = withBundleAnalyzer(
           },
         ];
       },
-      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Crisp iframes, Rollbar, SimplyBook, and Zapier.
-      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Crisp.
-      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, Storyblok, and Crisp.
-      // font-src: Allows fonts from the same origin and Google's Fonts API.
-      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Crisp.
-      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Crisp, Firebase, Rollbar, SimplyBook, and Zapier.
-      // frame-src: Allows frames from the same origin, Hotjar, Storyblok, and Crisp.
+      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Front Chat, Rollbar, SimplyBook, and Zapier.
+      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Front Chat.
+      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, and Storyblok.
+      // font-src: Allows fonts from the same origin, Google's Fonts API, and Front Chat.
+      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Front Chat.
+      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Front Chat, Firebase, Rollbar, SimplyBook, and Zapier.
+      // frame-src: Allows frames from the same origin, Hotjar, and Storyblok.
       // object-src: Disallows all object sources.
       // base-uri: Restricts the base URI to the same origin.
       // form-action: Restricts form actions to the same origin.
@@ -159,7 +159,7 @@ module.exports = withBundleAnalyzer(
               {
                 key: 'Permissions-Policy',
                 value:
-                  'camera=(), microphone=(), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
+                  'camera=(), microphone=(self), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
               },
               {
                 key: 'Cross-Origin-Opener-Policy',
