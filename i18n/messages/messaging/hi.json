@@ -1,5 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Hume bataiye ki aapke mann mein kya hai"
+    "messageHeading": "Hamein batayein aapke man mein kya hai",
+    "frontChat": {
+      "ariaChat": "Bloom sandesh",
+      "welcomeAuthor": "Bloom Team",
+      "welcomeMessage": "Namaste, yahan aap hamaari Bloom team ke bache hue logon aur sahayogiyon se baat kar sakte hain, jinhe ek-doosre ka saath dene ka anubhav hai. Hum yahan hain taki aap apne sawaal, bhavnayen aur vichaar saajha kar sakein, jaise-jaise aap hamare course se guzarte hain.\n\nYadi aap tatkal nuksan ke khatre mein hain, toh kripya aapatkalin sevaon ko call karein, yadi aap kar sakte hain aur yadi yeh aapke liye surakshit hai. Halankki hum sankat sahayata nahi dete, hum aapko us prakar ki sahayata seva se jodne mein madad kar sakte hain jiski aapko zaroorat hai. Aap hamare vaishvik nirdeshika mein apne kshetra ki sahayata sevaen dekh sakte hain: c.chayn.co/directory.\n\nAap humse angrezi, French, German, Hindi, Portuguese aur Spanish mein baat kar sakte hain.\n\nHum hamesha 1-2 dinon ke bheetar aapke sandesh ka jawab dene ka prayas karte hain.",
+      "empty": "Neeche apna pehla sandesh bhejein aur hamaari team jald hi aapse sampark karegi.",
+      "placeholder": "Ek sandesh likhein…",
+      "send": "Sandesh bhejein",
+      "attachImage": "Chavi sanlagna karein",
+      "imageAttachment": "Chavi",
+      "voiceNote": "Voice note",
+      "startRecording": "Voice note record karein",
+      "stopRecording": "Rokein aur voice note bhejein",
+      "cancelRecording": "Recording radd karein",
+      "recordingInProgress": "Record ho raha hai",
+      "messageSending": "Bheja ja raha hai",
+      "messageFailed": "Bheja nahi ja saka — kripya punah prayas karein.",
+      "audioUnavailable": "Audio upalabdh nahi hai",
+      "status": {
+        "connecting": "Jud raha hai…",
+        "disconnected": "Punah jud raha hai…",
+        "error": "Connect nahi ho paya. Kripya baad mein punah prayas karein."
+      },
+      "errors": {
+        "unsupportedImage": "Keval JPG, PNG, GIF ya WebP chhaviyan samarthit hain.",
+        "fileTooLarge": "Failen 25 MB se kam honi chahiye.",
+        "uploadFailed": "Upload vifal hua. Kripya punah prayas karein.",
+        "micPermission": "Microphone ki anumati aswikar kar di gayi. Voice note record karne ke liye, apne browser settings mein microphone ki anumati dein aur punah prayas karein.",
+        "micUnavailable": "Aapke microphone tak pahunch nahi ho saki. Kripya jaanchein ki yeh juda hua hai aur punah prayas karein."
+      }
+    }
   }
 }

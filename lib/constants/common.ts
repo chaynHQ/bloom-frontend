@@ -8,6 +8,7 @@ export const ENVIRONMENT =
   process.env.NEXT_PUBLIC_ENV || process.env.VERCEL_ENV || process.env.NODE_ENV;
 export const BASE_URL =
   ENVIRONMENT === 'staging' ? VERCEL_PREVIEW_URL : process.env.NEXT_PUBLIC_BASE_URL;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 export const FEEDBACK_FORM_URL = process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#';
 export const STORYBLOK_ENVIRONMENT = ENVIRONMENT === 'production' ? 'published' : 'draft';
 

@@ -18,7 +18,6 @@ export interface User {
   contactPermission: boolean;
   serviceEmailsPermission: boolean;
   emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
-  crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
   verifiedEmail: boolean;
@@ -43,7 +42,6 @@ export interface GetUserDto {
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
     emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
-    crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
     activeSubscriptions?: ActiveSubscription[];
@@ -81,7 +79,6 @@ const initialState: User = {
   contactPermission: false,
   serviceEmailsPermission: true,
   emailRemindersFrequency: null,
-  crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
   verifiedEmail: false,
