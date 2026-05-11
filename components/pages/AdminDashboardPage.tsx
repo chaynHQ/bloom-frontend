@@ -1,7 +1,6 @@
 'use client';
 
 import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
-import CrispToFrontMigrationForm from '@/components/forms/CrispToFrontMigrationForm';
 import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
 import UpdateTherapyAdminForm from '@/components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
@@ -84,23 +83,6 @@ export default function AdminDashboardPage() {
               {t('updatePartner.title')}
             </Typography>
             <UpdatePartnerActiveForm />
-          </CardContent>
-        </Card>
-        <Card sx={{ ...cardStyle, width: { xs: '100%', md: '80%' } }}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('crispMigration.title')}
-            </Typography>
-            <Typography
-              sx={{
-                '&:last-of-type': {
-                  marginBottom: '1em',
-                },
-              }}
-            >
-              {t('crispMigration.description')}
-            </Typography>
-            <CrispToFrontMigrationForm />
           </CardContent>
         </Card>
       </Container>

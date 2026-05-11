@@ -21,7 +21,7 @@ describe('Create User', () => {
     cy.wait(3000);
     cy.get('p').should(
       'contain',
-      "Your password needs to be a little longer, so it's more secure.",
+      "at least 8 characters and not too easy to guess. Try using a few words together — like 'blue morning river'",
     );
   });
 });

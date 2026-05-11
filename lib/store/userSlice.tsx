@@ -11,7 +11,6 @@ export interface User {
   id: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  firebaseUid: string | null;
   name: string | null;
   email: string | null;
   partnerAccessCode: string | null;
@@ -38,7 +37,6 @@ export interface GetUserDto {
     email: string;
     createdAt?: Date | null;
     updatedAt?: Date | null;
-    firebaseUid?: string | null;
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
     emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
@@ -72,7 +70,6 @@ const initialState: User = {
   id: null,
   createdAt: null,
   updatedAt: null,
-  firebaseUid: null,
   name: null,
   email: null,
   partnerAccessCode: null,
