@@ -9,7 +9,7 @@ import { getDateLocale } from '@/lib/utils/dates';
 import { format } from 'date-fns';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { ChatMessage } from './types';
+import { ChatMessage, MessageAttachment } from './types';
 
 const imagePreviewStyle = {
   display: 'block',
@@ -58,6 +58,20 @@ const filenameRowStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: 0.5,
+} as const;
+
+// Multi-attachment messages stack their attachments vertically inside the bubble
+// — gives each file a clear hit area without ballooning bubble width.
+const attachmentsStackStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 0.75,
+} as const;
+
+const voiceRowStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 0.25,
 } as const;
 
 const useBlobUrl = (src: string) => {
@@ -163,6 +177,64 @@ const AudioAttachment = ({ src, unavailableLabel }: { src: string; unavailableLa
   );
 };
 
+interface AttachmentProps {
+  attachment: MessageAttachment;
+  audioUnavailableLabel: string;
+  voiceFallbackLabel: string;
+}
+
+const AttachmentItem = ({
+  attachment,
+  audioUnavailableLabel,
+  voiceFallbackLabel,
+}: AttachmentProps) => {
+  const { kind, name, url, previewUrl } = attachment;
+
+  if (kind === 'image') {
+    return (
+      <Box>
+        {previewUrl ? (
+          <Box component="img" src={previewUrl} alt={name ?? ''} sx={imagePreviewStyle} />
+        ) : url ? (
+          <ImageAttachment src={url} alt={name ?? ''} />
+        ) : null}
+        {name && (
+          <Box sx={filenameRowStyle}>
+            <ImageIcon sx={{ fontSize: 14, flexShrink: 0, opacity: 0.7 }} aria-hidden="true" />
+            <Typography variant="caption" sx={{ opacity: 0.8, wordBreak: 'break-all' }}>
+              {name}
+            </Typography>
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+  if (kind === 'voice') {
+    return (
+      <Box sx={voiceRowStyle}>
+        <Box sx={filenameRowStyle}>
+          <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
+          <Typography variant="body2">{name ?? voiceFallbackLabel}</Typography>
+        </Box>
+        {previewUrl ? (
+          <Box sx={{ mt: 0.5 }}>
+            <audio
+              src={previewUrl}
+              controls
+              style={{ height: 32, maxWidth: 220, display: 'block' }}
+            />
+          </Box>
+        ) : url ? (
+          <AudioAttachment src={url} unavailableLabel={audioUnavailableLabel} />
+        ) : null}
+      </Box>
+    );
+  }
+
+  return url ? <FileAttachment src={url} filename={name ?? 'attachment'} /> : null;
+};
+
 interface Props {
   message: ChatMessage;
   failedLabel: string;
@@ -173,6 +245,14 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
   const t = useTranslations('Messaging.frontChat');
   const locale = useLocale();
   const isUser = message.direction === 'user';
+  const attachments = message.attachments ?? [];
+  // Hide body text when it's only there to label a single attachment (the attachment
+  // renders its own filename caption already). Multi-attachment bubbles always show
+  // the body so a real message above several files isn't dropped.
+  const singleAttachment = attachments.length === 1 ? attachments[0] : undefined;
+  const textDuplicatesAttachment =
+    !!singleAttachment && !!message.text && message.text === singleAttachment.name;
+  const showText = !!message.text && !textDuplicatesAttachment;
 
   return (
     <Box sx={isUser ? userBubbleStyle : agentBubbleStyle}>
@@ -185,50 +265,19 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
         </Typography>
       )}
 
-      {message.kind === 'image' ? (
-        <>
-          {message.previewUrl ? (
-            <Box
-              component="img"
-              src={message.previewUrl}
-              alt={message.text ?? ''}
-              sx={imagePreviewStyle}
+      {showText && <Typography variant="body2">{message.text}</Typography>}
+
+      {attachments.length > 0 && (
+        <Box sx={{ ...attachmentsStackStyle, mt: showText ? 0.75 : 0 }}>
+          {attachments.map((attachment, i) => (
+            <AttachmentItem
+              key={attachment.url ?? attachment.previewUrl ?? i}
+              attachment={attachment}
+              audioUnavailableLabel={t('audioUnavailable')}
+              voiceFallbackLabel={t('voiceNote')}
             />
-          ) : message.attachmentUrl ? (
-            <ImageAttachment src={message.attachmentUrl} alt={message.text ?? ''} />
-          ) : null}
-          <Box sx={filenameRowStyle}>
-            <ImageIcon sx={{ fontSize: 14, flexShrink: 0, opacity: 0.7 }} aria-hidden="true" />
-            <Typography variant="caption" sx={{ opacity: 0.8, wordBreak: 'break-all' }}>
-              {message.text}
-            </Typography>
-          </Box>
-        </>
-      ) : message.kind === 'voice' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
-          <Box sx={filenameRowStyle}>
-            <MicIcon sx={{ fontSize: 15, flexShrink: 0 }} aria-hidden="true" />
-            <Typography variant="body2">{message.text}</Typography>
-          </Box>
-          {message.previewUrl ? (
-            <Box sx={{ mt: 0.5 }}>
-              <audio
-                src={message.previewUrl}
-                controls
-                style={{ height: 32, maxWidth: 220, display: 'block' }}
-              />
-            </Box>
-          ) : message.attachmentUrl ? (
-            <AudioAttachment src={message.attachmentUrl} unavailableLabel={t('audioUnavailable')} />
-          ) : null}
+          ))}
         </Box>
-      ) : message.kind === 'file' && message.attachmentUrl ? (
-        <FileAttachment
-          src={message.attachmentUrl}
-          filename={message.attachmentName ?? message.text ?? 'attachment'}
-        />
-      ) : (
-        <Typography variant="body2">{message.text}</Typography>
       )}
 
       <Box sx={metaRowStyle}>
