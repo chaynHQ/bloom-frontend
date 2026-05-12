@@ -25,7 +25,7 @@ interface HeaderProps {
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
-  cta?: any;
+  cta?: React.ReactNode;
 }
 
 const headerContainerStyles = {

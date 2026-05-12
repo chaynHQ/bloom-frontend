@@ -11,6 +11,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
+import type { ReactNode } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import UserResearchBanner from '../banner/UserResearchBanner';
 
@@ -21,8 +22,8 @@ export interface HeaderProps {
   imageAlt?: string;
   translatedImageAlt?: string;
   progressStatus?: PROGRESS_STATUS;
-  children?: any;
-  cta?: any;
+  children?: ReactNode;
+  cta?: ReactNode;
 }
 
 const headerContainerStyle = {
