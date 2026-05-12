@@ -28,6 +28,7 @@ import {
   storyblokInit,
 } from '@storyblok/react/rsc';
 import { STORYBLOK_ENVIRONMENT } from './constants/common';
+import { serverInstance as rollbar } from './rollbar';
 
 export const getStoryblokApi = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
@@ -81,7 +82,7 @@ export const getStoryblokStory = async (
 
     return data?.story as ISbStoryData;
   } catch (error) {
-    console.log('Error getting storyblok data for page', slug, sbParams, error);
+    rollbar.error('Error getting storyblok data for page', error as Error, { slug, sbParams });
     return undefined;
   }
 };
@@ -105,6 +106,6 @@ export const getStoryblokStories = async (
 
     return data?.stories as ISbStoryData[];
   } catch (error) {
-    console.log('Error getting storyblok data for page', sbParams, error);
+    rollbar.error('Error getting storyblok data for page', error as Error, { sbParams });
   }
 };
