@@ -11,14 +11,12 @@ export interface User {
   id: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  firebaseUid: string | null;
   name: string | null;
   email: string | null;
   partnerAccessCode: string | null;
   contactPermission: boolean;
   serviceEmailsPermission: boolean;
   emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
-  crispTokenId: string | null;
   signUpLanguage: LANGUAGES | null;
   isSuperAdmin: boolean;
   verifiedEmail: boolean;
@@ -39,11 +37,9 @@ export interface GetUserDto {
     email: string;
     createdAt?: Date | null;
     updatedAt?: Date | null;
-    firebaseUid?: string | null;
     contactPermission?: boolean;
     serviceEmailsPermission?: boolean;
     emailRemindersFrequency: EMAIL_REMINDERS_FREQUENCY | null;
-    crispTokenId?: string | null;
     signUpLanguage?: LANGUAGES | null;
     isSuperAdmin?: boolean;
     activeSubscriptions?: ActiveSubscription[];
@@ -74,14 +70,12 @@ const initialState: User = {
   id: null,
   createdAt: null,
   updatedAt: null,
-  firebaseUid: null,
   name: null,
   email: null,
   partnerAccessCode: null,
   contactPermission: false,
   serviceEmailsPermission: true,
   emailRemindersFrequency: null,
-  crispTokenId: null,
   signUpLanguage: null,
   isSuperAdmin: false,
   verifiedEmail: false,

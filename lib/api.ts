@@ -16,6 +16,7 @@ import { Partner, PartnerFeature } from './store/partnersSlice';
 import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
 import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
+import { API_URL } from './constants/common';
 
 export interface GetUserResponse {
   user: User;
@@ -36,7 +37,7 @@ interface WhatsappUnsubscribePayload {
 }
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  baseUrl: API_URL,
   prepareHeaders: (headers, { getState }) => {
     const user = (getState() as RootState).user;
     const token = user.token;
@@ -56,7 +57,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   let result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // force reset token
-    const token = await getAuthToken();
+    const token = await getAuthToken(true);
 
     if (token.token) {
       await api.dispatch(setUserToken(token.token));
