@@ -46,7 +46,7 @@
         "authError": "Wir konnten kein Konto für diese Kombination aus Email und Passwort finden. Überprüfe Deine Email und Dein Passwort. ",
         "invalidEmail": "Deine Email-Adresse scheint ungültig zu sein. Korrigiere alle Tippfehler, um fortzufahren.",
         "tooManyAttempts": "Zu viele fehlgeschlagene Login-Versuche. Bitte warten Sie einige Minuten oder setzen Sie Ihr Passwort jetzt zurück.",
-        "weakPassword": "Dein Passwort muss etwas länger sein, damit es sicherer ist.",
+        "weakPassword": "Dein Passwort muss mindestens 8 Zeichen lang sein und darf nicht zu leicht zu erraten sein. Versuche, mehrere Wörter zu kombinieren — zum Beispiel 'blauer Morgen Fluss'.",
         "emailAlreadyInUse": "Diese Email ist bereits bei Bloom registriert, bitte geh zum <loginLink>Login-Bereich</loginLink> um fortzufahren.",
         "invalidCode": "Dieser Link zum Zurücksetzen des Passworts ist ungültig. Bitte <resetLink>starte den Prozess neu</resetLink> und versuche es noch einmal. ",
         "expiredCode": "Dieser Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte <resetLink>starte den Vorgang neu</resetLink> und versuche es noch einmal. ",
