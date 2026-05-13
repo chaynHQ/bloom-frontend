@@ -14,7 +14,7 @@ export const useTypedSelector = useSelector.withTypes<RootState>();
 export const useAppStore = useStore.withTypes<AppStore>();
 
 export const useStateUtils = () => {
-  const dispatch: any = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const clearState = useCallback(async () => {
     await dispatch(clearPartnerAccessesSlice());
