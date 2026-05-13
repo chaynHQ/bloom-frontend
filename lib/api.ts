@@ -18,46 +18,6 @@ import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 import { API_URL } from './constants/common';
 
-interface MigrationProgress {
-  totalContacts: number;
-  processedContacts: number;
-  totalConversations: number;
-  processedConversations: number;
-  totalMessages: number;
-  processedMessages: number;
-  totalAttachments: number;
-  processedAttachments: number;
-  totalNotes: number;
-  processedNotes: number;
-}
-
-export interface MigrationError {
-  sessionId?: string;
-  email?: string;
-  error: string;
-  timestamp: string;
-}
-
-export interface MigrationStatusResponse {
-  status: 'idle' | 'pending' | 'running' | 'completed' | 'failed';
-  progress?: MigrationProgress;
-  errors?: MigrationError[];
-  startedAt?: string;
-  completedAt?: string;
-  estimatedTimeRemaining?: number;
-}
-
-export interface MigrationOptions {
-  dryRun?: boolean;
-  skipAttachments?: boolean;
-  skipNotes?: boolean;
-  startDate?: string;
-  specificEmail?: string;
-  specificSessionId?: string;
-  emailDomainFilter?: string;
-  continueOnError?: boolean;
-}
-
 export interface GetUserResponse {
   user: User;
   partnerAccesses: PartnerAccesses;
@@ -350,23 +310,6 @@ export const api = createApi({
         };
       },
     }),
-    runCrispMigration: builder.mutation<{ status: 'started' }, MigrationOptions>({
-      query(body) {
-        return {
-          url: 'crisp-migration/run',
-          method: 'POST',
-          body,
-        };
-      },
-    }),
-    getCrispMigrationStatus: builder.query<MigrationStatusResponse, void>({
-      query() {
-        return {
-          url: 'crisp-migration/status',
-          method: 'GET',
-        };
-      },
-    }),
   }),
 });
 
@@ -398,6 +341,4 @@ export const {
   useGetTherapySessionsQuery,
   useCancelTherapySessionMutation,
   useGetSubscriptionsUserQuery,
-  useRunCrispMigrationMutation,
-  useGetCrispMigrationStatusQuery,
 } = api;
