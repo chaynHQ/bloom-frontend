@@ -3,18 +3,11 @@
 import { CHAT_MESSAGE_COMPOSED, CHAT_VIEWED } from '@/lib/constants/events';
 import { MAX_ATTACHMENT_BYTES, useMessaging } from '@/lib/hooks/useMessaging';
 import logEvent from '@/lib/utils/logEvent';
-import {
-  Alert,
-  Avatar,
-  Box,
-  CircularProgress,
-  Divider,
-  Fade,
-  Stack,
-  Typography,
-} from '@mui/material';
+import bloomLogo from '@/public/bloom_logo_alt.png';
+import { Alert, Box, CircularProgress, Divider, Fade, Stack, Typography } from '@mui/material';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MessageBubble } from './MessageBubble';
 import { MessageComposer } from './MessageComposer';
@@ -45,6 +38,7 @@ const transcriptStyle = {
 
 const welcomeStyleBase = {
   display: 'flex',
+  flexDirection: { xs: 'column', sm: 'row' },
   gap: 2,
   alignSelf: 'stretch',
   borderRadius: 1,
@@ -52,13 +46,16 @@ const welcomeStyleBase = {
   flexShrink: 0,
 } as const;
 
+const welcomeHeaderStyle = {
+  display: 'flex',
+  alignItems: { xs: 'center', sm: 'flex-start' },
+  gap: 1,
+} as const;
+
 const welcomeAvatarStyle = {
-  bgcolor: 'secondary.dark',
-  color: 'common.white',
+  position: 'relative',
   width: 40,
   height: 40,
-  fontSize: '1rem',
-  fontWeight: 700,
   flexShrink: 0,
 } as const;
 
@@ -90,11 +87,19 @@ interface WelcomeMessageProps {
 
 const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
   <Box sx={{ ...welcomeStyleBase, ...sx }} role="note">
-    <Avatar sx={welcomeAvatarStyle} aria-hidden="true">
-      B
-    </Avatar>
+    <Box sx={welcomeHeaderStyle}>
+      <Box sx={welcomeAvatarStyle} aria-hidden="true">
+        <Image src={bloomLogo} alt="" fill sizes="40px" style={{ objectFit: 'contain' }} />
+      </Box>
+      <Typography variant="body2" sx={{ fontWeight: 700, display: { xs: 'block', sm: 'none' } }}>
+        {author}
+      </Typography>
+    </Box>
     <Box>
-      <Typography variant="body2" sx={{ fontWeight: 700, mb: 0.5 }}>
+      <Typography
+        variant="body2"
+        sx={{ fontWeight: 700, mb: 0.5, display: { xs: 'none', sm: 'block' } }}
+      >
         {author}
       </Typography>
       {message.split('\n\n').map((paragraph, i) => (
