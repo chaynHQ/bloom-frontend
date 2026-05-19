@@ -37,22 +37,23 @@ const transcriptStyle = {
 } as const;
 
 const welcomeStyleBase = {
-  display: 'flex',
-  flexDirection: { xs: 'column', sm: 'row' },
-  gap: 2,
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  gridTemplateAreas: {
+    xs: '"avatar author" "message message"',
+    sm: '"avatar author" "avatar message"',
+  },
+  columnGap: { xs: 1, sm: 2 },
+  rowGap: 1,
+  alignItems: { xs: 'center', sm: 'flex-start' },
   alignSelf: 'stretch',
   borderRadius: 1,
   padding: 2,
   flexShrink: 0,
 } as const;
 
-const welcomeHeaderStyle = {
-  display: 'flex',
-  alignItems: { xs: 'center', sm: 'flex-start' },
-  gap: 1,
-} as const;
-
 const welcomeAvatarStyle = {
+  gridArea: 'avatar',
   position: 'relative',
   width: 40,
   height: 40,
@@ -87,21 +88,13 @@ interface WelcomeMessageProps {
 
 const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
   <Box sx={{ ...welcomeStyleBase, ...sx }} role="note">
-    <Box sx={welcomeHeaderStyle}>
-      <Box sx={welcomeAvatarStyle} aria-hidden="true">
-        <Image src={bloomLogo} alt="" fill sizes="40px" style={{ objectFit: 'contain' }} />
-      </Box>
-      <Typography variant="body2" sx={{ fontWeight: 700, display: { xs: 'block', sm: 'none' } }}>
-        {author}
-      </Typography>
+    <Box sx={welcomeAvatarStyle} aria-hidden="true">
+      <Image src={bloomLogo} alt="" fill sizes="40px" style={{ objectFit: 'contain' }} />
     </Box>
-    <Box>
-      <Typography
-        variant="body2"
-        sx={{ fontWeight: 700, mb: 0.5, display: { xs: 'none', sm: 'block' } }}
-      >
-        {author}
-      </Typography>
+    <Typography variant="body2" sx={{ gridArea: 'author', fontWeight: 700 }}>
+      {author}
+    </Typography>
+    <Box sx={{ gridArea: 'message' }}>
       {message.split('\n\n').map((paragraph, i) => (
         <Typography key={i} variant="body2" sx={{ lineHeight: 1.6, mt: i > 0 ? 1 : 0 }}>
           {paragraph}
