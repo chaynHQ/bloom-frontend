@@ -3,18 +3,11 @@
 import { CHAT_MESSAGE_COMPOSED, CHAT_VIEWED } from '@/lib/constants/events';
 import { MAX_ATTACHMENT_BYTES, useMessaging } from '@/lib/hooks/useMessaging';
 import logEvent from '@/lib/utils/logEvent';
-import {
-  Alert,
-  Avatar,
-  Box,
-  CircularProgress,
-  Divider,
-  Fade,
-  Stack,
-  Typography,
-} from '@mui/material';
+import bloomLogo from '@/public/bloom_logo_alt.png';
+import { Alert, Box, CircularProgress, Divider, Fade, Stack, Typography } from '@mui/material';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MessageBubble } from './MessageBubble';
 import { MessageComposer } from './MessageComposer';
@@ -44,8 +37,15 @@ const transcriptStyle = {
 } as const;
 
 const welcomeStyleBase = {
-  display: 'flex',
-  gap: 2,
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  gridTemplateAreas: {
+    xs: '"avatar author" "message message"',
+    sm: '"avatar author" "avatar message"',
+  },
+  columnGap: { xs: 1, sm: 2 },
+  rowGap: 1,
+  alignItems: { xs: 'center', sm: 'flex-start' },
   alignSelf: 'stretch',
   borderRadius: 1,
   padding: 2,
@@ -53,12 +53,10 @@ const welcomeStyleBase = {
 } as const;
 
 const welcomeAvatarStyle = {
-  bgcolor: 'secondary.dark',
-  color: 'common.white',
+  gridArea: 'avatar',
+  position: 'relative',
   width: 40,
   height: 40,
-  fontSize: '1rem',
-  fontWeight: 700,
   flexShrink: 0,
 } as const;
 
@@ -90,13 +88,13 @@ interface WelcomeMessageProps {
 
 const WelcomeMessage = ({ author, message, sx }: WelcomeMessageProps) => (
   <Box sx={{ ...welcomeStyleBase, ...sx }} role="note">
-    <Avatar sx={welcomeAvatarStyle} aria-hidden="true">
-      B
-    </Avatar>
-    <Box>
-      <Typography variant="body2" sx={{ fontWeight: 700, mb: 0.5 }}>
-        {author}
-      </Typography>
+    <Box sx={welcomeAvatarStyle} aria-hidden="true">
+      <Image src={bloomLogo} alt="" fill sizes="40px" style={{ objectFit: 'contain' }} />
+    </Box>
+    <Typography variant="body2" sx={{ gridArea: 'author', fontWeight: 700 }}>
+      {author}
+    </Typography>
+    <Box sx={{ gridArea: 'message' }}>
       {message.split('\n\n').map((paragraph, i) => (
         <Typography key={i} variant="body2" sx={{ lineHeight: 1.6, mt: i > 0 ? 1 : 0 }}>
           {paragraph}
