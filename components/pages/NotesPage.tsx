@@ -31,7 +31,7 @@ import {
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { backButtonStyle, backIconStyle } from '../layout/Header';
 
 const headerContainerStyle = {
@@ -141,9 +141,13 @@ interface Props {
 
 export default function NotesPage({ story }: Props) {
   const router = useRouter();
-  const [hasActiveWhatsappSub, setHasActiveWhatsappSub] = useState<boolean>(false);
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
+
+  const hasActiveWhatsappSub = useMemo(
+    () => hasWhatsappSubscription(userActiveSubscriptions),
+    [userActiveSubscriptions],
+  );
   const userId = useTypedSelector((state) => state.user.id);
 
   useGetSubscriptionsUserQuery(undefined, {
@@ -152,10 +156,6 @@ export default function NotesPage({ story }: Props) {
 
   const t = useTranslations('Whatsapp');
   const tS = useTranslations('Shared');
-
-  useEffect(() => {
-    setHasActiveWhatsappSub(hasWhatsappSubscription(userActiveSubscriptions));
-  }, [userActiveSubscriptions]);
 
   if (!story) {
     return <NoDataAvailable />;

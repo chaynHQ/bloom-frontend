@@ -46,7 +46,7 @@
         "authError": "Não foi possível encontrar uma conta para essa combinação de e-mail e senha. Verifique se seu e-mail e senha estão corretos.",
         "invalidEmail": "Seu e-mail parece estar inválido. Por favor, corrija os erros de digitação para continuar.",
         "tooManyAttempts": "Muitas tentativas de login falharam. Aguarde alguns minutos ou redefina sua senha agora.",
-        "weakPassword": "Sua senha precisa ser um pouco mais longa para ser mais segura.",
+        "weakPassword": "A sua senha precisa ter pelo menos 8 caracteres e não ser fácil de adivinhar. Tente usar algumas palavras juntas — como 'rio azul manhã'.",
         "emailAlreadyInUse": "Este e-mail já está cadastrado no Bloom, acesse <loginLink>login</loginLink> para continuar.",
         "invalidCode": "Este link de redefinição de senha é inválido. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",
         "expiredCode": "Este link de redefinição de senha expirou. Por favor, <resetLink>reinicie o processo</resetLink> e tente novamente.",

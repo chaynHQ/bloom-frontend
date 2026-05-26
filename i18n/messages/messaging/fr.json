@@ -1,5 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Dites-nous ce qui vous préoccupe"
+    "messageHeading": "Dites-nous ce que vous avez sur le cœur",
+    "frontChat": {
+      "ariaChat": "Messagerie Bloom",
+      "welcomeAuthor": "Équipe Bloom",
+      "welcomeMessage": "Bonjour, vous pouvez discuter ici avec des survivant·e·s et des allié·e·s de notre équipe Bloom, qui ont de l'expérience dans le soutien mutuel. Nous sommes là pour accueillir vos questions, vos sentiments et vos réflexions à mesure que vous avancez dans nos cours.\n\nSi vous courez un risque immédiat, veuillez appeler les services d'urgence si vous le pouvez et si cela est sans danger pour vous. Bien que nous ne proposions pas de soutien de crise, nous pouvons vous aider à trouver le service d'assistance dont vous avez besoin. Vous pouvez consulter les services de soutien dans votre région dans notre répertoire mondial ici : c.chayn.co/directory.\n\nVous pouvez discuter avec nous en anglais, français, allemand, hindi, portugais et espagnol.\n\nNous nous efforçons toujours de répondre à votre message sous 1 à 2 jours.",
+      "empty": "Envoyez votre premier message ci-dessous et notre équipe vous répondra bientôt.",
+      "placeholder": "Écrivez un message…",
+      "send": "Envoyer le message",
+      "attachImage": "Joindre une image",
+      "imageAttachment": "Image",
+      "voiceNote": "Note vocale",
+      "startRecording": "Enregistrer une note vocale",
+      "stopRecording": "Arrêter et envoyer la note vocale",
+      "cancelRecording": "Annuler l'enregistrement",
+      "recordingInProgress": "Enregistrement en cours",
+      "messageSending": "Envoi en cours",
+      "messageFailed": "Impossible d'envoyer le message. Veuillez réessayer.",
+      "audioUnavailable": "Audio non disponible",
+      "status": {
+        "connecting": "Connexion…",
+        "disconnected": "Reconnexion…",
+        "error": "Impossible de se connecter. Veuillez réessayer plus tard."
+      },
+      "errors": {
+        "unsupportedImage": "Seules les images JPG, PNG, GIF ou WebP sont prises en charge.",
+        "fileTooLarge": "Les fichiers doivent faire moins de 25 Mo.",
+        "uploadFailed": "Échec de l'envoi. Veuillez réessayer.",
+        "micPermission": "L'accès au microphone a été refusé. Pour enregistrer une note vocale, autorisez l'accès au microphone dans les paramètres de votre navigateur et réessayez.",
+        "micUnavailable": "Impossible d'accéder à votre microphone. Veuillez vérifier qu'il est bien branché et réessayez."
+      }
+    }
   }
 }

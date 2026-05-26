@@ -86,14 +86,16 @@ const LoginForm = () => {
     // Redirect if the user login process is complete and userId loaded
     const returnUrl = searchParams?.get('return_url');
 
-    if (partnerAdmin?.active) {
+    if (userIsSuperAdmin) {
+      router.push('/admin/dashboard');
+    } else if (partnerAdmin?.active) {
       router.push('/partner-admin/create-access-code');
     } else if (returnUrl) {
       router.push(returnUrl);
     } else {
       router.push('/courses');
     }
-  }, [userId, showSetupMFA, router, searchParams, partnerAdmin]);
+  }, [userId, showSetupMFA, router, searchParams, partnerAdmin, userIsSuperAdmin]);
 
   // Derive error message from userLoadError
   const userLoadErrorMessage = useMemo(() => {

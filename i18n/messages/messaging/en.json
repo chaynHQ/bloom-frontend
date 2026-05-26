@@ -1,5 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Tell us what’s on your mind"
+    "messageHeading": "Tell us what’s on your mind",
+    "frontChat": {
+      "ariaChat": "Bloom messaging",
+      "welcomeAuthor": "Bloom Team",
+      "welcomeMessage": "Hi there, chat here with survivors and allies from our Bloom team who are experienced in supporting one another. We’re here for you to share your questions, feelings and reflections as you work through our courses.\n\nIf you are at immediate risk of harm, please call emergency services if you can and if it’s safe for you to do so. While we don’t offer crisis support, we can help connect you to the kind of support service you need. You can look up support services in your area in our global directory here: c.chayn.co/directory.\n\nYou can chat with us in English, French, German, Hindi, Portuguese and Spanish.\n\nWe will always aim to respond to your message within 1-2 days.",
+      "empty": "Send your first message below and our team will get back to you soon.",
+      "placeholder": "Write a message…",
+      "send": "Send message",
+      "attachImage": "Attach image",
+      "imageAttachment": "Image",
+      "voiceNote": "Voice note",
+      "startRecording": "Record a voice note",
+      "stopRecording": "Stop and send voice note",
+      "cancelRecording": "Cancel recording",
+      "recordingInProgress": "Recording",
+      "messageSending": "Sending",
+      "messageFailed": "Couldn't send — please try again.",
+      "audioUnavailable": "Audio unavailable",
+      "status": {
+        "connecting": "Connecting…",
+        "disconnected": "Reconnecting…",
+        "error": "Unable to connect. Please try again later."
+      },
+      "errors": {
+        "unsupportedImage": "Only JPG, PNG, GIF or WebP images are supported.",
+        "fileTooLarge": "Files must be under 25 MB.",
+        "uploadFailed": "Upload failed. Please try again.",
+        "micPermission": "Microphone access was denied. To record a voice note, allow microphone access in your browser settings and try again.",
+        "micUnavailable": "Could not access your microphone. Please check it is connected and try again."
+      }
+    }
   }
 }

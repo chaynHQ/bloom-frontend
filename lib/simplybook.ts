@@ -26,6 +26,22 @@ export const getSimplybookWidgetConfig = (user?: User) => {
     app_config: {
       allow_switch_to_ada: 0,
       ...(user && {
+        // NOTE: user_id pre-fill is currently broken.
+        // The user_id intake field is set to "not visible" in Simplybook admin,
+        // which causes Simplybook to drop it from the form submission entirely —
+        // the predefined value is never passed through to the booking payload.
+        // Making the field visible fixes it, but exposes a raw UUID to the user.
+        //
+        // Also note: the predefined format here (object with client/fields keys)
+        // differs from Simplybook's own generated snippet which uses an empty array —
+        // the correct array format for v2 is unconfirmed; check with Simplybook support.
+        //
+        // Possible workarounds:
+        // 1. Look up user by email on the backend — Simplybook always submits the client
+        //    email, and it is pre-filled below. Requires email to be unique per user.
+        // 2. Pre-fill with the user's active therapy access code instead of user_id —
+        //    users are familiar with this value so a visible field wouldn't be confusing.
+        //    Requires a reliable way to select one code when a user has multiple active ones.
         predefined: {
           client: {
             name: user.name,

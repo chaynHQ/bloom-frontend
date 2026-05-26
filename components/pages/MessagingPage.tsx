@@ -3,8 +3,8 @@
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { CrispIframe } from '@/components/crisp/CrispIframe';
 import Header, { HeaderProps } from '@/components/layout/Header';
+import { MessageThread } from '@/components/messaging/MessageThread';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
@@ -13,8 +13,8 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
-import DynamicComponent from '../storyblok/DynamicComponent';
+import NotesFromBloomPromo from '@/components/banner/NotesFromBloomPromo';
+import DynamicComponent from '@/components/storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,
@@ -71,7 +71,7 @@ export default function MessagingPage({ story }: Props) {
                 />
               </Box>
               <Box flex={1}>
-                <CrispIframe />
+                <MessageThread />
               </Box>
             </Box>
           </Container>

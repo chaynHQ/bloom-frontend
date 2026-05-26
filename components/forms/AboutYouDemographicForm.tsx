@@ -32,7 +32,7 @@ import {
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
-import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { JSXElementConstructor, ReactElement, ReactNode, useMemo, useState } from 'react';
 
 const rowStyles = {
   ...rowStyle,
@@ -56,7 +56,6 @@ const AboutYouDemographicForm = () => {
   const rollbar = useRollbar();
   const locale = useLocale();
 
-  const [eventUserData, setEventUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [genderInput, setGenderInput] = useState<Array<string>>([]);
   const [genderTextInput, setGenderTextInput] = useState<string>('');
@@ -68,12 +67,6 @@ const AboutYouDemographicForm = () => {
   } | null>(null);
   const [countryTextInput, setCountryTextInput] = useState<string>('');
   const [ageInput, setAgeInput] = useState<string>('');
-  const [countryList, setCountryList] = useState<
-    Array<{
-      code: string;
-      label: string;
-    }>
-  >([]);
   const [formError] = useState<
     string | ReactNode[] | ReactElement<any, string | JSXElementConstructor<any>>
   >();
@@ -82,20 +75,21 @@ const AboutYouDemographicForm = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  useEffect(() => {
-    if (locale) {
-      setCountryList(
-        countries.map((c: { code: string; label: { [key: string]: string } }) => ({
-          code: c.code,
-          label: locale ? c.label[locale] : c.label.en,
-        })),
-      );
-    }
-  }, [locale]);
+  const countryList = useMemo(
+    () =>
+      locale
+        ? countries.map((c: { code: string; label: { [key: string]: string } }) => ({
+            code: c.code,
+            label: c.label[locale] ?? c.label.en,
+          }))
+        : [],
+    [locale],
+  );
 
-  useEffect(() => {
-    setEventUserData(getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin));
-  }, [userCreatedAt, partnerAccesses, partnerAdmin]);
+  const eventUserData = useMemo(
+    () => getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+    [userCreatedAt, partnerAccesses, partnerAdmin],
+  );
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
