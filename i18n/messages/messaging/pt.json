@@ -1,5 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Diga-nos o que está pensando"
+    "messageHeading": "Compartilhe o que você está sentindo",
+    "frontChat": {
+      "ariaChat": "Chat do Bloom",
+      "welcomeAuthor": "Equipe Bloom",
+      "welcomeMessage": "Olá, aqui você pode conversar com sobreviventes e pessoas aliadas da nossa equipe Bloom, que têm experiência em apoiar umas às outras. Estamos aqui para que você compartilhe suas dúvidas, sentimentos e reflexões à medida que avança em nossos cursos.\n\nSe você estiver em risco imediato, ligue para os serviços de emergência, se puder e se for seguro para você. Embora não ofereçamos apoio em situações de crise, podemos ajudar a conectar você com o tipo de serviço de apoio de que necessita. Você pode procurar serviços de apoio na sua região em nosso diretório global aqui: c.chayn.co/directory.\n\nVocê pode conversar conosco em inglês, francês, alemão, hindi, português e espanhol.\n\nNosso objetivo é sempre responder à sua mensagem no prazo de 1 a 2 dias.",
+      "empty": "Envie sua primeira mensagem abaixo e nossa equipe responderá em breve.",
+      "placeholder": "Escreva uma mensagem…",
+      "send": "Enviar mensagem",
+      "attachImage": "Anexar imagem",
+      "imageAttachment": "Imagem",
+      "voiceNote": "Mensagem de voz",
+      "startRecording": "Gravar uma mensagem de voz",
+      "stopRecording": "Parar e enviar mensagem de voz",
+      "cancelRecording": "Cancelar gravação",
+      "recordingInProgress": "Gravando",
+      "messageSending": "Enviando",
+      "messageFailed": "Não foi possível enviar — por favor, tente novamente.",
+      "audioUnavailable": "Áudio indisponível",
+      "status": {
+        "connecting": "Conectando…",
+        "disconnected": "Reconectando…",
+        "error": "Não foi possível conectar. Por favor, tente novamente mais tarde."
+      },
+      "errors": {
+        "unsupportedImage": "Apenas imagens JPG, PNG, GIF ou WebP são suportadas.",
+        "fileTooLarge": "Os arquivos devem ter menos de 25 MB.",
+        "uploadFailed": "Falha no envio. Por favor, tente novamente.",
+        "micPermission": "O acesso ao microfone foi negado. Para gravar uma mensagem de voz, permita o acesso ao microfone nas configurações do seu navegador e tente novamente.",
+        "micUnavailable": "Não foi possível acessar o seu microfone. Por favor, verifique se ele está conectado e tente novamente."
+      }
+    }
   }
 }

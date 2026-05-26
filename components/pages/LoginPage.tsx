@@ -2,6 +2,7 @@
 
 import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
+import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -9,8 +10,6 @@ import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
-import { getImageSizes } from '@/lib/utils/imageSizes';
-import UserResearchBanner from '../banner/UserResearchBanner';
 
 const imageContainerStyle = {
   position: 'relative',
@@ -73,7 +72,6 @@ export default function LoginPage() {
         <title>{`${t('login.title')} • Bloom`}</title>
       </Head>
       <Box sx={headerContainerStyle}>
-        <UserResearchBanner />
         <IconButton
           sx={backButtonStyle}
           onClick={() => router.back()}

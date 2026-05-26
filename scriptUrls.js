@@ -11,7 +11,6 @@ const scriptSrcUrls = [
   'https://*.storyblok.com',
   'https://*.newrelic.com',
   'https://*.nr-data.net',
-  'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://vercel.live',
   'https://*.noembed.com',
@@ -29,8 +28,6 @@ const scriptSrcUrls = [
   'https://fonts.googleapis.com',
   'https://static.hotjar.com',
   'https://app.storyblok.com',
-  'https://client.crisp.chat',
-  'wss://client.relay.crisp.chat',
   'https://apis.google.com',
   'https://va.vercel-scripts.com/',
   'https://www.google.com/recaptcha/',
@@ -44,25 +41,22 @@ const styleSrcUrls = [
   'https://fonts.googleapis.com',
   'https://static.hotjar.com',
   'https://app.storyblok.com',
-  'https://client.crisp.chat',
   'https://*.google-analytics.com',
 ];
-const fontSrcUrls = [
-  'https://fonts.gstatic.com',
-  'https://*.hotjar.com',
-  'https://*.crisp.chat',
-  'https://*.youtube.com',
-];
+const fontSrcUrls = ['https://fonts.gstatic.com', 'https://*.hotjar.com', 'https://*.youtube.com'];
 const imgSrcUrls = [
+  'blob:',
   'https://*.hotjar.com',
   'https://*.storyblok.com',
-  'https://*.crisp.chat',
   'https://*.googletagmanager.com',
   'https://i.ytimg.com',
   'https://cdnjs.cloudflare.com/',
 ];
 const connectSrcUrls = [
   API_URL,
+  process.env.NEXT_PUBLIC_ENV === 'development'
+    ? 'ws://localhost:35001'
+    : `wss://${new URL(process.env.NEXT_PUBLIC_API_URL).hostname}`,
   'https://*.hotjar.com',
   'https://*.hotjar.io',
   'wss://ws.hotjar.com',
@@ -75,8 +69,7 @@ const connectSrcUrls = [
   'https://*.simplybook.it',
   'https://*.zapier.com',
   'https://*.nr-data.net',
-  'wss://client.relay.crisp.chat',
-  'https://*.crisp.chat',
+  'https://sessions.bugsnag.com/',
   'https://*.noembed.com',
   'https://noembed.com',
   'https://*.youtube.com',
@@ -90,7 +83,6 @@ const connectSrcUrls = [
 const frameSrcUrls = [
   'https://*.hotjar.com',
   'https://*.storyblok.com',
-  'https://*.crisp.chat',
   'https://*.simplybook.it',
   'https://*.youtube.com',
   'https://www.youtube-nocookie.com/',
@@ -99,7 +91,7 @@ const frameSrcUrls = [
   'https://www.google.com/recaptcha/',
   'https://www.gstatic.com/recaptcha/',
 ];
-const mediaSrcUrls = ['https://*.storyblok.com', 'https://a.storyblok.com'];
+const mediaSrcUrls = ['blob:', 'https://*.storyblok.com', 'https://a.storyblok.com'];
 const objectSrcUrls = ['none'];
 const baseUriUrls = ['self'];
 const formActionUrls = ['self'];

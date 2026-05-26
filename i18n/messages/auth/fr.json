@@ -46,7 +46,7 @@
         "authError": "Aucun compte correspondant à cette combinaison d'adresse électronique et de mot de passe n'a été trouvé. Vérifiez votre adresse électronique et votre mot de passe.",
         "invalidEmail": "Votre email semble être invalide, corrigez les erreurs de frappe pour continuer.",
         "tooManyAttempts": "Trop de tentatives de connexion infructueuses. Veuillez patienter quelques minutes ou réinitialiser votre mot de passe maintenant.",
-        "weakPassword": "Votre mot de passe doit être un peu plus long pour plus de sécurité.",
+        "weakPassword": "Votre mot de passe doit contenir au moins 8 caractères et ne pas être trop facile à deviner. Essayez de combiner quelques mots — par exemple 'rivière bleue matin'.",
         "emailAlreadyInUse": "Cet email est déjà enregistré chez Bloom, cliquez sur <loginLink>Connexion</loginLink> pour continuer.",
         "invalidCode": "Ce lien de réinitialisation du mot de passe n'est pas valide, veuillez <resetLink>recommencer le processus</resetLink> et réessayer.",
         "expiredCode": "Ce lien de réinitialisation du mot de passe a expiré, veuillez <resetLink>recommencer le processus</resetLink> et réessayer.",

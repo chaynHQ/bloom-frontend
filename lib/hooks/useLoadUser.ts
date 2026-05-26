@@ -34,6 +34,7 @@ export default function useLoadUser() {
   const dispatch: any = useAppDispatch();
   const isMaintenanceMode = getIsMaintenanceMode();
   const userToken = useTypedSelector((state) => state.user.token);
+  const userId = useTypedSelector((state) => state.user.id);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
 
   const [createEventLog] = useCreateEventLogMutation();
@@ -54,8 +55,6 @@ export default function useLoadUser() {
         await dispatch(setUserToken(token.token));
         await dispatch(setUserVerifiedEmail(firebaseUser?.emailVerified ?? false));
         await dispatch(setUserMFAisSetup(!!token.signInSecondFactor));
-        // Trigger call to get user record by changing userLoading state, skip if in maintenance mode
-        !isMaintenanceMode && (await dispatch(setUserLoading(true)));
         logEvent(GET_AUTH_USER_SUCCESS);
         logEvent(GET_USER_REQUEST);
       } else if (!firebaseUser && userToken) {
@@ -68,6 +67,15 @@ export default function useLoadUser() {
     });
     return () => unsubscribe();
   }, [userToken, dispatch, isMaintenanceMode, clearState, createEventLog]);
+
+  // Mark user as loading whenever we have a token but no user record yet. onIdTokenChanged also
+  // fires on Firebase token refresh, so this avoids re-flipping loading=true when we already have
+  // the user (the cached getUser query wouldn't re-run the success effect to flip it back).
+  useEffect(() => {
+    if (userToken && !userId && !isMaintenanceMode) {
+      dispatch(setUserLoading(true));
+    }
+  }, [userToken, userId, isMaintenanceMode, dispatch]);
 
   // 2. Once firebase auth is complete, get the user database resource
   // skip property prevents the API query being called unless there is a user token and the user is not already set

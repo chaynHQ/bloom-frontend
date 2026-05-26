@@ -1,12 +1,11 @@
 'use client';
 
-import { usePathname } from '@/i18n/routing';
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
-import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 
 const alertStyle = {
@@ -24,24 +23,16 @@ const USER_RESEARCH_FORM_LINK =
 
 export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
-  const pathname = usePathname();
-
-  const userCookiesAccepted = useTypedSelector((state) => state.user.cookiesAccepted);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const locale = useLocale();
 
   const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
-  // const isPublicUser = partnerAccesses.length === 0 && !partnerAdmin.id;
-  const isBadooUser = partnerAccesses.find((pa) => {
-    return pa.partner.name.toLowerCase() === 'badoo';
-  });
+  const isEnglish = locale === 'en';
 
-  const isTargetPage = !(pathname.includes('auth') || pathname.includes('partnerName'));
-
-  const showBanner = isBannerFeatureEnabled && isBadooUser && isTargetPage && isBannerNotInteracted;
+  const showBanner = isBannerFeatureEnabled && isEnglish && isBannerNotInteracted;
 
   const handleClickAccepted = () => {
-    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
     logEvent(USER_BANNER_INTERESTED);
     setOpen(false);
 
@@ -49,13 +40,23 @@ export default function UserResearchBanner() {
   };
 
   const handleClickDeclined = () => {
-    if (userCookiesAccepted) Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
+    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
     logEvent(USER_BANNER_DISMISSED);
     setOpen(false);
   };
 
   return showBanner ? (
-    <Stack sx={{ width: '100%' }} spacing={2}>
+    <Stack
+      sx={{
+        width: '100%',
+        flexBasis: '100%',
+        position: 'relative',
+        zIndex: 1,
+        marginTop: -2,
+        marginBottom: 4,
+      }}
+      spacing={2}
+    >
       <Collapse in={open}>
         <Alert
           icon={false}
