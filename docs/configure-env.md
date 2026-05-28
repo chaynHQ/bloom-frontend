@@ -64,7 +64,7 @@ CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD=
 # OPTIONAL VARIABLES
 #--------------------------------------------------------------------
 # NEW RELIC TRACKING
-NEW_RELIC_LICENSE_KEY=eu01xx6fc63a14eea79c367dfe82e702FFFFNRAL
+NEW_RELIC_LICENSE_KEY=<your-new-relic-license-key>
 NEW_RELIC_APP_NAME=bloom-frontend
 NEW_RELIC_BROWSER_MONITORING_KEY=NRJS-0f9d5f21ee9234a45cc
 

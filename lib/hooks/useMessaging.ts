@@ -2,9 +2,11 @@
 
 import {
   AgentReplyPayload,
+  AttachmentPayload,
   ChatMessage,
   ConnectionState,
   HistoryEntry,
+  MessageAttachment,
 } from '@/components/messaging/types';
 import { getAuthToken } from '@/lib/auth';
 import { CHAT_MESSAGE_RECEIVED, CHAT_MESSAGE_SENT } from '@/lib/constants/events';
@@ -106,13 +108,28 @@ export function useMessaging(): UseMessagingResult {
   useEffect(() => {
     const prev = prevMessagesRef.current;
     prevMessagesRef.current = messages;
+    const liveUrls = new Set<string>();
+    for (const m of messages) {
+      m.attachments?.forEach((a) => a.previewUrl && liveUrls.add(a.previewUrl));
+    }
     for (const m of prev) {
-      if (!m.previewUrl) continue;
-      if (!messages.some((c) => c.previewUrl === m.previewUrl)) {
-        URL.revokeObjectURL(m.previewUrl);
-      }
+      m.attachments?.forEach((a) => {
+        if (a.previewUrl && !liveUrls.has(a.previewUrl)) URL.revokeObjectURL(a.previewUrl);
+      });
     }
   }, [messages]);
+
+  const toMessageAttachments = useCallback(
+    (payloads: AttachmentPayload[] | undefined): MessageAttachment[] | undefined => {
+      if (!payloads?.length) return undefined;
+      return payloads.map(({ url, name, kind }) => ({
+        kind,
+        url: `${API_URL}${url}`,
+        name,
+      }));
+    },
+    [],
+  );
 
   const upsertMessage = useCallback((message: ChatMessage) => {
     setMessages((prev) => {
@@ -124,46 +141,48 @@ export function useMessaging(): UseMessagingResult {
     });
   }, []);
 
-  const mergeHistoryEntries = useCallback((entries: HistoryEntry[]) => {
-    setMessages((prev) => {
-      const knownIds = new Set(prev.map((m) => m.id));
-      const next: ChatMessage[] = prev.slice();
+  const mergeHistoryEntries = useCallback(
+    (entries: HistoryEntry[]) => {
+      setMessages((prev) => {
+        const knownIds = new Set(prev.map((m) => m.id));
+        const next: ChatMessage[] = prev.slice();
 
-      for (const serverMsg of entries) {
-        if (knownIds.has(serverMsg.id)) continue;
+        for (const serverMsg of entries) {
+          if (knownIds.has(serverMsg.id)) continue;
 
-        const optimisticIdx = next.findIndex(
-          (local) =>
-            local.direction === serverMsg.direction &&
-            local.text === serverMsg.text &&
-            Math.abs(local.createdAt - serverMsg.createdAt) < OPTIMISTIC_RECONCILE_MS &&
-            !local.id.startsWith('msg_'),
-        );
+          const optimisticIdx = next.findIndex(
+            (local) =>
+              local.direction === serverMsg.direction &&
+              local.text === serverMsg.text &&
+              Math.abs(local.createdAt - serverMsg.createdAt) < OPTIMISTIC_RECONCILE_MS &&
+              !local.id.startsWith('msg_'),
+          );
 
-        const seeded: ChatMessage = {
-          id: serverMsg.id,
-          direction: serverMsg.direction,
-          kind: serverMsg.kind ?? 'text',
-          text: serverMsg.text,
-          authorName: serverMsg.authorName,
-          createdAt: serverMsg.createdAt,
-          status: 'sent',
-          ...(serverMsg.attachmentUrl && { attachmentUrl: `${API_URL}${serverMsg.attachmentUrl}` }),
-          ...(serverMsg.attachmentName && { attachmentName: serverMsg.attachmentName }),
-        };
+          const attachments = toMessageAttachments(serverMsg.attachments);
+          const seeded: ChatMessage = {
+            id: serverMsg.id,
+            direction: serverMsg.direction,
+            text: serverMsg.text,
+            authorName: serverMsg.authorName,
+            createdAt: serverMsg.createdAt,
+            status: 'sent',
+            ...(attachments && { attachments }),
+          };
 
-        if (optimisticIdx >= 0) {
-          next[optimisticIdx] = seeded;
-        } else {
-          next.push(seeded);
+          if (optimisticIdx >= 0) {
+            next[optimisticIdx] = seeded;
+          } else {
+            next.push(seeded);
+          }
+          knownIds.add(serverMsg.id);
+          if (serverMsg.direction === 'agent') seenAgentIdsRef.current.add(serverMsg.id);
         }
-        knownIds.add(serverMsg.id);
-        if (serverMsg.direction === 'agent') seenAgentIdsRef.current.add(serverMsg.id);
-      }
 
-      return next.sort((a, b) => a.createdAt - b.createdAt);
-    });
-  }, []);
+        return next.sort((a, b) => a.createdAt - b.createdAt);
+      });
+    },
+    [toMessageAttachments],
+  );
 
   const markAsRead = useCallback(async () => {
     const { token, error } = await getAuthToken();
@@ -188,7 +207,6 @@ export function useMessaging(): UseMessagingResult {
       const optimistic: ChatMessage = {
         id,
         direction: 'user',
-        kind: 'text',
         text: trimmed,
         createdAt: Date.now(),
         status: 'sending',
@@ -220,16 +238,14 @@ export function useMessaging(): UseMessagingResult {
       // Optimistic preview for both images and voice notes — the bubble renders this
       // immediately so the sender sees their own attachment without waiting for the
       // server's authenticated proxy URL on the next history refresh.
-      const previewUrl =
-        kind === 'image' || kind === 'voice' ? URL.createObjectURL(file) : undefined;
+      const name = file instanceof File ? file.name : undefined;
       const optimistic: ChatMessage = {
         id,
         direction: 'user',
-        kind,
-        text: file instanceof File ? file.name : displayText,
-        previewUrl,
+        text: name ?? displayText,
         createdAt: Date.now(),
         status: 'sending',
+        attachments: [{ kind, name, previewUrl: URL.createObjectURL(file) }],
       };
       upsertMessage(optimistic);
 
@@ -333,19 +349,19 @@ export function useMessaging(): UseMessagingResult {
         const id = payload.id ?? generateId();
         if (seenAgentIdsRef.current.has(id)) return;
         seenAgentIdsRef.current.add(id);
+        const attachments = toMessageAttachments(payload.attachments);
         upsertMessage({
           id,
           direction: 'agent',
-          kind: payload.kind ?? 'text',
           text: payload.body,
           authorName: payload.authorName,
           // Backend sends seconds (matching Front's emitted_at convention); multiply to get ms.
           createdAt: payload.emittedAt ? payload.emittedAt * 1000 : Date.now(),
           status: 'sent',
-          ...(payload.attachmentUrl && { attachmentUrl: `${API_URL}${payload.attachmentUrl}` }),
-          ...(payload.attachmentName && { attachmentName: payload.attachmentName }),
+          ...(attachments && { attachments }),
         });
-        logEvent(CHAT_MESSAGE_RECEIVED, { kind: payload.kind ?? 'text' });
+        // Analytics: capture the first attachment kind for parity with the previous schema.
+        logEvent(CHAT_MESSAGE_RECEIVED, { kind: attachments?.[0].kind ?? 'text' });
         if (markAsReadTimerRef.current) clearTimeout(markAsReadTimerRef.current);
         markAsReadTimerRef.current = setTimeout(() => markAsRead(), 500);
       });
@@ -356,7 +372,7 @@ export function useMessaging(): UseMessagingResult {
         tearDown();
         setMessages((prev) => {
           prev.forEach((m) => {
-            if (m.previewUrl) URL.revokeObjectURL(m.previewUrl);
+            m.attachments?.forEach((a) => a.previewUrl && URL.revokeObjectURL(a.previewUrl));
           });
           return [];
         });
@@ -371,7 +387,7 @@ export function useMessaging(): UseMessagingResult {
       unsubscribe();
       tearDown();
     };
-  }, [rollbar, upsertMessage, mergeHistoryEntries, markAsRead]);
+  }, [rollbar, upsertMessage, mergeHistoryEntries, markAsRead, toMessageAttachments]);
 
   return { messages, connectionState, sendText, sendAttachment };
 }

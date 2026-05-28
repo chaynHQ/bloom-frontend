@@ -16,5 +16,12 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 
+// Next.js throws frozen error objects that Cypress can't serialize — suppress them.
+Cypress.on('uncaughtException', (err) => {
+  if (err.message.includes('ERR_PREPARED_FOR_SERIALIZATION')) {
+    return false;
+  }
+});
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
