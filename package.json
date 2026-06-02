@@ -77,7 +77,7 @@
     "react-international-phone": "^4.8.0",
     "react-player": "^3.4.0",
     "react-redux": "^9.3.0",
-    "rollbar": "^2.26.4",
+    "rollbar": "^3.1.0",
     "socket.io-client": "^4.8.3",
     "storyblok-rich-text-react-renderer": "^3.0.1"
   },
