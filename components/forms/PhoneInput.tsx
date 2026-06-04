@@ -88,7 +88,10 @@ const PhoneInput = (props: PhoneInputProps) => {
       inputProps={{ dir: 'ltr' }}
       InputProps={{
         startAdornment: (
-          <InputAdornment position="start" style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}>
+          <InputAdornment
+            position="start"
+            style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}
+          >
             <Select
               MenuProps={menuProps}
               sx={selectStyles}

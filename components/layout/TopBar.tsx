@@ -20,7 +20,9 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
+import LibraryNav, { isLibraryPrototypePath } from '@/components/pages/library/LibraryNav';
 import DesktopMainNav from './DesktopMainNav';
 import DesktopTopNav from './DesktopTopNav';
 import LanguageMenu from './LanguageMenu';
@@ -62,6 +64,10 @@ const TopBar = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const pathname = usePathname();
+  // On the library prototype pages, swap the standard secondary nav for the proposed
+  // optimised one. Keeps the primary top bar identical to the rest of the app.
+  const isLibraryPrototype = isLibraryPrototypePath(pathname);
 
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
@@ -137,7 +143,9 @@ const TopBar = () => {
             {isSmallScreen && <MobileTopNav />}
           </Box>
         </Container>
-        {!isSmallScreen && !isMaintenanceMode && <DesktopMainNav />}
+        {!isSmallScreen &&
+          !isMaintenanceMode &&
+          (isLibraryPrototype ? <LibraryNav /> : <DesktopMainNav />)}
       </AppBar>
       <Box sx={topBarSpacerStyle} marginTop={0} />
     </>

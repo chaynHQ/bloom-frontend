@@ -523,6 +523,7 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
 export const ltrTheme = createAppTheme('ltr');
 export const rtlTheme = createAppTheme('rtl');
 
-export const getTheme = (direction: Direction): Theme => (direction === 'rtl' ? rtlTheme : ltrTheme);
+export const getTheme = (direction: Direction): Theme =>
+  direction === 'rtl' ? rtlTheme : ltrTheme;
 
 export default ltrTheme;

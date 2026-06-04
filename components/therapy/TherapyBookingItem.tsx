@@ -294,7 +294,10 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                   </>
                 )}{' '}
                 {!isValidStartDate && !formattedHeaderDateTime && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
             </Box>
@@ -331,7 +334,10 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                   </>
                 )}{' '}
                 {!isValidStartDate && !formattedDateDetails && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
               <Typography
@@ -351,7 +357,10 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                   </>
                 )}{' '}
                 {(!isValidStartDate || !isValidEndDate) && !formattedTimeRange && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
               <Typography variant="body2">
