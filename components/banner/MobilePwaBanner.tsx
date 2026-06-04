@@ -63,7 +63,7 @@ export const MobilePwaBanner = () => {
             </Button>
           </Stack>
         ) : (
-          <Stack sx={{ pl: '2rem', mt: '1rem' }}>
+          <Stack sx={{ paddingInlineStart: '2rem', mt: '1rem' }}>
             <Stack alignItems="center" direction="row" gap={1}>
               <Typography variant="body1">{t('iosStep1')}</Typography>
               <IosShareIcon />

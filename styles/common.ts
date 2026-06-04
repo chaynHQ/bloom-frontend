@@ -38,7 +38,7 @@ export const richtextContentStyle = {
 export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
-  left: { xs: 16, lg: '8%' },
+  insetInlineStart: { xs: 16, lg: '8%' },
   top: { xs: 68, sm: 80, md: 160 },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',

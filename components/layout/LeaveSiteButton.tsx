@@ -9,8 +9,8 @@ import { useTranslations } from 'next-intl';
 
 const buttonStyle = {
   ...breadcrumbPositionStyle,
-  left: 'unset',
-  right: { xs: 16, lg: 80 },
+  insetInlineStart: 'unset',
+  insetInlineEnd: { xs: 16, lg: 80 },
 } as const;
 
 const LeaveSiteButton = () => {

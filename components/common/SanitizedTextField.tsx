@@ -92,7 +92,7 @@ const SanitizedTextField = ({
 
   const characterCountStyle = {
     display: 'block',
-    textAlign: 'right',
+    textAlign: 'end',
     mt: -2.475,
     ...(currentLength > fieldMaxLength && { color: 'error.main' }),
   };

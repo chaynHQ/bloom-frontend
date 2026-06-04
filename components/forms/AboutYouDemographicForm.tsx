@@ -39,7 +39,7 @@ const rowStyles = {
   justifyContent: 'flex-start',
 
   '> label': {
-    marginLeft: 0.25,
+    marginInlineStart: 0.25,
   },
 } as const;
 
@@ -191,7 +191,7 @@ const AboutYouDemographicForm = () => {
               value.map((option: string, index: number) => (
                 <Chip
                   color="secondary"
-                  sx={{ marginBottom: 0.5, marginRight: 0.5 }}
+                  sx={{ marginBottom: 0.5, marginInlineEnd: 0.5 }}
                   label={option}
                   key={index}
                 />

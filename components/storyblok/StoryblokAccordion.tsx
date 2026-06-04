@@ -30,7 +30,7 @@ const containerStyle = {
 } as const;
 
 const accordionDetail = {
-  textAlign: 'left',
+  textAlign: 'start',
 } as const;
 
 const themes = {
@@ -117,7 +117,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                   position: 'relative',
                   fontSize: 32,
                   marginBottom: 0,
-                  marginRight: 2,
+                  marginInlineEnd: 2,
                 }}
               >
                 <Image
@@ -136,7 +136,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
                 sx={{ marginBottom: 0, maxWidth: 800 }}
                 component="h3"
                 variant={ai.title_size === 'small' ? 'body1' : 'h3'}
-                textAlign="left"
+                textAlign="start"
               >
                 {ai.title}
               </Typography>

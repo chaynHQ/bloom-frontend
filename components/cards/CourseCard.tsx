@@ -58,7 +58,7 @@ const collapseContentStyle = {
 } as const;
 
 const cardActionsStyle = {
-  paddingLeft: 4,
+  paddingInlineStart: 4,
   paddingTop: 1,
   gap: 1,
   justifyContent: 'flex-end',
@@ -135,7 +135,7 @@ const CourseCard = (props: CourseCardProps) => {
           <ProgressStatus status={courseProgress} />
         )}
         <IconButton
-          sx={{ marginLeft: 'auto', transform: expanded ? 'rotate(180deg)' : 'none' }}
+          sx={{ marginInlineStart: 'auto', transform: expanded ? 'rotate(180deg)' : 'none' }}
           aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"

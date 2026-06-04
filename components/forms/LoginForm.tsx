@@ -190,7 +190,7 @@ const LoginForm = () => {
 
             <LoadingButton
               id="login-submit"
-              sx={{ mt: 2, mr: 1.5, mb: 2, minWidth: 150 }}
+              sx={{ mt: 2, marginInlineEnd: 1.5, mb: 2, minWidth: 150 }}
               variant="contained"
               color="secondary"
               type="submit"
@@ -198,7 +198,7 @@ const LoginForm = () => {
             >
               {t('form.loginSubmit')}
             </LoadingButton>
-            <Typography variant="body2" textAlign="left" mb={1}>
+            <Typography variant="body2" textAlign="start" mb={1}>
               {t.rich('login.resetPasswordLink', {
                 resetLink: (children) => (
                   <Link
@@ -212,7 +212,7 @@ const LoginForm = () => {
                 ),
               })}
             </Typography>
-            <Typography variant="body2" textAlign="left">
+            <Typography variant="body2" textAlign="start">
               {t.rich('login.createAnAccountLink', {
                 createAnAccountLink: (children) => (
                   <Link

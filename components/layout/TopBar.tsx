@@ -45,7 +45,7 @@ const appBarContainerStyles = {
 const logoContainerStyle = {
   position: 'relative',
   width: { xs: 80, sm: 120 },
-  marginLeft: { xs: 3, sm: 0 },
+  marginInlineStart: { xs: 3, sm: 0 },
   height: 48,
 } as const;
 
@@ -54,7 +54,7 @@ const menusContainerStyle = {
   alignItems: 'center',
   alignContent: 'center',
   gap: { xs: 1, sm: 1.5 },
-  pr: { xs: 2, sm: 0 },
+  paddingInlineEnd: { xs: 2, sm: 0 },
 } as const;
 
 const TopBar = () => {
@@ -119,7 +119,7 @@ const TopBar = () => {
                     sx={{
                       width: 'auto',
                       height: { xs: 32, sm: 38 },
-                      ml: 1,
+                      marginInlineStart: 1,
                       px: { xs: 1.5, sm: 2 },
                       fontSize: { xs: '0.75rem', sm: '0.875rem' },
                     }}

@@ -12,14 +12,14 @@ import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 const modalStyle = {
   position: 'absolute',
   top: '50%',
-  right: { xs: 0, sm: 'unset' },
-  left: { xs: 'unset', sm: '50%' },
+  insetInlineEnd: { xs: 0, sm: 'unset' },
+  insetInlineStart: { xs: 'unset', sm: '50%' },
   transform: { xs: 'translate(0, -50%)', sm: 'translate(-50%, -50%)' },
   width: { xs: 'calc(100vw - 1rem)', sm: '90%', md: 800 },
   maxHeight: '75vh',
   overflowY: 'scroll',
-  borderTopLeftRadius: 30,
-  borderBottomLeftRadius: 30,
+  borderStartStartRadius: 30,
+  borderEndStartRadius: 30,
   bgcolor: 'background.paper',
 } as const;
 
@@ -32,9 +32,9 @@ const modalContentStyle = {
 const closeModalStyle = {
   position: 'absolute',
   top: 0,
-  right: 0,
+  insetInlineEnd: 0,
   borderRadius: 0,
-  borderBottomLeftRadius: 20,
+  borderEndStartRadius: 20,
 } as const;
 
 const screenReaderOnly = {

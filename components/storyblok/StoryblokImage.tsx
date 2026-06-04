@@ -42,8 +42,8 @@ const StoryblokImage = (props: StoryblokImageProps) => {
             : size === 'large'
               ? 5
               : 6,
-    marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
-    marginRight: alignment === 'center' ? 'auto' : 0,
+    marginInlineStart: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
+    marginInlineEnd: alignment === 'center' ? 'auto' : 0,
 
     '> span': {
       position: 'unset !important',

@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceSingleVideo } from '@/components/resources/ResourceSingleVideo';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -126,7 +127,11 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
                 color="secondary"
                 sx={{ width: 'fit-content' }}
                 href={nextResourceHref}
-                endIcon={<ArrowForward />}
+                endIcon={
+                  <DirectionalIcon>
+                    <ArrowForward />
+                  </DirectionalIcon>
+                }
                 component={i18nLink}
               >
                 {t(getNextResourceButtonLabel(nextResourceHref))}

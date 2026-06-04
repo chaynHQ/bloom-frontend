@@ -32,10 +32,10 @@ const cardContentStyle = {
 
 const overlay = {
   position: 'absolute',
-  right: 0,
+  insetInlineEnd: 0,
   bottom: 0,
   top: 0,
-  left: 0,
+  insetInlineStart: 0,
   opacity: 0,
   transition: 'opacity .3s ease',
   backgroundColor: 'overlayBackground',
@@ -59,8 +59,8 @@ const categoryStyle = {
   mb: '0.5rem !important',
   '& .before-dot:before': {
     content: '"• "',
-    marginLeft: 1,
-    marginRight: 1,
+    marginInlineStart: 1,
+    marginInlineEnd: 1,
   },
 } as const;
 

@@ -110,7 +110,7 @@ const SessionCard = (props: SessionCardProps) => {
       </CardActionArea>
       <CardActions sx={cardActionsStyle}>
         <IconButton
-          sx={{ marginLeft: 'auto' }}
+          sx={{ marginInlineStart: 'auto' }}
           aria-label={`${t('expandSummary')} ${session.name}`}
           onClick={handleExpandClick}
           size="small"

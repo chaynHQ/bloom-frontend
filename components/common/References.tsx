@@ -12,7 +12,7 @@ const referenceContainer = {
 } as const;
 
 const attributionStyle = {
-  ml: 1,
+  marginInlineStart: 1,
   color: 'text.secondary',
   fontStyle: 'normal',
 } as const;

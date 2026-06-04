@@ -26,7 +26,7 @@ import { useMemo, useState } from 'react';
 import BaseRegisterForm, { useRegisterFormLogic } from './BaseRegisterForm';
 
 const contactPermissionLabelStyle = {
-  mr: 0,
+  marginInlineEnd: 0,
   mt: 1,
   span: { fontSize: { xs: '0.875rem', md: '1rem !important' } },
 } as const;
@@ -180,7 +180,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         </FormControl>
 
         <LoadingButton
-          sx={{ mt: 1, mr: 1.5 }}
+          sx={{ mt: 1, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"
