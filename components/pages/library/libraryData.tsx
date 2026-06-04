@@ -25,12 +25,36 @@ export interface ThemeMeta {
 }
 
 export const THEMES: ThemeMeta[] = [
-  { key: 'recognising-harm', label: 'Recognising harm', blurb: 'Naming harm in relationships and everyday life' },
-  { key: 'why-harm-happens', label: 'Why harm happens', blurb: 'The social and systemic forces behind abuse' },
-  { key: 'body-after-trauma', label: 'Your body after trauma', blurb: 'How trauma lives in the body' },
-  { key: 'setting-boundaries', label: 'Setting boundaries', blurb: 'Emotional, physical, sexual, and digital boundaries' },
-  { key: 'healing-journey', label: 'Your healing journey', blurb: 'Finding your way through grief, growth, and recovery' },
-  { key: 'staying-safe', label: 'Staying safe now', blurb: 'Safety planning and coping with ongoing abuse' },
+  {
+    key: 'recognising-harm',
+    label: 'Recognising harm',
+    blurb: 'Naming harm in relationships and everyday life',
+  },
+  {
+    key: 'why-harm-happens',
+    label: 'Why harm happens',
+    blurb: 'The social and systemic forces behind abuse',
+  },
+  {
+    key: 'body-after-trauma',
+    label: 'Your body after trauma',
+    blurb: 'How trauma lives in the body',
+  },
+  {
+    key: 'setting-boundaries',
+    label: 'Setting boundaries',
+    blurb: 'Emotional, physical, sexual, and digital boundaries',
+  },
+  {
+    key: 'healing-journey',
+    label: 'Your healing journey',
+    blurb: 'Finding your way through grief, growth, and recovery',
+  },
+  {
+    key: 'staying-safe',
+    label: 'Staying safe now',
+    blurb: 'Safety planning and coping with ongoing abuse',
+  },
 ];
 
 export const THEME_LABEL: Record<ThemeKey, string> = Object.fromEntries(
@@ -65,7 +89,8 @@ export const ITEMS: LibraryItem[] = [
     kind: 'course',
     theme: 'recognising-harm',
     title: 'Image-based abuse and rebuilding ourselves',
-    description: 'A guided course to understand image-based abuse and gently rebuild a sense of safety.',
+    description:
+      'A guided course to understand image-based abuse and gently rebuild a sense of safety.',
     sessionCount: 8,
     totalLength: '~2hrs 30min',
     progress: 'started',
@@ -75,7 +100,8 @@ export const ITEMS: LibraryItem[] = [
     kind: 'course',
     theme: 'healing-journey',
     title: 'Reclaiming resilience in your trauma story',
-    description: 'Learn, reflect, and process what you have been through in a safe and empowering space.',
+    description:
+      'Learn, reflect, and process what you have been through in a safe and empowering space.',
     sessionCount: 8,
     totalLength: '~2hrs 30min',
   },
@@ -84,7 +110,8 @@ export const ITEMS: LibraryItem[] = [
     kind: 'course',
     theme: 'setting-boundaries',
     title: 'Recovering from toxic and abusive relationships',
-    description: 'Tools and affirming words to help you recognise patterns and set boundaries that protect you.',
+    description:
+      'Tools and affirming words to help you recognise patterns and set boundaries that protect you.',
     sessionCount: 8,
     totalLength: '~2hrs 30min',
     progress: 'completed',
@@ -94,7 +121,8 @@ export const ITEMS: LibraryItem[] = [
     kind: 'session',
     theme: 'body-after-trauma',
     title: 'Understanding your nervous system after trauma',
-    description: 'A short audio explaining why the body reacts the way it does, and what that means for healing.',
+    description:
+      'A short audio explaining why the body reacts the way it does, and what that means for healing.',
     format: 'audio',
     minutes: 8,
     progress: 'started',
@@ -122,7 +150,8 @@ export const ITEMS: LibraryItem[] = [
     kind: 'session',
     theme: 'body-after-trauma',
     title: 'How trauma shapes memory',
-    description: 'A written piece on why memories of harm can feel fragmented, and why that is normal.',
+    description:
+      'A written piece on why memories of harm can feel fragmented, and why that is normal.',
     format: 'written',
     minutes: 9,
   },

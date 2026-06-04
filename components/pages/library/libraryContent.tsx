@@ -121,7 +121,11 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
             {item.progress && (
               <Chip
                 size="small"
-                icon={item.progress === 'completed' ? <CheckCircleRounded sx={{ fontSize: 16 }} /> : undefined}
+                icon={
+                  item.progress === 'completed' ? (
+                    <CheckCircleRounded sx={{ fontSize: 16 }} />
+                  ) : undefined
+                }
                 label={item.progress === 'completed' ? 'Completed' : 'Started'}
                 sx={{
                   position: 'absolute',
@@ -138,11 +142,18 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
           <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             <Typography
               variant="caption"
-              sx={{ textTransform: 'uppercase', letterSpacing: 0.6, color: 'secondary.dark', fontWeight: 600 }}
+              sx={{
+                textTransform: 'uppercase',
+                letterSpacing: 0.6,
+                color: 'secondary.dark',
+                fontWeight: 600,
+              }}
             >
               {THEME_LABEL[item.theme]}
             </Typography>
-            <Typography sx={{ fontWeight: 500, fontSize: '1.0625rem', mt: 0.5, mb: 1, lineHeight: 1.3 }}>
+            <Typography
+              sx={{ fontWeight: 500, fontSize: '1.0625rem', mt: 0.5, mb: 1, lineHeight: 1.3 }}
+            >
               {item.title}
             </Typography>
             <Typography
@@ -165,11 +176,20 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {isCourse ? (
                 <>
-                  <Meta icon={<AutoStoriesRounded sx={{ fontSize: 16 }} />} text={`${item.sessionCount} sessions`} />
-                  <Meta icon={<AccessTimeRounded sx={{ fontSize: 16 }} />} text={item.totalLength!} />
+                  <Meta
+                    icon={<AutoStoriesRounded sx={{ fontSize: 16 }} />}
+                    text={`${item.sessionCount} sessions`}
+                  />
+                  <Meta
+                    icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
+                    text={item.totalLength!}
+                  />
                 </>
               ) : (
-                <Meta icon={<AccessTimeRounded sx={{ fontSize: 16 }} />} text={`${item.minutes} min`} />
+                <Meta
+                  icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
+                  text={`${item.minutes} min`}
+                />
               )}
               <Box sx={{ flexGrow: 1 }} />
               <ArrowForwardRounded sx={{ fontSize: 18, color: 'primary.dark' }} />
@@ -209,7 +229,15 @@ export function SupportCard({
         borderColor: 'rgba(0,0,0,0.06)',
       }}
     >
-      <CardActionArea sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2, backgroundColor: 'common.white' }}>
+      <CardActionArea
+        sx={{
+          p: 3,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          backgroundColor: 'common.white',
+        }}
+      >
         {iconSrc && (
           <Image src={iconSrc} alt="" width={44} height={44} style={{ objectFit: 'contain' }} />
         )}
