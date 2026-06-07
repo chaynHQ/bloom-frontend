@@ -1,5 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Cuéntanos qué tienes en mente"
+    "messageHeading": "Cuéntanos qué tienes en mente",
+    "frontChat": {
+      "ariaChat": "Chat de Bloom",
+      "welcomeAuthor": "Equipo Bloom",
+      "welcomeMessage": "Hola, aquí puedes chatear con sobrevivientes y personas aliadas de nuestro equipo Bloom, quienes tienen experiencia apoyándose mutuamente. Estamos aquí para que compartas tus preguntas, sentimientos y reflexiones mientras realizas nuestros cursos.\n\nSi te encuentras en riesgo inmediato, por favor llama a los servicios de emergencia si puedes y si es seguro para ti. Aunque no ofrecemos apoyo en crisis, podemos ayudarte a conectar con el tipo de servicio de apoyo que necesites. Puedes buscar servicios de apoyo en tu zona en nuestro directorio global aquí: c.chayn.co/directory.\n\nPuedes chatear con nuestro equipo en inglés, francés, alemán, hindi, portugués y español.\n\nNuestro objetivo es responder a tu mensaje en un plazo de 1 a 2 días.",
+      "empty": "Envía tu primer mensaje a continuación y nuestro equipo te responderá pronto.",
+      "placeholder": "Escribe un mensaje…",
+      "send": "Enviar mensaje",
+      "attachImage": "Adjuntar imagen",
+      "imageAttachment": "Imagen",
+      "voiceNote": "Nota de voz",
+      "startRecording": "Grabar una nota de voz",
+      "stopRecording": "Detener y enviar nota de voz",
+      "cancelRecording": "Cancelar grabación",
+      "recordingInProgress": "Grabando",
+      "messageSending": "Enviando",
+      "messageFailed": "No se pudo enviar. Por favor, inténtalo de nuevo.",
+      "audioUnavailable": "Audio no disponible",
+      "status": {
+        "connecting": "Conectando…",
+        "disconnected": "Reconectando…",
+        "error": "No es posible conectarse. Por favor, inténtalo más tarde."
+      },
+      "errors": {
+        "unsupportedImage": "Solo se admiten imágenes JPG, PNG, GIF o WebP.",
+        "fileTooLarge": "Los archivos deben ser menores de 25 MB.",
+        "uploadFailed": "Error al subir el archivo. Por favor, inténtalo de nuevo.",
+        "micPermission": "Se denegó el acceso al micrófono. Para grabar una nota de voz, permite el acceso al micrófono en la configuración de tu navegador e inténtalo de nuevo.",
+        "micUnavailable": "No se pudo acceder a tu micrófono. Por favor, comprueba que está conectado e inténtalo de nuevo."
+      }
+    }
   }
 }

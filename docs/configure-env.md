@@ -64,7 +64,7 @@ CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD=
 # OPTIONAL VARIABLES
 #--------------------------------------------------------------------
 # NEW RELIC TRACKING
-NEW_RELIC_LICENSE_KEY=eu01xx6fc63a14eea79c367dfe82e702FFFFNRAL
+NEW_RELIC_LICENSE_KEY=<your-new-relic-license-key>
 NEW_RELIC_APP_NAME=bloom-frontend
 NEW_RELIC_BROWSER_MONITORING_KEY=NRJS-0f9d5f21ee9234a45cc
 
@@ -73,7 +73,6 @@ NEXT_PUBLIC_HOTJAR_ID=
 NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID=
 
 # ADDITIONAL FEATURES
-NEXT_PUBLIC_CRISP_WEBSITE_ID= # User messaging
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # Booking session forms
 NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # User data form webhooks
 NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # User data form webhooks
@@ -97,6 +96,10 @@ If creating new environment variables, please tag Chayn staff developers in PR /
   In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom. If multiple courses need to be disabled, the slugs will need to be separated by commas.
 
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
+
+#### Front Chat (1:1 Messaging):
+
+The Front chat integration uses a custom WebSocket widget — no additional frontend environment variables are required. The frontend connects to the backend via `NEXT_PUBLIC_API_URL` (already required above). The backend holds all Front API credentials and proxies messages over a Socket.IO connection. The chat widget is only shown to users whose partner access includes `featureLiveChat: true`.
 
 #### How to Import Environment Variables with Vercel (Chayn team only):
 

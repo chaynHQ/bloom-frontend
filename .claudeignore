@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+out/
+
+# Coverage & test artifacts
+coverage/
+.nyc_output/
+cypress/screenshots/
+cypress/videos/
+
+# Logs
+*.log
+newrelic_agent.log
+
+# Lock files (large, rarely useful to read directly)
+yarn.lock
+
+# Generated type declarations
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# PWA generated files
+public/sw.js
+public/workbox-*.js
+public/worker-*.js
+public/fallback-*.js
