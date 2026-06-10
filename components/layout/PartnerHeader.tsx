@@ -59,6 +59,7 @@ const PartnerHeader = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={{ paddingBottom: 6 }}>
+        {/*Hindi: welcomeText starts lowercase due to Hindi following a "Bloom + {welcomeText}" sentence structure */}
         {props.showWelcomeSubtext && locale !== 'hi' && welcomeText}
         <Box sx={logoContainerStyle}>
           <Image
