@@ -84,10 +84,14 @@ export default function RegisterPage() {
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');
 
-  // Derive partner content and code param from URL and state
+  // Derive partner content and code param from URL and state.
+  // Prefer an explicit ?partner query, else fall back to a referral captured on entry
+  // (welcome link or partner UTM link) so the partner is still attached when signing up
+  // directly via /auth/register without a partner query.
   const { partnerContent, codeParam, allPartnersContent } = useMemo(() => {
-    if (partner) {
-      const partnerContentResult = getPartnerContent(partner + '');
+    const partnerName = partner || entryPartnerReferral;
+    if (partnerName) {
+      const partnerContentResult = getPartnerContent(partnerName + '');
       if (partnerContentResult) {
         // If code is in URL, use it; otherwise check if we have entry code for this partner
         const effectiveCode = code
