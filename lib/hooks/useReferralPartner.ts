@@ -4,7 +4,7 @@ import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/
 import Cookies from 'js-cookie';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useAppDispatch, useTypedSelector } from './store';
+import { useAppDispatch } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
@@ -13,14 +13,15 @@ export default function useReferralPartner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
-  const userCookiesAccepted =
-    useTypedSelector((state) => state.user.cookiesAccepted) ||
-    Cookies.get('analyticsConsent') === 'true';
 
   useEffect(() => {
-    async function setReferralPartner(referralPartner: string) {
-      if (userCookiesAccepted) Cookies.set('referralPartner', referralPartner);
-      await dispatch(setEntryPartnerReferral(referralPartner));
+    function setReferralPartner(referralPartner: string) {
+      // Essential/functional cookie (not analytics): remembers the referring partner for the
+      // current visit so the partner experience is shown and the partner is linked at sign up.
+      // Session-scoped (no expiry → cleared when the browser closes), so it is set without
+      // analytics consent, consistent with the Essential Cookies in our cookie policy.
+      Cookies.set('referralPartner', referralPartner);
+      dispatch(setEntryPartnerReferral(referralPartner));
     }
     async function setReferralCode(referralCode: string) {
       await dispatch(setEntryPartnerAccessCode(referralCode));
@@ -66,7 +67,14 @@ export default function useReferralPartner() {
       }
     }
 
-    if (referralPartner) setReferralPartner(referralPartner);
+    if (referralPartner) {
+      setReferralPartner(referralPartner);
+    } else {
+      // No referral in the URL — rehydrate Redux from the cookie so the partner survives full
+      // page loads (Redux resets on reload, but the session cookie persists for the visit).
+      const cookieReferralPartner = Cookies.get('referralPartner');
+      if (cookieReferralPartner) dispatch(setEntryPartnerReferral(cookieReferralPartner));
+    }
     if (referralCode) setReferralCode(referralCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

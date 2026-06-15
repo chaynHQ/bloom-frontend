@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { usePathname } from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
 import { setEntryPartnerReferral } from '../store/userSlice';
-import { useAppDispatch, useTypedSelector } from './store';
+import { useAppDispatch } from './store';
 import useReferralPartner from './useReferralPartner';
 
 // Mock partners constants to avoid pulling in SVG asset imports (the `@/` alias
@@ -37,10 +37,9 @@ describe('useReferralPartner - UTM detection', () => {
   beforeEach(() => {
     dispatchMock = jest.fn();
     (useAppDispatch as jest.MockedFunction<typeof useAppDispatch>).mockReturnValue(dispatchMock);
-    // cookiesAccepted true so the cookie is also set
-    (useTypedSelector as jest.MockedFunction<typeof useTypedSelector>).mockReturnValue(true);
     (usePathname as jest.Mock).mockReturnValue('/');
     Cookies.set = jest.fn();
+    Cookies.get = jest.fn();
   });
 
   afterEach(() => jest.clearAllMocks());
@@ -72,6 +71,26 @@ describe('useReferralPartner - UTM detection', () => {
     renderHook(() => useReferralPartner());
 
     expect(setEntryPartnerReferral).not.toHaveBeenCalled();
+    expect(Cookies.set).not.toHaveBeenCalled();
+  });
+
+  it('sets the referral cookie without requiring analytics consent', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'bumble' }));
+
+    renderHook(() => useReferralPartner());
+
+    // No cookiesAccepted state is provided, yet the functional cookie is still written
+    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble');
+  });
+
+  it('rehydrates Redux from the cookie when no referral is in the URL (e.g. after a reload)', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({}));
+    (Cookies.get as jest.Mock).mockReturnValue('bumble');
+
+    renderHook(() => useReferralPartner());
+
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
+    // It rehydrates state but does not re-write the cookie when nothing new was detected
     expect(Cookies.set).not.toHaveBeenCalled();
   });
 
