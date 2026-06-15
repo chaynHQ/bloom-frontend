@@ -1,13 +1,17 @@
 import { usePathname } from '@/i18n/routing';
+import { partnerKeys } from '@/lib/constants/partners';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAppDispatch, useTypedSelector } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
+// Referrals are detected from welcome/register paths and from a partner name in UTM link data.
 export default function useReferralPartner() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const userCookiesAccepted =
     useTypedSelector((state) => state.user.cookiesAccepted) ||
@@ -48,6 +52,20 @@ export default function useReferralPartner() {
         }
       }
     }
+    // Partners include their name in UTM link data (e.g. ?utm_source=bumble or
+    // ?utm_campaign=bumble-june-2026)
+    if (!referralPartner && searchParams) {
+      const utmData = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+        .map((key) => searchParams.get(key))
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      if (utmData) {
+        referralPartner = partnerKeys.find((key) => utmData.includes(key));
+      }
+    }
+
     if (referralPartner) setReferralPartner(referralPartner);
     if (referralCode) setReferralCode(referralCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
