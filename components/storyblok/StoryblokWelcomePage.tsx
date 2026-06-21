@@ -12,8 +12,8 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
+import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { Box, Button, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
@@ -59,10 +59,11 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
   const headerProps = {
-    partnerLogoSrc: partnerContent.partnershipLogo || welcomeToBloom,
+    partnerLogoSrc: partnerContent.partnershipLogo || bloomLogo,
     partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
     imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
+    showWelcomeSubtext: partnerContent === null,
   };
 
   const router = useRouter();
@@ -141,6 +142,7 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={introContainerStyle}>
         <Box sx={introTextStyle}>{render(introduction, RichTextOptions)}</Box>
