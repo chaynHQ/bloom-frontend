@@ -3,6 +3,7 @@ import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
 import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
+import ReferralPartnerTracker from '@/components/layout/ReferralPartnerTracker';
 import TopBar from '@/components/layout/TopBar';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
@@ -24,7 +25,7 @@ import { getMessages } from 'next-intl/server';
 import { Montserrat, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
@@ -92,6 +93,9 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       to bind the event listener in time.
                     */}
                     <script src="/deffer-pwa.js" async></script>
+                    <Suspense fallback={null}>
+                      <ReferralPartnerTracker />
+                    </Suspense>
                     <TopBar />
                     <LeaveSiteButton />
                     <DesktopPwaBanner />
