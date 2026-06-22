@@ -82,7 +82,7 @@ jobs:
             spec: 'cypress/integration/system/**/*.cy.tsx'
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -172,7 +172,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Check for ungrouped test files
         id: check
