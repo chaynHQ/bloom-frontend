@@ -21,10 +21,7 @@ const DirectionalIcon = ({ children }: DirectionalIconProps) => {
   const isRtl = useIsRtl();
 
   return (
-    <Box
-      component="span"
-      sx={{ display: 'inline-flex', transform: isRtl ? 'scaleX(-1)' : 'none' }}
-    >
+    <Box component="span" sx={{ display: 'inline-flex', transform: isRtl ? 'scaleX(-1)' : 'none' }}>
       {children}
     </Box>
   );
