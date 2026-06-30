@@ -109,7 +109,7 @@ const ApplyCodeForm = () => {
       <Box>
         <Typography mb={2}>{t('formSuccess.success')}</Typography>
         <Typography>{t('formSuccess.successLine2')}</Typography>
-        <List sx={{ listStyleType: 'disc', pl: 2 }}>
+        <List sx={{ listStyleType: 'disc', paddingInlineStart: 2 }}>
           <ListItem key="courses-item" sx={listItemStyle}>
             <Typography component="span">{t('formSuccess.courses')}</Typography>
           </ListItem>

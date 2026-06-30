@@ -41,8 +41,8 @@ const NotesFromBloomPromo = () => {
             width={[200, 225, 200]}
             position="absolute"
             bottom={[-125, -125, -100]}
-            left={[-100, -100, -75]}
             zIndex={1}
+            sx={{ insetInlineStart: [-100, -100, -75] }}
           >
             <Image alt={tN('alt.notesIcon')} src={NotesIcon} sizes={getImageSizes(100)} fill />
           </Box>

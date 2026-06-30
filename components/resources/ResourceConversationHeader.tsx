@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { ResourceConversationAudio } from '@/components/resources/ResourceConversationAudio';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -42,15 +43,15 @@ const headerRightStyle = {
 
 const nextResourceButtonStyle = {
   mt: { xs: 0, md: 'auto' },
-  mr: { md: 'auto' },
+  marginInlineEnd: { md: 'auto' },
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
   width: { xs: 150, md: 210 },
   height: { xs: 150, md: 210 },
-  marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: '1rem', md: '8%' },
+  marginInlineStart: { xs: 'auto', md: 0 },
+  marginInlineEnd: { xs: '1rem', md: '8%' },
   marginTop: 0,
 } as const;
 
@@ -130,7 +131,11 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
               color="secondary"
               sx={nextResourceButtonStyle}
               href={nextResourceHref}
-              endIcon={<ArrowForward />}
+              endIcon={
+                <DirectionalIcon>
+                  <ArrowForward />
+                </DirectionalIcon>
+              }
               component={i18nLink}
             >
               {t(getNextResourceButtonLabel(nextResourceHref))}

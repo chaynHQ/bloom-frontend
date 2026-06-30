@@ -35,7 +35,7 @@ const formStyle = {
 } as const;
 
 const contactPermissionLabelStyle = {
-  mr: 0,
+  marginInlineEnd: 0,
   span: { fontSize: { xs: '0.875rem', md: '1rem !important' } },
 } as const;
 

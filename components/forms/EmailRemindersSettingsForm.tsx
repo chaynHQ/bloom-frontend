@@ -34,7 +34,7 @@ const radioGroupStyle = {
   columnGap: 2,
   label: {
     minWidth: '50%',
-    marginRight: 0,
+    marginInlineEnd: 0,
   },
   '.MuiRadio-root': {
     paddingY: 0.75,

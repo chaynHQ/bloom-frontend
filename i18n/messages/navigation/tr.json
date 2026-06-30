@@ -1,0 +1,35 @@
+{
+  "Navigation": {
+    "menu": "Gezinme menüsü",
+    "menuOpen": "Gezinme menüsünü aç",
+    "menuClose": "Gezinme menüsünü kapat",
+    "languageMenu": "Dil menüsü",
+    "bloomLogo": "Bloom logosu",
+    "login": "Giriş yap",
+    "logout": "Çıkış yap",
+    "accountSettings": "Hesap ayarları",
+    "userMenu": "Kullanıcı ayarları menüsü",
+    "home": "Ana sayfa",
+    "admin": "Yönetim",
+    "about": "Hakkında",
+    "meetTheTeam": "Bloom ekibimiz",
+    "immediateHelp": "Acil yardım",
+    "therapy": "Terapi",
+    "courses": "Kurslar",
+    "applyCode": "Kod uygula",
+    "account": "Hesap",
+    "secondaryNavigationMenu": "İkincil gezinme menüsü",
+    "notes": "Notlar",
+    "alt": {
+      "therapyIcon": "Çiçekli bir baş illüstrasyonu",
+      "courseIcon": "Bir oynat simgesi illüstrasyonu, sağa işaret eden bir üçgen. Önünde küçük bir güneş var",
+      "notesIcon": "Ortasında bir kalp olan bir cep telefonu illüstrasyonu",
+      "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde düz çizgiler var.",
+      "activitiesIcon": "Kapağında küçük sarı bir alev olan bir kitap.",
+      "groundingIcon": "Üzerinde küçük pembe çiçekler olan bir dal."
+    },
+    "messaging": "Mesajlaşma",
+    "grounding": "Topraklanma",
+    "activities": "Etkinlikler"
+  }
+}

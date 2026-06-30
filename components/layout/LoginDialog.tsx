@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { Link as i18nLink, usePathname } from '@/i18n/routing';
 import courseIcon from '@/public/course_icon_background.svg';
 import { rowStyle } from '@/styles/common';
@@ -55,7 +56,11 @@ const LoginDialog = () => {
               color="secondary"
               variant="outlined"
               size="small"
-              startIcon={<ArrowBack />}
+              startIcon={
+                <DirectionalIcon>
+                  <ArrowBack />
+                </DirectionalIcon>
+              }
               sx={{ px: 2 }}
               onClick={() => {
                 router.back(); // Go back if possible
@@ -70,7 +75,7 @@ const LoginDialog = () => {
               color="secondary"
               variant="outlined"
               size="small"
-              sx={{ mr: 1.5 }}
+              sx={{ marginInlineEnd: 1.5 }}
               href={`/auth/login?return_url=${encodeURIComponent(pathname)}`}
             >
               {t('loginDialog.loginButton')}

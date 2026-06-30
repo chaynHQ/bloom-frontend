@@ -1,0 +1,13 @@
+{
+  "Welcome": {
+    "getStarted": "Başla",
+    "accessIntroduction": "Bloom yolculuğuna başlamak için {partnerName}'dan aldığın erişim kodunu gir.",
+    "publicIntroduction": "Kurslarımıza başlamak için Bloom'da bir hesap oluştur ya da önce aşağıdan Bloom hakkında daha fazlasını öğren.",
+    "continueCourses": "Bloom'a devam et",
+    "continueCoursesDescription": "Kaldığın yerden devam et.",
+    "goToCourses": "Kurslara git",
+    "form": {
+      "codeLabel": "{partnerName} erişim kodu"
+    }
+  }
+}

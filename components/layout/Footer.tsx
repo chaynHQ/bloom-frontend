@@ -35,11 +35,11 @@ function getDescriptionContainerStyle(totalPartners: number) {
     return {
       maxWidth: { sm: '80%', [totalPartners === 2 ? 'md' : 'lg']: 340 },
       minWidth: { [totalPartners === 2 ? 'md' : 'lg']: 280 },
-      marginRight: { sm: '20%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
+      marginInlineEnd: { sm: '20%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
     };
   } else {
     // 4+ partners to display, use full width for all screen sizes
-    return { maxWidth: { sm: '80%' }, marginRight: { sm: '20%' } };
+    return { maxWidth: { sm: '80%' }, marginInlineEnd: { sm: '20%' } };
   }
 }
 
@@ -73,7 +73,7 @@ const socialsContainerStyle = {
   ...rowStyle,
   justifyContent: 'flex-start',
   marginTop: 1.25,
-  marginLeft: -1,
+  marginInlineStart: -1,
 } as const;
 
 const fundingContainerStyle = {

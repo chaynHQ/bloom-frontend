@@ -18,10 +18,10 @@ const Column = (props: ColumnProps) => {
         horizontalAlignment === 'center'
           ? { xs: 'center', md: 'center' }
           : horizontalAlignment === 'right'
-            ? { xs: 'right', md: 'right' }
+            ? { xs: 'end', md: 'end' }
             : horizontalAlignment === 'mobile-left-desktop-center'
-              ? { xs: 'left', md: 'center' }
-              : { xs: 'left', md: 'left' },
+              ? { xs: 'start', md: 'center' }
+              : { xs: 'start', md: 'start' },
     }),
     ...(horizontalAlignment && {
       justifyContent:

@@ -46,7 +46,7 @@ export const DesktopPwaBanner = () => {
     zIndex: 1000,
     p: 2.5,
     width: 250,
-    right: { md: 16, lg: 80 },
+    insetInlineEnd: { md: 16, lg: 80 },
     bottom: { md: 16, lg: 40 },
     backgroundColor: 'common.white',
   } as const;

@@ -77,7 +77,7 @@ export const EmailForm = () => {
 
         {!resetEmailSent ? (
           <Button
-            sx={{ mt: 2, mr: 1.5 }}
+            sx={{ mt: 2, marginInlineEnd: 1.5 }}
             variant="contained"
             fullWidth
             color="secondary"
@@ -90,7 +90,7 @@ export const EmailForm = () => {
           <Box>
             <Typography mb={2}>{t('resetPasswordSent')}</Typography>
             <Button
-              sx={{ mt: 2, mr: 1.5 }}
+              sx={{ mt: 2, marginInlineEnd: 1.5 }}
               variant="contained"
               fullWidth
               color="secondary"
@@ -172,7 +172,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
       <Box>
         <Typography mb={2}>{t('passwordResetSuccess')}</Typography>
         <Button
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"
@@ -203,7 +203,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           </Typography>
         )}
         <LoadingButton
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"

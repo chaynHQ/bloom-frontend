@@ -43,7 +43,7 @@ const Step = ({ icon, iconAlt, children, indent = false }: StepProps) => {
   const tS = useTranslations('Shared');
 
   return (
-    <Box sx={{ ...stepContainerStyle, marginLeft: indent ? { xs: 4, sm: 3, md: 5 } : 0 }}>
+    <Box sx={{ ...stepContainerStyle, marginInlineStart: indent ? { xs: 4, sm: 3, md: 5 } : 0 }}>
       <Box sx={stepIconContainerStyle}>
         <Image
           alt={tS(iconAlt)}

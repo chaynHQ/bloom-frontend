@@ -50,7 +50,7 @@ export const SessionChat = (props: SessionChatProps) => {
           containerStyles={{ mx: 'auto', my: 2 }}
         ></Video>
         <Box>
-          <List sx={{ listStyleType: 'disc', pl: 2 }}>
+          <List sx={{ listStyleType: 'disc', paddingInlineStart: 2 }}>
             {chatList.map((text, index) => (
               <ListItem key={`chat_copy_${index}`} sx={listItemStyle}>
                 <Typography component="span">{text}</Typography>

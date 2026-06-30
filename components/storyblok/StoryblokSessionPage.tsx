@@ -1,6 +1,7 @@
 'use client';
 
 import SessionContentCard from '@/components/cards/SessionContentCard';
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { Dots } from '@/components/common/Dots';
 import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
 import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
@@ -40,11 +41,11 @@ const cardColumnStyle = {
 const backToCourseLinkStyle = {
   ...rowStyle,
   mt: 2,
-  mr: 'auto',
+  marginInlineEnd: 'auto',
   textDecoration: 'none',
   alignItems: 'center',
 
-  svg: { fontSize: 20, mr: 0.5, color: 'primary.dark' },
+  svg: { fontSize: 20, marginInlineEnd: 0.5, color: 'primary.dark' },
 } as const;
 
 export interface StoryblokSessionPageProps {
@@ -202,7 +203,9 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
             <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
           )}
           <Link href={getDefaultFullSlug(course.full_slug, locale)} sx={backToCourseLinkStyle}>
-            <ArrowBack />
+            <DirectionalIcon>
+              <ArrowBack />
+            </DirectionalIcon>
             <span>{t('backToCourse')}</span>
           </Link>
         </Box>

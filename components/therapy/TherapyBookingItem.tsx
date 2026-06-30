@@ -57,7 +57,7 @@ const paperStyle = {
   mb: 1.5,
   borderRadius: '12px',
   overflow: 'hidden',
-  transition: 'background-color 0.3s, opacity 0.3s, border-left-color 0.3s',
+  transition: 'background-color 0.3s, opacity 0.3s, border-inline-start-color 0.3s',
 } as const;
 
 const headerBoxStyle = {
@@ -83,7 +83,7 @@ const expandIconStyle = {
 const expandedBoxStyle = {
   p: '16px 20px',
   pt: 2,
-  textAlign: 'left',
+  textAlign: 'start',
 } as const;
 
 const videoLinkStyle = {
@@ -236,8 +236,8 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
       IconComponent = CalendarMonthOutlined;
       headerTitle = t('upcomingSessionTitle');
       statusStyles = {
-        borderLeft: '4px solid',
-        borderLeftColor: 'secondary.dark',
+        borderInlineStart: '4px solid',
+        borderInlineStartColor: 'secondary.dark',
         backgroundColor: 'background.default',
       };
       break;
@@ -289,12 +289,15 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                     {t('invalidDate')}{' '}
                     <ErrorOutline
                       fontSize="inherit"
-                      sx={{ verticalAlign: 'text-bottom', ml: 0.5 }}
+                      sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
                     />
                   </>
                 )}{' '}
                 {!isValidStartDate && !formattedHeaderDateTime && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', ml: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
             </Box>
@@ -326,12 +329,15 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                     {t('invalidDate')}{' '}
                     <ErrorOutline
                       fontSize="inherit"
-                      sx={{ verticalAlign: 'text-bottom', ml: 0.5 }}
+                      sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
                     />
                   </>
                 )}{' '}
                 {!isValidStartDate && !formattedDateDetails && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', ml: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
               <Typography
@@ -346,12 +352,15 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
                     {t('invalidDate')}{' '}
                     <ErrorOutline
                       fontSize="inherit"
-                      sx={{ verticalAlign: 'text-bottom', ml: 0.5 }}
+                      sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
                     />
                   </>
                 )}{' '}
                 {(!isValidStartDate || !isValidEndDate) && !formattedTimeRange && (
-                  <ErrorOutline fontSize="inherit" sx={{ verticalAlign: 'text-bottom', ml: 0.5 }} />
+                  <ErrorOutline
+                    fontSize="inherit"
+                    sx={{ verticalAlign: 'text-bottom', marginInlineStart: 0.5 }}
+                  />
                 )}
               </Typography>
               <Typography variant="body2">

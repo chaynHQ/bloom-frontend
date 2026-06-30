@@ -10,11 +10,12 @@ import StoryblokProvider from '@/components/providers/StoryblokProvider';
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
+import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { clientConfig } from '@/lib/rollbar';
+import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
-import theme from '@/styles/theme';
-import { Box, ThemeProvider } from '@mui/material';
+import { Box } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
@@ -22,24 +23,33 @@ import { Analytics } from '@vercel/analytics/react';
 import newrelic from 'newrelic';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { Montserrat, Open_Sans } from 'next/font/google';
+import { Montserrat, Noto_Sans_Arabic, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
+// 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500'],
   variable: '--font-open-sans',
   display: 'swap',
 });
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500'],
   variable: '--font-montserrat',
+  display: 'swap',
+});
+
+// Arabic glyph coverage for RTL locales — Latin fonts above cannot render Arabic.
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['300', '400', '500'],
+  variable: '--font-arabic',
   display: 'swap',
 });
 
@@ -52,6 +62,7 @@ firebase;
 
 export default async function BaseLayout({ children, locale }: BaseLayoutProps) {
   const messages = await getMessages();
+  const direction = getLocaleDirection(locale);
 
   let browserTimingHeader = undefined;
 
@@ -76,14 +87,18 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
 
   return (
     <RollbarProvider config={clientConfig}>
-      <html lang={locale} className={`${openSans.variable} ${montserrat.variable}`}>
+      <html
+        lang={locale}
+        dir={direction}
+        className={`${openSans.variable} ${montserrat.variable} ${notoSansArabic.variable}`}
+      >
         {browserTimingHeader && (
           <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
         )}
         <NextIntlClientProvider messages={messages} timeZone="Europe/London">
           <ReduxProvider>
             <AppRouterCacheProvider>
-              <ThemeProvider theme={theme}>
+              <AppThemeProvider direction={direction}>
                 <StoryblokProvider>
                   <body>
                     {/*
@@ -119,7 +134,7 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
                   />
                 </StoryblokProvider>
-              </ThemeProvider>
+              </AppThemeProvider>
             </AppRouterCacheProvider>
           </ReduxProvider>
         </NextIntlClientProvider>

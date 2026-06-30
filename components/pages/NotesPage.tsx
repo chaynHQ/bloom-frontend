@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
@@ -76,7 +77,7 @@ const usNoticeStyle = {
   '&::before': { display: 'none' },
   '& .MuiAccordionSummary-root': {
     py: 1,
-    pl: 1,
+    paddingInlineStart: 1,
     borderRadius: 20,
     '&.Mui-expanded': {
       minHeight: 'auto !important',
@@ -164,7 +165,7 @@ export default function NotesPage({ story }: Props) {
   const usNotice = (
     <Accordion sx={usNoticeStyle}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <SmsFailedOutlined color="error" sx={{ mr: 1.25, mt: '1px' }} />
+        <SmsFailedOutlined color="error" sx={{ marginInlineEnd: 1.25, mt: '1px' }} />
         <Typography variant="body1">{t('notes.usNoticeTitle')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -272,7 +273,9 @@ export default function NotesPage({ story }: Props) {
           onClick={() => router.back()}
           aria-label={tS('navigateBack')}
         >
-          <KeyboardArrowLeftIcon sx={backIconStyle} />
+          <DirectionalIcon>
+            <KeyboardArrowLeftIcon sx={backIconStyle} />
+          </DirectionalIcon>
         </IconButton>
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>

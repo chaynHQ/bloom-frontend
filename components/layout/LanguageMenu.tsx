@@ -23,6 +23,8 @@ const languageMap: { [key: string]: string } = {
   es: 'Español',
   de: 'Deutsch',
   fr: 'Français',
+  ar: 'العربية',
+  tr: 'Türkçe',
 };
 
 const buttonStyle = {

@@ -47,8 +47,8 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 220, sm: 250, md: 300, lg: 350 },
   height: { xs: 220, sm: 250, md: 300, lg: 350 },
-  marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: 0, md: 0 },
+  marginInlineStart: { xs: 'auto', md: 0 },
+  marginInlineEnd: { xs: 0, md: 0 },
 } as const;
 
 const textContainerStyle = {

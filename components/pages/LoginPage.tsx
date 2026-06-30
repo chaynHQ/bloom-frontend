@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -44,9 +45,9 @@ const headerContentStyle = {
 const backButtonStyle = {
   display: { md: 'none' },
   width: '2.5rem',
-  marginLeft: '-0.675rem',
+  marginInlineStart: '-0.675rem',
   marginY: { xs: 1.5, sm: 2 },
-  paddingRight: '1rem',
+  paddingInlineEnd: '1rem',
   alignSelf: 'start',
 } as const;
 
@@ -77,7 +78,9 @@ export default function LoginPage() {
           onClick={() => router.back()}
           aria-label={tS('navigateBack')}
         >
-          <KeyboardArrowLeftIcon sx={backIconStyle} />
+          <DirectionalIcon>
+            <KeyboardArrowLeftIcon sx={backIconStyle} />
+          </DirectionalIcon>
         </IconButton>
         <Box sx={headerContentStyle}>
           <Box textAlign="center">

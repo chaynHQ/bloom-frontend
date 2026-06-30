@@ -5,6 +5,8 @@ export enum LANGUAGES {
   fr = 'fr',
   pt = 'pt',
   de = 'de',
+  ar = 'ar',
+  tr = 'tr',
 }
 
 export enum MAINTENANCE_MODE {

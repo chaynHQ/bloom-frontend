@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { useVoiceRecorder } from '@/lib/hooks/useVoiceRecorder';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ImageIcon from '@mui/icons-material/Image';
@@ -269,7 +270,9 @@ export const MessageComposer = ({
                   size="small"
                   sx={sendButtonStyle}
                 >
-                  <SendIcon fontSize="small" />
+                  <DirectionalIcon>
+                    <SendIcon fontSize="small" />
+                  </DirectionalIcon>
                 </IconButton>
               </span>
             </Tooltip>
@@ -319,7 +322,7 @@ export const MessageComposer = ({
               size="small"
               disabled={isDisabled}
               sx={textFieldStyle}
-              slotProps={{ htmlInput: { maxLength: 10_000 } }}
+              slotProps={{ htmlInput: { maxLength: 10_000, dir: 'auto' } }}
             />
 
             <Tooltip title={t('send')}>
@@ -331,7 +334,9 @@ export const MessageComposer = ({
                   size="small"
                   sx={sendButtonStyle}
                 >
-                  <SendIcon fontSize="small" />
+                  <DirectionalIcon>
+                    <SendIcon fontSize="small" />
+                  </DirectionalIcon>
                 </IconButton>
               </span>
             </Tooltip>

@@ -15,14 +15,14 @@ const headingStyle = {
 
 const listStyle = {
   listStyleType: 'disc',
-  pl: 3,
+  paddingInlineStart: 3,
   pt: 0,
   pb: 0,
 } as const;
 
 const listItemStyle = {
   display: 'list-item',
-  pl: 1,
+  paddingInlineStart: 1,
   pt: 0,
   mb: 0,
 } as const;
@@ -67,7 +67,7 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
                 color="textSecondary"
                 component="span"
                 fontStyle="normal"
-                ml={0.5}
+                marginInlineStart={0.5}
               >
                 {reference.attribution}
               </Typography>

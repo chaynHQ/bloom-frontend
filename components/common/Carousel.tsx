@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import theme from '@/styles/theme';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -73,8 +74,8 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
       justifyContent="center"
       gap={5}
       alignItems="center"
-      marginLeft="auto" // need to override some mobile styles so that the dots are centered
-      marginRight="auto"
+      marginInlineStart="auto" // need to override some mobile styles so that the dots are centered
+      marginInlineEnd="auto"
       width="100%"
       maxWidth="400px"
       display="flex"
@@ -92,7 +93,9 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
             },
           }}
         >
-          <KeyboardArrowLeft></KeyboardArrowLeft>
+          <DirectionalIcon>
+            <KeyboardArrowLeft></KeyboardArrowLeft>
+          </DirectionalIcon>
         </IconButton>
       </Box>
       <Box>
@@ -118,7 +121,9 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
       </Box>
       <Box alignContent="center">
         <IconButton onClick={goForward} sx={iconButtonStyle}>
-          <KeyboardArrowRight></KeyboardArrowRight>
+          <DirectionalIcon>
+            <KeyboardArrowRight></KeyboardArrowRight>
+          </DirectionalIcon>
         </IconButton>
       </Box>
     </Box>

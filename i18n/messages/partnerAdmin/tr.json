@@ -1,0 +1,28 @@
+{
+  "PartnerAdmin": {
+    "createAccessCode": {
+      "title": "Erişim kodları oluştur",
+      "introduction": "Birine Bloom'a erişim vermek istediğin her seferde bir erişim kodu oluşturmak için bu formu kullan.",
+      "courseAccess": "Yalnızca kurslara erişim",
+      "liveChatAccess": "Kurslara ve mesajlaşmaya erişim",
+      "therapyAccess": "Kurslara, mesajlaşmaya ve altı terapi seansına erişim",
+      "resultLink": "Lütfen kullanıcıya, e-posta adresini kullanarak kaydolabileceği ilgili bağlantıya gitmesini söyle.",
+      "resultCode": "Kaydolduktan sonra hesap simgesine tıklayıp 'Kod uygula' seçeneğini seçebilir ve şu kodu kullanabilir: <partnerAccessCode></partnerAccessCode>",
+      "form": {
+        "featuresLabel": "Bu kullanıcıya sunulan destek türünü seç",
+        "featureCoursesLabel": "Yalnızca kurslar",
+        "featureLiveChatLabel": "Kurslar ve mesajlaşma",
+        "featureTherapyLabel": "Kurslar, mesajlaşma ve altı terapi seansı",
+        "reset": "Başka bir kod oluştur",
+        "errors": {
+          "createPartnerAccessError": "Erişim kodu oluşturulurken bir hata oluştu. Tekrar dene ya da Bloom ekibine mesaj gönder.",
+          "featureRequired": "Bir erişim kodu oluşturmadan önce bir destek türü seç"
+        }
+      }
+    },
+    "accessGuard": {
+      "title": "Erişim gerekli",
+      "introduction": "Hesabın, iş ortağı sayfalarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+    }
+  }
+}

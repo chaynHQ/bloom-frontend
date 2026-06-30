@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -119,7 +120,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               onClick={redirectToSession}
               variant="contained"
               color="secondary"
-              sx={{ mr: 'auto' }}
+              sx={{ marginInlineEnd: 'auto' }}
             >
               {t('sessionButtonLabel')}
             </Button>
@@ -140,7 +141,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               onClick={redirectToSession}
               variant="contained"
               color="secondary"
-              sx={{ mr: 'auto' }}
+              sx={{ marginInlineEnd: 'auto' }}
             >
               {t('sessionButtonLabel')}
             </Button>
@@ -152,7 +153,11 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             color="secondary"
             sx={{ width: 'fit-content' }}
             href={nextResourceHref}
-            endIcon={<ArrowForward />}
+            endIcon={
+              <DirectionalIcon>
+                <ArrowForward />
+              </DirectionalIcon>
+            }
             component={i18nLink}
           >
             {t(getNextResourceButtonLabel(nextResourceHref))}
