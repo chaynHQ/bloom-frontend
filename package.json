@@ -36,6 +36,7 @@
     "cypress:check-ungrouped": "node scripts/check-ungrouped-tests.js",
     "check:translations": "node ./scripts/checkTranslation.js",
     "check:links": "node ./scripts/checkLinks.mjs",
+    "translate:storyblok": "node ./scripts/translateStoryblok.mjs",
     "postinstall": "husky",
     "prepare": "husky",
     "knip": "knip"

@@ -2,6 +2,8 @@ name: Cypress release tests
 
 on:
   push:
+    branches-ignore:
+      - main
 
 # Cancel in-progress runs when a new run is triggered
 concurrency:
