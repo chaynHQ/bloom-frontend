@@ -106,13 +106,15 @@ const MobileTopNav = () => {
       )}
       <Drawer
         hideBackdrop={false}
-        PaperProps={{
-          sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
-        }}
         sx={{ width: '100%', top: { xs: 48, sm: 64 } }}
         anchor="top"
         open={open}
         onClose={handleClose}
+        slotProps={{
+          paper: {
+            sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
+          },
+        }}
       >
         <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
           {navigationLinks.map((link) => (

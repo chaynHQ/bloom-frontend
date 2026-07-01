@@ -45,7 +45,15 @@ export const SessionHeader = (props: SessionHeaderProps) => {
     title: name,
     introduction: (
       <>
-        <Typography variant="h3" component="p" maxWidth={600} fontWeight={300} mb="1rem !important">
+        <Typography
+          variant="h3"
+          component="p"
+          sx={{
+            maxWidth: 600,
+            fontWeight: 300,
+            mb: '1rem !important',
+          }}
+        >
           {weekString},{' '}
           {storyPosition !== undefined ? `${t('session')} ${storyPosition / 10 - 1}` : subtitle}
         </Typography>

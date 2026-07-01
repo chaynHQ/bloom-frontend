@@ -162,7 +162,11 @@ const AboutYouDemographicForm = () => {
   };
 
   return (
-    <Box mt={3}>
+    <Box
+      sx={{
+        mt: 3,
+      }}
+    >
       <form autoComplete="off" onSubmit={submitHandler}>
         <FormControl fullWidth component="fieldset" sx={{ mb: 4 }}>
           <FormLabel component="legend" sx={{ mb: 2 }}>
@@ -187,7 +191,7 @@ const AboutYouDemographicForm = () => {
                 setGenderTextInput('');
               }
             }}
-            renderTags={(value: readonly string[]) =>
+            renderValue={(value: readonly string[]) =>
               value.map((option: string, index: number) => (
                 <Chip
                   color="secondary"
@@ -201,7 +205,7 @@ const AboutYouDemographicForm = () => {
             renderInput={(params) => (
               <SanitizedTextField
                 {...params}
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 sx={staticFieldLabelStyle}
                 variant="standard"
                 required={genderInput.length === 0}
@@ -337,7 +341,7 @@ const AboutYouDemographicForm = () => {
             value={raceEthnNatn}
             variant="standard"
             fullWidth
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             sx={staticFieldLabelStyle}
           />
           <FormHelperText sx={{ m: 0, mt: '0 !important' }}>
@@ -370,7 +374,7 @@ const AboutYouDemographicForm = () => {
                 {...params}
                 required
                 variant="standard"
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 sx={staticFieldLabelStyle}
               />
             )}
@@ -406,7 +410,12 @@ const AboutYouDemographicForm = () => {
         </FormControl>
 
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography
+            sx={{
+              color: 'error.main',
+              mb: 2,
+            }}
+          >
             {formError}
           </Typography>
         )}

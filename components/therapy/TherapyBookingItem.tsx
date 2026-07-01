@@ -23,8 +23,8 @@ import logEvent from '@/lib/utils/logEvent';
 import {
   CalendarMonthOutlined,
   Cancel,
-  CheckCircleOutline,
-  ErrorOutline,
+  CheckCircleOutlined as CheckCircleOutline,
+  ErrorOutlined as ErrorOutline,
   ExpandMore,
 } from '@mui/icons-material';
 import {
@@ -275,7 +275,12 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
               sx={{ color: status === 'cancelled' ? 'action.disabled' : 'secondary.dark' }}
             />
             <Box>
-              <Typography component="div" fontWeight="medium">
+              <Typography
+                component="div"
+                sx={{
+                  fontWeight: 'medium',
+                }}
+              >
                 {headerTitle}
               </Typography>
               <Typography
@@ -400,7 +405,6 @@ export default function TherapyBookingItem({ session }: TherapyBookingItemProps)
           </Box>
         </Collapse>
       </Paper>
-
       <Dialog
         open={showConfirmDialog}
         onClose={handleCloseConfirmDialog}

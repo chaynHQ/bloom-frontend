@@ -46,7 +46,12 @@ export const RichTextOptions: RenderOptions = {
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
-      <Typography maxWidth={800} paragraph>
+      <Typography
+        sx={{
+          maxWidth: 800,
+          marginBottom: '16px',
+        }}
+      >
         {children}
       </Typography>
     ),
@@ -56,8 +61,11 @@ export const RichTextOptions: RenderOptions = {
         <Typography
           variant={headerLevel}
           component={headerLevel}
-          maxWidth={800}
-          sx={{ mt: 5, ':first-child': { mt: 0 } }}
+          sx={{
+            maxWidth: 800,
+            mt: 5,
+            ':first-child': { mt: 0 },
+          }}
         >
           {children}
         </Typography>

@@ -289,12 +289,15 @@ export default function BookTherapyPage({ story }: Props) {
       <Container sx={containerStyle}>
         {partnerAccess && <TherapyBookings partnerAccess={partnerAccess} />}
       </Container>
-
       <Container id="booking-steps-section" sx={bookingSectionStyle} maxWidth="md">
         <Typography variant="h2" component="h2" gutterBottom>
           {t('bookingSectionTitle')}
         </Typography>
-        <Box my={3}>
+        <Box
+          sx={{
+            my: 3,
+          }}
+        >
           <ImageTextRow items={steps} translations="Therapy.steps" />
         </Box>
         {hasTherapyRemaining && (
@@ -309,12 +312,10 @@ export default function BookTherapyPage({ story }: Props) {
           </Button>
         )}{' '}
       </Container>
-
       {processedStory.content.page_sections?.length > 0 &&
         processedStory.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!user.id} />
         ))}
-
       <Modal
         open={isWidgetModalOpen}
         onClose={handleCloseWidgetModal}
@@ -330,7 +331,16 @@ export default function BookTherapyPage({ story }: Props) {
           >
             <CloseIcon />
           </IconButton>
-          <Typography id="simplybook-widget-modal-title" variant="h3" sx={modalTitleStyle} mt={2}>
+          <Typography
+            id="simplybook-widget-modal-title"
+            variant="h3"
+            sx={[
+              {
+                mt: 2,
+              },
+              ...(Array.isArray(modalTitleStyle) ? modalTitleStyle : [modalTitleStyle]),
+            ]}
+          >
             {t('modalTitle')}
           </Typography>
           <Typography
@@ -351,7 +361,6 @@ export default function BookTherapyPage({ story }: Props) {
           <Box id="simplybook-widget-container" sx={widgetContainerStyle}></Box>
         </Box>
       </Modal>
-
       <Script
         id="widget-js"
         src="//widget.simplybook.it/v2/widget/widget.js"

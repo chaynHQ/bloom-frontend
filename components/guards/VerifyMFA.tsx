@@ -111,7 +111,12 @@ const VerifyMFA: React.FC<VerifyMFAProps> = ({ resolver }) => {
         </>
       )}
       {error && (
-        <Typography color="error" mt="1rem !important">
+        <Typography
+          color="error"
+          sx={{
+            mt: '1rem !important',
+          }}
+        >
           {error}
         </Typography>
       )}

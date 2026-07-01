@@ -176,16 +176,33 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             />
           </Box>
           <Box sx={cardHeaderStyle}>
-            <Typography component="h3" variant="h3" mb={0.5} marginInlineStart={0}>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{
+                mb: 0.5,
+                marginInlineStart: 0,
+              }}
+            >
               {name}
             </Typography>
-            <Typography fontStyle={'italic'} marginInlineStart={0}>
+            <Typography
+              sx={{
+                fontStyle: 'italic',
+                marginInlineStart: 0,
+              }}
+            >
               {role}
             </Typography>
             {!hide_languages && (
               <Box sx={iconRowStyles}>
                 <LanguageIcon data-testid="LanguageIcon" color="error" sx={iconStyles} />
-                <Typography variant="body2" marginInlineStart={0}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    marginInlineStart: 0,
+                  }}
+                >
                   {languages}
                 </Typography>
               </Box>
@@ -222,8 +239,10 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             <Link
               component={i18nLink}
               href={`/meet-the-team${team_page_section ? `?section=${team_page_section}` : ''}`}
-              mt={2}
-              display="block"
+              sx={{
+                mt: 2,
+                display: 'block',
+              }}
             >
               {t.rich('fullBioButton', { name: name })}
             </Link>

@@ -83,8 +83,18 @@ export default function LoginPage() {
           </DirectionalIcon>
         </IconButton>
         <Box sx={headerContentStyle}>
-          <Box textAlign="center">
-            <Typography variant="h1" component="h1" marginBottom={0}>
+          <Box
+            sx={{
+              textAlign: 'center',
+            }}
+          >
+            <Typography
+              variant="h1"
+              component="h1"
+              sx={{
+                marginBottom: 0,
+              }}
+            >
               {t('login.title')}
             </Typography>
           </Box>

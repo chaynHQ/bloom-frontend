@@ -128,7 +128,12 @@ const CookieBanner = () => {
       flipButtons={true}
     >
       <Box sx={rowContainerStyle}>
-        <Box width={50} height={50}>
+        <Box
+          sx={{
+            width: 50,
+            height: 50,
+          }}
+        >
           <Image
             alt={tS('alt.cookieCat')}
             src={IllustrationCookieCat}
@@ -139,8 +144,16 @@ const CookieBanner = () => {
             }}
           />
         </Box>
-        <Box flex={1}>
-          <Typography fontSize={'0.875rem !important'}>
+        <Box
+          sx={{
+            flex: 1,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '0.875rem !important',
+            }}
+          >
             {tS('cookieConsent.cookieConsentExplainer')}
             <Link
               target="_blank"

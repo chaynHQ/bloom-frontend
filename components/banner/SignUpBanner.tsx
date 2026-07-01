@@ -32,10 +32,22 @@ export const SignUpBanner = () => {
 
   return (
     <Container id="signup-banner" sx={containerStyle}>
-      <Typography variant="h2" component="h2" mb={2}>
+      <Typography
+        variant="h2"
+        component="h2"
+        sx={{
+          mb: 2,
+        }}
+      >
         {t('signUpTodayPromo.title')}
       </Typography>
-      <Typography mb={2}>{t('signUpTodayPromo.description1')}</Typography>
+      <Typography
+        sx={{
+          mb: 2,
+        }}
+      >
+        {t('signUpTodayPromo.description1')}
+      </Typography>
       <Typography
         sx={{
           mb: '2rem !important',

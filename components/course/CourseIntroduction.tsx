@@ -59,7 +59,11 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
         <Typography component="h2" variant="h2">
           {t('courseDetail.introductionTitle')}
         </Typography>
-        <Typography mb={4}>
+        <Typography
+          sx={{
+            mb: 4,
+          }}
+        >
           {t.rich('courseDetail.introductionDescription', {
             transcriptLink: (children) => (
               <MuiLink

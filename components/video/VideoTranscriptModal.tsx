@@ -100,7 +100,13 @@ const VideoTranscriptModal = (props: TranscriptModalProps) => {
           <Box>{render(content, RichTextOptions)}</Box>
           {references && references.length > 0 && (
             <>
-              <Typography variant="h3" mt={5} mb={2}>
+              <Typography
+                variant="h3"
+                sx={{
+                  mt: 5,
+                  mb: 2,
+                }}
+              >
                 {tS('references')}
               </Typography>
               {books.length > 0 && (

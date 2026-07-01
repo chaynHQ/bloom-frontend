@@ -15,7 +15,7 @@ import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import { Box } from '@mui/material';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
 import { Analytics } from '@vercel/analytics/react';

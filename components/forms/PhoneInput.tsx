@@ -83,38 +83,45 @@ const PhoneInput = (props: PhoneInputProps) => {
       onChange={handlePhoneValueChange}
       type="tel"
       inputRef={inputRef}
-      // Phone numbers (incl. the dial-code prefix) are always written left-to-right,
-      // even on RTL pages — keep the number field LTR regardless of locale.
-      inputProps={{ dir: 'ltr' }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment
-            position="start"
-            style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}
-          >
-            <Select
-              MenuProps={menuProps}
-              sx={selectStyles}
-              value={country.iso2}
-              onChange={(e) => setCountry(e.target.value as CountryIso2)}
-              renderValue={(value) => <FlagImage iso2={value} style={{ display: 'flex' }} />}
-            >
-              {defaultCountries.map((c) => {
-                const country = parseCountry(c);
-
-                return (
-                  <MenuItem key={country.iso2} value={country.iso2}>
-                    <FlagImage iso2={country.iso2} style={{ marginInlineEnd: '8px' }} />
-                    <Typography marginInlineEnd="8px">{country.name}</Typography>
-                    <Typography color="gray">+{country.dialCode}</Typography>
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </InputAdornment>
-        ),
-      }}
       {...restProps}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment
+              position="start"
+              style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}
+            >
+              <Select
+                MenuProps={menuProps}
+                sx={selectStyles}
+                value={country.iso2}
+                onChange={(e) => setCountry(e.target.value as CountryIso2)}
+                renderValue={(value) => <FlagImage iso2={value} style={{ display: 'flex' }} />}
+              >
+                {defaultCountries.map((c) => {
+                  const country = parseCountry(c);
+
+                  return (
+                    <MenuItem key={country.iso2} value={country.iso2}>
+                      <FlagImage iso2={country.iso2} style={{ marginInlineEnd: '8px' }} />
+                      <Typography
+                        sx={{
+                          marginInlineEnd: '8px',
+                        }}
+                      >
+                        {country.name}
+                      </Typography>
+                      <Typography color="gray">+{country.dialCode}</Typography>
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </InputAdornment>
+          ),
+        },
+
+        htmlInput: { dir: 'ltr' },
+      }}
     />
   );
 };

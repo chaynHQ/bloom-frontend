@@ -43,7 +43,12 @@ const LoginDialog = () => {
       >
         <Box sx={headerContainerStyles}>
           <Image src={courseIcon} alt={tN('alt.courseIcon')} width={60} height={60} />
-          <Typography variant="h3" mb={0}>
+          <Typography
+            variant="h3"
+            sx={{
+              mb: 0,
+            }}
+          >
             {t('loginDialog.title')}
           </Typography>
         </Box>

@@ -88,7 +88,15 @@ const Header = (props: HeaderProps) => {
   const getIntroduction = () => {
     if (!introduction) return undefined;
     if (typeof introduction === 'string') {
-      return <Typography fontSize="1rem !important">{introduction}</Typography>;
+      return (
+        <Typography
+          sx={{
+            fontSize: '1rem !important',
+          }}
+        >
+          {introduction}
+        </Typography>
+      );
     } else if (typeof introduction === 'object' && 'content' in introduction) {
       return render(introduction, RichTextOptions);
     } else {

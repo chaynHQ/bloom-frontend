@@ -68,9 +68,24 @@ const AccountActionsCard = () => {
             {t('actions.title')}
           </Typography>
           <Typography>{t('actions.description')}</Typography>
-          {error && <Typography color="error.main">{error}</Typography>}
+          {error && (
+            <Typography
+              sx={{
+                color: 'error.main',
+              }}
+            >
+              {error}
+            </Typography>
+          )}
         </Box>
-        <Box display={['flex']} flexWrap="wrap" gap={2} rowGap={2}>
+        <Box
+          sx={{
+            display: ['flex'],
+            flexWrap: 'wrap',
+            gap: 2,
+            rowGap: 2,
+          }}
+        >
           <Button
             sx={{
               background: theme.palette.secondary.dark,

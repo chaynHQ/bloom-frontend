@@ -133,10 +133,13 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
             )}
             {
               <Typography
-                sx={{ marginBottom: 0, maxWidth: 800 }}
                 component="h3"
                 variant={ai.title_size === 'small' ? 'body1' : 'h3'}
-                textAlign="start"
+                sx={{
+                  textAlign: 'start',
+                  marginBottom: 0,
+                  maxWidth: 800,
+                }}
               >
                 {ai.title}
               </Typography>

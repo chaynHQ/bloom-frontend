@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Box, InputBaseComponentProps, TextField, TextFieldProps, Typography } from '@mui/material';
 import DOMPurify from 'dompurify';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -32,7 +32,7 @@ interface SanitizedTextFieldProps extends Omit<
   allowedAttributes?: string[];
   maxLength?: number;
   showCharacterCount?: boolean;
-  inputProps?: TextFieldProps['inputProps'];
+  inputProps?: InputBaseComponentProps;
   value?: string | null;
   defaultValue?: string | null;
 }
@@ -82,11 +82,20 @@ const SanitizedTextField = ({
   const shouldShowCounter =
     showCharacterCount || (restProps.multiline && currentLength > fieldMaxLength * 0.8);
 
-  const textFieldProps = {
-    ...restProps,
+  const { slotProps, ...rest } = restProps;
+  const incomingHtmlInput =
+    slotProps?.htmlInput && typeof slotProps.htmlInput === 'object'
+      ? slotProps.htmlInput
+      : undefined;
+
+  const textFieldProps: TextFieldProps = {
+    ...rest,
     id,
     onChange: handleChange,
-    inputProps: { maxLength: fieldMaxLength, ...inputProps },
+    slotProps: {
+      ...slotProps,
+      htmlInput: { maxLength: fieldMaxLength, ...inputProps, ...incomingHtmlInput },
+    },
     ...(value !== undefined ? { value } : { defaultValue }),
   };
 
@@ -98,7 +107,11 @@ const SanitizedTextField = ({
   };
 
   return (
-    <Box mb={0}>
+    <Box
+      sx={{
+        mb: 0,
+      }}
+    >
       <TextField {...textFieldProps} />
       {shouldShowCounter && (
         <Typography variant="caption" sx={characterCountStyle}>

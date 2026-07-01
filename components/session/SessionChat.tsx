@@ -4,7 +4,7 @@ import SessionContentCard from '@/components/cards/SessionContentCard';
 import { Dots } from '@/components/common/Dots';
 import Video from '@/components/video/Video';
 import { Link as i18nLink } from '@/i18n/routing';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlined';
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
@@ -41,8 +41,20 @@ export const SessionChat = (props: SessionChatProps) => {
         eventPrefix="SESSION_CHAT"
         eventData={eventData}
       >
-        <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
-        <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
+        <Typography
+          sx={{
+            marginBottom: '16px',
+          }}
+        >
+          {t('sessionDetail.chat.description')}
+        </Typography>
+        <Typography
+          sx={{
+            marginBottom: '16px',
+          }}
+        >
+          {t('sessionDetail.chat.videoIntro')}
+        </Typography>
         <Video
           eventPrefix="SESSION_CHAT_VIDEO"
           eventData={eventData}

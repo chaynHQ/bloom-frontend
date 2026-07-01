@@ -2,7 +2,7 @@
 
 import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { useVoiceRecorder } from '@/lib/hooks/useVoiceRecorder';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
 import SendIcon from '@mui/icons-material/Send';
@@ -234,7 +234,6 @@ export const MessageComposer = ({
         onChange={handleImageSelected}
         aria-hidden="true"
       />
-
       <Box sx={controlRowStyle}>
         {isRecording || isStopping ? (
           // Recording mode: [delete] [pulse + timer] [send] — WhatsApp-style spatial
@@ -293,7 +292,6 @@ export const MessageComposer = ({
                 </IconButton>
               </span>
             </Tooltip>
-
             {recorder.isSupported && (
               <Tooltip title={t('startRecording')}>
                 <span>
@@ -309,7 +307,6 @@ export const MessageComposer = ({
                 </span>
               </Tooltip>
             )}
-
             <TextField
               value={draft}
               onChange={(e) => handleDraftChange(e.target.value)}
@@ -324,7 +321,6 @@ export const MessageComposer = ({
               sx={textFieldStyle}
               slotProps={{ htmlInput: { maxLength: 10_000, dir: 'auto' } }}
             />
-
             <Tooltip title={t('send')}>
               <span>
                 <IconButton

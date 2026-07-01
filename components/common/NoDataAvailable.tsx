@@ -36,7 +36,13 @@ const NoDataAvailable = () => {
           sizes={getImageSizes(imageContainerStyle.width)}
         />
       </Box>
-      <Typography variant="h3" component="h1" maxWidth={700}>
+      <Typography
+        variant="h3"
+        component="h1"
+        sx={{
+          maxWidth: 700,
+        }}
+      >
         {t('noDataAvailable.title')}
       </Typography>
     </Container>

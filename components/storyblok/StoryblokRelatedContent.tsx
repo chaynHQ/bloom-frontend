@@ -106,10 +106,14 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
 
   return (
     <Container sx={containerStyle}>
-      <Typography variant="h2" mb={3.5}>
+      <Typography
+        variant="h2"
+        sx={{
+          mb: 3.5,
+        }}
+      >
         {t('title')}
       </Typography>
-
       <Carousel
         theme="primary"
         items={items.map((item, index) => (
