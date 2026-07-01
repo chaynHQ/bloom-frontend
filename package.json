@@ -37,6 +37,7 @@
     "check:translations": "node ./scripts/checkTranslation.js",
     "check:links": "node ./scripts/checkLinks.mjs",
     "translate:storyblok": "node ./scripts/translateStoryblok.mjs",
+    "fix:storyblok": "node ./scripts/fixStoryblokTranslations.mjs",
     "postinstall": "husky",
     "prepare": "husky",
     "knip": "knip"

@@ -14,6 +14,11 @@ yarn translate:storyblok --all --include-policies            # dry-run, all lang
 yarn translate:storyblok --slug grounding --langs de --engine file   # one page, one lang
 ```
 
+> Two companion tools: **`yarn translate:storyblok --report`** audits what's still
+> untranslated per page/locale (read-only), and **`yarn fix:storyblok`**
+> (`scripts/fixStoryblokTranslations.mjs`) safely _corrects_ translations that already exist
+> (see [Correcting translations that already exist](#correcting-translations-that-already-exist-qa-fixes)).
+
 ## Hard-won learnings baked into the script
 
 - **Discovery = schema, not just the oracle.** A field is translatable if the component
@@ -109,8 +114,48 @@ yarn translate:storyblok --slug meet-the-team --engine file
 # meet-the-team.ar.done.json, then re-run to apply + (optionally) --write.
 ```
 
+## Correcting translations that already exist (QA fixes)
+
+`translateStoryblok.mjs` **creates/completes** translations. When a translation already
+exists but is _wrong_ — register/tone, gender agreement, a typo, a mistranslated phrase,
+European vs Brazilian Portuguese, a leaked English string, a broken `{placeholder}` — use
+the companion **`scripts/fixStoryblokTranslations.mjs`** (`yarn fix:storyblok`).
+
+```bash
+# 1. Get the exact current strings to fix (verbatim, incl. trailing spaces):
+yarn translate:storyblok --slug therapy/book-session --report-sources
+
+# 2. Write a pairs file: [["old string","new string"], …]  (or [{old,new}, …])
+#    'old' MUST be copied verbatim from the live value.
+
+# 3. Dry-run — shows what would change, writes nothing:
+yarn fix:storyblok --lang pt --slug therapy/book-session --pairs fixes.pt.json
+
+# 4. Apply as a DRAFT once the dry-run looks right (one file can span many slugs;
+#    pairs that match nothing on a given page are simply skipped):
+yarn fix:storyblok --lang pt --slug home,therapy/book-session,policies/terms-of-service \
+  --pairs fixes.pt.json --write --yes
+```
+
+Two hard-won rules the tool enforces:
+
+- **Language-scoped.** It only edits values inside `<field>__i18n__<lang>` subtrees. A
+  leaked/untranslated string is byte-identical in the English **source** and in the
+  still-untranslated locale copy, so an unscoped find-and-replace would corrupt the source;
+  this tool cannot. (Verified: the same string matches under `--lang tr` but not `--lang de`.)
+- **Whole-value match.** A pair replaces a leaf only when the value `=== old` exactly, so a
+  short `old` can never rewrite an unrelated leaf. To fix a typo inside a long sentence, the
+  pair's `old` is the whole sentence (generate these programmatically to avoid re-typing).
+
 ## Notes & limitations
 
+- **Image `alt` text is not field-level translatable.** `alt`/`title` live on the shared
+  **asset object** (`{ filename, alt, title, … }`), not on a translatable blok field — there
+  are no `alt__i18n__<lang>` keys, so neither script can localise them. Doing so needs a
+  Storyblok **schema** change (mark the image/asset fields `translatable: true`), per-locale
+  alt entry, and a check that the frontend renders the resolved per-locale asset. This is why
+  alt text is English in every locale today, including the professional ones — treat it as a
+  separate accessibility ticket.
 - **Legal pages** (`policies/*`) and anything compliance-sensitive should go through
   professional/legal translation, not the LLM path.
 - A grounding exercise that embeds an English **audio** clip will have its page _text_
