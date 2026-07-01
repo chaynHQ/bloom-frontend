@@ -152,8 +152,7 @@ function parseArgs(argv) {
     else if (a === '--report-sources') {
       args.report = true;
       args.reportSources = true;
-    }
-    else if (a === '--yes') args.yes = true;
+    } else if (a === '--yes') args.yes = true;
     else if (a === '--overwrite') args.overwrite = true;
     else if (a === '--out') args.out = path.resolve(next());
     else if (a === '--help' || a === '-h') {
