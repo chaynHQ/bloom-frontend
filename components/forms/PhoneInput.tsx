@@ -119,7 +119,8 @@ const PhoneInput = (props: PhoneInputProps) => {
             </InputAdornment>
           ),
         },
-
+        // Phone numbers (incl. the dial-code prefix) are always written left-to-right,
+        // even on RTL pages — keep the number field LTR regardless of locale.
         htmlInput: { dir: 'ltr' },
       }}
     />

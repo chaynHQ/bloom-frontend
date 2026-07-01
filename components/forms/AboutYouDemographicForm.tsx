@@ -205,7 +205,10 @@ const AboutYouDemographicForm = () => {
             renderInput={(params) => (
               <SanitizedTextField
                 {...params}
-                slotProps={{ inputLabel: { shrink: true } }}
+                slotProps={{
+                  ...params.slotProps,
+                  inputLabel: { ...params.slotProps?.inputLabel, shrink: true },
+                }}
                 sx={staticFieldLabelStyle}
                 variant="standard"
                 required={genderInput.length === 0}
@@ -374,7 +377,10 @@ const AboutYouDemographicForm = () => {
                 {...params}
                 required
                 variant="standard"
-                slotProps={{ inputLabel: { shrink: true } }}
+                slotProps={{
+                  ...params.slotProps,
+                  inputLabel: { ...params.slotProps?.inputLabel, shrink: true },
+                }}
                 sx={staticFieldLabelStyle}
               />
             )}

@@ -28,7 +28,7 @@ const headingFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-montserrat)' : 'var(--font-montserrat)';
 
 /**
- * Builds the MUI theme for a given text direction. MUI v7 + Emotion emit CSS logical
+ * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
  * properties internally, so passing `direction` here (combined with `dir` on <html>) is
  * what makes the built-in components mirror for RTL. Our own styles use logical
  * properties to achieve the same.
