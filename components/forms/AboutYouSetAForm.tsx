@@ -143,7 +143,11 @@ const AboutYouSetAForm = () => {
   }
 
   return (
-    <Box mt={3}>
+    <Box
+      sx={{
+        mt: 3,
+      }}
+    >
       <form autoComplete="off" onSubmit={submitHandler}>
         <SanitizedTextField
           id="hopes"
@@ -155,11 +159,22 @@ const AboutYouSetAForm = () => {
           required
           multiline
           rows={3}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ inputLabel: { shrink: true } }}
           sx={staticFieldLabelStyle}
         />
-        <Typography mb={1}>{tBase('scaleDescriptionLine1')}</Typography>
-        <Typography mb="1.5rem !important" fontWeight="600">
+        <Typography
+          sx={{
+            mb: 1,
+          }}
+        >
+          {tBase('scaleDescriptionLine1')}
+        </Typography>
+        <Typography
+          sx={{
+            mb: '1.5rem !important',
+            fontWeight: '600',
+          }}
+        >
           {tBase('scaleDescriptionLine2')}
         </Typography>
         {scaleQuestions.map((question) => (
@@ -181,7 +196,12 @@ const AboutYouSetAForm = () => {
         ))}
 
         {/* Additional user setting for email reminders frequency */}
-        <Typography mt={3} mb={1.5}>
+        <Typography
+          sx={{
+            mt: 3,
+            mb: 1.5,
+          }}
+        >
           {tAccount('introduction')}
         </Typography>
         <Typography>{tAccount('description')}</Typography>
@@ -192,7 +212,12 @@ const AboutYouSetAForm = () => {
         <Typography variant="body2">{tAccount('update')}</Typography>
 
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography
+            sx={{
+              color: 'error.main',
+              mb: 2,
+            }}
+          >
             {formError}
           </Typography>
         )}

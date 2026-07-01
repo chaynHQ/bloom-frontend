@@ -36,7 +36,11 @@ export default function SettingsPage() {
   };
 
   return (
-    <Box bgcolor={'secondary.light'}>
+    <Box
+      sx={{
+        bgcolor: 'secondary.light',
+      }}
+    >
       <Header
         title={headerProps.title}
         introduction={headerProps.introduction}

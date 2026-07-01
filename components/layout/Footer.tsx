@@ -35,11 +35,11 @@ function getDescriptionContainerStyle(totalPartners: number) {
     return {
       maxWidth: { sm: '80%', [totalPartners === 2 ? 'md' : 'lg']: 340 },
       minWidth: { [totalPartners === 2 ? 'md' : 'lg']: 280 },
-      marginRight: { sm: '20%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
+      marginInlineEnd: { sm: '20%', [totalPartners === 2 ? 'md' : 'lg']: 0 },
     };
   } else {
     // 4+ partners to display, use full width for all screen sizes
-    return { maxWidth: { sm: '80%' }, marginRight: { sm: '20%' } };
+    return { maxWidth: { sm: '80%' }, marginInlineEnd: { sm: '20%' } };
   }
 }
 
@@ -73,7 +73,7 @@ const socialsContainerStyle = {
   ...rowStyle,
   justifyContent: 'flex-start',
   marginTop: 1.25,
-  marginLeft: -1,
+  marginInlineStart: -1,
 } as const;
 
 const fundingContainerStyle = {
@@ -132,7 +132,12 @@ const Footer = () => {
   return (
     <>
       <Container sx={footerContainerStyle} component="footer">
-        <Box width="100%" mb={3}>
+        <Box
+          sx={{
+            width: '100%',
+            mb: 3,
+          }}
+        >
           <Image alt={tS('alt.bloomLogo')} src={bloomLogo} width={140} height={60} />
         </Box>
         <Box sx={footerContentRowStyle}>
@@ -140,25 +145,35 @@ const Footer = () => {
             <Typography>
               {tS.rich('footer.chaynDescription', {
                 link: (content) => (
-                  <Link href="https://www.chayn.co/" target="_blank" fontWeight={600}>
+                  <Link
+                    href="https://www.chayn.co/"
+                    target="_blank"
+                    sx={{
+                      fontWeight: 600,
+                    }}
+                  >
                     {content}
                   </Link>
                 ),
               })}
             </Typography>
             <Link
-              display="block"
-              mt={2}
               href="https://chayn.notion.site/Public-0bd70701308549518d0c7c72fdd6c9b1"
               target="_blank"
+              sx={{
+                display: 'block',
+                mt: 2,
+              }}
             >
               {tS('footer.policies')}
             </Link>
             <Link
-              display="block"
-              mt={2}
               href="https://app.eu.vanta.com/chayn.co/trust/yrbp5r3nj96a1dlq15h0y"
               target="_blank"
+              sx={{
+                display: 'block',
+                mt: 2,
+              }}
             >
               {tS('footer.trustCenter')}
             </Link>
@@ -172,9 +187,15 @@ const Footer = () => {
                 <Box key={`${partner.name}_footer`}>
                   <Link
                     href={partner.website}
-                    sx={logoContainerStyle}
-                    position="relative"
                     target="_blank"
+                    sx={[
+                      {
+                        position: 'relative',
+                      },
+                      ...(Array.isArray(logoContainerStyle)
+                        ? logoContainerStyle
+                        : [logoContainerStyle]),
+                    ]}
                   >
                     <Image
                       alt={tS(partner.logoAlt)}
@@ -284,10 +305,22 @@ const Footer = () => {
           {tS('footer.fundedByTitle')}
         </Typography>
         <Box sx={fundingLogosContainerStyle}>
-          <Link href="https://www.comicrelief.com/" position="relative" target="_blank">
+          <Link
+            href="https://www.comicrelief.com/"
+            target="_blank"
+            sx={{
+              position: 'relative',
+            }}
+          >
             <Image alt={tS('alt.comicReliefLogo')} src={comicReliefLogo} width={88} height={64} />
           </Link>
-          <Link href="https://www.tnlcommunityfund.org.uk/" position="relative" target="_blank">
+          <Link
+            href="https://www.tnlcommunityfund.org.uk/"
+            target="_blank"
+            sx={{
+              position: 'relative',
+            }}
+          >
             <Image
               alt={tS('alt.communityFundLogo')}
               src={communityFundLogo}

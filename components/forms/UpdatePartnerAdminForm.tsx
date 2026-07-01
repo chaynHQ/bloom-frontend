@@ -183,7 +183,15 @@ const UpdatePartnerAdminForm = () => {
         </FormControl>
       )}
 
-      {formError && <Typography color="error.main">{formError}</Typography>}
+      {formError && (
+        <Typography
+          sx={{
+            color: 'error.main',
+          }}
+        >
+          {formError}
+        </Typography>
+      )}
 
       <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}

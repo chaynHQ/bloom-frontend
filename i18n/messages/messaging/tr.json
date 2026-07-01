@@ -1,0 +1,35 @@
+{
+  "Messaging": {
+    "messageHeading": "Aklından geçenleri bize anlat",
+    "frontChat": {
+      "ariaChat": "Bloom mesajlaşma",
+      "welcomeAuthor": "Bloom Ekibi",
+      "welcomeMessage": "Merhaba, burada birbirine destek olma konusunda deneyimli, Bloom ekibimizden hayatta kalanlar ve müttefiklerle sohbet edebilirsin. Kurslarımızda ilerlerken sorularını, duygularını ve düşüncelerini paylaşman için buradayız.\n\nAcil bir zarar riski altındaysan, lütfen yapabiliyorsan ve senin için güvenliyse acil servisleri ara. Kriz desteği sunmuyor olsak da, ihtiyacın olan türde bir destek hizmetine ulaşmana yardımcı olabiliriz. Bölgendeki destek hizmetlerini buradaki küresel rehberimizde arayabilirsin: c.chayn.co/directory.\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce ve İspanyolca sohbet edebilirsin.\n\nMesajına her zaman 1-2 gün içinde yanıt vermeyi hedefleriz.",
+      "empty": "Aşağıdan ilk mesajını gönder, ekibimiz en kısa sürede sana geri dönecek.",
+      "placeholder": "Bir mesaj yaz…",
+      "send": "Mesaj gönder",
+      "attachImage": "Görsel ekle",
+      "imageAttachment": "Görsel",
+      "voiceNote": "Sesli not",
+      "startRecording": "Sesli not kaydet",
+      "stopRecording": "Sesli notu durdur ve gönder",
+      "cancelRecording": "Kaydı iptal et",
+      "recordingInProgress": "Kaydediliyor",
+      "messageSending": "Gönderiliyor",
+      "messageFailed": "Gönderilemedi — lütfen tekrar dene.",
+      "audioUnavailable": "Ses kullanılamıyor",
+      "status": {
+        "connecting": "Bağlanıyor…",
+        "disconnected": "Yeniden bağlanılıyor…",
+        "error": "Bağlanılamıyor. Lütfen daha sonra tekrar dene."
+      },
+      "errors": {
+        "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri desteklenir.",
+        "fileTooLarge": "Dosyalar 25 MB'tan küçük olmalıdır.",
+        "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar dene.",
+        "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarından mikrofon erişimine izin ver ve tekrar dene.",
+        "micUnavailable": "Mikrofonuna erişilemedi. Lütfen bağlı olduğundan emin ol ve tekrar dene."
+      }
+    }
+  }
+}

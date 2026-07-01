@@ -34,7 +34,7 @@ const radioGroupStyle = {
   columnGap: 2,
   label: {
     minWidth: '50%',
-    marginRight: 0,
+    marginInlineEnd: 0,
   },
   '.MuiRadio-root': {
     paddingY: 0.75,
@@ -152,12 +152,16 @@ const EmailRemindersSettingsForm = () => {
         setSelectedInput={handleSelectedInputChange}
       />
       {error && (
-        <Typography variant="body2" color={'error.main'}>
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'error.main',
+          }}
+        >
           {error}
         </Typography>
       )}
       {showUpdateLaterMessage && <Typography variant="body2">{t('update')}</Typography>}
-
       <LoadingButton
         qa-id="email-reminders-settings-submit"
         sx={{ mt: 3 }}

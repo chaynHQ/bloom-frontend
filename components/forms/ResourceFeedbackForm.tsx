@@ -163,11 +163,15 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
           fullWidth
           multiline
           rows={5}
-          InputProps={{ disableUnderline: true }}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ input: { disableUnderline: true }, inputLabel: { shrink: true } }}
         />
         {formError && (
-          <Typography sx={{ '&:last-of-type': { mb: 4 } }} color="error.main">
+          <Typography
+            sx={{
+              color: 'error.main',
+              '&:last-of-type': { mb: 4 },
+            }}
+          >
             {formError}
           </Typography>
         )}

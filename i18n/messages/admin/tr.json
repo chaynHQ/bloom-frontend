@@ -1,0 +1,54 @@
+{
+  "Admin": {
+    "title": "Süper yönetici panosu",
+    "accessGuard": {
+      "title": "Erişim gerekli",
+      "introduction": "Hesabın bu sayfalara erişim içermiyor."
+    },
+    "createPartnerAdmin": {
+      "title": "Bir yönetici hesabı oluştur",
+      "description": "Yönetici hesapları terapi kodları oluşturabilir",
+      "partnerNameLabel": "İş ortağı seç",
+      "submit": "Yönetici hesabı oluştur",
+      "successDescription": "İş ortağı yöneticisi oluşturuldu! Bir hesaplarının olduğunu ve ilk kez giriş yapabilmek için bir şifre seçmek üzere 'Şifremi unuttum' akışını kullanmaları gerektiğini bildirmek için onlara e-posta gönder.",
+      "emailAddressLabel": "E-posta adresi",
+      "nameLabel": "Ad",
+      "reset": "Başka bir yönetici oluştur",
+      "error": "İş ortağı yöneticisi oluşturulurken hata: "
+    },
+    "updateTherapy": {
+      "title": "Terapi seanslarını güncelle",
+      "emailLabel": "Kullanıcı e-postasına göre ara",
+      "therapySessionsRedeemed": "Kullanılan terapi seansı sayısı",
+      "therapySessionsTotal": "Toplam terapi seansı sayısı",
+      "submit": "Terapi seanslarını güncelle",
+      "successDescription": "Kullanıcının terapi seansları güncellendi!",
+      "error": "Terapi seansları güncellenirken hata: ",
+      "reset": "Başka bir kullanıcıyı güncelle"
+    },
+    "updatePartnerAdmin": {
+      "title": "İş ortağı yöneticisini güncelle",
+      "emailLabel": "Yönetici e-postasına göre ara",
+      "activeAdminLabel": "İş ortağı yöneticisi şu anda aktif",
+      "successDescription": "İş ortağı yöneticisi güncellendi!",
+      "formError": "Bir iş ortağı kullanıcısı seçtiğinden emin ol",
+      "error": "İş ortağı yöneticisi güncellenirken hata: ",
+      "reset": "Başka bir iş ortağı yöneticisini güncelle"
+    },
+    "updatePartner": {
+      "title": "İş ortağı aktiflik durumunu güncelle",
+      "activeLabel": "{partner} ortağını devre dışı bırak",
+      "inactiveLabel": "{partner} ortağını yeniden etkinleştir",
+      "partnerNameLabel": "İş ortağı seç",
+      "partnerActiveLabel": "İş ortağı aktif",
+      "successDescription": "{partner} başarıyla {status} olarak güncellendi",
+      "inactiveDescription": "{partner} şu anda pasif. {partner} ortağını yeniden etkinleştirmek, ortağı ve önceki tüm iş ortağı yöneticilerini ve kullanıcılarını geri yükler",
+      "activeDescription": "{partner} şu anda aktif. {partner} ortağını devre dışı bırakmak, iş ortağı yöneticilerini ve kullanıcılarını da devre dışı bırakarak onları herkese açık kullanıcılara dönüştürür. Tüm iş ortağı verileri ve kullanıcı verileri saklanır ve iş ortağı daha sonra yeniden etkinleştirilebilir.",
+      "inactiveSuccess": "{partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a herkese açık kullanıcılar olarak erişecekler",
+      "activeSuccess": "Önceki {partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a iş ortağı kullanıcıları olarak erişebilecekler",
+      "formError": "Bir iş ortağı seçtiğinden emin ol",
+      "error": "İş ortağı aktiflik durumu güncellenirken hata: ",
+      "reset": "Formu sıfırla"
+    }
+  }
+}

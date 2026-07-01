@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { RELATED_CONTENT_CARD_CLICK } from '@/lib/constants/events';
@@ -24,8 +25,8 @@ const categoryStyle = {
   mb: '0.5rem !important',
   '& .before-dot:before': {
     content: '"• "',
-    marginLeft: 1,
-    marginRight: 1,
+    marginInlineStart: 1,
+    marginInlineEnd: 1,
   },
 } as const;
 
@@ -64,7 +65,13 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
         }}
       >
         <CardContent sx={cardContentStyle}>
-          <Box position="relative" width="100%" paddingRight={1}>
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              paddingInlineEnd: 1,
+            }}
+          >
             <Box>
               <Typography sx={categoryStyle}>
                 {t(category)}
@@ -72,14 +79,21 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
                   <span className="before-dot">{` ${duration} ${t('minuteLabel')}`}</span>
                 )}
               </Typography>
-              <Typography variant="h3" mb={0}>
+              <Typography
+                variant="h3"
+                sx={{
+                  mb: 0,
+                }}
+              >
                 {title}
               </Typography>
             </Box>
-            <ArrowForwardIos
-              color="error"
-              sx={{ fontSize: '20px', position: 'absolute', right: -10, top: -5 }}
-            />
+            <DirectionalIcon>
+              <ArrowForwardIos
+                color="error"
+                sx={{ fontSize: '20px', position: 'absolute', insetInlineEnd: -10, top: -5 }}
+              />
+            </DirectionalIcon>
           </Box>
         </CardContent>
       </CardActionArea>

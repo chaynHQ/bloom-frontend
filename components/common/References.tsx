@@ -12,7 +12,7 @@ const referenceContainer = {
 } as const;
 
 const attributionStyle = {
-  ml: 1,
+  marginInlineStart: 1,
   color: 'text.secondary',
   fontStyle: 'normal',
 } as const;
@@ -29,7 +29,12 @@ const References = (props: ReferencesProps) => {
       {references.map((reference, index) => (
         <Box sx={referenceContainer} key={`key_reference_${index}`}>
           <ReferenceIcon category={reference.category} />
-          <Typography variant="body2" fontStyle="italic">
+          <Typography
+            variant="body2"
+            sx={{
+              fontStyle: 'italic',
+            }}
+          >
             {reference.url ? (
               <Link href={reference.url} target="_blank">
                 {reference.title}

@@ -55,10 +55,20 @@ export function SuperAdminGuard({ children }: { children: ReactNode }) {
             }}
           />
         </Box>
-        <Typography variant="h2" component="h2" mb={2}>
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            mb: 2,
+          }}
+        >
           {t('title')}
         </Typography>
-        <Typography mb={2}>
+        <Typography
+          sx={{
+            mb: 2,
+          }}
+        >
           {t.rich('introduction', {
             contactLink: (children) => (
               <Link target="_blank" href={FEEDBACK_FORM_URL}>

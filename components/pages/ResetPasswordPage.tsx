@@ -47,7 +47,13 @@ export default function ResetPasswordPage() {
       />
       <Container sx={containerStyle}>
         <Box sx={textContainerStyle}>
-          <Typography pb={2} variant="subtitle1" component="p">
+          <Typography
+            variant="subtitle1"
+            component="p"
+            sx={{
+              pb: 2,
+            }}
+          >
             {t('introduction')}
           </Typography>
         </Box>

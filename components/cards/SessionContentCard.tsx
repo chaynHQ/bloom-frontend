@@ -79,13 +79,19 @@ const SessionContentCard = (props: SessionContentCardProps) => {
       <CardActionArea onClick={handleExpandClick} aria-label={`${t('expand')} ${title}`}>
         <CardContent sx={titleContainerStyle}>
           <TitleIcon sx={titleIconStyle} color="error" />
-          <Typography component="h3" variant="h3" mb={0} flex={1}>
+          <Typography
+            component="h3"
+            variant="h3"
+            sx={{
+              mb: 0,
+              flex: 1,
+            }}
+          >
             {title}
           </Typography>
           <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
         </CardContent>
       </CardActionArea>
-
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={contentContainerStyle}>{children}</CardContent>
       </Collapse>

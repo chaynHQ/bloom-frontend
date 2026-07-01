@@ -100,7 +100,11 @@ export const SessionVideo = (props: SessionVideoProps) => {
         eventData={eventData}
         initialExpanded={true}
       >
-        <Typography mb={3}>
+        <Typography
+          sx={{
+            mb: 3,
+          }}
+        >
           {t.rich('sessionDetail.videoDescription', {
             transcriptLink: (children) => (
               <MuiLink

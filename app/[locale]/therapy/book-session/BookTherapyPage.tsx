@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Container, IconButton, Modal, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Script from 'next/script';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -80,8 +80,8 @@ const widgetContainerStyle = {
 const modalTitleStyle = {
   position: 'absolute',
   top: 10,
-  right: 0,
-  left: 0,
+  insetInlineEnd: 0,
+  insetInlineStart: 0,
   marginInline: 'auto',
   width: 'fit-content',
 } as const;
@@ -89,7 +89,7 @@ const modalTitleStyle = {
 const closeButtonStyle = {
   position: 'absolute',
   top: 20,
-  right: 20,
+  insetInlineEnd: 20,
   zIndex: 1301,
   color: 'grey.700',
   backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -127,6 +127,7 @@ interface Props {
 
 export default function BookTherapyPage({ story }: Props) {
   const t = useTranslations('Therapy');
+  const locale = useLocale();
   const [isWidgetModalOpen, setIsWidgetModalOpen] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [widgetError, setWidgetError] = useState<string | null>(null);
@@ -200,7 +201,7 @@ export default function BookTherapyPage({ story }: Props) {
           container.innerHTML = '';
           setWidgetError(null);
           try {
-            new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
+            new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user, locale));
           } catch (error) {
             rollbar.error('Simplybook widget initialization error', JSON.stringify(error));
             setWidgetError(t('error.initializingWidget'));
@@ -212,7 +213,7 @@ export default function BookTherapyPage({ story }: Props) {
               containerRetry.innerHTML = '';
               setWidgetError(null);
               try {
-                new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user));
+                new (window as any).SimplybookWidget(getSimplybookWidgetConfig(user, locale));
               } catch (error) {
                 rollbar.error(
                   'Simplybook widget initialization error after retry',
@@ -253,7 +254,7 @@ export default function BookTherapyPage({ story }: Props) {
         clearTimeout(timeoutId);
       }
     };
-  }, [isWidgetModalOpen, isScriptLoaded, user, rollbar, t]); // Added t to dependencies
+  }, [isWidgetModalOpen, isScriptLoaded, user, locale, rollbar, t]); // Added t to dependencies
 
   // Process story content to replace {partnerName} placeholders
   const processedStory = useStoryblokWithPartnerName(story, partnerAccess?.partner.name);
@@ -288,12 +289,15 @@ export default function BookTherapyPage({ story }: Props) {
       <Container sx={containerStyle}>
         {partnerAccess && <TherapyBookings partnerAccess={partnerAccess} />}
       </Container>
-
       <Container id="booking-steps-section" sx={bookingSectionStyle} maxWidth="md">
         <Typography variant="h2" component="h2" gutterBottom>
           {t('bookingSectionTitle')}
         </Typography>
-        <Box my={3}>
+        <Box
+          sx={{
+            my: 3,
+          }}
+        >
           <ImageTextRow items={steps} translations="Therapy.steps" />
         </Box>
         {hasTherapyRemaining && (
@@ -308,12 +312,10 @@ export default function BookTherapyPage({ story }: Props) {
           </Button>
         )}{' '}
       </Container>
-
       {processedStory.content.page_sections?.length > 0 &&
         processedStory.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!user.id} />
         ))}
-
       <Modal
         open={isWidgetModalOpen}
         onClose={handleCloseWidgetModal}
@@ -329,12 +331,21 @@ export default function BookTherapyPage({ story }: Props) {
           >
             <CloseIcon />
           </IconButton>
-          <Typography id="simplybook-widget-modal-title" variant="h3" sx={modalTitleStyle} mt={2}>
+          <Typography
+            id="simplybook-widget-modal-title"
+            variant="h3"
+            sx={[
+              {
+                mt: 2,
+              },
+              ...(Array.isArray(modalTitleStyle) ? modalTitleStyle : [modalTitleStyle]),
+            ]}
+          >
             {t('modalTitle')}
           </Typography>
           <Typography
             id="simplybook-widget-modal-description"
-            sx={{ position: 'absolute', left: '-9999px' }}
+            sx={{ position: 'absolute', insetInlineStart: '-9999px' }}
           >
             {t('modalDescription')}
           </Typography>
@@ -350,7 +361,6 @@ export default function BookTherapyPage({ story }: Props) {
           <Box id="simplybook-widget-container" sx={widgetContainerStyle}></Box>
         </Box>
       </Modal>
-
       <Script
         id="widget-js"
         src="//widget.simplybook.it/v2/widget/widget.js"

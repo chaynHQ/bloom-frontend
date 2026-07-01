@@ -1,0 +1,55 @@
+{
+  "Therapy": {
+    "title": "Terapi randevusu al",
+    "bookingButton": "Rezervasyona başla",
+    "bookingSectionTitle": "Rezervasyon nasıl işler",
+    "steps": {
+      "step1": "Özenle seçtiğimiz, çok dilli terapistlerimiz arasından seçim yaparsın.",
+      "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçidir.",
+      "step3": "Fikrini değiştirirsen, seansları istediğin zaman durdurabilir ya da terapistini değiştirebilirsin.",
+      "step4": "Paylaştığın her şey, yalnızca seninle terapist arasında kesinlikle gizli kalır."
+    },
+    "closeBookingWidget": "Rezervasyon aracını kapat",
+    "modalTitle": "Terapi randevusu al",
+    "modalDescription": "Terapi seansını planlamak için SimplyBook.me aracı.",
+    "error": {
+      "initializingWidget": "Rezervasyon aracı başlatılırken hata oluştu.",
+      "initializingWidgetRetry": "Yeniden denemede rezervasyon aracı başlatılırken hata oluştu.",
+      "containerNotFoundRetry": "Rezervasyon aracı yüklenemedi.",
+      "scriptNotLoaded": "Rezervasyon aracı betiği tam olarak yüklenmedi.",
+      "scriptLoadFailed": "Rezervasyon betiği yüklenemedi."
+    },
+    "therapyBookings": {
+      "header": "Terapi rezervasyonların",
+      "bookingSummary": "<remainingTotal>{remainingTotal}</remainingTotal> terapi seansın kaldı, <upcomingTotal>{upcomingTotal}</upcomingTotal> tanesi planlandı.",
+      "noBookingSummary": "Mevcut tüm terapi seanslarını rezerve ettin.",
+      "noBookings": "Şu anda hiç terapi rezervasyonun yok.",
+      "cancelAlert": "{id} numaralı rezervasyon için iptal talep edildi. Gerçek iptal mantığını uygula."
+    },
+    "bookingItem": {
+      "upcomingSessionTitle": "Yaklaşan terapi seansı ",
+      "pastSessionTitle": "Geçmiş terapi seansı ",
+      "cancelledSessionTitle": "İptal edilen seans",
+      "dateLabel": "Tarih",
+      "timeLabel": "Saat",
+      "therapistLabel": "Terapist",
+      "videoLinkLabel": "Video bağlantısı",
+      "videoLink": "E-posta ile gönderilen Google Meet takvim davetinden görüşmeye katıl",
+      "noVideoLink": "Bağlantı sağlanmadı",
+      "cancelButton": "İptal",
+      "cancelError": "Rezervasyon iptal edilirken hata oluştu - lütfen tekrar dene ya da ekiple iletişime geç.",
+      "expand": "Genişlet",
+      "collapse": "Daralt",
+      "cancelDialog": {
+        "title": "İptali Onayla",
+        "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun hissettiren bir zamanda yeni bir randevu alabilirsin.",
+        "keepButton": "Seansı Tut",
+        "confirmButton": "Seansı İptal Et"
+      }
+    },
+    "accessGuard": {
+      "title": "Terapi mevcut değil",
+      "introduction": "Bloom hesabın, terapi seanslarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+    }
+  }
+}
