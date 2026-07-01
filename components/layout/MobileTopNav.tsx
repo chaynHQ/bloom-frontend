@@ -47,9 +47,12 @@ const listItemStyle = {
 } as const;
 
 const listItemTextStyle = {
+  // `start` keeps labels aligned to the reading edge in both directions — left in LTR,
+  // right in RTL (Arabic). Without it the labels inherit a left alignment in the drawer.
+  textAlign: 'start',
   span: {
     fontSize: 16,
-    fontweight: 500,
+    fontWeight: 500,
   },
 } as const;
 
