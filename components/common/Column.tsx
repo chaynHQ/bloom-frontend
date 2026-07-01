@@ -1,9 +1,10 @@
 'use client';
 
 import { Box } from '@mui/material';
+import type { ReactNode } from 'react';
 
 interface ColumnProps {
-  children: any;
+  children: ReactNode;
   width?: string;
   horizontalAlignment?: string;
 }
