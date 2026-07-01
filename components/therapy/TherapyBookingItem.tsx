@@ -23,8 +23,8 @@ import logEvent from '@/lib/utils/logEvent';
 import {
   CalendarMonthOutlined,
   Cancel,
-  CheckCircleOutlined as CheckCircleOutline,
-  ErrorOutlined as ErrorOutline,
+  CheckCircleOutlineOutlined as CheckCircleOutline,
+  ErrorOutlineOutlined as ErrorOutline,
   ExpandMore,
 } from '@mui/icons-material';
 import {

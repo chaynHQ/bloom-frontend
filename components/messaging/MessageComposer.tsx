@@ -2,7 +2,7 @@
 
 import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { useVoiceRecorder } from '@/lib/hooks/useVoiceRecorder';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ImageIcon from '@mui/icons-material/Image';
 import MicIcon from '@mui/icons-material/Mic';
 import SendIcon from '@mui/icons-material/Send';
