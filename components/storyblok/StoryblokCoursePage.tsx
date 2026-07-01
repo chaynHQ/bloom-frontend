@@ -3,12 +3,14 @@
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import SessionCard from '@/components/cards/SessionCard';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import LoadingContainer from '@/components/common/LoadingContainer';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import CourseHeader from '@/components/course/CourseHeader';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -73,6 +75,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
+  const isUserLoading = useIsUserLoading();
   const courses = useTypedSelector((state) => state.courses);
 
   useGetUserCoursesQuery(undefined, {
@@ -109,6 +112,11 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
   });
 
   if (!userAccess) {
+    // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
+    // showing "no access" before we can make the access decision (e.g. on a partner deep-link).
+    if (isUserLoading) {
+      return <LoadingContainer />;
+    }
     return <ContentUnavailable />;
   }
 

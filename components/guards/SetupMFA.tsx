@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from '@/i18n/routing';
 import {
   reauthenticateUser,
   sendVerificationEmail,
@@ -11,7 +12,6 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { Alert, Box, Button, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import SanitizedTextField from '../common/SanitizedTextField';
 import PhoneInput from '../forms/PhoneInput';

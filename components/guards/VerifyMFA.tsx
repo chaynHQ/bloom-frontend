@@ -1,11 +1,11 @@
 'use client';
 
+import { useRouter } from '@/i18n/routing';
 import { triggerVerifyMFA, verifyMFA } from '@/lib/auth';
 import { Box, Button, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import type { MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import type React from 'react'; // Added import for React
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SanitizedTextField from '../common/SanitizedTextField';

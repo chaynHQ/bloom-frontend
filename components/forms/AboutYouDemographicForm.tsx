@@ -241,16 +241,16 @@ const AboutYouDemographicForm = () => {
                   onChange={(e) => setNeurodivergentInput(e.target.checked ? 'Yes' : '')}
                   sx={{
                     '& .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                   }}
                 />
@@ -264,16 +264,16 @@ const AboutYouDemographicForm = () => {
                   onChange={(e) => setNeurodivergentInput(e.target.checked ? 'No' : '')}
                   sx={{
                     '& .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                   }}
                 />
@@ -287,16 +287,16 @@ const AboutYouDemographicForm = () => {
                   onChange={(e) => setNeurodivergentInput(e.target.checked ? 'Not sure' : '')}
                   sx={{
                     '& .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                   }}
                 />
@@ -312,16 +312,16 @@ const AboutYouDemographicForm = () => {
                   }
                   sx={{
                     '& .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                     '&.Mui-checked:hover .MuiSvgIcon-root': {
-                      color: '#FF976A',
+                      color: 'secondary.dark',
                     },
                   }}
                 />
