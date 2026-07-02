@@ -116,6 +116,22 @@ export const api = createApi({
         };
       },
     }),
+    getCypressUsersCount: builder.query<{ count: number }, void>({
+      query() {
+        return {
+          url: `user/cypress/count`,
+          method: 'GET',
+        };
+      },
+    }),
+    deleteCypressUsers: builder.mutation<User[], void>({
+      query() {
+        return {
+          url: `user/cypress`,
+          method: 'DELETE',
+        };
+      },
+    }),
     getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
@@ -318,6 +334,8 @@ export const {
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useLazyGetCypressUsersCountQuery,
+  useDeleteCypressUsersMutation,
   useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,
