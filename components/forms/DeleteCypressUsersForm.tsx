@@ -56,7 +56,9 @@ const DeleteCypressUsersForm = () => {
   return (
     <form autoComplete="off" onSubmit={submitHandler}>
       <Typography sx={{ mb: 2 }}>{t('description')}</Typography>
-      <Typography sx={{ mb: 2, fontWeight: 'bold', color: 'error.main' }}>{t('warning')}</Typography>
+      <Typography sx={{ mb: 2, fontWeight: 'bold', color: 'error.main' }}>
+        {t('warning')}
+      </Typography>
 
       {deletedCount !== null && (
         <Typography sx={{ mb: 2, color: 'success.main' }}>
@@ -64,16 +66,11 @@ const DeleteCypressUsersForm = () => {
         </Typography>
       )}
 
-      <Typography sx={{ mb: 1 }}>
-        {countLoading ? t('counting') : t('count', { count })}
-      </Typography>
+      <Typography sx={{ mb: 1 }}>{countLoading ? t('counting') : t('count', { count })}</Typography>
 
       <FormControlLabel
         control={
-          <Checkbox
-            checked={confirmed}
-            onChange={(event) => setConfirmed(event.target.checked)}
-          />
+          <Checkbox checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} />
         }
         label={t('confirmLabel')}
       />
