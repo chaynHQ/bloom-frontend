@@ -31,7 +31,7 @@ export const videoContainerStyle = {
 export const videoStyle = {
   position: 'absolute',
   top: 0,
-  left: 0,
+  insetInlineStart: 0,
 } as const;
 
 const playIconStyle = {

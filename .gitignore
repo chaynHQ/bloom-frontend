@@ -54,3 +54,5 @@ newrelic_agent.log
 
 # Typescript
 tsconfig.tsbuildinfo
+# Storyblok translation working files (snapshots, proposals, todo/done arrays)
+.storyblok-translation/

@@ -1,0 +1,154 @@
+{
+  "Account": {
+    "applyCode": {
+      "title": "Kod uygula",
+      "introduction": "Bloom, dünya genelinde istismardan hayatta kalanların iyileşmesini desteklemek için iş ortaklarıyla çalışır.",
+      "description": "İş ortaklarımızdan birinden bir erişim kodu aldıysan, onların programına özel destek almak için kodu buraya ekleyebilirsin.",
+      "descriptionLine2": "Birden fazla iş ortağından kod ekleyebilirsin.",
+      "partnershipsTitle": "İş ortaklarımız",
+      "partnershipsDescription": "Logolarına tıklayarak iş birliklerimiz hakkında daha fazla bilgi edin.",
+      "formIntroduction": "Bir Bloom iş ortağından aldığın erişim kodunu gir.",
+      "formSuccess": {
+        "success": "Hesabına bir Bumble kodu uygulandı!",
+        "successLine2": "Bumble erişimin şunları sağlar:",
+        "liveChat": "Bloom ekibiyle mesajlaşma",
+        "therapy": "{therapySessionsRemaining} terapi seansı",
+        "courses": "Kendi kendine ilerlenen kurslar"
+      },
+      "form": {
+        "codeLabel": "Erişim kodu",
+        "submitLabel": "Kodu uygula",
+        "assignPartnerAccessError": "Kod hesabına uygulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+        "codeErrors": {
+          "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+          "expired": "Bu kodun süresi doldu. İş ortağının ekibiyle iletişime geç.",
+          "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya iş ortağıyla iletişime geç.",
+          "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan iş ortağının ekibiyle iletişime geç.",
+          "alreadyApplied": "Bu kod hesabına zaten uygulanmış."
+        }
+      }
+    },
+    "aboutYou": {
+      "title": "Senin hakkında",
+      "header": "Anlamamıza yardım et",
+      "description": "Bu sorular, Bloom'u kimlerin kullandığını ve bizden ne tür destekler beklediklerini anlamamıza yardımcı olur.",
+      "titleA": "Bloom'dan ne istiyorsun",
+      "descriptionALine1": "Şimdiye kadarki yanıtların için teşekkürler!",
+      "descriptionALine2": "Yeni bir kullanıcı olarak, hizmetlerimizi kullanmadan önce nasıl olduğunu anlamak isteriz. Bunu şimdi sormak, Bloom'u kullanmanın hayatta kalanlar üzerindeki etkisini ölçmemize ve doğru şeylere odaklanmamıza yardımcı olur.",
+      "goToCourses": "Kurslara geç",
+      "demographicForm": {
+        "genderLabel": "Lütfen cinsiyet kimliğini yansıtan bir veya daha fazla seçenek seç",
+        "genderHelpText": "Bunu, kullanıcılarımızın kendilerini nasıl tanımladığını daha iyi anlamak ve daha kapsayıcı, cinsiyet kimliğini destekleyen kaynaklar tasarlamak amacıyla soruyoruz. 'Yanıtlamamayı tercih ediyorum' seçeneğini işaretleyebilirsin.",
+        "genderOptions": {
+          "woman": "Kadın",
+          "man": "Erkek",
+          "nonBinary": "Non-binary (ikili olmayan)",
+          "transgender": "Trans",
+          "intersex": "İnterseks",
+          "twoSpirit": "Two-spirit (iki ruhlu)",
+          "genderNonConforming": "Cinsiyet normlarına uymayan",
+          "other": "Diğer (lütfen belirt)",
+          "preferNotToAnswer": "Yanıtlamamayı tercih ediyorum"
+        },
+        "neurodivergentLabel": "Beyninin bilgiyi işleme biçimini etkileyen bir nörotipin var mı? Bu bir öğrenme güçlüğü (örneğin disleksi, dispraksi, diskalkuli), DEHB ya da otizm olabilir.",
+        "neurodivergentHelpText": "Kapsayıcı hizmetler tasarlamak için elimizden geleni yapıyoruz, bu yüzden bunu bilmek bize yardımcı olur.",
+        "neurodivergentLabels": {
+          "1": "Evet",
+          "2": "Hayır",
+          "3": "Emin değilim",
+          "4": "Söylememeyi tercih ederim"
+        },
+        "raceEthnNatnLabel": "Irkını, etnik kökenini ve uyruğunu nasıl tanımlarsın? Örneğin Beyaz Hispanik Meksikalı ya da Tamil Hintli.",
+        "raceEthnNatnHelpText": "İnsanların ırk ve etnik köken deneyimlerinin yaşadıkları yere göre büyük ölçüde değiştiğini biliyoruz, bu yüzden seni en iyi tanımladığını hissettiğin şeyi yaz.",
+        "countryLabel": "Şu anda hangi ülkede yaşıyorsun?",
+        "countryHelpText": "Bu, hayatta kalanların hizmetlerimize nereden eriştiğini anlamamıza yardımcı olur.",
+        "ageLabel": "Yaş grubun nedir?",
+        "ageHelpText": "Yaş grubunu seç.",
+        "selectPlaceholder": "Lütfen bir seçenek seç.",
+        "ageLabels": {
+          "1": "18 yaşından küçük",
+          "2": "18-25",
+          "3": "25-35",
+          "4": "35-45",
+          "5": "45-55",
+          "6": "55+",
+          "7": "Söylememeyi tercih ederim"
+        },
+        "submitLabel": "Gönder",
+        "codeErrors": {}
+      },
+      "baseForm": {
+        "scaleDescriptionLine1": "Lütfen aşağıdaki ifadelere ne ölçüde katıldığını derecelendir:",
+        "scaleDescriptionLine2": "1 = kesinlikle katılmıyorum, 10 = kesinlikle katılıyorum",
+        "scaleLabels": {
+          "Q1": "Yaşadığım travmanın zihnimi, bedenimi ve duygularımı nasıl etkilediğini anlıyorum",
+          "Q2": "Uzun vadede bana yardımcı olmayan başa çıkma yöntemleri olduğunu ve bunlara yönelmenin travmaya verilen normal bir tepki olabileceğini biliyorum ",
+          "Q3": "İyileşmenin zaman, enerji ve sabır gerektirdiğini biliyorum",
+          "Q4": "İyileşmek için ihtiyacım olan ilgiyi kendime göstermeye kararlıyım",
+          "Q5": "Bana iyi hissettiren şeyleri buldum ve onlara günlük rutinimde zaman ayırıyorum",
+          "Q6": "Travmadan iyileşmenin bir parçasının tetikleyicilerle başa çıkmak olduğunu anlıyorum",
+          "Q7": "Beni neyin güvende ya da tehdit altında hissettirdiğinin bana özgü olduğunu anlıyorum",
+          "Q8": "Tetikleyici anları, yerleri veya yılın belirli zamanlarını öngörebilir ve onlarla başa çıkabilirim"
+        },
+        "submitLabel": "Tamamla"
+      },
+      "setAForm": {
+        "hopesLabel": "Bloom'un anlamana ya da yapmana yardımcı olmasını umduğun tek bir şey nedir?"
+      }
+    },
+    "disableServiceEmails": {
+      "title": "Bloom e-postaları kapatıldı",
+      "description": "Artık Bloom ile ilgili e-postalar almayacaksın. Bunu daha sonra değiştirmek istersen, lütfen <link>Bloom ekibiyle</link> iletişime geç",
+      "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+    },
+    "accountSettings": {
+      "title": "Hesap Ayarları",
+      "description": "Bloom'daki ayarlarını görüntüle ve güncelle",
+      "imageAlt": "İçinde kalp olan mesajlı bir cep telefonu illüstrasyonu",
+      "profileSettings": {
+        "title": "Profil bilgileri",
+        "description": "Adını ve e-postanı buradan güncelle. Bu, profilinde saklanan tek kişisel bilgidir.",
+        "nameLabel": "Ad",
+        "emailLabel": "E-posta",
+        "submitLabel": "Profili güncelle",
+        "emailAlreadyInUseError": "Bu e-posta başka bir hesap tarafından zaten kullanılıyor, lütfen tekrar dene",
+        "confirmDialogTitle": "E-postanı değiştirdiğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
+        "confirmDialogCancel": "İptal"
+      },
+      "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>",
+      "actions": {
+        "title": "Hesap işlemleri",
+        "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin seansların geçmişini sistemimizden kalıcı olarak siler.",
+        "button": {
+          "resetPassword": "Şifreyi sıfırla",
+          "deleteAccount": "Hesabı Sil"
+        },
+        "confirmDialogCancel": "Geri dön",
+        "resetPasswordConfirmDialogTitle": "Şifreni güncellediğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
+        "deleteAccountConfirmDialogTitle": "Lütfen hesabını silmek istediğini onayla",
+        "deleteAccountConfirmDialogDescription": "Bu, hesabının anında devre dışı kalacağı ve geri kurtarılamayacağı anlamına gelir. Hiçbir Bloom özelliğine veya kullanım geçmişine erişimin olmayacak. E-posta adresini ve tüm kişisel verilerini kayıtlarımızdan sileriz."
+      },
+      "emailSettings": {
+        "title": "E-posta tercihleri",
+        "description": "Sana e-posta gönderip gönderemeyeceğimizi bize bildir:",
+        "submitLabel": "E-posta tercihlerini kaydet",
+        "serviceEmailsPermissionLabel": "Hizmetlerin veya hesabındaki değişiklikler hakkında",
+        "contactPermissionLabel": "Yeni bir kurs, hizmet veya dil mevcut olduğunda",
+        "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+      },
+      "emailRemindersSettings": {
+        "title": "E-posta hatırlatıcıları",
+        "introduction": "Travmayla baş etmek, özellikle bunu yalnız yapıyorsan zor olabilir.",
+        "description": "Bir süredir giriş yapmadıysan nazik hatırlatmalarla iyileşme yolculuğunda yanında olabiliriz.",
+        "fieldLabel": "Hatırlatılsın:",
+        "twoWeeksLabel": "İki hafta sonra",
+        "oneMonthLabel": "Bir ay sonra",
+        "twoMonthsLabel": "İki ay sonra",
+        "neverLabel": "Asla",
+        "update": "Bu ayarı istediğin zaman güncelleyebilirsin",
+        "submitLabel": "E-posta hatırlatıcılarını kaydet",
+        "updateError": "E-posta hatırlatıcı ayarların güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+      }
+    }
+  }
+}

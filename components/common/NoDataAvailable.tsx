@@ -19,7 +19,7 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 180, md: 260 },
   height: { xs: 180, md: 260 },
-  marginLeft: { xs: -3, md: -6 },
+  marginInlineStart: { xs: -3, md: -6 },
   marginBottom: 4,
 } as const;
 
@@ -36,7 +36,13 @@ const NoDataAvailable = () => {
           sizes={getImageSizes(imageContainerStyle.width)}
         />
       </Box>
-      <Typography variant="h3" component="h1" maxWidth={700}>
+      <Typography
+        variant="h3"
+        component="h1"
+        sx={{
+          maxWidth: 700,
+        }}
+      >
         {t('noDataAvailable.title')}
       </Typography>
     </Container>

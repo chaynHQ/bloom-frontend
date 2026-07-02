@@ -21,47 +21,81 @@ const NotesFromBloomPromo = () => {
   const tN = useTranslations('Navigation');
   return (
     <Box
-      padding={['20px 30px', '30px 30px']}
-      width="100%"
-      display={'flex'}
-      justifyContent="center"
-      sx={{ overflow: 'hidden', background: theme.palette.bloomGradientVertical }} // This will clip overflowing content
+      sx={{
+        padding: ['20px 30px', '30px 30px'],
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        background: theme.palette.bloomGradientVertical,
+      }}
     >
       <Box
-        maxWidth={[600, 600, 750]}
-        width="100%"
-        gap={2}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="left"
+        sx={{
+          maxWidth: [600, 600, 750],
+          width: '100%',
+          gap: 2,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'left',
+        }}
       >
-        <Box flex="1" height={[100, 100, 50]} position="relative" display="flex">
+        <Box
+          sx={{
+            flex: '1',
+            height: [100, 100, 50],
+            position: 'relative',
+            display: 'flex',
+          }}
+        >
           <Box
-            height={[200, 225, 200]}
-            width={[200, 225, 200]}
-            position="absolute"
-            bottom={[-125, -125, -100]}
-            left={[-100, -100, -75]}
-            zIndex={1}
+            sx={{
+              height: [200, 225, 200],
+              width: [200, 225, 200],
+              position: 'absolute',
+              bottom: [-125, -125, -100],
+              zIndex: 1,
+              insetInlineStart: [-100, -100, -75],
+            }}
           >
             <Image alt={tN('alt.notesIcon')} src={NotesIcon} sizes={getImageSizes(100)} fill />
           </Box>
         </Box>
         <Box
-          flex="3"
-          zIndex={2}
-          display="flex"
-          flexDirection="column"
-          alignContent="right"
-          justifyContent={'right'}
+          sx={{
+            flex: '3',
+            zIndex: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignContent: 'right',
+            justifyContent: 'right',
+          }}
         >
-          <Box component="h2" fontSize={theme.typography.body1.fontSize} mb={0.5} mt={0}>
+          <Box
+            component="h2"
+            sx={{
+              fontSize: theme.typography.body1.fontSize,
+              mb: 0.5,
+              mt: 0,
+            }}
+          >
             {t('title')}
           </Box>
-          <Box component="p" mb={2} lineHeight={1.5}>
+          <Box
+            component="p"
+            sx={{
+              mb: 2,
+              lineHeight: 1.5,
+            }}
+          >
             {t('description')}
           </Box>
-          <Box display={['flex', 'flex', 'none']} justifyContent="flex-end">
+          <Box
+            sx={{
+              display: ['flex', 'flex', 'none'],
+              justifyContent: 'flex-end',
+            }}
+          >
             <Button
               link="/subscription/whatsapp"
               color={STORYBLOK_COLORS.PRIMARY_DARK}
@@ -74,7 +108,12 @@ const NotesFromBloomPromo = () => {
             />
           </Box>
         </Box>
-        <Box display={['none', 'none', 'flex']} justifyContent="flex-end">
+        <Box
+          sx={{
+            display: ['none', 'none', 'flex'],
+            justifyContent: 'flex-end',
+          }}
+        >
           <Button
             link="/subscription/whatsapp"
             color={STORYBLOK_COLORS.PRIMARY_DARK}

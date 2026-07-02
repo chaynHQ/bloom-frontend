@@ -1,7 +1,7 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutlineOutlined';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
@@ -75,8 +75,10 @@ export default function UserMenu() {
         onClose={handleClose}
         elevation={1}
         sx={{ mt: 0.5 }}
-        MenuListProps={{
-          id: 'user-menu',
+        slotProps={{
+          list: {
+            id: 'user-menu',
+          },
         }}
       >
         {!(partnerAdmin && partnerAdmin.partner) && (

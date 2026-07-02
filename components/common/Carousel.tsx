@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import theme from '@/styles/theme';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -70,17 +71,23 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
 
   return (
     <Box
-      justifyContent="center"
-      gap={5}
-      alignItems="center"
-      marginLeft="auto" // need to override some mobile styles so that the dots are centered
-      marginRight="auto"
-      width="100%"
-      maxWidth="400px"
-      display="flex"
-      marginTop={2}
+      sx={{
+        justifyContent: 'center',
+        gap: 5,
+        alignItems: 'center',
+        marginInlineStart: 'auto',
+        marginInlineEnd: 'auto',
+        width: '100%',
+        maxWidth: '400px',
+        display: 'flex',
+        marginTop: 2,
+      }}
     >
-      <Box alignContent="center">
+      <Box
+        sx={{
+          alignContent: 'center',
+        }}
+      >
         <IconButton
           onClick={goBack}
           sx={{
@@ -92,11 +99,20 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
             },
           }}
         >
-          <KeyboardArrowLeft></KeyboardArrowLeft>
+          <DirectionalIcon>
+            <KeyboardArrowLeft></KeyboardArrowLeft>
+          </DirectionalIcon>
         </IconButton>
       </Box>
       <Box>
-        <Box display="flex" gap={1} alignContent="center" width="100%">
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            alignContent: 'center',
+            width: '100%',
+          }}
+        >
           {[...Array(totalPages)].map((_, index) => (
             <Box key={index}>
               <button
@@ -116,9 +132,15 @@ const CustomDots = ({ carouselTheme = 'primary' }: { carouselTheme: 'primary' | 
           ))}
         </Box>
       </Box>
-      <Box alignContent="center">
+      <Box
+        sx={{
+          alignContent: 'center',
+        }}
+      >
         <IconButton onClick={goForward} sx={iconButtonStyle}>
-          <KeyboardArrowRight></KeyboardArrowRight>
+          <DirectionalIcon>
+            <KeyboardArrowRight></KeyboardArrowRight>
+          </DirectionalIcon>
         </IconButton>
       </Box>
     </Box>

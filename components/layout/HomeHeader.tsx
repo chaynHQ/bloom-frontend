@@ -15,13 +15,9 @@ import UserResearchBanner from '../banner/UserResearchBanner';
 
 interface HeaderProps {
   title:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -47,8 +43,8 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 220, sm: 250, md: 300, lg: 350 },
   height: { xs: 220, sm: 250, md: 300, lg: 350 },
-  marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: 0, md: 0 },
+  marginInlineStart: { xs: 'auto', md: 0 },
+  marginInlineEnd: { xs: 0, md: 0 },
 } as const;
 
 const textContainerStyle = {
@@ -77,7 +73,13 @@ const Header = (props: HeaderProps) => {
       <UserResearchBanner />
       <Box sx={textContainerStyle}>
         <Box sx={textContentStyle}>
-          <Typography variant="h1" component="h1" mb={3}>
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{
+              mb: 3,
+            }}
+          >
             {title}
           </Typography>
           <>{render(introduction, RichTextOptions)}</>

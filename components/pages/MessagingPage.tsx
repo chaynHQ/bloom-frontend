@@ -70,7 +70,11 @@ export default function MessagingPage({ story }: Props) {
                   }}
                 />
               </Box>
-              <Box flex={1}>
+              <Box
+                sx={{
+                  flex: 1,
+                }}
+              >
                 <MessageThread />
               </Box>
             </Box>

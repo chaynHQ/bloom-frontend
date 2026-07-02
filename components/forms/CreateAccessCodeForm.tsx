@@ -109,7 +109,13 @@ const CreateAccessCodeForm = () => {
   if (formSubmitSuccess) {
     return (
       <Box>
-        <Typography variant="h3" component="h3" mb={1}>
+        <Typography
+          variant="h3"
+          component="h3"
+          sx={{
+            mb: 1,
+          }}
+        >
           {t('therapyAccess')}
         </Typography>
         <Typography>
@@ -121,12 +127,15 @@ const CreateAccessCodeForm = () => {
             ),
           })}
         </Typography>
-        <Typography mt={2}>
+        <Typography
+          sx={{
+            mt: 2,
+          }}
+        >
           {t.rich('resultCode', {
             partnerAccessCode: () => <strong id="access-code">{partnerAccessCode}</strong>,
           })}
         </Typography>
-
         <Box>
           <Button sx={{ mt: 3 }} variant="contained" color="secondary" onClick={resetForm}>
             {t('form.reset')}
@@ -152,9 +161,15 @@ const CreateAccessCodeForm = () => {
           />
         </RadioGroup>
       </FormControl>
-
-      {formError && <Typography color="error.main">{formError}</Typography>}
-
+      {formError && (
+        <Typography
+          sx={{
+            color: 'error.main',
+          }}
+        >
+          {formError}
+        </Typography>
+      )}
       <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
       </LoadingButton>

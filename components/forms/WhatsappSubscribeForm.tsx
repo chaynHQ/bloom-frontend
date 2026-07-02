@@ -113,7 +113,12 @@ const WhatsappSubscribeForm = () => {
         </Box>
       </form>
       {formError && (
-        <Typography color="error.main" mb={2}>
+        <Typography
+          sx={{
+            color: 'error.main',
+            mb: 2,
+          }}
+        >
           {formError}
         </Typography>
       )}

@@ -1,6 +1,7 @@
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import { User } from '@/lib/store/userSlice';
+import { isRtlLocale } from '@/lib/utils/getLocaleDirection';
 
 // Simplybook hardcodes additional field IDs
 const userIdFieldId =
@@ -8,7 +9,7 @@ const userIdFieldId =
     ? '86a541b6d059de75eaba4e18a288cd24'
     : 'b3b2455c79e69e6baf6e8c1fcf34b691';
 
-export const getSimplybookWidgetConfig = (user?: User) => {
+export const getSimplybookWidgetConfig = (user?: User, locale?: string) => {
   return {
     container_id: 'simplybook-widget-container',
     widget_type: 'iframe',
@@ -22,7 +23,7 @@ export const getSimplybookWidgetConfig = (user?: User) => {
     },
     timeline: 'modern',
     datepicker: 'top_calendar',
-    is_rtl: false,
+    is_rtl: isRtlLocale(locale ?? ''),
     app_config: {
       allow_switch_to_ada: 0,
       ...(user && {

@@ -156,7 +156,11 @@ const LoginForm = () => {
   };
 
   return (
-    <Box mb={1}>
+    <Box
+      sx={{
+        mb: 1,
+      }}
+    >
       <form id="login-form" autoComplete="off" onSubmit={submitHandler}>
         {showVerifyMFA && mfaResolver ? (
           <VerifyMFA resolver={mfaResolver} />
@@ -183,14 +187,19 @@ const LoginForm = () => {
               required
             />
             {displayError && (
-              <Typography color="error.main" mb={'1rem !important'}>
+              <Typography
+                sx={{
+                  color: 'error.main',
+                  mb: '1rem !important',
+                }}
+              >
                 {displayError}
               </Typography>
             )}
 
             <LoadingButton
               id="login-submit"
-              sx={{ mt: 2, mr: 1.5, mb: 2, minWidth: 150 }}
+              sx={{ mt: 2, marginInlineEnd: 1.5, mb: 2, minWidth: 150 }}
               variant="contained"
               color="secondary"
               type="submit"
@@ -198,7 +207,13 @@ const LoginForm = () => {
             >
               {t('form.loginSubmit')}
             </LoadingButton>
-            <Typography variant="body2" textAlign="left" mb={1}>
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: 'start',
+                mb: 1,
+              }}
+            >
               {t.rich('login.resetPasswordLink', {
                 resetLink: (children) => (
                   <Link
@@ -212,7 +227,12 @@ const LoginForm = () => {
                 ),
               })}
             </Typography>
-            <Typography variant="body2" textAlign="left">
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: 'start',
+              }}
+            >
               {t.rich('login.createAnAccountLink', {
                 createAnAccountLink: (children) => (
                   <Link

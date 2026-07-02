@@ -38,7 +38,7 @@ const tabStyle = {
   fontweight: 500,
   padding: 0.25,
   color: 'text.primary',
-  '& .material-icons ': { mb: 0, mr: 1.5 },
+  '& .material-icons ': { mb: 0, marginInlineEnd: 1.5 },
 
   '&.Mui-selected': {
     color: 'text.secondary',
@@ -111,14 +111,13 @@ const DesktopMainNav = () => {
       sx={tabsStyle}
       variant="fullWidth"
       qa-id="secondary-nav"
-      // Weird type errors for this prop
-      TabIndicatorProps={
-        {
+      slotProps={{
+        indicator: {
           sx: {
             backgroundColor: 'primary.dark',
           },
-        } as Partial<HTMLAttributes<HTMLDivElement>>
-      }
+        } as Partial<HTMLAttributes<HTMLDivElement>>,
+      }}
     >
       {navItems.map((navItem) => {
         return (

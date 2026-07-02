@@ -4,7 +4,7 @@ import SessionContentCard from '@/components/cards/SessionContentCard';
 import { Dots } from '@/components/common/Dots';
 import Video from '@/components/video/Video';
 import { Link as i18nLink } from '@/i18n/routing';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
@@ -41,8 +41,20 @@ export const SessionChat = (props: SessionChatProps) => {
         eventPrefix="SESSION_CHAT"
         eventData={eventData}
       >
-        <Typography paragraph>{t('sessionDetail.chat.description')}</Typography>
-        <Typography paragraph>{t('sessionDetail.chat.videoIntro')}</Typography>
+        <Typography
+          sx={{
+            marginBottom: '16px',
+          }}
+        >
+          {t('sessionDetail.chat.description')}
+        </Typography>
+        <Typography
+          sx={{
+            marginBottom: '16px',
+          }}
+        >
+          {t('sessionDetail.chat.videoIntro')}
+        </Typography>
         <Video
           eventPrefix="SESSION_CHAT_VIDEO"
           eventData={eventData}
@@ -50,7 +62,7 @@ export const SessionChat = (props: SessionChatProps) => {
           containerStyles={{ mx: 'auto', my: 2 }}
         ></Video>
         <Box>
-          <List sx={{ listStyleType: 'disc', pl: 2 }}>
+          <List sx={{ listStyleType: 'disc', paddingInlineStart: 2 }}>
             {chatList.map((text, index) => (
               <ListItem key={`chat_copy_${index}`} sx={listItemStyle}>
                 <Typography component="span">{text}</Typography>

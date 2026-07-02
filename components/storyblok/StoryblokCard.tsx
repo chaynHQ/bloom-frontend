@@ -36,7 +36,7 @@ interface StoryblokCardProps {
 
 const cardActionsStyle = {
   position: 'absolute',
-  right: 1,
+  insetInlineEnd: 1,
   bottom: 3,
 } as const;
 
@@ -76,7 +76,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
 
   const slimPadding = {
     padding: { xs: 2, sm: 2, md: 2, lg: 2 },
-    ...(dropdown_button ? { paddingRight: { xs: 2, sm: 2, md: 4, lg: 2 } } : {}),
+    ...(dropdown_button ? { paddingInlineEnd: { xs: 2, sm: 2, md: 4, lg: 2 } } : {}),
     '&:last-child': { paddingBottom: { xs: 2, sm: 2, md: 2, lg: 2 } },
     gap: { xs: 3, sm: 1, md: 1 },
     '& h3:only-child': {
@@ -90,7 +90,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
     flexDirection:
       alignment === 'right' ? 'row-reverse' : alignment === 'center' ? 'column' : 'row',
     alignItems: alignment === 'right' ? 'flex-end' : alignment === 'center' ? 'center' : 'center',
-    textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
+    textAlign: alignment === 'right' ? 'end' : alignment === 'center' ? 'center' : 'start',
     gap: isSlimStyle ? 2 : 3,
     backgroundColor: background,
   } as const;
@@ -105,7 +105,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
 
   const collapseContentStyle = {
     backgroundColor: background,
-    textAlign: alignment === 'right' ? 'right' : alignment === 'center' ? 'center' : 'left',
+    textAlign: alignment === 'right' ? 'end' : alignment === 'center' ? 'center' : 'start',
     ...(style == 'slim' ? slimPadding : {}),
   } as const;
 
@@ -122,7 +122,13 @@ const StoryblokCard = (props: StoryblokCardProps) => {
           ></Image>
         </Box>
       )}
-      <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
+      <Box
+        sx={{
+          maxWidth: 700,
+        }}
+      >
+        {render(content, RichTextOptions)}
+      </Box>
     </CardContent>
   );
 
@@ -146,7 +152,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
         {dropdown_button && (
           <CardActions sx={cardActionsStyle}>
             <IconButton
-              sx={{ marginLeft: 'auto' }}
+              sx={{ marginInlineStart: 'auto' }}
               aria-label={`${t('expandSummary')}`}
               onClick={handleExpandClick}
               size="small"

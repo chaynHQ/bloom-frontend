@@ -86,7 +86,15 @@ const EmailSettingsForm = () => {
             />
           }
         />
-        {error && <Typography color="error.main">{error}</Typography>}
+        {error && (
+          <Typography
+            sx={{
+              color: 'error.main',
+            }}
+          >
+            {error}
+          </Typography>
+        )}
       </FormControl>
       <LoadingButton
         sx={{ mt: 1 }}

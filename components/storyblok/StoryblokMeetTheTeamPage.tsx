@@ -137,50 +137,63 @@ const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData
       {page_section_1?.length > 0 && (
         <StoryblokPageSection {...page_section_1[0]} isLoggedIn={isLoggedIn} />
       )}
-
       {/* CHANGED: Apply the new refs */}
       <Container ref={coreSectionRef} sx={coreContainerStyle}>
         <Typography variant="h2" component="h2">
           {core_team_title}
         </Typography>
         {core_team_description && typeof core_team_description === 'string' && (
-          <Typography maxWidth={650}>{core_team_description}</Typography>
+          <Typography
+            sx={{
+              maxWidth: 650,
+            }}
+          >
+            {core_team_description}
+          </Typography>
         )}
         <StoryblokTeamMembersCards team_member_items={core_team_members} cards_expandable={false} />
       </Container>
-
       {page_section_2?.length > 0 && (
         <StoryblokPageSection {...page_section_2[0]} isLoggedIn={isLoggedIn} />
       )}
-
       {/* CHANGED: Apply the new refs */}
       <Container ref={somaticsSectionRef} sx={somaticsContainerStyle}>
         <Typography variant="h2" component="h2">
           {somatics_team_title}
         </Typography>
         {somatics_team_description && (
-          <Box maxWidth={650}>{render(somatics_team_description, RichTextOptions)}</Box>
+          <Box
+            sx={{
+              maxWidth: 650,
+            }}
+          >
+            {render(somatics_team_description, RichTextOptions)}
+          </Box>
         )}
         <StoryblokTeamMembersCards
           team_member_items={somatics_team_members}
           cards_expandable={true}
         />
       </Container>
-
       {/* CHANGED: Apply the new refs */}
       <Container ref={supportingSectionRef} sx={supportingContainerStyle}>
         <Typography variant="h2" component="h2">
           {supporting_team_title}
         </Typography>
         {supporting_team_description && (
-          <Box maxWidth={650}>{render(supporting_team_description, RichTextOptions)}</Box>
+          <Box
+            sx={{
+              maxWidth: 650,
+            }}
+          >
+            {render(supporting_team_description, RichTextOptions)}
+          </Box>
         )}
         <StoryblokTeamMembersCards
           team_member_items={supporting_team_members}
           cards_expandable={true}
         />
       </Container>
-
       {page_section_3?.length > 0 && (
         <StoryblokPageSection {...page_section_3[0]} isLoggedIn={isLoggedIn} />
       )}

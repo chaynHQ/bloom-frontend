@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('path');
 
-const languages = ['de', 'en', 'es', 'fr', 'hi', 'pt'];
+const languages = ['de', 'en', 'es', 'fr', 'hi', 'pt', 'tr', 'ar'];
 
 const getKeys = (file, keys, prefix = '') => {
   keys ??= new Set();
