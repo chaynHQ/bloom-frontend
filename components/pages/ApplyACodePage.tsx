@@ -76,7 +76,14 @@ export default function ApplyACodePage() {
           <Typography variant="subtitle1" component="p">
             {t('applyCode.description')}
           </Typography>
-          <Typography mt={2} mb={4} variant="subtitle1" component="p">
+          <Typography
+            variant="subtitle1"
+            component="p"
+            sx={{
+              mt: 2,
+              mb: 4,
+            }}
+          >
             {t('applyCode.descriptionLine2')}
           </Typography>
           <Card sx={partnerCardStyle}>
@@ -89,11 +96,17 @@ export default function ApplyACodePage() {
                 {allPartnersContent?.map((partner) => (
                   <Link
                     component={i18nLink}
-                    sx={logoContainerStyle}
                     key={`${partner.name}-link`}
                     aria-label={tS(partner.logoAlt)}
-                    mt="1rem !important"
                     href={`/welcome/${partner.name.toLowerCase()}`}
+                    sx={[
+                      {
+                        mt: '1rem !important',
+                      },
+                      ...(Array.isArray(logoContainerStyle)
+                        ? logoContainerStyle
+                        : [logoContainerStyle]),
+                    ]}
                   >
                     <Image
                       alt={tS(partner.logoAlt)}

@@ -57,7 +57,13 @@ export const EmailForm = () => {
   };
   return (
     <Box>
-      <Typography mb={3}>{t('resetPasswordStep1')}</Typography>
+      <Typography
+        sx={{
+          mb: 3,
+        }}
+      >
+        {t('resetPasswordStep1')}
+      </Typography>
       <form autoComplete="off" onSubmit={sendResetEmailSubmit}>
         <SanitizedTextField
           id="email"
@@ -70,14 +76,19 @@ export const EmailForm = () => {
           required
         />
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography
+            sx={{
+              color: 'error.main',
+              mb: 2,
+            }}
+          >
             {formError}
           </Typography>
         )}
 
         {!resetEmailSent ? (
           <Button
-            sx={{ mt: 2, mr: 1.5 }}
+            sx={{ mt: 2, marginInlineEnd: 1.5 }}
             variant="contained"
             fullWidth
             color="secondary"
@@ -88,9 +99,15 @@ export const EmailForm = () => {
           </Button>
         ) : (
           <Box>
-            <Typography mb={2}>{t('resetPasswordSent')}</Typography>
+            <Typography
+              sx={{
+                mb: 2,
+              }}
+            >
+              {t('resetPasswordSent')}
+            </Typography>
             <Button
-              sx={{ mt: 2, mr: 1.5 }}
+              sx={{ mt: 2, marginInlineEnd: 1.5 }}
               variant="contained"
               fullWidth
               color="secondary"
@@ -170,9 +187,15 @@ export const PasswordForm = (props: PasswordFormProps) => {
   if (formSuccess) {
     return (
       <Box>
-        <Typography mb={2}>{t('passwordResetSuccess')}</Typography>
+        <Typography
+          sx={{
+            mb: 2,
+          }}
+        >
+          {t('passwordResetSuccess')}
+        </Typography>
         <Button
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"
@@ -186,7 +209,13 @@ export const PasswordForm = (props: PasswordFormProps) => {
 
   return (
     <Box>
-      <Typography mb={2}>{t('resetPasswordStep2')}</Typography>
+      <Typography
+        sx={{
+          mb: 2,
+        }}
+      >
+        {t('resetPasswordStep2')}
+      </Typography>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <SanitizedTextField
           id="password"
@@ -198,12 +227,17 @@ export const PasswordForm = (props: PasswordFormProps) => {
           required
         />
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography
+            sx={{
+              color: 'error.main',
+              mb: 2,
+            }}
+          >
             {formError}
           </Typography>
         )}
         <LoadingButton
-          sx={{ mt: 2, mr: 1.5 }}
+          sx={{ mt: 2, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
           color="secondary"

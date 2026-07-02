@@ -26,9 +26,22 @@ const CourseStatusHeader = (props: CourseStatusHeaderProps) => {
     );
 
   return (
-    <Box sx={iconTextRowStyle} mb={2}>
+    <Box
+      sx={[
+        {
+          mb: 2,
+        },
+        ...(Array.isArray(iconTextRowStyle) ? iconTextRowStyle : [iconTextRowStyle]),
+      ]}
+    >
       {icon}
-      <Typography variant="h3" component="h3" mb={0}>
+      <Typography
+        variant="h3"
+        component="h3"
+        sx={{
+          mb: 0,
+        }}
+      >
         {t.rich(status)}
       </Typography>
     </Box>

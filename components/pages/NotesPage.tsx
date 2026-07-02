@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
@@ -76,7 +77,7 @@ const usNoticeStyle = {
   '&::before': { display: 'none' },
   '& .MuiAccordionSummary-root': {
     py: 1,
-    pl: 1,
+    paddingInlineStart: 1,
     borderRadius: 20,
     '&.Mui-expanded': {
       minHeight: 'auto !important',
@@ -164,7 +165,7 @@ export default function NotesPage({ story }: Props) {
   const usNotice = (
     <Accordion sx={usNoticeStyle}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <SmsFailedOutlined color="error" sx={{ mr: 1.25, mt: '1px' }} />
+        <SmsFailedOutlined color="error" sx={{ marginInlineEnd: 1.25, mt: '1px' }} />
         <Typography variant="body1">{t('notes.usNoticeTitle')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -194,7 +195,12 @@ export default function NotesPage({ story }: Props) {
                 <Typography variant="h2" component="h2">
                   {t('notes.createAccount')}
                 </Typography>
-                <Typography variant="body2" pb={2}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    pb: 2,
+                  }}
+                >
                   {t('notes.createAccountDescription')}
                 </Typography>
                 <RegisterNotesForm />
@@ -223,7 +229,12 @@ export default function NotesPage({ story }: Props) {
                 <Typography variant="h2" component="h2">
                   {t('form.subscribeTitle')}
                 </Typography>
-                <Typography variant="body2" pb={2}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    pb: 2,
+                  }}
+                >
                   {t('notes.subscribeDescription')}
                 </Typography>
                 <WhatsappSubscribeForm />
@@ -253,7 +264,12 @@ export default function NotesPage({ story }: Props) {
               <Typography variant="h2" component="h2">
                 {t('form.unsubscribeTitle')}
               </Typography>
-              <Typography variant="body2" pb={2}>
+              <Typography
+                variant="body2"
+                sx={{
+                  pb: 2,
+                }}
+              >
                 {t('notes.unsubscribeDescription')}
               </Typography>
               <WhatsappUnsubscribeForm />
@@ -272,7 +288,9 @@ export default function NotesPage({ story }: Props) {
           onClick={() => router.back()}
           aria-label={tS('navigateBack')}
         >
-          <KeyboardArrowLeftIcon sx={backIconStyle} />
+          <DirectionalIcon>
+            <KeyboardArrowLeftIcon sx={backIconStyle} />
+          </DirectionalIcon>
         </IconButton>
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>
@@ -284,9 +302,14 @@ export default function NotesPage({ story }: Props) {
         </Box>
         {renderFormSection()}
       </Container>
-
       <Container sx={howItWorksContainerStyle}>
-        <Typography variant="h2" component="h2" textAlign="center">
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            textAlign: 'center',
+          }}
+        >
           {t('notes.howItWorks')}
         </Typography>
 
@@ -304,7 +327,6 @@ export default function NotesPage({ story }: Props) {
           </Box>
         </Box>
       </Container>
-
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!userId} />

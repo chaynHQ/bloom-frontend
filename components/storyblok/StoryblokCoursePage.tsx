@@ -156,8 +156,20 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
           <Box sx={sessionsContainerStyle}>
             {weeks.map((week: any) => {
               return (
-                <Box mb={6} key={week.name.split(':')[0]}>
-                  <Typography mb={{ xs: 0, md: 3.5 }} key={week.name} component="h2" variant="h2">
+                <Box
+                  key={week.name.split(':')[0]}
+                  sx={{
+                    mb: 6,
+                  }}
+                >
+                  <Typography
+                    key={week.name}
+                    component="h2"
+                    variant="h2"
+                    sx={{
+                      mb: { xs: 0, md: 3.5 },
+                    }}
+                  >
                     {week.name}
                   </Typography>
                   <Box sx={cardsContainerStyle}>

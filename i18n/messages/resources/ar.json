@@ -1,0 +1,57 @@
+{
+  "Resources": {
+    "backToConversations": "العودة إلى المحادثات",
+    "backToShorts": "العودة إلى المقاطع القصيرة",
+    "backToVideos": "العودة إلى الفيديوهات",
+    "backToSomatics": "العودة إلى التعافي الجسدي",
+    "nextVideoButtonLabel": "الفيديو التالي",
+    "nextConversationButtonLabel": "المحادثة التالية",
+    "nextSessionButtonLabel": "الجلسة التالية",
+    "conversations": "محادثات",
+    "shorts": "مقاطع قصيرة",
+    "videos": "فيديوهات",
+    "completed": "اكتملت",
+    "sessionDetail": "هذا المقطع من الجلسة: {sessionName}، من دورتنا: {courseName}",
+    "sessionButtonLabel": "مشاهدة الجلسة كاملة",
+    "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب</link>.",
+    "conversationTranscriptLink": "يمكنك الإنصات إلى المحادثة أو قراءة <link>النص المكتوب</link>.",
+    "relatedContent": {
+      "title": "محتوى ذو صلة",
+      "resource_short_video": "مشاهدة",
+      "resource_single_video": "مشاهدة",
+      "resource_conversation": "إنصات",
+      "course": "دورة",
+      "session": "جلسة",
+      "session_iba": "جلسة",
+      "grounding": "تثبيت الذات",
+      "activities": "نشاط",
+      "minuteLabel": "دقائق"
+    },
+    "resourceFeedback": {
+      "title": "كيف كانت هذه الجلسة؟",
+      "subtitle": "يسعدنا أن نعرف رأيك في هذا المحتوى التعليمي. تساعدنا ملاحظاتك على تحسين مواردنا.",
+      "feedbackTags": {
+        "relatable": "أشعر بأنها تخصّني",
+        "useful": "مفيدة",
+        "inspiring": "مُلهِمة",
+        "too long": "طويلة جدًا",
+        "too complicated": "معقّدة جدًا",
+        "not useful": "غير مفيدة"
+      },
+      "textboxDefaultText": "إضافة تعليق...",
+      "sendButtonText": "إرسال",
+      "submissionText": "شكرًا لك على إرسال ملاحظاتك",
+      "errors": {
+        "feedbackTagError": "يُرجى اختيار تقييم قبل الإرسال."
+      }
+    },
+    "references": {
+      "title": "موارد",
+      "keyReferences": "موارد رئيسية من هذه الجلسة (القائمة الكاملة في نهاية النص المكتوب):",
+      "books": "كتب",
+      "articles": "مقالات",
+      "video_practices": "تمارين بالفيديو",
+      "audios": "بودكاست"
+    }
+  }
+}

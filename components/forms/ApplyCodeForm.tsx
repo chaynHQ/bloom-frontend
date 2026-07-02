@@ -107,9 +107,15 @@ const ApplyCodeForm = () => {
   if (formSubmitSuccess && newPartnerAccess)
     return (
       <Box>
-        <Typography mb={2}>{t('formSuccess.success')}</Typography>
+        <Typography
+          sx={{
+            mb: 2,
+          }}
+        >
+          {t('formSuccess.success')}
+        </Typography>
         <Typography>{t('formSuccess.successLine2')}</Typography>
-        <List sx={{ listStyleType: 'disc', pl: 2 }}>
+        <List sx={{ listStyleType: 'disc', paddingInlineStart: 2 }}>
           <ListItem key="courses-item" sx={listItemStyle}>
             <Typography component="span">{t('formSuccess.courses')}</Typography>
           </ListItem>
@@ -133,8 +139,13 @@ const ApplyCodeForm = () => {
 
   return (
     <Box>
-      <Typography mb={2}>{t('formIntroduction')}</Typography>
-
+      <Typography
+        sx={{
+          mb: 2,
+        }}
+      >
+        {t('formIntroduction')}
+      </Typography>
       <form autoComplete="off" onSubmit={submitHandler}>
         <SanitizedTextField
           id="accessCode"
@@ -145,7 +156,12 @@ const ApplyCodeForm = () => {
           required
         />
         {formError && (
-          <Typography color="error.main" mb={2}>
+          <Typography
+            sx={{
+              color: 'error.main',
+              mb: 2,
+            }}
+          >
             {formError}
           </Typography>
         )}

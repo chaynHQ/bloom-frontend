@@ -1,0 +1,65 @@
+{
+  "Admin": {
+    "title": "لوحة تحكّم المشرف العام",
+    "accessGuard": {
+      "title": "الوصول مطلوب",
+      "introduction": "لا يتضمّن حسابك إمكانية الوصول إلى هذه الصفحات."
+    },
+    "createPartnerAdmin": {
+      "title": "إنشاء حساب مشرف",
+      "description": "تستطيع حسابات المشرفين توليد رموز العلاج النفسي",
+      "partnerNameLabel": "اختيار الشريك",
+      "submit": "إنشاء حساب مشرف",
+      "successDescription": "تم إنشاء مشرف الشريك! يمكنك مراسلتهم عبر البريد الإلكتروني لإبلاغهم بأن لديهم حسابًا، وأنهم سيحتاجون إلى استخدام مسار 'نسيت كلمة المرور' لاختيار كلمة مرور وتسجيل الدخول للمرة الأولى.",
+      "emailAddressLabel": "عنوان البريد الإلكتروني",
+      "nameLabel": "الاسم",
+      "reset": "إنشاء مشرف آخر",
+      "error": "خطأ في إنشاء مشرف الشريك: "
+    },
+    "updateTherapy": {
+      "title": "تحديث جلسات العلاج النفسي",
+      "emailLabel": "البحث حسب البريد الإلكتروني للمستخدم",
+      "therapySessionsRedeemed": "عدد جلسات العلاج النفسي المستخدَمة",
+      "therapySessionsTotal": "إجمالي عدد جلسات العلاج النفسي",
+      "submit": "تحديث جلسات العلاج النفسي",
+      "successDescription": "تم تحديث جلسات العلاج النفسي للمستخدم!",
+      "error": "خطأ في تحديث جلسات العلاج النفسي: ",
+      "reset": "تحديث مستخدم آخر"
+    },
+    "updatePartnerAdmin": {
+      "title": "تحديث مشرف الشريك",
+      "emailLabel": "البحث حسب البريد الإلكتروني للمشرف",
+      "activeAdminLabel": "مشرف الشريك نشط حاليًا",
+      "successDescription": "تم تحديث مشرف الشريك!",
+      "formError": "يُرجى التأكّد من اختيار مستخدم شريك",
+      "error": "خطأ في تحديث مشرف الشريك: ",
+      "reset": "تحديث مشرف شريك آخر"
+    },
+    "updatePartner": {
+      "title": "تحديث حالة نشاط الشريك",
+      "activeLabel": "إلغاء تنشيط {partner}",
+      "inactiveLabel": "إعادة تنشيط {partner}",
+      "partnerNameLabel": "اختيار الشريك",
+      "partnerActiveLabel": "الشريك نشط",
+      "successDescription": "تم تحديث {partner} بنجاح إلى {status}",
+      "inactiveDescription": "{partner} غير نشط حاليًا. ستؤدّي إعادة تنشيط {partner} إلى استعادة الشريك وجميع مشرفي الشريك ومستخدميه السابقين",
+      "activeDescription": "{partner} نشط حاليًا. سيؤدّي إلغاء تنشيط {partner} أيضًا إلى إلغاء تنشيط مشرفي الشريك ومستخدميه، وتحويلهم إلى مستخدمين عامّين. سيتم الاحتفاظ بجميع بيانات الشريك وبيانات المستخدمين، ويمكن إعادة تنشيط الشريك لاحقًا.",
+      "inactiveSuccess": "تم أيضًا تحديث مشرفي {partner} ومستخدمي الشريك، وسيصلون الآن إلى Bloom كمستخدمين عامّين",
+      "activeSuccess": "تم أيضًا تحديث مشرفي {partner} ومستخدمي الشريك السابقين، وسيكون لديهم الآن الوصول إلى Bloom كمستخدمي شريك",
+      "formError": "يُرجى التأكّد من اختيار شريك",
+      "error": "خطأ في تحديث حالة نشاط الشريك: ",
+      "reset": "إعادة تعيين النموذج"
+    },
+    "deleteCypressUsers": {
+      "title": "Delete test accounts",
+      "description": "Permanently deletes all automated-test (Cypress) accounts matching a cypress@chayn.co email, including their database records and related data, and their Firebase, Front and Mailchimp profiles. Use this to clear test data that has leaked into an environment.",
+      "warning": "This is a hard delete and cannot be undone.",
+      "counting": "Counting test accounts…",
+      "count": "{count} test accounts currently match.",
+      "confirmLabel": "I understand this permanently deletes these accounts and all their data.",
+      "submit": "Delete test accounts",
+      "success": "Deleted {count} test accounts.",
+      "error": "Error deleting test accounts: "
+    }
+  }
+}

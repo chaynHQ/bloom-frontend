@@ -47,9 +47,12 @@ const listItemStyle = {
 } as const;
 
 const listItemTextStyle = {
+  // `start` keeps labels aligned to the reading edge in both directions — left in LTR,
+  // right in RTL (Arabic). Without it the labels inherit a left alignment in the drawer.
+  textAlign: 'start',
   span: {
     fontSize: 16,
-    fontweight: 500,
+    fontWeight: 500,
   },
 } as const;
 
@@ -106,13 +109,15 @@ const MobileTopNav = () => {
       )}
       <Drawer
         hideBackdrop={false}
-        PaperProps={{
-          sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
-        }}
         sx={{ width: '100%', top: { xs: 48, sm: 64 } }}
         anchor="top"
         open={open}
         onClose={handleClose}
+        slotProps={{
+          paper: {
+            sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
+          },
+        }}
       >
         <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
           {navigationLinks.map((link) => (

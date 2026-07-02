@@ -1,0 +1,14 @@
+{
+  "Welcome": {
+    "getStarted": "لنبدأ",
+    "accessIntroduction": "يُرجى إدخال رمز الوصول الذي وصلك من {partnerName} لبدء رحلتك مع Bloom.",
+    "publicIntroduction": "يمكنك إنشاء حساب في Bloom لبدء رحلتك مع دوراتنا، أو التعرّف أكثر على Bloom أدناه أولًا.",
+    "continueCourses": "المتابعة إلى Bloom",
+    "continueCoursesDescription": "لنكمل من حيث توقفنا.",
+    "goToCourses": "الذهاب إلى الدورات",
+    "form": {
+      "codeLabel": "رمز الوصول من {partnerName}"
+    },
+    "WelcomeTo": "مرحبًا بك في"
+  }
+}

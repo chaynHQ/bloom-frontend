@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceSingleVideo } from '@/components/resources/ResourceSingleVideo';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -84,17 +85,34 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
       >
         {t(hasSomaticsTag ? 'backToSomatics' : 'backToVideos')}
       </Button>
-      <Box mb={4}>
-        <Typography variant="h1" maxWidth={600} mb={1}>
+      <Box
+        sx={{
+          mb: 4,
+        }}
+      >
+        <Typography
+          variant="h1"
+          sx={{
+            maxWidth: 600,
+            mb: 1,
+          }}
+        >
           {name}
         </Typography>
         {subtitle && (
-          <Typography variant="h2" component="p" maxWidth={600} fontWeight={300} mb={1}>
+          <Typography
+            variant="h2"
+            component="p"
+            sx={{
+              maxWidth: 600,
+              fontWeight: 300,
+              mb: 1,
+            }}
+          >
             {subtitle}
           </Typography>
         )}
       </Box>
-
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>
           <ResourceSingleVideo
@@ -126,7 +144,11 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
                 color="secondary"
                 sx={{ width: 'fit-content' }}
                 href={nextResourceHref}
-                endIcon={<ArrowForward />}
+                endIcon={
+                  <DirectionalIcon>
+                    <ArrowForward />
+                  </DirectionalIcon>
+                }
                 component={i18nLink}
               >
                 {t(getNextResourceButtonLabel(nextResourceHref))}

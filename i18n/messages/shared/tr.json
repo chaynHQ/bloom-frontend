@@ -1,0 +1,166 @@
+{
+  "Shared": {
+    "bloom": "Bloom",
+    "references": "Kaynaklar",
+    "metadata": {
+      "title": "İyileşme yolculuğunda bize katıl",
+      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen küresel bir kâr amacı gütmeyen kuruluş olan Chayn sunuyor.",
+      "imageAlt": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon. Bloom yazı logosu da dahildir."
+    },
+    "leaveSite": {
+      "button": "Bu siteden ayrıl",
+      "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
+      "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+    },
+    "navigateBack": "Geri git",
+    "navigateTo": "Şuraya git",
+    "footer": {
+      "fundedByTitle": "Finanse eden",
+      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
+      "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
+      "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
+      "bumbleLine1": "İş birliğiyle",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "badooLine1": "İş birliğiyle",
+      "badooLine2": "BADOO LTD",
+      "fruitzLine1": "İş birliğiyle",
+      "fruitzLine2": "FRUITZ LTD",
+      "policies": "Politikalarımız",
+      "trustCenter": "Güven Merkezi"
+    },
+    "maintenanceBanner": {
+      "title": "Bloom bakım için kapalı",
+      "description": "Bazı önemli planlı bakım çalışmalarını tamamlarken lütfen sabırlı ol. Bloom'un {hours} saat içinde her zamanki gibi kullanılabilir olması bekleniyor."
+    },
+    "fruitzRetirementBanner": {
+      "title": "Kurslarında değişiklik",
+      "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren 'Flört, Sınırlar ve İlişkiler' kursu artık kullanılamayacak, ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynı kalacak.",
+      "dismiss": "Kapat"
+    },
+    "videoTranscript": {
+      "title": "Video metni",
+      "closeModal": "Metni kapat"
+    },
+    "progressStatus": {
+      "started": "Başlandı",
+      "completed": "Tamamlandı",
+      "notStarted": "Başlanmadı"
+    },
+    "meetTheTeam": {
+      "fullBioButton": "{name} kişisinin tam biyografisini oku",
+      "expandTeamMember": "{name} için biyografiyi genişlet"
+    },
+    "noDataAvailable": {
+      "title": "Bu sayfa yüklenirken bir sorun oluştu. Lütfen geri dönüp tekrar dene ya da bizimle iletişime geç."
+    },
+    "error": {
+      "title": "Bir şeyler ters gitti",
+      "description": "Son istekte bir sorun oluştu, lütfen tekrar dene. Sorun devam ederse Bloom ekibiyle iletişime geç.",
+      "buttonLabel": "Tekrar dene"
+    },
+    "notFound": {
+      "title": "404 - Sayfa bulunamadı",
+      "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kurslar sayfasına geri dön.",
+      "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
+      "authenticatedRedirectButton": "Kurslar sayfasına dön",
+      "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
+    },
+    "alt": {
+      "chaynLogo": "Chayn logosu",
+      "bloomLogo": "Bloom logosu",
+      "bumbleLogo": "Bumble logosu",
+      "bloomBumbleLogo": "Bumble iş birliğiyle Bloom logosu",
+      "badooLogo": "Badoo logosu",
+      "bloomBadooLogo": "Badoo iş birliğiyle Bloom logosu",
+      "comicReliefLogo": "Comic Relief logosu",
+      "communityFundLogo": "Community Fund logosu",
+      "welcomeToBloom": "Bloom'a hoş geldin",
+      "tiktokLogo": "Tiktok logosu",
+      "githubLogo": "Github logosu",
+      "bloomHead": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon",
+      "beehive": "Bir arı kovanı illüstrasyonu",
+      "leafMix": "Bir gülle birleşmiş iki yaprak illüstrasyonu",
+      "leafMixBee": "Üzerinde uçuşan bir arı olan iki yaprak illüstrasyonu",
+      "leafMixDots": "Ortasında bir çiçek olan 3 yaprak ve çiçekten fışkıran noktalar illüstrasyonu.",
+      "personTea": "Oturmuş, çay tutan bir kişi illüstrasyonu",
+      "personSitting": "Oturan bir kişi illüstrasyonu",
+      "chooseTherapist": "Bir kişinin yandan yüz profili ve bir çiçek illüstrasyonu",
+      "dateSelector": "Ortasında bir kalp olan bir takvim illüstrasyonu",
+      "change": "Bir döngü illüstrasyonu - aralarında oklar olan, daire içinde üç güneş",
+      "notes": "Ekranında kalp içeren bir mesaj balonu olan bir cep telefonu illüstrasyonu",
+      "confidential": "Köşesinde bir kilit olan bir belge illüstrasyonu",
+      "cookieCat": "Bir kurabiyeyle dinlenen bir kedi illüstrasyonu",
+      "fruitzLogo": "Fruitz logosu",
+      "bloomFruitzLogo": "Fruitz iş birliğiyle Bloom logosu",
+      "bloomHomeIllustration": "Etrafında video simgesi, çiçek, mesaj simgesi ve çiçekli bir insan başı gibi semboller uçuşan, bağdaş kurup oturan bir kişi",
+      "bookIcon": "Kitap simgesi",
+      "articleIcon": "Makale simgesi",
+      "videoIcon": "Video simgesi"
+    },
+    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
+    "survivor": "Hayatta kalan",
+    "cookieConsent": {
+      "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazlasını şurada oku: ",
+      "cookieConsentPolicy": "çerez politikamız",
+      "acceptLabel": "Çerezleri Kabul Et",
+      "declineLabel": "Çerezleri Reddet"
+    },
+    "signUpTodayPromo": {
+      "title": "Bugün ücretsiz bir hesap aç",
+      "description1": "Bloom, travmadan iyileşirken sana destek olan çevrimiçi bir platformdur. Video kurslarından ve düşündürücü etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom ile etkileşim kurmanın pek çok farklı yolu var.",
+      "description2": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydol!",
+      "button": "Başla"
+    },
+    "loginDialog": {
+      "title": "Giriş yap ya da bir hesap oluştur",
+      "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
+      "loginButton": "Giriş yap",
+      "registerButton": "Hesap oluştur",
+      "backButton": "Geri dön"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "Düşünce günlükleri",
+      "activities-stream-of-consciousness-journaling": "Bilinç akışı günlüğü",
+      "activities-timelines": "Zaman çizelgeleri",
+      "activities-trust-mapping": "Güven haritalama",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Bedenimizdeki korku ve stresi haritalama",
+      "activities-letter-to-a-part-of-my-body": "Bedenimin bir parçasına mektup",
+      "activities-accelerators-and-brakes": "Gaz ve frenler",
+      "activities-ideal-sexual-being": "İdeal cinsel varlık",
+      "grounding-visual-breathing": "Görsel nefes",
+      "grounding-slow-breathing": "Yavaş nefes",
+      "grounding-box-breathing": "Kutu nefesi",
+      "grounding-drifting-clouds-meditation": "Süzülen bulutlar meditasyonu",
+      "grounding-positive-coping-statement": "Olumlu başa çıkma ifadesi",
+      "grounding-finger-focus": "Parmak odağı",
+      "grounding-day-walkthrough": "Gün gözden geçirme",
+      "grounding-what-can-you-hear": "Ne duyabiliyorsun",
+      "grounding-listen-to-your-voice": "Sesini dinle",
+      "grounding-calming-colours": "Sakinleştirici renkler",
+      "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
+      "grounding-best-check-in": "BEST kontrolü",
+      "grounding-compassionate-body-scan": "Şefkatli beden taraması",
+      "grounding-touching-and-feeling-textures": "Dokulara dokunma ve hissetme",
+      "grouding-sound-of-claps": "Alkış sesi",
+      "grounding-affirming-ourselves": "Kendimizi onaylama (sıkı baskı)"
+    },
+    "pwaBanner": {
+      "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
+      "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",
+      "iosDescription": "Bloom'u ana ekranına ekle",
+      "iosStep1": "1. Paylaş düğmesine dokun",
+      "iosStep2": "2. 'Ana Ekrana Ekle'ye dokun",
+      "button-decline-label": "Şimdi değil",
+      "button-install-label": "Yükle"
+    },
+    "notesFromBloomPromo": {
+      "title": "Ücretsiz destekleyici mesajlar",
+      "description": "Haftada iki kez doğrudan WhatsApp'ına mesajlar al",
+      "buttonText": "Abone ol"
+    },
+    "characterCount": "{current}/{max} karakter",
+    "scrollToSignUp": {
+      "button": "Ücretsiz kaydol"
+    }
+  }
+}

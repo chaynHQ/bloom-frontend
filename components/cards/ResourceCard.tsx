@@ -32,10 +32,10 @@ const cardContentStyle = {
 
 const overlay = {
   position: 'absolute',
-  right: 0,
+  insetInlineEnd: 0,
   bottom: 0,
   top: 0,
-  left: 0,
+  insetInlineStart: 0,
   opacity: 0,
   transition: 'opacity .3s ease',
   backgroundColor: 'overlayBackground',
@@ -59,8 +59,8 @@ const categoryStyle = {
   mb: '0.5rem !important',
   '& .before-dot:before': {
     content: '"• "',
-    marginLeft: 1,
-    marginRight: 1,
+    marginInlineStart: 1,
+    marginInlineEnd: 1,
   },
 } as const;
 
@@ -73,7 +73,14 @@ export const ResourceCard = (props: ResourceCardProps) => {
     <Card sx={cardStyle}>
       <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
         <CardContent sx={cardContentStyle}>
-          <Box height="170px" position="relative" width="100%" overflow="hidden">
+          <Box
+            sx={{
+              height: '170px',
+              position: 'relative',
+              width: '100%',
+              overflow: 'hidden',
+            }}
+          >
             <Image
               src={image?.filename || '/bloom_shorts.png'}
               fill
@@ -98,7 +105,11 @@ export const ResourceCard = (props: ResourceCardProps) => {
               </IconButton>
             </Box>
           </Box>
-          <Box p={3}>
+          <Box
+            sx={{
+              p: 3,
+            }}
+          >
             <Typography sx={categoryStyle}>
               {t(`relatedContent.resource_${category}`)}
               {duration && (
@@ -108,7 +119,12 @@ export const ResourceCard = (props: ResourceCardProps) => {
               )}
             </Typography>
             <Box>
-              <Typography variant="h3" mb={0}>
+              <Typography
+                variant="h3"
+                sx={{
+                  mb: 0,
+                }}
+              >
                 {title}
               </Typography>
             </Box>

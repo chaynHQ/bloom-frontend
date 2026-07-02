@@ -34,8 +34,8 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
   const containerStyle = {
     ...richtextContentStyle,
     maxWidth: '400px',
-    marginLeft: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
-    marginRight: alignment === 'center' ? 'auto' : 0,
+    marginInlineStart: alignment === 'center' || alignment === 'right' ? 'auto' : 0,
+    marginInlineEnd: alignment === 'center' ? 'auto' : 0,
     marginBottom: 4,
   } as const;
   const audioStarted = () => {
