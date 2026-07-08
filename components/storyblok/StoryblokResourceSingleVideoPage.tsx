@@ -9,6 +9,7 @@ import {
 } from '@/lib/constants/enums';
 import { RESOURCE_SINGLE_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -21,6 +22,7 @@ import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
+import LoadingContainer from '../common/LoadingContainer';
 import { ResourceSingleVideoHeader } from '../resources/ResourceSingleVideoHeader';
 import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -78,6 +80,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
+  const isUserLoading = useIsUserLoading();
 
   const getContentPartners = useMemo(() => {
     return userHasAccessToPartnerContent(
@@ -138,7 +141,11 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     logEvent(RESOURCE_SINGLE_VIDEO_VIEWED, eventData);
   });
 
-  if (!userAccess) return <ContentUnavailable />;
+  if (!userAccess) {
+    // Wait for the signed-in user's partner accesses to load before deciding there is no access.
+    if (isUserLoading) return <LoadingContainer />;
+    return <ContentUnavailable />;
+  }
 
   return (
     <Box

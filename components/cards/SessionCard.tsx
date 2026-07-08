@@ -96,11 +96,24 @@ const SessionCard = (props: SessionCardProps) => {
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>
-          <Typography flex={1} component="h3" variant="h3" mb={1}>
+          <Typography
+            component="h3"
+            variant="h3"
+            sx={{
+              flex: 1,
+              mb: 1,
+            }}
+          >
             {session.content.name}
           </Typography>
           <Box sx={cardContentRowStyles}>
-            <Typography color="grey.700">{sessionSubtitle}</Typography>
+            <Typography
+              sx={{
+                color: 'grey.700',
+              }}
+            >
+              {sessionSubtitle}
+            </Typography>
             <SessionProgressDisplay
               sessionId={session.uuid}
               storyblokCourseUuid={storyblokCourseUuid}

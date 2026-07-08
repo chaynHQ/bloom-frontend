@@ -3,19 +3,20 @@ import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
 import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
+import ReferralPartnerTracker from '@/components/layout/ReferralPartnerTracker';
 import TopBar from '@/components/layout/TopBar';
+import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
-import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { clientConfig } from '@/lib/rollbar';
 import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import { Box } from '@mui/material';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Provider as RollbarProvider } from '@rollbar/react';
 import { Analytics } from '@vercel/analytics/react';
@@ -25,7 +26,7 @@ import { getMessages } from 'next-intl/server';
 import { Montserrat, Noto_Sans_Arabic, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
 import { Hotjar } from 'nextjs-hotjar';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 
@@ -107,6 +108,9 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       to bind the event listener in time.
                     */}
                     <script src="/deffer-pwa.js" async></script>
+                    <Suspense fallback={null}>
+                      <ReferralPartnerTracker />
+                    </Suspense>
                     <TopBar />
                     <LeaveSiteButton />
                     <DesktopPwaBanner />

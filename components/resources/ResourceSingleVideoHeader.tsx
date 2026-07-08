@@ -85,17 +85,34 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
       >
         {t(hasSomaticsTag ? 'backToSomatics' : 'backToVideos')}
       </Button>
-      <Box mb={4}>
-        <Typography variant="h1" maxWidth={600} mb={1}>
+      <Box
+        sx={{
+          mb: 4,
+        }}
+      >
+        <Typography
+          variant="h1"
+          sx={{
+            maxWidth: 600,
+            mb: 1,
+          }}
+        >
           {name}
         </Typography>
         {subtitle && (
-          <Typography variant="h2" component="p" maxWidth={600} fontWeight={300} mb={1}>
+          <Typography
+            variant="h2"
+            component="p"
+            sx={{
+              maxWidth: 600,
+              fontWeight: 300,
+              mb: 1,
+            }}
+          >
             {subtitle}
           </Typography>
         )}
       </Box>
-
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>
           <ResourceSingleVideo

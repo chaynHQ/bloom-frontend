@@ -97,9 +97,14 @@ describe('A logged in public user can', () => {
       cy.visit('/messaging', {
         onBeforeLoad(win) {
           const mockStream = { getTracks: () => [{ stop: () => {} }] };
-          (win.navigator as any).mediaDevices = {
-            getUserMedia: () => Promise.resolve(mockStream),
-          };
+          // navigator.mediaDevices is a getter-only accessor in newer Chromium
+          // (bundled with Cypress 15.18+), so assign via defineProperty instead of `=`.
+          Object.defineProperty(win.navigator, 'mediaDevices', {
+            configurable: true,
+            value: {
+              getUserMedia: () => Promise.resolve(mockStream),
+            },
+          });
           class StubRecorder {
             static isTypeSupported() {
               return true;

@@ -9,9 +9,9 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
+import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '@/public/illustration_leaf_mix_dots.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import {
   Box,
@@ -84,10 +84,14 @@ export default function RegisterPage() {
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');
 
-  // Derive partner content and code param from URL and state
+  // Derive partner content and code param from URL and state.
+  // Prefer an explicit ?partner query, else fall back to a referral captured on entry
+  // (welcome link or partner UTM link) so the partner is still attached when signing up
+  // directly via /auth/register without a partner query.
   const { partnerContent, codeParam, allPartnersContent } = useMemo(() => {
-    if (partner) {
-      const partnerContentResult = getPartnerContent(partner + '');
+    const partnerName = partner || entryPartnerReferral;
+    if (partnerName) {
+      const partnerContentResult = getPartnerContent(partnerName + '');
       if (partnerContentResult) {
         // If code is in URL, use it; otherwise check if we have entry code for this partner
         const effectiveCode = code
@@ -132,10 +136,11 @@ export default function RegisterPage() {
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
   const headerProps = {
-    partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,
+    partnerLogoSrc: partnerContent?.partnershipLogo || bloomLogo,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
+    showWelcomeSubtext: partnerContent === null,
   };
   const ExtraContent = (
     <>
@@ -160,14 +165,20 @@ export default function RegisterPage() {
                 {allPartnersContent?.map((partner) => (
                   <Link
                     component={i18nLink}
-                    sx={logoContainerStyle}
                     key={`${partner.name}-link`}
                     aria-label={tS(partner.logoAlt)}
-                    mt="1rem !important"
                     onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.name))}
                     href={`/welcome/${partner.name.toLowerCase()}${
                       codeParam && '?code=' + codeParam
                     }`}
+                    sx={[
+                      {
+                        mt: '1rem !important',
+                      },
+                      ...(Array.isArray(logoContainerStyle)
+                        ? logoContainerStyle
+                        : [logoContainerStyle]),
+                    ]}
                   >
                     <Image
                       alt={tS(partner.logoAlt)}
@@ -195,10 +206,17 @@ export default function RegisterPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={containerStyle}>
         <Box sx={textContainerStyle}>
-          <Typography pb={2} variant="subtitle1" component="p">
+          <Typography
+            variant="subtitle1"
+            component="p"
+            sx={{
+              pb: 2,
+            }}
+          >
             {t('introduction')}
           </Typography>
           {!isSmallScreen && <>{ExtraContent}</>}
@@ -215,7 +233,15 @@ export default function RegisterPage() {
               ) : (
                 <RegisterForm />
               )}
-              <Typography variant="body2" component="p" textAlign="center" mb={1} pt={2}>
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{
+                  textAlign: 'center',
+                  mb: 1,
+                  pt: 2,
+                }}
+              >
                 {t.rich('register.loginRedirect', {
                   loginLink: (children) => (
                     <Link component={i18nLink} href="/auth/login">
@@ -225,7 +251,13 @@ export default function RegisterPage() {
                 })}
               </Typography>
 
-              <Typography variant="body2" component="p" textAlign="center">
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
                 {t.rich('terms', {
                   termsLink: (children) => (
                     <Link target="_blank" component={i18nLink} href="/policies/terms-of-service">

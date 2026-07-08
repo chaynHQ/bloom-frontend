@@ -13,13 +13,9 @@ const headerContainerStyles = {
 
 interface PartnerAdminHeaderProps {
   title:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction?:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   partnerLogoSrc?: StaticImageData;
   partnerLogoAlt?: string;
 }
@@ -31,7 +27,13 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <Typography variant="h2" component="h2" fontSize="1.25rem !important">
+      <Typography
+        variant="h2"
+        component="h2"
+        sx={{
+          fontSize: '1.25rem !important',
+        }}
+      >
         {title}
       </Typography>
       {partnerLogoAlt && partnerLogoSrc && (

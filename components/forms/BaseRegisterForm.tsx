@@ -163,9 +163,14 @@ const BaseRegisterForm = ({ children, onSubmit, formError }: BaseRegisterFormPro
   return (
     <form autoComplete="off" onSubmit={onSubmit}>
       {children}
-
       {formError && (
-        <Typography color="error.main" mb={2} pt={2}>
+        <Typography
+          sx={{
+            color: 'error.main',
+            mb: 2,
+            pt: 2,
+          }}
+        >
           {formError}
         </Typography>
       )}

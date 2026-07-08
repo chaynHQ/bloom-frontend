@@ -111,14 +111,13 @@ const DesktopMainNav = () => {
       sx={tabsStyle}
       variant="fullWidth"
       qa-id="secondary-nav"
-      // Weird type errors for this prop
-      TabIndicatorProps={
-        {
+      slotProps={{
+        indicator: {
           sx: {
             backgroundColor: 'primary.dark',
           },
-        } as Partial<HTMLAttributes<HTMLDivElement>>
-      }
+        } as Partial<HTMLAttributes<HTMLDivElement>>,
+      }}
     >
       {navItems.map((navItem) => {
         return (

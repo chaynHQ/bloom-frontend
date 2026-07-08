@@ -43,7 +43,7 @@
       "cancelDialog": {
         "title": "İptali Onayla",
         "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun hissettiren bir zamanda yeni bir randevu alabilirsin.",
-        "keepButton": "Seansı Koru",
+        "keepButton": "Seansı Tut",
         "confirmButton": "Seansı İptal Et"
       }
     },

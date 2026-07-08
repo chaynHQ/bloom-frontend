@@ -65,7 +65,13 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
         }}
       >
         <CardContent sx={cardContentStyle}>
-          <Box position="relative" width="100%" paddingInlineEnd={1}>
+          <Box
+            sx={{
+              position: 'relative',
+              width: '100%',
+              paddingInlineEnd: 1,
+            }}
+          >
             <Box>
               <Typography sx={categoryStyle}>
                 {t(category)}
@@ -73,7 +79,12 @@ export const RelatedContentCard = (props: RelatedContentProps) => {
                   <span className="before-dot">{` ${duration} ${t('minuteLabel')}`}</span>
                 )}
               </Typography>
-              <Typography variant="h3" mb={0}>
+              <Typography
+                variant="h3"
+                sx={{
+                  mb: 0,
+                }}
+              >
                 {title}
               </Typography>
             </Box>

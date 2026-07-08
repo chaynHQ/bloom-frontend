@@ -1,10 +1,12 @@
 'use client';
 
 import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
+import DeleteCypressUsersForm from '@/components/forms/DeleteCypressUsersForm';
 import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
 import UpdateTherapyAdminForm from '@/components/forms/UpdateTherapyAdminForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
 import { ADMIN_DASHBOARD_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
@@ -24,6 +26,10 @@ const cardStyle = {
 
 export default function AdminDashboardPage() {
   const t = useTranslations('Admin');
+
+  const userEmail = useTypedSelector((state) => state.user.email);
+  // The destructive test-data cleanup tool is only exposed to the tech team.
+  const showDeleteCypressUsers = !!userEmail && userEmail.toLowerCase().includes('tech');
 
   const headerProps = {
     title: t('title'),
@@ -85,6 +91,16 @@ export default function AdminDashboardPage() {
             <UpdatePartnerActiveForm />
           </CardContent>
         </Card>
+        {showDeleteCypressUsers && (
+          <Card sx={cardStyle}>
+            <CardContent>
+              <Typography variant="h2" component="h2">
+                {t('deleteCypressUsers.title')}
+              </Typography>
+              <DeleteCypressUsersForm />
+            </CardContent>
+          </Card>
+        )}
       </Container>
     </Box>
   );

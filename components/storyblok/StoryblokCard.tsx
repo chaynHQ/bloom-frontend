@@ -122,7 +122,13 @@ const StoryblokCard = (props: StoryblokCardProps) => {
           ></Image>
         </Box>
       )}
-      <Box maxWidth={700}>{render(content, RichTextOptions)}</Box>
+      <Box
+        sx={{
+          maxWidth: 700,
+        }}
+      >
+        {render(content, RichTextOptions)}
+      </Box>
     </CardContent>
   );
 

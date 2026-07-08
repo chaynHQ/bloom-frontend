@@ -28,7 +28,7 @@ const headingFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-montserrat)' : 'var(--font-montserrat)';
 
 /**
- * Builds the MUI theme for a given text direction. MUI v7 + Emotion emit CSS logical
+ * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
  * properties internally, so passing `direction` here (combined with `dir` on <html>) is
  * what makes the built-in components mirror for RTL. Our own styles use logical
  * properties to achieve the same.
@@ -213,6 +213,23 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               },
             },
           },
+          // MUI hard-codes physical margins on the button icons (startIcon: marginRight/Left,
+          // endIcon: the mirror). Those don't flip for RTL because this app relies on CSS
+          // logical properties + `dir` rather than stylis-plugin-rtl, so in Arabic the icon
+          // and label overlap. Re-express the same offsets with logical margins (identical in
+          // LTR, correctly mirrored in RTL). See getLocaleDirection for the RTL locale list.
+          startIcon: ({ ownerState }: { ownerState: { size?: string } }) => ({
+            marginLeft: 0,
+            marginRight: 0,
+            marginInlineEnd: 8,
+            marginInlineStart: ownerState.size === 'small' ? -2 : -4,
+          }),
+          endIcon: ({ ownerState }: { ownerState: { size?: string } }) => ({
+            marginLeft: 0,
+            marginRight: 0,
+            marginInlineEnd: ownerState.size === 'small' ? -2 : -4,
+            marginInlineStart: 8,
+          }),
           outlinedPrimary: {
             color: '#000000',
             borderColor: theme.palette.primary.dark,

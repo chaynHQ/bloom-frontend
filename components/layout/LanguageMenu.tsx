@@ -101,8 +101,10 @@ export default function LanguageMenu() {
         open={open}
         onClose={handleClose}
         elevation={1}
-        MenuListProps={{
-          id: 'language-menu',
+        slotProps={{
+          list: {
+            id: 'language-menu',
+          },
         }}
       >
         {routing.locales

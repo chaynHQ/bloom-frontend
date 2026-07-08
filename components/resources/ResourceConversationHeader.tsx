@@ -92,10 +92,14 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
       >
         {t('backToConversations')}
       </Button>
-
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyle}>
-          <Typography variant="h1" maxWidth={600}>
+          <Typography
+            variant="h1"
+            sx={{
+              maxWidth: 600,
+            }}
+          >
             {name}
           </Typography>
           {render(description, RichTextOptions)}

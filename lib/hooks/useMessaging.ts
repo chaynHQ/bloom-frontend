@@ -11,6 +11,7 @@ import {
 import { getAuthToken } from '@/lib/auth';
 import { CHAT_MESSAGE_RECEIVED, CHAT_MESSAGE_SENT } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
+import { getClientContext } from '@/lib/utils/clientContext';
 import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
 import { onIdTokenChanged } from 'firebase/auth';
@@ -316,7 +317,8 @@ export function useMessaging(): UseMessagingResult {
         socket = io(`${origin}${MESSAGING_ENDPOINTS.socketNs}`, {
           auth: async (cb) => {
             const { token } = await getAuthToken();
-            cb({ token: token ?? '' });
+            // Coarse, low-PII locale/device context mirrored to the Front support contact.
+            cb({ token: token ?? '', clientContext: getClientContext() });
           },
           transports: ['websocket', 'polling'],
           reconnection: true,

@@ -195,7 +195,12 @@ export default function NotesPage({ story }: Props) {
                 <Typography variant="h2" component="h2">
                   {t('notes.createAccount')}
                 </Typography>
-                <Typography variant="body2" pb={2}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    pb: 2,
+                  }}
+                >
                   {t('notes.createAccountDescription')}
                 </Typography>
                 <RegisterNotesForm />
@@ -224,7 +229,12 @@ export default function NotesPage({ story }: Props) {
                 <Typography variant="h2" component="h2">
                   {t('form.subscribeTitle')}
                 </Typography>
-                <Typography variant="body2" pb={2}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    pb: 2,
+                  }}
+                >
                   {t('notes.subscribeDescription')}
                 </Typography>
                 <WhatsappSubscribeForm />
@@ -254,7 +264,12 @@ export default function NotesPage({ story }: Props) {
               <Typography variant="h2" component="h2">
                 {t('form.unsubscribeTitle')}
               </Typography>
-              <Typography variant="body2" pb={2}>
+              <Typography
+                variant="body2"
+                sx={{
+                  pb: 2,
+                }}
+              >
                 {t('notes.unsubscribeDescription')}
               </Typography>
               <WhatsappUnsubscribeForm />
@@ -287,9 +302,14 @@ export default function NotesPage({ story }: Props) {
         </Box>
         {renderFormSection()}
       </Container>
-
       <Container sx={howItWorksContainerStyle}>
-        <Typography variant="h2" component="h2" textAlign="center">
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            textAlign: 'center',
+          }}
+        >
           {t('notes.howItWorks')}
         </Typography>
 
@@ -307,7 +327,6 @@ export default function NotesPage({ story }: Props) {
           </Box>
         </Box>
       </Container>
-
       {story.content.page_sections?.length > 0 &&
         story.content.page_sections.map((section: any, index: number) => (
           <StoryblokPageSection key={`page_section_${index}`} {...section} isLoggedIn={!!userId} />
