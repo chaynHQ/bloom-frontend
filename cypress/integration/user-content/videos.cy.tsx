@@ -11,10 +11,10 @@ describe('Videos Flow', () => {
     // User visits the home page
     cy.visit('/');
 
-    // User clicks on Courses
-    cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 10000 }).should('exist').click();
+    // User clicks on Library
+    cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
 
-    // User clicks on a conversation
+    // User clicks on a somatic video
     cy.contains('What is somatics?', {
       timeout: 10000,
     })

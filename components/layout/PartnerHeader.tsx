@@ -2,7 +2,7 @@
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { rowStyle } from '@/styles/common';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
@@ -50,17 +50,9 @@ const PartnerHeader = (props: HeaderProps) => {
   const tS = useTranslations('Shared');
   const locale = useLocale();
 
-  const welcomeText = (
-    <Typography variant="subtitle1" sx={welcomeTextStyle}>
-      {t('WelcomeTo')}
-    </Typography>
-  );
-
   return (
     <Container sx={headerContainerStyles}>
       <Box sx={{ paddingBottom: 6 }}>
-        {/*Hindi: welcomeText starts lowercase due to Hindi following a "Bloom + {welcomeText}" sentence structure */}
-        {props.showWelcomeSubtext && locale !== 'hi' && welcomeText}
         <Box sx={logoContainerStyle}>
           <Image
             alt={tS(partnerLogoAlt)}
@@ -69,7 +61,6 @@ const PartnerHeader = (props: HeaderProps) => {
             style={logoStyle}
           />
         </Box>
-        {props.showWelcomeSubtext && locale === 'hi' && welcomeText}
       </Box>
       <Box sx={imageContainerStyle}>
         <Image
