@@ -52,13 +52,16 @@ interface NavigationConfigOptions {
 
 const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
   {
-    key: 'courses',
-    href: '/courses',
+    // The unified library replaces the old Courses hub: it mixes courses with single
+    // sessions (shorts, somatic videos, audio conversations) behind one guided search.
+    // Reuses the existing "courses" analytics events until dedicated library events are added.
+    key: 'library',
+    href: '/library',
     icon: courseIcon,
     event: isMobile ? DRAWER_COURSES_CLICKED : SECONDARY_HEADER_COURSES_CLICKED,
-    translationKey: 'courses',
+    translationKey: 'library',
     altTranslationKey: 'alt.courseIcon',
-    qaIdPrefix: 'courses',
+    qaIdPrefix: 'library',
   },
   {
     key: 'messaging',

@@ -48,7 +48,7 @@ export default function NotFoundPage() {
         variant="contained"
         color="secondary"
         component={i18nLink}
-        href={userId ? '/courses' : '/login'}
+        href={userId ? '/library' : '/login'}
       >
         {userId
           ? t('notFound.authenticatedRedirectButton')

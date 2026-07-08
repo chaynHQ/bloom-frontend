@@ -154,7 +154,7 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
           component={i18nLink}
           href={
             isLoggedIn
-              ? '/courses'
+              ? '/library'
               : `/auth/register?partner=${partnerContent.name.toLocaleLowerCase()}${codeParam && '&code=' + codeParam}`
           }
         >

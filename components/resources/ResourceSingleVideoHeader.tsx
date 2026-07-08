@@ -79,7 +79,7 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}
-        href={hasSomaticsTag ? '/courses?section=somatics' : '/courses'}
+        href="/library"
         component={i18nLink}
         size="small"
       >

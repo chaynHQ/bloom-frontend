@@ -90,7 +90,7 @@ export default function AboutYouPage() {
             }}
             color="secondary"
             component={i18nLink}
-            href={typeof return_url === 'string' ? return_url : '/courses'}
+            href={typeof return_url === 'string' ? return_url : '/library'}
           >
             {t('goToCourses')}
           </Button>

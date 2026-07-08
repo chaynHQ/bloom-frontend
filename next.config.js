@@ -41,22 +41,22 @@ module.exports = withBundleAnalyzer(
         return [
           {
             source: '/welcome',
-            destination: '/courses',
+            destination: '/library',
             permanent: false,
           },
           {
             source: '/:locale(en|es|de|fr|pt|hi)/welcome',
-            destination: '/:locale/courses',
+            destination: '/:locale/library',
             permanent: false,
           },
           {
             source: '/login',
-            destination: '/courses',
+            destination: '/library',
             permanent: false,
           },
           {
             source: '/:locale(en|es|de|fr|pt|hi)/login',
-            destination: '/:locale/courses',
+            destination: '/:locale/library',
             permanent: false,
           },
           {
@@ -81,7 +81,19 @@ module.exports = withBundleAnalyzer(
           },
           {
             source: '/about-our-courses',
-            destination: '/courses',
+            destination: '/library',
+            permanent: false,
+          },
+          // The Courses hub was unified into the Library; redirect the old landing route
+          // (individual course pages under /courses/[slug] are unaffected).
+          {
+            source: '/courses',
+            destination: '/library',
+            permanent: false,
+          },
+          {
+            source: '/:locale(en|es|de|fr|pt|hi|ar|tr)/courses',
+            destination: '/:locale/library',
             permanent: false,
           },
         ];

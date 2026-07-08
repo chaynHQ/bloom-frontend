@@ -1,7 +1,6 @@
 'use client';
 
 import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
-import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import {
   Box,
@@ -9,11 +8,9 @@ import {
   Card,
   CardActionArea,
   Checkbox,
-  Chip,
   Container,
   FormControlLabel,
   InputAdornment,
-  Stack,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -27,20 +24,19 @@ import illustrationCourses from '@/public/illustration_courses.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
 import {
   bucketOf,
-  FORMAT_META,
   FORMATS,
-  ITEMS,
   LENGTHS,
   LibraryCard,
   SupportCard,
-  THEME_LABEL,
   THEMES,
   toggle,
   type Format,
   type Kind,
   type LengthBucket,
+  type LibraryStories,
   type ThemeKey,
-} from './library/libraryContent';
+} from '../library/libraryContent';
+import { useLibraryItems } from '../library/useLibraryItems';
 
 // A subtle, integrated explainer shown under the All/Courses/Single sessions toggle —
 // framed as session vs course so a first-time user understands the distinction in context.
@@ -51,34 +47,53 @@ const KIND_HINT: Record<'all' | Kind, string> = {
 };
 
 export default function LibraryPage({
+  stories,
   initialKind = 'all',
   initialThemes = [],
 }: {
+  stories: LibraryStories;
   initialKind?: 'all' | Kind;
   initialThemes?: ThemeKey[];
 }) {
+  const items = useLibraryItems(stories);
   const [keyword, setKeyword] = useState('');
   const [kind, setKind] = useState<'all' | Kind>(initialKind);
   const [themes, setThemes] = useState<ThemeKey[]>(initialThemes);
   const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
 
+  // Only offer the formats actually present in the library, so the filter never lists an
+  // option that can return nothing (audio/video today; written/activity appear if added).
+  const availableFormats = useMemo(
+    () => FORMATS.filter((f) => items.some((item) => item.format === f.key)),
+    [items],
+  );
+
   // Everything matching the filters EXCEPT the course/session toggle — so we can show how
   // many of each type are available and let the toggle counts guide a first-time user.
   const baseFiltered = useMemo(() => {
     const kw = keyword.trim().toLowerCase();
-    return ITEMS.filter((item) => {
-      if (themes.length && !themes.includes(item.theme)) return false;
+    return items.filter((item) => {
+      if (themes.length && !item.themes.some((t) => themes.includes(t))) return false;
       if (kw && !`${item.title} ${item.description}`.toLowerCase().includes(kw)) return false;
       // Format filter only applies to single sessions; selecting a format hides courses.
-      if (formats.length && (item.kind !== 'session' || !formats.includes(item.format!)))
+      if (
+        formats.length &&
+        (item.kind !== 'session' || !item.format || !formats.includes(item.format))
+      )
         return false;
-      // Length is a per-session concept; selecting a length hides courses.
-      if (lengths.length && (item.kind !== 'session' || !lengths.includes(bucketOf(item.minutes!))))
+      // Length is a per-session concept; selecting a length hides courses and sessions with
+      // no published duration.
+      if (
+        lengths.length &&
+        (item.kind !== 'session' ||
+          item.minutes == null ||
+          !lengths.includes(bucketOf(item.minutes)))
+      )
         return false;
       return true;
     });
-  }, [keyword, themes, formats, lengths]);
+  }, [items, keyword, themes, formats, lengths]);
 
   const results = useMemo(
     () => (kind === 'all' ? baseFiltered : baseFiltered.filter((item) => item.kind === kind)),
@@ -91,17 +106,9 @@ export default function LibraryPage({
     session: baseFiltered.filter((item) => item.kind === 'session').length,
   };
 
-  const activeChips = [
-    ...themes.map((t) => ({ label: THEME_LABEL[t], clear: () => setThemes((p) => toggle(p, t)) })),
-    ...formats.map((f) => ({
-      label: FORMAT_META[f].label,
-      clear: () => setFormats((p) => toggle(p, f)),
-    })),
-    ...lengths.map((l) => ({
-      label: LENGTHS.find((x) => x.key === l)!.label,
-      clear: () => setLengths((p) => toggle(p, l)),
-    })),
-  ];
+  // Selected themes are surfaced as descriptive cards atop the results (not as sidebar
+  // filters), giving the chosen theme context and a fuller explanation.
+  const selectedThemes = THEMES.filter((t) => themes.includes(t.key));
 
   const clearAll = () => {
     setKeyword('');
@@ -252,27 +259,18 @@ export default function LibraryPage({
               }}
             />
 
-            <FilterGroup title="Theme">
-              {THEMES.map((t) => (
-                <CheckRow
-                  key={t.key}
-                  label={t.label}
-                  checked={themes.includes(t.key)}
-                  onChange={() => setThemes((p) => toggle(p, t.key))}
-                />
-              ))}
-            </FilterGroup>
-
-            <FilterGroup title="Format">
-              {FORMATS.map((f) => (
-                <CheckRow
-                  key={f.key}
-                  label={f.label}
-                  checked={formats.includes(f.key)}
-                  onChange={() => setFormats((p) => toggle(p, f.key))}
-                />
-              ))}
-            </FilterGroup>
+            {availableFormats.length > 0 && (
+              <FilterGroup title="Format">
+                {availableFormats.map((f) => (
+                  <CheckRow
+                    key={f.key}
+                    label={f.label}
+                    checked={formats.includes(f.key)}
+                    onChange={() => setFormats((p) => toggle(p, f.key))}
+                  />
+                ))}
+              </FilterGroup>
+            )}
 
             <FilterGroup title="Session length">
               {LENGTHS.map((l) => (
@@ -288,6 +286,44 @@ export default function LibraryPage({
 
           {/* Results */}
           <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            {/* Selected theme(s): a descriptive card giving context for the guided choice. */}
+            {selectedThemes.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+                {selectedThemes.map((t) => (
+                  <Box
+                    key={t.key}
+                    sx={{
+                      backgroundColor: 'secondary.light',
+                      borderRadius: '12px',
+                      p: { xs: 2.5, md: 3 },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'space-between',
+                        gap: 2,
+                      }}
+                    >
+                      <Typography variant="h3" sx={{ fontSize: '1.25rem', mb: 1 }}>
+                        {t.label}
+                      </Typography>
+                      <Button
+                        onClick={() => setThemes((p) => toggle(p, t.key))}
+                        size="small"
+                        sx={{ textTransform: 'none', flexShrink: 0, color: 'grey.700' }}
+                      >
+                        Clear
+                      </Button>
+                    </Box>
+                    <Typography sx={{ color: 'grey.800', mb: 0, maxWidth: 640 }}>
+                      {t.description}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
             <Box
               sx={{
                 display: 'flex',
@@ -335,23 +371,6 @@ export default function LibraryPage({
               </Typography>
             </Box>
 
-            {activeChips.length > 0 && (
-              <Stack direction="row" flexWrap="wrap" gap={1} sx={{ mb: 3 }}>
-                {activeChips.map((c, i) => (
-                  <Chip
-                    key={i}
-                    label={c.label}
-                    onDelete={c.clear}
-                    deleteIcon={<CloseRounded />}
-                    sx={{ backgroundColor: 'secondary.light' }}
-                  />
-                ))}
-                <Button onClick={clearAll} size="small" sx={{ textTransform: 'none' }}>
-                  Clear all
-                </Button>
-              </Stack>
-            )}
-
             {results.length === 0 ? (
               <Box sx={{ py: 8, textAlign: 'center', color: 'grey.700' }}>
                 <Typography sx={{ mb: 1 }}>Nothing matches those filters yet.</Typography>
@@ -398,11 +417,13 @@ export default function LibraryPage({
             iconSrc={chatIcon}
             title="1-to-1 messaging"
             description="Thoughtful replies to your questions and reflections, from our multilingual team, within 1–2 days."
+            href="/messaging"
           />
           <SupportCard
             iconSrc={notesFromBloomIcon}
             title="Notes from Bloom"
             description="Support from Bloom, delivered to your WhatsApp twice a week."
+            href="/subscription/whatsapp"
           />
         </Box>
       </Container>

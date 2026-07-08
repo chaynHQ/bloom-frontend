@@ -86,7 +86,7 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}
-        href="/courses?section=conversations"
+        href="/library"
         component={i18nLink}
         size="small"
       >
