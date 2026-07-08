@@ -8,6 +8,6 @@
     "goToCourses": "الذهاب إلى الدورات",
     "form": {
       "codeLabel": "رمز الوصول من {partnerName}"
-    },
+    }
   }
 }

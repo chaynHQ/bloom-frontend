@@ -8,6 +8,6 @@
     "goToCourses": "Ir para cursos",
     "form": {
       "codeLabel": "Código de acesso de {partnerName} "
-    },
+    }
   }
 }
