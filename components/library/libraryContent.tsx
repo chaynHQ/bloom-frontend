@@ -59,7 +59,9 @@ export const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
 // ---------------------------------------------------------------------------
 
 // A small pill badge (format or course) shown under a card title. Format badges use the soft
-// blue from the design; a course badge uses the brand pink so the two kinds read apart.
+// blue from the design; a course badge uses the peach secondary so the two kinds read apart.
+// Both are built the same way — a pale fill with a one-step-deeper border — so they sit as a
+// pair, and both keep grey label text, which peach-on-peach couldn't carry.
 function TypeBadge({ type }: { type: ContentType }) {
   const t = useTranslations('Library');
   const isCourse = type === 'course';
@@ -76,18 +78,18 @@ function TypeBadge({ type }: { type: ContentType }) {
         pr: 1.5,
         borderRadius: '8px',
         border: '1px solid',
-        backgroundColor: isCourse ? 'primary.light' : '#DFF0F5',
-        borderColor: isCourse ? 'primary.main' : '#CCE7F0',
+        backgroundColor: isCourse ? 'secondary.light' : '#DFF0F5',
+        borderColor: isCourse ? 'secondary.main' : '#CCE7F0',
       }}
     >
-      <Icon sx={{ fontSize: 16, color: isCourse ? 'primary.dark' : 'grey.700' }} />
+      <Icon sx={{ fontSize: 16, color: 'grey.700' }} />
       <Typography
         sx={{
           fontFamily: HEADING_FONT,
           fontSize: '0.875rem',
           fontWeight: 500,
           lineHeight: 1.4,
-          color: isCourse ? 'primary.dark' : 'grey.700',
+          color: 'grey.700',
         }}
       >
         {t(`contentTypes.${type}`)}
@@ -155,7 +157,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
             }}
           >
             {item.progress === 'completed' ? (
-              <CheckCircleRounded sx={{ fontSize: 16, color: 'primary.dark' }} />
+              <CheckCircleRounded sx={{ fontSize: 16, color: 'secondary.dark' }} />
             ) : (
               <LockRounded sx={{ fontSize: 14, color: 'grey.700' }} />
             )}
@@ -236,7 +238,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
               )
             )}
             <Box sx={{ flexGrow: 1 }} />
-            <ArrowForwardRounded sx={{ fontSize: 18, color: 'primary.dark' }} />
+            <ArrowForwardRounded sx={{ fontSize: 18, color: 'secondary.dark' }} />
           </Box>
         </Box>
       </CardActionArea>

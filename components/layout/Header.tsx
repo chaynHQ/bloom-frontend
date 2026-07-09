@@ -54,25 +54,14 @@ const headerStyle = {
   gap: { xs: 3, md: 5 },
 } as const;
 
-// The illustration sits inside a translucent-white circle (design token); the image itself is
-// inset to ~72% of the circle, matching the Figma proportions. It orders above the text on
-// mobile (order: -1) and to the trailing edge on desktop.
+// The illustration orders above the text on mobile (order: -1) and to the trailing edge on
+// desktop.
 const rightHeaderStyle = {
+  position: 'relative',
   flexShrink: 0,
   order: { xs: -1, md: 0 },
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   width: { xs: 140, md: 220 },
   height: { xs: 140, md: 220 },
-  borderRadius: '50%',
-  backgroundColor: 'rgba(255, 255, 255, 0.5)',
-} as const;
-
-const rightImageStyle = {
-  position: 'relative',
-  width: { xs: 100, md: 158 },
-  height: { xs: 100, md: 158 },
 } as const;
 
 const leftHeaderStyle = {
@@ -165,17 +154,15 @@ const Header = (props: HeaderProps) => {
           </Box>
           {imageSrc && (
             <Box sx={rightHeaderStyle}>
-              <Box sx={rightImageStyle}>
-                <Image
-                  alt={imageAltText}
-                  src={imageSrc}
-                  fill
-                  sizes={getImageSizes(rightImageStyle.width)}
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                />
-              </Box>
+              <Image
+                alt={imageAltText}
+                src={imageSrc}
+                fill
+                sizes={getImageSizes(rightHeaderStyle.width)}
+                style={{
+                  objectFit: 'contain',
+                }}
+              />
             </Box>
           )}
         </Box>

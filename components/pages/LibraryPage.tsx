@@ -424,7 +424,7 @@ export default function LibraryPage({
                 '& .MuiToggleButtonGroup-grouped': {
                   m: 0,
                   border: '1px solid',
-                  borderColor: CARD_BORDER,
+                  borderColor: 'secondary.main',
                   borderRadius: '100px !important',
                   px: 2,
                   py: 0.75,
@@ -436,11 +436,14 @@ export default function LibraryPage({
                   color: 'grey.800',
                   backgroundColor: 'common.white',
                   '&:hover': { backgroundColor: 'secondary.light' },
+                  // The selected peach is a step deeper than the hover wash, so hovering an
+                  // unselected button never looks like selecting it. Label stays dark: peach text
+                  // on peach has nowhere near enough contrast.
                   '&.Mui-selected': {
-                    color: 'primary.dark',
-                    borderColor: 'primary.dark',
-                    backgroundColor: 'primary.light',
-                    '&:hover': { backgroundColor: 'primary.light' },
+                    color: 'grey.900',
+                    borderColor: 'secondary.dark',
+                    backgroundColor: 'secondary.main',
+                    '&:hover': { backgroundColor: 'secondary.main' },
                   },
                 },
               }}
