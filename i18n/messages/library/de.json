@@ -1,0 +1,9 @@
+{
+  "Library": {
+    "noResults": {
+      "title": "Keine Treffer für diese Filter",
+      "body": "Entferne ein oder zwei Filter oder erkunde ein anderes Thema – in der Bibliothek wartet noch mehr auf dich.",
+      "action": "Filter zurücksetzen"
+    }
+  }
+}

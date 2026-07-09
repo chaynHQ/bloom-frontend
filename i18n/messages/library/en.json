@@ -1,0 +1,9 @@
+{
+  "Library": {
+    "noResults": {
+      "title": "No matches for those filters",
+      "body": "Try removing a filter or two, or explore a different theme — there's more waiting in the library.",
+      "action": "Clear filters"
+    }
+  }
+}

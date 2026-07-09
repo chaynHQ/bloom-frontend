@@ -51,16 +51,29 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
     const accessible = (list: ISbStoryData[]) =>
       filterStoriesForLocaleAndPartnerAccess(list, locale, userPartners);
 
-    const courseItems = accessible(stories.courses)
+    const courseStories = accessible(stories.courses).filter((story) => !story.content.coming_soon);
+    const courseItems = courseStories.map((story) =>
+      withProgress(storyToLibraryItem(story, locale), coursesProgress),
+    );
+
+    // Individual course lessons are only browsable when their parent course is — a lesson of a
+    // hidden, coming-soon, or partner-restricted course must not leak into the library. Gate on
+    // the set of visible course uuids, then apply the lesson's own locale/coming-soon rules.
+    const visibleCourseUuids = new Set(courseStories.map((story) => story.uuid));
+    // Lesson completion is tracked per-course in the courses slice, so its progress records live
+    // nested under each course's `sessions`, not in a top-level list.
+    const sessionProgress = coursesProgress.flatMap((course) => course.sessions ?? []);
+    const courseSessionItems = accessible(stories.courseSessions)
       .filter((story) => !story.content.coming_soon)
-      .map((story) => withProgress(storyToLibraryItem(story, locale), coursesProgress));
+      .filter((story) => visibleCourseUuids.has(story.content.course))
+      .map((story) => withProgress(storyToLibraryItem(story, locale), sessionProgress));
 
     const resourceStories = [...stories.shorts, ...stories.somatics, ...stories.conversations];
     const sessionItems = accessible(resourceStories).map((story) =>
       withProgress(storyToLibraryItem(story, locale), resourcesProgress),
     );
 
-    return [...courseItems, ...sessionItems];
+    return [...courseItems, ...sessionItems, ...courseSessionItems];
   }, [
     stories,
     locale,

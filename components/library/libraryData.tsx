@@ -20,6 +20,10 @@ export type Kind = 'course' | 'session';
 // offered after intense content rather than searched for like a lesson.
 export type Format = 'audio' | 'written' | 'video' | 'activity';
 
+// The "Content type" filter unifies the old course/session toggle with the format filter:
+// a library item is a whole course, or a single session in one of the formats above.
+export type ContentType = 'course' | Format;
+
 export type ThemeKey =
   | 'recognising-harm'
   | 'why-harm-happens'
@@ -37,6 +41,8 @@ export interface ThemeMeta {
   description: string;
 }
 
+// Blurbs match the "Explore by theme" cards in the Figma design; the fuller `description` is
+// surfaced in the secondary theme card shown above the results once a theme is selected.
 export const THEMES: ThemeMeta[] = [
   {
     key: 'recognising-harm',
@@ -48,7 +54,7 @@ export const THEMES: ThemeMeta[] = [
   {
     key: 'why-harm-happens',
     label: 'Why harm happens',
-    blurb: 'The social and systemic forces behind abuse',
+    blurb: 'Learn about the social and systemic forces behind abuse',
     description:
       "Abuse is shaped by more than one person's choices. Understand the social, cultural, and systemic forces that allow harm to happen — and why none of it is your fault.",
   },
@@ -111,7 +117,6 @@ export interface LibraryItem {
   minutes?: number;
   // courses (multi-part)
   sessionCount?: number;
-  weekCount?: number;
   // progress, only present for logged-in users who have started/completed the item
   progress?: 'started' | 'completed';
 }
@@ -120,6 +125,10 @@ export interface LibraryItem {
 // server-side (see getLibraryStories) and filtered/mapped client-side (see useLibraryItems).
 export interface LibraryStories {
   courses: ISbStoryData[];
+  // Individual lessons nested inside a course (Session / session_iba blocks), surfaced as
+  // single sessions in the library. Kept separate from `courses` so their parent-course
+  // visibility can be enforced in useLibraryItems.
+  courseSessions: ISbStoryData[];
   shorts: ISbStoryData[];
   somatics: ISbStoryData[];
   conversations: ISbStoryData[];
@@ -190,11 +199,12 @@ export function storyToLibraryItem(story: ISbStoryData, locale: string): Library
   };
 
   if (content.component === COURSE_COMPONENT) {
+    // `weeks` is only a grouping wrapper in the CMS; the library card reports the total number
+    // of sessions across all of them, not the week structure.
     const weeks = (content.weeks ?? []) as { sessions?: unknown[] }[];
     return {
       ...base,
       kind: 'course',
-      weekCount: weeks.length,
       sessionCount: weeks.reduce((total, week) => total + (week.sessions?.length ?? 0), 0),
     };
   }

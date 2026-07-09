@@ -1,5 +1,5 @@
 import { getLibraryStories } from '@/components/library/getLibraryStories';
-import { THEMES, type ThemeKey } from '@/components/library/libraryData';
+import { THEMES, type ContentType, type ThemeKey } from '@/components/library/libraryData';
 import LibraryPage from '@/components/pages/LibraryPage';
 
 // The library is Bloom's unified content hub: it mixes courses with single sessions (shorts,
@@ -26,12 +26,18 @@ export default async function Page({
   const { locale } = await params;
   const { type, theme } = await searchParams;
   // Links like /library?type=course or /library?theme=healing-journey (e.g. from other pages)
-  // pre-select the relevant filters.
-  const initialKind = type === 'course' || type === 'session' ? type : 'all';
+  // pre-select the relevant filters. `type=course` ticks the "Courses" content-type filter.
+  const initialContentTypes: ContentType[] = type === 'course' ? ['course'] : [];
   const themeKeys = THEMES.map((t) => t.key) as string[];
   const initialThemes = theme && themeKeys.includes(theme) ? [theme as ThemeKey] : [];
 
   const stories = await getLibraryStories(locale);
 
-  return <LibraryPage stories={stories} initialKind={initialKind} initialThemes={initialThemes} />;
+  return (
+    <LibraryPage
+      stories={stories}
+      initialContentTypes={initialContentTypes}
+      initialThemes={initialThemes}
+    />
+  );
 }

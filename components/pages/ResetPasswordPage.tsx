@@ -2,8 +2,8 @@
 
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
-import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
+import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -29,11 +29,10 @@ export default function ResetPasswordPage() {
   const oobCodeParam = searchParams.get('oobCode');
 
   const headerProps = {
-    partnerLogoSrc: bloomLogo,
+    partnerLogoSrc: welcomeToBloom,
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
-    showWelcomeSubtext: true,
   };
 
   return (
@@ -43,7 +42,6 @@ export default function ResetPasswordPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
-        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={containerStyle}>
         <Box sx={textContainerStyle}>

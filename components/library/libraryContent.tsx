@@ -1,67 +1,140 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
+import type { SvgIconComponent } from '@mui/icons-material';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
-import AutoStoriesRounded from '@mui/icons-material/AutoStoriesRounded';
-import CalendarMonthRounded from '@mui/icons-material/CalendarMonthRounded';
+import ArticleRounded from '@mui/icons-material/ArticleRounded';
 import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
-import LayersRounded from '@mui/icons-material/LayersRounded';
-import { Box, Card, CardActionArea, Chip, Divider, Typography } from '@mui/material';
+import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
+import LockRounded from '@mui/icons-material/LockRounded';
+import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
+import RouteRounded from '@mui/icons-material/RouteRounded';
+import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
+import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
+import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import Image, { type StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 
-import activitiesIcon from '@/public/activities_icon.svg';
-import chatIcon from '@/public/chat_icon.svg';
-import courseIcon from '@/public/course_icon.svg';
-import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
-import { THEME_LABEL, type Format, type LibraryItem } from './libraryData';
+import { THEME_LABEL, type ContentType, type Format, type LibraryItem } from './libraryData';
 
 // Re-export the pure data/types so existing imports `from './libraryContent'` keep working.
 export * from './libraryData';
 
+// The Montserrat heading font, exposed as a CSS var by next/font (see styles/theme.ts). Used
+// directly in a few places where the design calls for Montserrat on non-heading elements
+// (card titles, badges, meta) that aren't MUI Typography heading variants.
+export const HEADING_FONT = 'var(--font-montserrat)';
+
+// Shared card surface tokens taken from the Figma design so every library card, the secondary
+// theme card, and the theme options read as one system. In the design the content cards carry
+// a soft two-layer elevation rather than a border (the secondary theme card is the exception —
+// it uses the CARD_BORDER outline).
+export const CARD_SURFACE = '#FFFCFA';
+export const CARD_BORDER = '#EBE0E1';
+export const CARD_SHADOW = '0px 1px 3px 1px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.08)';
+
 // ---------------------------------------------------------------------------
-// Format metadata (carries icon assets, so it must live in this client module)
+// Content-type metadata (labels + illustrations for the filter list and card badges)
 // ---------------------------------------------------------------------------
 
 export interface FormatMeta {
   key: Format;
   label: string;
-  iconSrc: StaticImageData;
+  Icon: SvgIconComponent;
 }
 
-// Placeholder mapping to EXISTING app assets by nearest concept (no audio/video/written
-// icons exist yet): audio→conversations (chat), video→course, written→notes, activity→activities.
+// Only audio/video exist in the CMS today; the filter is rendered from what's actually present
+// (see LibraryPage), so written/activity surface automatically if such resources are added.
 export const FORMATS: FormatMeta[] = [
-  { key: 'audio', label: 'Audio', iconSrc: chatIcon },
-  { key: 'written', label: 'Written', iconSrc: notesFromBloomIcon },
-  { key: 'video', label: 'Video', iconSrc: courseIcon },
-  { key: 'activity', label: 'Activity', iconSrc: activitiesIcon },
+  { key: 'audio', label: 'Audio', Icon: VolumeUpRounded },
+  { key: 'written', label: 'Written', Icon: ArticleRounded },
+  { key: 'video', label: 'Video', Icon: SmartDisplayRounded },
+  { key: 'activity', label: 'Activity', Icon: ExtensionRounded },
 ];
 
-export const FORMAT_META: Record<Format, FormatMeta> = Object.fromEntries(
-  FORMATS.map((f) => [f.key, f]),
-) as Record<Format, FormatMeta>;
+// Singular labels ("Course", "Audio", …) so every content-type reads consistently in the
+// filter list and on the card badges.
+export const CONTENT_TYPE_LABEL: Record<ContentType, string> = {
+  course: 'Course',
+  audio: 'Audio',
+  written: 'Written',
+  video: 'Video',
+  activity: 'Activity',
+};
+
+// Simple glyph icons for the card badges, matching the design's session cards. A course badge
+// leads with a "route" glyph — it's a guided path to follow, not a single thing to press play
+// on; single sessions use their format glyph. The "playlist" glyph is reserved for the session
+// count in the card meta, where it reads as "how many parts, and what they are". It deliberately
+// shares a play triangle with the video format glyph so the two read as a family — "one video"
+// and "several videos" — rather than as one symbol meaning two things.
+export const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
+  course: RouteRounded,
+  audio: VolumeUpRounded,
+  written: ArticleRounded,
+  video: SmartDisplayRounded,
+  activity: ExtensionRounded,
+};
 
 // ---------------------------------------------------------------------------
 // Card primitives
 // ---------------------------------------------------------------------------
 
+// A small pill badge (format or course) shown under a card title. Format badges use the soft
+// blue from the design; a course badge uses the brand pink so the two kinds read apart.
+function TypeBadge({ type }: { type: ContentType }) {
+  const isCourse = type === 'course';
+  const Icon = CONTENT_TYPE_ICON[type];
+  return (
+    <Box
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.5,
+        alignSelf: 'flex-start',
+        height: 32,
+        pl: 1,
+        pr: 1.5,
+        borderRadius: '8px',
+        border: '1px solid',
+        backgroundColor: isCourse ? 'primary.light' : '#DFF0F5',
+        borderColor: isCourse ? 'primary.main' : '#CCE7F0',
+      }}
+    >
+      <Icon sx={{ fontSize: 16, color: isCourse ? 'primary.dark' : 'grey.700' }} />
+      <Typography
+        sx={{
+          fontFamily: HEADING_FONT,
+          fontSize: '0.875rem',
+          fontWeight: 500,
+          lineHeight: 1.4,
+          color: isCourse ? 'primary.dark' : 'grey.700',
+        }}
+      >
+        {CONTENT_TYPE_LABEL[type]}
+      </Typography>
+    </Box>
+  );
+}
+
 export function LibraryCard({ item }: { item: LibraryItem }) {
   const isCourse = item.kind === 'course';
+  const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
 
   return (
     <Card
       sx={{
         m: 0,
-        position: 'relative',
         height: '100%',
-        borderRadius: '12px',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: 'common.white',
-        border: '1px solid',
-        borderColor: 'rgba(0,0,0,0.06)',
+        position: 'relative',
+        borderRadius: '16px',
+        boxShadow: CARD_SHADOW,
+        backgroundColor: CARD_SURFACE,
+        // Held transparent at rest so the hover/focus peach doesn't resize the card.
+        border: '1px solid transparent',
+        transition: 'border-color 150ms ease',
+        '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
       }}
     >
       <CardActionArea
@@ -73,101 +146,85 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
-          backgroundColor: 'common.white',
+          backgroundColor: CARD_SURFACE,
+          '&:hover': { backgroundColor: 'common.white' },
         }}
       >
-        {/* Thumbnail band — the story's real Storyblok image where available (a photo/still
-              covers the band; a course illustration sits contained on the tint), falling back
-              to a single format icon on a soft tint. */}
-        <Box
-          sx={{
-            position: 'relative',
-            height: 128,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            backgroundColor: isCourse ? 'primary.light' : 'secondary.light',
-          }}
-        >
-          {item.image ? (
-            <Image
-              src={item.image.filename}
-              alt=""
-              fill
-              sizes="(max-width: 600px) 100vw, 360px"
-              style={{
-                objectFit: isCourse ? 'contain' : 'cover',
-                padding: isCourse ? 12 : 0,
-              }}
-            />
-          ) : (
-            <Image
-              src={isCourse ? courseIcon : FORMAT_META[item.format!].iconSrc}
-              alt=""
-              width={48}
-              height={48}
-              style={{ objectFit: 'contain' }}
-            />
-          )}
-          <Chip
-            size="small"
-            icon={isCourse ? <LayersRounded sx={{ fontSize: 16 }} /> : undefined}
-            label={isCourse ? 'Course' : FORMAT_META[item.format!].label}
+        {/* Progress badge — pinned top-inline-end, mirroring the design's corner badge slot. */}
+        {item.progress && (
+          <Box
             sx={{
               position: 'absolute',
-              top: 8,
-              insetInlineStart: 8,
+              top: 0,
+              insetInlineEnd: 0,
               zIndex: 1,
-              fontWeight: 600,
-              backgroundColor: isCourse ? 'primary.dark' : 'common.white',
-              color: isCourse ? 'common.white' : 'text.primary',
-              '& .MuiChip-icon': { color: 'common.white' },
-            }}
-          />
-          {item.progress && (
-            <Chip
-              size="small"
-              icon={
-                item.progress === 'completed' ? (
-                  <CheckCircleRounded sx={{ fontSize: 16 }} />
-                ) : undefined
-              }
-              label={item.progress === 'completed' ? 'Completed' : 'Started'}
-              sx={{
-                position: 'absolute',
-                top: 8,
-                insetInlineEnd: 8,
-                zIndex: 1,
-                backgroundColor: 'common.white',
-                fontWeight: 600,
-              }}
-            />
-          )}
-        </Box>
-
-        {/* Body */}
-        <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <Typography
-            variant="caption"
-            sx={{
-              textTransform: 'uppercase',
-              letterSpacing: 0.6,
-              color: 'secondary.dark',
-              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 0.5,
+              py: 1,
+              pl: 1,
+              pr: 1.5,
+              backgroundColor: '#FCF8F8',
+              borderInlineStart: '1px solid',
+              borderBottom: '1px solid',
+              borderColor: CARD_BORDER,
+              borderEndStartRadius: '8px',
             }}
           >
+            {item.progress === 'completed' ? (
+              <CheckCircleRounded sx={{ fontSize: 16, color: 'primary.dark' }} />
+            ) : (
+              <LockRounded sx={{ fontSize: 14, color: 'grey.700' }} />
+            )}
+            <Typography
+              sx={{
+                fontFamily: HEADING_FONT,
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                color: 'grey.800',
+              }}
+            >
+              {item.progress === 'completed' ? 'Completed' : 'Started'}
+            </Typography>
+          </Box>
+        )}
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            p: 2,
+            // 56px, matching the design — a fixed top inset, not clearance for the corner badge.
+            // It holds whether or not a badge is present, so cards stay aligned across the grid.
+            pt: 7,
+          }}
+        >
+          {/* Copy: theme eyebrow, title, type badge, supporting text. The eyebrow gets a hair of
+              air beneath it so it reads as a label for the title rather than part of it, and the
+              badge is given equal space above and below so it sits as its own band between the
+              title and the description. */}
+          <Typography variant="body2" sx={{ color: 'grey.800', mb: 0.5 }}>
             {item.themes.map((t) => THEME_LABEL[t]).join(' · ')}
           </Typography>
           <Typography
-            sx={{ fontWeight: 500, fontSize: '1.0625rem', mt: 0.5, mb: 1, lineHeight: 1.3 }}
+            sx={{
+              fontFamily: HEADING_FONT,
+              fontSize: '1.125rem',
+              fontWeight: 500,
+              lineHeight: 1.33,
+              letterSpacing: '0.15px',
+              mb: 1.5,
+            }}
           >
             {item.title}
           </Typography>
+          <TypeBadge type={badgeType} />
           <Typography
             variant="body2"
             sx={{
-              color: 'grey.700',
+              color: 'grey.800',
+              mt: 1.5,
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
@@ -177,24 +234,16 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
             {item.description}
           </Typography>
 
+          {/* Meta pinned to the bottom, above a divider — the line that makes course vs single
+              session unmistakable. */}
           <Box sx={{ flexGrow: 1 }} />
-          <Divider sx={{ my: 1.5 }} />
-
-          {/* Meta — the line that makes "course vs single session" unmistakable */}
+          <Divider sx={{ my: 2, borderColor: CARD_BORDER }} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {isCourse ? (
-              <>
-                <Meta
-                  icon={<AutoStoriesRounded sx={{ fontSize: 16 }} />}
-                  text={`${item.sessionCount} ${item.sessionCount === 1 ? 'session' : 'sessions'}`}
-                />
-                {!!item.weekCount && (
-                  <Meta
-                    icon={<CalendarMonthRounded sx={{ fontSize: 16 }} />}
-                    text={`${item.weekCount} ${item.weekCount === 1 ? 'week' : 'weeks'}`}
-                  />
-                )}
-              </>
+              <Meta
+                icon={<PlaylistPlayRounded sx={{ fontSize: 16 }} />}
+                text={`${item.sessionCount} ${item.sessionCount === 1 ? 'session' : 'sessions'}`}
+              />
             ) : (
               item.minutes != null && (
                 <Meta
@@ -216,11 +265,15 @@ export function Meta({ icon, text }: { icon: ReactNode; text: string }) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'grey.800' }}>
       {icon}
-      <Typography variant="body2">{text}</Typography>
+      <Typography sx={{ fontFamily: HEADING_FONT, fontSize: '0.875rem', fontWeight: 500 }}>
+        {text}
+      </Typography>
     </Box>
   );
 }
 
+// Two-tone "Get support" card from the design: a light body (illustration inline with the
+// title, supporting text below) and a soft-pink panel on the trailing edge holding the arrow.
 export function SupportCard({
   title,
   description,
@@ -233,37 +286,61 @@ export function SupportCard({
   href: string;
 }) {
   return (
-    <Card
-      sx={{
-        m: 0,
-        borderRadius: '12px',
-        backgroundColor: 'common.white',
-        border: '1px solid',
-        borderColor: 'rgba(0,0,0,0.06)',
-      }}
-    >
+    <Card sx={{ m: 0, borderRadius: '16px', boxShadow: CARD_SHADOW, overflow: 'hidden' }}>
       <CardActionArea
         component={i18nLink}
         href={href}
         aria-label={title}
         sx={{
-          p: 3,
+          p: 0,
           display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          backgroundColor: 'common.white',
+          alignItems: 'stretch',
+          minHeight: { xs: 132, md: 180 },
+          backgroundColor: '#FCF8F8',
+          '&:hover': { backgroundColor: 'common.white' },
         }}
       >
-        {iconSrc && (
-          <Image src={iconSrc} alt="" width={44} height={44} style={{ objectFit: 'contain' }} />
-        )}
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography sx={{ fontWeight: 600, mb: 0.5 }}>{title}</Typography>
-          <Typography variant="body2" sx={{ color: 'grey.700' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: 0.75,
+            p: 2,
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            {iconSrc && (
+              <Image src={iconSrc} alt="" width={44} height={44} style={{ objectFit: 'contain' }} />
+            )}
+            <Typography
+              sx={{
+                fontFamily: HEADING_FONT,
+                fontSize: '1.125rem',
+                fontWeight: 500,
+                letterSpacing: '0.15px',
+              }}
+            >
+              {title}
+            </Typography>
+          </Box>
+          <Typography variant="body2" sx={{ color: 'grey.800' }}>
             {description}
           </Typography>
         </Box>
-        <ArrowForwardRounded sx={{ color: 'primary.dark' }} />
+        <Box
+          sx={{
+            flexShrink: 0,
+            width: 72,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#F9E2E3',
+          }}
+        >
+          <ArrowForwardRounded sx={{ color: 'grey.700' }} />
+        </Box>
       </CardActionArea>
     </Card>
   );

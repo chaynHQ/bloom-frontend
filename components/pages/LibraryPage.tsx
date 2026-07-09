@@ -1,13 +1,16 @@
 'use client';
 
-import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
+import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
+import TuneRounded from '@mui/icons-material/TuneRounded';
 import {
   Box,
   Button,
   Card,
   CardActionArea,
   Checkbox,
+  Chip,
+  Collapse,
   Container,
   FormControlLabel,
   InputAdornment,
@@ -16,203 +19,233 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
-import { useMemo, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 
 import chatIcon from '@/public/chat_icon.svg';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
+import Header from '../layout/Header';
 import {
   bucketOf,
+  CARD_BORDER,
+  CARD_SHADOW,
+  CARD_SURFACE,
   FORMATS,
+  HEADING_FONT,
   LENGTHS,
   LibraryCard,
   SupportCard,
   THEMES,
   toggle,
+  type ContentType,
   type Format,
-  type Kind,
   type LengthBucket,
   type LibraryStories,
   type ThemeKey,
 } from '../library/libraryContent';
 import { useLibraryItems } from '../library/useLibraryItems';
 
-// A subtle, integrated explainer shown under the All/Courses/Single sessions toggle —
-// framed as session vs course so a first-time user understands the distinction in context.
-const KIND_HINT: Record<'all' | Kind, string> = {
-  all: 'Courses are guided journeys made of several sessions. Single sessions are short and standalone.',
-  course: 'A course is a guided journey — a series of sessions to work through over time.',
-  session: 'A single session is short and standalone — explore one whenever you have a moment.',
-};
+// How many cards to show before the "Load more" button, and how many more each press reveals.
+const PAGE_SIZE = 8;
+
+// The top-level "what kind of thing am I looking for" axis, surfaced as buttons above the
+// results rather than as a checkbox in the sidebar: a course and a single session are different
+// shapes of content, not two ticks in one list. Format and length only describe single sessions,
+// so they stay in the sidebar and switch off while "Courses" is selected.
+type KindFilter = 'all' | 'course' | 'session';
+
+const KIND_OPTIONS: { key: KindFilter; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'course', label: 'Courses' },
+  { key: 'session', label: 'Single sessions' },
+];
+
+// Warm cream page background for the browse area, from the Figma design.
+const PAGE_BG = '#FFF2EB';
+// The active search-term chip: a deeper peach than the page behind it so it reads as a thing you
+// can dismiss rather than part of the background. Sampled from the design's "Input chip".
+const CHIP_BG = '#FFD8C7';
+const CHIP_BG_HOVER = '#FFC9B2';
+
+// The design's sidebar column is 264px of content, then a 24px gutter, the divider, and another
+// 24px before the results. Box-sizing is border-box, so the column must be 264 + 24 wide for its
+// rows to measure 264 and for the divider to land where the design puts it.
+const SIDEBAR_CONTENT = 264;
+const SIDEBAR_GUTTER = 3; // theme spacing units → 24px
+const SIDEBAR_WIDTH = SIDEBAR_CONTENT + 24;
+
+// Vertical padding for the browse section. It lives on the two columns rather than the Container
+// so the divider between them spans the full height of the section, edge to edge.
+const BROWSE_PY = { xs: 4, md: 6 };
+// Soft peach gradient behind the "Get support" band — colours sampled from Figma (a subtle
+// top-to-bottom wash matching the header, not a strong pink).
+const BAND_GRADIENT = 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)';
 
 export default function LibraryPage({
   stories,
-  initialKind = 'all',
+  initialContentTypes = [],
   initialThemes = [],
 }: {
   stories: LibraryStories;
-  initialKind?: 'all' | Kind;
+  initialContentTypes?: ContentType[];
   initialThemes?: ThemeKey[];
 }) {
+  const t = useTranslations('Library');
   const items = useLibraryItems(stories);
   const [keyword, setKeyword] = useState('');
-  const [kind, setKind] = useState<'all' | Kind>(initialKind);
   const [themes, setThemes] = useState<ThemeKey[]>(initialThemes);
-  const [formats, setFormats] = useState<Format[]>([]);
+  // `?type=course` deep-links straight to the Courses tab; any format in the initial types
+  // pre-ticks the sidebar instead.
+  const [kind, setKind] = useState<KindFilter>(
+    initialContentTypes.includes('course') ? 'course' : 'all',
+  );
+  const [formats, setFormats] = useState<Format[]>(() =>
+    initialContentTypes.filter((type): type is Format => type !== 'course'),
+  );
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  // On mobile the filter checkboxes collapse behind a "Filter" button (they're always shown on
+  // desktop via CSS breakpoints); this only drives the small-screen open/closed state.
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  // Only offer the formats actually present in the library, so the filter never lists an
-  // option that can return nothing (audio/video today; written/activity appear if added).
-  const availableFormats = useMemo(
-    () => FORMATS.filter((f) => items.some((item) => item.format === f.key)),
+  // Format and length describe a single session; a course has neither. Rather than let the user
+  // build a combination that can only ever return nothing, both groups switch off (and clear)
+  // while "Courses" is selected.
+  const sessionFiltersDisabled = kind === 'course';
+
+  const selectKind = (next: KindFilter) => {
+    setKind(next);
+    if (next === 'course') {
+      setFormats([]);
+      setLengths([]);
+    }
+  };
+
+  // Format options are data-driven: only the single-session formats that actually exist in the
+  // library today (audio/video now) are offered.
+  const formatOptions = useMemo(
+    () => FORMATS.filter((format) => items.some((item) => item.format === format.key)),
     [items],
   );
 
-  // Everything matching the filters EXCEPT the course/session toggle — so we can show how
-  // many of each type are available and let the toggle counts guide a first-time user.
-  const baseFiltered = useMemo(() => {
+  const results = useMemo(() => {
     const kw = keyword.trim().toLowerCase();
     return items.filter((item) => {
-      if (themes.length && !item.themes.some((t) => themes.includes(t))) return false;
+      if (kind !== 'all' && item.kind !== kind) return false;
+      if (themes.length && !item.themes.some((key) => themes.includes(key))) return false;
       if (kw && !`${item.title} ${item.description}`.toLowerCase().includes(kw)) return false;
-      // Format filter only applies to single sessions; selecting a format hides courses.
-      if (
-        formats.length &&
-        (item.kind !== 'session' || !item.format || !formats.includes(item.format))
-      )
-        return false;
-      // Length is a per-session concept; selecting a length hides courses and sessions with
-      // no published duration.
-      if (
-        lengths.length &&
-        (item.kind !== 'session' ||
-          item.minutes == null ||
-          !lengths.includes(bucketOf(item.minutes)))
-      )
-        return false;
+
+      // Format and length are single-session concepts, so either one excludes courses outright.
+      if (formats.length) {
+        if (item.format == null || !formats.includes(item.format)) return false;
+      }
+      if (lengths.length) {
+        if (item.minutes == null || !lengths.includes(bucketOf(item.minutes))) return false;
+      }
       return true;
     });
-  }, [items, keyword, themes, formats, lengths]);
+  }, [items, keyword, themes, kind, formats, lengths]);
 
-  const results = useMemo(
-    () => (kind === 'all' ? baseFiltered : baseFiltered.filter((item) => item.kind === kind)),
-    [baseFiltered, kind],
-  );
+  // Reset pagination whenever the filters change so "Load more" always starts from the top.
+  // Adjusting state during render (rather than in an effect) is the recommended pattern for
+  // deriving state from a changing key — no extra render pass, no cascading effect.
+  const filterKey = `${keyword}|${themes.join(',')}|${kind}|${formats.join(',')}|${lengths.join(',')}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setVisibleCount(PAGE_SIZE);
+  }
 
-  const counts = {
-    all: baseFiltered.length,
-    course: baseFiltered.filter((item) => item.kind === 'course').length,
-    session: baseFiltered.filter((item) => item.kind === 'session').length,
-  };
+  const visibleResults = results.slice(0, visibleCount);
+  const hasMore = results.length > visibleCount;
 
-  // Selected themes are surfaced as descriptive cards atop the results (not as sidebar
+  // Selected themes are surfaced as descriptive cards atop the results (never as sidebar
   // filters), giving the chosen theme context and a fuller explanation.
-  const selectedThemes = THEMES.filter((t) => themes.includes(t.key));
+  const selectedThemes = THEMES.filter((theme) => themes.includes(theme.key));
+  const filtersActive = Boolean(keyword) || formats.length > 0 || lengths.length > 0;
 
-  const clearAll = () => {
+  const clearFilters = () => {
     setKeyword('');
-    setKind('all');
-    setThemes([]);
     setFormats([]);
     setLengths([]);
+  };
+  const clearAll = () => {
+    clearFilters();
+    setThemes([]);
+    setKind('all');
   };
 
   return (
     <Box>
-      {/* ---- Hero ---- */}
-      <Box
+      {/* ---- Hero: the shared, redesigned page header ---- */}
+      <Header
+        title="Explore the library"
+        imageSrc={illustrationCourses}
+        introduction="Everything from Bloom in one place — guided courses to work through step by step, and single sessions you can explore whenever you need them."
+      />
+
+      {/* ---- Explore by theme ---- */}
+      <Container
         sx={{
-          background: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
-          px: { xs: 3, md: 'calc((100vw - 1000px) / 2)' },
-          pt: { xs: 5, md: 7 },
-          pb: { xs: 6, md: 8 },
+          backgroundColor: PAGE_BG,
+          borderBottom: '1px solid',
+          borderColor: CARD_BORDER,
+          pt: { xs: 4, md: 6 },
+          pb: { xs: 4, md: 6 },
         }}
       >
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 4 }}
-        >
-          <Box sx={{ maxWidth: 560 }}>
-            <Typography variant="h1" sx={{ mb: 2 }}>
-              Explore the library
-            </Typography>
-            <Typography sx={{ maxWidth: 480 }}>
-              Everything from Bloom in one place — guided courses to work through step by step, and
-              single sessions you can explore whenever you need them.
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: { xs: 'none', sm: 'flex' },
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              width: { sm: 150, md: 200 },
-              height: { sm: 150, md: 200 },
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255,255,255,0.45)',
-            }}
-          >
-            <Image
-              src={illustrationCourses}
-              alt=""
-              width={140}
-              height={140}
-              style={{ objectFit: 'contain' }}
-            />
-          </Box>
-        </Box>
-      </Box>
-
-      {/* ---- Guided entry: themes ---- */}
-      <Container
-        sx={{ backgroundColor: 'secondary.light', pt: { xs: 3, md: 4 }, pb: { xs: 4, md: 5 } }}
-      >
-        <Typography variant="h2" sx={{ fontSize: { xs: '1.5rem', md: '1.875rem' }, mb: 1 }}>
-          Where would you like to start?
-        </Typography>
-        <Typography sx={{ mb: 3, color: 'grey.800' }}>
-          Pick a theme to guide your search, or browse everything below.
-        </Typography>
+        <SectionLabel
+          label="Explore by theme"
+          onReset={themes.length ? () => setThemes([]) : undefined}
+        />
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
-            gap: 1.5,
-            my: 3,
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 2,
+            mt: 1,
           }}
         >
-          {THEMES.map((t) => {
-            const active = themes.includes(t.key);
+          {THEMES.map((theme) => {
+            const active = themes.includes(theme.key);
             return (
               <Card
-                key={t.key}
+                key={theme.key}
                 sx={{
                   m: 0,
-                  borderRadius: '12px',
-                  backgroundColor: 'common.white',
-                  border: '1px solid',
-                  borderColor: 'rgba(0,0,0,0.06)',
+                  borderRadius: '8px',
+                  backgroundColor: CARD_SURFACE,
+                  boxShadow: CARD_SHADOW,
                 }}
               >
                 <CardActionArea
-                  onClick={() => setThemes((p) => toggle(p, t.key))}
+                  onClick={() => setThemes((p) => toggle(p, theme.key))}
+                  aria-pressed={active}
                   sx={{
-                    p: 2,
-                    py: 1.5,
+                    p: 1.5,
                     height: '100%',
-                    backgroundColor: 'common.white',
+                    backgroundColor: CARD_SURFACE,
+                    borderRadius: '8px',
+                    // A pink ring marks the active theme; the transparent border on inactive
+                    // cards keeps their size identical so selection never shifts the layout.
                     border: '2px solid',
                     borderColor: active ? 'primary.dark' : 'transparent',
-                    borderRadius: '12px',
+                    '&:hover': { backgroundColor: 'common.white' },
                   }}
                 >
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography sx={{ fontWeight: 600 }}>{t.label}</Typography>
-                    {active && <CheckCircleRounded sx={{ fontSize: 18, color: 'primary.dark' }} />}
-                  </Box>
-                  <Typography variant="body2" sx={{ color: 'grey.700', mt: 0.5 }}>
-                    {t.blurb}
+                  <Typography
+                    sx={{
+                      fontFamily: HEADING_FONT,
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      mb: 0.5,
+                    }}
+                  >
+                    {theme.label}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'grey.700' }}>
+                    {theme.blurb}
                   </Typography>
                 </CardActionArea>
               </Card>
@@ -221,196 +254,309 @@ export default function LibraryPage({
         </Box>
       </Container>
 
-      {/* ---- Filters + results ---- */}
-      <Container
-        sx={{ backgroundColor: 'background.default', pt: { xs: 4, md: 5 }, pb: { xs: 6, md: 8 } }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: { xs: 3, md: 5 },
-          }}
-        >
+      {/* ---- Filters + results ----
+           The section's vertical padding sits on the two columns, not on the Container. Both
+           columns are flex children of a stretch row, so the shorter one grows to the full row
+           height and the divider on the sidebar's inline edge runs the whole height of the
+           section — no gap at the top or bottom. On mobile the row stacks and the divider is
+           dropped, so the padding collapses to a single seam between the two. */}
+      <Container sx={{ backgroundColor: PAGE_BG, py: '0 !important' }}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
           {/* Sidebar */}
-          <Box sx={{ width: { xs: '100%', md: 240 }, flexShrink: 0 }}>
-            <Typography sx={{ fontWeight: 600, pb: 1.5 }}>Filter the library</Typography>
-            <TextField
-              fullWidth
-              size="small"
-              placeholder="Search by keywords…"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              sx={{
-                mb: 3,
-                '& .MuiOutlinedInput-root': {
+          <Box
+            sx={{
+              width: { xs: '100%', md: SIDEBAR_WIDTH },
+              flexShrink: 0,
+              pt: BROWSE_PY,
+              pb: { xs: 0, md: 6 },
+              pr: { md: SIDEBAR_GUTTER },
+              borderInlineEnd: { md: '1px solid' },
+              borderColor: { md: CARD_BORDER },
+            }}
+          >
+            <SectionLabel
+              label="Filter the library"
+              onReset={filtersActive ? clearFilters : undefined}
+            />
+            {/* Search + (mobile-only) Filter toggle. On desktop the checkbox groups are always
+                visible; on mobile they collapse behind the toggle to keep the top of the list
+                reachable, matching the mobile design. */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+              <TextField
+                fullWidth
+                size="small"
+                placeholder="Search by keywords…"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                sx={{
+                  m: 0,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '100px',
+                    backgroundColor: 'common.white',
+                    '& fieldset': { borderColor: '#DECECF' },
+                  },
+                }}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchRounded fontSize="small" sx={{ color: 'grey.600' }} />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+              <Button
+                onClick={() => setMobileFiltersOpen((o) => !o)}
+                variant="outlined"
+                color="secondary"
+                aria-expanded={mobileFiltersOpen}
+                startIcon={<TuneRounded />}
+                sx={{
+                  display: { xs: 'inline-flex', md: 'none' },
+                  flexShrink: 0,
                   borderRadius: '100px',
                   backgroundColor: 'common.white',
-                },
-              }}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchRounded fontSize="small" />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-
-            {availableFormats.length > 0 && (
-              <FilterGroup title="Format">
-                {availableFormats.map((f) => (
-                  <CheckRow
-                    key={f.key}
-                    label={f.label}
-                    checked={formats.includes(f.key)}
-                    onChange={() => setFormats((p) => toggle(p, f.key))}
-                  />
-                ))}
-              </FilterGroup>
+                }}
+              >
+                Filter
+              </Button>
+            </Box>
+            {keyword && (
+              <Chip
+                label={keyword}
+                onDelete={() => setKeyword('')}
+                deleteIcon={<CloseRounded />}
+                sx={{
+                  mt: 1.5,
+                  maxWidth: '100%',
+                  height: 32,
+                  borderRadius: '8px',
+                  backgroundColor: CHIP_BG,
+                  '&:hover, &:focus-within': { backgroundColor: CHIP_BG_HOVER },
+                  '& .MuiChip-label': {
+                    fontFamily: HEADING_FONT,
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
+                    color: 'grey.800',
+                    pl: 1.5,
+                    pr: 0.5,
+                  },
+                  // MUI's default delete icon is a heavy 22px glyph with negative margins. The
+                  // design uses a light 18px cross, inset 8px from the trailing edge.
+                  '& .MuiChip-deleteIcon': {
+                    m: 0,
+                    mr: 1,
+                    fontSize: 18,
+                    color: 'grey.700',
+                    '&:hover': { color: 'grey.900' },
+                  },
+                }}
+              />
             )}
 
-            <FilterGroup title="Session length">
-              {LENGTHS.map((l) => (
-                <CheckRow
-                  key={l.key}
-                  label={l.label}
-                  checked={lengths.includes(l.key)}
-                  onChange={() => setLengths((p) => toggle(p, l.key))}
-                />
-              ))}
-            </FilterGroup>
+            {/* Filter groups: always open on desktop; collapsed behind the toggle on mobile. */}
+            <Collapse in={mobileFiltersOpen} sx={{ display: { md: 'none' } }}>
+              <FilterGroups
+                formatOptions={formatOptions}
+                formats={formats}
+                setFormats={setFormats}
+                lengths={lengths}
+                setLengths={setLengths}
+                disabled={sessionFiltersDisabled}
+              />
+            </Collapse>
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <FilterGroups
+                formatOptions={formatOptions}
+                formats={formats}
+                setFormats={setFormats}
+                lengths={lengths}
+                setLengths={setLengths}
+                disabled={sessionFiltersDisabled}
+              />
+            </Box>
           </Box>
 
           {/* Results */}
-          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-            {/* Selected theme(s): a descriptive card giving context for the guided choice. */}
-            {selectedThemes.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
-                {selectedThemes.map((t) => (
-                  <Box
-                    key={t.key}
-                    sx={{
-                      backgroundColor: 'secondary.light',
-                      borderRadius: '12px',
-                      p: { xs: 2.5, md: 3 },
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'baseline',
-                        justifyContent: 'space-between',
-                        gap: 2,
-                      }}
-                    >
-                      <Typography variant="h3" sx={{ fontSize: '1.25rem', mb: 1 }}>
-                        {t.label}
-                      </Typography>
-                      <Button
-                        onClick={() => setThemes((p) => toggle(p, t.key))}
-                        size="small"
-                        sx={{ textTransform: 'none', flexShrink: 0, color: 'grey.700' }}
-                      >
-                        Clear
-                      </Button>
-                    </Box>
-                    <Typography sx={{ color: 'grey.800', mb: 0, maxWidth: 640 }}>
-                      {t.description}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            )}
+          <Box
+            sx={{
+              flexGrow: 1,
+              minWidth: 0,
+              pt: BROWSE_PY,
+              pb: { xs: 6, md: 6 },
+              pl: { md: SIDEBAR_GUTTER },
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',
-                flexWrap: 'wrap',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 2,
-                mb: 2,
               }}
             >
-              <ToggleButtonGroup
-                exclusive
-                size="small"
-                value={kind}
-                onChange={(_, v) => v && setKind(v)}
+              <Typography
                 sx={{
-                  '& .MuiToggleButton-root': {
-                    textTransform: 'none',
-                    px: 2,
-                    borderRadius: '100px !important',
-                    border: '1px solid',
-                    borderColor: 'secondary.dark',
-                    mr: 1,
-                    '&.Mui-selected': {
-                      backgroundColor: 'primary.dark',
-                      color: 'common.white',
-                      '&:hover': { backgroundColor: 'primary.dark' },
-                    },
-                  },
+                  fontFamily: HEADING_FONT,
+                  fontSize: '1.125rem',
+                  fontWeight: 500,
+                  letterSpacing: '0.15px',
                 }}
               >
-                <ToggleButton value="all">All ({counts.all})</ToggleButton>
-                <ToggleButton value="course">Courses ({counts.course})</ToggleButton>
-                <ToggleButton value="session">Single sessions ({counts.session})</ToggleButton>
-              </ToggleButtonGroup>
-
-              <Typography variant="body2" sx={{ color: 'grey.700' }}>
+                Library
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'grey.700', flexShrink: 0 }}>
                 {results.length} {results.length === 1 ? 'result' : 'results'}
               </Typography>
             </Box>
 
-            <Box sx={{ mb: 3 }}>
-              <Typography variant="body2" sx={{ color: 'grey.700' }}>
-                {KIND_HINT[kind]}
-              </Typography>
-            </Box>
+            {/* Kind: the primary cut through the library, sitting directly under the heading it
+                qualifies and above the theme card, so the panel reads "what → why → results". */}
+            <ToggleButtonGroup
+              exclusive
+              value={kind}
+              onChange={(_, next: KindFilter | null) => next && selectKind(next)}
+              aria-label="Filter by content kind"
+              sx={{
+                mt: 2,
+                mb: 3,
+                flexWrap: 'wrap',
+                gap: 1,
+                '& .MuiToggleButtonGroup-grouped': {
+                  m: 0,
+                  border: '1px solid',
+                  borderColor: CARD_BORDER,
+                  borderRadius: '100px !important',
+                  px: 2,
+                  py: 0.75,
+                  fontFamily: HEADING_FONT,
+                  fontSize: '0.875rem',
+                  fontWeight: 500,
+                  lineHeight: 1.4,
+                  textTransform: 'none',
+                  color: 'grey.800',
+                  backgroundColor: 'common.white',
+                  '&:hover': { backgroundColor: 'secondary.light' },
+                  '&.Mui-selected': {
+                    color: 'primary.dark',
+                    borderColor: 'primary.dark',
+                    backgroundColor: 'primary.light',
+                    '&:hover': { backgroundColor: 'primary.light' },
+                  },
+                },
+              }}
+            >
+              {KIND_OPTIONS.map((option) => (
+                <ToggleButton key={option.key} value={option.key} disableRipple>
+                  {option.label}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+
+            {/* Selected theme(s): a descriptive card giving context for the guided choice. */}
+            {selectedThemes.map((theme) => (
+              <Box
+                key={theme.key}
+                sx={{
+                  borderRadius: '16px',
+                  border: '1px solid',
+                  borderColor: CARD_BORDER,
+                  p: { xs: 2, md: 2.5 },
+                  mb: 2,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: HEADING_FONT,
+                    fontSize: '1.125rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.15px',
+                    mb: 1,
+                  }}
+                >
+                  {theme.label}
+                </Typography>
+                <Typography sx={{ color: 'grey.800' }}>{theme.description}</Typography>
+              </Box>
+            ))}
 
             {results.length === 0 ? (
-              <Box sx={{ py: 8, textAlign: 'center', color: 'grey.700' }}>
-                <Typography sx={{ mb: 1 }}>Nothing matches those filters yet.</Typography>
-                <Button onClick={clearAll} variant="outlined" color="secondary">
-                  Clear filters
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  py: { xs: 7, md: 10 },
+                  px: 2,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: HEADING_FONT,
+                    fontSize: '1.125rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.15px',
+                    mb: 1,
+                  }}
+                >
+                  {t('noResults.title')}
+                </Typography>
+                <Typography sx={{ color: 'grey.700', maxWidth: 420 }}>
+                  {t('noResults.body')}
+                </Typography>
+                <Button onClick={clearAll} variant="outlined" color="secondary" sx={{ mt: 2 }}>
+                  {t('noResults.action')}
                 </Button>
               </Box>
             ) : (
-              <Box
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
-                  gap: 3,
-                }}
-              >
-                {results.map((item) => (
-                  <LibraryCard key={item.id} item={item} />
-                ))}
-              </Box>
+              <>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+                    gap: 3,
+                  }}
+                >
+                  {visibleResults.map((item) => (
+                    <LibraryCard key={item.id} item={item} />
+                  ))}
+                </Box>
+                {hasMore && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <Button
+                      onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      Load more
+                    </Button>
+                  </Box>
+                )}
+              </>
             )}
           </Box>
         </Box>
       </Container>
 
       {/* ---- Get support ---- */}
-      <Container
-        sx={{ backgroundColor: 'secondary.light', pt: { xs: 5, md: 7 }, pb: { xs: 6, md: 8 } }}
-      >
-        <Typography variant="h2" sx={{ fontSize: { xs: '1.5rem', md: '1.875rem' }, mb: 1 }}>
+      <Container sx={{ background: BAND_GRADIENT, pt: { xs: 7, md: 13 }, pb: { xs: 7, md: 13 } }}>
+        <Typography
+          variant="h2"
+          sx={{ fontSize: { xs: '1.5rem', md: '1.75rem' }, fontWeight: 500, mb: 1 }}
+        >
           Get support
         </Typography>
-        <Typography sx={{ mb: 3, color: 'grey.800' }}>
+        <Typography sx={{ color: 'grey.800' }}>
           Prefer to talk to someone? Bloom&apos;s support services are here whenever you need them.
         </Typography>
         <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
-            gap: 2,
-            mt: 3,
+            gap: 3,
+            mt: 2,
           }}
         >
           <SupportCard
@@ -432,48 +578,160 @@ export default function LibraryPage({
 }
 
 // ---------------------------------------------------------------------------
-// Sidebar sub-components (specific to the search page)
+// Sidebar / section sub-components (specific to the library page)
 // ---------------------------------------------------------------------------
 
-function FilterGroup({ title, children }: { title: string; children: ReactNode }) {
+// A section/sidebar label with an optional "Reset" action on the trailing edge — used by both
+// "Explore by theme" and "Filter the library" to match the design.
+function SectionLabel({ label, onReset }: { label: string; onReset?: () => void }) {
   return (
-    <Box sx={{ mb: 3 }}>
-      <Typography sx={{ fontWeight: 600, mb: 0.5 }}>{title}</Typography>
+    <Box
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 24 }}
+    >
+      <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', color: 'grey.800' }}>
+        {label}
+      </Typography>
+      {onReset && (
+        <Button
+          onClick={onReset}
+          size="small"
+          sx={{
+            minWidth: 0,
+            p: 0,
+            fontFamily: HEADING_FONT,
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: 'primary.dark',
+            '&:hover': { backgroundColor: 'transparent', textDecoration: 'underline' },
+          }}
+        >
+          Reset
+        </Button>
+      )}
+    </Box>
+  );
+}
+
+// The "Content type" + "Length" checkbox groups. Extracted so the sidebar can render them once
+// for desktop (always visible) and once inside a mobile Collapse without duplicating markup.
+//
+// The design gives each filter row a 64px height: 8px of row padding around a 48px checkbox
+// target (a 24px glyph inset by 12px). The global MuiFormControlLabel override in styles/theme.ts
+// zeroes the checkbox's vertical padding, pins it to the top, and paints it text.primary via a
+// `& .MuiCheckbox-root` descendant selector. That out-specifies an `sx` on the Checkbox itself,
+// so the row styling has to be applied from the FormControlLabel to land at all.
+const CHECKBOX_SX = {
+  '& .MuiCheckbox-root': {
+    p: 1.5,
+    m: 0,
+    alignSelf: 'center',
+    color: 'grey.600',
+    '&.Mui-checked': { color: 'primary.dark' },
+    '&.Mui-disabled': { color: 'grey.400' },
+  },
+} as const;
+
+function FilterGroups({
+  formatOptions,
+  formats,
+  setFormats,
+  lengths,
+  setLengths,
+  disabled,
+}: {
+  formatOptions: { key: Format; label: string }[];
+  formats: Format[];
+  setFormats: Dispatch<SetStateAction<Format[]>>;
+  lengths: LengthBucket[];
+  setLengths: Dispatch<SetStateAction<LengthBucket[]>>;
+  // True while "Courses" is selected: neither group describes a course, so both are inert.
+  disabled: boolean;
+}) {
+  return (
+    <Box sx={{ pt: 4 }}>
+      {formatOptions.length > 0 && (
+        <FilterGroup title="Content type" disabled={disabled}>
+          {formatOptions.map((option) => (
+            <CheckRow
+              key={option.key}
+              label={option.label}
+              checked={formats.includes(option.key)}
+              onChange={() => setFormats((p) => toggle(p, option.key))}
+              disabled={disabled}
+            />
+          ))}
+        </FilterGroup>
+      )}
+
+      <FilterGroup title="Length" disabled={disabled}>
+        {LENGTHS.map((l) => (
+          <CheckRow
+            key={l.key}
+            label={l.label}
+            checked={lengths.includes(l.key)}
+            onChange={() => setLengths((p) => toggle(p, l.key))}
+            disabled={disabled}
+          />
+        ))}
+      </FilterGroup>
+    </Box>
+  );
+}
+
+function FilterGroup({
+  title,
+  disabled,
+  children,
+}: {
+  title: string;
+  disabled?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <Box sx={{ mb: 4, '&:last-of-type': { mb: 0 } }}>
+      {/* No margin here: the first filter row's own top padding supplies the gap. */}
+      <Typography
+        sx={{
+          fontWeight: 600,
+          fontSize: '0.875rem',
+          color: disabled ? 'grey.500' : 'grey.800',
+        }}
+      >
+        {title}
+      </Typography>
       {children}
     </Box>
   );
 }
 
-// Row styled to match the reference: label on the left, checkbox on the right, with a
-// thin divider under each row.
+// Row styled to match the design: label on the leading edge, checkbox on the trailing edge,
+// with a thin divider under each row.
 function CheckRow({
   label,
   checked,
   onChange,
+  disabled,
 }: {
   label: string;
   checked: boolean;
   onChange: () => void;
+  disabled?: boolean;
 }) {
   return (
     <FormControlLabel
       labelPlacement="start"
-      control={
-        <Checkbox checked={checked} onChange={onChange} size="small" sx={{ color: 'grey.500' }} />
-      }
-      label={
-        <Typography variant="body2" sx={{ color: 'grey.700' }}>
-          {label}
-        </Typography>
-      }
+      disabled={disabled}
+      control={<Checkbox checked={checked} onChange={onChange} disableRipple />}
+      label={<Typography sx={{ color: disabled ? 'grey.500' : 'grey.700' }}>{label}</Typography>}
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%',
         m: 0,
-        py: 1.75,
+        py: 1,
         borderBottom: '1px solid',
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderColor: CARD_BORDER,
+        ...CHECKBOX_SX,
       }}
     />
   );

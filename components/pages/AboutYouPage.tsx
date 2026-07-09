@@ -57,7 +57,6 @@ export default function AboutYouPage() {
     partnerLogoAlt: 'alt.welcomeToBloom',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
-    showWelcomeSubtext: true,
   };
 
   return (
@@ -67,7 +66,6 @@ export default function AboutYouPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
-        showWelcomeSubtext={true}
       />
       <Container sx={containerStyle}>
         <Box sx={contentContainerStyle}>

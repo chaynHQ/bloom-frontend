@@ -1,0 +1,9 @@
+{
+  "Library": {
+    "noResults": {
+      "title": "Bu filtreler için sonuç yok",
+      "body": "Bir iki filtreyi kaldırmayı ya da başka bir temayı keşfetmeyi dene — kütüphanede seni bekleyen daha çok şey var.",
+      "action": "Filtreleri temizle"
+    }
+  }
+}

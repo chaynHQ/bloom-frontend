@@ -16,11 +16,19 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
     sort_by: 'position:description',
   };
 
-  const [courses, shorts, somatics, conversations] = await Promise.all([
+  const [courses, courseSessions, shorts, somatics, conversations] = await Promise.all([
     getStoryblokStories(locale, {
       ...baseProps,
       starts_with: 'courses/',
       filter_query: { component: { in: 'Course' } },
+    }),
+    // Individual lessons within a course ("Session" / "session_iba" blocks). Presented in the
+    // library as single sessions so they can be searched alongside courses and standalone
+    // resources; useLibraryItems couples their visibility to their parent course.
+    getStoryblokStories(locale, {
+      ...baseProps,
+      starts_with: 'courses/',
+      filter_query: { component: { in: 'Session,session_iba' } },
     }),
     getStoryblokStories(locale, { ...baseProps, starts_with: 'shorts/' }),
     getStoryblokStories(locale, {
@@ -33,6 +41,7 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
 
   return {
     courses: courses ?? [],
+    courseSessions: courseSessions ?? [],
     shorts: shorts ?? [],
     somatics: somatics ?? [],
     conversations: conversations ?? [],
