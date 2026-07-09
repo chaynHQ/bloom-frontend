@@ -5,10 +5,40 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import NotesIcon from '@/public/illustration_notes.svg';
 import theme from '@/styles/theme';
-import Box from '@mui/material/Box';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Button from '../common/Button';
+
+const containerStyle = {
+  background: theme.palette.bloomGradientVertical,
+  paddingTop: { xs: '2.5rem !important', md: '3.5rem !important' },
+  paddingBottom: { xs: '2.5rem !important', md: '3.5rem !important' },
+} as const;
+
+const rowStyle = {
+  flexDirection: { xs: 'column', md: 'row' },
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: { xs: 3, md: 8 },
+} as const;
+
+const contentStyle = {
+  flexDirection: { xs: 'column', md: 'row' },
+  alignItems: 'center',
+  gap: { xs: 2, md: 4 },
+} as const;
+
+const imageContainerStyle = {
+  position: 'relative',
+  flexShrink: 0,
+  width: { xs: 120, md: 140 },
+  height: { xs: 120, md: 140 },
+} as const;
+
+const textContainerStyle = {
+  textAlign: { xs: 'center', md: 'start' },
+} as const;
 
 const NotesFromBloomPromo = () => {
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -16,116 +46,35 @@ const NotesFromBloomPromo = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
 
-  // add tracking for this component
   const t = useTranslations('Shared.notesFromBloomPromo');
   const tN = useTranslations('Navigation');
+
   return (
-    <Box
-      sx={{
-        padding: ['20px 30px', '30px 30px'],
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        background: theme.palette.bloomGradientVertical,
-      }}
-    >
-      <Box
-        sx={{
-          maxWidth: [600, 600, 750],
-          width: '100%',
-          gap: 2,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'left',
-        }}
-      >
-        <Box
-          sx={{
-            flex: '1',
-            height: [100, 100, 50],
-            position: 'relative',
-            display: 'flex',
+    <Container sx={containerStyle}>
+      <Stack sx={rowStyle}>
+        <Stack sx={contentStyle}>
+          <Box sx={imageContainerStyle}>
+            <Image alt={tN('alt.notesIcon')} src={NotesIcon} sizes={getImageSizes(140)} fill />
+          </Box>
+          <Box sx={textContainerStyle}>
+            <Typography variant="h3" component="h2" sx={{ mb: 1 }}>
+              {t('title')}
+            </Typography>
+            <Typography sx={{ mb: 0 }}>{t('description')}</Typography>
+          </Box>
+        </Stack>
+        <Button
+          link="/subscription/whatsapp"
+          color={STORYBLOK_COLORS.PRIMARY_DARK}
+          text={t('buttonText')}
+          size="medium"
+          style={{ marginTop: 0, marginBottom: 0, flexShrink: 0 }}
+          clickHandler={() => {
+            logEvent(NOTES_FROM_BLOOM_PROMO_CLICKED, eventUserData);
           }}
-        >
-          <Box
-            sx={{
-              height: [200, 225, 200],
-              width: [200, 225, 200],
-              position: 'absolute',
-              bottom: [-125, -125, -100],
-              zIndex: 1,
-              insetInlineStart: [-100, -100, -75],
-            }}
-          >
-            <Image alt={tN('alt.notesIcon')} src={NotesIcon} sizes={getImageSizes(100)} fill />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            flex: '3',
-            zIndex: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignContent: 'right',
-            justifyContent: 'right',
-          }}
-        >
-          <Box
-            component="h2"
-            sx={{
-              fontSize: theme.typography.body1.fontSize,
-              mb: 0.5,
-              mt: 0,
-            }}
-          >
-            {t('title')}
-          </Box>
-          <Box
-            component="p"
-            sx={{
-              mb: 2,
-              lineHeight: 1.5,
-            }}
-          >
-            {t('description')}
-          </Box>
-          <Box
-            sx={{
-              display: ['flex', 'flex', 'none'],
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button
-              link="/subscription/whatsapp"
-              color={STORYBLOK_COLORS.PRIMARY_DARK}
-              text={t('buttonText')}
-              size="medium"
-              style={{ marginBottom: 0, marginTop: 1.5 }}
-              clickHandler={() => {
-                logEvent(NOTES_FROM_BLOOM_PROMO_CLICKED, eventUserData);
-              }}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: ['none', 'none', 'flex'],
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Button
-            link="/subscription/whatsapp"
-            color={STORYBLOK_COLORS.PRIMARY_DARK}
-            text={t('buttonText')}
-            size="small"
-            clickHandler={() => {
-              logEvent(NOTES_FROM_BLOOM_PROMO_CLICKED, eventUserData);
-            }}
-          />
-        </Box>
-      </Box>
-    </Box>
+        />
+      </Stack>
+    </Container>
   );
 };
 
