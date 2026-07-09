@@ -1,9 +1,89 @@
 {
   "Library": {
+    "metadata": {
+      "title": "Library",
+      "description": "Explore Bloom courses and single sessions in one place."
+    },
+    "title": "Explore the library",
+    "introduction": "Everything from Bloom in one place — guided courses to work through step by step, and single sessions you can explore whenever you need them.",
+    "exploreByTheme": "Explore by theme",
+    "filterHeading": "Filter the library",
+    "filterButtonLabel": "Filter",
+    "searchPlaceholder": "Search by keywords…",
+    "reset": "Reset",
+    "resultsHeading": "Library",
+    "resultsCount": "{count, plural, one {# result} other {# results}}",
+    "kindLabel": "Filter by content kind",
+    "kind": {
+      "all": "All",
+      "course": "Courses",
+      "session": "Single sessions"
+    },
+    "contentTypeHeading": "Content type",
+    "contentTypes": {
+      "course": "Course",
+      "audio": "Audio",
+      "written": "Written",
+      "video": "Video",
+      "activity": "Activity"
+    },
+    "lengthHeading": "Length",
+    "lengths": {
+      "under10": "Under 10 min",
+      "10to20": "10–20 min",
+      "over20": "Over 20 min"
+    },
+    "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+    "duration": "{minutes} min",
+    "loadMore": "Load more",
     "noResults": {
       "title": "No matches for those filters",
-      "body": "Try removing a filter or two, or explore a different theme — there's more waiting in the library.",
+      "body": "Try removing a filter or two, or explore a different theme — there’s more waiting in the library.",
       "action": "Clear filters"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Recognising harm",
+        "blurb": "Naming harm in relationships and everyday life",
+        "description": "Harm isn’t always obvious. Explore what abuse and coercion can look like in relationships and everyday life, and find language for experiences that have been hard to name."
+      },
+      "why-harm-happens": {
+        "label": "Why harm happens",
+        "blurb": "Learn about the social and systemic forces behind abuse",
+        "description": "Abuse is shaped by more than one person’s choices. Understand the social, cultural, and systemic forces that allow harm to happen — and why none of it is your fault."
+      },
+      "body-after-trauma": {
+        "label": "Your body after trauma",
+        "blurb": "How trauma lives in the body",
+        "description": "Trauma lives in the body as much as the mind. Learn how your nervous system responds to what you’ve been through, and gentle, body-based ways to feel safer."
+      },
+      "setting-boundaries": {
+        "label": "Setting boundaries",
+        "blurb": "Emotional, physical, sexual, and digital boundaries",
+        "description": "Boundaries protect your wellbeing across every part of life. Explore how to recognise, set, and hold emotional, physical, sexual, and digital boundaries."
+      },
+      "healing-journey": {
+        "label": "Your healing journey",
+        "blurb": "Finding your way through grief, growth, and recovery",
+        "description": "Healing isn’t linear. Find companionship and tools for moving through grief, growth, and recovery at whatever pace feels right for you."
+      },
+      "staying-safe": {
+        "label": "Staying safe now",
+        "blurb": "Safety planning and coping with ongoing abuse",
+        "description": "If you’re still in or near harm, safety comes first. Find practical support for safety planning and for coping when things feel unsafe right now."
+      }
+    },
+    "support": {
+      "title": "Get support",
+      "introduction": "Prefer to talk to someone? Bloom’s support services are here whenever you need them.",
+      "messaging": {
+        "title": "1-to-1 messaging",
+        "description": "Thoughtful replies to your questions and reflections, from our multilingual team, within 1–2 days."
+      },
+      "notes": {
+        "title": "Notes from Bloom",
+        "description": "Support from Bloom, delivered to your WhatsApp twice a week."
+      }
     }
   }
 }

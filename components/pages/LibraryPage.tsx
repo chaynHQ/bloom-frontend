@@ -31,12 +31,12 @@ import {
   CARD_BORDER,
   CARD_SHADOW,
   CARD_SURFACE,
-  FORMATS,
+  FORMAT_KEYS,
   HEADING_FONT,
-  LENGTHS,
+  LENGTH_KEYS,
   LibraryCard,
   SupportCard,
-  THEMES,
+  THEME_KEYS,
   toggle,
   type ContentType,
   type Format,
@@ -55,11 +55,8 @@ const PAGE_SIZE = 8;
 // so they stay in the sidebar and switch off while "Courses" is selected.
 type KindFilter = 'all' | 'course' | 'session';
 
-const KIND_OPTIONS: { key: KindFilter; label: string }[] = [
-  { key: 'all', label: 'All' },
-  { key: 'course', label: 'Courses' },
-  { key: 'session', label: 'Single sessions' },
-];
+// Display order of the kind toggle; labels live under `Library.kind.<key>`.
+const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
 // Warm cream page background for the browse area, from the Figma design.
 const PAGE_BG = '#FFF2EB';
@@ -125,7 +122,7 @@ export default function LibraryPage({
   // Format options are data-driven: only the single-session formats that actually exist in the
   // library today (audio/video now) are offered.
   const formatOptions = useMemo(
-    () => FORMATS.filter((format) => items.some((item) => item.format === format.key)),
+    () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
     [items],
   );
 
@@ -162,7 +159,7 @@ export default function LibraryPage({
 
   // Selected themes are surfaced as descriptive cards atop the results (never as sidebar
   // filters), giving the chosen theme context and a fuller explanation.
-  const selectedThemes = THEMES.filter((theme) => themes.includes(theme.key));
+  const selectedThemes = THEME_KEYS.filter((theme) => themes.includes(theme));
   const filtersActive = Boolean(keyword) || formats.length > 0 || lengths.length > 0;
 
   const clearFilters = () => {
@@ -180,9 +177,10 @@ export default function LibraryPage({
     <Box>
       {/* ---- Hero: the shared, redesigned page header ---- */}
       <Header
-        title="Explore the library"
+        title={t('title')}
         imageSrc={illustrationCourses}
-        introduction="Everything from Bloom in one place — guided courses to work through step by step, and single sessions you can explore whenever you need them."
+        imageAlt="alt.personSitting"
+        introduction={t('introduction')}
       />
 
       {/* ---- Explore by theme ---- */}
@@ -196,7 +194,7 @@ export default function LibraryPage({
         }}
       >
         <SectionLabel
-          label="Explore by theme"
+          label={t('exploreByTheme')}
           onReset={themes.length ? () => setThemes([]) : undefined}
         />
         <Box
@@ -207,11 +205,11 @@ export default function LibraryPage({
             mt: 1,
           }}
         >
-          {THEMES.map((theme) => {
-            const active = themes.includes(theme.key);
+          {THEME_KEYS.map((theme) => {
+            const active = themes.includes(theme);
             return (
               <Card
-                key={theme.key}
+                key={theme}
                 sx={{
                   m: 0,
                   borderRadius: '8px',
@@ -220,7 +218,7 @@ export default function LibraryPage({
                 }}
               >
                 <CardActionArea
-                  onClick={() => setThemes((p) => toggle(p, theme.key))}
+                  onClick={() => setThemes((p) => toggle(p, theme))}
                   aria-pressed={active}
                   sx={{
                     p: 1.5,
@@ -242,10 +240,10 @@ export default function LibraryPage({
                       mb: 0.5,
                     }}
                   >
-                    {theme.label}
+                    {t(`themes.${theme}.label`)}
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'grey.700' }}>
-                    {theme.blurb}
+                    {t(`themes.${theme}.blurb`)}
                   </Typography>
                 </CardActionArea>
               </Card>
@@ -275,7 +273,7 @@ export default function LibraryPage({
             }}
           >
             <SectionLabel
-              label="Filter the library"
+              label={t('filterHeading')}
               onReset={filtersActive ? clearFilters : undefined}
             />
             {/* Search + (mobile-only) Filter toggle. On desktop the checkbox groups are always
@@ -285,7 +283,7 @@ export default function LibraryPage({
               <TextField
                 fullWidth
                 size="small"
-                placeholder="Search by keywords…"
+                placeholder={t('searchPlaceholder')}
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 sx={{
@@ -319,7 +317,7 @@ export default function LibraryPage({
                   backgroundColor: 'common.white',
                 }}
               >
-                Filter
+                {t('filterButtonLabel')}
               </Button>
             </Box>
             {keyword && (
@@ -404,10 +402,10 @@ export default function LibraryPage({
                   letterSpacing: '0.15px',
                 }}
               >
-                Library
+                {t('resultsHeading')}
               </Typography>
               <Typography variant="body2" sx={{ color: 'grey.700', flexShrink: 0 }}>
-                {results.length} {results.length === 1 ? 'result' : 'results'}
+                {t('resultsCount', { count: results.length })}
               </Typography>
             </Box>
 
@@ -417,7 +415,7 @@ export default function LibraryPage({
               exclusive
               value={kind}
               onChange={(_, next: KindFilter | null) => next && selectKind(next)}
-              aria-label="Filter by content kind"
+              aria-label={t('kindLabel')}
               sx={{
                 mt: 2,
                 mb: 3,
@@ -447,9 +445,9 @@ export default function LibraryPage({
                 },
               }}
             >
-              {KIND_OPTIONS.map((option) => (
-                <ToggleButton key={option.key} value={option.key} disableRipple>
-                  {option.label}
+              {KIND_KEYS.map((option) => (
+                <ToggleButton key={option} value={option} disableRipple>
+                  {t(`kind.${option}`)}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
@@ -457,7 +455,7 @@ export default function LibraryPage({
             {/* Selected theme(s): a descriptive card giving context for the guided choice. */}
             {selectedThemes.map((theme) => (
               <Box
-                key={theme.key}
+                key={theme}
                 sx={{
                   borderRadius: '16px',
                   border: '1px solid',
@@ -475,9 +473,11 @@ export default function LibraryPage({
                     mb: 1,
                   }}
                 >
-                  {theme.label}
+                  {t(`themes.${theme}.label`)}
                 </Typography>
-                <Typography sx={{ color: 'grey.800' }}>{theme.description}</Typography>
+                <Typography sx={{ color: 'grey.800' }}>
+                  {t(`themes.${theme}.description`)}
+                </Typography>
               </Box>
             ))}
 
@@ -530,7 +530,7 @@ export default function LibraryPage({
                       variant="outlined"
                       color="primary"
                     >
-                      Load more
+                      {t('loadMore')}
                     </Button>
                   </Box>
                 )}
@@ -546,11 +546,9 @@ export default function LibraryPage({
           variant="h2"
           sx={{ fontSize: { xs: '1.5rem', md: '1.75rem' }, fontWeight: 500, mb: 1 }}
         >
-          Get support
+          {t('support.title')}
         </Typography>
-        <Typography sx={{ color: 'grey.800' }}>
-          Prefer to talk to someone? Bloom&apos;s support services are here whenever you need them.
-        </Typography>
+        <Typography sx={{ color: 'grey.800' }}>{t('support.introduction')}</Typography>
         <Box
           sx={{
             display: 'grid',
@@ -561,14 +559,14 @@ export default function LibraryPage({
         >
           <SupportCard
             iconSrc={chatIcon}
-            title="1-to-1 messaging"
-            description="Thoughtful replies to your questions and reflections, from our multilingual team, within 1–2 days."
+            title={t('support.messaging.title')}
+            description={t('support.messaging.description')}
             href="/messaging"
           />
           <SupportCard
             iconSrc={notesFromBloomIcon}
-            title="Notes from Bloom"
-            description="Support from Bloom, delivered to your WhatsApp twice a week."
+            title={t('support.notes.title')}
+            description={t('support.notes.description')}
             href="/subscription/whatsapp"
           />
         </Box>
@@ -584,6 +582,7 @@ export default function LibraryPage({
 // A section/sidebar label with an optional "Reset" action on the trailing edge — used by both
 // "Explore by theme" and "Filter the library" to match the design.
 function SectionLabel({ label, onReset }: { label: string; onReset?: () => void }) {
+  const t = useTranslations('Library');
   return (
     <Box
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 24 }}
@@ -605,7 +604,7 @@ function SectionLabel({ label, onReset }: { label: string; onReset?: () => void 
             '&:hover': { backgroundColor: 'transparent', textDecoration: 'underline' },
           }}
         >
-          Reset
+          {t('reset')}
         </Button>
       )}
     </Box>
@@ -639,7 +638,7 @@ function FilterGroups({
   setLengths,
   disabled,
 }: {
-  formatOptions: { key: Format; label: string }[];
+  formatOptions: Format[];
   formats: Format[];
   setFormats: Dispatch<SetStateAction<Format[]>>;
   lengths: LengthBucket[];
@@ -647,29 +646,30 @@ function FilterGroups({
   // True while "Courses" is selected: neither group describes a course, so both are inert.
   disabled: boolean;
 }) {
+  const t = useTranslations('Library');
   return (
     <Box sx={{ pt: 4 }}>
       {formatOptions.length > 0 && (
-        <FilterGroup title="Content type" disabled={disabled}>
+        <FilterGroup title={t('contentTypeHeading')} disabled={disabled}>
           {formatOptions.map((option) => (
             <CheckRow
-              key={option.key}
-              label={option.label}
-              checked={formats.includes(option.key)}
-              onChange={() => setFormats((p) => toggle(p, option.key))}
+              key={option}
+              label={t(`contentTypes.${option}`)}
+              checked={formats.includes(option)}
+              onChange={() => setFormats((p) => toggle(p, option))}
               disabled={disabled}
             />
           ))}
         </FilterGroup>
       )}
 
-      <FilterGroup title="Length" disabled={disabled}>
-        {LENGTHS.map((l) => (
+      <FilterGroup title={t('lengthHeading')} disabled={disabled}>
+        {LENGTH_KEYS.map((length) => (
           <CheckRow
-            key={l.key}
-            label={l.label}
-            checked={lengths.includes(l.key)}
-            onChange={() => setLengths((p) => toggle(p, l.key))}
+            key={length}
+            label={t(`lengths.${length}`)}
+            checked={lengths.includes(length)}
+            onChange={() => setLengths((p) => toggle(p, length))}
             disabled={disabled}
           />
         ))}

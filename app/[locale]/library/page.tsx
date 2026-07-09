@@ -1,6 +1,8 @@
 import { getLibraryStories } from '@/components/library/getLibraryStories';
-import { THEMES, type ContentType, type ThemeKey } from '@/components/library/libraryData';
+import { THEME_KEYS, type ContentType, type ThemeKey } from '@/components/library/libraryData';
 import LibraryPage from '@/components/pages/LibraryPage';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getTranslations } from 'next-intl/server';
 
 // The library is Bloom's unified content hub: it mixes courses with single sessions (shorts,
 // somatic videos, and audio conversations) behind one guided search, all backed by real
@@ -8,13 +10,18 @@ import LibraryPage from '@/components/pages/LibraryPage';
 
 export const revalidate = 14400; // invalidate every 4 hours, matching the other content pages
 
-export const metadata = {
-  title: 'Library | Bloom',
-  description: 'Explore Bloom courses and single sessions in one place.',
-};
-
 type Params = Promise<{ locale: string }>;
 type SearchParams = Promise<{ type?: string; theme?: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Library' });
+
+  return generateMetadataBasic({
+    title: t('metadata.title'),
+    description: t('metadata.description'),
+  });
+}
 
 export default async function Page({
   params,
@@ -28,8 +35,8 @@ export default async function Page({
   // Links like /library?type=course or /library?theme=healing-journey (e.g. from other pages)
   // pre-select the relevant filters. `type=course` ticks the "Courses" content-type filter.
   const initialContentTypes: ContentType[] = type === 'course' ? ['course'] : [];
-  const themeKeys = THEMES.map((t) => t.key) as string[];
-  const initialThemes = theme && themeKeys.includes(theme) ? [theme as ThemeKey] : [];
+  const initialThemes =
+    theme && (THEME_KEYS as string[]).includes(theme) ? [theme as ThemeKey] : [];
 
   const stories = await getLibraryStories(locale);
 

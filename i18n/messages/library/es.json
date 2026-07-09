@@ -1,9 +1,89 @@
 {
   "Library": {
+    "metadata": {
+      "title": "Biblioteca",
+      "description": "Explora los cursos y las sesiones individuales de Bloom en un solo lugar."
+    },
+    "title": "Explora la biblioteca",
+    "introduction": "Todo lo que ofrece Bloom en un solo lugar: cursos guiados para avanzar paso a paso y sesiones individuales que puedes explorar cuando lo necesites.",
+    "exploreByTheme": "Explorar por tema",
+    "filterHeading": "Filtrar la biblioteca",
+    "filterButtonLabel": "Filtrar",
+    "searchPlaceholder": "Buscar por palabras clave…",
+    "reset": "Restablecer",
+    "resultsHeading": "Biblioteca",
+    "resultsCount": "{count, plural, one {# resultado} other {# resultados}}",
+    "kindLabel": "Filtrar por categoría de contenido",
+    "kind": {
+      "all": "Todo",
+      "course": "Cursos",
+      "session": "Sesiones individuales"
+    },
+    "contentTypeHeading": "Tipo de contenido",
+    "contentTypes": {
+      "course": "Curso",
+      "audio": "Audio",
+      "written": "Escrito",
+      "video": "Vídeo",
+      "activity": "Actividad"
+    },
+    "lengthHeading": "Duración",
+    "lengths": {
+      "under10": "Menos de 10 min",
+      "10to20": "10–20 min",
+      "over20": "Más de 20 min"
+    },
+    "sessionCount": "{count, plural, one {# sesión} other {# sesiones}}",
+    "duration": "{minutes} min",
+    "loadMore": "Ver más",
     "noResults": {
       "title": "No hay resultados para esos filtros",
       "body": "Prueba a quitar uno o dos filtros, o explora otro tema: en la biblioteca hay mucho más esperándote.",
       "action": "Borrar filtros"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Reconocer el daño",
+        "blurb": "Poner nombre al daño en las relaciones y en la vida cotidiana",
+        "description": "El daño no siempre es evidente. Explora cómo pueden manifestarse el abuso y la coerción en las relaciones y en la vida cotidiana, y encuentra palabras para experiencias que ha sido difícil nombrar."
+      },
+      "why-harm-happens": {
+        "label": "Por qué ocurre el daño",
+        "blurb": "Conoce las fuerzas sociales y sistémicas que hay detrás del abuso",
+        "description": "El abuso no depende solo de las decisiones de una persona. Comprende las fuerzas sociales, culturales y sistémicas que permiten que ocurra el daño, y por qué nada de esto es culpa tuya."
+      },
+      "body-after-trauma": {
+        "label": "Tu cuerpo después del trauma",
+        "blurb": "Cómo vive el trauma en el cuerpo",
+        "description": "El trauma vive tanto en el cuerpo como en la mente. Descubre cómo responde tu sistema nervioso a lo que has vivido y formas suaves, centradas en el cuerpo, de sentirte con más seguridad."
+      },
+      "setting-boundaries": {
+        "label": "Poner límites",
+        "blurb": "Límites emocionales, físicos, sexuales y digitales",
+        "description": "Los límites protegen tu bienestar en todos los ámbitos de la vida. Explora cómo reconocer, poner y sostener límites emocionales, físicos, sexuales y digitales."
+      },
+      "healing-journey": {
+        "label": "Tu camino de sanación",
+        "blurb": "Encontrar tu camino a través del duelo, el crecimiento y la recuperación",
+        "description": "La sanación no es lineal. Encuentra acompañamiento y herramientas para atravesar el duelo, el crecimiento y la recuperación al ritmo que sientas adecuado."
+      },
+      "staying-safe": {
+        "label": "Mantenerte a salvo ahora",
+        "blurb": "Plan de seguridad y estrategias frente al abuso continuo",
+        "description": "Si todavía estás en una situación de daño o cerca de ella, la seguridad es lo primero. Encuentra apoyo práctico para crear un plan de seguridad y para afrontar los momentos en que las cosas no se sienten seguras."
+      }
+    },
+    "support": {
+      "title": "Buscar apoyo",
+      "introduction": "¿Prefieres hablar con alguien? Los servicios de apoyo de Bloom están aquí siempre que los necesites.",
+      "messaging": {
+        "title": "Mensajería individual",
+        "description": "Respuestas cuidadosas a tus preguntas y reflexiones, de parte de nuestro equipo multilingüe, en 1–2 días."
+      },
+      "notes": {
+        "title": "Notas de Bloom",
+        "description": "Apoyo de Bloom, directo a tu WhatsApp dos veces por semana."
+      }
     }
   }
 }

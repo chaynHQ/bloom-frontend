@@ -9,9 +9,9 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
+import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import illustrationLeafMixDots from '@/public/illustration_leaf_mix_dots.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import {
   Box,
@@ -135,11 +135,17 @@ export default function RegisterPage() {
     }
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
+  // With no partnership lockup we show the plain Bloom logo, and PartnerHeader renders the
+  // translated "Welcome to" line beside it — so the logo's alt describes the logo rather than
+  // repeating that phrase.
+  const partnershipLogo = partnerContent?.partnershipLogo;
+
   const headerProps = {
-    partnerLogoSrc: partnerContent?.partnershipLogo || welcomeToBloom,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoSrc: partnershipLogo || bloomLogo,
+    partnerLogoAlt: partnershipLogo ? 'alt.welcomeToBloom' : 'alt.bloomLogo',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
+    showWelcomeSubtext: !partnershipLogo,
   };
   const ExtraContent = (
     <>
@@ -205,6 +211,7 @@ export default function RegisterPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={containerStyle}>
         <Box sx={textContainerStyle}>

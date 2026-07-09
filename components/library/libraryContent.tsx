@@ -13,10 +13,11 @@ import RouteRounded from '@mui/icons-material/RouteRounded';
 import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 import Image, { type StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 
-import { THEME_LABEL, type ContentType, type Format, type LibraryItem } from './libraryData';
+import { type ContentType, type LibraryItem } from './libraryData';
 
 // Re-export the pure data/types so existing imports `from './libraryContent'` keep working.
 export * from './libraryData';
@@ -35,33 +36,9 @@ export const CARD_BORDER = '#EBE0E1';
 export const CARD_SHADOW = '0px 1px 3px 1px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.08)';
 
 // ---------------------------------------------------------------------------
-// Content-type metadata (labels + illustrations for the filter list and card badges)
+// Content-type metadata (illustrations for the filter list and card badges). The labels are
+// translated at the point of use, under `Library.contentTypes.<key>`.
 // ---------------------------------------------------------------------------
-
-export interface FormatMeta {
-  key: Format;
-  label: string;
-  Icon: SvgIconComponent;
-}
-
-// Only audio/video exist in the CMS today; the filter is rendered from what's actually present
-// (see LibraryPage), so written/activity surface automatically if such resources are added.
-export const FORMATS: FormatMeta[] = [
-  { key: 'audio', label: 'Audio', Icon: VolumeUpRounded },
-  { key: 'written', label: 'Written', Icon: ArticleRounded },
-  { key: 'video', label: 'Video', Icon: SmartDisplayRounded },
-  { key: 'activity', label: 'Activity', Icon: ExtensionRounded },
-];
-
-// Singular labels ("Course", "Audio", …) so every content-type reads consistently in the
-// filter list and on the card badges.
-export const CONTENT_TYPE_LABEL: Record<ContentType, string> = {
-  course: 'Course',
-  audio: 'Audio',
-  written: 'Written',
-  video: 'Video',
-  activity: 'Activity',
-};
 
 // Simple glyph icons for the card badges, matching the design's session cards. A course badge
 // leads with a "route" glyph — it's a guided path to follow, not a single thing to press play
@@ -84,6 +61,7 @@ export const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
 // A small pill badge (format or course) shown under a card title. Format badges use the soft
 // blue from the design; a course badge uses the brand pink so the two kinds read apart.
 function TypeBadge({ type }: { type: ContentType }) {
+  const t = useTranslations('Library');
   const isCourse = type === 'course';
   const Icon = CONTENT_TYPE_ICON[type];
   return (
@@ -112,13 +90,18 @@ function TypeBadge({ type }: { type: ContentType }) {
           color: isCourse ? 'primary.dark' : 'grey.700',
         }}
       >
-        {CONTENT_TYPE_LABEL[type]}
+        {t(`contentTypes.${type}`)}
       </Typography>
     </Box>
   );
 }
 
 export function LibraryCard({ item }: { item: LibraryItem }) {
+  const t = useTranslations('Library');
+  // "Started" / "Completed" already exist as shared progress vocabulary, translated everywhere
+  // the app reports course progress — the card badge says the same thing, so it says it the
+  // same way rather than introducing a second set of strings to keep in sync.
+  const tS = useTranslations('Shared');
   const isCourse = item.kind === 'course';
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
 
@@ -184,7 +167,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
                 color: 'grey.800',
               }}
             >
-              {item.progress === 'completed' ? 'Completed' : 'Started'}
+              {tS(`progressStatus.${item.progress}`)}
             </Typography>
           </Box>
         )}
@@ -205,7 +188,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
               badge is given equal space above and below so it sits as its own band between the
               title and the description. */}
           <Typography variant="body2" sx={{ color: 'grey.800', mb: 0.5 }}>
-            {item.themes.map((t) => THEME_LABEL[t]).join(' · ')}
+            {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
           </Typography>
           <Typography
             sx={{
@@ -242,13 +225,13 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
             {isCourse ? (
               <Meta
                 icon={<PlaylistPlayRounded sx={{ fontSize: 16 }} />}
-                text={`${item.sessionCount} ${item.sessionCount === 1 ? 'session' : 'sessions'}`}
+                text={t('sessionCount', { count: item.sessionCount ?? 0 })}
               />
             ) : (
               item.minutes != null && (
                 <Meta
                   icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
-                  text={`${item.minutes} min`}
+                  text={t('duration', { minutes: item.minutes })}
                 />
               )
             )}

@@ -32,72 +32,26 @@ export type ThemeKey =
   | 'healing-journey'
   | 'staying-safe';
 
-export interface ThemeMeta {
-  key: ThemeKey;
-  label: string;
-  // Short one-liner for the guided-entry cards.
-  blurb: string;
-  // Fuller description shown at the top of the results panel once the theme is selected.
-  description: string;
-}
-
-// Blurbs match the "Explore by theme" cards in the Figma design; the fuller `description` is
-// surfaced in the secondary theme card shown above the results once a theme is selected.
-export const THEMES: ThemeMeta[] = [
-  {
-    key: 'recognising-harm',
-    label: 'Recognising harm',
-    blurb: 'Naming harm in relationships and everyday life',
-    description:
-      "Harm isn't always obvious. Explore what abuse and coercion can look like in relationships and everyday life, and find language for experiences that have been hard to name.",
-  },
-  {
-    key: 'why-harm-happens',
-    label: 'Why harm happens',
-    blurb: 'Learn about the social and systemic forces behind abuse',
-    description:
-      "Abuse is shaped by more than one person's choices. Understand the social, cultural, and systemic forces that allow harm to happen — and why none of it is your fault.",
-  },
-  {
-    key: 'body-after-trauma',
-    label: 'Your body after trauma',
-    blurb: 'How trauma lives in the body',
-    description:
-      "Trauma lives in the body as much as the mind. Learn how your nervous system responds to what you've been through, and gentle, body-based ways to feel safer.",
-  },
-  {
-    key: 'setting-boundaries',
-    label: 'Setting boundaries',
-    blurb: 'Emotional, physical, sexual, and digital boundaries',
-    description:
-      'Boundaries protect your wellbeing across every part of life. Explore how to recognise, set, and hold emotional, physical, sexual, and digital boundaries.',
-  },
-  {
-    key: 'healing-journey',
-    label: 'Your healing journey',
-    blurb: 'Finding your way through grief, growth, and recovery',
-    description:
-      "Healing isn't linear. Find companionship and tools for moving through grief, growth, and recovery at whatever pace feels right for you.",
-  },
-  {
-    key: 'staying-safe',
-    label: 'Staying safe now',
-    blurb: 'Safety planning and coping with ongoing abuse',
-    description:
-      "If you're still in or near harm, safety comes first. Find practical support for safety planning and for coping when things feel unsafe right now.",
-  },
+// Display order of the "Explore by theme" cards. Every key has a `label`, `blurb`, and
+// `description` under `Library.themes.<key>` in the message files — the blurb is the one-liner
+// on the guided-entry card, the description the fuller copy shown above the results once the
+// theme is selected.
+export const THEME_KEYS: ThemeKey[] = [
+  'recognising-harm',
+  'why-harm-happens',
+  'body-after-trauma',
+  'setting-boundaries',
+  'healing-journey',
+  'staying-safe',
 ];
-
-export const THEME_LABEL: Record<ThemeKey, string> = Object.fromEntries(
-  THEMES.map((t) => [t.key, t.label]),
-) as Record<ThemeKey, string>;
 
 export type LengthBucket = 'under10' | '10to20' | 'over20';
-export const LENGTHS: { key: LengthBucket; label: string }[] = [
-  { key: 'under10', label: 'Under 10 min' },
-  { key: '10to20', label: '10–20 min' },
-  { key: 'over20', label: 'Over 20 min' },
-];
+// Display order of the "Length" filter; labels live under `Library.lengths.<key>`.
+export const LENGTH_KEYS: LengthBucket[] = ['under10', '10to20', 'over20'];
+
+// Display order of the "Content type" filter. Only the formats actually present in the library
+// are offered (see LibraryPage); labels live under `Library.contentTypes.<key>`.
+export const FORMAT_KEYS: Format[] = ['audio', 'written', 'video', 'activity'];
 
 export interface LibraryImage {
   filename: string;

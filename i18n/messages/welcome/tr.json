@@ -8,6 +8,7 @@
     "goToCourses": "Kurslara git",
     "form": {
       "codeLabel": "{partnerName} erişim kodu"
-    }
+    },
+    "WelcomeTo": "Hoş geldin"
   }
 }

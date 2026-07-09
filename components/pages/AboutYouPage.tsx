@@ -7,8 +7,8 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { SURVEY_FORMS } from '@/lib/constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
+import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
-import welcomeToBloom from '@/public/welcome_to_bloom.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -53,10 +53,11 @@ export default function AboutYouPage() {
   }, []);
 
   const headerProps = {
-    partnerLogoSrc: welcomeToBloom,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoSrc: bloomLogo,
+    partnerLogoAlt: 'alt.bloomLogo',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
+    showWelcomeSubtext: true,
   };
 
   return (
@@ -66,6 +67,7 @@ export default function AboutYouPage() {
         partnerLogoAlt={headerProps.partnerLogoAlt}
         imageSrc={headerProps.imageSrc}
         imageAlt={headerProps.imageAlt}
+        showWelcomeSubtext={headerProps.showWelcomeSubtext}
       />
       <Container sx={containerStyle}>
         <Box sx={contentContainerStyle}>

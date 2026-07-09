@@ -1,9 +1,89 @@
 {
   "Library": {
+    "metadata": {
+      "title": "Biblioteca",
+      "description": "Explore os cursos e as sessões individuais do Bloom em um só lugar."
+    },
+    "title": "Explore a biblioteca",
+    "introduction": "Tudo o que o Bloom oferece em um só lugar — cursos guiados para percorrer passo a passo e sessões individuais que você pode explorar sempre que precisar.",
+    "exploreByTheme": "Explorar por tema",
+    "filterHeading": "Filtrar a biblioteca",
+    "filterButtonLabel": "Filtrar",
+    "searchPlaceholder": "Buscar por palavras-chave…",
+    "reset": "Redefinir",
+    "resultsHeading": "Biblioteca",
+    "resultsCount": "{count, plural, one {# resultado} other {# resultados}}",
+    "kindLabel": "Filtrar por categoria de conteúdo",
+    "kind": {
+      "all": "Tudo",
+      "course": "Cursos",
+      "session": "Sessões individuais"
+    },
+    "contentTypeHeading": "Tipo de conteúdo",
+    "contentTypes": {
+      "course": "Curso",
+      "audio": "Áudio",
+      "written": "Texto",
+      "video": "Vídeo",
+      "activity": "Atividade"
+    },
+    "lengthHeading": "Duração",
+    "lengths": {
+      "under10": "Menos de 10 min",
+      "10to20": "10–20 min",
+      "over20": "Mais de 20 min"
+    },
+    "sessionCount": "{count, plural, one {# sessão} other {# sessões}}",
+    "duration": "{minutes} min",
+    "loadMore": "Ver mais",
     "noResults": {
       "title": "Nenhum resultado para esses filtros",
       "body": "Tente remover um ou dois filtros, ou explore outro tema — há muito mais esperando por você na biblioteca.",
       "action": "Limpar filtros"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Reconhecer a violência",
+        "blurb": "Dar nome à violência nos relacionamentos e no dia a dia",
+        "description": "A violência nem sempre é evidente. Explore como o abuso e a coerção podem aparecer nos relacionamentos e no dia a dia, e encontre palavras para experiências que têm sido difíceis de nomear."
+      },
+      "why-harm-happens": {
+        "label": "Por que a violência acontece",
+        "blurb": "Conheça as forças sociais e sistêmicas por trás do abuso",
+        "description": "O abuso não depende apenas das escolhas de uma pessoa. Entenda as forças sociais, culturais e sistêmicas que permitem que a violência aconteça — e por que nada disso é culpa sua."
+      },
+      "body-after-trauma": {
+        "label": "Seu corpo depois do trauma",
+        "blurb": "Como o trauma vive no corpo",
+        "description": "O trauma vive tanto no corpo quanto na mente. Descubra como seu sistema nervoso responde ao que você viveu e caminhos suaves, centrados no corpo, para se sentir mais em segurança."
+      },
+      "setting-boundaries": {
+        "label": "Estabelecer limites",
+        "blurb": "Limites emocionais, físicos, sexuais e digitais",
+        "description": "Os limites protegem seu bem-estar em todas as áreas da vida. Explore como reconhecer, estabelecer e sustentar limites emocionais, físicos, sexuais e digitais."
+      },
+      "healing-journey": {
+        "label": "Sua jornada de cura",
+        "blurb": "Encontrar seu caminho pelo luto, pelo crescimento e pela recuperação",
+        "description": "A cura não é linear. Encontre acolhimento e ferramentas para atravessar o luto, o crescimento e a recuperação no ritmo que fizer sentido para você."
+      },
+      "staying-safe": {
+        "label": "Manter-se em segurança agora",
+        "blurb": "Plano de segurança e estratégias diante da violência contínua",
+        "description": "Se você ainda está em uma situação de violência ou perto dela, a segurança vem primeiro. Encontre apoio prático para montar um plano de segurança e para lidar com os momentos em que as coisas não parecem seguras."
+      }
+    },
+    "support": {
+      "title": "Buscar apoio",
+      "introduction": "Prefere conversar com alguém? Os serviços de apoio do Bloom estão aqui sempre que você precisar.",
+      "messaging": {
+        "title": "Mensagens individuais",
+        "description": "Respostas cuidadosas às suas perguntas e reflexões, da nossa equipe multilíngue, em 1 a 2 dias."
+      },
+      "notes": {
+        "title": "Notas do Bloom",
+        "description": "Apoio do Bloom, direto no seu WhatsApp, duas vezes por semana."
+      }
     }
   }
 }

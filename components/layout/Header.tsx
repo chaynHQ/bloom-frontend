@@ -34,7 +34,7 @@ const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   minHeight: { xs: 300, md: 360, lg: 400 },
-  paddingTop: { xs: '2rem !important', md: '2.5rem !important' },
+  paddingTop: '2.5rem !important',
   paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
   background: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
 };

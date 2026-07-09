@@ -1,9 +1,89 @@
 {
   "Library": {
+    "metadata": {
+      "title": "Library",
+      "description": "Bloom ke courses aur single sessions ek hi jagah par explore kariye."
+    },
+    "title": "Library explore kariye",
+    "introduction": "Bloom ka sab kuch ek hi jagah par — guided courses jinhe aap step by step poora kar sakte hain, aur single sessions jinhe aap jab chahe explore kar sakte hain.",
+    "exploreByTheme": "Theme se explore kariye",
+    "filterHeading": "Library filter kariye",
+    "filterButtonLabel": "Filter",
+    "searchPlaceholder": "Keywords se search kariye…",
+    "reset": "Reset",
+    "resultsHeading": "Library",
+    "resultsCount": "{count, plural, one {# result} other {# results}}",
+    "kindLabel": "Content ke prakaar se filter kariye",
+    "kind": {
+      "all": "Sabhi",
+      "course": "Courses",
+      "session": "Single sessions"
+    },
+    "contentTypeHeading": "Content type",
+    "contentTypes": {
+      "course": "Course",
+      "audio": "Audio",
+      "written": "Likhit",
+      "video": "Video",
+      "activity": "Activity"
+    },
+    "lengthHeading": "Samay",
+    "lengths": {
+      "under10": "10 min se kam",
+      "10to20": "10–20 min",
+      "over20": "20 min se zyada"
+    },
+    "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+    "duration": "{minutes} min",
+    "loadMore": "Aur dikhaiye",
     "noResults": {
-      "title": "इन फ़िल्टर के लिए कोई परिणाम नहीं",
-      "body": "एक-दो फ़िल्टर हटाकर देखें, या कोई दूसरी थीम खोजें — लाइब्रेरी में आपके लिए और भी बहुत कुछ है।",
-      "action": "फ़िल्टर हटाएँ"
+      "title": "In filters ke liye koi result nahi mila",
+      "body": "Ek-do filter hataakar dekhiye, ya koi doosri theme explore kariye — library mein aapke liye aur bhi bahut kuch hai.",
+      "action": "Filters hataiye"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Hinsa ko pehchanna",
+        "blurb": "Rishton mein aur rozmarra zindagi mein hinsa ko naam dena",
+        "description": "Hinsa hamesha saaf dikhai nahi deti. Jaaniye ki rishton mein aur rozmarra zindagi mein abuse aur coercion kaise dikh sakte hain, aur un anubhavon ke liye shabd dhoondhiye jinhe naam dena mushkil raha hai."
+      },
+      "why-harm-happens": {
+        "label": "Hinsa kyun hoti hai",
+        "blurb": "Abuse ke peeche ki samajik aur vyavasthagat vajahon ke bare mein jaaniye",
+        "description": "Abuse sirf ek vyakti ke faislon se nahi banta. Un samajik, sanskritik aur vyavasthagat shaktiyon ko samjhiye jo hinsa ko hone deti hain — aur yeh ki isme se kuch bhi aapki galti nahi hai."
+      },
+      "body-after-trauma": {
+        "label": "Trauma ke baad aapka sharir",
+        "blurb": "Trauma sharir mein kaise basta hai",
+        "description": "Trauma jitna mann mein hota hai, utna hi sharir mein bhi. Jaaniye ki aapka nervous system aapke anubhavon par kaise pratikriya karta hai, aur suraksha mehsoos karne ke komal, sharir-aadhaarit tareeke."
+      },
+      "setting-boundaries": {
+        "label": "Boundaries banana",
+        "blurb": "Bhavnatmak, sharirik, yaun aur digital boundaries",
+        "description": "Boundaries zindagi ke har hisse mein aapki bhalai ki raksha karti hain. Jaaniye ki bhavnatmak, sharirik, yaun aur digital boundaries ko kaise pehchanein, banayein aur banaye rakhein."
+      },
+      "healing-journey": {
+        "label": "Aapki healing journey",
+        "blurb": "Shok, vikaas aur recovery ke beech apna raasta dhoondhna",
+        "description": "Healing seedhi rekha mein nahi chalti. Shok, vikaas aur recovery se guzarne ke liye saath aur tools paiye — us raftaar se jo aapko sahi lage."
+      },
+      "staying-safe": {
+        "label": "Abhi surakshit rehna",
+        "blurb": "Safety planning aur chalti hui hinsa se nipatna",
+        "description": "Agar aap abhi bhi hinsa mein hain ya uske kareeb hain, toh suraksha sabse pehle aati hai. Safety planning ke liye aur un palon se nipatne ke liye vyavaharik sahayata paiye jab cheezein surakshit na lagein."
+      }
+    },
+    "support": {
+      "title": "Sahayata paiye",
+      "introduction": "Kya aap kisi se baat karna chahenge? Bloom ki support services jab bhi aapko zaroorat ho, aapke liye maujood hain.",
+      "messaging": {
+        "title": "1-to-1 messaging",
+        "description": "Aapke sawaalon aur vichaaron ke soch-samajh kar diye gaye jawaab, humari multilingual team se, 1–2 dinon ke andar."
+      },
+      "notes": {
+        "title": "Notes from Bloom",
+        "description": "Bloom se sahayata, hafte mein do baar seedhe aapke WhatsApp par."
+      }
     }
   }
 }
