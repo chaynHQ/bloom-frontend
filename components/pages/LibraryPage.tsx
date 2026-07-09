@@ -302,6 +302,7 @@ export default function LibraryPage({
                       </InputAdornment>
                     ),
                   },
+                  htmlInput: { 'qa-id': 'library-search-input' },
                 }}
               />
               <Button

@@ -1,4 +1,3 @@
-/* eslint-disable */
 // Visual review helper (not an assertion suite): captures the library page across desktop and
 // mobile so spacing details — sidebar rhythm, section borders, card gaps — can be eyeballed,
 // and confirms individual course sessions are searchable alongside courses/resources.
@@ -54,9 +53,7 @@ describe('Library — visual review', () => {
     waitForLibrary();
     // A real course *lesson* title (a Session block nested inside a course), not a standalone
     // resource — proves individual course sessions now appear in library search results.
-    cy.get('input[placeholder="Search by keywords…"]').type(
-      'Introduction and what you should know',
-    );
+    cy.get('[qa-id=library-search-input]').type('Introduction and what you should know');
     cy.contains('a[aria-label]', 'Introduction and what you should know', {
       timeout: 15000,
     }).should('be.visible');

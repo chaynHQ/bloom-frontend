@@ -15,13 +15,9 @@ import UserResearchBanner from '../banner/UserResearchBanner';
 
 interface HeaderProps {
   title:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction:
-    | string
-    | React.ReactNode[]
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+    string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   imageSrc: StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;

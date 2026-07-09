@@ -11,7 +11,9 @@ describe('User about you page should display', () => {
   });
 
   it('header section', () => {
-    cy.checkImage('Welcome to Bloom', 'welcome_to_bloom');
+    // The header now pairs the plain Bloom logo with a translated "Welcome to" line rendered
+    // beside it by PartnerHeader, so the logo's alt describes the logo itself.
+    cy.checkImage('Bloom logo', 'bloom_logo');
     cy.checkImage(
       `Illustration of a person's face and shoulders, with big leaves and flowers blooming above them`,
       'illustration_bloom_head_yellow',

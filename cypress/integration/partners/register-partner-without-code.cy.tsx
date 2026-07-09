@@ -19,7 +19,8 @@ describe('Register without access code', () => {
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
     cy.get('a').contains('Skip').click();
     cy.wait(2000); // Waiting for dom to rerender
-    cy.get('h3').contains('Dating, boundaries, and relationships').click();
+    // Skip lands on the library, where each result is an anchor card rather than an h3.
+    cy.get('a[aria-label="Dating, boundaries, and relationships"]', { timeout: 8000 }).click();
     cy.get('h3').contains('What are boundaries').click();
   });
 
@@ -42,7 +43,7 @@ describe('Register without access code', () => {
     cy.get('a').contains('Skip').click();
     cy.wait(2000); // Waiting for dom to rerender
     // Bumble partner content is available, confirming the partner was attached at signup
-    cy.get('h3').contains('Dating, boundaries, and relationships').click();
+    cy.get('a[aria-label="Dating, boundaries, and relationships"]', { timeout: 8000 }).click();
     cy.get('h3').contains('What are boundaries').click();
   });
 
