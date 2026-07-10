@@ -405,7 +405,11 @@ export default function LibraryPage({
               >
                 {t('resultsHeading')}
               </Typography>
-              <Typography variant="body2" sx={{ color: 'grey.700', flexShrink: 0 }}>
+              <Typography
+                variant="body2"
+                qa-id="library-results-count"
+                sx={{ color: 'grey.700', flexShrink: 0 }}
+              >
                 {t('resultsCount', { count: results.length })}
               </Typography>
             </Box>
@@ -450,7 +454,12 @@ export default function LibraryPage({
               }}
             >
               {KIND_KEYS.map((option) => (
-                <ToggleButton key={option} value={option} disableRipple>
+                <ToggleButton
+                  key={option}
+                  value={option}
+                  qa-id={`library-kind-${option}`}
+                  disableRipple
+                >
                   {t(`kind.${option}`)}
                 </ToggleButton>
               ))}

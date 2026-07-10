@@ -6,8 +6,8 @@ import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import ArticleRounded from '@mui/icons-material/ArticleRounded';
 import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
+import DonutLargeRounded from '@mui/icons-material/DonutLargeRounded';
 import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
-import LockRounded from '@mui/icons-material/LockRounded';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
 import RouteRounded from '@mui/icons-material/RouteRounded';
 import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
@@ -109,6 +109,9 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
 
   return (
     <Card
+      data-testid="library-card"
+      data-kind={item.kind}
+      data-format={item.format ?? ''}
       sx={{
         m: 0,
         height: '100%',
@@ -138,6 +141,8 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
         {/* Progress badge — pinned top-inline-end, mirroring the design's corner badge slot. */}
         {item.progress && (
           <Box
+            data-testid="library-card-progress"
+            data-progress={item.progress}
             sx={{
               position: 'absolute',
               top: 0,
@@ -156,10 +161,12 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
               borderEndStartRadius: '8px',
             }}
           >
+            {/* Matches the icons the shared ProgressStatus component uses elsewhere: a part-filled
+                donut for in-progress, a tick for complete. (A padlock would read as "locked".) */}
             {item.progress === 'completed' ? (
               <CheckCircleRounded sx={{ fontSize: 16, color: 'secondary.dark' }} />
             ) : (
-              <LockRounded sx={{ fontSize: 14, color: 'grey.700' }} />
+              <DonutLargeRounded sx={{ fontSize: 14, color: 'grey.700' }} />
             )}
             <Typography
               sx={{
