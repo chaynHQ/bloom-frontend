@@ -8,7 +8,13 @@ import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerCon
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
-import { storyToLibraryItem, type LibraryItem, type LibraryStories } from './libraryData';
+import {
+  normaliseSlug,
+  parentCourseSlug,
+  storyToLibraryItem,
+  type LibraryItem,
+  type LibraryStories,
+} from './libraryData';
 
 // Progress records in the courses/resources Redux slices share this shape; both key off the
 // Storyblok uuid, which is a LibraryItem's id.
@@ -60,20 +66,25 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
     // hidden, coming-soon, or partner-restricted course must not leak into the library. Gate on
     // the visible courses, then apply the lesson's own locale/coming-soon rules. The same map
     // supplies the parent course's title for the lesson's card meta.
+    //
+    // Courses are keyed by slug, not uuid: a lesson's parent is read from its path rather than
+    // from the hand-set `content.course` uuid, which is already wrong for one lesson in the CMS.
+    // See parentCourseSlug — this gate is what stops a restricted course's lessons leaking, so it
+    // must not depend on a field an editor can mis-set.
     const visibleCourseTitles = new Map(
-      courseStories.map((story) => [story.uuid, story.content.name as string]),
+      courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name as string]),
     );
     // Lesson completion is tracked per-course in the courses slice, so its progress records live
     // nested under each course's `sessions`, not in a top-level list.
     const sessionProgress = coursesProgress.flatMap((course) => course.sessions ?? []);
     const courseSessionItems = accessible(stories.courseSessions)
       .filter((story) => !story.content.coming_soon)
-      .filter((story) => visibleCourseTitles.has(story.content.course))
+      .filter((story) => visibleCourseTitles.has(parentCourseSlug(story.full_slug)))
       .map((story) =>
         withProgress(
           {
             ...storyToLibraryItem(story, locale),
-            courseTitle: visibleCourseTitles.get(story.content.course),
+            courseTitle: visibleCourseTitles.get(parentCourseSlug(story.full_slug)),
           },
           sessionProgress,
         ),

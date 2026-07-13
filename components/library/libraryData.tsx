@@ -179,6 +179,24 @@ export function bucketOf(minutes: number): LengthBucket {
   return 'over20';
 }
 
+// Storyblok's full_slug is inconsistent about leading/trailing slashes (courses come back as
+// `courses/managing-anxiety/`, lessons as `courses/managing-anxiety/what-is-anxiety`).
+export function normaliseSlug(fullSlug: string): string {
+  return fullSlug.replace(/^\/+|\/+$/g, '');
+}
+
+// The slug of the course a lesson belongs to. A lesson always lives at `<course slug>/<lesson>` in
+// the story tree, so its parent can be read straight off the path.
+//
+// This is deliberately NOT `content.course`. That field is a uuid an editor sets by hand, and it
+// is already wrong in production — `courses/managing-anxiety/what-is-anxiety` points at
+// "Reclaiming resilience in your trauma story". Since the parent course is what decides whether a
+// lesson may be shown at all (a restricted course's lessons must stay hidden), the gate has to key
+// off something an editor cannot silently break. The path is that something.
+export function parentCourseSlug(lessonFullSlug: string): string {
+  return normaliseSlug(lessonFullSlug).split('/').slice(0, -1).join('/');
+}
+
 // The state of every filter on the page at once. Empty array = that filter is off (matches
 // everything), rather than on-and-matching-nothing.
 export interface LibraryFilters {
@@ -203,8 +221,9 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
 
     // Format and length describe a single session, so either one excludes courses outright.
     if (formats.length && (item.format == null || !formats.includes(item.format))) return false;
-    // Course lessons carry no duration in Storyblok. An item of unknown length can't be claimed
-    // to fall inside a bucket, so choosing any length excludes it rather than guessing.
+    // Not every session has a duration: no course lesson carries one, and `duration` is free text
+    // that some shorts leave blank. An item of unknown length can't be claimed to fall inside a
+    // bucket, so choosing any length excludes it rather than guessing.
     if (lengths.length && (item.minutes == null || !lengths.includes(bucketOf(item.minutes))))
       return false;
 

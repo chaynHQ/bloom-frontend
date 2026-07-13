@@ -30,6 +30,50 @@ const waitForLibrary = () => {
 };
 
 describe('Library page', () => {
+  // The library is public, so these browse it anonymously — which Cypress's default test isolation
+  // already guarantees by clearing cookies and storage between tests.
+  describe('Entry points', () => {
+    beforeEach(() => {
+      cy.viewport(1440, 900);
+    });
+
+    it('redirects the retired courses hub to the library', () => {
+      cy.visit('/courses');
+
+      cy.location('pathname').should('eq', '/library');
+      waitForLibrary();
+    });
+
+    it('pre-selects a theme from a ?theme= deep link', () => {
+      cy.visit('/library?theme=setting-boundaries');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-theme-setting-boundaries]').should(
+        'have.attr',
+        'aria-pressed',
+        'true',
+      );
+      // Every visible card carries the selected theme in its eyebrow.
+      cards().each(($card) => expect($card.text()).to.contain('Setting boundaries'));
+    });
+
+    it('opens on the Courses tab from a ?type=course deep link', () => {
+      cy.visit('/library?type=course');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-kind-course]').should('have.attr', 'aria-pressed', 'true');
+      cards().each(($card) => expect($card.attr('data-kind')).to.equal('course'));
+    });
+
+    it('ignores an unknown ?theme= key rather than filtering everything away', () => {
+      cy.visit('/library?theme=not-a-real-theme');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-kind-all]').should('have.attr', 'aria-pressed', 'true');
+      cards().should('have.length', PAGE_SIZE);
+    });
+  });
+
   describe('Filtering', () => {
     beforeEach(() => {
       // Desktop width keeps the filter checkboxes on-screen rather than behind the mobile toggle.
@@ -46,6 +90,16 @@ describe('Library page', () => {
         cy.contains('button', 'Load more').click();
         cards().should('have.length', Math.min(total, PAGE_SIZE * 2));
       });
+    });
+
+    it('resets pagination to the first page when a filter changes', () => {
+      // Otherwise "Load more", then a narrowing filter, would leave a page-2-sized grid showing
+      // against a much shorter result set.
+      cy.contains('button', 'Load more').click();
+      cards().should('have.length', PAGE_SIZE * 2);
+
+      cy.get('[qa-id=library-kind-course]').click();
+      cards().should('have.length.at.most', PAGE_SIZE);
     });
 
     it('"Courses" narrows the results to courses only', () => {

@@ -2,6 +2,8 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import {
   bucketOf,
   filterLibraryItems,
+  normaliseSlug,
+  parentCourseSlug,
   storyToLibraryItem,
   toggle,
   type LibraryFilters,
@@ -107,6 +109,29 @@ describe('storyToLibraryItem', () => {
     );
     expect(storyToLibraryItem(story({}, 'shorts/what-are-boundaries'), 'en').href).toBe(
       '/shorts/what-are-boundaries',
+    );
+  });
+});
+
+describe('parentCourseSlug', () => {
+  it('reads the parent course off a lesson path', () => {
+    expect(parentCourseSlug('courses/managing-anxiety/what-is-anxiety')).toBe(
+      'courses/managing-anxiety',
+    );
+  });
+
+  it('normalises the slashes Storyblok is inconsistent about', () => {
+    // Courses come back as `courses/managing-anxiety/`, lessons without the trailing slash, and
+    // either can arrive with a leading one. The two must still meet in the middle.
+    expect(parentCourseSlug('/courses/managing-anxiety/what-is-anxiety/')).toBe(
+      'courses/managing-anxiety',
+    );
+    expect(normaliseSlug('/courses/managing-anxiety/')).toBe('courses/managing-anxiety');
+  });
+
+  it('keeps the locale prefix, which a lesson and its course both carry', () => {
+    expect(parentCourseSlug('de/courses/managing-anxiety/what-is-anxiety')).toBe(
+      'de/courses/managing-anxiety',
     );
   });
 });

@@ -35,7 +35,7 @@ import {
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
   LIBRARY_FILTERS_CLEARED,
@@ -100,6 +100,18 @@ const BROWSE_PY = { xs: 4, md: 6 };
 // Analytics params are scalars, so a multi-select filter reports as a comma-separated list.
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
 
+// A LibraryItem's `progress` is a translation key ('started'), while every other progress event in
+// the app reports a PROGRESS_STATUS ('Started'). Analytics speaks the latter so the library can be
+// compared against courses and resources.
+const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
+  NonNullable<LibraryItem['progress']> | 'none',
+  PROGRESS_STATUS
+> = {
+  started: PROGRESS_STATUS.STARTED,
+  completed: PROGRESS_STATUS.COMPLETED,
+  none: PROGRESS_STATUS.NOT_STARTED,
+};
+
 export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const t = useTranslations('Library');
   const items = useLibraryItems(stories);
@@ -130,11 +142,21 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
+  const userToken = useTypedSelector((state) => state.user.token);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const showEmailRemindersBanner =
     isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
+
+  // Firebase resolving is not the same as the user being known. `authStateLoading` goes false at
+  // the end of the onIdTokenChanged callback, and only *then* does useLoadUser run the getUser
+  // query that fills in partnerAccesses and createdAt (it is skipped while auth is loading). So a
+  // signed-in user passes through a window where they look anonymous. Reporting in that window
+  // would stamp every partner user as a PUBLIC_USER with no partner — the exact attribution these
+  // events exist to provide. The user is settled once auth has resolved and either there is no
+  // token (genuinely anonymous) or their record has landed.
+  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
 
   const eventUserData = useMemo(
     () => getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
@@ -186,13 +208,22 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   // would re-fire the event that had nothing to do with it.
   const resultsCount = results.length;
 
-  // The page view waits for auth to resolve so it can be attributed to the user's partner.
+  // The page view waits for the user to be settled (see `userSettled`) so it can be attributed to
+  // their partner, and reports the filters it opened on — a `?theme=` deep link is a guided entry
+  // into the library, and reporting only "viewed" would lose which door they came through.
   const viewLogged = useRef(false);
   useEffect(() => {
-    if (authStateLoading || viewLogged.current) return;
+    if (!userSettled || viewLogged.current) return;
     viewLogged.current = true;
-    logEvent(LIBRARY_VIEWED, eventUserData);
-  }, [authStateLoading, eventUserData]);
+    logEvent(LIBRARY_VIEWED, {
+      library_kind: kind,
+      library_themes: reportList(themes),
+      ...eventUserData,
+    });
+    // Reports the filter state the page opened with, not whatever it has become since — the user
+    // has had no chance to change it before this fires.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSettled, eventUserData]);
 
   // Bloom's users search this library for deeply personal things. The search term itself is
   // therefore never sent to analytics — only whether a search happened and how well it did,
@@ -241,7 +272,10 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         library_item_storyblok_uuid: item.id,
         library_item_kind: item.kind,
         library_item_format: item.format ?? null,
-        library_item_progress: item.progress ?? null,
+        // Reported with the same vocabulary as `course_progress` / `resource_progress` elsewhere,
+        // so library progress can be compared against them. The item's own lowercase values are
+        // translation keys, and stay in the UI where they belong.
+        library_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
         // 1-based rank in the filtered results, so we can see whether people reach past the top.
         library_item_position: index + 1,
         library_results_count: resultsCount,
