@@ -20,50 +20,71 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
+import { useSearchParams } from 'next/navigation';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 
+import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
+import {
+  LIBRARY_FILTERED,
+  LIBRARY_FILTERS_CLEARED,
+  LIBRARY_ITEM_CLICKED,
+  LIBRARY_LOAD_MORE_CLICKED,
+  LIBRARY_SEARCHED,
+  LIBRARY_SUPPORT_CARD_CLICKED,
+  LIBRARY_VIEWED,
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import chatIcon from '@/public/chat_icon.svg';
 import illustrationCourses from '@/public/illustration_courses.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
 import Header from '../layout/Header';
 import {
-  bucketOf,
+  BAND_GRADIENT,
   CARD_BORDER,
   CARD_SHADOW,
   CARD_SURFACE,
-  FORMAT_KEYS,
+  CHIP_BG,
+  CHIP_BG_HOVER,
   HEADING_FONT,
-  LENGTH_KEYS,
+  INPUT_BORDER,
   LibraryCard,
+  PAGE_BG,
   SupportCard,
+} from '../library/libraryContent';
+import {
+  filterLibraryItems,
+  FORMAT_KEYS,
+  KIND_KEYS,
+  LENGTH_KEYS,
   THEME_KEYS,
   toggle,
-  type ContentType,
   type Format,
+  type KindFilter,
   type LengthBucket,
+  type LibraryItem,
   type LibraryStories,
   type ThemeKey,
-} from '../library/libraryContent';
+} from '../library/libraryData';
 import { useLibraryItems } from '../library/useLibraryItems';
 
 // How many cards to show before the "Load more" button, and how many more each press reveals.
 const PAGE_SIZE = 8;
 
-// The top-level "what kind of thing am I looking for" axis, surfaced as buttons above the
-// results rather than as a checkbox in the sidebar: a course and a single session are different
-// shapes of content, not two ticks in one list. Format and length only describe single sessions,
-// so they stay in the sidebar and switch off while "Courses" is selected.
-type KindFilter = 'all' | 'course' | 'session';
-
-// Display order of the kind toggle; labels live under `Library.kind.<key>`.
-const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
-
-// Warm cream page background for the browse area, from the Figma design.
-const PAGE_BG = '#FFF2EB';
-// The active search-term chip: a deeper peach than the page behind it so it reads as a thing you
-// can dismiss rather than part of the background. Sampled from the design's "Input chip".
-const CHIP_BG = '#FFD8C7';
-const CHIP_BG_HOVER = '#FFC9B2';
+// A search event per keystroke would be noise; wait for the typing to settle first.
+const SEARCH_EVENT_DEBOUNCE_MS = 1000;
 
 // The design's sidebar column is 264px of content, then a 24px gutter, the divider, and another
 // 24px before the results. Box-sizing is border-box, so the column must be 264 + 24 wide for its
@@ -75,36 +96,50 @@ const SIDEBAR_WIDTH = SIDEBAR_CONTENT + 24;
 // Vertical padding for the browse section. It lives on the two columns rather than the Container
 // so the divider between them spans the full height of the section, edge to edge.
 const BROWSE_PY = { xs: 4, md: 6 };
-// Soft peach gradient behind the "Get support" band — colours sampled from Figma (a subtle
-// top-to-bottom wash matching the header, not a strong pink).
-const BAND_GRADIENT = 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)';
 
-export default function LibraryPage({
-  stories,
-  initialContentTypes = [],
-  initialThemes = [],
-}: {
-  stories: LibraryStories;
-  initialContentTypes?: ContentType[];
-  initialThemes?: ThemeKey[];
-}) {
+// Analytics params are scalars, so a multi-select filter reports as a comma-separated list.
+const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
+
+export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const t = useTranslations('Library');
   const items = useLibraryItems(stories);
+
+  // Deep links pre-select filters: `?type=course` opens on the Courses tab, `?theme=<key>`
+  // selects a theme card (e.g. from the home page). They only seed the filter state below, so
+  // they're read here rather than handed down from the server component — the same way the
+  // courses page read its `?section=` param. An unknown theme key is ignored.
+  const searchParams = useSearchParams();
+  const themeParam = searchParams.get('theme');
+  const initialTheme = THEME_KEYS.find((theme) => theme === themeParam);
+
   const [keyword, setKeyword] = useState('');
-  const [themes, setThemes] = useState<ThemeKey[]>(initialThemes);
-  // `?type=course` deep-links straight to the Courses tab; any format in the initial types
-  // pre-ticks the sidebar instead.
+  const [themes, setThemes] = useState<ThemeKey[]>(initialTheme ? [initialTheme] : []);
   const [kind, setKind] = useState<KindFilter>(
-    initialContentTypes.includes('course') ? 'course' : 'all',
+    searchParams.get('type') === 'course' ? 'course' : 'all',
   );
-  const [formats, setFormats] = useState<Format[]>(() =>
-    initialContentTypes.filter((type): type is Format => type !== 'course'),
-  );
+  const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   // On mobile the filter checkboxes collapse behind a "Filter" button (they're always shown on
   // desktop via CSS breakpoints); this only drives the small-screen open/closed state.
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const userEmailRemindersFrequency = useTypedSelector(
+    (state) => state.user.emailRemindersFrequency,
+  );
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
+  const showEmailRemindersBanner =
+    isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
+
+  const eventUserData = useMemo(
+    () => getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+    [userCreatedAt, partnerAccesses, partnerAdmin],
+  );
 
   // Format and length describe a single session; a course has neither. Rather than let the user
   // build a combination that can only ever return nothing, both groups switch off (and clear)
@@ -126,23 +161,10 @@ export default function LibraryPage({
     [items],
   );
 
-  const results = useMemo(() => {
-    const kw = keyword.trim().toLowerCase();
-    return items.filter((item) => {
-      if (kind !== 'all' && item.kind !== kind) return false;
-      if (themes.length && !item.themes.some((key) => themes.includes(key))) return false;
-      if (kw && !`${item.title} ${item.description}`.toLowerCase().includes(kw)) return false;
-
-      // Format and length are single-session concepts, so either one excludes courses outright.
-      if (formats.length) {
-        if (item.format == null || !formats.includes(item.format)) return false;
-      }
-      if (lengths.length) {
-        if (item.minutes == null || !lengths.includes(bucketOf(item.minutes))) return false;
-      }
-      return true;
-    });
-  }, [items, keyword, themes, kind, formats, lengths]);
+  const results = useMemo(
+    () => filterLibraryItems(items, { keyword, kind, themes, formats, lengths }),
+    [items, keyword, themes, kind, formats, lengths],
+  );
 
   // Reset pagination whenever the filters change so "Load more" always starts from the top.
   // Adjusting state during render (rather than in an effect) is the recommended pattern for
@@ -157,6 +179,88 @@ export default function LibraryPage({
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
 
+  // ---- Analytics -----------------------------------------------------------
+  // Each event below reports the result count as it stands when the interaction happens. The
+  // count is a dependency of these effects (it settles a render after the filter does), so each
+  // one guards on what it has already reported — otherwise a result count that moved on its own
+  // would re-fire the event that had nothing to do with it.
+  const resultsCount = results.length;
+
+  // The page view waits for auth to resolve so it can be attributed to the user's partner.
+  const viewLogged = useRef(false);
+  useEffect(() => {
+    if (authStateLoading || viewLogged.current) return;
+    viewLogged.current = true;
+    logEvent(LIBRARY_VIEWED, eventUserData);
+  }, [authStateLoading, eventUserData]);
+
+  // Bloom's users search this library for deeply personal things. The search term itself is
+  // therefore never sent to analytics — only whether a search happened and how well it did,
+  // which is what tells us if the library is findable.
+  const loggedSearch = useRef('');
+  useEffect(() => {
+    const term = keyword.trim();
+    // Clearing the box arms the next search, so searching the same term twice reports twice.
+    if (!term) {
+      loggedSearch.current = '';
+      return;
+    }
+    if (loggedSearch.current === term) return;
+    const timer = setTimeout(() => {
+      loggedSearch.current = term;
+      logEvent(LIBRARY_SEARCHED, {
+        library_search_term_length: term.length,
+        library_results_count: resultsCount,
+        ...eventUserData,
+      });
+    }, SEARCH_EVENT_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [keyword, resultsCount, eventUserData]);
+
+  // Report the whole filter state on every change, so a report can read the combination a user
+  // arrived at rather than having to reassemble it from individual toggles.
+  const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
+  const loggedFilterState = useRef(filterState);
+  useEffect(() => {
+    if (loggedFilterState.current === filterState) return;
+    loggedFilterState.current = filterState;
+    logEvent(LIBRARY_FILTERED, {
+      library_kind: kind,
+      library_themes: reportList(themes),
+      library_formats: reportList(formats),
+      library_lengths: reportList(lengths),
+      library_results_count: resultsCount,
+      ...eventUserData,
+    });
+  }, [filterState, kind, themes, formats, lengths, resultsCount, eventUserData]);
+
+  const logItemClick = useCallback(
+    (item: LibraryItem, index: number) => {
+      logEvent(LIBRARY_ITEM_CLICKED, {
+        library_item_name: item.title,
+        library_item_storyblok_uuid: item.id,
+        library_item_kind: item.kind,
+        library_item_format: item.format ?? null,
+        library_item_progress: item.progress ?? null,
+        // 1-based rank in the filtered results, so we can see whether people reach past the top.
+        library_item_position: index + 1,
+        library_results_count: resultsCount,
+        ...eventUserData,
+      });
+    },
+    [resultsCount, eventUserData],
+  );
+
+  const loadMore = () => {
+    const nextVisible = visibleCount + PAGE_SIZE;
+    setVisibleCount(nextVisible);
+    logEvent(LIBRARY_LOAD_MORE_CLICKED, {
+      library_results_count: resultsCount,
+      library_visible_count: Math.min(nextVisible, resultsCount),
+      ...eventUserData,
+    });
+  };
+
   // Selected themes are surfaced as descriptive cards atop the results (never as sidebar
   // filters), giving the chosen theme context and a fuller explanation.
   const selectedThemes = THEME_KEYS.filter((theme) => themes.includes(theme));
@@ -166,6 +270,7 @@ export default function LibraryPage({
     setKeyword('');
     setFormats([]);
     setLengths([]);
+    logEvent(LIBRARY_FILTERS_CLEARED, eventUserData);
   };
   const clearAll = () => {
     clearFilters();
@@ -181,6 +286,7 @@ export default function LibraryPage({
         imageSrc={illustrationCourses}
         imageAlt="alt.personSitting"
         introduction={t('introduction')}
+        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
 
       {/* ---- Explore by theme ---- */}
@@ -220,6 +326,7 @@ export default function LibraryPage({
                 <CardActionArea
                   onClick={() => setThemes((p) => toggle(p, theme))}
                   aria-pressed={active}
+                  qa-id={`library-theme-${theme}`}
                   sx={{
                     p: 1.5,
                     height: '100%',
@@ -291,7 +398,7 @@ export default function LibraryPage({
                   '& .MuiOutlinedInput-root': {
                     borderRadius: '100px',
                     backgroundColor: 'common.white',
-                    '& fieldset': { borderColor: '#DECECF' },
+                    '& fieldset': { borderColor: INPUT_BORDER },
                   },
                 }}
                 slotProps={{
@@ -532,17 +639,17 @@ export default function LibraryPage({
                     gap: 3,
                   }}
                 >
-                  {visibleResults.map((item) => (
-                    <LibraryCard key={item.id} item={item} />
+                  {visibleResults.map((item, index) => (
+                    <LibraryCard
+                      key={item.id}
+                      item={item}
+                      onSelect={() => logItemClick(item, index)}
+                    />
                   ))}
                 </Box>
                 {hasMore && (
                   <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                    <Button
-                      onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                      variant="outlined"
-                      color="primary"
-                    >
+                    <Button onClick={loadMore} variant="outlined" color="primary">
                       {t('loadMore')}
                     </Button>
                   </Box>
@@ -575,15 +682,33 @@ export default function LibraryPage({
             title={t('support.messaging.title')}
             description={t('support.messaging.description')}
             href="/messaging"
+            onSelect={() =>
+              logEvent(LIBRARY_SUPPORT_CARD_CLICKED, {
+                library_support_card: 'messaging',
+                ...eventUserData,
+              })
+            }
           />
           <SupportCard
             iconSrc={notesFromBloomIcon}
             title={t('support.notes.title')}
             description={t('support.notes.description')}
             href="/subscription/whatsapp"
+            onSelect={() =>
+              logEvent(LIBRARY_SUPPORT_CARD_CLICKED, {
+                library_support_card: 'notes',
+                ...eventUserData,
+              })
+            }
           />
         </Box>
       </Container>
+
+      {/* The library is the app's main content hub, so it carries the same two prompts the
+          courses hub did: sign up (the header CTA scrolls here), and — once signed in — turn on
+          the email reminders that bring people back to the content they started. */}
+      {!isLoggedIn && <SignUpBanner />}
+      {showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );
 }

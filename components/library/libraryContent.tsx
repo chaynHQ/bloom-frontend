@@ -19,21 +19,37 @@ import type { ReactNode } from 'react';
 
 import { type ContentType, type LibraryItem } from './libraryData';
 
-// Re-export the pure data/types so existing imports `from './libraryContent'` keep working.
-export * from './libraryData';
-
 // The Montserrat heading font, exposed as a CSS var by next/font (see styles/theme.ts). Used
 // directly in a few places where the design calls for Montserrat on non-heading elements
 // (card titles, badges, meta) that aren't MUI Typography heading variants.
 export const HEADING_FONT = 'var(--font-montserrat)';
 
-// Shared card surface tokens taken from the Figma design so every library card, the secondary
-// theme card, and the theme options read as one system. In the design the content cards carry
-// a soft two-layer elevation rather than a border (the secondary theme card is the exception —
-// it uses the CARD_BORDER outline).
+// Design tokens for the library, taken from the Figma design and kept together here so the page
+// and the cards read as one system rather than drifting apart across two files. These are
+// library-specific surfaces that the MUI palette (styles/theme.ts) has no equivalent for; the
+// peach/pink brand colours still come from the theme (`secondary.*`, `primary.dark`).
+//
+// In the design the content cards carry a soft two-layer elevation rather than a border (the
+// secondary theme card is the exception — it uses the CARD_BORDER outline).
 export const CARD_SURFACE = '#FFFCFA';
 export const CARD_BORDER = '#EBE0E1';
 export const CARD_SHADOW = '0px 1px 3px 1px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.08)';
+// Warm cream page background for the browse area.
+export const PAGE_BG = '#FFF2EB';
+// The active search-term chip: a deeper peach than the page behind it so it reads as a thing you
+// can dismiss rather than part of the background. Sampled from the design's "Input chip".
+export const CHIP_BG = '#FFD8C7';
+export const CHIP_BG_HOVER = '#FFC9B2';
+// Soft peach gradient behind the "Get support" band — a subtle top-to-bottom wash matching the
+// header, not a strong pink.
+export const BAND_GRADIENT = 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)';
+// The search field's outline, and the pale panels the cards use for their inner surfaces.
+export const INPUT_BORDER = '#DECECF';
+export const PANEL_SURFACE = '#FCF8F8';
+// The format badge's soft blue, and the support card's pink arrow panel.
+export const BADGE_BLUE = '#DFF0F5';
+export const BADGE_BLUE_BORDER = '#CCE7F0';
+export const SUPPORT_ARROW_PANEL = '#F9E2E3';
 
 // ---------------------------------------------------------------------------
 // Content-type metadata (illustrations for the filter list and card badges). The labels are
@@ -78,8 +94,8 @@ function TypeBadge({ type }: { type: ContentType }) {
         pr: 1.5,
         borderRadius: '8px',
         border: '1px solid',
-        backgroundColor: isCourse ? 'secondary.light' : '#DFF0F5',
-        borderColor: isCourse ? 'secondary.main' : '#CCE7F0',
+        backgroundColor: isCourse ? 'secondary.light' : BADGE_BLUE,
+        borderColor: isCourse ? 'secondary.main' : BADGE_BLUE_BORDER,
       }}
     >
       <Icon sx={{ fontSize: 16, color: 'grey.700' }} />
@@ -98,7 +114,7 @@ function TypeBadge({ type }: { type: ContentType }) {
   );
 }
 
-export function LibraryCard({ item }: { item: LibraryItem }) {
+export function LibraryCard({ item, onSelect }: { item: LibraryItem; onSelect?: () => void }) {
   const t = useTranslations('Library');
   // "Started" / "Completed" already exist as shared progress vocabulary, translated everywhere
   // the app reports course progress — the card badge says the same thing, so it says it the
@@ -129,6 +145,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
         component={i18nLink}
         href={item.href}
         aria-label={item.title}
+        onClick={onSelect}
         sx={{
           height: '100%',
           display: 'flex',
@@ -154,7 +171,7 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
               py: 1,
               pl: 1,
               pr: 1.5,
-              backgroundColor: '#FCF8F8',
+              backgroundColor: PANEL_SURFACE,
               borderInlineStart: '1px solid',
               borderBottom: '1px solid',
               borderColor: CARD_BORDER,
@@ -230,17 +247,25 @@ export function LibraryCard({ item }: { item: LibraryItem }) {
               session unmistakable. */}
           <Box sx={{ flexGrow: 1 }} />
           <Divider sx={{ my: 2, borderColor: CARD_BORDER }} />
+          {/* A course reports how many sessions it holds; a standalone session reports how long
+              it takes. A course lesson has neither in the CMS, so it names the course it belongs
+              to — which is the more useful thing to know about it anyway. */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {isCourse ? (
               <Meta
                 icon={<PlaylistPlayRounded sx={{ fontSize: 16 }} />}
                 text={t('sessionCount', { count: item.sessionCount ?? 0 })}
               />
+            ) : item.minutes != null ? (
+              <Meta
+                icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
+                text={t('duration', { minutes: item.minutes })}
+              />
             ) : (
-              item.minutes != null && (
+              item.courseTitle && (
                 <Meta
-                  icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
-                  text={t('duration', { minutes: item.minutes })}
+                  icon={<RouteRounded sx={{ fontSize: 16 }} />}
+                  text={t('partOfCourse', { course: item.courseTitle })}
                 />
               )
             )}
@@ -271,11 +296,13 @@ export function SupportCard({
   description,
   iconSrc,
   href,
+  onSelect,
 }: {
   title: string;
   description: string;
   iconSrc?: StaticImageData;
   href: string;
+  onSelect?: () => void;
 }) {
   return (
     <Card sx={{ m: 0, borderRadius: '16px', boxShadow: CARD_SHADOW, overflow: 'hidden' }}>
@@ -283,12 +310,13 @@ export function SupportCard({
         component={i18nLink}
         href={href}
         aria-label={title}
+        onClick={onSelect}
         sx={{
           p: 0,
           display: 'flex',
           alignItems: 'stretch',
           minHeight: { xs: 132, md: 180 },
-          backgroundColor: '#FCF8F8',
+          backgroundColor: PANEL_SURFACE,
           '&:hover': { backgroundColor: 'common.white' },
         }}
       >
@@ -328,7 +356,7 @@ export function SupportCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#F9E2E3',
+            backgroundColor: SUPPORT_ARROW_PANEL,
           }}
         >
           <ArrowForwardRounded sx={{ color: 'grey.700' }} />

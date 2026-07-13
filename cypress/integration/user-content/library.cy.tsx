@@ -129,6 +129,10 @@ describe('Library page', () => {
         .should('have.attr', 'data-kind', 'session')
         .find('a[href*="/courses/"]')
         .should('exist');
+
+      // Storyblok gives course lessons no duration, so where a standalone session reports its
+      // length, a lesson names the course it belongs to instead of showing an empty meta row.
+      cards().first().should('contain', 'Part of Recovering from toxic and abusive relationships');
     });
   });
 

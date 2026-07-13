@@ -35,6 +35,7 @@
     },
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
     "duration": "{minutes} min",
+    "partOfCourse": "{course} ka hissa",
     "loadMore": "Aur dikhaiye",
     "noResults": {
       "title": "In filters ke liye koi result nahi mila",

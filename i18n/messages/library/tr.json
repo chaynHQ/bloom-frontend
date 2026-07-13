@@ -35,6 +35,7 @@
     },
     "sessionCount": "{count, plural, one {# seans} other {# seans}}",
     "duration": "{minutes} dk",
+    "partOfCourse": "{course} kursunun bir parçası",
     "loadMore": "Daha fazla göster",
     "noResults": {
       "title": "Bu filtreler için sonuç yok",

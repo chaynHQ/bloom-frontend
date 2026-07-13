@@ -26,10 +26,9 @@ export interface HeaderProps {
   cta?: any;
 }
 
-// Refreshed header to match the 2026 design: a single soft peach gradient band (its colours
-// sampled from Figma — a subtle top-to-bottom wash, not a strong pink), with the heading block
-// vertically centred against a translucent-white circle holding the page illustration. On
-// mobile the layout stacks with the illustration on top, matching the mobile design.
+// Refreshed header to match the 2026 design: a single soft peach gradient band (a subtle
+// top-to-bottom wash rather than the previous two-stop pink), with the heading block and the
+// page illustration centred against it as a row. On mobile the row stacks, illustration first.
 const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',

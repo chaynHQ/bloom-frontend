@@ -12,8 +12,17 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 const COURSE_COMPONENT = 'Course';
 
 // A course is a guided journey made of several sessions; a "session" in the library is an
-// individual, standalone resource (a short, a somatic video, or an audio conversation).
+// individual thing to sit down with — a lesson from a course, a short, a somatic video, or an
+// audio conversation.
 export type Kind = 'course' | 'session';
+
+// The top-level "what kind of thing am I looking for" axis, surfaced as buttons above the
+// results rather than as a checkbox in the sidebar: a course and a single session are different
+// shapes of content, not two ticks in one list.
+export type KindFilter = 'all' | Kind;
+
+// Display order of the kind toggle; labels live under `Library.kind.<key>`.
+export const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
 // Grounding is intentionally NOT a library format. The library is a learning space
 // (courses + single sessions); grounding/relaxation lives in its own "Grounding" space,
@@ -53,11 +62,6 @@ export const LENGTH_KEYS: LengthBucket[] = ['under10', '10to20', 'over20'];
 // are offered (see LibraryPage); labels live under `Library.contentTypes.<key>`.
 export const FORMAT_KEYS: Format[] = ['audio', 'written', 'video', 'activity'];
 
-export interface LibraryImage {
-  filename: string;
-  alt: string;
-}
-
 export interface LibraryItem {
   id: string; // Storyblok uuid
   kind: Kind;
@@ -65,10 +69,13 @@ export interface LibraryItem {
   title: string;
   description: string;
   href: string; // resolved, locale-aware app path
-  image?: LibraryImage; // Storyblok thumbnail (a.storyblok.com); absent → icon fallback
-  // sessions (single resources)
+  // sessions (single resources and course lessons)
   format?: Format;
-  minutes?: number;
+  minutes?: number; // absent when Storyblok has no duration (all course lessons)
+  // set on a course lesson: the title of the course it belongs to. Lessons carry no duration in
+  // the CMS, so this is what their card meta reports instead — and it tells the reader why a
+  // lesson sitting next to a standalone session looks different.
+  courseTitle?: string;
   // courses (multi-part)
   sessionCount?: number;
   // progress, only present for logged-in users who have started/completed the item
@@ -88,13 +95,17 @@ export interface LibraryStories {
   conversations: ISbStoryData[];
 }
 
-// Standalone resource components → library "format". Only audio and video exist in the CMS
-// today; the format filter is rendered data-driven from what's actually present, so adding
-// written/activity resources later surfaces them automatically without code changes.
+// Storyblok component → library "format". Every session-shaped component is listed explicitly,
+// including the two course-lesson blocks (Session / session_iba), which are video-led lessons.
+// Only audio and video exist in the CMS today; the format filter is rendered data-driven from
+// what's actually present, so adding written/activity resources later surfaces them
+// automatically without code changes.
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_conversation: 'audio',
   resource_short_video: 'video',
   resource_single_video: 'video',
+  Session: 'video',
+  session_iba: 'video',
 };
 
 // Fallback for the rare story that has no themes set in Storyblok yet (e.g. a newly added
@@ -128,17 +139,6 @@ function toPlainText(value: unknown): string {
   return '';
 }
 
-// Picks the best available Storyblok image for a card thumbnail. Resources carry
-// preview_image / header_image; courses carry an illustration. The order works for both
-// because the shapes are mutually exclusive across content types.
-function pickImage(content: Record<string, unknown>): LibraryImage | undefined {
-  for (const key of ['preview_image', 'header_image', 'image_with_background', 'image']) {
-    const asset = content[key] as { filename?: string; alt?: string } | undefined;
-    if (asset?.filename) return { filename: asset.filename, alt: asset.alt ?? '' };
-  }
-  return undefined;
-}
-
 // Maps a raw Storyblok story to a LibraryItem. Progress is attached separately (it needs
 // Redux user state) in useLibraryItems.
 export function storyToLibraryItem(story: ISbStoryData, locale: string): LibraryItem {
@@ -149,7 +149,6 @@ export function storyToLibraryItem(story: ISbStoryData, locale: string): Library
     title: content.name,
     description: toPlainText(content.description),
     href: getDefaultFullSlug(story.full_slug, locale),
-    image: pickImage(content),
   };
 
   if (content.component === COURSE_COMPONENT) {
@@ -166,6 +165,9 @@ export function storyToLibraryItem(story: ISbStoryData, locale: string): Library
   return {
     ...base,
     kind: 'session',
+    // Every session component the library fetches is mapped above; the fallback only guards a
+    // component added to one of those Storyblok folders without being mapped here, and video is
+    // the safe guess (it's what every session-shaped block leads with today).
     format: FORMAT_BY_COMPONENT[content.component ?? ''] ?? 'video',
     minutes: parseMinutes(content.duration),
   };
@@ -175,6 +177,39 @@ export function bucketOf(minutes: number): LengthBucket {
   if (minutes < 10) return 'under10';
   if (minutes <= 20) return '10to20';
   return 'over20';
+}
+
+// The state of every filter on the page at once. Empty array = that filter is off (matches
+// everything), rather than on-and-matching-nothing.
+export interface LibraryFilters {
+  keyword: string;
+  kind: KindFilter;
+  themes: ThemeKey[];
+  formats: Format[];
+  lengths: LengthBucket[];
+}
+
+// The library's whole filter model, kept out of the page component so it can be read and tested
+// on its own. Filters combine as AND across groups and OR within a group — ticking "Audio" and
+// "Video" widens the results, ticking "Audio" and "Under 10 min" narrows them.
+export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters): LibraryItem[] {
+  const { keyword, kind, themes, formats, lengths } = filters;
+  const search = keyword.trim().toLowerCase();
+
+  return items.filter((item) => {
+    if (kind !== 'all' && item.kind !== kind) return false;
+    if (themes.length && !item.themes.some((theme) => themes.includes(theme))) return false;
+    if (search && !`${item.title} ${item.description}`.toLowerCase().includes(search)) return false;
+
+    // Format and length describe a single session, so either one excludes courses outright.
+    if (formats.length && (item.format == null || !formats.includes(item.format))) return false;
+    // Course lessons carry no duration in Storyblok. An item of unknown length can't be claimed
+    // to fall inside a bucket, so choosing any length excludes it rather than guessing.
+    if (lengths.length && (item.minutes == null || !lengths.includes(bucketOf(item.minutes))))
+      return false;
+
+    return true;
+  });
 }
 
 export function toggle<T>(list: T[], value: T): T[] {

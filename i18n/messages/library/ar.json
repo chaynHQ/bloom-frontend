@@ -35,6 +35,7 @@
     },
     "sessionCount": "{count, plural, zero {لا جلسات} one {جلسة واحدة} two {جلستان} few {# جلسات} many {# جلسة} other {# جلسة}}",
     "duration": "{minutes, plural, zero {# دقيقة} one {دقيقة واحدة} two {دقيقتان} few {# دقائق} many {# دقيقة} other {# دقيقة}}",
+    "partOfCourse": "جزء من {course}",
     "loadMore": "عرض المزيد",
     "noResults": {
       "title": "لا نتائج لعوامل التصفية هذه",

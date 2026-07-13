@@ -35,6 +35,7 @@
     },
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
     "duration": "{minutes} min",
+    "partOfCourse": "Fait partie de {course}",
     "loadMore": "Voir plus",
     "noResults": {
       "title": "Aucun résultat pour ces filtres",

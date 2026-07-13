@@ -26,6 +26,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Matches the locale segment of a prefixed path in the redirects below. Kept as one constant so
+// every redirect covers the same set of locales — they used to be listed per-redirect and had
+// already drifted. Mirrors ALL_LOCALES in i18n/routing.ts: ar and tr are hidden in production but
+// routable on preview/staging, so a locale-prefixed redirect must still handle them there.
+const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
+
 module.exports = withBundleAnalyzer(
   withNextIntl(
     withPWA({
@@ -45,7 +51,7 @@ module.exports = withBundleAnalyzer(
             permanent: false,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/welcome',
+            source: `/${LOCALE_PATTERN}/welcome`,
             destination: '/:locale/library',
             permanent: false,
           },
@@ -55,7 +61,7 @@ module.exports = withBundleAnalyzer(
             permanent: false,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/login',
+            source: `/${LOCALE_PATTERN}/login`,
             destination: '/:locale/library',
             permanent: false,
           },
@@ -65,7 +71,7 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/partnership/:path*',
+            source: `/${LOCALE_PATTERN}/partnership/:path*`,
             destination: '/:locale/welcome/:path*',
             permanent: true,
           },
@@ -75,7 +81,7 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/chat',
+            source: `/${LOCALE_PATTERN}/chat`,
             destination: '/:locale/messaging',
             permanent: true,
           },
@@ -92,7 +98,7 @@ module.exports = withBundleAnalyzer(
             permanent: false,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi|ar|tr)/courses',
+            source: `/${LOCALE_PATTERN}/courses`,
             destination: '/:locale/library',
             permanent: false,
           },

@@ -2,9 +2,9 @@ import {
   DRAWER_ACTIVITIES_CLICKED,
   DRAWER_ADMIN_CLICKED,
   DRAWER_CHAT_CLICKED,
-  DRAWER_COURSES_CLICKED,
   DRAWER_GROUNDING_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
+  DRAWER_LIBRARY_CLICKED,
   DRAWER_NOTES_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
   DRAWER_THERAPY_CLICKED,
@@ -13,8 +13,8 @@ import {
   HEADER_OUR_BLOOM_TEAM_CLICKED,
   SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
-  SECONDARY_HEADER_COURSES_CLICKED,
   SECONDARY_HEADER_GROUNDING_CLICKED,
+  SECONDARY_HEADER_LIBRARY_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '@/lib/constants/events';
@@ -53,12 +53,12 @@ interface NavigationConfigOptions {
 const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
   {
     // The unified library replaces the old Courses hub: it mixes courses with single
-    // sessions (shorts, somatic videos, audio conversations) behind one guided search.
-    // Reuses the existing "courses" analytics events until dedicated library events are added.
+    // sessions (course lessons, shorts, somatic videos, audio conversations) behind one
+    // guided search.
     key: 'library',
     href: '/library',
     icon: courseIcon,
-    event: isMobile ? DRAWER_COURSES_CLICKED : SECONDARY_HEADER_COURSES_CLICKED,
+    event: isMobile ? DRAWER_LIBRARY_CLICKED : SECONDARY_HEADER_LIBRARY_CLICKED,
     translationKey: 'library',
     altTranslationKey: 'alt.courseIcon',
     qaIdPrefix: 'library',
