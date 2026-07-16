@@ -26,7 +26,7 @@ describe('User about you page should display', () => {
       'contain',
       'These questions help us understand who is using Bloom and what kinds of support they need from us.',
     );
-    cy.checkLink('/library', 'Skip to courses');
+    cy.checkLink('/library', 'Skip to library');
   });
 
   it('About you panel', () => {
