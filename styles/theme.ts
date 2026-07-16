@@ -230,56 +230,73 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             marginInlineEnd: ownerState.size === 'small' ? -2 : -4,
             marginInlineStart: 8,
           }),
-          outlinedPrimary: {
-            color: '#000000',
-            borderColor: theme.palette.primary.dark,
-          },
-          containedPrimary: {
-            borderColor: 'transparent',
-            '&.Mui-disabled': {
-              backgroundColor: lighten(theme.palette.primary.main, 0.2),
-              color: theme.palette.grey[800],
-            },
-          },
-          containedSecondary: {
-            borderColor: 'transparent',
-            backgroundColor: theme.palette.secondary.dark,
-            '&:hover': {
-              backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
-            },
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.secondary.dark,
-              opacity: 0.1,
-            },
-            '&.Mui-disabled': {
-              backgroundColor: lighten(theme.palette.secondary.main, 0.2),
-              color: theme.palette.grey[800],
-            },
-          },
-          outlinedSecondary: {
-            color: '#000000',
-            borderColor: theme.palette.secondary.dark,
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.secondary.dark,
-              opacity: 0.1,
-            },
-            '&:hover': {
-              backgroundColor: theme.palette.secondary.light,
-              borderColor: theme.palette.secondary.dark,
-            },
-          },
-          containedError: {
-            backgroundColor: theme.palette.primary.dark,
-            color: theme.palette.common.white,
-            '&:hover': {
-              backgroundColor: lighten(theme.palette.primary.dark, 0.3),
-            },
-            '&.Mui-disabled': {
-              backgroundColor: lighten(theme.palette.primary.dark, 0.3),
-              color: `${theme.palette.common.white} !important`,
-            },
-          },
         },
+        variants: [
+          {
+            props: { variant: 'outlined', color: 'primary' },
+            style: {
+              color: '#000000',
+              borderColor: theme.palette.primary.dark,
+            },
+          },
+          {
+            props: { variant: 'contained', color: 'primary' },
+            style: {
+              borderColor: 'transparent',
+              '&.Mui-disabled': {
+                backgroundColor: lighten(theme.palette.primary.main, 0.2),
+                color: theme.palette.grey[800],
+              },
+            },
+          },
+          {
+            props: { variant: 'contained', color: 'secondary' },
+            style: {
+              borderColor: 'transparent',
+              backgroundColor: theme.palette.secondary.dark,
+              '&:hover': {
+                backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
+              },
+              '& .MuiTouchRipple-root span': {
+                backgroundColor: theme.palette.secondary.dark,
+                opacity: 0.1,
+              },
+              '&.Mui-disabled': {
+                backgroundColor: lighten(theme.palette.secondary.main, 0.2),
+                color: theme.palette.grey[800],
+              },
+            },
+          },
+          {
+            props: { variant: 'outlined', color: 'secondary' },
+            style: {
+              color: '#000000',
+              borderColor: theme.palette.secondary.dark,
+              '& .MuiTouchRipple-root span': {
+                backgroundColor: theme.palette.secondary.dark,
+                opacity: 0.1,
+              },
+              '&:hover': {
+                backgroundColor: theme.palette.secondary.light,
+                borderColor: theme.palette.secondary.dark,
+              },
+            },
+          },
+          {
+            props: { variant: 'contained', color: 'error' },
+            style: {
+              backgroundColor: theme.palette.primary.dark,
+              color: theme.palette.common.white,
+              '&:hover': {
+                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+              },
+              '&.Mui-disabled': {
+                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                color: `${theme.palette.common.white} !important`,
+              },
+            },
+          },
+        ],
       },
       MuiIconButton: {
         styleOverrides: {
