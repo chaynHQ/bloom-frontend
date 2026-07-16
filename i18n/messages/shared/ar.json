@@ -60,9 +60,9 @@
     },
     "notFound": {
       "title": "404 - الصفحة غير موجودة",
-      "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الدورات.",
+      "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة المكتبة.",
       "unauthenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الترحيب.",
-      "authenticatedRedirectButton": "العودة إلى صفحة الدورات",
+      "authenticatedRedirectButton": "العودة إلى صفحة المكتبة",
       "unauthenticatedRedirectButton": "العودة إلى صفحة الترحيب"
     },
     "alt": {

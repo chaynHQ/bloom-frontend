@@ -1,12 +1,7 @@
 'use client';
 
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import {
-  LANGUAGES,
-  PROGRESS_STATUS,
-  RESOURCE_CATEGORIES,
-  STORYBLOK_TAGS,
-} from '@/lib/constants/enums';
+import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SINGLE_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
@@ -70,7 +65,6 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     included_for_partners,
   } = story.content as StoryblokResourceSingleVideoPageProps;
   const storyUuid = story.uuid;
-  const tags = story.tag_list as STORYBLOK_TAGS[];
 
   const locale = useLocale();
   const referralPartner = useCookieReferralPartner();
@@ -176,7 +170,6 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
           references,
           eventData,
           nextResourceHref,
-          tags,
         }}
       />
       {team_members_section && <StoryblokTeamMembersSection {...team_members_section[0]} />}

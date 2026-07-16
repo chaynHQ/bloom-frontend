@@ -83,7 +83,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
         component={i18nLink}
         size="small"
       >
-        {t('backToShorts')}
+        {t('backToLibrary')}
       </Button>
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>

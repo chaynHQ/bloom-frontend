@@ -50,12 +50,12 @@
     },
     "accessGuard": {
       "title": "Kurs içeriği mevcut değil",
-      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına</contactLink> geri dön."
+      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kütüphaneye</contactLink> geri dön."
     },
     "errors": {
       "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
-    "backToCourses": "Kurslara dön"
+    "backToLibrary": "Kütüphaneye dön"
   }
 }

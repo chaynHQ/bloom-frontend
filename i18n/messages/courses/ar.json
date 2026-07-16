@@ -50,12 +50,12 @@
     },
     "accessGuard": {
       "title": "محتوى الدورة غير متاح",
-      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى محتوى الدورة المطلوب. يمكنك العودة إلى <contactLink>دوراتك</contactLink>."
+      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى محتوى الدورة المطلوب. يمكنك العودة إلى <contactLink>المكتبة</contactLink>."
     },
     "errors": {
       "completeSessionError": "حدث خطأ أثناء وضع علامة اكتمال على هذه الجلسة. يُرجى المحاولة بعد قليل."
     },
     "backToCourse": "العودة إلى الدورة",
-    "backToCourses": "العودة إلى الدورات"
+    "backToLibrary": "العودة إلى المكتبة"
   }
 }

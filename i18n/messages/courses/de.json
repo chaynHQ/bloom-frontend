@@ -50,12 +50,12 @@
     },
     "accessGuard": {
       "title": "Kursinhalte nicht verfügbar",
-      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen</contactLink>."
+      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zur <contactLink>Bibliothek</contactLink>."
     },
     "errors": {
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
     "backToCourse": "Zurück zum Kurs",
-    "backToCourses": "Zurück zu Kursen"
+    "backToLibrary": "Zurück zur Bibliothek"
   }
 }

@@ -94,7 +94,7 @@ export default function AboutYouPage() {
             component={i18nLink}
             href={typeof return_url === 'string' ? return_url : '/library'}
           >
-            {t('goToCourses')}
+            {t('goToLibrary')}
           </Button>
           <Box sx={formContainerStyle}>
             <Card>

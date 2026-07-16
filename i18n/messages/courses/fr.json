@@ -50,12 +50,12 @@
     },
     "accessGuard": {
       "title": "Le contenu du cours n'est pas disponible",
-      "introduction": "Votre compte Bloom ne comprend pas l'accès au contenu du cours souhaité. Veuillez retournez à votre <contactLink>cours</contactLink>."
+      "introduction": "Votre compte Bloom ne comprend pas l’accès au contenu du cours souhaité. Veuillez retourner à la <contactLink>bibliothèque</contactLink>."
     },
     "errors": {
       "completeSessionError": "Une erreur s'est produite lorsque vous avez marqué cette session comme étant complète. Veuillez réessayez plus tard."
     },
     "backToCourse": "Revenir au cours",
-    "backToCourses": "Revenir aux cours"
+    "backToLibrary": "Revenir à la bibliothèque"
   }
 }

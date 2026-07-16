@@ -35,7 +35,7 @@
       "titleA": "What you want from Bloom",
       "descriptionALine1": "Thank you for your answers so far!",
       "descriptionALine2": "As a new user, we'd like to understand how you're doing before using our services. Asking this now helps us to measure the impact that using Bloom is having for survivors, and helps us focus on the right things.",
-      "goToCourses": "Skip to courses",
+      "goToLibrary": "Go to library",
       "demographicForm": {
         "genderLabel": "Please select one or more options that reflect your gender identity",
         "genderHelpText": "We are asking this to better understand how our users identify, with a view to designing even more inclusive and gender-affirming resources. You can select 'Prefer not to answer'.",

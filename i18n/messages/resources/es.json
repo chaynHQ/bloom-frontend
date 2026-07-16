@@ -1,9 +1,6 @@
 {
   "Resources": {
-    "backToConversations": "Ir a las conversaciones",
-    "backToShorts": "Ir a los cortos",
-    "backToVideos": "Volver a los vídeos",
-    "backToSomatics": "Volver a los somática",
+    "backToLibrary": "Volver a la biblioteca",
     "nextVideoButtonLabel": "Siguiente vídeo",
     "nextConversationButtonLabel": "Siguiente conversación",
     "nextSessionButtonLabel": "Siguiente sesión",

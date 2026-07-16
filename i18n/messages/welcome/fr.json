@@ -3,9 +3,7 @@
     "getStarted": "Démarrer",
     "accessIntroduction": "Saisissez le code d'accès que vous avez reçu de {partnerName} pour commencer votre voyage sur Bloom.",
     "publicIntroduction": "Créez un compte avec Bloom pour commencer à suivre nos cours, ou informez-vous d'abord sur Bloom ci-dessous.",
-    "continueCourses": "Continuer avec Bloom",
-    "continueCoursesDescription": "Reprenez là où vous en étiez.",
-    "goToCourses": "Accéder aux cours",
+    "goToLibrary": "Accéder à la bibliothèque",
     "form": {
       "codeLabel": "{partnerName} code d'accès"
     },

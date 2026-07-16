@@ -50,12 +50,12 @@
     },
     "accessGuard": {
       "title": "Yeh course content uplabhd nahi hai.",
-      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
+      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>Library</contactLink> par vapas jaiye."
     },
     "errors": {
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
     "backToCourse": "Course par vapas jayein.",
-    "backToCourses": "Courses par vapas jayein."
+    "backToLibrary": "Library par vapas jayein."
   }
 }

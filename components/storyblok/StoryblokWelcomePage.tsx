@@ -167,7 +167,7 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
               : `/auth/register?partner=${partnerContent.name.toLocaleLowerCase()}${codeParam && '&code=' + codeParam}`
           }
         >
-          {t(isLoggedIn ? 'goToCourses' : 'getStarted')}
+          {t(isLoggedIn ? 'goToLibrary' : 'getStarted')}
         </Button>
       </Container>
       {page_sections?.length > 0 &&

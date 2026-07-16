@@ -61,9 +61,9 @@
     },
     "notFound": {
       "title": "404 - Página não encontrada",
-      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
+      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página da biblioteca.",
       "unauthenticatedDescription": "Página não encontrada. Verifique a  url ou volte à página inicial.",
-      "authenticatedRedirectButton": "Retornar à página de cursos",
+      "authenticatedRedirectButton": "Retornar à página da biblioteca",
       "unauthenticatedRedirectButton": "Voltar à página inicial"
     },
     "alt": {

@@ -40,7 +40,7 @@ const CourseHeader = (props: CourseHeaderProps) => {
         component={i18nLink}
         size="small"
       >
-        {t('backToCourses')}
+        {t('backToLibrary')}
       </Button>
     </Header>
   );
