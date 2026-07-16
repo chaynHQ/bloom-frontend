@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Kurslarımız",
-    "introduction": "Bloom kursları, travmayla başa çıkmamıza yardımcı olmak için bize özel bilgiler, araçlar ve destekleyici sözler sunar. Yaşadıklarımızı ve bunların bizi nasıl etkilemiş olabileceğini öğrenmemiz, üzerine düşünmemiz ve işlememiz için bizi teşvik ederler — hepsi güvenli ve güçlendirici bir alanda.",
     "session": "Seans",
     "course": "Kurs",
-    "courses": "Kurslar",
     "expand": "Genişlet",
     "expandSummary": "Şunun özetini genişlet:",
     "navigateToSession": "Seansa git -",
     "navigateToCourse": "Kursa git -",
-    "noCourses": "Şu anda gösterilecek kurs yok. Bu doğru görünmüyorsa, daha sonra tekrar dene ya da Bloom ekibiyle iletişime geç.",
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
       "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku"
@@ -60,12 +56,6 @@
       "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
-    "backToCourses": "Kurslara dön",
-    "conversationsHeading": "Sohbetler",
-    "conversationsDescription": "Güçlü hikâyeler aracılığıyla, mitlere meydan okurken, düşünmeye teşvik ederken ve zararı ve iyileşmeyi anlamanın yeni yollarını açarken bizi dinle.",
-    "shortsHeading": "Kısalar",
-    "shortsDescription": "Vaktin mi kısıtlı ya da nereden başlayacağından emin değil misin? Kısalar, Bloom'un öğrenme seanslarına 2–3 dakikalık bakışlardır; iyileşme yolculuğumuz için içgörü, güven ve araçlar sunarlar.",
-    "somaticsHeading": "Somatik: Beden temelli iyileşme",
-    "somaticsDescription": "Nazik, beden temelli yaklaşımların şiddetten, stresten ve korkudan iyileşmeyi nasıl destekleyebileceğini keşfet. Bu kaynak koleksiyonu; bedenlerimizle yeniden bağ kurmamıza, dayanıklılık geliştirmemize ve güvenliğin ve rahatlığın nasıl hissettirebileceğini keşfetmemize yardımcı olacak açık, pratik bir rehberlik sunar."
+    "backToCourses": "Kurslara dön"
   }
 }

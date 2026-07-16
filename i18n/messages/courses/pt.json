@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Nossos cursos",
-    "introduction": "Os cursos Bloom oferecem informações personalizadas, ferramentas e palavras afirmativas para nos ajudar a lidar com o trauma. Elas nos encorajam a aprender, refletir e processar o que passamos e como isso pode ter nos afetado – tudo em um espaço seguro e que promove o empoderamento",
     "session": "Sessão",
     "course": "Curso",
-    "courses": "Cursos",
     "expand": "Expandir",
     "expandSummary": "Expandir o resumo de",
     "navigateToSession": "Ir à sessão -",
     "navigateToCourse": "Ir ao curso -",
-    "noCourses": "Não há cursos para serem exibidos no momento. Se isso não parecer certo, tente novamente mais tarde ou entre em contato com a equipe do Bloom.",
     "courseDetail": {
       "introductionTitle": "Introdução ao curso",
       "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>"
@@ -60,12 +56,6 @@
       "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."
     },
     "backToCourse": "Voltar para o Curso",
-    "backToCourses": "Voltar para Cursos",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somática: Cura baseada no corpo",
-    "somaticsDescription": "Descubra como as abordagens suaves e baseadas no corpo podem apoiar a cura da violência, do stress e do medo. Esta coleção de recursos oferece orientação clara e prática para nos ajudar a reconectar com os nossos corpos, a construir resiliência e a explorar o que a segurança e o bem-estar podem significar."
+    "backToCourses": "Voltar para Cursos"
   }
 }

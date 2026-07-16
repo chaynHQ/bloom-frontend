@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Nos cours",
-    "introduction": "Les cours de Bloom offrent des informations, des outils et du soutien adaptés pour nous aider à faire face au trauma. Ils nous encouragent à comprendre, à réfléchir et à traiter ce que nous avons vécu et comment cela a pu nous affecter, le tout dans un espace de sécurité et d’empouvoirement.",
     "session": "Session",
     "course": "Cours",
-    "courses": "Cours",
     "expand": "Ouvrir",
     "expandSummary": "Ouvrir le résumé de",
     "navigateToSession": "Aller à la session -",
     "navigateToCourse": "Aller au cours -",
-    "noCourses": "Il n'y a pas de cours disponible pour le moment. Réessayez plus tard ou contactez l'équipe Bloom.",
     "courseDetail": {
       "introductionTitle": "Début du cours",
       "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>"
@@ -60,12 +56,6 @@
       "completeSessionError": "Une erreur s'est produite lorsque vous avez marqué cette session comme étant complète. Veuillez réessayez plus tard."
     },
     "backToCourse": "Revenir au cours",
-    "backToCourses": "Revenir aux cours",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Extraits",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somatique : La guérison par le corps",
-    "somaticsDescription": "Découvrez comment les approches douces et basées sur le corps peuvent aider à guérir de la violence, du stress et de la peur. Cette collection de ressources offre des conseils clairs et pratiques pour nous aider à nous reconnecter à notre corps, à renforcer notre résilience et à explorer ce que la sécurité et l'aisance peuvent signifier."
+    "backToCourses": "Revenir aux cours"
   }
 }

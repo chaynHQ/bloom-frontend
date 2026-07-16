@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import type { LibraryStories } from './libraryData';
+import type { LibraryStories } from '@/lib/utils/libraryData';
 import { useLibraryItems } from './useLibraryItems';
 
 jest.mock('next-intl', () => ({ useLocale: jest.fn() }));
