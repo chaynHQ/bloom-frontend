@@ -1,0 +1,166 @@
+{
+  "Shared": {
+    "bloom": "Bloom",
+    "references": "موارد",
+    "metadata": {
+      "title": "رحلتك نحو التعافي تبدأ معنا",
+      "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم.",
+      "imageAlt": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما. ويتضمّن شعار Bloom المكتوب."
+    },
+    "leaveSite": {
+      "button": "مغادرة هذا الموقع",
+      "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
+      "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+    },
+    "navigateBack": "العودة للخلف",
+    "navigateTo": "الانتقال إلى",
+    "footer": {
+      "fundedByTitle": "بتمويل من",
+      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
+      "chaynLine1": "بُني بواسطة <bold>CHAYN</bold> CIO.",
+      "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
+      "bumbleLine1": "بالشراكة مع",
+      "bumbleLine2": "BUMBLE HOLDING LTD",
+      "badooLine1": "بالشراكة مع",
+      "badooLine2": "BADOO LTD",
+      "fruitzLine1": "بالشراكة مع",
+      "fruitzLine2": "FRUITZ LTD",
+      "policies": "سياساتنا",
+      "trustCenter": "مركز الثقة"
+    },
+    "maintenanceBanner": {
+      "title": "Bloom متوقّف مؤقتًا للصيانة",
+      "description": "نرجو تحمّلك بينما نُكمل بعض أعمال الصيانة المجدولة الضرورية. من المفترض أن يعود Bloom للعمل كالمعتاد خلال {hours} ساعة."
+    },
+    "fruitzRetirementBanner": {
+      "title": "تغيير في دوراتك",
+      "description": "تقترب شراكة Fruitz x Bloom من نهايتها، لكن دعم Bloom لك يبقى مستمرًا. اعتبارًا من 19 أغسطس، لن تعود دورة 'المواعدة والحدود والعلاقات' متاحة، لكن جميع الخدمات الأخرى، بما في ذلك المراسلة الفردية، ستبقى كما هي.",
+      "dismiss": "إغلاق"
+    },
+    "videoTranscript": {
+      "title": "النص المكتوب للفيديو",
+      "closeModal": "إغلاق النص"
+    },
+    "progressStatus": {
+      "started": "بدأت",
+      "completed": "اكتملت",
+      "notStarted": "لم تبدأ"
+    },
+    "meetTheTeam": {
+      "fullBioButton": "قراءة السيرة الكاملة لـ {name}",
+      "expandTeamMember": "توسيع السيرة الذاتية لـ {name}"
+    },
+    "noDataAvailable": {
+      "title": "حدثت مشكلة أثناء تحميل هذه الصفحة. يُرجى العودة والمحاولة مرة أخرى، أو التواصل معنا."
+    },
+    "error": {
+      "title": "حدث خطأ ما",
+      "description": "حدثت مشكلة في الطلب الأخير، يُرجى المحاولة مرة أخرى. إذا استمرت المشكلة، يُرجى التواصل مع فريق Bloom.",
+      "buttonLabel": "المحاولة مرة أخرى"
+    },
+    "notFound": {
+      "title": "404 - الصفحة غير موجودة",
+      "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الدورات.",
+      "unauthenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الترحيب.",
+      "authenticatedRedirectButton": "العودة إلى صفحة الدورات",
+      "unauthenticatedRedirectButton": "العودة إلى صفحة الترحيب"
+    },
+    "alt": {
+      "chaynLogo": "شعار Chayn",
+      "bloomLogo": "شعار Bloom",
+      "bumbleLogo": "شعار Bumble",
+      "bloomBumbleLogo": "شعار Bloom بالشراكة مع Bumble",
+      "badooLogo": "شعار Badoo",
+      "bloomBadooLogo": "شعار Bloom بالشراكة مع Badoo",
+      "comicReliefLogo": "شعار Comic Relief",
+      "communityFundLogo": "شعار Community Fund",
+      "welcomeToBloom": "مرحبًا بك في Bloom",
+      "tiktokLogo": "شعار Tiktok",
+      "githubLogo": "شعار Github",
+      "bloomHead": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما",
+      "beehive": "رسم توضيحي لخلية نحل",
+      "leafMix": "رسم توضيحي لورقتين متّصلتين بوردة",
+      "leafMixBee": "رسم توضيحي لورقتين مع نحلة تحلّق فوقهما",
+      "leafMixDots": "رسم توضيحي لـ 3 أوراق مع زهرة في المنتصف، ونقاط تنطلق من الزهرة.",
+      "personTea": "رسم توضيحي لشخص جالس يحمل كوب شاي",
+      "personSitting": "رسم توضيحي لشخص جالس",
+      "chooseTherapist": "رسم توضيحي لوجه شخص من الجانب، مع زهرة",
+      "dateSelector": "رسم توضيحي لتقويم مع قلب في المنتصف",
+      "change": "رسم توضيحي لدورة — ثلاث شموس في دائرة مع أسهم بينها",
+      "notes": "رسم توضيحي لهاتف محمول مع فقاعة رسالة تحتوي على قلب على الشاشة",
+      "confidential": "رسم توضيحي لمستند مع قفل في الزاوية",
+      "cookieCat": "رسم توضيحي لقطة مستريحة مع قطعة بسكويت",
+      "fruitzLogo": "شعار Fruitz",
+      "bloomFruitzLogo": "شعار Bloom بالشراكة مع Fruitz",
+      "bloomHomeIllustration": "شخص جالس متربّع مع رموز تطفو حوله مثل أيقونة فيديو وزهرة وأيقونة رسالة ورأس شخص مع زهرة",
+      "bookIcon": "أيقونة كتاب",
+      "articleIcon": "أيقونة مقال",
+      "videoIcon": "أيقونة فيديو"
+    },
+    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
+    "survivor": "ناجٍ/ية",
+    "cookieConsent": {
+      "cookieConsentExplainer": "يُرجى السماح بملفات تعريف الارتباط التحليلية حتى نتمكّن من تحسين Bloom. مزيد من التفاصيل في ",
+      "cookieConsentPolicy": "سياسة ملفات تعريف الارتباط",
+      "acceptLabel": "قبول ملفات تعريف الارتباط",
+      "declineLabel": "رفض ملفات تعريف الارتباط"
+    },
+    "signUpTodayPromo": {
+      "title": "إنشاء حساب مجاني اليوم",
+      "description1": "Bloom منصّة عبر الإنترنت لدعمك في أثناء تعافيك من الصدمة. من الدورات المصوّرة والأنشطة التأمّلية إلى المراسلة المباشرة مع فريقنا، هناك طرق متنوّعة كثيرة للتفاعل مع Bloom.",
+      "description2": "ما عليك سوى التسجيل اليوم للوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom!",
+      "button": "لنبدأ"
+    },
+    "loginDialog": {
+      "title": "تسجيل الدخول أو إنشاء حساب",
+      "description": "بالتسجيل المجاني يمكنك الوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom",
+      "loginButton": "تسجيل الدخول",
+      "registerButton": "إنشاء حساب",
+      "backButton": "العودة"
+    },
+    "exerciseNames": {
+      "activities-thought-diaries": "يوميات الأفكار",
+      "activities-stream-of-consciousness-journaling": "الكتابة بتيّار الوعي",
+      "activities-timelines": "الخطوط الزمنية",
+      "activities-trust-mapping": "رسم خريطة الثقة",
+      "activities-mapping-fear-and-stress-in-our-bodies": "رسم خريطة الخوف والتوتّر في أجسادنا",
+      "activities-letter-to-a-part-of-my-body": "رسالة إلى جزء من جسدي",
+      "activities-accelerators-and-brakes": "المسرّعات والمكابح",
+      "activities-ideal-sexual-being": "الكينونة الجنسية المثالية",
+      "grounding-visual-breathing": "التنفّس البصري",
+      "grounding-slow-breathing": "التنفّس البطيء",
+      "grounding-box-breathing": "التنفّس الصندوقي",
+      "grounding-drifting-clouds-meditation": "تأمّل الغيوم المتنقّلة",
+      "grounding-positive-coping-statement": "عبارة تأقلم إيجابية",
+      "grounding-finger-focus": "تركيز الأصابع",
+      "grounding-day-walkthrough": "استعراض اليوم",
+      "grounding-what-can-you-hear": "ما الذي يمكنك سماعه",
+      "grounding-listen-to-your-voice": "الإنصات إلى صوتك",
+      "grounding-calming-colours": "الألوان المهدّئة",
+      "grounding-coming-back-to-your-safe-space": "العودة إلى مساحتك الآمنة",
+      "grounding-best-check-in": "تفقّد BEST",
+      "grounding-compassionate-body-scan": "مسح الجسد بتعاطف",
+      "grounding-touching-and-feeling-textures": "لمس الملمس والإحساس به",
+      "grouding-sound-of-claps": "صوت التصفيق",
+      "grounding-affirming-ourselves": "تأكيد ذواتنا (ضغط ثابت)"
+    },
+    "pwaBanner": {
+      "mobileDescription": "تثبيت التطبيق للوصول إليه من شاشتك الرئيسية",
+      "desktopDescription": "تثبيت التطبيق للوصول إلى Bloom من شاشتك الرئيسية",
+      "iosDescription": "إضافة Bloom إلى شاشتك الرئيسية",
+      "iosStep1": "1. اضغط على زر المشاركة",
+      "iosStep2": "2. اضغط على 'إضافة إلى الشاشة الرئيسية'",
+      "button-decline-label": "ليس الآن",
+      "button-install-label": "تثبيت"
+    },
+    "notesFromBloomPromo": {
+      "title": "رسائل داعمة مجانية",
+      "description": "رسائل مرتين أسبوعيًا تصلك مباشرةً على WhatsApp",
+      "buttonText": "الاشتراك"
+    },
+    "characterCount": "{current}/{max} حرفًا",
+    "scrollToSignUp": {
+      "button": "التسجيل مجانًا"
+    }
+  }
+}

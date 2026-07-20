@@ -28,10 +28,10 @@ const selectStyles = {
   },
   '.MuiSelect-select': {
     padding: '8px',
-    paddingRight: '24px !important',
+    paddingInlineEnd: '24px !important',
   },
   svg: {
-    right: 0,
+    insetInlineEnd: 0,
   },
 } as const;
 
@@ -40,7 +40,7 @@ const menuProps = {
     height: '20rem',
     width: '30rem',
     top: '0.5rem',
-    left: '-1.75rem',
+    insetInlineStart: '-1.75rem',
   },
   transformOrigin: {
     vertical: 'top',
@@ -83,32 +83,46 @@ const PhoneInput = (props: PhoneInputProps) => {
       onChange={handlePhoneValueChange}
       type="tel"
       inputRef={inputRef}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start" style={{ marginRight: '2px', marginLeft: '-8px' }}>
-            <Select
-              MenuProps={menuProps}
-              sx={selectStyles}
-              value={country.iso2}
-              onChange={(e) => setCountry(e.target.value as CountryIso2)}
-              renderValue={(value) => <FlagImage iso2={value} style={{ display: 'flex' }} />}
-            >
-              {defaultCountries.map((c) => {
-                const country = parseCountry(c);
-
-                return (
-                  <MenuItem key={country.iso2} value={country.iso2}>
-                    <FlagImage iso2={country.iso2} style={{ marginRight: '8px' }} />
-                    <Typography marginRight="8px">{country.name}</Typography>
-                    <Typography color="gray">+{country.dialCode}</Typography>
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </InputAdornment>
-        ),
-      }}
       {...restProps}
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment
+              position="start"
+              style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}
+            >
+              <Select
+                MenuProps={menuProps}
+                sx={selectStyles}
+                value={country.iso2}
+                onChange={(e) => setCountry(e.target.value as CountryIso2)}
+                renderValue={(value) => <FlagImage iso2={value} style={{ display: 'flex' }} />}
+              >
+                {defaultCountries.map((c) => {
+                  const country = parseCountry(c);
+
+                  return (
+                    <MenuItem key={country.iso2} value={country.iso2}>
+                      <FlagImage iso2={country.iso2} style={{ marginInlineEnd: '8px' }} />
+                      <Typography
+                        sx={{
+                          marginInlineEnd: '8px',
+                        }}
+                      >
+                        {country.name}
+                      </Typography>
+                      <Typography color="gray">+{country.dialCode}</Typography>
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </InputAdornment>
+          ),
+        },
+        // Phone numbers (incl. the dial-code prefix) are always written left-to-right,
+        // even on RTL pages — keep the number field LTR regardless of locale.
+        htmlInput: { dir: 'ltr' },
+      }}
     />
   );
 };

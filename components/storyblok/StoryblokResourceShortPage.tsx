@@ -6,6 +6,7 @@ import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -18,6 +19,7 @@ import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { ContentUnavailable } from '../common/ContentUnavailable';
+import LoadingContainer from '../common/LoadingContainer';
 import { ResourceShortHeader } from '../resources/ResourceShortsHeader';
 import DynamicComponent from './DynamicComponent';
 import { StoryblokPageSectionProps } from './StoryblokPageSection';
@@ -74,6 +76,7 @@ const StoryblokResourceShortPage = ({
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
+  const isUserLoading = useIsUserLoading();
 
   const getContentPartners = useMemo(() => {
     return userHasAccessToPartnerContent(
@@ -134,7 +137,11 @@ const StoryblokResourceShortPage = ({
     return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
   }, [related_content]);
 
-  if (!userAccess) return <ContentUnavailable />;
+  if (!userAccess) {
+    // Wait for the signed-in user's partner accesses to load before deciding there is no access.
+    if (isUserLoading) return <LoadingContainer />;
+    return <ContentUnavailable />;
+  }
 
   return (
     <Box

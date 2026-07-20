@@ -19,7 +19,7 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 120, sm: 180, md: 200, lg: 220 },
   height: { xs: 120, sm: 180, md: 200, lg: 220 },
-  marginRight: { sm: 2, md: 3, lg: 2 },
+  marginInlineEnd: { sm: 2, md: 3, lg: 2 },
 } as const;
 
 const logoContainerStyle = {

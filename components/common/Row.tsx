@@ -28,10 +28,10 @@ const Row = (props: RowProps) => {
       horizontalAlignment === 'center'
         ? 'center'
         : horizontalAlignment === 'right'
-          ? 'right'
+          ? 'end'
           : horizontalAlignment === 'mobile-left-desktop-center'
-            ? { xs: 'left', md: 'center' }
-            : 'left',
+            ? { xs: 'start', md: 'center' }
+            : 'start',
     ...(horizontalAlignment && {
       justifyContent:
         horizontalAlignment === 'center'

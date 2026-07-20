@@ -182,8 +182,13 @@ const SetupMFA = () => {
     return (
       <Box>
         <Typography variant="h3">{t('setupMFA.reauthTitle')}</Typography>
-        <Typography mb={2}>{t('setupMFA.reauthDescription')}</Typography>
-
+        <Typography
+          sx={{
+            mb: 2,
+          }}
+        >
+          {t('setupMFA.reauthDescription')}
+        </Typography>
         <SanitizedTextField
           id="password"
           type="password"
@@ -195,13 +200,11 @@ const SetupMFA = () => {
           margin="normal"
           required
         />
-
         {error && (
           <Alert severity="error" sx={{ mt: 2 }}>
             {error}
           </Alert>
         )}
-
         <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
           <Button variant="outlined" onClick={handleReauthDismiss} disabled={isReauthenticating}>
             {t('setupMFA.cancelReauth')}

@@ -13,7 +13,7 @@ const imageContainerStyle = {
   position: 'relative',
   width: { xs: 180, md: 260 },
   height: { xs: 180, md: 260 },
-  marginLeft: { xs: -3, md: -6 },
+  marginInlineStart: { xs: -3, md: -6 },
   marginBottom: 2,
 } as const;
 

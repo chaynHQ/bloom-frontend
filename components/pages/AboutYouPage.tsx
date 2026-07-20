@@ -29,7 +29,7 @@ const contentContainerStyle = {
 
 const formContainerStyle = {
   marginTop: 5,
-  textAlign: 'left',
+  textAlign: 'start',
 } as const;
 
 const getForm = (formLabel: string) => {

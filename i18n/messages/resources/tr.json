@@ -1,0 +1,57 @@
+{
+  "Resources": {
+    "backToConversations": "Sohbetlere dön",
+    "backToShorts": "Kısalara dön",
+    "backToVideos": "Videolara dön",
+    "backToSomatics": "Somatiklere dön",
+    "nextVideoButtonLabel": "Sonraki video",
+    "nextConversationButtonLabel": "Sonraki sohbet",
+    "nextSessionButtonLabel": "Sonraki seans",
+    "conversations": "Sohbetler",
+    "shorts": "Kısalar",
+    "videos": "Videolar",
+    "completed": "Tamamlandı",
+    "sessionDetail": "Bu klip şu Seanstan: {sessionName}, şu Kursumuzdan: {courseName}",
+    "sessionButtonLabel": "Seansın tamamını izle",
+    "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
+    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
+    "relatedContent": {
+      "title": "İlgili içerik",
+      "resource_short_video": "İzle",
+      "resource_single_video": "İzle",
+      "resource_conversation": "Dinle",
+      "course": "Kurs",
+      "session": "Seans",
+      "session_iba": "Seans",
+      "grounding": "Topraklanma",
+      "activities": "Etkinlik",
+      "minuteLabel": "dakika"
+    },
+    "resourceFeedback": {
+      "title": "Bu seans nasıldı?",
+      "subtitle": "Bu öğrenmeyi nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı olur.",
+      "feedbackTags": {
+        "relatable": "Bana yakın",
+        "useful": "Faydalı",
+        "inspiring": "İlham verici",
+        "too long": "Çok uzun",
+        "too complicated": "Çok karmaşık",
+        "not useful": "Faydalı değil"
+      },
+      "textboxDefaultText": "Bir yorum ekle...",
+      "sendButtonText": "Gönder",
+      "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+      "errors": {
+        "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
+      }
+    },
+    "references": {
+      "title": "Kaynaklar",
+      "keyReferences": "Bu seanstan önemli kaynaklar (tam liste metnin sonundadır):",
+      "books": "Kitaplar",
+      "articles": "Makaleler",
+      "video_practices": "Video uygulamaları",
+      "audios": "Podcast'ler"
+    }
+  }
+}

@@ -18,12 +18,12 @@ const PageSection = (props: PageSectionProps) => {
   const containerStyle = {
     ...columnStyle,
     ...(width === 'wide' && {
-      paddingLeft: { lg: 'calc((100vw - 1200px) / 2) !important' },
-      paddingRight: { lg: 'calc((100vw - 1200px) / 2) !important' },
+      paddingInlineStart: { lg: 'calc((100vw - 1200px) / 2) !important' },
+      paddingInlineEnd: { lg: 'calc((100vw - 1200px) / 2) !important' },
     }),
     ...(width === 'full' && {
-      paddingLeft: { xs: 0, ms: 0, md: 0, lg: 0 },
-      paddingRight: { xs: 0, ms: 0, md: 0, lg: 0 },
+      paddingInlineStart: { xs: 0, ms: 0, md: 0, lg: 0 },
+      paddingInlineEnd: { xs: 0, ms: 0, md: 0, lg: 0 },
       paddingTop: { xs: 0, ms: 0, md: 0, lg: 0 },
       paddingBottom: { xs: 0, ms: 0, md: 0, lg: 0 },
     }),
@@ -37,7 +37,7 @@ const PageSection = (props: PageSectionProps) => {
       alignItems:
         alignment === 'center' ? 'center' : alignment === 'right' ? 'flex-end' : 'flex-start',
     }),
-    textAlign: alignment === 'center' ? 'center' : alignment === 'right' ? 'right' : 'left',
+    textAlign: alignment === 'center' ? 'center' : alignment === 'right' ? 'end' : 'start',
     ...(alignment === 'center' && {
       ' p': { marginX: 'auto' },
     }),

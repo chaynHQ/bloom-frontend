@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceShortVideo } from '@/components/resources/ResourceShortVideo';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -84,10 +85,14 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
       >
         {t('backToShorts')}
       </Button>
-
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>
-          <Typography variant="h1" maxWidth={600}>
+          <Typography
+            variant="h1"
+            sx={{
+              maxWidth: 600,
+            }}
+          >
             {name}
           </Typography>
           <ResourceShortVideo
@@ -106,7 +111,12 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             {/* Description field is not currently displayed */}
             {/* {render(description, RichTextOptions)} */}
 
-            <Typography component="h2" mb={2}>
+            <Typography
+              component="h2"
+              sx={{
+                mb: 2,
+              }}
+            >
               {t('sessionDetail', {
                 sessionNumber: relatedSession.position / 10 - 1,
                 sessionName: relatedSession.content.name,
@@ -119,7 +129,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               onClick={redirectToSession}
               variant="contained"
               color="secondary"
-              sx={{ mr: 'auto' }}
+              sx={{ marginInlineEnd: 'auto' }}
             >
               {t('sessionButtonLabel')}
             </Button>
@@ -127,7 +137,12 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
         )}
         {relatedCourse && !relatedSession && (
           <Box sx={headerRightStyle}>
-            <Typography component="h2" mb={2}>
+            <Typography
+              component="h2"
+              sx={{
+                mb: 2,
+              }}
+            >
               {t('sessionDetail', {
                 sessionNumber: 0,
                 sessionName: relatedCourse.content.name,
@@ -140,7 +155,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               onClick={redirectToSession}
               variant="contained"
               color="secondary"
-              sx={{ mr: 'auto' }}
+              sx={{ marginInlineEnd: 'auto' }}
             >
               {t('sessionButtonLabel')}
             </Button>
@@ -152,7 +167,11 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
             color="secondary"
             sx={{ width: 'fit-content' }}
             href={nextResourceHref}
-            endIcon={<ArrowForward />}
+            endIcon={
+              <DirectionalIcon>
+                <ArrowForward />
+              </DirectionalIcon>
+            }
             component={i18nLink}
           >
             {t(getNextResourceButtonLabel(nextResourceHref))}

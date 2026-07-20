@@ -26,7 +26,7 @@ const CookieBanner = () => {
     maxWidth: isMobileScreen ? 'none' : theme.spacing(54),
     maxHeight: theme.spacing(35),
     position: 'fixed',
-    right: isMobileScreen ? 0 : theme.spacing(2),
+    insetInlineEnd: isMobileScreen ? 0 : theme.spacing(2),
     bottom: isMobileScreen
       ? mobileBottomNavHeight
       : isTabletScreen
@@ -37,7 +37,7 @@ const CookieBanner = () => {
       4,
     )} 0px`,
     lineHeight: 1.5,
-    marginRight: isMobileScreen ? 0 : theme.spacing(2),
+    marginInlineEnd: isMobileScreen ? 0 : theme.spacing(2),
     padding: `${theme.spacing(3)} ${theme.spacing(2)} `,
     zIndex: 5,
   };
@@ -51,7 +51,7 @@ const CookieBanner = () => {
 
   const acceptButtonStyle = {
     backgroundColor: 'secondary.main',
-    marginLeft: '0.5rem',
+    marginInlineStart: '0.5rem',
     float: 'inline-end',
     ':hover': {
       backgroundColor: 'secondary.dark',
@@ -128,7 +128,12 @@ const CookieBanner = () => {
       flipButtons={true}
     >
       <Box sx={rowContainerStyle}>
-        <Box width={50} height={50}>
+        <Box
+          sx={{
+            width: 50,
+            height: 50,
+          }}
+        >
           <Image
             alt={tS('alt.cookieCat')}
             src={IllustrationCookieCat}
@@ -139,8 +144,16 @@ const CookieBanner = () => {
             }}
           />
         </Box>
-        <Box flex={1}>
-          <Typography fontSize={'0.875rem !important'}>
+        <Box
+          sx={{
+            flex: 1,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: '0.875rem !important',
+            }}
+          >
             {tS('cookieConsent.cookieConsentExplainer')}
             <Link
               target="_blank"

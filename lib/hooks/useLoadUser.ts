@@ -31,7 +31,7 @@ import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useStateUtils, useTypedSelector } from './store';
 
 export default function useLoadUser() {
-  const dispatch: any = useAppDispatch();
+  const dispatch = useAppDispatch();
   const isMaintenanceMode = getIsMaintenanceMode();
   const userToken = useTypedSelector((state) => state.user.token);
   const userId = useTypedSelector((state) => state.user.id);

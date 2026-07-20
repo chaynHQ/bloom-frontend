@@ -79,10 +79,21 @@ const WhatsappUnsubscribeForm = () => {
       <form autoComplete="off" onSubmit={unsubscribeHandler}>
         <Box sx={rowStyle}>
           <Box>
-            <Typography variant="body2" color="text.secondary" mb={0.5}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.secondary',
+                mb: 0.5,
+              }}
+            >
               Phone number
             </Typography>
-            <Typography variant="body1" color={'text.secondary'}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'text.secondary',
+              }}
+            >
               {phoneNumber}
             </Typography>
           </Box>
@@ -99,7 +110,12 @@ const WhatsappUnsubscribeForm = () => {
         </Box>
       </form>
       {formError && (
-        <Typography color="error.main" my={2}>
+        <Typography
+          sx={{
+            color: 'error.main',
+            my: 2,
+          }}
+        >
           {formError}
         </Typography>
       )}

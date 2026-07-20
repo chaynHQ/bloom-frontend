@@ -44,7 +44,9 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
         vertical_alignment,
         gap,
       })}
-      width="100%"
+      sx={{
+        width: '100%',
+      }}
     >
       <Row
         numberOfColumns={columns.length}

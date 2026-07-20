@@ -47,6 +47,8 @@ export async function generateMetadataBase(locale: string) {
         'pt-PT': '/pt',
         'fr-FR': '/fr',
         'hi-IN': '/hi',
+        ar: '/ar',
+        'tr-TR': '/tr',
       },
     },
     title: generateMetadataTitle(t('title')),

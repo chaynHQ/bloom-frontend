@@ -1,0 +1,71 @@
+{
+  "Courses": {
+    "title": "Kurslarımız",
+    "introduction": "Bloom kursları, travmayla başa çıkmamıza yardımcı olmak için bize özel bilgiler, araçlar ve destekleyici sözler sunar. Yaşadıklarımızı ve bunların bizi nasıl etkilemiş olabileceğini öğrenmemiz, üzerine düşünmemiz ve işlememiz için bizi teşvik ederler — hepsi güvenli ve güçlendirici bir alanda.",
+    "session": "Seans",
+    "course": "Kurs",
+    "courses": "Kurslar",
+    "expand": "Genişlet",
+    "expandSummary": "Şunun özetini genişlet:",
+    "navigateToSession": "Seansa git -",
+    "navigateToCourse": "Kursa git -",
+    "noCourses": "Şu anda gösterilecek kurs yok. Bu doğru görünmüyorsa, daha sonra tekrar dene ya da Bloom ekibiyle iletişime geç.",
+    "courseDetail": {
+      "introductionTitle": "Kurs tanıtımı",
+      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku"
+    },
+    "sessionDetail": {
+      "videoTitle": "Video",
+      "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini</transcriptLink> oku.",
+      "activityTitle": "Etkinlik",
+      "bonusTitle": "Bonus içerik",
+      "chat": {
+        "title": "Bizimle düşün",
+        "description": "Bu seansa dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
+        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
+        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "detailIntro": "Unutma:",
+        "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
+        "detailTimezone": "Pek çok farklı saat diliminde çalışıyoruz, bu yüzden bizden 6 saat içinde yanıt almalısın ve bu süre 24 saati geçmez.",
+        "detailLanguage": "Her zaman İngilizce, Fransızca, Hintçe, Portekizce veya İspanyolca olarak hizmet veriyoruz, ancak ekibimizin bazı üyeleri Arapça ve Bengalce de konuşuyor; seni onlarla görüştürmekten memnuniyet duyarız.",
+        "detailLegal": "Devam eden bir dava sürecindeysen, bizimle paylaştıklarına dikkat et, çünkü bu bazen davanı etkileyebilir.",
+        "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
+        "startButton": "Bize mesaj gönder"
+      },
+      "sessionComplete": "Seans tamamlandı"
+    },
+    "sessionFeedback": {
+      "title": "Bu seans nasıldı?",
+      "subtitle": "Bu seansı nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kurslarımızı geliştirmemize yardımcı olur.",
+      "feedbackTags": {
+        "relatable": "Bana yakın",
+        "useful": "Faydalı",
+        "inspiring": "İlham verici",
+        "too long": "Çok uzun",
+        "too complicated": "Çok karmaşık",
+        "not useful": "Faydalı değil"
+      },
+      "textboxDefaultText": "Bir yorum ekle...",
+      "sendButtonText": "Gönder",
+      "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+      "errors": {
+        "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
+      }
+    },
+    "accessGuard": {
+      "title": "Kurs içeriği mevcut değil",
+      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına</contactLink> geri dön."
+    },
+    "errors": {
+      "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
+    },
+    "backToCourse": "Kursa dön",
+    "backToCourses": "Kurslara dön",
+    "conversationsHeading": "Sohbetler",
+    "conversationsDescription": "Güçlü hikâyeler aracılığıyla, mitlere meydan okurken, düşünmeye teşvik ederken ve zararı ve iyileşmeyi anlamanın yeni yollarını açarken bizi dinle.",
+    "shortsHeading": "Kısalar",
+    "shortsDescription": "Vaktin mi kısıtlı ya da nereden başlayacağından emin değil misin? Kısalar, Bloom'un öğrenme seanslarına 2–3 dakikalık bakışlardır; iyileşme yolculuğumuz için içgörü, güven ve araçlar sunarlar.",
+    "somaticsHeading": "Somatik: Beden temelli iyileşme",
+    "somaticsDescription": "Nazik, beden temelli yaklaşımların şiddetten, stresten ve korkudan iyileşmeyi nasıl destekleyebileceğini keşfet. Bu kaynak koleksiyonu; bedenlerimizle yeniden bağ kurmamıza, dayanıklılık geliştirmemize ve güvenliğin ve rahatlığın nasıl hissettirebileceğini keşfetmemize yardımcı olacak açık, pratik bir rehberlik sunar."
+  }
+}
