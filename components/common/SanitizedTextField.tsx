@@ -67,14 +67,16 @@ const SanitizedTextField = ({
     [allowedTags, allowedAttributes],
   );
 
+  const isPassword = restProps.type === 'password' || id === 'password';
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const inputValue =
       e.target.value.length > fieldMaxLength
         ? e.target.value.substring(0, fieldMaxLength)
         : e.target.value;
 
-    const sanitized = DOMPurify.sanitize(inputValue, purifyConfig);
-    onChange?.(sanitized);
+    const processed = isPassword ? inputValue : DOMPurify.sanitize(inputValue, purifyConfig);
+    onChange?.(processed);
   };
 
   const effectiveValue = value ?? defaultValue ?? '';
