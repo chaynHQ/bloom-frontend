@@ -128,11 +128,21 @@ export default function useLoadUser() {
       dispatch(setLoadError(errorMessage));
       dispatch(setUserLoading(false));
 
-      rollbar.error('useLoadUser error: failed to get user resource -', userResourceError);
+      if (userResourceError) {
+        rollbar.error(
+          'useLoadUser error: failed to get user resource (request failed) -',
+          userResourceError,
+        );
+      } else {
+        rollbar.error(
+          'useLoadUser error: failed to get user resource (success response missing user id)',
+          { hasResource: !!userResource, hasUser: !!userResource?.user },
+        );
+      }
       logEvent(GET_USER_ERROR, { message: errorMessage });
       logEvent(LOGOUT_FORCED);
     }
-  }, [userResourceError, isInvalidUserResourceResponse, dispatch, rollbar]);
+  }, [userResourceError, isInvalidUserResourceResponse, userResource, dispatch, rollbar]);
 
   return {
     userResourceIsLoading,
