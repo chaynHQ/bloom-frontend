@@ -34,10 +34,22 @@ export default function Page() {
           }}
         />
       </Box>
-      <Typography variant="h2" component="h2" mb={2}>
+      <Typography
+        variant="h2"
+        component="h2"
+        sx={{
+          mb: 2,
+        }}
+      >
         {t('maintenanceBanner.title')}
       </Typography>
-      <Typography maxWidth={650} mb={2} mx={'auto'}>
+      <Typography
+        sx={{
+          maxWidth: 650,
+          mb: 2,
+          mx: 'auto',
+        }}
+      >
         {t('maintenanceBanner.description', {
           hours: process.env.NEXT_PUBLIC_MAINTENANCE_HOURS as string,
         })}

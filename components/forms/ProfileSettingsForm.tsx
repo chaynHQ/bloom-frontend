@@ -112,7 +112,15 @@ const ProfileSettingsForm = () => {
             setIsSuccess(false);
           }}
         />
-        {error && <Typography color="error.main">{error}</Typography>}
+        {error && (
+          <Typography
+            sx={{
+              color: 'error.main',
+            }}
+          >
+            {error}
+          </Typography>
+        )}
         <LoadingButton
           id="profile-settings-submit"
           sx={{ mt: 1 }}

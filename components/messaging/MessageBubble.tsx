@@ -33,7 +33,7 @@ const userBubbleStyle = {
   ...bubbleBaseStyle,
   alignSelf: 'flex-end',
   backgroundColor: 'secondary.main',
-  borderBottomRightRadius: '4px',
+  borderEndEndRadius: '4px',
 } as const;
 
 // secondary.light (#FFEAE1) with a secondary.main border — visually paired with user bubbles
@@ -43,7 +43,7 @@ const agentBubbleStyle = {
   backgroundColor: 'secondary.light',
   border: '1px solid',
   borderColor: 'secondary.main',
-  borderBottomLeftRadius: '4px',
+  borderEndStartRadius: '4px',
 } as const;
 
 const metaRowStyle = {
@@ -265,7 +265,12 @@ export const MessageBubble = ({ message, failedLabel, sendingLabel }: Props) => 
         </Typography>
       )}
 
-      {showText && <Typography variant="body2">{message.text}</Typography>}
+      {/* dir="auto" lets the browser infer direction per message so mixed Arabic/Latin text reads correctly */}
+      {showText && (
+        <Typography variant="body2" dir="auto">
+          {message.text}
+        </Typography>
+      )}
 
       {attachments.length > 0 && (
         <Box sx={{ ...attachmentsStackStyle, mt: showText ? 0.75 : 0 }}>

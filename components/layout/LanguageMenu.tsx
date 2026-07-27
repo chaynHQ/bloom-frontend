@@ -23,6 +23,8 @@ const languageMap: { [key: string]: string } = {
   es: 'Español',
   de: 'Deutsch',
   fr: 'Français',
+  ar: 'العربية',
+  tr: 'Türkçe',
 };
 
 const buttonStyle = {
@@ -99,8 +101,10 @@ export default function LanguageMenu() {
         open={open}
         onClose={handleClose}
         elevation={1}
-        MenuListProps={{
-          id: 'language-menu',
+        slotProps={{
+          list: {
+            id: 'language-menu',
+          },
         }}
       >
         {routing.locales

@@ -1,5 +1,6 @@
 'use client';
 
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { useRouter } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -41,8 +42,8 @@ const rightHeaderStyle = {
   position: 'relative',
   width: { xs: 150, md: 210 },
   height: { xs: 150, md: 210 },
-  marginLeft: { xs: 'auto', md: 0 },
-  marginRight: { xs: '1rem', md: '8%' },
+  marginInlineStart: { xs: 'auto', md: 0 },
+  marginInlineEnd: { xs: '1rem', md: '8%' },
   marginTop: 0,
 } as const;
 
@@ -88,7 +89,15 @@ const Header = (props: HeaderProps) => {
   const getIntroduction = () => {
     if (!introduction) return undefined;
     if (typeof introduction === 'string') {
-      return <Typography fontSize="1rem !important">{introduction}</Typography>;
+      return (
+        <Typography
+          sx={{
+            fontSize: '1rem !important',
+          }}
+        >
+          {introduction}
+        </Typography>
+      );
     } else if (typeof introduction === 'object' && 'content' in introduction) {
       return render(introduction, RichTextOptions);
     } else {
@@ -106,7 +115,9 @@ const Header = (props: HeaderProps) => {
           aria-label={tS('navigateBack')}
           size="small"
         >
-          <KeyboardArrowLeftIcon sx={backIconStyle} />
+          <DirectionalIcon>
+            <KeyboardArrowLeftIcon sx={backIconStyle} />
+          </DirectionalIcon>
         </IconButton>
       )}
       {children && <>{children}</>}

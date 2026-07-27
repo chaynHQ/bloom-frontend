@@ -92,7 +92,12 @@ const UpdatePartnerActiveForm = () => {
   if (isSuccess) {
     return (
       <Box>
-        <Typography fontWeight={500} mb={1}>
+        <Typography
+          sx={{
+            fontWeight: 500,
+            mb: 1,
+          }}
+        >
           {t.rich('successDescription', {
             status: isActive ? 'inactive' : 'active',
             partner: selectedPartnerName || 'partner',
@@ -130,9 +135,15 @@ const UpdatePartnerActiveForm = () => {
           </MenuItem>
         ))}
       </SanitizedTextField>
-
-      {formError && <Typography color="error.main">{formError}</Typography>}
-
+      {formError && (
+        <Typography
+          sx={{
+            color: 'error.main',
+          }}
+        >
+          {formError}
+        </Typography>
+      )}
       {selectedPartner && (
         <Typography>
           {t.rich(isActive ? 'activeDescription' : 'inactiveDescription', {

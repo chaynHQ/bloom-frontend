@@ -15,14 +15,14 @@ const headingStyle = {
 
 const listStyle = {
   listStyleType: 'disc',
-  pl: 3,
+  paddingInlineStart: 3,
   pt: 0,
   pb: 0,
 } as const;
 
 const listItemStyle = {
   display: 'list-item',
-  pl: 1,
+  paddingInlineStart: 1,
   pt: 0,
   mb: 0,
 } as const;
@@ -39,10 +39,20 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
   const categoryString = tS(`${category}s`);
 
   return (
-    <Box mb={2}>
+    <Box
+      sx={{
+        mb: 2,
+      }}
+    >
       <Box sx={headingStyle}>
         <ReferenceIcon category={category} />
-        <Typography variant="h4" component="h4" mb={0}>
+        <Typography
+          variant="h4"
+          component="h4"
+          sx={{
+            mb: 0,
+          }}
+        >
           {categoryString}
         </Typography>
       </Box>
@@ -52,8 +62,10 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
             <Typography
               key={`reference_${reference.category}_${index}`}
               variant="body2"
-              mb={0.75}
-              fontStyle="italic"
+              sx={{
+                mb: 0.75,
+                fontStyle: 'italic',
+              }}
             >
               {reference.url ? (
                 <Link href={reference.url} target="_blank" rel="noopener noreferrer">
@@ -66,8 +78,10 @@ const ReferencesCategory = (props: ReferencesCategoryProps) => {
                 variant="body2"
                 color="textSecondary"
                 component="span"
-                fontStyle="normal"
-                ml={0.5}
+                sx={{
+                  fontStyle: 'normal',
+                  marginInlineStart: 0.5,
+                }}
               >
                 {reference.attribution}
               </Typography>

@@ -61,9 +61,12 @@ describe('hasAccessToPage', () => {
           hasAccessToPage(true, false, ['Public'], [partnerAccess], emptyPartnerAdmin),
         ).toEqual(false);
       });
-      it('a public user with partner referral should not access', () => {
+      it('a logged-in public user with a lingering partner referral should still access public content', () => {
+        // A referral partner is only a pre-login hint; once logged in it must not strip access to
+        // 'Public' content. Regression test for course overview wrongly showing "no access" after
+        // entering via a partner UTM link (which leaves a referralPartner cookie set).
         expect(hasAccessToPage(true, false, ['Public'], [], emptyPartnerAdmin, 'Bumble')).toEqual(
-          false,
+          true,
         );
       });
     });
@@ -98,6 +101,53 @@ describe('hasAccessToPage', () => {
           hasAccessToPage(true, false, ['Bumble', 'Public'], [partnerAccess], emptyPartnerAdmin),
         ).toEqual(true);
       });
+    });
+  });
+
+  // A referral partner is a pre-login marketing hint set from UTM link data / welcome paths.
+  // It must only ever *add* access (letting a logged-out visitor preview their partner's content)
+  // and must never *remove* access an equivalent user would otherwise have. These cover the four
+  // user states for a course included for everyone (all partners + 'Public'), which a lingering
+  // referral cookie previously broke for logged-in public users on a partner deep-link.
+  describe('referral partner only adds access, never removes it', () => {
+    const allPartnersIncludingPublic = ['Public', 'Bumble', 'Badoo'];
+
+    it('1. logged out with no referral can preview public content', () => {
+      expect(
+        hasAccessToPage(false, true, allPartnersIncludingPublic, [], emptyPartnerAdmin),
+      ).toEqual(true);
+    });
+    it('2. logged out with a referral partner can preview that content', () => {
+      expect(
+        hasAccessToPage(false, true, allPartnersIncludingPublic, [], emptyPartnerAdmin, 'badoo'),
+      ).toEqual(true);
+    });
+    it('3. logged in with no partner access still gets public content despite a referral cookie', () => {
+      expect(
+        hasAccessToPage(true, true, allPartnersIncludingPublic, [], emptyPartnerAdmin, 'badoo'),
+      ).toEqual(true);
+    });
+    it('4. logged in with a partner access gets access despite a referral cookie', () => {
+      const badooAccess = {
+        ...partnerAccess,
+        partner: { name: 'Badoo' } as PartnerContent,
+      } as PartnerAccess;
+      expect(
+        hasAccessToPage(
+          true,
+          true,
+          allPartnersIncludingPublic,
+          [badooAccess],
+          emptyPartnerAdmin,
+          'badoo',
+        ),
+      ).toEqual(true);
+    });
+    it('a referral cookie does not grant a logged-in user access to an unrelated partner course', () => {
+      // referral=badoo must not let a public logged-in user into a Bumble-only course.
+      expect(hasAccessToPage(true, true, ['Bumble'], [], emptyPartnerAdmin, 'badoo')).toEqual(
+        false,
+      );
     });
   });
 });

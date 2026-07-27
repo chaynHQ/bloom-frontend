@@ -72,7 +72,11 @@ export default function TherapyBookings({ partnerAccess }: TherapyBookingsProps)
       <Typography variant="h2" component="h2" gutterBottom>
         {t('header')}
       </Typography>
-      <Typography mb={'2rem !important'}>
+      <Typography
+        sx={{
+          mb: '2rem !important',
+        }}
+      >
         {partnerAccess.therapySessionsRemaining > 0
           ? t.rich('bookingSummary', {
               remainingTotal: () => (
@@ -91,19 +95,16 @@ export default function TherapyBookings({ partnerAccess }: TherapyBookingsProps)
           <CircularProgress />
         </Box>
       )}
-
       {isError && !isLoading && (
         <Alert severity="error" sx={{ mt: 2 }}>
           {t('loadError')}
         </Alert>
       )}
-
       {!isLoading && !isError && sortedBookings.length === 0 && (
         <Paper elevation={0} sx={noBookingsPaperStyle}>
           <Typography>{t('noBookings')}</Typography>
         </Paper>
       )}
-
       {!isLoading && !isError && sortedBookings.length > 0 && (
         <Stack spacing={0}>
           {sortedBookings.map((session) => (

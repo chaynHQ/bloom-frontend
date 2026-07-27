@@ -45,7 +45,7 @@ const Quote = (props: QuoteProps) => {
         height: '28px',
         width: '28px',
         top: { xs: '-60px', md: '-40px' },
-        left: { xs: 0, md: '-44px' },
+        insetInlineStart: { xs: 0, md: '-44px' },
       },
       '&:after': {
         content: 'none',

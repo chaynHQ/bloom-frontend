@@ -46,19 +46,30 @@ export const DesktopPwaBanner = () => {
     zIndex: 1000,
     p: 2.5,
     width: 250,
-    right: { md: 16, lg: 80 },
+    insetInlineEnd: { md: 16, lg: 80 },
     bottom: { md: 16, lg: 40 },
     backgroundColor: 'common.white',
   } as const;
 
   return (
     <Paper elevation={1} sx={bannerStyle}>
-      <Typography variant="body2" fontWeight={500}>
+      <Typography
+        variant="body2"
+        sx={{
+          fontWeight: 500,
+        }}
+      >
         {t(bannerState === 'Generic' ? 'mobileDescription' : 'iosDescription')}
       </Typography>
-
       {bannerState === 'Generic' ? (
-        <Stack direction="row" spacing={1} mt={1.5} ml="auto">
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{
+            mt: 1.5,
+            ml: 'auto',
+          }}
+        >
           <Button
             onClick={declineInstallation}
             variant="outlined"
@@ -79,12 +90,29 @@ export const DesktopPwaBanner = () => {
           </Button>
         </Stack>
       ) : (
-        <Stack direction="row" gap={2}>
-          <Stack alignItems="center" direction="row" gap={1}>
+        <Stack
+          direction="row"
+          sx={{
+            gap: 2,
+          }}
+        >
+          <Stack
+            direction="row"
+            sx={{
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
             <Typography variant="body1">{t('iosStep1')}</Typography>
             <IosShareIcon />
           </Stack>
-          <Stack alignItems="center" direction="row" gap={1}>
+          <Stack
+            direction="row"
+            sx={{
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
             <Typography variant="body1">{t('iosStep2')}</Typography>
             <AddBoxOutlinedIcon />
           </Stack>

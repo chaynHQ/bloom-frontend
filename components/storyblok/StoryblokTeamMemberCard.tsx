@@ -16,7 +16,7 @@ import { useMemo, useState } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const cardStyle = {
-  textAlign: 'left',
+  textAlign: 'start',
   alignSelf: 'flex-start',
   width: '100%',
   maxWidth: 550,
@@ -33,7 +33,7 @@ const cardHeaderStyle = {
   ...columnStyle,
   flex: 1,
   padding: { xs: 2, md: 2.5 },
-  paddingRight: { xs: 1, md: 2 },
+  paddingInlineEnd: { xs: 1, md: 2 },
   paddingBottom: { xs: 0.5, md: 0.75 },
   overflow: 'hidden',
   ' p': {
@@ -80,7 +80,7 @@ const iconStyles = {
 } as const;
 
 const expandButtonContainerStyles = {
-  textAlign: 'right',
+  textAlign: 'end',
   mt: 'auto',
 } as const;
 
@@ -176,16 +176,33 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             />
           </Box>
           <Box sx={cardHeaderStyle}>
-            <Typography component="h3" variant="h3" mb={0.5} ml={0}>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{
+                mb: 0.5,
+                marginInlineStart: 0,
+              }}
+            >
               {name}
             </Typography>
-            <Typography fontStyle={'italic'} ml={0}>
+            <Typography
+              sx={{
+                fontStyle: 'italic',
+                marginInlineStart: 0,
+              }}
+            >
               {role}
             </Typography>
             {!hide_languages && (
               <Box sx={iconRowStyles}>
                 <LanguageIcon data-testid="LanguageIcon" color="error" sx={iconStyles} />
-                <Typography variant="body2" ml={0}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    marginInlineStart: 0,
+                  }}
+                >
                   {languages}
                 </Typography>
               </Box>
@@ -222,8 +239,10 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
             <Link
               component={i18nLink}
               href={`/meet-the-team${team_page_section ? `?section=${team_page_section}` : ''}`}
-              mt={2}
-              display="block"
+              sx={{
+                mt: 2,
+                display: 'block',
+              }}
             >
               {t.rich('fullBioButton', { name: name })}
             </Link>

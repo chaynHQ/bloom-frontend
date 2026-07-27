@@ -19,7 +19,12 @@ export const EmailRemindersSettingsBanner = () => {
 
   return (
     <Container sx={containerStyle}>
-      <Typography variant="h3" mb={1.5}>
+      <Typography
+        variant="h3"
+        sx={{
+          mb: 1.5,
+        }}
+      >
         {t('introduction')}
       </Typography>
       <Typography>{t('description')}</Typography>

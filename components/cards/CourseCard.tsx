@@ -58,7 +58,7 @@ const collapseContentStyle = {
 } as const;
 
 const cardActionsStyle = {
-  paddingLeft: 4,
+  paddingInlineStart: 4,
   paddingTop: 1,
   gap: 1,
   justifyContent: 'flex-end',
@@ -108,7 +108,14 @@ const CourseCard = (props: CourseCardProps) => {
           }}
         />
       </Box>
-      <Typography component="h3" variant="h3" flex={1} mb={0}>
+      <Typography
+        component="h3"
+        variant="h3"
+        sx={{
+          flex: 1,
+          mb: 0,
+        }}
+      >
         {course.content.name}
       </Typography>
     </CardContent>
@@ -135,7 +142,7 @@ const CourseCard = (props: CourseCardProps) => {
           <ProgressStatus status={courseProgress} />
         )}
         <IconButton
-          sx={{ marginLeft: 'auto', transform: expanded ? 'rotate(180deg)' : 'none' }}
+          sx={{ marginInlineStart: 'auto', transform: expanded ? 'rotate(180deg)' : 'none' }}
           aria-label={`${t('expandSummary')} ${course.content.name}`}
           onClick={handleExpandClick}
           size="small"
@@ -145,7 +152,13 @@ const CourseCard = (props: CourseCardProps) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={collapseContentStyle}>
-          <Typography paragraph>{course.content.description}</Typography>
+          <Typography
+            sx={{
+              marginBottom: '16px',
+            }}
+          >
+            {course.content.description}
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>

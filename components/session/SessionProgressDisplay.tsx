@@ -42,7 +42,11 @@ export const SessionProgressDisplay = (props: SessionProgressDisplayProps) => {
   return (
     <>
       {sessionProgress !== PROGRESS_STATUS.NOT_STARTED && (
-        <Box mt={0.5}>
+        <Box
+          sx={{
+            mt: 0.5,
+          }}
+        >
           {sessionProgress === PROGRESS_STATUS.STARTED && <DonutLargeIcon color="error" />}
           {sessionProgress === PROGRESS_STATUS.COMPLETED && <CheckCircleIcon color="error" />}
         </Box>
