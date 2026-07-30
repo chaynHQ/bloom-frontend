@@ -63,6 +63,8 @@ const connectSrcUrls = [
   'https://*.googletagmanager.com',
   'https://*.googleapis.com',
   'https://*.google-analytics.com',
+  'https://www.google.com/g/collect',
+  'https://www.google.com/ccm/collect',
   'https://identitytoolkit.googleapis.com',
   'https://*.storyblok.com',
   'https://*.rollbar.com',
