@@ -1,12 +1,13 @@
 // Note bumble is does not have the automatic access code feature
 
 describe('Create User', () => {
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
   });
 
   it('User should be able to create user', () => {
+    const username = Cypress.uniqueEmail();
+
     // Start from the home page
     cy.visit('/');
     cy.wait(2000);
@@ -20,7 +21,7 @@ describe('Create User', () => {
     cy.get('#email', { timeout: 10000 }).type(username);
     cy.get('#password', { timeout: 10000 }).type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.wait(3000);
+    cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 10000 }).should('contain', 'Help us understand');
   });
   after(() => {

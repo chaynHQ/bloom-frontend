@@ -49,7 +49,7 @@ describe('Welcome badoo page should display', () => {
     });
   });
   describe('for a public logged in user', () => {
-    const email = `cypresstestemail+${Date.now()}@chayn.co`;
+    const email = Cypress.uniqueEmail();
     const password = 'testtesttest';
 
     before(() => {

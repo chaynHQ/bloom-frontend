@@ -1,8 +1,8 @@
 describe('User account settings page', () => {
   const password = 'testpassword';
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
 
   before(() => {
+    const username = Cypress.uniqueEmail();
     cy.cleanUpTestState();
     cy.createUser({ emailInput: username, passwordInput: password });
     cy.logInWithEmailAndPassword(username, password);
@@ -10,6 +10,7 @@ describe('User account settings page', () => {
 
   it('Should successfully update name', () => {
     cy.visit('/account/settings');
+    cy.waitForAuthenticatedApp();
     cy.get('#name', { timeout: 15000 }).clear().type('Updated name');
     cy.get('#profile-settings-submit').click();
     cy.get(`[data-testid='CheckCircleOutlinedIcon']`).should('be.visible');
@@ -17,6 +18,7 @@ describe('User account settings page', () => {
 
   it('Should display error if attempting to update email to existing email in use', () => {
     cy.visit('/account/settings');
+    cy.waitForAuthenticatedApp();
     cy.get('#email')
       .clear()
       .type(Cypress.env('CYPRESS_PUBLIC_EMAIL') as string);
@@ -28,8 +30,9 @@ describe('User account settings page', () => {
   });
 
   it('Should successfully update email', () => {
-    const newEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
+    const newEmail = Cypress.uniqueEmail();
     cy.visit('/account/settings');
+    cy.waitForAuthenticatedApp();
     cy.get('#email').clear().type(newEmail);
     cy.get('#profile-settings-submit').click();
     cy.get('#confirm-dialog-submit').click();

@@ -2,7 +2,6 @@
 describe('Register with access code', () => {
   let welcomeCodeLink = null;
   let welcomeCode = null;
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
 
   before(() => {
     cy.cleanUpTestState();
@@ -26,6 +25,8 @@ describe('Register with access code', () => {
   });
 
   it('Access code should be on first register button link', () => {
+    const username = Cypress.uniqueEmail();
+
     // Start from the home page
     cy.visit(welcomeCodeLink);
     cy.get(`a[href="/auth/register?partner=badoo&code=${welcomeCode}"]`)
@@ -38,7 +39,7 @@ describe('Register with access code', () => {
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.wait(4000); // Waiting for dom to rerender
+    cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
   });
   after(() => {
