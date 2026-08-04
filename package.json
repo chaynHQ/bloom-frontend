@@ -92,7 +92,7 @@
     "@types/jest": "^30.0.0",
     "@types/js-cookie": "^3.0.2",
     "@types/newrelic": "^9.14.8",
-    "@types/node": "^25.9.4",
+    "@types/node": "^26.1.2",
     "@types/react": "19.2.17",
     "babel-plugin-istanbul": "^8.0.0",
     "cypress": "^15.19.0",
