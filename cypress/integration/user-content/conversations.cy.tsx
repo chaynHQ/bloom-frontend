@@ -1,5 +1,5 @@
 describe('Conversations Flow', () => {
-  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
   before(() => {

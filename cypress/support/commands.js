@@ -27,6 +27,44 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
+let emailCounter = 0;
+
+/**
+ * Builds a unique test email address.
+ *
+ * Generate the address in the same scope as the code that registers the user. Cypress re-runs
+ * the test body on retry but not `describe`/`before`, so:
+ *
+ *   - user created inside an `it` → generate inside that `it` (or a `beforeEach`). A
+ *     describe-scoped address would be reused by every retry and the second attempt would
+ *     fail with "email already in use" regardless of why the first attempt failed.
+ *   - user created in `before()` → describe scope is fine, since neither the address nor the
+ *     user is recreated on retry.
+ *
+ * The counter and random suffix stop the six parallel CI jobs colliding when two of them
+ * generate an address in the same millisecond. The prefix must keep the "cypress" substring
+ * so the backend cleanup endpoints still match these users.
+ */
+Cypress.uniqueEmail = (prefix = 'cypresstestemail') =>
+  `${prefix}+${Date.now()}-${(emailCounter += 1)}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}@chayn.co`;
+
+/**
+ * Blocks until the app itself considers the user signed in.
+ *
+ * TopBar renders #user-menu-button only when `!userLoading && userId`, which is the same
+ * Redux state AuthGuard reads to decide whether to redirect to /auth/login. Waiting on it
+ * means Firebase has restored the session and getUser has populated the store, so the guard
+ * won't bounce the page out from under a later assertion.
+ *
+ * Use this after visiting any /account, /admin, /therapy, /partner-admin or course session
+ * route, and after a signup redirect, instead of a fixed cy.wait().
+ */
+Cypress.Commands.add('waitForAuthenticatedApp', () => {
+  cy.get('#user-menu-button', { timeout: 30000 }).should('exist');
+});
+
 Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
   cy.wait(4000);
