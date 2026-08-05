@@ -8,6 +8,7 @@ describe('User about you page should display', () => {
 
   beforeEach(() => {
     cy.visit('/account/about-you');
+    cy.waitForAuthenticatedApp();
   });
 
   it('header section', () => {

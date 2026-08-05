@@ -13,7 +13,7 @@ describe('Welcome page should', () => {
       cy.checkPageUrl(coursesPageUrl);
     });
     describe('for a public logged in user', () => {
-      const email = `cypresstestemail+${Date.now()}@chayn.co`;
+      const email = Cypress.uniqueEmail();
       const password = 'testtesttest';
 
       before(() => {

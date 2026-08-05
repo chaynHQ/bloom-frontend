@@ -68,6 +68,9 @@ jobs:
       deployments: read
     strategy:
       fail-fast: false # Don't cancel other jobs if one fails
+      # Caps concurrent load on the backend. All groups create users via POST /user, and six
+      # at once trips the API rate limit with 429s.
+      max-parallel: 4
       matrix:
         group:
           - name: 'Auth flows'
