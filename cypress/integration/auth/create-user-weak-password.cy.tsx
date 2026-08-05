@@ -1,10 +1,11 @@
 describe('Create User', () => {
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
   });
 
   it('Should not be able to create user with a weak password', () => {
+    const username = Cypress.uniqueEmail();
+
     // Start from the home page
     cy.visit('/');
     cy.wait(2000);

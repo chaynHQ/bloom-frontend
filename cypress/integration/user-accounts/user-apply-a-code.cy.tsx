@@ -8,6 +8,7 @@ describe('User apply a code page should display', () => {
 
   beforeEach(() => {
     cy.visit('/account/apply-a-code');
+    cy.waitForAuthenticatedApp();
   });
 
   it('header section', () => {
