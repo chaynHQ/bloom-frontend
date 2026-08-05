@@ -36,6 +36,30 @@ interface WhatsappUnsubscribePayload {
   id: string;
 }
 
+// Superadmin backfill that re-sends every user's Front contact custom fields. Held in memory on
+// the backend, so `status` is 'idle' until a run starts and resets on deploy.
+export interface FrontContactBackfillProgress {
+  status: 'running' | 'completed' | 'failed';
+  total: number;
+  processed: number;
+  updated: number;
+  skipped: number;
+  notFound: number;
+  failed: number;
+  since: string;
+  until?: string;
+  startedAt: string;
+  completedAt?: string;
+}
+
+export interface FrontContactBackfillStatus {
+  status: FrontContactBackfillProgress['status'] | 'idle';
+  progress?: FrontContactBackfillProgress;
+  errors?: { userId?: string; error: string; timestamp: string }[];
+  // How many contacts a run with default options would cover.
+  coverage: { total: number; since: string; until?: string };
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers, { getState }) => {
@@ -129,6 +153,26 @@ export const api = createApi({
         return {
           url: `user/cypress`,
           method: 'DELETE',
+        };
+      },
+    }),
+    getFrontContactBackfill: builder.query<FrontContactBackfillStatus, void>({
+      query() {
+        return {
+          url: `user/front-contact-backfill`,
+          method: 'GET',
+        };
+      },
+    }),
+    startFrontContactBackfill: builder.mutation<
+      { status: 'started' },
+      { startDate?: string; endDate?: string; limit?: number } | void
+    >({
+      query(body) {
+        return {
+          url: `user/front-contact-backfill`,
+          method: 'POST',
+          body: body || {},
         };
       },
     }),
@@ -336,6 +380,8 @@ export const {
   useDeleteUserMutation,
   useLazyGetCypressUsersCountQuery,
   useDeleteCypressUsersMutation,
+  useGetFrontContactBackfillQuery,
+  useStartFrontContactBackfillMutation,
   useAssignPartnerAccessMutation,
   useAddPartnerAccessMutation,
   useStartSessionMutation,

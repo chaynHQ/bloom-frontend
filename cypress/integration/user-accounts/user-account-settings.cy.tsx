@@ -9,6 +9,7 @@ describe.only('User account settings page', () => {
 
   beforeEach(() => {
     cy.visit('/account/settings');
+    cy.waitForAuthenticatedApp();
   });
 
   it.skip('Should display disabled user email and name fields with user data', () => {

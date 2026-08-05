@@ -1,5 +1,5 @@
 describe.only('A course session user', () => {
-  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
   before(() => {

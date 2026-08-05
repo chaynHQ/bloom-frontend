@@ -1,6 +1,6 @@
 describe('Delete User', () => {
   before(() => {
-    let username = `cypresstestemail+${Date.now()}@chayn.co`;
+    const username = Cypress.uniqueEmail();
     const password = 'testpassword';
     cy.cleanUpTestState();
     cy.createUser({ emailInput: username, passwordInput: password });
@@ -8,6 +8,7 @@ describe('Delete User', () => {
   });
   it(`should be able to delete user from accounts settings page`, () => {
     cy.visit('/account/settings');
+    cy.waitForAuthenticatedApp();
     cy.get('#delete-account-button', { timeout: 10000 })
       .should('contain.text', 'Delete Account')
       .click();
