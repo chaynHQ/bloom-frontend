@@ -12,7 +12,8 @@ describe('User about you page should display', () => {
   });
 
   it('header section', () => {
-    cy.checkImage('Welcome to Bloom', 'welcome_to_bloom');
+    cy.contains('Welcome to').should('exist');
+    cy.checkImage('Welcome to Bloom', 'bloom_logo');
     cy.checkImage(
       `Illustration of a person's face and shoulders, with big leaves and flowers blooming above them`,
       'illustration_bloom_head_yellow',
