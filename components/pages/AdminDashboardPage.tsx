@@ -12,6 +12,7 @@ import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import SyncFrontContactsForm from '../forms/SyncFrontContactsForm';
 import UpdatePartnerActiveForm from '../forms/UpdatePartnerActiveForm';
 
 const containerStyle = {
@@ -28,8 +29,9 @@ export default function AdminDashboardPage() {
   const t = useTranslations('Admin');
 
   const userEmail = useTypedSelector((state) => state.user.email);
-  // The destructive test-data cleanup tool is only exposed to the tech team.
-  const showDeleteCypressUsers = !!userEmail && userEmail.toLowerCase().includes('tech');
+  // Tools that write to production data outside Bloom (test-data cleanup, Front contact
+  // backfill) are only exposed to the tech team.
+  const showTechTools = !!userEmail && userEmail.toLowerCase().includes('tech');
 
   const headerProps = {
     title: t('title'),
@@ -91,15 +93,25 @@ export default function AdminDashboardPage() {
             <UpdatePartnerActiveForm />
           </CardContent>
         </Card>
-        {showDeleteCypressUsers && (
-          <Card sx={cardStyle}>
-            <CardContent>
-              <Typography variant="h2" component="h2">
-                {t('deleteCypressUsers.title')}
-              </Typography>
-              <DeleteCypressUsersForm />
-            </CardContent>
-          </Card>
+        {showTechTools && (
+          <>
+            <Card sx={cardStyle}>
+              <CardContent>
+                <Typography variant="h2" component="h2">
+                  {t('deleteCypressUsers.title')}
+                </Typography>
+                <DeleteCypressUsersForm />
+              </CardContent>
+            </Card>
+            <Card sx={cardStyle}>
+              <CardContent>
+                <Typography variant="h2" component="h2">
+                  {t('syncFrontContacts.title')}
+                </Typography>
+                <SyncFrontContactsForm />
+              </CardContent>
+            </Card>
+          </>
         )}
       </Container>
     </Box>
