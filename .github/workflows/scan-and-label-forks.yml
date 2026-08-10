@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Label PR for Sensitive Files
         # https://github.com/actions/labeler
-        uses: actions/labeler@b8dd2d9be0f68b860e7dae5dae7d772984eacd6d
+        uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/configs/labeler.yml

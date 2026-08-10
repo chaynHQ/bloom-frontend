@@ -1,11 +1,12 @@
 // Note Bumble has automatic access code feature
 describe('Register without access code', () => {
-  let username = `cypresstestemail+${Date.now()}@chayn.co`;
   before(() => {
     cy.cleanUpTestState();
   });
 
   it('Access code input should not be on form and correct courses should be available', () => {
+    const username = Cypress.uniqueEmail();
+
     // Start from the home page
     cy.visit('/welcome/bumble');
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
@@ -15,7 +16,7 @@ describe('Register without access code', () => {
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.wait(4000); // Waiting for dom to rerender
+    cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
     cy.get('a').contains('Skip').click();
     cy.wait(2000); // Waiting for dom to rerender
@@ -25,7 +26,7 @@ describe('Register without access code', () => {
 
   it('Partner in UTM link attaches partner and shows partner register form', () => {
     cy.cleanUpTestState();
-    const utmUsername = `cypresstestemail+${Date.now()}@chayn.co`;
+    const utmUsername = Cypress.uniqueEmail();
 
     // Entry via a partner UTM link (e.g. a Bumble campaign) should attribute the
     // referral, so registering shows the Bumble form (no access code) and attaches the partner.
@@ -37,7 +38,7 @@ describe('Register without access code', () => {
     cy.get('#email').type(utmUsername);
     cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.wait(4000); // Waiting for dom to rerender
+    cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
     cy.get('a').contains('Skip').click();
     cy.wait(2000); // Waiting for dom to rerender

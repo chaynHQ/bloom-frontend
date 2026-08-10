@@ -19,7 +19,7 @@ describe('Navigation', () => {
     });
   });
   describe('A logged in public user', () => {
-    const email = `cypresstestemail+${Date.now()}@chayn.co`;
+    const email = Cypress.uniqueEmail();
     const password = 'testtesttest';
     before(() => {
       cy.cleanUpTestState();
@@ -46,7 +46,7 @@ describe('Navigation', () => {
 
   describe('A logged in bumble user', () => {
     before(() => {
-      const newUserEmail = `cypresstestemail+${Date.now() + 1}@chayn.co`;
+      const newUserEmail = Cypress.uniqueEmail();
       const password = 'testpassword';
       cy.cleanUpTestState();
 
@@ -92,7 +92,7 @@ describe('Navigation', () => {
 
   describe('A logged in badoo user with therapy access', () => {
     before(() => {
-      const newUserEmail = `cypresstestemail+${Date.now() + 2}@chayn.co`;
+      const newUserEmail = Cypress.uniqueEmail();
       const password = 'testpassword';
       cy.cleanUpTestState();
 

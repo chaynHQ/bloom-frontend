@@ -1,5 +1,5 @@
 describe('A logged in user should be able to navigate to grounding and do an exercise', () => {
-  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
   before(() => {
