@@ -35,7 +35,6 @@ import {
   Box,
   Button,
   Chip,
-  Collapse,
   Container,
   InputAdornment,
   TextField,
@@ -53,20 +52,18 @@ import { SectionLabel } from '../library/SectionLabel';
 import { SupportBand } from '../library/SupportBand';
 import { ThemeCards } from '../library/ThemeCards';
 
-// How many cards to show before the "Load more" button, and how many more each press reveals.
+// Cards shown before the "Load more" button, and how many more each press reveals.
 const PAGE_SIZE = 8;
 
-// A search event per keystroke would be noise; wait for the typing to settle first.
+// Waits for the typing to settle before reporting a search.
 const SEARCH_EVENT_DEBOUNCE_MS = 1000;
 
-// Design: 264px of sidebar content plus a gutter before the divider. Box-sizing is border-box, so
-// the column has to be that much wider for its rows to measure 264.
+// Design: 264px of sidebar content plus a gutter before the divider.
 const SIDEBAR_CONTENT = 264;
 const SIDEBAR_GUTTER = 3; // theme spacing units
 const SIDEBAR_GUTTER_PX = SIDEBAR_GUTTER * 8;
 
-// Sits on the two columns rather than the Container, so the divider between them spans the full
-// height of the section.
+// Sits on the two columns rather than the Container.
 const BROWSE_PY = { xs: 4, md: 6 };
 
 const browseContainerStyle = { backgroundColor: 'pageBackground', py: '0 !important' } as const;
@@ -94,6 +91,13 @@ const searchFieldStyle = {
   },
 } as const;
 
+// Ties the mobile toggle to the group it opens.
+const FILTERS_ID = 'library-filters';
+
+// Collapsed behind the toggle below md, always open from md up.
+const filtersStyle = (open: boolean) =>
+  ({ display: { xs: open ? 'block' : 'none', md: 'block' } }) as const;
+
 const mobileFilterButtonStyle = {
   display: { xs: 'inline-flex', md: 'none' },
   flexShrink: 0,
@@ -116,8 +120,7 @@ const searchChipStyle = {
     pl: 1.5,
     pr: 0.5,
   },
-  // MUI's default delete icon is a 22px glyph with negative margins; the design uses a
-  // lighter 18px cross, inset from the trailing edge.
+  // MUI's default delete icon is a 22px glyph with negative margins.
   '& .MuiChip-deleteIcon': {
     m: 0,
     mr: 1,
@@ -203,11 +206,11 @@ const cardGridStyle = {
   gap: 3,
 } as const;
 
-// Analytics params are scalars, so a multi-select filter reports as a comma-separated list.
+// A multi-select filter reports as a comma-separated list.
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
 
 // A LibraryItem's `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS
-// ('Started'), matching course/resource progress events so the library can be compared against them.
+// ('Started'), as the course and resource progress events do.
 const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
   NonNullable<LibraryItem['progress']> | 'none',
   PROGRESS_STATUS
@@ -235,7 +238,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  // Drives the small-screen open/closed state only; on desktop the checkboxes are always shown.
+  // Small-screen open/closed state only; on desktop the checkboxes are always shown.
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -252,7 +255,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
 
   // A signed-in user briefly looks anonymous: partnerAccesses/createdAt only arrive after the
-  // getUser query. Reporting in that window would misattribute partner users as PUBLIC_USER.
+  // getUser query.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
 
   const eventUserData = useMemo(
@@ -260,8 +263,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // Format and length describe a single session; a course has neither, so both groups switch off
-  // and clear while "Courses" is selected rather than returning nothing.
+  // Format and length describe a single session, which a course is not.
   const sessionFiltersDisabled = kind === 'course';
 
   const selectKind = (next: KindFilter) => {
@@ -272,7 +274,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     }
   };
 
-  // Only the single-session formats present in the library today (audio/video) are offered.
+  // Only the formats present in the library are offered.
   const formatOptions = useMemo(
     () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
     [items],
@@ -284,17 +286,16 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   );
 
   // ---- Analytics ----
-  // Each event reports the result count at the time of the interaction; because the count is an
-  // effect dependency, each effect guards on what it last reported so a count change alone can't
-  // re-fire it.
+  // Each event reports the result count at the time of the interaction. The count is also an
+  // effect dependency, so each effect guards on what it last reported.
   const resultsCount = results.length;
 
-  // The whole filter state as one string: the value every filter event reports, and (with the
-  // keyword) the key that resets pagination.
+  // The whole filter state as one string: what every filter event reports, and (with the keyword)
+  // the key that resets pagination.
   const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
   const filterKey = `${keyword}|${filterState}`;
 
-  // Reset pagination whenever the filters change, so "Load more" starts from the top again.
+  // Reset pagination whenever the filters change.
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (filterKey !== prevFilterKey) {
     setPrevFilterKey(filterKey);
@@ -304,8 +305,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
 
-  // Waits for the user to settle so the view can be attributed to their partner, and reports the
-  // filters it opened on (e.g. a `?theme=` deep link).
+  // Waits for the user to settle, then reports the filters the page opened on.
   const viewLogged = useRef(false);
   useEffect(() => {
     if (!userSettled || viewLogged.current) return;
@@ -316,16 +316,14 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
       library_results_count: resultsCount,
       ...eventUserData,
     });
-    // Fires once, reporting the state the page opened with.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSettled, eventUserData]);
 
-  // The search term is never sent to analytics — only its length and the result count, which is
-  // enough to tell whether the library is findable.
+  // The search term is never sent to analytics — only its length and the result count.
   const loggedSearch = useRef('');
   useEffect(() => {
     const term = keyword.trim();
-    // Clearing the box arms the next search, so searching the same term twice reports twice.
+    // Clearing the box arms the next search.
     if (!term) {
       loggedSearch.current = '';
       return;
@@ -342,8 +340,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     return () => clearTimeout(timer);
   }, [keyword, resultsCount, eventUserData]);
 
-  // Reports the whole filter state on every change, so a report can read the combination a user
-  // arrived at without reassembling it from individual toggles.
+  // Reports the whole filter state on every change.
   const loggedFilterState = useRef(filterState);
   useEffect(() => {
     if (loggedFilterState.current === filterState) return;
@@ -384,7 +381,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     });
   };
 
-  // Selected themes appear as descriptive cards above the results, not as sidebar filters.
+  // Selected themes appear as descriptive cards above the results.
   const selectedThemes = THEME_KEYS.filter((theme) => themes.includes(theme));
   const filtersActive = Boolean(keyword) || formats.length > 0 || lengths.length > 0;
 
@@ -442,7 +439,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                       </InputAdornment>
                     ),
                   },
-                  htmlInput: { 'qa-id': 'library-search-input' },
+                  // The field has no visible label, so it carries its own accessible name.
+                  htmlInput: { 'qa-id': 'library-search-input', 'aria-label': t('searchLabel') },
                 }}
               />
               <Button
@@ -450,6 +448,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                 variant="outlined"
                 color="secondary"
                 aria-expanded={mobileFiltersOpen}
+                aria-controls={FILTERS_ID}
                 startIcon={<TuneRounded />}
                 sx={mobileFilterButtonStyle}
               >
@@ -465,18 +464,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               />
             )}
 
-            {/* Always open on desktop, collapsed behind the toggle on mobile. */}
-            <Collapse in={mobileFiltersOpen} sx={{ display: { md: 'none' } }}>
-              <FilterGroups
-                formatOptions={formatOptions}
-                formats={formats}
-                setFormats={setFormats}
-                lengths={lengths}
-                setLengths={setLengths}
-                disabled={sessionFiltersDisabled}
-              />
-            </Collapse>
-            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            {/* Always shown on desktop, behind the toggle on mobile. */}
+            <Box id={FILTERS_ID} sx={filtersStyle(mobileFiltersOpen)}>
               <FilterGroups
                 formatOptions={formatOptions}
                 formats={formats}

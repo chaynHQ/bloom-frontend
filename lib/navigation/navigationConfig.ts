@@ -52,9 +52,6 @@ interface NavigationConfigOptions {
 
 const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
   {
-    // The unified library replaces the old Courses hub: it mixes courses with single
-    // sessions (course lessons, shorts, somatic videos, audio conversations) behind one
-    // guided search.
     key: 'library',
     href: '/library',
     icon: courseIcon,

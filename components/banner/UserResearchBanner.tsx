@@ -25,9 +25,8 @@ export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
 
-  // The dismissal cookie is browser-only, so reading it during render hydration-mismatched every
-  // server-rendered page using Header. Resolve it after mount instead; `null` means not yet
-  // known, and the banner stays hidden until it is.
+  // The dismissal cookie is browser-only, so it is resolved after mount to avoid a hydration
+  // mismatch. `null` means not yet known, and the banner stays hidden until it is.
   const [bannerInteracted, setBannerInteracted] = useState<boolean | null>(null);
 
   useEffect(() => {

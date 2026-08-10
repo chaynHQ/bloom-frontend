@@ -1,26 +1,20 @@
-// Pure data, types, and Storyblok → LibraryItem mapping for the library. No 'use client': this
-// is imported by both the route (a Server Component) and the page UI.
+// Pure data, types, and Storyblok → LibraryItem mapping for the library.
 
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { ISbStoryData } from '@storyblok/react/rsc';
 
-// Storyblok component (bloktype) name for a course story, matching the fetch filter_query.
 const COURSE_COMPONENT = 'Course';
 
-// A course is a guided journey of several sessions; a "session" is a single thing to sit with —
-// a course lesson, a short, a somatic video, or an audio conversation.
+// A "session" is a course lesson, a short, a somatic video, or an audio conversation.
 export type Kind = 'course' | 'session';
 
-// The kind toggle above the results.
 export type KindFilter = 'all' | Kind;
 
-// Display order of the kind toggle; labels live under `Library.kind.<key>`.
+// Labels live under `Library.kind.<key>`.
 export const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
-// Grounding is deliberately not a library format; it is offered after intense content instead.
 export type Format = 'audio' | 'written' | 'video' | 'activity';
 
-// The "Content type" filter: a library item is a whole course, or a single session in a format.
 export type ContentType = 'course' | Format;
 
 export type ThemeKey =
@@ -31,8 +25,7 @@ export type ThemeKey =
   | 'healing-journey'
   | 'staying-safe';
 
-// Display order of the "Explore by theme" cards; each key has `label`, `blurb`, and `description`
-// under `Library.themes.<key>`.
+// Each key has `label`, `blurb`, and `description` under `Library.themes.<key>`.
 export const THEME_KEYS: ThemeKey[] = [
   'recognising-harm',
   'why-harm-happens',
@@ -43,10 +36,10 @@ export const THEME_KEYS: ThemeKey[] = [
 ];
 
 export type LengthBucket = 'under10' | '10to20' | 'over20';
-// Display order of the "Length" filter; labels live under `Library.lengths.<key>`.
+// Labels live under `Library.lengths.<key>`.
 export const LENGTH_KEYS: LengthBucket[] = ['under10', '10to20', 'over20'];
 
-// Display order of the "Content type" filter; labels live under `Library.contentTypes.<key>`.
+// Labels live under `Library.contentTypes.<key>`.
 export const FORMAT_KEYS: Format[] = ['audio', 'written', 'video', 'activity'];
 
 export interface LibraryItem {
@@ -58,27 +51,71 @@ export interface LibraryItem {
   href: string; // resolved, locale-aware app path
   format?: Format;
   minutes?: number; // absent when Storyblok has no duration (all course lessons)
-  // On a course lesson: the title of the course it belongs to. Lessons carry no duration, so the
-  // card reports this instead.
+  // On a course lesson: the title of the course it belongs to.
   courseTitle?: string;
   sessionCount?: number; // courses only
   progress?: 'started' | 'completed'; // logged-in users who have started/completed the item
 }
 
-// The raw Storyblok stories the library is built from, grouped by content type. Fetched
-// server-side (getLibraryStories) and filtered/mapped client-side (useLibraryItems).
-export interface LibraryStories {
-  courses: ISbStoryData[];
-  // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
-  // Kept separate so their parent-course visibility can be enforced in useLibraryItems.
-  courseSessions: ISbStoryData[];
-  shorts: ISbStoryData[];
-  somatics: ISbStoryData[];
-  conversations: ISbStoryData[];
+// A Storyblok story trimmed to the fields the library reads, as sent from the route to the page.
+export interface LibraryStory {
+  uuid: string;
+  full_slug: string;
+  content: {
+    name: string;
+    component?: string;
+    description?: unknown; // plain string on a course, rich-text document on a resource
+    themes?: string[];
+    duration?: unknown; // free-text minutes
+    languages?: string[];
+    included_for_partners?: string[];
+    coming_soon?: boolean;
+    weeks?: { sessions?: unknown[] }[];
+  };
 }
 
-// Storyblok component → library format. Only audio and video exist in the CMS today, and the
-// format filter renders from what is actually present.
+// Narrows a Storyblok story to the fields above.
+export function toLibraryStory(story: ISbStoryData): LibraryStory {
+  const {
+    name,
+    component,
+    description,
+    themes,
+    duration,
+    languages,
+    included_for_partners,
+    coming_soon,
+    weeks,
+  } = story.content;
+
+  return {
+    uuid: story.uuid,
+    full_slug: story.full_slug,
+    content: {
+      name,
+      component,
+      description,
+      themes,
+      duration,
+      languages,
+      included_for_partners,
+      coming_soon,
+      weeks,
+    },
+  };
+}
+
+// The Storyblok stories the library is built from, grouped by content type.
+export interface LibraryStories {
+  courses: LibraryStory[];
+  // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
+  courseSessions: LibraryStory[];
+  shorts: LibraryStory[];
+  somatics: LibraryStory[];
+  conversations: LibraryStory[];
+}
+
+// Storyblok component → library format.
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_conversation: 'audio',
   resource_short_video: 'video',
@@ -87,24 +124,22 @@ const FORMAT_BY_COMPONENT: Record<string, Format> = {
   session_iba: 'video',
 };
 
-// Fallback for a story with no themes set yet, so a card never renders untagged.
+// Fallback for a story with no themes set.
 const DEFAULT_THEME: ThemeKey = 'healing-journey';
 
-// Storyblok's `themes` is a multi-option field, so a story can belong to several themes.
-function themesForStory(story: ISbStoryData): ThemeKey[] {
+// Storyblok's `themes` is a multi-option field.
+function themesForStory(story: LibraryStory): ThemeKey[] {
   const themes = story.content.themes;
   return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
 }
 
-// Storyblok duration is free-text minutes that is sometimes blank; return a positive number or
-// undefined so callers can hide the duration / skip length filtering.
+// Storyblok duration is free-text minutes that is sometimes blank.
 function parseMinutes(duration: unknown): number | undefined {
   const minutes = Number(duration);
   return Number.isFinite(minutes) && minutes > 0 ? minutes : undefined;
 }
 
-// A description is a plain string on courses but a Storyblok rich-text document on resources.
-// Flatten either shape to plain text for the card blurb and keyword search.
+// A description is a plain string on courses but a rich-text document on resources.
 function toPlainText(value: unknown): string {
   if (typeof value === 'string') return value;
   if (!value || typeof value !== 'object') return '';
@@ -116,20 +151,19 @@ function toPlainText(value: unknown): string {
   return '';
 }
 
-// Maps a raw Storyblok story to a LibraryItem. Progress is attached separately (it needs Redux
-// user state) in useLibraryItems.
-export function storyToLibraryItem(story: ISbStoryData, locale: string): LibraryItem {
+// Maps a Storyblok story to a LibraryItem. Progress is attached in useLibraryItems.
+export function storyToLibraryItem(story: LibraryStory, locale: string): LibraryItem {
   const content = story.content;
   const base = {
     id: story.uuid,
     themes: themesForStory(story),
     title: content.name,
     description: toPlainText(content.description),
-    href: getDefaultFullSlug(story.full_slug, locale),
+    href: getDefaultFullSlug(normaliseSlug(story.full_slug), locale),
   };
 
   if (content.component === COURSE_COMPONENT) {
-    // `weeks` is a grouping wrapper; the card reports the total sessions across all of them.
+    // `weeks` is a grouping wrapper; the sessions are counted across all of them.
     const weeks = (content.weeks ?? []) as { sessions?: unknown[] }[];
     return {
       ...base,
@@ -141,7 +175,6 @@ export function storyToLibraryItem(story: ISbStoryData, locale: string): Library
   return {
     ...base,
     kind: 'session',
-    // The fallback only guards a component added to a session folder without being mapped above.
     format: FORMAT_BY_COMPONENT[content.component ?? ''] ?? 'video',
     minutes: parseMinutes(content.duration),
   };
@@ -153,15 +186,12 @@ export function bucketOf(minutes: number): LengthBucket {
   return 'over20';
 }
 
-// Storyblok's full_slug is inconsistent about leading/trailing slashes (courses come back as
-// `courses/managing-anxiety/`, lessons as `courses/managing-anxiety/what-is-anxiety`).
+// Storyblok returns course slugs with a trailing slash and lesson slugs without one.
 export function normaliseSlug(fullSlug: string): string {
   return fullSlug.replace(/^\/+|\/+$/g, '');
 }
 
 // The slug of the course a lesson belongs to, read from its path (`<course slug>/<lesson>`).
-// Deliberately not `content.course`: that hand-set uuid is already wrong for one lesson in the
-// CMS, and the parent course is what decides whether a lesson may be shown at all.
 export function parentCourseSlug(lessonFullSlug: string): string {
   return normaliseSlug(lessonFullSlug).split('/').slice(0, -1).join('/');
 }
@@ -175,25 +205,29 @@ export interface LibraryFilters {
   lengths: LengthBucket[];
 }
 
-// Filters combine as AND across groups and OR within a group.
+// Filters combine as AND across groups and OR within a group. A keyword puts title matches first;
+// otherwise the Storyblok order is kept.
 export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters): LibraryItem[] {
   const { keyword, kind, themes, formats, lengths } = filters;
   const search = keyword.trim().toLowerCase();
 
-  return items.filter((item) => {
+  const matches = items.filter((item) => {
     if (kind !== 'all' && item.kind !== kind) return false;
     if (themes.length && !item.themes.some((theme) => themes.includes(theme))) return false;
     if (search && !`${item.title} ${item.description}`.toLowerCase().includes(search)) return false;
 
-    // Format and length describe a single session, so either one excludes courses outright.
     if (formats.length && (item.format == null || !formats.includes(item.format))) return false;
-    // An item of unknown length (course lessons, blank-duration shorts) can't fall in a bucket,
-    // so choosing any length excludes it rather than guessing.
     if (lengths.length && (item.minutes == null || !lengths.includes(bucketOf(item.minutes))))
       return false;
 
     return true;
   });
+
+  if (!search) return matches;
+
+  const titleMatchesFirst = (item: LibraryItem) =>
+    item.title.toLowerCase().includes(search) ? 0 : 1;
+  return matches.sort((a, b) => titleMatchesFirst(a) - titleMatchesFirst(b));
 }
 
 export function toggle<T>(list: T[], value: T): T[] {

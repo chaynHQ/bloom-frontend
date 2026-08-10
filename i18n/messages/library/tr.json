@@ -10,6 +10,7 @@
     "filterHeading": "Kütüphaneyi filtrele",
     "filterButtonLabel": "Filtrele",
     "searchPlaceholder": "Anahtar kelimelerle ara…",
+    "searchLabel": "Kütüphanede ara",
     "reset": "Sıfırla",
     "resultsHeading": "Kütüphane",
     "resultsCount": "{count, plural, one {# sonuç} other {# sonuç}}",

@@ -16,7 +16,7 @@ import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
-// Badge glyph per content type; a course uses a "route" glyph for its guided path.
+// Badge glyph per content type.
 const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
   course: RouteRounded,
   audio: VolumeUpRounded,
@@ -32,7 +32,7 @@ const cardStyle = {
   borderRadius: '16px',
   boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
-  // Transparent at rest so the hover/focus peach doesn't resize the card.
+  // Transparent at rest so the hover/focus border doesn't resize the card.
   border: '1px solid transparent',
   transition: 'border-color 150ms ease',
   '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
@@ -77,7 +77,7 @@ const contentStyle = {
   flexDirection: 'column',
   flexGrow: 1,
   p: 2,
-  // Fixed top inset (56px) so cards stay aligned whether or not a corner badge is present.
+  // Fixed top inset (56px), with or without a corner badge.
   pt: 7,
 } as const;
 
@@ -188,7 +188,7 @@ export function LibraryCard({ item, onSelect }: { item: LibraryItem; onSelect?: 
 
           <Box sx={spacerStyle} />
           <Divider sx={{ my: 2, borderColor: 'cardBorder' }} />
-          {/* Course lessons carry no duration in the CMS, so they name their course instead. */}
+          {/* Course lessons carry no duration, so they name their course instead. */}
           <Box sx={metaRowStyle}>
             {isCourse ? (
               <Meta

@@ -10,6 +10,7 @@
     "filterHeading": "Bibliothek filtern",
     "filterButtonLabel": "Filter",
     "searchPlaceholder": "Nach Stichwörtern suchen …",
+    "searchLabel": "Die Bibliothek durchsuchen",
     "reset": "Zurücksetzen",
     "resultsHeading": "Bibliothek",
     "resultsCount": "{count, plural, one {# Ergebnis} other {# Ergebnisse}}",

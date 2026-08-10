@@ -88,6 +88,15 @@ describe('filterResourcesForLocaleAndPartnerAccess', () => {
     ]);
   });
 
+  it('treats a story with no languages set as English-only rather than hiding it everywhere', () => {
+    const untagged = [
+      { uuid: '5', content: { included_for_partners: [] } },
+    ] as unknown as ISbStoryData[];
+
+    expect(filterResourcesForLocaleAndPartnerAccess(untagged, 'en', ['public'])).toHaveLength(1);
+    expect(filterResourcesForLocaleAndPartnerAccess(untagged, 'de', ['public'])).toEqual([]);
+  });
+
   it('should be case-insensitive for partner names', () => {
     const locale = 'fr';
     const userPartners = ['PARTNER3'];

@@ -10,6 +10,7 @@
     "filterHeading": "تصفية المكتبة",
     "filterButtonLabel": "تصفية",
     "searchPlaceholder": "البحث بالكلمات المفتاحية…",
+    "searchLabel": "البحث في المكتبة",
     "reset": "إعادة تعيين",
     "resultsHeading": "المكتبة",
     "resultsCount": "{count, plural, zero {لا نتائج} one {نتيجة واحدة} two {نتيجتان} few {# نتائج} many {# نتيجة} other {# نتيجة}}",

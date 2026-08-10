@@ -10,6 +10,7 @@
     "filterHeading": "Library filter kariye",
     "filterButtonLabel": "Filter",
     "searchPlaceholder": "Keywords se search kariye…",
+    "searchLabel": "Library mein search kariye",
     "reset": "Reset",
     "resultsHeading": "Library",
     "resultsCount": "{count, plural, one {# result} other {# results}}",

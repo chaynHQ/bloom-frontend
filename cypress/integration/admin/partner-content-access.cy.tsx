@@ -4,13 +4,10 @@ describe('users signing up through partner channels can properly access partner-
   const password = 'testtesttest';
 
   const bumbleSpecificCourseName = 'Dating, boundaries, and relationships';
-  // A lesson *inside* that course. The library gates a lesson on its parent course as well as on
-  // the lesson's own partner restriction.
+  // A lesson inside that course, gated on its parent course as well as its own restriction.
   const bumbleSpecificLessonName = 'Culture, patriarchy, and boundaries';
 
-  // The library renders only its first page of results, so a plain absence assertion would pass
-  // for leaked content that sorted below the fold. Search first, then read the result count: 0
-  // results is a claim about the whole library.
+  // The library renders only its first page, so search first and read the result count.
   const searchLibraryFor = (title: string) => {
     cy.visit('/library');
     cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');

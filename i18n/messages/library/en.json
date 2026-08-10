@@ -10,6 +10,7 @@
     "filterHeading": "Filter the library",
     "filterButtonLabel": "Filter",
     "searchPlaceholder": "Search by keywords…",
+    "searchLabel": "Search the library",
     "reset": "Reset",
     "resultsHeading": "Library",
     "resultsCount": "{count, plural, one {# result} other {# results}}",

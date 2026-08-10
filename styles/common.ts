@@ -35,7 +35,7 @@ export const richtextContentStyle = {
   },
 } as const;
 
-// Material elevation 1, used by the cards in the library.
+// Material elevation 1.
 export const cardShadow = '0px 1px 3px 1px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.08)';
 
 export const breadcrumbPositionStyle = {

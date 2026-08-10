@@ -14,8 +14,7 @@ describe('Conversations Flow', () => {
     // User clicks on Library
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
 
-    // The library only renders its first page of results, so search for the conversation
-    // rather than relying on it appearing in the initial set.
+    // The library only renders its first page of results, so search for the conversation.
     cy.get('[qa-id=library-search-input]', { timeout: 10000 }).type('Stolen faces');
 
     // User clicks on a conversation

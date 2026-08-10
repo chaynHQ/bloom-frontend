@@ -19,7 +19,7 @@ describe('Register without access code', () => {
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
     cy.get('a').contains('Skip').click();
     cy.wait(2000); // Waiting for dom to rerender
-    // Skip lands on the library, where each result is an anchor card rather than an h3.
+    // Skip lands on the library, where each result is an anchor card.
     cy.get('a[aria-label="Dating, boundaries, and relationships"]', { timeout: 8000 }).click();
     cy.get('h3').contains('What are boundaries').click();
   });

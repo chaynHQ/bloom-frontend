@@ -1,12 +1,10 @@
-// Selectors lean on the semantic hooks the cards expose (`data-kind`, `data-format`,
-// `data-progress`) rather than on badge wording, so these assertions survive copy changes.
+// Selectors use the semantic hooks the cards expose: `data-kind`, `data-format`, `data-progress`.
 
 const PAGE_SIZE = 8; // must match PAGE_SIZE in components/pages/LibraryPage.tsx
 
 const cards = () => cy.get('[qa-id=library-card]');
 
-// Assert on the rendered count with a retrying `should`, so we wait for the filtered re-render
-// rather than reading a stale number.
+// A retrying `should`, so the assertion waits for the filtered re-render.
 const expectCount = (assert: (count: number) => void) =>
   cy.get('[qa-id=library-results-count]').should(($el) => assert(parseInt($el.text(), 10)));
 
@@ -16,8 +14,8 @@ const readCount = () =>
     .invoke('text')
     .then((text) => parseInt(text, 10));
 
-// The sidebar filter groups render twice (mobile drawer + desktop sidebar), so always reach for
-// the visible copy. Returns the <label> row, whose checkbox carries the disabled state.
+// Returns the <label> row, whose checkbox carries the disabled state. The group is hidden behind
+// a toggle below md, so only the on-screen copy is reachable.
 const filterRow = (label: string) => cy.get('label:visible').contains(label).closest('label');
 
 const waitForLibrary = () => {
@@ -71,7 +69,7 @@ describe('Library page', () => {
 
   describe('Filtering', () => {
     beforeEach(() => {
-      // Desktop width keeps the filter checkboxes on-screen rather than behind the mobile toggle.
+      // Desktop width keeps the filter checkboxes on-screen.
       cy.viewport(1440, 900);
       cy.visit('/library');
       waitForLibrary();
@@ -88,7 +86,6 @@ describe('Library page', () => {
     });
 
     it('resets pagination to the first page when a filter changes', () => {
-      // Otherwise "Load more" then a narrowing filter leaves an oversized grid.
       cy.contains('button', 'Load more').click();
       cards().should('have.length', PAGE_SIZE * 2);
 
@@ -126,8 +123,6 @@ describe('Library page', () => {
     });
 
     it('disables and clears the session-only filters while "Courses" is selected', () => {
-      // Format and length describe a single session, so alongside "Courses" they would only ever
-      // build a combination that returns nothing.
       filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       cy.get('[qa-id=library-kind-course]').click();
@@ -145,7 +140,7 @@ describe('Library page', () => {
         expectCount((count) => expect(count).to.be.lessThan(all));
         cy.get('a[aria-label="What is somatics?"]').should('exist');
 
-        // Somatics content is all single sessions, so the same search under "Courses" is empty.
+        // Somatics content is all single sessions.
         cy.get('[qa-id=library-kind-course]').click();
         cy.contains('No matches for those filters').should('be.visible');
         cards().should('have.length', 0);
@@ -167,8 +162,7 @@ describe('Library page', () => {
     });
 
     it('surfaces individual course sessions alongside courses and standalone resources', () => {
-      // A lesson nested inside a course, not a standalone resource — its href is scoped under
-      // the parent course, which is what distinguishes the two in the results.
+      // A lesson nested inside a course: its href is scoped under the parent course.
       cy.get('[qa-id=library-search-input]').type('Introduction and what you should know');
 
       cards().should('have.length.greaterThan', 0);
@@ -178,8 +172,7 @@ describe('Library page', () => {
         .find('a[href*="/courses/"]')
         .should('exist');
 
-      // Storyblok gives course lessons no duration, so where a standalone session reports its
-      // length, a lesson names the course it belongs to instead of showing an empty meta row.
+      // Course lessons have no duration, so they name their course where a session reports length.
       cards().first().should('contain', 'Part of Recovering from toxic and abusive relationships');
     });
   });
@@ -209,7 +202,7 @@ describe('Library page', () => {
     it('marks a completed session as Completed and its parent course as Started', () => {
       cy.viewport(1440, 900);
 
-      // Work through a real session so progress is written by the app rather than stubbed.
+      // Work through a real session so progress is written by the app.
       cy.visit('/courses/healing-from-sexual-trauma');
       cy.get('a[href*="what-is-sexual-trauma"]', { timeout: 10000 }).first().click();
       cy.get('h1', { timeout: 10000 }).should('contain', 'What is sexual trauma?');

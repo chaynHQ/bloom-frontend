@@ -1,12 +1,11 @@
 import { expect } from '@jest/globals';
-import { ISbStoryData } from '@storyblok/react/rsc';
 import { renderHook } from '@testing-library/react';
 import { useLocale } from 'next-intl';
 
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import type { LibraryStories } from '@/lib/utils/libraryData';
+import type { LibraryStories, LibraryStory } from '@/lib/utils/libraryData';
 import { useLibraryItems } from './useLibraryItems';
 
 jest.mock('next-intl', () => ({ useLocale: jest.fn() }));
@@ -16,8 +15,8 @@ jest.mock('@/lib/hooks/useCookieReferralPartner', () => ({
   useCookieReferralPartner: jest.fn(),
 }));
 
-// The slices useLibraryItems reads, keyed the way `useTypedSelector(state => state.x)` reaches
-// them. Each test supplies only what it cares about; the rest is an empty, logged-out user.
+// The slices useLibraryItems reads. Each test supplies only what it cares about; the rest is an
+// empty, logged-out user.
 interface State {
   user: { id: string | null; authStateLoading: boolean };
   partnerAccesses: { partner: { name: string } }[];
@@ -26,15 +25,11 @@ interface State {
   resources: { storyblokUuid: string; completed: boolean }[];
 }
 
-// A lesson's parent course is read from its path, not from a `content.course` uuid — so the
-// fixtures below mirror the real story tree: `courses/<course>/<lesson>`.
+// A lesson's parent course is read from its path, so the fixtures mirror the real story tree.
 const COURSE_SLUG = 'courses/a-course';
 
-// A Storyblok story trimmed to the fields the hook reads. Public and English by default, so each
-// test only states the thing it is actually about.
-const story = (
-  overrides: Partial<ISbStoryData['content']> & { uuid?: string; full_slug?: string } = {},
-) => {
+// A Storyblok story trimmed to the fields the hook reads. Public and English by default.
+const story = (overrides: Record<string, unknown> & { uuid?: string; full_slug?: string } = {}) => {
   const { uuid = 'story-uuid', full_slug = 'shorts/a-short', ...content } = overrides;
   return {
     uuid,
@@ -47,13 +42,12 @@ const story = (
       themes: ['healing-journey'],
       ...content,
     },
-  } as unknown as ISbStoryData;
+  } as unknown as LibraryStory;
 };
 
-// Storyblok returns course slugs with a trailing slash and lesson slugs without one; the fixtures
-// keep that quirk so the normalisation is actually exercised.
+// Storyblok returns course slugs with a trailing slash and lesson slugs without one.
 const courseStory = (
-  overrides: Partial<ISbStoryData['content']> & { uuid?: string; full_slug?: string } = {},
+  overrides: Record<string, unknown> & { uuid?: string; full_slug?: string } = {},
 ) =>
   story({
     uuid: 'course-uuid',
@@ -64,7 +58,7 @@ const courseStory = (
   });
 
 const lessonStory = (
-  overrides: Partial<ISbStoryData['content']> & { uuid?: string; full_slug?: string } = {},
+  overrides: Record<string, unknown> & { uuid?: string; full_slug?: string } = {},
 ) =>
   story({
     uuid: 'lesson-uuid',
@@ -104,15 +98,14 @@ const renderLibrary = (stories: Partial<LibraryStories>, state: Partial<State> =
 
 const titles = (items: { title: string }[]) => items.map((item) => item.title);
 
-// A signed-in user with an access to the named partner. Note they are NOT also granted 'public'
-// access — see userHasAccessToPartnerContent — so a partner user cannot see Public-only content.
+// A signed-in user with access to the named partner. They are not also granted 'public' access —
+// see userHasAccessToPartnerContent.
 const asPartnerUser = (partner: string): Partial<State> => ({
   user: { id: 'user-1', authStateLoading: false },
   partnerAccesses: [{ partner: { name: partner } }],
 });
 
-// A signed-in user with no partner: they see Public content, which is what the progress tests are
-// about (progress is keyed off the Storyblok uuid, whatever the content is).
+// A signed-in user with no partner, so they see Public content.
 const asPublicUser: Partial<State> = {
   user: { id: 'user-1', authStateLoading: false },
   partnerAccesses: [],
@@ -131,9 +124,7 @@ describe('useLibraryItems partner access', () => {
   });
   // Shares COURSE_SLUG, so the lessons below are its children.
   const bumbleCourse = courseStory({ name: 'A Bumble course', included_for_partners: ['Bumble'] });
-  // A lesson of the Bumble course whose OWN entry is unrestricted — the shared filter reads an
-  // empty `included_for_partners` as "public", so the parent-course gate is the only thing
-  // standing between it and a public user. Seven real lessons look exactly like this.
+  // A lesson of the Bumble course whose own entry is unrestricted.
   const bumbleLesson = lessonStory({ name: 'A Bumble lesson', included_for_partners: [] });
 
   it('hides a partner-restricted course from a public user', () => {
@@ -145,8 +136,7 @@ describe('useLibraryItems partner access', () => {
   it('shows a partner-restricted course to a user with that partner access', () => {
     const items = renderLibrary({ courses: [publicCourse, bumbleCourse] }, asPartnerUser('Bumble'));
 
-    // The partner user sees their own course. They do NOT see the Public-only one: partner users
-    // are not granted 'public' access (see userHasAccessToPartnerContent).
+    // The partner user sees their own course, but not the Public-only one.
     expect(titles(items)).toEqual(['A Bumble course']);
   });
 
@@ -168,9 +158,7 @@ describe('useLibraryItems partner access', () => {
     );
   });
 
-  // Storyblok's `content.course` uuid is hand-set and is already wrong for one lesson in the CMS.
-  // The gate reads the parent from the story path instead, so a mis-set uuid can neither leak a
-  // restricted lesson nor mislabel a card.
+  // The gate reads the parent from the story path, not from `content.course`.
   it('ignores a content.course uuid that points at a different, visible course', () => {
     const lesson = lessonStory({
       name: 'A Bumble lesson',
@@ -183,7 +171,7 @@ describe('useLibraryItems partner access', () => {
       courseSessions: [lesson],
     });
 
-    // publicCourse is visible, but the lesson lives under the Bumble course, so it stays hidden.
+    // publicCourse is visible, but the lesson lives under the Bumble course.
     expect(titles(items)).toEqual(['A public course']);
   });
 

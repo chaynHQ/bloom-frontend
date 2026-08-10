@@ -10,14 +10,13 @@ import {
   storyToLibraryItem,
   type LibraryItem,
   type LibraryStories,
+  type LibraryStory,
 } from '@/lib/utils/libraryData';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 
-// Progress records in the courses/resources Redux slices share this shape, both keyed off the
-// Storyblok uuid, which is a LibraryItem's id.
+// Progress records in the courses/resources Redux slices, keyed off the Storyblok uuid.
 interface ProgressRecord {
   storyblokUuid: string;
   completed: boolean;
@@ -29,8 +28,8 @@ function withProgress(item: LibraryItem, progress: ProgressRecord[]): LibraryIte
   return { ...item, progress: record.completed ? 'completed' : 'started' };
 }
 
-// Turns the server-fetched stories into display-ready LibraryItems: filters by locale and the
-// user's partner access (anonymous users see public content), then attaches progress from Redux.
+// Turns the server-fetched stories into LibraryItems: filters by locale and the user's partner
+// access, then attaches progress from Redux.
 export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
@@ -52,7 +51,7 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       referralPartner,
       userId,
     );
-    const accessible = (list: ISbStoryData[]) =>
+    const accessible = (list: LibraryStory[]) =>
       filterStoriesForLocaleAndPartnerAccess(list, locale, userPartners);
 
     const courseStories = accessible(stories.courses).filter((story) => !story.content.coming_soon);
@@ -60,12 +59,11 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       withProgress(storyToLibraryItem(story, locale), coursesProgress),
     );
 
-    // A lesson is only browsable when its parent course is. Keyed by slug rather than the
-    // unreliable `content.course` uuid — see parentCourseSlug — and supplies the parent title.
+    // A lesson is only browsable when its parent course is. Keyed by slug — see parentCourseSlug.
     const visibleCourseTitles = new Map(
-      courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name as string]),
+      courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name]),
     );
-    // Lesson completion is tracked per-course, nested under each course's `sessions`.
+    // Lesson completion is nested under each course's `sessions`.
     const sessionProgress = coursesProgress.flatMap((course) => course.sessions ?? []);
     const courseSessionItems = accessible(stories.courseSessions)
       .filter((story) => !story.content.coming_soon)

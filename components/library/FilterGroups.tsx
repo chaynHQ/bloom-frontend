@@ -5,12 +5,10 @@ import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 const groupStyle = { mb: 4, '&:last-of-type': { mb: 0 } } as const;
 
-// No margin below: the first filter row's own top padding supplies the gap.
 const groupTitleStyle = { fontWeight: 600, fontSize: '0.875rem' } as const;
 
-// The global MuiFormControlLabel override in styles/theme.ts styles the checkbox via a
-// `& .MuiCheckbox-root` descendant selector, which out-specifies an `sx` on the Checkbox itself —
-// so the row styling has to be applied from the FormControlLabel to land.
+// The global MuiFormControlLabel override in styles/theme.ts reaches the checkbox with a
+// `& .MuiCheckbox-root` selector, which out-specifies an `sx` on the Checkbox itself.
 const checkRowStyle = {
   display: 'flex',
   justifyContent: 'space-between',
@@ -29,7 +27,7 @@ const checkRowStyle = {
   },
 } as const;
 
-// A titled group of filter rows. Disabled greys the heading while its rows are inert.
+// A titled group of filter rows.
 function FilterGroup({
   title,
   disabled,
@@ -71,7 +69,7 @@ function CheckRow({
   );
 }
 
-// The "Content type" + "Length" checkbox groups, rendered once per breakpoint by the sidebar.
+// The "Content type" and "Length" checkbox groups.
 export function FilterGroups({
   formatOptions,
   formats,
@@ -85,7 +83,7 @@ export function FilterGroups({
   setFormats: Dispatch<SetStateAction<Format[]>>;
   lengths: LengthBucket[];
   setLengths: Dispatch<SetStateAction<LengthBucket[]>>;
-  // True while "Courses" is selected: neither group describes a course, so both are inert.
+  // True while "Courses" is selected.
   disabled: boolean;
 }) {
   const t = useTranslations('Library');

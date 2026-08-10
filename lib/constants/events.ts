@@ -70,8 +70,6 @@ export const THERAPY_VIDEO_LINK_CLICKED = 'THERAPY_VIDEO_LINK_CLICKED';
 export const COURSE_OVERVIEW_VIEWED = 'COURSE_OVERVIEW_VIEWED';
 
 // LIBRARY EVENTS
-// Named for the library rather than reusing the retired COURSE_LIST_VIEWED, so the two remain
-// distinguishable in reporting.
 export const LIBRARY_VIEWED = 'LIBRARY_VIEWED';
 export const LIBRARY_SEARCHED = 'LIBRARY_SEARCHED';
 export const LIBRARY_FILTERED = 'LIBRARY_FILTERED';

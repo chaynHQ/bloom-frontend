@@ -36,8 +36,7 @@ const headerContainerStyle = {
   background: theme.palette.bloomGradientSoft,
 };
 
-// Fills the remaining band height so the heading block stays centred whether or not a research
-// banner or breadcrumb sits above it.
+// Fills the remaining band height, centring the heading block under anything above it.
 const centerWrapStyle = {
   flexGrow: 1,
   display: 'flex',

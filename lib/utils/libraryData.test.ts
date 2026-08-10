@@ -1,4 +1,3 @@
-import { ISbStoryData } from '@storyblok/react/rsc';
 import {
   bucketOf,
   filterLibraryItems,
@@ -6,18 +5,20 @@ import {
   parentCourseSlug,
   storyToLibraryItem,
   toggle,
+  toLibraryStory,
   type LibraryFilters,
   type LibraryItem,
+  type LibraryStory,
 } from './libraryData';
 
-// A Storyblok story, trimmed to the fields the library reads. `content` is deliberately loose:
-// the real payloads differ per component, and that variation is what these tests are about.
+// A Storyblok story, trimmed to the fields the library reads. `content` is loose: the real
+// payloads differ per component.
 const story = (content: Record<string, unknown>, full_slug = 'shorts/what-are-boundaries') =>
   ({
     uuid: 'uuid-1',
     full_slug,
     content: { name: 'What are boundaries', ...content },
-  }) as unknown as ISbStoryData;
+  }) as unknown as LibraryStory;
 
 describe('storyToLibraryItem', () => {
   describe('courses', () => {
@@ -36,7 +37,7 @@ describe('storyToLibraryItem', () => {
 
       expect(item.kind).toBe('course');
       expect(item.sessionCount).toBe(5);
-      // A course has no format or duration of its own — the filters rely on that.
+      // A course has no format or duration of its own.
       expect(item.format).toBeUndefined();
       expect(item.minutes).toBeUndefined();
     });
@@ -53,7 +54,6 @@ describe('storyToLibraryItem', () => {
       ['resource_conversation', 'audio'],
       ['resource_short_video', 'video'],
       ['resource_single_video', 'video'],
-      // Course lessons are video-led, and are mapped explicitly rather than falling through.
       ['Session', 'video'],
       ['session_iba', 'video'],
     ])('maps the %s component to the %s format', (component, format) => {
@@ -111,6 +111,69 @@ describe('storyToLibraryItem', () => {
       '/shorts/what-are-boundaries',
     );
   });
+
+  it('drops the trailing slash Storyblok puts on course slugs, which Next would only redirect', () => {
+    expect(
+      storyToLibraryItem(story({ component: 'Course' }, 'courses/managing-anxiety/'), 'en').href,
+    ).toBe('/courses/managing-anxiety');
+    expect(
+      storyToLibraryItem(story({ component: 'Course' }, 'de/courses/managing-anxiety/'), 'de').href,
+    ).toBe('/courses/managing-anxiety');
+  });
+});
+
+describe('toLibraryStory', () => {
+  it('keeps only the fields the library reads', () => {
+    const projected = toLibraryStory({
+      uuid: 'uuid-1',
+      full_slug: 'courses/managing-anxiety/',
+      id: 12345,
+      content: {
+        name: 'Managing anxiety',
+        component: 'Course',
+        description: 'A course.',
+        themes: ['healing-journey'],
+        duration: '12',
+        languages: ['default'],
+        included_for_partners: ['Public'],
+        coming_soon: false,
+        weeks: [{ sessions: ['session-uuid'] }],
+        video_transcript: { type: 'doc', content: ['…a very large document…'] },
+        bonus: ['…blocks…'],
+        activity: ['…blocks…'],
+        seo_description: 'Dropped too.',
+      },
+    } as unknown as Parameters<typeof toLibraryStory>[0]);
+
+    expect(projected).toEqual({
+      uuid: 'uuid-1',
+      full_slug: 'courses/managing-anxiety/',
+      content: {
+        name: 'Managing anxiety',
+        component: 'Course',
+        description: 'A course.',
+        themes: ['healing-journey'],
+        duration: '12',
+        languages: ['default'],
+        included_for_partners: ['Public'],
+        coming_soon: false,
+        // Session uuids only.
+        weeks: [{ sessions: ['session-uuid'] }],
+      },
+    });
+  });
+
+  it('survives a story missing the optional fields', () => {
+    const projected = toLibraryStory({
+      uuid: 'uuid-2',
+      full_slug: 'shorts/a-short',
+      content: { name: 'A short', component: 'resource_short_video' },
+    } as unknown as Parameters<typeof toLibraryStory>[0]);
+
+    expect(projected.content.name).toBe('A short');
+    expect(projected.content.weeks).toBeUndefined();
+    expect(storyToLibraryItem(projected, 'en').themes).toEqual(['healing-journey']);
+  });
 });
 
 describe('parentCourseSlug', () => {
@@ -121,8 +184,8 @@ describe('parentCourseSlug', () => {
   });
 
   it('normalises the slashes Storyblok is inconsistent about', () => {
-    // Courses come back as `courses/managing-anxiety/`, lessons without the trailing slash, and
-    // either can arrive with a leading one. The two must still meet in the middle.
+    // Courses come back with a trailing slash, lessons without one, and either can arrive with a
+    // leading one.
     expect(parentCourseSlug('/courses/managing-anxiety/what-is-anxiety/')).toBe(
       'courses/managing-anxiety',
     );
@@ -178,7 +241,7 @@ describe('filterLibraryItems', () => {
   const course = item({ id: 'course', kind: 'course', format: undefined, minutes: undefined });
   const audio = item({ id: 'audio', format: 'audio', minutes: 25 });
   const video = item({ id: 'video', format: 'video', minutes: 5 });
-  // Course lessons come out of Storyblok with no duration at all.
+  // Course lessons come out of Storyblok with no duration.
   const lesson = item({ id: 'lesson', minutes: undefined, courseTitle: 'Managing anxiety' });
 
   const items = [course, audio, video, lesson];
@@ -207,7 +270,7 @@ describe('filterLibraryItems', () => {
   });
 
   it('excludes items of unknown length whenever a length is chosen', () => {
-    // The lesson is a video and would match `formats: ['video']`, but no bucket can claim it.
+    // The lesson is a video, but no bucket can claim it.
     expect(idsFrom({ lengths: ['under10'] })).toEqual(['video']);
     expect(idsFrom({ lengths: ['over20'] })).toEqual(['audio']);
     expect(idsFrom({ lengths: ['under10', 'over20'] })).toEqual(['audio', 'video']);
@@ -216,7 +279,6 @@ describe('filterLibraryItems', () => {
 
   it('combines groups with AND', () => {
     expect(idsFrom({ formats: ['video'], lengths: ['under10'] })).toEqual(['video']);
-    // A course can never satisfy a session-only filter, so the combination returns nothing.
     expect(idsFrom({ kind: 'course', formats: ['video'] })).toEqual([]);
   });
 
@@ -235,5 +297,30 @@ describe('filterLibraryItems', () => {
     expect(filterLibraryItems(both, { ...noFilters, keyword: '  ANXIETY ' })).toEqual([anxiety]);
     expect(filterLibraryItems(both, { ...noFilters, keyword: 'calm' })).toEqual([boundaries]);
     expect(filterLibraryItems(both, { ...noFilters, keyword: 'nothing here' })).toEqual([]);
+  });
+
+  it('puts title matches ahead of description-only ones', () => {
+    // Storyblok order would put the description match first.
+    const mentions = item({ id: 'mentions', title: 'Feeling calm', description: 'On boundaries' });
+    const named = item({ id: 'named', title: 'What are boundaries', description: '' });
+
+    expect(
+      filterLibraryItems([mentions, named], { ...noFilters, keyword: 'boundaries' }).map(
+        (i) => i.id,
+      ),
+    ).toEqual(['named', 'mentions']);
+  });
+
+  it('leaves the order alone when there is no keyword', () => {
+    expect(idsFrom({ kind: 'session' })).toEqual(['audio', 'video', 'lesson']);
+  });
+
+  it('keeps Storyblok order among items that match the keyword equally', () => {
+    const first = item({ id: 'first', title: 'Boundaries at work' });
+    const second = item({ id: 'second', title: 'Boundaries with family' });
+
+    expect(
+      filterLibraryItems([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
+    ).toEqual(['first', 'second']);
   });
 });

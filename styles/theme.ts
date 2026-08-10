@@ -40,8 +40,8 @@ declare module '@mui/material/styles' {
     supportArrowPanel?: string;
   }
 
-  // The heading font with its RTL fallback, for heading styling on non-heading elements. Use as
-  // `sx={{ fontFamily: 'headingFontFamily' }}`; the raw var has no Arabic glyph coverage.
+  // The heading font with its RTL fallback, for use as `sx={{ fontFamily: 'headingFontFamily' }}`
+  // on non-heading elements.
   interface TypographyVariants {
     headingFontFamily: string;
   }

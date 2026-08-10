@@ -26,9 +26,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-// The locale segment of a prefixed path in the redirects below, kept as one constant so every
-// redirect covers the same locales. Mirrors ALL_LOCALES in i18n/routing.ts: ar and tr are hidden
-// in production but routable on preview, so locale-prefixed redirects must handle them there.
+// The locale segment of the prefixed paths below. Mirrors ALL_LOCALES in i18n/routing.ts.
 const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
 
 module.exports = withBundleAnalyzer(
@@ -89,8 +87,7 @@ module.exports = withBundleAnalyzer(
             destination: '/library',
             permanent: false,
           },
-          // The Courses hub was unified into the Library; redirect the old landing route
-          // (individual course pages under /courses/[slug] are unaffected).
+          // The old Courses landing route; individual course pages are unaffected.
           {
             source: '/courses',
             destination: '/library',
