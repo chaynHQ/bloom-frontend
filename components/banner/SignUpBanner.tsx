@@ -8,7 +8,7 @@ import logEvent from '@/lib/utils/logEvent';
 import theme from '@/styles/theme';
 import { Button, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const containerStyle = {
   background: theme.palette.bloomGradient,
@@ -21,12 +21,20 @@ export const SignUpBanner = () => {
     (state) => state.user.authStateLoading || state.user.loading,
   );
   const referralPartner = useCookieReferralPartner();
+  // See ScrollToSignUpButton: `userLoading` can flip mid-hydration, so the banner holds the
+  // server-rendered output until after mount.
+  const [isMounted, setIsMounted] = useState(false);
 
   const registerPath = useMemo(() => {
     return referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register';
   }, [referralPartner]);
 
-  if (userLoading) {
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted || userLoading) {
     return null;
   }
 

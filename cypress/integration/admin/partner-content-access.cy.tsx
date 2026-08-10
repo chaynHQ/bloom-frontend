@@ -14,14 +14,14 @@ describe('users signing up through partner channels can properly access partner-
 
   const expectFound = (title: string) => {
     searchLibraryFor(title);
-    cy.get('[data-testid=library-card]').should('have.length.greaterThan', 0);
-    cy.contains('[data-testid=library-card]', title).should('exist');
+    cy.get('[qa-id=library-card]').should('have.length.greaterThan', 0);
+    cy.contains('[qa-id=library-card]', title).should('exist');
   };
 
   const expectNotFound = (title: string) => {
     searchLibraryFor(title);
     cy.get('[qa-id=library-results-count]').should('contain', '0 results');
-    cy.get('[data-testid=library-card]').should('not.exist');
+    cy.get('[qa-id=library-card]').should('not.exist');
   };
 
   beforeEach(() => {
