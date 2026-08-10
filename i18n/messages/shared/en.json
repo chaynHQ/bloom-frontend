@@ -60,9 +60,9 @@
     },
     "notFound": {
       "title": "404 - Page not found",
-      "authenticatedDescription": "This page could not be found. Check the url or go back to the courses page.",
+      "authenticatedDescription": "This page could not be found. Check the url or go back to the library page.",
       "unauthenticatedDescription": "This page could not be found. Check the url or go back to the welcome page.",
-      "authenticatedRedirectButton": "Back to courses page",
+      "authenticatedRedirectButton": "Back to library page",
       "unauthenticatedRedirectButton": "Back to welcome page"
     },
     "alt": {

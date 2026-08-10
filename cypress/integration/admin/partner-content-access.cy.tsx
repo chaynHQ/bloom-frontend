@@ -1,13 +1,34 @@
 describe('users signing up through partner channels can properly access partner-specific course content', () => {
   const password = 'testtesttest';
 
-  const bumbleSpecificCourseName = /Dating, boundaries, and Relationships/i;
+  const bumbleSpecificCourseName = 'Dating, boundaries, and relationships';
+  // A lesson inside that course, gated on its parent course as well as its own restriction.
+  const bumbleSpecificLessonName = 'Culture, patriarchy, and boundaries';
+
+  // The library renders only its first page, so search first and read the result count.
+  const searchLibraryFor = (title: string) => {
+    cy.visit('/library');
+    cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');
+    cy.get('[qa-id=library-search-input]').clear().type(title);
+  };
+
+  const expectFound = (title: string) => {
+    searchLibraryFor(title);
+    cy.get('[qa-id=library-card]').should('have.length.greaterThan', 0);
+    cy.contains('[qa-id=library-card]', title).should('exist');
+  };
+
+  const expectNotFound = (title: string) => {
+    searchLibraryFor(title);
+    cy.get('[qa-id=library-results-count]').should('contain', '0 results');
+    cy.get('[qa-id=library-card]').should('not.exist');
+  };
 
   beforeEach(() => {
     cy.cleanUpTestState();
   });
 
-  it('Bumble-specific courses and resources exclusively exist on the /courses page for Bumble users.', () => {
+  it('Bumble-specific courses and their lessons are visible in the library for Bumble users.', () => {
     const username_partner = Cypress.uniqueEmail('cypresstestemailpartner');
 
     //log in as a Bumble user and see if the course appears
@@ -21,22 +42,22 @@ describe('users signing up through partner channels can properly access partner-
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.waitForAuthenticatedApp();
 
-    cy.visit('/courses');
-
     cy.waitForAuthenticatedApp();
-    cy.get('h3').contains(bumbleSpecificCourseName).should('exist');
+
+    expectFound(bumbleSpecificCourseName);
+    expectFound(bumbleSpecificLessonName);
   });
 
-  it('Non-parter users should not see Partner-specific courses and resources', () => {
+  it('Non-partner users should not see partner-specific courses, or the lessons inside them', () => {
     const username_regular = Cypress.uniqueEmail('cypresstestemailRegular');
 
     cy.createUser({ emailInput: username_regular, passwordInput: password });
     cy.logInWithEmailAndPassword(username_regular, password);
-    cy.visit('/courses');
-    // Without this the negative assertion below can pass for the wrong reason — an
-    // unloaded user has no partner content either.
+
     cy.waitForAuthenticatedApp();
-    cy.get('h3').contains(bumbleSpecificCourseName).should('not.exist');
+
+    expectNotFound(bumbleSpecificCourseName);
+    expectNotFound(bumbleSpecificLessonName);
   });
 
   afterEach(() => {

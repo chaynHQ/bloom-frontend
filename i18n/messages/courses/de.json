@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Unsere Kurse",
-    "introduction": "Die Bloom-Kurse bieten Informationen, Hilfsmittel und bestärkende Worte an, die spezifisch darauf angepasst sind, Traumata zu bewältigen. Sie ermutigen uns zu lernen und zu reflektieren und das, was wir erlebt haben einschließlich der Auswirkungen, die das auf uns hatte, in einem sicheren und ermutigendem Rahmen zu verarbeiten. ",
     "session": "Session",
     "course": "Kurs",
-    "courses": "Kurse",
     "expand": "Erweitern",
     "expandSummary": "Zusammenfassung erweitern für",
     "navigateToSession": "Zur Session navigieren -",
     "navigateToCourse": "Zum Kurs navigieren -",
-    "noCourses": "Zur Zeit sind keine Kurse verfügbar. Falls Dir das nicht richtig erscheint, kontaktiere das Bloom-Team.",
     "courseDetail": {
       "introductionTitle": "Einführung in den Kurs",
       "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript</transcriptLink>"
@@ -54,18 +50,12 @@
     },
     "accessGuard": {
       "title": "Kursinhalte nicht verfügbar",
-      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen</contactLink>."
+      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zur <contactLink>Bibliothek</contactLink>."
     },
     "errors": {
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
     "backToCourse": "Zurück zum Kurs",
-    "backToCourses": "Zurück zu Kursen",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somatik: Körperbasierte Heilung",
-    "somaticsDescription": "Entdecken Sie, wie sanfte, körperbasierte Ansätze die Heilung von Gewalt, Stress und Angst unterstützen können. Diese Ressourcensammlung bietet klare, praktische Anleitungen, die uns helfen, uns wieder mit unserem Körper zu verbinden, Resilienz aufzubauen und zu erkunden, wie sich Sicherheit und Leichtigkeit anfühlen können."
+    "backToLibrary": "Zurück zur Bibliothek"
   }
 }

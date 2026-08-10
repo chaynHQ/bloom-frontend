@@ -4,7 +4,7 @@ import DirectionalIcon from '@/components/common/DirectionalIcon';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { ResourceSingleVideo } from '@/components/resources/ResourceSingleVideo';
 import { Link as i18nLink } from '@/i18n/routing';
-import { PROGRESS_STATUS, STORYBLOK_TAGS } from '@/lib/constants/enums';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
@@ -53,7 +53,6 @@ interface ResourceSingleVideoHeaderProps {
   references: StoryblokReferenceProps[];
   eventData: { [key: string]: any };
   nextResourceHref: string | undefined;
-  tags: STORYBLOK_TAGS[];
 }
 
 export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps) => {
@@ -68,22 +67,19 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
     references,
     eventData,
     nextResourceHref,
-    tags,
   } = props;
   const t = useTranslations('Resources');
-
-  const hasSomaticsTag = tags.includes(STORYBLOK_TAGS.SOMATICS);
 
   return (
     <Container sx={{ background: theme.palette.bloomGradient }}>
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}
-        href={hasSomaticsTag ? '/courses?section=somatics' : '/courses'}
+        href="/library"
         component={i18nLink}
         size="small"
       >
-        {t(hasSomaticsTag ? 'backToSomatics' : 'backToVideos')}
+        {t('backToLibrary')}
       </Button>
       <Box
         sx={{

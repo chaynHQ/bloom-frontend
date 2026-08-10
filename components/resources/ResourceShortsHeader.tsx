@@ -79,11 +79,11 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}
-        href="/courses?section=shorts"
+        href="/library"
         component={i18nLink}
         size="small"
       >
-        {t('backToShorts')}
+        {t('backToLibrary')}
       </Button>
       <Box sx={headerStyle}>
         <Box sx={headerLeftStyles}>

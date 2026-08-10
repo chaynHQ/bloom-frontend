@@ -9,7 +9,7 @@ describe.only('A course session user', () => {
   });
 
   it('Should navigate to a session and complete it', () => {
-    cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 8000 }).should('exist').click(); //navigate to courses
+    cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 8000 }).should('exist').click(); //navigate to the library
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
       timeout: 8000,

@@ -1,16 +1,16 @@
 const welcomePageUrl = 'welcome';
 const invalidPartnerPageUrl = `${welcomePageUrl}/invalid-partner`;
-const coursesPageUrl = 'courses';
+const libraryPageUrl = 'library';
 
 describe('Welcome page should', () => {
   before(() => {
     cy.cleanUpTestState();
   });
 
-  describe('Redirect to courses page', () => {
+  describe('Redirect to library page', () => {
     it('for a non-logged in user visiting page without partner', () => {
       cy.visit(welcomePageUrl);
-      cy.checkPageUrl(coursesPageUrl);
+      cy.checkPageUrl(libraryPageUrl);
     });
     describe('for a public logged in user', () => {
       const email = Cypress.uniqueEmail();
@@ -23,7 +23,7 @@ describe('Welcome page should', () => {
       });
       it('visiting page without partner', () => {
         cy.visit(welcomePageUrl);
-        cy.checkPageUrl(coursesPageUrl);
+        cy.checkPageUrl(libraryPageUrl);
       });
       after(() => {
         cy.logout();

@@ -61,9 +61,9 @@
     },
     "notFound": {
       "title": "404 - Page introuvable",
-      "authenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URLou retournez à la page des cours.",
+      "authenticatedDescription": "Cette page n’a pas pu être trouvée. Vérifiez l’URL ou retournez à la page de la bibliothèque.",
       "unauthenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URL ou retournez à la page d'accueil.",
-      "authenticatedRedirectButton": "Retour à la page des cours.",
+      "authenticatedRedirectButton": "Retour à la page de la bibliothèque.",
       "unauthenticatedRedirectButton": "Retour à la page d'accueil"
     },
     "alt": {

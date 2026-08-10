@@ -30,7 +30,7 @@ export default function ResetPasswordPage() {
 
   const headerProps = {
     partnerLogoSrc: bloomLogo,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoAlt: 'alt.bloomLogo',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
     showWelcomeSubtext: true,

@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Humare courses",
-    "introduction": "Bloom ke courses humein trauma se nipatne ke liye tailored jankaari, takneekein aur positive shabd dete hain. Vo humein ek surakshit aur empowering space dete hain jahan humein seekhne, pratibimb (reflect) karne aur process karne mein protsahit kiya jata hai. ",
     "session": "Session",
     "course": "Course",
-    "courses": "Courses",
     "expand": "Vistaar karein",
     "expandSummary": "Summary vistaar karein",
     "navigateToSession": "Session par leke jaiye",
     "navigateToCourse": "Course pe leke jaiye",
-    "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",
       "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
@@ -54,18 +50,12 @@
     },
     "accessGuard": {
       "title": "Yeh course content uplabhd nahi hai.",
-      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
+      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>Library</contactLink> par vapas jaiye."
     },
     "errors": {
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
     "backToCourse": "Course par vapas jayein.",
-    "backToCourses": "Courses par vapas jayein.",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somatics: Sharir-aadhārit upachaar",
-    "somaticsDescription": "Jaanein ki kaise komal, sharir-aadhārit upachaar hinsa, tanav aur darr se upachaar mein madad kar sakte hain. Sansadhanon ka yah sangrah hamare sharir se phir se judne, lachilepan ka nirmaan karne aur suraksha tatha suvidha ka ehsaas kaisa hota hai, yah samajhne mein hamari madad karne ke liye spasht, vyavahārik mārgdarshan pradan karta hai."
+    "backToLibrary": "Library par vapas jayein."
   }
 }

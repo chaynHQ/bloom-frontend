@@ -1,9 +1,6 @@
 {
   "Resources": {
-    "backToConversations": "Conversations par vaapas jaaen",
-    "backToShorts": "Clips par vaapas jaaen",
-    "backToVideos": "Videos par wapas jaein",
-    "backToSomatics": "Somatics par wapas jaein",
+    "backToLibrary": "Library par vapas jayein.",
     "nextVideoButtonLabel": "Agla video",
     "nextConversationButtonLabel": "Agli conversation",
     "nextSessionButtonLabel": "Agla session",

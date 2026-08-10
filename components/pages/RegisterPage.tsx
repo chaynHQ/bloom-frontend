@@ -135,12 +135,16 @@ export default function RegisterPage() {
     }
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
+  // Without a partnership lockup, PartnerHeader renders the translated "Welcome to" line beside
+  // the plain Bloom logo.
+  const partnershipLogo = partnerContent?.partnershipLogo;
+
   const headerProps = {
-    partnerLogoSrc: partnerContent?.partnershipLogo || bloomLogo,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoSrc: partnershipLogo || bloomLogo,
+    partnerLogoAlt: partnershipLogo ? 'alt.welcomeToBloom' : 'alt.bloomLogo',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
-    showWelcomeSubtext: partnerContent === null,
+    showWelcomeSubtext: !partnershipLogo,
   };
   const ExtraContent = (
     <>

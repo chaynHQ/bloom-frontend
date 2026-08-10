@@ -61,9 +61,9 @@
     },
     "notFound": {
       "title": "404 - Seite nicht gefunden",
-      "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",
+      "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Bibliotheksseite.",
       "unauthenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück auf die Startseite.",
-      "authenticatedRedirectButton": "Zurück zur Kursseite",
+      "authenticatedRedirectButton": "Zurück zur Bibliotheksseite",
       "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },
     "alt": {

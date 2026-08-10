@@ -58,12 +58,17 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
+  // See RegisterPage: without a partnership lockup the alt describes the Bloom logo.
+  const partnershipLogo = partnerContent.partnershipLogo;
+
   const headerProps = {
-    partnerLogoSrc: partnerContent.partnershipLogo || bloomLogo,
-    partnerLogoAlt: partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom',
+    partnerLogoSrc: partnershipLogo || bloomLogo,
+    partnerLogoAlt: partnershipLogo
+      ? partnerContent.partnershipLogoAlt || 'alt.welcomeToBloom'
+      : 'alt.bloomLogo',
     imageSrc: partnerContent.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
-    showWelcomeSubtext: partnerContent === null,
+    showWelcomeSubtext: !partnershipLogo,
   };
 
   const router = useRouter();
@@ -156,11 +161,11 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
           component={i18nLink}
           href={
             isLoggedIn
-              ? '/courses'
+              ? '/library'
               : `/auth/register?partner=${partnerContent.name.toLocaleLowerCase()}${codeParam && '&code=' + codeParam}`
           }
         >
-          {t(isLoggedIn ? 'goToCourses' : 'getStarted')}
+          {t(isLoggedIn ? 'goToLibrary' : 'getStarted')}
         </Button>
       </Container>
       {page_sections?.length > 0 &&

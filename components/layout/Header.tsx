@@ -8,6 +8,7 @@ import { TextNode } from '@/lib/types/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
+import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -27,36 +28,49 @@ export interface HeaderProps {
 }
 
 const headerContainerStyle = {
-  minHeight: { xs: 220, lg: 360 },
-  paddingBottom: { xs: '1.5rem !important', md: '5rem !important' },
-  background: {
-    xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
-    md: 'linear-gradient(180deg, #F3D6D8 36.79%, #FFEAE1 73.59%)',
-  },
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: { xs: 300, md: 360, lg: 400 },
+  paddingTop: '2.5rem !important',
+  paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
+  background: theme.palette.bloomGradientSoft,
 };
 
-const headerStyle = { ...rowStyle, alignItems: 'flex-start', gap: { xs: 3, md: 4 } } as const;
+// Fills the remaining band height, centring the heading block under anything above it.
+const centerWrapStyle = {
+  flexGrow: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+} as const;
 
+const headerStyle = {
+  ...rowStyle,
+  flexDirection: { xs: 'column', md: 'row' },
+  alignItems: { xs: 'flex-start', md: 'center' },
+  gap: { xs: 3, md: 5 },
+} as const;
+
+// The illustration sits above the text on mobile, and on the trailing edge on desktop.
 const rightHeaderStyle = {
   position: 'relative',
-  width: { xs: 150, md: 210 },
-  height: { xs: 150, md: 210 },
-  marginInlineStart: { xs: 'auto', md: 0 },
-  marginInlineEnd: { xs: '1rem', md: '8%' },
-  marginTop: 0,
+  flexShrink: 0,
+  order: { xs: -1, md: 0 },
+  width: { xs: 140, md: 220 },
+  height: { xs: 140, md: 220 },
 } as const;
 
 const leftHeaderStyle = {
   ...columnStyle,
-  justifyContent: 'space-between',
-  width: { xs: '100%', sm: 'auto' },
-  maxWidth: { xs: '100%', sm: '80%', md: '55%' },
-  mt: { md: -2.5 },
+  alignItems: 'flex-start',
+  gap: 2,
+  width: { xs: '100%', md: 'auto' },
+  maxWidth: { xs: '100%', md: '60%' },
 } as const;
 
 const leftMetaStyle = {
   ...columnStyle,
-  gap: 3,
+  gap: 2,
 } as const;
 
 export const backButtonStyle = {
@@ -120,28 +134,30 @@ const Header = (props: HeaderProps) => {
         </IconButton>
       )}
       {children && <>{children}</>}
-      <Box sx={headerStyle}>
-        <Box sx={leftHeaderStyle}>
-          <Typography variant="h1" component="h1">
-            {title}
-          </Typography>
-          <Box sx={leftMetaStyle}>
-            <Box>{getIntroduction()}</Box>
-            {progressStatus && <ProgressStatus status={progressStatus} />}
-            {cta && <Box>{cta}</Box>}
+      <Box sx={centerWrapStyle}>
+        <Box sx={headerStyle}>
+          <Box sx={leftHeaderStyle}>
+            <Typography variant="h1" component="h1" sx={{ fontWeight: 500, mb: 0 }}>
+              {title}
+            </Typography>
+            <Box sx={leftMetaStyle}>
+              <Box>{getIntroduction()}</Box>
+              {progressStatus && <ProgressStatus status={progressStatus} />}
+              {cta && <Box>{cta}</Box>}
+            </Box>
           </Box>
-        </Box>
-        <Box sx={rightHeaderStyle}>
           {imageSrc && (
-            <Image
-              alt={imageAltText}
-              src={imageSrc}
-              fill
-              sizes={getImageSizes(rightHeaderStyle.width)}
-              style={{
-                objectFit: 'contain',
-              }}
-            />
+            <Box sx={rightHeaderStyle}>
+              <Image
+                alt={imageAltText}
+                src={imageSrc}
+                fill
+                sizes={getImageSizes(rightHeaderStyle.width)}
+                style={{
+                  objectFit: 'contain',
+                }}
+              />
+            </Box>
           )}
         </Box>
       </Box>

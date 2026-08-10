@@ -1,9 +1,6 @@
 {
   "Resources": {
-    "backToConversations": "Sohbetlere dön",
-    "backToShorts": "Kısalara dön",
-    "backToVideos": "Videolara dön",
-    "backToSomatics": "Somatiklere dön",
+    "backToLibrary": "Kütüphaneye dön",
     "nextVideoButtonLabel": "Sonraki video",
     "nextConversationButtonLabel": "Sonraki sohbet",
     "nextSessionButtonLabel": "Sonraki seans",

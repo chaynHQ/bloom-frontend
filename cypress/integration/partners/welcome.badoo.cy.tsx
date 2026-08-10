@@ -58,7 +58,7 @@ describe('Welcome badoo page should display', () => {
       cy.logInWithEmailAndPassword(email, password);
     });
     it('continue to bloom panel', () => {
-      cy.get('a[href="/courses"]').should('contain', 'Go to courses');
+      cy.get('a[href="/library"]').should('contain', 'Go to library');
     });
     after(() => {
       cy.logout();

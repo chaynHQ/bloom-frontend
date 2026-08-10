@@ -55,7 +55,7 @@ export const ContentUnavailable = ({ title, message }: ContentUnavailableProps) 
         {message ||
           t.rich('introduction', {
             contactLink: (children) => (
-              <Link component={i18nLink} href="/courses">
+              <Link component={i18nLink} href="/library">
                 {children}
               </Link>
             ),

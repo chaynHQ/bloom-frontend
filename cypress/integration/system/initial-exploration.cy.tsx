@@ -13,11 +13,10 @@ describe('Initial exploration', () => {
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-notes-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-courses-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`h3`).contains('Reclaiming resilience');
-    cy.get(`h3`).should('not.contain', 'Dating, boundaries, and relationships');
-    cy.get(`h3`).contains('Healing from sexual trauma').click();
+    cy.get(`[qa-id=secondary-nav-library-button]`).click();
+    cy.contains('Reclaiming resilience', { timeout: 8000 }).should('exist');
+    cy.contains('Dating, boundaries, and relationships').should('not.exist');
+    cy.contains('Healing from sexual trauma').click();
     cy.wait(2000); // leave time for the page to load as flakey
     cy.get('h3').contains('What is sexual trauma').click();
     cy.get('#signup-banner').should('be.visible');
@@ -33,12 +32,11 @@ describe('Initial exploration', () => {
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-notes-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-courses-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`h3`).contains('Healing from sexual trauma');
-    cy.get(`h3`).should('not.contain', 'Reclaiming resilience');
-    cy.get(`h3`).should('contain', 'Dating, boundaries, and relationships');
-    cy.get(`h3`).contains('Dating, boundaries, and relationships').click();
+    cy.get(`[qa-id=secondary-nav-library-button]`).click();
+    cy.contains('Healing from sexual trauma', { timeout: 8000 }).should('exist');
+    cy.contains('Reclaiming resilience').should('not.exist');
+    cy.contains('Dating, boundaries, and relationships').should('exist');
+    cy.contains('Dating, boundaries, and relationships').click();
     cy.get('h3').contains('What are boundaries').click();
     cy.get('#signup-banner').should('be.visible');
   });

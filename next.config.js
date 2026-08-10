@@ -26,6 +26,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// The locale segment of the prefixed paths below. Mirrors ALL_LOCALES in i18n/routing.ts.
+const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
+
 module.exports = withBundleAnalyzer(
   withNextIntl(
     withPWA({
@@ -41,22 +44,22 @@ module.exports = withBundleAnalyzer(
         return [
           {
             source: '/welcome',
-            destination: '/courses',
+            destination: '/library',
             permanent: false,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/welcome',
-            destination: '/:locale/courses',
+            source: `/${LOCALE_PATTERN}/welcome`,
+            destination: '/:locale/library',
             permanent: false,
           },
           {
             source: '/login',
-            destination: '/courses',
+            destination: '/library',
             permanent: false,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/login',
-            destination: '/:locale/courses',
+            source: `/${LOCALE_PATTERN}/login`,
+            destination: '/:locale/library',
             permanent: false,
           },
           {
@@ -65,7 +68,7 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/partnership/:path*',
+            source: `/${LOCALE_PATTERN}/partnership/:path*`,
             destination: '/:locale/welcome/:path*',
             permanent: true,
           },
@@ -75,13 +78,24 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
-            source: '/:locale(en|es|de|fr|pt|hi)/chat',
+            source: `/${LOCALE_PATTERN}/chat`,
             destination: '/:locale/messaging',
             permanent: true,
           },
           {
             source: '/about-our-courses',
-            destination: '/courses',
+            destination: '/library',
+            permanent: false,
+          },
+          // The old Courses landing route; individual course pages are unaffected.
+          {
+            source: '/courses',
+            destination: '/library',
+            permanent: false,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/courses`,
+            destination: '/:locale/library',
             permanent: false,
           },
         ];

@@ -93,7 +93,7 @@ const LoginForm = () => {
     } else if (returnUrl) {
       router.push(returnUrl);
     } else {
-      router.push('/courses');
+      router.push('/library');
     }
   }, [userId, showSetupMFA, router, searchParams, partnerAdmin, userIsSuperAdmin]);
 

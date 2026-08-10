@@ -3,15 +3,22 @@
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 const ScrollToSignUpButton = () => {
   const t = useTranslations('Shared');
   const theme = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
   );
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
   const handleClick = () => {
     const signUpBanner = document.getElementById('signup-banner');
     if (signUpBanner) {
@@ -22,7 +29,7 @@ const ScrollToSignUpButton = () => {
     }
   };
 
-  if (userLoading) {
+  if (!isMounted || userLoading) {
     return null;
   }
 

@@ -36,11 +36,11 @@ const CourseHeader = (props: CourseHeaderProps) => {
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}
-        href="/courses"
+        href="/library"
         component={i18nLink}
         size="small"
       >
-        {t('backToCourses')}
+        {t('backToLibrary')}
       </Button>
     </Header>
   );

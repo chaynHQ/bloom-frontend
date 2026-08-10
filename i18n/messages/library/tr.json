@@ -1,0 +1,91 @@
+{
+  "Library": {
+    "metadata": {
+      "title": "Kütüphane",
+      "description": "Bloom kurslarını ve tekil seanslarını tek bir yerde keşfet."
+    },
+    "title": "Kütüphaneyi keşfet",
+    "introduction": "Bloom'daki her şey tek bir yerde — adım adım ilerleyebileceğin rehberli kurslar ve ihtiyaç duyduğun her an keşfedebileceğin tekil seanslar.",
+    "exploreByTheme": "Temaya göre keşfet",
+    "filterHeading": "Kütüphaneyi filtrele",
+    "filterButtonLabel": "Filtrele",
+    "searchPlaceholder": "Anahtar kelimelerle ara…",
+    "searchLabel": "Kütüphanede ara",
+    "reset": "Sıfırla",
+    "resultsHeading": "Kütüphane",
+    "resultsCount": "{count, plural, one {# sonuç} other {# sonuç}}",
+    "kindLabel": "İçerik türüne göre filtrele",
+    "kind": {
+      "all": "Tümü",
+      "course": "Kurslar",
+      "session": "Tekil seanslar"
+    },
+    "contentTypeHeading": "İçerik türü",
+    "contentTypes": {
+      "course": "Kurs",
+      "audio": "Ses",
+      "written": "Yazılı",
+      "video": "Video",
+      "activity": "Etkinlik"
+    },
+    "lengthHeading": "Süre",
+    "lengths": {
+      "under10": "10 dk'dan kısa",
+      "10to20": "10–20 dk",
+      "over20": "20 dk'dan uzun"
+    },
+    "sessionCount": "{count, plural, one {# seans} other {# seans}}",
+    "duration": "{minutes} dk",
+    "partOfCourse": "{course} kursunun bir parçası",
+    "loadMore": "Daha fazla göster",
+    "noResults": {
+      "title": "Bu filtreler için sonuç yok",
+      "body": "Bir iki filtreyi kaldırmayı ya da başka bir temayı keşfetmeyi dene — kütüphanede seni bekleyen daha çok şey var.",
+      "action": "Filtreleri temizle"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Zararı fark etmek",
+        "blurb": "İlişkilerde ve gündelik hayatta zararı adlandırmak",
+        "description": "Zarar her zaman açıkça görünmez. İstismarın ve zorlamanın ilişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet, adlandırması zor olan deneyimler için kelimeler bul."
+      },
+      "why-harm-happens": {
+        "label": "Zarar neden olur",
+        "blurb": "İstismarın ardındaki toplumsal ve sistemsel güçleri öğren",
+        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. Zararın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri anla — ve bunların hiçbirinin neden senin suçun olmadığını."
+      },
+      "body-after-trauma": {
+        "label": "Travma sonrası bedenin",
+        "blurb": "Travma bedende nasıl yaşar",
+        "description": "Travma zihinde olduğu kadar bedende de yaşar. Sinir sisteminin yaşadıklarına nasıl tepki verdiğini ve kendini daha güvende hissetmenin nazik, bedene dayalı yollarını öğren."
+      },
+      "setting-boundaries": {
+        "label": "Sınır koymak",
+        "blurb": "Duygusal, fiziksel, cinsel ve dijital sınırlar",
+        "description": "Sınırlar hayatın her alanında iyilik halini korur. Duygusal, fiziksel, cinsel ve dijital sınırları nasıl fark edeceğini, koyacağını ve koruyacağını keşfet."
+      },
+      "healing-journey": {
+        "label": "İyileşme yolculuğun",
+        "blurb": "Yas, büyüme ve iyileşme içinde kendi yolunu bulmak",
+        "description": "İyileşme doğrusal değildir. Yas, büyüme ve iyileşmenin içinden geçmek için eşlik ve araçlar bul — sana doğru gelen hızda."
+      },
+      "staying-safe": {
+        "label": "Şimdi güvende kalmak",
+        "blurb": "Güvenlik planlaması ve süregelen istismarla baş etmek",
+        "description": "Hâlâ zararın içindeysen ya da ona yakınsan, önce güvenlik gelir. Güvenlik planı yapmak ve işlerin şu an güvensiz hissettirdiği anlarla baş etmek için pratik destek bul."
+      }
+    },
+    "support": {
+      "title": "Destek al",
+      "introduction": "Biriyle konuşmayı mı tercih edersin? Bloom'un destek hizmetleri ihtiyaç duyduğun her an burada.",
+      "messaging": {
+        "title": "Bire bir mesajlaşma",
+        "description": "Sorularına ve düşüncelerine, çok dilli ekibimizden 1–2 gün içinde özenli yanıtlar."
+      },
+      "notes": {
+        "title": "Bloom'dan Notlar",
+        "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
+      }
+    }
+  }
+}

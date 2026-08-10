@@ -1,15 +1,11 @@
 {
   "Courses": {
-    "title": "Nuestros cursos",
-    "introduction": "Los cursos de Bloom ofrecen información hecha a medida, con herramientas y palabras de afirmación para ayudarnos a afrontar el trauma. Nos animan a aprender, reflexionar y procesar por lo que hemos pasado y cómo nos puede haber afectado; todo en un lugar seguro y de empoderamiento.",
     "session": "Sesión",
     "course": "Curso",
-    "courses": "Cursos",
     "expand": "Expandir",
     "expandSummary": "Expandir resumen de",
     "navigateToSession": "Navegar a la sesión -",
     "navigateToCourse": "Navegar al curso -",
-    "noCourses": "En este momento no hay cursos para mostrar. Si esto no parece correcto, inténtalo de nuevo más tarde, o contacta al equipo de Bloom.",
     "courseDetail": {
       "introductionTitle": "Introducción al curso",
       "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>"
@@ -54,18 +50,12 @@
     },
     "accessGuard": {
       "title": "Contenido del curso no disponible",
-      "introduction": "Tu cuenta de Bloom no incluye acceso al contenido del curso que pediste. Regresa a tus <contactLink>cursos</contactLink>."
+      "introduction": "Tu cuenta de Bloom no incluye acceso al contenido del curso que pediste. Regresa a la <contactLink>biblioteca</contactLink>."
     },
     "errors": {
       "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."
     },
     "backToCourse": "Volver al curso",
-    "backToCourses": "Ir a cursos",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somática: Sanación basada en el cuerpo",
-    "somaticsDescription": "Descubra cómo los enfoques suaves y basados en el cuerpo pueden ayudar a sanar la violencia, el estrés y el miedo. Esta colección de recursos ofrece una orientación clara y práctica para ayudarnos a reconectar con nuestros cuerpos, desarrollar resiliencia y explorar lo que la seguridad y el bienestar pueden significar."
+    "backToLibrary": "Volver a la biblioteca"
   }
 }

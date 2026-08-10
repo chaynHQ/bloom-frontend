@@ -2,7 +2,6 @@
   "Shared": {
     "bloom": "Bloom",
     "references": "Sansadhan",
-
     "metadata": {
       "title": "Apne healing ke safar par humein join kariye",
       "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
@@ -62,9 +61,9 @@
     },
     "notFound": {
       "title": "404 - Page nahi mila",
-      "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",
+      "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya library ke page par vapis jayen.",
       "unauthenticatedDescription": "Yeh page nahi mila. URL check kariya ya fir welcome page par vapis jaiye",
-      "authenticatedRedirectButton": "Courses ke page par vapis jaiye",
+      "authenticatedRedirectButton": "Library ke page par vapis jaiye",
       "unauthenticatedRedirectButton": "Welcome page par vapis jaiye."
     },
     "alt": {

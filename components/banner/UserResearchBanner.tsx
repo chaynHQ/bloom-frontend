@@ -6,7 +6,7 @@ import logEvent from '@/lib/utils/logEvent';
 import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const alertStyle = {
   backgroundColor: 'secondary.light',
@@ -25,11 +25,19 @@ export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
 
-  const isBannerNotInteracted = !Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED));
+  // The dismissal cookie is browser-only, so it is resolved after mount to avoid a hydration
+  // mismatch. `null` means not yet known, and the banner stays hidden until it is.
+  const [bannerInteracted, setBannerInteracted] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setBannerInteracted(Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED)));
+  }, []);
+
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isEnglish = locale === 'en';
 
-  const showBanner = isBannerFeatureEnabled && isEnglish && isBannerNotInteracted;
+  const showBanner = isBannerFeatureEnabled && isEnglish && bannerInteracted === false;
 
   const handleClickAccepted = () => {
     Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');

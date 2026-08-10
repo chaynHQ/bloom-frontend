@@ -60,9 +60,9 @@
     },
     "notFound": {
       "title": "404 - Sayfa bulunamadı",
-      "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kurslar sayfasına geri dön.",
+      "authenticatedDescription": "Bu sayfa bulunamadı. URL’yi kontrol et ya da kütüphane sayfasına geri dön.",
       "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
-      "authenticatedRedirectButton": "Kurslar sayfasına dön",
+      "authenticatedRedirectButton": "Kütüphane sayfasına dön",
       "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
     },
     "alt": {

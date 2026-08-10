@@ -11,15 +11,16 @@ describe('Videos Flow', () => {
     // User visits the home page
     cy.visit('/');
 
-    // User clicks on Courses
-    cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 10000 }).should('exist').click();
+    // User clicks on Library
+    cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
 
-    // User clicks on a conversation
-    cy.contains('What is somatics?', {
+    // The library only renders its first page of results, so search for the video.
+    cy.get('[qa-id=library-search-input]', { timeout: 10000 }).type('What is somatics');
+
+    // User clicks on a somatic video
+    cy.get('a[aria-label="What is somatics?"]', {
       timeout: 10000,
-    })
-      .should('exist')
-      .click();
+    }).click();
 
     // User is prompted to login
     cy.get('a[qa-id="dialogLoginButton"]').click();

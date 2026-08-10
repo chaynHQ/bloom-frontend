@@ -1,0 +1,91 @@
+{
+  "Library": {
+    "metadata": {
+      "title": "Bibliothèque",
+      "description": "Découvre les cours et les sessions individuelles de Bloom, réunis au même endroit."
+    },
+    "title": "Explore la bibliothèque",
+    "introduction": "Tout ce que propose Bloom, au même endroit — des cours guidés à suivre étape par étape, et des sessions individuelles à explorer dès que tu en ressens le besoin.",
+    "exploreByTheme": "Explorer par thème",
+    "filterHeading": "Filtrer la bibliothèque",
+    "filterButtonLabel": "Filtrer",
+    "searchPlaceholder": "Rechercher par mots-clés…",
+    "searchLabel": "Rechercher dans la bibliothèque",
+    "reset": "Réinitialiser",
+    "resultsHeading": "Bibliothèque",
+    "resultsCount": "{count, plural, one {# résultat} other {# résultats}}",
+    "kindLabel": "Filtrer par catégorie de contenu",
+    "kind": {
+      "all": "Tout",
+      "course": "Cours",
+      "session": "Sessions individuelles"
+    },
+    "contentTypeHeading": "Type de contenu",
+    "contentTypes": {
+      "course": "Cours",
+      "audio": "Audio",
+      "written": "Écrit",
+      "video": "Vidéo",
+      "activity": "Activité"
+    },
+    "lengthHeading": "Durée",
+    "lengths": {
+      "under10": "Moins de 10 min",
+      "10to20": "10–20 min",
+      "over20": "Plus de 20 min"
+    },
+    "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+    "duration": "{minutes} min",
+    "partOfCourse": "Fait partie de {course}",
+    "loadMore": "Voir plus",
+    "noResults": {
+      "title": "Aucun résultat pour ces filtres",
+      "body": "Essaie d’enlever un ou deux filtres, ou explore un autre thème — la bibliothèque a encore beaucoup à t’offrir.",
+      "action": "Effacer les filtres"
+    },
+    "themes": {
+      "recognising-harm": {
+        "label": "Reconnaître la violence",
+        "blurb": "Nommer la violence dans les relations et au quotidien",
+        "description": "La violence n’est pas toujours évidente. Découvre les formes que peuvent prendre les abus et le contrôle coercitif dans les relations et au quotidien, et trouve les mots pour des expériences difficiles à nommer."
+      },
+      "why-harm-happens": {
+        "label": "Pourquoi la violence existe",
+        "blurb": "Comprendre les forces sociales et systémiques à l’origine des violences",
+        "description": "La violence ne se résume pas aux choix d’une seule personne. Comprends les forces sociales, culturelles et systémiques qui la rendent possible — et pourquoi rien de tout cela n’est de ta faute."
+      },
+      "body-after-trauma": {
+        "label": "Ton corps après un traumatisme",
+        "blurb": "Comment le traumatisme habite le corps",
+        "description": "Le traumatisme vit autant dans le corps que dans l’esprit. Découvre comment ton système nerveux réagit à ce que tu as vécu, et des approches douces, centrées sur le corps, pour te sentir plus en sécurité."
+      },
+      "setting-boundaries": {
+        "label": "Poser ses limites",
+        "blurb": "Limites émotionnelles, physiques, sexuelles et numériques",
+        "description": "Les limites protègent ton bien-être dans tous les domaines de la vie. Découvre comment reconnaître, poser et maintenir des limites émotionnelles, physiques, sexuelles et numériques."
+      },
+      "healing-journey": {
+        "label": "Ton chemin de guérison",
+        "blurb": "Avancer à travers le deuil, la croissance et la reconstruction",
+        "description": "La guérison n’est pas linéaire. Trouve du soutien et des outils pour traverser le deuil, la croissance et la reconstruction, au rythme qui te convient."
+      },
+      "staying-safe": {
+        "label": "Rester en sécurité maintenant",
+        "blurb": "Plan de sécurité et stratégies face à une violence en cours",
+        "description": "Si tu es encore en danger ou proche de l’être, la sécurité passe avant tout. Trouve un soutien concret pour préparer un plan de sécurité et pour faire face aux moments où les choses ne semblent pas sûres."
+      }
+    },
+    "support": {
+      "title": "Trouver du soutien",
+      "introduction": "Tu préfères parler à quelqu’un ? Les services de soutien de Bloom sont là chaque fois que tu en as besoin.",
+      "messaging": {
+        "title": "Messagerie individuelle",
+        "description": "Des réponses attentives à tes questions et à tes réflexions, de la part de notre équipe multilingue, sous 1 à 2 jours."
+      },
+      "notes": {
+        "title": "Notes de Bloom",
+        "description": "Le soutien de Bloom, directement sur ton WhatsApp, deux fois par semaine."
+      }
+    }
+  }
+}

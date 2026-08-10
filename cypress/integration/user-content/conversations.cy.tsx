@@ -11,15 +11,16 @@ describe('Conversations Flow', () => {
     // User visits the home page
     cy.visit('/');
 
-    // User clicks on Courses
-    cy.get(`[qa-id=secondary-nav-courses-button]`, { timeout: 10000 }).should('exist').click();
+    // User clicks on Library
+    cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
+
+    // The library only renders its first page of results, so search for the conversation.
+    cy.get('[qa-id=library-search-input]', { timeout: 10000 }).type('Stolen faces');
 
     // User clicks on a conversation
-    cy.contains('Stolen faces: How fake images leave real scars', {
+    cy.get('a[aria-label="Stolen faces: How fake images leave real scars"]', {
       timeout: 10000,
-    })
-      .should('exist')
-      .click();
+    }).click();
 
     // User is prompted to login
     cy.get('a[qa-id="dialogLoginButton"]').click();
