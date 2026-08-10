@@ -8,10 +8,12 @@ describe('User about you page should display', () => {
 
   beforeEach(() => {
     cy.visit('/account/about-you');
+    cy.waitForAuthenticatedApp();
   });
 
   it('header section', () => {
-    cy.checkImage('Bloom logo', 'bloom_logo');
+    cy.contains('Welcome to').should('exist');
+    cy.checkImage('Welcome to Bloom', 'bloom_logo');
     cy.checkImage(
       `Illustration of a person's face and shoulders, with big leaves and flowers blooming above them`,
       'illustration_bloom_head_yellow',

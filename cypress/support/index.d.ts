@@ -1,4 +1,13 @@
 declare namespace Cypress {
+  interface Cypress {
+    /**
+     * Builds a unique test email address. Generate it in the same scope as the code that
+     * registers the user — retries re-run the test body but not `describe`/`before`.
+     * @example cy.createUser({ emailInput: Cypress.uniqueEmail() })
+     */
+    uniqueEmail(prefix?: string): string;
+  }
+
   interface Chainable {
     /**
      * Custom command to select DOM element by data-cy attribute.
@@ -33,6 +42,12 @@ declare namespace Cypress {
     logout(): Chainable<Element>;
     deleteAllCypressUsers(): Chainable<Element>;
     cleanUpTestState(): Chainable<Element>;
+    /**
+     * Waits until the app has finished restoring auth and loading the user, so AuthGuard
+     * won't redirect to /auth/login mid-test.
+     * @example cy.visit('/account/settings'); cy.waitForAuthenticatedApp();
+     */
+    waitForAuthenticatedApp(): Chainable<Element>;
     visitGermanPage(url: string): Chainable<Element>;
     visitSpanishPage(url: string): Chainable<Element>;
     visitFrenchPage(url: string): Chainable<Element>;

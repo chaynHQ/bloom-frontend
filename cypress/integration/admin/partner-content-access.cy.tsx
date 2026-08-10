@@ -1,6 +1,4 @@
 describe('users signing up through partner channels can properly access partner-specific course content', () => {
-  let username_partner = `cypresstestemailpartner+${Date.now()}@chayn.co`;
-  let username_regular = `cypresstestemailRegular+${Date.now()}@chayn.co`;
   const password = 'testtesttest';
 
   const bumbleSpecificCourseName = 'Dating, boundaries, and relationships';
@@ -31,6 +29,8 @@ describe('users signing up through partner channels can properly access partner-
   });
 
   it('Bumble-specific courses and their lessons are visible in the library for Bumble users.', () => {
+    const username_partner = Cypress.uniqueEmail('cypresstestemailpartner');
+
     //log in as a Bumble user and see if the course appears
     cy.visit('/welcome/bumble');
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
@@ -40,16 +40,22 @@ describe('users signing up through partner channels can properly access partner-
     cy.get('#email').type(username_partner);
     cy.get('#password').type('testpassword');
     cy.get('button[type="submit"]').contains('Create account').click();
-    cy.wait(4000); // Waiting for dom to rerender
+    cy.waitForAuthenticatedApp();
 
+    cy.waitForAuthenticatedApp();
+    
     expectFound(bumbleSpecificCourseName);
     expectFound(bumbleSpecificLessonName);
   });
 
   it('Non-partner users should not see partner-specific courses, or the lessons inside them', () => {
+    const username_regular = Cypress.uniqueEmail('cypresstestemailRegular');
+
     cy.createUser({ emailInput: username_regular, passwordInput: password });
     cy.logInWithEmailAndPassword(username_regular, password);
 
+    cy.waitForAuthenticatedApp();
+        
     expectNotFound(bumbleSpecificCourseName);
     expectNotFound(bumbleSpecificLessonName);
   });
