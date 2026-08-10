@@ -1,13 +1,77 @@
-import { Box } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import type { Dispatch, SetStateAction } from 'react';
-
 import { LENGTH_KEYS, toggle, type Format, type LengthBucket } from '@/lib/utils/libraryData';
-import { CheckRow } from './CheckRow';
-import { FilterGroup } from './FilterGroup';
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
-// The "Content type" + "Length" checkbox groups. Extracted so the sidebar can render them once for
-// desktop (always visible) and once inside a mobile Collapse without duplicating markup.
+const groupStyle = { mb: 4, '&:last-of-type': { mb: 0 } } as const;
+
+// No margin below: the first filter row's own top padding supplies the gap.
+const groupTitleStyle = { fontWeight: 600, fontSize: '0.875rem' } as const;
+
+// The global MuiFormControlLabel override in styles/theme.ts styles the checkbox via a
+// `& .MuiCheckbox-root` descendant selector, which out-specifies an `sx` on the Checkbox itself —
+// so the row styling has to be applied from the FormControlLabel to land.
+const checkRowStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  m: 0,
+  py: 1,
+  borderBottom: '1px solid',
+  borderColor: 'cardBorder',
+  '& .MuiCheckbox-root': {
+    p: 1.5,
+    m: 0,
+    alignSelf: 'center',
+    color: 'grey.600',
+    '&.Mui-checked': { color: 'primary.dark' },
+    '&.Mui-disabled': { color: 'grey.400' },
+  },
+} as const;
+
+// A titled group of filter rows. Disabled greys the heading while its rows are inert.
+function FilterGroup({
+  title,
+  disabled,
+  children,
+}: {
+  title: string;
+  disabled?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <Box sx={groupStyle}>
+      <Typography sx={{ ...groupTitleStyle, color: disabled ? 'grey.500' : 'grey.800' }}>
+        {title}
+      </Typography>
+      {children}
+    </Box>
+  );
+}
+
+function CheckRow({
+  label,
+  checked,
+  onChange,
+  disabled,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <FormControlLabel
+      labelPlacement="start"
+      disabled={disabled}
+      control={<Checkbox checked={checked} onChange={onChange} disableRipple />}
+      label={<Typography sx={{ color: disabled ? 'grey.500' : 'grey.700' }}>{label}</Typography>}
+      sx={checkRowStyle}
+    />
+  );
+}
+
+// The "Content type" + "Length" checkbox groups, rendered once per breakpoint by the sidebar.
 export function FilterGroups({
   formatOptions,
   formats,

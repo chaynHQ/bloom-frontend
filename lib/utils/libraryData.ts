@@ -1,6 +1,5 @@
 // Pure data, types, and Storyblok → LibraryItem mapping for the library. No 'use client': this
-// is imported by both Server Components (the route) and Client Components (the page UI and the
-// useLibraryItems hook). Anything needing MUI/icons/hooks lives in the library components instead.
+// is imported by both the route (a Server Component) and the page UI.
 
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -12,15 +11,13 @@ const COURSE_COMPONENT = 'Course';
 // a course lesson, a short, a somatic video, or an audio conversation.
 export type Kind = 'course' | 'session';
 
-// The kind toggle above the results; a course and a single session are different shapes of
-// content rather than two ticks in one list.
+// The kind toggle above the results.
 export type KindFilter = 'all' | Kind;
 
 // Display order of the kind toggle; labels live under `Library.kind.<key>`.
 export const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
-// Grounding is deliberately not a library format — it lives in its own space, offered after
-// intense content rather than searched for like a lesson.
+// Grounding is deliberately not a library format; it is offered after intense content instead.
 export type Format = 'audio' | 'written' | 'video' | 'activity';
 
 // The "Content type" filter: a library item is a whole course, or a single session in a format.
@@ -80,8 +77,8 @@ export interface LibraryStories {
   conversations: ISbStoryData[];
 }
 
-// Storyblok component → library format. Only audio and video exist in the CMS today; the format
-// filter renders from what's actually present, so adding written/activity later needs no changes.
+// Storyblok component → library format. Only audio and video exist in the CMS today, and the
+// format filter renders from what is actually present.
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_conversation: 'audio',
   resource_short_video: 'video',

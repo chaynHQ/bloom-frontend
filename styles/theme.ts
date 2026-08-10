@@ -9,13 +9,44 @@ declare module '@mui/material/styles' {
     palePrimaryLight: string;
     bloomGradient: string;
     bloomGradientVertical: string;
+    bloomGradientSoft: string;
+    cardSurface: string;
+    cardBorder: string;
+    panelSurface: string;
+    pageBackground: string;
+    inputBorder: string;
+    chipBackground: string;
+    chipBackgroundHover: string;
+    badgeBlue: string;
+    badgeBlueBorder: string;
+    supportArrowPanel: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
     paleSecondaryLight?: string;
     bloomGradient?: string;
     bloomGradientVertical?: string;
+    bloomGradientSoft?: string;
     overlayBackground?: string;
+    cardSurface?: string;
+    cardBorder?: string;
+    panelSurface?: string;
+    pageBackground?: string;
+    inputBorder?: string;
+    chipBackground?: string;
+    chipBackgroundHover?: string;
+    badgeBlue?: string;
+    badgeBlueBorder?: string;
+    supportArrowPanel?: string;
+  }
+
+  // The heading font with its RTL fallback, for heading styling on non-heading elements. Use as
+  // `sx={{ fontFamily: 'headingFontFamily' }}`; the raw var has no Arabic glyph coverage.
+  interface TypographyVariants {
+    headingFontFamily: string;
+  }
+  interface TypographyVariantsOptions {
+    headingFontFamily?: string;
   }
 }
 
@@ -61,12 +92,25 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       overlayBackground: 'rgba(0, 0, 0, 0.4)',
       bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
+      // Used behind the page header and the library's "Get support" band.
+      bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
+      cardSurface: '#FFFCFA',
+      cardBorder: '#EBE0E1',
+      panelSurface: '#FCF8F8',
+      pageBackground: '#FFF2EB',
+      inputBorder: '#DECECF',
+      chipBackground: '#FFD8C7',
+      chipBackgroundHover: '#FFC9B2',
+      badgeBlue: '#DFF0F5',
+      badgeBlueBorder: '#CCE7F0',
+      supportArrowPanel: '#F9E2E3',
     },
     shape: {
       borderRadius: 20,
     },
     typography: {
       fontFamily: bodyFontFamily(direction),
+      headingFontFamily: headingFontFamily(direction),
       h1: {
         fontFamily: headingFontFamily(direction),
         fontSize: '2.25rem',

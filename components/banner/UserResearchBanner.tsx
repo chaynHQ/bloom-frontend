@@ -25,17 +25,12 @@ export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
 
-  // The dismissal cookie only exists in the browser: js-cookie reads `document.cookie`, and
-  // returns undefined when there is no `document`. Reading it during render therefore made the
-  // server always emit the banner, while a client that had already dismissed it rendered
-  // nothing — a hydration mismatch on every server-rendered page using Header / HomeHeader.
-  // Resolve the cookie after mount instead, so the server and the first client render agree.
-  // (Reading it server-side via `next/headers` would opt those pages out of static rendering.)
-  // `null` = not yet known; the banner stays hidden until it resolves.
+  // The dismissal cookie is browser-only, so reading it during render hydration-mismatched every
+  // server-rendered page using Header. Resolve it after mount instead; `null` means not yet
+  // known, and the banner stays hidden until it is.
   const [bannerInteracted, setBannerInteracted] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Reading browser cookie after hydration - this intentionally triggers a re-render
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setBannerInteracted(Boolean(Cookies.get(USER_RESEARCH_BANNER_INTERACTED)));
   }, []);

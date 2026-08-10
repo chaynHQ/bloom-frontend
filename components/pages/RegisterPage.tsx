@@ -135,9 +135,8 @@ export default function RegisterPage() {
     }
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
-  // With no partnership lockup we show the plain Bloom logo, and PartnerHeader renders the
-  // translated "Welcome to" line beside it — so the logo's alt describes the logo rather than
-  // repeating that phrase.
+  // Without a partnership lockup, PartnerHeader renders the translated "Welcome to" line beside
+  // the plain Bloom logo, so the alt describes the logo rather than repeating that phrase.
   const partnershipLogo = partnerContent?.partnershipLogo;
 
   const headerProps = {

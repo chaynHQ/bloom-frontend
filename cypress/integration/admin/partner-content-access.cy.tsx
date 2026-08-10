@@ -4,15 +4,13 @@ describe('users signing up through partner channels can properly access partner-
   const password = 'testtesttest';
 
   const bumbleSpecificCourseName = 'Dating, boundaries, and relationships';
-  // A lesson *inside* that course. Its own Storyblok entry is partner-restricted, and the library
-  // additionally refuses to show a lesson whose parent course the user cannot see. Asserting on it
-  // covers the leak the library introduced by surfacing individual course lessons as cards.
+  // A lesson *inside* that course. The library gates a lesson on its parent course as well as on
+  // the lesson's own partner restriction.
   const bumbleSpecificLessonName = 'Culture, patriarchy, and boundaries';
 
-  // The library renders only its first page of results (PAGE_SIZE = 8), so asserting that a title
-  // is absent from the page proves nothing on its own — it would pass just as happily for content
-  // that had leaked but sorted below the fold. Search for the title first, then read the result
-  // count: 0 results is a claim about the whole library, not about the first eight cards.
+  // The library renders only its first page of results, so a plain absence assertion would pass
+  // for leaked content that sorted below the fold. Search first, then read the result count: 0
+  // results is a claim about the whole library.
   const searchLibraryFor = (title: string) => {
     cy.visit('/library');
     cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');

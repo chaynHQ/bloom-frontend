@@ -29,9 +29,8 @@ function withProgress(item: LibraryItem, progress: ProgressRecord[]): LibraryIte
   return { ...item, progress: record.completed ? 'completed' : 'started' };
 }
 
-// Turns the server-fetched library stories into display-ready LibraryItems: filters by locale and
-// the user's partner access (anonymous users see public content), then attaches course/resource
-// progress from Redux.
+// Turns the server-fetched stories into display-ready LibraryItems: filters by locale and the
+// user's partner access (anonymous users see public content), then attaches progress from Redux.
 export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
@@ -61,9 +60,8 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       withProgress(storyToLibraryItem(story, locale), coursesProgress),
     );
 
-    // A lesson is only browsable when its parent course is, so gate lessons on the visible
-    // courses. Keyed by slug (via parentCourseSlug) rather than the hand-set `content.course`
-    // uuid, which is unreliable — see parentCourseSlug. The map also supplies the parent title.
+    // A lesson is only browsable when its parent course is. Keyed by slug rather than the
+    // unreliable `content.course` uuid — see parentCourseSlug — and supplies the parent title.
     const visibleCourseTitles = new Map(
       courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name as string]),
     );

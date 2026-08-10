@@ -26,10 +26,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-// Matches the locale segment of a prefixed path in the redirects below. Kept as one constant so
-// every redirect covers the same set of locales — they used to be listed per-redirect and had
-// already drifted. Mirrors ALL_LOCALES in i18n/routing.ts: ar and tr are hidden in production but
-// routable on preview/staging, so a locale-prefixed redirect must still handle them there.
+// The locale segment of a prefixed path in the redirects below, kept as one constant so every
+// redirect covers the same locales. Mirrors ALL_LOCALES in i18n/routing.ts: ar and tr are hidden
+// in production but routable on preview, so locale-prefixed redirects must handle them there.
 const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
 
 module.exports = withBundleAnalyzer(

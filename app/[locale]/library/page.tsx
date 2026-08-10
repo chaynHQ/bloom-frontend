@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 
 // The library is Bloom's unified content hub: courses and single sessions (course lessons,
 // shorts, somatic videos, audio conversations) behind one guided search.
-
 export const revalidate = 14400; // invalidate every 4 hours, matching the other content pages
 
 type Params = Promise<{ locale: string }>;

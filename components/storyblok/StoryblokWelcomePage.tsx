@@ -58,9 +58,8 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
 
   const partnerContent = getPartnerContent(storySlug) as PartnerContent;
 
-  // With no partnership lockup we show the plain Bloom logo, and PartnerHeader renders the
-  // translated "Welcome to" line beside it — so the logo's alt describes the logo rather than
-  // repeating that phrase.
+  // See RegisterPage: without a partnership lockup the alt describes the Bloom logo, because
+  // PartnerHeader already renders the translated "Welcome to" line beside it.
   const partnershipLogo = partnerContent.partnershipLogo;
 
   const headerProps = {

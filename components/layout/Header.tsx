@@ -8,6 +8,7 @@ import { TextNode } from '@/lib/types/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
+import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -26,19 +27,17 @@ export interface HeaderProps {
   cta?: any;
 }
 
-// Refreshed header to match the 2026 design: a single soft peach gradient band (a subtle
-// top-to-bottom wash rather than the previous two-stop pink), with the heading block and the
-// page illustration centred against it as a row. On mobile the row stacks, illustration first.
 const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   minHeight: { xs: 300, md: 360, lg: 400 },
   paddingTop: '2.5rem !important',
   paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
-  background: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
+  background: theme.palette.bloomGradientSoft,
 };
 
-// Fills the remaining band height and vertically centres the heading block within it.
+// Fills the remaining band height so the heading block stays centred whether or not a research
+// banner or breadcrumb sits above it.
 const centerWrapStyle = {
   flexGrow: 1,
   display: 'flex',
@@ -53,8 +52,7 @@ const headerStyle = {
   gap: { xs: 3, md: 5 },
 } as const;
 
-// The illustration orders above the text on mobile (order: -1) and to the trailing edge on
-// desktop.
+// The illustration sits above the text on mobile, and on the trailing edge on desktop.
 const rightHeaderStyle = {
   position: 'relative',
   flexShrink: 0,
@@ -137,8 +135,6 @@ const Header = (props: HeaderProps) => {
         </IconButton>
       )}
       {children && <>{children}</>}
-      {/* The heading block grows to fill the band and centres itself vertically, so it stays
-          centred whether or not a research banner / breadcrumb sits above it. */}
       <Box sx={centerWrapStyle}>
         <Box sx={headerStyle}>
           <Box sx={leftHeaderStyle}>

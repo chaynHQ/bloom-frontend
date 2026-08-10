@@ -4,8 +4,8 @@ import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
 import type { LibraryStories } from './libraryData';
 
-// Storyblok's page size caps at 100 and defaults to 25. The library fetches every course lesson
-// in the CMS (57 today), so its queries page to exhaustion rather than silently truncating.
+// Storyblok's page size caps at 100 and defaults to 25, so these queries page to exhaustion
+// rather than silently truncating.
 const PER_PAGE = 100;
 
 // Runaway guard: 20 pages is 2000 stories, far beyond anything Bloom holds.
@@ -45,7 +45,7 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
   const baseProps: Partial<ISbStoriesParams> = {
     language: locale,
     version: STORYBLOK_ENVIRONMENT,
-    sort_by: 'position:description',
+    sort_by: 'position:asc',
   };
 
   const [courses, courseSessions, shorts, somatics, conversations] = await Promise.all([

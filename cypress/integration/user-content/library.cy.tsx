@@ -1,13 +1,9 @@
-// The library is the unified content hub: courses, individual course sessions, and standalone
-// single sessions (audio conversations, somatic videos, shorts) behind one guided search.
-//
 // Selectors lean on the semantic hooks the cards expose (`data-kind`, `data-format`,
-// `data-progress`) rather than on badge wording, so these assertions test the filter model
-// itself and survive copy changes.
+// `data-progress`) rather than on badge wording, so these assertions survive copy changes.
 
 const PAGE_SIZE = 8; // must match PAGE_SIZE in components/pages/LibraryPage.tsx
 
-const cards = () => cy.get('[data-testid=library-card]');
+const cards = () => cy.get('[qa-id=library-card]');
 
 // Assert on the rendered count with a retrying `should`, so we wait for the filtered re-render
 // rather than reading a stale number.
@@ -30,8 +26,7 @@ const waitForLibrary = () => {
 };
 
 describe('Library page', () => {
-  // The library is public, so these browse it anonymously — which Cypress's default test isolation
-  // already guarantees by clearing cookies and storage between tests.
+  // The library is public, so these browse it anonymously.
   describe('Entry points', () => {
     beforeEach(() => {
       cy.viewport(1440, 900);
@@ -93,8 +88,7 @@ describe('Library page', () => {
     });
 
     it('resets pagination to the first page when a filter changes', () => {
-      // Otherwise "Load more", then a narrowing filter, would leave a page-2-sized grid showing
-      // against a much shorter result set.
+      // Otherwise "Load more" then a narrowing filter leaves an oversized grid.
       cy.contains('button', 'Load more').click();
       cards().should('have.length', PAGE_SIZE * 2);
 
@@ -132,8 +126,8 @@ describe('Library page', () => {
     });
 
     it('disables and clears the session-only filters while "Courses" is selected', () => {
-      // Format and length describe a single session; a course has neither, so offering them
-      // alongside "Courses" could only ever build a combination that returns nothing.
+      // Format and length describe a single session, so alongside "Courses" they would only ever
+      // build a combination that returns nothing.
       filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       cy.get('[qa-id=library-kind-course]').click();
@@ -209,7 +203,7 @@ describe('Library page', () => {
       cy.visit('/library');
       waitForLibrary();
 
-      cy.get('[data-testid=library-card-progress]').should('not.exist');
+      cy.get('[qa-id=library-card-progress]').should('not.exist');
     });
 
     it('marks a completed session as Completed and its parent course as Started', () => {
@@ -227,17 +221,17 @@ describe('Library page', () => {
 
       // The completed session carries a Completed badge.
       cy.get('[qa-id=library-search-input]').type('What is sexual trauma');
-      cy.get('[data-testid=library-card]', { timeout: 15000 })
+      cy.get('[qa-id=library-card]', { timeout: 15000 })
         .filter(':contains("What is sexual trauma")')
-        .find('[data-testid=library-card-progress]')
+        .find('[qa-id=library-card-progress]')
         .should('have.attr', 'data-progress', 'completed')
         .and('contain', 'Completed');
 
       // Its parent course has been started, but not finished.
       cy.get('[qa-id=library-search-input]').clear().type('Healing from sexual trauma');
-      cy.get('[data-testid=library-card][data-kind=course]', { timeout: 15000 })
+      cy.get('[qa-id=library-card][data-kind=course]', { timeout: 15000 })
         .filter(':contains("Healing from sexual trauma")')
-        .find('[data-testid=library-card-progress]')
+        .find('[qa-id=library-card-progress]')
         .should('have.attr', 'data-progress', 'started')
         .and('contain', 'Started');
     });

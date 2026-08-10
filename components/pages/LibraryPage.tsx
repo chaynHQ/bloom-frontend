@@ -1,13 +1,39 @@
 'use client';
 
+import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
+import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
+import {
+  LIBRARY_FILTERED,
+  LIBRARY_FILTERS_CLEARED,
+  LIBRARY_ITEM_CLICKED,
+  LIBRARY_LOAD_MORE_CLICKED,
+  LIBRARY_SEARCHED,
+  LIBRARY_VIEWED,
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import {
+  filterLibraryItems,
+  FORMAT_KEYS,
+  KIND_KEYS,
+  THEME_KEYS,
+  type Format,
+  type KindFilter,
+  type LengthBucket,
+  type LibraryItem,
+  type LibraryStories,
+  type ThemeKey,
+} from '@/lib/utils/libraryData';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
+import illustrationCourses from '@/public/illustration_courses.svg';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import TuneRounded from '@mui/icons-material/TuneRounded';
 import {
   Box,
   Button,
-  Card,
-  CardActionArea,
   Chip,
   Collapse,
   Container,
@@ -20,55 +46,12 @@ import {
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
-import {
-  LIBRARY_FILTERED,
-  LIBRARY_FILTERS_CLEARED,
-  LIBRARY_ITEM_CLICKED,
-  LIBRARY_LOAD_MORE_CLICKED,
-  LIBRARY_SEARCHED,
-  LIBRARY_SUPPORT_CARD_CLICKED,
-  LIBRARY_VIEWED,
-} from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import chatIcon from '@/public/chat_icon.svg';
-import illustrationCourses from '@/public/illustration_courses.svg';
-import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
-import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
-import {
-  filterLibraryItems,
-  FORMAT_KEYS,
-  KIND_KEYS,
-  THEME_KEYS,
-  toggle,
-  type Format,
-  type KindFilter,
-  type LengthBucket,
-  type LibraryItem,
-  type LibraryStories,
-  type ThemeKey,
-} from '@/lib/utils/libraryData';
 import Header from '../layout/Header';
 import { FilterGroups } from '../library/FilterGroups';
 import { LibraryCard } from '../library/LibraryCard';
-import {
-  BAND_GRADIENT,
-  CARD_BORDER,
-  CARD_SHADOW,
-  CARD_SURFACE,
-  CHIP_BG,
-  CHIP_BG_HOVER,
-  HEADING_FONT,
-  INPUT_BORDER,
-  PAGE_BG,
-} from '../library/libraryTokens';
 import { SectionLabel } from '../library/SectionLabel';
-import { SupportCard } from '../library/SupportCard';
+import { SupportBand } from '../library/SupportBand';
+import { ThemeCards } from '../library/ThemeCards';
 
 // How many cards to show before the "Load more" button, and how many more each press reveals.
 const PAGE_SIZE = 8;
@@ -76,15 +59,149 @@ const PAGE_SIZE = 8;
 // A search event per keystroke would be noise; wait for the typing to settle first.
 const SEARCH_EVENT_DEBOUNCE_MS = 1000;
 
-// Design: 264px of sidebar content + a 24px gutter before the divider. Box-sizing is border-box,
-// so the column is 264 + 24 wide for its rows to measure 264.
+// Design: 264px of sidebar content plus a gutter before the divider. Box-sizing is border-box, so
+// the column has to be that much wider for its rows to measure 264.
 const SIDEBAR_CONTENT = 264;
-const SIDEBAR_GUTTER = 3; // theme spacing units → 24px
-const SIDEBAR_WIDTH = SIDEBAR_CONTENT + 24;
+const SIDEBAR_GUTTER = 3; // theme spacing units
+const SIDEBAR_GUTTER_PX = SIDEBAR_GUTTER * 8;
 
-// Vertical padding for the browse section. It lives on the two columns rather than the Container
-// so the divider between them spans the full height of the section, edge to edge.
+// Sits on the two columns rather than the Container, so the divider between them spans the full
+// height of the section.
 const BROWSE_PY = { xs: 4, md: 6 };
+
+const browseContainerStyle = { backgroundColor: 'pageBackground', py: '0 !important' } as const;
+
+const browseRowStyle = { display: 'flex', flexDirection: { xs: 'column', md: 'row' } } as const;
+
+const sidebarStyle = {
+  width: { xs: '100%', md: SIDEBAR_CONTENT + SIDEBAR_GUTTER_PX },
+  flexShrink: 0,
+  pt: BROWSE_PY,
+  pb: { xs: 0, md: 6 },
+  pr: { md: SIDEBAR_GUTTER },
+  borderInlineEnd: { md: '1px solid' },
+  borderColor: { md: 'cardBorder' },
+} as const;
+
+const searchRowStyle = { display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 } as const;
+
+const searchFieldStyle = {
+  m: 0,
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '100px',
+    backgroundColor: 'common.white',
+    '& fieldset': { borderColor: 'inputBorder' },
+  },
+} as const;
+
+const mobileFilterButtonStyle = {
+  display: { xs: 'inline-flex', md: 'none' },
+  flexShrink: 0,
+  borderRadius: '100px',
+  backgroundColor: 'common.white',
+} as const;
+
+const searchChipStyle = {
+  mt: 1.5,
+  maxWidth: '100%',
+  height: 32,
+  borderRadius: '8px',
+  backgroundColor: 'chipBackground',
+  '&:hover, &:focus-within': { backgroundColor: 'chipBackgroundHover' },
+  '& .MuiChip-label': {
+    fontFamily: 'headingFontFamily',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    color: 'grey.800',
+    pl: 1.5,
+    pr: 0.5,
+  },
+  // MUI's default delete icon is a 22px glyph with negative margins; the design uses a
+  // lighter 18px cross, inset from the trailing edge.
+  '& .MuiChip-deleteIcon': {
+    m: 0,
+    mr: 1,
+    fontSize: 18,
+    color: 'grey.700',
+    '&:hover': { color: 'grey.900' },
+  },
+} as const;
+
+const resultsColumnStyle = {
+  flexGrow: 1,
+  minWidth: 0,
+  pt: BROWSE_PY,
+  pb: 6,
+  pl: { md: SIDEBAR_GUTTER },
+} as const;
+
+const resultsHeaderStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 2,
+} as const;
+
+const headingStyle = {
+  fontFamily: 'headingFontFamily',
+  fontSize: '1.125rem',
+  fontWeight: 500,
+  letterSpacing: '0.15px',
+} as const;
+
+const kindToggleStyle = {
+  mt: 2,
+  mb: 3,
+  flexWrap: 'wrap',
+  gap: 1,
+  '& .MuiToggleButtonGroup-grouped': {
+    m: 0,
+    border: '1px solid',
+    borderColor: 'secondary.main',
+    borderRadius: '100px !important',
+    px: 2,
+    py: 0.75,
+    fontFamily: 'headingFontFamily',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    lineHeight: 1.4,
+    textTransform: 'none',
+    color: 'grey.800',
+    backgroundColor: 'common.white',
+    '&:hover': { backgroundColor: 'secondary.light' },
+    '&.Mui-selected': {
+      color: 'grey.900',
+      borderColor: 'secondary.dark',
+      backgroundColor: 'secondary.main',
+      '&:hover': { backgroundColor: 'secondary.main' },
+    },
+  },
+} as const;
+
+const themeDetailStyle = {
+  borderRadius: '16px',
+  border: '1px solid',
+  borderColor: 'cardBorder',
+  p: { xs: 2, md: 2.5 },
+  mb: 2,
+} as const;
+
+const themeDetailTitleStyle = { ...headingStyle, fontWeight: 600, mb: 1 } as const;
+
+const noResultsStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  py: { xs: 7, md: 10 },
+  px: 2,
+} as const;
+
+const cardGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+  gap: 3,
+} as const;
 
 // Analytics params are scalars, so a multi-select filter reports as a comma-separated list.
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
@@ -118,8 +235,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  // On mobile the filter checkboxes collapse behind a "Filter" button (they're always shown on
-  // desktop via CSS breakpoints); this only drives the small-screen open/closed state.
+  // Drives the small-screen open/closed state only; on desktop the checkboxes are always shown.
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -136,9 +252,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
 
   // A signed-in user briefly looks anonymous: partnerAccesses/createdAt only arrive after the
-  // getUser query, which runs once auth resolves. Reporting in that window would misattribute
-  // partner users as PUBLIC_USER, so wait until auth has resolved and the user record has landed
-  // (or there is no token at all).
+  // getUser query. Reporting in that window would misattribute partner users as PUBLIC_USER.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
 
   const eventUserData = useMemo(
@@ -146,9 +260,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // Format and length describe a single session; a course has neither. Rather than let the user
-  // build a combination that can only ever return nothing, both groups switch off (and clear)
-  // while "Courses" is selected.
+  // Format and length describe a single session; a course has neither, so both groups switch off
+  // and clear while "Courses" is selected rather than returning nothing.
   const sessionFiltersDisabled = kind === 'course';
 
   const selectKind = (next: KindFilter) => {
@@ -159,8 +272,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     }
   };
 
-  // Format options are data-driven: only the single-session formats that actually exist in the
-  // library today (audio/video now) are offered.
+  // Only the single-session formats present in the library today (audio/video) are offered.
   const formatOptions = useMemo(
     () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
     [items],
@@ -171,9 +283,18 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [items, keyword, themes, kind, formats, lengths],
   );
 
-  // Reset pagination whenever the filters change so "Load more" starts from the top. Adjusting
-  // state during render is the React-recommended pattern for deriving state from a changing key.
-  const filterKey = `${keyword}|${themes.join(',')}|${kind}|${formats.join(',')}|${lengths.join(',')}`;
+  // ---- Analytics ----
+  // Each event reports the result count at the time of the interaction; because the count is an
+  // effect dependency, each effect guards on what it last reported so a count change alone can't
+  // re-fire it.
+  const resultsCount = results.length;
+
+  // The whole filter state as one string: the value every filter event reports, and (with the
+  // keyword) the key that resets pagination.
+  const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
+  const filterKey = `${keyword}|${filterState}`;
+
+  // Reset pagination whenever the filters change, so "Load more" starts from the top again.
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (filterKey !== prevFilterKey) {
     setPrevFilterKey(filterKey);
@@ -183,14 +304,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
 
-  // ---- Analytics ----
-  // Each event reports the result count at the time of the interaction; because the count is an
-  // effect dependency, each effect guards on what it last reported so a count change alone can't
-  // re-fire it.
-  const resultsCount = results.length;
-
-  // The page view waits for the user to settle so it can be attributed to their partner, and
-  // reports the filters it opened on (e.g. a `?theme=` deep link).
+  // Waits for the user to settle so the view can be attributed to their partner, and reports the
+  // filters it opened on (e.g. a `?theme=` deep link).
   const viewLogged = useRef(false);
   useEffect(() => {
     if (!userSettled || viewLogged.current) return;
@@ -198,15 +313,15 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     logEvent(LIBRARY_VIEWED, {
       library_kind: kind,
       library_themes: reportList(themes),
+      library_results_count: resultsCount,
       ...eventUserData,
     });
-    // Reports the filter state the page opened with, not whatever it has become since — the user
-    // has had no chance to change it before this fires.
+    // Fires once, reporting the state the page opened with.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSettled, eventUserData]);
 
-  // The search term is deeply personal, so it is never sent to analytics — only its length and
-  // the result count, enough to tell whether the library is findable.
+  // The search term is never sent to analytics — only its length and the result count, which is
+  // enough to tell whether the library is findable.
   const loggedSearch = useRef('');
   useEffect(() => {
     const term = keyword.trim();
@@ -227,9 +342,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     return () => clearTimeout(timer);
   }, [keyword, resultsCount, eventUserData]);
 
-  // Report the whole filter state on every change, so a report can read the combination a user
-  // arrived at rather than having to reassemble it from individual toggles.
-  const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
+  // Reports the whole filter state on every change, so a report can read the combination a user
+  // arrived at without reassembling it from individual toggles.
   const loggedFilterState = useRef(filterState);
   useEffect(() => {
     if (loggedFilterState.current === filterState) return;
@@ -278,7 +392,13 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     setKeyword('');
     setFormats([]);
     setLengths([]);
-    logEvent(LIBRARY_FILTERS_CLEARED, eventUserData);
+    logEvent(LIBRARY_FILTERS_CLEARED, {
+      library_formats: reportList(formats),
+      library_lengths: reportList(lengths),
+      library_had_search_term: Boolean(keyword),
+      library_results_count: resultsCount,
+      ...eventUserData,
+    });
   };
   const clearAll = () => {
     clearFilters();
@@ -288,7 +408,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
   return (
     <Box>
-      {/* ---- Hero: the shared, redesigned page header ---- */}
       <Header
         title={t('title')}
         imageSrc={illustrationCourses}
@@ -297,115 +416,24 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
 
-      {/* ---- Explore by theme ---- */}
-      <Container
-        sx={{
-          backgroundColor: PAGE_BG,
-          borderBottom: '1px solid',
-          borderColor: CARD_BORDER,
-          pt: { xs: 4, md: 6 },
-          pb: { xs: 4, md: 6 },
-        }}
-      >
-        <SectionLabel
-          label={t('exploreByTheme')}
-          onReset={themes.length ? () => setThemes([]) : undefined}
-        />
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 2,
-            mt: 1,
-          }}
-        >
-          {THEME_KEYS.map((theme) => {
-            const active = themes.includes(theme);
-            return (
-              <Card
-                key={theme}
-                sx={{
-                  m: 0,
-                  borderRadius: '8px',
-                  backgroundColor: CARD_SURFACE,
-                  boxShadow: CARD_SHADOW,
-                }}
-              >
-                <CardActionArea
-                  onClick={() => setThemes((p) => toggle(p, theme))}
-                  aria-pressed={active}
-                  qa-id={`library-theme-${theme}`}
-                  sx={{
-                    p: 1.5,
-                    height: '100%',
-                    backgroundColor: CARD_SURFACE,
-                    borderRadius: '8px',
-                    // A pink ring marks the active theme; the transparent border on inactive
-                    // cards keeps their size identical so selection never shifts the layout.
-                    border: '2px solid',
-                    borderColor: active ? 'primary.dark' : 'transparent',
-                    '&:hover': { backgroundColor: 'common.white' },
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: HEADING_FONT,
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      mb: 0.5,
-                    }}
-                  >
-                    {t(`themes.${theme}.label`)}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'grey.700' }}>
-                    {t(`themes.${theme}.blurb`)}
-                  </Typography>
-                </CardActionArea>
-              </Card>
-            );
-          })}
-        </Box>
-      </Container>
+      <ThemeCards themes={themes} setThemes={setThemes} />
 
-      {/* ---- Filters + results ----
-           Vertical padding sits on the two columns, not the Container, so the divider on the
-           sidebar's inline edge spans the full section height. On mobile the row stacks and the
-           divider is dropped. */}
-      <Container sx={{ backgroundColor: PAGE_BG, py: '0 !important' }}>
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
-          {/* Sidebar */}
-          <Box
-            sx={{
-              width: { xs: '100%', md: SIDEBAR_WIDTH },
-              flexShrink: 0,
-              pt: BROWSE_PY,
-              pb: { xs: 0, md: 6 },
-              pr: { md: SIDEBAR_GUTTER },
-              borderInlineEnd: { md: '1px solid' },
-              borderColor: { md: CARD_BORDER },
-            }}
-          >
+      {/* On mobile the row stacks and the sidebar divider is dropped. */}
+      <Container sx={browseContainerStyle}>
+        <Box sx={browseRowStyle}>
+          <Box sx={sidebarStyle}>
             <SectionLabel
               label={t('filterHeading')}
               onReset={filtersActive ? clearFilters : undefined}
             />
-            {/* Search + (mobile-only) Filter toggle. The checkbox groups are always visible on
-                desktop and collapse behind the toggle on mobile. */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+            <Box sx={searchRowStyle}>
               <TextField
                 fullWidth
                 size="small"
                 placeholder={t('searchPlaceholder')}
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                sx={{
-                  m: 0,
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '100px',
-                    backgroundColor: 'common.white',
-                    '& fieldset': { borderColor: INPUT_BORDER },
-                  },
-                }}
+                sx={searchFieldStyle}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -423,12 +451,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                 color="secondary"
                 aria-expanded={mobileFiltersOpen}
                 startIcon={<TuneRounded />}
-                sx={{
-                  display: { xs: 'inline-flex', md: 'none' },
-                  flexShrink: 0,
-                  borderRadius: '100px',
-                  backgroundColor: 'common.white',
-                }}
+                sx={mobileFilterButtonStyle}
               >
                 {t('filterButtonLabel')}
               </Button>
@@ -438,35 +461,11 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                 label={keyword}
                 onDelete={() => setKeyword('')}
                 deleteIcon={<CloseRounded />}
-                sx={{
-                  mt: 1.5,
-                  maxWidth: '100%',
-                  height: 32,
-                  borderRadius: '8px',
-                  backgroundColor: CHIP_BG,
-                  '&:hover, &:focus-within': { backgroundColor: CHIP_BG_HOVER },
-                  '& .MuiChip-label': {
-                    fontFamily: HEADING_FONT,
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                    color: 'grey.800',
-                    pl: 1.5,
-                    pr: 0.5,
-                  },
-                  // MUI's default delete icon is a heavy 22px glyph with negative margins. The
-                  // design uses a light 18px cross, inset 8px from the trailing edge.
-                  '& .MuiChip-deleteIcon': {
-                    m: 0,
-                    mr: 1,
-                    fontSize: 18,
-                    color: 'grey.700',
-                    '&:hover': { color: 'grey.900' },
-                  },
-                }}
+                sx={searchChipStyle}
               />
             )}
 
-            {/* Filter groups: always open on desktop; collapsed behind the toggle on mobile. */}
+            {/* Always open on desktop, collapsed behind the toggle on mobile. */}
             <Collapse in={mobileFiltersOpen} sx={{ display: { md: 'none' } }}>
               <FilterGroups
                 formatOptions={formatOptions}
@@ -489,34 +488,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
             </Box>
           </Box>
 
-          {/* Results */}
-          <Box
-            sx={{
-              flexGrow: 1,
-              minWidth: 0,
-              pt: BROWSE_PY,
-              pb: { xs: 6, md: 6 },
-              pl: { md: SIDEBAR_GUTTER },
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 2,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: HEADING_FONT,
-                  fontSize: '1.125rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.15px',
-                }}
-              >
-                {t('resultsHeading')}
-              </Typography>
+          <Box sx={resultsColumnStyle}>
+            <Box sx={resultsHeaderStyle}>
+              <Typography sx={headingStyle}>{t('resultsHeading')}</Typography>
               <Typography
                 variant="body2"
                 qa-id="library-results-count"
@@ -526,42 +500,12 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               </Typography>
             </Box>
 
-            {/* Kind: the primary cut through the library, under the results heading. */}
             <ToggleButtonGroup
               exclusive
               value={kind}
               onChange={(_, next: KindFilter | null) => next && selectKind(next)}
               aria-label={t('kindLabel')}
-              sx={{
-                mt: 2,
-                mb: 3,
-                flexWrap: 'wrap',
-                gap: 1,
-                '& .MuiToggleButtonGroup-grouped': {
-                  m: 0,
-                  border: '1px solid',
-                  borderColor: 'secondary.main',
-                  borderRadius: '100px !important',
-                  px: 2,
-                  py: 0.75,
-                  fontFamily: HEADING_FONT,
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  lineHeight: 1.4,
-                  textTransform: 'none',
-                  color: 'grey.800',
-                  backgroundColor: 'common.white',
-                  '&:hover': { backgroundColor: 'secondary.light' },
-                  // Selected peach is a step deeper than the hover wash; label stays dark for
-                  // contrast.
-                  '&.Mui-selected': {
-                    color: 'grey.900',
-                    borderColor: 'secondary.dark',
-                    backgroundColor: 'secondary.main',
-                    '&:hover': { backgroundColor: 'secondary.main' },
-                  },
-                },
-              }}
+              sx={kindToggleStyle}
             >
               {KIND_KEYS.map((option) => (
                 <ToggleButton
@@ -575,29 +519,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               ))}
             </ToggleButtonGroup>
 
-            {/* Selected theme(s): a descriptive card giving context for the guided choice. */}
             {selectedThemes.map((theme) => (
-              <Box
-                key={theme}
-                sx={{
-                  borderRadius: '16px',
-                  border: '1px solid',
-                  borderColor: CARD_BORDER,
-                  p: { xs: 2, md: 2.5 },
-                  mb: 2,
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: HEADING_FONT,
-                    fontSize: '1.125rem',
-                    fontWeight: 600,
-                    letterSpacing: '0.15px',
-                    mb: 1,
-                  }}
-                >
-                  {t(`themes.${theme}.label`)}
-                </Typography>
+              <Box key={theme} sx={themeDetailStyle}>
+                <Typography sx={themeDetailTitleStyle}>{t(`themes.${theme}.label`)}</Typography>
                 <Typography sx={{ color: 'grey.800' }}>
                   {t(`themes.${theme}.description`)}
                 </Typography>
@@ -605,27 +529,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
             ))}
 
             {results.length === 0 ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  py: { xs: 7, md: 10 },
-                  px: 2,
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: HEADING_FONT,
-                    fontSize: '1.125rem',
-                    fontWeight: 500,
-                    letterSpacing: '0.15px',
-                    mb: 1,
-                  }}
-                >
-                  {t('noResults.title')}
-                </Typography>
+              <Box sx={noResultsStyle}>
+                <Typography sx={{ ...headingStyle, mb: 1 }}>{t('noResults.title')}</Typography>
                 <Typography sx={{ color: 'grey.700', maxWidth: 420 }}>
                   {t('noResults.body')}
                 </Typography>
@@ -635,13 +540,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               </Box>
             ) : (
               <>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
-                    gap: 3,
-                  }}
-                >
+                <Box sx={cardGridStyle}>
                   {visibleResults.map((item, index) => (
                     <LibraryCard
                       key={item.id}
@@ -663,49 +562,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         </Box>
       </Container>
 
-      {/* ---- Get support ---- */}
-      <Container sx={{ background: BAND_GRADIENT, pt: { xs: 7, md: 13 }, pb: { xs: 7, md: 13 } }}>
-        <Typography
-          variant="h2"
-          sx={{ fontSize: { xs: '1.5rem', md: '1.75rem' }, fontWeight: 500, mb: 1 }}
-        >
-          {t('support.title')}
-        </Typography>
-        <Typography sx={{ color: 'grey.800' }}>{t('support.introduction')}</Typography>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
-            gap: 3,
-            mt: 2,
-          }}
-        >
-          <SupportCard
-            iconSrc={chatIcon}
-            title={t('support.messaging.title')}
-            description={t('support.messaging.description')}
-            href="/messaging"
-            onSelect={() =>
-              logEvent(LIBRARY_SUPPORT_CARD_CLICKED, {
-                library_support_card: 'messaging',
-                ...eventUserData,
-              })
-            }
-          />
-          <SupportCard
-            iconSrc={notesFromBloomIcon}
-            title={t('support.notes.title')}
-            description={t('support.notes.description')}
-            href="/subscription/whatsapp"
-            onSelect={() =>
-              logEvent(LIBRARY_SUPPORT_CARD_CLICKED, {
-                library_support_card: 'notes',
-                ...eventUserData,
-              })
-            }
-          />
-        </Box>
-      </Container>
+      <SupportBand eventUserData={eventUserData} />
 
       {/* Sign up (the header CTA scrolls here), and — once signed in — turn on email reminders. */}
       {!isLoggedIn && <SignUpBanner />}
