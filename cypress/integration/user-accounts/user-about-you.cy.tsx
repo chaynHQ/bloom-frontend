@@ -13,7 +13,8 @@ describe('User about you page should display', () => {
 
   it('header section', () => {
     cy.contains('Welcome to').should('exist');
-    cy.checkImage('Welcome to Bloom', 'bloom_logo');
+    // Scoped to main as the TopBar and Footer logos share the "Bloom logo" alt text
+    cy.get('main img[alt="Bloom logo"]').should('have.attr', 'src').should('include', 'bloom_logo');
     cy.checkImage(
       `Illustration of a person's face and shoulders, with big leaves and flowers blooming above them`,
       'illustration_bloom_head_yellow',

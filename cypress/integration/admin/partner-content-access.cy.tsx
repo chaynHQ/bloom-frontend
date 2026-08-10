@@ -43,7 +43,7 @@ describe('users signing up through partner channels can properly access partner-
     cy.waitForAuthenticatedApp();
 
     cy.waitForAuthenticatedApp();
-    
+
     expectFound(bumbleSpecificCourseName);
     expectFound(bumbleSpecificLessonName);
   });
@@ -55,7 +55,7 @@ describe('users signing up through partner channels can properly access partner-
     cy.logInWithEmailAndPassword(username_regular, password);
 
     cy.waitForAuthenticatedApp();
-        
+
     expectNotFound(bumbleSpecificCourseName);
     expectNotFound(bumbleSpecificLessonName);
   });
