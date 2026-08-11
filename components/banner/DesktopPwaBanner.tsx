@@ -50,7 +50,7 @@ export const DesktopPwaBanner = () => {
     ...getFloatingBannerPosition(isSmallScreen),
     p: 2.5,
     width: 250,
-    maxWidth: `calc(100vw - ${floatingBannerGap * 2}px)`,
+    maxWidth: `calc(100% - ${floatingBannerGap * 2}px)`,
     backgroundColor: 'common.white',
   } as const;
 

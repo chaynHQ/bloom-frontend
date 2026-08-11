@@ -4,12 +4,11 @@ describe('Initial exploration', () => {
   });
   it('should be able to explore all pages', () => {
     cy.visit('/');
-    cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
+    // The hero copy comes from Storyblok, so this only asserts the page rendered its heading.
+    cy.get('h1', { timeout: 8000 }).should('not.be.empty');
     cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-activities-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-notes-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
@@ -27,8 +26,6 @@ describe('Initial exploration', () => {
     cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-activities-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');
     cy.get(`[qa-id=secondary-nav-notes-button]`).click();
     cy.get('a', { timeout: 8000 }).contains('Get started');

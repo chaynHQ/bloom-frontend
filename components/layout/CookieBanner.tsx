@@ -28,8 +28,9 @@ const CookieBanner = () => {
   const consentBoxStyle: React.CSSProperties = {
     ...getFloatingBannerPosition(hasMobileBottomNav),
     backgroundColor: theme.palette.secondary.light,
-    // Never wider than the viewport once the gap on either side is taken into account.
-    maxWidth: `min(${theme.spacing(54)}, calc(100vw - ${floatingBannerGap * 2}px))`,
+    // Percentages resolve against the fixed containing block, which excludes the scrollbar; `vw`
+    // does not, and would push the banner off its inline-end anchor by the scrollbar's width.
+    maxWidth: `min(${theme.spacing(54)}, calc(100% - ${floatingBannerGap * 2}px))`,
     maxHeight: theme.spacing(35),
     borderRadius: theme.spacing(2),
     boxShadow: `${alpha(theme.palette.common.black, 0.2)} 0px ${theme.spacing(1)} ${theme.spacing(

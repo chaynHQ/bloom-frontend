@@ -43,16 +43,18 @@ describe('Cookie consent', () => {
       cy.get('.CookieConsent').then(($banner) => {
         const banner = $banner[0].getBoundingClientRect();
 
-        cy.window().then((window) => {
+        cy.document().then((document) => {
+          // The layout viewport, which is what a fixed element is positioned against. Measuring
+          // against window.innerWidth would count the scrollbar as usable space.
+          const { clientWidth, clientHeight } = document.documentElement;
+
           // Fully on screen horizontally, anchored to the inline end (right in LTR).
           expect(banner.left).to.be.at.least(0);
-          expect(banner.right).to.be.at.most(window.innerWidth);
-          expect(window.innerWidth - banner.right).to.be.at.most(banner.left);
+          expect(banner.right).to.be.at.most(clientWidth);
+          expect(clientWidth - banner.right).to.be.at.most(banner.left);
           // Sits at the bottom, above the mobile bottom nav where that is rendered.
-          expect(banner.bottom).to.be.at.most(
-            window.innerHeight - (hasBottomNav ? bottomNavHeight : 0),
-          );
-          expect(banner.bottom).to.be.greaterThan(window.innerHeight / 2);
+          expect(banner.bottom).to.be.at.most(clientHeight - (hasBottomNav ? bottomNavHeight : 0));
+          expect(banner.bottom).to.be.greaterThan(clientHeight / 2);
         });
       });
     });
