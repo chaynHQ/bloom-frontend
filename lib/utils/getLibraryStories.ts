@@ -10,8 +10,6 @@ const PER_PAGE = 100;
 // Runaway guard: 20 pages is 2000 stories.
 const MAX_PAGES = 20;
 
-// Fetches every story matching `params`, following Storyblok's pagination to the end, and trims
-// each one to the fields the library reads.
 async function getAllStoryblokStories(
   locale: string,
   params: Partial<ISbStoriesParams>,
@@ -35,7 +33,6 @@ async function getAllStoryblokStories(
   return stories.map(toLibraryStory);
 }
 
-// For the groups the library can do without: a failure drops the group rather than the page.
 async function getOptionalStories(
   locale: string,
   params: Partial<ISbStoriesParams>,
@@ -51,9 +48,7 @@ async function getOptionalStories(
   }
 }
 
-// Server-only: fetches the stories that make up the library — courses, their lessons, and the
-// standalone resources presented as single sessions. Locale and partner-access filtering happens
-// client-side in useLibraryItems.
+// Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
   const baseProps: Partial<ISbStoriesParams> = {
     language: locale,
@@ -67,7 +62,6 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
       starts_with: 'courses/',
       filter_query: { component: { in: 'Course' } },
     }),
-    // Individual lessons within a course.
     getOptionalStories(locale, {
       ...baseProps,
       starts_with: 'courses/',

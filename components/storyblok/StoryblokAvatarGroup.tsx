@@ -24,7 +24,6 @@ export interface StoryblokAvatarGroupProps {
   separate: boolean;
 }
 
-// The `avatar_group` blok: a few circular portraits, overlapping by default.
 const StoryblokAvatarGroup = (props: StoryblokAvatarGroupProps) => {
   const {
     _uid,

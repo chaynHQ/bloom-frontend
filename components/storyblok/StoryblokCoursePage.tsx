@@ -193,7 +193,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
           </Box>
         </>
       </Container>
-      {!isLoggedIn && <SignUpSection />}
+      {!isLoggedIn && <SignUpSection source="course" />}
     </Box>
   );
 };

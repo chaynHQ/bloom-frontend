@@ -1,7 +1,5 @@
-/**
- * Horizontal alignment values shared by the Storyblok `page_section`, `row_new` and `row_column`
- * bloks. Along the inline axis this is `justify-content` on a row and `align-items` on a column.
- */
+// Horizontal alignment values shared by the Storyblok `page_section`, `row_new` and `row_column`
+// bloks.
 type ResponsiveAlignment = string | { xs: string; md: string };
 
 export const INLINE_ALIGNMENT: Record<string, ResponsiveAlignment> = {

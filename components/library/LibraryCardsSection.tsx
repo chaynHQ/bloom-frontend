@@ -16,14 +16,12 @@ interface LibraryCardsSectionProps {
   illustrationSrc?: StaticImageData;
   items: LibraryItem[];
   showAccountNeeded?: boolean;
-  // Theme palette token for the section behind the cards.
   background?: string;
   // A "browse all" button is only shown when both a label and a destination are given.
   browseLabel?: string;
   browseHref?: string;
   // Draws a hairline above the section, for the second of two sections sharing one background.
   divided?: boolean;
-  // The analytics event fired when the reader moves the row.
   carouselEventName: string;
   onCardSelect: (item: LibraryItem, index: number) => void;
   onBrowseAll?: () => void;
@@ -53,8 +51,6 @@ const illustrationStyle = {
   height: { sm: 120, md: 150 },
 } as const;
 
-// A section of library cards under a heading, optionally with a standfirst, an illustration and a
-// "browse all" link. Used for the home page's session, course and continue-learning rows.
 export function LibraryCardsSection({
   qaId,
   heading,
@@ -83,7 +79,6 @@ export function LibraryCardsSection({
         </Box>
         {illustrationSrc && (
           <Box sx={illustrationStyle}>
-            {/* Decorative — the heading names the section. */}
             <Image
               alt=""
               src={illustrationSrc}
@@ -106,7 +101,6 @@ export function LibraryCardsSection({
           <LibraryCard
             key={item.id}
             item={item}
-            // A course leads with its illustration; a single session has none, so it stays compact.
             layout={item.kind === 'course' ? 'illustrated' : 'compact'}
             showAccountNeeded={showAccountNeeded}
             onSelect={() => onCardSelect(item, index)}

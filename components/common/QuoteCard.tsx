@@ -4,8 +4,6 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-// A quote in a tinted card, with an optional attribution. Rendered by the Storyblok `quote_card`
-// blok. The size scale is shared with StoryblokStatement and StoryblokQuote.
 export type QuoteTextSize = 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
 
 const FONT_SIZE: Record<QuoteTextSize, { xs: string; md: string }> = {

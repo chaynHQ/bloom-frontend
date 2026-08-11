@@ -23,7 +23,6 @@ export interface StoryblokLinkCardProps {
   event_name: string;
 }
 
-// The `link_card` blok: a titled card linking somewhere, placed by an editor inside a row.
 const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
   const {
     _uid,
@@ -41,7 +40,6 @@ const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
 
   const { href, external } = resolveStoryblokLink(link);
 
-  // A half-filled card in the editor renders nothing rather than a dead link.
   if (!title || !href) return <></>;
 
   return (

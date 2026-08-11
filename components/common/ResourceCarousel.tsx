@@ -19,7 +19,6 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-// Each resource component renders as its own card; anything unrecognised is skipped.
 function resourceCard(story: ISbStoryData, locale: string) {
   const href = getDefaultFullSlug(story.full_slug, locale);
   const { component, name, duration, preview_image } = story.content;

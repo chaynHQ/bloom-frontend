@@ -193,7 +193,7 @@ const StoryblokResourceShortPage = ({
         userContentPartners={getContentPartners}
       />
 
-      {!isLoggedIn && <SignUpSection />}
+      {!isLoggedIn && <SignUpSection source="resource-short" />}
     </Box>
   );
 };

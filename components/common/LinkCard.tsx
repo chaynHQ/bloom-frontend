@@ -9,9 +9,6 @@ import { Box, Card, CardActionArea, Typography } from '@mui/material';
 import Image, { type StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 
-// A titled card that links somewhere, optionally leading with an icon and closing with an arrow in
-// a tinted panel. Used by the "Get support" section and the Storyblok `link_card` blok.
-
 // `small` fits three across a row; `large` is taller and fits two.
 export type LinkCardSize = 'small' | 'large';
 
@@ -94,7 +91,6 @@ export function LinkCard({
   qaId,
   onSelect,
 }: LinkCardProps) {
-  // Links off Bloom get a plain anchor and a new tab; in-app links keep their locale.
   const opensInNewTab = external ?? isExternalHref(href);
 
   return (

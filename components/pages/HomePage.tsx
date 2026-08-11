@@ -32,7 +32,6 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
-// How many cards each content section shows.
 const SECTION_SIZE = 3;
 
 interface Props {
@@ -58,8 +57,8 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
     [userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // The same locale- and partner-filtered content the library is built from, so the page cannot
-  // surface a course or session the visitor has no access to.
+  // The same filtered content the library is built from, so the page cannot surface an item the
+  // visitor has no access to.
   const items = useLibraryItems(libraryStories);
 
   const content = story?.content;
@@ -87,8 +86,8 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
     };
   }, [items, content]);
 
-  // partnerAccesses/createdAt only arrive after the getUser query, so the view event waits for the
-  // user to settle rather than reporting a signed-in visitor as anonymous.
+  // partnerAccesses/createdAt arrive with getUser, so the view event waits for the user to settle
+  // rather than reporting a signed-in visitor as anonymous.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
   const viewLogged = useRef(false);
   useEffect(() => {
@@ -121,8 +120,6 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
   const logBrowseAll = (section: string) => () =>
     logEvent(HOME_BROWSE_ALL_CLICKED, { home_section: section, ...eventUserData });
 
-  // Editor-composed sections: `top_sections` sits between the hero and the content rows below,
-  // `bottom_sections` closes the page.
   const renderSections = (sections: any[] | undefined, key: string) =>
     sections?.map((section: any, index: number) =>
       section.component === 'notes_from_bloom_promo' ? (
@@ -190,7 +187,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
 
       <SupportSection eventUserData={eventUserData} eventName={HOME_SUPPORT_CARD_CLICKED} />
 
-      {!isLoggedIn && <SignUpSection sectionBelow />}
+      {!isLoggedIn && <SignUpSection source="home" sectionBelow />}
 
       {renderSections(story.content.bottom_sections, 'bottom_section')}
     </Box>

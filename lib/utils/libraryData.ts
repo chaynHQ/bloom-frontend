@@ -1,5 +1,3 @@
-// Pure data, types, and Storyblok → LibraryItem mapping for the library.
-
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -11,7 +9,6 @@ export type Kind = 'course' | 'session';
 
 export type KindFilter = 'all' | Kind;
 
-// Labels live under `Library.kind.<key>`.
 export const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
 export type Format = 'audio' | 'written' | 'video' | 'activity';
@@ -26,7 +23,6 @@ export type ThemeKey =
   | 'healing-journey'
   | 'staying-safe';
 
-// Each key has `label`, `blurb`, and `description` under `Library.themes.<key>`.
 export const THEME_KEYS: ThemeKey[] = [
   'recognising-harm',
   'why-harm-happens',
@@ -37,10 +33,8 @@ export const THEME_KEYS: ThemeKey[] = [
 ];
 
 export type LengthBucket = 'under10' | '10to20' | 'over20';
-// Labels live under `Library.lengths.<key>`.
 export const LENGTH_KEYS: LengthBucket[] = ['under10', '10to20', 'over20'];
 
-// Labels live under `Library.contentTypes.<key>`.
 export const FORMAT_KEYS: Format[] = ['audio', 'written', 'video', 'activity'];
 
 export interface LibraryItem {
@@ -80,7 +74,6 @@ export interface LibraryStory {
   };
 }
 
-// Narrows a Storyblok story to the fields above.
 export function toLibraryStory(story: ISbStoryData): LibraryStory {
   const {
     name,
@@ -113,7 +106,6 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   };
 }
 
-// The Storyblok stories the library is built from, grouped by content type.
 export interface LibraryStories {
   courses: LibraryStory[];
   // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
@@ -123,7 +115,6 @@ export interface LibraryStories {
   conversations: LibraryStory[];
 }
 
-// Storyblok component → library format.
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_conversation: 'audio',
   resource_short_video: 'video',
@@ -132,10 +123,8 @@ const FORMAT_BY_COMPONENT: Record<string, Format> = {
   session_iba: 'video',
 };
 
-// Fallback for a story with no themes set.
 const DEFAULT_THEME: ThemeKey = 'healing-journey';
 
-// Storyblok's `themes` is a multi-option field.
 function themesForStory(story: LibraryStory): ThemeKey[] {
   const themes = story.content.themes;
   return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
@@ -174,7 +163,6 @@ export function pathRequiresAccount(path: string): boolean {
   return segments[0] === 'courses' && segments.length > 2;
 }
 
-// Maps a Storyblok story to a LibraryItem. Progress is attached in useLibraryItems.
 export function storyToLibraryItem(story: LibraryStory, locale: string): LibraryItem {
   const content = story.content;
   const href = getDefaultFullSlug(normaliseSlug(story.full_slug), locale);
@@ -222,7 +210,6 @@ export function parentCourseSlug(lessonFullSlug: string): string {
   return normaliseSlug(lessonFullSlug).split('/').slice(0, -1).join('/');
 }
 
-// The state of every filter on the page. Empty array = that filter is off (matches everything).
 export interface LibraryFilters {
   keyword: string;
   kind: KindFilter;
@@ -231,8 +218,7 @@ export interface LibraryFilters {
   lengths: LengthBucket[];
 }
 
-// Filters combine as AND across groups and OR within a group. A keyword puts title matches first;
-// otherwise the Storyblok order is kept.
+// AND across groups, OR within a group. A keyword puts title matches first.
 export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters): LibraryItem[] {
   const { keyword, kind, themes, formats, lengths } = filters;
   const search = keyword.trim().toLowerCase();

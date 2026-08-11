@@ -1,7 +1,9 @@
 'use client';
 
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
-import useCookieConsentDecided from '@/lib/hooks/useCookieConsentDecided';
+import useCookieConsentDecided, {
+  ANALYTICS_CONSENT_COOKIE,
+} from '@/lib/hooks/useCookieConsentDecided';
 import { setPwaDismissed } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -32,7 +34,8 @@ export default function usePWA() {
   const dispatch = useAppDispatch();
   const cookieConsentDecided = useCookieConsentDecided();
   const user = useTypedSelector((state) => state.user);
-  const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
+  const userCookiesAccepted =
+    user.cookiesAccepted || Cookies.get(ANALYTICS_CONSENT_COOKIE) === 'true';
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);

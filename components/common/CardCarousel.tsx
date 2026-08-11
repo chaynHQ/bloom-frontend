@@ -9,11 +9,8 @@ import { Box, IconButton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 
-/**
- * A row of cards that scrolls horizontally, snapping to each card, with as many visible per
- * breakpoint as you ask for. Give `slidesPerView` a fractional value to let the next card peek in
- * and signal that the row moves.
- */
+// A horizontally scrolling row of cards that snaps to each card. A fractional `slidesPerView`
+// lets the next card peek in, signalling that the row moves.
 
 export interface SlidesPerView {
   xs: number;
@@ -21,8 +18,7 @@ export interface SlidesPerView {
   md?: number;
 }
 
-// Track padding, in theme spacing units, so the first card lines up with the section's text and
-// the last can scroll clear of the edge.
+// Track padding, in theme spacing units, so the first card lines up with the section's text.
 const EDGE = 3;
 
 const slideWidth = (perView: number, gapPx: number) =>
@@ -79,8 +75,6 @@ const arrowStyle = {
   '&.Mui-disabled': { backgroundColor: 'primary.light', color: 'common.white' },
 } as const;
 
-// A transparent hit area around a small visual dot, so the target stays comfortable without the
-// indicators dominating the row.
 const dotButtonStyle = {
   display: 'flex',
   alignItems: 'center',
@@ -114,15 +108,12 @@ export function CardCarousel({
   qaId,
 }: {
   children: ReactNode[];
-  // Names the scroll region for screen readers, e.g. "Individual sessions". Omit where the row has
-  // no heading of its own and a generic name is the honest one.
+  // Names the scroll region for screen readers; omit where the row has no heading of its own.
   label?: string;
-  // Reported once the row settles on a new card, so each surface is distinguishable.
   eventName: string;
   eventData?: Record<string, unknown>;
   slidesPerView?: SlidesPerView;
   gap?: number;
-  // Adds previous/next arrows. They hide themselves when everything already fits.
   controls?: boolean;
   qaId?: string;
 }) {
@@ -156,7 +147,6 @@ export function CardCarousel({
     };
   }, [measure, children.length]);
 
-  // Report movement once, when the row settles on a page it was not already on.
   const reportedPage = useRef(0);
   useEffect(() => {
     if (page === reportedPage.current) return;

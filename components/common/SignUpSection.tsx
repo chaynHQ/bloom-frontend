@@ -5,7 +5,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useRegisterPath } from '@/lib/hooks/useRegisterPath';
-import logEvent from '@/lib/utils/logEvent';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import globeIcon from '@/public/globe.svg';
 import heartIcon from '@/public/heart.svg';
 import playPauseIcon from '@/public/play_pause.svg';
@@ -32,7 +32,6 @@ const containerStyle = (sectionAbove: boolean, sectionBelow: boolean) =>
     ...(sectionBelow && sectionDivider('bottom')),
   }) as const;
 
-// Two features per row on mobile, with the odd one centred beneath; three across from `md`.
 const featuresStyle = {
   display: 'flex',
   flexWrap: 'wrap',
@@ -42,12 +41,13 @@ const featuresStyle = {
   '& > *': { flexBasis: { xs: '40%', md: 0 }, flexGrow: { md: 1 } },
 } as const;
 
-// The signed-out closing section: what Bloom offers, then the sign-up call to action. Shown on the
-// home page and at the foot of the public content pages.
 export function SignUpSection({
+  source,
   sectionAbove = true,
   sectionBelow = false,
 }: {
+  // Names the surface the section closes, so sign-ups stay attributable per page.
+  source: string;
   sectionAbove?: boolean;
   sectionBelow?: boolean;
 }) {
@@ -55,6 +55,9 @@ export function SignUpSection({
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
   );
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const registerPath = useRegisterPath();
   // `userLoading` can flip mid-hydration, so hold the server-rendered output until after mount.
   const [isMounted, setIsMounted] = useState(false);
@@ -87,7 +90,12 @@ export function SignUpSection({
         color="error"
         component={i18nLink}
         href={registerPath}
-        onClick={() => logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED)}
+        onClick={() =>
+          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, {
+            sign_up_section_source: source,
+            ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+          })
+        }
         sx={{ mt: 4 }}
       >
         {t('cta')}

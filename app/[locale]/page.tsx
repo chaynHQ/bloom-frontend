@@ -11,8 +11,6 @@ const HOME_SLUG = 'home-redesign';
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
-  // The hero and the editor-composed sections come from the home story; the session and course
-  // bands are built from the same content the library uses.
   const [story, libraryStories] = await Promise.all([
     getStoryblokStory(HOME_SLUG, locale),
     getLibraryStories(locale),

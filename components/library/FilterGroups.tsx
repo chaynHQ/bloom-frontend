@@ -27,7 +27,6 @@ const checkRowStyle = {
   },
 } as const;
 
-// A titled group of filter rows.
 function FilterGroup({
   title,
   disabled,
@@ -69,7 +68,6 @@ function CheckRow({
   );
 }
 
-// The "Content type" and "Length" checkbox groups.
 export function FilterGroups({
   formatOptions,
   formats,

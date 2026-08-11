@@ -9,9 +9,8 @@ import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
-// Full-bleed section: the background runs edge to edge while the content keeps the same gutters as
-// the page Container (see the MuiContainer overrides in styles/theme.ts), so the message lines up
-// with the page body beneath it.
+// Full-bleed: the background runs edge to edge while the content keeps the page Container's
+// gutters (see the MuiContainer overrides in styles/theme.ts).
 const sectionStyle = {
   width: '100%',
   backgroundColor: 'secondary.main',
@@ -34,12 +33,9 @@ const sectionContentStyle = {
   },
 } as const;
 
-// On desktop the section is a single line: the supporting clause only appears where there is room for
-// it, and `nowrap` keeps the headline from ever pushing the section to two rows.
-//
-// The 20rem flex-basis is what drives the small-screen wrapping: flexbox decides to wrap on the
-// hypothetical main size, so the actions stay alongside the message until the two can no longer
-// both fit, then drop to their own row. A fixed `100%` here would force that break at every width.
+// The flex-basis drives the small-screen wrapping: flexbox wraps on the hypothetical main size, so
+// the actions stay alongside the message until both no longer fit, then drop to their own row. A
+// fixed `100%` would force that break at every width.
 const messageStyle = {
   flex: '1 1 10rem',
   minWidth: { xs: 'auto', md: 0 },
@@ -60,8 +56,6 @@ const actionsStyle = {
   gap: { xs: 1, md: 1.5 },
 } as const;
 
-// The app's standard CTA — contained/secondary, same as ScrollToSignUpButton and BloomButton's
-// default. Only the sizing is overridden, to keep the section to one line.
 const ctaStyle = {
   paddingInline: { xs: 2, md: 2.5 },
   paddingBlock: 0.5,
@@ -69,8 +63,6 @@ const ctaStyle = {
   fontSize: '0.875rem',
   lineHeight: 1.5,
   whiteSpace: 'nowrap',
-  // secondary.dark on a secondary.main section is a deliberately tonal pairing, so it leans on the
-  // same shadow the breadcrumb buttons use to lift off their background rather than on hue.
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
 } as const;
 
@@ -87,9 +79,8 @@ const USER_RESEARCH_FORM_LINK =
 
 const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
 
-// The study is run in English only, so the banner is gated on the `en` locale and its copy is not
-// translated. Keep it here rather than inline in the JSX, and move it to i18n/messages if the
-// study is ever opened up to other languages.
+// The study runs in English only, so the banner is gated on the `en` locale and its copy is not
+// translated. Move this to i18n/messages if the study opens up to other languages.
 const COPY = {
   regionLabel: 'Bloom user research',
   headline: 'Take part in Bloom research for $75',
@@ -103,8 +94,7 @@ export default function UserResearchBanner() {
   const locale = useLocale();
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // The dismissal cookie is browser-only, so it is resolved after mount to avoid a hydration
-  // mismatch. `null` means not yet known, and the banner stays hidden until it is.
+  // Resolved after mount to avoid a hydration mismatch; `null` means not yet known.
   const [bannerInteracted, setBannerInteracted] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -117,9 +107,9 @@ export default function UserResearchBanner() {
 
   const showBanner = isBannerFeatureEnabled && isEnglish && bannerInteracted === false;
 
-  // The floating back / "Leave site" buttons are fixed just below the TopBar, so they have to move
-  // down by however tall this section renders — which varies with the breakpoint and with wrapping.
-  // Measuring beats hard-coding it. See breadcrumbPositionStyle in styles/common.ts.
+  // The floating back / "Leave site" buttons are fixed below the TopBar and must move down by
+  // however tall this renders, which varies with breakpoint and wrapping. See
+  // breadcrumbPositionStyle in styles/common.ts.
   useEffect(() => {
     const section = sectionRef.current;
     const root = document.documentElement;

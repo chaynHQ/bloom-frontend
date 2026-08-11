@@ -23,7 +23,6 @@ import type { ReactNode } from 'react';
 // badge; `compact` is the text-only card.
 export type LibraryCardLayout = 'compact' | 'illustrated';
 
-// Badge glyph per content type.
 const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
   course: RouteRounded,
   audio: VolumeUpRounded,
@@ -54,7 +53,6 @@ const actionAreaStyle = {
   '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
-// The status badge notched into the card's top trailing corner.
 const cornerBadgeStyle = {
   position: 'absolute',
   top: 0,
@@ -98,7 +96,6 @@ const contentStyle = (layout: LibraryCardLayout, hasCornerBadge: boolean) =>
     pt: layout === 'compact' && hasCornerBadge ? 7 : 2,
   }) as const;
 
-// One line, so a card with two themes keeps its title level with its neighbours' in a row.
 const themeStyle = {
   color: 'grey.800',
   mb: 0.5,
@@ -174,7 +171,6 @@ export function LibraryCard({
   const isCourse = item.kind === 'course';
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
   const BadgeIcon = CONTENT_TYPE_ICON[badgeType];
-  // Progress only exists for a signed-in user, so the two corner badges never both apply.
   const showAccountBadge = showAccountNeeded && !item.progress && item.requiresAccount;
   const isIllustrated = layout === 'illustrated' && Boolean(item.imageSrc);
 

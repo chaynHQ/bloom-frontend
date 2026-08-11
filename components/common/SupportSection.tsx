@@ -1,7 +1,6 @@
 'use client';
 
 import { LinkCard } from '@/components/common/LinkCard';
-import { LIBRARY_SUPPORT_CARD_CLICKED } from '@/lib/constants/events';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import chatIcon from '@/public/chat_icon.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
@@ -28,14 +27,13 @@ const gridStyle = {
   mt: 3,
 } as const;
 
-// The "Get support" section, closing both the library and the home page. Each page passes the event
-// it reports card clicks under, so the two surfaces stay distinguishable in analytics.
+// The "Get support" section, closing both the library and the home page.
 export function SupportSection({
   eventUserData,
-  eventName = LIBRARY_SUPPORT_CARD_CLICKED,
+  eventName,
 }: {
   eventUserData: ReturnType<typeof getEventUserData>;
-  eventName?: string;
+  eventName: string;
 }) {
   const t = useTranslations('Shared.supportSection');
 

@@ -27,7 +27,6 @@ const PageSection = (props: PageSectionProps) => {
 
   const containerStyle: SxProps<Theme> = {
     ...columnStyle,
-    // `compact` matches the tighter rhythm of the app's own page sections.
     ...(divider && sectionDivider('top')),
     ...(spacing === 'compact' && {
       paddingTop: { xs: '2.5rem !important', md: '4rem !important' },

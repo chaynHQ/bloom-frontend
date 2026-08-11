@@ -87,7 +87,7 @@ export default function MessagingPage({ story }: Props) {
       ) : (
         <>
           <NotesFromBloomPromo />
-          <SignUpSection />
+          <SignUpSection source="messaging" />
         </>
       )}
     </Box>

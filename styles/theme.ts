@@ -53,8 +53,6 @@ declare module '@mui/material/styles' {
     supportArrowPanel?: string;
   }
 
-  // The heading font with its RTL fallback, for use as `sx={{ fontFamily: 'headingFontFamily' }}`
-  // on non-heading elements.
   interface TypographyVariants {
     headingFontFamily: string;
   }
@@ -112,18 +110,14 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       overlayBackground: 'rgba(0, 0, 0, 0.4)',
       bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
-      // Used behind the page header and the library's "Get support" section.
       bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
-      // The same soft gradient running upwards, behind the sign-up section.
       bloomGradientSoftUp: 'linear-gradient(0deg, #F9E2E3 0%, #FFEAE1 100%)',
       cardSurface: '#FFFCFA',
       cardBorder: '#EBE0E1',
-      // The pale section behind the home page's session and course rows, and the main nav.
       sectionSurface: '#FAF1F2',
       panelSurface: '#FCF8F8',
       pageBackground: '#FFF2EB',
       inputBorder: '#DECECF',
-      // Hairline between adjacent page sections.
       sectionBorder: '#DECECF',
       chipBackground: '#FFD8C7',
       chipBackgroundHover: '#FFC9B2',
@@ -134,12 +128,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
     shape: {
       borderRadius: 20,
     },
-    // Material 3 scale from the "Bloom Library 2026" Figma: Montserrat for headings and labels,
-    // Open Sans for body. Comments below name the style each variant maps to.
     typography: {
       fontFamily: bodyFontFamily(direction),
       headingFontFamily: headingFontFamily(direction),
-      // Headline/Large, at 400 by product decision.
       h1: {
         fontFamily: headingFontFamily(direction),
         fontSize: '2rem',
@@ -148,7 +139,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         lineHeight: 40 / 32,
         color: headingColor,
       },
-      // Headline/Small stepping up to Headline/Medium from `md`.
       h2: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.5rem',
@@ -161,7 +151,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           lineHeight: 36 / 28,
         },
       },
-      // Title/Large.
       h3: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.375rem',
@@ -170,7 +159,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         lineHeight: 28 / 22,
         color: headingColor,
       },
-      // Title/Medium — the shared card-title style.
       h4: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.125rem',
@@ -184,12 +172,10 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         fontFamily: headingFontFamily(direction),
         fontStyle: 'italic',
       },
-      // Body/Large.
       body1: {
         fontSize: '1rem',
         lineHeight: 24 / 16,
       },
-      // Body/Medium.
       body2: {
         fontSize: '0.875rem',
         lineHeight: 20 / 14,
@@ -281,7 +267,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            // Label/Large at the default size, Title/Medium at `large`.
             fontFamily: headingFontFamily(direction),
             fontWeight: 500,
             borderRadius: '100px',
@@ -303,14 +288,13 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               },
             },
           },
+          sizeMedium: { minHeight: 44 },
+          sizeLarge: { minHeight: 48 },
           // MUI hard-codes physical margins on the button icons (startIcon: marginRight/Left,
           // endIcon: the mirror). Those don't flip for RTL because this app relies on CSS
           // logical properties + `dir` rather than stylis-plugin-rtl, so in Arabic the icon
           // and label overlap. Re-express the same offsets with logical margins (identical in
           // LTR, correctly mirrored in RTL). See getLocaleDirection for the RTL locale list.
-          // Comfortable touch targets; `small` keeps its compact size for inline actions.
-          sizeMedium: { minHeight: 44 },
-          sizeLarge: { minHeight: 48 },
           startIcon: ({ ownerState }: { ownerState: { size?: string } }) => ({
             marginLeft: 0,
             marginRight: 0,
@@ -325,8 +309,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           }),
         },
         variants: [
-          // The companion to the primary CTA, so it hovers on the same beat: a tint that fills the
-          // pill and a border that stays put.
           {
             props: { variant: 'outlined', color: 'primary' },
             style: {
@@ -381,10 +363,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               },
             },
           },
-          // Bloom's primary call-to-action, and the only definition of it. Static buttons opt in
-          // with `variant="contained" color="error"`; CMS buttons map their `primary.dark` choice
-          // onto the same pair via getButtonStyleProps. Hover deepens the pink rather than
-          // lightening it, which would drop the white label below its contrast floor.
+          // Bloom's primary call-to-action. CMS buttons reach it via getButtonStyleProps. Hover
+          // darkens rather than lightens, which would drop the white label below its contrast floor.
           {
             props: { variant: 'contained', color: 'error' },
             style: {
@@ -405,7 +385,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
                 boxShadow: `0 1px 3px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
                 transform: 'translateY(0)',
               },
-              // The fill is the focus colour, so the ring sits just outside it against the page.
               '&.Mui-focusVisible': {
                 outline: `2px solid ${theme.palette.primary.dark}`,
                 outlineOffset: 2,

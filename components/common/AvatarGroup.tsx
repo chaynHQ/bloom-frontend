@@ -4,9 +4,6 @@ import { INLINE_ALIGNMENT } from '@/lib/utils/alignment';
 import { Box } from '@mui/material';
 import Image from 'next/image';
 
-// Circular portraits arranged as a group: either a row that overlaps, or a loose cluster where the
-// first portrait leads and the rest sit below it.
-
 export interface Avatar {
   src: string;
   alt: string;
@@ -52,7 +49,6 @@ const rowAvatarStyle = (size: AvatarGroupSize, index: number, overlap: boolean) 
     zIndex: 10 - index,
   }) as const;
 
-// Sized from the leading circle, which the placements are percentages of.
 const clusterStyle = (size: AvatarGroupSize, alignment: string) =>
   ({
     position: 'relative',

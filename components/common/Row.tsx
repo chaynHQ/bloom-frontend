@@ -10,7 +10,7 @@ interface RowProps {
   horizontalAlignment: string;
   verticalAlignment: string;
   gap?: string;
-  // `reverse` stacks the columns bottom-to-top below `md`, for rows whose media leads on mobile.
+  // `reverse` stacks the columns bottom-to-top below `md`.
   mobileStackOrder?: string;
 }
 

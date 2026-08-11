@@ -29,8 +29,6 @@ const cardStyle = {
 const cardActionAreaStyle = {
   p: 1.5,
   height: '100%',
-  // CardActionArea centres its content; the cards in a row are equal height, so the text is
-  // pinned to the top instead to keep the labels level.
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'stretch',
@@ -42,7 +40,6 @@ const cardActionAreaStyle = {
   '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
-// Title/Small Emphasized.
 const cardLabelStyle = {
   fontFamily: 'headingFontFamily',
   fontSize: '0.875rem',
@@ -52,7 +49,6 @@ const cardLabelStyle = {
   mb: 0.5,
 } as const;
 
-// The "Explore by theme" section above the results.
 export function ThemeCards({
   themes,
   setThemes,

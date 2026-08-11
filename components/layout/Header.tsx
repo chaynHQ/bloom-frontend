@@ -36,7 +36,6 @@ const headerContainerStyle = {
   background: theme.palette.bloomGradientSoft,
 };
 
-// Fills the remaining section height, centring the heading block under anything above it.
 const centerWrapStyle = {
   flexGrow: 1,
   display: 'flex',
@@ -51,7 +50,6 @@ const headerStyle = {
   gap: { xs: 3, md: 5 },
 } as const;
 
-// The illustration sits above the text on mobile, and on the trailing edge on desktop.
 const rightHeaderStyle = {
   position: 'relative',
   flexShrink: 0,

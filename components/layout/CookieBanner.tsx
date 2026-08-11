@@ -3,7 +3,10 @@
 import { floatingBannerGap, getFloatingBannerPosition } from '@/lib/constants/banners';
 import { COOKIES_ACCEPTED, COOKIES_REJECTED } from '@/lib/constants/events';
 import { useAppDispatch } from '@/lib/hooks/store';
-import { notifyCookieConsentDecided } from '@/lib/hooks/useCookieConsentDecided';
+import {
+  ANALYTICS_CONSENT_COOKIE,
+  notifyCookieConsentDecided,
+} from '@/lib/hooks/useCookieConsentDecided';
 import { setCookiesAccepted } from '@/lib/store/userSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
@@ -88,7 +91,7 @@ const CookieBanner = () => {
   }, []);
 
   useEffect(() => {
-    const cookieConsent = getCookieConsentValue('analyticsConsent');
+    const cookieConsent = getCookieConsentValue(ANALYTICS_CONSENT_COOKIE);
     if (cookieConsent && cookieConsent === 'true') {
       dispatch(setCookiesAccepted(true));
     }
@@ -100,7 +103,7 @@ const CookieBanner = () => {
       disableStyles={true}
       buttonText={tS('cookieConsent.acceptLabel')}
       declineButtonText={tS('cookieConsent.declineLabel')}
-      cookieName="analyticsConsent"
+      cookieName={ANALYTICS_CONSENT_COOKIE}
       location="none"
       expires={365}
       onAccept={handleAccept}

@@ -4,10 +4,6 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import { Box, Typography } from '@mui/material';
 import Image, { type StaticImageData } from 'next/image';
 
-// An illustration above a short label, for grids of brief illustrated points such as the sign-up
-// section's "Built with you in mind". The illustrations carry their own background shape, so
-// nothing is drawn behind them.
-
 const ICON_WIDTH = { xs: 88, md: 125 };
 
 // Width ÷ height of the illustrations these hold, so the label sits directly under the artwork.

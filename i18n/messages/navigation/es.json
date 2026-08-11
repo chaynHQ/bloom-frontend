@@ -25,11 +25,9 @@
       "courseIcon": "Una ilustración del ícono “play”, un triángulo apuntando a la derecha. En frente hay un sol pequeño. ",
       "notesIcon": "Una ilustración de un celular con un corazón en el centro.",
       "chatIcon": "Dos globos de conversación superpuestos sobre un fondo rosa. El primero tiene un corazón rosa dentro. El segundo tiene líneas rectas.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
       "groundingIcon": "A twig with small pink flowers."
     },
     "messaging": "Mensajería",
-    "grounding": "Anclaje ",
-    "activities": "Actividades"
+    "grounding": "Anclaje "
   }
 }

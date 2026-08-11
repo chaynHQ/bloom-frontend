@@ -52,7 +52,7 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
         cta={isPartiallyPublicPage && !isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
       {!isLoggedIn && isPartiallyPublicPage && <NotesFromBloomPromo />}
-      {!isLoggedIn && isPartiallyPublicPage && <SignUpSection />}
+      {!isLoggedIn && isPartiallyPublicPage && <SignUpSection source="content-page" />}
       {(isLoggedIn || isFullyPublicPage) &&
         page_sections?.length > 0 &&
         page_sections.map((section: SbBlokData, index: number) => (

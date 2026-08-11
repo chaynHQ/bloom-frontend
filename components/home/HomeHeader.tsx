@@ -73,7 +73,7 @@ export function HomeHeader({
   const tS = useTranslations('Shared');
   const imageAltText = translatedImageAlt ?? (imageAlt ? tS(`alt.${imageAlt}`) : '');
 
-  // The sign-up CTA also keeps firing PROMO_GET_STARTED_CLICKED so its funnel stays continuous.
+  // The sign-up CTA keeps firing PROMO_GET_STARTED_CLICKED so its funnel stays continuous.
   const logCtaClick = (cta: string, alsoLog?: string) => {
     logEvent(HOME_HERO_CTA_CLICKED, { home_hero_cta: cta, ...eventUserData });
     if (alsoLog) logEvent(alsoLog, eventUserData);
