@@ -1,7 +1,14 @@
 'use client';
 
 import type { Direction } from '@/lib/utils/getLocaleDirection';
-import { createTheme, lighten, responsiveFontSizes, type Theme } from '@mui/material/styles';
+import {
+  alpha,
+  createTheme,
+  darken,
+  lighten,
+  responsiveFontSizes,
+  type Theme,
+} from '@mui/material/styles';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here
 declare module '@mui/material/styles' {
@@ -10,11 +17,14 @@ declare module '@mui/material/styles' {
     bloomGradient: string;
     bloomGradientVertical: string;
     bloomGradientSoft: string;
+    bloomGradientSoftUp: string;
     cardSurface: string;
     cardBorder: string;
+    sectionSurface: string;
     panelSurface: string;
     pageBackground: string;
     inputBorder: string;
+    sectionBorder: string;
     chipBackground: string;
     chipBackgroundHover: string;
     badgeBlue: string;
@@ -27,12 +37,15 @@ declare module '@mui/material/styles' {
     bloomGradient?: string;
     bloomGradientVertical?: string;
     bloomGradientSoft?: string;
+    bloomGradientSoftUp?: string;
     overlayBackground?: string;
     cardSurface?: string;
     cardBorder?: string;
+    sectionSurface?: string;
     panelSurface?: string;
     pageBackground?: string;
     inputBorder?: string;
+    sectionBorder?: string;
     chipBackground?: string;
     chipBackgroundHover?: string;
     badgeBlue?: string;
@@ -57,6 +70,10 @@ const bodyFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-open-sans)' : 'var(--font-open-sans)';
 const headingFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-montserrat)' : 'var(--font-montserrat)';
+
+// Headings and card titles are pure black in the design; body copy sits at grey.800.
+const headingColor = '#000000';
+const bodyColor = '#424242';
 
 /**
  * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
@@ -84,6 +101,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       background: {
         default: '#FEF6F2',
       },
+      text: {
+        primary: bodyColor,
+      },
       error: {
         main: '#EA0050',
       },
@@ -92,13 +112,19 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       overlayBackground: 'rgba(0, 0, 0, 0.4)',
       bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
-      // Used behind the page header and the library's "Get support" band.
+      // Used behind the page header and the library's "Get support" section.
       bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
+      // The same soft gradient running upwards, behind the sign-up section.
+      bloomGradientSoftUp: 'linear-gradient(0deg, #F9E2E3 0%, #FFEAE1 100%)',
       cardSurface: '#FFFCFA',
       cardBorder: '#EBE0E1',
+      // The pale section behind the home page's session and course rows, and the main nav.
+      sectionSurface: '#FAF1F2',
       panelSurface: '#FCF8F8',
       pageBackground: '#FFF2EB',
       inputBorder: '#DECECF',
+      // Hairline between adjacent page sections.
+      sectionBorder: '#DECECF',
       chipBackground: '#FFD8C7',
       chipBackgroundHover: '#FFC9B2',
       badgeBlue: '#DFF0F5',
@@ -108,45 +134,65 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
     shape: {
       borderRadius: 20,
     },
+    // Material 3 scale from the "Bloom Library 2026" Figma: Montserrat for headings and labels,
+    // Open Sans for body. Comments below name the style each variant maps to.
     typography: {
       fontFamily: bodyFontFamily(direction),
       headingFontFamily: headingFontFamily(direction),
+      // Headline/Large, at 400 by product decision.
       h1: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '2.25rem',
+        fontSize: '2rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
-        lineHeight: 1.4,
+        lineHeight: 40 / 32,
+        color: headingColor,
       },
+      // Headline/Small stepping up to Headline/Medium from `md`.
       h2: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '1.875rem',
+        fontSize: '1.5rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
+        lineHeight: 32 / 24,
+        color: headingColor,
+        '@media (min-width:900px)': {
+          fontSize: '1.75rem',
+          lineHeight: 36 / 28,
+        },
       },
+      // Title/Large.
       h3: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.375rem',
         marginBottom: '1rem',
-        fontWeight: 400,
-        lineHeight: 1.4,
-      },
-      h4: {
-        fontSize: '1rem',
         fontWeight: 500,
+        lineHeight: 28 / 22,
+        color: headingColor,
+      },
+      // Title/Medium — the shared card-title style.
+      h4: {
+        fontFamily: headingFontFamily(direction),
+        fontSize: '1.125rem',
+        fontWeight: 500,
+        lineHeight: 24 / 18,
+        letterSpacing: '0.15px',
+        color: headingColor,
       },
       subtitle1: {
         fontSize: '1.375rem',
         fontFamily: headingFontFamily(direction),
         fontStyle: 'italic',
       },
+      // Body/Large.
       body1: {
         fontSize: '1rem',
-        lineHeight: 1.5,
+        lineHeight: 24 / 16,
       },
+      // Body/Medium.
       body2: {
         fontSize: '0.875rem',
-        lineHeight: 1.5,
+        lineHeight: 20 / 14,
       },
     },
   });
@@ -235,7 +281,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            fontWeight: 'bold',
+            // Label/Large at the default size, Title/Medium at `large`.
+            fontFamily: headingFontFamily(direction),
+            fontWeight: 500,
             borderRadius: '100px',
             textTransform: 'unset',
             paddingInline: 24,
@@ -249,11 +297,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               opacity: 0.1,
             },
             '@media (min-width:900px)': {
-              '&.MuiButton-sizeMedium': {
-                fontSize: '1rem',
-              },
               '&.MuiButton-sizeLarge': {
                 fontSize: '1.125rem',
+                letterSpacing: '0.15px',
               },
             },
           },
@@ -262,6 +308,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           // logical properties + `dir` rather than stylis-plugin-rtl, so in Arabic the icon
           // and label overlap. Re-express the same offsets with logical margins (identical in
           // LTR, correctly mirrored in RTL). See getLocaleDirection for the RTL locale list.
+          // Comfortable touch targets; `small` keeps its compact size for inline actions.
+          sizeMedium: { minHeight: 44 },
+          sizeLarge: { minHeight: 48 },
           startIcon: ({ ownerState }: { ownerState: { size?: string } }) => ({
             marginLeft: 0,
             marginRight: 0,
@@ -276,11 +325,17 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           }),
         },
         variants: [
+          // The companion to the primary CTA, so it hovers on the same beat: a tint that fills the
+          // pill and a border that stays put.
           {
             props: { variant: 'outlined', color: 'primary' },
             style: {
-              color: '#000000',
+              color: theme.palette.primary.dark,
               borderColor: theme.palette.primary.dark,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.primary.dark,
+              },
             },
           },
           {
@@ -326,17 +381,45 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               },
             },
           },
+          // Bloom's primary call-to-action, and the only definition of it. Static buttons opt in
+          // with `variant="contained" color="error"`; CMS buttons map their `primary.dark` choice
+          // onto the same pair via getButtonStyleProps. Hover deepens the pink rather than
+          // lightening it, which would drop the white label below its contrast floor.
           {
             props: { variant: 'contained', color: 'error' },
             style: {
+              borderColor: 'transparent',
               backgroundColor: theme.palette.primary.dark,
               color: theme.palette.common.white,
+              transition: theme.transitions.create(
+                ['background-color', 'box-shadow', 'transform'],
+                { duration: theme.transitions.duration.short },
+              ),
               '&:hover': {
-                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                backgroundColor: darken(theme.palette.primary.dark, 0.2),
+                boxShadow: `0 4px 12px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
+                transform: 'translateY(-1px)',
+              },
+              '&:active': {
+                backgroundColor: darken(theme.palette.primary.dark, 0.32),
+                boxShadow: `0 1px 3px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
+                transform: 'translateY(0)',
+              },
+              // The fill is the focus colour, so the ring sits just outside it against the page.
+              '&.Mui-focusVisible': {
+                outline: `2px solid ${theme.palette.primary.dark}`,
+                outlineOffset: 2,
+              },
+              // The themed primary.dark ripple is invisible on a primary.dark fill.
+              '& .MuiTouchRipple-root span': {
+                backgroundColor: theme.palette.common.white,
+                opacity: 0.2,
               },
               '&.Mui-disabled': {
                 backgroundColor: lighten(theme.palette.primary.dark, 0.3),
                 color: `${theme.palette.common.white} !important`,
+                boxShadow: 'none',
+                transform: 'none',
               },
             },
           },

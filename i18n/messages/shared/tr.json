@@ -14,6 +14,12 @@
     },
     "navigateBack": "Geri git",
     "navigateTo": "Şuraya git",
+    "carousel": {
+      "regionLabel": "İçerik karuseli",
+      "previous": "{name}: önceki",
+      "next": "{name}: sonraki",
+      "goToPage": "{name}: {pages} içinden {page}. sayfaya git"
+    },
     "footer": {
       "fundedByTitle": "Finanse eden",
       "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
@@ -60,7 +66,7 @@
     },
     "notFound": {
       "title": "404 - Sayfa bulunamadı",
-      "authenticatedDescription": "Bu sayfa bulunamadı. URL’yi kontrol et ya da kütüphane sayfasına geri dön.",
+      "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kütüphane sayfasına geri dön.",
       "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
       "authenticatedRedirectButton": "Kütüphane sayfasına dön",
       "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
@@ -105,11 +111,17 @@
       "acceptLabel": "Çerezleri Kabul Et",
       "declineLabel": "Çerezleri Reddet"
     },
-    "signUpTodayPromo": {
-      "title": "Bugün ücretsiz bir hesap aç",
-      "description1": "Bloom, travmadan iyileşirken sana destek olan çevrimiçi bir platformdur. Video kurslarından ve düşündürücü etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom ile etkileşim kurmanın pek çok farklı yolu var.",
-      "description2": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydol!",
-      "button": "Başla"
+    "supportSection": {
+      "title": "Destek al",
+      "introduction": "Biriyle konuşmayı mı tercih edersin? Bloom'un destek hizmetleri ihtiyaç duyduğun her an burada.",
+      "messaging": {
+        "title": "Bire bir mesajlaşma",
+        "description": "Sorularına ve düşüncelerine, çok dilli ekibimizden 1–2 gün içinde özenli yanıtlar."
+      },
+      "notes": {
+        "title": "Bloom'dan Notlar",
+        "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
+      }
     },
     "loginDialog": {
       "title": "Giriş yap ya da bir hesap oluştur",
@@ -161,6 +173,14 @@
     "characterCount": "{current}/{max} karakter",
     "scrollToSignUp": {
       "button": "Ücretsiz kaydol"
+    },
+    "signUpSection": {
+      "title": "Seni düşünerek tasarlandı",
+      "introduction": "Bloom senin için burada; kim olursan ol, nerede olursan ol.",
+      "multilingual": "Çok dilli",
+      "freeAndAnonymous": "Ücretsiz ve anonim",
+      "exploreAtYourPace": "Kendi hızında keşfet",
+      "cta": "Bloom'a katıl, her zaman ücretsiz"
     }
   }
 }

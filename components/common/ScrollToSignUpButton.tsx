@@ -20,11 +20,11 @@ const ScrollToSignUpButton = () => {
   }, []);
 
   const handleClick = () => {
-    const signUpBanner = document.getElementById('signup-banner');
-    if (signUpBanner) {
+    const signUpSection = document.getElementById('signup-section');
+    if (signUpSection) {
       // Nav height: xs: 48px, sm: 64px, md: 128px
       const navHeight = isSmallScreen ? 48 : isMediumScreen ? 64 : 128;
-      const elementPosition = signUpBanner.getBoundingClientRect().top + window.scrollY;
+      const elementPosition = signUpSection.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: elementPosition - navHeight, behavior: 'smooth' });
     }
   };

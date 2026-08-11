@@ -28,7 +28,7 @@ interface DesktopMainNavIconType {
 
 const tabsStyle = {
   display: { xs: 'none', md: 'flex' },
-  backgroundColor: theme.palette.palePrimaryLight,
+  backgroundColor: theme.palette.sectionSurface,
 } as const;
 
 const tabStyle = {

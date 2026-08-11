@@ -27,10 +27,19 @@ interface StoryblokRowColumnBlockProps {
   horizontal_alignment: string;
   vertical_alignment: string;
   gap: string;
+  mobile_stack_order?: string;
 }
 
 const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
-  const { _uid, _editable, columns, horizontal_alignment, vertical_alignment, gap } = props;
+  const {
+    _uid,
+    _editable,
+    columns,
+    horizontal_alignment,
+    vertical_alignment,
+    gap,
+    mobile_stack_order,
+  } = props;
 
   if (!columns) return <></>;
 
@@ -53,6 +62,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
         verticalAlignment={vertical_alignment}
         horizontalAlignment={horizontal_alignment}
         gap={gap}
+        mobileStackOrder={mobile_stack_order}
       >
         {columns.map((column: any, index: number) => {
           return (

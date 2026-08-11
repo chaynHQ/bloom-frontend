@@ -1,15 +1,18 @@
 import StoryblokAccordion from '@/components/storyblok/StoryblokAccordion';
 import StoryblokAudio from '@/components/storyblok/StoryblokAudio';
+import StoryblokAvatarGroup from '@/components/storyblok/StoryblokAvatarGroup';
 import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
+import StoryblokLinkCard from '@/components/storyblok/StoryblokLinkCard';
 import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTeamPage';
 import StoryblokNotesFromBloomPromo from '@/components/storyblok/StoryblokNotesFromBloomPromo';
 import StoryblokPage from '@/components/storyblok/StoryblokPage';
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
+import StoryblokQuoteCard from '@/components/storyblok/StoryblokQuoteCard';
 import StoryblokResourceCarousel from '@/components/storyblok/StoryblokResourceCarousel';
 import StoryblokRow from '@/components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
@@ -56,6 +59,9 @@ export const getStoryblokApi = storyblokInit({
     meet_the_team: StoryblokMeetTheTeamPage,
     resource_carousel: StoryblokResourceCarousel,
     notes_from_bloom_promo: StoryblokNotesFromBloomPromo,
+    link_card: StoryblokLinkCard,
+    avatar_group: StoryblokAvatarGroup,
+    quote_card: StoryblokQuoteCard,
   },
 });
 

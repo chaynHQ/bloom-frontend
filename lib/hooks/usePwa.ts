@@ -1,6 +1,7 @@
 'use client';
 
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import useCookieConsentDecided from '@/lib/hooks/useCookieConsentDecided';
 import { setPwaDismissed } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -29,6 +30,7 @@ const PWA_BANNER_DISMISSED = 'pwaBannerDismissed';
 export default function usePWA() {
   const [installAttempted, setInstallAttempted] = useState(false);
   const dispatch = useAppDispatch();
+  const cookieConsentDecided = useCookieConsentDecided();
   const user = useTypedSelector((state) => state.user);
   const userCookiesAccepted = user.cookiesAccepted || Cookies.get('analyticsConsent') === 'true';
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -117,6 +119,8 @@ export default function usePWA() {
     const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
 
     const isHidden =
+      // Wait for the cookie banner to be answered so the two banners never share the screen.
+      !cookieConsentDecided ||
       pwaBannerDismissedCookie ||
       user.pwaDismissed ||
       isStandalone ||
@@ -125,7 +129,7 @@ export default function usePWA() {
     if (isHidden) return 'Hidden';
     if (installAttempted && isIos) return 'Ios';
     return 'Generic';
-  }, [user.pwaDismissed, installAttempted]);
+  }, [user.pwaDismissed, installAttempted, cookieConsentDecided]);
 
   // Set up appinstalled event listener
   useEffect(() => {

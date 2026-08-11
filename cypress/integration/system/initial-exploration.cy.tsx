@@ -19,7 +19,7 @@ describe('Initial exploration', () => {
     cy.contains('Healing from sexual trauma').click();
     cy.wait(2000); // leave time for the page to load as flakey
     cy.get('h3').contains('What is sexual trauma').click();
-    cy.get('#signup-banner').should('be.visible');
+    cy.get('#signup-section').should('be.visible');
   });
   it('a user with partner referral should be able to explore all pages for partners', () => {
     cy.visit('/welcome/bumble');
@@ -38,7 +38,7 @@ describe('Initial exploration', () => {
     cy.contains('Dating, boundaries, and relationships').should('exist');
     cy.contains('Dating, boundaries, and relationships').click();
     cy.get('h3').contains('What are boundaries').click();
-    cy.get('#signup-banner').should('be.visible');
+    cy.get('#signup-section').should('be.visible');
   });
   after(() => {
     cy.cleanUpTestState();

@@ -1,5 +1,6 @@
 // Pure data, types, and Storyblok → LibraryItem mapping for the library.
 
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { ISbStoryData } from '@storyblok/react/rsc';
 
@@ -55,6 +56,10 @@ export interface LibraryItem {
   courseTitle?: string;
   sessionCount?: number; // courses only
   progress?: 'started' | 'completed'; // logged-in users who have started/completed the item
+  // The course illustration on its background, shown by the card's `illustrated` layout.
+  imageSrc?: string;
+  // Whether opening the item puts a signed-out user in front of the login dialog.
+  requiresAccount: boolean;
 }
 
 // A Storyblok story trimmed to the fields the library reads, as sent from the route to the page.
@@ -71,6 +76,7 @@ export interface LibraryStory {
     included_for_partners?: string[];
     coming_soon?: boolean;
     weeks?: { sessions?: unknown[] }[];
+    image_with_background?: { filename?: string };
   };
 }
 
@@ -86,6 +92,7 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
     included_for_partners,
     coming_soon,
     weeks,
+    image_with_background,
   } = story.content;
 
   return {
@@ -101,6 +108,7 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
       included_for_partners,
       coming_soon,
       weeks,
+      image_with_background,
     },
   };
 }
@@ -151,15 +159,32 @@ function toPlainText(value: unknown): string {
   return '';
 }
 
+// Path heads that AuthGuard treats as authenticated, of the ones the library can link to.
+const AUTHENTICATED_PATH_HEADS = ['videos', 'conversations'];
+
+// Mirrors the rules in components/guards/AuthGuard.tsx: somatic videos and audio conversations
+// always need an account, as does a lesson inside a course (`courses/<course>/<lesson>`). Course
+// overviews and shorts are public.
+//
+// Takes an app path, not a Storyblok `full_slug`: a translated story's slug is prefixed with its
+// locale (`de/videos/…`), which would hide the path head this reads.
+export function pathRequiresAccount(path: string): boolean {
+  const segments = normaliseSlug(path).split('/');
+  if (AUTHENTICATED_PATH_HEADS.includes(segments[0])) return true;
+  return segments[0] === 'courses' && segments.length > 2;
+}
+
 // Maps a Storyblok story to a LibraryItem. Progress is attached in useLibraryItems.
 export function storyToLibraryItem(story: LibraryStory, locale: string): LibraryItem {
   const content = story.content;
+  const href = getDefaultFullSlug(normaliseSlug(story.full_slug), locale);
   const base = {
     id: story.uuid,
     themes: themesForStory(story),
     title: content.name,
     description: toPlainText(content.description),
-    href: getDefaultFullSlug(normaliseSlug(story.full_slug), locale),
+    href,
+    requiresAccount: pathRequiresAccount(href),
   };
 
   if (content.component === COURSE_COMPONENT) {
@@ -169,6 +194,7 @@ export function storyToLibraryItem(story: LibraryStory, locale: string): Library
       ...base,
       kind: 'course',
       sessionCount: weeks.reduce((total, week) => total + (week.sessions?.length ?? 0), 0),
+      imageSrc: content.image_with_background?.filename,
     };
   }
 
@@ -233,3 +259,14 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
 export function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 }
+
+// A LibraryItem's `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS
+// ('Started'), as the course and resource progress events do.
+export const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
+  NonNullable<LibraryItem['progress']> | 'none',
+  PROGRESS_STATUS
+> = {
+  started: PROGRESS_STATUS.STARTED,
+  completed: PROGRESS_STATUS.COMPLETED,
+  none: PROGRESS_STATUS.NOT_STARTED,
+};

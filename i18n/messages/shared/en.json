@@ -14,6 +14,12 @@
     },
     "navigateBack": "Navigate back",
     "navigateTo": "Navigate to",
+    "carousel": {
+      "regionLabel": "Content carousel",
+      "previous": "{name}: previous",
+      "next": "{name}: next",
+      "goToPage": "{name}: go to {page} of {pages}"
+    },
     "footer": {
       "fundedByTitle": "Funded by",
       "chaynDescription": "Bloom is brought to you by <link>Chayn</link>, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
@@ -105,11 +111,17 @@
       "acceptLabel": "Accept Cookies",
       "declineLabel": "Reject Cookies"
     },
-    "signUpTodayPromo": {
-      "title": "Sign up for a free account today",
-      "description1": "Bloom is an online platform to support you as you heal from trauma. From video courses and reflective activities to direct messaging with our team, there's lots of different ways to engage with Bloom.",
-      "description2": "Sign up today to get access to all of our content and explore everything Bloom has to offer!",
-      "button": "Get started"
+    "supportSection": {
+      "title": "Get support",
+      "introduction": "Prefer to talk to someone? Bloom’s support services are here whenever you need them.",
+      "messaging": {
+        "title": "1-to-1 messaging",
+        "description": "Thoughtful replies to your questions and reflections, from our multilingual team, within 1–2 days."
+      },
+      "notes": {
+        "title": "Notes from Bloom",
+        "description": "Support from Bloom, delivered to your WhatsApp twice a week."
+      }
     },
     "loginDialog": {
       "title": "Login or Create an account",
@@ -161,6 +173,14 @@
     "characterCount": "{current}/{max} characters",
     "scrollToSignUp": {
       "button": "Sign up for free"
+    },
+    "signUpSection": {
+      "title": "Built with you in mind",
+      "introduction": "Bloom is here for you, whoever and wherever you are.",
+      "multilingual": "Multilingual",
+      "freeAndAnonymous": "Free and anonymous",
+      "exploreAtYourPace": "Explore at your own pace",
+      "cta": "Join Bloom, always free"
     }
   }
 }

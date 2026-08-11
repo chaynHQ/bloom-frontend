@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# sessão} other {# sessões}}",
     "duration": "{minutes} min",
     "partOfCourse": "Parte de {course}",
+    "accountNeeded": "É necessária uma conta",
     "loadMore": "Ver mais",
     "noResults": {
       "title": "Nenhum resultado para esses filtros",
@@ -73,18 +74,6 @@
         "label": "Manter-se em segurança agora",
         "blurb": "Plano de segurança e estratégias diante da violência contínua",
         "description": "Se você ainda está em uma situação de violência ou perto dela, a segurança vem primeiro. Encontre apoio prático para montar um plano de segurança e para lidar com os momentos em que as coisas não parecem seguras."
-      }
-    },
-    "support": {
-      "title": "Buscar apoio",
-      "introduction": "Prefere conversar com alguém? Os serviços de apoio do Bloom estão aqui sempre que você precisar.",
-      "messaging": {
-        "title": "Mensagens individuais",
-        "description": "Respostas cuidadosas às suas perguntas e reflexões, da nossa equipe multilíngue, em 1 a 2 dias."
-      },
-      "notes": {
-        "title": "Notas do Bloom",
-        "description": "Apoio do Bloom, direto no seu WhatsApp, duas vezes por semana."
       }
     }
   }

@@ -1,9 +1,9 @@
 'use client';
 
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
   LIBRARY_FILTERS_CLEARED,
@@ -18,6 +18,7 @@ import {
   filterLibraryItems,
   FORMAT_KEYS,
   KIND_KEYS,
+  PROGRESS_STATUS_BY_ITEM_PROGRESS,
   THEME_KEYS,
   type Format,
   type KindFilter,
@@ -45,11 +46,11 @@ import {
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { SupportSection } from '../common/SupportSection';
 import Header from '../layout/Header';
 import { FilterGroups } from '../library/FilterGroups';
 import { LibraryCard } from '../library/LibraryCard';
 import { SectionLabel } from '../library/SectionLabel';
-import { SupportBand } from '../library/SupportBand';
 import { ThemeCards } from '../library/ThemeCards';
 
 // Cards shown before the "Load more" button, and how many more each press reveals.
@@ -145,13 +146,6 @@ const resultsHeaderStyle = {
   gap: 2,
 } as const;
 
-const headingStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '1.125rem',
-  fontWeight: 500,
-  letterSpacing: '0.15px',
-} as const;
-
 const kindToggleStyle = {
   mt: 2,
   mb: 3,
@@ -189,7 +183,7 @@ const themeDetailStyle = {
   mb: 2,
 } as const;
 
-const themeDetailTitleStyle = { ...headingStyle, fontWeight: 600, mb: 1 } as const;
+const themeDetailTitleStyle = { fontWeight: 600, mb: 1 } as const;
 
 const noResultsStyle = {
   display: 'flex',
@@ -209,31 +203,21 @@ const cardGridStyle = {
 // A multi-select filter reports as a comma-separated list.
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
 
-// A LibraryItem's `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS
-// ('Started'), as the course and resource progress events do.
-const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
-  NonNullable<LibraryItem['progress']> | 'none',
-  PROGRESS_STATUS
-> = {
-  started: PROGRESS_STATUS.STARTED,
-  completed: PROGRESS_STATUS.COMPLETED,
-  none: PROGRESS_STATUS.NOT_STARTED,
-};
-
 export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const t = useTranslations('Library');
   const items = useLibraryItems(stories);
 
   // Deep links seed the initial filter state: `?type=course` opens on the Courses tab,
-  // `?theme=<key>` selects a theme card. An unknown theme key is ignored.
+  // `?theme=<key>` selects a theme card. An unknown theme or type key is ignored.
   const searchParams = useSearchParams();
   const themeParam = searchParams.get('theme');
   const initialTheme = THEME_KEYS.find((theme) => theme === themeParam);
+  const typeParam = searchParams.get('type');
 
   const [keyword, setKeyword] = useState('');
   const [themes, setThemes] = useState<ThemeKey[]>(initialTheme ? [initialTheme] : []);
   const [kind, setKind] = useState<KindFilter>(
-    searchParams.get('type') === 'course' ? 'course' : 'all',
+    KIND_KEYS.find((option) => option === typeParam) ?? 'all',
   );
   const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
@@ -479,7 +463,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
           <Box sx={resultsColumnStyle}>
             <Box sx={resultsHeaderStyle}>
-              <Typography sx={headingStyle}>{t('resultsHeading')}</Typography>
+              <Typography variant="h4">{t('resultsHeading')}</Typography>
               <Typography
                 variant="body2"
                 qa-id="library-results-count"
@@ -510,7 +494,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
             {selectedThemes.map((theme) => (
               <Box key={theme} sx={themeDetailStyle}>
-                <Typography sx={themeDetailTitleStyle}>{t(`themes.${theme}.label`)}</Typography>
+                <Typography variant="h4" sx={themeDetailTitleStyle}>
+                  {t(`themes.${theme}.label`)}
+                </Typography>
                 <Typography sx={{ color: 'grey.800' }}>
                   {t(`themes.${theme}.description`)}
                 </Typography>
@@ -519,7 +505,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
             {results.length === 0 ? (
               <Box sx={noResultsStyle}>
-                <Typography sx={{ ...headingStyle, mb: 1 }}>{t('noResults.title')}</Typography>
+                <Typography variant="h4" sx={{ mb: 1 }}>
+                  {t('noResults.title')}
+                </Typography>
                 <Typography sx={{ color: 'grey.700', maxWidth: 420 }}>
                   {t('noResults.body')}
                 </Typography>
@@ -551,10 +539,10 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         </Box>
       </Container>
 
-      <SupportBand eventUserData={eventUserData} />
+      <SupportSection eventUserData={eventUserData} />
 
       {/* Sign up (the header CTA scrolls here), and — once signed in — turn on email reminders. */}
-      {!isLoggedIn && <SignUpBanner />}
+      {!isLoggedIn && <SignUpSection />}
       {showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );

@@ -3,6 +3,7 @@ import {
   filterLibraryItems,
   normaliseSlug,
   parentCourseSlug,
+  pathRequiresAccount,
   storyToLibraryItem,
   toggle,
   toLibraryStory,
@@ -46,6 +47,29 @@ describe('storyToLibraryItem', () => {
       const item = storyToLibraryItem(story({ component: 'Course' }, 'courses/coming-soon'), 'en');
 
       expect(item.sessionCount).toBe(0);
+    });
+
+    // The home page's illustrated card renders this; the library's compact card ignores it.
+    it('carries the course illustration on its background', () => {
+      const item = storyToLibraryItem(
+        story(
+          {
+            component: 'Course',
+            image_with_background: { filename: 'https://a.storyblok.com/c.svg' },
+          },
+          'courses/managing-anxiety',
+        ),
+        'en',
+      );
+
+      expect(item.imageSrc).toBe('https://a.storyblok.com/c.svg');
+    });
+
+    it('leaves the illustration unset when the course has none, so the card falls back', () => {
+      expect(
+        storyToLibraryItem(story({ component: 'Course' }, 'courses/managing-anxiety'), 'en')
+          .imageSrc,
+      ).toBeUndefined();
     });
   });
 
@@ -199,6 +223,36 @@ describe('parentCourseSlug', () => {
   });
 });
 
+// These mirror the rules in components/guards/AuthGuard.tsx — if that list of authenticated path
+// heads changes, the "Account needed" badge goes wrong until this follows it.
+describe('pathRequiresAccount', () => {
+  it.each([
+    ['/courses/managing-anxiety', false, 'a course overview is public'],
+    ['/shorts/what-are-boundaries', false, 'a short is public'],
+    ['/courses/managing-anxiety/what-is-anxiety', true, 'a course lesson needs an account'],
+    ['/videos/a-somatic-video', true, 'a somatic video needs an account'],
+    ['/conversations/a-conversation', true, 'an audio conversation needs an account'],
+  ])('%s → %s (%s)', (path, expected) => {
+    expect(pathRequiresAccount(path)).toBe(expected);
+  });
+});
+
+describe('storyToLibraryItem account requirement', () => {
+  // A translated story's full_slug carries its locale (`de/videos/…`). The requirement is read
+  // from the app path, after the locale has been stripped — otherwise every non-English card
+  // would look public.
+  it('reads the requirement past a locale prefix', () => {
+    expect(
+      storyToLibraryItem(story({ component: 'resource_conversation' }, 'de/videos/somatic'), 'de')
+        .requiresAccount,
+    ).toBe(true);
+    expect(
+      storyToLibraryItem(story({ component: 'resource_short_video' }, 'de/shorts/a-short'), 'de')
+        .requiresAccount,
+    ).toBe(false);
+  });
+});
+
 describe('bucketOf', () => {
   it.each([
     [5, 'under10'],
@@ -235,6 +289,7 @@ describe('filterLibraryItems', () => {
     href: '/shorts/a-session',
     format: 'video',
     minutes: 5,
+    requiresAccount: false,
     ...overrides,
   });
 

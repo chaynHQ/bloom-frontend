@@ -1,0 +1,22 @@
+{
+  "Home": {
+    "hero": {
+      "joinCta": "Únete a Bloom, siempre gratis",
+      "exploreSessionsCta": "Explorar todas las sesiones",
+      "goToCoursesCta": "Ir a los cursos"
+    },
+    "continueLearning": {
+      "heading": "Retoma donde lo dejaste"
+    },
+    "sessions": {
+      "heading": "Sesiones individuales",
+      "introduction": "Sesiones sobre reconocer el daño, poner límites, sanar y mucho más.",
+      "browseAll": "Ver todas las sesiones"
+    },
+    "courses": {
+      "heading": "Cursos",
+      "introduction": "Un lugar guiado para empezar. Cada curso te lleva por un conjunto de sesiones a tu propio ritmo.",
+      "browseAll": "Ver todos los cursos"
+    }
+  }
+}

@@ -90,6 +90,8 @@ export enum STORYBLOK_COLORS {
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
   BLOOM_GRADIENT = 'bloomGradient',
+  PAGE_BACKGROUND = 'pageBackground',
+  PALE_PRIMARY_LIGHT = 'palePrimaryLight',
 }
 
 export enum STORYBLOK_REFERENCE_CATEGORIES {

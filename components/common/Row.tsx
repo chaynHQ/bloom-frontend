@@ -1,5 +1,6 @@
 'use client';
 
+import { INLINE_ALIGNMENT, TEXT_ALIGNMENT } from '@/lib/utils/alignment';
 import { richtextContentStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 
@@ -9,46 +10,42 @@ interface RowProps {
   horizontalAlignment: string;
   verticalAlignment: string;
   gap?: string;
+  // `reverse` stacks the columns bottom-to-top below `md`, for rows whose media leads on mobile.
+  mobileStackOrder?: string;
 }
 
+const ALIGN_ITEMS: Record<string, string> = { center: 'center', bottom: 'flex-end' };
+
 const Row = (props: RowProps) => {
-  const { children, horizontalAlignment, verticalAlignment, numberOfColumns, gap } = props;
+  const {
+    children,
+    horizontalAlignment,
+    verticalAlignment,
+    numberOfColumns,
+    gap,
+    mobileStackOrder,
+  } = props;
+
   const calculatedGap =
     gap === 'none'
       ? 0
-      : gap === 'mobile-small-desktop-default'
-        ? { xs: 2, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns }
-        : { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns };
+      : gap === 'small'
+        ? 2.5
+        : gap === 'mobile-small-desktop-default'
+          ? { xs: 2, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns }
+          : { xs: 3, sm: 8 / numberOfColumns, md: 10 / numberOfColumns, lg: 16 / numberOfColumns };
 
   const rowStyles = {
     width: '100%',
     gap: calculatedGap,
     ...rowStyle,
-    textAlign:
-      horizontalAlignment === 'center'
-        ? 'center'
-        : horizontalAlignment === 'right'
-          ? 'end'
-          : horizontalAlignment === 'mobile-left-desktop-center'
-            ? { xs: 'start', md: 'center' }
-            : 'start',
+    textAlign: TEXT_ALIGNMENT[horizontalAlignment] ?? 'start',
     ...(horizontalAlignment && {
-      justifyContent:
-        horizontalAlignment === 'center'
-          ? 'center'
-          : horizontalAlignment === 'right'
-            ? 'flex-end'
-            : horizontalAlignment === 'mobile-left-desktop-center'
-              ? { xs: 'flex-start', md: 'center' }
-              : 'flex-start',
+      justifyContent: INLINE_ALIGNMENT[horizontalAlignment] ?? 'flex-start',
     }),
-    ...(verticalAlignment && {
-      alignItems:
-        verticalAlignment === 'center'
-          ? 'center'
-          : verticalAlignment === 'bottom'
-            ? 'flex-end'
-            : 'flex-start',
+    ...(verticalAlignment && { alignItems: ALIGN_ITEMS[verticalAlignment] ?? 'flex-start' }),
+    ...(mobileStackOrder === 'reverse' && {
+      flexDirection: { xs: 'column-reverse', md: 'row' },
     }),
     ...richtextContentStyle,
   } as const;

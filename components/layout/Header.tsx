@@ -14,7 +14,6 @@ import { Box, Container, IconButton, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import UserResearchBanner from '../banner/UserResearchBanner';
 
 export interface HeaderProps {
   title: string;
@@ -30,13 +29,14 @@ export interface HeaderProps {
 const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
-  minHeight: { xs: 300, md: 360, lg: 400 },
-  paddingTop: '2.5rem !important',
+  // Matches the home hero, so the section is the same depth wherever a page starts.
+  minHeight: { xs: 300, md: 340 },
+  paddingTop: '3.5rem !important',
   paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
   background: theme.palette.bloomGradientSoft,
 };
 
-// Fills the remaining band height, centring the heading block under anything above it.
+// Fills the remaining section height, centring the heading block under anything above it.
 const centerWrapStyle = {
   flexGrow: 1,
   display: 'flex',
@@ -120,7 +120,6 @@ const Header = (props: HeaderProps) => {
 
   return (
     <Container sx={headerContainerStyle}>
-      <UserResearchBanner />
       {!children && (
         <IconButton
           sx={backButtonStyle}
@@ -137,7 +136,7 @@ const Header = (props: HeaderProps) => {
       <Box sx={centerWrapStyle}>
         <Box sx={headerStyle}>
           <Box sx={leftHeaderStyle}>
-            <Typography variant="h1" component="h1" sx={{ fontWeight: 500, mb: 0 }}>
+            <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
               {title}
             </Typography>
             <Box sx={leftMetaStyle}>

@@ -62,7 +62,7 @@ describe('Home page should display', () => {
     cy.checkLink('/auth/register', 'Get started');
   });
 
-  it('testimonial section', () => {
+  it('quote section', () => {
     cy.checkImage('Illustration of a person sitting cross legged with a tea', 'tea_blue');
     cy.get('blockquote').should(
       'contain',

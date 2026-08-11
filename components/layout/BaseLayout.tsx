@@ -2,12 +2,13 @@ import { AuthGuard } from '@/components/guards/AuthGuard';
 import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
-import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import ReferralPartnerTracker from '@/components/layout/ReferralPartnerTracker';
 import TopBar from '@/components/layout/TopBar';
 import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
+import { mobileBottomNavHeight } from '@/lib/constants/banners';
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
@@ -29,18 +30,19 @@ import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
+import UserResearchBanner from '../banner/UserResearchBanner';
 
 // 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600'],
   variable: '--font-open-sans',
   display: 'swap',
 });
 
 const montserrat = Montserrat({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600'],
   variable: '--font-montserrat',
   display: 'swap',
 });
@@ -112,6 +114,8 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       <ReferralPartnerTracker />
                     </Suspense>
                     <TopBar />
+                    {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
+                    <UserResearchBanner />
                     <LeaveSiteButton />
                     <DesktopPwaBanner />
 

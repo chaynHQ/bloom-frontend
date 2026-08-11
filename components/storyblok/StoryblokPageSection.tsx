@@ -16,6 +16,9 @@ export interface StoryblokPageSectionProps {
   alignment: string;
   authenticated_hide: boolean;
   unauthenticated_hide: boolean;
+  width?: 'default' | 'wide' | 'full';
+  spacing?: 'default' | 'compact';
+  divider?: boolean;
 }
 
 const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
@@ -28,6 +31,9 @@ const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
     alignment,
     authenticated_hide,
     unauthenticated_hide,
+    width,
+    spacing,
+    divider,
   } = props;
 
   if (!content || (isLoggedIn && authenticated_hide) || (!isLoggedIn && unauthenticated_hide))
@@ -35,7 +41,13 @@ const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
 
   return (
     <Box {...storyblokEditable({ _uid, _editable, content, color, alignment })}>
-      <PageSection color={color} alignment={alignment}>
+      <PageSection
+        color={color}
+        alignment={alignment}
+        width={width}
+        spacing={spacing}
+        divider={divider}
+      >
         {render(content, RichTextOptions)}
       </PageSection>
     </Box>

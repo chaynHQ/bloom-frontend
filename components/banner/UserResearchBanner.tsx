@@ -3,27 +3,105 @@
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import logEvent from '@/lib/utils/logEvent';
-import { Alert, AlertTitle, Button, Collapse, Stack } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const alertStyle = {
-  backgroundColor: 'secondary.light',
+// Full-bleed section: the background runs edge to edge while the content keeps the same gutters as
+// the page Container (see the MuiContainer overrides in styles/theme.ts), so the message lines up
+// with the page body beneath it.
+const sectionStyle = {
+  width: '100%',
+  backgroundColor: 'secondary.main',
   color: 'text.primary',
-  boxShadow: 1,
-  borderRadius: 0.6,
-  padding: 2,
-  'flex-direction': 'column',
-};
+  borderBottom: '1px solid',
+  borderBottomColor: 'secondary.dark',
+} as const;
+
+const sectionContentStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flexWrap: { xs: 'wrap', md: 'nowrap' },
+  gap: { xs: 1.5, md: 3 },
+  paddingBlock: { xs: 1.5, md: 1 },
+  paddingInline: {
+    xs: '1.5rem',
+    sm: '2rem',
+    lg: 'calc((100vw - 1000px) / 2)',
+  },
+} as const;
+
+// On desktop the section is a single line: the supporting clause only appears where there is room for
+// it, and `nowrap` keeps the headline from ever pushing the section to two rows.
+//
+// The 20rem flex-basis is what drives the small-screen wrapping: flexbox decides to wrap on the
+// hypothetical main size, so the actions stay alongside the message until the two can no longer
+// both fit, then drop to their own row. A fixed `100%` here would force that break at every width.
+const messageStyle = {
+  flex: '1 1 10rem',
+  minWidth: { xs: 'auto', md: 0 },
+  margin: 0,
+  fontSize: { xs: '0.875rem', md: '0.9375rem' },
+  lineHeight: 1.4,
+  whiteSpace: { xs: 'normal', md: 'nowrap' },
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+} as const;
+
+const supportingTextStyle = { display: { xs: 'none', lg: 'inline' } } as const;
+
+const actionsStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  flexShrink: 0,
+  gap: { xs: 1, md: 1.5 },
+} as const;
+
+// The app's standard CTA — contained/secondary, same as ScrollToSignUpButton and BloomButton's
+// default. Only the sizing is overridden, to keep the section to one line.
+const ctaStyle = {
+  paddingInline: { xs: 2, md: 2.5 },
+  paddingBlock: 0.5,
+  minWidth: 'auto',
+  fontSize: '0.875rem',
+  lineHeight: 1.5,
+  whiteSpace: 'nowrap',
+  // secondary.dark on a secondary.main section is a deliberately tonal pairing, so it leans on the
+  // same shadow the breadcrumb buttons use to lift off their background rather than on hue.
+  boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+} as const;
+
+// The themed IconButton hover is primary.main, which washes out against the apricot section.
+const dismissStyle = {
+  color: 'text.primary',
+  padding: 0.5,
+  '&:hover': { backgroundColor: 'secondary.dark' },
+} as const;
 
 const USER_RESEARCH_BANNER_INTERACTED = 'user_research_banner_interacted';
 const USER_RESEARCH_FORM_LINK =
   'https://docs.google.com/forms/d/e/1FAIpQLSfBwYdXRKDX_IKtcShgYvNu835BqtI5PbIC-GrmBBVIZDpQgw/viewform?usp=sf_link';
 
+const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
+
+// The study is run in English only, so the banner is gated on the `en` locale and its copy is not
+// translated. Keep it here rather than inline in the JSX, and move it to i18n/messages if the
+// study is ever opened up to other languages.
+const COPY = {
+  regionLabel: 'Bloom user research',
+  headline: 'Take part in Bloom research for $75',
+  supportingText: ' — test new designs and help us make Bloom better for survivors.',
+  accept: 'I\u2019m interested',
+  dismiss: 'Dismiss',
+} as const;
+
 export default function UserResearchBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   // The dismissal cookie is browser-only, so it is resolved after mount to avoid a hydration
   // mismatch. `null` means not yet known, and the banner stays hidden until it is.
@@ -39,6 +117,33 @@ export default function UserResearchBanner() {
 
   const showBanner = isBannerFeatureEnabled && isEnglish && bannerInteracted === false;
 
+  // The floating back / "Leave site" buttons are fixed just below the TopBar, so they have to move
+  // down by however tall this section renders — which varies with the breakpoint and with wrapping.
+  // Measuring beats hard-coding it. See breadcrumbPositionStyle in styles/common.ts.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const root = document.documentElement;
+
+    const clear = () => root.style.removeProperty(TOP_BANNER_HEIGHT_VARIABLE);
+
+    if (!section || !open) {
+      clear();
+      return;
+    }
+
+    const sync = () =>
+      root.style.setProperty(TOP_BANNER_HEIGHT_VARIABLE, `${section.offsetHeight}px`);
+
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      clear();
+    };
+  }, [open, showBanner]);
+
   const handleClickAccepted = () => {
     Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
     logEvent(USER_BANNER_INTERESTED);
@@ -53,40 +158,41 @@ export default function UserResearchBanner() {
     setOpen(false);
   };
 
-  return showBanner ? (
-    <Stack
-      sx={{
-        width: '100%',
-        flexBasis: '100%',
-        position: 'relative',
-        zIndex: 1,
-        marginTop: -2,
-        marginBottom: 4,
-      }}
-      spacing={2}
-    >
-      <Collapse in={open}>
-        <Alert
-          icon={false}
-          sx={alertStyle}
-          action={
-            <>
-              <Button color="inherit" size="medium" onClick={handleClickAccepted}>
-                I’m interested
-              </Button>
-              <Button color="inherit" size="medium" onClick={handleClickDeclined}>
-                Dismiss
-              </Button>
-            </>
-          }
-        >
-          <AlertTitle>
-            <strong>Take part in Bloom research for $75</strong>
-          </AlertTitle>
-          By testing out new designs and giving us feedback, you can help us make Bloom better and
-          reach more survivors.
-        </Alert>
-      </Collapse>
-    </Stack>
-  ) : null;
+  if (!showBanner) return null;
+
+  return (
+    <Collapse in={open}>
+      <Box component="aside" ref={sectionRef} aria-label={COPY.regionLabel} sx={sectionStyle}>
+        <Box sx={sectionContentStyle}>
+          <Typography sx={messageStyle}>
+            <Box component="strong" sx={{ fontWeight: 600 }}>
+              {COPY.headline}
+            </Box>
+            <Box component="span" sx={supportingTextStyle}>
+              {COPY.supportingText}
+            </Box>
+          </Typography>
+          <Box sx={actionsStyle}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              sx={ctaStyle}
+              onClick={handleClickAccepted}
+            >
+              {COPY.accept}
+            </Button>
+            <IconButton
+              size="small"
+              aria-label={COPY.dismiss}
+              sx={dismissStyle}
+              onClick={handleClickDeclined}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </Box>
+      </Box>
+    </Collapse>
+  );
 }

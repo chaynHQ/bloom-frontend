@@ -1,6 +1,6 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import Header, { HeaderProps } from '@/components/layout/Header';
@@ -87,7 +87,7 @@ export default function MessagingPage({ story }: Props) {
       ) : (
         <>
           <NotesFromBloomPromo />
-          <SignUpBanner />
+          <SignUpSection />
         </>
       )}
     </Box>

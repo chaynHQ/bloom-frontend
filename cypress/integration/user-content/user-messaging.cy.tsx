@@ -161,7 +161,7 @@ describe('A logged in public user can', () => {
 describe('A logged out user visiting the messaging page', () => {
   it('sees the sign-up banner instead of the chat widget', () => {
     cy.visit('/messaging');
-    cy.get('#signup-banner').should('be.visible');
+    cy.get('#signup-section').should('be.visible');
     cy.get('[aria-label="Bloom messaging"]').should('not.exist');
   });
 });

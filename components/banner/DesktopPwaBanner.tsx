@@ -1,5 +1,6 @@
 'use client';
 
+import { floatingBannerGap, getFloatingBannerPosition } from '@/lib/constants/banners';
 import { PWA_DESKTOP_BANNER_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import usePWA from '@/lib/hooks/usePwa';
@@ -8,10 +9,11 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { Button, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 export const DesktopPwaBanner = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const hasLoggedView = useRef(false);
   const { bannerState, declineInstallation, install, getPwaMetaData } = usePWA();
   const t = useTranslations('Shared.pwaBanner');
   const theme = useTheme();
@@ -33,21 +35,22 @@ export const DesktopPwaBanner = () => {
   }, []);
 
   useEffect(() => {
-    if (isMounted && !isSmallScreen) {
+    // Only log a view once the banner is actually on screen — it now waits for a cookie decision.
+    if (isMounted && !isSmallScreen && bannerState !== 'Hidden' && !hasLoggedView.current) {
+      hasLoggedView.current = true;
       logEvent(PWA_DESKTOP_BANNER_VIEWED, analyticsPayload);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMounted, isSmallScreen]);
+  }, [isMounted, isSmallScreen, bannerState]);
 
   if (!isMounted || isSmallScreen || bannerState === 'Hidden') return null;
 
   const bannerStyle = {
-    position: 'fixed',
-    zIndex: 1000,
+    // Shares its anchor with the cookie banner — only one of the two is ever visible at a time.
+    ...getFloatingBannerPosition(isSmallScreen),
     p: 2.5,
     width: 250,
-    insetInlineEnd: { md: 16, lg: 80 },
-    bottom: { md: 16, lg: 40 },
+    maxWidth: `calc(100vw - ${floatingBannerGap * 2}px)`,
     backgroundColor: 'common.white',
   } as const;
 

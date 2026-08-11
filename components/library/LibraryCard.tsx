@@ -1,4 +1,5 @@
 import { Link as i18nLink } from '@/i18n/routing';
+import { getImageSizes } from '@/lib/utils/imageSizes';
 import { type ContentType, type LibraryItem } from '@/lib/utils/libraryData';
 import { cardShadow } from '@/styles/common';
 import type { SvgIconComponent } from '@mui/icons-material';
@@ -8,13 +9,19 @@ import ArticleRounded from '@mui/icons-material/ArticleRounded';
 import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
 import DonutLargeRounded from '@mui/icons-material/DonutLargeRounded';
 import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
+import LockOutlined from '@mui/icons-material/LockOutlined';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
 import RouteRounded from '@mui/icons-material/RouteRounded';
 import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import type { ReactNode } from 'react';
+
+// `illustrated` heads the card with the course illustration and drops the theme line and type
+// badge; `compact` is the text-only card.
+export type LibraryCardLayout = 'compact' | 'illustrated';
 
 // Badge glyph per content type.
 const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
@@ -47,7 +54,8 @@ const actionAreaStyle = {
   '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
-const progressBadgeStyle = {
+// The status badge notched into the card's top trailing corner.
+const cornerBadgeStyle = {
   position: 'absolute',
   top: 0,
   insetInlineEnd: 0,
@@ -65,29 +73,38 @@ const progressBadgeStyle = {
   borderEndStartRadius: '8px',
 } as const;
 
-const progressLabelStyle = {
+const cornerBadgeLabelStyle = {
   fontFamily: 'headingFontFamily',
   fontSize: '0.75rem',
   fontWeight: 500,
   color: 'grey.800',
 } as const;
 
-const contentStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  p: 2,
-  // Fixed top inset (56px), with or without a corner badge.
-  pt: 7,
+const imagePanelStyle = {
+  position: 'relative',
+  height: { xs: 140, md: 160 },
+  flexShrink: 0,
+  backgroundColor: 'secondary.light',
 } as const;
 
-const titleStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '1.125rem',
-  fontWeight: 500,
-  lineHeight: 1.33,
-  letterSpacing: '0.15px',
-  mb: 1.5,
+// Only a badged compact card insets its content to clear the corner badge; under `illustrated`
+// the badge sits over the image instead.
+const contentStyle = (layout: LibraryCardLayout, hasCornerBadge: boolean) =>
+  ({
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    p: 2,
+    pt: layout === 'compact' && hasCornerBadge ? 7 : 2,
+  }) as const;
+
+// One line, so a card with two themes keeps its title level with its neighbours' in a row.
+const themeStyle = {
+  color: 'grey.800',
+  mb: 0.5,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 } as const;
 
 const descriptionStyle = {
@@ -140,12 +157,26 @@ function Meta({ icon, text }: { icon: ReactNode; text: string }) {
   );
 }
 
-export function LibraryCard({ item, onSelect }: { item: LibraryItem; onSelect?: () => void }) {
+export function LibraryCard({
+  item,
+  layout = 'compact',
+  showAccountNeeded = false,
+  onSelect,
+}: {
+  item: LibraryItem;
+  layout?: LibraryCardLayout;
+  // Signed-out surfaces set this to flag the items that will ask the visitor to sign in.
+  showAccountNeeded?: boolean;
+  onSelect?: () => void;
+}) {
   const t = useTranslations('Library');
   const tS = useTranslations('Shared');
   const isCourse = item.kind === 'course';
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
   const BadgeIcon = CONTENT_TYPE_ICON[badgeType];
+  // Progress only exists for a signed-in user, so the two corner badges never both apply.
+  const showAccountBadge = showAccountNeeded && !item.progress && item.requiresAccount;
+  const isIllustrated = layout === 'illustrated' && Boolean(item.imageSrc);
 
   return (
     <Card qa-id="library-card" data-kind={item.kind} data-format={item.format ?? ''} sx={cardStyle}>
@@ -157,32 +188,65 @@ export function LibraryCard({ item, onSelect }: { item: LibraryItem; onSelect?: 
         sx={actionAreaStyle}
       >
         {item.progress && (
-          <Box qa-id="library-card-progress" data-progress={item.progress} sx={progressBadgeStyle}>
+          <Box qa-id="library-card-progress" data-progress={item.progress} sx={cornerBadgeStyle}>
             {item.progress === 'completed' ? (
               <CheckCircleRounded sx={{ fontSize: 16, color: 'secondary.dark' }} />
             ) : (
               <DonutLargeRounded sx={{ fontSize: 14, color: 'grey.700' }} />
             )}
-            <Typography sx={progressLabelStyle}>{tS(`progressStatus.${item.progress}`)}</Typography>
+            <Typography sx={cornerBadgeLabelStyle}>
+              {tS(`progressStatus.${item.progress}`)}
+            </Typography>
+          </Box>
+        )}
+        {showAccountBadge && (
+          <Box qa-id="library-card-account-needed" sx={cornerBadgeStyle}>
+            <LockOutlined sx={{ fontSize: 14, color: 'grey.700' }} />
+            <Typography sx={cornerBadgeLabelStyle}>{t('accountNeeded')}</Typography>
           </Box>
         )}
 
-        <Box sx={contentStyle}>
-          <Typography variant="body2" sx={{ color: 'grey.800', mb: 0.5 }}>
-            {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
-          </Typography>
-          <Typography sx={titleStyle}>{item.title}</Typography>
-          <Box
-            sx={{
-              ...typeBadgeStyle,
-              backgroundColor: isCourse ? 'secondary.light' : 'badgeBlue',
-              borderColor: isCourse ? 'secondary.main' : 'badgeBlueBorder',
-            }}
-          >
-            <BadgeIcon sx={{ fontSize: 16, color: 'grey.700' }} />
-            <Typography sx={typeBadgeLabelStyle}>{t(`contentTypes.${badgeType}`)}</Typography>
+        {isIllustrated && (
+          <Box sx={imagePanelStyle}>
+            <Image
+              // Decorative — the title names the course.
+              alt=""
+              src={item.imageSrc!}
+              fill
+              sizes={getImageSizes({ xs: '100vw', md: '340px' })}
+              style={{ objectFit: 'contain', padding: '1rem' }}
+            />
           </Box>
-          <Typography variant="body2" sx={descriptionStyle}>
+        )}
+
+        <Box
+          sx={contentStyle(
+            isIllustrated ? 'illustrated' : 'compact',
+            Boolean(item.progress) || showAccountBadge,
+          )}
+        >
+          {!isIllustrated && (
+            <Typography variant="body2" sx={themeStyle}>
+              {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
+            </Typography>
+          )}
+          <Typography variant="h4" sx={{ mb: 1.5 }}>
+            {item.title}
+          </Typography>
+          {!isIllustrated && (
+            <Box
+              sx={{
+                ...typeBadgeStyle,
+                backgroundColor: isCourse ? 'secondary.light' : 'badgeBlue',
+                borderColor: isCourse ? 'secondary.main' : 'badgeBlueBorder',
+              }}
+            >
+              <BadgeIcon sx={{ fontSize: 16, color: 'grey.700' }} />
+              <Typography sx={typeBadgeLabelStyle}>{t(`contentTypes.${badgeType}`)}</Typography>
+            </Box>
+          )}
+          {/* The type badge supplies the gap under the title in the compact layout. */}
+          <Typography variant="body2" sx={{ ...descriptionStyle, ...(isIllustrated && { mt: 0 }) }}>
             {item.description}
           </Typography>
 

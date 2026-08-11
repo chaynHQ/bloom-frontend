@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# Session} other {# Sessions}}",
     "duration": "{minutes} Min.",
     "partOfCourse": "Teil von {course}",
+    "accountNeeded": "Konto erforderlich",
     "loadMore": "Mehr laden",
     "noResults": {
       "title": "Keine Treffer für diese Filter",
@@ -73,18 +74,6 @@
         "label": "Jetzt sicher bleiben",
         "blurb": "Sicherheitsplanung und der Umgang mit anhaltender Gewalt",
         "description": "Wenn du dich noch in einer Gewaltsituation befindest oder ihr nahe bist, geht Sicherheit vor. Finde praktische Unterstützung für die Sicherheitsplanung und für den Umgang mit Momenten, die sich gerade jetzt unsicher anfühlen."
-      }
-    },
-    "support": {
-      "title": "Unterstützung finden",
-      "introduction": "Möchtest du lieber mit jemandem sprechen? Blooms Unterstützungsangebote sind für dich da, wann immer du sie brauchst.",
-      "messaging": {
-        "title": "1-zu-1-Nachrichten",
-        "description": "Achtsame Antworten auf deine Fragen und Gedanken – von unserem mehrsprachigen Team, innerhalb von 1–2 Tagen."
-      },
-      "notes": {
-        "title": "Notes von Bloom",
-        "description": "Unterstützung von Bloom – zweimal pro Woche direkt auf dein WhatsApp."
       }
     }
   }
