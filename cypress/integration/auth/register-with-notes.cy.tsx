@@ -1,6 +1,5 @@
 describe('Register with Notes from Bloom', () => {
   const SUBSCRIPTION_WHATSAPP_PAGE_URL = '/subscription/whatsapp';
-  const TEST_EMAIL = `cypresstestemail+${Date.now()}@chayn.co`;
   const TEST_PASSWORD = 'testpassword123';
   const TEST_NAME = 'Cypress Test User';
   const VALID_PHONE = '7123456789';
@@ -20,7 +19,7 @@ describe('Register with Notes from Bloom', () => {
 
   it('should show error for invalid phone number', () => {
     cy.get('input#name').type(TEST_NAME);
-    cy.get('input#email').type(TEST_EMAIL);
+    cy.get('input#email').type(Cypress.uniqueEmail());
     cy.get('input#password').type(TEST_PASSWORD);
     cy.get('input[type="tel"]').type(INVALID_PHONE);
 
@@ -32,7 +31,7 @@ describe('Register with Notes from Bloom', () => {
   it('should register user and subscribe to whatsapp', () => {
     // We'll use the actual user creation but mock the WhatsApp subscription
     cy.get('input#name').type(TEST_NAME);
-    cy.get('input#email').type(TEST_EMAIL);
+    cy.get('input#email').type(Cypress.uniqueEmail());
     cy.get('input#password').type(TEST_PASSWORD);
     cy.get('input[type="tel"]').type(VALID_PHONE);
 
@@ -53,6 +52,7 @@ describe('Register with Notes from Bloom', () => {
 
     // Wait for the user to be created and logged in
     cy.url().should('include', '/account/about-you', { timeout: 10000 });
+    cy.waitForAuthenticatedApp();
   });
 
   it('should handle registration errors', () => {

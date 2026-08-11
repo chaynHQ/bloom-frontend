@@ -9,6 +9,7 @@ describe('Create access code page should display', () => {
 
   beforeEach(() => {
     cy.visit('/partner-admin/create-access-code');
+    cy.waitForAuthenticatedApp();
   });
 
   it('header section', () => {

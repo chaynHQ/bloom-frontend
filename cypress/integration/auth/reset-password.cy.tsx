@@ -1,6 +1,6 @@
 import { Email, MailSlurp } from 'mailslurp-client';
 
-const email = `cypresstestemail+${Date.now()}@chayn.co`;
+const email = Cypress.uniqueEmail();
 
 const resetPasswordPath = 'auth/reset-password';
 

@@ -1,5 +1,5 @@
 describe('A logged in public user can', () => {
-  const email = `cypresstestemail+${Date.now()}@chayn.co`;
+  const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
   before(() => {
