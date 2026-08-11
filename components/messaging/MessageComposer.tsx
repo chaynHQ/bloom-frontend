@@ -187,8 +187,14 @@ export const MessageComposer = ({
     }
     try {
       await onSendAttachment(file, 'image', t('imageAttachment'));
-    } catch {
-      onError(t('errors.uploadFailed'));
+    } catch (err) {
+      onError(
+        t(
+          (err as Error).message === 'IMAGE_BLOCKED'
+            ? 'errors.imageBlocked'
+            : 'errors.uploadFailed',
+        ),
+      );
     }
   };
 
