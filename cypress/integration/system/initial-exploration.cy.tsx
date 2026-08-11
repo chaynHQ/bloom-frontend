@@ -1,3 +1,11 @@
+// Each nav destination is checked by url and by having rendered its heading. Asserting on page
+// copy instead would match the outgoing page while the next one is still loading.
+const visitFromNav = (button: string, path: string) => {
+  cy.get(`[qa-id=secondary-nav-${button}-button]`).click();
+  cy.checkPageUrl(path);
+  cy.get('h1', { timeout: 8000 }).should('not.be.empty');
+};
+
 describe('Initial exploration', () => {
   before(() => {
     cy.cleanUpTestState();
@@ -6,12 +14,9 @@ describe('Initial exploration', () => {
     cy.visit('/');
     // The hero copy comes from Storyblok, so this only asserts the page rendered its heading.
     cy.get('h1', { timeout: 8000 }).should('not.be.empty');
-    cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-notes-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
+    visitFromNav('messaging', 'messaging');
+    visitFromNav('grounding', 'grounding');
+    visitFromNav('notes', 'subscription/whatsapp');
     cy.get(`[qa-id=secondary-nav-library-button]`).click();
     cy.contains('Reclaiming resilience', { timeout: 8000 }).should('exist');
     cy.contains('Dating, boundaries, and relationships').should('not.exist');
@@ -23,12 +28,9 @@ describe('Initial exploration', () => {
   it('a user with partner referral should be able to explore all pages for partners', () => {
     cy.visit('/welcome/bumble');
     cy.get('h1', { timeout: 8000 }).contains('Join us on your healing journey');
-    cy.get(`[qa-id=secondary-nav-messaging-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-grounding-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
-    cy.get(`[qa-id=secondary-nav-notes-button]`).click();
-    cy.get('a', { timeout: 8000 }).contains('Get started');
+    visitFromNav('messaging', 'messaging');
+    visitFromNav('grounding', 'grounding');
+    visitFromNav('notes', 'subscription/whatsapp');
     cy.get(`[qa-id=secondary-nav-library-button]`).click();
     cy.contains('Healing from sexual trauma', { timeout: 8000 }).should('exist');
     cy.contains('Reclaiming resilience').should('not.exist');
