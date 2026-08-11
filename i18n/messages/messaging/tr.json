@@ -27,6 +27,7 @@
         "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri desteklenir.",
         "fileTooLarge": "Dosyalar 25 MB'tan küçük olmalıdır.",
         "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar dene.",
+        "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Eğer bu bir hata olduğunu düşünüyorsan, lütfen bize nedenini açıklamak için bir mesaj gönder.",
         "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarından mikrofon erişimine izin ver ve tekrar dene.",
         "micUnavailable": "Mikrofonuna erişilemedi. Lütfen bağlı olduğundan emin ol ve tekrar dene."
       }
