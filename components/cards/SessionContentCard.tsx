@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { useState } from 'react';
 
 const cardStyle = {
@@ -22,7 +23,7 @@ const cardStyle = {
 } as const;
 
 interface SessionContentCardProps {
-  children: any;
+  children: ReactNode;
   title: string;
   titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
   titleIconSize?: number;
