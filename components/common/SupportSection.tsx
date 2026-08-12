@@ -27,7 +27,6 @@ const gridStyle = {
   mt: 3,
 } as const;
 
-// The "Get support" section, closing both the library and the home page.
 export function SupportSection({
   eventUserData,
   eventName,

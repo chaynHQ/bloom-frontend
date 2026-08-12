@@ -1,14 +1,10 @@
-// The fixed mobile bottom nav, rendered below the `md` breakpoint.
 export const mobileBottomNavHeight = 100;
 
-// Gap between a floating banner and the viewport edge, or the mobile bottom nav below it.
 export const floatingBannerGap = 16;
 
 // Sits above the mobile bottom nav (1100) so banners are never hidden behind it.
 export const floatingBannerZIndex = 1200;
 
-// Bottom-end anchor shared by the floating banners (cookie consent, PWA install). Only one shows
-// at a time — the PWA banner waits for the cookie banner to be answered.
 export const getFloatingBannerPosition = (hasMobileBottomNav: boolean) =>
   ({
     position: 'fixed',

@@ -35,7 +35,6 @@ const cardActionAreaStyle = {
   justifyContent: 'flex-start',
   backgroundColor: 'cardSurface',
   borderRadius: '8px',
-  // Transparent when inactive, so selecting a theme never shifts the layout.
   border: '2px solid',
   '&:hover': { backgroundColor: 'common.white' },
 } as const;
@@ -43,7 +42,7 @@ const cardActionAreaStyle = {
 const cardLabelStyle = {
   fontFamily: 'headingFontFamily',
   fontSize: '0.875rem',
-  fontWeight: 600,
+  fontWeight: 500,
   letterSpacing: '0.1px',
   color: 'common.black',
   mb: 0.5,

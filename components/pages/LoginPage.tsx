@@ -5,6 +5,7 @@ import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
+import { pageHeaderPaddingTop } from '@/styles/common';
 import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
@@ -24,8 +25,7 @@ const headerContainerStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: '0', md: '6.5rem ' },
-  paddingY: '2rem',
+  paddingTop: pageHeaderPaddingTop,
   paddingX: '2rem',
   background: {
     xs: theme.palette.bloomGradient,

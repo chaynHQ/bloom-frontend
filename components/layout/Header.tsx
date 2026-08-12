@@ -7,7 +7,13 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { TextNode } from '@/lib/types/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
+import {
+  breadcrumbButtonStyle,
+  columnStyle,
+  pageHeaderPaddingBottom,
+  pageHeaderPaddingTop,
+  rowStyle,
+} from '@/styles/common';
 import theme from '@/styles/theme';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { Box, Container, IconButton, SxProps, Theme, Typography } from '@mui/material';
@@ -24,18 +30,15 @@ export interface HeaderProps {
   progressStatus?: PROGRESS_STATUS;
   children?: any;
   cta?: any;
-  // The home page opens on this header, so it gets a larger, eagerly loaded illustration that
-  // keeps its place beside the copy from `sm` rather than `md`.
   variant?: 'default' | 'hero';
 }
 
 const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
-  // Matches the home hero, so the section is the same depth wherever a page starts.
   minHeight: { xs: 300, md: 340 },
-  paddingTop: '3.5rem !important',
-  paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
+  paddingTop: pageHeaderPaddingTop,
+  paddingBottom: pageHeaderPaddingBottom,
   background: theme.palette.bloomGradientSoft,
 };
 
@@ -87,7 +90,6 @@ const leftMetaStyle = {
   gap: 2,
 } as const;
 
-// A header can close its copy with more than one button, so they lay out as a row.
 const ctaStyle = { display: 'flex', flexWrap: 'wrap', gap: 2 } as const;
 
 export const backButtonStyle = {

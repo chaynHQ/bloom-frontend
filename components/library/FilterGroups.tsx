@@ -81,7 +81,6 @@ export function FilterGroups({
   setFormats: Dispatch<SetStateAction<Format[]>>;
   lengths: LengthBucket[];
   setLengths: Dispatch<SetStateAction<LengthBucket[]>>;
-  // True while "Courses" is selected.
   disabled: boolean;
 }) {
   const t = useTranslations('Library');

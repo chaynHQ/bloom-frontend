@@ -1,8 +1,8 @@
 'use client';
 
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
-import { SignUpSection } from '@/components/common/SignUpSection';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
@@ -54,7 +54,6 @@ import { LibraryCard } from '../library/LibraryCard';
 import { SectionLabel } from '../library/SectionLabel';
 import { ThemeCards } from '../library/ThemeCards';
 
-// Cards shown before "Load more", and how many more each press reveals.
 const PAGE_SIZE = 8;
 
 const SEARCH_EVENT_DEBOUNCE_MS = 1000;
@@ -179,7 +178,7 @@ const themeDetailStyle = {
   mb: 2,
 } as const;
 
-const themeDetailTitleStyle = { fontWeight: 600, mb: 1 } as const;
+const themeDetailTitleStyle = { fontWeight: 500, mb: 1 } as const;
 
 const noResultsStyle = {
   display: 'flex',
@@ -403,7 +402,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                       </InputAdornment>
                     ),
                   },
-                  // The field has no visible label, so it carries its own accessible name.
                   htmlInput: { 'qa-id': 'library-search-input', 'aria-label': t('searchLabel') },
                 }}
               />

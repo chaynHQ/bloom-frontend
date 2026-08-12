@@ -38,7 +38,6 @@ const cardStyle = {
   borderRadius: '16px',
   boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
-  // Transparent at rest so the hover/focus border doesn't resize the card.
   border: '1px solid transparent',
   transition: 'border-color 150ms ease',
   '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
@@ -162,7 +161,6 @@ export function LibraryCard({
 }: {
   item: LibraryItem;
   layout?: LibraryCardLayout;
-  // Signed-out surfaces set this to flag the items that will ask the visitor to sign in.
   showAccountNeeded?: boolean;
   onSelect?: () => void;
 }) {
@@ -205,7 +203,6 @@ export function LibraryCard({
         {isIllustrated && (
           <Box sx={imagePanelStyle}>
             <Image
-              // Decorative — the title names the course.
               alt=""
               src={item.imageSrc!}
               fill
@@ -241,14 +238,12 @@ export function LibraryCard({
               <Typography sx={typeBadgeLabelStyle}>{t(`contentTypes.${badgeType}`)}</Typography>
             </Box>
           )}
-          {/* The type badge supplies the gap under the title in the compact layout. */}
           <Typography variant="body2" sx={{ ...descriptionStyle, ...(isIllustrated && { mt: 0 }) }}>
             {item.description}
           </Typography>
 
           <Box sx={spacerStyle} />
           <Divider sx={{ my: 2, borderColor: 'cardBorder' }} />
-          {/* Course lessons carry no duration, so they name their course instead. */}
           <Box sx={metaRowStyle}>
             {isCourse ? (
               <Meta

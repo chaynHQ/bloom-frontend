@@ -7,7 +7,7 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { breadcrumbButtonStyle, rowStyle } from '@/styles/common';
+import { breadcrumbButtonStyle, pageHeaderPaddingTop, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
@@ -15,6 +15,11 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import ProgressStatus from '../common/ProgressStatus';
+
+const headerContainerStyle = {
+  background: theme.palette.bloomGradient,
+  paddingTop: pageHeaderPaddingTop,
+} as const;
 
 const audioContainerStyle = {
   mt: { xs: 4, md: 6 },
@@ -24,7 +29,6 @@ const headerStyle = {
   ...rowStyle,
   flexWrap: { xs: 'wrap', md: 'no-wrap' },
   gap: { xs: 3, md: 5 },
-  mt: { md: -2.5 },
 } as const;
 
 const headerLeftStyle = {
@@ -82,7 +86,7 @@ export const ResourceConversationHeader = (props: ResourceConversationHeaderProp
   const t = useTranslations('Resources');
 
   return (
-    <Container sx={{ background: theme.palette.bloomGradient }}>
+    <Container sx={headerContainerStyle}>
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}

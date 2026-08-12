@@ -17,10 +17,8 @@ interface LibraryCardsSectionProps {
   items: LibraryItem[];
   showAccountNeeded?: boolean;
   background?: string;
-  // A "browse all" button is only shown when both a label and a destination are given.
   browseLabel?: string;
   browseHref?: string;
-  // Draws a hairline above the section, for the second of two sections sharing one background.
   divided?: boolean;
   carouselEventName: string;
   onCardSelect: (item: LibraryItem, index: number) => void;

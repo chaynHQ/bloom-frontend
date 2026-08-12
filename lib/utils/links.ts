@@ -11,7 +11,6 @@ export interface ResolvedLink {
   external: boolean;
 }
 
-// Whether an href leaves Bloom, and so should open in a new tab.
 export function isExternalHref(href: string): boolean {
   if (!/^https?:\/\//.test(href)) return false;
   return !(Boolean(BASE_URL) && href.startsWith(BASE_URL as string));

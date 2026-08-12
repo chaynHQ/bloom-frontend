@@ -7,7 +7,12 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
+import {
+  breadcrumbButtonStyle,
+  columnStyle,
+  pageHeaderPaddingTop,
+  rowStyle,
+} from '@/styles/common';
 import theme from '@/styles/theme';
 import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
@@ -16,11 +21,15 @@ import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import References from '../common/References';
 import { StoryblokReferenceProps } from '../storyblok/StoryblokTypes';
 
+const headerContainerStyle = {
+  background: theme.palette.bloomGradient,
+  paddingTop: pageHeaderPaddingTop,
+} as const;
+
 const headerStyle = {
   ...rowStyle,
   flexWrap: { xs: 'wrap', md: 'no-wrap' },
   gap: { xs: 3, md: 5 },
-  mt: { md: -2.5 },
 } as const;
 
 const headerLeftStyles = {
@@ -71,7 +80,7 @@ export const ResourceSingleVideoHeader = (props: ResourceSingleVideoHeaderProps)
   const t = useTranslations('Resources');
 
   return (
-    <Container sx={{ background: theme.palette.bloomGradient }}>
+    <Container sx={headerContainerStyle}>
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}

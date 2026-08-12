@@ -9,7 +9,12 @@ import { RESOURCE_SHORT_VIDEO_VISIT_SESSION } from '@/lib/constants/events';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import getNextResourceButtonLabel from '@/lib/utils/getNextResourceButtonLabel';
 import logEvent from '@/lib/utils/logEvent';
-import { breadcrumbButtonStyle, columnStyle, rowStyle } from '@/styles/common';
+import {
+  breadcrumbButtonStyle,
+  columnStyle,
+  pageHeaderPaddingTop,
+  rowStyle,
+} from '@/styles/common';
 import theme from '@/styles/theme';
 import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
@@ -17,11 +22,15 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
+const headerContainerStyle = {
+  background: theme.palette.bloomGradient,
+  paddingTop: pageHeaderPaddingTop,
+} as const;
+
 const headerStyle = {
   ...rowStyle,
   flexWrap: { xs: 'wrap', md: 'no-wrap' },
   gap: 5,
-  mt: { md: -2.5 },
 } as const;
 
 const headerRightStyle = {
@@ -75,7 +84,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
   };
 
   return (
-    <Container sx={{ background: theme.palette.bloomGradient }}>
+    <Container sx={headerContainerStyle}>
       <Button
         variant="contained"
         sx={breadcrumbButtonStyle}

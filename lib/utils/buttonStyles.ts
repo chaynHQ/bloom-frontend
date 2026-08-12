@@ -10,9 +10,8 @@ interface ButtonStyleProps {
   sx: SystemStyleObject<Theme>;
 }
 
-// Maps a CMS-authored colour onto the MUI colour the theme already styles, so Storyblok buttons
-// match the hard-coded ones. `primary.dark` returns no overrides: an `sx` background would beat
-// the theme's hover rule.
+// Maps a CMS-authored colour onto the MUI colour the theme already styles. `primary.dark` returns
+// no overrides: an `sx` background would beat the theme's hover rule.
 export const getButtonStyleProps = (
   color: STORYBLOK_COLORS | string,
   variant: ButtonVariant = 'contained',

@@ -13,10 +13,9 @@ export const dynamic = 'force-dynamic';
 
 type Params = Promise<{ locale: string; partnerName: string }>;
 
-// Each redesigned welcome page is a separate story so the live `welcome/<partner>` one keeps
-// serving until cutover, and so a partner without a redesign (Fruitz, retired) is unaffected.
-// At cutover: delete `welcome/<partner>`, rename the redesign to take its place, and drop the
-// fallback below.
+// The redesign is a separate story so `welcome/<partner>` keeps serving until cutover, and a
+// partner without one (Fruitz, retired) is unaffected. At cutover: delete `welcome/<partner>`,
+// rename the redesign to take its place, and drop the fallback below.
 const redesignSlug = (partnerName: string) => `welcome-redesign/${partnerName}`;
 
 async function getStory(locale: string, partnerName: string) {
@@ -75,8 +74,6 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, partnerName } = await params;
 
-  // Fetched together rather than in sequence: a partner still on the old page pays for library
-  // stories it will not use, but every redesigned page — all of the live ones — saves a round trip.
   const [redesignStory, libraryStories] = await Promise.all([
     getRedesignStory(locale, partnerName),
     getLibraryStories(locale),

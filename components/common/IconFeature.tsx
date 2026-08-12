@@ -6,7 +6,6 @@ import Image, { type StaticImageData } from 'next/image';
 
 const ICON_WIDTH = { xs: 88, md: 125 };
 
-// Width ÷ height of the illustrations these hold, so the label sits directly under the artwork.
 const ILLUSTRATION_ASPECT = 155 / 146;
 
 const containerStyle = {
@@ -38,7 +37,6 @@ export function IconFeature({
   return (
     <Box qa-id={qaId} sx={containerStyle}>
       <Box sx={iconStyle}>
-        {/* Decorative — the label carries the meaning. */}
         <Image
           alt=""
           src={iconSrc}

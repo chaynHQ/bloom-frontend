@@ -58,8 +58,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
   const { courses, sessions, inProgress } = useFeaturedLibraryItems(libraryStories, story?.content);
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('home', eventUserData);
 
-  // partnerAccesses/createdAt arrive with getUser, so the view event waits for the user to settle
-  // rather than reporting a signed-in visitor as anonymous.
+  // Wait for getUser before logging, so a signed-in visitor isn't reported as anonymous.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
   const viewLogged = useRef(false);
   useEffect(() => {
@@ -77,7 +76,6 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
     return <NoDataAvailable />;
   }
 
-  // The sign-up CTA keeps firing PROMO_GET_STARTED_CLICKED so its funnel stays continuous.
   const logCtaClick = (cta: string, alsoLog?: string) => {
     logEvent(HOME_HERO_CTA_CLICKED, { home_hero_cta: cta, ...eventUserData });
     if (alsoLog) logEvent(alsoLog, eventUserData);

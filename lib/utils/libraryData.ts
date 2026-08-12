@@ -40,23 +40,20 @@ export const FORMAT_KEYS: Format[] = ['audio', 'written', 'video', 'activity'];
 export interface LibraryItem {
   id: string; // Storyblok uuid
   kind: Kind;
-  themes: ThemeKey[]; // a story can belong to more than one theme
+  themes: ThemeKey[];
   title: string;
   description: string;
   href: string; // resolved, locale-aware app path
   format?: Format;
-  minutes?: number; // absent when Storyblok has no duration (all course lessons)
-  // On a course lesson: the title of the course it belongs to.
+  minutes?: number; // absent on course lessons
   courseTitle?: string;
   sessionCount?: number; // courses only
-  progress?: 'started' | 'completed'; // logged-in users who have started/completed the item
-  // The course illustration on its background, shown by the card's `illustrated` layout.
+  progress?: 'started' | 'completed';
   imageSrc?: string;
-  // Whether opening the item puts a signed-out user in front of the login dialog.
   requiresAccount: boolean;
 }
 
-// A Storyblok story trimmed to the fields the library reads, as sent from the route to the page.
+// A Storyblok story trimmed to the fields the library reads.
 export interface LibraryStory {
   uuid: string;
   full_slug: string;
@@ -130,13 +127,11 @@ function themesForStory(story: LibraryStory): ThemeKey[] {
   return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
 }
 
-// Storyblok duration is free-text minutes that is sometimes blank.
 function parseMinutes(duration: unknown): number | undefined {
   const minutes = Number(duration);
   return Number.isFinite(minutes) && minutes > 0 ? minutes : undefined;
 }
 
-// A description is a plain string on courses but a rich-text document on resources.
 function toPlainText(value: unknown): string {
   if (typeof value === 'string') return value;
   if (!value || typeof value !== 'object') return '';
@@ -148,15 +143,10 @@ function toPlainText(value: unknown): string {
   return '';
 }
 
-// Path heads that AuthGuard treats as authenticated, of the ones the library can link to.
 const AUTHENTICATED_PATH_HEADS = ['videos', 'conversations'];
 
-// Mirrors the rules in components/guards/AuthGuard.tsx: somatic videos and audio conversations
-// always need an account, as does a lesson inside a course (`courses/<course>/<lesson>`). Course
-// overviews and shorts are public.
-//
-// Takes an app path, not a Storyblok `full_slug`: a translated story's slug is prefixed with its
-// locale (`de/videos/…`), which would hide the path head this reads.
+// Mirrors components/guards/AuthGuard.tsx. Takes an app path, not a Storyblok `full_slug` — a
+// translated slug is locale-prefixed (`de/videos/…`), which would hide the path head.
 export function pathRequiresAccount(path: string): boolean {
   const segments = normaliseSlug(path).split('/');
   if (AUTHENTICATED_PATH_HEADS.includes(segments[0])) return true;
@@ -176,7 +166,6 @@ export function storyToLibraryItem(story: LibraryStory, locale: string): Library
   };
 
   if (content.component === COURSE_COMPONENT) {
-    // `weeks` is a grouping wrapper; the sessions are counted across all of them.
     const weeks = (content.weeks ?? []) as { sessions?: unknown[] }[];
     return {
       ...base,
@@ -205,7 +194,6 @@ export function normaliseSlug(fullSlug: string): string {
   return fullSlug.replace(/^\/+|\/+$/g, '');
 }
 
-// The slug of the course a lesson belongs to, read from its path (`<course slug>/<lesson>`).
 export function parentCourseSlug(lessonFullSlug: string): string {
   return normaliseSlug(lessonFullSlug).split('/').slice(0, -1).join('/');
 }
@@ -246,8 +234,7 @@ export function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 }
 
-// A LibraryItem's `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS
-// ('Started'), as the course and resource progress events do.
+// `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS ('Started').
 export const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
   NonNullable<LibraryItem['progress']> | 'none',
   PROGRESS_STATUS

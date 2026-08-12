@@ -12,14 +12,11 @@ interface FeaturedContent {
   [key: string]: unknown;
 }
 
-// The sessions and courses a page leads with. Drawn from the same filtered set the library is
-// built from, so a page cannot surface an item the visitor has no access to.
 export function useFeaturedLibraryItems(stories: LibraryStories, content?: FeaturedContent) {
   const items = useLibraryItems(stories);
 
   return useMemo(() => {
     const byUuid = new Map(items.map((item) => [item.id, item]));
-    // An editor's picks come first, falling back to the first few items of that kind.
     const pick = (uuids: string[] | undefined, fallback: LibraryItem[]) => {
       const chosen = (uuids ?? [])
         .map((uuid) => byUuid.get(uuid))

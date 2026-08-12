@@ -1,39 +1,33 @@
 'use client';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
-import { rowStyle } from '@/styles/common';
+import { pageHeaderPaddingTop, rowStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Box, Container, Typography } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
-// The partner banner: the partnership lockup beside an illustration standing on the section's
-// bottom edge. The `hero` variant is the welcome page's version of it — the same banner opening
-// the page, so it takes the page-opening gradient and a larger illustration.
-
+// The partnership lockup beside an illustration standing on the section's bottom edge. `hero` is
+// the welcome page's version, opening the page with its gradient and a larger illustration.
 const VARIANTS = {
   default: {
     background: { backgroundColor: 'common.white' },
-    paddingTop: { xs: 0, sm: 0, md: 0, lg: 0 },
-    paddingBottom: { xs: 0, md: 0 },
+    paddingTop: pageHeaderPaddingTop,
+    paddingBottom: '0 !important',
     imageWidth: { xs: 120, sm: 180, md: 200, lg: 220 },
     minHeight: { xs: 200, sm: 250, md: 300, lg: 300 },
-    // The lockup sits with the illustration on the bottom edge, lifted clear of it.
     lockupAlign: 'end',
     lockupOffset: 6,
     objectPosition: 'center',
   },
   hero: {
     background: { background: theme.palette.bloomGradientSoft },
-    // Leaves room for the fixed "Leave this site" button, which floats over the top of the banner.
-    paddingTop: '3.5rem !important',
+    paddingTop: pageHeaderPaddingTop,
     paddingBottom: '0 !important',
     imageWidth: { xs: 150, sm: 220, md: 280, lg: 340 },
     minHeight: { xs: 240, sm: 280, md: 340, lg: 340 },
-    // Only the illustration stands on the bottom edge; the lockup centres in the band beside it.
     lockupAlign: 'center',
     lockupOffset: 0,
-    // Stands the artwork on that edge rather than centring it in a box it does not fill.
     objectPosition: 'bottom',
   },
 } as const;
@@ -59,7 +53,6 @@ const containerStyle = ({
 const imageContainerStyle = ({ imageWidth }: Variant) =>
   ({
     position: 'relative',
-    // The illustration keeps the bottom edge whatever the lockup beside it does.
     alignSelf: 'flex-end',
     width: imageWidth,
     height: imageWidth,
@@ -85,7 +78,6 @@ interface HeaderProps {
   partnerLogoAlt: string;
   imageSrc: string | StaticImageData;
   imageAlt?: string;
-  // Set when the alt text arrives already translated, as a Storyblok asset's own alt does.
   translatedImageAlt?: string;
   showWelcomeSubtext?: boolean;
   variant?: 'default' | 'hero';

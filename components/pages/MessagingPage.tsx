@@ -1,10 +1,12 @@
 'use client';
 
-import { SignUpSection } from '@/components/common/SignUpSection';
+import NotesFromBloomPromo from '@/components/banner/NotesFromBloomPromo';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import Header, { HeaderProps } from '@/components/layout/Header';
 import { MessageThread } from '@/components/messaging/MessageThread';
+import DynamicComponent from '@/components/storyblok/DynamicComponent';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import IllustrationCourseDBR from '@/public/illustration_course_dbr.svg';
@@ -13,8 +15,6 @@ import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import NotesFromBloomPromo from '@/components/banner/NotesFromBloomPromo';
-import DynamicComponent from '@/components/storyblok/DynamicComponent';
 
 const messageRowStyle = {
   ...rowStyle,

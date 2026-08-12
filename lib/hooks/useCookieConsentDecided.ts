@@ -5,8 +5,7 @@ import { useSyncExternalStore } from 'react';
 
 export const ANALYTICS_CONSENT_COOKIE = 'analyticsConsent';
 
-// Dispatched by the cookie banner on accept or decline, so banners waiting on that decision
-// appear immediately rather than on the next page load.
+// Dispatched by the cookie banner on accept or decline, so waiting banners appear immediately.
 export const COOKIE_CONSENT_DECIDED_EVENT = 'cookieConsentDecided';
 
 export const notifyCookieConsentDecided = () => {
@@ -19,7 +18,6 @@ const subscribe = (onStoreChange: () => void) => {
   return () => window.removeEventListener(COOKIE_CONSENT_DECIDED_EVENT, onStoreChange);
 };
 
-// The cookie is set to 'true' on accept and 'false' on decline — either counts as a decision.
 const getSnapshot = () => Cookies.get(ANALYTICS_CONSENT_COOKIE) !== undefined;
 
 // Cookies aren't readable while rendering on the server, so treat consent as undecided.

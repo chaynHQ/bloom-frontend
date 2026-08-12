@@ -35,12 +35,15 @@ export const richtextContentStyle = {
   },
 } as const;
 
-// "Shadow 1" in the design system.
+// Every page-opening header band starts at the same depth, leaving room for the fixed
+// "Leave this site" and breadcrumb buttons that float over the top of it.
+export const pageHeaderPaddingTop = '3.5rem !important';
+export const pageHeaderPaddingBottom = '3.5rem !important';
+
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
 
-// A hairline where two sections meet. Drawn as a pseudo-element inset to the container's own
-// inline padding (see the MuiContainer overrides in styles/theme.ts) — a plain border would run
-// the full viewport width rather than the content width.
+// A hairline where two sections meet. A pseudo-element rather than a border, so it spans the
+// content width rather than the full viewport (see the MuiContainer overrides in styles/theme.ts).
 export const sectionDivider = (edge: 'top' | 'bottom') =>
   ({
     position: 'relative',

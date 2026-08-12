@@ -19,33 +19,16 @@ async function getAllStoryblokStories(
   for (let page = 1; page <= MAX_PAGES; page++) {
     const batch = await getStoryblokStories(locale, { ...params, per_page: PER_PAGE, page });
 
-    // getStoryblokStories returns undefined on error, which is not an empty page.
-    if (!batch) {
-      throw new Error(
-        `Storyblok request failed for library stories (starts_with: ${params.starts_with}, page: ${page})`,
-      );
-    }
+    // getStoryblokStories reports to Rollbar and returns undefined on error. Keep the pages
+    // already fetched rather than failing the render — every surface here degrades to fewer
+    // cards, and no one content group should be able to take the page down.
+    if (!batch) break;
 
     stories.push(...batch);
     if (batch.length < PER_PAGE) break;
   }
 
   return stories.map(toLibraryStory);
-}
-
-async function getOptionalStories(
-  locale: string,
-  params: Partial<ISbStoriesParams>,
-): Promise<LibraryStory[]> {
-  try {
-    return await getAllStoryblokStories(locale, params);
-  } catch (error) {
-    console.error(
-      `Library: dropping the "${params.starts_with}" content group after a Storyblok failure`,
-      error,
-    );
-    return [];
-  }
 }
 
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
@@ -62,18 +45,18 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
       starts_with: 'courses/',
       filter_query: { component: { in: 'Course' } },
     }),
-    getOptionalStories(locale, {
+    getAllStoryblokStories(locale, {
       ...baseProps,
       starts_with: 'courses/',
       filter_query: { component: { in: 'Session,session_iba' } },
     }),
-    getOptionalStories(locale, { ...baseProps, starts_with: 'shorts/' }),
-    getOptionalStories(locale, {
+    getAllStoryblokStories(locale, { ...baseProps, starts_with: 'shorts/' }),
+    getAllStoryblokStories(locale, {
       ...baseProps,
       starts_with: 'videos/',
       with_tag: STORYBLOK_TAGS.SOMATICS,
     }),
-    getOptionalStories(locale, { ...baseProps, starts_with: 'conversations/' }),
+    getAllStoryblokStories(locale, { ...baseProps, starts_with: 'conversations/' }),
   ]);
 
   return { courses, courseSessions, shorts, somatics, conversations };

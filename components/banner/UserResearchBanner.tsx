@@ -9,8 +9,7 @@ import Cookies from 'js-cookie';
 import { useLocale } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
-// Full-bleed: the background runs edge to edge while the content keeps the page Container's
-// gutters (see the MuiContainer overrides in styles/theme.ts).
+// Full-bleed background; the content keeps the page Container's gutters (see styles/theme.ts).
 const sectionStyle = {
   width: '100%',
   backgroundColor: 'secondary.main',
@@ -33,9 +32,8 @@ const sectionContentStyle = {
   },
 } as const;
 
-// The flex-basis drives the small-screen wrapping: flexbox wraps on the hypothetical main size, so
-// the actions stay alongside the message until both no longer fit, then drop to their own row. A
-// fixed `100%` would force that break at every width.
+// The flex-basis drives the wrapping: the actions stay alongside the message until both no longer
+// fit, then drop to their own row. A fixed `100%` would force that break at every width.
 const messageStyle = {
   flex: '1 1 10rem',
   minWidth: { xs: 'auto', md: 0 },
@@ -80,7 +78,7 @@ const USER_RESEARCH_FORM_LINK =
 const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
 
 // The study runs in English only, so the banner is gated on the `en` locale and its copy is not
-// translated. Move this to i18n/messages if the study opens up to other languages.
+// translated. Move to i18n/messages if the study opens up to other languages.
 const COPY = {
   regionLabel: 'Bloom user research',
   headline: 'Take part in Bloom research for $75',
@@ -107,9 +105,8 @@ export default function UserResearchBanner() {
 
   const showBanner = isBannerFeatureEnabled && isEnglish && bannerInteracted === false;
 
-  // The floating back / "Leave site" buttons are fixed below the TopBar and must move down by
-  // however tall this renders, which varies with breakpoint and wrapping. See
-  // breadcrumbPositionStyle in styles/common.ts.
+  // Publishes this banner's height so the fixed back / "Leave site" buttons can clear it —
+  // see breadcrumbPositionStyle in styles/common.ts.
   useEffect(() => {
     const section = sectionRef.current;
     const root = document.documentElement;
@@ -155,7 +152,7 @@ export default function UserResearchBanner() {
       <Box component="aside" ref={sectionRef} aria-label={COPY.regionLabel} sx={sectionStyle}>
         <Box sx={sectionContentStyle}>
           <Typography sx={messageStyle}>
-            <Box component="strong" sx={{ fontWeight: 600 }}>
+            <Box component="strong" sx={{ fontWeight: 500 }}>
               {COPY.headline}
             </Box>
             <Box component="span" sx={supportingTextStyle}>

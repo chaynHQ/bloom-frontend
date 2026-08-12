@@ -245,7 +245,7 @@ export const generatePartnerPromoGoToCoursesEvent = (partner: string) =>
   `${partner.toUpperCase()}_PROMO_GO_TO_COURSES_CLICKED`;
 
 // The redesigned welcome page carries a `welcome_partner` property rather than baking the partner
-// into the event name, so the pages can be compared with each other and with the home page.
+// into the event name, so the pages stay comparable with each other and with the home page.
 export const WELCOME_VIEWED = 'WELCOME_VIEWED';
 export const WELCOME_CONTENT_CARD_CLICKED = 'WELCOME_CONTENT_CARD_CLICKED';
 export const WELCOME_BROWSE_ALL_CLICKED = 'WELCOME_BROWSE_ALL_CLICKED';
@@ -266,7 +266,6 @@ export const RESOURCE_CAROUSEL_PAGED = 'RESOURCE_CAROUSEL_PAGED';
 export const RELATED_CONTENT_CAROUSEL_PAGED = 'RELATED_CONTENT_CAROUSEL_PAGED';
 export const STORYBLOK_CAROUSEL_PAGED = 'STORYBLOK_CAROUSEL_PAGED';
 
-// Editor-placed cards, wherever in the CMS they appear.
 export const STORYBLOK_LINK_CARD_CLICKED = 'STORYBLOK_LINK_CARD_CLICKED';
 
 // COOKIES

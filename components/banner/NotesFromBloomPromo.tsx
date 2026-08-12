@@ -9,9 +9,6 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Button from '../common/Button';
 
-// A promo band, not a full section: it sits between page sections (and directly above
-// SignUpSection on the public pages), so it keeps less vertical padding than the Container
-// default while still giving the illustration room to breathe.
 const containerStyle = {
   background: theme.palette.bloomGradientVertical,
   paddingTop: { xs: '2rem !important', md: '2.5rem !important' },
@@ -25,7 +22,6 @@ const rowStyle = {
   gap: { xs: 2.5, md: 5 },
 } as const;
 
-// Illustration + copy take the free space so the CTA settles against the end edge of the row.
 const contentStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   alignItems: 'center',
@@ -40,7 +36,6 @@ const imageContainerStyle = {
   height: { xs: 140, sm: 160, md: 176 },
 } as const;
 
-// Caps the line length so the copy doesn't stretch across the full 1000px content width.
 const textContainerStyle = {
   textAlign: { xs: 'center', md: 'start' },
   maxWidth: { md: '30rem' },

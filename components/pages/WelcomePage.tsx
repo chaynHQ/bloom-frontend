@@ -41,17 +41,12 @@ import { render } from 'storyblok-rich-text-react-renderer';
 interface Props {
   story: ISbStoryData;
   libraryStories: LibraryStories;
-  // Taken from the route rather than the story, so an unpublished or mis-slugged story cannot
-  // silently drop the partner branding.
+  // Taken from the route, not the story, so a mis-slugged story cannot drop the partner branding.
   partnerName: string;
 }
 
-// The headline and the call to action sit in a section of their own under the partner banner,
-// rather than beside the lockup, so the partnership is what opens the page.
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
 
-// The redesigned partner welcome page: the home page's sections, with the partner's lockup, CTA
-// and editor-composed sections around them. Replaces StoryblokWelcomePage.
 export default function WelcomePage({ story: initialStory, libraryStories, partnerName }: Props) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Shared.librarySections');
@@ -89,7 +84,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     [partnerSlug, userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // An entry code held in state is put back in the query, so it survives a refresh.
+  // Entry code in state, add to url query in case of refresh
   const urlUpdated = useRef(false);
   useEffect(() => {
     if (code || !entryCode || urlUpdated.current) return;
@@ -102,8 +97,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   const { courses, sessions } = useFeaturedLibraryItems(libraryStories, content);
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('welcome', eventData);
 
-  // partnerAccesses/createdAt arrive with getUser, so the view event waits for the user to settle
-  // rather than reporting a signed-in visitor as anonymous.
+  // Wait for getUser before logging, so a signed-in visitor isn't reported as anonymous.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
   const viewLogged = useRef(false);
   useEffect(() => {
@@ -121,8 +115,8 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
 
   const { partnershipLogo, partnershipLogoAlt, bloomGirlIllustration } = partnerContent;
 
+  // Keeps firing the per-partner events, which feed existing dashboards.
   const logHeroClick = () => {
-    // The per-partner events predate this page and feed existing dashboards, so both still fire.
     logEvent(
       isLoggedIn
         ? generatePartnerPromoGoToCoursesEvent(partnerSlug)
@@ -135,8 +129,6 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     <Box>
       <PartnerHeader
         variant="hero"
-        // Falls back to the partner's own illustration, so an unset asset never leaves the banner
-        // one-sided.
         imageSrc={
           content.header_image?.filename || bloomGirlIllustration || illustrationBloomHeadYellow
         }

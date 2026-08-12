@@ -18,8 +18,6 @@ const DIAMETER: Record<AvatarGroupSize, { xs: number; md: number }> = {
   large: { xs: 100, md: 120 },
 };
 
-// Three equal portraits: one above two that sit tangent to each other. Any beyond the third fall
-// back to the row layout.
 const CLUSTER_PLACEMENT = [
   { top: '0%', insetInlineStart: '24%' },
   { top: '43%', insetInlineStart: '0%' },

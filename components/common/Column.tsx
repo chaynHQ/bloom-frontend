@@ -7,9 +7,6 @@ interface ColumnProps {
   children: any;
   width?: string;
   horizontalAlignment?: string;
-  // Treat `width` as the column's share of the row rather than a fixed percentage, so a row's
-  // columns tile its full width instead of wrapping once they no longer fit. Off by default —
-  // every pre-redesign story is laid out around the fixed percentages.
   fill?: boolean;
 }
 
@@ -26,9 +23,8 @@ const COLUMN_WIDTHS: Record<string, { xs: string; md: string }> = {
   'mobile-med-desktop-full': { xs: '40%', md: '100%' },
 };
 
-// A filled column's authored width is its share of the row rather than a fixed percentage, so the
-// columns tile the row's full width and the gap comes out of the shared space. A lone column has
-// no one to share with, so it keeps its authored width.
+// `fill` treats the authored width as a share of the row rather than a fixed percentage, so the
+// columns tile its full width. Off by default — pre-redesign stories assume fixed percentages.
 const fillWidth = (size: { xs: string; md: string }) => ({
   width: { xs: size.xs, md: 'auto' },
   flexBasis: { md: 0 },

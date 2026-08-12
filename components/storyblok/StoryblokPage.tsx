@@ -1,7 +1,7 @@
 'use client';
 
-import { SignUpSection } from '@/components/common/SignUpSection';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';

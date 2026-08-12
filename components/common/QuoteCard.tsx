@@ -56,14 +56,12 @@ export function QuoteCard({
   // Usually blank — survivor quotes are anonymous unless consent is explicit.
   attribution?: string;
   textSize?: QuoteTextSize;
-  // Theme palette token.
   background?: string;
   qaId?: string;
 }) {
   return (
     <Box component="figure" qa-id={qaId} sx={cardStyle(background)}>
       <Box sx={quoteMarkStyle}>
-        {/* Decorative — the blockquote below marks the quotation semantically. */}
         <Image alt="" src="/pink_quotes.svg" fill sizes="28px" style={{ objectFit: 'contain' }} />
       </Box>
       <Typography component="blockquote" sx={quoteTextStyle(textSize)}>

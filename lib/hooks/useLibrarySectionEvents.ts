@@ -4,9 +4,6 @@ import { PROGRESS_STATUS_BY_ITEM_PROGRESS, type LibraryItem } from '@/lib/utils/
 import logEvent from '@/lib/utils/logEvent';
 import { useCallback } from 'react';
 
-// Card and browse-all events for a page's library sections. `prefix` names the page the event
-// properties belong to, so the home page reports `home_section` and the welcome pages
-// `welcome_section`.
 export function useLibrarySectionEvents(prefix: string, eventData: object) {
   const logCardClick = useCallback(
     (eventName: string, section: string) => (item: LibraryItem, index: number) => {

@@ -19,7 +19,6 @@ export interface StoryblokLinkCardProps {
   background: STORYBLOK_COLORS;
   arrow_color: STORYBLOK_COLORS;
   hide_arrow: boolean;
-  // Stable analytics label, so reworded or translated titles stay comparable. Defaults to title.
   event_name: string;
 }
 

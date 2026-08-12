@@ -9,9 +9,6 @@ import { Box, IconButton } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 
-// A horizontally scrolling row of cards that snaps to each card. A fractional `slidesPerView`
-// lets the next card peek in, signalling that the row moves.
-
 export interface SlidesPerView {
   xs: number;
   sm?: number;
@@ -41,11 +38,9 @@ const trackStyle = (slidesPerView: SlidesPerView, gap: number) =>
     gridAutoColumns: responsiveSlideWidth(slidesPerView, gap * 8),
     overflowX: 'auto',
     scrollSnapType: 'inline mandatory',
-    // Bleed to the section edge so a card can sit flush while its content stays aligned.
     marginInline: -EDGE,
     paddingInline: EDGE,
     scrollPaddingInlineStart: (theme: { spacing: (n: number) => string }) => theme.spacing(EDGE),
-    // Cards carry a shadow, so the track needs room for it rather than clipping it.
     paddingBlock: 1,
     marginBlock: -1,
     scrollbarWidth: 'none',
@@ -87,7 +82,6 @@ const dotButtonStyle = {
   cursor: 'pointer',
 } as const;
 
-// The current page is marked by width as well as colour, so it does not rely on colour alone.
 const dotStyle = (active: boolean) =>
   ({
     width: active ? 22 : 8,
@@ -108,7 +102,6 @@ export function CardCarousel({
   qaId,
 }: {
   children: ReactNode[];
-  // Names the scroll region for screen readers; omit where the row has no heading of its own.
   label?: string;
   eventName: string;
   eventData?: Record<string, unknown>;

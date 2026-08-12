@@ -21,7 +21,6 @@ const FEATURES = [
   { key: 'exploreAtYourPace', icon: playPauseIcon },
 ] as const;
 
-// A hairline only where the section meets another one, never against the header or footer.
 const containerStyle = (sectionAbove: boolean, sectionBelow: boolean) =>
   ({
     background: theme.palette.bloomGradientSoftUp,
@@ -46,7 +45,6 @@ export function SignUpSection({
   sectionAbove = true,
   sectionBelow = false,
 }: {
-  // Names the surface the section closes, so sign-ups stay attributable per page.
   source: string;
   sectionAbove?: boolean;
   sectionBelow?: boolean;

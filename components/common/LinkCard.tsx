@@ -64,13 +64,10 @@ const arrowPanelStyle = (size: LinkCardSize, color: string) =>
 export interface LinkCardProps {
   title: string;
   description?: ReactNode;
-  // Omit for a card with no icon. Decorative, so it renders with empty alt text.
   iconSrc?: StaticImageData | string;
   href: string;
-  // Detected from the href; pass it only to override that.
   external?: boolean;
   size?: LinkCardSize;
-  // Theme palette tokens, e.g. 'common.white' or 'cardSurface'.
   background?: string;
   arrowColor?: string;
   hideArrow?: boolean;

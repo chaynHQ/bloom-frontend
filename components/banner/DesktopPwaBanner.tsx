@@ -46,7 +46,6 @@ export const DesktopPwaBanner = () => {
   if (!isMounted || isSmallScreen || bannerState === 'Hidden') return null;
 
   const bannerStyle = {
-    // Shares its anchor with the cookie banner — only one of the two is ever visible at a time.
     ...getFloatingBannerPosition(isSmallScreen),
     p: 2.5,
     width: 250,
