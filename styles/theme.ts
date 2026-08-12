@@ -18,6 +18,7 @@ declare module '@mui/material/styles' {
     bloomGradientVertical: string;
     bloomGradientSoft: string;
     bloomGradientSoftUp: string;
+    bloomGradientPeach: string;
     cardSurface: string;
     cardBorder: string;
     sectionSurface: string;
@@ -38,6 +39,7 @@ declare module '@mui/material/styles' {
     bloomGradientVertical?: string;
     bloomGradientSoft?: string;
     bloomGradientSoftUp?: string;
+    bloomGradientPeach?: string;
     overlayBackground?: string;
     cardSurface?: string;
     cardBorder?: string;
@@ -112,6 +114,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
       bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
       bloomGradientSoftUp: 'linear-gradient(0deg, #F9E2E3 0%, #FFEAE1 100%)',
+      // Peach down to `sectionSurface`, so the section fades into the pale pink band below it. The
+      // middle stop keeps the fade in the warm peach family rather than passing through beige.
+      bloomGradientPeach: 'linear-gradient(180deg, #FFE3D3 0%, #FEEAE2 40%, #FAF1F2 100%)',
       cardSurface: '#FFFCFA',
       cardBorder: '#EBE0E1',
       sectionSurface: '#FAF1F2',

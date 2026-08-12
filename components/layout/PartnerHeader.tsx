@@ -2,62 +2,38 @@
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { pageHeaderPaddingTop, rowStyle } from '@/styles/common';
-import theme from '@/styles/theme';
 import { Box, Container, Typography } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 
-// The partnership lockup beside an illustration standing on the section's bottom edge. `hero` is
-// the welcome page's version, opening the page with its gradient and a larger illustration.
-const VARIANTS = {
-  default: {
-    background: { backgroundColor: 'common.white' },
-    paddingTop: pageHeaderPaddingTop,
-    paddingBottom: '0 !important',
-    imageWidth: { xs: 120, sm: 180, md: 200, lg: 220 },
-    minHeight: { xs: 200, sm: 250, md: 300, lg: 300 },
-    lockupAlign: 'end',
-    lockupOffset: 6,
-    objectPosition: 'center',
-  },
-  hero: {
-    background: { background: theme.palette.bloomGradientSoft },
-    paddingTop: pageHeaderPaddingTop,
-    paddingBottom: '0 !important',
-    imageWidth: { xs: 150, sm: 220, md: 280, lg: 340 },
-    minHeight: { xs: 240, sm: 280, md: 340, lg: 340 },
-    lockupAlign: 'center',
-    lockupOffset: 0,
-    objectPosition: 'bottom',
-  },
+// The partnership lockup, vertically centred on a white band, beside an illustration standing on
+// the section's bottom edge. Shared by the welcome page and the partner-aware auth pages.
+const imageWidth = { xs: 150, sm: 200, md: 240, lg: 280 } as const;
+
+const containerStyle = {
+  ...rowStyle,
+  alignItems: 'center',
+  paddingTop: '0 !important',
+  paddingBottom: '0 !important',
+  minHeight: { xs: 220, sm: 260, md: 300, lg: 320 },
+  backgroundColor: 'common.white',
 } as const;
 
-type Variant = (typeof VARIANTS)[keyof typeof VARIANTS];
+// The band's padding lives on the lockup rather than the container, so the lockup stays centred in
+// the band while the illustration keeps standing on its bottom edge. The top gap also clears the
+// fixed "leave this site" button.
+const lockupStyle = {
+  paddingTop: pageHeaderPaddingTop,
+  paddingBottom: pageHeaderPaddingTop,
+} as const;
 
-const containerStyle = ({
-  background,
-  paddingTop,
-  paddingBottom,
-  minHeight,
-  lockupAlign,
-}: Variant) =>
-  ({
-    ...rowStyle,
-    alignItems: lockupAlign,
-    paddingTop,
-    paddingBottom,
-    minHeight,
-    ...background,
-  }) as const;
-
-const imageContainerStyle = ({ imageWidth }: Variant) =>
-  ({
-    position: 'relative',
-    alignSelf: 'flex-end',
-    width: imageWidth,
-    height: imageWidth,
-    marginInlineEnd: { sm: 2, md: 3, lg: 2 },
-  }) as const;
+const imageContainerStyle = {
+  position: 'relative',
+  alignSelf: 'flex-end',
+  width: imageWidth,
+  height: imageWidth,
+  marginInlineEnd: { sm: 2, md: 3, lg: 2 },
+} as const;
 
 const logoContainerStyle = {
   width: { xs: 160, sm: 180, md: 200, lg: 220 },
@@ -80,7 +56,8 @@ interface HeaderProps {
   imageAlt?: string;
   translatedImageAlt?: string;
   showWelcomeSubtext?: boolean;
-  variant?: 'default' | 'hero';
+  // Set on pages where the illustration is the largest above-the-fold image.
+  priority?: boolean;
 }
 
 const PartnerHeader = (props: HeaderProps) => {
@@ -90,13 +67,12 @@ const PartnerHeader = (props: HeaderProps) => {
     imageAlt,
     translatedImageAlt,
     imageSrc,
-    variant = 'default',
+    priority = false,
   } = props;
   const t = useTranslations('Welcome');
   const tS = useTranslations('Shared');
   const locale = useLocale();
 
-  const styles = VARIANTS[variant];
   const imageAltText = translatedImageAlt ? translatedImageAlt : imageAlt ? tS(imageAlt) : '';
 
   const welcomeText = (
@@ -106,8 +82,8 @@ const PartnerHeader = (props: HeaderProps) => {
   );
 
   return (
-    <Container sx={containerStyle(styles)}>
-      <Box sx={{ paddingBottom: styles.lockupOffset }}>
+    <Container sx={containerStyle}>
+      <Box sx={lockupStyle}>
         {/*Hindi: welcomeText starts lowercase due to Hindi following a "Bloom + {welcomeText}" sentence structure */}
         {props.showWelcomeSubtext && locale !== 'hi' && welcomeText}
         <Box sx={logoContainerStyle}>
@@ -120,14 +96,14 @@ const PartnerHeader = (props: HeaderProps) => {
         </Box>
         {props.showWelcomeSubtext && locale === 'hi' && welcomeText}
       </Box>
-      <Box sx={imageContainerStyle(styles)}>
+      <Box sx={imageContainerStyle}>
         <Image
           alt={imageAltText}
           src={imageSrc}
           fill
-          priority={variant === 'hero'}
-          sizes={getImageSizes(styles.imageWidth)}
-          style={{ objectFit: 'contain', objectPosition: styles.objectPosition }}
+          priority={priority}
+          sizes={getImageSizes(imageWidth)}
+          style={{ objectFit: 'contain', objectPosition: 'bottom' }}
         />
       </Box>
     </Container>

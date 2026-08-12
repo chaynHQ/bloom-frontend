@@ -27,8 +27,8 @@ import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import bloomLogo from '@/public/bloom_logo.svg';
-import illustrationSignpost from '@/public/courses_signpost.svg';
 import illustrationSessions from '@/public/course_icon.svg';
+import illustrationSignpost from '@/public/courses_signpost.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import { Box, Button, Typography } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
@@ -128,7 +128,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   return (
     <Box>
       <PartnerHeader
-        variant="hero"
+        priority
         imageSrc={
           content.header_image?.filename || bloomGirlIllustration || illustrationBloomHeadYellow
         }
@@ -142,9 +142,9 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
 
       <Box qa-id="welcome-intro">
         <PageSection
-          color={STORYBLOK_COLORS.COMMON_WHITE}
+          color={STORYBLOK_COLORS.BLOOM_GRADIENT_PEACH}
           alignment="center"
-          spacing="compact"
+          spacing="default"
           divider={false}
         >
           <Typography variant="h1" component="h1" sx={introTitleStyle}>
