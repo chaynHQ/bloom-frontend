@@ -182,6 +182,21 @@
       "freeAndAnonymous": "Gratuit et anonyme",
       "exploreAtYourPace": "Explore à ton rythme",
       "cta": "Rejoins Bloom, toujours gratuit"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Reprends là où tu en étais"
+      },
+      "sessions": {
+        "heading": "Sessions individuelles",
+        "introduction": "Des sessions sur reconnaître les violences, poser des limites, guérir, et bien plus encore.",
+        "browseAll": "Voir toutes les sessions"
+      },
+      "courses": {
+        "heading": "Cours",
+        "introduction": "Un point de départ accompagné. Chaque cours te guide à travers un ensemble de sessions, à ton rythme.",
+        "browseAll": "Voir tous les cours"
+      }
     }
   }
 }

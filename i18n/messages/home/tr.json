@@ -4,19 +4,6 @@
       "joinCta": "Bloom'a katıl, her zaman ücretsiz",
       "exploreSessionsCta": "Tüm seansları keşfet",
       "goToCoursesCta": "Kurslara git"
-    },
-    "continueLearning": {
-      "heading": "Kaldığın yerden devam et"
-    },
-    "sessions": {
-      "heading": "Tekil seanslar",
-      "introduction": "Zararı fark etme, sınır koyma, iyileşme ve daha fazlası üzerine seanslar.",
-      "browseAll": "Tüm seanslara göz at"
-    },
-    "courses": {
-      "heading": "Kurslar",
-      "introduction": "Başlamak için rehberli bir yer. Her kurs seni kendi hızında bir dizi seanstan geçirir.",
-      "browseAll": "Tüm kurslara göz at"
     }
   }
 }

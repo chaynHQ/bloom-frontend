@@ -4,19 +4,6 @@
       "joinCta": "Junte-se ao Bloom, sempre gratuito",
       "exploreSessionsCta": "Explorar todas as sessões",
       "goToCoursesCta": "Ir para os cursos"
-    },
-    "continueLearning": {
-      "heading": "Retome de onde parou"
-    },
-    "sessions": {
-      "heading": "Sessões individuais",
-      "introduction": "Sessões sobre reconhecer o dano, definir limites, curar e muito mais.",
-      "browseAll": "Ver todas as sessões"
-    },
-    "courses": {
-      "heading": "Cursos",
-      "introduction": "Um ponto de partida acompanhado. Cada curso leva você por um conjunto de sessões no seu próprio ritmo.",
-      "browseAll": "Ver todos os cursos"
     }
   }
 }

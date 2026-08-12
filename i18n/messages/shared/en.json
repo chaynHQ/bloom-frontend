@@ -181,6 +181,21 @@
       "freeAndAnonymous": "Free and anonymous",
       "exploreAtYourPace": "Explore at your own pace",
       "cta": "Join Bloom, always free"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Pick up where you left off"
+      },
+      "sessions": {
+        "heading": "Individual sessions",
+        "introduction": "Sessions on understanding harm, setting boundaries, healing, and more.",
+        "browseAll": "Browse all sessions"
+      },
+      "courses": {
+        "heading": "Courses",
+        "introduction": "A guided place to begin. Each course takes you through a set of sessions at your own pace.",
+        "browseAll": "Browse all courses"
+      }
     }
   }
 }

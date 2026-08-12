@@ -4,19 +4,6 @@
       "joinCta": "Bloom beitreten – immer kostenlos",
       "exploreSessionsCta": "Alle Sessions entdecken",
       "goToCoursesCta": "Zu den Kursen"
-    },
-    "continueLearning": {
-      "heading": "Mach dort weiter, wo du aufgehört hast"
-    },
-    "sessions": {
-      "heading": "Einzelne Sessions",
-      "introduction": "Sessions über das Erkennen von Verletzungen, das Setzen von Grenzen, Heilung und mehr.",
-      "browseAll": "Alle Sessions ansehen"
-    },
-    "courses": {
-      "heading": "Kurse",
-      "introduction": "Ein geführter Ort für den Anfang. Jeder Kurs führt dich in deinem eigenen Tempo durch eine Reihe von Sessions.",
-      "browseAll": "Alle Kurse ansehen"
     }
   }
 }

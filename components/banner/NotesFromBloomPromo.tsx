@@ -1,7 +1,6 @@
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { NOTES_FROM_BLOOM_PROMO_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import NotesIcon from '@/public/illustration_notes.svg';
 import theme from '@/styles/theme';
@@ -10,34 +9,41 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Button from '../common/Button';
 
+// A promo band, not a full section: it sits between page sections (and directly above
+// SignUpSection on the public pages), so it keeps less vertical padding than the Container
+// default while still giving the illustration room to breathe.
 const containerStyle = {
   background: theme.palette.bloomGradientVertical,
-  paddingTop: { xs: '2.5rem !important', md: '3.5rem !important' },
-  paddingBottom: { xs: '2.5rem !important', md: '3.5rem !important' },
+  paddingTop: { xs: '2rem !important', md: '2.5rem !important' },
+  paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
 } as const;
 
 const rowStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   alignItems: 'center',
-  justifyContent: 'center',
-  gap: { xs: 3, md: 8 },
+  justifyContent: { xs: 'center', md: 'space-between' },
+  gap: { xs: 2.5, md: 5 },
 } as const;
 
+// Illustration + copy take the free space so the CTA settles against the end edge of the row.
 const contentStyle = {
   flexDirection: { xs: 'column', md: 'row' },
   alignItems: 'center',
   gap: { xs: 2, md: 4 },
+  flexGrow: 1,
 } as const;
 
 const imageContainerStyle = {
   position: 'relative',
   flexShrink: 0,
-  width: { xs: 120, md: 140 },
-  height: { xs: 120, md: 140 },
+  width: { xs: 140, sm: 160, md: 176 },
+  height: { xs: 140, sm: 160, md: 176 },
 } as const;
 
+// Caps the line length so the copy doesn't stretch across the full 1000px content width.
 const textContainerStyle = {
   textAlign: { xs: 'center', md: 'start' },
+  maxWidth: { md: '30rem' },
 } as const;
 
 const NotesFromBloomPromo = () => {
@@ -50,11 +56,16 @@ const NotesFromBloomPromo = () => {
   const tN = useTranslations('Navigation');
 
   return (
-    <Container sx={containerStyle}>
+    <Container qa-id="notes-from-bloom-promo" sx={containerStyle}>
       <Stack sx={rowStyle}>
         <Stack sx={contentStyle}>
           <Box sx={imageContainerStyle}>
-            <Image alt={tN('alt.notesIcon')} src={NotesIcon} sizes={getImageSizes(140)} fill />
+            <Image
+              alt={tN('alt.notesIcon')}
+              src={NotesIcon}
+              sizes="(min-width: 900px) 176px, (min-width: 600px) 160px, 140px"
+              fill
+            />
           </Box>
           <Box sx={textContainerStyle}>
             <Typography variant="h3" component="h2" sx={{ mb: 1 }}>

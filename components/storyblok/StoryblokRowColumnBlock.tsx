@@ -28,6 +28,8 @@ interface StoryblokRowColumnBlockProps {
   vertical_alignment: string;
   gap: string;
   mobile_stack_order?: string;
+  // `fill` makes the column widths shares of the row rather than fixed percentages — see Column.
+  column_sizing?: string;
 }
 
 const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
@@ -39,9 +41,12 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
     vertical_alignment,
     gap,
     mobile_stack_order,
+    column_sizing,
   } = props;
 
   if (!columns) return <></>;
+
+  const fill = column_sizing === 'fill';
 
   return (
     <Box
@@ -52,6 +57,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
         horizontal_alignment,
         vertical_alignment,
         gap,
+        column_sizing,
       })}
       sx={{
         width: '100%',
@@ -69,6 +75,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
             <Column
               width={column.width}
               horizontalAlignment={column.horizontal_alignment}
+              fill={fill}
               key={`row_column_${index}_${column._uid}`}
             >
               {render(column.content, RichTextOptions)}

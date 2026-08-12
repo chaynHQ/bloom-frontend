@@ -4,19 +4,6 @@
       "joinCta": "Join Bloom, always free",
       "exploreSessionsCta": "Explore all sessions",
       "goToCoursesCta": "Go to courses"
-    },
-    "continueLearning": {
-      "heading": "Pick up where you left off"
-    },
-    "sessions": {
-      "heading": "Individual sessions",
-      "introduction": "Sessions on understanding harm, setting boundaries, healing, and more.",
-      "browseAll": "Browse all sessions"
-    },
-    "courses": {
-      "heading": "Courses",
-      "introduction": "A guided place to begin. Each course takes you through a set of sessions at your own pace.",
-      "browseAll": "Browse all courses"
     }
   }
 }

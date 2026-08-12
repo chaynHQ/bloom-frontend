@@ -11,9 +11,14 @@ interface PageSectionProps {
   color: STORYBLOK_COLORS;
   alignment: string;
   width?: 'default' | 'wide' | 'full';
-  spacing?: 'default' | 'compact';
+  spacing?: 'default' | 'compact' | 'tight';
   divider?: boolean;
 }
+
+const SPACING: Record<string, { xs: string; md: string }> = {
+  compact: { xs: '2.5rem !important', md: '4rem !important' },
+  tight: { xs: '2rem !important', md: '2.5rem !important' },
+};
 
 const PageSection = (props: PageSectionProps) => {
   const {
@@ -28,9 +33,9 @@ const PageSection = (props: PageSectionProps) => {
   const containerStyle: SxProps<Theme> = {
     ...columnStyle,
     ...(divider && sectionDivider('top')),
-    ...(spacing === 'compact' && {
-      paddingTop: { xs: '2.5rem !important', md: '4rem !important' },
-      paddingBottom: { xs: '2.5rem !important', md: '4rem !important' },
+    ...(SPACING[spacing] && {
+      paddingTop: SPACING[spacing],
+      paddingBottom: SPACING[spacing],
     }),
     ...(width === 'wide' && {
       paddingInlineStart: { lg: 'calc((100vw - 1200px) / 2) !important' },

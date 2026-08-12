@@ -1,38 +1,35 @@
 'use client';
 
-import { SignUpSection } from '@/components/common/SignUpSection';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
+import Header from '@/components/layout/Header';
 import { LibraryCardsSection } from '@/components/library/LibraryCardsSection';
-import { HomeHeader } from '@/components/home/HomeHeader';
-import StoryblokNotesFromBloomPromo from '@/components/storyblok/StoryblokNotesFromBloomPromo';
-import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
+import DynamicComponent from '@/components/storyblok/DynamicComponent';
+import { Link as i18nLink } from '@/i18n/routing';
 import {
   HOME_BROWSE_ALL_CLICKED,
   HOME_CAROUSEL_PAGED,
   HOME_CONTENT_CARD_CLICKED,
   HOME_CONTINUE_CARD_CLICKED,
+  HOME_HERO_CTA_CLICKED,
   HOME_SUPPORT_CARD_CLICKED,
   HOME_VIEWED,
+  PROMO_GET_STARTED_CLICKED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
+import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
 import { useRegisterPath } from '@/lib/hooks/useRegisterPath';
-import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
-import {
-  PROGRESS_STATUS_BY_ITEM_PROGRESS,
-  type LibraryItem,
-  type LibraryStories,
-} from '@/lib/utils/libraryData';
+import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import illustrationSignpost from '@/public/courses_signpost.svg';
 import illustrationSessions from '@/public/course_icon.svg';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
-import { ISbStoryData } from '@storyblok/react/rsc';
+import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-
-const SECTION_SIZE = 3;
+import { useEffect, useMemo, useRef } from 'react';
 
 interface Props {
   story: ISbStoryData | undefined;
@@ -41,7 +38,8 @@ interface Props {
 
 export default function HomePage({ story: initialStory, libraryStories }: Props) {
   const story = useStoryblokState(initialStory ?? null) ?? initialStory;
-  const t = useTranslations('Home');
+  const t = useTranslations('Shared.librarySections');
+  const tHero = useTranslations('Home.hero');
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
@@ -57,34 +55,8 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
     [userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // The same filtered content the library is built from, so the page cannot surface an item the
-  // visitor has no access to.
-  const items = useLibraryItems(libraryStories);
-
-  const content = story?.content;
-
-  const { courses, sessions, inProgress } = useMemo(() => {
-    const byUuid = new Map(items.map((item) => [item.id, item]));
-    // An editor's picks come first, falling back to the first few items of that kind.
-    const pick = (uuids: string[] | undefined, fallback: LibraryItem[]) => {
-      const chosen = (uuids ?? [])
-        .map((uuid) => byUuid.get(uuid))
-        .filter((item): item is LibraryItem => Boolean(item));
-      return (chosen.length ? chosen : fallback).slice(0, SECTION_SIZE);
-    };
-
-    return {
-      courses: pick(
-        content?.featured_courses,
-        items.filter((item) => item.kind === 'course'),
-      ),
-      sessions: pick(
-        content?.featured_sessions,
-        items.filter((item) => item.kind === 'session'),
-      ),
-      inProgress: items.filter((item) => item.progress === 'started').slice(0, SECTION_SIZE),
-    };
-  }, [items, content]);
+  const { courses, sessions, inProgress } = useFeaturedLibraryItems(libraryStories, story?.content);
+  const { logCardClick, logBrowseAll } = useLibrarySectionEvents('home', eventUserData);
 
   // partnerAccesses/createdAt arrive with getUser, so the view event waits for the user to settle
   // rather than reporting a signed-in visitor as anonymous.
@@ -101,52 +73,71 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSettled, eventUserData]);
 
-  const logCardClick = useCallback(
-    (event: string, section: string) => (item: LibraryItem, index: number) => {
-      logEvent(event, {
-        home_section: section,
-        home_item_name: item.title,
-        home_item_storyblok_uuid: item.id,
-        home_item_kind: item.kind,
-        home_item_format: item.format ?? null,
-        home_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
-        home_item_position: index + 1, // 1-based rank within the section
-        ...eventUserData,
-      });
-    },
-    [eventUserData],
-  );
-
-  const logBrowseAll = (section: string) => () =>
-    logEvent(HOME_BROWSE_ALL_CLICKED, { home_section: section, ...eventUserData });
-
-  const renderSections = (sections: any[] | undefined, key: string) =>
-    sections?.map((section: any, index: number) =>
-      section.component === 'notes_from_bloom_promo' ? (
-        <StoryblokNotesFromBloomPromo key={`${key}_notes_${index}`} />
-      ) : (
-        <StoryblokPageSection key={`${key}_${index}`} {...section} isLoggedIn={isLoggedIn} />
-      ),
-    );
-
   if (!story) {
     return <NoDataAvailable />;
   }
 
+  // The sign-up CTA keeps firing PROMO_GET_STARTED_CLICKED so its funnel stays continuous.
+  const logCtaClick = (cta: string, alsoLog?: string) => {
+    logEvent(HOME_HERO_CTA_CLICKED, { home_hero_cta: cta, ...eventUserData });
+    if (alsoLog) logEvent(alsoLog, eventUserData);
+  };
+
   return (
     <Box>
-      <HomeHeader
+      <Header
+        variant="hero"
         title={story.content.title}
         introduction={story.content.introduction}
         imageSrc={story.content.header_image?.filename}
-        imageAlt={story.content.header_image?.alt}
+        imageAlt={
+          story.content.header_image?.alt ? `alt.${story.content.header_image.alt}` : undefined
+        }
         translatedImageAlt={story.content.translatedImageAlt}
-        isLoggedIn={isLoggedIn}
-        registerPath={registerPath}
-        eventUserData={eventUserData}
+        cta={
+          isLoggedIn ? (
+            <>
+              <Button
+                qa-id="home-hero-sessions-button"
+                variant="contained"
+                color="error"
+                component={i18nLink}
+                href="/library?type=session"
+                onClick={() => logCtaClick('sessions')}
+              >
+                {tHero('exploreSessionsCta')}
+              </Button>
+              <Button
+                qa-id="home-hero-courses-button"
+                variant="outlined"
+                color="primary"
+                component={i18nLink}
+                href="/library?type=course"
+                onClick={() => logCtaClick('courses')}
+              >
+                {tHero('goToCoursesCta')}
+              </Button>
+            </>
+          ) : (
+            <Button
+              id="primary-get-started-button"
+              qa-id="home-hero-join-button"
+              variant="contained"
+              color="error"
+              size="large"
+              component={i18nLink}
+              href={registerPath}
+              onClick={() => logCtaClick('join', PROMO_GET_STARTED_CLICKED)}
+            >
+              {tHero('joinCta')}
+            </Button>
+          )
+        }
       />
 
-      {renderSections(story.content.top_sections, 'top_section')}
+      {story.content.top_sections?.map((section: SbBlokData, index: number) => (
+        <DynamicComponent key={`top_section_${index}`} blok={section} />
+      ))}
 
       <LibraryCardsSection
         qaId="home-continue-learning"
@@ -168,7 +159,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
         browseLabel={t('sessions.browseAll')}
         browseHref="/library?type=session"
         onCardSelect={logCardClick(HOME_CONTENT_CARD_CLICKED, 'sessions')}
-        onBrowseAll={logBrowseAll('sessions')}
+        onBrowseAll={logBrowseAll(HOME_BROWSE_ALL_CLICKED, 'sessions')}
       />
 
       <LibraryCardsSection
@@ -182,14 +173,16 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
         browseHref="/library?type=course"
         divided={sessions.length > 0}
         onCardSelect={logCardClick(HOME_CONTENT_CARD_CLICKED, 'courses')}
-        onBrowseAll={logBrowseAll('courses')}
+        onBrowseAll={logBrowseAll(HOME_BROWSE_ALL_CLICKED, 'courses')}
       />
 
       <SupportSection eventUserData={eventUserData} eventName={HOME_SUPPORT_CARD_CLICKED} />
 
       {!isLoggedIn && <SignUpSection source="home" sectionBelow />}
 
-      {renderSections(story.content.bottom_sections, 'bottom_section')}
+      {story.content.bottom_sections?.map((section: SbBlokData, index: number) => (
+        <DynamicComponent key={`bottom_section_${index}`} blok={section} />
+      ))}
     </Box>
   );
 }

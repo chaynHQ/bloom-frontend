@@ -2,8 +2,8 @@
 
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
 import communityFundLogo from '@/public/community_fund_logo.svg';
@@ -301,7 +301,7 @@ const Footer = () => {
         </Box>
       </Container>
       <Container sx={fundingContainerStyle}>
-        <Typography variant="h3" component="p">
+        <Typography variant="h3" component="p" sx={{ color: '#ffffff !important' }}>
           {tS('footer.fundedByTitle')}
         </Typography>
         <Box sx={fundingLogosContainerStyle}>
