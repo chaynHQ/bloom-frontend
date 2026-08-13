@@ -41,10 +41,10 @@
       "expand": "Genişlet",
       "collapse": "Daralt",
       "cancelDialog": {
-        "title": "İptali Onayla",
+        "title": "İptali onayla",
         "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun bir zamanda yeni bir randevu alabilirsin.",
-        "keepButton": "Vazgeç",
-        "confirmButton": "Seansı İptal Et"
+        "keepButton": "Seansı koru",
+        "confirmButton": "Seansı iptal et"
       }
     },
     "accessGuard": {

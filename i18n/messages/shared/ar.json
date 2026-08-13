@@ -4,7 +4,7 @@
     "references": "موارد",
     "metadata": {
       "title": "رحلتك نحو التعافي تبدأ معنا",
-      "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحليفات وحلفاء من حول العالم.",
+      "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجيات وناجون وحليفات وحلفاء من حول العالم.",
       "imageAlt": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما. ويتضمّن شعار Bloom المكتوب."
     },
     "leaveSite": {
@@ -16,8 +16,8 @@
     "navigateTo": "الانتقال إلى",
     "footer": {
       "fundedByTitle": "بتمويل من",
-      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحليفات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
-      "chaynLine1": "بُني بواسطة <bold>CHAYN</bold> CIO.",
+      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجيات وناجون وحليفات وحلفاء من حول العالم، وتنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
+      "chaynLine1": "من إنشاء <bold>CHAYN</bold> CIO.",
       "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
       "bumbleLine1": "بالشراكة مع",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -30,11 +30,11 @@
     },
     "maintenanceBanner": {
       "title": "Bloom متوقّف مؤقتًا للصيانة",
-      "description": "نرجو تحمّلك بينما نُكمل بعض أعمال الصيانة المجدولة الضرورية. من المفترض أن يعود Bloom للعمل كالمعتاد خلال {hours} ساعة."
+      "description": "نشكر لك صبرك بينما نُكمل بعض أعمال الصيانة المجدولة الضرورية. من المفترض أن يعود Bloom للعمل كالمعتاد خلال {hours} ساعة."
     },
     "fruitzRetirementBanner": {
       "title": "تغيير في دوراتك",
-      "description": "تقترب شراكة Fruitz x Bloom من نهايتها، لكن دعم Bloom لك يبقى مستمرًا. اعتبارًا من 19 أغسطس، لن تعود دورة 'المواعدة والحدود والعلاقات' متاحة، لكن جميع الخدمات الأخرى، بما في ذلك المراسلة الفردية، ستبقى كما هي.",
+      "description": "تقترب شراكة Fruitz x Bloom من نهايتها، لكن دعم Bloom لك يبقى مستمرًا. اعتبارًا من 19 أغسطس، لن تعود دورة 'المواعدة، والحدود، والعلاقات' متاحة، لكن جميع الخدمات الأخرى، بما في ذلك المراسلة الفردية، ستبقى كما هي.",
       "dismiss": "إغلاق"
     },
     "videoTranscript": {
@@ -43,9 +43,9 @@
       "description": ""
     },
     "progressStatus": {
-      "started": "بدأت",
-      "completed": "اكتملت",
-      "notStarted": "لم تبدأ"
+      "started": "قيد المتابعة",
+      "completed": "مكتملة",
+      "notStarted": "لم تبدأ بعد"
     },
     "meetTheTeam": {
       "fullBioButton": "قراءة السيرة الكاملة لـ {name}",
@@ -99,7 +99,7 @@
       "videoIcon": "أيقونة فيديو"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "ناجٍ/ية",
+    "survivor": "ناجية أو ناجٍ",
     "cookieConsent": {
       "cookieConsentExplainer": "يُرجى السماح بملفات تعريف الارتباط التحليلية حتى نتمكّن من تحسين Bloom. مزيد من التفاصيل في ",
       "cookieConsentPolicy": "سياسة ملفات تعريف الارتباط",
@@ -139,7 +139,7 @@
       "grounding-listen-to-your-voice": "الإنصات إلى صوتك",
       "grounding-calming-colours": "الألوان المهدّئة",
       "grounding-coming-back-to-your-safe-space": "العودة إلى مساحتك الآمنة",
-      "grounding-best-check-in": "تفقّد BEST",
+      "grounding-best-check-in": "وقفة تفقّد BEST",
       "grounding-compassionate-body-scan": "مسح الجسد بتعاطف",
       "grounding-touching-and-feeling-textures": "لمس الملمس والإحساس به",
       "grouding-sound-of-claps": "صوت التصفيق",
@@ -159,7 +159,7 @@
       "description": "رسائل مرتين أسبوعيًا تصلك مباشرةً على WhatsApp",
       "buttonText": "الاشتراك"
     },
-    "characterCount": "{current}/{max} حرفًا",
+    "characterCount": "{current}/{max} حرف",
     "scrollToSignUp": {
       "button": "التسجيل مجانًا"
     }

@@ -10,7 +10,7 @@
     "conversations": "محادثات",
     "shorts": "مقاطع قصيرة",
     "videos": "فيديوهات",
-    "completed": "اكتملت",
+    "completed": "مكتملة",
     "sessionDetail": "هذا المقطع من الجلسة: {sessionName}، من دورتنا: {courseName}",
     "sessionButtonLabel": "مشاهدة الجلسة كاملة",
     "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب</link>.",
