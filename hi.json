@@ -1,0 +1,700 @@
+{
+    "Auth": {
+        "introduction": "Bloom apne remote courses ke madhyam se survivors ko jankaari deta hai aur empower karta hai. Inn courses mein trauma, gender-based hinsa aur therapeutic takneekein shaamil hai taki survivors trauma se heal ho paye.",
+        "getStartedBloom": "Bloom ke saath shuruat karte hain",
+        "getStartedWith": "{{partnerName}} code ke saath shuru karte hain",
+        "loginLink": "Aapke paas pehle se he account hai? <loginLink>Login kariye<\/loginLink>",
+        "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <termsLink>Sevao ki Sharte<\/termsLink> aur <privacyLink>Privacy Policy<\/privacyLink> sweekaar kar rahe hain.",
+        "login": {
+            "title": "Vapas se swagat hai",
+            "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here<\/resetLink>",
+            "createAnAccountLink": "Aapke paas account nahi hai? <createAnAccountLink>Account banaiye<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "Account banaiye",
+            "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in<\/loginLink>",
+            "partnershipsTitle": "Hamari partnerships",
+            "partnershipsDescription": "Agar aap Bloom par hamare kisi partner se aa rahe hain, toh unke logo kar click kariye. "
+        },
+        "resetPassword": {
+            "title": "Password reset kariye"
+        },
+        "form": {
+            "codeLabel": "access code",
+            "nameLabel": "Pehla naam\/Apnaam",
+            "emailLabel": "Email",
+            "passwordLabel": "Password",
+            "contactPermissionLabel": "Naye sansadhanon aur humein apni pratikriya dene ke avsaron ke baare mein email prapt karein.",
+            "registerSubmit": "Account Banao",
+            "resetPasswordStep1": "Hum aapko ek email bhejenge taki aap apna password reset kar sakein. ",
+            "resetPasswordStep2": "Bas aap anth tak pahuchne wale hain! Ab aap apna naya password set kar sakte hain. ",
+            "resetPasswordSubmit": "Password reset kariye",
+            "resendPasswordSubmit": "Email dubara bhejein.",
+            "resetPasswordSent": "Bloom ke reset link ke liye apna email check kariye. Aapko email nahi mila? Apna junk folder check kariye ya fir email resend kariye. ",
+            "passwordResetSuccess": "Aapka password reset ho gaya hai! Ab aap apne naye password ke saath log in karna jari rakh sakte hain.",
+            "loginSubmit": "Login",
+            "createUserError": "Aapka account set up karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+            "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink> agar aapko fir bhi error aa raha hai. ",
+            "codeErrors": {
+                "internal": "Aapke access code ko validate karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+                "expired": "Yeh code expire ho chuka hai. {{partnerName}} team sampark karein.",
+                "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir {{partnerName}} team se sampark karein.",
+                "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh {{partnerName}} ki team se sampark karein. "
+            },
+            "firebase": {
+                "wrongPassword": "Galat password, kripya phir se koshish karein ya logout karein aur apna password reset karein.",
+                "authError": "Humein uss email aur password ke combination ka koi account nahi mila. Apna email aur password check keejiye. ",
+                "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
+                "tooManyAttempts": "Bahut saare viphal login prayaas, krpaya kuchh minat prateeksha karen ya apana paasavard abhee reeset karen.",
+                "weakPassword": "Aapka password kam se kam 8 characters ka hona chahiye aur bahut aasaan nahi hona chahiye. Kuch shabdon ko milaakar try karein — jaise 'neela subah nadi'.",
+                "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login<\/loginLink> par jaiye jaari rakhne ke liye.",
+                "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya<\/resetLink> aur fir prayas kariya. ",
+                "expiredCode": "This reset password link is now expired, please <resetLink>restart the process<\/resetLink> and try again.",
+                "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink> agar aapko fir bhi error aa raha hai. "
+            },
+            "phoneNumberLabel": "Phone number",
+            "verificationCodeLabel": "Verification code",
+            "mfaTriggerError": "SMS code bhejne mein truti. Kripya punah prayaas karein.",
+            "mfaVerificationIdMissing": "Kripya pehle SMS code ka anuroodh karein.",
+            "mfaEnrollError": "2FA mein naamaakon karne mein truti. Kripya punah prayaas karein.",
+            "mfaFinalizeError": "2FA setup ko antim roop dene mein truti. Kripya punah prayaas karein.",
+            "mfaError": "Amaany satyaapan code. Kripya punah prayaas karein.",
+            "emailNotVerified": "2FA setup karne se pehle kripya apne email ki pushti karein.",
+            "emailVerificationError": "Satyaapan email bhejne mein truti. Kripya punah prayaas karein.",
+            "emailVerificationSent": "Satyaapan email bhej diya gaya hai. Kripya apne inbox ki jaanch karein.",
+            "emailVerificationSpamCheck": "Agar aapko email nahi dikh raha, kripya apne spam folder ki jaanch karein.",
+            "sendVerificationEmail": "Satyaapan email bhejein",
+            "resendVerificationEmail": "Satyaapan email punah bhejein",
+            "passwordRequired": "Punah praman ke liye password aavashyak hai.",
+            "reauthenticationError": "Punah praman mein asafalta. Kripya punah prayaas karein."
+        },
+        "verifyMFA": {
+            "title": "Do-charan praman verify karein",
+            "triggerSMS": "SMS code bhejein",
+            "verifyCode": "Code verify karein",
+            "phoneNumber": "Hum aapke registered phone number par ek verification code bhejenge: {{phoneNumber}}"
+        },
+        "setupMFA": {
+            "title": "Do-charan praman setup karein",
+            "sendCode": "Verification code bhejein",
+            "verifyCode": "Code verify karein",
+            "enterCodeHelperText": "Kripya apne phone par bheje gaye verification code ko darj karein:",
+            "reauthTitle": "Apni Pehchaan Confirm Karein",
+            "reauthDescription": "Kripya aage badhne se pehle apna password darj karein",
+            "cancelReauth": "Cancel Karein",
+            "confirmReauth": "Confirm Karein",
+            "reauthenticating": "Confirm kar rahe hain..."
+        }
+    },
+    "Shared": {
+        "bloom": "Bloom",
+        "references": "Sansadhan",
+        "metadata": {
+            "title": "Apne healing ke safar par humein join kariye",
+            "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
+            "imageAlt": "Ek insan ke chehre aur kandhon ki tasveer, jiske upar bade patte aur phool khil rahe hain. Bloom ka logo bhi ismein shamil hai."
+        },
+        "leaveSite": {
+            "button": "Site ko chodiye",
+            "wikiLink": "https:\/\/hi.wikipedia.org\/wiki\/Main_Page",
+            "googleLink": "https:\/\/www.google.com\/search?q={{E0}}A4{{AA}}E0{{A5}}8D{{E0}}A4{{AF}}E0{{A4}}BE{{E0}}A4{{B0}}E0{{A4}}BE+{{E0}}A4{{AC}}E0{{A4}}9A{{E0}}A5{{8D}}E0{{A4}}9A{{E0}}A4%BE+{{E0}}A4{{AA}}E0{{A4}}B6{{E0}}A5%81+memes&sca_esv=c4520c9ea19d39e2&sca_upv=1&udm=2&biw=1277&bih=659&sxsrf=ADLYWIJoTLyEWIrJrVKtvC--b54j8mJHgA%3A1715343868084&ei=_BE-Zv3QBL3bseMP1d28iAY&ved=0ahUKEwj9vrLviYOGAxW9bWwGHdUuD2EQ4dUDCBA&uact=5&oq={{E0}}A4{{AA}}E0{{A5}}8D{{E0}}A4{{AF}}E0{{A4}}BE{{E0}}A4{{B0}}E0{{A4}}BE+{{E0}}A4{{AC}}E0{{A4}}9A{{E0}}A5{{8D}}E0{{A4}}9A{{E0}}A4%BE+{{E0}}A4{{AA}}E0{{A4}}B6{{E0}}A5%81+memes"
+        },
+        "navigateBack": "Pichhle prishth par nevigēt kareñ",
+        "navigateTo": "Pichhle prishth par nevigēt kareñ",
+        "footer": {
+            "fundedByTitle": "Yeh kaam fund kiya gaya hai by",
+            "chaynDescription": "Bloom aapke liye <link>Chayn<\/link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
+            "chaynLine1": "<bold>CHAYN<\/bold> CIO. se banaya gaya",
+            "chaynLine2": "UK Charity Number: 1196098",
+            "bumbleLine1": "Partnership mein",
+            "bumbleLine2": "BUMBLE HOLDING LTD",
+            "badooLine1": "Partnership mein",
+            "badooLine2": "BADOO LTD",
+            "fruitzLine1": "Partnership mein",
+            "fruitzLine2": "FRUITZ LTD",
+            "policies": "Humari policies",
+            "trustCenter": "Trust Center"
+        },
+        "maintenanceBanner": {
+            "title": "Rakharakhaav ke lie Bloom band hai",
+            "description": "jab tak ham kuchh aavashyak niyojit rakharakhaav poora kar len, krpaya hamaare saath bane rahen. bloom hamesha kee tarah kuchh hee {{hours}} ghanton mein upalabdh ho jaana chaahie."
+        },
+        "fruitzRetirementBanner": {
+            "title": "Aapke course mein badlaav",
+            "description": "Fruitz app x Bloom saajhedaaree samaapt ho rahee hai, lekin aapka Bloom support jaari rahega. 19 agast se, ‘Dating, Boundaries, aur Relationships’ course uplabdh nahi rahega, lekin anya sabhi services, jismein 1:1 messaging shamil hai, pehle ki tarah chalu rahengi.",
+            "dismiss": "Band karein"
+        },
+        "videoTranscript": {
+            "title": "Video ki transcript",
+            "closeModal": "Transcript band karein",
+            "description": "Video ki transcript padein - "
+        },
+        "progressStatus": {
+            "started": "Shuru ho gaya",
+            "completed": "Poora hai",
+            "notStarted": "Shuru nahi hua"
+        },
+        "meetTheTeam": {
+            "fullBioButton": "{{name}} ki poori jeevani padhein",
+            "expandTeamMember": "Bio bada kariye {{name}} ke liye"
+        },
+        "noDataAvailable": {
+            "title": "Is pej ko lod karane mein kuchh samasya huee. krpaya vaapas jaen aur jaldee hee punah prayaas karen, ya sampark karen"
+        },
+        "error": {
+            "title": "Kuch galat ho gaya",
+            "description": "Pichhle request mein kuch samasya thi, kripya dobara prayas karein. Yadi samasya bani rahti hai, to Bloom team se sampark karein.",
+            "buttonLabel": "Dobara prayas karein"
+        },
+        "notFound": {
+            "title": "404 - Page nahi mila",
+            "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",
+            "unauthenticatedDescription": "Yeh page nahi mila. URL check kariya ya fir welcome page par vapis jaiye",
+            "authenticatedRedirectButton": "Courses ke page par vapis jaiye",
+            "unauthenticatedRedirectButton": "Welcome page par vapis jaiye."
+        },
+        "alt": {
+            "chaynLogo": "Chayn logo",
+            "bloomLogo": "Bloom logo",
+            "bumbleLogo": "Bumble logo",
+            "bloomBumbleLogo": "Bloom ki partnership Badoo logo ke saath",
+            "badooLogo": "Badoo logo",
+            "bloomBadooLogo": "Bloom ki partnership Badoo logo ke saath",
+            "comicReliefLogo": "Comic Relief logo",
+            "communityFundLogo": "Community Fund logo",
+            "welcomeToBloom": "Bloom pe swagat hai",
+            "tiktokLogo": "Tiktok logo",
+            "githubLogo": "Github logo",
+            "bloomHead": "ek vyakti ke chehre aur kandho ka chitra hai, jiske upar bade patte aur fool khile hue hain",
+            "beehive": "Bee hive ka chitra",
+            "leafMix": "Illustration of two leaves joined with a rose",
+            "leafMixBee": "Illustration of two leaves with a bee hovering above",
+            "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
+            "personTea": "Chai pakde baithe vyakti ka chitran",
+            "personSitting": "baithe vyakti ka chitran",
+            "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
+            "dateSelector": "Illustration of a calendar with a heart in the middle",
+            "change": "Ek chakra ka chitran - ke chakra mein teen sooraj unke beech mein teer. ",
+            "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+            "confidential": "Illustration of a document with a lock in the corner",
+            "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
+            "fruitzLogo": "Fruitz logo",
+            "bloomFruitzLogo": "Bloom ki partnership Fruitz logo ke saath",
+            "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+            "bookIcon": "Kitab ka icon",
+            "articleIcon": "Lekh ka icon",
+            "videoIcon": "Video ka icon"
+        },
+        "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/oHbPDvL2",
+        "survivor": "Survivor",
+        "cookieConsent": {
+            "cookieConsentExplainer": "Kripya analytics cookies ki anumati dein taki hum Bloom mein sudhaar kar sakein. Humare mein aur padein. ",
+            "cookieConsentPolicy": "Cookies neeti",
+            "acceptLabel": "Cookies sweekaar kariye",
+            "declineLabel": "Cookies asweekar karein"
+        },
+        "signUpTodayPromo": {
+            "title": "Free account ke liye aaj he sign up karein",
+            "description1": "Bloom ek online platform hai jo apko apke ghavon se ubharne aur heal hone mein madad karta hai. Bloom par bahut sar alag alag suvidhaye hain - \nVideo courses, vichar sambhanti activities, aur toh aur aap humari team se seedha message par baat kar sakte hain.",
+            "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
+            "button": "Shuru karte hain"
+        },
+        "loginDialog": {
+            "title": "Bloom mein login karein ya ek naya account banayein",
+            "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
+            "loginButton": "Log in",
+            "registerButton": "Account banayein",
+            "backButton": "Cancel"
+        },
+        "exerciseNames": {
+            "activities-thought-diaries": "Personal diary",
+            "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
+            "activities-timelines": "Timelines",
+            "activities-trust-mapping": "Trust mapping",
+            "activities-mapping-fear-and-stress-in-our-bodies": "Darr aur tanav ko apne shareer mein samjhna",
+            "activities-letter-to-a-part-of-my-body": "Mere shareer ke ek hisse ko khatt",
+            "activities-accelerators-and-brakes": "Accelerators aur brakes",
+            "activities-ideal-sexual-being": "Aadarsh sexual insaan",
+            "grounding-visual-breathing": "Picture ke saath saans lena",
+            "grounding-slow-breathing": "Slow breathing",
+            "grounding-box-breathing": "Box breathing",
+            "grounding-drifting-clouds-meditation": "Tension free — chalte badal",
+            "grounding-positive-coping-statement": "Positive shabd",
+            "grounding-finger-focus": "Unglio ka dhyaan kariyes",
+            "grounding-day-walkthrough": "Mene din mein kya kiya?",
+            "grounding-what-can-you-hear": "Kya tum mujhe sun sakte ho?",
+            "grounding-listen-to-your-voice": "Apni awaaz ko suno",
+            "grounding-calming-colours": "Sukoon ke rang",
+            "grounding-coming-back-to-your-safe-space": "Apni safe space mein wapis ana",
+            "grounding-best-check-in": "BEST check-in",
+            "grounding-compassionate-body-scan": "Sahanbhooti se shareer ko mehsoos karna",
+            "grounding-touching-and-feeling-textures": "Textures ko mehsoos karna",
+            "grouding-sound-of-claps": "Taaliyo ki awaz",
+            "grounding-affirming-ourselves": "Jaadu ki jhappi!"
+        },
+        "pwaBanner": {
+            "mobileDescription": "Apne homescreen se access ke liye app ko install karein",
+            "desktopDescription": "Apne homescreen se Bloom tak access pane ke liye app ko install karein",
+            "iosDescription": "Bloom ko apne homescreen mein kaise add karein",
+            "iosStep1": "1. Share button ko tap karein",
+            "iosStep2": "2. “Add To Home Screen” ko tap karein",
+            "button-decline-label": "Abhi nahi",
+            "button-install-label": "Install karein"
+        },
+        "notesFromBloomPromo": {
+            "title": "Nihshulk sahaayak sandesh",
+            "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
+            "buttonText": "Sadasyata len"
+        },
+        "characterCount": "{{current}}\/{{max}} अक्षर",
+        "scrollToSignUp": {
+            "button": "Muft mein sign up karein"
+        }
+    },
+    "Account": {
+        "applyCode": {
+            "title": "Code laagu karein",
+            "introduction": "Bloom partners ke saath kaam karta hai tak duniya bhar ke survivors ki healing mein sahyog kar sake.",
+            "description": "Yadi aapko hamare kisi partner se access code mila hai toh aap usse add kar sakte hain taki aapko programme specific sahayata mil sake.",
+            "descriptionLine2": "Aap ek se adhik partner ke code jod sakte hain.",
+            "partnershipsTitle": "Hamare partners",
+            "partnershipsDescription": "Hamari partnerships ke bare mein aur jaanne ke liye unke logo par click kariye.",
+            "formIntroduction": "Bloom partner se mila access code daaliye.",
+            "formSuccess": {
+                "success": "Appke account par ek Bumble code laga gaya hai!",
+                "successLine2": "Aapka Bumble access neeche di gai cheezon saksham karta hai:",
+                "liveChat": "Bloom team ke saath sandesh seva",
+                "therapy": "{{therapySessionsRemaining}} therapy sessions",
+                "courses": "Swa-nirdeshit courses"
+            },
+            "form": {
+                "codeLabel": "Access code",
+                "submitLabel": "Code lagaiye",
+                "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
+                "codeErrors": {
+                    "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
+                    "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
+                    "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
+                    "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. ",
+                    "alreadyApplied": "Yeh code apke account me phele se hi lag chuka hai."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "Aapke bare mein",
+            "header": "Humein samjhne mein madar kariye",
+            "description": "Yeh sawal humein samjhne mein madad karte hain ki kaun Bloom istemaal kar raha hai aur unhe humse kis tarha ki support chahiye. ",
+            "titleA": "Aapko Bloom se kya chahiye",
+            "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
+            "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
+            "goToCourses": "Skip karke courses par jayein",
+            "demographicForm": {
+                "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
+                "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
+                "genderOptions": {
+                    "woman": "Mahila",
+                    "man": "Purush",
+                    "nonBinary": "Gaer Avidhari (Non Binary)",
+                    "transgender": "Kinnar",
+                    "intersex": "Intersex",
+                    "twoSpirit": "Do-bhawan",
+                    "genderNonConforming": "Non-conformité au genre",
+                    "other": "Autre (à préciser)",
+                    "preferNotToAnswer": "Batana pasand nahi karte"
+                },
+                "neurodivergentLabel": "Kya aapko koi neuro-manorog hai jo aapke dimaag ke kaam karne ki shamta pe prabhav daalta hai? Yeh koi adhigham shamta ho sakti hai (jaise ki Dyslexia, Dyspraxia, Dyscalculia), ADHD, ya fir Autism.",
+                "neurodivergentHelpText": "Hum apni sewaon ko sahit banane ki poori koshish karte hain, toh isliye humara yeh jaanna zaroori hai.",
+                "neurodivergentLabels": {
+                    "1": "Haan",
+                    "2": "Nahi",
+                    "3": "Nishchit nahin\n",
+                    "4": "Nahin kahana pasand karate hain\n"
+                },
+                "raceEthnNatnLabel": "Aapki race, ethnicity and nationality kya hai? E.g., White Hispanic Mexican, or Tamil Indian.",
+                "raceEthnNatnHelpText": "Hum jaante hain ki sab logon ka unki race aur ethnicity ke sath experience alag hota hai jo depend karta hai ki vo kahan rehte hain. Toh aap vo likhiye jo sabse achi tarha se aapko describe karta hai.",
+                "countryLabel": "Aap kaunse desh mein abhi reh rahe hain?",
+                "countryHelpText": "Yeh samjhne mein humein madad karega ki survivors services kahan se le rahe hain",
+                "ageLabel": "Apka age group kya hai?",
+                "ageHelpText": "Apna ayu varg chuniyen.",
+                "selectPlaceholder": "Kripya ek vikalp chuniyen.",
+                "ageLabels": {
+                    "1": "18 ke neeche",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "Na bata pasand karungi"
+                },
+                "submitLabel": "Submit",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",
+                "scaleDescriptionLine2": "1 = Poori tarha asehmat, 10 = Poori tarha sehmat",
+                "scaleLabels": {
+                    "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
+                    "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un coping mechanisms ki taraf akarshit hona ek normal trauma response hai",
+                    "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
+                    "Q4": "Mein apne aapko vo poora dhyaan doongi jo mujhe theek hone aur heal hone ke liye chahiye.",
+                    "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
+                    "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
+                    "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mere liye unique hai",
+                    "Q8": "Mein pehle he samjh jati hoon jab mere triggering moments, jagahein ya waqt aasakte ho aur unke saath cope karparti hoon."
+                },
+                "submitLabel": "Submit"
+            },
+            "setAForm": {
+                "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
+            }
+        },
+        "disableServiceEmails": {
+            "title": "Bloom ke emails band kar diye gaye!",
+            "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.<\/link>",
+            "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
+        },
+        "accountSettings": {
+            "title": "Account Settings",
+            "description": "Aapke settings ko dekhiye aur update kijiye",
+            "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
+            "profileSettings": {
+                "title": "Profile details",
+                "description": "Yahaan apana naam aur eemel apadet karen. yah aapakee profail mein sangraheet ekamaatr vyaktigat jaanakaaree hai.",
+                "nameLabel": "Naam",
+                "emailLabel": "Email",
+                "submitLabel": "Profile ko save kijiye",
+                "emailAlreadyInUseError": "Yah eemel pahale se hee kisee any khaate dvaara upayog mein hai, krpaya punah prayaas karen",
+                "confirmDialogTitle": "jab aap apana eemel badalate hain, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+                "confirmDialogCancel": "Cancel"
+            },
+            "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>",
+            "actions": {
+                "title": "Account Actions",
+                "description": "Apna account delete karne se aapka naam, email address aur dekhe gaye sessions ki history permanently delete ho jayegi.",
+                "button": {
+                    "resetPassword": "Password reset kijiye",
+                    "deleteAccount": "Account delete kijiye"
+                },
+                "confirmDialogCancel": "Cancel",
+                "resetPasswordConfirmDialogTitle": "jab aap apana password update karenge, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+                "deleteAccountConfirmDialogTitle": "kya aap sach mein apana account delete karna chaahate hain?",
+                "deleteAccountConfirmDialogDescription": "yah aapake naam, eemel pata aur dekhe gaye sessions ka history hamesha ke liye delete kar dega."
+            },
+            "emailSettings": {
+                "title": "Email Preferences",
+                "description": "Humein bataein ki kya hum aapko email bhej sakte hain:",
+                "submitLabel": "Email preferences ko save kijiye",
+                "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
+                "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
+                "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "Email Reminders",
+                "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
+                "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
+                "fieldLabel": "Yaad dilaya jaaye:",
+                "twoWeeksLabel": "Do saptah baad",
+                "oneMonthLabel": "Ek mahine ke baad",
+                "twoMonthsLabel": "Do mahine baad",
+                "neverLabel": "Kabhi nahi",
+                "update": "Aap is setting ko kabhi bhi update kar sakte hain",
+                "submitLabel": "Email Reminders Save karen",
+                "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।<\/link>"
+            }
+        }
+    },
+    "Courses": {
+        "title": "Humare courses",
+        "introduction": "Bloom ke courses humein trauma se nipatne ke liye tailored jankaari, takneekein aur positive shabd dete hain. Vo humein ek surakshit aur empowering space dete hain jahan humein seekhne, pratibimb (reflect) karne aur process karne mein protsahit kiya jata hai. ",
+        "session": "Session",
+        "course": "Course",
+        "courses": "Courses",
+        "expand": "Vistaar karein",
+        "expandSummary": "Summary vistaar karein",
+        "navigateToSession": "Session par leke jaiye",
+        "navigateToCourse": "Course pe leke jaiye",
+        "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
+        "courseDetail": {
+            "introductionTitle": "Course ka introduction",
+            "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript<\/transcriptLink> padh lijiye"
+        },
+        "sessionDetail": {
+            "videoTitle": "Video",
+            "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript<\/transcriptLink> padh lijiye.",
+            "activityTitle": "Activity",
+            "bonusTitle": "Bonus content",
+            "chat": {
+                "title": "Humare saath soch vichaar kariye",
+                "description": "Yadi aap iss sessions par apne vichaar share karna chahte hai toh Bloom team apko sunna pasand karegi!",
+                "videoIntro": "Sandesh Seva kaise kaam karti hai, iske bare mein aur jaanein:",
+                "videoLink": "https:\/\/youtu.be\/NIE_1BK-qi0",
+                "detailIntro": "Yaad rakhiye:",
+                "detailPrivacy": "Aapke messages niji aur surakshit hai, vo sirf Bloom team pad sakti hain aur aap gumnaan rehte hain. ",
+                "detailTimezone": "Hum kai alag-alag timezones mein kaam karte hain, isliye aapko humse 6 ghanto ke andar response milna chahiye, aur samay 24 ghanton se adhik nahi hoga. ",
+                "detailLanguage": "Hum humesha Anghrezi aur Spanish mein uplabdh hain, lekin humari team ke sadasya French, Italian, Hindi, Arabic aur Bangla bhi bolte hain. Humein aapke liye unke saath baat karne ki vyvastha karne mein khushi hogi. ",
+                "detailLegal": "Yadi aap ek sakriya kanooni mamle se guzar rahe hain, toh vichaar karein ki aap hamare saath kya share karte hain kyuki yeh kabhi-kabhi aapke mamle ko prabhavit kar sakta hai. ",
+                "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
+                "startButton": "Hame sandesh bhejein"
+            },
+            "sessionComplete": "Session poora hua"
+        },
+        "sessionFeedback": {
+            "title": "Yeh session kaisa aapko kaisa laga?",
+            "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+            "feedbackTags": {
+                "relatable": "Mein session ko samjh pai aur usse jud pai",
+                "useful": "Faidemand",
+                "inspiring": "Mujhe hausla afzai mehsoos hui",
+                "too long": "Bahut lamba tha",
+                "too complicated": "Bahut mushkil tha",
+                "not useful": "Zada faidemand nahi tha"
+            },
+            "textboxDefaultText": "Ek comment add karein...",
+            "sendButtonText": "Bhejein",
+            "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+            "errors": {
+                "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
+            }
+        },
+        "accessGuard": {
+            "title": "Yeh course content uplabhd nahi hai.",
+            "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses<\/contactLink> par vapas jaiye. "
+        },
+        "errors": {
+            "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
+        },
+        "backToCourse": "Course par vapas jayein.",
+        "backToCourses": "Courses par vapas jayein.",
+        "conversationsHeading": "Conversations",
+        "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
+        "shortsHeading": "Shorts",
+        "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
+        "somaticsHeading": "Somatics: Sharir-aadhārit upachaar",
+        "somaticsDescription": "Jaanein ki kaise komal, sharir-aadhārit upachaar hinsa, tanav aur darr se upachaar mein madad kar sakte hain. Sansadhanon ka yah sangrah hamare sharir se phir se judne, lachilepan ka nirmaan karne aur suraksha tatha suvidha ka ehsaas kaisa hota hai, yah samajhne mein hamari madad karne ke liye spasht, vyavahārik mārgdarshan pradan karta hai."
+    },
+    "Therapy": {
+        "title": "Therapy book kariye",
+        "bookingButton": "Booking shuru kariye",
+        "bookingSectionTitle": "Booking kaise kaam kartī hai",
+        "steps": {
+            "step1": "Ap hamare dhaayn se chune hue, bahubhashi therapists se chun sakte hain. ",
+            "step2": "Vo din aur samay chuniye jo apke liye sabse acha kaam karta hain. Saare sessions online hain. ",
+            "step3": "Agar aap apka mann badal jata hain, toh kisi bhi samay aap apne sessions rok sakte hain ya therapist badal sakte hain. ",
+            "step4": "Aap jo kuch bhi sajha karte hain vo apke aur therapist ke beech poori tarha gopniye rehta hai."
+        },
+        "closeBookingWidget": "Booking widget band karein",
+        "modalTitle": "Therapī book karein",
+        "modalDescription": "Āpkī therapy session schedule karne ke liye SimplyBook.me widget.",
+        "error": {
+            "initializingWidget": "Booking widget initialize karne mein error.",
+            "initializingWidgetRetry": "Retry par booking widget initialize karne mein error.",
+            "containerNotFoundRetry": "Booking widget load nahīn ho sakā.",
+            "scriptNotLoaded": "Booking widget script pūrī tarah se load nahīn huā.",
+            "scriptLoadFailed": "Booking script load karne mein asafaltā."
+        },
+        "therapyBookings": {
+            "header": "Aapki therapy bookings",
+            "bookingSummary": "Aapke paas <remainingTotal>{{remainingTotal}}<\/remainingTotal> therapy sessions baaki hain, <upcomingTotal>{{upcomingTotal}}<\/upcomingTotal> scheduled hain.",
+            "noBookingSummary": "Aapke paas koi therapy sessions baaki nahi hain.",
+            "noBookings": "Aapne apni sabhi uplabdh therapy sessions book kar li hain.",
+            "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {{id}}. Vastavik cancellation logic implement karein."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Aane wala therapy session",
+            "pastSessionTitle": "Pichhla therapy session",
+            "cancelledSessionTitle": "Radd satra",
+            "dateLabel": "Tareekh",
+            "timeLabel": "Samay",
+            "therapistLabel": "Therapist",
+            "videoLinkLabel": "Video link",
+            "videoLink": "Email dwara bheje gaye Google Meet calendar aamantran se call mein shaamil hon.",
+            "noVideoLink": "Koi link nahi diya gaya hai",
+            "cancelButton": "Cancel karein",
+            "cancelError": "Booking radd karne mein truti - kripya punah prayaas karein ya team se sampark karein.",
+            "expand": "Expand karein",
+            "collapse": "Collapse karein",
+            "cancelDialog": {
+                "title": "Cancel karna confirm karein",
+                "description": "Kya aap vaakai apni {{dateTime}} ke lie nirdhaarit therapy satr radd karna chahte hain? Aap apni suvidhaanusaar ek naya appointment book kar sakte hain.",
+                "keepButton": "Session rakhein",
+                "confirmButton": "Session cancel karein"
+            }
+        },
+        "accessGuard": {
+            "title": "Therapy uplabdh nahi hai",
+            "introduction": "Apke Bloom account mein therapy sessions ki access shamil nahi hai. Yadi yeh theek nahi lag raha toh <contactLink>Bloom ki team ko message kariye<\/contactLink>."
+        }
+    },
+    "Welcome": {
+        "getStarted": "Shuru kariye",
+        "accessIntroduction": "Apna Bloom ka safar shuru karne ke liye {{partnerName}} dwara diya gaya access code daaliye.  ",
+        "publicIntroduction": "Bloom ke courses shuru karne ke liye humare saath account banaiye ya fir pehle Bloom ke bare mein aur janiye. ",
+        "continueCourses": "Bloom par jaiye",
+        "continueCoursesDescription": "Jahan se aapne choda tha, vahan se shuru kariye",
+        "goToCourses": "Courses pe jaiye",
+        "form": {
+            "codeLabel": "{{partnerName}} access code"
+        },
+        "WelcomeTo": "mein aapka swagat hai"
+    },
+    "Whatsapp": {
+        "form": {
+            "subscribeTitle": "Notes ke liye Subscribe karein",
+            "subscribe": "Subscribe",
+            "phoneNumber": "Phone number",
+            "unsubscribeTitle": "Aap Notes ke liye subscribed hain",
+            "unsubscribe": "Unsubscribe",
+            "subscribeErrors": {
+                "invalidNumber": "Apka phone number amaanya prateet hota hai. Kriya jo bhi error hai usko theek karein aur firse prayas kariye.",
+                "internal": "WhatsApp ko subscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye<\/contactLink>.",
+                "alreadyExists": "Apke user ke liye WhatsApp subscription pehle se he ho rakha hai. Yadi yeh ek galti hai, toh kripya <contactLink>Bloom team ko message kariye<\/contactLink>."
+            },
+            "unsubscribeErrors": {
+                "internal": "WhatsApp se unsubscribe karne mein error aa raha hai. Kripya dubara prayas kariye aur agar yeh error firse aye toh humari <contactLink>Bloom team ko message kariye<\/contactLink>."
+            }
+        },
+        "notes": {
+            "title": "Bloom se Notes ke liye sign up karein",
+            "description": "Healing ka raasta akela aur kabhi-kabhi kathin ho sakta hai. Hamare Bloom se Notes hafte mein do baar aane wale reminders, encouragement, affirmations, aur hamare courses se activities hain, jo seedhe aapke phone par bheje jaate hain taaki aapki healing journey mein madad mil sake.",
+            "createAccount": "Account banayein",
+            "createAccountDescription": "Bloom se Notes ke liye sign up karein aur hamari resources ki platform tak pahunch prapt karein.",
+            "haveAccount": "Pehle se account hai?",
+            "login": "Login",
+            "createAccountButton": "Account banayein",
+            "howItWorks": "Bloom se Notes kaise kaam karte hain",
+            "step1": "Hum aapke WhatsApp number par messages bhejte hain",
+            "step2": "Har hafte do baar, har Budhvaar aur Ravivaar",
+            "step3": "Hum affirmations, activities aur reflections share karte hain",
+            "step4": "Agar aap apna mann badlein toh kisi bhi samay unsubscribe kar sakte hain",
+            "usNoticeTitle": "US subscribers ke liye WhatsApp delivery mein samasya",
+            "usNoticeDescription": "Meta ne kuch badlaav kiye hain jinse USA mein subscribers ko Notes bhejne mein dikkat aa rahi hai. Hum ise theek karne mein lage hain, lekin abhi messages aap tak nahi pahunch rahe hain. Aap subscribe kar sakte hain — jab sab ke liye theek ho jayega, hum aapko suchit karenge.",
+            "subscribeDescription": "WhatsApp messages prapt karna shuru karne ke liye Bloom se Notes ke liye subscribe karein. Yahan kabhi bhi unsubscribe karein.",
+            "unsubscribeDescription": "WhatsApp messages band karne ke liye ya apna number update karne ke liye Bloom se Notes se unsubscribe karein. Kabhi bhi dobara subscribe kar sakte hain."
+        }
+    },
+    "Messaging": {
+        "messageHeading": "Hamein batayein aapke man mein kya hai",
+        "frontChat": {
+            "ariaChat": "Bloom sandesh",
+            "welcomeAuthor": "Bloom Team",
+            "welcomeMessage": "Namaste, yahan aap hamaari Bloom team ke bache hue logon aur sahayogiyon se baat kar sakte hain, jinhe ek-doosre ka saath dene ka anubhav hai. Hum yahan hain taki aap apne sawaal, bhavnayen aur vichaar saajha kar sakein, jaise-jaise aap hamare course se guzarte hain.\n\nYadi aap tatkal nuksan ke khatre mein hain, toh kripya aapatkalin sevaon ko call karein, yadi aap kar sakte hain aur yadi yeh aapke liye surakshit hai. Halankki hum sankat sahayata nahi dete, hum aapko us prakar ki sahayata seva se jodne mein madad kar sakte hain jiski aapko zaroorat hai. Aap hamare vaishvik nirdeshika mein apne kshetra ki sahayata sevaen dekh sakte hain: c.chayn.co\/directory.\n\nAap humse angrezi, French, German, Hindi, Portuguese aur Spanish mein baat kar sakte hain.\n\nHum hamesha 1-2 dinon ke bheetar aapke sandesh ka jawab dene ka prayas karte hain.",
+            "empty": "Neeche apna pehla sandesh bhejein aur hamaari team jald hi aapse sampark karegi.",
+            "placeholder": "Ek sandesh likhein…",
+            "send": "Sandesh bhejein",
+            "attachImage": "Chavi sanlagna karein",
+            "imageAttachment": "Chavi",
+            "voiceNote": "Voice note",
+            "startRecording": "Voice note record karein",
+            "stopRecording": "Rokein aur voice note bhejein",
+            "cancelRecording": "Recording radd karein",
+            "recordingInProgress": "Record ho raha hai",
+            "messageSending": "Bheja ja raha hai",
+            "messageFailed": "Bheja nahi ja saka — kripya punah prayas karein.",
+            "audioUnavailable": "Audio upalabdh nahi hai",
+            "status": {
+                "connecting": "Jud raha hai…",
+                "disconnected": "Punah jud raha hai…",
+                "error": "Connect nahi ho paya. Kripya baad mein punah prayas karein."
+            },
+            "errors": {
+                "unsupportedImage": "Keval JPG, PNG, GIF ya WebP chhaviyan samarthit hain.",
+                "fileTooLarge": "Failen 25 MB se kam honi chahiye.",
+                "uploadFailed": "Upload vifal hua. Kripya punah prayas karein.",
+                "imageBlocked": "Is chhavi ko block kar diya gaya hai kyunki yeh hamare suraksha maandandon par khari nahi utri. Agar aapko lagta hai ki yeh ek galti hai, to kripya humein ek message likhkar iska kaaran batayein.",
+                "micPermission": "Microphone ki anumati aswikar kar di gayi. Voice note record karne ke liye, apne browser settings mein microphone ki anumati dein aur punah prayas karein.",
+                "micUnavailable": "Aapke microphone tak pahunch nahi ho saki. Kripya jaanchein ki yeh juda hua hai aur punah prayas karein."
+            }
+        }
+    },
+    "Resources": {
+        "backToConversations": "Conversations par vaapas jaaen",
+        "backToShorts": "Clips par vaapas jaaen",
+        "backToVideos": "Videos par wapas jaein",
+        "backToSomatics": "Somatics par wapas jaein",
+        "nextVideoButtonLabel": "Agla video",
+        "nextConversationButtonLabel": "Agli conversation",
+        "nextSessionButtonLabel": "Agla session",
+        "conversations": "Bātcīt",
+        "shorts": "Clips",
+        "videos": "Videos",
+        "completed": "Pūra",
+        "sessionDetail": "Yah clip Session: {{sessionName}}, hamāre Course: {{courseName}} se hai",
+        "sessionButtonLabel": "Pūrī session dekhen",
+        "videoTranscriptLink": "Video dekhen yā <link>transcript<\/link> paṛhen.",
+        "conversationTranscriptLink": "Bātchīt sune yā <link>transcript<\/link> paṛhen.",
+        "relatedContent": {
+            "title": "Related content",
+            "resource_short_video": "Watch",
+            "resource_single_video": "Watch",
+            "resource_conversation": "Listen",
+            "course": "Course",
+            "session": "Session",
+            "session_iba": "Session",
+            "grounding": "Grounding",
+            "activities": "Activity",
+            "minuteLabel": "minutes"
+        },
+        "resourceFeedback": {
+            "title": "Yeh session kaisa aapko kaisa laga?",
+            "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+            "feedbackTags": {
+                "relatable": "Mein session ko samjh pai aur usse jud pai",
+                "useful": "Faidemand",
+                "inspiring": "Mujhe hausla afzai mehsoos hui",
+                "too long": "Bahut lamba tha",
+                "too complicated": "Bahut mushkil tha",
+                "not useful": "Zada faidemand nahi tha"
+            },
+            "textboxDefaultText": "Ek comment add karein...",
+            "sendButtonText": "Bhejein",
+            "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+            "errors": {
+                "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
+            }
+        },
+        "references": {
+            "title": "Sansadhan",
+            "keyReferences": "Is session ke mukhya sansadhan (purn soochi transcript ke ant mein):",
+            "books": "Kitaben",
+            "articles": "Lekh",
+            "video_practices": "Video abhyaas",
+            "audios": "Podcasts"
+        }
+    },
+    "Navigation": {
+        "menu": "Navigation menu",
+        "menuOpen": "Navigation menu kholo",
+        "menuClose": "navigation menu band karo",
+        "languageMenu": "Bhasha ka menu",
+        "bloomLogo": "Bloom ka logo",
+        "login": "Log in",
+        "logout": "Log out",
+        "accountSettings": "Account settings",
+        "userMenu": "Upyogkarta settings menu",
+        "home": "Ghar",
+        "admin": "Admin",
+        "about": "Bloom ke bare mein",
+        "meetTheTeam": "Humari Bloom team",
+        "immediateHelp": "Emergency sahayata",
+        "therapy": "Therapy",
+        "courses": "Courses",
+        "applyCode": "Code apply kariye",
+        "account": "Account",
+        "secondaryNavigationMenu": "Secondary navigation menu",
+        "notes": "Messages",
+        "alt": {
+            "therapyIcon": "Ek chitra jismein sir pe phool hai",
+            "courseIcon": "Ek chitra hai jismein play karne wale button ka icon, ek tikon jo seedhi taraf point kar raha hai. Uske aage ek chota suraj hai",
+            "notesIcon": "Ek chitra hai jismein mobile phone ke andar beech mein ek dil bana hua hai",
+            "chatIcon": "Do speech bubbles gulabi background ke peeche mil rahe hain. Pehle wale mein ek gulabi dil hai. Doosre wale mein seedhi liney hain.",
+            "activitiesIcon": "A book with a small yellow fire on its cover.",
+            "groundingIcon": "A twig with small pink flowers."
+        },
+        "messaging": "Sandesh Seva",
+        "grounding": "Stirtha",
+        "activities": "Activities"
+    }
+}
