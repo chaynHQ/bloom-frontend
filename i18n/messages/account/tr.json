@@ -1,7 +1,7 @@
 {
   "Account": {
     "applyCode": {
-      "title": "Kod uygula",
+      "title": "Kod ekle",
       "introduction": "Bloom, dünya genelinde istismardan hayatta kalanların iyileşmesini desteklemek için iş ortaklarıyla çalışır.",
       "description": "İş ortaklarımızdan birinden bir erişim kodu aldıysan, onların programına özel destek almak için kodu buraya ekleyebilirsin.",
       "descriptionLine2": "Birden fazla iş ortağından kod ekleyebilirsin.",

@@ -1,20 +1,20 @@
 {
   "Resources": {
     "backToConversations": "Sohbetlere geri dön",
-    "backToShorts": "Kısalara geri dön",
+    "backToShorts": "Kısa videolara geri dön",
     "backToVideos": "Videolara geri dön",
     "backToSomatics": "Somatik çalışmalara geri dön",
     "nextVideoButtonLabel": "Sıradaki video",
     "nextConversationButtonLabel": "Sıradaki sohbet",
     "nextSessionButtonLabel": "Sıradaki bölüm",
     "conversations": "Sohbetler",
-    "shorts": "Kısalar",
+    "shorts": "Kısa videolar",
     "videos": "Videolar",
     "completed": "Tamamlandı",
-    "sessionDetail": "Bu klip, Kursumuz: {courseName}içindeki Bölüm {sessionName}alınmıştır",
-    "sessionButtonLabel": "Bölümün tamamını izleyin",
-    "videoTranscriptLink": "Videoyu izleyin veya <link>metni</link> okuyun.",
-    "conversationTranscriptLink": "Konuşmayı dinleyin veya <link>metni</link> okuyun.",
+    "sessionDetail": "Bu klip, {courseName} kursumuzun {sessionName} bölümünden alınmıştır",
+    "sessionButtonLabel": "Bölümün tamamını izle",
+    "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
+    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
     "relatedContent": {
       "title": "İlgili içerik",
       "resource_short_video": "İzle",
@@ -29,9 +29,9 @@
     },
     "resourceFeedback": {
       "title": "Bu bölüm nasıldı?",
-      "subtitle": "Bu öğrenme deneyimini nasıl bulduğunuzu duymak isteriz. Geri bildiriminiz, kaynaklarımızı geliştirmemize yardımcı oluyor.",
+      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
-        "relatable": "Kendimden bir şeyler buldum",
+        "relatable": "Bana yakın",
         "useful": "Faydalı",
         "inspiring": "İlham verici",
         "too long": "Çok uzun",
@@ -40,18 +40,18 @@
       },
       "textboxDefaultText": "Yorum ekle...",
       "sendButtonText": "Gönder",
-      "submissionText": "Geri bildiriminizi ilettiğiniz için teşekkür ederiz",
+      "submissionText": "Geri bildirimin için teşekkürler",
       "errors": {
-        "feedbackTagError": "Göndermeden önce lütfen bir puan seçin."
+        "feedbackTagError": "Göndermeden önce lütfen bir değerlendirme seç."
       }
     },
     "references": {
       "title": "Kaynaklar",
-      "keyReferences": "Bu oturumun önemli kaynakları (tam liste transkriptin sonunda yer almaktadır):",
+      "keyReferences": "Bu bölümdeki önemli kaynaklar (tam liste metin dökümünün sonunda):",
       "books": "Kitaplar",
       "articles": "Makaleler",
-      "video_practices": "Video pratikleri",
-      "audios": "Podcastler"
+      "video_practices": "Video çalışmaları",
+      "audios": "Podcast'ler"
     }
   }
 }
