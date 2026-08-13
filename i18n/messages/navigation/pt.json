@@ -1,35 +1,35 @@
 {
-  "Navigation": {
-    "menu": "Menu de navegação",
-    "menuOpen": "Abrir menu de navegação",
-    "menuClose": "Fechar menu de navegação",
-    "languageMenu": "Menu de idiomas",
-    "bloomLogo": "Logotipo do Bloom",
-    "login": "Iniciar sessão",
-    "logout": "Desconectar-se",
-    "accountSettings": "Configurações da conta",
-    "userMenu": "Menu de configuração de perfil de participante",
-    "home": "Início",
-    "admin": "Admin",
-    "about": "Sobre",
-    "meetTheTeam": "Nossa equipe do Bloom",
-    "immediateHelp": "Ajuda Imediata",
-    "therapy": "Terapia",
-    "courses": "Cursos",
-    "applyCode": "Aplicar um código",
-    "account": "Conta",
-    "secondaryNavigationMenu": "Secondary navigation menu",
-    "notes": "Notas",
-    "alt": {
-      "therapyIcon": "Uma ilustração de uma cabeça com flor",
-      "courseIcon": "Uma ilustração de um ícone de jogo, um ponto de triângulo à direita. Na frente há um pequeno sol.",
-      "notesIcon": "Uma ilustração de um telefone celular com um coração no centro",
-      "chatIcon": "Dois balões de fala se cruzando contra um fundo rosa. A primeira tem um coração rosa dentro dela. A segunda tem linhas retas.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
-      "groundingIcon": "A twig with small pink flowers."
-    },
-    "messaging": "Bate-papo",
-    "grounding": "Aterramento",
-    "activities": "Atividades"
-  }
+    "Navigation": {
+        "menu": "Menu de navegação",
+        "menuOpen": "Abrir menu de navegação",
+        "menuClose": "Fechar menu de navegação",
+        "languageMenu": "Menu de idiomas",
+        "bloomLogo": "Logotipo do Bloom",
+        "login": "Iniciar sessão",
+        "logout": "Desconectar-se",
+        "accountSettings": "Configurações da conta",
+        "userMenu": "Menu de configuração de perfil de participante",
+        "home": "Início",
+        "admin": "Admin",
+        "about": "Sobre",
+        "meetTheTeam": "Nossa equipe do Bloom",
+        "immediateHelp": "Ajuda Imediata",
+        "therapy": "Terapia",
+        "courses": "Cursos",
+        "applyCode": "Aplicar um código",
+        "account": "Conta",
+        "secondaryNavigationMenu": "Secondary navigation menu",
+        "notes": "Notas",
+        "alt": {
+            "therapyIcon": "Uma ilustração de uma cabeça com flor",
+            "courseIcon": "Uma ilustração de um ícone de jogo, um ponto de triângulo à direita. Na frente há um pequeno sol.",
+            "notesIcon": "Uma ilustração de um telefone celular com um coração no centro",
+            "chatIcon": "Dois balões de fala se cruzando contra um fundo rosa. A primeira tem um coração rosa dentro dela. A segunda tem linhas retas.",
+            "activitiesIcon": "A book with a small yellow fire on its cover.",
+            "groundingIcon": "A twig with small pink flowers."
+        },
+        "messaging": "Bate-papo",
+        "grounding": "Aterramento",
+        "activities": "Atividades"
+    }
 }

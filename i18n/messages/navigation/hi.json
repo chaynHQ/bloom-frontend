@@ -1,35 +1,35 @@
 {
-  "Navigation": {
-    "menu": "Navigation menu",
-    "menuOpen": "Navigation menu kholo",
-    "menuClose": "navigation menu band karo",
-    "languageMenu": "Bhasha ka menu",
-    "bloomLogo": "Bloom ka logo",
-    "login": "Log in",
-    "logout": "Log out",
-    "accountSettings": "Account settings",
-    "userMenu": "Upyogkarta settings menu",
-    "home": "Ghar",
-    "admin": "Admin",
-    "about": "Bloom ke bare mein",
-    "meetTheTeam": "Humari Bloom team",
-    "immediateHelp": "Emergency sahayata",
-    "therapy": "Therapy",
-    "courses": "Courses",
-    "applyCode": "Code apply kariye",
-    "account": "Account",
-    "secondaryNavigationMenu": "Secondary navigation menu",
-    "notes": "Messages",
-    "alt": {
-      "therapyIcon": "Ek chitra jismein sir pe phool hai",
-      "courseIcon": "Ek chitra hai jismein play karne wale button ka icon, ek tikon jo seedhi taraf point kar raha hai. Uske aage ek chota suraj hai",
-      "notesIcon": "Ek chitra hai jismein mobile phone ke andar beech mein ek dil bana hua hai",
-      "chatIcon": "Do speech bubbles gulabi background ke peeche mil rahe hain. Pehle wale mein ek gulabi dil hai. Doosre wale mein seedhi liney hain.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
-      "groundingIcon": "A twig with small pink flowers."
-    },
-    "messaging": "Sandesh Seva",
-    "grounding": "Stirtha",
-    "activities": "Activities"
-  }
+    "Navigation": {
+        "menu": "Navigation menu",
+        "menuOpen": "Navigation menu kholo",
+        "menuClose": "navigation menu band karo",
+        "languageMenu": "Bhasha ka menu",
+        "bloomLogo": "Bloom ka logo",
+        "login": "Log in",
+        "logout": "Log out",
+        "accountSettings": "Account settings",
+        "userMenu": "Upyogkarta settings menu",
+        "home": "Ghar",
+        "admin": "Admin",
+        "about": "Bloom ke bare mein",
+        "meetTheTeam": "Humari Bloom team",
+        "immediateHelp": "Emergency sahayata",
+        "therapy": "Therapy",
+        "courses": "Courses",
+        "applyCode": "Code apply kariye",
+        "account": "Account",
+        "secondaryNavigationMenu": "Secondary navigation menu",
+        "notes": "Messages",
+        "alt": {
+            "therapyIcon": "Ek chitra jismein sir pe phool hai",
+            "courseIcon": "Ek chitra hai jismein play karne wale button ka icon, ek tikon jo seedhi taraf point kar raha hai. Uske aage ek chota suraj hai",
+            "notesIcon": "Ek chitra hai jismein mobile phone ke andar beech mein ek dil bana hua hai",
+            "chatIcon": "Do speech bubbles gulabi background ke peeche mil rahe hain. Pehle wale mein ek gulabi dil hai. Doosre wale mein seedhi liney hain.",
+            "activitiesIcon": "A book with a small yellow fire on its cover.",
+            "groundingIcon": "A twig with small pink flowers."
+        },
+        "messaging": "Sandesh Seva",
+        "grounding": "Stirtha",
+        "activities": "Activities"
+    }
 }

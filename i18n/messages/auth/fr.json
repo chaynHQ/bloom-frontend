@@ -1,90 +1,89 @@
 {
-  "Auth": {
-    "introduction": "Bloom informe les personnes survivantes et leur donne la capacité d'agir en proposant des cours à distance qui combinent des connaissances sur les traumatismes et les violences basées sur le genre avec des pratiques thérapeutiques qui aident à guérir des traumatismes.",
-    "getStartedBloom": "Démarrer avec Bloom",
-    "getStartedWith": "Commencer par saisir un code de {partnerName}",
-    "loginLink": "Vous avez déjà un compte ? <loginLink>Connectez-vous</loginLink>",
-    "terms": "En poursuivant, vous indiquez que vous acceptez nos <termsLink>conditions d'utilisation</termsLink> et notre <privacyLink>politique de confidentialité</privacyLink>.",
-    "login": {
-      "title": "Bienvenue",
-      "resetPasswordLink": "Mot de passe oublié? <resetLink>Réinitialiser le mot de passe</resetLink>",
-      "createAnAccountLink": "Vous n'avez pas de compte ? <createAnAccountLink>Créez un compte</createAnAccountLink>"
-    },
-    "register": {
-      "title": "Créer un compte",
-      "loginRedirect": "Vous avez déjà un compte ? <loginLink>Connectez-vous</loginLink>",
-      "partnershipsTitle": "Nos partenaires",
-      "partnershipsDescription": "Si vous avez découvert Bloom par l'un de nos partenaires, cliquez sur son logo ci-dessous."
-    },
-    "resetPassword": {
-      "title": "Réinitialiser votre mot de passe"
-    },
-    "form": {
-      "codeLabel": "code d'accès",
-      "nameLabel": "Prénom/pseudo",
-      "emailLabel": "E-mail",
-      "passwordLabel": "Mot de passe",
-      "contactPermissionLabel": "Recevez des e-mails concernant les nouvelles ressources et les opportunités de partager vos commentaires avec nous.",
-      "registerSubmit": "Créer un compte",
-      "resetPasswordStep1": "Nous vous enverrons un lien pour réinitialiser votre mot de passe.",
-      "resetPasswordStep2": "Vous y êtes presque ! Vous pouvez maintenant créer un nouveau mot de passe.",
-      "resetPasswordSubmit": "Réinitialiser le mot de passe",
-      "resendPasswordSubmit": "Renvoyer l'e-mail",
-      "resetPasswordSent": "Vérifiez vos e-mails pour voir si vous avez reçu un lien de réinitialisation de Bloom. Si vous ne l'avez pas reçu, vérifiez vos spams ou renvoyez l'e-mail.",
-      "passwordResetSuccess": "Votre mot de passe a été réinitialisé ! Vous pouvez dès à présent vous connecter avec votre nouveau mot de passe.",
-      "loginSubmit": "Connexion",
-      "createUserError": "Une erreur s'est produite lors de la configuration de votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
-      "getUserError": "Une erreur s'est produite lors de la récupération de votre compte. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
-      "codeErrors": {
-        "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
-        "expired": "Ce code a expiré. Prenez contact avec l'équipe de {partnerName}.",
-        "invalid": "Votre code d'accès semble être invalide. Vérifiez les erreurs de frappe ou contactez l'équipe de {partnerName}.",
-        "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez l'équipe de {partnerName}."
-      },
-      "firebase": {
-        "wrongPassword": "Mot de passe incorrect, veuillez réessayer ou vous déconnecter et réinitialiser votre mot de passe.",
-        "authError": "Aucun compte correspondant à cette combinaison d'adresse électronique et de mot de passe n'a été trouvé. Vérifiez votre adresse électronique et votre mot de passe.",
-        "invalidEmail": "Votre email semble être invalide, corrigez les erreurs de frappe pour continuer.",
-        "tooManyAttempts": "Trop de tentatives de connexion infructueuses. Veuillez patienter quelques minutes ou réinitialiser votre mot de passe maintenant.",
-        "weakPassword": "Votre mot de passe doit contenir au moins 8 caractères et ne pas être trop facile à deviner. Essayez de combiner quelques mots — par exemple 'rivière bleue matin'.",
-        "emailAlreadyInUse": "Cet email est déjà enregistré chez Bloom, cliquez sur <loginLink>Connexion</loginLink> pour continuer.",
-        "invalidCode": "Ce lien de réinitialisation du mot de passe n'est pas valide, veuillez <resetLink>recommencer le processus</resetLink> et réessayer.",
-        "expiredCode": "Ce lien de réinitialisation du mot de passe a expiré, veuillez <resetLink>recommencer le processus</resetLink> et réessayer.",
-        "getUserError": "Une erreur s'est produite lors de la récupération de votre compte. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste."
-      },
-      "phoneNumberLabel": "Numéro de téléphone",
-      "verificationCodeLabel": "Code de vérification",
-      "mfaTriggerError": "Erreur lors de l'envoi du code SMS. Veuillez réessayer.",
-      "mfaVerificationIdMissing": "Veuillez d'abord demander un code SMS.",
-      "mfaEnrollError": "Erreur lors de l'inscription à l'authentification à deux facteurs. Veuillez réessayer.",
-      "mfaFinalizeError": "Erreur lors de la finalisation de la configuration de l'authentification à deux facteurs. Veuillez réessayer.",
-      "mfaError": "Code de vérification invalide. Veuillez réessayer.",
-      "emailNotVerified": "Veuillez vérifier votre email avant de configurer l'authentification à deux facteurs.",
-      "emailVerificationError": "Erreur lors de l'envoi de l'email de vérification. Veuillez réessayer.",
-      "emailVerificationSent": "Email de vérification envoyé. Veuillez vérifier votre boîte de réception.",
-      "emailVerificationSpamCheck": "Si vous ne voyez pas l'email, veuillez vérifier votre dossier spam.",
-      "sendVerificationEmail": "Envoyer l'email de vérification",
-      "resendVerificationEmail": "Renvoyer l'email de vérification",
-      "passwordRequired": "Le mot de passe est requis pour la réauthentification.",
-      "reauthenticationError": "Échec de la réauthentification. Veuillez réessayer."
-    },
-
-    "verifyMFA": {
-      "title": "Vérifier l'authentification à deux facteurs",
-      "triggerSMS": "Envoyer le code SMS",
-      "verifyCode": "Vérifier le code",
-      "phoneNumber": "Nous enverrons un code de vérification à votre numéro de téléphone enregistré : {phoneNumber}"
-    },
-    "setupMFA": {
-      "title": "Configurer l'authentification à deux facteurs",
-      "sendCode": "Envoyer le code de vérification",
-      "verifyCode": "Vérifier le code",
-      "enterCodeHelperText": "Veuillez entrer le code de vérification que nous avons envoyé à votre téléphone :",
-      "reauthTitle": "Confirmez votre identité",
-      "reauthDescription": "Veuillez entrer votre mot de passe avant de continuer",
-      "cancelReauth": "Annuler",
-      "confirmReauth": "Confirmer",
-      "reauthenticating": "Confirmation..."
+    "Auth": {
+        "introduction": "Bloom informe les personnes survivantes et leur donne la capacité d'agir en proposant des cours à distance qui combinent des connaissances sur les traumatismes et les violences basées sur le genre avec des pratiques thérapeutiques qui aident à guérir des traumatismes.",
+        "getStartedBloom": "Démarrer avec Bloom",
+        "getStartedWith": "Commencer par saisir un code de {partnerName}",
+        "loginLink": "Vous avez déjà un compte ? <loginLink>Connectez-vous<\/loginLink>",
+        "terms": "En poursuivant, vous indiquez que vous acceptez nos <termsLink>conditions d'utilisation<\/termsLink> et notre <privacyLink>politique de confidentialité<\/privacyLink>.",
+        "login": {
+            "title": "Bienvenue",
+            "resetPasswordLink": "Mot de passe oublié? <resetLink>Réinitialiser le mot de passe<\/resetLink>",
+            "createAnAccountLink": "Vous n'avez pas de compte ? <createAnAccountLink>Créez un compte<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "Créer un compte",
+            "loginRedirect": "Vous avez déjà un compte ? <loginLink>Connectez-vous<\/loginLink>",
+            "partnershipsTitle": "Nos partenaires",
+            "partnershipsDescription": "Si vous avez découvert Bloom par l'un de nos partenaires, cliquez sur son logo ci-dessous."
+        },
+        "resetPassword": {
+            "title": "Réinitialiser votre mot de passe"
+        },
+        "form": {
+            "codeLabel": "code d'accès",
+            "nameLabel": "Prénom\/pseudo",
+            "emailLabel": "E-mail",
+            "passwordLabel": "Mot de passe",
+            "contactPermissionLabel": "Recevez des e-mails concernant les nouvelles ressources et les opportunités de partager vos commentaires avec nous.",
+            "registerSubmit": "Créer un compte",
+            "resetPasswordStep1": "Nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+            "resetPasswordStep2": "Vous y êtes presque ! Vous pouvez maintenant créer un nouveau mot de passe.",
+            "resetPasswordSubmit": "Réinitialiser le mot de passe",
+            "resendPasswordSubmit": "Renvoyer l'e-mail",
+            "resetPasswordSent": "Vérifiez vos e-mails pour voir si vous avez reçu un lien de réinitialisation de Bloom. Si vous ne l'avez pas reçu, vérifiez vos spams ou renvoyez l'e-mail.",
+            "passwordResetSuccess": "Votre mot de passe a été réinitialisé ! Vous pouvez dès à présent vous connecter avec votre nouveau mot de passe.",
+            "loginSubmit": "Connexion",
+            "createUserError": "Une erreur s'est produite lors de la configuration de votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste.",
+            "getUserError": "Une erreur s'est produite lors de la récupération de votre compte. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste.",
+            "codeErrors": {
+                "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste.",
+                "expired": "Ce code a expiré. Prenez contact avec l'équipe de {partnerName}.",
+                "invalid": "Votre code d'accès semble être invalide. Vérifiez les erreurs de frappe ou contactez l'équipe de {partnerName}.",
+                "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez l'équipe de {partnerName}."
+            },
+            "firebase": {
+                "wrongPassword": "Mot de passe incorrect, veuillez réessayer ou vous déconnecter et réinitialiser votre mot de passe.",
+                "authError": "Aucun compte correspondant à cette combinaison d'adresse électronique et de mot de passe n'a été trouvé. Vérifiez votre adresse électronique et votre mot de passe.",
+                "invalidEmail": "Votre email semble être invalide, corrigez les erreurs de frappe pour continuer.",
+                "tooManyAttempts": "Trop de tentatives de connexion infructueuses. Veuillez patienter quelques minutes ou réinitialiser votre mot de passe maintenant.",
+                "weakPassword": "Votre mot de passe doit contenir au moins 8 caractères et ne pas être trop facile à deviner. Essayez de combiner quelques mots — par exemple 'rivière bleue matin'.",
+                "emailAlreadyInUse": "Cet email est déjà enregistré chez Bloom, cliquez sur <loginLink>Connexion<\/loginLink> pour continuer.",
+                "invalidCode": "Ce lien de réinitialisation du mot de passe n'est pas valide, veuillez <resetLink>recommencer le processus<\/resetLink> et réessayer.",
+                "expiredCode": "Ce lien de réinitialisation du mot de passe a expiré, veuillez <resetLink>recommencer le processus<\/resetLink> et réessayer.",
+                "getUserError": "Une erreur s'est produite lors de la récupération de votre compte. Veuillez réessayer plus tard et <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste."
+            },
+            "phoneNumberLabel": "Numéro de téléphone",
+            "verificationCodeLabel": "Code de vérification",
+            "mfaTriggerError": "Erreur lors de l'envoi du code SMS. Veuillez réessayer.",
+            "mfaVerificationIdMissing": "Veuillez d'abord demander un code SMS.",
+            "mfaEnrollError": "Erreur lors de l'inscription à l'authentification à deux facteurs. Veuillez réessayer.",
+            "mfaFinalizeError": "Erreur lors de la finalisation de la configuration de l'authentification à deux facteurs. Veuillez réessayer.",
+            "mfaError": "Code de vérification invalide. Veuillez réessayer.",
+            "emailNotVerified": "Veuillez vérifier votre email avant de configurer l'authentification à deux facteurs.",
+            "emailVerificationError": "Erreur lors de l'envoi de l'email de vérification. Veuillez réessayer.",
+            "emailVerificationSent": "Email de vérification envoyé. Veuillez vérifier votre boîte de réception.",
+            "emailVerificationSpamCheck": "Si vous ne voyez pas l'email, veuillez vérifier votre dossier spam.",
+            "sendVerificationEmail": "Envoyer l'email de vérification",
+            "resendVerificationEmail": "Renvoyer l'email de vérification",
+            "passwordRequired": "Le mot de passe est requis pour la réauthentification.",
+            "reauthenticationError": "Échec de la réauthentification. Veuillez réessayer."
+        },
+        "verifyMFA": {
+            "title": "Vérifier l'authentification à deux facteurs",
+            "triggerSMS": "Envoyer le code SMS",
+            "verifyCode": "Vérifier le code",
+            "phoneNumber": "Nous enverrons un code de vérification à votre numéro de téléphone enregistré : {phoneNumber}"
+        },
+        "setupMFA": {
+            "title": "Configurer l'authentification à deux facteurs",
+            "sendCode": "Envoyer le code de vérification",
+            "verifyCode": "Vérifier le code",
+            "enterCodeHelperText": "Veuillez entrer le code de vérification que nous avons envoyé à votre téléphone :",
+            "reauthTitle": "Confirmez votre identité",
+            "reauthDescription": "Veuillez entrer votre mot de passe avant de continuer",
+            "cancelReauth": "Annuler",
+            "confirmReauth": "Confirmer",
+            "reauthenticating": "Confirmation..."
+        }
     }
-  }
 }

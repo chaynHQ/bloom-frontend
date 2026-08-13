@@ -1,71 +1,71 @@
 {
-  "Courses": {
-    "title": "Humare courses",
-    "introduction": "Bloom ke courses humein trauma se nipatne ke liye tailored jankaari, takneekein aur positive shabd dete hain. Vo humein ek surakshit aur empowering space dete hain jahan humein seekhne, pratibimb (reflect) karne aur process karne mein protsahit kiya jata hai. ",
-    "session": "Session",
-    "course": "Course",
-    "courses": "Courses",
-    "expand": "Vistaar karein",
-    "expandSummary": "Summary vistaar karein",
-    "navigateToSession": "Session par leke jaiye",
-    "navigateToCourse": "Course pe leke jaiye",
-    "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
-    "courseDetail": {
-      "introductionTitle": "Course ka introduction",
-      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
-    },
-    "sessionDetail": {
-      "videoTitle": "Video",
-      "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript</transcriptLink> padh lijiye.",
-      "activityTitle": "Activity",
-      "bonusTitle": "Bonus content",
-      "chat": {
-        "title": "Humare saath soch vichaar kariye",
-        "description": "Yadi aap iss sessions par apne vichaar share karna chahte hai toh Bloom team apko sunna pasand karegi!",
-        "videoIntro": "Sandesh Seva kaise kaam karti hai, iske bare mein aur jaanein:",
-        "videoLink": "https://youtu.be/NIE_1BK-qi0",
-        "detailIntro": "Yaad rakhiye:",
-        "detailPrivacy": "Aapke messages niji aur surakshit hai, vo sirf Bloom team pad sakti hain aur aap gumnaan rehte hain. ",
-        "detailTimezone": "Hum kai alag-alag timezones mein kaam karte hain, isliye aapko humse 6 ghanto ke andar response milna chahiye, aur samay 24 ghanton se adhik nahi hoga. ",
-        "detailLanguage": "Hum humesha Anghrezi aur Spanish mein uplabdh hain, lekin humari team ke sadasya French, Italian, Hindi, Arabic aur Bangla bhi bolte hain. Humein aapke liye unke saath baat karne ki vyvastha karne mein khushi hogi. ",
-        "detailLegal": "Yadi aap ek sakriya kanooni mamle se guzar rahe hain, toh vichaar karein ki aap hamare saath kya share karte hain kyuki yeh kabhi-kabhi aapke mamle ko prabhavit kar sakta hai. ",
-        "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
-        "startButton": "Hame sandesh bhejein"
-      },
-      "sessionComplete": "Session poora hua"
-    },
-    "sessionFeedback": {
-      "title": "Yeh session kaisa aapko kaisa laga?",
-      "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
-      "feedbackTags": {
-        "relatable": "Mein session ko samjh pai aur usse jud pai",
-        "useful": "Faidemand",
-        "inspiring": "Mujhe hausla afzai mehsoos hui",
-        "too long": "Bahut lamba tha",
-        "too complicated": "Bahut mushkil tha",
-        "not useful": "Zada faidemand nahi tha"
-      },
-      "textboxDefaultText": "Ek comment add karein...",
-      "sendButtonText": "Bhejein",
-      "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
-      "errors": {
-        "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
-      }
-    },
-    "accessGuard": {
-      "title": "Yeh course content uplabhd nahi hai.",
-      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
-    },
-    "errors": {
-      "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
-    },
-    "backToCourse": "Course par vapas jayein.",
-    "backToCourses": "Courses par vapas jayein.",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somatics: Sharir-aadhārit upachaar",
-    "somaticsDescription": "Jaanein ki kaise komal, sharir-aadhārit upachaar hinsa, tanav aur darr se upachaar mein madad kar sakte hain. Sansadhanon ka yah sangrah hamare sharir se phir se judne, lachilepan ka nirmaan karne aur suraksha tatha suvidha ka ehsaas kaisa hota hai, yah samajhne mein hamari madad karne ke liye spasht, vyavahārik mārgdarshan pradan karta hai."
-  }
+    "Courses": {
+        "title": "Humare courses",
+        "introduction": "Bloom ke courses humein trauma se nipatne ke liye tailored jankaari, takneekein aur positive shabd dete hain. Vo humein ek surakshit aur empowering space dete hain jahan humein seekhne, pratibimb (reflect) karne aur process karne mein protsahit kiya jata hai. ",
+        "session": "Session",
+        "course": "Course",
+        "courses": "Courses",
+        "expand": "Vistaar karein",
+        "expandSummary": "Summary vistaar karein",
+        "navigateToSession": "Session par leke jaiye",
+        "navigateToCourse": "Course pe leke jaiye",
+        "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
+        "courseDetail": {
+            "introductionTitle": "Course ka introduction",
+            "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript<\/transcriptLink> padh lijiye"
+        },
+        "sessionDetail": {
+            "videoTitle": "Video",
+            "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript<\/transcriptLink> padh lijiye.",
+            "activityTitle": "Activity",
+            "bonusTitle": "Bonus content",
+            "chat": {
+                "title": "Humare saath soch vichaar kariye",
+                "description": "Yadi aap iss sessions par apne vichaar share karna chahte hai toh Bloom team apko sunna pasand karegi!",
+                "videoIntro": "Sandesh Seva kaise kaam karti hai, iske bare mein aur jaanein:",
+                "videoLink": "https:\/\/youtu.be\/NIE_1BK-qi0",
+                "detailIntro": "Yaad rakhiye:",
+                "detailPrivacy": "Aapke messages niji aur surakshit hai, vo sirf Bloom team pad sakti hain aur aap gumnaan rehte hain. ",
+                "detailTimezone": "Hum kai alag-alag timezones mein kaam karte hain, isliye aapko humse 6 ghanto ke andar response milna chahiye, aur samay 24 ghanton se adhik nahi hoga. ",
+                "detailLanguage": "Hum humesha Anghrezi aur Spanish mein uplabdh hain, lekin humari team ke sadasya French, Italian, Hindi, Arabic aur Bangla bhi bolte hain. Humein aapke liye unke saath baat karne ki vyvastha karne mein khushi hogi. ",
+                "detailLegal": "Yadi aap ek sakriya kanooni mamle se guzar rahe hain, toh vichaar karein ki aap hamare saath kya share karte hain kyuki yeh kabhi-kabhi aapke mamle ko prabhavit kar sakta hai. ",
+                "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
+                "startButton": "Hame sandesh bhejein"
+            },
+            "sessionComplete": "Session poora hua"
+        },
+        "sessionFeedback": {
+            "title": "Yeh session kaisa aapko kaisa laga?",
+            "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+            "feedbackTags": {
+                "relatable": "Mein session ko samjh pai aur usse jud pai",
+                "useful": "Faidemand",
+                "inspiring": "Mujhe hausla afzai mehsoos hui",
+                "too long": "Bahut lamba tha",
+                "too complicated": "Bahut mushkil tha",
+                "not useful": "Zada faidemand nahi tha"
+            },
+            "textboxDefaultText": "Ek comment add karein...",
+            "sendButtonText": "Bhejein",
+            "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
+            "errors": {
+                "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
+            }
+        },
+        "accessGuard": {
+            "title": "Yeh course content uplabhd nahi hai.",
+            "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses<\/contactLink> par vapas jaiye. "
+        },
+        "errors": {
+            "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
+        },
+        "backToCourse": "Course par vapas jayein.",
+        "backToCourses": "Courses par vapas jayein.",
+        "conversationsHeading": "Conversations",
+        "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
+        "shortsHeading": "Shorts",
+        "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
+        "somaticsHeading": "Somatics: Sharir-aadhārit upachaar",
+        "somaticsDescription": "Jaanein ki kaise komal, sharir-aadhārit upachaar hinsa, tanav aur darr se upachaar mein madad kar sakte hain. Sansadhanon ka yah sangrah hamare sharir se phir se judne, lachilepan ka nirmaan karne aur suraksha tatha suvidha ka ehsaas kaisa hota hai, yah samajhne mein hamari madad karne ke liye spasht, vyavahārik mārgdarshan pradan karta hai."
+    }
 }

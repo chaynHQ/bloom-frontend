@@ -1,71 +1,71 @@
 {
-  "Courses": {
-    "title": "Unsere Kurse",
-    "introduction": "Die Bloom-Kurse bieten Informationen, Hilfsmittel und bestärkende Worte an, die spezifisch darauf angepasst sind, Traumata zu bewältigen. Sie ermutigen uns zu lernen und zu reflektieren und das, was wir erlebt haben einschließlich der Auswirkungen, die das auf uns hatte, in einem sicheren und ermutigendem Rahmen zu verarbeiten. ",
-    "session": "Session",
-    "course": "Kurs",
-    "courses": "Kurse",
-    "expand": "Erweitern",
-    "expandSummary": "Zusammenfassung erweitern für",
-    "navigateToSession": "Zur Session navigieren -",
-    "navigateToCourse": "Zum Kurs navigieren -",
-    "noCourses": "Zur Zeit sind keine Kurse verfügbar. Falls Dir das nicht richtig erscheint, kontaktiere das Bloom-Team.",
-    "courseDetail": {
-      "introductionTitle": "Einführung in den Kurs",
-      "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript</transcriptLink>"
-    },
-    "sessionDetail": {
-      "videoTitle": "Video",
-      "videoDescription": "Schau das Video an oder lies das <transcriptLink>Videotranskript</transcriptLink>.",
-      "activityTitle": "Übung",
-      "bonusTitle": "Bonusinhalte",
-      "chat": {
-        "title": "Reflektiere mit uns",
-        "description": "Wenn Du Deine Überlegungen zu dieser Session mit uns teilen möchtest - das Bloom-Team freut sich, von Dir zu hören. ",
-        "videoIntro": "Erfahre mehr darüber, wie messaging funktioniert:",
-        "videoLink": "https://youtu.be/p7i39Z0XQ54",
-        "detailIntro": "Denk dran:",
-        "detailPrivacy": "Deine Nachrichten sind privat und sicher. Sie werden nur vom Bloom-Team gesehen und Du bleibst anonym. ",
-        "detailTimezone": "Wir arbeiten in vielen verschiedenen Zeitzonen, daher solltest Du innerhalb von 6 Stunden eine Antwort von uns erhalten, und es wird nicht länger als 24 Stunden dauern. ",
-        "detailLanguage": "Wir sind immer auf Deutsch und Englisch erreichbar, aber unser Team spricht auch Französisch, Hindi, Portugiesisch, Spanisch, Arabisch und Bangla - wir arrangieren gerne ein Gespräch für Dich. ",
-        "detailLegal": "Falls Du Dich in einem laufenden Gerichtsverfahren befindest, denk bitte darüber nach, was Du mit uns teilst, da dies manchmal Auswirkungen auf Dein Verfahren haben kann. ",
-        "detailImmediateHelp": "Falls Du akut bedroht wirst oder in Gefahr bist, geh bitte im Menü zu \"Soforthilfe\", um die richtige Ansprechstelle zu finden. ",
-        "startButton": "Schreiben Sie uns"
-      },
-      "sessionComplete": "Session abgeschlossen"
-    },
-    "sessionFeedback": {
-      "title": "Wie war diese Session?",
-      "subtitle": "Wir würden gerne deine Meinung zu dieser Sitzung hören. Dein Feedback hilft uns, unsere Kurse zu verbessern.",
-      "feedbackTags": {
-        "relatable": "Zuordenbar",
-        "useful": "Nützlich",
-        "inspiring": "Inspirierend",
-        "too long": "Zu lang",
-        "too complicated": "Zu kompliziert",
-        "not useful": "Nicht nützlich"
-      },
-      "textboxDefaultText": "Füge einen Kommentar hinzu...",
-      "sendButtonText": "Senden",
-      "submissionText": "Vielen Dank für die Übermittlung Ihres Feedbacks",
-      "errors": {
-        "feedbackTagError": "Bitte wählen Sie vor dem Absenden eine Bewertung aus."
-      }
-    },
-    "accessGuard": {
-      "title": "Kursinhalte nicht verfügbar",
-      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen</contactLink>."
-    },
-    "errors": {
-      "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
-    },
-    "backToCourse": "Zurück zum Kurs",
-    "backToCourses": "Zurück zu Kursen",
-    "conversationsHeading": "Conversations",
-    "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
-    "shortsHeading": "Shorts",
-    "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
-    "somaticsHeading": "Somatik: Körperbasierte Heilung",
-    "somaticsDescription": "Entdecken Sie, wie sanfte, körperbasierte Ansätze die Heilung von Gewalt, Stress und Angst unterstützen können. Diese Ressourcensammlung bietet klare, praktische Anleitungen, die uns helfen, uns wieder mit unserem Körper zu verbinden, Resilienz aufzubauen und zu erkunden, wie sich Sicherheit und Leichtigkeit anfühlen können."
-  }
+    "Courses": {
+        "title": "Unsere Kurse",
+        "introduction": "Die Bloom-Kurse bieten Informationen, Hilfsmittel und bestärkende Worte an, die spezifisch darauf angepasst sind, Traumata zu bewältigen. Sie ermutigen uns zu lernen und zu reflektieren und das, was wir erlebt haben einschließlich der Auswirkungen, die das auf uns hatte, in einem sicheren und ermutigendem Rahmen zu verarbeiten. ",
+        "session": "Session",
+        "course": "Kurs",
+        "courses": "Kurse",
+        "expand": "Erweitern",
+        "expandSummary": "Zusammenfassung erweitern für",
+        "navigateToSession": "Zur Session navigieren -",
+        "navigateToCourse": "Zum Kurs navigieren -",
+        "noCourses": "Zur Zeit sind keine Kurse verfügbar. Falls Dir das nicht richtig erscheint, kontaktiere das Bloom-Team.",
+        "courseDetail": {
+            "introductionTitle": "Einführung in den Kurs",
+            "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript<\/transcriptLink>"
+        },
+        "sessionDetail": {
+            "videoTitle": "Video",
+            "videoDescription": "Schau das Video an oder lies das <transcriptLink>Videotranskript<\/transcriptLink>.",
+            "activityTitle": "Übung",
+            "bonusTitle": "Bonusinhalte",
+            "chat": {
+                "title": "Reflektiere mit uns",
+                "description": "Wenn Du Deine Überlegungen zu dieser Session mit uns teilen möchtest - das Bloom-Team freut sich, von Dir zu hören. ",
+                "videoIntro": "Erfahre mehr darüber, wie messaging funktioniert:",
+                "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
+                "detailIntro": "Denk dran:",
+                "detailPrivacy": "Deine Nachrichten sind privat und sicher. Sie werden nur vom Bloom-Team gesehen und Du bleibst anonym. ",
+                "detailTimezone": "Wir arbeiten in vielen verschiedenen Zeitzonen, daher solltest Du innerhalb von 6 Stunden eine Antwort von uns erhalten, und es wird nicht länger als 24 Stunden dauern. ",
+                "detailLanguage": "Wir sind immer auf Deutsch und Englisch erreichbar, aber unser Team spricht auch Französisch, Hindi, Portugiesisch, Spanisch, Arabisch und Bangla - wir arrangieren gerne ein Gespräch für Dich. ",
+                "detailLegal": "Falls Du Dich in einem laufenden Gerichtsverfahren befindest, denk bitte darüber nach, was Du mit uns teilst, da dies manchmal Auswirkungen auf Dein Verfahren haben kann. ",
+                "detailImmediateHelp": "Falls Du akut bedroht wirst oder in Gefahr bist, geh bitte im Menü zu \"Soforthilfe\", um die richtige Ansprechstelle zu finden. ",
+                "startButton": "Schreiben Sie uns"
+            },
+            "sessionComplete": "Session abgeschlossen"
+        },
+        "sessionFeedback": {
+            "title": "Wie war diese Session?",
+            "subtitle": "Wir würden gerne deine Meinung zu dieser Sitzung hören. Dein Feedback hilft uns, unsere Kurse zu verbessern.",
+            "feedbackTags": {
+                "relatable": "Zuordenbar",
+                "useful": "Nützlich",
+                "inspiring": "Inspirierend",
+                "too long": "Zu lang",
+                "too complicated": "Zu kompliziert",
+                "not useful": "Nicht nützlich"
+            },
+            "textboxDefaultText": "Füge einen Kommentar hinzu...",
+            "sendButtonText": "Senden",
+            "submissionText": "Vielen Dank für die Übermittlung Ihres Feedbacks",
+            "errors": {
+                "feedbackTagError": "Bitte wählen Sie vor dem Absenden eine Bewertung aus."
+            }
+        },
+        "accessGuard": {
+            "title": "Kursinhalte nicht verfügbar",
+            "introduction": "Dein Bloom-Konto beinhaltet keinen Zugriff auf den gewünschten Kursinhalt. Geh zurück zu Deinen <contactLink>Kursen<\/contactLink>."
+        },
+        "errors": {
+            "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
+        },
+        "backToCourse": "Zurück zum Kurs",
+        "backToCourses": "Zurück zu Kursen",
+        "conversationsHeading": "Conversations",
+        "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
+        "shortsHeading": "Shorts",
+        "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
+        "somaticsHeading": "Somatik: Körperbasierte Heilung",
+        "somaticsDescription": "Entdecken Sie, wie sanfte, körperbasierte Ansätze die Heilung von Gewalt, Stress und Angst unterstützen können. Diese Ressourcensammlung bietet klare, praktische Anleitungen, die uns helfen, uns wieder mit unserem Körper zu verbinden, Resilienz aufzubauen und zu erkunden, wie sich Sicherheit und Leichtigkeit anfühlen können."
+    }
 }

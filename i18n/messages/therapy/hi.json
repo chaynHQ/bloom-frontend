@@ -1,55 +1,55 @@
 {
-  "Therapy": {
-    "title": "Therapy book kariye",
-    "bookingButton": "Booking shuru kariye",
-    "bookingSectionTitle": "Booking kaise kaam kartī hai",
-    "steps": {
-      "step1": "Ap hamare dhaayn se chune hue, bahubhashi therapists se chun sakte hain. ",
-      "step2": "Vo din aur samay chuniye jo apke liye sabse acha kaam karta hain. Saare sessions online hain. ",
-      "step3": "Agar aap apka mann badal jata hain, toh kisi bhi samay aap apne sessions rok sakte hain ya therapist badal sakte hain. ",
-      "step4": "Aap jo kuch bhi sajha karte hain vo apke aur therapist ke beech poori tarha gopniye rehta hai."
-    },
-    "closeBookingWidget": "Booking widget band karein",
-    "modalTitle": "Therapī book karein",
-    "modalDescription": "Āpkī therapy session schedule karne ke liye SimplyBook.me widget.",
-    "error": {
-      "initializingWidget": "Booking widget initialize karne mein error.",
-      "initializingWidgetRetry": "Retry par booking widget initialize karne mein error.",
-      "containerNotFoundRetry": "Booking widget load nahīn ho sakā.",
-      "scriptNotLoaded": "Booking widget script pūrī tarah se load nahīn huā.",
-      "scriptLoadFailed": "Booking script load karne mein asafaltā."
-    },
-    "therapyBookings": {
-      "header": "Aapki therapy bookings",
-      "bookingSummary": "Aapke paas <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions baaki hain, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled hain.",
-      "noBookingSummary": "Aapke paas koi therapy sessions baaki nahi hain.",
-      "noBookings": "Aapne apni sabhi uplabdh therapy sessions book kar li hain.",
-      "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {id}. Vastavik cancellation logic implement karein."
-    },
-    "bookingItem": {
-      "upcomingSessionTitle": "Aane wala therapy session",
-      "pastSessionTitle": "Pichhla therapy session",
-      "cancelledSessionTitle": "Radd satra",
-      "dateLabel": "Tareekh",
-      "timeLabel": "Samay",
-      "therapistLabel": "Therapist",
-      "videoLinkLabel": "Video link",
-      "videoLink": "Email dwara bheje gaye Google Meet calendar aamantran se call mein shaamil hon.",
-      "cancelError": "Booking radd karne mein truti - kripya punah prayaas karein ya team se sampark karein.",
-      "noVideoLink": "Koi link nahi diya gaya hai",
-      "cancelButton": "Cancel karein",
-      "expand": "Expand karein",
-      "collapse": "Collapse karein",
-      "cancelDialog": {
-        "title": "Cancel karna confirm karein",
-        "description": "Kya aap vaakai apni {dateTime} ke lie nirdhaarit therapy satr radd karna chahte hain? Aap apni suvidhaanusaar ek naya appointment book kar sakte hain.",
-        "keepButton": "Session rakhein",
-        "confirmButton": "Session cancel karein"
-      }
-    },
-    "accessGuard": {
-      "title": "Therapy uplabdh nahi hai",
-      "introduction": "Apke Bloom account mein therapy sessions ki access shamil nahi hai. Yadi yeh theek nahi lag raha toh <contactLink>Bloom ki team ko message kariye</contactLink>."
+    "Therapy": {
+        "title": "Therapy book kariye",
+        "bookingButton": "Booking shuru kariye",
+        "bookingSectionTitle": "Booking kaise kaam kartī hai",
+        "steps": {
+            "step1": "Ap hamare dhaayn se chune hue, bahubhashi therapists se chun sakte hain. ",
+            "step2": "Vo din aur samay chuniye jo apke liye sabse acha kaam karta hain. Saare sessions online hain. ",
+            "step3": "Agar aap apka mann badal jata hain, toh kisi bhi samay aap apne sessions rok sakte hain ya therapist badal sakte hain. ",
+            "step4": "Aap jo kuch bhi sajha karte hain vo apke aur therapist ke beech poori tarha gopniye rehta hai."
+        },
+        "closeBookingWidget": "Booking widget band karein",
+        "modalTitle": "Therapī book karein",
+        "modalDescription": "Āpkī therapy session schedule karne ke liye SimplyBook.me widget.",
+        "error": {
+            "initializingWidget": "Booking widget initialize karne mein error.",
+            "initializingWidgetRetry": "Retry par booking widget initialize karne mein error.",
+            "containerNotFoundRetry": "Booking widget load nahīn ho sakā.",
+            "scriptNotLoaded": "Booking widget script pūrī tarah se load nahīn huā.",
+            "scriptLoadFailed": "Booking script load karne mein asafaltā."
+        },
+        "therapyBookings": {
+            "header": "Aapki therapy bookings",
+            "bookingSummary": "Aapke paas <remainingTotal>{remainingTotal}<\/remainingTotal> therapy sessions baaki hain, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> scheduled hain.",
+            "noBookingSummary": "Aapke paas koi therapy sessions baaki nahi hain.",
+            "noBookings": "Aapne apni sabhi uplabdh therapy sessions book kar li hain.",
+            "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {id}. Vastavik cancellation logic implement karein."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Aane wala therapy session",
+            "pastSessionTitle": "Pichhla therapy session",
+            "cancelledSessionTitle": "Radd satra",
+            "dateLabel": "Tareekh",
+            "timeLabel": "Samay",
+            "therapistLabel": "Therapist",
+            "videoLinkLabel": "Video link",
+            "videoLink": "Email dwara bheje gaye Google Meet calendar aamantran se call mein shaamil hon.",
+            "noVideoLink": "Koi link nahi diya gaya hai",
+            "cancelButton": "Cancel karein",
+            "cancelError": "Booking radd karne mein truti - kripya punah prayaas karein ya team se sampark karein.",
+            "expand": "Expand karein",
+            "collapse": "Collapse karein",
+            "cancelDialog": {
+                "title": "Cancel karna confirm karein",
+                "description": "Kya aap vaakai apni {dateTime} ke lie nirdhaarit therapy satr radd karna chahte hain? Aap apni suvidhaanusaar ek naya appointment book kar sakte hain.",
+                "keepButton": "Session rakhein",
+                "confirmButton": "Session cancel karein"
+            }
+        },
+        "accessGuard": {
+            "title": "Therapy uplabdh nahi hai",
+            "introduction": "Apke Bloom account mein therapy sessions ki access shamil nahi hai. Yadi yeh theek nahi lag raha toh <contactLink>Bloom ki team ko message kariye<\/contactLink>."
+        }
     }
-  }
 }
