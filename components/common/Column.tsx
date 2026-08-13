@@ -2,9 +2,10 @@
 
 import { INLINE_ALIGNMENT, TEXT_ALIGNMENT } from '@/lib/utils/alignment';
 import { Box } from '@mui/material';
+import type { ReactNode } from 'react';
 
 interface ColumnProps {
-  children: any;
+  children: ReactNode;
   width?: string;
   horizontalAlignment?: string;
   fill?: boolean;

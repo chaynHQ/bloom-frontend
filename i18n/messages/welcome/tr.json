@@ -2,7 +2,7 @@
   "Welcome": {
     "getStarted": "Başla",
     "accessIntroduction": "Bloom yolculuğuna başlamak için {partnerName} tarafından sana verilen erişim kodunu gir.",
-    "publicIntroduction": "Kurslarımıza başlamak için Bloom'da bir hesap oluştur ya da önce aşağıdan Bloom hakkında daha fazlasını öğren.",
+    "publicIntroduction": "Kurslarımıza başlamak için Bloom'da hesap oluştur ya da önce aşağıdan Bloom hakkında daha fazlasını öğren.",
     "goToLibrary": "Kütüphaneye git",
     "form": {
       "codeLabel": "{partnerName} erişim kodu"

@@ -1,10 +1,10 @@
 {
   "Courses": {
-    "session": "Seans",
+    "session": "Bölüm",
     "course": "Kurs",
     "expand": "Genişlet",
     "expandSummary": "Şunun özetini genişlet:",
-    "navigateToSession": "Seansa git -",
+    "navigateToSession": "Bölüme git -",
     "navigateToCourse": "Kursa git -",
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
@@ -16,9 +16,9 @@
       "activityTitle": "Etkinlik",
       "bonusTitle": "Bonus içerik",
       "chat": {
-        "title": "Bizimle düşün",
-        "description": "Bu seansa dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
-        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
+        "title": "Birlikte düşünelim",
+        "description": "Bu bölüme dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
+        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi al:",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
         "detailIntro": "Unutma:",
         "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
@@ -28,11 +28,11 @@
         "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
         "startButton": "Bize mesaj gönder"
       },
-      "sessionComplete": "Seans tamamlandı"
+      "sessionComplete": "Bölüm tamamlandı"
     },
     "sessionFeedback": {
-      "title": "Bu seans nasıldı?",
-      "subtitle": "Bu seansı nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kurslarımızı geliştirmemize yardımcı olur.",
+      "title": "Bu bölüm nasıldı?",
+      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kurslarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
         "relatable": "Bana yakın",
         "useful": "Faydalı",
@@ -53,7 +53,7 @@
       "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kütüphaneye</contactLink> geri dön."
     },
     "errors": {
-      "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
+      "completeSessionError": "Bu bölüm tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
     "backToLibrary": "Kütüphaneye dön"

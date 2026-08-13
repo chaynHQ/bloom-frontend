@@ -4,7 +4,7 @@
     "references": "موارد",
     "metadata": {
       "title": "رحلتك نحو التعافي تبدأ معنا",
-      "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم.",
+      "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحليفات وحلفاء من حول العالم.",
       "imageAlt": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما. ويتضمّن شعار Bloom المكتوب."
     },
     "leaveSite": {
@@ -22,7 +22,7 @@
     },
     "footer": {
       "fundedByTitle": "بتمويل من",
-      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
+      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحليفات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
       "chaynLine1": "بُني بواسطة <bold>CHAYN</bold> CIO.",
       "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
       "bumbleLine1": "بالشراكة مع",
@@ -45,7 +45,8 @@
     },
     "videoTranscript": {
       "title": "النص المكتوب للفيديو",
-      "closeModal": "إغلاق النص"
+      "closeModal": "إغلاق النص",
+      "description": ""
     },
     "progressStatus": {
       "started": "بدأت",
@@ -86,19 +87,19 @@
       "bloomHead": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما",
       "beehive": "رسم توضيحي لخلية نحل",
       "leafMix": "رسم توضيحي لورقتين متّصلتين بوردة",
-      "leafMixBee": "رسم توضيحي لورقتين مع نحلة تحلّق فوقهما",
-      "leafMixDots": "رسم توضيحي لـ 3 أوراق مع زهرة في المنتصف، ونقاط تنطلق من الزهرة.",
+      "leafMixBee": "رسم توضيحي لورقتين تحوم فوقهما نحلة",
+      "leafMixDots": "رسم توضيحي لثلاث أوراق مع زهرة في المنتصف، ونقاط تنطلق من الزهرة.",
       "personTea": "رسم توضيحي لشخص جالس يحمل كوب شاي",
       "personSitting": "رسم توضيحي لشخص جالس",
       "chooseTherapist": "رسم توضيحي لوجه شخص من الجانب، مع زهرة",
-      "dateSelector": "رسم توضيحي لتقويم مع قلب في المنتصف",
-      "change": "رسم توضيحي لدورة — ثلاث شموس في دائرة مع أسهم بينها",
-      "notes": "رسم توضيحي لهاتف محمول مع فقاعة رسالة تحتوي على قلب على الشاشة",
-      "confidential": "رسم توضيحي لمستند مع قفل في الزاوية",
-      "cookieCat": "رسم توضيحي لقطة مستريحة مع قطعة بسكويت",
+      "dateSelector": "رسم توضيحي لتقويم يظهر في وسطه قلب",
+      "change": "رسم توضيحي لدورة — ثلاث شموس في دائرة مع أسهم تربط بينها",
+      "notes": "رسم توضيحي لهاتف محمول تظهر على شاشته فقاعة رسالة تحتوي على قلب",
+      "confidential": "رسم توضيحي لمستند يظهر في زاويته قفل",
+      "cookieCat": "رسم توضيحي لقطّة مسترخية مع قطعة بسكويت",
       "fruitzLogo": "شعار Fruitz",
       "bloomFruitzLogo": "شعار Bloom بالشراكة مع Fruitz",
-      "bloomHomeIllustration": "شخص جالس متربّع مع رموز تطفو حوله مثل أيقونة فيديو وزهرة وأيقونة رسالة ورأس شخص مع زهرة",
+      "bloomHomeIllustration": "رسم توضيحي لشخص جالس متربّع، وتحيط به رموز عائمة مثل أيقونة فيديو وزهرة وأيقونة رسالة ورأس شخص مع زهرة",
       "bookIcon": "أيقونة كتاب",
       "articleIcon": "أيقونة مقال",
       "videoIcon": "أيقونة فيديو"
@@ -131,8 +132,8 @@
       "backButton": "العودة"
     },
     "exerciseNames": {
-      "activities-thought-diaries": "يوميات الأفكار",
-      "activities-stream-of-consciousness-journaling": "الكتابة بتيّار الوعي",
+      "activities-thought-diaries": "مذكرات الأفكار",
+      "activities-stream-of-consciousness-journaling": "تدوين اليوميات بتيّار الوعي",
       "activities-timelines": "الخطوط الزمنية",
       "activities-trust-mapping": "رسم خريطة الثقة",
       "activities-mapping-fear-and-stress-in-our-bodies": "رسم خريطة الخوف والتوتّر في أجسادنا",
@@ -143,10 +144,10 @@
       "grounding-slow-breathing": "التنفّس البطيء",
       "grounding-box-breathing": "التنفّس الصندوقي",
       "grounding-drifting-clouds-meditation": "تأمّل الغيوم المتنقّلة",
-      "grounding-positive-coping-statement": "عبارة تأقلم إيجابية",
+      "grounding-positive-coping-statement": "عبارة تكيّف إيجابية",
       "grounding-finger-focus": "تركيز الأصابع",
       "grounding-day-walkthrough": "استعراض اليوم",
-      "grounding-what-can-you-hear": "ما الذي يمكنك سماعه",
+      "grounding-what-can-you-hear": "ماذا تسمع؟",
       "grounding-listen-to-your-voice": "الإنصات إلى صوتك",
       "grounding-calming-colours": "الألوان المهدّئة",
       "grounding-coming-back-to-your-safe-space": "العودة إلى مساحتك الآمنة",

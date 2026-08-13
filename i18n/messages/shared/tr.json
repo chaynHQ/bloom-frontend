@@ -4,7 +4,7 @@
     "references": "Kaynaklar",
     "metadata": {
       "title": "İyileşme yolculuğunda bize katıl",
-      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen küresel bir kâr amacı gütmeyen kuruluş olan Chayn sunuyor.",
+      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen küresel bir kâr amacı gütmeyen kuruluş olan Chayn sunuyor.",
       "imageAlt": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon. Bloom yazı logosu da dahildir."
     },
     "leaveSite": {
@@ -22,7 +22,7 @@
     },
     "footer": {
       "fundedByTitle": "Finanse eden",
-      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
+      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
       "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
       "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
       "bumbleLine1": "İş birliğiyle",
@@ -45,7 +45,8 @@
     },
     "videoTranscript": {
       "title": "Video metni",
-      "closeModal": "Metni kapat"
+      "closeModal": "Metni kapat",
+      "description": ""
     },
     "progressStatus": {
       "started": "Başlandı",
@@ -86,7 +87,7 @@
       "bloomHead": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon",
       "beehive": "Bir arı kovanı illüstrasyonu",
       "leafMix": "Bir gülle birleşmiş iki yaprak illüstrasyonu",
-      "leafMixBee": "Üzerinde uçuşan bir arı olan iki yaprak illüstrasyonu",
+      "leafMixBee": "Üzerinde bir arının uçuştuğu iki yaprak illüstrasyonu",
       "leafMixDots": "Ortasında bir çiçek olan 3 yaprak ve çiçekten fışkıran noktalar illüstrasyonu.",
       "personTea": "Oturmuş, çay tutan bir kişi illüstrasyonu",
       "personSitting": "Oturan bir kişi illüstrasyonu",
@@ -106,7 +107,7 @@
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Hayatta kalan",
     "cookieConsent": {
-      "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazlasını şurada oku: ",
+      "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazla bilgi için: ",
       "cookieConsentPolicy": "çerez politikamız",
       "acceptLabel": "Çerezleri Kabul Et",
       "declineLabel": "Çerezleri Reddet"
@@ -124,7 +125,7 @@
       }
     },
     "loginDialog": {
-      "title": "Giriş yap ya da bir hesap oluştur",
+      "title": "Giriş yap ya da hesap oluştur",
       "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
       "loginButton": "Giriş yap",
       "registerButton": "Hesap oluştur",
@@ -132,29 +133,29 @@
     },
     "exerciseNames": {
       "activities-thought-diaries": "Düşünce günlükleri",
-      "activities-stream-of-consciousness-journaling": "Bilinç akışı günlüğü",
+      "activities-stream-of-consciousness-journaling": "Bilinç akışıyla günlük tutma",
       "activities-timelines": "Zaman çizelgeleri",
       "activities-trust-mapping": "Güven haritalama",
       "activities-mapping-fear-and-stress-in-our-bodies": "Bedenimizdeki korku ve stresi haritalama",
       "activities-letter-to-a-part-of-my-body": "Bedenimin bir parçasına mektup",
-      "activities-accelerators-and-brakes": "Gaz ve frenler",
-      "activities-ideal-sexual-being": "İdeal cinsel varlık",
-      "grounding-visual-breathing": "Görsel nefes",
-      "grounding-slow-breathing": "Yavaş nefes",
+      "activities-accelerators-and-brakes": "Gaz ve fren",
+      "activities-ideal-sexual-being": "İdeal cinsel benlik",
+      "grounding-visual-breathing": "Görsel nefes alma",
+      "grounding-slow-breathing": "Yavaş nefes alma",
       "grounding-box-breathing": "Kutu nefesi",
       "grounding-drifting-clouds-meditation": "Süzülen bulutlar meditasyonu",
       "grounding-positive-coping-statement": "Olumlu başa çıkma ifadesi",
-      "grounding-finger-focus": "Parmak odağı",
-      "grounding-day-walkthrough": "Gün gözden geçirme",
-      "grounding-what-can-you-hear": "Ne duyabiliyorsun",
+      "grounding-finger-focus": "Parmakla odaklama",
+      "grounding-day-walkthrough": "Günü zihinden geçirme",
+      "grounding-what-can-you-hear": "Ne duyuyorsun?",
       "grounding-listen-to-your-voice": "Sesini dinle",
       "grounding-calming-colours": "Sakinleştirici renkler",
       "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
-      "grounding-best-check-in": "BEST kontrolü",
+      "grounding-best-check-in": "BEST durum değerlendirmesi",
       "grounding-compassionate-body-scan": "Şefkatli beden taraması",
-      "grounding-touching-and-feeling-textures": "Dokulara dokunma ve hissetme",
+      "grounding-touching-and-feeling-textures": "Dokunarak dokuları hissetme",
       "grouding-sound-of-claps": "Alkış sesi",
-      "grounding-affirming-ourselves": "Kendimizi onaylama (sıkı baskı)"
+      "grounding-affirming-ourselves": "Kendimizi olumlama (sıkı baskı)"
     },
     "pwaBanner": {
       "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
