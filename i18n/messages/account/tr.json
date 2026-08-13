@@ -75,7 +75,10 @@
           "7": "Söylememeyi tercih ederim"
         },
         "submitLabel": "Gönder",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Lütfen aşağıdaki ifadelere ne ölçüde katıldığını derecelendir:",

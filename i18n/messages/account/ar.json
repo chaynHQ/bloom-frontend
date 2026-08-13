@@ -75,7 +75,10 @@
           "7": "أفضّل عدم الإفصاح"
         },
         "submitLabel": "إرسال",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "يُرجى تقييم مدى موافقتك على العبارات التالية:",

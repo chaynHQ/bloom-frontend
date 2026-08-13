@@ -39,7 +39,8 @@
     },
     "videoTranscript": {
       "title": "Video transcript",
-      "closeModal": "Close transcript"
+      "closeModal": "Close transcript",
+      "description": ""
     },
     "progressStatus": {
       "started": "Started",

@@ -39,7 +39,8 @@
     },
     "videoTranscript": {
       "title": "النص المكتوب للفيديو",
-      "closeModal": "إغلاق النص"
+      "closeModal": "إغلاق النص",
+      "description": ""
     },
     "progressStatus": {
       "started": "بدأت",
