@@ -14,6 +14,12 @@
     },
     "navigateBack": "Pichhle prishth par nevigēt kareñ",
     "navigateTo": "Pichhle prishth par nevigēt kareñ",
+    "carousel": {
+      "regionLabel": "Content carousel",
+      "previous": "{name}: pichhla",
+      "next": "{name}: agla",
+      "goToPage": "{name}: {pages} mein se {page} par jaiye"
+    },
     "footer": {
       "fundedByTitle": "Yeh kaam fund kiya gaya hai by",
       "chaynDescription": "Bloom aapke liye <link>Chayn</link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
@@ -95,7 +101,8 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Kitab ka icon",
       "articleIcon": "Lekh ka icon",
-      "videoIcon": "Video ka icon"
+      "videoIcon": "Video ka icon",
+      "notes": "Ek mobile ki illustration jisme screen par ek message bubble hai jisme heart hai"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/oHbPDvL2",
     "survivor": "Survivor",
@@ -105,11 +112,17 @@
       "acceptLabel": "Cookies sweekaar kariye",
       "declineLabel": "Cookies asweekar karein"
     },
-    "signUpTodayPromo": {
-      "title": "Free account ke liye aaj he sign up karein",
-      "description1": "Bloom ek online platform hai jo apko apke ghavon se ubharne aur heal hone mein madad karta hai. Bloom par bahut sar alag alag suvidhaye hain - \nVideo courses, vichar sambhanti activities, aur toh aur aap humari team se seedha message par baat kar sakte hain.",
-      "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
-      "button": "Shuru karte hain"
+    "supportSection": {
+      "title": "Sahayata paiye",
+      "introduction": "Kya aap kisi se baat karna chahenge? Bloom ki support services jab bhi aapko zaroorat ho, aapke liye maujood hain.",
+      "messaging": {
+        "title": "1-to-1 messaging",
+        "description": "Aapke sawaalon aur vichaaron ke soch-samajh kar diye gaye jawaab, humari multilingual team se, 1–2 dinon ke andar."
+      },
+      "notes": {
+        "title": "Notes from Bloom",
+        "description": "Bloom se sahayata, hafte mein do baar seedhe aapke WhatsApp par."
+      }
     },
     "loginDialog": {
       "title": "Bloom mein login karein ya ek naya account banayein",
@@ -158,9 +171,32 @@
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
     },
-    "characterCount": "{current}/{max} अक्षर",
+    "characterCount": "{current}/{max} akshar",
     "scrollToSignUp": {
       "button": "Muft mein sign up karein"
+    },
+    "signUpSection": {
+      "title": "Aapko dhyan mein rakh kar banaya gaya",
+      "introduction": "Bloom aapke liye yahan hai — aap jo bhi hain aur jahan bhi hain.",
+      "multilingual": "Multilingual",
+      "freeAndAnonymous": "Free aur anonymous",
+      "exploreAtYourPace": "Apni speed se explore kariye",
+      "cta": "Bloom join kariye, hamesha free"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Wahin se shuru kariye jahan chhoda tha"
+      },
+      "sessions": {
+        "heading": "Single sessions",
+        "introduction": "Nuksaan ko pehchanne, boundaries banane, healing aur bahut kuch par sessions.",
+        "browseAll": "Sabhi sessions dekhiye"
+      },
+      "courses": {
+        "heading": "Courses",
+        "introduction": "Shuruaat ke liye ek guided jagah. Har course aapko apni raftaar se sessions ki ek series se le jaata hai.",
+        "browseAll": "Sabhi courses dekhiye"
+      }
     }
   }
 }

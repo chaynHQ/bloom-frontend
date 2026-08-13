@@ -25,11 +25,9 @@
       "courseIcon": "Uma ilustração de um ícone de jogo, um ponto de triângulo à direita. Na frente há um pequeno sol.",
       "notesIcon": "Uma ilustração de um telefone celular com um coração no centro",
       "chatIcon": "Dois balões de fala se cruzando contra um fundo rosa. A primeira tem um coração rosa dentro dela. A segunda tem linhas retas.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
       "groundingIcon": "A twig with small pink flowers."
     },
     "messaging": "Bate-papo",
-    "grounding": "Aterramento",
-    "activities": "Atividades"
+    "grounding": "Aterramento"
   }
 }

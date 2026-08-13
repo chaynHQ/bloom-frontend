@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# sesión} other {# sesiones}}",
     "duration": "{minutes} min",
     "partOfCourse": "Parte de {course}",
+    "accountNeeded": "Se necesita una cuenta",
     "loadMore": "Ver más",
     "noResults": {
       "title": "No hay resultados para esos filtros",
@@ -73,18 +74,6 @@
         "label": "Mantenerte a salvo ahora",
         "blurb": "Plan de seguridad y estrategias frente al abuso continuo",
         "description": "Si todavía estás en una situación de daño o cerca de ella, la seguridad es lo primero. Encuentra apoyo práctico para crear un plan de seguridad y para afrontar los momentos en que las cosas no se sienten seguras."
-      }
-    },
-    "support": {
-      "title": "Buscar apoyo",
-      "introduction": "¿Prefieres hablar con alguien? Los servicios de apoyo de Bloom están aquí siempre que los necesites.",
-      "messaging": {
-        "title": "Mensajería individual",
-        "description": "Respuestas cuidadosas a tus preguntas y reflexiones, de parte de nuestro equipo multilingüe, en 1–2 días."
-      },
-      "notes": {
-        "title": "Notas de Bloom",
-        "description": "Apoyo de Bloom, directo a tu WhatsApp dos veces por semana."
       }
     }
   }

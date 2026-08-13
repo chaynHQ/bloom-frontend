@@ -3,6 +3,7 @@
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { generateStoryblokButtonEvent } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { getButtonStyleProps } from '@/lib/utils/buttonStyles';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { Button, Link } from '@mui/material';
 
@@ -24,27 +25,14 @@ const BloomButton = (props: BloomButtonProps) => {
 
   if (!link) return <></>;
 
-  const buttonStyle = {
-    marginTop: 2,
-    marginBottom: 2,
-    backgroundColor:
-      color === 'background.default'
-        ? 'secondary.main'
-        : color === 'primary.light'
-          ? 'primary.main'
-          : color === 'secondary.light'
-            ? 'secondary.main'
-            : color,
-    color: color === 'primary.dark' ? 'common.white' : 'text.primary',
-    ...style,
-  } as const;
+  const { muiColor, sx } = getButtonStyleProps(color, 'contained');
 
   return (
     <Button
       component={Link}
-      sx={buttonStyle}
+      sx={{ marginTop: 2, marginBottom: 2, ...sx, ...style }}
       variant="contained"
-      color={color.includes('primary') ? 'primary' : 'secondary'}
+      color={muiColor}
       href={link}
       size={size}
       onClick={() => {

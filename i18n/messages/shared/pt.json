@@ -14,6 +14,12 @@
     },
     "navigateBack": "Voltar para a página anterior",
     "navigateTo": "Navegar para",
+    "carousel": {
+      "regionLabel": "Carrossel de conteúdos",
+      "previous": "{name}: anterior",
+      "next": "{name}: seguinte",
+      "goToPage": "{name}: ir para {page} de {pages}"
+    },
     "footer": {
       "fundedByTitle": "Fundado por",
       "chaynDescription": "O Bloom é oferecido a você pela <link>Chayn</link>, uma organização global sem fins lucrativos, administrada por pessoas sobreviventes e aliadas de todo o mundo, que cria recursos para apoiar no processo de recuperação de sobreviventes de violência baseada em gênero.",
@@ -43,9 +49,9 @@
       "closeModal": "Close transcript"
     },
     "progressStatus": {
-      "started": "Started",
+      "started": "Iniciado",
       "completed": "Finalizado",
-      "notStarted": "Not started"
+      "notStarted": "Não iniciado"
     },
     "meetTheTeam": {
       "fullBioButton": "Ler a biografia completa de {name}",
@@ -95,7 +101,8 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Ícone de livro",
       "articleIcon": "Ícone de artigo",
-      "videoIcon": "Ícone de vídeo"
+      "videoIcon": "Ícone de vídeo",
+      "notes": "Ilustração de um telemóvel com um balão de mensagem com um coração no ecrã"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/ZGoDbg20",
     "survivor": "Survivor",
@@ -105,11 +112,17 @@
       "acceptLabel": "Aceitar Cookies",
       "declineLabel": "Rejeitar Cookies"
     },
-    "signUpTodayPromo": {
-      "title": "Inscreva-se para uma conta gratuita hoje",
-      "description1": "Bloom é uma plataforma online para te apoiar enquanto você se recupera de traumas. Desde cursos em vídeo e atividades reflexivas até a troca de mensagens diretas com nossa equipe, há muitas maneiras diferentes de interagir com o Bloom.",
-      "description2": "Inscreva-se abaixo para ter acesso a todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer!",
-      "button": "Comece"
+    "supportSection": {
+      "title": "Buscar apoio",
+      "introduction": "Prefere conversar com alguém? Os serviços de apoio do Bloom estão aqui sempre que você precisar.",
+      "messaging": {
+        "title": "Mensagens individuais",
+        "description": "Respostas cuidadosas às suas perguntas e reflexões, da nossa equipe multilíngue, em 1 a 2 dias."
+      },
+      "notes": {
+        "title": "Notas do Bloom",
+        "description": "Apoio do Bloom, direto no seu WhatsApp, duas vezes por semana."
+      }
     },
     "loginDialog": {
       "title": "Faça login ou crie uma conta",
@@ -161,6 +174,29 @@
     "characterCount": "{current}/{max} caracteres",
     "scrollToSignUp": {
       "button": "Inscreva-se grátis"
+    },
+    "signUpSection": {
+      "title": "Criado pensando em você",
+      "introduction": "O Bloom está aqui para você, seja quem for e esteja onde estiver.",
+      "multilingual": "Multilingue",
+      "freeAndAnonymous": "Gratuito e anônimo",
+      "exploreAtYourPace": "Explore no seu ritmo",
+      "cta": "Junte-se ao Bloom, sempre gratuito"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Retome de onde parou"
+      },
+      "sessions": {
+        "heading": "Sessões individuais",
+        "introduction": "Sessões sobre reconhecer o dano, definir limites, curar e muito mais.",
+        "browseAll": "Ver todas as sessões"
+      },
+      "courses": {
+        "heading": "Cursos",
+        "introduction": "Um ponto de partida acompanhado. Cada curso leva você por um conjunto de sessões no seu próprio ritmo.",
+        "browseAll": "Ver todos os cursos"
+      }
     }
   }
 }

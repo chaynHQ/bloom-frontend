@@ -19,6 +19,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(await import(`./messages/account/${locale}.json`)).default,
       ...(await import(`./messages/courses/${locale}.json`)).default,
       ...(await import(`./messages/library/${locale}.json`)).default,
+      ...(await import(`./messages/home/${locale}.json`)).default,
       ...(await import(`./messages/account/${locale}.json`)).default,
       ...(await import(`./messages/admin/${locale}.json`)).default,
       ...(await import(`./messages/therapy/${locale}.json`)).default,

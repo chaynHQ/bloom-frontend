@@ -1,7 +1,8 @@
 'use client';
 
 import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
-import Carousel, { CarouselItemContainer } from '@/components/common/Carousel';
+import { CardCarousel } from '@/components/common/CardCarousel';
+import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
 import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { Container, Typography } from '@mui/material';
@@ -114,14 +115,9 @@ export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => 
       >
         {t('title')}
       </Typography>
-      <Carousel
-        theme="primary"
-        items={items.map((item, index) => (
-          <CarouselItemContainer key={index} slidesPerScreen={[1, 2, 3]}>
-            {item}
-          </CarouselItemContainer>
-        ))}
-      />
+      <CardCarousel label={t('title')} controls eventName={RELATED_CONTENT_CAROUSEL_PAGED}>
+        {items}
+      </CardCarousel>
     </Container>
   );
 };

@@ -25,11 +25,9 @@
       "courseIcon": "Illustration d'une icône de lecture, un triangle pointant vers la droite. Un petit soleil se trouve à l'avant",
       "notesIcon": "Illustration d'un téléphone portable avec un cœur au centre",
       "chatIcon": "Deux bulles se croisent sur un fond rose. La première contient un cœur rose. La seconde a des lignes droites.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
       "groundingIcon": "A twig with small pink flowers."
     },
     "messaging": "Messagerie",
-    "grounding": "Exercices",
-    "activities": "Activités"
+    "grounding": "Exercices"
   }
 }

@@ -35,14 +35,45 @@ export const richtextContentStyle = {
   },
 } as const;
 
-// Material elevation 1.
-export const cardShadow = '0px 1px 3px 1px rgba(0,0,0,0.08), 0px 1px 2px 0px rgba(0,0,0,0.08)';
+// Every page-opening header band starts at the same depth, leaving room for the fixed
+// "Leave this site" and breadcrumb buttons that float over the top of it.
+export const pageHeaderPaddingTop = '3.5rem !important';
+export const pageHeaderPaddingBottom = '3.5rem !important';
 
+export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
+
+// A hairline where two sections meet. A pseudo-element rather than a border, so it spans the
+// content width rather than the full viewport (see the MuiContainer overrides in styles/theme.ts).
+export const sectionDivider = (edge: 'top' | 'bottom') =>
+  ({
+    position: 'relative',
+    [`&::${edge === 'top' ? 'before' : 'after'}`]: {
+      content: '""',
+      position: 'absolute',
+      [edge]: 0,
+      insetInlineStart: '1.5rem',
+      insetInlineEnd: '1.5rem',
+      borderTop: '1px solid',
+      borderColor: 'sectionBorder',
+      '@media (min-width:600px)': { insetInlineStart: '2rem', insetInlineEnd: '2rem' },
+      '@media (min-width:1200px)': {
+        insetInlineStart: 'calc((100vw - 1000px) / 2)',
+        insetInlineEnd: 'calc((100vw - 1000px) / 2)',
+      },
+    },
+  }) as const;
+
+// Offset by `--top-banner-height`, published by UserResearchBanner when a banner sits between the
+// TopBar and the page body.
 export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
   insetInlineStart: { xs: 16, lg: '8%' },
-  top: { xs: 68, sm: 80, md: 160 },
+  top: {
+    xs: 'calc(64px + var(--top-banner-height, 0px))',
+    sm: 'calc(80px + var(--top-banner-height, 0px))',
+    md: 'calc(160px + var(--top-banner-height, 0px))',
+  },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
 } as const;
@@ -79,8 +110,9 @@ export const staticFieldLabelStyle = {
   },
 };
 
+// Matches the rendered AppBar height: the logo row, plus the DesktopMainNav tab strip from `md`.
 export const topBarSpacerStyle = {
-  height: { xs: '3rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8rem' },
+  height: { xs: '3.25rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8.5rem' },
 } as const;
 
 export const mobileBottomNavSpacerStyle = {

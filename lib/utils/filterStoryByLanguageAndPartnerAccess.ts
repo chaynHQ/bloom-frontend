@@ -18,7 +18,6 @@ const filterResourcesForLocaleAndPartnerAccess = <T extends FilterableStory>(
       ? languages.includes(contentLanguagesString)
       : contentLanguagesString === 'default';
 
-    // No partners listed means unrestricted.
     const includedForPartners: string[] = resource?.content?.included_for_partners ?? [];
     const matchesPartner =
       includedForPartners.length === 0 ||

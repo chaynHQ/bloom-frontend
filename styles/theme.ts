@@ -1,7 +1,14 @@
 'use client';
 
 import type { Direction } from '@/lib/utils/getLocaleDirection';
-import { createTheme, lighten, responsiveFontSizes, type Theme } from '@mui/material/styles';
+import {
+  alpha,
+  createTheme,
+  darken,
+  lighten,
+  responsiveFontSizes,
+  type Theme,
+} from '@mui/material/styles';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here
 declare module '@mui/material/styles' {
@@ -10,11 +17,15 @@ declare module '@mui/material/styles' {
     bloomGradient: string;
     bloomGradientVertical: string;
     bloomGradientSoft: string;
+    bloomGradientSoftUp: string;
+    bloomGradientPeach: string;
     cardSurface: string;
     cardBorder: string;
+    sectionSurface: string;
     panelSurface: string;
     pageBackground: string;
     inputBorder: string;
+    sectionBorder: string;
     chipBackground: string;
     chipBackgroundHover: string;
     badgeBlue: string;
@@ -27,12 +38,16 @@ declare module '@mui/material/styles' {
     bloomGradient?: string;
     bloomGradientVertical?: string;
     bloomGradientSoft?: string;
+    bloomGradientSoftUp?: string;
+    bloomGradientPeach?: string;
     overlayBackground?: string;
     cardSurface?: string;
     cardBorder?: string;
+    sectionSurface?: string;
     panelSurface?: string;
     pageBackground?: string;
     inputBorder?: string;
+    sectionBorder?: string;
     chipBackground?: string;
     chipBackgroundHover?: string;
     badgeBlue?: string;
@@ -40,8 +55,6 @@ declare module '@mui/material/styles' {
     supportArrowPanel?: string;
   }
 
-  // The heading font with its RTL fallback, for use as `sx={{ fontFamily: 'headingFontFamily' }}`
-  // on non-heading elements.
   interface TypographyVariants {
     headingFontFamily: string;
   }
@@ -57,6 +70,10 @@ const bodyFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-open-sans)' : 'var(--font-open-sans)';
 const headingFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-montserrat)' : 'var(--font-montserrat)';
+
+// Headings and card titles are pure black in the design; body copy sits at grey.800.
+const headingColor = '#000000';
+const bodyColor = '#424242';
 
 /**
  * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
@@ -84,6 +101,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       background: {
         default: '#FEF6F2',
       },
+      text: {
+        primary: bodyColor,
+      },
       error: {
         main: '#EA0050',
       },
@@ -92,13 +112,18 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       overlayBackground: 'rgba(0, 0, 0, 0.4)',
       bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
-      // Used behind the page header and the library's "Get support" band.
       bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
+      bloomGradientSoftUp: 'linear-gradient(0deg, #F9E2E3 0%, #FFEAE1 100%)',
+      // Peach down to `sectionSurface`, so the section fades into the pale pink band below it. The
+      // middle stop keeps the fade in the warm peach family rather than passing through beige.
+      bloomGradientPeach: 'linear-gradient(180deg, #FFE3D3 0%, #FEEAE2 40%, #FAF1F2 100%)',
       cardSurface: '#FFFCFA',
       cardBorder: '#EBE0E1',
+      sectionSurface: '#FAF1F2',
       panelSurface: '#FCF8F8',
       pageBackground: '#FFF2EB',
       inputBorder: '#DECECF',
+      sectionBorder: '#DECECF',
       chipBackground: '#FFD8C7',
       chipBackgroundHover: '#FFC9B2',
       badgeBlue: '#DFF0F5',
@@ -113,27 +138,39 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       headingFontFamily: headingFontFamily(direction),
       h1: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '2.25rem',
+        fontSize: '2rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
-        lineHeight: 1.4,
+        lineHeight: 40 / 32,
+        color: headingColor,
       },
       h2: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '1.875rem',
+        fontSize: '1.5rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
+        lineHeight: 32 / 24,
+        color: headingColor,
+        '@media (min-width:900px)': {
+          fontSize: '1.75rem',
+          lineHeight: 36 / 28,
+        },
       },
       h3: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.375rem',
         marginBottom: '1rem',
-        fontWeight: 400,
-        lineHeight: 1.4,
+        fontWeight: 500,
+        lineHeight: 28 / 22,
+        color: headingColor,
       },
       h4: {
-        fontSize: '1rem',
+        fontFamily: headingFontFamily(direction),
+        fontSize: '1.125rem',
         fontWeight: 500,
+        lineHeight: 24 / 18,
+        letterSpacing: '0.15px',
+        color: headingColor,
       },
       subtitle1: {
         fontSize: '1.375rem',
@@ -142,11 +179,11 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       },
       body1: {
         fontSize: '1rem',
-        lineHeight: 1.5,
+        lineHeight: 24 / 16,
       },
       body2: {
         fontSize: '0.875rem',
-        lineHeight: 1.5,
+        lineHeight: 20 / 14,
       },
     },
   });
@@ -235,7 +272,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            fontWeight: 'bold',
+            fontFamily: headingFontFamily(direction),
+            fontWeight: 500,
             borderRadius: '100px',
             textTransform: 'unset',
             paddingInline: 24,
@@ -249,14 +287,14 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               opacity: 0.1,
             },
             '@media (min-width:900px)': {
-              '&.MuiButton-sizeMedium': {
-                fontSize: '1rem',
-              },
               '&.MuiButton-sizeLarge': {
                 fontSize: '1.125rem',
+                letterSpacing: '0.15px',
               },
             },
           },
+          sizeMedium: { minHeight: 44 },
+          sizeLarge: { minHeight: 48 },
           // MUI hard-codes physical margins on the button icons (startIcon: marginRight/Left,
           // endIcon: the mirror). Those don't flip for RTL because this app relies on CSS
           // logical properties + `dir` rather than stylis-plugin-rtl, so in Arabic the icon
@@ -279,8 +317,12 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           {
             props: { variant: 'outlined', color: 'primary' },
             style: {
-              color: '#000000',
+              color: theme.palette.primary.dark,
               borderColor: theme.palette.primary.dark,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.primary.dark,
+              },
             },
           },
           {
@@ -326,17 +368,42 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               },
             },
           },
+          // Bloom's primary call-to-action. CMS buttons reach it via getButtonStyleProps. Hover
+          // darkens rather than lightens, which would drop the white label below its contrast floor.
           {
             props: { variant: 'contained', color: 'error' },
             style: {
+              borderColor: 'transparent',
               backgroundColor: theme.palette.primary.dark,
               color: theme.palette.common.white,
+              transition: theme.transitions.create(
+                ['background-color', 'box-shadow', 'transform'],
+                { duration: theme.transitions.duration.short },
+              ),
               '&:hover': {
-                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                backgroundColor: darken(theme.palette.primary.dark, 0.2),
+                boxShadow: `0 4px 12px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
+                transform: 'translateY(-1px)',
+              },
+              '&:active': {
+                backgroundColor: darken(theme.palette.primary.dark, 0.32),
+                boxShadow: `0 1px 3px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
+                transform: 'translateY(0)',
+              },
+              '&.Mui-focusVisible': {
+                outline: `2px solid ${theme.palette.primary.dark}`,
+                outlineOffset: 2,
+              },
+              // The themed primary.dark ripple is invisible on a primary.dark fill.
+              '& .MuiTouchRipple-root span': {
+                backgroundColor: theme.palette.common.white,
+                opacity: 0.2,
               },
               '&.Mui-disabled': {
                 backgroundColor: lighten(theme.palette.primary.dark, 0.3),
                 color: `${theme.palette.common.white} !important`,
+                boxShadow: 'none',
+                transform: 'none',
               },
             },
           },

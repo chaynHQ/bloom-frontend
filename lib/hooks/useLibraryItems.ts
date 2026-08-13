@@ -16,7 +16,6 @@ import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerCon
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 
-// Progress records in the courses/resources Redux slices, keyed off the Storyblok uuid.
 interface ProgressRecord {
   storyblokUuid: string;
   completed: boolean;
@@ -28,8 +27,7 @@ function withProgress(item: LibraryItem, progress: ProgressRecord[]): LibraryIte
   return { ...item, progress: record.completed ? 'completed' : 'started' };
 }
 
-// Turns the server-fetched stories into LibraryItems: filters by locale and the user's partner
-// access, then attaches progress from Redux.
+// Filters the server-fetched stories by locale and partner access, then attaches Redux progress.
 export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
@@ -41,7 +39,6 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
   const referralPartner = useCookieReferralPartner();
   const isLoggedIn = !authStateLoading && Boolean(userId);
 
-  // Refresh course progress for logged-in users.
   useGetUserCoursesQuery(undefined, { skip: !isLoggedIn });
 
   return useMemo(() => {
@@ -63,7 +60,6 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
     const visibleCourseTitles = new Map(
       courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name]),
     );
-    // Lesson completion is nested under each course's `sessions`.
     const sessionProgress = coursesProgress.flatMap((course) => course.sessions ?? []);
     const courseSessionItems = accessible(stories.courseSessions)
       .filter((story) => !story.content.coming_soon)

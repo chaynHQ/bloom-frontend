@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
     "duration": "{minutes} min",
     "partOfCourse": "{course} ka hissa",
+    "accountNeeded": "Account chahiye",
     "loadMore": "Aur dikhaiye",
     "noResults": {
       "title": "In filters ke liye koi result nahi mila",
@@ -73,18 +74,6 @@
         "label": "Abhi surakshit rehna",
         "blurb": "Safety planning aur chalti hui hinsa se nipatna",
         "description": "Agar aap abhi bhi hinsa mein hain ya uske kareeb hain, toh suraksha sabse pehle aati hai. Safety planning ke liye aur un palon se nipatne ke liye vyavaharik sahayata paiye jab cheezein surakshit na lagein."
-      }
-    },
-    "support": {
-      "title": "Sahayata paiye",
-      "introduction": "Kya aap kisi se baat karna chahenge? Bloom ki support services jab bhi aapko zaroorat ho, aapke liye maujood hain.",
-      "messaging": {
-        "title": "1-to-1 messaging",
-        "description": "Aapke sawaalon aur vichaaron ke soch-samajh kar diye gaye jawaab, humari multilingual team se, 1–2 dinon ke andar."
-      },
-      "notes": {
-        "title": "Notes from Bloom",
-        "description": "Bloom se sahayata, hafte mein do baar seedhe aapke WhatsApp par."
       }
     }
   }

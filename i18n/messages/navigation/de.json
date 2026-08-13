@@ -25,11 +25,9 @@
       "courseIcon": "Eine Illustration eines Spielsymbols, eine dreieckige Spitze, die nach rechts zeigt. Davor befindet sich eine kleine Sonne.",
       "notesIcon": "Eine Illustration eines Handys mit einem Herz in der Mitte. ",
       "chatIcon": "Zwei Sprechblasen, die vor einem pinken Hintergrund aufeinander treffen. In der ersten ist ein pinkes Herz. Die zweite hat gerade Linien. ",
-      "activitiesIcon": "Ein Buch mit einem kleinen gelben Feuer auf dem Einband.",
       "groundingIcon": "Ein Zweig mit kleinen pinken Blüten."
     },
     "messaging": "Messaging",
-    "grounding": "Stabilisierung",
-    "activities": "Übungen"
+    "grounding": "Stabilisierung"
   }
 }

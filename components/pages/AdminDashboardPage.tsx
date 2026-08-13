@@ -28,7 +28,6 @@ export default function AdminDashboardPage() {
   const t = useTranslations('Admin');
 
   const userEmail = useTypedSelector((state) => state.user.email);
-  // The test-data cleanup tool is only exposed to the tech team.
   const showDeleteCypressUsers = !!userEmail && userEmail.toLowerCase().includes('tech');
 
   const headerProps = {

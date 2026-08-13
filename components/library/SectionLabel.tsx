@@ -20,7 +20,6 @@ const resetButtonStyle = {
   '&:hover': { backgroundColor: 'transparent', textDecoration: 'underline' },
 } as const;
 
-// A section label with an optional "Reset" action on the trailing edge.
 export function SectionLabel({ label, onReset }: { label: string; onReset?: () => void }) {
   const t = useTranslations('Library');
   return (

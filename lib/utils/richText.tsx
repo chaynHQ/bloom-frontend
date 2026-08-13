@@ -1,10 +1,13 @@
 import StoryblokAccordion from '@/components/storyblok/StoryblokAccordion';
 import StoryblokAudio from '@/components/storyblok/StoryblokAudio';
+import StoryblokAvatarGroup from '@/components/storyblok/StoryblokAvatarGroup';
 import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
+import StoryblokLinkCard from '@/components/storyblok/StoryblokLinkCard';
 import StoryblokQuote from '@/components/storyblok/StoryblokQuote';
+import StoryblokQuoteCard from '@/components/storyblok/StoryblokQuoteCard';
 import StoryblokResourceCarousel from '@/components/storyblok/StoryblokResourceCarousel';
 import StoryblokRow from '@/components/storyblok/StoryblokRow';
 import StoryblokRowColumnBlock from '@/components/storyblok/StoryblokRowColumnBlock';
@@ -43,6 +46,9 @@ export const RichTextOptions: RenderOptions = {
     ['carousel']: (props: any) => <StoryblokCarousel {...props} />,
     ['spacer']: (props: any) => <StoryblokSpacer {...props} />,
     ['resource_carousel']: (props: any) => <StoryblokResourceCarousel {...props} />,
+    ['link_card']: (props: any) => <StoryblokLinkCard {...props} />,
+    ['avatar_group']: (props: any) => <StoryblokAvatarGroup {...props} />,
+    ['quote_card']: (props: any) => <StoryblokQuoteCard {...props} />,
   },
   nodeResolvers: {
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (

@@ -138,8 +138,8 @@
       },
       "emailRemindersSettings": {
         "title": "Email Reminders",
-        "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
-        "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
+        "introduction": "Trauma se guzarna mushkil ho sakta hai, khaaskar yedi aap ise akela kar rahe hain.",
+        "description": "Hum aapki upchar yaatra mein track par rehne mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
         "fieldLabel": "Yaad dilaya jaaye:",
         "twoWeeksLabel": "Do saptah baad",
         "oneMonthLabel": "Ek mahine ke baad",
@@ -147,7 +147,7 @@
         "neverLabel": "Kabhi nahi",
         "update": "Aap is setting ko kabhi bhi update kar sakte hain",
         "submitLabel": "Email Reminders Save karen",
-        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।</link>"
+        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se sampark karein.</link>"
       }
     }
   }

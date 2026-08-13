@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
     "duration": "{minutes} min",
     "partOfCourse": "Part of {course}",
+    "accountNeeded": "Account needed",
     "loadMore": "Load more",
     "noResults": {
       "title": "No matches for those filters",
@@ -73,18 +74,6 @@
         "label": "Staying safe now",
         "blurb": "Safety planning and coping with ongoing abuse",
         "description": "If you’re still in or near harm, safety comes first. Find practical support for safety planning and for coping when things feel unsafe right now."
-      }
-    },
-    "support": {
-      "title": "Get support",
-      "introduction": "Prefer to talk to someone? Bloom’s support services are here whenever you need them.",
-      "messaging": {
-        "title": "1-to-1 messaging",
-        "description": "Thoughtful replies to your questions and reflections, from our multilingual team, within 1–2 days."
-      },
-      "notes": {
-        "title": "Notes from Bloom",
-        "description": "Support from Bloom, delivered to your WhatsApp twice a week."
       }
     }
   }

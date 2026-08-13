@@ -68,11 +68,11 @@ const SessionCard = (props: SessionCardProps) => {
   const t = useTranslations('Courses');
   const locale = useLocale();
 
-  const scrollToSignupBanner = () => {
-    const signupBanner = document.getElementById('signup-banner');
+  const scrollToSignupSection = () => {
+    const signupSection = document.getElementById('signup-section');
 
-    if (signupBanner) {
-      const scrollToY = signupBanner.getBoundingClientRect().top + window.scrollY - 136;
+    if (signupSection) {
+      const scrollToY = signupSection.getBoundingClientRect().top + window.scrollY - 136;
 
       window.scrollTo({ top: scrollToY, behavior: 'smooth' });
     }
@@ -92,7 +92,7 @@ const SessionCard = (props: SessionCardProps) => {
         sx={cardActionStyle}
         {...(isLoggedIn
           ? { href: getDefaultFullSlug(session.full_slug, locale), component: Link }
-          : { onClick: scrollToSignupBanner })}
+          : { onClick: scrollToSignupSection })}
         aria-label={`${t('navigateToSession')} ${session.name}`}
       >
         <CardContent sx={cardContentStyle}>

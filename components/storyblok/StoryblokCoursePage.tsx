@@ -1,6 +1,6 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import SessionCard from '@/components/cards/SessionCard';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
@@ -193,7 +193,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
           </Box>
         </>
       </Container>
-      {!isLoggedIn && <SignUpBanner />}
+      {!isLoggedIn && <SignUpSection source="course" />}
     </Box>
   );
 };

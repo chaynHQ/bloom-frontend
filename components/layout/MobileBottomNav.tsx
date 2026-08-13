@@ -5,12 +5,11 @@ import { Box, ButtonBase, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
+import { mobileBottomNavHeight } from '@/lib/constants/banners';
 import { getMainNavItems, MainNavItem } from '@/lib/navigation/navigationConfig';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
-
-export const mobileBottomNavHeight = 100;
 
 interface ProcessedMobileNavItem {
   label: string;

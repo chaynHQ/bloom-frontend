@@ -1,7 +1,7 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -52,7 +52,7 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
         cta={isPartiallyPublicPage && !isLoggedIn ? <ScrollToSignUpButton /> : undefined}
       />
       {!isLoggedIn && isPartiallyPublicPage && <NotesFromBloomPromo />}
-      {!isLoggedIn && isPartiallyPublicPage && <SignUpBanner />}
+      {!isLoggedIn && isPartiallyPublicPage && <SignUpSection source="content-page" />}
       {(isLoggedIn || isFullyPublicPage) &&
         page_sections?.length > 0 &&
         page_sections.map((section: SbBlokData, index: number) => (

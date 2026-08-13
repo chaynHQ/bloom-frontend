@@ -14,6 +14,12 @@
     },
     "navigateBack": "Revenir à la page précédente",
     "navigateTo": "Aller vers",
+    "carousel": {
+      "regionLabel": "Carrousel de contenus",
+      "previous": "{name} : précédent",
+      "next": "{name} : suivant",
+      "goToPage": "{name} : aller à {page} sur {pages}"
+    },
     "footer": {
       "fundedByTitle": "Financé par",
       "chaynDescription": "Bloom vous est présenté par <link>Chayn</link>, une organisation mondiale à but non lucratif, dirigée par des personnes survivantes et des sympathisant·es du monde entier. Elle crée des ressources pour soutenir la guérison des personnes survivantes aux violences basées sur le genre.",
@@ -63,7 +69,7 @@
       "title": "404 - Page introuvable",
       "authenticatedDescription": "Cette page n’a pas pu être trouvée. Vérifiez l’URL ou retournez à la page de la bibliothèque.",
       "unauthenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URL ou retournez à la page d'accueil.",
-      "authenticatedRedirectButton": "Retour à la page de la bibliothèque.",
+      "authenticatedRedirectButton": "Retour à la page de la bibliothèque",
       "unauthenticatedRedirectButton": "Retour à la page d'accueil"
     },
     "alt": {
@@ -95,7 +101,8 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Icône de livre",
       "articleIcon": "Icône d'article",
-      "videoIcon": "Icône de vidéo"
+      "videoIcon": "Icône de vidéo",
+      "notes": "Illustration d'un téléphone avec une bulle de message contenant un cœur à l'écran"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/WP73HFzz",
     "survivor": "Survivant·e",
@@ -105,11 +112,17 @@
       "acceptLabel": "Accepter les Cookies",
       "declineLabel": "Reject Cookies"
     },
-    "signUpTodayPromo": {
-      "title": "Ouvre un compte gratuit aujourd’hui",
-      "description1": "Bloom est une plateforme en ligne qui t’aide à guérir des traumatismes. Que ce soit par les cours vidéo, les activités de réflexion ou la messagerie, il y a de nombreuses façons différentes de s’engager avec Bloom.",
-      "description2": "Inscris-toi ci-dessous pour avoir accès à l’ensemble de notre contenu et pour explorer tout ce que Bloom a à t’offrir.",
-      "button": "Commencer"
+    "supportSection": {
+      "title": "Trouver du soutien",
+      "introduction": "Tu préfères parler à quelqu’un ? Les services de soutien de Bloom sont là chaque fois que tu en as besoin.",
+      "messaging": {
+        "title": "Messagerie individuelle",
+        "description": "Des réponses attentives à tes questions et à tes réflexions, de la part de notre équipe multilingue, sous 1 à 2 jours."
+      },
+      "notes": {
+        "title": "Notes de Bloom",
+        "description": "Le soutien de Bloom, directement sur ton WhatsApp, deux fois par semaine."
+      }
     },
     "loginDialog": {
       "title": "Connectez-vous ou créez un compte",
@@ -161,6 +174,29 @@
     "characterCount": "{current}/{max} caractères",
     "scrollToSignUp": {
       "button": "Inscris-toi gratuitement"
+    },
+    "signUpSection": {
+      "title": "Conçu pour toi",
+      "introduction": "Bloom est là pour toi, qui que tu sois et où que tu sois.",
+      "multilingual": "Multilingue",
+      "freeAndAnonymous": "Gratuit et anonyme",
+      "exploreAtYourPace": "Explore à ton rythme",
+      "cta": "Rejoins Bloom, toujours gratuit"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Reprends là où tu en étais"
+      },
+      "sessions": {
+        "heading": "Sessions individuelles",
+        "introduction": "Des sessions sur reconnaître les violences, poser des limites, guérir, et bien plus encore.",
+        "browseAll": "Voir toutes les sessions"
+      },
+      "courses": {
+        "heading": "Cours",
+        "introduction": "Un point de départ accompagné. Chaque cours te guide à travers un ensemble de sessions, à ton rythme.",
+        "browseAll": "Voir tous les cours"
+      }
     }
   }
 }

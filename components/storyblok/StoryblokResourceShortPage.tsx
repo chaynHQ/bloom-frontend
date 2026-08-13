@@ -1,6 +1,6 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
+import { SignUpSection } from '@/components/common/SignUpSection';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
@@ -193,7 +193,7 @@ const StoryblokResourceShortPage = ({
         userContentPartners={getContentPartners}
       />
 
-      {!isLoggedIn && <SignUpBanner />}
+      {!isLoggedIn && <SignUpSection source="resource-short" />}
     </Box>
   );
 };

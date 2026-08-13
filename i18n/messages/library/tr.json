@@ -37,6 +37,7 @@
     "sessionCount": "{count, plural, one {# seans} other {# seans}}",
     "duration": "{minutes} dk",
     "partOfCourse": "{course} kursunun bir parçası",
+    "accountNeeded": "Hesap gerekli",
     "loadMore": "Daha fazla göster",
     "noResults": {
       "title": "Bu filtreler için sonuç yok",
@@ -73,18 +74,6 @@
         "label": "Şimdi güvende kalmak",
         "blurb": "Güvenlik planlaması ve süregelen istismarla baş etmek",
         "description": "Hâlâ zararın içindeysen ya da ona yakınsan, önce güvenlik gelir. Güvenlik planı yapmak ve işlerin şu an güvensiz hissettirdiği anlarla baş etmek için pratik destek bul."
-      }
-    },
-    "support": {
-      "title": "Destek al",
-      "introduction": "Biriyle konuşmayı mı tercih edersin? Bloom'un destek hizmetleri ihtiyaç duyduğun her an burada.",
-      "messaging": {
-        "title": "Bire bir mesajlaşma",
-        "description": "Sorularına ve düşüncelerine, çok dilli ekibimizden 1–2 gün içinde özenli yanıtlar."
-      },
-      "notes": {
-        "title": "Bloom'dan Notlar",
-        "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
       }
     }
   }

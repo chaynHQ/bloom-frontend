@@ -56,3 +56,5 @@ newrelic_agent.log
 *.tsbuildinfo
 # Storyblok translation working files (snapshots, proposals, todo/done arrays)
 .storyblok-translation/
+# Storyblok provisioning snapshots (component schemas and stories, taken before any write)
+.storyblok-provision/

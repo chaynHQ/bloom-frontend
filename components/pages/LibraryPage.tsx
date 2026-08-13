@@ -1,15 +1,16 @@
 'use client';
 
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import { EMAIL_REMINDERS_FREQUENCY, PROGRESS_STATUS } from '@/lib/constants/enums';
+import { SignUpSection } from '@/components/common/SignUpSection';
+import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
   LIBRARY_FILTERS_CLEARED,
   LIBRARY_ITEM_CLICKED,
   LIBRARY_LOAD_MORE_CLICKED,
   LIBRARY_SEARCHED,
+  LIBRARY_SUPPORT_CARD_CLICKED,
   LIBRARY_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -18,6 +19,7 @@ import {
   filterLibraryItems,
   FORMAT_KEYS,
   KIND_KEYS,
+  PROGRESS_STATUS_BY_ITEM_PROGRESS,
   THEME_KEYS,
   type Format,
   type KindFilter,
@@ -45,25 +47,21 @@ import {
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { SupportSection } from '../common/SupportSection';
 import Header from '../layout/Header';
 import { FilterGroups } from '../library/FilterGroups';
 import { LibraryCard } from '../library/LibraryCard';
 import { SectionLabel } from '../library/SectionLabel';
-import { SupportBand } from '../library/SupportBand';
 import { ThemeCards } from '../library/ThemeCards';
 
-// Cards shown before the "Load more" button, and how many more each press reveals.
 const PAGE_SIZE = 8;
 
-// Waits for the typing to settle before reporting a search.
 const SEARCH_EVENT_DEBOUNCE_MS = 1000;
 
-// Design: 264px of sidebar content plus a gutter before the divider.
 const SIDEBAR_CONTENT = 264;
 const SIDEBAR_GUTTER = 3; // theme spacing units
 const SIDEBAR_GUTTER_PX = SIDEBAR_GUTTER * 8;
 
-// Sits on the two columns rather than the Container.
 const BROWSE_PY = { xs: 4, md: 6 };
 
 const browseContainerStyle = { backgroundColor: 'pageBackground', py: '0 !important' } as const;
@@ -91,10 +89,8 @@ const searchFieldStyle = {
   },
 } as const;
 
-// Ties the mobile toggle to the group it opens.
 const FILTERS_ID = 'library-filters';
 
-// Collapsed behind the toggle below md, always open from md up.
 const filtersStyle = (open: boolean) =>
   ({ display: { xs: open ? 'block' : 'none', md: 'block' } }) as const;
 
@@ -145,13 +141,6 @@ const resultsHeaderStyle = {
   gap: 2,
 } as const;
 
-const headingStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '1.125rem',
-  fontWeight: 500,
-  letterSpacing: '0.15px',
-} as const;
-
 const kindToggleStyle = {
   mt: 2,
   mb: 3,
@@ -189,7 +178,7 @@ const themeDetailStyle = {
   mb: 2,
 } as const;
 
-const themeDetailTitleStyle = { ...headingStyle, fontWeight: 600, mb: 1 } as const;
+const themeDetailTitleStyle = { fontWeight: 500, mb: 1 } as const;
 
 const noResultsStyle = {
   display: 'flex',
@@ -206,39 +195,26 @@ const cardGridStyle = {
   gap: 3,
 } as const;
 
-// A multi-select filter reports as a comma-separated list.
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
-
-// A LibraryItem's `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS
-// ('Started'), as the course and resource progress events do.
-const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
-  NonNullable<LibraryItem['progress']> | 'none',
-  PROGRESS_STATUS
-> = {
-  started: PROGRESS_STATUS.STARTED,
-  completed: PROGRESS_STATUS.COMPLETED,
-  none: PROGRESS_STATUS.NOT_STARTED,
-};
 
 export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const t = useTranslations('Library');
   const items = useLibraryItems(stories);
 
-  // Deep links seed the initial filter state: `?type=course` opens on the Courses tab,
-  // `?theme=<key>` selects a theme card. An unknown theme key is ignored.
+  // Deep links seed the initial filter state; an unknown theme or type key is ignored.
   const searchParams = useSearchParams();
   const themeParam = searchParams.get('theme');
   const initialTheme = THEME_KEYS.find((theme) => theme === themeParam);
+  const typeParam = searchParams.get('type');
 
   const [keyword, setKeyword] = useState('');
   const [themes, setThemes] = useState<ThemeKey[]>(initialTheme ? [initialTheme] : []);
   const [kind, setKind] = useState<KindFilter>(
-    searchParams.get('type') === 'course' ? 'course' : 'all',
+    KIND_KEYS.find((option) => option === typeParam) ?? 'all',
   );
   const [formats, setFormats] = useState<Format[]>([]);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  // Small-screen open/closed state only; on desktop the checkboxes are always shown.
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -254,8 +230,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const showEmailRemindersBanner =
     isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
 
-  // A signed-in user briefly looks anonymous: partnerAccesses/createdAt only arrive after the
-  // getUser query.
+  // A signed-in user briefly looks anonymous: partnerAccesses/createdAt arrive with getUser.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
 
   const eventUserData = useMemo(
@@ -263,7 +238,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // Format and length describe a single session, which a course is not.
   const sessionFiltersDisabled = kind === 'course';
 
   const selectKind = (next: KindFilter) => {
@@ -274,7 +248,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     }
   };
 
-  // Only the formats present in the library are offered.
   const formatOptions = useMemo(
     () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
     [items],
@@ -285,17 +258,12 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [items, keyword, themes, kind, formats, lengths],
   );
 
-  // ---- Analytics ----
-  // Each event reports the result count at the time of the interaction. The count is also an
-  // effect dependency, so each effect guards on what it last reported.
   const resultsCount = results.length;
 
-  // The whole filter state as one string: what every filter event reports, and (with the keyword)
-  // the key that resets pagination.
+  // The whole filter state as one string: what filter events report, and the pagination reset key.
   const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
   const filterKey = `${keyword}|${filterState}`;
 
-  // Reset pagination whenever the filters change.
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (filterKey !== prevFilterKey) {
     setPrevFilterKey(filterKey);
@@ -305,7 +273,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
 
-  // Waits for the user to settle, then reports the filters the page opened on.
   const viewLogged = useRef(false);
   useEffect(() => {
     if (!userSettled || viewLogged.current) return;
@@ -323,7 +290,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const loggedSearch = useRef('');
   useEffect(() => {
     const term = keyword.trim();
-    // Clearing the box arms the next search.
     if (!term) {
       loggedSearch.current = '';
       return;
@@ -340,7 +306,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     return () => clearTimeout(timer);
   }, [keyword, resultsCount, eventUserData]);
 
-  // Reports the whole filter state on every change.
   const loggedFilterState = useRef(filterState);
   useEffect(() => {
     if (loggedFilterState.current === filterState) return;
@@ -381,7 +346,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     });
   };
 
-  // Selected themes appear as descriptive cards above the results.
   const selectedThemes = THEME_KEYS.filter((theme) => themes.includes(theme));
   const filtersActive = Boolean(keyword) || formats.length > 0 || lengths.length > 0;
 
@@ -415,7 +379,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
       <ThemeCards themes={themes} setThemes={setThemes} />
 
-      {/* On mobile the row stacks and the sidebar divider is dropped. */}
       <Container sx={browseContainerStyle}>
         <Box sx={browseRowStyle}>
           <Box sx={sidebarStyle}>
@@ -439,7 +402,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                       </InputAdornment>
                     ),
                   },
-                  // The field has no visible label, so it carries its own accessible name.
                   htmlInput: { 'qa-id': 'library-search-input', 'aria-label': t('searchLabel') },
                 }}
               />
@@ -464,7 +426,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               />
             )}
 
-            {/* Always shown on desktop, behind the toggle on mobile. */}
             <Box id={FILTERS_ID} sx={filtersStyle(mobileFiltersOpen)}>
               <FilterGroups
                 formatOptions={formatOptions}
@@ -479,7 +440,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
           <Box sx={resultsColumnStyle}>
             <Box sx={resultsHeaderStyle}>
-              <Typography sx={headingStyle}>{t('resultsHeading')}</Typography>
+              <Typography variant="h4">{t('resultsHeading')}</Typography>
               <Typography
                 variant="body2"
                 qa-id="library-results-count"
@@ -510,7 +471,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
             {selectedThemes.map((theme) => (
               <Box key={theme} sx={themeDetailStyle}>
-                <Typography sx={themeDetailTitleStyle}>{t(`themes.${theme}.label`)}</Typography>
+                <Typography variant="h4" sx={themeDetailTitleStyle}>
+                  {t(`themes.${theme}.label`)}
+                </Typography>
                 <Typography sx={{ color: 'grey.800' }}>
                   {t(`themes.${theme}.description`)}
                 </Typography>
@@ -519,7 +482,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
             {results.length === 0 ? (
               <Box sx={noResultsStyle}>
-                <Typography sx={{ ...headingStyle, mb: 1 }}>{t('noResults.title')}</Typography>
+                <Typography variant="h4" sx={{ mb: 1 }}>
+                  {t('noResults.title')}
+                </Typography>
                 <Typography sx={{ color: 'grey.700', maxWidth: 420 }}>
                   {t('noResults.body')}
                 </Typography>
@@ -551,10 +516,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         </Box>
       </Container>
 
-      <SupportBand eventUserData={eventUserData} />
+      <SupportSection eventUserData={eventUserData} eventName={LIBRARY_SUPPORT_CARD_CLICKED} />
 
-      {/* Sign up (the header CTA scrolls here), and — once signed in — turn on email reminders. */}
-      {!isLoggedIn && <SignUpBanner />}
+      {!isLoggedIn && <SignUpSection source="library" />}
       {showEmailRemindersBanner && <EmailRemindersSettingsBanner />}
     </Box>
   );
