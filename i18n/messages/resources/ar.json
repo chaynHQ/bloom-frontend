@@ -3,7 +3,7 @@
     "backToConversations": "العودة إلى المحادثات",
     "backToShorts": "العودة إلى المقاطع القصيرة",
     "backToVideos": "العودة إلى الفيديوهات",
-    "backToSomatics": "العودة إلى التعافي الجسدي",
+    "backToSomatics": "العودة إلى الرعاية الجسدية",
     "nextVideoButtonLabel": "الفيديو التالي",
     "nextConversationButtonLabel": "المحادثة التالية",
     "nextSessionButtonLabel": "الجلسة التالية",
@@ -51,7 +51,7 @@
       "books": "كتب",
       "articles": "مقالات",
       "video_practices": "تمارين بالفيديو",
-      "audios": "Podcasts"
+      "audios": "بودكاست"
     }
   }
 }
