@@ -1,3 +1,4 @@
+import { CardStatusBadge } from '@/components/cards/CardStatusBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { type ContentType, type LibraryItem } from '@/lib/utils/libraryData';
@@ -6,10 +7,7 @@ import type { SvgIconComponent } from '@mui/icons-material';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import ArticleRounded from '@mui/icons-material/ArticleRounded';
-import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
-import DonutLargeRounded from '@mui/icons-material/DonutLargeRounded';
 import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
-import LockOutlined from '@mui/icons-material/LockOutlined';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
 import RouteRounded from '@mui/icons-material/RouteRounded';
 import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
@@ -50,31 +48,6 @@ const actionAreaStyle = {
   alignItems: 'stretch',
   backgroundColor: 'cardSurface',
   '&:hover': { backgroundColor: 'common.white' },
-} as const;
-
-const cornerBadgeStyle = {
-  position: 'absolute',
-  top: 0,
-  insetInlineEnd: 0,
-  zIndex: 1,
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 0.5,
-  py: 1,
-  pl: 1,
-  pr: 1.5,
-  backgroundColor: 'panelSurface',
-  borderInlineStart: '1px solid',
-  borderBottom: '1px solid',
-  borderColor: 'cardBorder',
-  borderEndStartRadius: '8px',
-} as const;
-
-const cornerBadgeLabelStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '0.75rem',
-  fontWeight: 500,
-  color: 'grey.800',
 } as const;
 
 const imagePanelStyle = {
@@ -165,7 +138,6 @@ export function LibraryCard({
   onSelect?: () => void;
 }) {
   const t = useTranslations('Library');
-  const tS = useTranslations('Shared');
   const isCourse = item.kind === 'course';
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
   const BadgeIcon = CONTENT_TYPE_ICON[badgeType];
@@ -181,24 +153,11 @@ export function LibraryCard({
         onClick={onSelect}
         sx={actionAreaStyle}
       >
-        {item.progress && (
-          <Box qa-id="library-card-progress" data-progress={item.progress} sx={cornerBadgeStyle}>
-            {item.progress === 'completed' ? (
-              <CheckCircleRounded sx={{ fontSize: 16, color: 'secondary.dark' }} />
-            ) : (
-              <DonutLargeRounded sx={{ fontSize: 14, color: 'grey.700' }} />
-            )}
-            <Typography sx={cornerBadgeLabelStyle}>
-              {tS(`progressStatus.${item.progress}`)}
-            </Typography>
-          </Box>
-        )}
-        {showAccountBadge && (
-          <Box qa-id="library-card-account-needed" sx={cornerBadgeStyle}>
-            <LockOutlined sx={{ fontSize: 14, color: 'grey.700' }} />
-            <Typography sx={cornerBadgeLabelStyle}>{t('accountNeeded')}</Typography>
-          </Box>
-        )}
+        <CardStatusBadge
+          qaId="library-card"
+          progress={item.progress}
+          accountNeeded={showAccountBadge}
+        />
 
         {isIllustrated && (
           <Box sx={imagePanelStyle}>

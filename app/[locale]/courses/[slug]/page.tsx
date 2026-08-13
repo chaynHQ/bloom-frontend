@@ -3,6 +3,7 @@ import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getCourseStories } from '@/lib/utils/getLibraryStories';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -72,11 +73,14 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, slug } = await params;
 
-  const story = await getStory(locale, slug);
+  const [story, courseStories] = await Promise.all([
+    getStory(locale, slug),
+    getCourseStories(locale),
+  ]);
 
   if (!story) {
     notFound();
   }
 
-  return <StoryblokCoursePage story={story} />;
+  return <StoryblokCoursePage story={story} courseStories={courseStories} />;
 }

@@ -8,7 +8,11 @@
     "navigateToCourse": "Course pe leke jaiye",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",
-      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
+      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye",
+      "sessionsTitle": "Is course ke sessions",
+      "beginCourse": "Course shuru karein",
+      "continueCourse": "Course jaari rakhein",
+      "otherCoursesTitle": "Dusre courses dekhein"
     },
     "sessionDetail": {
       "videoTitle": "Video",
@@ -28,7 +32,13 @@
         "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
         "startButton": "Hame sandesh bhejein"
       },
-      "sessionComplete": "Session poora hua"
+      "sessionComplete": "Session poora hua",
+      "currentSession": "Maujooda session",
+      "currentCourse": "Maujooda course",
+      "current": "Maujooda",
+      "nextSession": "Agla session",
+      "viewCourseDetail": "Course ki detail dekhein",
+      "closeSessions": "Band karein"
     },
     "sessionFeedback": {
       "title": "Yeh session kaisa aapko kaisa laga?",

@@ -1,4 +1,4 @@
-describe.only('A course session user', () => {
+describe('A course session user', () => {
   const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
@@ -29,11 +29,20 @@ describe.only('A course session user', () => {
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Activity').click();
+    // The playlist lists every session in the course and marks the one being viewed.
+    cy.get('[qa-id=session-playlist]').first().should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Bonus content').click();
+    // Activity opens by default; bonus content starts collapsed and expands on click.
+    cy.get('[qa-id=session-activity] button').should('have.attr', 'aria-expanded', 'true');
 
-    cy.get('button').contains('Session complete').click();
+    cy.get('[qa-id=session-bonus]')
+      .first()
+      .within(() => {
+        cy.get('button').should('have.attr', 'aria-expanded', 'false').click();
+        cy.get('button').should('have.attr', 'aria-expanded', 'true');
+      });
+
+    cy.get('[qa-id=session-complete-button]').click();
 
     cy.wait(2000);
 

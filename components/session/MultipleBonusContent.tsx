@@ -1,9 +1,7 @@
 'use client';
 
 import SessionContentCard from '@/components/cards/SessionContentCard';
-import { Dots } from '@/components/common/Dots';
 import { RichTextOptions } from '@/lib/utils/richText';
-import LinkIcon from '@mui/icons-material/Link';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 export type BonusContent = {
@@ -11,30 +9,26 @@ export type BonusContent = {
   title: string;
   content: unknown;
 };
+
 interface MultipleBonusContentProps {
   bonus: BonusContent[];
   eventData: { [key: string]: any };
 }
 
-const MultipleBonusContent = (props: MultipleBonusContentProps) => {
-  const { bonus, eventData } = props;
-
-  return (
-    <>
-      <Dots />
-      {bonus.map((bonus: BonusContent) => (
-        <SessionContentCard
-          key={bonus._uid}
-          title={bonus.title}
-          titleIcon={LinkIcon}
-          eventPrefix="SESSION_BONUS_CONTENT"
-          eventData={eventData}
-        >
-          <>{render(bonus.content as StoryblokRichtext, RichTextOptions)}</>
-        </SessionContentCard>
-      ))}
-    </>
-  );
-};
+const MultipleBonusContent = ({ bonus, eventData }: MultipleBonusContentProps) => (
+  <>
+    {bonus.map((bonusItem: BonusContent) => (
+      <SessionContentCard
+        key={bonusItem._uid}
+        qaId="session-bonus"
+        title={bonusItem.title}
+        eventPrefix="SESSION_BONUS_CONTENT"
+        eventData={eventData}
+      >
+        <>{render(bonusItem.content as StoryblokRichtext, RichTextOptions)}</>
+      </SessionContentCard>
+    ))}
+  </>
+);
 
 export default MultipleBonusContent;

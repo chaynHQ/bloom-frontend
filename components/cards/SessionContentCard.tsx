@@ -1,101 +1,129 @@
 'use client';
 
 import logEvent from '@/lib/utils/logEvent';
-import { rowStyle } from '@/styles/common';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Collapse,
-  SvgIconTypeMap,
-  Typography,
-} from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { cardShadow } from '@/styles/common';
+import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
+import { Box, ButtonBase, Collapse, Typography } from '@mui/material';
+import { ReactNode, useId, useState } from 'react';
 
 const cardStyle = {
-  width: { xs: '100%', md: 700 },
-  marginTop: 0,
-  backgroundColor: 'background.default',
+  borderRadius: '16px',
+  border: '1px solid',
+  borderColor: 'cardBorder',
+  backgroundColor: 'cardSurface',
+  boxShadow: cardShadow,
+  overflow: 'hidden',
+  transition: 'border-color 150ms ease',
+  '&:hover': { borderColor: 'secondary.dark' },
+} as const;
+
+// Hover washes the header in the brand tint; keyboard focus adds an inset ring, which the card's
+// overflow clip cannot crop the way an outset one would. The open state is carried by the rotated
+// chevron and the body's top rule rather than a third background colour.
+const headerStyle = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  gap: 2,
+  width: '100%',
+  p: 2,
+  textAlign: 'start',
+  transition: 'background-color 150ms ease',
+  '&:hover': { backgroundColor: 'primary.light' },
+  '&.Mui-focusVisible': {
+    outline: '2px solid',
+    outlineColor: 'primary.dark',
+    outlineOffset: '-2px',
+    backgroundColor: 'primary.light',
+  },
+} as const;
+
+// Height is left to the content: a fixed 20px box clips descenders and Arabic diacritics.
+const badgeStyle = {
+  display: 'inline-block',
+  mb: 1,
+  px: 1,
+  py: 0.25,
+  borderRadius: '8px',
+  backgroundColor: 'chipBackground',
+  fontFamily: 'headingFontFamily',
+  fontSize: '0.875rem',
+  fontWeight: 500,
+  lineHeight: 1.4,
+  color: 'grey.800',
+} as const;
+
+const chevronStyle = (expanded: boolean) =>
+  ({
+    flexShrink: 0,
+    mt: 0.5,
+    color: 'primary.dark',
+    transition: 'transform 200ms ease',
+    transform: expanded ? 'rotate(180deg)' : 'none',
+  }) as const;
+
+const bodyStyle = {
+  px: 2,
+  pt: 2,
+  pb: 2,
+  borderTop: '1px solid',
+  borderColor: 'cardBorder',
 } as const;
 
 interface SessionContentCardProps {
-  children: any;
   title: string;
-  titleIcon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-  titleIconSize?: number;
-  initialExpanded?: boolean;
+  badge?: string;
+  children: ReactNode;
   eventPrefix: string;
   eventData: { [key: string]: any };
+  initialExpanded?: boolean;
+  qaId?: string;
 }
 
-const SessionContentCard = (props: SessionContentCardProps) => {
-  const {
-    children,
-    title,
-    titleIcon,
-    titleIconSize = 28,
-    initialExpanded = false,
-    eventPrefix,
-    eventData,
-  } = props;
-  const t = useTranslations('Courses');
-  const TitleIcon = titleIcon;
-  eventPrefix;
-  const [expanded, setExpanded] = useState<boolean>(initialExpanded);
+const SessionContentCard = ({
+  title,
+  badge,
+  children,
+  eventPrefix,
+  eventData,
+  initialExpanded = false,
+  qaId,
+}: SessionContentCardProps) => {
+  const [expanded, setExpanded] = useState(initialExpanded);
+  const bodyId = useId();
 
-  const handleExpandClick = () => {
+  const handleToggle = () => {
     setExpanded(!expanded);
     logEvent(`${eventPrefix}_${!expanded ? 'EXPANDED' : 'COLLAPSED'}`, eventData);
   };
 
-  const titleIconStyle = {
-    width: { xs: titleIconSize, md: titleIconSize + 4 },
-    height: { xs: titleIconSize, md: titleIconSize + 4 },
-  } as const;
-
-  const contentContainerStyle = {
-    paddingY: '2rem !important',
-  } as const;
-
-  const titleContainerStyle = {
-    ...rowStyle,
-    alignItems: 'center',
-    gap: 1.5,
-    paddingY: { xs: '1rem !important', md: '1.25rem !important' },
-    bgcolor: expanded ? 'primary.light' : 'none',
-  } as const;
-
-  const arrowStyle = {
-    width: { xs: 26, md: 30 },
-    height: { xs: 26, md: 30 },
-    transform: expanded ? 'rotate(180deg)' : 'none',
-  } as const;
-
   return (
-    <Card sx={cardStyle} key={''}>
-      <CardActionArea onClick={handleExpandClick} aria-label={`${t('expand')} ${title}`}>
-        <CardContent sx={titleContainerStyle}>
-          <TitleIcon sx={titleIconStyle} color="error" />
-          <Typography
-            component="h3"
-            variant="h3"
-            sx={{
-              mb: 0,
-              flex: 1,
-            }}
-          >
+    <Box qa-id={qaId} sx={cardStyle}>
+      <ButtonBase
+        disableRipple
+        onClick={handleToggle}
+        aria-expanded={expanded}
+        aria-controls={bodyId}
+        sx={headerStyle}
+      >
+        <Box>
+          {badge && (
+            <Typography component="span" sx={badgeStyle}>
+              {badge}
+            </Typography>
+          )}
+          <Typography variant="h3" component="h2" sx={{ mb: 0 }}>
             {title}
           </Typography>
-          <KeyboardArrowDownIcon sx={arrowStyle} color="error" />
-        </CardContent>
-      </CardActionArea>
+        </Box>
+        <ExpandMoreRounded sx={chevronStyle(expanded)} />
+      </ButtonBase>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent sx={contentContainerStyle}>{children}</CardContent>
+        <Box id={bodyId} sx={bodyStyle}>
+          {children}
+        </Box>
       </Collapse>
-    </Card>
+    </Box>
   );
 };
 

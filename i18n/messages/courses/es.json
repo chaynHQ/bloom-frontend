@@ -8,7 +8,11 @@
     "navigateToCourse": "Navegar al curso -",
     "courseDetail": {
       "introductionTitle": "Introducción al curso",
-      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>"
+      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>",
+      "sessionsTitle": "Sesiones de este curso",
+      "beginCourse": "Empezar el curso",
+      "continueCourse": "Continuar el curso",
+      "otherCoursesTitle": "Ver otros cursos"
     },
     "sessionDetail": {
       "videoTitle": "Video",
@@ -28,7 +32,13 @@
         "detailImmediateHelp": "Si estás en peligro inminente de amenaza o daño, por favor ve a ‘Ayuda inmediata’ en el menú, para encontrar el servicio de apoyo adecuado para ti.",
         "startButton": "Envíanos un mensaje"
       },
-      "sessionComplete": "Sesión completa"
+      "sessionComplete": "Sesión completa",
+      "currentSession": "Sesión actual",
+      "currentCourse": "Curso actual",
+      "current": "Actual",
+      "nextSession": "Siguiente sesión",
+      "viewCourseDetail": "Ver detalles del curso",
+      "closeSessions": "Cerrar"
     },
     "sessionFeedback": {
       "title": "¿Cómo fue esta sesión?",

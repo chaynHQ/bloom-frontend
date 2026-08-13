@@ -8,7 +8,11 @@
     "navigateToCourse": "الانتقال إلى الدورة -",
     "courseDetail": {
       "introductionTitle": "مقدّمة الدورة",
-      "introductionDescription": "يمكنك مشاهدة فيديو المقدّمة أو قراءة <transcriptLink>النص المكتوب للفيديو</transcriptLink>"
+      "introductionDescription": "يمكنك مشاهدة فيديو المقدّمة أو قراءة <transcriptLink>النص المكتوب للفيديو</transcriptLink>",
+      "sessionsTitle": "جلسات هذه الدورة",
+      "beginCourse": "بدء الدورة",
+      "continueCourse": "متابعة الدورة",
+      "otherCoursesTitle": "عرض دورات أخرى"
     },
     "sessionDetail": {
       "videoTitle": "فيديو",
@@ -28,7 +32,13 @@
         "detailImmediateHelp": "إذا كنت في خطر أو أذى وشيك، يُرجى الانتقال إلى 'مساعدة فورية' في القائمة للعثور على الخدمة المناسبة لدعمك.",
         "startButton": "راسِلنا"
       },
-      "sessionComplete": "اكتملت الجلسة"
+      "sessionComplete": "اكتملت الجلسة",
+      "currentSession": "الجلسة الحالية",
+      "currentCourse": "الدورة الحالية",
+      "current": "الحالية",
+      "nextSession": "الجلسة التالية",
+      "viewCourseDetail": "عرض تفاصيل الدورة",
+      "closeSessions": "إغلاق"
     },
     "sessionFeedback": {
       "title": "كيف كانت هذه الجلسة؟",

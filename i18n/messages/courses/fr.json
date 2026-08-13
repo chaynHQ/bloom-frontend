@@ -8,7 +8,11 @@
     "navigateToCourse": "Aller au cours -",
     "courseDetail": {
       "introductionTitle": "Début du cours",
-      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>"
+      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>",
+      "sessionsTitle": "Sessions de ce cours",
+      "beginCourse": "Commencer le cours",
+      "continueCourse": "Continuer le cours",
+      "otherCoursesTitle": "Voir d'autres cours"
     },
     "sessionDetail": {
       "videoTitle": "Vidéo",
@@ -28,7 +32,13 @@
         "detailImmediateHelp": "Si vous êtes en danger imminent , veuillez consulter la rubrique \"Aide immédiate\" dans le menu pour trouver le service qui pourra vous aider.",
         "startButton": "Envoyez-nous un message"
       },
-      "sessionComplete": "Session complète"
+      "sessionComplete": "Session complète",
+      "currentSession": "Session actuelle",
+      "currentCourse": "Cours actuel",
+      "current": "En cours",
+      "nextSession": "Session suivante",
+      "viewCourseDetail": "Voir les détails du cours",
+      "closeSessions": "Fermer"
     },
     "sessionFeedback": {
       "title": "Comment s’est déroulée la session? ",

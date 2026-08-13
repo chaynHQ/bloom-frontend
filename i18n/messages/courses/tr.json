@@ -8,7 +8,11 @@
     "navigateToCourse": "Kursa git -",
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
-      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku"
+      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku",
+      "sessionsTitle": "Bu kurstaki seanslar",
+      "beginCourse": "Kursa başla",
+      "continueCourse": "Kursa devam et",
+      "otherCoursesTitle": "Diğer kursları gör"
     },
     "sessionDetail": {
       "videoTitle": "Video",
@@ -28,7 +32,13 @@
         "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
         "startButton": "Bize mesaj gönder"
       },
-      "sessionComplete": "Seans tamamlandı"
+      "sessionComplete": "Seans tamamlandı",
+      "currentSession": "Mevcut seans",
+      "currentCourse": "Mevcut kurs",
+      "current": "Mevcut",
+      "nextSession": "Sonraki seans",
+      "viewCourseDetail": "Kurs detaylarını gör",
+      "closeSessions": "Kapat"
     },
     "sessionFeedback": {
       "title": "Bu seans nasıldı?",

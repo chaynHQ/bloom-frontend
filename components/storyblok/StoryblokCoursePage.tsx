@@ -1,41 +1,43 @@
 'use client';
 
-import { SignUpSection } from '@/components/common/SignUpSection';
-import SessionCard from '@/components/cards/SessionCard';
+import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import CourseHeader from '@/components/course/CourseHeader';
+import { SignUpSection } from '@/components/common/SignUpSection';
+import { CourseHero } from '@/components/course/CourseHero';
 import CourseIntroduction from '@/components/course/CourseIntroduction';
+import { CourseSessionList } from '@/components/course/CourseSessionList';
+import { OtherCourses } from '@/components/course/OtherCourses';
 import { useGetUserCoursesQuery } from '@/lib/api';
-import { COURSE_OVERVIEW_VIEWED } from '@/lib/constants/events';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import {
+  COURSE_OTHER_COURSE_CLICKED,
+  COURSE_OVERVIEW_VIEWED,
+  COURSE_SESSION_CLICKED,
+  COURSE_START_CLICKED,
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
-import { useTypedSelector } from '@/lib/hooks/store';
+import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { useScrollToSignUp } from '@/lib/hooks/useScrollToSignUp';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
+import { getCourseSessions, type CourseSession } from '@/lib/utils/courseSessions';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
+import { type LibraryItem, type LibraryStory } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
-import { rowStyle } from '@/styles/common';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
-import { useEffect, useMemo } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useMemo, useRef } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-const containerStyle = {
-  backgroundColor: 'secondary.light',
-} as const;
+const OTHER_COURSES_SHOWN = 2;
 
-const sessionsContainerStyle = {
-  marginTop: 6,
-} as const;
-
-const cardsContainerStyle = {
-  ...rowStyle,
-  flexDirection: { xs: 'column', md: 'row' },
-  gap: { xs: 0, md: 4 },
-} as const;
+// The redesign has no slot for the course intro video, but courses that have one still need to
+// surface it — so it sits as its own band between the hero and the session list.
+const introSectionStyle = { backgroundColor: 'secondary.light' } as const;
 
 export interface StoryblokCoursePageProps {
   _uid: string;
@@ -52,7 +54,13 @@ export interface StoryblokCoursePageProps {
   component: 'Course';
 }
 
-const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokCoursePage = ({
+  story: initialStory,
+  courseStories = [],
+}: {
+  story: ISbStoryData;
+  courseStories?: LibraryStory[];
+}) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
@@ -69,6 +77,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
+  const locale = useLocale();
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -77,6 +86,7 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const isUserLoading = useIsUserLoading();
   const courses = useTypedSelector((state) => state.courses);
+  const scrollToSignUp = useScrollToSignUp();
 
   useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
@@ -101,15 +111,77 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
     [courses, storyUuid],
   );
 
-  const eventData = {
-    course_name: name,
-    course_storyblok_uuid: storyUuid,
-    course_progress: courseProgress,
+  const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);
+
+  const progressByUuid = useMemo(() => {
+    const userCourse = courses?.find((course) => course.storyblokUuid === storyUuid);
+    return (userCourse?.sessions ?? []).reduce<Record<string, CardProgress>>((map, session) => {
+      map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
+      return map;
+    }, {});
+  }, [courses, storyUuid]);
+
+  // The next unfinished session, so a returning user picks up where they left off.
+  const nextSession = useMemo(
+    () => sessions.find((session) => progressByUuid[session.uuid] !== 'completed') ?? sessions[0],
+    [sessions, progressByUuid],
+  );
+
+  const libraryStories = useMemo(
+    () => ({
+      courses: courseStories,
+      courseSessions: [],
+      shorts: [],
+      somatics: [],
+      conversations: [],
+    }),
+    [courseStories],
+  );
+  const otherCourses = useLibraryItems(libraryStories)
+    .filter((item) => item.id !== storyUuid)
+    .slice(0, OTHER_COURSES_SHOWN);
+
+  const eventData = useMemo(
+    () => ({
+      course_name: name,
+      course_storyblok_uuid: storyUuid,
+      course_progress: courseProgress,
+    }),
+    [name, storyUuid, courseProgress],
+  );
+
+  const hasLoggedView = useRef(false);
+  useEffect(() => {
+    if (hasLoggedView.current || isUserLoading) return;
+    hasLoggedView.current = true;
+    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
+  }, [eventData, isUserLoading]);
+
+  const handleCtaClick = () => {
+    logEvent(COURSE_START_CLICKED, {
+      ...eventData,
+      course_cta_target: isLoggedIn ? (nextSession?.href ?? null) : 'signup',
+    });
+    if (!isLoggedIn) scrollToSignUp();
   };
 
-  useEffect(() => {
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  });
+  const handleSessionSelect = (session: CourseSession) => {
+    logEvent(COURSE_SESSION_CLICKED, {
+      ...eventData,
+      session_name: session.name,
+      session_storyblok_uuid: session.uuid,
+      session_position: session.position,
+    });
+  };
+
+  const handleOtherCourseSelect = (course: LibraryItem, index: number) => {
+    logEvent(COURSE_OTHER_COURSE_CLICKED, {
+      ...eventData,
+      other_course_name: course.title,
+      other_course_storyblok_uuid: course.id,
+      other_course_position: index + 1,
+    });
+  };
 
   if (!userAccess) {
     // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
@@ -135,64 +207,40 @@ const StoryblokCoursePage = ({ story: initialStory }: { story: ISbStoryData }) =
         included_for_partners,
       })}
     >
-      <CourseHeader
+      <CourseHero
         name={name}
         description={description}
-        image_with_background={image_with_background}
-        eventData={eventData}
+        imageSrc={image_with_background?.filename}
+        imageAlt={image_with_background?.alt}
+        sessionCount={sessions.length}
         courseProgress={courseProgress}
-        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
+        ctaHref={isLoggedIn ? nextSession?.href : undefined}
+        ctaLabel={
+          courseProgress === PROGRESS_STATUS.NOT_STARTED
+            ? t('courseDetail.beginCourse')
+            : t('courseDetail.continueCourse')
+        }
+        onCtaClick={handleCtaClick}
+        backHref="/library"
+        backLabel={t('backToLibrary')}
       />
-      <Container sx={containerStyle}>
-        <>
-          {video && (
-            <CourseIntroduction
-              video={video}
-              name={name}
-              video_transcript={video_transcript}
-              eventData={eventData}
-            />
-          )}
-          <Box sx={sessionsContainerStyle}>
-            {weeks.map((week: any) => {
-              return (
-                <Box
-                  key={week.name.split(':')[0]}
-                  sx={{
-                    mb: 6,
-                  }}
-                >
-                  <Typography
-                    key={week.name}
-                    component="h2"
-                    variant="h2"
-                    sx={{
-                      mb: { xs: 0, md: 3.5 },
-                    }}
-                  >
-                    {week.name}
-                  </Typography>
-                  <Box sx={cardsContainerStyle}>
-                    {week.sessions.map((session: any) => {
-                      const position = `${t('session')} ${session.position / 10 - 1}`;
-
-                      return (
-                        <SessionCard
-                          key={session.id}
-                          session={session}
-                          sessionSubtitle={position}
-                          storyblokCourseUuid={storyUuid}
-                          isLoggedIn={isLoggedIn}
-                        />
-                      );
-                    })}
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-        </>
-      </Container>
+      {video && (
+        <Container sx={introSectionStyle}>
+          <CourseIntroduction
+            video={video}
+            name={name}
+            video_transcript={video_transcript}
+            eventData={eventData}
+          />
+        </Container>
+      )}
+      <CourseSessionList
+        sessions={sessions}
+        progressByUuid={progressByUuid}
+        accountNeeded={!isLoggedIn}
+        onSessionSelect={handleSessionSelect}
+      />
+      <OtherCourses courses={otherCourses} onCourseSelect={handleOtherCourseSelect} />
       {!isLoggedIn && <SignUpSection source="course" />}
     </Box>
   );
