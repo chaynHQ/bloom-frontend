@@ -1,0 +1,700 @@
+{
+    "Auth": {
+        "introduction": "يقدّم Bloom المعرفة والتمكين للناجيات والناجين من خلال دورات عن بُعد تجمع بين فهم الصدمة والعنف القائم على النوع الاجتماعي وممارسات علاجية تساعد على التعافي من الصدمة.",
+        "getStartedBloom": "لنبدأ مع Bloom",
+        "getStartedWith": "لنبدأ برمز {{partnerName}}",
+        "loginLink": "هل لديك حساب بالفعل؟ <loginLink>الانتقال إلى تسجيل الدخول<\/loginLink>",
+        "terms": "تعني المتابعة موافقتك على <termsLink>شروط الخدمة<\/termsLink> و<privacyLink>سياسة الخصوصية<\/privacyLink>",
+        "login": {
+            "title": "أهلًا بعودتك",
+            "resetPasswordLink": "هل نسيت كلمة المرور؟ <resetLink>إعادة التعيين من هنا<\/resetLink>",
+            "createAnAccountLink": "ليس لديك حساب؟ <createAnAccountLink>إنشاء حساب<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "إنشاء حساب",
+            "loginRedirect": "هل لديك حساب بالفعل؟ <loginLink>تسجيل الدخول<\/loginLink>",
+            "partnershipsTitle": "شراكاتنا",
+            "partnershipsDescription": "إذا وصلت إلى Bloom عبر أحد شركائنا، يمكنك النقر على شعاره أدناه."
+        },
+        "resetPassword": {
+            "title": "إعادة تعيين كلمة المرور"
+        },
+        "form": {
+            "codeLabel": "رمز الوصول",
+            "nameLabel": "الاسم الأول\/الاسم المستعار",
+            "emailLabel": "البريد الإلكتروني",
+            "passwordLabel": "كلمة المرور",
+            "contactPermissionLabel": "تلقّي رسائل بريدية حول الموارد الجديدة وفرص مشاركة ملاحظاتك معنا",
+            "registerSubmit": "إنشاء حساب",
+            "resetPasswordStep1": "سنرسل إليك رسالة بريدية لبدء إعادة تعيين كلمة المرور.",
+            "resetPasswordStep2": "اقتربنا! يمكنك الآن تعيين كلمة المرور الجديدة.",
+            "resetPasswordSubmit": "إعادة تعيين كلمة المرور",
+            "resendPasswordSubmit": "إعادة إرسال الرسالة",
+            "resetPasswordSent": "يُرجى التحقّق من بريدك الإلكتروني بحثًا عن رابط إعادة التعيين من Bloom. لم يصلك الرابط؟ يمكنك مراجعة مجلد الرسائل غير المرغوب فيها أو إعادة إرسال الرسالة.",
+            "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور! يمكنك الآن متابعة تسجيل الدخول بكلمة المرور الجديدة.",
+            "loginSubmit": "تسجيل الدخول",
+            "createUserError": "حدث خطأ أثناء إعداد حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+            "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+            "codeErrors": {
+                "internal": "حدث خطأ أثناء التحقّق من رمز الوصول. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+                "expired": "انتهت صلاحية هذا الرمز. يُرجى التواصل مع فريق {{partnerName}}.",
+                "invalid": "يبدو أن رمز الوصول غير صالح. يُرجى التحقّق من الأخطاء الإملائية أو التواصل مع فريق {{partnerName}}.",
+                "alreadyInUse": "سبق استخدام هذا الرمز. إذا اعتقدت أن هناك خطأً، يُرجى التواصل مع فريق {{partnerName}}."
+            },
+            "firebase": {
+                "wrongPassword": "كلمة المرور غير صحيحة، يُرجى المحاولة مرة أخرى أو تسجيل الخروج وإعادة تعيين كلمة المرور.",
+                "authError": "لم نتمكّن من العثور على حساب بهذا البريد الإلكتروني وكلمة المرور. يُرجى التحقّق من البريد الإلكتروني وكلمة المرور.",
+                "invalidEmail": "يبدو أن بريدك الإلكتروني غير صالح، يُرجى تصحيح أي أخطاء إملائية للمتابعة.",
+                "tooManyAttempts": "محاولات تسجيل دخول فاشلة كثيرة، يُرجى الانتظار بضع دقائق أو إعادة تعيين كلمة المرور الآن.",
+                "weakPassword": "يجب أن تتكوّن كلمة المرور من 8 أحرف على الأقل وألّا تكون سهلة التخمين. يمكنك تجربة دمج بضع كلمات معًا — مثل 'نهر صباح أزرق'.",
+                "emailAlreadyInUse": "هذا البريد الإلكتروني مسجَّل بالفعل في Bloom، يُرجى الانتقال إلى <loginLink>تسجيل الدخول<\/loginLink> للمتابعة.",
+                "invalidCode": "رابط إعادة تعيين كلمة المرور هذا غير صالح، يُرجى <resetLink>إعادة بدء العملية<\/resetLink> والمحاولة مرة أخرى.",
+                "expiredCode": "انتهت الآن صلاحية رابط إعادة تعيين كلمة المرور، يُرجى <resetLink>إعادة بدء العملية<\/resetLink> والمحاولة مرة أخرى.",
+                "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ."
+            },
+            "phoneNumberLabel": "رقم الهاتف",
+            "verificationCodeLabel": "رمز التحقّق",
+            "mfaTriggerError": "حدث خطأ أثناء إرسال رمز الرسالة النصية. يُرجى المحاولة مرة أخرى.",
+            "mfaVerificationIdMissing": "يُرجى طلب رمز عبر رسالة نصية أولًا.",
+            "mfaEnrollError": "حدث خطأ أثناء تفعيل المصادقة الثنائية. يُرجى المحاولة مرة أخرى.",
+            "mfaFinalizeError": "حدث خطأ أثناء إتمام إعداد المصادقة الثنائية. يُرجى المحاولة مرة أخرى.",
+            "mfaError": "رمز التحقّق غير صالح. يُرجى المحاولة مرة أخرى.",
+            "emailNotVerified": "يُرجى تأكيد بريدك الإلكتروني قبل إعداد المصادقة الثنائية.",
+            "emailVerificationError": "حدث خطأ أثناء إرسال رسالة التأكيد. يُرجى المحاولة مرة أخرى.",
+            "emailVerificationSent": "تم إرسال رسالة التأكيد. يُرجى التحقّق من صندوق الوارد.",
+            "emailVerificationSpamCheck": "إذا لم تظهر الرسالة، يُرجى التحقّق من مجلد الرسائل غير المرغوب فيها.",
+            "sendVerificationEmail": "إرسال رسالة التأكيد",
+            "resendVerificationEmail": "إعادة إرسال رسالة التأكيد",
+            "passwordRequired": "كلمة المرور مطلوبة لإعادة التحقّق من الهوية.",
+            "reauthenticationError": "تعذّرت إعادة التحقّق من الهوية. يُرجى المحاولة مرة أخرى."
+        },
+        "verifyMFA": {
+            "title": "التحقّق من المصادقة الثنائية",
+            "triggerSMS": "إرسال رمز عبر رسالة نصية",
+            "verifyCode": "التحقّق من الرمز",
+            "phoneNumber": "سنرسل رمز تحقّق إلى رقم هاتفك المسجَّل: {{phoneNumber}}"
+        },
+        "setupMFA": {
+            "title": "إعداد المصادقة الثنائية",
+            "sendCode": "إرسال رمز التحقّق",
+            "verifyCode": "التحقّق من الرمز",
+            "enterCodeHelperText": "يُرجى إدخال رمز التحقّق الذي أرسلناه إلى هاتفك:",
+            "reauthTitle": "تأكيد كلمة المرور",
+            "reauthDescription": "يُرجى إدخال كلمة المرور قبل المتابعة",
+            "cancelReauth": "إلغاء",
+            "confirmReauth": "تأكيد",
+            "reauthenticating": "جارٍ التأكيد..."
+        }
+    },
+    "Shared": {
+        "bloom": "Bloom",
+        "references": "موارد",
+        "metadata": {
+            "title": "رحلتك نحو التعافي تبدأ معنا",
+            "description": "Bloom هنا من أجلك؛ للتعلّم والتعافي والنمو نحو مستقبل واثق. تقدّمه Chayn، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم.",
+            "imageAlt": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما. ويتضمّن شعار Bloom المكتوب."
+        },
+        "leaveSite": {
+            "button": "مغادرة هذا الموقع",
+            "wikiLink": "https:\/\/en.wikipedia.org\/wiki\/Main_Page",
+            "googleLink": "https:\/\/www.google.co.uk\/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+        },
+        "navigateBack": "العودة للخلف",
+        "navigateTo": "الانتقال إلى",
+        "footer": {
+            "fundedByTitle": "بتمويل من",
+            "chaynDescription": "يصل إليك Bloom عبر <link>Chayn<\/link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
+            "chaynLine1": "بُني بواسطة <bold>CHAYN<\/bold> CIO.",
+            "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
+            "bumbleLine1": "بالشراكة مع",
+            "bumbleLine2": "BUMBLE HOLDING LTD",
+            "badooLine1": "بالشراكة مع",
+            "badooLine2": "BADOO LTD",
+            "fruitzLine1": "بالشراكة مع",
+            "fruitzLine2": "FRUITZ LTD",
+            "policies": "سياساتنا",
+            "trustCenter": "مركز الثقة"
+        },
+        "maintenanceBanner": {
+            "title": "Bloom متوقّف مؤقتًا للصيانة",
+            "description": "نرجو تحمّلك بينما نُكمل بعض أعمال الصيانة المجدولة الضرورية. من المفترض أن يعود Bloom للعمل كالمعتاد خلال {{hours}} ساعة."
+        },
+        "fruitzRetirementBanner": {
+            "title": "تغيير في دوراتك",
+            "description": "تقترب شراكة Fruitz x Bloom من نهايتها، لكن دعم Bloom لك يبقى مستمرًا. اعتبارًا من 19 أغسطس، لن تعود دورة 'المواعدة والحدود والعلاقات' متاحة، لكن جميع الخدمات الأخرى، بما في ذلك المراسلة الفردية، ستبقى كما هي.",
+            "dismiss": "إغلاق"
+        },
+        "videoTranscript": {
+            "title": "النص المكتوب للفيديو",
+            "closeModal": "إغلاق النص",
+            "description": ""
+        },
+        "progressStatus": {
+            "started": "بدأت",
+            "completed": "اكتملت",
+            "notStarted": "لم تبدأ"
+        },
+        "meetTheTeam": {
+            "fullBioButton": "قراءة السيرة الكاملة لـ {{name}}",
+            "expandTeamMember": "توسيع السيرة الذاتية لـ {{name}}"
+        },
+        "noDataAvailable": {
+            "title": "حدثت مشكلة أثناء تحميل هذه الصفحة. يُرجى العودة والمحاولة مرة أخرى، أو التواصل معنا."
+        },
+        "error": {
+            "title": "حدث خطأ ما",
+            "description": "حدثت مشكلة في الطلب الأخير، يُرجى المحاولة مرة أخرى. إذا استمرت المشكلة، يُرجى التواصل مع فريق Bloom.",
+            "buttonLabel": "المحاولة مرة أخرى"
+        },
+        "notFound": {
+            "title": "404 - الصفحة غير موجودة",
+            "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الدورات.",
+            "unauthenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الترحيب.",
+            "authenticatedRedirectButton": "العودة إلى صفحة الدورات",
+            "unauthenticatedRedirectButton": "العودة إلى صفحة الترحيب"
+        },
+        "alt": {
+            "chaynLogo": "شعار Chayn",
+            "bloomLogo": "شعار Bloom",
+            "bumbleLogo": "شعار Bumble",
+            "bloomBumbleLogo": "شعار Bloom بالشراكة مع Bumble",
+            "badooLogo": "شعار Badoo",
+            "bloomBadooLogo": "شعار Bloom بالشراكة مع Badoo",
+            "comicReliefLogo": "شعار Comic Relief",
+            "communityFundLogo": "شعار Community Fund",
+            "welcomeToBloom": "مرحبًا بك في Bloom",
+            "tiktokLogo": "شعار Tiktok",
+            "githubLogo": "شعار Github",
+            "bloomHead": "رسم توضيحي لوجه شخص وكتفيه، مع أوراق كبيرة وزهور تتفتّح فوقهما",
+            "beehive": "رسم توضيحي لخلية نحل",
+            "leafMix": "رسم توضيحي لورقتين متّصلتين بوردة",
+            "leafMixBee": "رسم توضيحي لورقتين مع نحلة تحلّق فوقهما",
+            "leafMixDots": "رسم توضيحي لـ 3 أوراق مع زهرة في المنتصف، ونقاط تنطلق من الزهرة.",
+            "personTea": "رسم توضيحي لشخص جالس يحمل كوب شاي",
+            "personSitting": "رسم توضيحي لشخص جالس",
+            "chooseTherapist": "رسم توضيحي لوجه شخص من الجانب، مع زهرة",
+            "dateSelector": "رسم توضيحي لتقويم مع قلب في المنتصف",
+            "change": "رسم توضيحي لدورة — ثلاث شموس في دائرة مع أسهم بينها",
+            "notes": "رسم توضيحي لهاتف محمول مع فقاعة رسالة تحتوي على قلب على الشاشة",
+            "confidential": "رسم توضيحي لمستند مع قفل في الزاوية",
+            "cookieCat": "رسم توضيحي لقطة مستريحة مع قطعة بسكويت",
+            "fruitzLogo": "شعار Fruitz",
+            "bloomFruitzLogo": "شعار Bloom بالشراكة مع Fruitz",
+            "bloomHomeIllustration": "شخص جالس متربّع مع رموز تطفو حوله مثل أيقونة فيديو وزهرة وأيقونة رسالة ورأس شخص مع زهرة",
+            "bookIcon": "أيقونة كتاب",
+            "articleIcon": "أيقونة مقال",
+            "videoIcon": "أيقونة فيديو"
+        },
+        "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/OY9Wdk4h",
+        "survivor": "ناجٍ\/ية",
+        "cookieConsent": {
+            "cookieConsentExplainer": "يُرجى السماح بملفات تعريف الارتباط التحليلية حتى نتمكّن من تحسين Bloom. مزيد من التفاصيل في ",
+            "cookieConsentPolicy": "سياسة ملفات تعريف الارتباط",
+            "acceptLabel": "قبول ملفات تعريف الارتباط",
+            "declineLabel": "رفض ملفات تعريف الارتباط"
+        },
+        "signUpTodayPromo": {
+            "title": "إنشاء حساب مجاني اليوم",
+            "description1": "Bloom منصّة عبر الإنترنت لدعمك في أثناء تعافيك من الصدمة. من الدورات المصوّرة والأنشطة التأمّلية إلى المراسلة المباشرة مع فريقنا، هناك طرق متنوّعة كثيرة للتفاعل مع Bloom.",
+            "description2": "ما عليك سوى التسجيل اليوم للوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom!",
+            "button": "لنبدأ"
+        },
+        "loginDialog": {
+            "title": "تسجيل الدخول أو إنشاء حساب",
+            "description": "بالتسجيل المجاني يمكنك الوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom",
+            "loginButton": "تسجيل الدخول",
+            "registerButton": "إنشاء حساب",
+            "backButton": "العودة"
+        },
+        "exerciseNames": {
+            "activities-thought-diaries": "يوميات الأفكار",
+            "activities-stream-of-consciousness-journaling": "الكتابة بتيّار الوعي",
+            "activities-timelines": "الخطوط الزمنية",
+            "activities-trust-mapping": "رسم خريطة الثقة",
+            "activities-mapping-fear-and-stress-in-our-bodies": "رسم خريطة الخوف والتوتّر في أجسادنا",
+            "activities-letter-to-a-part-of-my-body": "رسالة إلى جزء من جسدي",
+            "activities-accelerators-and-brakes": "المسرّعات والمكابح",
+            "activities-ideal-sexual-being": "الكينونة الجنسية المثالية",
+            "grounding-visual-breathing": "التنفّس البصري",
+            "grounding-slow-breathing": "التنفّس البطيء",
+            "grounding-box-breathing": "التنفّس الصندوقي",
+            "grounding-drifting-clouds-meditation": "تأمّل الغيوم المتنقّلة",
+            "grounding-positive-coping-statement": "عبارة تأقلم إيجابية",
+            "grounding-finger-focus": "تركيز الأصابع",
+            "grounding-day-walkthrough": "استعراض اليوم",
+            "grounding-what-can-you-hear": "ما الذي يمكنك سماعه",
+            "grounding-listen-to-your-voice": "الإنصات إلى صوتك",
+            "grounding-calming-colours": "الألوان المهدّئة",
+            "grounding-coming-back-to-your-safe-space": "العودة إلى مساحتك الآمنة",
+            "grounding-best-check-in": "تفقّد BEST",
+            "grounding-compassionate-body-scan": "مسح الجسد بتعاطف",
+            "grounding-touching-and-feeling-textures": "لمس الملمس والإحساس به",
+            "grouding-sound-of-claps": "صوت التصفيق",
+            "grounding-affirming-ourselves": "تأكيد ذواتنا (ضغط ثابت)"
+        },
+        "pwaBanner": {
+            "mobileDescription": "تثبيت التطبيق للوصول إليه من شاشتك الرئيسية",
+            "desktopDescription": "تثبيت التطبيق للوصول إلى Bloom من شاشتك الرئيسية",
+            "iosDescription": "إضافة Bloom إلى شاشتك الرئيسية",
+            "iosStep1": "1. اضغط على زر المشاركة",
+            "iosStep2": "2. اضغط على 'إضافة إلى الشاشة الرئيسية'",
+            "button-decline-label": "ليس الآن",
+            "button-install-label": "تثبيت"
+        },
+        "notesFromBloomPromo": {
+            "title": "رسائل داعمة مجانية",
+            "description": "رسائل مرتين أسبوعيًا تصلك مباشرةً على WhatsApp",
+            "buttonText": "الاشتراك"
+        },
+        "characterCount": "{{current}}\/{{max}} حرفًا",
+        "scrollToSignUp": {
+            "button": "التسجيل مجانًا"
+        }
+    },
+    "Account": {
+        "applyCode": {
+            "title": "إضافة رمز",
+            "introduction": "يعمل Bloom مع شركاء لدعم تعافي الناجيات والناجين من سوء المعاملة حول العالم.",
+            "description": "إذا وصلك رمز وصول من أحد شركائنا، يمكنك إضافته هنا لتلقّي الدعم الخاص ببرنامجهم.",
+            "descriptionLine2": "يمكنك إضافة رموز من أكثر من شريك واحد.",
+            "partnershipsTitle": "شركاؤنا",
+            "partnershipsDescription": "يمكنك معرفة المزيد عن شراكاتنا بالنقر على شعار كل شريك.",
+            "formIntroduction": "يُرجى إدخال رمز الوصول الذي وصلك من أحد شركاء Bloom.",
+            "formSuccess": {
+                "success": "تمت إضافة رمز Bumble إلى حسابك!",
+                "successLine2": "يتيح لك وصول Bumble ما يلي:",
+                "liveChat": "المراسلة مع فريق Bloom",
+                "therapy": "{{therapySessionsRemaining}} جلسات علاج نفسي",
+                "courses": "دورات ذاتية التوجيه"
+            },
+            "form": {
+                "codeLabel": "رمز الوصول",
+                "submitLabel": "إضافة الرمز",
+                "assignPartnerAccessError": "حدث خطأ أثناء إضافة الرمز إلى حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+                "codeErrors": {
+                    "internal": "حدث خطأ أثناء التحقّق من رمز الوصول. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+                    "expired": "انتهت صلاحية هذا الرمز. يُرجى التواصل مع فريق الشريك.",
+                    "invalid": "يبدو أن رمز الوصول غير صالح. يُرجى التحقّق من الأخطاء الإملائية أو التواصل مع الشريك.",
+                    "alreadyInUse": "سبق استخدام هذا الرمز. إذا اعتقدت أن هناك خطأً، يُرجى التواصل مع فريق الشريك.",
+                    "alreadyApplied": "سبق إضافة هذا الرمز إلى حسابك."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "نبذة عنك",
+            "header": "ساعدنا على الفهم",
+            "description": "تساعدنا هذه الأسئلة على فهم من يستخدم Bloom وأنواع الدعم التي يحتاجها.",
+            "titleA": "آمالك من Bloom",
+            "descriptionALine1": "شكرًا لك على إجاباتك حتى الآن!",
+            "descriptionALine2": "بصفتك من المستخدمين الجدد، نودّ أن نفهم كيف حالك قبل استخدام خدماتنا. يساعدنا طرح هذا السؤال الآن على قياس الأثر الذي يحدثه Bloom في حياة الناجيات والناجين، وعلى التركيز على الأمور الصحيحة.",
+            "goToCourses": "التخطّي إلى الدورات",
+            "demographicForm": {
+                "genderLabel": "يُرجى اختيار خيار واحد أو أكثر يعبّر عن هويتك الجندرية",
+                "genderHelpText": "نطرح هذا السؤال لفهم كيف يعرّف مستخدمونا أنفسهم على نحو أفضل، بهدف تصميم موارد أكثر شمولًا ومراعاةً للهوية الجندرية. يمكنك اختيار 'أفضّل عدم الإجابة'.",
+                "genderOptions": {
+                    "woman": "امرأة",
+                    "man": "رجل",
+                    "nonBinary": "غير ثنائي الجندر",
+                    "transgender": "عابر\/ة جندريًا",
+                    "intersex": "بَيْني الجنس (إنترسكس)",
+                    "twoSpirit": "ثنائي الروح (Two-Spirit)",
+                    "genderNonConforming": "غير ممتثل\/ة للمعايير الجندرية",
+                    "other": "أخرى (يُرجى التحديد)",
+                    "preferNotToAnswer": "أفضّل عدم الإجابة"
+                },
+                "neurodivergentLabel": "هل لديك نمط عصبي يؤثّر في طريقة معالجة دماغك للمعلومات؟ قد يكون ذلك صعوبة تعلّم (مثل عُسر القراءة أو عُسر الأداء الحركي أو عُسر الحساب) أو اضطراب فرط الحركة وتشتّت الانتباه أو التوحّد.",
+                "neurodivergentHelpText": "نبذل قصارى جهدنا لتصميم خدمات شاملة، لذا من المفيد لنا معرفة ذلك.",
+                "neurodivergentLabels": {
+                    "1": "نعم",
+                    "2": "لا",
+                    "3": "غير متأكد\/ة",
+                    "4": "أفضّل عدم الإفصاح"
+                },
+                "raceEthnNatnLabel": "كيف يمكنك وصف عِرقك وأصلك الإثني وجنسيتك؟ مثال: أبيض من أصل لاتيني مكسيكي، أو تاميلي هندي.",
+                "raceEthnNatnHelpText": "نعلم أن تجارب الناس مع العِرق والأصل الإثني تختلف كثيرًا تبعًا لأماكن إقامتهم، لذا يمكنك كتابة ما يصفك شخصيًا على أفضل نحو.",
+                "countryLabel": "ما بلد إقامتك الحالي؟",
+                "countryHelpText": "سيساعدنا هذا على فهم الأماكن التي تصل منها الناجيات والناجون إلى خدماتنا.",
+                "ageLabel": "ما فئتك العمرية؟",
+                "ageHelpText": "يُرجى اختيار فئتك العمرية.",
+                "selectPlaceholder": "يُرجى اختيار أحد الخيارات.",
+                "ageLabels": {
+                    "1": "أقل من 18",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "أفضّل عدم الإفصاح"
+                },
+                "submitLabel": "إرسال",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "يُرجى تقييم مدى موافقتك على العبارات التالية:",
+                "scaleDescriptionLine2": "1 = لا أوافق بشدة، 10 = أوافق بشدة",
+                "scaleLabels": {
+                    "Q1": "أفهم كيف أثّرت الصدمة التي مررتُ بها في عقلي وجسدي ومشاعري",
+                    "Q2": "أعلم أن هناك آليات للتأقلم لا تساعدني على المدى الطويل، وأن الانجذاب إليها قد يكون استجابة طبيعية للصدمة ",
+                    "Q3": "أعلم أن التعافي يحتاج إلى وقت وطاقة وصبر",
+                    "Q4": "ألتزم بمنح نفسي الاهتمام الذي أحتاجه للتعافي",
+                    "Q5": "وجدتُ الأشياء التي تُشعرني بالرضا، وأخصّص لها وقتًا في روتيني",
+                    "Q6": "أفهم أن جزءًا من التعافي من الصدمة هو التعامل مع المحفّزات",
+                    "Q7": "أفهم أن ما يُشعرني بالأمان أو بالتهديد أمرٌ خاص بي وحدي",
+                    "Q8": "أستطيع توقّع اللحظات أو الأماكن أو أوقات السنة المحفّزة والتعامل معها"
+                },
+                "submitLabel": "إتمام"
+            },
+            "setAForm": {
+                "hopesLabel": "ما الشيء الواحد الذي تأمل أن يساعدك Bloom على فهمه أو فعله؟"
+            }
+        },
+        "disableServiceEmails": {
+            "title": "تم إيقاف رسائل Bloom البريدية",
+            "description": "لن تصلك بعد الآن رسائل بريدية متعلّقة بـ Bloom. إذا رغبت في تغيير ذلك لاحقًا، يُرجى التواصل مع <link>فريق Bloom<\/link>",
+            "error": "حدث خطأ أثناء إيقاف الرسائل البريدية من Bloom. يُرجى المحاولة مجددًا بتحديث هذه الصفحة، أو التواصل مع <link>فريق Bloom.<\/link>"
+        },
+        "accountSettings": {
+            "title": "إعدادات الحساب",
+            "description": "عرض إعداداتك في Bloom وتحديثها",
+            "imageAlt": "رسم توضيحي لهاتف محمول مع رسالة تحتوي على قلب",
+            "profileSettings": {
+                "title": "تفاصيل الملف الشخصي",
+                "description": "يمكنك تحديث اسمك وبريدك الإلكتروني هنا. هذه هي المعلومات الشخصية الوحيدة المخزّنة مع ملفك الشخصي.",
+                "nameLabel": "الاسم",
+                "emailLabel": "البريد الإلكتروني",
+                "submitLabel": "تحديث الملف الشخصي",
+                "emailAlreadyInUseError": "هذا البريد الإلكتروني مستخدم بالفعل في حساب آخر، يُرجى المحاولة مرة أخرى",
+                "confirmDialogTitle": "عند تغيير بريدك الإلكتروني، سيلزم تسجيل الدخول من جديد. هل نتابع؟",
+                "confirmDialogCancel": "إلغاء"
+            },
+            "updateError": "حدث خطأ أثناء تحديث حسابك في Bloom. يُرجى المحاولة مجددًا بتحديث هذه الصفحة، أو التواصل مع <link>فريق Bloom.<\/link>",
+            "actions": {
+                "title": "إجراءات الحساب",
+                "description": "سيؤدّي حذف حسابك إلى محو اسمك وبريدك الإلكتروني وسجلّ الجلسات التي شاهدتها من نظامنا بشكل نهائي.",
+                "button": {
+                    "resetPassword": "إعادة تعيين كلمة المرور",
+                    "deleteAccount": "حذف الحساب"
+                },
+                "confirmDialogCancel": "العودة",
+                "resetPasswordConfirmDialogTitle": "عند تحديث كلمة المرور، سيلزم تسجيل الدخول من جديد. هل نتابع؟",
+                "deleteAccountConfirmDialogTitle": "يُرجى تأكيد رغبتك في حذف حسابك",
+                "deleteAccountConfirmDialogDescription": "يعني هذا أن حسابك سيصبح غير نشط على الفور ولا يمكن استرجاعه. لن يكون بإمكانك الوصول إلى أي من ميزات Bloom أو سجلّ استخدامك. وسنمحو بريدك الإلكتروني وأي بيانات شخصية من سجلّاتنا."
+            },
+            "emailSettings": {
+                "title": "تفضيلات البريد الإلكتروني",
+                "description": "أخبرنا إن كان بإمكاننا إرسال رسائل بريدية إليك:",
+                "submitLabel": "حفظ تفضيلات البريد الإلكتروني",
+                "serviceEmailsPermissionLabel": "بشأن خدماتك أو التغييرات على حسابك",
+                "contactPermissionLabel": "عند توفّر دورة أو خدمة أو لغة جديدة",
+                "updateError": "حدث خطأ أثناء تحديث حسابك في Bloom. يُرجى المحاولة مجددًا بتحديث هذه الصفحة، أو <link>التواصل مع فريق Bloom.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "تذكيرات البريد الإلكتروني",
+                "introduction": "قد يكون التعامل مع الصدمة صعبًا، خاصةً حين يكون ذلك بمفردك.",
+                "description": "يمكننا مساعدتك على متابعة رحلة تعافيك، عبر تذكيرات لطيفة إن مرّت فترة دون تسجيل الدخول.",
+                "fieldLabel": "ذكّرني:",
+                "twoWeeksLabel": "بعد أسبوعين",
+                "oneMonthLabel": "بعد شهر واحد",
+                "twoMonthsLabel": "بعد شهرين",
+                "neverLabel": "أبدًا",
+                "update": "يمكنك تحديث هذا الإعداد في أي وقت",
+                "submitLabel": "حفظ تذكيرات البريد الإلكتروني",
+                "updateError": "حدث خطأ أثناء تحديث إعدادات تذكيرات بريدك الإلكتروني. يُرجى المحاولة مجددًا بتحديث هذه الصفحة، أو <link>التواصل مع فريق Bloom.<\/link>"
+            }
+        }
+    },
+    "Courses": {
+        "title": "دوراتنا",
+        "introduction": "تقدّم دورات Bloom معلومات وأدوات وكلمات داعمة مصمّمة لمساعدتنا على التعامل مع الصدمة. وهي تشجّعنا على التعلّم والتأمّل واستيعاب ما مررنا به وكيف ربما أثّر فينا — كل ذلك في مساحة آمنة ومُمكِّنة.",
+        "session": "جلسة",
+        "course": "دورة",
+        "courses": "الدورات",
+        "expand": "توسيع",
+        "expandSummary": "توسيع ملخّص",
+        "navigateToSession": "الانتقال إلى الجلسة -",
+        "navigateToCourse": "الانتقال إلى الدورة -",
+        "noCourses": "لا توجد دورات لعرضها في الوقت الحالي. إذا بدا هذا غير صحيح، يُرجى المحاولة لاحقًا أو التواصل مع فريق Bloom.",
+        "courseDetail": {
+            "introductionTitle": "مقدّمة الدورة",
+            "introductionDescription": "يمكنك مشاهدة فيديو المقدّمة أو قراءة <transcriptLink>النص المكتوب للفيديو<\/transcriptLink>"
+        },
+        "sessionDetail": {
+            "videoTitle": "فيديو",
+            "videoDescription": "يمكنك مشاهدة الفيديو أو قراءة <transcriptLink>النص المكتوب للفيديو<\/transcriptLink>.",
+            "activityTitle": "نشاط",
+            "bonusTitle": "محتوى إضافي",
+            "chat": {
+                "title": "تأمّل معنا",
+                "description": "إذا رغبت في مشاركة تأمّلاتك حول هذه الجلسة، فإن فريق Bloom يسعده أن يسمع منك! ",
+                "videoIntro": "مزيد من المعلومات حول كيفية عمل المراسلة:",
+                "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
+                "detailIntro": "للتذكير:",
+                "detailPrivacy": "رسائلك خاصة وآمنة، ولا يطّلع عليها سوى فريق Bloom، وتبقى هويتك مجهولة.",
+                "detailTimezone": "نعمل عبر مناطق زمنية مختلفة كثيرة، لذا من المفترض أن يصلك ردّ منا خلال 6 ساعات، ولن يتجاوز ذلك 24 ساعة.",
+                "detailLanguage": "نحن متاحون دائمًا بالإنجليزية أو الفرنسية أو الهندية أو البرتغالية أو الإسبانية، كما يتحدّث بعض أعضاء فريقنا العربية والبنغالية؛ ويسعدنا أن نرتّب لك التحدّث معهم.",
+                "detailLegal": "إذا كانت لديك قضية قانونية جارية، يُرجى الانتباه إلى ما تتم مشاركته معنا، فقد يؤثّر ذلك أحيانًا في قضيتك.",
+                "detailImmediateHelp": "إذا كنت في خطر أو أذى وشيك، يُرجى الانتقال إلى 'مساعدة فورية' في القائمة للعثور على الخدمة المناسبة لدعمك.",
+                "startButton": "راسِلنا"
+            },
+            "sessionComplete": "اكتملت الجلسة"
+        },
+        "sessionFeedback": {
+            "title": "كيف كانت هذه الجلسة؟",
+            "subtitle": "يسعدنا أن نعرف رأيك في هذه الجلسة. تساعدنا ملاحظاتك على تحسين دوراتنا.",
+            "feedbackTags": {
+                "relatable": "أشعر بأنها تخصّني",
+                "useful": "مفيدة",
+                "inspiring": "مُلهِمة",
+                "too long": "طويلة جدًا",
+                "too complicated": "معقّدة جدًا",
+                "not useful": "غير مفيدة"
+            },
+            "textboxDefaultText": "إضافة تعليق...",
+            "sendButtonText": "إرسال",
+            "submissionText": "شكرًا لك على إرسال ملاحظاتك",
+            "errors": {
+                "feedbackTagError": "يُرجى اختيار تقييم قبل الإرسال."
+            }
+        },
+        "accessGuard": {
+            "title": "محتوى الدورة غير متاح",
+            "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى محتوى الدورة المطلوب. يمكنك العودة إلى <contactLink>دوراتك<\/contactLink>."
+        },
+        "errors": {
+            "completeSessionError": "حدث خطأ أثناء وضع علامة اكتمال على هذه الجلسة. يُرجى المحاولة بعد قليل."
+        },
+        "backToCourse": "العودة إلى الدورة",
+        "backToCourses": "العودة إلى الدورات",
+        "conversationsHeading": "محادثات",
+        "conversationsDescription": "عبر قصص مؤثّرة، يمكنك الإنصات إلينا ونحن نتحدّى الخرافات، ونحفّز التأمّل، ونفتح سُبلًا جديدة لفهم الأذى والتعافي.",
+        "shortsHeading": "مقاطع قصيرة",
+        "shortsDescription": "ضيق الوقت أو الحيرة في البداية؟ المقاطع القصيرة هي لمحات من جلسات Bloom التعليمية تتراوح بين دقيقتين وثلاث دقائق، وتقدّم البصيرة والطمأنينة وأدوات لرحلة تعافينا.",
+        "somaticsHeading": "التعافي الجسدي: الشفاء عبر الجسد",
+        "somaticsDescription": "كيف يمكن للأساليب اللطيفة القائمة على الجسد أن تدعم التعافي من العنف والتوتّر والخوف؟ تقدّم هذه المجموعة من الموارد إرشادات واضحة وعملية لمساعدتنا على إعادة التواصل مع أجسادنا، وبناء المرونة، واستكشاف ما يمكن أن يكون عليه الشعور بالأمان والراحة."
+    },
+    "Therapy": {
+        "title": "حجز جلسة علاج نفسي",
+        "bookingButton": "بدء الحجز",
+        "bookingSectionTitle": "كيف يعمل الحجز",
+        "steps": {
+            "step1": "يمكنك الاختيار من بين معالِجات ومعالِجين اخترناهم بعناية ويتحدّثون عدّة لغات.",
+            "step2": "يمكنك اختيار التاريخ والوقت المناسبين لك. جميع الجلسات تُعقد عبر الإنترنت.",
+            "step3": "إذا غيّرت رأيك، يمكنك إيقاف الجلسات أو تغيير المعالِج\/ة في أي وقت.",
+            "step4": "يبقى كل ما تتم مشاركته سرّيًا تمامًا، بينك وبين المعالِج\/ة."
+        },
+        "closeBookingWidget": "إغلاق أداة الحجز",
+        "modalTitle": "حجز جلسة علاج نفسي",
+        "modalDescription": "أداة SimplyBook.me لجدولة جلسة العلاج النفسي الخاصة بك.",
+        "error": {
+            "initializingWidget": "حدث خطأ أثناء تهيئة أداة الحجز.",
+            "initializingWidgetRetry": "حدث خطأ أثناء تهيئة أداة الحجز عند إعادة المحاولة.",
+            "containerNotFoundRetry": "تعذّر تحميل أداة الحجز.",
+            "scriptNotLoaded": "لم يكتمل تحميل سكربت أداة الحجز.",
+            "scriptLoadFailed": "فشل تحميل سكربت الحجز."
+        },
+        "therapyBookings": {
+            "header": "حجوزاتك للعلاج النفسي",
+            "bookingSummary": "لديك <remainingTotal>{{remainingTotal}}<\/remainingTotal> جلسات علاج نفسي متبقّية، و<upcomingTotal>{{upcomingTotal}}<\/upcomingTotal> مجدولة.",
+            "noBookingSummary": "لقد حجزت جميع جلسات العلاج النفسي المتاحة لك.",
+            "noBookings": "ليس لديك أي حجوزات علاج نفسي في الوقت الحالي.",
+            "cancelAlert": "تم طلب إلغاء الحجز رقم: {{id}}. تنفيذ منطق الإلغاء الفعلي."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "جلسة علاج نفسي قادمة ",
+            "pastSessionTitle": "جلسة علاج نفسي سابقة ",
+            "cancelledSessionTitle": "جلسة ملغاة",
+            "dateLabel": "التاريخ",
+            "timeLabel": "الوقت",
+            "therapistLabel": "المعالِج\/ة",
+            "videoLinkLabel": "رابط الفيديو",
+            "videoLink": "يمكنك الانضمام إلى المكالمة من دعوة تقويم Google Meet المُرسَلة عبر البريد الإلكتروني",
+            "noVideoLink": "لم يتم توفير رابط",
+            "cancelButton": "إلغاء",
+            "cancelError": "حدث خطأ أثناء إلغاء الحجز — يُرجى المحاولة مرة أخرى أو التواصل مع الفريق.",
+            "expand": "توسيع",
+            "collapse": "طيّ",
+            "cancelDialog": {
+                "title": "تأكيد الإلغاء",
+                "description": "هل من المؤكّد رغبتك في إلغاء جلسة العلاج النفسي المجدولة في {{dateTime}}؟ يمكنك حجز موعد جديد في وقت يناسبك.",
+                "keepButton": "الإبقاء على الجلسة",
+                "confirmButton": "إلغاء الجلسة"
+            }
+        },
+        "accessGuard": {
+            "title": "العلاج النفسي غير متاح",
+            "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى جلسات العلاج النفسي. إذا بدا هذا غير صحيح، يمكنك <contactLink>مراسلة فريق Bloom<\/contactLink>."
+        }
+    },
+    "Welcome": {
+        "getStarted": "لنبدأ",
+        "accessIntroduction": "يُرجى إدخال رمز الوصول الذي وصلك من {{partnerName}} لبدء رحلتك مع Bloom.",
+        "publicIntroduction": "يمكنك إنشاء حساب في Bloom لبدء رحلتك مع دوراتنا، أو التعرّف أكثر على Bloom أدناه أولًا.",
+        "continueCourses": "المتابعة إلى Bloom",
+        "continueCoursesDescription": "لنكمل من حيث توقفنا.",
+        "goToCourses": "الذهاب إلى الدورات",
+        "form": {
+            "codeLabel": "رمز الوصول من {{partnerName}}"
+        },
+        "WelcomeTo": "مرحبًا بك في"
+    },
+    "Whatsapp": {
+        "form": {
+            "subscribeTitle": "الاشتراك في الملاحظات",
+            "subscribe": "اشتراك",
+            "phoneNumber": "رقم الهاتف",
+            "unsubscribeTitle": "اشتراكك في الملاحظات نشط",
+            "unsubscribe": "إلغاء الاشتراك",
+            "subscribeErrors": {
+                "invalidNumber": "يبدو أن رقم هاتفك غير صالح. يُرجى تصحيح أي أخطاء والمحاولة مرة أخرى.",
+                "internal": "حدث خطأ أثناء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+                "alreadyExists": "يوجد بالفعل اشتراك في WhatsApp لرقمك. يُرجى <contactLink>مراسلة فريق Bloom<\/contactLink> إذا اعتقدت أن هذا خطأ."
+            },
+            "unsubscribeErrors": {
+                "internal": "حدث خطأ أثناء إلغاء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ."
+            }
+        },
+        "notes": {
+            "title": "الاشتراك في ملاحظات من Bloom",
+            "description": "قد يكون طريق التعافي موحشًا وشائكًا أحيانًا. ملاحظات من Bloom هي تذكيرات وكلمات تشجيع وعبارات داعمة وأنشطة من دوراتنا، مرتين أسبوعيًا، تصلك مباشرةً على هاتفك لمساعدتك على مواصلة رحلة تعافيك.",
+            "createAccount": "إنشاء حساب",
+            "createAccountDescription": "يمنحك الاشتراك في ملاحظات من Bloom الوصول إلى منصّتنا الغنية بالموارد.",
+            "haveAccount": "هل لديك حساب؟",
+            "login": "تسجيل الدخول",
+            "createAccountButton": "إنشاء حساب",
+            "howItWorks": "كيف تعمل ملاحظات من Bloom",
+            "step1": "نرسل رسائل إلى رقمك على WhatsApp",
+            "step2": "مرتين أسبوعيًا، كل أربعاء وأحد",
+            "step3": "نشارك عبارات داعمة وأنشطة وتأمّلات",
+            "step4": "يمكنك إلغاء الاشتراك في أي وقت إذا غيّرت رأيك",
+            "usNoticeTitle": "مشكلات في تسليم رسائل WhatsApp للمشتركين في الولايات المتحدة",
+            "usNoticeDescription": "أجرت Meta تغييرات تؤثّر في قدرتنا على إرسال الملاحظات إلى المشتركين في الولايات المتحدة. نعمل جاهدين على إصلاح ذلك، لكن قد لا تصلك الرسائل في الوقت الحالي. يمكنك الاشتراك بكل أريحية — وسنبقيك على اطّلاع عندما يعود كل شيء للعمل من جديد للجميع.",
+            "subscribeDescription": "الاشتراك في ملاحظات من Bloom يتيح لك بدء تلقّي رسائل WhatsApp. يمكنك إلغاء الاشتراك من هنا في أي وقت.",
+            "unsubscribeDescription": "إلغاء الاشتراك في ملاحظات من Bloom يوقف تلقّي رسائل WhatsApp، أو يتيح لك تحديث رقمك. يمكنك الاشتراك من جديد في أي وقت."
+        }
+    },
+    "Messaging": {
+        "messageHeading": "أخبرنا بما يدور في ذهنك",
+        "frontChat": {
+            "ariaChat": "مراسلة Bloom",
+            "welcomeAuthor": "فريق Bloom",
+            "welcomeMessage": "مرحبًا، يمكنك الدردشة هنا مع ناجيات وناجين وحلفاء من فريق Bloom لديهم خبرة في دعم بعضهم بعضًا. نحن هنا من أجلك لمشاركة أسئلتك ومشاعرك وتأمّلاتك أثناء تقدّمك في دوراتنا.\n\nإذا كنت في خطر أذى وشيك، فيُرجى الاتصال بخدمات الطوارئ إن استطعت وإن كان ذلك آمنًا لك. ورغم أننا لا نقدّم دعمًا في الأزمات، يمكننا مساعدتك على التواصل مع نوع خدمة الدعم الذي تحتاجه. يمكنك البحث عن خدمات الدعم في منطقتك عبر دليلنا العالمي هنا: c.chayn.co\/directory.\n\nيمكنك الدردشة معنا بالإنجليزية والفرنسية والألمانية والهندية والبرتغالية والإسبانية.\n\nنحرص دائمًا على الرد على رسالتك خلال يوم إلى يومين.",
+            "empty": "يمكنك إرسال رسالتك الأولى أدناه وسيعاود فريقنا التواصل معك قريبًا.",
+            "placeholder": "رسالتك…",
+            "send": "إرسال الرسالة",
+            "attachImage": "إرفاق صورة",
+            "imageAttachment": "صورة",
+            "voiceNote": "رسالة صوتية",
+            "startRecording": "تسجيل رسالة صوتية",
+            "stopRecording": "إيقاف وإرسال الرسالة الصوتية",
+            "cancelRecording": "إلغاء التسجيل",
+            "recordingInProgress": "جارٍ التسجيل",
+            "messageSending": "جارٍ الإرسال",
+            "messageFailed": "تعذّر الإرسال — يُرجى المحاولة مرة أخرى.",
+            "audioUnavailable": "الصوت غير متاح",
+            "status": {
+                "connecting": "جارٍ الاتصال…",
+                "disconnected": "جارٍ إعادة الاتصال…",
+                "error": "تعذّر الاتصال. يُرجى المحاولة لاحقًا."
+            },
+            "errors": {
+                "unsupportedImage": "الصور المدعومة هي JPG أو PNG أو GIF أو WebP فقط.",
+                "fileTooLarge": "يجب أن يكون حجم الملفات أقل من 25 ميغابايت.",
+                "uploadFailed": "فشل الرفع. يُرجى المحاولة مرة أخرى.",
+                "imageBlocked": "تم حظر هذه الصورة لأنها لا تتوافق مع معايير أماننا. إذا كنت تعتقد أن هذا خطأ، يُرجى إرسال رسالة لنا لشرح السبب.",
+                "micPermission": "تم رفض الوصول إلى الميكروفون. لتسجيل رسالة صوتية، يُرجى السماح بالوصول إلى الميكروفون في إعدادات متصفّحك والمحاولة مرة أخرى.",
+                "micUnavailable": "تعذّر الوصول إلى الميكروفون. يُرجى التأكّد من توصيله والمحاولة مرة أخرى."
+            }
+        }
+    },
+    "Resources": {
+        "backToConversations": "العودة إلى المحادثات",
+        "backToShorts": "العودة إلى المقاطع القصيرة",
+        "backToVideos": "العودة إلى الفيديوهات",
+        "backToSomatics": "العودة إلى التعافي الجسدي",
+        "nextVideoButtonLabel": "الفيديو التالي",
+        "nextConversationButtonLabel": "المحادثة التالية",
+        "nextSessionButtonLabel": "الجلسة التالية",
+        "conversations": "محادثات",
+        "shorts": "مقاطع قصيرة",
+        "videos": "فيديوهات",
+        "completed": "اكتملت",
+        "sessionDetail": "هذا المقطع من الجلسة: {{sessionName}}، من دورتنا: {{courseName}}",
+        "sessionButtonLabel": "مشاهدة الجلسة كاملة",
+        "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب<\/link>.",
+        "conversationTranscriptLink": "يمكنك الإنصات إلى المحادثة أو قراءة <link>النص المكتوب<\/link>.",
+        "relatedContent": {
+            "title": "محتوى ذو صلة",
+            "resource_short_video": "مشاهدة",
+            "resource_single_video": "مشاهدة",
+            "resource_conversation": "إنصات",
+            "course": "دورة",
+            "session": "جلسة",
+            "session_iba": "جلسة",
+            "grounding": "تثبيت الذات",
+            "activities": "نشاط",
+            "minuteLabel": "دقائق"
+        },
+        "resourceFeedback": {
+            "title": "كيف كانت هذه الجلسة؟",
+            "subtitle": "يسعدنا أن نعرف رأيك في هذا المحتوى التعليمي. تساعدنا ملاحظاتك على تحسين مواردنا.",
+            "feedbackTags": {
+                "relatable": "أشعر بأنها تخصّني",
+                "useful": "مفيدة",
+                "inspiring": "مُلهِمة",
+                "too long": "طويلة جدًا",
+                "too complicated": "معقّدة جدًا",
+                "not useful": "غير مفيدة"
+            },
+            "textboxDefaultText": "إضافة تعليق...",
+            "sendButtonText": "إرسال",
+            "submissionText": "شكرًا لك على إرسال ملاحظاتك",
+            "errors": {
+                "feedbackTagError": "يُرجى اختيار تقييم قبل الإرسال."
+            }
+        },
+        "references": {
+            "title": "موارد",
+            "keyReferences": "موارد رئيسية من هذه الجلسة (القائمة الكاملة في نهاية النص المكتوب):",
+            "books": "كتب",
+            "articles": "مقالات",
+            "video_practices": "تمارين بالفيديو",
+            "audios": "بودكاست"
+        }
+    },
+    "Navigation": {
+        "menu": "قائمة التنقل",
+        "menuOpen": "فتح قائمة التنقل",
+        "menuClose": "إغلاق قائمة التنقل",
+        "languageMenu": "قائمة اللغات",
+        "bloomLogo": "شعار Bloom",
+        "login": "تسجيل الدخول",
+        "logout": "تسجيل الخروج",
+        "accountSettings": "إعدادات الحساب",
+        "userMenu": "قائمة إعدادات المستخدم",
+        "home": "الرئيسية",
+        "admin": "الإدارة",
+        "about": "حول",
+        "meetTheTeam": "فريق Bloom",
+        "immediateHelp": "مساعدة فورية",
+        "therapy": "العلاج النفسي",
+        "courses": "الدورات",
+        "applyCode": "إضافة رمز",
+        "account": "الحساب",
+        "secondaryNavigationMenu": "قائمة التنقل الثانوية",
+        "notes": "ملاحظات",
+        "alt": {
+            "therapyIcon": "رسم توضيحي لرأس مع زهرة",
+            "courseIcon": "رسم توضيحي لأيقونة تشغيل، مثلث يشير إلى اليمين، أمامه شمس صغيرة",
+            "notesIcon": "رسم توضيحي لهاتف محمول مع قلب في المنتصف",
+            "chatIcon": "فقاعتا حوار متقاطعتان على خلفية وردية. الأولى بداخلها قلب وردي، والثانية بها خطوط مستقيمة.",
+            "activitiesIcon": "كتاب على غلافه شعلة صفراء صغيرة.",
+            "groundingIcon": "غصن صغير عليه زهور وردية صغيرة."
+        },
+        "messaging": "المراسلة",
+        "grounding": "تثبيت الذات",
+        "activities": "Activities"
+    }
+}
