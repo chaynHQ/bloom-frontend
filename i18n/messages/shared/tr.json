@@ -4,8 +4,8 @@
     "references": "Kaynaklar",
     "metadata": {
       "title": "İyileşme yolculuğunda bize katıl",
-      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen küresel bir kâr amacı gütmeyen kuruluş olan Chayn sunuyor.",
-      "imageAlt": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon. Bloom yazı logosu da dahildir."
+      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana Chayn sunuyor: dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, kâr amacı gütmeyen küresel bir kuruluş.",
+      "imageAlt": "Yüzü ve omuzları görünen bir kişi illüstrasyonu; üzerinde büyük yapraklar ve çiçekler açıyor. Bloom yazı logosu da yer alıyor."
     },
     "leaveSite": {
       "button": "Bu siteden ayrıl",
@@ -16,7 +16,7 @@
     "navigateTo": "Şuraya git",
     "footer": {
       "fundedByTitle": "Finanse eden",
-      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
+      "chaynDescription": "Bloom'u sana <link>Chayn</link> sunuyor: dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, kâr amacı gütmeyen küresel bir kuruluş. Chayn, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturuyor.",
       "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
       "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
       "bumbleLine1": "İş birliğiyle",
@@ -34,7 +34,7 @@
     },
     "fruitzRetirementBanner": {
       "title": "Kurslarında değişiklik",
-      "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren 'Flört, Sınırlar ve İlişkiler' kursu artık kullanılamayacak, ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynı kalacak.",
+      "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren 'Flört, sınırlar ve ilişkiler' kursu artık kullanılamayacak, ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynı kalacak.",
       "dismiss": "Kapat"
     },
     "videoTranscript": {
@@ -43,12 +43,12 @@
       "description": ""
     },
     "progressStatus": {
-      "started": "Başlandı",
+      "started": "Devam ediyor",
       "completed": "Tamamlandı",
       "notStarted": "Başlanmadı"
     },
     "meetTheTeam": {
-      "fullBioButton": "{name} kişisinin tam biyografisini oku",
+      "fullBioButton": "{name} biyografisinin tamamını oku",
       "expandTeamMember": "{name} için biyografiyi genişlet"
     },
     "noDataAvailable": {
@@ -78,7 +78,7 @@
       "welcomeToBloom": "Bloom'a hoş geldin",
       "tiktokLogo": "Tiktok logosu",
       "githubLogo": "Github logosu",
-      "bloomHead": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon",
+      "bloomHead": "Yüzü ve omuzları görünen bir kişi illüstrasyonu; üzerinde büyük yapraklar ve çiçekler açıyor",
       "beehive": "Bir arı kovanı illüstrasyonu",
       "leafMix": "Bir gülle birleşmiş iki yaprak illüstrasyonu",
       "leafMixBee": "Üzerinde bir arının uçuştuğu iki yaprak illüstrasyonu",
@@ -103,8 +103,8 @@
     "cookieConsent": {
       "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazla bilgi için: ",
       "cookieConsentPolicy": "çerez politikamız",
-      "acceptLabel": "Çerezleri Kabul Et",
-      "declineLabel": "Çerezleri Reddet"
+      "acceptLabel": "Çerezleri kabul et",
+      "declineLabel": "Çerezleri reddet"
     },
     "signUpTodayPromo": {
       "title": "Bugün ücretsiz bir hesap aç",
@@ -139,7 +139,7 @@
       "grounding-listen-to-your-voice": "Sesini dinle",
       "grounding-calming-colours": "Sakinleştirici renkler",
       "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
-      "grounding-best-check-in": "BEST durum değerlendirmesi",
+      "grounding-best-check-in": "BEST kendini yoklama",
       "grounding-compassionate-body-scan": "Şefkatli beden taraması",
       "grounding-touching-and-feeling-textures": "Dokunarak dokuları hissetme",
       "grouding-sound-of-claps": "Alkış sesi",

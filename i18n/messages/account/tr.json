@@ -105,7 +105,7 @@
       "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
     },
     "accountSettings": {
-      "title": "Hesap Ayarları",
+      "title": "Hesap ayarları",
       "description": "Bloom'daki ayarlarını görüntüle ve güncelle",
       "imageAlt": "İçinde kalp olan mesajlı bir cep telefonu illüstrasyonu",
       "profileSettings": {
@@ -124,7 +124,7 @@
         "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin bölümlerin geçmişini sistemimizden kalıcı olarak siler.",
         "button": {
           "resetPassword": "Şifreyi sıfırla",
-          "deleteAccount": "Hesabı Sil"
+          "deleteAccount": "Hesabı sil"
         },
         "confirmDialogCancel": "Geri dön",
         "resetPasswordConfirmDialogTitle": "Şifreni güncellediğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
