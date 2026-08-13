@@ -1,20 +1,20 @@
 {
   "Auth": {
-    "introduction": "Bloom, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri, travmadan iyileşmeye yardımcı olan terapötik uygulamalarla birleştiren uzaktan kurslar sunarak hayatta kalanları bilgilendirir ve güçlendirir.",
-    "getStartedBloom": "Bloom'a başla",
-    "getStartedWith": "Bir {partnerName} koduyla başla",
-    "loginLink": "Zaten bir hesabın var mı? <loginLink>Girişe git</loginLink>",
-    "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı</termsLink> ve <privacyLink>Gizlilik Politikamızı</privacyLink> kabul ettiğini belirtmiş olursun",
+    "introduction": "Bloom, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri travmadan iyileşmeye yardımcı olan terapötik uygulamalarla birleştiren uzaktan kurslar sunarak hayatta kalanları bilgilendirir ve güçlendirir.",
+    "getStartedBloom": "Bloom'u kullanmaya başla",
+    "getStartedWith": "{partnerName} koduyla başla",
+    "loginLink": "Zaten hesabın var mı? <loginLink>Giriş yap</loginLink>",
+    "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı</termsLink> ve <privacyLink>Gizlilik Politikamızı</privacyLink> kabul etmiş olursun",
     "login": {
       "title": "Tekrar hoş geldin",
       "resetPasswordLink": "Şifreni mi unuttun? <resetLink>Buradan sıfırla</resetLink>",
-      "createAnAccountLink": "Hesabın yok mu? <createAnAccountLink>Bir hesap oluştur</createAnAccountLink>"
+      "createAnAccountLink": "Hesabın yok mu? <createAnAccountLink>Hesap oluştur</createAnAccountLink>"
     },
     "register": {
       "title": "Hesap oluştur",
-      "loginRedirect": "Zaten bir hesabın var mı? <loginLink>Giriş yap</loginLink>",
+      "loginRedirect": "Zaten hesabın var mı? <loginLink>Giriş yap</loginLink>",
       "partnershipsTitle": "İş birliklerimiz",
-      "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıdan onların logosuna tıkla."
+      "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıda logosuna tıkla."
     },
     "resetPassword": {
       "title": "Şifreni sıfırla"
@@ -24,14 +24,14 @@
       "nameLabel": "Ad/takma ad",
       "emailLabel": "E-posta",
       "passwordLabel": "Şifre",
-      "contactPermissionLabel": "Yeni kaynaklar ve bize geri bildirimini paylaşma fırsatları hakkında e-postalar al",
+      "contactPermissionLabel": "Yeni kaynaklar ve geri bildirimini bizimle paylaşma fırsatları hakkında e-posta al",
       "registerSubmit": "Hesap oluştur",
-      "resetPasswordStep1": "Şifreni sıfırlamaya başlaman için sana bir e-posta göndereceğiz.",
+      "resetPasswordStep1": "Şifreni sıfırlaman için sana bir e-posta göndereceğiz.",
       "resetPasswordStep2": "Neredeyse tamam! Artık yeni şifreni belirleyebilirsin.",
       "resetPasswordSubmit": "Şifreyi sıfırla",
       "resendPasswordSubmit": "E-postayı tekrar gönder",
-      "resetPasswordSent": "Bloom'dan gelen sıfırlama bağlantısı için e-postanı kontrol et. Bir bağlantı almadın mı? Gereksiz (spam) klasörünü kontrol et veya e-postayı tekrar gönder.",
-      "passwordResetSuccess": "Şifren sıfırlandı! Artık yeni şifrenle giriş yapmaya devam edebilirsin.",
+      "resetPasswordSent": "Bloom'dan gelen sıfırlama bağlantısı için e-postanı kontrol et. E-posta almadın mı? Spam klasörünü kontrol et ya da e-postayı tekrar gönder.",
+      "passwordResetSuccess": "Şifren sıfırlandı! Artık yeni şifrenle giriş yapabilirsin.",
       "loginSubmit": "Giriş yap",
       "createUserError": "Hesabın kurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
       "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
@@ -47,7 +47,7 @@
         "invalidEmail": "E-postan geçersiz görünüyor, devam etmek için yazım hatalarını düzelt.",
         "tooManyAttempts": "Çok fazla başarısız giriş denemesi, lütfen birkaç dakika bekle ya da şimdi şifreni sıfırla.",
         "weakPassword": "Şifren en az 8 karakter olmalı ve tahmin edilmesi çok kolay olmamalı. Birkaç kelimeyi bir araya getirmeyi dene — 'mavi sabah nehri' gibi.",
-        "emailAlreadyInUse": "Bu e-posta Bloom'da zaten kayıtlı, devam etmek için <loginLink>girişe</loginLink> git.",
+        "emailAlreadyInUse": "Bu e-posta Bloom'da zaten kayıtlı, devam etmek için <loginLink>giriş sayfasına</loginLink> git.",
         "invalidCode": "Bu şifre sıfırlama bağlantısı geçersiz, lütfen <resetLink>işlemi yeniden başlat</resetLink> ve tekrar dene.",
         "expiredCode": "Bu şifre sıfırlama bağlantısının süresi doldu, lütfen <resetLink>işlemi yeniden başlat</resetLink> ve tekrar dene.",
         "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
@@ -55,14 +55,14 @@
       "phoneNumberLabel": "Telefon numarası",
       "verificationCodeLabel": "Doğrulama kodu",
       "mfaTriggerError": "SMS kodu gönderilirken hata oluştu. Lütfen tekrar dene.",
-      "mfaVerificationIdMissing": "Lütfen önce bir SMS kodu iste.",
+      "mfaVerificationIdMissing": "Lütfen önce SMS kodu iste.",
       "mfaEnrollError": "İki adımlı doğrulamaya kaydolurken hata oluştu. Lütfen tekrar dene.",
       "mfaFinalizeError": "İki adımlı doğrulama kurulumu tamamlanırken hata oluştu. Lütfen tekrar dene.",
       "mfaError": "Geçersiz doğrulama kodu. Lütfen tekrar dene.",
       "emailNotVerified": "İki adımlı doğrulamayı kurmadan önce lütfen e-postanı doğrula.",
       "emailVerificationError": "Doğrulama e-postası gönderilirken hata oluştu. Lütfen tekrar dene.",
       "emailVerificationSent": "Doğrulama e-postası gönderildi. Lütfen gelen kutunu kontrol et.",
-      "emailVerificationSpamCheck": "E-postayı göremiyorsan, lütfen gereksiz (spam) klasörünü kontrol et.",
+      "emailVerificationSpamCheck": "E-postayı göremiyorsan lütfen spam klasörünü kontrol et.",
       "sendVerificationEmail": "Doğrulama e-postası gönder",
       "resendVerificationEmail": "Doğrulama e-postasını tekrar gönder",
       "passwordRequired": "Yeniden kimlik doğrulama için şifre gereklidir.",

@@ -27,6 +27,7 @@
         "unsupportedImage": "Seules les images JPG, PNG, GIF ou WebP sont prises en charge.",
         "fileTooLarge": "Les fichiers doivent faire moins de 25 Mo.",
         "uploadFailed": "Échec de l'envoi. Veuillez réessayer.",
+        "imageBlocked": "Cette image a été bloquée car elle ne respecte pas nos normes de sécurité. Si vous pensez qu'il s'agit d'une erreur, veuillez nous écrire un message pour nous en expliquer la raison.",
         "micPermission": "L'accès au microphone a été refusé. Pour enregistrer une note vocale, autorisez l'accès au microphone dans les paramètres de votre navigateur et réessayez.",
         "micUnavailable": "Impossible d'accéder à votre microphone. Veuillez vérifier qu'il est bien branché et réessayez."
       }

@@ -1,30 +1,30 @@
 {
   "Therapy": {
     "title": "Terapi randevusu al",
-    "bookingButton": "Rezervasyona başla",
-    "bookingSectionTitle": "Rezervasyon nasıl işler",
+    "bookingButton": "Randevu almaya başla",
+    "bookingSectionTitle": "Randevu nasıl alınır",
     "steps": {
-      "step1": "Özenle seçtiğimiz, çok dilli terapistlerimiz arasından seçim yaparsın.",
-      "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçidir.",
+      "step1": "Özenle seçtiğimiz çok dilli terapistlerimiz arasından seçim yaparsın.",
+      "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçi.",
       "step3": "Fikrini değiştirirsen, seansları istediğin zaman durdurabilir ya da terapistini değiştirebilirsin.",
       "step4": "Paylaştığın her şey, yalnızca seninle terapist arasında kesinlikle gizli kalır."
     },
-    "closeBookingWidget": "Rezervasyon aracını kapat",
+    "closeBookingWidget": "Randevu penceresini kapat",
     "modalTitle": "Terapi randevusu al",
     "modalDescription": "Terapi seansını planlamak için SimplyBook.me aracı.",
     "error": {
-      "initializingWidget": "Rezervasyon aracı başlatılırken hata oluştu.",
-      "initializingWidgetRetry": "Yeniden denemede rezervasyon aracı başlatılırken hata oluştu.",
-      "containerNotFoundRetry": "Rezervasyon aracı yüklenemedi.",
-      "scriptNotLoaded": "Rezervasyon aracı betiği tam olarak yüklenmedi.",
-      "scriptLoadFailed": "Rezervasyon betiği yüklenemedi."
+      "initializingWidget": "Randevu aracı başlatılırken hata oluştu.",
+      "initializingWidgetRetry": "Yeniden denemede randevu aracı başlatılırken hata oluştu.",
+      "containerNotFoundRetry": "Randevu aracı yüklenemedi.",
+      "scriptNotLoaded": "Randevu aracının betiği tam olarak yüklenmedi.",
+      "scriptLoadFailed": "Randevu betiği yüklenemedi."
     },
     "therapyBookings": {
-      "header": "Terapi rezervasyonların",
+      "header": "Terapi randevuların",
       "bookingSummary": "<remainingTotal>{remainingTotal}</remainingTotal> terapi seansın kaldı, <upcomingTotal>{upcomingTotal}</upcomingTotal> tanesi planlandı.",
-      "noBookingSummary": "Mevcut tüm terapi seanslarını rezerve ettin.",
-      "noBookings": "Şu anda hiç terapi rezervasyonun yok.",
-      "cancelAlert": "{id} numaralı rezervasyon için iptal talep edildi. Gerçek iptal mantığını uygula."
+      "noBookingSummary": "Mevcut tüm terapi seansların için randevu aldın.",
+      "noBookings": "Şu anda hiç terapi randevun yok.",
+      "cancelAlert": "{id} numaralı randevu için iptal talep edildi. Gerçek iptal mantığını uygula."
     },
     "bookingItem": {
       "upcomingSessionTitle": "Yaklaşan terapi seansı ",
@@ -37,13 +37,13 @@
       "videoLink": "E-posta ile gönderilen Google Meet takvim davetinden görüşmeye katıl",
       "noVideoLink": "Bağlantı sağlanmadı",
       "cancelButton": "İptal",
-      "cancelError": "Rezervasyon iptal edilirken hata oluştu - lütfen tekrar dene ya da ekiple iletişime geç.",
+      "cancelError": "Randevu iptal edilirken hata oluştu - lütfen tekrar dene ya da ekiple iletişime geç.",
       "expand": "Genişlet",
       "collapse": "Daralt",
       "cancelDialog": {
         "title": "İptali Onayla",
-        "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun hissettiren bir zamanda yeni bir randevu alabilirsin.",
-        "keepButton": "Seansı Tut",
+        "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun bir zamanda yeni bir randevu alabilirsin.",
+        "keepButton": "Vazgeç",
         "confirmButton": "Seansı İptal Et"
       }
     },

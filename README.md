@@ -55,7 +55,7 @@ Chayn is proudly open-source and built with volunteer contributions. We are grat
 
 **Please consider giving this repository a star ⭐ and follow our GitHub profile to help us grow our open-source community and find more contributors like you!**
 
-Support our mission further by [sponsoring us on GitHub](https://github.com/sponsors/chaynHQ), exploring [our volunteer programs](https://www.chayn.co/get-involved), and following us on [social media](https://linktr.ee/chayn).
+Support our mission further by [sponsoring us on GitHub](https://github.com/sponsors/chaynHQ), exploring [our volunteer programs](<>), and following us on [social media](https://linktr.ee/chayn).
 
 # Licence
 

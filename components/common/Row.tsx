@@ -3,9 +3,10 @@
 import { INLINE_ALIGNMENT, TEXT_ALIGNMENT } from '@/lib/utils/alignment';
 import { richtextContentStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
+import type { ReactNode } from 'react';
 
 interface RowProps {
-  children: any;
+  children: ReactNode;
   numberOfColumns: number;
   horizontalAlignment: string;
   verticalAlignment: string;
