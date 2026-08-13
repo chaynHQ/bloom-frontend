@@ -20,9 +20,9 @@
       "activityTitle": "Etkinlik",
       "bonusTitle": "Bonus içerik",
       "chat": {
-        "title": "Bizimle düşün",
+        "title": "Birlikte düşünelim",
         "description": "Bu bölüme dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
-        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
+        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi al:",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
         "detailIntro": "Unutma:",
         "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
@@ -65,7 +65,7 @@
     "conversationsDescription": "Güçlü hikâyeler aracılığıyla, mitlere meydan okurken, düşünmeye teşvik ederken ve zararı ve iyileşmeyi anlamanın yeni yollarını açarken bizi dinle.",
     "shortsHeading": "Kısa videolar",
     "shortsDescription": "Vaktin mi kısıtlı ya da nereden başlayacağından emin değil misin? Kısa videolar, Bloom'un öğrenme bölümlerine 2–3 dakikalık bakışlardır; iyileşme yolculuğumuz için içgörü, güven ve araçlar sunarlar.",
-    "somaticsHeading": "Somatik: Beden temelli iyileşme",
+    "somaticsHeading": "Somatik çalışmalar: Beden temelli iyileşme",
     "somaticsDescription": "Nazik, beden temelli yaklaşımların şiddetten, stresten ve korkudan iyileşmeyi nasıl destekleyebileceğini keşfet. Bu kaynak koleksiyonu; bedenlerimizle yeniden bağ kurmamıza, dayanıklılık geliştirmemize ve güvenliğin ve rahatlığın nasıl hissettirebileceğini keşfetmemize yardımcı olacak açık, pratik bir rehberlik sunar."
   }
 }
