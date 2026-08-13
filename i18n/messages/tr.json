@@ -1,0 +1,700 @@
+{
+    "Auth": {
+        "introduction": "Bloom, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri, travmadan iyileşmeye yardımcı olan terapötik uygulamalarla birleştiren uzaktan kurslar sunarak hayatta kalanları bilgilendirir ve güçlendirir.",
+        "getStartedBloom": "Bloom'a başla",
+        "getStartedWith": "Bir {{partnerName}} koduyla başla",
+        "loginLink": "Zaten bir hesabın var mı? <loginLink>Girişe git<\/loginLink>",
+        "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı<\/termsLink> ve <privacyLink>Gizlilik Politikamızı<\/privacyLink> kabul ettiğini belirtmiş olursun",
+        "login": {
+            "title": "Tekrar hoş geldin",
+            "resetPasswordLink": "Şifreni mi unuttun? <resetLink>Buradan sıfırla<\/resetLink>",
+            "createAnAccountLink": "Hesabın yok mu? <createAnAccountLink>Bir hesap oluştur<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "Hesap oluştur",
+            "loginRedirect": "Zaten bir hesabın var mı? <loginLink>Giriş yap<\/loginLink>",
+            "partnershipsTitle": "İş birliklerimiz",
+            "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıdan onların logosuna tıkla."
+        },
+        "resetPassword": {
+            "title": "Şifreni sıfırla"
+        },
+        "form": {
+            "codeLabel": "erişim kodu",
+            "nameLabel": "Ad\/takma ad",
+            "emailLabel": "E-posta",
+            "passwordLabel": "Şifre",
+            "contactPermissionLabel": "Yeni kaynaklar ve bize geri bildirimini paylaşma fırsatları hakkında e-postalar al",
+            "registerSubmit": "Hesap oluştur",
+            "resetPasswordStep1": "Şifreni sıfırlamaya başlaman için sana bir e-posta göndereceğiz.",
+            "resetPasswordStep2": "Neredeyse tamam! Artık yeni şifreni belirleyebilirsin.",
+            "resetPasswordSubmit": "Şifreyi sıfırla",
+            "resendPasswordSubmit": "E-postayı tekrar gönder",
+            "resetPasswordSent": "Bloom'dan gelen sıfırlama bağlantısı için e-postanı kontrol et. Bir bağlantı almadın mı? Gereksiz (spam) klasörünü kontrol et veya e-postayı tekrar gönder.",
+            "passwordResetSuccess": "Şifren sıfırlandı! Artık yeni şifrenle giriş yapmaya devam edebilirsin.",
+            "loginSubmit": "Giriş yap",
+            "createUserError": "Hesabın kurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+            "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+            "codeErrors": {
+                "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+                "expired": "Bu kodun süresi doldu. {{partnerName}} ekibiyle iletişime geç.",
+                "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya {{partnerName}} ekibiyle iletişime geç.",
+                "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan {{partnerName}} ekibiyle iletişime geç."
+            },
+            "firebase": {
+                "wrongPassword": "Şifre yanlış, lütfen tekrar dene ya da çıkış yapıp şifreni sıfırla.",
+                "authError": "Bu e-posta ve şifre kombinasyonuna ait bir hesap bulamadık. E-postanı ve şifreni kontrol et.",
+                "invalidEmail": "E-postan geçersiz görünüyor, devam etmek için yazım hatalarını düzelt.",
+                "tooManyAttempts": "Çok fazla başarısız giriş denemesi, lütfen birkaç dakika bekle ya da şimdi şifreni sıfırla.",
+                "weakPassword": "Şifren en az 8 karakter olmalı ve tahmin edilmesi çok kolay olmamalı. Birkaç kelimeyi bir araya getirmeyi dene — 'mavi sabah nehri' gibi.",
+                "emailAlreadyInUse": "Bu e-posta Bloom'da zaten kayıtlı, devam etmek için <loginLink>girişe<\/loginLink> git.",
+                "invalidCode": "Bu şifre sıfırlama bağlantısı geçersiz, lütfen <resetLink>işlemi yeniden başlat<\/resetLink> ve tekrar dene.",
+                "expiredCode": "Bu şifre sıfırlama bağlantısının süresi doldu, lütfen <resetLink>işlemi yeniden başlat<\/resetLink> ve tekrar dene.",
+                "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
+            },
+            "phoneNumberLabel": "Telefon numarası",
+            "verificationCodeLabel": "Doğrulama kodu",
+            "mfaTriggerError": "SMS kodu gönderilirken hata oluştu. Lütfen tekrar dene.",
+            "mfaVerificationIdMissing": "Lütfen önce bir SMS kodu iste.",
+            "mfaEnrollError": "İki adımlı doğrulamaya kaydolurken hata oluştu. Lütfen tekrar dene.",
+            "mfaFinalizeError": "İki adımlı doğrulama kurulumu tamamlanırken hata oluştu. Lütfen tekrar dene.",
+            "mfaError": "Geçersiz doğrulama kodu. Lütfen tekrar dene.",
+            "emailNotVerified": "İki adımlı doğrulamayı kurmadan önce lütfen e-postanı doğrula.",
+            "emailVerificationError": "Doğrulama e-postası gönderilirken hata oluştu. Lütfen tekrar dene.",
+            "emailVerificationSent": "Doğrulama e-postası gönderildi. Lütfen gelen kutunu kontrol et.",
+            "emailVerificationSpamCheck": "E-postayı göremiyorsan, lütfen gereksiz (spam) klasörünü kontrol et.",
+            "sendVerificationEmail": "Doğrulama e-postası gönder",
+            "resendVerificationEmail": "Doğrulama e-postasını tekrar gönder",
+            "passwordRequired": "Yeniden kimlik doğrulama için şifre gereklidir.",
+            "reauthenticationError": "Yeniden kimlik doğrulama başarısız oldu. Lütfen tekrar dene."
+        },
+        "verifyMFA": {
+            "title": "İki adımlı doğrulamayı onayla",
+            "triggerSMS": "SMS kodu gönder",
+            "verifyCode": "Kodu doğrula",
+            "phoneNumber": "Kayıtlı telefon numarana bir doğrulama kodu göndereceğiz: {{phoneNumber}}"
+        },
+        "setupMFA": {
+            "title": "İki adımlı doğrulamayı kur",
+            "sendCode": "Doğrulama kodu gönder",
+            "verifyCode": "Kodu doğrula",
+            "enterCodeHelperText": "Lütfen telefonuna gönderdiğimiz doğrulama kodunu gir:",
+            "reauthTitle": "Şifreni onayla",
+            "reauthDescription": "Devam etmeden önce lütfen şifreni gir",
+            "cancelReauth": "İptal",
+            "confirmReauth": "Onayla",
+            "reauthenticating": "Onaylanıyor..."
+        }
+    },
+    "Shared": {
+        "bloom": "Bloom",
+        "references": "Kaynaklar",
+        "metadata": {
+            "title": "İyileşme yolculuğunda bize katıl",
+            "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen küresel bir kâr amacı gütmeyen kuruluş olan Chayn sunuyor.",
+            "imageAlt": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon. Bloom yazı logosu da dahildir."
+        },
+        "leaveSite": {
+            "button": "Bu siteden ayrıl",
+            "wikiLink": "https:\/\/en.wikipedia.org\/wiki\/Main_Page",
+            "googleLink": "https:\/\/www.google.co.uk\/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+        },
+        "navigateBack": "Geri git",
+        "navigateTo": "Şuraya git",
+        "footer": {
+            "fundedByTitle": "Finanse eden",
+            "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn<\/link> sunuyor.",
+            "chaynLine1": "<bold>CHAYN<\/bold> CIO tarafından oluşturuldu.",
+            "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
+            "bumbleLine1": "İş birliğiyle",
+            "bumbleLine2": "BUMBLE HOLDING LTD",
+            "badooLine1": "İş birliğiyle",
+            "badooLine2": "BADOO LTD",
+            "fruitzLine1": "İş birliğiyle",
+            "fruitzLine2": "FRUITZ LTD",
+            "policies": "Politikalarımız",
+            "trustCenter": "Güven Merkezi"
+        },
+        "maintenanceBanner": {
+            "title": "Bloom bakım için kapalı",
+            "description": "Bazı önemli planlı bakım çalışmalarını tamamlarken lütfen sabırlı ol. Bloom'un {{hours}} saat içinde her zamanki gibi kullanılabilir olması bekleniyor."
+        },
+        "fruitzRetirementBanner": {
+            "title": "Kurslarında değişiklik",
+            "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren 'Flört, Sınırlar ve İlişkiler' kursu artık kullanılamayacak, ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynı kalacak.",
+            "dismiss": "Kapat"
+        },
+        "videoTranscript": {
+            "title": "Video metni",
+            "closeModal": "Metni kapat",
+            "description": ""
+        },
+        "progressStatus": {
+            "started": "Başlandı",
+            "completed": "Tamamlandı",
+            "notStarted": "Başlanmadı"
+        },
+        "meetTheTeam": {
+            "fullBioButton": "{{name}} kişisinin tam biyografisini oku",
+            "expandTeamMember": "{{name}} için biyografiyi genişlet"
+        },
+        "noDataAvailable": {
+            "title": "Bu sayfa yüklenirken bir sorun oluştu. Lütfen geri dönüp tekrar dene ya da bizimle iletişime geç."
+        },
+        "error": {
+            "title": "Bir şeyler ters gitti",
+            "description": "Son istekte bir sorun oluştu, lütfen tekrar dene. Sorun devam ederse Bloom ekibiyle iletişime geç.",
+            "buttonLabel": "Tekrar dene"
+        },
+        "notFound": {
+            "title": "404 - Sayfa bulunamadı",
+            "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kurslar sayfasına geri dön.",
+            "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
+            "authenticatedRedirectButton": "Kurslar sayfasına dön",
+            "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
+        },
+        "alt": {
+            "chaynLogo": "Chayn logosu",
+            "bloomLogo": "Bloom logosu",
+            "bumbleLogo": "Bumble logosu",
+            "bloomBumbleLogo": "Bumble iş birliğiyle Bloom logosu",
+            "badooLogo": "Badoo logosu",
+            "bloomBadooLogo": "Badoo iş birliğiyle Bloom logosu",
+            "comicReliefLogo": "Comic Relief logosu",
+            "communityFundLogo": "Community Fund logosu",
+            "welcomeToBloom": "Bloom'a hoş geldin",
+            "tiktokLogo": "Tiktok logosu",
+            "githubLogo": "Github logosu",
+            "bloomHead": "Bir kişinin yüzü ve omuzları, üzerlerinde açan büyük yapraklar ve çiçeklerle birlikte bir illüstrasyon",
+            "beehive": "Bir arı kovanı illüstrasyonu",
+            "leafMix": "Bir gülle birleşmiş iki yaprak illüstrasyonu",
+            "leafMixBee": "Üzerinde uçuşan bir arı olan iki yaprak illüstrasyonu",
+            "leafMixDots": "Ortasında bir çiçek olan 3 yaprak ve çiçekten fışkıran noktalar illüstrasyonu.",
+            "personTea": "Oturmuş, çay tutan bir kişi illüstrasyonu",
+            "personSitting": "Oturan bir kişi illüstrasyonu",
+            "chooseTherapist": "Bir kişinin yandan yüz profili ve bir çiçek illüstrasyonu",
+            "dateSelector": "Ortasında bir kalp olan bir takvim illüstrasyonu",
+            "change": "Bir döngü illüstrasyonu - aralarında oklar olan, daire içinde üç güneş",
+            "notes": "Ekranında kalp içeren bir mesaj balonu olan bir cep telefonu illüstrasyonu",
+            "confidential": "Köşesinde bir kilit olan bir belge illüstrasyonu",
+            "cookieCat": "Bir kurabiyeyle dinlenen bir kedi illüstrasyonu",
+            "fruitzLogo": "Fruitz logosu",
+            "bloomFruitzLogo": "Fruitz iş birliğiyle Bloom logosu",
+            "bloomHomeIllustration": "Etrafında video simgesi, çiçek, mesaj simgesi ve çiçekli bir insan başı gibi semboller uçuşan, bağdaş kurup oturan bir kişi",
+            "bookIcon": "Kitap simgesi",
+            "articleIcon": "Makale simgesi",
+            "videoIcon": "Video simgesi"
+        },
+        "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/OY9Wdk4h",
+        "survivor": "Hayatta kalan",
+        "cookieConsent": {
+            "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazlasını şurada oku: ",
+            "cookieConsentPolicy": "çerez politikamız",
+            "acceptLabel": "Çerezleri Kabul Et",
+            "declineLabel": "Çerezleri Reddet"
+        },
+        "signUpTodayPromo": {
+            "title": "Bugün ücretsiz bir hesap aç",
+            "description1": "Bloom, travmadan iyileşirken sana destek olan çevrimiçi bir platformdur. Video kurslarından ve düşündürücü etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom ile etkileşim kurmanın pek çok farklı yolu var.",
+            "description2": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydol!",
+            "button": "Başla"
+        },
+        "loginDialog": {
+            "title": "Giriş yap ya da bir hesap oluştur",
+            "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
+            "loginButton": "Giriş yap",
+            "registerButton": "Hesap oluştur",
+            "backButton": "Geri dön"
+        },
+        "exerciseNames": {
+            "activities-thought-diaries": "Düşünce günlükleri",
+            "activities-stream-of-consciousness-journaling": "Bilinç akışı günlüğü",
+            "activities-timelines": "Zaman çizelgeleri",
+            "activities-trust-mapping": "Güven haritalama",
+            "activities-mapping-fear-and-stress-in-our-bodies": "Bedenimizdeki korku ve stresi haritalama",
+            "activities-letter-to-a-part-of-my-body": "Bedenimin bir parçasına mektup",
+            "activities-accelerators-and-brakes": "Gaz ve frenler",
+            "activities-ideal-sexual-being": "İdeal cinsel varlık",
+            "grounding-visual-breathing": "Görsel nefes",
+            "grounding-slow-breathing": "Yavaş nefes",
+            "grounding-box-breathing": "Kutu nefesi",
+            "grounding-drifting-clouds-meditation": "Süzülen bulutlar meditasyonu",
+            "grounding-positive-coping-statement": "Olumlu başa çıkma ifadesi",
+            "grounding-finger-focus": "Parmak odağı",
+            "grounding-day-walkthrough": "Gün gözden geçirme",
+            "grounding-what-can-you-hear": "Ne duyabiliyorsun",
+            "grounding-listen-to-your-voice": "Sesini dinle",
+            "grounding-calming-colours": "Sakinleştirici renkler",
+            "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
+            "grounding-best-check-in": "BEST kontrolü",
+            "grounding-compassionate-body-scan": "Şefkatli beden taraması",
+            "grounding-touching-and-feeling-textures": "Dokulara dokunma ve hissetme",
+            "grouding-sound-of-claps": "Alkış sesi",
+            "grounding-affirming-ourselves": "Kendimizi onaylama (sıkı baskı)"
+        },
+        "pwaBanner": {
+            "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
+            "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",
+            "iosDescription": "Bloom'u ana ekranına ekle",
+            "iosStep1": "1. Paylaş düğmesine dokun",
+            "iosStep2": "2. 'Ana Ekrana Ekle'ye dokun",
+            "button-decline-label": "Şimdi değil",
+            "button-install-label": "Yükle"
+        },
+        "notesFromBloomPromo": {
+            "title": "Ücretsiz destekleyici mesajlar",
+            "description": "Haftada iki kez doğrudan WhatsApp'ına mesajlar al",
+            "buttonText": "Abone ol"
+        },
+        "characterCount": "{{current}}\/{{max}} karakter",
+        "scrollToSignUp": {
+            "button": "Ücretsiz kaydol"
+        }
+    },
+    "Account": {
+        "applyCode": {
+            "title": "Kod uygula",
+            "introduction": "Bloom, dünya genelinde istismardan hayatta kalanların iyileşmesini desteklemek için iş ortaklarıyla çalışır.",
+            "description": "İş ortaklarımızdan birinden bir erişim kodu aldıysan, onların programına özel destek almak için kodu buraya ekleyebilirsin.",
+            "descriptionLine2": "Birden fazla iş ortağından kod ekleyebilirsin.",
+            "partnershipsTitle": "İş ortaklarımız",
+            "partnershipsDescription": "Logolarına tıklayarak iş birliklerimiz hakkında daha fazla bilgi edin.",
+            "formIntroduction": "Bir Bloom iş ortağından aldığın erişim kodunu gir.",
+            "formSuccess": {
+                "success": "Hesabına bir Bumble kodu uygulandı!",
+                "successLine2": "Bumble erişimin şunları sağlar:",
+                "liveChat": "Bloom ekibiyle mesajlaşma",
+                "therapy": "{{therapySessionsRemaining}} terapi seansı",
+                "courses": "Kendi kendine ilerlenen kurslar"
+            },
+            "form": {
+                "codeLabel": "Erişim kodu",
+                "submitLabel": "Kodu uygula",
+                "assignPartnerAccessError": "Kod hesabına uygulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+                "codeErrors": {
+                    "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+                    "expired": "Bu kodun süresi doldu. İş ortağının ekibiyle iletişime geç.",
+                    "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya iş ortağıyla iletişime geç.",
+                    "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan iş ortağının ekibiyle iletişime geç.",
+                    "alreadyApplied": "Bu kod hesabına zaten uygulanmış."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "Senin hakkında",
+            "header": "Anlamamıza yardım et",
+            "description": "Bu sorular, Bloom'u kimlerin kullandığını ve bizden ne tür destekler beklediklerini anlamamıza yardımcı olur.",
+            "titleA": "Bloom'dan ne istiyorsun",
+            "descriptionALine1": "Şimdiye kadarki yanıtların için teşekkürler!",
+            "descriptionALine2": "Yeni bir kullanıcı olarak, hizmetlerimizi kullanmadan önce nasıl olduğunu anlamak isteriz. Bunu şimdi sormak, Bloom'u kullanmanın hayatta kalanlar üzerindeki etkisini ölçmemize ve doğru şeylere odaklanmamıza yardımcı olur.",
+            "goToCourses": "Kurslara geç",
+            "demographicForm": {
+                "genderLabel": "Lütfen cinsiyet kimliğini yansıtan bir veya daha fazla seçenek seç",
+                "genderHelpText": "Bunu, kullanıcılarımızın kendilerini nasıl tanımladığını daha iyi anlamak ve daha kapsayıcı, cinsiyet kimliğini destekleyen kaynaklar tasarlamak amacıyla soruyoruz. 'Yanıtlamamayı tercih ediyorum' seçeneğini işaretleyebilirsin.",
+                "genderOptions": {
+                    "woman": "Kadın",
+                    "man": "Erkek",
+                    "nonBinary": "Non-binary (ikili olmayan)",
+                    "transgender": "Trans",
+                    "intersex": "İnterseks",
+                    "twoSpirit": "Two-spirit (iki ruhlu)",
+                    "genderNonConforming": "Cinsiyet normlarına uymayan",
+                    "other": "Diğer (lütfen belirt)",
+                    "preferNotToAnswer": "Yanıtlamamayı tercih ediyorum"
+                },
+                "neurodivergentLabel": "Beyninin bilgiyi işleme biçimini etkileyen bir nörotipin var mı? Bu bir öğrenme güçlüğü (örneğin disleksi, dispraksi, diskalkuli), DEHB ya da otizm olabilir.",
+                "neurodivergentHelpText": "Kapsayıcı hizmetler tasarlamak için elimizden geleni yapıyoruz, bu yüzden bunu bilmek bize yardımcı olur.",
+                "neurodivergentLabels": {
+                    "1": "Evet",
+                    "2": "Hayır",
+                    "3": "Emin değilim",
+                    "4": "Söylememeyi tercih ederim"
+                },
+                "raceEthnNatnLabel": "Irkını, etnik kökenini ve uyruğunu nasıl tanımlarsın? Örneğin Beyaz Hispanik Meksikalı ya da Tamil Hintli.",
+                "raceEthnNatnHelpText": "İnsanların ırk ve etnik köken deneyimlerinin yaşadıkları yere göre büyük ölçüde değiştiğini biliyoruz, bu yüzden seni en iyi tanımladığını hissettiğin şeyi yaz.",
+                "countryLabel": "Şu anda hangi ülkede yaşıyorsun?",
+                "countryHelpText": "Bu, hayatta kalanların hizmetlerimize nereden eriştiğini anlamamıza yardımcı olur.",
+                "ageLabel": "Yaş grubun nedir?",
+                "ageHelpText": "Yaş grubunu seç.",
+                "selectPlaceholder": "Lütfen bir seçenek seç.",
+                "ageLabels": {
+                    "1": "18 yaşından küçük",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "Söylememeyi tercih ederim"
+                },
+                "submitLabel": "Gönder",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "Lütfen aşağıdaki ifadelere ne ölçüde katıldığını derecelendir:",
+                "scaleDescriptionLine2": "1 = kesinlikle katılmıyorum, 10 = kesinlikle katılıyorum",
+                "scaleLabels": {
+                    "Q1": "Yaşadığım travmanın zihnimi, bedenimi ve duygularımı nasıl etkilediğini anlıyorum",
+                    "Q2": "Uzun vadede bana yardımcı olmayan başa çıkma yöntemleri olduğunu ve bunlara yönelmenin travmaya verilen normal bir tepki olabileceğini biliyorum ",
+                    "Q3": "İyileşmenin zaman, enerji ve sabır gerektirdiğini biliyorum",
+                    "Q4": "İyileşmek için ihtiyacım olan ilgiyi kendime göstermeye kararlıyım",
+                    "Q5": "Bana iyi hissettiren şeyleri buldum ve onlara günlük rutinimde zaman ayırıyorum",
+                    "Q6": "Travmadan iyileşmenin bir parçasının tetikleyicilerle başa çıkmak olduğunu anlıyorum",
+                    "Q7": "Beni neyin güvende ya da tehdit altında hissettirdiğinin bana özgü olduğunu anlıyorum",
+                    "Q8": "Tetikleyici anları, yerleri veya yılın belirli zamanlarını öngörebilir ve onlarla başa çıkabilirim"
+                },
+                "submitLabel": "Tamamla"
+            },
+            "setAForm": {
+                "hopesLabel": "Bloom'un anlamana ya da yapmana yardımcı olmasını umduğun tek bir şey nedir?"
+            }
+        },
+        "disableServiceEmails": {
+            "title": "Bloom e-postaları kapatıldı",
+            "description": "Artık Bloom ile ilgili e-postalar almayacaksın. Bunu daha sonra değiştirmek istersen, lütfen <link>Bloom ekibiyle<\/link> iletişime geç",
+            "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
+        },
+        "accountSettings": {
+            "title": "Hesap Ayarları",
+            "description": "Bloom'daki ayarlarını görüntüle ve güncelle",
+            "imageAlt": "İçinde kalp olan mesajlı bir cep telefonu illüstrasyonu",
+            "profileSettings": {
+                "title": "Profil bilgileri",
+                "description": "Adını ve e-postanı buradan güncelle. Bu, profilinde saklanan tek kişisel bilgidir.",
+                "nameLabel": "Ad",
+                "emailLabel": "E-posta",
+                "submitLabel": "Profili güncelle",
+                "emailAlreadyInUseError": "Bu e-posta başka bir hesap tarafından zaten kullanılıyor, lütfen tekrar dene",
+                "confirmDialogTitle": "E-postanı değiştirdiğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
+                "confirmDialogCancel": "İptal"
+            },
+            "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>",
+            "actions": {
+                "title": "Hesap işlemleri",
+                "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin seansların geçmişini sistemimizden kalıcı olarak siler.",
+                "button": {
+                    "resetPassword": "Şifreyi sıfırla",
+                    "deleteAccount": "Hesabı Sil"
+                },
+                "confirmDialogCancel": "Geri dön",
+                "resetPasswordConfirmDialogTitle": "Şifreni güncellediğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
+                "deleteAccountConfirmDialogTitle": "Lütfen hesabını silmek istediğini onayla",
+                "deleteAccountConfirmDialogDescription": "Bu, hesabının anında devre dışı kalacağı ve geri kurtarılamayacağı anlamına gelir. Hiçbir Bloom özelliğine veya kullanım geçmişine erişimin olmayacak. E-posta adresini ve tüm kişisel verilerini kayıtlarımızdan sileriz."
+            },
+            "emailSettings": {
+                "title": "E-posta tercihleri",
+                "description": "Sana e-posta gönderip gönderemeyeceğimizi bize bildir:",
+                "submitLabel": "E-posta tercihlerini kaydet",
+                "serviceEmailsPermissionLabel": "Hizmetlerin veya hesabındaki değişiklikler hakkında",
+                "contactPermissionLabel": "Yeni bir kurs, hizmet veya dil mevcut olduğunda",
+                "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "E-posta hatırlatıcıları",
+                "introduction": "Travmayla baş etmek, özellikle bunu yalnız yapıyorsan zor olabilir.",
+                "description": "Bir süredir giriş yapmadıysan nazik hatırlatmalarla iyileşme yolculuğunda yanında olabiliriz.",
+                "fieldLabel": "Hatırlatılsın:",
+                "twoWeeksLabel": "İki hafta sonra",
+                "oneMonthLabel": "Bir ay sonra",
+                "twoMonthsLabel": "İki ay sonra",
+                "neverLabel": "Asla",
+                "update": "Bu ayarı istediğin zaman güncelleyebilirsin",
+                "submitLabel": "E-posta hatırlatıcılarını kaydet",
+                "updateError": "E-posta hatırlatıcı ayarların güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
+            }
+        }
+    },
+    "Courses": {
+        "title": "Kurslarımız",
+        "introduction": "Bloom kursları, travmayla başa çıkmamıza yardımcı olmak için bize özel bilgiler, araçlar ve destekleyici sözler sunar. Yaşadıklarımızı ve bunların bizi nasıl etkilemiş olabileceğini öğrenmemiz, üzerine düşünmemiz ve işlememiz için bizi teşvik ederler — hepsi güvenli ve güçlendirici bir alanda.",
+        "session": "Seans",
+        "course": "Kurs",
+        "courses": "Kurslar",
+        "expand": "Genişlet",
+        "expandSummary": "Şunun özetini genişlet:",
+        "navigateToSession": "Seansa git -",
+        "navigateToCourse": "Kursa git -",
+        "noCourses": "Şu anda gösterilecek kurs yok. Bu doğru görünmüyorsa, daha sonra tekrar dene ya da Bloom ekibiyle iletişime geç.",
+        "courseDetail": {
+            "introductionTitle": "Kurs tanıtımı",
+            "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini<\/transcriptLink> oku"
+        },
+        "sessionDetail": {
+            "videoTitle": "Video",
+            "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini<\/transcriptLink> oku.",
+            "activityTitle": "Etkinlik",
+            "bonusTitle": "Bonus içerik",
+            "chat": {
+                "title": "Bizimle düşün",
+                "description": "Bu seansa dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
+                "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
+                "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
+                "detailIntro": "Unutma:",
+                "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
+                "detailTimezone": "Pek çok farklı saat diliminde çalışıyoruz, bu yüzden bizden 6 saat içinde yanıt almalısın ve bu süre 24 saati geçmez.",
+                "detailLanguage": "Her zaman İngilizce, Fransızca, Hintçe, Portekizce veya İspanyolca olarak hizmet veriyoruz, ancak ekibimizin bazı üyeleri Arapça ve Bengalce de konuşuyor; seni onlarla görüştürmekten memnuniyet duyarız.",
+                "detailLegal": "Devam eden bir dava sürecindeysen, bizimle paylaştıklarına dikkat et, çünkü bu bazen davanı etkileyebilir.",
+                "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
+                "startButton": "Bize mesaj gönder"
+            },
+            "sessionComplete": "Seans tamamlandı"
+        },
+        "sessionFeedback": {
+            "title": "Bu seans nasıldı?",
+            "subtitle": "Bu seansı nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kurslarımızı geliştirmemize yardımcı olur.",
+            "feedbackTags": {
+                "relatable": "Bana yakın",
+                "useful": "Faydalı",
+                "inspiring": "İlham verici",
+                "too long": "Çok uzun",
+                "too complicated": "Çok karmaşık",
+                "not useful": "Faydalı değil"
+            },
+            "textboxDefaultText": "Bir yorum ekle...",
+            "sendButtonText": "Gönder",
+            "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+            "errors": {
+                "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
+            }
+        },
+        "accessGuard": {
+            "title": "Kurs içeriği mevcut değil",
+            "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına<\/contactLink> geri dön."
+        },
+        "errors": {
+            "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
+        },
+        "backToCourse": "Kursa dön",
+        "backToCourses": "Kurslara dön",
+        "conversationsHeading": "Sohbetler",
+        "conversationsDescription": "Güçlü hikâyeler aracılığıyla, mitlere meydan okurken, düşünmeye teşvik ederken ve zararı ve iyileşmeyi anlamanın yeni yollarını açarken bizi dinle.",
+        "shortsHeading": "Kısalar",
+        "shortsDescription": "Vaktin mi kısıtlı ya da nereden başlayacağından emin değil misin? Kısalar, Bloom'un öğrenme seanslarına 2–3 dakikalık bakışlardır; iyileşme yolculuğumuz için içgörü, güven ve araçlar sunarlar.",
+        "somaticsHeading": "Somatik: Beden temelli iyileşme",
+        "somaticsDescription": "Nazik, beden temelli yaklaşımların şiddetten, stresten ve korkudan iyileşmeyi nasıl destekleyebileceğini keşfet. Bu kaynak koleksiyonu; bedenlerimizle yeniden bağ kurmamıza, dayanıklılık geliştirmemize ve güvenliğin ve rahatlığın nasıl hissettirebileceğini keşfetmemize yardımcı olacak açık, pratik bir rehberlik sunar."
+    },
+    "Therapy": {
+        "title": "Terapi randevusu al",
+        "bookingButton": "Rezervasyona başla",
+        "bookingSectionTitle": "Rezervasyon nasıl işler",
+        "steps": {
+            "step1": "Özenle seçtiğimiz, çok dilli terapistlerimiz arasından seçim yaparsın.",
+            "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçidir.",
+            "step3": "Fikrini değiştirirsen, seansları istediğin zaman durdurabilir ya da terapistini değiştirebilirsin.",
+            "step4": "Paylaştığın her şey, yalnızca seninle terapist arasında kesinlikle gizli kalır."
+        },
+        "closeBookingWidget": "Rezervasyon aracını kapat",
+        "modalTitle": "Terapi randevusu al",
+        "modalDescription": "Terapi seansını planlamak için SimplyBook.me aracı.",
+        "error": {
+            "initializingWidget": "Rezervasyon aracı başlatılırken hata oluştu.",
+            "initializingWidgetRetry": "Yeniden denemede rezervasyon aracı başlatılırken hata oluştu.",
+            "containerNotFoundRetry": "Rezervasyon aracı yüklenemedi.",
+            "scriptNotLoaded": "Rezervasyon aracı betiği tam olarak yüklenmedi.",
+            "scriptLoadFailed": "Rezervasyon betiği yüklenemedi."
+        },
+        "therapyBookings": {
+            "header": "Terapi rezervasyonların",
+            "bookingSummary": "<remainingTotal>{{remainingTotal}}<\/remainingTotal> terapi seansın kaldı, <upcomingTotal>{{upcomingTotal}}<\/upcomingTotal> tanesi planlandı.",
+            "noBookingSummary": "Mevcut tüm terapi seanslarını rezerve ettin.",
+            "noBookings": "Şu anda hiç terapi rezervasyonun yok.",
+            "cancelAlert": "{{id}} numaralı rezervasyon için iptal talep edildi. Gerçek iptal mantığını uygula."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Yaklaşan terapi seansı ",
+            "pastSessionTitle": "Geçmiş terapi seansı ",
+            "cancelledSessionTitle": "İptal edilen seans",
+            "dateLabel": "Tarih",
+            "timeLabel": "Saat",
+            "therapistLabel": "Terapist",
+            "videoLinkLabel": "Video bağlantısı",
+            "videoLink": "E-posta ile gönderilen Google Meet takvim davetinden görüşmeye katıl",
+            "noVideoLink": "Bağlantı sağlanmadı",
+            "cancelButton": "İptal",
+            "cancelError": "Rezervasyon iptal edilirken hata oluştu - lütfen tekrar dene ya da ekiple iletişime geç.",
+            "expand": "Genişlet",
+            "collapse": "Daralt",
+            "cancelDialog": {
+                "title": "İptali Onayla",
+                "description": "{{dateTime}} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun hissettiren bir zamanda yeni bir randevu alabilirsin.",
+                "keepButton": "Seansı Tut",
+                "confirmButton": "Seansı İptal Et"
+            }
+        },
+        "accessGuard": {
+            "title": "Terapi mevcut değil",
+            "introduction": "Bloom hesabın, terapi seanslarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
+        }
+    },
+    "Welcome": {
+        "getStarted": "Başla",
+        "accessIntroduction": "Bloom yolculuğuna başlamak için {{partnerName}} tarafından sana verilen erişim kodunu gir.",
+        "publicIntroduction": "Kurslarımıza başlamak için Bloom'da bir hesap oluştur ya da önce aşağıdan Bloom hakkında daha fazlasını öğren.",
+        "continueCourses": "Bloom'a devam et",
+        "continueCoursesDescription": "Kaldığın yerden devam et.",
+        "goToCourses": "Kurslara git",
+        "form": {
+            "codeLabel": "{{partnerName}} erişim kodu"
+        },
+        "WelcomeTo": "Hoş geldin"
+    },
+    "Whatsapp": {
+        "form": {
+            "subscribeTitle": "Notlar'a abone ol",
+            "subscribe": "Abone ol",
+            "phoneNumber": "Telefon numarası",
+            "unsubscribeTitle": "Notlar'a abonesin",
+            "unsubscribe": "Aboneliği iptal et",
+            "subscribeErrors": {
+                "invalidNumber": "Telefon numaran geçersiz görünüyor. Lütfen hataları düzelt ve tekrar dene.",
+                "internal": "WhatsApp'a abone olurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+                "alreadyExists": "Numaran için zaten bir WhatsApp aboneliği var. Bunun bir hata olduğunu düşünüyorsan lütfen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
+            },
+            "unsubscribeErrors": {
+                "internal": "WhatsApp aboneliğini iptal ederken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
+            }
+        },
+        "notes": {
+            "title": "Bloom'dan Notlar'a abone ol",
+            "description": "İyileşmeye giden yol yalnız ve bazen dikenli olabilir. Bloom'dan Notlar; iyileşme yolculuğuna devam etmene yardımcı olmak için doğrudan telefonuna gönderilen, haftada iki kez paylaşılan hatırlatmalar, cesaretlendirmeler, olumlamalar ve kurslarımızdan etkinliklerdir.",
+            "createAccount": "Bir hesap oluştur",
+            "createAccountDescription": "Bloom'dan Notlar'a kaydol ve kaynak platformumuza eriş.",
+            "haveAccount": "Hesabın var mı?",
+            "login": "Giriş yap",
+            "createAccountButton": "Hesap oluştur",
+            "howItWorks": "Bloom'dan Notlar nasıl işler",
+            "step1": "WhatsApp numarana mesajlar gönderiyoruz",
+            "step2": "Haftada iki kez, her Çarşamba ve Pazar",
+            "step3": "Olumlamalar, etkinlikler ve düşünceler paylaşıyoruz",
+            "step4": "Fikrini değiştirirsen istediğin zaman aboneliğini iptal et",
+            "usNoticeTitle": "ABD'deki aboneler için WhatsApp teslimat sorunları",
+            "usNoticeDescription": "Meta, ABD'deki abonelere Notlar göndermemizi etkileyen değişiklikler yaptı. Bunu düzeltmek için yoğun şekilde çalışıyoruz, ancak mesajlar şu anda sana ulaşmayabilir. Yine de abone olabilirsin—herkes için tekrar çalışmaya başladığında seni bilgilendireceğiz.",
+            "subscribeDescription": "WhatsApp mesajları almaya başlamak için Bloom'dan Notlar'a abone ol. İstediğin zaman buradan aboneliğini iptal edebilirsin.",
+            "unsubscribeDescription": "WhatsApp mesajları almayı durdurmak ya da numaranı güncellemek için Bloom'dan Notlar aboneliğini iptal et. İstediğin zaman tekrar abone olabilirsin."
+        }
+    },
+    "Messaging": {
+        "messageHeading": "Aklından geçenleri bize anlat",
+        "frontChat": {
+            "ariaChat": "Bloom mesajlaşma",
+            "welcomeAuthor": "Bloom Ekibi",
+            "welcomeMessage": "Merhaba, burada birbirine destek olma konusunda deneyimli, Bloom ekibimizden hayatta kalanlar ve müttefiklerle sohbet edebilirsin. Kurslarımızda ilerlerken sorularını, duygularını ve düşüncelerini paylaşman için buradayız.\n\nAcil bir zarar riski altındaysan, lütfen yapabiliyorsan ve senin için güvenliyse acil servisleri ara. Kriz desteği sunmuyor olsak da, ihtiyacın olan türde bir destek hizmetine ulaşmana yardımcı olabiliriz. Bölgendeki destek hizmetlerini buradaki küresel rehberimizde arayabilirsin: c.chayn.co\/directory.\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce ve İspanyolca sohbet edebilirsin.\n\nMesajına her zaman 1-2 gün içinde yanıt vermeyi hedefleriz.",
+            "empty": "Aşağıdan ilk mesajını gönder, ekibimiz en kısa sürede sana geri dönecek.",
+            "placeholder": "Bir mesaj yaz…",
+            "send": "Mesaj gönder",
+            "attachImage": "Görsel ekle",
+            "imageAttachment": "Görsel",
+            "voiceNote": "Sesli not",
+            "startRecording": "Sesli not kaydet",
+            "stopRecording": "Sesli notu durdur ve gönder",
+            "cancelRecording": "Kaydı iptal et",
+            "recordingInProgress": "Kaydediliyor",
+            "messageSending": "Gönderiliyor",
+            "messageFailed": "Gönderilemedi — lütfen tekrar dene.",
+            "audioUnavailable": "Ses kullanılamıyor",
+            "status": {
+                "connecting": "Bağlanıyor…",
+                "disconnected": "Yeniden bağlanılıyor…",
+                "error": "Bağlanılamıyor. Lütfen daha sonra tekrar dene."
+            },
+            "errors": {
+                "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri desteklenir.",
+                "fileTooLarge": "Dosyalar 25 MB'tan küçük olmalıdır.",
+                "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar dene.",
+                "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Eğer bu bir hata olduğunu düşünüyorsan, lütfen bize nedenini açıklamak için bir mesaj gönder.",
+                "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarından mikrofon erişimine izin ver ve tekrar dene.",
+                "micUnavailable": "Mikrofonuna erişilemedi. Lütfen bağlı olduğundan emin ol ve tekrar dene."
+            }
+        }
+    },
+    "Resources": {
+        "backToConversations": "Sohbetlere dön",
+        "backToShorts": "Kısalara dön",
+        "backToVideos": "Videolara dön",
+        "backToSomatics": "Somatiklere dön",
+        "nextVideoButtonLabel": "Sonraki video",
+        "nextConversationButtonLabel": "Sonraki sohbet",
+        "nextSessionButtonLabel": "Sonraki seans",
+        "conversations": "Sohbetler",
+        "shorts": "Kısalar",
+        "videos": "Videolar",
+        "completed": "Tamamlandı",
+        "sessionDetail": "Bu klip şu Seanstan: {{sessionName}}, şu Kursumuzdan: {{courseName}}",
+        "sessionButtonLabel": "Seansın tamamını izle",
+        "videoTranscriptLink": "Videoyu izle ya da <link>metni<\/link> oku.",
+        "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni<\/link> oku.",
+        "relatedContent": {
+            "title": "İlgili içerik",
+            "resource_short_video": "İzle",
+            "resource_single_video": "İzle",
+            "resource_conversation": "Dinle",
+            "course": "Kurs",
+            "session": "Seans",
+            "session_iba": "Seans",
+            "grounding": "Topraklanma",
+            "activities": "Etkinlik",
+            "minuteLabel": "dakika"
+        },
+        "resourceFeedback": {
+            "title": "Bu seans nasıldı?",
+            "subtitle": "Bu öğrenmeyi nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı olur.",
+            "feedbackTags": {
+                "relatable": "Bana yakın",
+                "useful": "Faydalı",
+                "inspiring": "İlham verici",
+                "too long": "Çok uzun",
+                "too complicated": "Çok karmaşık",
+                "not useful": "Faydalı değil"
+            },
+            "textboxDefaultText": "Bir yorum ekle...",
+            "sendButtonText": "Gönder",
+            "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+            "errors": {
+                "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
+            }
+        },
+        "references": {
+            "title": "Kaynaklar",
+            "keyReferences": "Bu seanstan önemli kaynaklar (tam liste metnin sonundadır):",
+            "books": "Kitaplar",
+            "articles": "Makaleler",
+            "video_practices": "Video uygulamaları",
+            "audios": "Podcast'ler"
+        }
+    },
+    "Navigation": {
+        "menu": "Gezinme menüsü",
+        "menuOpen": "Gezinme menüsünü aç",
+        "menuClose": "Gezinme menüsünü kapat",
+        "languageMenu": "Dil menüsü",
+        "bloomLogo": "Bloom logosu",
+        "login": "Giriş yap",
+        "logout": "Çıkış yap",
+        "accountSettings": "Hesap ayarları",
+        "userMenu": "Kullanıcı ayarları menüsü",
+        "home": "Ana sayfa",
+        "admin": "Yönetim",
+        "about": "Hakkında",
+        "meetTheTeam": "Bloom ekibimiz",
+        "immediateHelp": "Acil yardım",
+        "therapy": "Terapi",
+        "courses": "Kurslar",
+        "applyCode": "Kod uygula",
+        "account": "Hesap",
+        "secondaryNavigationMenu": "İkincil gezinme menüsü",
+        "notes": "Notlar",
+        "alt": {
+            "therapyIcon": "Çiçekli bir baş illüstrasyonu",
+            "courseIcon": "Bir oynat simgesi illüstrasyonu, sağa işaret eden bir üçgen. Önünde küçük bir güneş var",
+            "notesIcon": "Ortasında bir kalp olan bir cep telefonu illüstrasyonu",
+            "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde düz çizgiler var.",
+            "activitiesIcon": "Kapağında küçük sarı bir alev olan bir kitap.",
+            "groundingIcon": "Üzerinde küçük pembe çiçekler olan bir dal."
+        },
+        "messaging": "Mesajlaşma",
+        "grounding": "Topraklanma",
+        "activities": "Etkinlikler"
+    }
+}

@@ -1,0 +1,700 @@
+{
+    "Auth": {
+        "introduction": "Bloom informa y empodera a los sobrevivientes, ofreciéndoles cursos remotos que combinan reflexiones sobre el trauma y la violencia de género con prácticas terapéuticas para ayudar a sanar del trauma.",
+        "getStartedBloom": "Empieza con Bloom",
+        "getStartedWith": "Empieza con un código de {{partnerName}}",
+        "loginLink": "¿Ya tienes una cuenta? <loginLink>Ir al inicio de sesión<\/loginLink>",
+        "terms": "Al continuar, estás indicando que aceptas nuestros <termsLink>Términos de Servicio<\/termsLink> y nuestras <privacyLink>Políticas de Privacidad<\/privacyLink>",
+        "login": {
+            "title": "Te damos la bienvenida",
+            "resetPasswordLink": "¿Has olvidado la contraseña? <resetLink>Recuperar contraseña<\/resetLink>",
+            "createAnAccountLink": "¿No tienes una cuenta? <createAnAccountLink>Crea una cuenta<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "Crea una cuenta",
+            "loginRedirect": "¿Ya tienes una cuenta? <loginLink>Inicia sesión<\/loginLink>",
+            "partnershipsTitle": "Nuestros socios",
+            "partnershipsDescription": "Si fuiste referido a Bloom por parte de uno de nuestros socios, haz click en su logo a continuación."
+        },
+        "resetPassword": {
+            "title": "Recupera tu contraseña"
+        },
+        "form": {
+            "codeLabel": "código de acceso",
+            "nameLabel": "Primer nombre\/apodo",
+            "emailLabel": "Email",
+            "passwordLabel": "Contraseña",
+            "contactPermissionLabel": "Reciba correos electrónicos sobre nuevos recursos y oportunidades para compartir sus comentarios con nosotros.",
+            "registerSubmit": "Crea una cuenta",
+            "resetPasswordStep1": "Te enviaremos un email para empezar a recuperar tu contraseña.",
+            "resetPasswordStep2": "¡Ya casi! Ahora puedes crear tu nueva contraseña.",
+            "resetPasswordSubmit": "Recuperar contraseña",
+            "resendPasswordSubmit": "Reenviar email",
+            "resetPasswordSent": "Busca en tus emails el link de recuperación de contraseña de Bloom. ¿No recibiste uno? Busca en tu buzón de spam o reenvía el email.",
+            "passwordResetSuccess": "¡Tu contraseña se ha restablecido! Ahora puedes iniciar sesión con tu nueva contraseña.",
+            "loginSubmit": "Iniciar sesión",
+            "createUserError": "Hubo un error creando tu cuenta. Inténtalo de nuevo luego y <contactLink>contacta al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+            "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+            "codeErrors": {
+                "internal": "Hubo un error validando tu código de acceso. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+                "expired": "Este código ha expirado. Ponte en contacto con el equipo de {{partnerName}}.",
+                "invalid": "Este código parece no ser válido. Revisa si tienes errores tipográficos o ponte en contacto con el equipo de {{partnerName}}.",
+                "alreadyInUse": "Este código ya ha sido usado. Si crees que esto es un error, ponte en contacto con el equipo de {{partnerName}}."
+            },
+            "firebase": {
+                "wrongPassword": "Contraseña incorrecta, inténtelo de nuevo o cierre sesión y restablezca su contraseña.",
+                "authError": "No pudimos encontrar una cuenta con esa combinación de email y contraseña. Revisa tu email y contraseña.",
+                "invalidEmail": "Tu email parece no ser válido. Arregla los errores tipográficos y continua.",
+                "tooManyAttempts": "Demasiados intentos de inicio de sesión fallidos. Por favor, espere unos minutos o restablezca su contraseña ahora.",
+                "weakPassword": "Tu contraseña debe tener al menos 8 caracteres y no ser fácil de adivinar. Intenta combinar unas pocas palabras — como 'río azul mañana'.",
+                "emailAlreadyInUse": "Este email ya está registrado en Bloom. Ve al <loginLink>inicio de sesión<\/loginLink> para continuar.",
+                "invalidCode": "Este link de recuperación de contraseña no es válido. Por favor <resetLink>comienza de nuevo el proceso<\/resetLink> e inténtalo otra vez.",
+                "expiredCode": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso<\/resetLink> e inténtalo otra vez.",
+                "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error."
+            },
+            "phoneNumberLabel": "Número de teléfono",
+            "verificationCodeLabel": "Código de verificación",
+            "mfaTriggerError": "Error al enviar el código SMS. Por favor, inténtalo de nuevo.",
+            "mfaVerificationIdMissing": "Por favor, solicita primero un código SMS.",
+            "mfaEnrollError": "Error al inscribirse en la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+            "mfaFinalizeError": "Error al finalizar la configuración de la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+            "mfaError": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+            "emailNotVerified": "Por favor, verifica tu email antes de configurar la autenticación de dos factores.",
+            "emailVerificationError": "Error al enviar el email de verificación. Por favor, inténtalo de nuevo.",
+            "emailVerificationSent": "Email de verificación enviado. Por favor, revisa tu bandeja de entrada.",
+            "emailVerificationSpamCheck": "Si no ves el email, por favor revisa tu carpeta de spam.",
+            "sendVerificationEmail": "Enviar email de verificación",
+            "resendVerificationEmail": "Reenviar email de verificación",
+            "passwordRequired": "Se requiere contraseña para la reautenticación.",
+            "reauthenticationError": "Error al reautenticar. Por favor, inténtalo de nuevo."
+        },
+        "verifyMFA": {
+            "title": "Verificar autenticación de dos factores",
+            "triggerSMS": "Enviar código SMS",
+            "verifyCode": "Verificar código",
+            "phoneNumber": "Enviaremos un código de verificación a tu número de teléfono registrado: {{phoneNumber}}"
+        },
+        "setupMFA": {
+            "title": "Configurar autenticación de dos factores",
+            "sendCode": "Enviar código de verificación",
+            "verifyCode": "Verificar código",
+            "enterCodeHelperText": "Por favor, introduce el código de verificación que hemos enviado a tu teléfono:",
+            "reauthTitle": "Confirma tu identidad",
+            "reauthDescription": "Por favor introduce tu contraseña antes de continuar",
+            "cancelReauth": "Cancelar",
+            "confirmReauth": "Confirmar",
+            "reauthenticating": "Confirmando..."
+        }
+    },
+    "Shared": {
+        "bloom": "Bloom",
+        "references": "Recursos",
+        "metadata": {
+            "title": "Acompáñanos en tu viaje de sanación",
+            "description": "Bloom está aquí para que aprendas, sanes y crezcas hacia un futuro seguro. Es traído a ti por Chayn, una organización global sin fines de lucro, dirigida por sobrevivientes y aliados de todo el mundo.",
+            "imageAlt": "Ilustración de la cara y los hombros de una persona, con grandes hojas y flores floreciendo sobre ellos. El logotipo tipográfico Bloom está incluido."
+        },
+        "leaveSite": {
+            "button": "Salir de este sitio",
+            "wikiLink": "https:\/\/es.wikipedia.org\/wiki\/Main_Page",
+            "googleLink": "https:\/\/www.google.com\/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIL3o0kdGZtpYuWmPJsdgViGguqIqQ:1715343769392&q=lindos+memes+de+animales+beb{{C3}}A9s&uds=ADvngMiZcBNsMUvkBJ71fvRLrjNSDfHatRp71ALRK88DdPn_U5cJfmQy0nQsEWPbgqovuuacPqaXDpAskRBpixfYX6iW7pxh7UKmo8P_5qdqeEp6lEiE-IwawftPppZcg-CprRgc_b6LVrZrXbMALYl9IWOeBKcbgImK7cQarhDvSdG1ka-WgR-plQTy7Ki1VTkYDKWs51ptDCX3ZkWjnfaO8TQi-bJMPi9j-1KjpFsf7ZbEXlGKQCW8As1Pou09vsHaDlXygxPou7aUpdouBoCcf5ugTO9ovaRgzgA3k2WbH3kREX6X-l4kQb0gQd8lEv7_lI-FduyhL91QYgrvaEwGhpF-27IuNQ&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwjKwarAiYOGAxWZUGwGHbQkCEYQtKgLegQICBAB&biw=1277&bih=659&dpr=1.5"
+        },
+        "navigateBack": "Volver a la página anterior",
+        "navigateTo": "Navegar a",
+        "footer": {
+            "fundedByTitle": "Financiado por",
+            "chaynDescription": "Bloom es traído por <link>Chayn<\/link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
+            "chaynLine1": "Construído por <bold>CHAYN<\/bold> CIO.",
+            "chaynLine2": "Número de Caridad del RU: 1196098",
+            "bumbleLine1": "En asociación con",
+            "bumbleLine2": "BUMBLE HOLDING LTD",
+            "badooLine1": "En asociación con",
+            "badooLine2": "BADOO LTD",
+            "fruitzLine1": "En asociación con",
+            "fruitzLine2": "FRUITZ LTD",
+            "policies": "Nuestras políticas",
+            "trustCenter": "Centro de Confianza"
+        },
+        "maintenanceBanner": {
+            "title": "Bloom está en mantenimiento",
+            "description": "Por favor, tenga paciencia mientras completamos un mantenimiento planificado esencial. Bloom debería estar disponible como de costumbre dentro de {{hours}} horas."
+        },
+        "fruitzRetirementBanner": {
+            "title": "Cambio en tus cursos",
+            "description": "La colaboración Fruitz x Bloom llega a su fin, pero tu apoyo en Bloom continúa. A partir del 19 de agosto, el curso ‘Citas, límites y relaciones’ ya no estará disponible, pero todos los demás servicios, incluido el envío de mensajes 1:1, seguirán funcionando con normalidad.",
+            "dismiss": "Cerrar"
+        },
+        "videoTranscript": {
+            "title": "Transcripción del video",
+            "closeModal": "Cerrar transcripción",
+            "description": "Lee la transcripción del video -"
+        },
+        "progressStatus": {
+            "started": "Empezado",
+            "completed": "Completo",
+            "notStarted": "Sin empezar"
+        },
+        "meetTheTeam": {
+            "fullBioButton": "Leer la biografía completa de {{name}}",
+            "expandTeamMember": "Expandir biografía para {{name}}"
+        },
+        "noDataAvailable": {
+            "title": "Se produjo un problema al cargar esta página. Vuelva a intentarlo pronto o póngase en contacto con nosotros."
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "Hubo un problema con la última solicitud, por favor inténtalo de nuevo. Si el problema persiste, contacta al equipo de Bloom.",
+            "buttonLabel": "Intentar de nuevo"
+        },
+        "notFound": {
+            "title": "404 - Página no encontrada",
+            "authenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de cursos.",
+            "unauthenticatedDescription": "Esta página no pudo ser encontrada. Revisa el url o regresa a la página de inicio.",
+            "authenticatedRedirectButton": "Regresar a la página de cursos",
+            "unauthenticatedRedirectButton": "Regresar a la página de inicio"
+        },
+        "alt": {
+            "chaynLogo": "Logo de Chayn",
+            "bloomLogo": "Logo de Bloom",
+            "bumbleLogo": "Logo de Bumble",
+            "bloomBumbleLogo": "Logo de Bloom para Bumble",
+            "badooLogo": "Logo de Badoo",
+            "bloomBadooLogo": "Logo de Bloom para Badoo",
+            "comicReliefLogo": "Logo de Comic Relief",
+            "communityFundLogo": "Logo de Community Fund",
+            "welcomeToBloom": "Te damos la bienvenida a Bloom",
+            "tiktokLogo": "Logo de Tiktok",
+            "githubLogo": "Github logo",
+            "bloomHead": "Ilustración de la cara y hombros de una persona, con hojas grandes y flores floreciendo arriba de éstas",
+            "beehive": "Ilustración de una colmena",
+            "leafMix": "Ilustración de dos hojas unidas por una rosa",
+            "leafMixBee": "Ilustración de dos hojas con una abeja volando encima",
+            "leafMixDots": "Ilustración de 3 hojas con una flor en el medio, y puntos saliendo de la flor.",
+            "personTea": "Ilustración de una persona sentada, sosteniendo una taza de té",
+            "personSitting": "Ilustración de una persona sentada",
+            "chooseTherapist": "Ilustración de una persona de perfil, con una flor",
+            "dateSelector": "Ilustración de un calendario con un corazón en el centro",
+            "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
+            "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+            "confidential": "Ilustración de un documento con un candado en una esquina",
+            "cookieCat": "Ilustración de un gato descansando con una galleta",
+            "fruitzLogo": "Logo de Fruitz",
+            "bloomFruitzLogo": "Logo de Bloom para Fruitz",
+            "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
+            "bookIcon": "Icono de libro",
+            "articleIcon": "Icono de artículo",
+            "videoIcon": "Icono de vídeo"
+        },
+        "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/smGSjlCo",
+        "survivor": "Sobreviviente",
+        "cookieConsent": {
+            "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
+            "cookieConsentPolicy": "política de cookies",
+            "acceptLabel": "Aceptar Cookies",
+            "declineLabel": "Reject Cookies"
+        },
+        "signUpTodayPromo": {
+            "title": "Regístrese hoy mismo para obtener una cuenta gratuita",
+            "description1": "Bloom es una plataforma en línea que te ayuda a recuperarte de un trauma. Desde cursos en vídeo y actividades de reflexión hasta mensajería directa con nuestro equipo, hay muchas formas diferentes de participar en Bloom.",
+            "description2": "Regístrate a continuación para acceder a todos nuestros contenidos y explorar todo lo que Bloom ofrecer.",
+            "button": "Iniciar"
+        },
+        "loginDialog": {
+            "title": "Iniciar sesión o crear una cuenta",
+            "description": "Regístrate gratis para acceder a todo nuestro contenido y explorar todo lo que Bloom tiene para ofrecer",
+            "loginButton": "Iniciar sesión",
+            "registerButton": "Crear cuenta",
+            "backButton": "Cancelar"
+        },
+        "exerciseNames": {
+            "activities-thought-diaries": "Diarios de pensamientos",
+            "activities-stream-of-consciousness-journaling": "Diario de flujo de consciencia",
+            "activities-timelines": "Líneas de tiempo",
+            "activities-trust-mapping": "El mapa de la confianza",
+            "activities-mapping-fear-and-stress-in-our-bodies": "Observando el miedo y el estrés en nuestro cuerpe",
+            "activities-letter-to-a-part-of-my-body": "Una carta a una parte de mi cuerpe",
+            "activities-accelerators-and-brakes": "Aceleradores y frenos",
+            "activities-ideal-sexual-being": "El ser sexual ideal",
+            "grounding-visual-breathing": "Respiración visual",
+            "grounding-slow-breathing": "Respiración lenta",
+            "grounding-box-breathing": "Respiración de caja",
+            "grounding-drifting-clouds-meditation": "Sin preocupaciones, meditación con nubes a la deri",
+            "grounding-positive-coping-statement": "Declaración positiva de afrontamiento",
+            "grounding-finger-focus": "Enfocarse en los dedos",
+            "grounding-day-walkthrough": "Paseo por el día",
+            "grounding-what-can-you-hear": "¿Me escuchas?",
+            "grounding-listen-to-your-voice": "Escucha tu voz",
+            "grounding-calming-colours": "Colores relajantes",
+            "grounding-coming-back-to-your-safe-space": "Volviendo a tu lugar seguro",
+            "grounding-best-check-in": "BEST check-in",
+            "grounding-compassionate-body-scan": "Escaneo corporal compasivo",
+            "grounding-touching-and-feeling-textures": "Tacto, sensaciones y texturas",
+            "grouding-sound-of-claps": "El sonido de los aplausos",
+            "grounding-affirming-ourselves": "Reafirmarnos (presión firme)"
+        },
+        "pwaBanner": {
+            "mobileDescription": "Instala la app para acceder desde tu pantalla de inicio",
+            "desktopDescription": "Instala la app para acceder a Bloom desde tu pantalla de inicio",
+            "iosDescription": "Añade Bloom a tu pantalla de inicio",
+            "iosStep1": "1. Pulsa el botón de compartir",
+            "iosStep2": "2. Pulsa “Añadir a pantalla de inicio”",
+            "button-decline-label": "Ahora no",
+            "button-install-label": "Instalar"
+        },
+        "notesFromBloomPromo": {
+            "title": "Mensajes de apoyo gratis",
+            "description": "Recibe mensajes dos veces por semana directamente en tu WhatsApp",
+            "buttonText": "Suscríbete"
+        },
+        "characterCount": "{{current}}\/{{max}} caracteres",
+        "scrollToSignUp": {
+            "button": "Regístrate gratis"
+        }
+    },
+    "Account": {
+        "applyCode": {
+            "title": "Aplicar un código",
+            "introduction": "Bloom trabaja con socios para apoyar la sanación de sobrevivientes de abuso alrededor del mundo.",
+            "description": "Si recibió un código de acceso de uno de nuestros socios, puede añadirlo aquí para recibir soporte específico de su programa.",
+            "descriptionLine2": "Puedes añadir códigos de más de un socio.",
+            "partnershipsTitle": "Nuestros socios",
+            "partnershipsDescription": "Lea más sobre nuestras asociaciones haciendo clic en su logotipo.",
+            "formIntroduction": "Ingrese el código de acceso que recibió de un socio de Bloom.",
+            "formSuccess": {
+                "success": "¡Se aplicó un código Bumble a su cuenta!",
+                "successLine2": "Su acceso con Bumble permite:",
+                "liveChat": "Mensajería con el equipo de Bloom",
+                "therapy": "{{therapySessionsRemaining}} sesiones de terapia",
+                "courses": "Cursos auto-guiados"
+            },
+            "form": {
+                "codeLabel": "Código de acceso",
+                "submitLabel": "Aplicar un código",
+                "assignPartnerAccessError": "Hubo un error al aplicar el código a su cuenta. Vuelve a intentarlo más tarde y <contactLink>envía un mensaje al equipo de Bloom<\/contactLink> si sigues recibiendo este error.",
+                "codeErrors": {
+                    "internal": "Hubo un error al validar el código a su cuenta. Vuelve a intentarlo más tarde y <contactLink>envía un mensaje al equipo de Bloom<\/contactLink> si sigues recibiendo este error.",
+                    "expired": "Éste código ha expirado. Ponerse en contacto con el socio.",
+                    "invalid": "Su código de acceso parece no ser válido. Verifique los errores tipográficos o póngase en contacto con el socio.",
+                    "alreadyInUse": "Este código ya ha sido usado. Si cree que ha habido un error, póngase en contacto con el socio.",
+                    "alreadyApplied": "Este código ya se ha aplicado a su cuenta."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "Acerca de ti",
+            "header": "Ayúdanos a entender",
+            "description": "Estas preguntas nos ayudan a entender quién está usando Bloom y qué tipo de apoyo necesitan de nosotros.",
+            "titleA": "Lo que quieres de Bloom",
+            "descriptionALine1": "¡Gracias por tus respuestas!",
+            "descriptionALine2": "Como eres un usuario nuevo, nos gustaría saber cómo te encuentras antes de usar nuestros servicios. Estas preguntas nos ayudan a medir el impacto que tiene Bloom sobre las personas sobrevivientes que lo usan, y nos ayuda a enfocarnos en las cosas correctas.",
+            "goToCourses": "Saltar a cursos",
+            "demographicForm": {
+                "genderLabel": "Por favor elige una o más opciones que reflejen tu identidad de género",
+                "genderHelpText": "Hacemos esta pregunta para entender mejor cómo se identifican nuestres usuaries, con la perspectiva de diseñar recursos aún más inclusivos y con perspectiva de género. Puedes elegir la opción 'Prefiero no responder'.",
+                "genderOptions": {
+                    "woman": "Mujer",
+                    "man": "Hombre",
+                    "nonBinary": "Género no binario",
+                    "transgender": "Transgénero",
+                    "intersex": "Intersexual",
+                    "twoSpirit": "Dos espíritus",
+                    "genderNonConforming": "Género no conforme",
+                    "other": "Otro (por favor, explícalo)",
+                    "preferNotToAnswer": "Prefiero no responder"
+                },
+                "neurodivergentLabel": "¿Tiene alguna característica neurológica que afecte la forma en que su cerebro procesa la información? Puede tratarse de una dificultad de aprendizaje (por ejemplo, dislexia, dispraxia, discalculia), TDAH, un trastorno del aprendizaje, o autismo.",
+                "neurodivergentHelpText": "Hacemos todo lo posible por crear servicios inclusivos, así que saber esto nos ayuda.",
+                "neurodivergentLabels": {
+                    "1": "Si",
+                    "2": "No",
+                    "3": "No estoy seguro",
+                    "4": "Prefiero no decir"
+                },
+                "raceEthnNatnLabel": "¿Cómo describirías tu raza, etnia y nacionalidad? Por ejemplo, hispano, blanco, mexicano, o indio tamil.",
+                "raceEthnNatnHelpText": "Sabemos que las experiencias de raza y etnicidad que tienen las personas, pueden variar dependiendo de donde viven, así que escribe lo que sientas que mejor te describe.",
+                "countryLabel": "¿En qué país vives en este momento?",
+                "countryHelpText": "Esto nos ayuda a entender desde dónde las personas sobrevivientes están accediendo a nuestros servicios.",
+                "ageLabel": "¿Cuál es tu grupo de edad?",
+                "ageHelpText": "Seleccione su grupo de edad.",
+                "selectPlaceholder": "Por favor, seleccione una opción.",
+                "ageLabels": {
+                    "1": "Menor de 18",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "Prefiero no decir"
+                },
+                "submitLabel": "Enviar",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "Por favor, califica en qué grado estás de acuerdo con las siguientes afirmaciones:",
+                "scaleDescriptionLine2": "1 = totalmente en desacuerdo, 10 = totalmente de acuerdo",
+                "scaleLabels": {
+                    "Q1": "Entiendo cómo el trauma que he vivido ha afectado mi mente, cuerpo y emociones",
+                    "Q2": "Entiendo que hay mecanismos de afrontamiento que no me ayudan a largo plazo, y que sentirme atraíde a estos puede ser una respuesta normal al trauma",
+                    "Q3": "Entiendo que sanar requiere de tiempo, energía y paciencia",
+                    "Q4": "Estoy comprometide a darme la atención que necesito para sanar.",
+                    "Q5": "He encontrado las cosas que me hacen sentir bien y saco el tiempo para hacerlas en mi rutina",
+                    "Q6": "Entiendo que parte de sanar del trauma es lidiar con los detonantes",
+                    "Q7": "Entiendo que hay cosas que me hacen sentir segure o amenazade exclusivamente a mi",
+                    "Q8": "Puedo anticipar y afrontar momentos, lugares o épocas del año que son detonantes"
+                },
+                "submitLabel": "Completo"
+            },
+            "setAForm": {
+                "hopesLabel": "¿Qué esperas que Bloom te ayude a entender o hacer?"
+            }
+        },
+        "disableServiceEmails": {
+            "title": "Correos de Bloom desactivados",
+            "description": "Ya no recibirás correos electrónicos relacionados con Bloom. Si deseas cambiar esto más tarde, <link>ponte en contacto con el equipo de Bloom.<\/link>",
+            "error": "Se produjo un error al desactivar los correos electrónicos de Bloom. Vuelve a intentarlo después de actualizar esta página o <link>ponte en contacto con el equipo de Bloom.<\/link>"
+        },
+        "accountSettings": {
+            "title": "Ajustes de Cuenta",
+            "description": "Ver y actualizar tu configuración en Bloom",
+            "imageAlt": "Ilustración de un teléfono móvil con un mensaje que contiene un corazón",
+            "profileSettings": {
+                "title": "Detalles del perfil",
+                "description": "Actualice su nombre y correo electrónico aquí. Esta es la única información personal almacenada con su perfil.",
+                "nameLabel": "Nombre",
+                "emailLabel": "Correo electrónico",
+                "submitLabel": "Guardar Perfil",
+                "emailAlreadyInUseError": "Este correo electrónico ya está siendo utilizado por otra cuenta, inténtalo de nuevo.",
+                "confirmDialogTitle": "Cuando cambie su correo electrónico, deberá iniciar sesión nuevamente. ¿Desea continuar?",
+                "confirmDialogCancel": "Cancelar"
+            },
+            "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.<\/link>",
+            "actions": {
+                "title": "Acciones de la cuenta",
+                "description": "Eliminar tu cuenta borrará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema.",
+                "button": {
+                    "resetPassword": "Restablecer contraseña",
+                    "deleteAccount": "Eliminar cuenta"
+                },
+                "confirmDialogCancel": "Cancelar",
+                "resetPasswordConfirmDialogTitle": "Cuando actualice su contraseña, deberá iniciar sesión nuevamente. ¿Desea continuar?",
+                "deleteAccountConfirmDialogTitle": "Confirma que deseas eliminar tu cuenta",
+                "deleteAccountConfirmDialogDescription": "Esto eliminará permanentemente tu nombre, dirección de correo electrónico y el historial de sesiones que has visto de nuestro sistema."
+            },
+            "emailSettings": {
+                "title": "Preferencias de correo electrónico",
+                "description": "Avísanos si podemos enviarte correos electrónicos:",
+                "submitLabel": "Guardar preferencias de correo electrónico",
+                "serviceEmailsPermissionLabel": "Sobre tus servicios o cambios en tu cuenta",
+                "contactPermissionLabel": "Cuando haya un nuevo curso, servicio o idioma disponible",
+                "updateError": "Se produjo un error al actualizar su cuenta Bloom. Vuelva a intentarlo actualizando esta página o <link>póngase en contacto con el equipo de Bloom.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "Recordatorios por correo electrónico",
+                "introduction": "Superar un trauma puede ser difícil, especialmente si lo haces solo.",
+                "description": "Podemos ayudarte a mantenerte en tu camino de recuperación con recordatorios amables si no has iniciado sesión en un tiempo.",
+                "fieldLabel": "Recibir recordatorios:",
+                "twoWeeksLabel": "Después de dos semanas",
+                "oneMonthLabel": "Después de un mes",
+                "twoMonthsLabel": "Después de dos meses",
+                "neverLabel": "Nunca",
+                "update": "Puedes actualizar esta configuración en cualquier momento",
+                "submitLabel": "Guardar recordatorios por correo electrónico",
+                "updateError": "Se produjo un error al actualizar la configuración de recordatorios por correo electrónico. Inténtalo nuevamente actualizando esta página o <link>poniéndote en contacto con el equipo de Bloom.<\/link>"
+            }
+        }
+    },
+    "Courses": {
+        "title": "Nuestros cursos",
+        "introduction": "Los cursos de Bloom ofrecen información hecha a medida, con herramientas y palabras de afirmación para ayudarnos a afrontar el trauma. Nos animan a aprender, reflexionar y procesar por lo que hemos pasado y cómo nos puede haber afectado; todo en un lugar seguro y de empoderamiento.",
+        "session": "Sesión",
+        "course": "Curso",
+        "courses": "Cursos",
+        "expand": "Expandir",
+        "expandSummary": "Expandir resumen de",
+        "navigateToSession": "Navegar a la sesión -",
+        "navigateToCourse": "Navegar al curso -",
+        "noCourses": "En este momento no hay cursos para mostrar. Si esto no parece correcto, inténtalo de nuevo más tarde, o contacta al equipo de Bloom.",
+        "courseDetail": {
+            "introductionTitle": "Introducción al curso",
+            "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video<\/transcriptLink>"
+        },
+        "sessionDetail": {
+            "videoTitle": "Video",
+            "videoDescription": "Mira el video o lee la <transcriptLink>transcripción del video<\/transcriptLink>.",
+            "activityTitle": "Actividad",
+            "bonusTitle": "Contenido extra",
+            "chat": {
+                "title": "Reflexiona con nosotres",
+                "description": "Si quieres compartir tus reflexiones sobre esta sesión, al equipo de Bloom le encantaría escuchar tus comentarios.",
+                "videoIntro": "Descubre cómo funciona la mensajería:",
+                "videoLink": "https:\/\/youtu.be\/ISmqaNJTPE8",
+                "detailIntro": "Recuerda:",
+                "detailPrivacy": "Tus mensajes son privados y seguros, solo serán vistos por el equipo de Bloom y permanecerán completamente anónimos.",
+                "detailTimezone": "Trabajamos en varias zonas horarias diferentes, así que seguramente recibirás una respuesta del equipo dentro de 6 horas o 24 horas como máximo.",
+                "detailLanguage": "Siempre estamos disponibles en inglés o español, pero los miembros de nuestro equipo también hablan francés, italiano, hindi, árabe y bangla; nos alegraría comunicarte con uno de ellos.",
+                "detailLegal": "Si tienes un caso legal abierto, considera lo que compartes con nosotros, ya que en algunas ocasiones, esto puede afectar tu caso.",
+                "detailImmediateHelp": "Si estás en peligro inminente de amenaza o daño, por favor ve a ‘Ayuda inmediata’ en el menú, para encontrar el servicio de apoyo adecuado para ti.",
+                "startButton": "Envíanos un mensaje"
+            },
+            "sessionComplete": "Sesión completa"
+        },
+        "sessionFeedback": {
+            "title": "¿Cómo fue esta sesión?",
+            "subtitle": "Nos encantaría saber cómo encontraste esta sesión. Tu opinión nos ayuda a mejorar nuestros cursos.",
+            "feedbackTags": {
+                "relatable": "Identificable",
+                "useful": "Útil",
+                "inspiring": "Inspirador",
+                "too long": "Demasiado largo",
+                "too complicated": "Demasiado complicado",
+                "not useful": "No útil"
+            },
+            "textboxDefaultText": "Añade un comentario...",
+            "sendButtonText": "Enviar",
+            "submissionText": "Gracias por enviar tu opinión",
+            "errors": {
+                "feedbackTagError": "Por favor selecciona una calificación antes de enviar."
+            }
+        },
+        "accessGuard": {
+            "title": "Contenido del curso no disponible",
+            "introduction": "Tu cuenta de Bloom no incluye acceso al contenido del curso que pediste. Regresa a tus <contactLink>cursos<\/contactLink>."
+        },
+        "errors": {
+            "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."
+        },
+        "backToCourse": "Volver al curso",
+        "backToCourses": "Ir a cursos",
+        "conversationsHeading": "Conversations",
+        "conversationsDescription": "Through powerful stories, listen as we challenge myths, spark reflection, and open new ways of understanding harm and healing.",
+        "shortsHeading": "Shorts",
+        "shortsDescription": "Pressed for time or unsure where to start? Shorts are 2–3 minute glimpses into Bloom’s learning sessions that offer insight, reassurance and tools for our healing journey.",
+        "somaticsHeading": "Somática: Sanación basada en el cuerpo",
+        "somaticsDescription": "Descubra cómo los enfoques suaves y basados en el cuerpo pueden ayudar a sanar la violencia, el estrés y el miedo. Esta colección de recursos ofrece una orientación clara y práctica para ayudarnos a reconectar con nuestros cuerpos, desarrollar resiliencia y explorar lo que la seguridad y el bienestar pueden significar."
+    },
+    "Therapy": {
+        "title": "Reserva una cita de terapia",
+        "bookingButton": "Empezar a reservar",
+        "bookingSectionTitle": "Cómo funciona la reserva",
+        "steps": {
+            "step1": "Eliges entre nuestros terapeutas multilingües cuidadosamente seleccionados.",
+            "step2": "Elige una fecha y hora que te funcione. Todas las sesiones son en línea.",
+            "step3": "Si cambias de opinión, puedes detener las sesiones o cambiar de terapeuta en cualquier momento.",
+            "step4": "Todo lo que compartas permanece estrictamente confidencial, entre tú y el terapeuta."
+        },
+        "closeBookingWidget": "Cerrar widget",
+        "modalTitle": "Reservar terapia",
+        "modalDescription": "Widget de SimplyBook.me para programar tu sesión de terapia.",
+        "error": {
+            "initializingWidget": "Error al inicializar el widget de reserva.",
+            "initializingWidgetRetry": "Error al inicializar el widget de reserva en el reintento.",
+            "containerNotFoundRetry": "No se pudo cargar el widget de reserva.",
+            "scriptNotLoaded": "El script del widget de reserva no se cargó completamente.",
+            "scriptLoadFailed": "Error al cargar el script de reserva."
+        },
+        "therapyBookings": {
+            "header": "Tus reservas de terapia",
+            "bookingSummary": "Te quedan <remainingTotal>{{remainingTotal}}<\/remainingTotal> sesiones de terapia, <upcomingTotal>{{upcomingTotal}}<\/upcomingTotal> programadas.",
+            "noBookingSummary": "Ha reservado todas sus sesiones de terapia disponibles.",
+            "noBookings": "No tienes reservas de terapia en este momento.",
+            "cancelAlert": "Cancelación solicitada para la reserva ID: {{id}}. Implementa la lógica de cancelación real."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Próxima sesión de terapia",
+            "pastSessionTitle": "Sesión de terapia pasada",
+            "cancelledSessionTitle": "Sesión cancelada",
+            "dateLabel": "Fecha",
+            "timeLabel": "Hora",
+            "therapistLabel": "Terapeuta",
+            "videoLinkLabel": "Enlace del vídeo",
+            "videoLink": "Únete a la llamada desde la invitación del calendario de Google Meet enviada por correo electrónico.",
+            "noVideoLink": "No se proporcionó ningún enlace",
+            "cancelButton": "Cancelar",
+            "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
+            "expand": "Expandir",
+            "collapse": "Contraer",
+            "cancelDialog": {
+                "title": "Confirmar Cancelación",
+                "description": "¿Seguro que quieres cancelar tu sesión de terapia programada para el {{dateTime}}? Puedes reservar una nueva cita a una hora que te resulte adecuada.",
+                "keepButton": "Mantener Sesión",
+                "confirmButton": "Cancelar Sesión"
+            }
+        },
+        "accessGuard": {
+            "title": "Terapia no disponible",
+            "introduction": "Tu cuenta de Bloom no incluye acceso a sesiones de terapia. Si esto no parece correcto, <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink>."
+        }
+    },
+    "Welcome": {
+        "getStarted": "Empieza",
+        "accessIntroduction": "Ingresa el código de acceso que recibiste de {{partnerName}} para empezar tu recorrido con Bloom.",
+        "publicIntroduction": "Crea una cuenta con Bloom para empezar con nuestros cursos, o primero averigua más acerca de Bloom a continuación.",
+        "continueCourses": "Continua con Bloom",
+        "continueCoursesDescription": "Continua donde lo habías dejado.",
+        "goToCourses": "Ir a cursos",
+        "form": {
+            "codeLabel": "Código de acceso de {{partnerName}}"
+        },
+        "WelcomeTo": "Bienvenida a"
+    },
+    "Whatsapp": {
+        "form": {
+            "subscribeTitle": "Suscríbete a Notas",
+            "subscribe": "Suscribirse",
+            "phoneNumber": "Número de teléfono",
+            "unsubscribeTitle": "Estás suscrito a Notas",
+            "unsubscribe": "Cancelar suscripción",
+            "subscribeErrors": {
+                "invalidNumber": "Tu número de teléfono parece ser inválido. Por favor, observa si hay errores e inténtalo de nuevo.",
+                "internal": "Hubo un error al suscribirte a WhatsApp. Intenta de nuevo más tarde y <contactLink> ponte en contacto con el equipo de Bloom<\/contactLink> si sigues recibiendo el mismo error.",
+                "alreadyExists": "Ya existe una suscripción a WhatsApp para tu usuario. Por favor <contactLink> ponte en contacto con el equipo de Bloom<\/contactLink> si crees que es un error."
+            },
+            "unsubscribeErrors": {
+                "internal": "Hubo un error al cancelar la suscripción de WhatsApp. Intenta de nuevo más tarde y <contactLink>ponte en contacto con el equipo de Bloom<\/contactLink> si sigues recibiendo este error."
+            }
+        },
+        "notes": {
+            "title": "Suscríbete a Notas de Bloom",
+            "description": "El camino hacia la sanación puede ser solitario y a veces espinoso. Nuestras Notas de Bloom son recordatorios bisemanales, aliento, afirmaciones y actividades de nuestros cursos, enviados directamente a tu teléfono para ayudarte a continuar tu viaje de sanación.",
+            "createAccount": "Crear una cuenta",
+            "createAccountDescription": "Regístrate en Notas de Bloom y accede a nuestra plataforma de recursos.",
+            "haveAccount": "¿Ya tienes una cuenta?",
+            "login": "Iniciar sesión",
+            "createAccountButton": "Crear cuenta",
+            "howItWorks": "Cómo funcionan las Notas de Bloom",
+            "step1": "Enviamos mensajes a tu número de WhatsApp",
+            "step2": "Dos veces por semana, cada miércoles y domingo",
+            "step3": "Compartimos afirmaciones, actividades y reflexiones",
+            "step4": "Cancela tu suscripción en cualquier momento si cambias de opinión",
+            "usNoticeTitle": "Problemas de entrega de WhatsApp para suscriptores en EE. UU.",
+            "usNoticeDescription": "Meta ha realizado cambios que están afectando nuestra capacidad de enviar Notas a suscriptores en EE. UU. Estamos trabajando para solucionarlo, pero es posible que los mensajes no te lleguen por ahora. Puedes suscribirte igualmente y te avisaremos cuando funcione para todos de nuevo.",
+            "subscribeDescription": "Suscríbete a Notas de Bloom para comenzar a recibir mensajes de WhatsApp. Cancela tu suscripción aquí en cualquier momento.",
+            "unsubscribeDescription": "Cancela tu suscripción a Notas de Bloom para dejar de recibir mensajes de WhatsApp, o para actualizar tu número. Suscríbete de nuevo en cualquier momento."
+        }
+    },
+    "Messaging": {
+        "messageHeading": "Cuéntanos qué tienes en mente",
+        "frontChat": {
+            "ariaChat": "Chat de Bloom",
+            "welcomeAuthor": "Equipo Bloom",
+            "welcomeMessage": "Hola, aquí puedes chatear con sobrevivientes y personas aliadas de nuestro equipo Bloom, quienes tienen experiencia apoyándose mutuamente. Estamos aquí para que compartas tus preguntas, sentimientos y reflexiones mientras realizas nuestros cursos.\n\nSi te encuentras en riesgo inmediato, por favor llama a los servicios de emergencia si puedes y si es seguro para ti. Aunque no ofrecemos apoyo en crisis, podemos ayudarte a conectar con el tipo de servicio de apoyo que necesites. Puedes buscar servicios de apoyo en tu zona en nuestro directorio global aquí: c.chayn.co\/directory.\n\nPuedes chatear con nuestro equipo en inglés, francés, alemán, hindi, portugués y español.\n\nNuestro objetivo es responder a tu mensaje en un plazo de 1 a 2 días.",
+            "empty": "Envía tu primer mensaje a continuación y nuestro equipo te responderá pronto.",
+            "placeholder": "Escribe un mensaje…",
+            "send": "Enviar mensaje",
+            "attachImage": "Adjuntar imagen",
+            "imageAttachment": "Imagen",
+            "voiceNote": "Nota de voz",
+            "startRecording": "Grabar una nota de voz",
+            "stopRecording": "Detener y enviar nota de voz",
+            "cancelRecording": "Cancelar grabación",
+            "recordingInProgress": "Grabando",
+            "messageSending": "Enviando",
+            "messageFailed": "No se pudo enviar. Por favor, inténtalo de nuevo.",
+            "audioUnavailable": "Audio no disponible",
+            "status": {
+                "connecting": "Conectando…",
+                "disconnected": "Reconectando…",
+                "error": "No es posible conectarse. Por favor, inténtalo más tarde."
+            },
+            "errors": {
+                "unsupportedImage": "Solo se admiten imágenes JPG, PNG, GIF o WebP.",
+                "fileTooLarge": "Los archivos deben ser menores de 25 MB.",
+                "uploadFailed": "Error al subir el archivo. Por favor, inténtalo de nuevo.",
+                "imageBlocked": "Esta imagen ha sido bloqueada porque no cumple con nuestros estándares de seguridad. Si crees que es un error, por favor, escríbenos un mensaje para explicarnos por qué.",
+                "micPermission": "Se denegó el acceso al micrófono. Para grabar una nota de voz, permite el acceso al micrófono en la configuración de tu navegador e inténtalo de nuevo.",
+                "micUnavailable": "No se pudo acceder a tu micrófono. Por favor, comprueba que está conectado e inténtalo de nuevo."
+            }
+        }
+    },
+    "Resources": {
+        "backToConversations": "Ir a las conversaciones",
+        "backToShorts": "Ir a los cortos",
+        "backToVideos": "Volver a los vídeos",
+        "backToSomatics": "Volver a los somática",
+        "nextVideoButtonLabel": "Siguiente vídeo",
+        "nextConversationButtonLabel": "Siguiente conversación",
+        "nextSessionButtonLabel": "Siguiente sesión",
+        "conversations": "Conversaciones",
+        "shorts": "Cortos",
+        "videos": "Vídeos",
+        "completed": "Completado",
+        "sessionDetail": "Este clip es de la Sesión: {{sessionName}}, de nuestro Curso: {{courseName}}",
+        "sessionButtonLabel": "Ver sesión completa",
+        "videoTranscriptLink": "Mira el video o lee la <link>transcripción<\/link>.",
+        "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción<\/link>.",
+        "relatedContent": {
+            "title": "Contenido relacionado",
+            "resource_short_video": "Ver",
+            "resource_single_video": "Ver",
+            "resource_conversation": "Escuchar",
+            "course": "Curso",
+            "session": "Sesión",
+            "session_iba": "Sesión",
+            "grounding": "Anclaje",
+            "activities": "Actividad",
+            "minuteLabel": "minutos"
+        },
+        "resourceFeedback": {
+            "title": "¿Cómo fue esta sesión?",
+            "subtitle": "Nos encantaría saber cómo encontraste esta sesión. Tu opinión nos ayuda a mejorar nuestros cursos.",
+            "feedbackTags": {
+                "relatable": "Identificable",
+                "useful": "Útil",
+                "inspiring": "Inspirador",
+                "too long": "Demasiado largo",
+                "too complicated": "Demasiado complicado",
+                "not useful": "No útil"
+            },
+            "textboxDefaultText": "Añade un comentario...",
+            "sendButtonText": "Enviar",
+            "submissionText": "Gracias por enviar tu opinión",
+            "errors": {
+                "feedbackTagError": "Por favor selecciona una calificación antes de enviar."
+            }
+        },
+        "references": {
+            "title": "Recursos",
+            "keyReferences": "Recursos clave de esta sesión (lista completa al final de la transcripción):",
+            "books": "Libros",
+            "articles": "Artículos",
+            "video_practices": "Prácticas en vídeo",
+            "audios": "Podcasts"
+        }
+    },
+    "Navigation": {
+        "menu": "Menú de navegación",
+        "menuOpen": "Abrir menú de navegación",
+        "menuClose": "Cerrar menú de navegación",
+        "languageMenu": "Menú de Idioma",
+        "bloomLogo": "Logo de Bloom",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "accountSettings": "Configuración de la cuenta",
+        "userMenu": "Menú de configuración de usuario",
+        "home": "Inicio",
+        "admin": "Admin",
+        "about": "Acerca de Bloom",
+        "meetTheTeam": "Nuestro equipo Bloom",
+        "immediateHelp": "Ayuda inmediata",
+        "therapy": "Terapia",
+        "courses": "Cursos",
+        "applyCode": "Aplicar un código",
+        "account": "Cuenta",
+        "secondaryNavigationMenu": "Secondary navigation menu",
+        "notes": "Notas",
+        "alt": {
+            "therapyIcon": "Una ilustración de una cabeza con una flor",
+            "courseIcon": "Una ilustración del ícono “play”, un triángulo apuntando a la derecha. En frente hay un sol pequeño. ",
+            "notesIcon": "Una ilustración de un celular con un corazón en el centro.",
+            "chatIcon": "Dos globos de conversación superpuestos sobre un fondo rosa. El primero tiene un corazón rosa dentro. El segundo tiene líneas rectas.",
+            "activitiesIcon": "A book with a small yellow fire on its cover.",
+            "groundingIcon": "A twig with small pink flowers."
+        },
+        "messaging": "Mensajería",
+        "grounding": "Anclaje ",
+        "activities": "Actividades"
+    }
+}
