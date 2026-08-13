@@ -1,28 +1,28 @@
 {
   "PartnerAdmin": {
     "createAccessCode": {
-      "title": "Erişim kodları oluştur",
-      "introduction": "Birine Bloom'a erişim vermek istediğin her seferde bir erişim kodu oluşturmak için bu formu kullan.",
+      "title": "Erişim kodları oluşturun",
+      "introduction": "Bloom'a birinin erişmesini istediğiniz her seferde bir erişim kodu oluşturmak için bu formu kullanın.",
       "courseAccess": "Yalnızca kurslara erişim",
       "liveChatAccess": "Kurslara ve mesajlaşmaya erişim",
       "therapyAccess": "Kurslara, mesajlaşmaya ve altı terapi seansına erişim",
-      "resultLink": "Lütfen kullanıcıya, e-posta adresini kullanarak kaydolabileceği ilgili bağlantıya gitmesini söyle.",
-      "resultCode": "Kaydolduktan sonra hesap simgesine tıklayıp 'Kod uygula' seçeneğini seçebilir ve şu kodu kullanabilir: <partnerAccessCode></partnerAccessCode>",
+      "resultLink": "Lütfen kullanıcıya, e-posta adresini kullanarak kayıt olabileceği ilgili bağlantıya gitmesini söyleyin.",
+      "resultCode": "Kayıt olduktan sonra, hesap simgesine tıklayabilir, `Kod uygula` seçeneğini seçebilir ve aşağıdaki kodu kullanabilirler: <partnerAccessCode></partnerAccessCode>",
       "form": {
-        "featuresLabel": "Bu kullanıcıya sunulan destek türünü seç",
+        "featuresLabel": "Bu kullanıcıya sunulan destek türünü seçin",
         "featureCoursesLabel": "Yalnızca kurslar",
         "featureLiveChatLabel": "Kurslar ve mesajlaşma",
         "featureTherapyLabel": "Kurslar, mesajlaşma ve altı terapi seansı",
-        "reset": "Başka bir kod oluştur",
+        "reset": "Başka bir kod oluşturun",
         "errors": {
-          "createPartnerAccessError": "Erişim kodu oluşturulurken bir hata oluştu. Tekrar dene ya da Bloom ekibine mesaj gönder.",
-          "featureRequired": "Bir erişim kodu oluşturmadan önce bir destek türü seç"
+          "createPartnerAccessError": "Erişim kodu oluşturulurken bir hata oluştu. Lütfen tekrar deneyin veya Bloom ekibine mesaj gönderin.",
+          "featureRequired": "Erişim kodu oluşturmadan önce bir destek türü seçin"
         }
       }
     },
     "accessGuard": {
       "title": "Erişim gerekli",
-      "introduction": "Hesabın, iş ortağı sayfalarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+      "introduction": "Hesabınız, iş ortağı sayfalarına erişim içermiyor. Bu doğru görünmüyorsa <contactLink>Bloom ekibiyle iletişime geçin</contactLink>."
     }
   }
 }

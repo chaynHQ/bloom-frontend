@@ -1,20 +1,20 @@
 {
   "Admin": {
-    "title": "Süper yönetici panosu",
+    "title": "Süper yönetici kontrol paneli",
     "accessGuard": {
       "title": "Erişim gerekli",
-      "introduction": "Hesabın bu sayfalara erişim içermiyor."
+      "introduction": "Hesabınız bu sayfalara erişim hakkı içermemektedir."
     },
     "createPartnerAdmin": {
-      "title": "Bir yönetici hesabı oluştur",
+      "title": "Yönetici hesabı oluşturun",
       "description": "Yönetici hesapları terapi kodları oluşturabilir",
-      "partnerNameLabel": "İş ortağı seç",
+      "partnerNameLabel": "Partner seçin",
       "submit": "Yönetici hesabı oluştur",
-      "successDescription": "İş ortağı yöneticisi oluşturuldu! Bir hesaplarının olduğunu ve ilk kez giriş yapabilmek için bir şifre seçmek üzere 'Şifremi unuttum' akışını kullanmaları gerektiğini bildirmek için onlara e-posta gönder.",
+      "successDescription": "Partner Yönetici hesabı oluşturuldu! Onlara bir hesapları olduğunu ve ilk kez giriş yapabilmeleri için 'Şifremi unuttum' seçeneğini kullanarak bir şifre seçmeleri gerektiğini bildiren bir e-posta gönderin.",
       "emailAddressLabel": "E-posta adresi",
-      "nameLabel": "Ad",
-      "reset": "Başka bir yönetici oluştur",
-      "error": "İş ortağı yöneticisi oluşturulurken hata: "
+      "nameLabel": "İsim",
+      "reset": "Başka bir yönetici oluşturun",
+      "error": "Partner yöneticisi oluşturulurken hata oluştu: "
     },
     "updateTherapy": {
       "title": "Terapi seanslarını güncelle",
@@ -22,32 +22,32 @@
       "therapySessionsRedeemed": "Kullanılan terapi seansı sayısı",
       "therapySessionsTotal": "Toplam terapi seansı sayısı",
       "submit": "Terapi seanslarını güncelle",
-      "successDescription": "Kullanıcının terapi seansları güncellendi!",
-      "error": "Terapi seansları güncellenirken hata: ",
+      "successDescription": "Kullanıcı terapi seansları güncellendi!",
+      "error": "Terapi seanslarını güncellerken hata oluştu:",
       "reset": "Başka bir kullanıcıyı güncelle"
     },
     "updatePartnerAdmin": {
-      "title": "İş ortağı yöneticisini güncelle",
+      "title": "Partner yöneticisini güncelle",
       "emailLabel": "Yönetici e-postasına göre ara",
-      "activeAdminLabel": "İş ortağı yöneticisi şu anda aktif",
-      "successDescription": "İş ortağı yöneticisi güncellendi!",
-      "formError": "Bir iş ortağı kullanıcısı seçtiğinden emin ol",
-      "error": "İş ortağı yöneticisi güncellenirken hata: ",
-      "reset": "Başka bir iş ortağı yöneticisini güncelle"
+      "activeAdminLabel": "Partner yöneticisi şu anda aktif",
+      "successDescription": "Partner yöneticisi güncellendi!",
+      "formError": "Bir partner kullanıcı seçtiğinizden emin olun",
+      "error": "Partner yöneticisini güncellerken hata oluştu:",
+      "reset": "Başka bir partner yöneticisini güncelle"
     },
     "updatePartner": {
-      "title": "İş ortağı aktiflik durumunu güncelle",
-      "activeLabel": "{partner} ortağını devre dışı bırak",
-      "inactiveLabel": "{partner} ortağını yeniden etkinleştir",
-      "partnerNameLabel": "İş ortağı seç",
-      "partnerActiveLabel": "İş ortağı aktif",
-      "successDescription": "{partner} başarıyla {status} olarak güncellendi",
-      "inactiveDescription": "{partner} şu anda pasif. {partner} ortağını yeniden etkinleştirmek, ortağı ve önceki tüm iş ortağı yöneticilerini ve kullanıcılarını geri yükler",
-      "activeDescription": "{partner} şu anda aktif. {partner} ortağını devre dışı bırakmak, iş ortağı yöneticilerini ve kullanıcılarını da devre dışı bırakarak onları herkese açık kullanıcılara dönüştürür. Tüm iş ortağı verileri ve kullanıcı verileri saklanır ve iş ortağı daha sonra yeniden etkinleştirilebilir.",
-      "inactiveSuccess": "{partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a herkese açık kullanıcılar olarak erişecekler",
-      "activeSuccess": "Önceki {partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a iş ortağı kullanıcıları olarak erişebilecekler",
-      "formError": "Bir iş ortağı seçtiğinden emin ol",
-      "error": "İş ortağı aktiflik durumu güncellenirken hata: ",
+      "title": "Partnerin aktif durumunu güncelle",
+      "activeLabel": "devre dışı bırak {partner}",
+      "inactiveLabel": "Yeniden etkinleştir {partner}",
+      "partnerNameLabel": "Partner seçin",
+      "partnerActiveLabel": "Partner aktif",
+      "successDescription": "{partner} başarıyla {status}olarak güncellendi",
+      "inactiveDescription": "{partner} şu anda etkin değil. {partner} yeniden etkinleştirildiğinde partner ile önceki tüm partner yöneticileri ve kullanıcılar geri yüklenecektir",
+      "activeDescription": "{partner} şu anda aktif. {partner} devre dışı bırakıldığında partner yöneticileri ve kullanıcıları da devre dışı bırakılacak ve bunlar genel kullanıcılara dönüştürülecektir. Tüm partner ve kullanıcı verileri korunacak ve partner daha sonra yeniden etkinleştirilebilecektir.",
+      "inactiveSuccess": "{partner} yöneticileri ve partner kullanıcıları da güncellendi; artık Bloom'a genel kullanıcılar olarak erişecekler",
+      "activeSuccess": "Önceki {partner} yöneticiler ve partner kullanıcıları da güncellendi ve artık Bloom’a partner kullanıcıları olarak erişebilecekler",
+      "formError": "Bir partner seçtiğinizden emin olun",
+      "error": "Partnerin etkin durumu güncellenirken hata oluştu:",
       "reset": "Formu sıfırla"
     },
     "deleteCypressUsers": {

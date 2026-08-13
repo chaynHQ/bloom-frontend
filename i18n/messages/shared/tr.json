@@ -40,7 +40,7 @@
     "videoTranscript": {
       "title": "Video metni",
       "closeModal": "Metni kapat",
-      "description": ""
+      "description": "boş"
     },
     "progressStatus": {
       "started": "Başlandı",
@@ -99,67 +99,67 @@
       "videoIcon": "Video simgesi"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "Hayatta kalan",
+    "survivor": "Hayatta Kalan",
     "cookieConsent": {
-      "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazlasını şurada oku: ",
-      "cookieConsentPolicy": "çerez politikamız",
+      "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analitik çerezlere izin verin. Daha fazla bilgi için ",
+      "cookieConsentPolicy": "çerez politikası",
       "acceptLabel": "Çerezleri Kabul Et",
       "declineLabel": "Çerezleri Reddet"
     },
     "signUpTodayPromo": {
-      "title": "Bugün ücretsiz bir hesap aç",
-      "description1": "Bloom, travmadan iyileşirken sana destek olan çevrimiçi bir platformdur. Video kurslarından ve düşündürücü etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom ile etkileşim kurmanın pek çok farklı yolu var.",
-      "description2": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydol!",
-      "button": "Başla"
+      "title": "Hemen ücretsiz bir hesap açın",
+      "description1": "Bloom, travmanın etkilerinden iyileşme sürecinizde sizi desteklemek için tasarlanmış çevrim içi bir platformdur. Video kurslarından ve düşünmeye yönelik etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom’dan faydalanmanın pek çok farklı yolu vardır.",
+      "description2": "Tüm içeriklerimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydolun!",
+      "button": "Başlayın"
     },
     "loginDialog": {
-      "title": "Giriş yap ya da bir hesap oluştur",
-      "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
+      "title": "Giriş yapın veya bir hesap oluşturun",
+      "description": "Tüm içeriklerimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydolun",
       "loginButton": "Giriş yap",
       "registerButton": "Hesap oluştur",
       "backButton": "Geri dön"
     },
     "exerciseNames": {
       "activities-thought-diaries": "Düşünce günlükleri",
-      "activities-stream-of-consciousness-journaling": "Bilinç akışı günlüğü",
+      "activities-stream-of-consciousness-journaling": "Bilinç akışı yöntemiyle günlük yazma",
       "activities-timelines": "Zaman çizelgeleri",
-      "activities-trust-mapping": "Güven haritalama",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Bedenimizdeki korku ve stresi haritalama",
+      "activities-trust-mapping": "Güven haritalaması",
+      "activities-mapping-fear-and-stress-in-our-bodies": "Bedenlerimizdeki korku ve stresi haritalamak",
       "activities-letter-to-a-part-of-my-body": "Bedenimin bir parçasına mektup",
-      "activities-accelerators-and-brakes": "Gaz ve frenler",
-      "activities-ideal-sexual-being": "İdeal cinsel varlık",
-      "grounding-visual-breathing": "Görsel nefes",
-      "grounding-slow-breathing": "Yavaş nefes",
+      "activities-accelerators-and-brakes": "Gaz pedalları ve frenler",
+      "activities-ideal-sexual-being": "İdeal cinsel benlik",
+      "grounding-visual-breathing": "Görsel nefes alma",
+      "grounding-slow-breathing": "Yavaş nefes alma",
       "grounding-box-breathing": "Kutu nefesi",
       "grounding-drifting-clouds-meditation": "Süzülen bulutlar meditasyonu",
       "grounding-positive-coping-statement": "Olumlu başa çıkma ifadesi",
-      "grounding-finger-focus": "Parmak odağı",
-      "grounding-day-walkthrough": "Gün gözden geçirme",
-      "grounding-what-can-you-hear": "Ne duyabiliyorsun",
-      "grounding-listen-to-your-voice": "Sesini dinle",
+      "grounding-finger-focus": "Parmakla odaklama",
+      "grounding-day-walkthrough": "Günlük akışa göz atma",
+      "grounding-what-can-you-hear": "Neler duyabiliyorsun?",
+      "grounding-listen-to-your-voice": "Kendi sesini dinle",
       "grounding-calming-colours": "Sakinleştirici renkler",
-      "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
-      "grounding-best-check-in": "BEST kontrolü",
-      "grounding-compassionate-body-scan": "Şefkatli beden taraması",
-      "grounding-touching-and-feeling-textures": "Dokulara dokunma ve hissetme",
-      "grouding-sound-of-claps": "Alkış sesi",
-      "grounding-affirming-ourselves": "Kendimizi onaylama (sıkı baskı)"
+      "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönüyorsun",
+      "grounding-best-check-in": "BEST durum değerlendirmesi",
+      "grounding-compassionate-body-scan": "Bedeni şefkatle tarama",
+      "grounding-touching-and-feeling-textures": "Dokunma ve dokuları hissetme",
+      "grouding-sound-of-claps": "Alkış sesleri",
+      "grounding-affirming-ourselves": "Kendimizi ifade etmek (net ve kararlı bir şekilde)"
     },
     "pwaBanner": {
-      "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
-      "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",
+      "mobileDescription": "Ana ekranınızdan erişebilmek için uygulamayı yükleyin",
+      "desktopDescription": "Bloom'a ana ekranınızdan erişmek için uygulamayı yükleyin",
       "iosDescription": "Bloom'u ana ekranına ekle",
-      "iosStep1": "1. Paylaş düğmesine dokun",
-      "iosStep2": "2. 'Ana Ekrana Ekle'ye dokun",
+      "iosStep1": "1. Paylaş düğmesine dokunun",
+      "iosStep2": "2. “Ana Ekrana Ekle” seçeneğine dokunun",
       "button-decline-label": "Şimdi değil",
       "button-install-label": "Yükle"
     },
     "notesFromBloomPromo": {
-      "title": "Ücretsiz destekleyici mesajlar",
-      "description": "Haftada iki kez doğrudan WhatsApp'ına mesajlar al",
+      "title": "Ücretsiz destek mesajları",
+      "description": "Haftada iki kez doğrudan WhatsApp'ınıza mesaj alın",
       "buttonText": "Abone ol"
     },
-    "characterCount": "{current}/{max} karakter",
+    "characterCount": "{current}/{max} karakterler",
     "scrollToSignUp": {
       "button": "Ücretsiz kaydol"
     }

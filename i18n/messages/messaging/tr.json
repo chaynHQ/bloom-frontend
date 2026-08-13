@@ -1,35 +1,35 @@
 {
   "Messaging": {
-    "messageHeading": "Aklından geçenleri bize anlat",
+    "messageHeading": "Düşüncelerinizi bizimle paylaşın",
     "frontChat": {
       "ariaChat": "Bloom mesajlaşma",
       "welcomeAuthor": "Bloom Ekibi",
-      "welcomeMessage": "Merhaba, burada birbirine destek olma konusunda deneyimli, Bloom ekibimizden hayatta kalanlar ve müttefiklerle sohbet edebilirsin. Kurslarımızda ilerlerken sorularını, duygularını ve düşüncelerini paylaşman için buradayız.\n\nAcil bir zarar riski altındaysan, lütfen yapabiliyorsan ve senin için güvenliyse acil servisleri ara. Kriz desteği sunmuyor olsak da, ihtiyacın olan türde bir destek hizmetine ulaşmana yardımcı olabiliriz. Bölgendeki destek hizmetlerini buradaki küresel rehberimizde arayabilirsin: c.chayn.co/directory.\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce ve İspanyolca sohbet edebilirsin.\n\nMesajına her zaman 1-2 gün içinde yanıt vermeyi hedefleriz.",
-      "empty": "Aşağıdan ilk mesajını gönder, ekibimiz en kısa sürede sana geri dönecek.",
-      "placeholder": "Bir mesaj yaz…",
+      "welcomeMessage": "Merhaba, burası Bloom ekibimizden, birbirini destekleme konusunda deneyimli hayatta kalanlar ve destekçilerinin bulunduğu sohbet alanı. Kurslarımızı tamamlarken aklınıza takılan soruları, duygularınızı ve düşüncelerinizi bizimle paylaşmanız için buradayız.\n\nEğer şu anda zarar görme tehlikesi altındaysanız, yapabiliyorsanız ve sizin için güvenliyse lütfen acil destek hizmetlerine ulaşın. Biz kriz desteği sunmuyoruz; ancak ihtiyacınız olan destek hizmetine ulaşmanız için sizi doğru yere yönlendirmeye yardımcı olabiliriz. Bölgenizdeki destek hizmetlerini küresel rehberimizden bulabilirsiniz: c.chayn.co/directory\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce ve İspanyolca sohbet edebilirsiniz.\n\nMesajlarınıza her zaman 1–2 gün içinde yanıt vermeye çalışacağız.",
+      "empty": "Aşağıdan ilk mesajınızı gönderin; ekibimiz en kısa sürede sizinle iletişime geçecektir.",
+      "placeholder": "Mesaj yaz...",
       "send": "Mesaj gönder",
-      "attachImage": "Görsel ekle",
-      "imageAttachment": "Görsel",
+      "attachImage": "Görüntü ekle",
+      "imageAttachment": "Görüntü",
       "voiceNote": "Sesli not",
       "startRecording": "Sesli not kaydet",
-      "stopRecording": "Sesli notu durdur ve gönder",
+      "stopRecording": "Dur ve sesli not gönder",
       "cancelRecording": "Kaydı iptal et",
       "recordingInProgress": "Kaydediliyor",
       "messageSending": "Gönderiliyor",
-      "messageFailed": "Gönderilemedi — lütfen tekrar dene.",
-      "audioUnavailable": "Ses kullanılamıyor",
+      "messageFailed": "Gönderilemedi — lütfen tekrar deneyin.",
+      "audioUnavailable": "Ses mevcut değil",
       "status": {
-        "connecting": "Bağlanıyor…",
-        "disconnected": "Yeniden bağlanılıyor…",
-        "error": "Bağlanılamıyor. Lütfen daha sonra tekrar dene."
+        "connecting": "Bağlantı kuruluyor…",
+        "disconnected": "Yeniden bağlanıyor…",
+        "error": "Bağlantı kurulamadı. Lütfen daha sonra tekrar deneyin."
       },
       "errors": {
-        "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri desteklenir.",
-        "fileTooLarge": "Dosyalar 25 MB'tan küçük olmalıdır.",
-        "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar dene.",
-        "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Eğer bu bir hata olduğunu düşünüyorsan, lütfen bize nedenini açıklamak için bir mesaj gönder.",
-        "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarından mikrofon erişimine izin ver ve tekrar dene.",
-        "micUnavailable": "Mikrofonuna erişilemedi. Lütfen bağlı olduğundan emin ol ve tekrar dene."
+        "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP formatındaki görseller desteklenmektedir.",
+        "fileTooLarge": "Dosyaların boyutu 25 MB'tan küçük olmalıdır.",
+        "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar deneyin.",
+        "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarınızdan mikrofon erişimine izin verin ve tekrar deneyin.",
+        "micUnavailable": "Mikrofonunuza erişilemedi. Lütfen bağlı olduğunu kontrol edin ve tekrar deneyin.",
+        "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Eğer bu bir hata olduğunu düşünüyorsan, lütfen bize nedenini açıklamak için bir mesaj gönder."
       }
     }
   }
