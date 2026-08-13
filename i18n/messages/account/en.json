@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Access code",
         "submitLabel": "Apply code",
-        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "assignPartnerAccessError": "There was an error applying the code to your account. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error.",
         "codeErrors": {
-          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+          "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error.",
           "expired": "This code has expired. Get in touch with the partner's team.",
           "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the partner.",
           "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the partner's team.",
@@ -75,7 +75,10 @@
           "7": "Prefer not to say"
         },
         "submitLabel": "Submit",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
@@ -98,8 +101,8 @@
     },
     "disableServiceEmails": {
       "title": "Bloom emails turned off",
-      "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please get in touch with the <link>Bloom team</link>",
-      "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or get in touch with the <link>Bloom team.</link>"
+      "description": "You will no longer receive emails related to Bloom. If you'd like to change this later, please get in touch with the <link>Bloom team<\/link>",
+      "error": "There was an error turning off emails from Bloom. Try again by refreshing this page, or get in touch with the <link>Bloom team.<\/link>"
     },
     "accountSettings": {
       "title": "Account Settings",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "When you change your email, you will need to log in again. Do you wish to proceed?",
         "confirmDialogCancel": "Cancel"
       },
-      "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or get in touch with the <link>Bloom team.</link>",
+      "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or get in touch with the <link>Bloom team.<\/link>",
       "actions": {
         "title": "Account actions",
         "description": "Deleting your account will permanently erase your name, email address and the history of sessions you've watched from our system.",
@@ -134,7 +137,7 @@
         "submitLabel": "Save email preferences",
         "serviceEmailsPermissionLabel": "About your services or changes to your account",
         "contactPermissionLabel": "When there is a new course, service or language available",
-        "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+        "updateError": "There was an error updating your Bloom account. Try again by refreshing this page, or <link>get in touch with the Bloom team.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "Email reminders",
@@ -147,7 +150,7 @@
         "neverLabel": "Never",
         "update": "You can update this setting at any time",
         "submitLabel": "Save email reminders",
-        "updateError": "There was an error updating your email reminders settings. Try again by refreshing this page, or <link>get in touch with the Bloom team.</link>"
+        "updateError": "There was an error updating your email reminders settings. Try again by refreshing this page, or <link>get in touch with the Bloom team.<\/link>"
       }
     }
   }

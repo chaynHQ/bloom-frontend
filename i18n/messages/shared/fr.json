@@ -9,15 +9,15 @@
     },
     "leaveSite": {
       "button": "Sortir du site",
-      "wikiLink": "https://fr.wikipedia.org/wiki/Main_Page",
-      "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
+      "wikiLink": "https:\/\/fr.wikipedia.org\/wiki\/Main_Page",
+      "googleLink": "https:\/\/www.google.com\/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
     },
     "navigateBack": "Revenir à la page précédente",
     "navigateTo": "Aller vers",
     "footer": {
       "fundedByTitle": "Financé par",
-      "chaynDescription": "Bloom vous est présenté par <link>Chayn</link>, une organisation mondiale à but non lucratif, dirigée par des personnes survivantes et des sympathisant·es du monde entier. Elle crée des ressources pour soutenir la guérison des personnes survivantes aux violences basées sur le genre.",
-      "chaynLine1": "Elaboré par <bold>CHAYN</bold> CIO.",
+      "chaynDescription": "Bloom vous est présenté par <link>Chayn<\/link>, une organisation mondiale à but non lucratif, dirigée par des personnes survivantes et des sympathisant·es du monde entier. Elle crée des ressources pour soutenir la guérison des personnes survivantes aux violences basées sur le genre.",
+      "chaynLine1": "Elaboré par <bold>CHAYN<\/bold> CIO.",
       "chaynLine2": "Numéro d'organisme de bienfaisance britannique : 1196098",
       "bumbleLine1": "En partenariat avec",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -39,8 +39,8 @@
     },
     "videoTranscript": {
       "title": "Transcription de la vidéo",
-      "description": "Lire la transcription de la vidéo- ",
-      "closeModal": "Arrêter la transcription"
+      "closeModal": "Arrêter la transcription",
+      "description": "Lire la transcription de la vidéo- "
     },
     "progressStatus": {
       "started": "Démarré",
@@ -88,6 +88,7 @@
       "chooseTherapist": "Illustration du profil latéral du visage d'une personne, avec une fleur.",
       "dateSelector": "Illustration d'un calendrier avec un cœur au milieu",
       "change": "Illustration d'un cycle - trois soleils dans un cercle avec des flèches entre eux",
+      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
       "confidential": "Illustration d'un document avec un cadenas dans un coin",
       "cookieCat": "Illustration d'un chat au repos avec un cookie",
       "fruitzLogo": "Logo de Fruitz",
@@ -97,7 +98,7 @@
       "articleIcon": "Icône d'article",
       "videoIcon": "Icône de vidéo"
     },
-    "feedbackTypeform": "https://chayn.typeform.com/to/WP73HFzz",
+    "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/WP73HFzz",
     "survivor": "Survivant·e",
     "cookieConsent": {
       "cookieConsentExplainer": "Veuillez autoriser les cookies d'analyse afin que nous puissions améliorer Bloom. En savoir plus dans notre ",
@@ -158,7 +159,7 @@
       "description": "Recevez des messages deux fois par semaine directement sur votre WhatsApp",
       "buttonText": "S'abonner"
     },
-    "characterCount": "{current}/{max} caractères",
+    "characterCount": "{current}\/{max} caractères",
     "scrollToSignUp": {
       "button": "Inscris-toi gratuitement"
     }

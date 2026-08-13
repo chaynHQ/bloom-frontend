@@ -8,11 +8,11 @@
       "unsubscribe": "Se désabonner",
       "subscribeErrors": {
         "invalidNumber": "Votre numéro de téléphone n'est pas valide. Veuillez corriger les erreurs éventuelles et réessayer.",
-        "internal": "Une erreur s'est produite lors de l'inscription à WhatsApp. Réessayez plus tard et <contactLink> contactez l'équipe Bloom</contactLink> si vous obtenez toujours cette erreur.",
-        "alreadyExists": "Un abonnement WhatsApp existe déjà pour votre utilisateur. Veuillez envoyer un message <contactLink> à l'équipe Bloom</contactLink> si vous pensez qu'il s'agit d'une erreur."
+        "internal": "Une erreur s'est produite lors de l'inscription à WhatsApp. Réessayez plus tard et <contactLink> contactez l'équipe Bloom<\/contactLink> si vous obtenez toujours cette erreur.",
+        "alreadyExists": "Un abonnement WhatsApp existe déjà pour votre utilisateur. Veuillez envoyer un message <contactLink> à l'équipe Bloom<\/contactLink> si vous pensez qu'il s'agit d'une erreur."
       },
       "unsubscribeErrors": {
-        "internal": "Une erreur s'est produite lors de la désinscription de WhatsApp. Réessayez plus tard et <contactLink>contactez l'équipe Bloom</contactLink> si vous obtenez toujours cette erreur."
+        "internal": "Une erreur s'est produite lors de la désinscription de WhatsApp. Réessayez plus tard et <contactLink>contactez l'équipe Bloom<\/contactLink> si vous obtenez toujours cette erreur."
       }
     },
     "notes": {

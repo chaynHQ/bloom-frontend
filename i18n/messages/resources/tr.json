@@ -13,8 +13,8 @@
     "completed": "Tamamlandı",
     "sessionDetail": "Bu klip şu Seanstan: {sessionName}, şu Kursumuzdan: {courseName}",
     "sessionButtonLabel": "Seansın tamamını izle",
-    "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
-    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
+    "videoTranscriptLink": "Videoyu izle ya da <link>metni<\/link> oku.",
+    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni<\/link> oku.",
     "relatedContent": {
       "title": "İlgili içerik",
       "resource_short_video": "İzle",

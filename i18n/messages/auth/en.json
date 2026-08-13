@@ -3,16 +3,16 @@
     "introduction": "Bloom informs and empowers survivors by offering remote courses that combine insights on trauma and gender-based violence with therapeutic practices to help heal from trauma.",
     "getStartedBloom": "Get started with Bloom",
     "getStartedWith": "Get started with a {partnerName} code",
-    "loginLink": "Already have an account? <loginLink>Go to login</loginLink>",
-    "terms": "By continuing, you are indicating that you accept our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>",
+    "loginLink": "Already have an account? <loginLink>Go to login<\/loginLink>",
+    "terms": "By continuing, you are indicating that you accept our <termsLink>Terms of Service<\/termsLink> and <privacyLink>Privacy Policy<\/privacyLink>",
     "login": {
       "title": "Welcome back",
-      "resetPasswordLink": "Forgot password? <resetLink>Reset here</resetLink>",
-      "createAnAccountLink": "Don't have an account? <createAnAccountLink>Create an account</createAnAccountLink>"
+      "resetPasswordLink": "Forgot password? <resetLink>Reset here<\/resetLink>",
+      "createAnAccountLink": "Don't have an account? <createAnAccountLink>Create an account<\/createAnAccountLink>"
     },
     "register": {
       "title": "Create account",
-      "loginRedirect": "Already have an account? <loginLink>Log in</loginLink>",
+      "loginRedirect": "Already have an account? <loginLink>Log in<\/loginLink>",
       "partnershipsTitle": "Our partnerships",
       "partnershipsDescription": "If you're coming to Bloom from one of our partners, click their logo below."
     },
@@ -21,7 +21,7 @@
     },
     "form": {
       "codeLabel": "access code",
-      "nameLabel": "First name/nickname",
+      "nameLabel": "First name\/nickname",
       "emailLabel": "Email",
       "passwordLabel": "Password",
       "contactPermissionLabel": "Receive emails about new resources and opportunities to share your feedback with us",
@@ -33,10 +33,10 @@
       "resetPasswordSent": "Check your emails for a reset link from Bloom. Didn't receive one? Check your junk folder or resend the email.",
       "passwordResetSuccess": "Your password has been reset! You can now continue to login with your new password.",
       "loginSubmit": "Login",
-      "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
-      "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+      "createUserError": "There was an error setting up your account. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error.",
+      "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error.",
       "codeErrors": {
-        "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error.",
+        "internal": "There was an error validating your access code. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error.",
         "expired": "This code has expired. Get in touch with the {partnerName} team.",
         "invalid": "Your access code appears to be invalid. Check for typos or get in touch with the {partnerName} team.",
         "alreadyInUse": "This code has already been used. If you think there's been a mistake, get in touch with the {partnerName} team."
@@ -47,10 +47,10 @@
         "invalidEmail": "Your email appears to be invalid, fix any typos to continue.",
         "tooManyAttempts": "Too many failed login attempts, please wait a few minutes or reset your password now.",
         "weakPassword": "Your password needs to be at least 8 characters and not too easy to guess. Try using a few words together — like 'blue morning river'.",
-        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login</loginLink> to continue.",
-        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process</resetLink> and try again.",
-        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
-        "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team</contactLink> if you're still getting this error."
+        "emailAlreadyInUse": "This email is already registered with Bloom, go to <loginLink>login<\/loginLink> to continue.",
+        "invalidCode": "This reset password link is invalid, please <resetLink>restart the process<\/resetLink> and try again.",
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process<\/resetLink> and try again.",
+        "getUserError": "There was an error retrieving your account. Try again later and <contactLink>message the Bloom team<\/contactLink> if you're still getting this error."
       },
       "phoneNumberLabel": "Phone number",
       "verificationCodeLabel": "Verification code",

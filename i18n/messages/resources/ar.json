@@ -13,8 +13,8 @@
     "completed": "اكتملت",
     "sessionDetail": "هذا المقطع من الجلسة: {sessionName}، من دورتنا: {courseName}",
     "sessionButtonLabel": "مشاهدة الجلسة كاملة",
-    "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب</link>.",
-    "conversationTranscriptLink": "يمكنك الإنصات إلى المحادثة أو قراءة <link>النص المكتوب</link>.",
+    "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب<\/link>.",
+    "conversationTranscriptLink": "يمكنك الإنصات إلى المحادثة أو قراءة <link>النص المكتوب<\/link>.",
     "relatedContent": {
       "title": "محتوى ذو صلة",
       "resource_short_video": "مشاهدة",
@@ -51,7 +51,7 @@
       "books": "كتب",
       "articles": "مقالات",
       "video_practices": "تمارين بالفيديو",
-      "audios": "بودكاست"
+      "audios": "Podcasts"
     }
   }
 }

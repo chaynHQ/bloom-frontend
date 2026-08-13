@@ -13,8 +13,8 @@
     "completed": "Completed",
     "sessionDetail": "This clip is from Session: {sessionName}, from our Course: {courseName}",
     "sessionButtonLabel": "Watch full session",
-    "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
-    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
+    "videoTranscriptLink": "Watch the video or read the <link>transcript<\/link>.",
+    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript<\/link>.",
     "relatedContent": {
       "title": "Related content",
       "resource_short_video": "Watch",

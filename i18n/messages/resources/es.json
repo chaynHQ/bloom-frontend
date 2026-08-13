@@ -13,8 +13,8 @@
     "completed": "Completado",
     "sessionDetail": "Este clip es de la Sesión: {sessionName}, de nuestro Curso: {courseName}",
     "sessionButtonLabel": "Ver sesión completa",
-    "videoTranscriptLink": "Mira el video o lee la <link>transcripción</link>.",
-    "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción</link>.",
+    "videoTranscriptLink": "Mira el video o lee la <link>transcripción<\/link>.",
+    "conversationTranscriptLink": "Escucha la conversación o lee la <link>transcripción<\/link>.",
     "relatedContent": {
       "title": "Contenido relacionado",
       "resource_short_video": "Ver",

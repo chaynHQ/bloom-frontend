@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Código de acesso",
         "submitLabel": "Aplicar o código",
-        "assignPartnerAccessError": "Ocorreu um erro ao aplicar o código à sua conta. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se você ainda estiver recebendo esse erro.",
+        "assignPartnerAccessError": "Ocorreu um erro ao aplicar o código à sua conta. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom<\/contactLink> se você ainda estiver recebendo esse erro.",
         "codeErrors": {
-          "internal": "Ocorreu um erro ao validar seu código de acesso. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom</contactLink> se o problema persistir.",
+          "internal": "Ocorreu um erro ao validar seu código de acesso. Tente novamente mais tarde e <contactLink>envie uma mensagem para a equipe do Bloom<\/contactLink> se o problema persistir.",
           "expired": "Este código expirou. Entre em contato com a equipe da organização parceira.",
           "invalid": "Seu código de acesso parece estar inválido. Verifique se há erros de digitação ou entre em contato com a organização parceira.",
           "alreadyInUse": "Este código já foi utilizado. Se você acha que houve um engano, entre em contato com a equipe da organização parceira.",
@@ -75,7 +75,10 @@
           "7": "Prefiro não declarar"
         },
         "submitLabel": "Enviar",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Por favor, indique seu grau de satisfação de acordo com as seguintes afirmações:",
@@ -98,8 +101,8 @@
     },
     "disableServiceEmails": {
       "title": "E-mails do Bloom desativados",
-      "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, <link>entre em contato com a equipe do Bloom.</link>",
-      "error": "Ocorreu um erro ao desativar os e-mails do Bloom. Tente novamente após atualizar esta página ou <link>entre em contato com a equipe do Bloom.</link>"
+      "description": "Você não receberá mais e-mails relacionados ao Bloom. Se desejar alterar isso mais tarde, <link>entre em contato com a equipe do Bloom.<\/link>",
+      "error": "Ocorreu um erro ao desativar os e-mails do Bloom. Tente novamente após atualizar esta página ou <link>entre em contato com a equipe do Bloom.<\/link>"
     },
     "accountSettings": {
       "title": "Configurações da conta",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "Ao alterar seu e-mail, você precisará fazer login novamente. Você deseja continuar?",
         "confirmDialogCancel": "Cancelar"
       },
-      "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>",
+      "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.<\/link>",
       "actions": {
         "title": "Ações da conta",
         "description": "Excluir sua conta apagará permanentemente seu nome, endereço de e-mail e o histórico de sessões que você assistiu em nosso sistema.",
@@ -134,7 +137,7 @@
         "submitLabel": "Salvar preferências de e-mail",
         "serviceEmailsPermissionLabel": "Sobre seus serviços ou alterações em sua conta",
         "contactPermissionLabel": "Quando houver um novo curso, serviço ou idioma disponível",
-        "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.</link>"
+        "updateError": "Ocorreu um erro ao atualizar sua conta Bloom. Tente novamente atualizando esta página ou <link>entre em contato com a equipe da Bloom.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "Lembretes por e-mail",
@@ -147,7 +150,7 @@
         "neverLabel": "Nunca",
         "update": "Você pode atualizar esta configuração a qualquer momento",
         "submitLabel": "Salvar lembretes por e-mail",
-        "updateError": "Ocorreu um erro ao atualizar suas configurações de lembretes por e-mail. Tente novamente atualizando esta página ou <link> entrando em contato com a equipe do Bloom. </link>"
+        "updateError": "Ocorreu um erro ao atualizar suas configurações de lembretes por e-mail. Tente novamente atualizando esta página ou <link> entrando em contato com a equipe do Bloom. <\/link>"
       }
     }
   }

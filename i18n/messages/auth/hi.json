@@ -3,16 +3,16 @@
     "introduction": "Bloom apne remote courses ke madhyam se survivors ko jankaari deta hai aur empower karta hai. Inn courses mein trauma, gender-based hinsa aur therapeutic takneekein shaamil hai taki survivors trauma se heal ho paye.",
     "getStartedBloom": "Bloom ke saath shuruat karte hain",
     "getStartedWith": "{partnerName} code ke saath shuru karte hain",
-    "loginLink": "Aapke paas pehle se he account hai? <loginLink>Login kariye</loginLink>",
-    "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <termsLink>Sevao ki Sharte</termsLink> aur <privacyLink>Privacy Policy</privacyLink> sweekaar kar rahe hain.",
+    "loginLink": "Aapke paas pehle se he account hai? <loginLink>Login kariye<\/loginLink>",
+    "terms": "Jaari rakhkar, aap sanket de rahe hai aap hamari <termsLink>Sevao ki Sharte<\/termsLink> aur <privacyLink>Privacy Policy<\/privacyLink> sweekaar kar rahe hain.",
     "login": {
       "title": "Vapas se swagat hai",
-      "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here</resetLink>",
-      "createAnAccountLink": "Aapke paas account nahi hai? <createAnAccountLink>Account banaiye</createAnAccountLink>"
+      "resetPasswordLink": "Password bhool gaye? <resetLink>Reset here<\/resetLink>",
+      "createAnAccountLink": "Aapke paas account nahi hai? <createAnAccountLink>Account banaiye<\/createAnAccountLink>"
     },
     "register": {
       "title": "Account banaiye",
-      "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in</loginLink>",
+      "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in<\/loginLink>",
       "partnershipsTitle": "Hamari partnerships",
       "partnershipsDescription": "Agar aap Bloom par hamare kisi partner se aa rahe hain, toh unke logo kar click kariye. "
     },
@@ -21,7 +21,7 @@
     },
     "form": {
       "codeLabel": "access code",
-      "nameLabel": "Pehla naam/Apnaam",
+      "nameLabel": "Pehla naam\/Apnaam",
       "emailLabel": "Email",
       "passwordLabel": "Password",
       "contactPermissionLabel": "Naye sansadhanon aur humein apni pratikriya dene ke avsaron ke baare mein email prapt karein.",
@@ -33,10 +33,10 @@
       "resetPasswordSent": "Bloom ke reset link ke liye apna email check kariye. Aapko email nahi mila? Apna junk folder check kariye ya fir email resend kariye. ",
       "passwordResetSuccess": "Aapka password reset ho gaya hai! Ab aap apne naye password ke saath log in karna jari rakh sakte hain.",
       "loginSubmit": "Login",
-      "createUserError": "Aapka account set up karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
-      "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. ",
+      "createUserError": "Aapka account set up karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+      "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink> agar aapko fir bhi error aa raha hai. ",
       "codeErrors": {
-        "internal": "Aapke access code ko validate karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
+        "internal": "Aapke access code ko validate karne mein error aa raha hai. Firse baad mein prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink>  agar aapko fir bhi yeh error aa raha hai. ",
         "expired": "Yeh code expire ho chuka hai. {partnerName} team sampark karein.",
         "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir {partnerName} team se sampark karein.",
         "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh {partnerName} ki team se sampark karein. "
@@ -47,10 +47,10 @@
         "invalidEmail": "Apka email invalid aa raha hai, jaari rakhne ke liye kripya typos ko theek karein.",
         "tooManyAttempts": "Bahut saare viphal login prayaas, krpaya kuchh minat prateeksha karen ya apana paasavard abhee reeset karen.",
         "weakPassword": "Aapka password kam se kam 8 characters ka hona chahiye aur bahut aasaan nahi hona chahiye. Kuch shabdon ko milaakar try karein — jaise 'neela subah nadi'.",
-        "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login</loginLink> par jaiye jaari rakhne ke liye.",
-        "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya</resetLink> aur fir prayas kariya. ",
-        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process</resetLink> and try again.",
-        "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye</contactLink> agar aapko fir bhi error aa raha hai. "
+        "emailAlreadyInUse": "Yeh email Bloom ke saath pehle se he registered hai, <loginLink>login<\/loginLink> par jaiye jaari rakhne ke liye.",
+        "invalidCode": "Yeh reset password link ab samaapt hogaya hai, kripya <resetLink>prakriya restart kariya<\/resetLink> aur fir prayas kariya. ",
+        "expiredCode": "This reset password link is now expired, please <resetLink>restart the process<\/resetLink> and try again.",
+        "getUserError": "Aapka account retrieve karne mein error aa raha hai. Baad mein dubara prayas kariye aur <contactLink>Bloom team ko message kariye<\/contactLink> agar aapko fir bhi error aa raha hai. "
       },
       "phoneNumberLabel": "Phone number",
       "verificationCodeLabel": "Verification code",

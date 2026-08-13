@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Access code",
         "submitLabel": "Code lagaiye",
-        "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
+        "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
         "codeErrors": {
-          "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
+          "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
           "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
           "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
           "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. ",
@@ -75,7 +75,10 @@
           "7": "Na bata pasand karungi"
         },
         "submitLabel": "Submit",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",
@@ -98,8 +101,8 @@
     },
     "disableServiceEmails": {
       "title": "Bloom ke emails band kar diye gaye!",
-      "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.</link>",
-      "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
+      "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.<\/link>",
+      "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
     },
     "accountSettings": {
       "title": "Account Settings",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "jab aap apana eemel badalate hain, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
         "confirmDialogCancel": "Cancel"
       },
-      "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
+      "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>",
       "actions": {
         "title": "Account Actions",
         "description": "Apna account delete karne se aapka naam, email address aur dekhe gaye sessions ki history permanently delete ho jayegi.",
@@ -134,7 +137,7 @@
         "submitLabel": "Email preferences ko save kijiye",
         "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
         "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
-        "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
+        "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "Email Reminders",
@@ -147,7 +150,7 @@
         "neverLabel": "Kabhi nahi",
         "update": "Aap is setting ko kabhi bhi update kar sakte hain",
         "submitLabel": "Email Reminders Save karen",
-        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।</link>"
+        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।<\/link>"
       }
     }
   }

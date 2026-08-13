@@ -9,15 +9,15 @@
     },
     "leaveSite": {
       "button": "Bu siteden ayrıl",
-      "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
-      "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+      "wikiLink": "https:\/\/en.wikipedia.org\/wiki\/Main_Page",
+      "googleLink": "https:\/\/www.google.co.uk\/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
     "navigateBack": "Geri git",
     "navigateTo": "Şuraya git",
     "footer": {
       "fundedByTitle": "Finanse eden",
-      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn</link> sunuyor.",
-      "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
+      "chaynDescription": "Bloom'u sana, dünyanın dört bir yanından hayatta kalanlar ve müttefikler tarafından yürütülen, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturan küresel bir kâr amacı gütmeyen kuruluş olan <link>Chayn<\/link> sunuyor.",
+      "chaynLine1": "<bold>CHAYN<\/bold> CIO tarafından oluşturuldu.",
       "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
       "bumbleLine1": "İş birliğiyle",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -39,7 +39,8 @@
     },
     "videoTranscript": {
       "title": "Video metni",
-      "closeModal": "Metni kapat"
+      "closeModal": "Metni kapat",
+      "description": ""
     },
     "progressStatus": {
       "started": "Başlandı",
@@ -97,7 +98,7 @@
       "articleIcon": "Makale simgesi",
       "videoIcon": "Video simgesi"
     },
-    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
+    "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/OY9Wdk4h",
     "survivor": "Hayatta kalan",
     "cookieConsent": {
       "cookieConsentExplainer": "Bloom'u geliştirebilmemiz için lütfen analiz çerezlerine izin ver. Daha fazlasını şurada oku: ",
@@ -158,7 +159,7 @@
       "description": "Haftada iki kez doğrudan WhatsApp'ına mesajlar al",
       "buttonText": "Abone ol"
     },
-    "characterCount": "{current}/{max} karakter",
+    "characterCount": "{current}\/{max} karakter",
     "scrollToSignUp": {
       "button": "Ücretsiz kaydol"
     }

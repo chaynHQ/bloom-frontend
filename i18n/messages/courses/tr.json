@@ -12,18 +12,18 @@
     "noCourses": "Şu anda gösterilecek kurs yok. Bu doğru görünmüyorsa, daha sonra tekrar dene ya da Bloom ekibiyle iletişime geç.",
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
-      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku"
+      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini<\/transcriptLink> oku"
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini</transcriptLink> oku.",
+      "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini<\/transcriptLink> oku.",
       "activityTitle": "Etkinlik",
       "bonusTitle": "Bonus içerik",
       "chat": {
         "title": "Bizimle düşün",
         "description": "Bu seansa dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
         "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
-        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
         "detailIntro": "Unutma:",
         "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
         "detailTimezone": "Pek çok farklı saat diliminde çalışıyoruz, bu yüzden bizden 6 saat içinde yanıt almalısın ve bu süre 24 saati geçmez.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Kurs içeriği mevcut değil",
-      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına</contactLink> geri dön."
+      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına<\/contactLink> geri dön."
     },
     "errors": {
       "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."

@@ -12,18 +12,18 @@
     "noCourses": "There are no courses to display right now. If this doesn't seem right, try again later or contact the Bloom team.",
     "courseDetail": {
       "introductionTitle": "Course introduction",
-      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>"
+      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript<\/transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
+      "videoDescription": "Watch the video or read the <transcriptLink>video transcript<\/transcriptLink>.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
       "chat": {
         "title": "Reflect with us",
         "description": "If you’d like to share your reflections on this session, the Bloom team would love to hear from you! ",
         "videoIntro": "Find out more about how messaging works:",
-        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
         "detailIntro": "Remember:",
         "detailPrivacy": "Your messages are private and secure, they’re only ever seen by the Bloom team and you remain anonymous.",
         "detailTimezone": "We work across many different timezones, so you should get a response from us within 6 hours, and it won’t be longer than 24 hours.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Course content not available",
-      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses</contactLink>."
+      "introduction": "Your Bloom account does not include access to the requested course content. Go back to your <contactLink>courses<\/contactLink>."
     },
     "errors": {
       "completeSessionError": "There was an error marking this session as complete. Try again a little later."

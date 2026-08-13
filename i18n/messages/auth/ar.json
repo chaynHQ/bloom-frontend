@@ -3,16 +3,16 @@
     "introduction": "يقدّم Bloom المعرفة والتمكين للناجيات والناجين من خلال دورات عن بُعد تجمع بين فهم الصدمة والعنف القائم على النوع الاجتماعي وممارسات علاجية تساعد على التعافي من الصدمة.",
     "getStartedBloom": "لنبدأ مع Bloom",
     "getStartedWith": "لنبدأ برمز {partnerName}",
-    "loginLink": "هل لديك حساب بالفعل؟ <loginLink>الانتقال إلى تسجيل الدخول</loginLink>",
-    "terms": "تعني المتابعة موافقتك على <termsLink>شروط الخدمة</termsLink> و<privacyLink>سياسة الخصوصية</privacyLink>",
+    "loginLink": "هل لديك حساب بالفعل؟ <loginLink>الانتقال إلى تسجيل الدخول<\/loginLink>",
+    "terms": "تعني المتابعة موافقتك على <termsLink>شروط الخدمة<\/termsLink> و<privacyLink>سياسة الخصوصية<\/privacyLink>",
     "login": {
       "title": "أهلًا بعودتك",
-      "resetPasswordLink": "هل نسيت كلمة المرور؟ <resetLink>إعادة التعيين من هنا</resetLink>",
-      "createAnAccountLink": "ليس لديك حساب؟ <createAnAccountLink>إنشاء حساب</createAnAccountLink>"
+      "resetPasswordLink": "هل نسيت كلمة المرور؟ <resetLink>إعادة التعيين من هنا<\/resetLink>",
+      "createAnAccountLink": "ليس لديك حساب؟ <createAnAccountLink>إنشاء حساب<\/createAnAccountLink>"
     },
     "register": {
       "title": "إنشاء حساب",
-      "loginRedirect": "هل لديك حساب بالفعل؟ <loginLink>تسجيل الدخول</loginLink>",
+      "loginRedirect": "هل لديك حساب بالفعل؟ <loginLink>تسجيل الدخول<\/loginLink>",
       "partnershipsTitle": "شراكاتنا",
       "partnershipsDescription": "إذا وصلت إلى Bloom عبر أحد شركائنا، يمكنك النقر على شعاره أدناه."
     },
@@ -21,7 +21,7 @@
     },
     "form": {
       "codeLabel": "رمز الوصول",
-      "nameLabel": "الاسم الأول/الاسم المستعار",
+      "nameLabel": "الاسم الأول\/الاسم المستعار",
       "emailLabel": "البريد الإلكتروني",
       "passwordLabel": "كلمة المرور",
       "contactPermissionLabel": "تلقّي رسائل بريدية حول الموارد الجديدة وفرص مشاركة ملاحظاتك معنا",
@@ -33,10 +33,10 @@
       "resetPasswordSent": "يُرجى التحقّق من بريدك الإلكتروني بحثًا عن رابط إعادة التعيين من Bloom. لم يصلك الرابط؟ يمكنك مراجعة مجلد الرسائل غير المرغوب فيها أو إعادة إرسال الرسالة.",
       "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور! يمكنك الآن متابعة تسجيل الدخول بكلمة المرور الجديدة.",
       "loginSubmit": "تسجيل الدخول",
-      "createUserError": "حدث خطأ أثناء إعداد حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ.",
-      "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ.",
+      "createUserError": "حدث خطأ أثناء إعداد حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+      "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
       "codeErrors": {
-        "internal": "حدث خطأ أثناء التحقّق من رمز الوصول. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ.",
+        "internal": "حدث خطأ أثناء التحقّق من رمز الوصول. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
         "expired": "انتهت صلاحية هذا الرمز. يُرجى التواصل مع فريق {partnerName}.",
         "invalid": "يبدو أن رمز الوصول غير صالح. يُرجى التحقّق من الأخطاء الإملائية أو التواصل مع فريق {partnerName}.",
         "alreadyInUse": "سبق استخدام هذا الرمز. إذا اعتقدت أن هناك خطأً، يُرجى التواصل مع فريق {partnerName}."
@@ -47,10 +47,10 @@
         "invalidEmail": "يبدو أن بريدك الإلكتروني غير صالح، يُرجى تصحيح أي أخطاء إملائية للمتابعة.",
         "tooManyAttempts": "محاولات تسجيل دخول فاشلة كثيرة، يُرجى الانتظار بضع دقائق أو إعادة تعيين كلمة المرور الآن.",
         "weakPassword": "يجب أن تتكوّن كلمة المرور من 8 أحرف على الأقل وألّا تكون سهلة التخمين. يمكنك تجربة دمج بضع كلمات معًا — مثل 'نهر صباح أزرق'.",
-        "emailAlreadyInUse": "هذا البريد الإلكتروني مسجَّل بالفعل في Bloom، يُرجى الانتقال إلى <loginLink>تسجيل الدخول</loginLink> للمتابعة.",
-        "invalidCode": "رابط إعادة تعيين كلمة المرور هذا غير صالح، يُرجى <resetLink>إعادة بدء العملية</resetLink> والمحاولة مرة أخرى.",
-        "expiredCode": "انتهت الآن صلاحية رابط إعادة تعيين كلمة المرور، يُرجى <resetLink>إعادة بدء العملية</resetLink> والمحاولة مرة أخرى.",
-        "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ."
+        "emailAlreadyInUse": "هذا البريد الإلكتروني مسجَّل بالفعل في Bloom، يُرجى الانتقال إلى <loginLink>تسجيل الدخول<\/loginLink> للمتابعة.",
+        "invalidCode": "رابط إعادة تعيين كلمة المرور هذا غير صالح، يُرجى <resetLink>إعادة بدء العملية<\/resetLink> والمحاولة مرة أخرى.",
+        "expiredCode": "انتهت الآن صلاحية رابط إعادة تعيين كلمة المرور، يُرجى <resetLink>إعادة بدء العملية<\/resetLink> والمحاولة مرة أخرى.",
+        "getUserError": "حدث خطأ أثناء استرجاع حسابك. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ."
       },
       "phoneNumberLabel": "رقم الهاتف",
       "verificationCodeLabel": "رمز التحقّق",

@@ -12,18 +12,18 @@
     "noCourses": "Abhi dikhane ke liye koi course nahi hai. There are no courses to display right now. Agar yeh sahi nahi lagta, toh dobara prayas karein ya fir Bloom mein team se sampark karien. ",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",
-      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
+      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript<\/transcriptLink> padh lijiye"
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript</transcriptLink> padh lijiye.",
+      "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript<\/transcriptLink> padh lijiye.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
       "chat": {
         "title": "Humare saath soch vichaar kariye",
         "description": "Yadi aap iss sessions par apne vichaar share karna chahte hai toh Bloom team apko sunna pasand karegi!",
         "videoIntro": "Sandesh Seva kaise kaam karti hai, iske bare mein aur jaanein:",
-        "videoLink": "https://youtu.be/NIE_1BK-qi0",
+        "videoLink": "https:\/\/youtu.be\/NIE_1BK-qi0",
         "detailIntro": "Yaad rakhiye:",
         "detailPrivacy": "Aapke messages niji aur surakshit hai, vo sirf Bloom team pad sakti hain aur aap gumnaan rehte hain. ",
         "detailTimezone": "Hum kai alag-alag timezones mein kaam karte hain, isliye aapko humse 6 ghanto ke andar response milna chahiye, aur samay 24 ghanton se adhik nahi hoga. ",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Yeh course content uplabhd nahi hai.",
-      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses</contactLink> par vapas jaiye. "
+      "introduction": "Aapke Bloom account mein iss course content ki access shaamil nahi hai. Apne <contactLink>courses<\/contactLink> par vapas jaiye. "
     },
     "errors": {
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "

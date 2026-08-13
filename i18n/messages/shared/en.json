@@ -9,15 +9,15 @@
     },
     "leaveSite": {
       "button": "Leave this site",
-      "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
-      "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+      "wikiLink": "https:\/\/en.wikipedia.org\/wiki\/Main_Page",
+      "googleLink": "https:\/\/www.google.co.uk\/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
     "navigateBack": "Navigate back",
     "navigateTo": "Navigate to",
     "footer": {
       "fundedByTitle": "Funded by",
-      "chaynDescription": "Bloom is brought to you by <link>Chayn</link>, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
-      "chaynLine1": "Built by <bold>CHAYN</bold> CIO.",
+      "chaynDescription": "Bloom is brought to you by <link>Chayn<\/link>, a global non-profit, run by survivors and allies from around the world, creating resources to support the healing of survivors of gender-based violence.",
+      "chaynLine1": "Built by <bold>CHAYN<\/bold> CIO.",
       "chaynLine2": "UK Charity Number: 1196098",
       "bumbleLine1": "In partnership with",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -39,7 +39,8 @@
     },
     "videoTranscript": {
       "title": "Video transcript",
-      "closeModal": "Close transcript"
+      "closeModal": "Close transcript",
+      "description": ""
     },
     "progressStatus": {
       "started": "Started",
@@ -97,7 +98,7 @@
       "articleIcon": "Article icon",
       "videoIcon": "Video icon"
     },
-    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
+    "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/OY9Wdk4h",
     "survivor": "Survivor",
     "cookieConsent": {
       "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
@@ -158,7 +159,7 @@
       "description": "Receive twice weekly messages direct to your WhatsApp",
       "buttonText": "Subscribe"
     },
-    "characterCount": "{current}/{max} characters",
+    "characterCount": "{current}\/{max} characters",
     "scrollToSignUp": {
       "button": "Sign up for free"
     }

@@ -13,8 +13,8 @@
     "completed": "Pūra",
     "sessionDetail": "Yah clip Session: {sessionName}, hamāre Course: {courseName} se hai",
     "sessionButtonLabel": "Pūrī session dekhen",
-    "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
-    "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+    "videoTranscriptLink": "Video dekhen yā <link>transcript<\/link> paṛhen.",
+    "conversationTranscriptLink": "Bātchīt sune yā <link>transcript<\/link> paṛhen.",
     "relatedContent": {
       "title": "Related content",
       "resource_short_video": "Watch",

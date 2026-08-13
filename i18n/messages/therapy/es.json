@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "Tus reservas de terapia",
-      "bookingSummary": "Te quedan <remainingTotal>{remainingTotal}</remainingTotal> sesiones de terapia, <upcomingTotal>{upcomingTotal}</upcomingTotal> programadas.",
+      "bookingSummary": "Te quedan <remainingTotal>{remainingTotal}<\/remainingTotal> sesiones de terapia, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> programadas.",
       "noBookingSummary": "Ha reservado todas sus sesiones de terapia disponibles.",
       "noBookings": "No tienes reservas de terapia en este momento.",
       "cancelAlert": "Cancelación solicitada para la reserva ID: {id}. Implementa la lógica de cancelación real."
@@ -35,9 +35,9 @@
       "therapistLabel": "Terapeuta",
       "videoLinkLabel": "Enlace del vídeo",
       "videoLink": "Únete a la llamada desde la invitación del calendario de Google Meet enviada por correo electrónico.",
-      "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
       "noVideoLink": "No se proporcionó ningún enlace",
       "cancelButton": "Cancelar",
+      "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
       "expand": "Expandir",
       "collapse": "Contraer",
       "cancelDialog": {
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Terapia no disponible",
-      "introduction": "Tu cuenta de Bloom no incluye acceso a sesiones de terapia. Si esto no parece correcto, <contactLink>envíale un mensaje al equipo de Bloom</contactLink>."
+      "introduction": "Tu cuenta de Bloom no incluye acceso a sesiones de terapia. Si esto no parece correcto, <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink>."
     }
   }
 }

@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "Deine Therapiebuchungen",
-      "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}</remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}</upcomingTotal> sind geplant.",
+      "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}<\/remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> sind geplant.",
       "noBookingSummary": "Sie haben alle Ihre verfügbaren Therapiesitzungen gebucht.",
       "noBookings": "Du hast im Moment keine Therapiebuchungen.",
       "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
@@ -32,12 +32,12 @@
       "cancelledSessionTitle": "Abgesagte Sitzung",
       "dateLabel": "Datum",
       "timeLabel": "Uhrzeit",
-      "therapistLabel": "Therapeut/in",
+      "therapistLabel": "Therapeut\/in",
       "videoLinkLabel": "Video-Link",
       "videoLink": "Nehmen Sie am Anruf über die Google Meet-Kalendereinladung teil, die per E-Mail gesendet wurde.",
-      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
       "noVideoLink": "Kein Link angegeben",
       "cancelButton": "Stornieren",
+      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
       "expand": "Erweitern",
       "collapse": "Einklappen",
       "cancelDialog": {
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Therapie nicht verfügbar",
-      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugang zu Therapiesitzungen. Wenn Du meinst, das stimmt nicht, <contactLink>kontaktiere das Bloom-Team</contactLink>."
+      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugang zu Therapiesitzungen. Wenn Du meinst, das stimmt nicht, <contactLink>kontaktiere das Bloom-Team<\/contactLink>."
     }
   }
 }

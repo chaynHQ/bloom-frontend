@@ -3,16 +3,16 @@
     "introduction": "Bloom, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri, travmadan iyileşmeye yardımcı olan terapötik uygulamalarla birleştiren uzaktan kurslar sunarak hayatta kalanları bilgilendirir ve güçlendirir.",
     "getStartedBloom": "Bloom'a başla",
     "getStartedWith": "Bir {partnerName} koduyla başla",
-    "loginLink": "Zaten bir hesabın var mı? <loginLink>Girişe git</loginLink>",
-    "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı</termsLink> ve <privacyLink>Gizlilik Politikamızı</privacyLink> kabul ettiğini belirtmiş olursun",
+    "loginLink": "Zaten bir hesabın var mı? <loginLink>Girişe git<\/loginLink>",
+    "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı<\/termsLink> ve <privacyLink>Gizlilik Politikamızı<\/privacyLink> kabul ettiğini belirtmiş olursun",
     "login": {
       "title": "Tekrar hoş geldin",
-      "resetPasswordLink": "Şifreni mi unuttun? <resetLink>Buradan sıfırla</resetLink>",
-      "createAnAccountLink": "Hesabın yok mu? <createAnAccountLink>Bir hesap oluştur</createAnAccountLink>"
+      "resetPasswordLink": "Şifreni mi unuttun? <resetLink>Buradan sıfırla<\/resetLink>",
+      "createAnAccountLink": "Hesabın yok mu? <createAnAccountLink>Bir hesap oluştur<\/createAnAccountLink>"
     },
     "register": {
       "title": "Hesap oluştur",
-      "loginRedirect": "Zaten bir hesabın var mı? <loginLink>Giriş yap</loginLink>",
+      "loginRedirect": "Zaten bir hesabın var mı? <loginLink>Giriş yap<\/loginLink>",
       "partnershipsTitle": "İş birliklerimiz",
       "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıdan onların logosuna tıkla."
     },
@@ -21,7 +21,7 @@
     },
     "form": {
       "codeLabel": "erişim kodu",
-      "nameLabel": "Ad/takma ad",
+      "nameLabel": "Ad\/takma ad",
       "emailLabel": "E-posta",
       "passwordLabel": "Şifre",
       "contactPermissionLabel": "Yeni kaynaklar ve bize geri bildirimini paylaşma fırsatları hakkında e-postalar al",
@@ -33,10 +33,10 @@
       "resetPasswordSent": "Bloom'dan gelen sıfırlama bağlantısı için e-postanı kontrol et. Bir bağlantı almadın mı? Gereksiz (spam) klasörünü kontrol et veya e-postayı tekrar gönder.",
       "passwordResetSuccess": "Şifren sıfırlandı! Artık yeni şifrenle giriş yapmaya devam edebilirsin.",
       "loginSubmit": "Giriş yap",
-      "createUserError": "Hesabın kurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
-      "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+      "createUserError": "Hesabın kurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+      "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
       "codeErrors": {
-        "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+        "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
         "expired": "Bu kodun süresi doldu. {partnerName} ekibiyle iletişime geç.",
         "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya {partnerName} ekibiyle iletişime geç.",
         "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan {partnerName} ekibiyle iletişime geç."
@@ -47,10 +47,10 @@
         "invalidEmail": "E-postan geçersiz görünüyor, devam etmek için yazım hatalarını düzelt.",
         "tooManyAttempts": "Çok fazla başarısız giriş denemesi, lütfen birkaç dakika bekle ya da şimdi şifreni sıfırla.",
         "weakPassword": "Şifren en az 8 karakter olmalı ve tahmin edilmesi çok kolay olmamalı. Birkaç kelimeyi bir araya getirmeyi dene — 'mavi sabah nehri' gibi.",
-        "emailAlreadyInUse": "Bu e-posta Bloom'da zaten kayıtlı, devam etmek için <loginLink>girişe</loginLink> git.",
-        "invalidCode": "Bu şifre sıfırlama bağlantısı geçersiz, lütfen <resetLink>işlemi yeniden başlat</resetLink> ve tekrar dene.",
-        "expiredCode": "Bu şifre sıfırlama bağlantısının süresi doldu, lütfen <resetLink>işlemi yeniden başlat</resetLink> ve tekrar dene.",
-        "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+        "emailAlreadyInUse": "Bu e-posta Bloom'da zaten kayıtlı, devam etmek için <loginLink>girişe<\/loginLink> git.",
+        "invalidCode": "Bu şifre sıfırlama bağlantısı geçersiz, lütfen <resetLink>işlemi yeniden başlat<\/resetLink> ve tekrar dene.",
+        "expiredCode": "Bu şifre sıfırlama bağlantısının süresi doldu, lütfen <resetLink>işlemi yeniden başlat<\/resetLink> ve tekrar dene.",
+        "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
       },
       "phoneNumberLabel": "Telefon numarası",
       "verificationCodeLabel": "Doğrulama kodu",

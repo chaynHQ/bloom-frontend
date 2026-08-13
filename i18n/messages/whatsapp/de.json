@@ -8,11 +8,11 @@
       "unsubscribe": "Abmelden",
       "subscribeErrors": {
         "invalidNumber": "Deine Telefonnummer scheint ungültig zu sein. Bitte behebe alle Fehler und versuche es erneut.",
-        "internal": "Es ist ein Fehler beim abonnieren von WhatsApp aufgetreten. Versuch es später nochmal und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt.",
-        "alreadyExists": "Für dieses Konto existiert bereits ein WhatsApp Abonnement. Bitte <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn Du glaubst, hier liegt ein Fehler vor."
+        "internal": "Es ist ein Fehler beim abonnieren von WhatsApp aufgetreten. Versuch es später nochmal und <contactLink>kontaktiere das Bloom-Team<\/contactLink>, wenn dieser Fehler weiterhin auftritt.",
+        "alreadyExists": "Für dieses Konto existiert bereits ein WhatsApp Abonnement. Bitte <contactLink>kontaktiere das Bloom-Team<\/contactLink>, wenn Du glaubst, hier liegt ein Fehler vor."
       },
       "unsubscribeErrors": {
-        "internal": "Es ist ein Fehler beim Abmelden von WhatsApp aufgetreten. Versuch es später erneut und <contactLink>kontaktiere das Bloom-Team</contactLink>, wenn dieser Fehler weiterhin auftritt."
+        "internal": "Es ist ein Fehler beim Abmelden von WhatsApp aufgetreten. Versuch es später erneut und <contactLink>kontaktiere das Bloom-Team<\/contactLink>, wenn dieser Fehler weiterhin auftritt."
       }
     },
     "notes": {

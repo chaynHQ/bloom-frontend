@@ -8,11 +8,11 @@
       "unsubscribe": "إلغاء الاشتراك",
       "subscribeErrors": {
         "invalidNumber": "يبدو أن رقم هاتفك غير صالح. يُرجى تصحيح أي أخطاء والمحاولة مرة أخرى.",
-        "internal": "حدث خطأ أثناء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ.",
-        "alreadyExists": "يوجد بالفعل اشتراك في WhatsApp لرقمك. يُرجى <contactLink>مراسلة فريق Bloom</contactLink> إذا اعتقدت أن هذا خطأ."
+        "internal": "حدث خطأ أثناء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ.",
+        "alreadyExists": "يوجد بالفعل اشتراك في WhatsApp لرقمك. يُرجى <contactLink>مراسلة فريق Bloom<\/contactLink> إذا اعتقدت أن هذا خطأ."
       },
       "unsubscribeErrors": {
-        "internal": "حدث خطأ أثناء إلغاء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom</contactLink> إذا استمر ظهور هذا الخطأ."
+        "internal": "حدث خطأ أثناء إلغاء الاشتراك في WhatsApp. يُرجى المحاولة لاحقًا، و<contactLink>مراسلة فريق Bloom<\/contactLink> إذا استمر ظهور هذا الخطأ."
       }
     },
     "notes": {

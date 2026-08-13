@@ -12,18 +12,18 @@
     "noCourses": "Não há cursos para serem exibidos no momento. Se isso não parecer certo, tente novamente mais tarde ou entre em contato com a equipe do Bloom.",
     "courseDetail": {
       "introductionTitle": "Introdução ao curso",
-      "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>"
+      "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo<\/transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Vídeo",
-      "videoDescription": "Assita ao vídeo ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>.",
+      "videoDescription": "Assita ao vídeo ou leia a <transcriptLink>transcrição do vídeo<\/transcriptLink>.",
       "activityTitle": "Atividade",
       "bonusTitle": "Conteúdo Extra",
       "chat": {
         "title": "Reflita conosco",
         "description": "Se você quiser compartilhar suas reflexões sobre esta sessão, a equipe Bloom adoraria ouvir você!",
         "videoIntro": "Descubra mais sobre como funciona a mensajeria:",
-        "videoLink": "https://youtu.be/bR6AcsiBpzE",
+        "videoLink": "https:\/\/youtu.be\/bR6AcsiBpzE",
         "detailIntro": "Lembre-se:",
         "detailPrivacy": "Suas mensagens são privadas e sigilosas, elas só são vistas pela equipe Bloom e você permanece no anonimato.",
         "detailTimezone": "Trabalhamos em muitos e diferentes fusos horários, portanto, você deve receber uma resposta nossa dentro de 6 horas ou em até 24 horas.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Conteúdo do curso não disponível",
-      "introduction": "Sua conta Bloom não inclui o acesso ao conteúdo do curso solicitado. Volte para seus <contactLink>cursos</contactLink>."
+      "introduction": "Sua conta Bloom não inclui o acesso ao conteúdo do curso solicitado. Volte para seus <contactLink>cursos<\/contactLink>."
     },
     "errors": {
       "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."

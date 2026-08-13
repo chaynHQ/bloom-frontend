@@ -12,18 +12,18 @@
     "noCourses": "En este momento no hay cursos para mostrar. Si esto no parece correcto, inténtalo de nuevo más tarde, o contacta al equipo de Bloom.",
     "courseDetail": {
       "introductionTitle": "Introducción al curso",
-      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>"
+      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video<\/transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Video",
-      "videoDescription": "Mira el video o lee la <transcriptLink>transcripción del video</transcriptLink>.",
+      "videoDescription": "Mira el video o lee la <transcriptLink>transcripción del video<\/transcriptLink>.",
       "activityTitle": "Actividad",
       "bonusTitle": "Contenido extra",
       "chat": {
         "title": "Reflexiona con nosotres",
         "description": "Si quieres compartir tus reflexiones sobre esta sesión, al equipo de Bloom le encantaría escuchar tus comentarios.",
         "videoIntro": "Descubre cómo funciona la mensajería:",
-        "videoLink": "https://youtu.be/ISmqaNJTPE8",
+        "videoLink": "https:\/\/youtu.be\/ISmqaNJTPE8",
         "detailIntro": "Recuerda:",
         "detailPrivacy": "Tus mensajes son privados y seguros, solo serán vistos por el equipo de Bloom y permanecerán completamente anónimos.",
         "detailTimezone": "Trabajamos en varias zonas horarias diferentes, así que seguramente recibirás una respuesta del equipo dentro de 6 horas o 24 horas como máximo.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Contenido del curso no disponible",
-      "introduction": "Tu cuenta de Bloom no incluye acceso al contenido del curso que pediste. Regresa a tus <contactLink>cursos</contactLink>."
+      "introduction": "Tu cuenta de Bloom no incluye acceso al contenido del curso que pediste. Regresa a tus <contactLink>cursos<\/contactLink>."
     },
     "errors": {
       "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."

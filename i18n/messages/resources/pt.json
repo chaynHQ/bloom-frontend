@@ -13,8 +13,8 @@
     "completed": "Concluído",
     "sessionDetail": "Este clipe é da Sessão: {sessionName}, do nosso Curso: {courseName}",
     "sessionButtonLabel": "Assistir à sessão completa",
-    "videoTranscriptLink": "Assista ao vídeo ou leia a <link>transcrição</link>.",
-    "conversationTranscriptLink": "Ouça a conversa ou leia a <link>transcrição</link>.",
+    "videoTranscriptLink": "Assista ao vídeo ou leia a <link>transcrição<\/link>.",
+    "conversationTranscriptLink": "Ouça a conversa ou leia a <link>transcrição<\/link>.",
     "relatedContent": {
       "title": "Conteúdo relacionado",
       "resource_short_video": "Assistir",

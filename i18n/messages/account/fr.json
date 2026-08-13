@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Code d'accès",
         "submitLabel": "Appliquer le code",
-        "assignPartnerAccessError": "Une erreur s'est produite lors de l'application du code à votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
+        "assignPartnerAccessError": "Une erreur s'est produite lors de l'application du code à votre compte. Veuillez réessayez plus tard ou <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste.",
         "codeErrors": {
-          "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard ou <contactLink>contactez l'équipe Bloom</contactLink> si le problème persiste.",
+          "internal": "Une erreur s'est produite lors de la validation de votre code d'accès. Veuillez réessayer plus tard ou <contactLink>contactez l'équipe Bloom<\/contactLink> si le problème persiste.",
           "expired": "Ce code n'est plus valable. Veuillez prendre contact avec le partenaire.",
           "invalid": "Votre code d'accès semble être invalide. Vérifiez les erreurs de frappe ou contactez le partenaire.",
           "alreadyInUse": "Ce code a déjà été utilisé. Si vous pensez qu'il y a eu une erreur, contactez le partenaire.",
@@ -75,7 +75,10 @@
           "7": "Je préfère ne pas répondre"
         },
         "submitLabel": "Envoyer",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Veuillez indiquer votre niveau d'accord avec les énoncés suivants :",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "Après avoir modifié votre email, vous devrez vous reconnecter. Voulez-vous continuer?",
         "confirmDialogCancel": "Annuler"
       },
-      "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>",
+      "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.<\/link>",
       "actions": {
         "title": "Actions sur le compte",
         "description": " La suppression de votre compte effacera définitivement votre nom, votre adresse e-mail et l’historique des sessions que vous avez regardées de notre système.",
@@ -131,10 +134,10 @@
       "emailSettings": {
         "title": "Rester informé·es ",
         "description": "Dites-nous si nous pouvons vous envoyer des emails:",
+        "submitLabel": "Enregistrer les préférences d'email",
         "serviceEmailsPermissionLabel": "Concernant vos services ou les modifications apportées à votre compte",
         "contactPermissionLabel": "Lorsqu'un nouveau cours, un nouveau service ou une nouvelle langue est disponible",
-        "submitLabel": "Enregistrer les préférences d'email",
-        "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
+        "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "Rappels par emails",
@@ -147,7 +150,7 @@
         "neverLabel": "Jamais",
         "update": "Vous pouvez mettre à jour ce paramètre à tout moment",
         "submitLabel": "Enregistrer les rappels par e-mail",
-        "updateError": "Une erreur s'est produite lors de la mise à jour de vos paramètres de rappels par e-mail. Veuillez réessayer en actualisant cette page ou en <link>contactant l'équipe Bloom.</link>"
+        "updateError": "Une erreur s'est produite lors de la mise à jour de vos paramètres de rappels par e-mail. Veuillez réessayer en actualisant cette page ou en <link>contactant l'équipe Bloom.<\/link>"
       }
     }
   }

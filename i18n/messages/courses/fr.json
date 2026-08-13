@@ -12,18 +12,18 @@
     "noCourses": "Il n'y a pas de cours disponible pour le moment. Réessayez plus tard ou contactez l'équipe Bloom.",
     "courseDetail": {
       "introductionTitle": "Début du cours",
-      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>"
+      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo<\/transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "Vidéo",
-      "videoDescription": "Regarder la vidéo ou lire la <transcriptLink>transcription de la vidéo</transcriptLink>.",
+      "videoDescription": "Regarder la vidéo ou lire la <transcriptLink>transcription de la vidéo<\/transcriptLink>.",
       "activityTitle": "Activité",
       "bonusTitle": "Contenu bonus ",
       "chat": {
         "title": "Réfléchir avec nous",
         "description": "Vous souhaitez partager votre avis sur cette session ? L'équipe Bloom serait ravie de vous entendre ! ",
         "videoIntro": "Découvrez comment fonctionne la messagerie:",
-        "videoLink": "https://youtu.be/euoYjZFZ7Ow",
+        "videoLink": "https:\/\/youtu.be\/euoYjZFZ7Ow",
         "detailIntro": "Bon à savoir : ",
         "detailPrivacy": "Vos messages sont confidentiels et sécurisés, ils ne sont vus que par l'équipe Bloom et vous restez anonyme.",
         "detailTimezone": "Nous travaillons avec des fuseaux horaires différents. Vous devriez donc recevoir une réponse de notre part dans les 6 heures et pas au-delà 24 heures.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "Le contenu du cours n'est pas disponible",
-      "introduction": "Votre compte Bloom ne comprend pas l'accès au contenu du cours souhaité. Veuillez retournez à votre <contactLink>cours</contactLink>."
+      "introduction": "Votre compte Bloom ne comprend pas l'accès au contenu du cours souhaité. Veuillez retournez à votre <contactLink>cours<\/contactLink>."
     },
     "errors": {
       "completeSessionError": "Une erreur s'est produite lorsque vous avez marqué cette session comme étant complète. Veuillez réessayez plus tard."

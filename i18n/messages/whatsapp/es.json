@@ -8,11 +8,11 @@
       "unsubscribe": "Cancelar suscripción",
       "subscribeErrors": {
         "invalidNumber": "Tu número de teléfono parece ser inválido. Por favor, observa si hay errores e inténtalo de nuevo.",
-        "internal": "Hubo un error al suscribirte a WhatsApp. Intenta de nuevo más tarde y <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si sigues recibiendo el mismo error.",
-        "alreadyExists": "Ya existe una suscripción a WhatsApp para tu usuario. Por favor <contactLink> ponte en contacto con el equipo de Bloom</contactLink> si crees que es un error."
+        "internal": "Hubo un error al suscribirte a WhatsApp. Intenta de nuevo más tarde y <contactLink> ponte en contacto con el equipo de Bloom<\/contactLink> si sigues recibiendo el mismo error.",
+        "alreadyExists": "Ya existe una suscripción a WhatsApp para tu usuario. Por favor <contactLink> ponte en contacto con el equipo de Bloom<\/contactLink> si crees que es un error."
       },
       "unsubscribeErrors": {
-        "internal": "Hubo un error al cancelar la suscripción de WhatsApp. Intenta de nuevo más tarde y <contactLink>ponte en contacto con el equipo de Bloom</contactLink> si sigues recibiendo este error."
+        "internal": "Hubo un error al cancelar la suscripción de WhatsApp. Intenta de nuevo más tarde y <contactLink>ponte en contacto con el equipo de Bloom<\/contactLink> si sigues recibiendo este error."
       }
     },
     "notes": {

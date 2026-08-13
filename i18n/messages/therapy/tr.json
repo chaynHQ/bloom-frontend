@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "Terapi rezervasyonların",
-      "bookingSummary": "<remainingTotal>{remainingTotal}</remainingTotal> terapi seansın kaldı, <upcomingTotal>{upcomingTotal}</upcomingTotal> tanesi planlandı.",
+      "bookingSummary": "<remainingTotal>{remainingTotal}<\/remainingTotal> terapi seansın kaldı, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> tanesi planlandı.",
       "noBookingSummary": "Mevcut tüm terapi seanslarını rezerve ettin.",
       "noBookings": "Şu anda hiç terapi rezervasyonun yok.",
       "cancelAlert": "{id} numaralı rezervasyon için iptal talep edildi. Gerçek iptal mantığını uygula."
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Terapi mevcut değil",
-      "introduction": "Bloom hesabın, terapi seanslarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+      "introduction": "Bloom hesabın, terapi seanslarına erişim içermiyor. Bu doğru görünmüyorsa, <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
     }
   }
 }

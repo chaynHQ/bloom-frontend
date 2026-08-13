@@ -9,15 +9,15 @@
     },
     "leaveSite": {
       "button": "مغادرة هذا الموقع",
-      "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
-      "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
+      "wikiLink": "https:\/\/en.wikipedia.org\/wiki\/Main_Page",
+      "googleLink": "https:\/\/www.google.co.uk\/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
     "navigateBack": "العودة للخلف",
     "navigateTo": "الانتقال إلى",
     "footer": {
       "fundedByTitle": "بتمويل من",
-      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
-      "chaynLine1": "بُني بواسطة <bold>CHAYN</bold> CIO.",
+      "chaynDescription": "يصل إليك Bloom عبر <link>Chayn<\/link>، وهي منظمة غير ربحية عالمية يديرها ناجون وناجيات وحلفاء من حول العالم، تنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
+      "chaynLine1": "بُني بواسطة <bold>CHAYN<\/bold> CIO.",
       "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
       "bumbleLine1": "بالشراكة مع",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -39,7 +39,8 @@
     },
     "videoTranscript": {
       "title": "النص المكتوب للفيديو",
-      "closeModal": "إغلاق النص"
+      "closeModal": "إغلاق النص",
+      "description": ""
     },
     "progressStatus": {
       "started": "بدأت",
@@ -97,8 +98,8 @@
       "articleIcon": "أيقونة مقال",
       "videoIcon": "أيقونة فيديو"
     },
-    "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
-    "survivor": "ناجٍ/ية",
+    "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/OY9Wdk4h",
+    "survivor": "ناجٍ\/ية",
     "cookieConsent": {
       "cookieConsentExplainer": "يُرجى السماح بملفات تعريف الارتباط التحليلية حتى نتمكّن من تحسين Bloom. مزيد من التفاصيل في ",
       "cookieConsentPolicy": "سياسة ملفات تعريف الارتباط",
@@ -158,7 +159,7 @@
       "description": "رسائل مرتين أسبوعيًا تصلك مباشرةً على WhatsApp",
       "buttonText": "الاشتراك"
     },
-    "characterCount": "{current}/{max} حرفًا",
+    "characterCount": "{current}\/{max} حرفًا",
     "scrollToSignUp": {
       "button": "التسجيل مجانًا"
     }

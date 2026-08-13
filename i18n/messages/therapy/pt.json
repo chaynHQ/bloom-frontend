@@ -19,10 +19,9 @@
       "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
       "scriptLoadFailed": "Falha ao carregar o script de agendamento."
     },
-
     "therapyBookings": {
       "header": "Suas reservas de terapia",
-      "bookingSummary": "Você tem <remainingTotal>{remainingTotal}</remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}</upcomingTotal> agendadas.",
+      "bookingSummary": "Você tem <remainingTotal>{remainingTotal}<\/remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> agendadas.",
       "noBookingSummary": "Você não tem mais sessões de terapia restantes.",
       "noBookings": "Você reservou todas as suas sessões de terapia disponíveis.",
       "cancelAlert": "Cancelamento solicitado para o ID da reserva: {id}. Implemente a lógica de cancelamento real."
@@ -36,9 +35,9 @@
       "therapistLabel": "Terapeuta",
       "videoLinkLabel": "Link do vídeo",
       "videoLink": "Participe na chamada a partir do convite do calendário do Google Meet enviado por e-mail.",
-      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
       "noVideoLink": "Nenhum link fornecido",
       "cancelButton": "Cancelar",
+      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
       "expand": "Expandir",
       "collapse": "Recolher",
       "cancelDialog": {
@@ -50,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Terapia não disponível",
-      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team<\/contactLink>."
     }
   }
 }

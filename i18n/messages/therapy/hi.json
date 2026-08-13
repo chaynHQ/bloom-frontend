@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "Aapki therapy bookings",
-      "bookingSummary": "Aapke paas <remainingTotal>{remainingTotal}</remainingTotal> therapy sessions baaki hain, <upcomingTotal>{upcomingTotal}</upcomingTotal> scheduled hain.",
+      "bookingSummary": "Aapke paas <remainingTotal>{remainingTotal}<\/remainingTotal> therapy sessions baaki hain, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> scheduled hain.",
       "noBookingSummary": "Aapke paas koi therapy sessions baaki nahi hain.",
       "noBookings": "Aapne apni sabhi uplabdh therapy sessions book kar li hain.",
       "cancelAlert": "Booking ID ke liye cancellation request ki gayi hai: {id}. Vastavik cancellation logic implement karein."
@@ -35,9 +35,9 @@
       "therapistLabel": "Therapist",
       "videoLinkLabel": "Video link",
       "videoLink": "Email dwara bheje gaye Google Meet calendar aamantran se call mein shaamil hon.",
-      "cancelError": "Booking radd karne mein truti - kripya punah prayaas karein ya team se sampark karein.",
       "noVideoLink": "Koi link nahi diya gaya hai",
       "cancelButton": "Cancel karein",
+      "cancelError": "Booking radd karne mein truti - kripya punah prayaas karein ya team se sampark karein.",
       "expand": "Expand karein",
       "collapse": "Collapse karein",
       "cancelDialog": {
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Therapy uplabdh nahi hai",
-      "introduction": "Apke Bloom account mein therapy sessions ki access shamil nahi hai. Yadi yeh theek nahi lag raha toh <contactLink>Bloom ki team ko message kariye</contactLink>."
+      "introduction": "Apke Bloom account mein therapy sessions ki access shamil nahi hai. Yadi yeh theek nahi lag raha toh <contactLink>Bloom ki team ko message kariye<\/contactLink>."
     }
   }
 }

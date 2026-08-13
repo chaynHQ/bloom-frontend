@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Zugangscode",
         "submitLabel": "Code anwenden",
-        "assignPartnerAccessError": "Es ist ein Fehler bei der Eingabe des Zugangscodes in Deinem Konto aufgetreten. Versuch es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
+        "assignPartnerAccessError": "Es ist ein Fehler bei der Eingabe des Zugangscodes in Deinem Konto aufgetreten. Versuch es später nochmal und <contactLink>benachrichtige das Bloom-Team<\/contactLink>, falls dieser Fehler weiterhin auftritt.",
         "codeErrors": {
-          "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
+          "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team<\/contactLink>, falls dieser Fehler weiterhin auftritt.",
           "expired": "Dieser Code ist abgelaufen. Kontaktiere bitte das Team der Partnerorganisation. ",
           "invalid": "Dein Zugangscode scheint ungültig zu sein. Überprüfe auf Tippfehler oder setz Dich mit der Partnerorganisation in Verbindung. ",
           "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. ",
@@ -75,7 +75,10 @@
           "7": "Lieber nicht sagen"
         },
         "submitLabel": "Absenden",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Bitte bewerte, inwieweit Du folgenden Aussagen zustimmst:",
@@ -98,8 +101,8 @@
     },
     "disableServiceEmails": {
       "title": "Bloom-E-Mails deaktiviert",
-      "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.</link>",
-      "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.</link>"
+      "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.<\/link>",
+      "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.<\/link>"
     },
     "accountSettings": {
       "title": "Kontoeinstellungen",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
         "confirmDialogCancel": "Stornieren"
       },
-      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
+      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.<\/link>",
       "actions": {
         "title": "Kontoaktionen",
         "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
@@ -123,18 +126,18 @@
           "resetPassword": "Passwort zurücksetzen",
           "deleteAccount": "Konto löschen"
         },
-        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
         "confirmDialogCancel": "Stornieren",
+        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
         "deleteAccountConfirmDialogTitle": "Bitte bestätigen Sie, dass Sie Ihr Konto löschen möchten",
         "deleteAccountConfirmDialogDescription": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht."
       },
       "emailSettings": {
         "title": "E-Mail-Einstellungen",
         "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
+        "submitLabel": "E-Mail-Einstellungen speichern",
         "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
         "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
-        "submitLabel": "E-Mail-Einstellungen speichern",
-        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
+        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "E-Mail-Erinnerungen",
@@ -147,7 +150,7 @@
         "neverLabel": "Nie",
         "update": "Sie können diese Einstellung jederzeit aktualisieren",
         "submitLabel": "E-Mail-Erinnerungen speichern",
-        "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.</link>"
+        "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.<\/link>"
       }
     }
   }

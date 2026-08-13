@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "Vos réservations de thérapie",
-      "bookingSummary": "Il vous reste <remainingTotal>{remainingTotal}</remainingTotal> séances de thérapie, <upcomingTotal>{upcomingTotal}</upcomingTotal> sont programmées.",
+      "bookingSummary": "Il vous reste <remainingTotal>{remainingTotal}<\/remainingTotal> séances de thérapie, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> sont programmées.",
       "noBookingSummary": "Vous avez réservé toutes vos séances de thérapie disponibles.",
       "noBookings": "Vous n'avez aucune réservation de thérapie pour le moment.",
       "cancelAlert": "Annulation demandée pour la réservation ID : {id}. Implémentez la logique d'annulation réelle."
@@ -35,9 +35,9 @@
       "therapistLabel": "Thérapeute",
       "videoLinkLabel": "Lien vidéo",
       "videoLink": "Rejoignez l'appel à partir de l'invitation de l'agenda Google Meet envoyée par e-mail.",
-      "cancelError": "Erreur lors de l'annulation de la réservation. Veuillez réessayer ou contacter l'équipe.",
       "noVideoLink": "Aucun lien fourni",
       "cancelButton": "Annuler",
+      "cancelError": "Erreur lors de l'annulation de la réservation. Veuillez réessayer ou contacter l'équipe.",
       "expand": "Développer",
       "collapse": "Réduire",
       "cancelDialog": {
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "Thérapie indisponible",
-      "introduction": "Votre compte Bloom ne comprend pas l'accès aux sessions de thérapie. Pour y remédier, <contactLink>contactez l'équipe Bloom</contactLink>."
+      "introduction": "Votre compte Bloom ne comprend pas l'accès aux sessions de thérapie. Pour y remédier, <contactLink>contactez l'équipe Bloom<\/contactLink>."
     }
   }
 }

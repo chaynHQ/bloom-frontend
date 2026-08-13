@@ -18,9 +18,9 @@
       "form": {
         "codeLabel": "Erişim kodu",
         "submitLabel": "Kodu uygula",
-        "assignPartnerAccessError": "Kod hesabına uygulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+        "assignPartnerAccessError": "Kod hesabına uygulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
         "codeErrors": {
-          "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+          "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
           "expired": "Bu kodun süresi doldu. İş ortağının ekibiyle iletişime geç.",
           "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya iş ortağıyla iletişime geç.",
           "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan iş ortağının ekibiyle iletişime geç.",
@@ -75,7 +75,10 @@
           "7": "Söylememeyi tercih ederim"
         },
         "submitLabel": "Gönder",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Lütfen aşağıdaki ifadelere ne ölçüde katıldığını derecelendir:",
@@ -98,8 +101,8 @@
     },
     "disableServiceEmails": {
       "title": "Bloom e-postaları kapatıldı",
-      "description": "Artık Bloom ile ilgili e-postalar almayacaksın. Bunu daha sonra değiştirmek istersen, lütfen <link>Bloom ekibiyle</link> iletişime geç",
-      "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+      "description": "Artık Bloom ile ilgili e-postalar almayacaksın. Bunu daha sonra değiştirmek istersen, lütfen <link>Bloom ekibiyle<\/link> iletişime geç",
+      "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
     },
     "accountSettings": {
       "title": "Hesap Ayarları",
@@ -115,7 +118,7 @@
         "confirmDialogTitle": "E-postanı değiştirdiğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
         "confirmDialogCancel": "İptal"
       },
-      "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>",
+      "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>",
       "actions": {
         "title": "Hesap işlemleri",
         "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin seansların geçmişini sistemimizden kalıcı olarak siler.",
@@ -134,7 +137,7 @@
         "submitLabel": "E-posta tercihlerini kaydet",
         "serviceEmailsPermissionLabel": "Hizmetlerin veya hesabındaki değişiklikler hakkında",
         "contactPermissionLabel": "Yeni bir kurs, hizmet veya dil mevcut olduğunda",
-        "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+        "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
       },
       "emailRemindersSettings": {
         "title": "E-posta hatırlatıcıları",
@@ -147,7 +150,7 @@
         "neverLabel": "Asla",
         "update": "Bu ayarı istediğin zaman güncelleyebilirsin",
         "submitLabel": "E-posta hatırlatıcılarını kaydet",
-        "updateError": "E-posta hatırlatıcı ayarların güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
+        "updateError": "E-posta hatırlatıcı ayarların güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.<\/link>"
       }
     }
   }

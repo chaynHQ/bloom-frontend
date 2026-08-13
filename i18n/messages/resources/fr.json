@@ -13,8 +13,8 @@
     "completed": "Terminé",
     "sessionDetail": "Cet extrait est de la Session : {sessionName}, de notre Cours : {courseName}",
     "sessionButtonLabel": "Regarder la session complète",
-    "videoTranscriptLink": "Regardez la vidéo ou lisez la <link>transcription</link>.",
-    "conversationTranscriptLink": "Écoutez la conversation ou lisez la <link>transcription</link>.",
+    "videoTranscriptLink": "Regardez la vidéo ou lisez la <link>transcription<\/link>.",
+    "conversationTranscriptLink": "Écoutez la conversation ou lisez la <link>transcription<\/link>.",
     "relatedContent": {
       "title": "Contenu associé",
       "resource_short_video": "Regarder",

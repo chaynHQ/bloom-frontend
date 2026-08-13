@@ -12,18 +12,18 @@
     "noCourses": "لا توجد دورات لعرضها في الوقت الحالي. إذا بدا هذا غير صحيح، يُرجى المحاولة لاحقًا أو التواصل مع فريق Bloom.",
     "courseDetail": {
       "introductionTitle": "مقدّمة الدورة",
-      "introductionDescription": "يمكنك مشاهدة فيديو المقدّمة أو قراءة <transcriptLink>النص المكتوب للفيديو</transcriptLink>"
+      "introductionDescription": "يمكنك مشاهدة فيديو المقدّمة أو قراءة <transcriptLink>النص المكتوب للفيديو<\/transcriptLink>"
     },
     "sessionDetail": {
       "videoTitle": "فيديو",
-      "videoDescription": "يمكنك مشاهدة الفيديو أو قراءة <transcriptLink>النص المكتوب للفيديو</transcriptLink>.",
+      "videoDescription": "يمكنك مشاهدة الفيديو أو قراءة <transcriptLink>النص المكتوب للفيديو<\/transcriptLink>.",
       "activityTitle": "نشاط",
       "bonusTitle": "محتوى إضافي",
       "chat": {
         "title": "تأمّل معنا",
         "description": "إذا رغبت في مشاركة تأمّلاتك حول هذه الجلسة، فإن فريق Bloom يسعده أن يسمع منك! ",
         "videoIntro": "مزيد من المعلومات حول كيفية عمل المراسلة:",
-        "videoLink": "https://youtu.be/p7i39Z0XQ54",
+        "videoLink": "https:\/\/youtu.be\/p7i39Z0XQ54",
         "detailIntro": "للتذكير:",
         "detailPrivacy": "رسائلك خاصة وآمنة، ولا يطّلع عليها سوى فريق Bloom، وتبقى هويتك مجهولة.",
         "detailTimezone": "نعمل عبر مناطق زمنية مختلفة كثيرة، لذا من المفترض أن يصلك ردّ منا خلال 6 ساعات، ولن يتجاوز ذلك 24 ساعة.",
@@ -54,7 +54,7 @@
     },
     "accessGuard": {
       "title": "محتوى الدورة غير متاح",
-      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى محتوى الدورة المطلوب. يمكنك العودة إلى <contactLink>دوراتك</contactLink>."
+      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى محتوى الدورة المطلوب. يمكنك العودة إلى <contactLink>دوراتك<\/contactLink>."
     },
     "errors": {
       "completeSessionError": "حدث خطأ أثناء وضع علامة اكتمال على هذه الجلسة. يُرجى المحاولة بعد قليل."

@@ -6,8 +6,8 @@
     "steps": {
       "step1": "يمكنك الاختيار من بين معالِجات ومعالِجين اخترناهم بعناية ويتحدّثون عدّة لغات.",
       "step2": "يمكنك اختيار التاريخ والوقت المناسبين لك. جميع الجلسات تُعقد عبر الإنترنت.",
-      "step3": "إذا غيّرت رأيك، يمكنك إيقاف الجلسات أو تغيير المعالِج/ة في أي وقت.",
-      "step4": "يبقى كل ما تتم مشاركته سرّيًا تمامًا، بينك وبين المعالِج/ة."
+      "step3": "إذا غيّرت رأيك، يمكنك إيقاف الجلسات أو تغيير المعالِج\/ة في أي وقت.",
+      "step4": "يبقى كل ما تتم مشاركته سرّيًا تمامًا، بينك وبين المعالِج\/ة."
     },
     "closeBookingWidget": "إغلاق أداة الحجز",
     "modalTitle": "حجز جلسة علاج نفسي",
@@ -21,7 +21,7 @@
     },
     "therapyBookings": {
       "header": "حجوزاتك للعلاج النفسي",
-      "bookingSummary": "لديك <remainingTotal>{remainingTotal}</remainingTotal> جلسات علاج نفسي متبقّية، و<upcomingTotal>{upcomingTotal}</upcomingTotal> مجدولة.",
+      "bookingSummary": "لديك <remainingTotal>{remainingTotal}<\/remainingTotal> جلسات علاج نفسي متبقّية، و<upcomingTotal>{upcomingTotal}<\/upcomingTotal> مجدولة.",
       "noBookingSummary": "لقد حجزت جميع جلسات العلاج النفسي المتاحة لك.",
       "noBookings": "ليس لديك أي حجوزات علاج نفسي في الوقت الحالي.",
       "cancelAlert": "تم طلب إلغاء الحجز رقم: {id}. تنفيذ منطق الإلغاء الفعلي."
@@ -32,7 +32,7 @@
       "cancelledSessionTitle": "جلسة ملغاة",
       "dateLabel": "التاريخ",
       "timeLabel": "الوقت",
-      "therapistLabel": "المعالِج/ة",
+      "therapistLabel": "المعالِج\/ة",
       "videoLinkLabel": "رابط الفيديو",
       "videoLink": "يمكنك الانضمام إلى المكالمة من دعوة تقويم Google Meet المُرسَلة عبر البريد الإلكتروني",
       "noVideoLink": "لم يتم توفير رابط",
@@ -49,7 +49,7 @@
     },
     "accessGuard": {
       "title": "العلاج النفسي غير متاح",
-      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى جلسات العلاج النفسي. إذا بدا هذا غير صحيح، يمكنك <contactLink>مراسلة فريق Bloom</contactLink>."
+      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى جلسات العلاج النفسي. إذا بدا هذا غير صحيح، يمكنك <contactLink>مراسلة فريق Bloom<\/contactLink>."
     }
   }
 }

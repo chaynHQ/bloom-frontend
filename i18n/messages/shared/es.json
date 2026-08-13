@@ -9,15 +9,15 @@
     },
     "leaveSite": {
       "button": "Salir de este sitio",
-      "wikiLink": "https://es.wikipedia.org/wiki/Main_Page",
-      "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIL3o0kdGZtpYuWmPJsdgViGguqIqQ:1715343769392&q=lindos+memes+de+animales+beb%C3%A9s&uds=ADvngMiZcBNsMUvkBJ71fvRLrjNSDfHatRp71ALRK88DdPn_U5cJfmQy0nQsEWPbgqovuuacPqaXDpAskRBpixfYX6iW7pxh7UKmo8P_5qdqeEp6lEiE-IwawftPppZcg-CprRgc_b6LVrZrXbMALYl9IWOeBKcbgImK7cQarhDvSdG1ka-WgR-plQTy7Ki1VTkYDKWs51ptDCX3ZkWjnfaO8TQi-bJMPi9j-1KjpFsf7ZbEXlGKQCW8As1Pou09vsHaDlXygxPou7aUpdouBoCcf5ugTO9ovaRgzgA3k2WbH3kREX6X-l4kQb0gQd8lEv7_lI-FduyhL91QYgrvaEwGhpF-27IuNQ&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwjKwarAiYOGAxWZUGwGHbQkCEYQtKgLegQICBAB&biw=1277&bih=659&dpr=1.5"
+      "wikiLink": "https:\/\/es.wikipedia.org\/wiki\/Main_Page",
+      "googleLink": "https:\/\/www.google.com\/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIL3o0kdGZtpYuWmPJsdgViGguqIqQ:1715343769392&q=lindos+memes+de+animales+beb%C3%A9s&uds=ADvngMiZcBNsMUvkBJ71fvRLrjNSDfHatRp71ALRK88DdPn_U5cJfmQy0nQsEWPbgqovuuacPqaXDpAskRBpixfYX6iW7pxh7UKmo8P_5qdqeEp6lEiE-IwawftPppZcg-CprRgc_b6LVrZrXbMALYl9IWOeBKcbgImK7cQarhDvSdG1ka-WgR-plQTy7Ki1VTkYDKWs51ptDCX3ZkWjnfaO8TQi-bJMPi9j-1KjpFsf7ZbEXlGKQCW8As1Pou09vsHaDlXygxPou7aUpdouBoCcf5ugTO9ovaRgzgA3k2WbH3kREX6X-l4kQb0gQd8lEv7_lI-FduyhL91QYgrvaEwGhpF-27IuNQ&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwjKwarAiYOGAxWZUGwGHbQkCEYQtKgLegQICBAB&biw=1277&bih=659&dpr=1.5"
     },
     "navigateBack": "Volver a la página anterior",
     "navigateTo": "Navegar a",
     "footer": {
       "fundedByTitle": "Financiado por",
-      "chaynDescription": "Bloom es traído por <link>Chayn</link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
-      "chaynLine1": "Construído por <bold>CHAYN</bold> CIO.",
+      "chaynDescription": "Bloom es traído por <link>Chayn<\/link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
+      "chaynLine1": "Construído por <bold>CHAYN<\/bold> CIO.",
       "chaynLine2": "Número de Caridad del RU: 1196098",
       "bumbleLine1": "En asociación con",
       "bumbleLine2": "BUMBLE HOLDING LTD",
@@ -39,8 +39,8 @@
     },
     "videoTranscript": {
       "title": "Transcripción del video",
-      "description": "Lee la transcripción del video -",
-      "closeModal": "Cerrar transcripción"
+      "closeModal": "Cerrar transcripción",
+      "description": "Lee la transcripción del video -"
     },
     "progressStatus": {
       "started": "Empezado",
@@ -88,6 +88,7 @@
       "chooseTherapist": "Ilustración de una persona de perfil, con una flor",
       "dateSelector": "Ilustración de un calendario con un corazón en el centro",
       "change": "Ilustración de un ciclo - tres soles en un círculo con flechas entre ellos",
+      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
       "confidential": "Ilustración de un documento con un candado en una esquina",
       "cookieCat": "Ilustración de un gato descansando con una galleta",
       "fruitzLogo": "Logo de Fruitz",
@@ -97,7 +98,7 @@
       "articleIcon": "Icono de artículo",
       "videoIcon": "Icono de vídeo"
     },
-    "feedbackTypeform": "https://chayn.typeform.com/to/smGSjlCo",
+    "feedbackTypeform": "https:\/\/chayn.typeform.com\/to\/smGSjlCo",
     "survivor": "Sobreviviente",
     "cookieConsent": {
       "cookieConsentExplainer": "Please allow analytics cookies so we can improve Bloom. Read more in our ",
@@ -158,7 +159,7 @@
       "description": "Recibe mensajes dos veces por semana directamente en tu WhatsApp",
       "buttonText": "Suscríbete"
     },
-    "characterCount": "{current}/{max} caracteres",
+    "characterCount": "{current}\/{max} caracteres",
     "scrollToSignUp": {
       "button": "Regístrate gratis"
     }

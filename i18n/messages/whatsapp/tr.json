@@ -8,11 +8,11 @@
       "unsubscribe": "Aboneliği iptal et",
       "subscribeErrors": {
         "invalidNumber": "Telefon numaran geçersiz görünüyor. Lütfen hataları düzelt ve tekrar dene.",
-        "internal": "WhatsApp'a abone olurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
-        "alreadyExists": "Numaran için zaten bir WhatsApp aboneliği var. Bunun bir hata olduğunu düşünüyorsan lütfen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+        "internal": "WhatsApp'a abone olurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>.",
+        "alreadyExists": "Numaran için zaten bir WhatsApp aboneliği var. Bunun bir hata olduğunu düşünüyorsan lütfen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
       },
       "unsubscribeErrors": {
-        "internal": "WhatsApp aboneliğini iptal ederken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+        "internal": "WhatsApp aboneliğini iptal ederken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder<\/contactLink>."
       }
     },
     "notes": {
