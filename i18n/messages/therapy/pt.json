@@ -1,56 +1,55 @@
 {
-  "Therapy": {
-    "title": "Agende uma sessão de terapia",
-    "bookingButton": "Comece a agendar",
-    "bookingSectionTitle": "Como funciona o agendamento",
-    "steps": {
-      "step1": "Escolha entre as opções disponíveis de terapeutas multilíngues, que passaram por uma cuidadosa seleção.",
-      "step2": "Escolha a data e hora que melhor funcionar para você. Todas as sessões são virtuais.",
-      "step3": "Se você mudar de ideia, poderá suspender as sessões ou trocar de profissional a qualquer momento. ",
-      "step4": "Tudo o que você compartilhar, permanecerá estritamente confidencial entre você a pessoa que te acompanha como terapeuta."
-    },
-    "closeBookingWidget": "Fechar widget de agendamento",
-    "modalTitle": "Agendar terapia",
-    "modalDescription": "Widget SimplyBook.me para agendar sua sessão de terapia.",
-    "error": {
-      "initializingWidget": "Erro ao inicializar o widget de agendamento.",
-      "initializingWidgetRetry": "Erro ao inicializar o widget de agendamento na nova tentativa.",
-      "containerNotFoundRetry": "Não foi possível carregar o widget de agendamento.",
-      "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
-      "scriptLoadFailed": "Falha ao carregar o script de agendamento."
-    },
-
-    "therapyBookings": {
-      "header": "Suas reservas de terapia",
-      "bookingSummary": "Você tem <remainingTotal>{remainingTotal}</remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}</upcomingTotal> agendadas.",
-      "noBookingSummary": "Você não tem mais sessões de terapia restantes.",
-      "noBookings": "Você reservou todas as suas sessões de terapia disponíveis.",
-      "cancelAlert": "Cancelamento solicitado para o ID da reserva: {id}. Implemente a lógica de cancelamento real."
-    },
-    "bookingItem": {
-      "upcomingSessionTitle": "Próxima sessão de terapia",
-      "pastSessionTitle": "Sessão de terapia anterior",
-      "cancelledSessionTitle": "Sessão cancelada",
-      "dateLabel": "Data",
-      "timeLabel": "Hora",
-      "therapistLabel": "Terapeuta",
-      "videoLinkLabel": "Link do vídeo",
-      "videoLink": "Participe na chamada a partir do convite do calendário do Google Meet enviado por e-mail.",
-      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
-      "noVideoLink": "Nenhum link fornecido",
-      "cancelButton": "Cancelar",
-      "expand": "Expandir",
-      "collapse": "Recolher",
-      "cancelDialog": {
-        "title": "Confirmar Cancelamento",
-        "description": "Tem certeza de que deseja cancelar sua sessão de terapia agendada para {dateTime}? Você pode agendar uma nova consulta em um horário que lhe seja conveniente.",
-        "keepButton": "Manter Sessão",
-        "confirmButton": "Cancelar Sessão"
-      }
-    },
-    "accessGuard": {
-      "title": "Terapia não disponível",
-      "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team</contactLink>."
+    "Therapy": {
+        "title": "Agende uma sessão de terapia",
+        "bookingButton": "Comece a agendar",
+        "bookingSectionTitle": "Como funciona o agendamento",
+        "steps": {
+            "step1": "Escolha entre as opções disponíveis de terapeutas multilíngues, que passaram por uma cuidadosa seleção.",
+            "step2": "Escolha a data e hora que melhor funcionar para você. Todas as sessões são virtuais.",
+            "step3": "Se você mudar de ideia, poderá suspender as sessões ou trocar de profissional a qualquer momento. ",
+            "step4": "Tudo o que você compartilhar, permanecerá estritamente confidencial entre você a pessoa que te acompanha como terapeuta."
+        },
+        "closeBookingWidget": "Fechar widget de agendamento",
+        "modalTitle": "Agendar terapia",
+        "modalDescription": "Widget SimplyBook.me para agendar sua sessão de terapia.",
+        "error": {
+            "initializingWidget": "Erro ao inicializar o widget de agendamento.",
+            "initializingWidgetRetry": "Erro ao inicializar o widget de agendamento na nova tentativa.",
+            "containerNotFoundRetry": "Não foi possível carregar o widget de agendamento.",
+            "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
+            "scriptLoadFailed": "Falha ao carregar o script de agendamento."
+        },
+        "therapyBookings": {
+            "header": "Suas reservas de terapia",
+            "bookingSummary": "Você tem <remainingTotal>{remainingTotal}<\/remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> agendadas.",
+            "noBookingSummary": "Você não tem mais sessões de terapia restantes.",
+            "noBookings": "Você reservou todas as suas sessões de terapia disponíveis.",
+            "cancelAlert": "Cancelamento solicitado para o ID da reserva: {id}. Implemente a lógica de cancelamento real."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Próxima sessão de terapia",
+            "pastSessionTitle": "Sessão de terapia anterior",
+            "cancelledSessionTitle": "Sessão cancelada",
+            "dateLabel": "Data",
+            "timeLabel": "Hora",
+            "therapistLabel": "Terapeuta",
+            "videoLinkLabel": "Link do vídeo",
+            "videoLink": "Participe na chamada a partir do convite do calendário do Google Meet enviado por e-mail.",
+            "noVideoLink": "Nenhum link fornecido",
+            "cancelButton": "Cancelar",
+            "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
+            "expand": "Expandir",
+            "collapse": "Recolher",
+            "cancelDialog": {
+                "title": "Confirmar Cancelamento",
+                "description": "Tem certeza de que deseja cancelar sua sessão de terapia agendada para {dateTime}? Você pode agendar uma nova consulta em um horário que lhe seja conveniente.",
+                "keepButton": "Manter Sessão",
+                "confirmButton": "Cancelar Sessão"
+            }
+        },
+        "accessGuard": {
+            "title": "Terapia não disponível",
+            "introduction": "Your Bloom account does not include access to therapy sessions. If this doesn't seem right, <contactLink>message the Bloom team<\/contactLink>."
+        }
     }
-  }
 }

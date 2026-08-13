@@ -1,154 +1,157 @@
 {
-  "Account": {
-    "applyCode": {
-      "title": "Einen Code anwenden",
-      "introduction": "Bloom arbeitet mit Partnerorganisationen zusammen, um Überlebende auf der ganzen Welt bei der Heilung zu unterstützen.",
-      "description": "Wenn Du einen Zugangscode von eine unserer Partnerorganisationen bekommen hast, kannst Du ihn hier angeben, um spezifische Unterstützung für deren Programm zu erhalten. ",
-      "descriptionLine2": "Du kannst Zugangscodes von mehr als einer Partnerorganisation angeben.",
-      "partnershipsTitle": "Unsere Partnerorganisationen",
-      "partnershipsDescription": "Erfahre mehr über unsere Partnerschaften, indem du auf das Logo der jeweiligen Organisation klickst.",
-      "formIntroduction": "Gib den Zugangscode an, den Du von einer Partnerorganisation von Bloom erhalten hast. ",
-      "formSuccess": {
-        "success": "Ein Bumble-Code wurde auf Dein Konto angewendet!",
-        "successLine2": "Dein Bumble-Zugang ermöglicht Folgendes:",
-        "liveChat": "Messaging mit dem Bloom-Team",
-        "therapy": "{therapySessionsRemaining} Therapie Sitzungen",
-        "courses": "Selbstgeführte Kurse"
-      },
-      "form": {
-        "codeLabel": "Zugangscode",
-        "submitLabel": "Code anwenden",
-        "assignPartnerAccessError": "Es ist ein Fehler bei der Eingabe des Zugangscodes in Deinem Konto aufgetreten. Versuch es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
-        "codeErrors": {
-          "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team</contactLink>, falls dieser Fehler weiterhin auftritt.",
-          "expired": "Dieser Code ist abgelaufen. Kontaktiere bitte das Team der Partnerorganisation. ",
-          "invalid": "Dein Zugangscode scheint ungültig zu sein. Überprüfe auf Tippfehler oder setz Dich mit der Partnerorganisation in Verbindung. ",
-          "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. ",
-          "alreadyApplied": "Dieser Code wurde bereits auf Ihr Konto angewendet."
+    "Account": {
+        "applyCode": {
+            "title": "Einen Code anwenden",
+            "introduction": "Bloom arbeitet mit Partnerorganisationen zusammen, um Überlebende auf der ganzen Welt bei der Heilung zu unterstützen.",
+            "description": "Wenn Du einen Zugangscode von eine unserer Partnerorganisationen bekommen hast, kannst Du ihn hier angeben, um spezifische Unterstützung für deren Programm zu erhalten. ",
+            "descriptionLine2": "Du kannst Zugangscodes von mehr als einer Partnerorganisation angeben.",
+            "partnershipsTitle": "Unsere Partnerorganisationen",
+            "partnershipsDescription": "Erfahre mehr über unsere Partnerschaften, indem du auf das Logo der jeweiligen Organisation klickst.",
+            "formIntroduction": "Gib den Zugangscode an, den Du von einer Partnerorganisation von Bloom erhalten hast. ",
+            "formSuccess": {
+                "success": "Ein Bumble-Code wurde auf Dein Konto angewendet!",
+                "successLine2": "Dein Bumble-Zugang ermöglicht Folgendes:",
+                "liveChat": "Messaging mit dem Bloom-Team",
+                "therapy": "{therapySessionsRemaining} Therapie Sitzungen",
+                "courses": "Selbstgeführte Kurse"
+            },
+            "form": {
+                "codeLabel": "Zugangscode",
+                "submitLabel": "Code anwenden",
+                "assignPartnerAccessError": "Es ist ein Fehler bei der Eingabe des Zugangscodes in Deinem Konto aufgetreten. Versuch es später nochmal und <contactLink>benachrichtige das Bloom-Team<\/contactLink>, falls dieser Fehler weiterhin auftritt.",
+                "codeErrors": {
+                    "internal": "Es ist ein Fehler bei der Validierung Deines Zugangscodes aufgetreten. Versuche es später nochmal und <contactLink>benachrichtige das Bloom-Team<\/contactLink>, falls dieser Fehler weiterhin auftritt.",
+                    "expired": "Dieser Code ist abgelaufen. Kontaktiere bitte das Team der Partnerorganisation. ",
+                    "invalid": "Dein Zugangscode scheint ungültig zu sein. Überprüfe auf Tippfehler oder setz Dich mit der Partnerorganisation in Verbindung. ",
+                    "alreadyInUse": "Dieser Code ist bereits verwendet worden. Wenn Du glaubst, dass ein Fehler vorliegt, kontaktiere bitte das Team der Partnerorganisation. ",
+                    "alreadyApplied": "Dieser Code wurde bereits auf Ihr Konto angewendet."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "Über Dich",
+            "header": "Hilf uns, zu verstehen",
+            "description": "Diese Fragen helfen uns zu verstehen, wer Bloom nutzt, und welche Art von Unterstützung sie von uns brauchen. ",
+            "titleA": "Was Du von Bloom erwartest",
+            "descriptionALine1": "Vielen Dank für Deine bisherigen Antworten!",
+            "descriptionALine2": "Von Dir als neue:r Nutzer:in möchten wir gerne wissen, wie es Dir geht, bevor du unser Angebot nutzt. Das hilft uns dabei, die Wirksamkeit von Bloom für Überlebende besser zu verstehen, damit wir uns auf die richtigen Aspekte fokussieren können. ",
+            "goToCourses": "Zu den Kursen springen",
+            "demographicForm": {
+                "genderLabel": "Bitte wähle die Kategorie(n) aus, die deine Geschlechtsidentität widerspiegelt oder widerspiegeln. Du kannst auch mehrere Antworten auswählen.",
+                "genderHelpText": "Wir fragen das, um besser zu verstehen, wie sich Nutzer*innen geschlechtlich identifizieren, mit dem Ziel Angebote anzubieten, die inklusiver sind und Nutzer*innen mehr in ihrem Geschlecht bekräftigen. Du kannst auch „Das möchte ich nicht sagen” als Antwort auswählen.",
+                "genderOptions": {
+                    "woman": "Frau",
+                    "man": "Mann",
+                    "nonBinary": "Nicht-binär",
+                    "transgender": "Transgender",
+                    "intersex": "Intersex",
+                    "twoSpirit": "Two-spirit",
+                    "genderNonConforming": "Geschlechtlich non-konform",
+                    "other": "Anderes (bitte gib hier den Namen an)",
+                    "preferNotToAnswer": "Das möchte ich nicht sagen"
+                },
+                "neurodivergentLabel": "Hast du einen Neurotyp, der die Art und Weise beeinflusst, wie dein Gehirn Informationen verarbeitet? Das kann eine Lernschwierigkeit (z. B. Legasthenie, Dyspraxie, Dyskalkulie), ADHS, eine Lernbehinderung oder Autismus sein.",
+                "neurodivergentHelpText": "Wir tun unser Bestes, um unsere Dienste inklusive zu gestalten, daher ist es hilfreich für uns das zu wissen .",
+                "neurodivergentLabels": {
+                    "1": "Ja",
+                    "2": "Nein",
+                    "3": "Nicht sicher",
+                    "4": "Sag es lieber nicht"
+                },
+                "raceEthnNatnLabel": "Wie würdest du deine ethnische Zugehörigkeit und Nationalität beschreiben? Z.B. Weiß lateinamerikanisch und aus Mexiko oder Tamil aus Indien. ",
+                "raceEthnNatnHelpText": "Wir wissen, dass die Erfahrungen von Menschen bezüglich Rassifizierung und Ethnizität sehr unterschiedlich sein können, je nachdem, wo sie leben. Schreibe, was auf Dich persönlich am Besten zutrifft. ",
+                "countryLabel": "In welchem Land lebst Du zur Zeit?",
+                "countryHelpText": "Dies hilft uns zu verstehen, von wo aus Überlebende unser Angebot nutzen",
+                "ageLabel": "Was ist Deine Altersgruppe?",
+                "ageHelpText": "Wählen Sie Ihre Altersgruppe aus.",
+                "selectPlaceholder": "Bitte wählen Sie eine Option aus.",
+                "ageLabels": {
+                    "1": "Unter 18",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "Lieber nicht sagen"
+                },
+                "submitLabel": "Absenden",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "Bitte bewerte, inwieweit Du folgenden Aussagen zustimmst:",
+                "scaleDescriptionLine2": "1 = stimme überhaupt nicht zu, 10 = stimme voll und ganz zu",
+                "scaleLabels": {
+                    "Q1": "Ich verstehe, inwiefern das Trauma, das ich erlebt habe, meine Psyche, meinen Körper und meine Emotionen beeinflusst hat",
+                    "Q2": "Ich weiß, dass es Bewältigungsstrategien gibt, die mir langfristig nicht helfen, und dass es eine normale Reaktion auf ein Trauma sein kann, sich zu diesen hingezogen zu fühlen",
+                    "Q3": "Ich weiß, dass es Zeit, Energie und Geduld braucht, um zu heilen",
+                    "Q4": "Ich bin entschlossen, mir selbst die Aufmerksamkeit zu schenken, die ich zum Heilen brauche",
+                    "Q5": "Ich habe Dinge gefunden, die mir ein gutes Gefühl geben, und nehme mir Zeit dafür in meinem Tagesablauf",
+                    "Q6": "Ich verstehe, dass zur Heilung eines Traumas auch der Umgang mit Triggern gehört",
+                    "Q7": "Ich verstehe, dass es individuell ist, was mir ein sicheres oder bedrohliches Gefühl gibt",
+                    "Q8": "Ich kann triggernde Momente, Orte oder Zeitpunkte im Jahr vorhersehen und damit umgehen"
+                },
+                "submitLabel": "Vollständig"
+            },
+            "setAForm": {
+                "hopesLabel": "Was ist eine Sache, die du hoffst, durch Bloom verstehen oder tun zu können?"
+            }
+        },
+        "disableServiceEmails": {
+            "title": "Bloom-E-Mails deaktiviert",
+            "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.<\/link>",
+            "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.<\/link>"
+        },
+        "accountSettings": {
+            "title": "Kontoeinstellungen",
+            "description": "Einstellungen in Bloom anzeigen und aktualisieren",
+            "imageAlt": "Abbildung eines Mobiltelefons mit einer Nachricht, die ein Herz enthält",
+            "profileSettings": {
+                "title": "Profildetails",
+                "description": "Aktualisieren Sie hier Ihren Namen und Ihre E-Mail-Adresse. Dies sind die einzigen persönlichen Informationen, die in Ihrem Profil gespeichert werden.",
+                "nameLabel": "Name",
+                "emailLabel": "E-Mail",
+                "submitLabel": "Profil speichern",
+                "emailAlreadyInUseError": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet. Bitte versuchen Sie es erneut",
+                "confirmDialogTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
+                "confirmDialogCancel": "Stornieren"
+            },
+            "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.<\/link>",
+            "actions": {
+                "title": "Kontoaktionen",
+                "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
+                "button": {
+                    "resetPassword": "Passwort zurücksetzen",
+                    "deleteAccount": "Konto löschen"
+                },
+                "confirmDialogCancel": "Stornieren",
+                "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
+                "deleteAccountConfirmDialogTitle": "Bitte bestätigen Sie, dass Sie Ihr Konto löschen möchten",
+                "deleteAccountConfirmDialogDescription": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht."
+            },
+            "emailSettings": {
+                "title": "E-Mail-Einstellungen",
+                "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
+                "submitLabel": "E-Mail-Einstellungen speichern",
+                "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
+                "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
+                "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "E-Mail-Erinnerungen",
+                "introduction": "Die Verarbeitung von Traumata kann schwierig sein, besonders wenn man es alleine macht.",
+                "description": "Wir können Ihnen helfen, auf Ihrem Heilungsweg zu bleiben, mit sanften Erinnerungen, wenn Sie sich eine Weile nicht angemeldet haben.",
+                "fieldLabel": "Erinnert werden:",
+                "twoWeeksLabel": "Nach zwei Wochen",
+                "oneMonthLabel": "Nach einem Monat",
+                "twoMonthsLabel": "Nach zwei Monaten",
+                "neverLabel": "Nie",
+                "update": "Sie können diese Einstellung jederzeit aktualisieren",
+                "submitLabel": "E-Mail-Erinnerungen speichern",
+                "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.<\/link>"
+            }
         }
-      }
-    },
-    "aboutYou": {
-      "title": "Über Dich",
-      "header": "Hilf uns, zu verstehen",
-      "description": "Diese Fragen helfen uns zu verstehen, wer Bloom nutzt, und welche Art von Unterstützung sie von uns brauchen. ",
-      "titleA": "Was Du von Bloom erwartest",
-      "descriptionALine1": "Vielen Dank für Deine bisherigen Antworten!",
-      "descriptionALine2": "Von Dir als neue:r Nutzer:in möchten wir gerne wissen, wie es Dir geht, bevor du unser Angebot nutzt. Das hilft uns dabei, die Wirksamkeit von Bloom für Überlebende besser zu verstehen, damit wir uns auf die richtigen Aspekte fokussieren können. ",
-      "goToCourses": "Zu den Kursen springen",
-      "demographicForm": {
-        "genderLabel": "Bitte wähle die Kategorie(n) aus, die deine Geschlechtsidentität widerspiegelt oder widerspiegeln. Du kannst auch mehrere Antworten auswählen.",
-        "genderHelpText": "Wir fragen das, um besser zu verstehen, wie sich Nutzer*innen geschlechtlich identifizieren, mit dem Ziel Angebote anzubieten, die inklusiver sind und Nutzer*innen mehr in ihrem Geschlecht bekräftigen. Du kannst auch „Das möchte ich nicht sagen” als Antwort auswählen.",
-        "genderOptions": {
-          "woman": "Frau",
-          "man": "Mann",
-          "nonBinary": "Nicht-binär",
-          "transgender": "Transgender",
-          "intersex": "Intersex",
-          "twoSpirit": "Two-spirit",
-          "genderNonConforming": "Geschlechtlich non-konform",
-          "other": "Anderes (bitte gib hier den Namen an)",
-          "preferNotToAnswer": "Das möchte ich nicht sagen"
-        },
-        "neurodivergentLabel": "Hast du einen Neurotyp, der die Art und Weise beeinflusst, wie dein Gehirn Informationen verarbeitet? Das kann eine Lernschwierigkeit (z. B. Legasthenie, Dyspraxie, Dyskalkulie), ADHS, eine Lernbehinderung oder Autismus sein.",
-        "neurodivergentHelpText": "Wir tun unser Bestes, um unsere Dienste inklusive zu gestalten, daher ist es hilfreich für uns das zu wissen .",
-        "neurodivergentLabels": {
-          "1": "Ja",
-          "2": "Nein",
-          "3": "Nicht sicher",
-          "4": "Sag es lieber nicht"
-        },
-        "raceEthnNatnLabel": "Wie würdest du deine ethnische Zugehörigkeit und Nationalität beschreiben? Z.B. Weiß lateinamerikanisch und aus Mexiko oder Tamil aus Indien. ",
-        "raceEthnNatnHelpText": "Wir wissen, dass die Erfahrungen von Menschen bezüglich Rassifizierung und Ethnizität sehr unterschiedlich sein können, je nachdem, wo sie leben. Schreibe, was auf Dich persönlich am Besten zutrifft. ",
-        "countryLabel": "In welchem Land lebst Du zur Zeit?",
-        "countryHelpText": "Dies hilft uns zu verstehen, von wo aus Überlebende unser Angebot nutzen",
-        "ageLabel": "Was ist Deine Altersgruppe?",
-        "ageHelpText": "Wählen Sie Ihre Altersgruppe aus.",
-        "selectPlaceholder": "Bitte wählen Sie eine Option aus.",
-        "ageLabels": {
-          "1": "Unter 18",
-          "2": "18-25",
-          "3": "25-35",
-          "4": "35-45",
-          "5": "45-55",
-          "6": "55+",
-          "7": "Lieber nicht sagen"
-        },
-        "submitLabel": "Absenden",
-        "codeErrors": {}
-      },
-      "baseForm": {
-        "scaleDescriptionLine1": "Bitte bewerte, inwieweit Du folgenden Aussagen zustimmst:",
-        "scaleDescriptionLine2": "1 = stimme überhaupt nicht zu, 10 = stimme voll und ganz zu",
-        "scaleLabels": {
-          "Q1": "Ich verstehe, inwiefern das Trauma, das ich erlebt habe, meine Psyche, meinen Körper und meine Emotionen beeinflusst hat",
-          "Q2": "Ich weiß, dass es Bewältigungsstrategien gibt, die mir langfristig nicht helfen, und dass es eine normale Reaktion auf ein Trauma sein kann, sich zu diesen hingezogen zu fühlen",
-          "Q3": "Ich weiß, dass es Zeit, Energie und Geduld braucht, um zu heilen",
-          "Q4": "Ich bin entschlossen, mir selbst die Aufmerksamkeit zu schenken, die ich zum Heilen brauche",
-          "Q5": "Ich habe Dinge gefunden, die mir ein gutes Gefühl geben, und nehme mir Zeit dafür in meinem Tagesablauf",
-          "Q6": "Ich verstehe, dass zur Heilung eines Traumas auch der Umgang mit Triggern gehört",
-          "Q7": "Ich verstehe, dass es individuell ist, was mir ein sicheres oder bedrohliches Gefühl gibt",
-          "Q8": "Ich kann triggernde Momente, Orte oder Zeitpunkte im Jahr vorhersehen und damit umgehen"
-        },
-        "submitLabel": "Vollständig"
-      },
-      "setAForm": {
-        "hopesLabel": "Was ist eine Sache, die du hoffst, durch Bloom verstehen oder tun zu können?"
-      }
-    },
-    "disableServiceEmails": {
-      "title": "Bloom-E-Mails deaktiviert",
-      "description": "Du wirst keine E-Mails mehr im Zusammenhang mit Bloom erhalten. Wenn du dies später ändern möchtest, <link>wende dich bitte an das Bloom-Team.</link>",
-      "error": "Beim Deaktivieren der Bloom-E-Mails ist ein Fehler aufgetreten. Versuche es erneut, indem du diese Seite aktualisierst, oder <link>wende dich an das Bloom-Team.</link>"
-    },
-    "accountSettings": {
-      "title": "Kontoeinstellungen",
-      "description": "Einstellungen in Bloom anzeigen und aktualisieren",
-      "imageAlt": "Abbildung eines Mobiltelefons mit einer Nachricht, die ein Herz enthält",
-      "profileSettings": {
-        "title": "Profildetails",
-        "description": "Aktualisieren Sie hier Ihren Namen und Ihre E-Mail-Adresse. Dies sind die einzigen persönlichen Informationen, die in Ihrem Profil gespeichert werden.",
-        "nameLabel": "Name",
-        "emailLabel": "E-Mail",
-        "submitLabel": "Profil speichern",
-        "emailAlreadyInUseError": "Diese E-Mail-Adresse wird bereits von einem anderen Konto verwendet. Bitte versuchen Sie es erneut",
-        "confirmDialogTitle": "Wenn Sie Ihre E-Mail-Adresse ändern, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
-        "confirmDialogCancel": "Stornieren"
-      },
-      "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>",
-      "actions": {
-        "title": "Kontoaktionen",
-        "description": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht.",
-        "button": {
-          "resetPassword": "Passwort zurücksetzen",
-          "deleteAccount": "Konto löschen"
-        },
-        "resetPasswordConfirmDialogTitle": "Wenn Sie Ihr Passwort aktualisieren, müssen Sie sich erneut anmelden. Möchten Sie fortfahren?",
-        "confirmDialogCancel": "Stornieren",
-        "deleteAccountConfirmDialogTitle": "Bitte bestätigen Sie, dass Sie Ihr Konto löschen möchten",
-        "deleteAccountConfirmDialogDescription": "Durch das Löschen Ihres Kontos werden Ihr Name, Ihre E-Mail-Adresse und der Verlauf der von Ihnen angesehenen Sitzungen dauerhaft aus unserem System gelöscht."
-      },
-      "emailSettings": {
-        "title": "E-Mail-Einstellungen",
-        "description": "Lassen Sie uns wissen, ob wir Ihnen E-Mails senden dürfen:",
-        "serviceEmailsPermissionLabel": "Über Ihre Dienste oder Änderungen an Ihrem Konto",
-        "contactPermissionLabel": "Wenn ein neuer Kurs, Service oder eine neue Sprache verfügbar ist",
-        "submitLabel": "E-Mail-Einstellungen speichern",
-        "updateError": "Beim Aktualisieren Ihres Bloom-Kontos ist ein Fehler aufgetreten. Versuchen Sie es noch einmal, indem Sie diese Seite aktualisieren, oder <link>nehmen Sie Kontakt mit dem Bloom-Team auf.</link>"
-      },
-      "emailRemindersSettings": {
-        "title": "E-Mail-Erinnerungen",
-        "introduction": "Die Verarbeitung von Traumata kann schwierig sein, besonders wenn man es alleine macht.",
-        "description": "Wir können Ihnen helfen, auf Ihrem Heilungsweg zu bleiben, mit sanften Erinnerungen, wenn Sie sich eine Weile nicht angemeldet haben.",
-        "fieldLabel": "Erinnert werden:",
-        "twoWeeksLabel": "Nach zwei Wochen",
-        "oneMonthLabel": "Nach einem Monat",
-        "twoMonthsLabel": "Nach zwei Monaten",
-        "neverLabel": "Nie",
-        "update": "Sie können diese Einstellung jederzeit aktualisieren",
-        "submitLabel": "E-Mail-Erinnerungen speichern",
-        "updateError": "Bei der Aktualisierung Ihrer E-Mail-Erinnerungseinstellungen ist ein Fehler aufgetreten. Versuchen Sie es erneut, indem Sie diese Seite aktualisieren, oder <link>kontaktieren Sie das Bloom-Team.</link>"
-      }
     }
-  }
 }

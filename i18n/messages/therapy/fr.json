@@ -1,55 +1,55 @@
 {
-  "Therapy": {
-    "title": "Thérapie par la lecture",
-    "bookingButton": "Commencer la réservation",
-    "bookingSectionTitle": "Comment fonctionne la réservation",
-    "steps": {
-      "step1": "Vous avez le choix parmi des thérapeutes multilingues soigneusement sélectionné·es.",
-      "step2": "Choisissez la date et l'heure qui vous conviennent. Toutes les sessions sont en ligne.",
-      "step3": "Si vous changez d'avis, vous pouvez à tout moment arrêter les sessions ou changer de thérapeute.",
-      "step4": "Tout ce que vous partagez reste strictement confidentiel, entre vous et le·a thérapeute."
-    },
-    "closeBookingWidget": "Fermer le widget de réservation",
-    "modalTitle": "Réserver une thérapie",
-    "modalDescription": "Widget SimplyBook.me pour planifier votre séance de thérapie.",
-    "error": {
-      "initializingWidget": "Erreur lors de l'initialisation du widget de réservation.",
-      "initializingWidgetRetry": "Erreur lors de l'initialisation du widget de réservation lors de la nouvelle tentative.",
-      "containerNotFoundRetry": "Impossible de charger le widget de réservation.",
-      "scriptNotLoaded": "Le script du widget de réservation n'est pas complètement chargé.",
-      "scriptLoadFailed": "Échec du chargement du script de réservation."
-    },
-    "therapyBookings": {
-      "header": "Vos réservations de thérapie",
-      "bookingSummary": "Il vous reste <remainingTotal>{remainingTotal}</remainingTotal> séances de thérapie, <upcomingTotal>{upcomingTotal}</upcomingTotal> sont programmées.",
-      "noBookingSummary": "Vous avez réservé toutes vos séances de thérapie disponibles.",
-      "noBookings": "Vous n'avez aucune réservation de thérapie pour le moment.",
-      "cancelAlert": "Annulation demandée pour la réservation ID : {id}. Implémentez la logique d'annulation réelle."
-    },
-    "bookingItem": {
-      "upcomingSessionTitle": "Prochaine séance de thérapie",
-      "pastSessionTitle": "Séance de thérapie passée",
-      "cancelledSessionTitle": "Séance annulée",
-      "dateLabel": "Date",
-      "timeLabel": "Heure",
-      "therapistLabel": "Thérapeute",
-      "videoLinkLabel": "Lien vidéo",
-      "videoLink": "Rejoignez l'appel à partir de l'invitation de l'agenda Google Meet envoyée par e-mail.",
-      "cancelError": "Erreur lors de l'annulation de la réservation. Veuillez réessayer ou contacter l'équipe.",
-      "noVideoLink": "Aucun lien fourni",
-      "cancelButton": "Annuler",
-      "expand": "Développer",
-      "collapse": "Réduire",
-      "cancelDialog": {
-        "title": "Confirmer l'annulation",
-        "description": "Êtes-vous sûr de vouloir annuler votre séance de thérapie prévue pour le {dateTime} ? Vous pouvez prendre un nouveau rendez-vous à un moment qui vous convient.",
-        "keepButton": "Garder la séance",
-        "confirmButton": "Annuler la séance"
-      }
-    },
-    "accessGuard": {
-      "title": "Thérapie indisponible",
-      "introduction": "Votre compte Bloom ne comprend pas l'accès aux sessions de thérapie. Pour y remédier, <contactLink>contactez l'équipe Bloom</contactLink>."
+    "Therapy": {
+        "title": "Thérapie par la lecture",
+        "bookingButton": "Commencer la réservation",
+        "bookingSectionTitle": "Comment fonctionne la réservation",
+        "steps": {
+            "step1": "Vous avez le choix parmi des thérapeutes multilingues soigneusement sélectionné·es.",
+            "step2": "Choisissez la date et l'heure qui vous conviennent. Toutes les sessions sont en ligne.",
+            "step3": "Si vous changez d'avis, vous pouvez à tout moment arrêter les sessions ou changer de thérapeute.",
+            "step4": "Tout ce que vous partagez reste strictement confidentiel, entre vous et le·a thérapeute."
+        },
+        "closeBookingWidget": "Fermer le widget de réservation",
+        "modalTitle": "Réserver une thérapie",
+        "modalDescription": "Widget SimplyBook.me pour planifier votre séance de thérapie.",
+        "error": {
+            "initializingWidget": "Erreur lors de l'initialisation du widget de réservation.",
+            "initializingWidgetRetry": "Erreur lors de l'initialisation du widget de réservation lors de la nouvelle tentative.",
+            "containerNotFoundRetry": "Impossible de charger le widget de réservation.",
+            "scriptNotLoaded": "Le script du widget de réservation n'est pas complètement chargé.",
+            "scriptLoadFailed": "Échec du chargement du script de réservation."
+        },
+        "therapyBookings": {
+            "header": "Vos réservations de thérapie",
+            "bookingSummary": "Il vous reste <remainingTotal>{remainingTotal}<\/remainingTotal> séances de thérapie, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> sont programmées.",
+            "noBookingSummary": "Vous avez réservé toutes vos séances de thérapie disponibles.",
+            "noBookings": "Vous n'avez aucune réservation de thérapie pour le moment.",
+            "cancelAlert": "Annulation demandée pour la réservation ID : {id}. Implémentez la logique d'annulation réelle."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Prochaine séance de thérapie",
+            "pastSessionTitle": "Séance de thérapie passée",
+            "cancelledSessionTitle": "Séance annulée",
+            "dateLabel": "Date",
+            "timeLabel": "Heure",
+            "therapistLabel": "Thérapeute",
+            "videoLinkLabel": "Lien vidéo",
+            "videoLink": "Rejoignez l'appel à partir de l'invitation de l'agenda Google Meet envoyée par e-mail.",
+            "noVideoLink": "Aucun lien fourni",
+            "cancelButton": "Annuler",
+            "cancelError": "Erreur lors de l'annulation de la réservation. Veuillez réessayer ou contacter l'équipe.",
+            "expand": "Développer",
+            "collapse": "Réduire",
+            "cancelDialog": {
+                "title": "Confirmer l'annulation",
+                "description": "Êtes-vous sûr de vouloir annuler votre séance de thérapie prévue pour le {dateTime} ? Vous pouvez prendre un nouveau rendez-vous à un moment qui vous convient.",
+                "keepButton": "Garder la séance",
+                "confirmButton": "Annuler la séance"
+            }
+        },
+        "accessGuard": {
+            "title": "Thérapie indisponible",
+            "introduction": "Votre compte Bloom ne comprend pas l'accès aux sessions de thérapie. Pour y remédier, <contactLink>contactez l'équipe Bloom<\/contactLink>."
+        }
     }
-  }
 }

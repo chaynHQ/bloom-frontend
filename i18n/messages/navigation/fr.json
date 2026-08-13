@@ -1,35 +1,35 @@
 {
-  "Navigation": {
-    "menu": "Menu de navigation",
-    "menuOpen": "Ouvrir le menu de navigation",
-    "menuClose": "Fermer le menu de navigation",
-    "languageMenu": "Menu de langues",
-    "bloomLogo": "Logo de Bloom",
-    "login": "Connexion",
-    "logout": "Se déconnecter",
-    "accountSettings": "Paramètres du compte",
-    "userMenu": "Menu paramètre utilisateur",
-    "home": "Accueil",
-    "admin": "Admin",
-    "about": "À propos de Bloom",
-    "meetTheTeam": "L'équipe Bloom",
-    "immediateHelp": "Aide immédiate",
-    "therapy": "Thérapie",
-    "courses": "Cours",
-    "applyCode": "Appliquer un code",
-    "account": "Compte",
-    "secondaryNavigationMenu": "Secondary navigation menu",
-    "notes": "Notes",
-    "alt": {
-      "therapyIcon": "Illustration d'une tête avec une fleur",
-      "courseIcon": "Illustration d'une icône de lecture, un triangle pointant vers la droite. Un petit soleil se trouve à l'avant",
-      "notesIcon": "Illustration d'un téléphone portable avec un cœur au centre",
-      "chatIcon": "Deux bulles se croisent sur un fond rose. La première contient un cœur rose. La seconde a des lignes droites.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
-      "groundingIcon": "A twig with small pink flowers."
-    },
-    "messaging": "Messagerie",
-    "grounding": "Exercices",
-    "activities": "Activités"
-  }
+    "Navigation": {
+        "menu": "Menu de navigation",
+        "menuOpen": "Ouvrir le menu de navigation",
+        "menuClose": "Fermer le menu de navigation",
+        "languageMenu": "Menu de langues",
+        "bloomLogo": "Logo de Bloom",
+        "login": "Connexion",
+        "logout": "Se déconnecter",
+        "accountSettings": "Paramètres du compte",
+        "userMenu": "Menu paramètre utilisateur",
+        "home": "Accueil",
+        "admin": "Admin",
+        "about": "À propos de Bloom",
+        "meetTheTeam": "L'équipe Bloom",
+        "immediateHelp": "Aide immédiate",
+        "therapy": "Thérapie",
+        "courses": "Cours",
+        "applyCode": "Appliquer un code",
+        "account": "Compte",
+        "secondaryNavigationMenu": "Secondary navigation menu",
+        "notes": "Notes",
+        "alt": {
+            "therapyIcon": "Illustration d'une tête avec une fleur",
+            "courseIcon": "Illustration d'une icône de lecture, un triangle pointant vers la droite. Un petit soleil se trouve à l'avant",
+            "notesIcon": "Illustration d'un téléphone portable avec un cœur au centre",
+            "chatIcon": "Deux bulles se croisent sur un fond rose. La première contient un cœur rose. La seconde a des lignes droites.",
+            "activitiesIcon": "A book with a small yellow fire on its cover.",
+            "groundingIcon": "A twig with small pink flowers."
+        },
+        "messaging": "Messagerie",
+        "grounding": "Exercices",
+        "activities": "Activités"
+    }
 }

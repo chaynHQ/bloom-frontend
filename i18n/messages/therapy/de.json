@@ -1,55 +1,55 @@
 {
-  "Therapy": {
-    "title": "Therapie buchen",
-    "bookingButton": "Eine Sitzung buchen",
-    "bookingSectionTitle": "So funktioniert die Buchung",
-    "steps": {
-      "step1": "Du wählst aus unseren sorgfältig ausgewählten, mehrsprachigen Therapeut:innen aus.",
-      "step2": "Wähle ein Datum und eine Uhrzeit, die für Dich passen. Alle Sitzungen finden online statt. ",
-      "step3": "Wenn Du Deine Meinung änderst, kannst Du die Sitzung jederzeit abbrechen oder die Therapeutin oder den Therapeuten wechseln. ",
-      "step4": "Alles, was Du teilst, bleibt streng vertraulich zwischen Dir und den Therapeut:innen."
-    },
-    "closeBookingWidget": "Buchungs-Widget schließen",
-    "modalTitle": "Therapie buchen",
-    "modalDescription": "SimplyBook.me Widget zur Terminplanung Ihrer Therapiesitzung.",
-    "error": {
-      "initializingWidget": "Fehler beim Initialisieren des Buchungs-Widgets.",
-      "initializingWidgetRetry": "Fehler beim Initialisieren des Buchungs-Widgets beim erneuten Versuch.",
-      "containerNotFoundRetry": "Das Buchungs-Widget konnte nicht geladen werden.",
-      "scriptNotLoaded": "Das Skript für das Buchungs-Widget wurde nicht vollständig geladen.",
-      "scriptLoadFailed": "Fehler beim Laden des Buchungsskripts."
-    },
-    "therapyBookings": {
-      "header": "Deine Therapiebuchungen",
-      "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}</remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}</upcomingTotal> sind geplant.",
-      "noBookingSummary": "Sie haben alle Ihre verfügbaren Therapiesitzungen gebucht.",
-      "noBookings": "Du hast im Moment keine Therapiebuchungen.",
-      "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
-    },
-    "bookingItem": {
-      "upcomingSessionTitle": "Bevorstehende Therapiesitzung",
-      "pastSessionTitle": "Vergangene Therapiesitzung",
-      "cancelledSessionTitle": "Abgesagte Sitzung",
-      "dateLabel": "Datum",
-      "timeLabel": "Uhrzeit",
-      "therapistLabel": "Therapeut/in",
-      "videoLinkLabel": "Video-Link",
-      "videoLink": "Nehmen Sie am Anruf über die Google Meet-Kalendereinladung teil, die per E-Mail gesendet wurde.",
-      "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
-      "noVideoLink": "Kein Link angegeben",
-      "cancelButton": "Stornieren",
-      "expand": "Erweitern",
-      "collapse": "Einklappen",
-      "cancelDialog": {
-        "title": "Stornierung bestätigen",
-        "description": "Sind Sie sicher, dass Sie Ihre für {dateTime} geplante Therapiesitzung absagen möchten? Sie können einen neuen Termin zu einem Zeitpunkt buchen, der sich für Sie richtig anfühlt.",
-        "keepButton": "Sitzung beibehalten",
-        "confirmButton": "Sitzung stornieren"
-      }
-    },
-    "accessGuard": {
-      "title": "Therapie nicht verfügbar",
-      "introduction": "Dein Bloom-Konto beinhaltet keinen Zugang zu Therapiesitzungen. Wenn Du meinst, das stimmt nicht, <contactLink>kontaktiere das Bloom-Team</contactLink>."
+    "Therapy": {
+        "title": "Therapie buchen",
+        "bookingButton": "Eine Sitzung buchen",
+        "bookingSectionTitle": "So funktioniert die Buchung",
+        "steps": {
+            "step1": "Du wählst aus unseren sorgfältig ausgewählten, mehrsprachigen Therapeut:innen aus.",
+            "step2": "Wähle ein Datum und eine Uhrzeit, die für Dich passen. Alle Sitzungen finden online statt. ",
+            "step3": "Wenn Du Deine Meinung änderst, kannst Du die Sitzung jederzeit abbrechen oder die Therapeutin oder den Therapeuten wechseln. ",
+            "step4": "Alles, was Du teilst, bleibt streng vertraulich zwischen Dir und den Therapeut:innen."
+        },
+        "closeBookingWidget": "Buchungs-Widget schließen",
+        "modalTitle": "Therapie buchen",
+        "modalDescription": "SimplyBook.me Widget zur Terminplanung Ihrer Therapiesitzung.",
+        "error": {
+            "initializingWidget": "Fehler beim Initialisieren des Buchungs-Widgets.",
+            "initializingWidgetRetry": "Fehler beim Initialisieren des Buchungs-Widgets beim erneuten Versuch.",
+            "containerNotFoundRetry": "Das Buchungs-Widget konnte nicht geladen werden.",
+            "scriptNotLoaded": "Das Skript für das Buchungs-Widget wurde nicht vollständig geladen.",
+            "scriptLoadFailed": "Fehler beim Laden des Buchungsskripts."
+        },
+        "therapyBookings": {
+            "header": "Deine Therapiebuchungen",
+            "bookingSummary": "Du hast noch <remainingTotal>{remainingTotal}<\/remainingTotal> Therapiesitzungen übrig, <upcomingTotal>{upcomingTotal}<\/upcomingTotal> sind geplant.",
+            "noBookingSummary": "Sie haben alle Ihre verfügbaren Therapiesitzungen gebucht.",
+            "noBookings": "Du hast im Moment keine Therapiebuchungen.",
+            "cancelAlert": "Stornierung für Buchungs-ID angefordert: {id}. Implementieren Sie die tatsächliche Stornierungslogik."
+        },
+        "bookingItem": {
+            "upcomingSessionTitle": "Bevorstehende Therapiesitzung",
+            "pastSessionTitle": "Vergangene Therapiesitzung",
+            "cancelledSessionTitle": "Abgesagte Sitzung",
+            "dateLabel": "Datum",
+            "timeLabel": "Uhrzeit",
+            "therapistLabel": "Therapeut\/in",
+            "videoLinkLabel": "Video-Link",
+            "videoLink": "Nehmen Sie am Anruf über die Google Meet-Kalendereinladung teil, die per E-Mail gesendet wurde.",
+            "noVideoLink": "Kein Link angegeben",
+            "cancelButton": "Stornieren",
+            "cancelError": "Fehler beim Stornieren der Buchung – bitte versuchen Sie es erneut oder wenden Sie sich an das Team.",
+            "expand": "Erweitern",
+            "collapse": "Einklappen",
+            "cancelDialog": {
+                "title": "Stornierung bestätigen",
+                "description": "Sind Sie sicher, dass Sie Ihre für {dateTime} geplante Therapiesitzung absagen möchten? Sie können einen neuen Termin zu einem Zeitpunkt buchen, der sich für Sie richtig anfühlt.",
+                "keepButton": "Sitzung beibehalten",
+                "confirmButton": "Sitzung stornieren"
+            }
+        },
+        "accessGuard": {
+            "title": "Therapie nicht verfügbar",
+            "introduction": "Dein Bloom-Konto beinhaltet keinen Zugang zu Therapiesitzungen. Wenn Du meinst, das stimmt nicht, <contactLink>kontaktiere das Bloom-Team<\/contactLink>."
+        }
     }
-  }
 }

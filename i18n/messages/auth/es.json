@@ -1,89 +1,89 @@
 {
-  "Auth": {
-    "introduction": "Bloom informa y empodera a los sobrevivientes, ofreciéndoles cursos remotos que combinan reflexiones sobre el trauma y la violencia de género con prácticas terapéuticas para ayudar a sanar del trauma.",
-    "getStartedBloom": "Empieza con Bloom",
-    "getStartedWith": "Empieza con un código de {partnerName}",
-    "loginLink": "¿Ya tienes una cuenta? <loginLink>Ir al inicio de sesión</loginLink>",
-    "terms": "Al continuar, estás indicando que aceptas nuestros <termsLink>Términos de Servicio</termsLink> y nuestras <privacyLink>Políticas de Privacidad</privacyLink>",
-    "login": {
-      "title": "Te damos la bienvenida",
-      "resetPasswordLink": "¿Has olvidado la contraseña? <resetLink>Recuperar contraseña</resetLink>",
-      "createAnAccountLink": "¿No tienes una cuenta? <createAnAccountLink>Crea una cuenta</createAnAccountLink>"
-    },
-    "register": {
-      "title": "Crea una cuenta",
-      "loginRedirect": "¿Ya tienes una cuenta? <loginLink>Inicia sesión</loginLink>",
-      "partnershipsTitle": "Nuestros socios",
-      "partnershipsDescription": "Si fuiste referido a Bloom por parte de uno de nuestros socios, haz click en su logo a continuación."
-    },
-    "resetPassword": {
-      "title": "Recupera tu contraseña"
-    },
-    "form": {
-      "codeLabel": "código de acceso",
-      "nameLabel": "Primer nombre/apodo",
-      "emailLabel": "Email",
-      "passwordLabel": "Contraseña",
-      "contactPermissionLabel": "Reciba correos electrónicos sobre nuevos recursos y oportunidades para compartir sus comentarios con nosotros.",
-      "registerSubmit": "Crea una cuenta",
-      "resetPasswordStep1": "Te enviaremos un email para empezar a recuperar tu contraseña.",
-      "resetPasswordStep2": "¡Ya casi! Ahora puedes crear tu nueva contraseña.",
-      "resetPasswordSubmit": "Recuperar contraseña",
-      "resendPasswordSubmit": "Reenviar email",
-      "resetPasswordSent": "Busca en tus emails el link de recuperación de contraseña de Bloom. ¿No recibiste uno? Busca en tu buzón de spam o reenvía el email.",
-      "passwordResetSuccess": "¡Tu contraseña se ha restablecido! Ahora puedes iniciar sesión con tu nueva contraseña.",
-      "loginSubmit": "Iniciar sesión",
-      "createUserError": "Hubo un error creando tu cuenta. Inténtalo de nuevo luego y <contactLink>contacta al equipo de Bloom</contactLink> si sigues obteniendo este error.",
-      "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si sigues obteniendo este error.",
-      "codeErrors": {
-        "internal": "Hubo un error validando tu código de acceso. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si sigues obteniendo este error.",
-        "expired": "Este código ha expirado. Ponte en contacto con el equipo de {partnerName}.",
-        "invalid": "Este código parece no ser válido. Revisa si tienes errores tipográficos o ponte en contacto con el equipo de {partnerName}.",
-        "alreadyInUse": "Este código ya ha sido usado. Si crees que esto es un error, ponte en contacto con el equipo de {partnerName}."
-      },
-      "firebase": {
-        "wrongPassword": "Contraseña incorrecta, inténtelo de nuevo o cierre sesión y restablezca su contraseña.",
-        "authError": "No pudimos encontrar una cuenta con esa combinación de email y contraseña. Revisa tu email y contraseña.",
-        "invalidEmail": "Tu email parece no ser válido. Arregla los errores tipográficos y continua.",
-        "tooManyAttempts": "Demasiados intentos de inicio de sesión fallidos. Por favor, espere unos minutos o restablezca su contraseña ahora.",
-        "weakPassword": "Tu contraseña debe tener al menos 8 caracteres y no ser fácil de adivinar. Intenta combinar unas pocas palabras — como 'río azul mañana'.",
-        "emailAlreadyInUse": "Este email ya está registrado en Bloom. Ve al <loginLink>inicio de sesión</loginLink> para continuar.",
-        "invalidCode": "Este link de recuperación de contraseña no es válido. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez.",
-        "expiredCode": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso</resetLink> e inténtalo otra vez.",
-        "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom</contactLink> si sigues obteniendo este error."
-      },
-      "phoneNumberLabel": "Número de teléfono",
-      "verificationCodeLabel": "Código de verificación",
-      "mfaTriggerError": "Error al enviar el código SMS. Por favor, inténtalo de nuevo.",
-      "mfaVerificationIdMissing": "Por favor, solicita primero un código SMS.",
-      "mfaEnrollError": "Error al inscribirse en la autenticación de dos factores. Por favor, inténtalo de nuevo.",
-      "mfaFinalizeError": "Error al finalizar la configuración de la autenticación de dos factores. Por favor, inténtalo de nuevo.",
-      "mfaError": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
-      "emailNotVerified": "Por favor, verifica tu email antes de configurar la autenticación de dos factores.",
-      "emailVerificationError": "Error al enviar el email de verificación. Por favor, inténtalo de nuevo.",
-      "emailVerificationSent": "Email de verificación enviado. Por favor, revisa tu bandeja de entrada.",
-      "emailVerificationSpamCheck": "Si no ves el email, por favor revisa tu carpeta de spam.",
-      "sendVerificationEmail": "Enviar email de verificación",
-      "resendVerificationEmail": "Reenviar email de verificación",
-      "passwordRequired": "Se requiere contraseña para la reautenticación.",
-      "reauthenticationError": "Error al reautenticar. Por favor, inténtalo de nuevo."
-    },
-    "verifyMFA": {
-      "title": "Verificar autenticación de dos factores",
-      "triggerSMS": "Enviar código SMS",
-      "verifyCode": "Verificar código",
-      "phoneNumber": "Enviaremos un código de verificación a tu número de teléfono registrado: {phoneNumber}"
-    },
-    "setupMFA": {
-      "title": "Configurar autenticación de dos factores",
-      "sendCode": "Enviar código de verificación",
-      "verifyCode": "Verificar código",
-      "enterCodeHelperText": "Por favor, introduce el código de verificación que hemos enviado a tu teléfono:",
-      "reauthTitle": "Confirma tu identidad",
-      "reauthDescription": "Por favor introduce tu contraseña antes de continuar",
-      "cancelReauth": "Cancelar",
-      "confirmReauth": "Confirmar",
-      "reauthenticating": "Confirmando..."
+    "Auth": {
+        "introduction": "Bloom informa y empodera a los sobrevivientes, ofreciéndoles cursos remotos que combinan reflexiones sobre el trauma y la violencia de género con prácticas terapéuticas para ayudar a sanar del trauma.",
+        "getStartedBloom": "Empieza con Bloom",
+        "getStartedWith": "Empieza con un código de {partnerName}",
+        "loginLink": "¿Ya tienes una cuenta? <loginLink>Ir al inicio de sesión<\/loginLink>",
+        "terms": "Al continuar, estás indicando que aceptas nuestros <termsLink>Términos de Servicio<\/termsLink> y nuestras <privacyLink>Políticas de Privacidad<\/privacyLink>",
+        "login": {
+            "title": "Te damos la bienvenida",
+            "resetPasswordLink": "¿Has olvidado la contraseña? <resetLink>Recuperar contraseña<\/resetLink>",
+            "createAnAccountLink": "¿No tienes una cuenta? <createAnAccountLink>Crea una cuenta<\/createAnAccountLink>"
+        },
+        "register": {
+            "title": "Crea una cuenta",
+            "loginRedirect": "¿Ya tienes una cuenta? <loginLink>Inicia sesión<\/loginLink>",
+            "partnershipsTitle": "Nuestros socios",
+            "partnershipsDescription": "Si fuiste referido a Bloom por parte de uno de nuestros socios, haz click en su logo a continuación."
+        },
+        "resetPassword": {
+            "title": "Recupera tu contraseña"
+        },
+        "form": {
+            "codeLabel": "código de acceso",
+            "nameLabel": "Primer nombre\/apodo",
+            "emailLabel": "Email",
+            "passwordLabel": "Contraseña",
+            "contactPermissionLabel": "Reciba correos electrónicos sobre nuevos recursos y oportunidades para compartir sus comentarios con nosotros.",
+            "registerSubmit": "Crea una cuenta",
+            "resetPasswordStep1": "Te enviaremos un email para empezar a recuperar tu contraseña.",
+            "resetPasswordStep2": "¡Ya casi! Ahora puedes crear tu nueva contraseña.",
+            "resetPasswordSubmit": "Recuperar contraseña",
+            "resendPasswordSubmit": "Reenviar email",
+            "resetPasswordSent": "Busca en tus emails el link de recuperación de contraseña de Bloom. ¿No recibiste uno? Busca en tu buzón de spam o reenvía el email.",
+            "passwordResetSuccess": "¡Tu contraseña se ha restablecido! Ahora puedes iniciar sesión con tu nueva contraseña.",
+            "loginSubmit": "Iniciar sesión",
+            "createUserError": "Hubo un error creando tu cuenta. Inténtalo de nuevo luego y <contactLink>contacta al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+            "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+            "codeErrors": {
+                "internal": "Hubo un error validando tu código de acceso. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error.",
+                "expired": "Este código ha expirado. Ponte en contacto con el equipo de {partnerName}.",
+                "invalid": "Este código parece no ser válido. Revisa si tienes errores tipográficos o ponte en contacto con el equipo de {partnerName}.",
+                "alreadyInUse": "Este código ya ha sido usado. Si crees que esto es un error, ponte en contacto con el equipo de {partnerName}."
+            },
+            "firebase": {
+                "wrongPassword": "Contraseña incorrecta, inténtelo de nuevo o cierre sesión y restablezca su contraseña.",
+                "authError": "No pudimos encontrar una cuenta con esa combinación de email y contraseña. Revisa tu email y contraseña.",
+                "invalidEmail": "Tu email parece no ser válido. Arregla los errores tipográficos y continua.",
+                "tooManyAttempts": "Demasiados intentos de inicio de sesión fallidos. Por favor, espere unos minutos o restablezca su contraseña ahora.",
+                "weakPassword": "Tu contraseña debe tener al menos 8 caracteres y no ser fácil de adivinar. Intenta combinar unas pocas palabras — como 'río azul mañana'.",
+                "emailAlreadyInUse": "Este email ya está registrado en Bloom. Ve al <loginLink>inicio de sesión<\/loginLink> para continuar.",
+                "invalidCode": "Este link de recuperación de contraseña no es válido. Por favor <resetLink>comienza de nuevo el proceso<\/resetLink> e inténtalo otra vez.",
+                "expiredCode": "Este link de recuperación de contraseña ha expirado. Por favor <resetLink>comienza de nuevo el proceso<\/resetLink> e inténtalo otra vez.",
+                "getUserError": "Hubo un error recuperando tu cuenta. Inténtalo de nuevo luego y <contactLink>envíale un mensaje al equipo de Bloom<\/contactLink> si sigues obteniendo este error."
+            },
+            "phoneNumberLabel": "Número de teléfono",
+            "verificationCodeLabel": "Código de verificación",
+            "mfaTriggerError": "Error al enviar el código SMS. Por favor, inténtalo de nuevo.",
+            "mfaVerificationIdMissing": "Por favor, solicita primero un código SMS.",
+            "mfaEnrollError": "Error al inscribirse en la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+            "mfaFinalizeError": "Error al finalizar la configuración de la autenticación de dos factores. Por favor, inténtalo de nuevo.",
+            "mfaError": "Código de verificación inválido. Por favor, inténtalo de nuevo.",
+            "emailNotVerified": "Por favor, verifica tu email antes de configurar la autenticación de dos factores.",
+            "emailVerificationError": "Error al enviar el email de verificación. Por favor, inténtalo de nuevo.",
+            "emailVerificationSent": "Email de verificación enviado. Por favor, revisa tu bandeja de entrada.",
+            "emailVerificationSpamCheck": "Si no ves el email, por favor revisa tu carpeta de spam.",
+            "sendVerificationEmail": "Enviar email de verificación",
+            "resendVerificationEmail": "Reenviar email de verificación",
+            "passwordRequired": "Se requiere contraseña para la reautenticación.",
+            "reauthenticationError": "Error al reautenticar. Por favor, inténtalo de nuevo."
+        },
+        "verifyMFA": {
+            "title": "Verificar autenticación de dos factores",
+            "triggerSMS": "Enviar código SMS",
+            "verifyCode": "Verificar código",
+            "phoneNumber": "Enviaremos un código de verificación a tu número de teléfono registrado: {phoneNumber}"
+        },
+        "setupMFA": {
+            "title": "Configurar autenticación de dos factores",
+            "sendCode": "Enviar código de verificación",
+            "verifyCode": "Verificar código",
+            "enterCodeHelperText": "Por favor, introduce el código de verificación que hemos enviado a tu teléfono:",
+            "reauthTitle": "Confirma tu identidad",
+            "reauthDescription": "Por favor introduce tu contraseña antes de continuar",
+            "cancelReauth": "Cancelar",
+            "confirmReauth": "Confirmar",
+            "reauthenticating": "Confirmando..."
+        }
     }
-  }
 }

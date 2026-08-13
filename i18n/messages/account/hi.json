@@ -1,154 +1,157 @@
 {
-  "Account": {
-    "applyCode": {
-      "title": "Code laagu karein",
-      "introduction": "Bloom partners ke saath kaam karta hai tak duniya bhar ke survivors ki healing mein sahyog kar sake.",
-      "description": "Yadi aapko hamare kisi partner se access code mila hai toh aap usse add kar sakte hain taki aapko programme specific sahayata mil sake.",
-      "descriptionLine2": "Aap ek se adhik partner ke code jod sakte hain.",
-      "partnershipsTitle": "Hamare partners",
-      "partnershipsDescription": "Hamari partnerships ke bare mein aur jaanne ke liye unke logo par click kariye.",
-      "formIntroduction": "Bloom partner se mila access code daaliye.",
-      "formSuccess": {
-        "success": "Appke account par ek Bumble code laga gaya hai!",
-        "successLine2": "Aapka Bumble access neeche di gai cheezon saksham karta hai:",
-        "liveChat": "Bloom team ke saath sandesh seva",
-        "therapy": "{therapySessionsRemaining} therapy sessions",
-        "courses": "Swa-nirdeshit courses"
-      },
-      "form": {
-        "codeLabel": "Access code",
-        "submitLabel": "Code lagaiye",
-        "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
-        "codeErrors": {
-          "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye</contactLink> agar aapko yeh error dobara aa raha hai.",
-          "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
-          "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
-          "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. ",
-          "alreadyApplied": "Yeh code apke account me phele se hi lag chuka hai."
+    "Account": {
+        "applyCode": {
+            "title": "Code laagu karein",
+            "introduction": "Bloom partners ke saath kaam karta hai tak duniya bhar ke survivors ki healing mein sahyog kar sake.",
+            "description": "Yadi aapko hamare kisi partner se access code mila hai toh aap usse add kar sakte hain taki aapko programme specific sahayata mil sake.",
+            "descriptionLine2": "Aap ek se adhik partner ke code jod sakte hain.",
+            "partnershipsTitle": "Hamare partners",
+            "partnershipsDescription": "Hamari partnerships ke bare mein aur jaanne ke liye unke logo par click kariye.",
+            "formIntroduction": "Bloom partner se mila access code daaliye.",
+            "formSuccess": {
+                "success": "Appke account par ek Bumble code laga gaya hai!",
+                "successLine2": "Aapka Bumble access neeche di gai cheezon saksham karta hai:",
+                "liveChat": "Bloom team ke saath sandesh seva",
+                "therapy": "{therapySessionsRemaining} therapy sessions",
+                "courses": "Swa-nirdeshit courses"
+            },
+            "form": {
+                "codeLabel": "Access code",
+                "submitLabel": "Code lagaiye",
+                "assignPartnerAccessError": "Apke account pe code lagane mein error aya hai.  Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
+                "codeErrors": {
+                    "internal": "Aapke access code ko validate karne mein error aa raha hai. Baad mein dubara prayaas kariye aur <contactLink>Bloom ki team ko meesage kariye<\/contactLink> agar aapko yeh error dobara aa raha hai.",
+                    "expired": "Yeh code expire ho chuka hai. Partner ki team se sampark karein. ",
+                    "invalid": "Aapka access code invalid hai. Typos ki jaanch karein ya fir partner se sampark karein.",
+                    "alreadyInUse": "Yeh code pehle se he istemaal ho chuka hai. Agar aapko lagta hai ki koi galti hui hai, toh partner ki team se sampark karein. ",
+                    "alreadyApplied": "Yeh code apke account me phele se hi lag chuka hai."
+                }
+            }
+        },
+        "aboutYou": {
+            "title": "Aapke bare mein",
+            "header": "Humein samjhne mein madar kariye",
+            "description": "Yeh sawal humein samjhne mein madad karte hain ki kaun Bloom istemaal kar raha hai aur unhe humse kis tarha ki support chahiye. ",
+            "titleA": "Aapko Bloom se kya chahiye",
+            "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
+            "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
+            "goToCourses": "Skip karke courses par jayein",
+            "demographicForm": {
+                "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
+                "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
+                "genderOptions": {
+                    "woman": "Mahila",
+                    "man": "Purush",
+                    "nonBinary": "Gaer Avidhari (Non Binary)",
+                    "transgender": "Kinnar",
+                    "intersex": "Intersex",
+                    "twoSpirit": "Do-bhawan",
+                    "genderNonConforming": "Non-conformité au genre",
+                    "other": "Autre (à préciser)",
+                    "preferNotToAnswer": "Batana pasand nahi karte"
+                },
+                "neurodivergentLabel": "Kya aapko koi neuro-manorog hai jo aapke dimaag ke kaam karne ki shamta pe prabhav daalta hai? Yeh koi adhigham shamta ho sakti hai (jaise ki Dyslexia, Dyspraxia, Dyscalculia), ADHD, ya fir Autism.",
+                "neurodivergentHelpText": "Hum apni sewaon ko sahit banane ki poori koshish karte hain, toh isliye humara yeh jaanna zaroori hai.",
+                "neurodivergentLabels": {
+                    "1": "Haan",
+                    "2": "Nahi",
+                    "3": "Nishchit nahin\n",
+                    "4": "Nahin kahana pasand karate hain\n"
+                },
+                "raceEthnNatnLabel": "Aapki race, ethnicity and nationality kya hai? E.g., White Hispanic Mexican, or Tamil Indian.",
+                "raceEthnNatnHelpText": "Hum jaante hain ki sab logon ka unki race aur ethnicity ke sath experience alag hota hai jo depend karta hai ki vo kahan rehte hain. Toh aap vo likhiye jo sabse achi tarha se aapko describe karta hai.",
+                "countryLabel": "Aap kaunse desh mein abhi reh rahe hain?",
+                "countryHelpText": "Yeh samjhne mein humein madad karega ki survivors services kahan se le rahe hain",
+                "ageLabel": "Apka age group kya hai?",
+                "ageHelpText": "Apna ayu varg chuniyen.",
+                "selectPlaceholder": "Kripya ek vikalp chuniyen.",
+                "ageLabels": {
+                    "1": "18 ke neeche",
+                    "2": "18-25",
+                    "3": "25-35",
+                    "4": "35-45",
+                    "5": "45-55",
+                    "6": "55+",
+                    "7": "Na bata pasand karungi"
+                },
+                "submitLabel": "Submit",
+                "codeErrors": {
+                    "one": "",
+                    "other": ""
+                }
+            },
+            "baseForm": {
+                "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",
+                "scaleDescriptionLine2": "1 = Poori tarha asehmat, 10 = Poori tarha sehmat",
+                "scaleLabels": {
+                    "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
+                    "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un coping mechanisms ki taraf akarshit hona ek normal trauma response hai",
+                    "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
+                    "Q4": "Mein apne aapko vo poora dhyaan doongi jo mujhe theek hone aur heal hone ke liye chahiye.",
+                    "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
+                    "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
+                    "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mere liye unique hai",
+                    "Q8": "Mein pehle he samjh jati hoon jab mere triggering moments, jagahein ya waqt aasakte ho aur unke saath cope karparti hoon."
+                },
+                "submitLabel": "Submit"
+            },
+            "setAForm": {
+                "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
+            }
+        },
+        "disableServiceEmails": {
+            "title": "Bloom ke emails band kar diye gaye!",
+            "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.<\/link>",
+            "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
+        },
+        "accountSettings": {
+            "title": "Account Settings",
+            "description": "Aapke settings ko dekhiye aur update kijiye",
+            "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
+            "profileSettings": {
+                "title": "Profile details",
+                "description": "Yahaan apana naam aur eemel apadet karen. yah aapakee profail mein sangraheet ekamaatr vyaktigat jaanakaaree hai.",
+                "nameLabel": "Naam",
+                "emailLabel": "Email",
+                "submitLabel": "Profile ko save kijiye",
+                "emailAlreadyInUseError": "Yah eemel pahale se hee kisee any khaate dvaara upayog mein hai, krpaya punah prayaas karen",
+                "confirmDialogTitle": "jab aap apana eemel badalate hain, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+                "confirmDialogCancel": "Cancel"
+            },
+            "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>",
+            "actions": {
+                "title": "Account Actions",
+                "description": "Apna account delete karne se aapka naam, email address aur dekhe gaye sessions ki history permanently delete ho jayegi.",
+                "button": {
+                    "resetPassword": "Password reset kijiye",
+                    "deleteAccount": "Account delete kijiye"
+                },
+                "confirmDialogCancel": "Cancel",
+                "resetPasswordConfirmDialogTitle": "jab aap apana password update karenge, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
+                "deleteAccountConfirmDialogTitle": "kya aap sach mein apana account delete karna chaahate hain?",
+                "deleteAccountConfirmDialogDescription": "yah aapake naam, eemel pata aur dekhe gaye sessions ka history hamesha ke liye delete kar dega."
+            },
+            "emailSettings": {
+                "title": "Email Preferences",
+                "description": "Humein bataein ki kya hum aapko email bhej sakte hain:",
+                "submitLabel": "Email preferences ko save kijiye",
+                "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
+                "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
+                "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.<\/link>"
+            },
+            "emailRemindersSettings": {
+                "title": "Email Reminders",
+                "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
+                "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
+                "fieldLabel": "Yaad dilaya jaaye:",
+                "twoWeeksLabel": "Do saptah baad",
+                "oneMonthLabel": "Ek mahine ke baad",
+                "twoMonthsLabel": "Do mahine baad",
+                "neverLabel": "Kabhi nahi",
+                "update": "Aap is setting ko kabhi bhi update kar sakte hain",
+                "submitLabel": "Email Reminders Save karen",
+                "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।<\/link>"
+            }
         }
-      }
-    },
-    "aboutYou": {
-      "title": "Aapke bare mein",
-      "header": "Humein samjhne mein madar kariye",
-      "description": "Yeh sawal humein samjhne mein madad karte hain ki kaun Bloom istemaal kar raha hai aur unhe humse kis tarha ki support chahiye. ",
-      "titleA": "Aapko Bloom se kya chahiye",
-      "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
-      "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
-      "goToCourses": "Skip karke courses par jayein",
-      "demographicForm": {
-        "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
-        "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
-        "genderOptions": {
-          "woman": "Mahila",
-          "man": "Purush",
-          "nonBinary": "Gaer Avidhari (Non Binary)",
-          "transgender": "Kinnar",
-          "intersex": "Intersex",
-          "twoSpirit": "Do-bhawan",
-          "genderNonConforming": "Non-conformité au genre",
-          "other": "Autre (à préciser)",
-          "preferNotToAnswer": "Batana pasand nahi karte"
-        },
-        "neurodivergentLabel": "Kya aapko koi neuro-manorog hai jo aapke dimaag ke kaam karne ki shamta pe prabhav daalta hai? Yeh koi adhigham shamta ho sakti hai (jaise ki Dyslexia, Dyspraxia, Dyscalculia), ADHD, ya fir Autism.",
-        "neurodivergentHelpText": "Hum apni sewaon ko sahit banane ki poori koshish karte hain, toh isliye humara yeh jaanna zaroori hai.",
-        "neurodivergentLabels": {
-          "1": "Haan",
-          "2": "Nahi",
-          "3": "Nishchit nahin\n",
-          "4": "Nahin kahana pasand karate hain\n"
-        },
-        "raceEthnNatnLabel": "Aapki race, ethnicity and nationality kya hai? E.g., White Hispanic Mexican, or Tamil Indian.",
-        "raceEthnNatnHelpText": "Hum jaante hain ki sab logon ka unki race aur ethnicity ke sath experience alag hota hai jo depend karta hai ki vo kahan rehte hain. Toh aap vo likhiye jo sabse achi tarha se aapko describe karta hai.",
-        "countryLabel": "Aap kaunse desh mein abhi reh rahe hain?",
-        "countryHelpText": "Yeh samjhne mein humein madad karega ki survivors services kahan se le rahe hain",
-        "ageLabel": "Apka age group kya hai?",
-        "ageHelpText": "Apna ayu varg chuniyen.",
-        "selectPlaceholder": "Kripya ek vikalp chuniyen.",
-        "ageLabels": {
-          "1": "18 ke neeche",
-          "2": "18-25",
-          "3": "25-35",
-          "4": "35-45",
-          "5": "45-55",
-          "6": "55+",
-          "7": "Na bata pasand karungi"
-        },
-        "submitLabel": "Submit",
-        "codeErrors": {}
-      },
-      "baseForm": {
-        "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",
-        "scaleDescriptionLine2": "1 = Poori tarha asehmat, 10 = Poori tarha sehmat",
-        "scaleLabels": {
-          "Q1": "Mein samjhti hu ki jo trauma mene experience kiya hai usne kese mere dimaag, shareen aur feelings ko affect kiya hai",
-          "Q2": "Mujhe pata hai ki kuch coping mechanisms mujhe long term mein help nahi karte, par yeh bhi pata hai un coping mechanisms ki taraf akarshit hona ek normal trauma response hai",
-          "Q3": "Mujhe pata hai ki heal karne ke liye waqt, energy aur sabar chahiye hota hain",
-          "Q4": "Mein apne aapko vo poora dhyaan doongi jo mujhe theek hone aur heal hone ke liye chahiye.",
-          "Q5": "Mujhe pata hai ki mujhe kya cheezein karna pasand hai aur mein unhe karne ke liye apne routine mein se time nikaalti hu",
-          "Q6": "Mein samajhti hu ki trauma se heal hone ka ek hissa hai apne triggers ke saath deal karna",
-          "Q7": "Mein samajhti hu ki jo cheezein mujhe surakshit ya asurakshit mehsoos karati hai vo mere liye unique hai",
-          "Q8": "Mein pehle he samjh jati hoon jab mere triggering moments, jagahein ya waqt aasakte ho aur unke saath cope karparti hoon."
-        },
-        "submitLabel": "Submit"
-      },
-      "setAForm": {
-        "hopesLabel": "Esi kya ek cheez hai jo aap asha karte ho ki Bloom apko samjhne ya karne mein madad karega? "
-      }
-    },
-    "disableServiceEmails": {
-      "title": "Bloom ke emails band kar diye gaye!",
-      "description": "Ab aapko Bloom se judde koi emails nahi milenge. Agar aap isse baad mein badalna chahte hain, toh <link>please Bloom ki team se contact karein.</link>",
-      "error": "Bloom ke emails band karne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
-    },
-    "accountSettings": {
-      "title": "Account Settings",
-      "description": "Aapke settings ko dekhiye aur update kijiye",
-      "imageAlt": "Sandesh yukta mobile phone ka chitraan jis mein dil hai",
-      "profileSettings": {
-        "title": "Profile details",
-        "description": "Yahaan apana naam aur eemel apadet karen. yah aapakee profail mein sangraheet ekamaatr vyaktigat jaanakaaree hai.",
-        "nameLabel": "Naam",
-        "emailLabel": "Email",
-        "submitLabel": "Profile ko save kijiye",
-        "emailAlreadyInUseError": "Yah eemel pahale se hee kisee any khaate dvaara upayog mein hai, krpaya punah prayaas karen",
-        "confirmDialogTitle": "jab aap apana eemel badalate hain, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
-        "confirmDialogCancel": "Cancel"
-      },
-      "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>",
-      "actions": {
-        "title": "Account Actions",
-        "description": "Apna account delete karne se aapka naam, email address aur dekhe gaye sessions ki history permanently delete ho jayegi.",
-        "button": {
-          "resetPassword": "Password reset kijiye",
-          "deleteAccount": "Account delete kijiye"
-        },
-        "confirmDialogCancel": "Cancel",
-        "resetPasswordConfirmDialogTitle": "jab aap apana password update karenge, to aapako phir se log in karana hoga. kya aap aage badhana chaahate hain?",
-        "deleteAccountConfirmDialogTitle": "kya aap sach mein apana account delete karna chaahate hain?",
-        "deleteAccountConfirmDialogDescription": "yah aapake naam, eemel pata aur dekhe gaye sessions ka history hamesha ke liye delete kar dega."
-      },
-      "emailSettings": {
-        "title": "Email Preferences",
-        "description": "Humein bataein ki kya hum aapko email bhej sakte hain:",
-        "submitLabel": "Email preferences ko save kijiye",
-        "serviceEmailsPermissionLabel": "Bloom ko meri account ke changes aur feedback ke baare mein emails bhejne de",
-        "contactPermissionLabel": "Bloom ko naye course, bhasha ya service available hone par mujhe emails bhejne de",
-        "updateError": "aapka Bloom ke account update krne mein dikkat hui hai. Please page refresh karke phir try karein, ya <link>Bloom ki team se contact karein.</link>"
-      },
-      "emailRemindersSettings": {
-        "title": "Email Reminders",
-        "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
-        "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
-        "fieldLabel": "Yaad dilaya jaaye:",
-        "twoWeeksLabel": "Do saptah baad",
-        "oneMonthLabel": "Ek mahine ke baad",
-        "twoMonthsLabel": "Do mahine baad",
-        "neverLabel": "Kabhi nahi",
-        "update": "Aap is setting ko kabhi bhi update kar sakte hain",
-        "submitLabel": "Email Reminders Save karen",
-        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।</link>"
-      }
     }
-  }
 }
