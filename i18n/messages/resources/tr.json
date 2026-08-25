@@ -1,18 +1,18 @@
 {
   "Resources": {
-    "backToConversations": "Sohbetlere dön",
-    "backToShorts": "Kısalara dön",
-    "backToVideos": "Videolara dön",
-    "backToSomatics": "Somatiklere dön",
-    "nextVideoButtonLabel": "Sonraki video",
-    "nextConversationButtonLabel": "Sonraki sohbet",
-    "nextSessionButtonLabel": "Sonraki seans",
+    "backToConversations": "Sohbetlere geri dön",
+    "backToShorts": "Kısa videolara geri dön",
+    "backToVideos": "Videolara geri dön",
+    "backToSomatics": "Somatik çalışmalara geri dön",
+    "nextVideoButtonLabel": "Sıradaki video",
+    "nextConversationButtonLabel": "Sıradaki sohbet",
+    "nextSessionButtonLabel": "Sıradaki bölüm",
     "conversations": "Sohbetler",
-    "shorts": "Kısalar",
+    "shorts": "Kısa videolar",
     "videos": "Videolar",
     "completed": "Tamamlandı",
-    "sessionDetail": "Bu klip şu Seanstan: {sessionName}, şu Kursumuzdan: {courseName}",
-    "sessionButtonLabel": "Seansın tamamını izle",
+    "sessionDetail": "Bu klip, {courseName} kursumuzun {sessionName} bölümünden alınmıştır",
+    "sessionButtonLabel": "Bölümün tamamını izle",
     "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
     "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
     "relatedContent": {
@@ -21,15 +21,15 @@
       "resource_single_video": "İzle",
       "resource_conversation": "Dinle",
       "course": "Kurs",
-      "session": "Seans",
-      "session_iba": "Seans",
-      "grounding": "Topraklanma",
+      "session": "Bölüm",
+      "session_iba": "Bölüm",
+      "grounding": "Köklenme",
       "activities": "Etkinlik",
       "minuteLabel": "dakika"
     },
     "resourceFeedback": {
-      "title": "Bu seans nasıldı?",
-      "subtitle": "Bu öğrenmeyi nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı olur.",
+      "title": "Bu bölüm nasıldı?",
+      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
         "relatable": "Bana yakın",
         "useful": "Faydalı",
@@ -38,19 +38,19 @@
         "too complicated": "Çok karmaşık",
         "not useful": "Faydalı değil"
       },
-      "textboxDefaultText": "Bir yorum ekle...",
+      "textboxDefaultText": "Yorum ekle...",
       "sendButtonText": "Gönder",
-      "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+      "submissionText": "Geri bildirimin için teşekkürler",
       "errors": {
-        "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
+        "feedbackTagError": "Göndermeden önce lütfen bir değerlendirme seç."
       }
     },
     "references": {
       "title": "Kaynaklar",
-      "keyReferences": "Bu seanstan önemli kaynaklar (tam liste metnin sonundadır):",
+      "keyReferences": "Bu bölümdeki önemli kaynaklar (tam liste metin dökümünün sonunda):",
       "books": "Kitaplar",
       "articles": "Makaleler",
-      "video_practices": "Video uygulamaları",
+      "video_practices": "Video çalışmaları",
       "audios": "Podcast'ler"
     }
   }

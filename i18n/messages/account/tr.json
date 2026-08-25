@@ -1,30 +1,30 @@
 {
   "Account": {
     "applyCode": {
-      "title": "Kod uygula",
+      "title": "Kod ekle",
       "introduction": "Bloom, dünya genelinde istismardan hayatta kalanların iyileşmesini desteklemek için iş ortaklarıyla çalışır.",
       "description": "İş ortaklarımızdan birinden bir erişim kodu aldıysan, onların programına özel destek almak için kodu buraya ekleyebilirsin.",
       "descriptionLine2": "Birden fazla iş ortağından kod ekleyebilirsin.",
       "partnershipsTitle": "İş ortaklarımız",
-      "partnershipsDescription": "Logolarına tıklayarak iş birliklerimiz hakkında daha fazla bilgi edin.",
+      "partnershipsDescription": "Logolarına tıklayarak iş birliklerimiz hakkında daha fazla bilgi al.",
       "formIntroduction": "Bir Bloom iş ortağından aldığın erişim kodunu gir.",
       "formSuccess": {
-        "success": "Hesabına bir Bumble kodu uygulandı!",
+        "success": "Hesabına bir Bumble kodu eklendi!",
         "successLine2": "Bumble erişimin şunları sağlar:",
         "liveChat": "Bloom ekibiyle mesajlaşma",
         "therapy": "{therapySessionsRemaining} terapi seansı",
-        "courses": "Kendi kendine ilerlenen kurslar"
+        "courses": "Kendi hızında ilerleyebileceğin kurslar"
       },
       "form": {
         "codeLabel": "Erişim kodu",
-        "submitLabel": "Kodu uygula",
-        "assignPartnerAccessError": "Kod hesabına uygulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+        "submitLabel": "Kodu ekle",
+        "assignPartnerAccessError": "Kod hesabına eklenirken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
         "codeErrors": {
           "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
           "expired": "Bu kodun süresi doldu. İş ortağının ekibiyle iletişime geç.",
           "invalid": "Erişim kodun geçersiz görünüyor. Yazım hatalarını kontrol et veya iş ortağıyla iletişime geç.",
           "alreadyInUse": "Bu kod daha önce kullanılmış. Bir hata olduğunu düşünüyorsan iş ortağının ekibiyle iletişime geç.",
-          "alreadyApplied": "Bu kod hesabına zaten uygulanmış."
+          "alreadyApplied": "Bu kod hesabına zaten eklenmiş."
         }
       }
     },
@@ -42,7 +42,7 @@
         "genderOptions": {
           "woman": "Kadın",
           "man": "Erkek",
-          "nonBinary": "Non-binary (ikili olmayan)",
+          "nonBinary": "Non-binary (ikili cinsiyet sistemi dışında)",
           "transgender": "Trans",
           "intersex": "İnterseks",
           "twoSpirit": "Two-spirit (iki ruhlu)",
@@ -75,14 +75,17 @@
           "7": "Söylememeyi tercih ederim"
         },
         "submitLabel": "Gönder",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Lütfen aşağıdaki ifadelere ne ölçüde katıldığını derecelendir:",
         "scaleDescriptionLine2": "1 = kesinlikle katılmıyorum, 10 = kesinlikle katılıyorum",
         "scaleLabels": {
           "Q1": "Yaşadığım travmanın zihnimi, bedenimi ve duygularımı nasıl etkilediğini anlıyorum",
-          "Q2": "Uzun vadede bana yardımcı olmayan başa çıkma yöntemleri olduğunu ve bunlara yönelmenin travmaya verilen normal bir tepki olabileceğini biliyorum ",
+          "Q2": "Uzun vadede bana yardımcı olmayan başa çıkma mekanizmaları olduğunu ve bunlara yönelmenin travmaya verilen normal bir tepki olabileceğini biliyorum ",
           "Q3": "İyileşmenin zaman, enerji ve sabır gerektirdiğini biliyorum",
           "Q4": "İyileşmek için ihtiyacım olan ilgiyi kendime göstermeye kararlıyım",
           "Q5": "Bana iyi hissettiren şeyleri buldum ve onlara günlük rutinimde zaman ayırıyorum",
@@ -102,7 +105,7 @@
       "error": "Bloom'dan gelen e-postalar kapatılırken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"
     },
     "accountSettings": {
-      "title": "Hesap Ayarları",
+      "title": "Hesap ayarları",
       "description": "Bloom'daki ayarlarını görüntüle ve güncelle",
       "imageAlt": "İçinde kalp olan mesajlı bir cep telefonu illüstrasyonu",
       "profileSettings": {
@@ -118,15 +121,15 @@
       "updateError": "Bloom hesabın güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>",
       "actions": {
         "title": "Hesap işlemleri",
-        "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin seansların geçmişini sistemimizden kalıcı olarak siler.",
+        "description": "Hesabını silmek; adını, e-posta adresini ve izlediğin bölümlerin geçmişini sistemimizden kalıcı olarak siler.",
         "button": {
           "resetPassword": "Şifreyi sıfırla",
-          "deleteAccount": "Hesabı Sil"
+          "deleteAccount": "Hesabı sil"
         },
         "confirmDialogCancel": "Geri dön",
         "resetPasswordConfirmDialogTitle": "Şifreni güncellediğinde tekrar giriş yapman gerekecek. Devam etmek ister misin?",
         "deleteAccountConfirmDialogTitle": "Lütfen hesabını silmek istediğini onayla",
-        "deleteAccountConfirmDialogDescription": "Bu, hesabının anında devre dışı kalacağı ve geri kurtarılamayacağı anlamına gelir. Hiçbir Bloom özelliğine veya kullanım geçmişine erişimin olmayacak. E-posta adresini ve tüm kişisel verilerini kayıtlarımızdan sileriz."
+        "deleteAccountConfirmDialogDescription": "Bu, hesabının anında devre dışı kalacağı ve geri getirilemeyeceği anlamına gelir. Hiçbir Bloom özelliğine veya kullanım geçmişine erişimin olmayacak. E-posta adresini ve tüm kişisel verilerini kayıtlarımızdan sileriz."
       },
       "emailSettings": {
         "title": "E-posta tercihleri",
@@ -144,7 +147,7 @@
         "twoWeeksLabel": "İki hafta sonra",
         "oneMonthLabel": "Bir ay sonra",
         "twoMonthsLabel": "İki ay sonra",
-        "neverLabel": "Asla",
+        "neverLabel": "Hiçbir zaman",
         "update": "Bu ayarı istediğin zaman güncelleyebilirsin",
         "submitLabel": "E-posta hatırlatıcılarını kaydet",
         "updateError": "E-posta hatırlatıcı ayarların güncellenirken bir hata oluştu. Bu sayfayı yenileyerek tekrar dene ya da <link>Bloom ekibiyle iletişime geç.</link>"

@@ -27,6 +27,7 @@
         "unsupportedImage": "Es werden nur JPG-, PNG-, GIF- oder WebP-Bilder unterstützt.",
         "fileTooLarge": "Dateien müssen kleiner als 25 MB sein.",
         "uploadFailed": "Hochladen fehlgeschlagen. Bitte versuche es erneut.",
+        "imageBlocked": "Dieses Bild wurde blockiert, weil es unseren Sicherheitsstandards nicht entsprach. Wenn du glaubst, dass dies ein Fehler ist, schreibe uns bitte eine Nachricht und erkläre uns, warum.",
         "micPermission": "Zugriff auf das Mikrofon verweigert. Um eine Sprachnachricht aufzunehmen, erlaube den Mikrofonzugriff in deinen Browsereinstellungen und versuche es erneut.",
         "micUnavailable": "Kein Zugriff auf dein Mikrofon. Bitte überprüfe, ob es angeschlossen ist, und versuche es erneut."
       }

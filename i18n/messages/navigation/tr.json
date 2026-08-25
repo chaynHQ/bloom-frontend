@@ -11,12 +11,12 @@
     "userMenu": "Kullanıcı ayarları menüsü",
     "home": "Ana sayfa",
     "admin": "Yönetim",
-    "about": "Hakkında",
+    "about": "Hakkımızda",
     "meetTheTeam": "Bloom ekibimiz",
     "immediateHelp": "Acil yardım",
     "therapy": "Terapi",
     "courses": "Kurslar",
-    "applyCode": "Kod uygula",
+    "applyCode": "Kod ekle",
     "account": "Hesap",
     "secondaryNavigationMenu": "İkincil gezinme menüsü",
     "notes": "Notlar",
@@ -24,12 +24,12 @@
       "therapyIcon": "Çiçekli bir baş illüstrasyonu",
       "courseIcon": "Bir oynat simgesi illüstrasyonu, sağa işaret eden bir üçgen. Önünde küçük bir güneş var",
       "notesIcon": "Ortasında bir kalp olan bir cep telefonu illüstrasyonu",
-      "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde düz çizgiler var.",
+      "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde ise düz çizgiler var.",
       "activitiesIcon": "Kapağında küçük sarı bir alev olan bir kitap.",
       "groundingIcon": "Üzerinde küçük pembe çiçekler olan bir dal."
     },
     "messaging": "Mesajlaşma",
-    "grounding": "Topraklanma",
+    "grounding": "Köklenme",
     "activities": "Etkinlikler"
   }
 }

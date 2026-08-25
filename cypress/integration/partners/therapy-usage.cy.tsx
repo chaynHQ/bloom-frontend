@@ -1,6 +1,5 @@
 describe('Therapy Usage', () => {
   let accessCode = ''; //intialise access code variable
-  const newUserEmail = `cypresstestuser+${Date.now()}@chayn.co`;
   const password = 'testpassword';
 
   before(() => {
@@ -10,6 +9,7 @@ describe('Therapy Usage', () => {
       Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
     );
     cy.visit('/partner-admin/create-access-code');
+    cy.waitForAuthenticatedApp();
     cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
     cy.get('button[type="submit"]').contains('Create access code').click(); // submit form to create access code
     cy.get('#access-code')
@@ -26,6 +26,8 @@ describe('Therapy Usage', () => {
   });
 
   it('Log in as a user and apply code', () => {
+    const newUserEmail = Cypress.uniqueEmail('cypresstestuser');
+
     cy.cleanUpTestState();
     cy.createUser({
       emailInput: newUserEmail,
@@ -42,6 +44,7 @@ describe('Therapy Usage', () => {
 
   it('Should load the therapy page and display main content sections', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
     // Check Header elements
     cy.get('h1').should('be.visible').and('have.text', 'Book therapy'); // Assuming H1 is the main title
 
@@ -70,7 +73,7 @@ describe('Therapy Usage', () => {
 
   it('Should open the booking modal and display the Simplybook widget iframe', () => {
     cy.visit('/therapy/book-session');
-    cy.wait(4000); // wait for the page to load as there are issues with page rerendering in cypress tests
+    cy.waitForAuthenticatedApp();
 
     cy.get('button').contains('Begin booking').click();
 
@@ -87,6 +90,7 @@ describe('Therapy Usage', () => {
 
   it('Should display a therapy booking item with all relevant data', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
 
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
@@ -116,6 +120,7 @@ describe('Therapy Usage', () => {
 
   it('Should allow expanding and collapsing a therapy booking item and display details', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
 
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
@@ -147,6 +152,7 @@ describe('Therapy Usage', () => {
 
   it('Should open and close the cancel confirmation dialog for an Upcoming therapy session', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
 
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
@@ -203,6 +209,7 @@ describe('Therapy Usage', () => {
 
   it('Should not show cancel button for past or cancelled sessions', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
 
     cy.intercept('GET', '/api/v1/therapy-session', [
       {
@@ -256,6 +263,7 @@ describe('Therapy Usage', () => {
 
   it('Should display an error message if cancelling a session fails', () => {
     cy.visit('/therapy/book-session');
+    cy.waitForAuthenticatedApp();
 
     cy.intercept('GET', '/api/v1/therapy-session', [
       {

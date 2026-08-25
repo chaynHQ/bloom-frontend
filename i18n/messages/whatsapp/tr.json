@@ -23,13 +23,13 @@
       "haveAccount": "Hesabın var mı?",
       "login": "Giriş yap",
       "createAccountButton": "Hesap oluştur",
-      "howItWorks": "Bloom'dan Notlar nasıl işler",
+      "howItWorks": "Bloom'dan Notlar nasıl çalışır",
       "step1": "WhatsApp numarana mesajlar gönderiyoruz",
       "step2": "Haftada iki kez, her Çarşamba ve Pazar",
       "step3": "Olumlamalar, etkinlikler ve düşünceler paylaşıyoruz",
       "step4": "Fikrini değiştirirsen istediğin zaman aboneliğini iptal et",
-      "usNoticeTitle": "ABD'deki aboneler için WhatsApp teslimat sorunları",
-      "usNoticeDescription": "Meta, ABD'deki abonelere Notlar göndermemizi etkileyen değişiklikler yaptı. Bunu düzeltmek için yoğun şekilde çalışıyoruz, ancak mesajlar şu anda sana ulaşmayabilir. Yine de abone olabilirsin—herkes için tekrar çalışmaya başladığında seni bilgilendireceğiz.",
+      "usNoticeTitle": "ABD'deki aboneler için WhatsApp mesaj iletim sorunları",
+      "usNoticeDescription": "Meta'nın yaptığı bazı değişiklikler, ABD'deki abonelerimize Notlar göndermemizi etkiliyor. Bu sorunu çözmek için elimizden geleni yapıyoruz; ancak şu anda mesajlarımız sana ulaşmayabilir. Yine de abone olmaktan çekinme — herkes için yeniden çalışmaya başladığında seni bilgilendireceğiz.",
       "subscribeDescription": "WhatsApp mesajları almaya başlamak için Bloom'dan Notlar'a abone ol. İstediğin zaman buradan aboneliğini iptal edebilirsin.",
       "unsubscribeDescription": "WhatsApp mesajları almayı durdurmak ya da numaranı güncellemek için Bloom'dan Notlar aboneliğini iptal et. İstediğin zaman tekrar abone olabilirsin."
     }

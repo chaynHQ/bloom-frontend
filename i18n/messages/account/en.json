@@ -75,7 +75,10 @@
           "7": "Prefer not to say"
         },
         "submitLabel": "Submit",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Please rate your level of agreement with the following statements:",
