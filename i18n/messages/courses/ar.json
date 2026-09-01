@@ -15,7 +15,7 @@
       "otherCoursesTitle": "عرض دورات أخرى"
     },
     "sessionDetail": {
-      "videoTitle": "فيديو",
+      "learnTitle": "عن هذه الجلسة",
       "videoDescription": "يمكنك مشاهدة الفيديو أو قراءة <transcriptLink>النص المكتوب للفيديو</transcriptLink>.",
       "activityTitle": "نشاط",
       "bonusTitle": "محتوى إضافي",
@@ -37,7 +37,6 @@
       "currentCourse": "الدورة الحالية",
       "current": "الحالية",
       "nextSession": "الجلسة التالية",
-      "viewCourseDetail": "عرض تفاصيل الدورة",
       "closeSessions": "إغلاق"
     },
     "sessionFeedback": {
@@ -66,6 +65,8 @@
       "completeSessionError": "حدث خطأ أثناء وضع علامة اكتمال على هذه الجلسة. يُرجى المحاولة بعد قليل."
     },
     "backToCourse": "العودة إلى الدورة",
-    "backToLibrary": "العودة إلى المكتبة"
+    "backToCourseOverview": "العودة إلى نظرة عامة على الدورة",
+    "backToLibrary": "العودة إلى المكتبة",
+    "backToSessions": "العودة إلى الجلسات"
   }
 }

@@ -6,21 +6,31 @@ import { type CourseSession } from '@/lib/utils/courseSessions';
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
+// The rule sits on the section's top edge so it spans the full viewport width, above the heading.
 const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: 'secondary.light',
+  borderTop: '1px solid',
+  borderColor: 'sectionBorder',
+  paddingTop: { xs: '2rem !important', md: '2.5rem !important' },
 } as const;
 
 const listStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: 3,
-  mt: 4,
   maxWidth: { md: 504 }, // 40px marker + 16px gap + a 448px card, as designed
 } as const;
 
-const itemStyle = { display: 'flex', gap: 2, alignItems: 'stretch' } as const;
+// `paddingInlineStart: 0` overrides the global `ol > li` indent so the disc aligns to the
+// section's inline padding, level with the heading above it.
+const itemStyle = {
+  display: 'flex',
+  gap: 2,
+  alignItems: 'stretch',
+  paddingInlineStart: 0,
+} as const;
 
 // The marker column draws the timeline: a numbered disc with a connector running down to the
 // next session. The last item's connector is suppressed so the line ends with the course.
@@ -39,7 +49,7 @@ const discStyle = {
   color: 'common.white',
   fontFamily: 'headingFontFamily',
   fontSize: '1.375rem',
-  fontWeight: 500,
+  fontWeight: 400,
 } as const;
 
 const connectorStyle = {
@@ -74,7 +84,7 @@ export function CourseSessionList({
       <Typography variant="h2" component="h2" sx={{ mb: 0.5 }}>
         {t('courseDetail.sessionsTitle')}
       </Typography>
-      <Typography variant="body2" sx={{ color: 'grey.800' }}>
+      <Typography variant="body2" sx={{ color: 'grey.800', pb: 3 }}>
         {tL('sessionCount', { count: sessions.length })}
       </Typography>
 

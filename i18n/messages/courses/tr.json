@@ -9,13 +9,13 @@
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
       "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku",
-      "sessionsTitle": "Bu kurstaki seanslar",
+      "sessionsTitle": "Bu kurstaki bölümler",
       "beginCourse": "Kursa başla",
       "continueCourse": "Kursa devam et",
       "otherCoursesTitle": "Diğer kursları gör"
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Bu bölüm hakkında",
       "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini</transcriptLink> oku.",
       "activityTitle": "Etkinlik",
       "bonusTitle": "Bonus içerik",
@@ -33,11 +33,10 @@
         "startButton": "Bize mesaj gönder"
       },
       "sessionComplete": "Bölüm tamamlandı",
-      "currentSession": "Mevcut seans",
+      "currentSession": "Mevcut bölüm",
       "currentCourse": "Mevcut kurs",
       "current": "Mevcut",
-      "nextSession": "Sonraki seans",
-      "viewCourseDetail": "Kurs detaylarını gör",
+      "nextSession": "Sonraki bölüm",
       "closeSessions": "Kapat"
     },
     "sessionFeedback": {
@@ -66,6 +65,8 @@
       "completeSessionError": "Bu bölüm tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
-    "backToLibrary": "Kütüphaneye dön"
+    "backToCourseOverview": "Kurs özetine dön",
+    "backToLibrary": "Kütüphaneye dön",
+    "backToSessions": "Bölümlere dön"
   }
 }

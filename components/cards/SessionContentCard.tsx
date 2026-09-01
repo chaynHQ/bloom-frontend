@@ -1,7 +1,6 @@
 'use client';
 
 import logEvent from '@/lib/utils/logEvent';
-import { cardShadow } from '@/styles/common';
 import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
 import { Box, ButtonBase, Collapse, Typography } from '@mui/material';
 import { ReactNode, useId, useState } from 'react';
@@ -11,7 +10,6 @@ const cardStyle = {
   border: '1px solid',
   borderColor: 'cardBorder',
   backgroundColor: 'cardSurface',
-  boxShadow: cardShadow,
   overflow: 'hidden',
   transition: 'border-color 150ms ease',
   '&:hover': { borderColor: 'secondary.dark' },
@@ -112,7 +110,7 @@ const SessionContentCard = ({
               {badge}
             </Typography>
           )}
-          <Typography variant="h3" component="h2" sx={{ mb: 0 }}>
+          <Typography variant="h3" component="h2" sx={{ mb: 0, fontWeight: 400 }}>
             {title}
           </Typography>
         </Box>

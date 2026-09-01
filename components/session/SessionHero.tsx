@@ -35,7 +35,9 @@ export const SessionHero = ({ name, sessionProgress }: SessionHeroProps) => {
     <Box qa-id="session-hero">
       <Box sx={rowStyle}>
         <Box>
-          <Typography variant="body2" sx={{ color: 'grey.700' }}>
+          {/* `div`, not the default `p`: the global `p:last-of-type { margin-bottom: 0 }` rule
+              would otherwise cancel the gap below this label. */}
+          <Typography component="div" variant="body2" sx={{ color: 'grey.700', mb: 1.5 }}>
             {t('sessionDetail.currentSession')}
           </Typography>
           <Typography variant="h1" component="h1" sx={{ mb: 0 }}>

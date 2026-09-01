@@ -22,7 +22,11 @@ import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { useScrollToSignUp } from '@/lib/hooks/useScrollToSignUp';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
-import { getCourseSessions, type CourseSession } from '@/lib/utils/courseSessions';
+import {
+  getCourseSessions,
+  getCourseTotalMinutes,
+  type CourseSession,
+} from '@/lib/utils/courseSessions';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { type LibraryItem, type LibraryStory } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
@@ -36,8 +40,15 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 const OTHER_COURSES_SHOWN = 2;
 
 // The redesign has no slot for the course intro video, but courses that have one still need to
-// surface it — so it sits as its own band between the hero and the session list.
-const introSectionStyle = { backgroundColor: 'secondary.light' } as const;
+// surface it. Full-width rules on the top edge of this section and the session list separate the
+// three bands; the padding around the intro/sessions rule is symmetric (video ↔ rule ↔ heading).
+const introSectionStyle = {
+  backgroundColor: 'secondary.light',
+  borderTop: '1px solid',
+  borderColor: 'sectionBorder',
+  paddingTop: { xs: '1.75rem !important', md: '2rem !important' },
+  paddingBottom: { xs: '2rem !important', md: '2.5rem !important' },
+} as const;
 
 export interface StoryblokCoursePageProps {
   _uid: string;
@@ -112,6 +123,7 @@ const StoryblokCoursePage = ({
   );
 
   const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);
+  const courseMinutes = useMemo(() => getCourseTotalMinutes(sessions), [sessions]);
 
   const progressByUuid = useMemo(() => {
     const userCourse = courses?.find((course) => course.storyblokUuid === storyUuid);
@@ -213,6 +225,7 @@ const StoryblokCoursePage = ({
         imageSrc={image_with_background?.filename}
         imageAlt={image_with_background?.alt}
         sessionCount={sessions.length}
+        courseMinutes={courseMinutes}
         courseProgress={courseProgress}
         ctaHref={isLoggedIn ? nextSession?.href : undefined}
         ctaLabel={
@@ -222,7 +235,7 @@ const StoryblokCoursePage = ({
         }
         onCtaClick={handleCtaClick}
         backHref="/library"
-        backLabel={t('backToLibrary')}
+        backLabel={t('backToSessions')}
       />
       {video && (
         <Container sx={introSectionStyle}>
@@ -241,7 +254,7 @@ const StoryblokCoursePage = ({
         onSessionSelect={handleSessionSelect}
       />
       <OtherCourses courses={otherCourses} onCourseSelect={handleOtherCourseSelect} />
-      {!isLoggedIn && <SignUpSection source="course" />}
+      {!isLoggedIn && <SignUpSection source="course" sectionAbove={false} />}
     </Box>
   );
 };

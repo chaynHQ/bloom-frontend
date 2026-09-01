@@ -4,7 +4,8 @@ import { CardStatusBadge, type CardProgress } from '@/components/cards/CardStatu
 import { Link as i18nLink } from '@/i18n/routing';
 import { type CourseSession } from '@/lib/utils/courseSessions';
 import { cardShadow } from '@/styles/common';
-import { Box, Card, CardActionArea, Typography } from '@mui/material';
+import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
+import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 const cardStyle = {
@@ -28,13 +29,13 @@ const actionAreaStyle = {
   '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
-// The design insets the content from the top whether or not a corner badge is present, so cards
-// keep a consistent height as progress and lock states come and go.
+// Top inset leaves room for the notched corner badge so it never overlaps the title.
 const contentStyle = {
   display: 'flex',
   flexDirection: 'column',
-  p: 2,
-  pt: 7,
+  px: 2,
+  pt: 5,
+  pb: 2,
 } as const;
 
 const descriptionStyle = {
@@ -44,6 +45,17 @@ const descriptionStyle = {
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
+} as const;
+
+// The duration sits in a footer set off from the copy by a hairline, as designed.
+const metaDividerStyle = { mt: 2, borderColor: 'cardBorder' } as const;
+
+const metaStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 0.5,
+  mt: 2,
+  color: 'grey.800',
 } as const;
 
 interface CourseSessionCardProps {
@@ -60,6 +72,7 @@ export function CourseSessionCard({
   onSelect,
 }: CourseSessionCardProps) {
   const t = useTranslations('Courses');
+  const tL = useTranslations('Library');
 
   return (
     <Card qa-id="course-session-card" sx={cardStyle}>
@@ -84,6 +97,17 @@ export function CourseSessionCard({
             <Typography variant="body2" sx={descriptionStyle}>
               {session.description}
             </Typography>
+          )}
+          {session.minutes != null && (
+            <>
+              <Divider sx={metaDividerStyle} />
+              <Box sx={metaStyle}>
+                <AccessTimeRounded sx={{ fontSize: 16 }} />
+                <Typography variant="body2" component="span">
+                  {tL('duration', { minutes: session.minutes })}
+                </Typography>
+              </Box>
+            </>
           )}
         </Box>
       </CardActionArea>

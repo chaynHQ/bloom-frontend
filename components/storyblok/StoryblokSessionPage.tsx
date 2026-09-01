@@ -2,6 +2,7 @@
 
 import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import SessionContentCard from '@/components/cards/SessionContentCard';
+import { BackLink } from '@/components/common/BackLink';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
 import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
@@ -24,6 +25,7 @@ import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
+import { contentRailGutter, pageHeaderPaddingTop } from '@/styles/common';
 import { Box, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
@@ -31,44 +33,53 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-// Full-bleed two-column from `lg`: the playlist pins to the inline start and the session content
-// centres in the space that remains, rather than sharing the usual centred content rail.
+// Full-bleed two-column from `lg`: the playlist pins to the inline start, the session content
+// aligns its inline end to the standard content rail rather than drifting out to the viewport edge.
 const containerStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', lg: 'row' },
   alignItems: 'flex-start',
   gap: { lg: 3 },
   backgroundColor: 'pageBackground',
+  // Compact on mobile so the inline back link sits level with the fixed "Leave this site" button;
+  // from `lg` the header offset moves to `mainStyle` so the playlist can sit near the top.
+  paddingTop: { xs: '0.75rem !important', lg: '1rem !important' },
+  // No bottom padding below `lg`: the sticky course bar should meet the footer with no dead gap.
+  paddingBottom: { xs: '0 !important', lg: '5rem !important' },
   paddingInlineStart: { lg: '1.5rem !important' },
-  paddingInlineEnd: { lg: '1.5rem !important' },
+  paddingInlineEnd: { lg: `max(1.5rem, ${contentRailGutter()}) !important` },
 } as const;
 
 const mainStyle = {
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 3,
   flex: 1,
   minWidth: 0,
   width: '100%',
-  maxWidth: { lg: 608 },
-  marginInline: { lg: 'auto' },
+  maxWidth: { lg: 620 },
+  paddingTop: { lg: pageHeaderPaddingTop },
+  // Pushes the column to the inline end so its right edge lands on the content rail.
+  marginInlineStart: { lg: 'auto' },
 } as const;
 
 const cardsStyle = {
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
-  // A short connector in each gap, tying the session's cards into one sequence.
-  '& > *': { position: 'relative' },
-  '& > * + *::before': {
+  gap: 3,
+  position: 'relative',
+  // A faint rule runs down the centre; the opaque cards cover all but the gaps, leaving a short
+  // connector between each card that ties the session's content into one sequence, as designed.
+  '&::before': {
     content: '""',
     position: 'absolute',
-    top: '-2rem',
+    top: 0,
+    bottom: 0,
     insetInlineStart: '50%',
     width: '1px',
-    height: '2rem',
-    backgroundColor: 'sectionBorder',
+    backgroundColor: 'cardBorder',
   },
+  '& > *': { position: 'relative' },
 } as const;
 
 export interface StoryblokSessionPageProps {
@@ -219,6 +230,12 @@ const StoryblokSessionPage = ({
     >
       <Container sx={containerStyle}>
         <Box component="main" sx={mainStyle}>
+          {/* The playlist sidebar carries the back link from `lg`; below that it sits inline here. */}
+          <BackLink
+            href={courseHref}
+            label={t('backToCourseOverview')}
+            sx={{ display: { lg: 'none' } }}
+          />
           <SessionHero name={name} sessionProgress={sessionProgress} />
           <Box sx={cardsStyle}>
             <SessionMediaCard
@@ -255,13 +272,22 @@ const StoryblokSessionPage = ({
               <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
             )}
             <SessionChat eventData={eventData} />
+            {sessionId && (
+              <SessionContentCard
+                qaId="session-feedback"
+                title={t('sessionFeedback.title')}
+                eventPrefix="SESSION_FEEDBACK"
+                eventData={eventData}
+              >
+                <SessionFeedbackForm sessionId={sessionId} />
+              </SessionContentCard>
+            )}
             <SessionActions
               storyUuid={storyUuid}
               sessionProgress={sessionProgress}
               nextSession={nextSession}
               eventData={eventData}
             />
-            {sessionId && <SessionFeedbackForm sessionId={sessionId} />}
           </Box>
         </Box>
 
@@ -275,7 +301,7 @@ const StoryblokSessionPage = ({
             progressByUuid={progressByUuid}
             accountNeeded={!isLoggedIn}
             backHref="/library"
-            backLabel={t('backToLibrary')}
+            backLabel={t('backToSessions')}
             onSessionSelect={handlePlaylistSessionSelect}
             onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
           />

@@ -127,7 +127,7 @@ function themesForStory(story: LibraryStory): ThemeKey[] {
   return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
 }
 
-function parseMinutes(duration: unknown): number | undefined {
+export function parseMinutes(duration: unknown): number | undefined {
   const minutes = Number(duration);
   return Number.isFinite(minutes) && minutes > 0 ? minutes : undefined;
 }

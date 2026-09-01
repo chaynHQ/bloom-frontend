@@ -15,7 +15,7 @@
       "otherCoursesTitle": "Andere Kurse ansehen"
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Über diese Session",
       "videoDescription": "Schau das Video an oder lies das <transcriptLink>Videotranskript</transcriptLink>.",
       "activityTitle": "Übung",
       "bonusTitle": "Bonusinhalte",
@@ -37,7 +37,6 @@
       "currentCourse": "Aktueller Kurs",
       "current": "Aktuell",
       "nextSession": "Nächste Session",
-      "viewCourseDetail": "Kursdetails ansehen",
       "closeSessions": "Schließen"
     },
     "sessionFeedback": {
@@ -66,6 +65,8 @@
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
     "backToCourse": "Zurück zum Kurs",
-    "backToLibrary": "Zurück zur Bibliothek"
+    "backToCourseOverview": "Zurück zur Kursübersicht",
+    "backToLibrary": "Zurück zur Bibliothek",
+    "backToSessions": "Zurück zu den Sessions"
   }
 }

@@ -15,7 +15,7 @@
       "otherCoursesTitle": "Dusre courses dekhein"
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Is session ke baare mein",
       "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript</transcriptLink> padh lijiye.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
@@ -37,7 +37,6 @@
       "currentCourse": "Maujooda course",
       "current": "Maujooda",
       "nextSession": "Agla session",
-      "viewCourseDetail": "Course ki detail dekhein",
       "closeSessions": "Band karein"
     },
     "sessionFeedback": {
@@ -66,6 +65,8 @@
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
     "backToCourse": "Course par vapas jayein.",
-    "backToLibrary": "Library par vapas jayein."
+    "backToCourseOverview": "Course overview par vapas jayein.",
+    "backToLibrary": "Library par vapas jayein.",
+    "backToSessions": "Sessions par vapas jayein."
   }
 }

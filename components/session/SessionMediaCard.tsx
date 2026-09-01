@@ -14,20 +14,44 @@ import {
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  type Theme,
+  Typography,
+} from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-const accordionStyle = {
+// A quiet, scrollable panel with grey body text keeps the video the focus of the card; the
+// scrollbar is tinted in the brand pink, as the design shows it running down the panel's edge.
+const accordionStyle = (theme: Theme) => ({
   mt: 2,
   backgroundColor: 'transparent',
   boxShadow: 'none',
   '&::before': { display: 'none' },
   '& .MuiAccordionSummary-root': { minHeight: 0, px: 0 },
-  '& .MuiAccordionDetails-root': { px: 0, maxHeight: 320, overflowY: 'auto' },
-} as const;
+  '& .MuiAccordionDetails-root': {
+    px: 2,
+    py: 1.5,
+    maxHeight: 320,
+    overflowY: 'auto',
+    borderRadius: '8px',
+    backgroundColor: theme.palette.panelSurface,
+    color: theme.palette.grey[700],
+    '& p': { color: theme.palette.grey[700] },
+    scrollbarWidth: 'thin',
+    scrollbarColor: `${theme.palette.primary.dark} transparent`,
+    '&::-webkit-scrollbar': { width: '6px' },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: theme.palette.primary.dark,
+      borderRadius: '3px',
+    },
+  },
+});
 
 const summaryLabelStyle = {
   fontFamily: 'headingFontFamily',
@@ -102,7 +126,7 @@ export const SessionMediaCard = ({
   return (
     <SessionContentCard
       qaId="session-media-card"
-      title={t('sessionDetail.videoTitle')}
+      title={t('sessionDetail.learnTitle')}
       eventPrefix="SESSION_VIDEO"
       eventData={eventData}
       initialExpanded
@@ -117,7 +141,7 @@ export const SessionMediaCard = ({
         setVideoStarted={setVideoStarted}
         eventData={eventData}
         eventPrefix="SESSION"
-        containerStyles={{ mt: 2 }}
+        containerStyles={{ mt: 2, maxWidth: '100%' }}
       />
       {video_transcript && (
         <Accordion

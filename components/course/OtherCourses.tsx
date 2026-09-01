@@ -2,7 +2,6 @@
 
 import { LibraryCard } from '@/components/library/LibraryCard';
 import { type LibraryItem } from '@/lib/utils/libraryData';
-import { sectionDivider } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
@@ -10,7 +9,6 @@ const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: 'pageBackground',
-  ...sectionDivider('top'),
 } as const;
 
 const gridStyle = {

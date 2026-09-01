@@ -26,10 +26,10 @@ const barStyle = {
   justifyContent: 'flex-end',
   gap: 2,
   p: 2,
-  borderRadius: '16px',
+  borderRadius: '8px',
   border: '1px solid',
   borderColor: 'cardBorder',
-  backgroundColor: 'cardSurface',
+  backgroundColor: 'pageBackground',
 } as const;
 
 const errorStyle = { width: '100%', color: 'primary.dark', fontWeight: 500 } as const;

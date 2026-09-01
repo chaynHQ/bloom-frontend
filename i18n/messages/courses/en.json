@@ -15,7 +15,7 @@
       "otherCoursesTitle": "View other courses"
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "About this session",
       "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
@@ -37,7 +37,6 @@
       "currentCourse": "Current course",
       "current": "Current",
       "nextSession": "Next session",
-      "viewCourseDetail": "View course detail",
       "closeSessions": "Close"
     },
     "sessionFeedback": {
@@ -66,6 +65,8 @@
       "completeSessionError": "There was an error marking this session as complete. Try again a little later."
     },
     "backToCourse": "Back to course",
-    "backToLibrary": "Back to library"
+    "backToCourseOverview": "Back to course overview",
+    "backToLibrary": "Back to library",
+    "backToSessions": "Back to sessions"
   }
 }
