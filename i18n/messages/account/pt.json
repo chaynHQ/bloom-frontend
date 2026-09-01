@@ -75,7 +75,10 @@
           "7": "Prefiro não declarar"
         },
         "submitLabel": "Enviar",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Por favor, indique seu grau de satisfação de acordo com as seguintes afirmações:",

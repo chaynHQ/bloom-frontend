@@ -75,7 +75,10 @@
           "7": "Na bata pasand karungi"
         },
         "submitLabel": "Submit",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "apni sehmati ke anusaar neeche likhe hue statements ko rate karein:",

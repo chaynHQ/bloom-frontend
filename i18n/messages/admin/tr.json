@@ -1,16 +1,16 @@
 {
   "Admin": {
-    "title": "Süper yönetici panosu",
+    "title": "Süper yönetici kontrol paneli",
     "accessGuard": {
       "title": "Erişim gerekli",
       "introduction": "Hesabın bu sayfalara erişim içermiyor."
     },
     "createPartnerAdmin": {
-      "title": "Bir yönetici hesabı oluştur",
+      "title": "Yönetici hesabı oluştur",
       "description": "Yönetici hesapları terapi kodları oluşturabilir",
       "partnerNameLabel": "İş ortağı seç",
       "submit": "Yönetici hesabı oluştur",
-      "successDescription": "İş ortağı yöneticisi oluşturuldu! Bir hesaplarının olduğunu ve ilk kez giriş yapabilmek için bir şifre seçmek üzere 'Şifremi unuttum' akışını kullanmaları gerektiğini bildirmek için onlara e-posta gönder.",
+      "successDescription": "İş ortağı yöneticisi oluşturuldu! Hesaplarının açıldığını ve ilk kez giriş yapabilmek için 'Şifremi unuttum' seçeneğiyle bir şifre belirlemeleri gerektiğini onlara e-posta ile bildir.",
       "emailAddressLabel": "E-posta adresi",
       "nameLabel": "Ad",
       "reset": "Başka bir yönetici oluştur",
@@ -51,29 +51,15 @@
       "reset": "Formu sıfırla"
     },
     "deleteCypressUsers": {
-      "title": "Delete test accounts",
-      "description": "Permanently deletes all automated-test (Cypress) accounts matching a cypress@chayn.co email, including their database records and related data, and their Firebase, Front and Mailchimp profiles. Use this to clear test data that has leaked into an environment.",
-      "warning": "This is a hard delete and cannot be undone.",
-      "counting": "Counting test accounts…",
-      "count": "{count} test accounts currently match.",
-      "confirmLabel": "I understand this permanently deletes these accounts and all their data.",
-      "submit": "Delete test accounts",
-      "success": "Deleted {count} test accounts.",
-      "error": "Error deleting test accounts: "
-    },
-    "syncFrontContacts": {
-      "title": "Sync Front contacts",
-      "description": "Re-sends every custom field to Front for all contacts — everyone imported from Crisp plus everyone who has signed up since. Repairs contacts whose sign up and last active dates show as 01/01/1970. Safe to run more than once.",
-      "counting": "Checking how many contacts need syncing…",
-      "coverage": "{count} contacts will be synced, covering everyone from {since} onwards.",
-      "running": "Syncing… {processed} of {total} contacts.",
-      "complete": "Finished. {processed} of {total} contacts processed.",
-      "failed": "Stopped after an error. {processed} of {total} contacts processed.",
-      "breakdown": "{updated} updated · {notFound} no longer in Front · {skipped} test accounts skipped · {failed} failed",
-      "lastError": "Most recent error: {error}",
-      "submit": "Start sync",
-      "submitRunning": "Sync in progress",
-      "error": "Error starting sync: "
+      "title": "Test hesaplarını sil",
+      "description": "cypress@chayn.co adresiyle eşleşen tüm otomatik test (Cypress) hesaplarını; veritabanı kayıtları, ilgili verileri ve Firebase, Front ve Mailchimp profilleriyle birlikte kalıcı olarak siler. Bir ortama sızmış test verilerini temizlemek için kullan.",
+      "warning": "Bu kalıcı bir silme işlemidir ve geri alınamaz.",
+      "counting": "Test hesapları sayılıyor…",
+      "count": "Şu anda {count} test hesabı eşleşiyor.",
+      "confirmLabel": "Bu işlemin bu hesapları ve tüm verilerini kalıcı olarak sileceğini anlıyorum.",
+      "submit": "Test hesaplarını sil",
+      "success": "{count} test hesabı silindi.",
+      "error": "Test hesapları silinirken hata: "
     }
   }
 }

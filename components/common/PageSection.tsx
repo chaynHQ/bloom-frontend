@@ -4,9 +4,10 @@ import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { columnStyle } from '@/styles/common';
 import theme from '@/styles/theme';
 import { Container } from '@mui/material';
+import type { ReactNode } from 'react';
 
 interface PageSectionProps {
-  children: any;
+  children: ReactNode;
   color: STORYBLOK_COLORS;
   alignment: string;
   width?: 'default' | 'wide' | 'full';
