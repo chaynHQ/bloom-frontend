@@ -1,6 +1,6 @@
 'use client';
 
-import { Link as i18nLink } from '@/i18n/routing';
+import { Link as i18nLink, usePathname } from '@/i18n/routing';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useRegisterPath } from '@/lib/hooks/useRegisterPath';
@@ -53,6 +53,7 @@ export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
   const t = useTranslations('Courses.courseDetail.accessCard');
   const tS = useTranslations('Shared.signUpSection');
   const registerPath = useRegisterPath();
+  const pathname = usePathname();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -96,7 +97,12 @@ export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
       >
         {tS('cta')}
       </Button>
-      <Link component={i18nLink} href="/auth/login" sx={logInStyle}>
+      <Link
+        qa-id="access-full-course-login-link"
+        component={i18nLink}
+        href={`/auth/login?return_url=${encodeURIComponent(pathname)}`}
+        sx={logInStyle}
+      >
         {t('logIn')}
       </Link>
     </Box>

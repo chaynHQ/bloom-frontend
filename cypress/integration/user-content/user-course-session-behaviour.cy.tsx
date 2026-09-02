@@ -10,8 +10,12 @@ describe('A course session user', () => {
 
   it('Should navigate to a session and complete it', () => {
     // Test isolation resets the page to about:blank before this test runs, so the state
-    // from before() (visiting '/' and logging in) doesn't carry over without revisiting.
+    // from before() (visiting '/' and logging in) doesn't carry over without revisiting. The
+    // login itself is also async (Firebase auth state resolving after the fresh page load), so
+    // wait for the app to recognise it before navigating — otherwise the first session of this
+    // public course renders its logged-out preview, which hides the session-complete button.
     cy.visit('/');
+    cy.waitForAuthenticatedApp();
 
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 8000 }).should('exist').click(); //navigate to the library
 
