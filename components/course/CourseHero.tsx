@@ -2,7 +2,7 @@
 
 import { BackLink } from '@/components/common/BackLink';
 import ProgressStatus from '@/components/common/ProgressStatus';
-import { Link as i18nLink } from '@/i18n/routing';
+import { CourseCtaPanel } from '@/components/course/CourseCtaPanel';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { splitDuration } from '@/lib/utils/courseSessions';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -11,7 +11,7 @@ import { columnStyle, pageHeaderPaddingTop } from '@/styles/common';
 import theme from '@/styles/theme';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
-import { Box, Button, Container, Divider, Typography } from '@mui/material';
+import { Box, Container, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -68,30 +68,6 @@ const metaStyle = {
   fontWeight: 500,
 } as const;
 
-// The CTA sits in its own panel so it reads as an action rather than part of the course copy.
-// On desktop it stays pinned as the page scrolls into the session list.
-const ctaPanelStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-  flexShrink: 0,
-  alignSelf: { md: 'flex-start' },
-  position: { md: 'sticky' },
-  top: { md: 'calc(9rem + var(--top-banner-height, 0px))' },
-  width: { xs: '100%', md: 360 },
-  p: 2,
-  borderRadius: '8px',
-  border: '1px solid',
-  borderColor: 'cardBorder',
-  backgroundColor: 'pageBackground',
-} as const;
-
-// On desktop the illustration stacks above the title in the copy column; offsetting the CTA by
-// its height drops the panel down so it sits alongside the title rather than the illustration.
-const CTA_ILLUSTRATION_OFFSET = 'calc(135px + 16px)';
-
-const ctaButtonStyle = { width: '100%', maxWidth: 'none' } as const;
-
 interface CourseHeroProps {
   name: string;
   description: StoryblokRichtext;
@@ -100,6 +76,7 @@ interface CourseHeroProps {
   sessionCount: number;
   courseMinutes?: number;
   courseProgress: PROGRESS_STATUS;
+  loggedIn: boolean;
   ctaHref?: string;
   ctaLabel: string;
   onCtaClick: () => void;
@@ -115,6 +92,7 @@ export function CourseHero({
   sessionCount,
   courseMinutes,
   courseProgress,
+  loggedIn,
   ctaHref,
   ctaLabel,
   onCtaClick,
@@ -173,23 +151,13 @@ export function CourseHero({
           </Box>
         </Box>
 
-        <Box
-          sx={{
-            ...ctaPanelStyle,
-            ...(Boolean(imageSrc) && { mt: { md: CTA_ILLUSTRATION_OFFSET } }),
-          }}
-        >
-          <Button
-            qa-id="course-cta"
-            variant="contained"
-            color="error"
-            sx={ctaButtonStyle}
-            onClick={onCtaClick}
-            {...(ctaHref ? { component: i18nLink, href: ctaHref } : {})}
-          >
-            {ctaLabel}
-          </Button>
-        </Box>
+        <CourseCtaPanel
+          loggedIn={loggedIn}
+          ctaHref={ctaHref}
+          ctaLabel={ctaLabel}
+          onCtaClick={onCtaClick}
+          offsetForIllustration={Boolean(imageSrc)}
+        />
       </Box>
     </Container>
   );

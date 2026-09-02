@@ -65,6 +65,8 @@ interface CourseSessionListProps {
   sessions: CourseSession[];
   progressByUuid: Record<string, CardProgress>;
   accountNeeded: boolean;
+  // The first session opens without an account on a public course, so it keeps no lock badge.
+  firstSessionFree?: boolean;
   onSessionSelect: (session: CourseSession) => void;
 }
 
@@ -72,6 +74,7 @@ export function CourseSessionList({
   sessions,
   progressByUuid,
   accountNeeded,
+  firstSessionFree = false,
   onSessionSelect,
 }: CourseSessionListProps) {
   const t = useTranslations('Courses');
@@ -100,7 +103,7 @@ export function CourseSessionList({
             <CourseSessionCard
               session={session}
               progress={progressByUuid[session.uuid]}
-              accountNeeded={accountNeeded}
+              accountNeeded={accountNeeded && !(firstSessionFree && index === 0)}
               onSelect={() => onSessionSelect(session)}
             />
           </Box>

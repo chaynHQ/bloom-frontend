@@ -12,7 +12,12 @@
       "sessionsTitle": "Bu kurstaki bölümler",
       "beginCourse": "Kursa başla",
       "continueCourse": "Kursa devam et",
-      "otherCoursesTitle": "Diğer kursları gör"
+      "otherCoursesTitle": "Diğer kursları gör",
+      "accessCard": {
+        "title": "Kursun tamamına eriş",
+        "body": "Tüm oturumların kilidini açmak ve ilerlemeni kaydetmek için ücretsiz bir hesap oluştur.",
+        "logIn": "Zaten bir hesabım var"
+      }
     },
     "sessionDetail": {
       "learnTitle": "Bu bölüm hakkında",

@@ -97,6 +97,7 @@ interface SessionCourseNavProps {
   currentSessionUuid: string;
   progressByUuid: Record<string, CardProgress>;
   accountNeeded: boolean;
+  previewSessionUuid?: string;
   backHref: string;
   backLabel: string;
   onSessionSelect: (session: CourseSession) => void;

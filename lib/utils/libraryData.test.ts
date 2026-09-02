@@ -223,8 +223,9 @@ describe('parentCourseSlug', () => {
   });
 });
 
-// These mirror the rules in components/guards/AuthGuard.tsx — if that list of authenticated path
-// heads changes, the "Account needed" badge goes wrong until this follows it.
+// A conservative floor: every course lesson path reads as needing an account. AuthGuard no longer
+// blocks session pages — the session page itself opens the first lesson of a Public course — and
+// useLibraryItems lifts the badge for those first lessons via `freeFirstSessionUuids`.
 describe('pathRequiresAccount', () => {
   it.each([
     ['/courses/managing-anxiety', false, 'a course overview is public'],
@@ -250,6 +251,15 @@ describe('storyToLibraryItem account requirement', () => {
       storyToLibraryItem(story({ component: 'resource_short_video' }, 'de/shorts/a-short'), 'de')
         .requiresAccount,
     ).toBe(false);
+  });
+
+  it('drops the requirement for a course lesson in freeFirstSessionUuids', () => {
+    const lesson = story({ component: 'Session' }, 'courses/managing-anxiety/what-is-anxiety');
+    expect(storyToLibraryItem(lesson, 'en').requiresAccount).toBe(true);
+    expect(storyToLibraryItem(lesson, 'en', new Set([lesson.uuid])).requiresAccount).toBe(false);
+    expect(storyToLibraryItem(lesson, 'en', new Set(['some-other-uuid'])).requiresAccount).toBe(
+      true,
+    );
   });
 });
 

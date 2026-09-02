@@ -20,7 +20,6 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
-import { useScrollToSignUp } from '@/lib/hooks/useScrollToSignUp';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
   getCourseSessions,
@@ -97,11 +96,13 @@ const StoryblokCoursePage = ({
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const isUserLoading = useIsUserLoading();
   const courses = useTypedSelector((state) => state.courses);
-  const scrollToSignUp = useScrollToSignUp();
 
   useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
+
+  // A public course opens its first session to logged-out visitors (see StoryblokSessionPage).
+  const isPublicCourse = (included_for_partners ?? []).includes('Public');
 
   // Derive user access from partner settings
   const userAccess = useMemo(() => {
@@ -169,12 +170,13 @@ const StoryblokCoursePage = ({
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
   }, [eventData, isUserLoading]);
 
+  // Logged out, the hero CTA is the "Access the full course" sign-up card, which logs its own
+  // event; this fires only for the logged-in "Begin/Continue course" button.
   const handleCtaClick = () => {
     logEvent(COURSE_START_CLICKED, {
       ...eventData,
-      course_cta_target: isLoggedIn ? (nextSession?.href ?? null) : 'signup',
+      course_cta_target: nextSession?.href ?? null,
     });
-    if (!isLoggedIn) scrollToSignUp();
   };
 
   const handleSessionSelect = (session: CourseSession) => {
@@ -227,6 +229,7 @@ const StoryblokCoursePage = ({
         sessionCount={sessions.length}
         courseMinutes={courseMinutes}
         courseProgress={courseProgress}
+        loggedIn={isLoggedIn}
         ctaHref={isLoggedIn ? nextSession?.href : undefined}
         ctaLabel={
           courseProgress === PROGRESS_STATUS.NOT_STARTED
@@ -251,6 +254,7 @@ const StoryblokCoursePage = ({
         sessions={sessions}
         progressByUuid={progressByUuid}
         accountNeeded={!isLoggedIn}
+        firstSessionFree={!isLoggedIn && isPublicCourse}
         onSessionSelect={handleSessionSelect}
       />
       <OtherCourses courses={otherCourses} onCourseSelect={handleOtherCourseSelect} />

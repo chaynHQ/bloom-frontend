@@ -38,6 +38,12 @@ export function getCourseSessions(
     }));
 }
 
+// The first session of a course, matched by uuid so it stays correct across locales (session
+// slugs are locale-prefixed; uuids are not).
+export function isFirstCourseSession(sessions: CourseSession[], sessionUuid: string): boolean {
+  return sessions.length > 0 && sessions[0].uuid === sessionUuid;
+}
+
 // Total runtime across a course's sessions, or undefined when none carry a duration.
 export function getCourseTotalMinutes(sessions: CourseSession[]): number | undefined {
   const total = sessions.reduce((sum, session) => sum + (session.minutes ?? 0), 0);

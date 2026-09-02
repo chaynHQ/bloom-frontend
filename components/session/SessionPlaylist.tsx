@@ -97,6 +97,8 @@ interface SessionPlaylistProps {
   currentSessionUuid: string;
   progressByUuid: Record<string, CardProgress>;
   accountNeeded: boolean;
+  // The one session a logged-out visitor may open (a public course's first session) — no lock.
+  previewSessionUuid?: string;
   backHref: string;
   backLabel: string;
   // The bottom-drawer variant drops the back link — the drawer's Close button is the way out.
@@ -113,6 +115,7 @@ export function SessionPlaylist({
   currentSessionUuid,
   progressByUuid,
   accountNeeded,
+  previewSessionUuid,
   backHref,
   backLabel,
   hideBackLink = false,
@@ -192,7 +195,7 @@ export function SessionPlaylist({
                   <Box aria-hidden sx={completedBadgeStyle}>
                     <CheckRounded sx={{ fontSize: 16 }} />
                   </Box>
-                ) : accountNeeded ? (
+                ) : accountNeeded && session.uuid !== previewSessionUuid ? (
                   <LockOutlined sx={{ flexShrink: 0, fontSize: 16, color: 'grey.700', mt: 0.5 }} />
                 ) : null}
               </Link>

@@ -12,7 +12,12 @@
       "sessionsTitle": "جلسات هذه الدورة",
       "beginCourse": "بدء الدورة",
       "continueCourse": "متابعة الدورة",
-      "otherCoursesTitle": "عرض دورات أخرى"
+      "otherCoursesTitle": "عرض دورات أخرى",
+      "accessCard": {
+        "title": "الوصول إلى الدورة كاملةً",
+        "body": "حساب مجاني يفتح لك جميع الجلسات ويحفظ تقدُّمك.",
+        "logIn": "لديّ حساب بالفعل"
+      }
     },
     "sessionDetail": {
       "learnTitle": "عن هذه الجلسة",

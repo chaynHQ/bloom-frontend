@@ -12,7 +12,12 @@
       "sessionsTitle": "Sessions de ce cours",
       "beginCourse": "Commencer le cours",
       "continueCourse": "Continuer le cours",
-      "otherCoursesTitle": "Voir d'autres cours"
+      "otherCoursesTitle": "Voir d'autres cours",
+      "accessCard": {
+        "title": "Accéder au cours complet",
+        "body": "Crée un compte gratuit pour débloquer toutes les sessions et enregistrer ta progression.",
+        "logIn": "J'ai déjà un compte"
+      }
     },
     "sessionDetail": {
       "learnTitle": "À propos de cette session",

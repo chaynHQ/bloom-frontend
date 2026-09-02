@@ -12,7 +12,12 @@
       "sessionsTitle": "Is course ke sessions",
       "beginCourse": "Course shuru karein",
       "continueCourse": "Course jaari rakhein",
-      "otherCoursesTitle": "Dusre courses dekhein"
+      "otherCoursesTitle": "Dusre courses dekhein",
+      "accessCard": {
+        "title": "Poora course access kariye",
+        "body": "Sabhi sessions unlock karne aur apni progress save karne ke liye ek free account banaiye.",
+        "logIn": "Mera pehle se account hai"
+      }
     },
     "sessionDetail": {
       "learnTitle": "Is session ke baare mein",

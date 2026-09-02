@@ -67,6 +67,8 @@ interface SessionMediaCardProps {
   video_transcript: StoryblokRichtext;
   storyUuid: string;
   sessionProgress: PROGRESS_STATUS;
+  // The logged-out first-session preview passes false: no account, so no progress to record.
+  trackProgress?: boolean;
   eventData: { [key: string]: any };
 }
 
@@ -77,6 +79,7 @@ export const SessionMediaCard = ({
   video_transcript,
   storyUuid,
   sessionProgress,
+  trackProgress = true,
   eventData,
 }: SessionMediaCardProps) => {
   const t = useTranslations('Courses');
@@ -88,6 +91,7 @@ export const SessionMediaCard = ({
   const [startSession] = useStartSessionMutation();
 
   const callStartSession = useCallback(async () => {
+    if (!trackProgress) return;
     logEvent(SESSION_STARTED_REQUEST, eventData);
 
     const startSessionResponse = await startSession({ storyblokUuid: storyUuid });
@@ -102,7 +106,7 @@ export const SessionMediaCard = ({
       logEvent(SESSION_STARTED_ERROR, eventData);
       rollbar.error('Session started error', error);
     }
-  }, [eventData, storyUuid, startSession, rollbar]);
+  }, [trackProgress, eventData, storyUuid, startSession, rollbar]);
 
   useEffect(() => {
     if (transcriptOpen === null) return;
