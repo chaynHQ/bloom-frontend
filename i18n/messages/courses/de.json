@@ -8,10 +8,19 @@
     "navigateToCourse": "Zum Kurs navigieren -",
     "courseDetail": {
       "introductionTitle": "Einführung in den Kurs",
-      "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript</transcriptLink>"
+      "introductionDescription": "Schau Dir das Einführungsvideo an oder lies das <transcriptLink>Videotranskript</transcriptLink>",
+      "sessionsTitle": "Sessions in diesem Kurs",
+      "beginCourse": "Kurs beginnen",
+      "continueCourse": "Kurs fortsetzen",
+      "otherCoursesTitle": "Andere Kurse ansehen",
+      "accessCard": {
+        "title": "Zugang zum gesamten Kurs",
+        "body": "Erstelle ein kostenloses Konto, um alle Sessions freizuschalten und deinen Fortschritt zu speichern.",
+        "logIn": "Ich habe bereits ein Konto"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Über diese Session",
       "videoDescription": "Schau das Video an oder lies das <transcriptLink>Videotranskript</transcriptLink>.",
       "activityTitle": "Übung",
       "bonusTitle": "Bonusinhalte",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "Falls Du akut bedroht wirst oder in Gefahr bist, geh bitte im Menü zu \"Soforthilfe\", um die richtige Ansprechstelle zu finden. ",
         "startButton": "Schreiben Sie uns"
       },
-      "sessionComplete": "Session abgeschlossen"
+      "sessionComplete": "Session abgeschlossen",
+      "currentSession": "Aktuelle Session",
+      "currentCourse": "Aktueller Kurs",
+      "current": "Aktuell",
+      "nextSession": "Nächste Session",
+      "closeSessions": "Schließen"
     },
     "sessionFeedback": {
       "title": "Wie war diese Session?",
@@ -56,6 +70,8 @@
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
     "backToCourse": "Zurück zum Kurs",
-    "backToLibrary": "Zurück zur Bibliothek"
+    "backToCourseOverview": "Zurück zur Kursübersicht",
+    "backToLibrary": "Zurück zur Bibliothek",
+    "backToSessions": "Zurück zu den Sessions"
   }
 }

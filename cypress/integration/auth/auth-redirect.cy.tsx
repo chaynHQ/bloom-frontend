@@ -1,17 +1,16 @@
 describe('Auth redirect', () => {
+  // `dating-boundaries-and-relationships` is partner-only (no 'Public'), so a logged-out visitor
+  // gets the login dialog. Public-course sessions are covered in public/public-course-session.
+  const gatedSession = '/courses/dating-boundaries-and-relationships/what-are-boundaries';
+
   before(() => {
     cy.cleanUpTestState();
   });
-  it('User visits a session page with an auth guard and should be shown a pop up login dialog', () => {
-    cy.visit(
-      '/courses/image-based-abuse-and-rebuilding-ourselves/the-social-context-of-image-based-abuse-and-victim-blaming',
-      { failOnStatusCode: false },
-    );
+
+  it('shows the login dialog on a session a logged-out visitor cannot access', () => {
+    cy.visit(gatedSession, { failOnStatusCode: false });
     cy.get('[qa-id="dialogLoginButton"]').should('contain', 'Log in').click();
     cy.get('h1').should('contain', 'Welcome back');
-    cy.url().should(
-      'include',
-      'return_url=%2Fcourses%2Fimage-based-abuse-and-rebuilding-ourselves%2Fthe-social-context-of-image-based-abuse-and-victim-blaming',
-    );
+    cy.url().should('include', `return_url=${encodeURIComponent(gatedSession)}`);
   });
 });

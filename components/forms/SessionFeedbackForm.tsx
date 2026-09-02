@@ -4,9 +4,9 @@ import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateSessionFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS } from '@/lib/constants/enums';
 import { SESSION_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
-import logEvent from '@/lib/utils/logEvent';
 import { SessionFeedback } from '@/lib/store/coursesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -25,25 +25,37 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 
+// A subtle tinted fill plus a hairline sets the comment box apart from the card behind it.
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
   '& .MuiFilledInput-root': {
-    backgroundColor: 'white',
+    backgroundColor: 'sectionSurface',
+    border: '1px solid',
+    borderColor: 'inputBorder',
     borderRadius: '12px',
-    padding: '12px 12px',
+    padding: '12px',
     '&:hover': {
-      backgroundColor: 'background.default',
+      backgroundColor: 'panelSurface',
+    },
+    '&.Mui-focused': {
+      backgroundColor: 'panelSurface',
+      borderColor: 'secondary.dark',
     },
   },
 };
 
+// A fixed column count keeps every option on a single line rather than letting the longer
+// labels ("Too complicated") wrap inside a narrow flex track.
 const radioGroupStyle = {
   width: '100%',
-  padding: '20px 0px',
+  display: 'grid',
+  gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' },
+  gap: 1,
+  py: 2.5,
   label: {
     margin: 0,
     padding: 1,
-    width: { xs: '50%', sm: '33%', md: '16.5%' },
+    width: '100%',
   },
 } as const;
 
@@ -125,14 +137,10 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
 
   return (
     <>
-      <Typography component="h2" variant="h2">
-        {t('title')}
-      </Typography>
       <Typography>{t('subtitle')}</Typography>
       <form autoComplete="off" onSubmit={submitHandler}>
         <FormControl fullWidth component="fieldset">
           <RadioGroup
-            row
             sx={radioGroupStyle}
             aria-label="feature"
             name="feedback-radio-buttons"

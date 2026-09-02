@@ -1,4 +1,4 @@
-describe.only('A course session user', () => {
+describe('A course session user', () => {
   const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
@@ -9,6 +9,14 @@ describe.only('A course session user', () => {
   });
 
   it('Should navigate to a session and complete it', () => {
+    // Test isolation resets the page to about:blank before this test runs, so the state
+    // from before() (visiting '/' and logging in) doesn't carry over without revisiting. The
+    // login itself is also async (Firebase auth state resolving after the fresh page load), so
+    // wait for the app to recognise it before navigating — otherwise the first session of this
+    // public course renders its logged-out preview, which hides the session-complete button.
+    cy.visit('/');
+    cy.waitForAuthenticatedApp();
+
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 8000 }).should('exist').click(); //navigate to the library
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
@@ -29,11 +37,20 @@ describe.only('A course session user', () => {
 
     cy.get('h1').should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Activity').click();
+    // The playlist lists every session in the course and marks the one being viewed.
+    cy.get('[qa-id=session-playlist]').first().should('contain', 'What is sexual trauma?');
 
-    cy.get('h3').contains('Bonus content').click();
+    // Activity opens by default; bonus content starts collapsed and expands on click.
+    cy.get('[qa-id=session-activity] button').should('have.attr', 'aria-expanded', 'true');
 
-    cy.get('button').contains('Session complete').click();
+    cy.get('[qa-id=session-bonus]')
+      .first()
+      .within(() => {
+        cy.get('button').should('have.attr', 'aria-expanded', 'false').click();
+        cy.get('button').should('have.attr', 'aria-expanded', 'true');
+      });
+
+    cy.get('[qa-id=session-complete-button]').click();
 
     cy.wait(2000);
 

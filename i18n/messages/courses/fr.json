@@ -8,10 +8,19 @@
     "navigateToCourse": "Aller au cours -",
     "courseDetail": {
       "introductionTitle": "Début du cours",
-      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>"
+      "introductionDescription": "Regardez la vidéo d'introduction ou lisez la <transcriptLink>transcription de la vidéo</transcriptLink>",
+      "sessionsTitle": "Sessions de ce cours",
+      "beginCourse": "Commencer le cours",
+      "continueCourse": "Continuer le cours",
+      "otherCoursesTitle": "Voir d'autres cours",
+      "accessCard": {
+        "title": "Accéder au cours complet",
+        "body": "Crée un compte gratuit pour débloquer toutes les sessions et enregistrer ta progression.",
+        "logIn": "J'ai déjà un compte"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Vidéo",
+      "learnTitle": "À propos de cette session",
       "videoDescription": "Regarder la vidéo ou lire la <transcriptLink>transcription de la vidéo</transcriptLink>.",
       "activityTitle": "Activité",
       "bonusTitle": "Contenu bonus ",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "Si vous êtes en danger imminent , veuillez consulter la rubrique \"Aide immédiate\" dans le menu pour trouver le service qui pourra vous aider.",
         "startButton": "Envoyez-nous un message"
       },
-      "sessionComplete": "Session complète"
+      "sessionComplete": "Session complète",
+      "currentSession": "Session actuelle",
+      "currentCourse": "Cours actuel",
+      "current": "En cours",
+      "nextSession": "Session suivante",
+      "closeSessions": "Fermer"
     },
     "sessionFeedback": {
       "title": "Comment s’est déroulée la session? ",
@@ -56,6 +70,8 @@
       "completeSessionError": "Une erreur s'est produite lorsque vous avez marqué cette session comme étant complète. Veuillez réessayez plus tard."
     },
     "backToCourse": "Revenir au cours",
-    "backToLibrary": "Revenir à la bibliothèque"
+    "backToCourseOverview": "Revenir à l’aperçu du cours",
+    "backToLibrary": "Revenir à la bibliothèque",
+    "backToSessions": "Revenir aux sessions"
   }
 }

@@ -116,7 +116,7 @@
       "title": "Destek al",
       "introduction": "Biriyle konuşmayı mı tercih edersin? Bloom'un destek hizmetleri ihtiyaç duyduğun her an burada.",
       "messaging": {
-        "title": "Bire bir mesajlaşma",
+        "title": "Birebir mesajlaşma",
         "description": "Sorularına ve düşüncelerine, çok dilli ekibimizden 1–2 gün içinde özenli yanıtlar."
       },
       "notes": {
@@ -188,13 +188,13 @@
         "heading": "Kaldığın yerden devam et"
       },
       "sessions": {
-        "heading": "Tekil seanslar",
-        "introduction": "Zararı fark etme, sınır koyma, iyileşme ve daha fazlası üzerine seanslar.",
-        "browseAll": "Tüm seanslara göz at"
+        "heading": "Tekil bölümler",
+        "introduction": "Zararı fark etme, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
+        "browseAll": "Tüm bölümlere göz at"
       },
       "courses": {
         "heading": "Kurslar",
-        "introduction": "Başlamak için rehberli bir yer. Her kurs seni kendi hızında bir dizi seanstan geçirir.",
+        "introduction": "Başlamak için rehberli bir yer. Her kurs seni kendi hızında bir dizi bölümden geçirir.",
         "browseAll": "Tüm kurslara göz at"
       }
     }

@@ -36,6 +36,8 @@
     },
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
     "duration": "{minutes} min",
+    "courseDuration": "~{hours} h {minutes} min",
+    "courseDurationHoursOnly": "~{hours} h",
     "partOfCourse": "Fait partie de {course}",
     "accountNeeded": "Compte requis",
     "loadMore": "Voir plus",

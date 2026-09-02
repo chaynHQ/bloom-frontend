@@ -18,11 +18,14 @@ describe('Shorts Flow', () => {
     cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
     cy.wait(2000); // wait to ensure user plays the short
 
-    // User clicks on a related session titled "Sexuality and desire"
-    cy.contains('h3', 'Sexuality and desire', { timeout: 10000 }).should('be.visible').click();
+    // User clicks through to the short's related session via the "Watch full session" button
+    cy.get('[qa-id="resource-short-related-session-button"]', { timeout: 10000 })
+      .should('be.visible')
+      .click();
 
-    // User is prompted to login
-    cy.get('a[qa-id="dialogLoginButton"]').click();
+    // The related session isn't the course's first session, so the guest sees the sign-up gate
+    // card in place of the video, rather than a login dialog over a full preview.
+    cy.get('a[qa-id="access-full-course-login-link"]', { timeout: 10000 }).click();
 
     // User logs in
     cy.get('#email').type(email);

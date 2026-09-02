@@ -31,32 +31,37 @@ async function getAllStoryblokStories(
   return stories.map(toLibraryStory);
 }
 
+const baseProps = (locale: string): Partial<ISbStoriesParams> => ({
+  language: locale,
+  version: STORYBLOK_ENVIRONMENT,
+  sort_by: 'position:asc',
+});
+
+// Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
+export async function getCourseStories(locale: string): Promise<LibraryStory[]> {
+  return getAllStoryblokStories(locale, {
+    ...baseProps(locale),
+    starts_with: 'courses/',
+    filter_query: { component: { in: 'Course' } },
+  });
+}
+
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
-  const baseProps: Partial<ISbStoriesParams> = {
-    language: locale,
-    version: STORYBLOK_ENVIRONMENT,
-    sort_by: 'position:asc',
-  };
-
   const [courses, courseSessions, shorts, somatics, conversations] = await Promise.all([
+    getCourseStories(locale),
     getAllStoryblokStories(locale, {
-      ...baseProps,
-      starts_with: 'courses/',
-      filter_query: { component: { in: 'Course' } },
-    }),
-    getAllStoryblokStories(locale, {
-      ...baseProps,
+      ...baseProps(locale),
       starts_with: 'courses/',
       filter_query: { component: { in: 'Session,session_iba' } },
     }),
-    getAllStoryblokStories(locale, { ...baseProps, starts_with: 'shorts/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
     getAllStoryblokStories(locale, {
-      ...baseProps,
+      ...baseProps(locale),
       starts_with: 'videos/',
       with_tag: STORYBLOK_TAGS.SOMATICS,
     }),
-    getAllStoryblokStories(locale, { ...baseProps, starts_with: 'conversations/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
   ]);
 
   return { courses, courseSessions, shorts, somatics, conversations };

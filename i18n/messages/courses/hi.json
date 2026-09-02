@@ -8,10 +8,19 @@
     "navigateToCourse": "Course pe leke jaiye",
     "courseDetail": {
       "introductionTitle": "Course ka introduction",
-      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye"
+      "introductionDescription": "Introduction video dekhiye ya <transcriptLink>video transcript</transcriptLink> padh lijiye",
+      "sessionsTitle": "Is course ke sessions",
+      "beginCourse": "Course shuru karein",
+      "continueCourse": "Course jaari rakhein",
+      "otherCoursesTitle": "Dusre courses dekhein",
+      "accessCard": {
+        "title": "Poora course access kariye",
+        "body": "Sabhi sessions unlock karne aur apni progress save karne ke liye ek free account banaiye.",
+        "logIn": "Mera pehle se account hai"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Is session ke baare mein",
       "videoDescription": "Video dekhiye ya fir <transcriptLink>video transcript</transcriptLink> padh lijiye.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "Yadi aap asann khatre mein hai, toh kripya menu mein \"tatkaal sahayata\" par jaye taki aapki sahayata ke liye sahi seva mil sake. ",
         "startButton": "Hame sandesh bhejein"
       },
-      "sessionComplete": "Session poora hua"
+      "sessionComplete": "Session poora hua",
+      "currentSession": "Maujooda session",
+      "currentCourse": "Maujooda course",
+      "current": "Maujooda",
+      "nextSession": "Agla session",
+      "closeSessions": "Band karein"
     },
     "sessionFeedback": {
       "title": "Yeh session kaisa aapko kaisa laga?",
@@ -56,6 +70,8 @@
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
     "backToCourse": "Course par vapas jayein.",
-    "backToLibrary": "Library par vapas jayein."
+    "backToCourseOverview": "Course overview par vapas jayein.",
+    "backToLibrary": "Library par vapas jayein.",
+    "backToSessions": "Sessions par vapas jayein."
   }
 }

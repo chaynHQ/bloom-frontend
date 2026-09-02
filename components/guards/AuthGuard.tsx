@@ -22,8 +22,10 @@ const authenticatedPathHeads = [
 ];
 const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
 
-// Adds required permissions guard to pages, redirecting where required permissions are missing
-// New pages will default to requiring authenticated and public pages must be added to the array above
+// Adds required permissions guard to pages, redirecting where required permissions are missing.
+// New pages default to requiring authentication; public pages must be added to the array above.
+// Course overview and session pages guard themselves: StoryblokCoursePage / StoryblokSessionPage
+// own the "Public course, first session" preview and the sign-up gate for the rest.
 export function AuthGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const locale = useLocale();
@@ -54,8 +56,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     return <LoadingContainer />;
   }
 
-  const isSessionPage = pathname.includes('courses') && pathname.split('/').length > 3;
-  const isPublicPage = !authenticatedPathHeads.includes(pathHead) && !isSessionPage;
+  const isPublicPage = !authenticatedPathHeads.includes(pathHead);
 
   // Page does not require authenticated user, return content without guards
   if (isPublicPage) {

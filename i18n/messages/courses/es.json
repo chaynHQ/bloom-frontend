@@ -8,10 +8,19 @@
     "navigateToCourse": "Navegar al curso -",
     "courseDetail": {
       "introductionTitle": "Introducción al curso",
-      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>"
+      "introductionDescription": "Mira el video de introducción o lee la <transcriptLink>transcripción del video</transcriptLink>",
+      "sessionsTitle": "Sesiones de este curso",
+      "beginCourse": "Empezar el curso",
+      "continueCourse": "Continuar el curso",
+      "otherCoursesTitle": "Ver otros cursos",
+      "accessCard": {
+        "title": "Accede al curso completo",
+        "body": "Crea una cuenta gratuita para desbloquear todas las sesiones y guardar tu progreso.",
+        "logIn": "Ya tengo una cuenta"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Sobre esta sesión",
       "videoDescription": "Mira el video o lee la <transcriptLink>transcripción del video</transcriptLink>.",
       "activityTitle": "Actividad",
       "bonusTitle": "Contenido extra",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "Si estás en peligro inminente de amenaza o daño, por favor ve a ‘Ayuda inmediata’ en el menú, para encontrar el servicio de apoyo adecuado para ti.",
         "startButton": "Envíanos un mensaje"
       },
-      "sessionComplete": "Sesión completa"
+      "sessionComplete": "Sesión completa",
+      "currentSession": "Sesión actual",
+      "currentCourse": "Curso actual",
+      "current": "Actual",
+      "nextSession": "Siguiente sesión",
+      "closeSessions": "Cerrar"
     },
     "sessionFeedback": {
       "title": "¿Cómo fue esta sesión?",
@@ -56,6 +70,8 @@
       "completeSessionError": "Hubo un error marcando esta sesión como completa. Inténtalo de nuevo más tarde."
     },
     "backToCourse": "Volver al curso",
-    "backToLibrary": "Volver a la biblioteca"
+    "backToCourseOverview": "Volver al resumen del curso",
+    "backToLibrary": "Volver a la biblioteca",
+    "backToSessions": "Volver a las sesiones"
   }
 }

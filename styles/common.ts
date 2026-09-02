@@ -42,6 +42,13 @@ export const pageHeaderPaddingBottom = '3.5rem !important';
 
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
 
+// The centred content rail the TopBar and standard pages align to; `wide` sections use the wider
+// one. `contentRailGutter` is the `lg` Container inline padding that locks content to that width.
+export const CONTENT_MAX_WIDTH = 1000;
+export const CONTENT_MAX_WIDTH_WIDE = 1200;
+export const contentRailGutter = (width: number = CONTENT_MAX_WIDTH) =>
+  `calc((100vw - ${width}px) / 2)`;
+
 // A hairline where two sections meet. A pseudo-element rather than a border, so it spans the
 // content width rather than the full viewport (see the MuiContainer overrides in styles/theme.ts).
 export const sectionDivider = (edge: 'top' | 'bottom') =>
@@ -57,8 +64,8 @@ export const sectionDivider = (edge: 'top' | 'bottom') =>
       borderColor: 'sectionBorder',
       '@media (min-width:600px)': { insetInlineStart: '2rem', insetInlineEnd: '2rem' },
       '@media (min-width:1200px)': {
-        insetInlineStart: 'calc((100vw - 1000px) / 2)',
-        insetInlineEnd: 'calc((100vw - 1000px) / 2)',
+        insetInlineStart: contentRailGutter(),
+        insetInlineEnd: contentRailGutter(),
       },
     },
   }) as const;

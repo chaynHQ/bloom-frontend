@@ -2,7 +2,12 @@
 
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { INLINE_ALIGNMENT, TEXT_ALIGNMENT } from '@/lib/utils/alignment';
-import { columnStyle, sectionDivider } from '@/styles/common';
+import {
+  CONTENT_MAX_WIDTH_WIDE,
+  columnStyle,
+  contentRailGutter,
+  sectionDivider,
+} from '@/styles/common';
 import theme from '@/styles/theme';
 import { Container, type SxProps, type Theme } from '@mui/material';
 import type { ReactNode } from 'react';
@@ -39,8 +44,8 @@ const PageSection = (props: PageSectionProps) => {
       paddingBottom: SPACING[spacing],
     }),
     ...(width === 'wide' && {
-      paddingInlineStart: { lg: 'calc((100vw - 1200px) / 2) !important' },
-      paddingInlineEnd: { lg: 'calc((100vw - 1200px) / 2) !important' },
+      paddingInlineStart: { lg: `${contentRailGutter(CONTENT_MAX_WIDTH_WIDE)} !important` },
+      paddingInlineEnd: { lg: `${contentRailGutter(CONTENT_MAX_WIDTH_WIDE)} !important` },
     }),
     ...(width === 'full' && {
       paddingInlineStart: { xs: 0, ms: 0, md: 0, lg: 0 },

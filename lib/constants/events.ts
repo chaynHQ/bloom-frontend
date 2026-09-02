@@ -68,6 +68,9 @@ export const THERAPY_BOOKINGS_LOAD_ERROR = 'THERAPY_BOOKINGS_LOAD_ERROR';
 export const THERAPY_BOOKINGS_VIEWED = 'THERAPY_BOOKINGS_VIEWED';
 export const THERAPY_VIDEO_LINK_CLICKED = 'THERAPY_VIDEO_LINK_CLICKED';
 export const COURSE_OVERVIEW_VIEWED = 'COURSE_OVERVIEW_VIEWED';
+export const COURSE_START_CLICKED = 'COURSE_START_CLICKED';
+export const COURSE_SESSION_CLICKED = 'COURSE_SESSION_CLICKED';
+export const COURSE_OTHER_COURSE_CLICKED = 'COURSE_OTHER_COURSE_CLICKED';
 
 // LIBRARY EVENTS
 export const LIBRARY_VIEWED = 'LIBRARY_VIEWED';
@@ -152,7 +155,17 @@ export const SESSION_ACTIVITY_COLLAPSED = 'SESSION_ACTIVITY_COLLAPSED'; // Event
 export const SESSION_BONUS_CONTENT_EXPANDED = 'SESSION_BONUS_CONTENT_EXPANDED'; // Event in use but not exported - applied using eventPrefix
 export const SESSION_BONUS_CONTENT_COLLAPSED = 'SESSION_BONUS_CONTENT_COLLAPSED'; // Event in use but not exported - applied using eventPrefix
 
+export const SESSION_CHAT_EXPANDED = 'SESSION_CHAT_EXPANDED'; // Event in use but not exported - applied using eventPrefix
+export const SESSION_CHAT_COLLAPSED = 'SESSION_CHAT_COLLAPSED'; // Event in use but not exported - applied using eventPrefix
+
+export const SESSION_FEEDBACK_EXPANDED = 'SESSION_FEEDBACK_EXPANDED'; // Event in use but not exported - applied using eventPrefix
+export const SESSION_FEEDBACK_COLLAPSED = 'SESSION_FEEDBACK_COLLAPSED'; // Event in use but not exported - applied using eventPrefix
+
 export const SESSION_CHAT_BUTTON_CLICKED = 'SESSION_CHAT_BUTTON_CLICKED';
+
+export const SESSION_PLAYLIST_OPENED = 'SESSION_PLAYLIST_OPENED';
+export const SESSION_PLAYLIST_SESSION_CLICKED = 'SESSION_PLAYLIST_SESSION_CLICKED';
+export const SESSION_NEXT_CLICKED = 'SESSION_NEXT_CLICKED';
 
 export const CHAT_VIEWED = 'CHAT_VIEWED';
 export const CHAT_MESSAGE_SENT = 'CHAT_MESSAGE_SENT';

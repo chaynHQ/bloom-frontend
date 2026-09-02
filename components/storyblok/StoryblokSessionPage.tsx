@@ -1,51 +1,62 @@
 'use client';
 
+import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import SessionContentCard from '@/components/cards/SessionContentCard';
-import DirectionalIcon from '@/components/common/DirectionalIcon';
-import { Dots } from '@/components/common/Dots';
+import { BackLink } from '@/components/common/BackLink';
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import LoadingContainer from '@/components/common/LoadingContainer';
 import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
+import LoginDialog from '@/components/layout/LoginDialog';
+import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
 import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
+import { SessionActions } from '@/components/session/SessionActions';
 import { SessionChat } from '@/components/session/SessionChat';
-import { SessionCompleteButton } from '@/components/session/SessionCompleteButton';
-import { SessionHeader } from '@/components/session/SessionHeader';
-import { SessionVideo } from '@/components/session/SessionVideo';
+import { SessionCourseNav } from '@/components/session/SessionCourseNav';
+import { SessionHero } from '@/components/session/SessionHero';
+import { SessionMediaCard } from '@/components/session/SessionMediaCard';
+import { sessionContainerStyle, sessionMainStyle } from '@/components/session/sessionPageLayout';
 import { useGetUserCoursesQuery } from '@/lib/api';
-import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import {
+  SESSION_PLAYLIST_OPENED,
+  SESSION_PLAYLIST_SESSION_CLICKED,
+  SESSION_VIEWED,
+} from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import {
+  getCourseSessions,
+  isFirstCourseSession,
+  type CourseSession,
+} from '@/lib/utils/courseSessions';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
+import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { columnStyle, rowStyle } from '@/styles/common';
-import { ArrowBack } from '@mui/icons-material';
-import LinkIcon from '@mui/icons-material/Link';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Box, Container, Link } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { ContentUnavailable } from '../common/ContentUnavailable';
 
-const containerStyle = {
-  backgroundColor: 'secondary.light',
-} as const;
-
-const cardColumnStyle = {
-  ...columnStyle,
-  alignItems: 'center',
-  gap: { xs: 2, md: 3 },
-} as const;
-
-const backToCourseLinkStyle = {
-  ...rowStyle,
-  mt: 2,
-  marginInlineEnd: 'auto',
-  textDecoration: 'none',
-  alignItems: 'center',
-
-  svg: { fontSize: 20, marginInlineEnd: 0.5, color: 'primary.dark' },
+const cardsStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 3,
+  position: 'relative',
+  // A faint rule runs down the centre; the opaque cards cover all but the gaps, leaving a short
+  // connector between each card that ties the session's content into one sequence, as designed.
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    insetInlineStart: '50%',
+    width: '1px',
+    backgroundColor: 'cardBorder',
+  },
+  '& > *': { position: 'relative' },
 } as const;
 
 export interface StoryblokSessionPageProps {
@@ -65,7 +76,13 @@ export interface StoryblokSessionPageProps {
   included_for_partners: string[];
 }
 
-const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokSessionPage = ({
+  story: initialStory,
+  courseStory,
+}: {
+  story: ISbStoryData;
+  courseStory?: ISbStoryData;
+}) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
@@ -81,7 +98,6 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
     bonus,
   } = story.content as StoryblokSessionPageProps;
   const storyUuid = story.uuid;
-  const storyPosition = story.position;
 
   const t = useTranslations('Courses');
   const locale = useLocale();
@@ -89,6 +105,7 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
+  const isUserLoading = useIsUserLoading();
   useGetUserCoursesQuery(undefined, {
     skip: !isLoggedIn,
   });
@@ -115,6 +132,34 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
     [courses, course, storyUuid],
   );
 
+  // The playlist needs the course's sessions resolved, which only the route-level fetch provides.
+  const sessions = useMemo(() => getCourseSessions(courseStory, locale), [courseStory, locale]);
+  const courseHref = getDefaultFullSlug(course.full_slug, locale);
+
+  // A public course opens its first session to logged-out visitors as a full preview; later
+  // sessions show a sign-up gate. `!isUserLoading` keeps a signing-in user from flashing the
+  // logged-out treatment while auth settles. If the course fetch failed, `sessions` is empty so
+  // `isFirstSession` is false and the visitor fails closed to the gate.
+  const isPublicCourse = (course.content.included_for_partners ?? []).includes('Public');
+  const previewSessionUuid = isPublicCourse ? sessions[0]?.uuid : undefined;
+  const isFirstSession = isFirstCourseSession(sessions, storyUuid);
+  const isLoggedOut = !isLoggedIn && !isUserLoading;
+  const isLoggedOutPreview = isLoggedOut && isPublicCourse && isFirstSession;
+  const isLoggedOutGate = isLoggedOut && isPublicCourse && !isFirstSession;
+
+  const progressByUuid = useMemo(() => {
+    const userCourse = courses?.find((c) => c.storyblokUuid === course.uuid);
+    return (userCourse?.sessions ?? []).reduce<Record<string, CardProgress>>((map, session) => {
+      map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
+      return map;
+    }, {});
+  }, [courses, course.uuid]);
+
+  const nextSession = useMemo(() => {
+    const currentIndex = sessions.findIndex((session) => session.uuid === storyUuid);
+    return currentIndex === -1 ? undefined : sessions[currentIndex + 1];
+  }, [sessions, storyUuid]);
+
   // This component handles both "session" and alternative "session_iba" page blocks
   // "session_iba" page blocks have a multi-block bonus field, and omit the coming soon fields
   const isAlternateSessionPage = Array.isArray(bonus);
@@ -123,16 +168,49 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
   const showRichtextBonusContent =
     richtextBonusContent && richtextBonusContent.content && richtextBonusContent.content[0].content;
   const showMultipleBonusContent = multipleBonusContent && multipleBonusContent.length > 0;
+  const showActivity =
+    activity?.content && (activity.content.length > 1 || activity.content[0].content);
 
-  const eventData = {
-    session_name: name,
-    session_storyblok_uuid: storyUuid,
-    session_progress: sessionProgress,
-    course_name: course.name,
-    course_storyblok_uuid: course.uuid,
+  const eventData = useMemo(
+    () => ({
+      session_name: name,
+      session_storyblok_uuid: storyUuid,
+      session_progress: sessionProgress,
+      course_name: course.name,
+      course_storyblok_uuid: course.uuid,
+    }),
+    [name, storyUuid, sessionProgress, course.name, course.uuid],
+  );
+
+  const hasLoggedView = useRef(false);
+  useEffect(() => {
+    if (hasLoggedView.current || isUserLoading) return;
+    hasLoggedView.current = true;
+    logEvent(SESSION_VIEWED, eventData);
+  }, [eventData, isUserLoading]);
+
+  const handlePlaylistSessionSelect = (session: CourseSession) => {
+    logEvent(SESSION_PLAYLIST_SESSION_CLICKED, {
+      ...eventData,
+      selected_session_name: session.name,
+      selected_session_storyblok_uuid: session.uuid,
+      selected_session_position: session.position,
+    });
   };
 
-  if (!userAccess) return <ContentUnavailable />;
+  if (!userAccess) {
+    // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
+    // showing "no access" before we can make the decision (e.g. on a partner deep-link).
+    if (isUserLoading) return <LoadingContainer />;
+    // AuthGuard no longer blocks session pages, so a logged-out visitor to a partner-only course
+    // needs the login prompt here — they may gain access once signed in.
+    return (
+      <>
+        {!isLoggedIn && <LoginDialog />}
+        <ContentUnavailable />
+      </>
+    );
+  }
 
   return (
     <Box
@@ -150,72 +228,99 @@ const StoryblokSessionPage = ({ story: initialStory }: { story: ISbStoryData }) 
         bonus,
       })}
     >
-      <SessionHeader
-        description={description}
-        name={name}
-        sessionProgress={sessionProgress}
-        course={course}
-        subtitle={subtitle}
-        storyUuid={storyUuid}
-        storyPosition={storyPosition}
-      />
-      <Container sx={containerStyle}>
-        <Box sx={cardColumnStyle}>
-          <SessionVideo
-            eventData={eventData}
-            name={name}
-            video={video}
-            storyUuid={storyUuid}
-            sessionProgress={sessionProgress}
-            video_transcript={video_transcript}
+      <Container sx={sessionContainerStyle}>
+        <Box component="main" sx={sessionMainStyle}>
+          {/* The playlist sidebar carries the back link from `lg`; below that it sits inline here. */}
+          <BackLink
+            href={courseHref}
+            label={t('backToCourseOverview')}
+            sx={{ display: { lg: 'none' } }}
           />
-          {activity.content && (activity.content?.length > 1 || activity.content[0].content) && (
+          <SessionHero name={name} sessionProgress={sessionProgress} />
+          {isLoggedOutGate ? (
+            <AccessFullCourseCard source="session" />
+          ) : (
             <>
-              <Dots />
-              <SessionContentCard
-                title={t('sessionDetail.activityTitle')}
-                titleIcon={StarBorderIcon}
-                eventPrefix="SESSION_ACTIVITY"
-                eventData={eventData}
-              >
-                <>{render(activity, RichTextOptions)}</>
-              </SessionContentCard>
+              <Box sx={cardsStyle}>
+                <SessionMediaCard
+                  name={name}
+                  description={description}
+                  video={video}
+                  video_transcript={video_transcript}
+                  storyUuid={storyUuid}
+                  sessionProgress={sessionProgress}
+                  trackProgress={!isLoggedOutPreview}
+                  eventData={eventData}
+                />
+                {showActivity && (
+                  <SessionContentCard
+                    qaId="session-activity"
+                    title={t('sessionDetail.activityTitle')}
+                    eventPrefix="SESSION_ACTIVITY"
+                    eventData={eventData}
+                    initialExpanded
+                  >
+                    <>{render(activity, RichTextOptions)}</>
+                  </SessionContentCard>
+                )}
+                {showRichtextBonusContent && (
+                  <SessionContentCard
+                    qaId="session-bonus"
+                    title={t('sessionDetail.bonusTitle')}
+                    eventPrefix="SESSION_BONUS_CONTENT"
+                    eventData={eventData}
+                  >
+                    <>{render(richtextBonusContent, RichTextOptions)}</>
+                  </SessionContentCard>
+                )}
+                {showMultipleBonusContent && (
+                  <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
+                )}
+                {/* Account-only, so hidden in the logged-out first-session preview — the sign-up
+                    card below stands in for them. */}
+                {!isLoggedOutPreview && <SessionChat eventData={eventData} />}
+                {sessionId && (
+                  <SessionContentCard
+                    qaId="session-feedback"
+                    title={t('sessionFeedback.title')}
+                    eventPrefix="SESSION_FEEDBACK"
+                    eventData={eventData}
+                    initialExpanded
+                  >
+                    <SessionFeedbackForm sessionId={sessionId} />
+                  </SessionContentCard>
+                )}
+                {!isLoggedOutPreview && (
+                  <SessionActions
+                    storyUuid={storyUuid}
+                    sessionProgress={sessionProgress}
+                    nextSession={nextSession}
+                    eventData={eventData}
+                  />
+                )}
+              </Box>
+              {isLoggedOutPreview && <AccessFullCourseCard source="session" />}
             </>
           )}
-          {showRichtextBonusContent && (
-            <>
-              <Dots />
-              <SessionContentCard
-                title={t('sessionDetail.bonusTitle')}
-                titleIcon={LinkIcon}
-                eventPrefix="SESSION_BONUS_CONTENT"
-                eventData={eventData}
-              >
-                <>{render(richtextBonusContent, RichTextOptions)}</>
-              </SessionContentCard>
-            </>
-          )}
-          {showMultipleBonusContent && (
-            <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
-          )}
-          <SessionChat eventData={eventData} />
-          {sessionProgress !== PROGRESS_STATUS.COMPLETED && (
-            <SessionCompleteButton storyUuid={storyUuid} eventData={eventData} />
-          )}
-          <Link href={getDefaultFullSlug(course.full_slug, locale)} sx={backToCourseLinkStyle}>
-            <DirectionalIcon>
-              <ArrowBack />
-            </DirectionalIcon>
-            <span>{t('backToCourse')}</span>
-          </Link>
         </Box>
-      </Container>
 
-      {sessionId && (
-        <Container sx={{ bgcolor: 'background.paper' }}>
-          <SessionFeedbackForm sessionId={sessionId} />
-        </Container>
-      )}
+        {/* After main in the DOM so the mobile bar closes the page; ordered first on desktop. */}
+        {sessions.length > 0 && (
+          <SessionCourseNav
+            courseName={course.content.name}
+            courseHref={courseHref}
+            sessions={sessions}
+            currentSessionUuid={storyUuid}
+            progressByUuid={progressByUuid}
+            accountNeeded={!isLoggedIn}
+            previewSessionUuid={previewSessionUuid}
+            backHref="/library"
+            backLabel={t('backToSessions')}
+            onSessionSelect={handlePlaylistSessionSelect}
+            onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
+          />
+        )}
+      </Container>
     </Box>
   );
 };

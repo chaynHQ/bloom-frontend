@@ -56,6 +56,15 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       withProgress(storyToLibraryItem(story, locale), coursesProgress),
     );
 
+    // A Public course opens its first lesson to logged-out visitors, so that lesson's library card
+    // drops the "Account needed" badge. `weeks[].sessions` holds session uuids (relation unresolved).
+    const freeFirstSessionUuids = new Set(
+      courseStories
+        .filter((story) => (story.content.included_for_partners ?? []).includes('Public'))
+        .map((story) => (story.content.weeks ?? []).flatMap((week) => week.sessions ?? [])[0])
+        .filter((uuid): uuid is string => typeof uuid === 'string'),
+    );
+
     // A lesson is only browsable when its parent course is. Keyed by slug — see parentCourseSlug.
     const visibleCourseTitles = new Map(
       courseStories.map((story) => [normaliseSlug(story.full_slug), story.content.name]),
@@ -67,7 +76,7 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       .map((story) =>
         withProgress(
           {
-            ...storyToLibraryItem(story, locale),
+            ...storyToLibraryItem(story, locale, freeFirstSessionUuids),
             courseTitle: visibleCourseTitles.get(parentCourseSlug(story.full_slug)),
           },
           sessionProgress,

@@ -2,10 +2,10 @@
   "Library": {
     "metadata": {
       "title": "Kütüphane",
-      "description": "Bloom kurslarını ve tekil seanslarını tek bir yerde keşfet."
+      "description": "Bloom kurslarını ve tekil bölümlerini tek bir yerde keşfet."
     },
     "title": "Kütüphaneyi keşfet",
-    "introduction": "Bloom'daki her şey tek bir yerde — adım adım ilerleyebileceğin rehberli kurslar ve ihtiyaç duyduğun her an keşfedebileceğin tekil seanslar.",
+    "introduction": "Bloom'daki her şey tek bir yerde — adım adım ilerleyebileceğin rehberli kurslar ve ihtiyaç duyduğun her an keşfedebileceğin tekil bölümler.",
     "exploreByTheme": "Temaya göre keşfet",
     "filterHeading": "Kütüphaneyi filtrele",
     "filterButtonLabel": "Filtrele",
@@ -18,7 +18,7 @@
     "kind": {
       "all": "Tümü",
       "course": "Kurslar",
-      "session": "Tekil seanslar"
+      "session": "Tekil bölümler"
     },
     "contentTypeHeading": "İçerik türü",
     "contentTypes": {
@@ -34,8 +34,10 @@
       "10to20": "10–20 dk",
       "over20": "20 dk'dan uzun"
     },
-    "sessionCount": "{count, plural, one {# seans} other {# seans}}",
+    "sessionCount": "{count, plural, one {# bölüm} other {# bölüm}}",
     "duration": "{minutes} dk",
+    "courseDuration": "~{hours} saat {minutes} dk",
+    "courseDurationHoursOnly": "~{hours} saat",
     "partOfCourse": "{course} kursunun bir parçası",
     "accountNeeded": "Hesap gerekli",
     "loadMore": "Daha fazla göster",
@@ -53,7 +55,7 @@
       "why-harm-happens": {
         "label": "Zarar neden olur",
         "blurb": "İstismarın ardındaki toplumsal ve sistemsel güçleri öğren",
-        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. Zararın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri anla — ve bunların hiçbirinin neden senin suçun olmadığını."
+        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. Zararın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri — ve bunların hiçbirinin neden senin suçun olmadığını — anla."
       },
       "body-after-trauma": {
         "label": "Travma sonrası bedenin",

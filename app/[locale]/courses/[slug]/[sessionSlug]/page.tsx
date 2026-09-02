@@ -67,11 +67,16 @@ export default async function Page({ params }: { params: Params }) {
   const { locale, slug, sessionSlug } = await params;
 
   const fullSlug = `courses/${slug}/${sessionSlug}`;
-  const story = await getStory(locale, fullSlug);
+  // The session's own `course` relation resolves the course but leaves its sessions as bare
+  // uuids, so the playlist needs the course fetched with `week.sessions` resolved.
+  const [story, courseStory] = await Promise.all([
+    getStory(locale, fullSlug),
+    getStoryblokStory(`courses/${slug}`, locale, { resolve_relations: 'week.sessions' }),
+  ]);
 
   if (!story) {
     notFound();
   }
 
-  return <StoryblokSessionPage story={story} />;
+  return <StoryblokSessionPage story={story} courseStory={courseStory} />;
 }

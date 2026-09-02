@@ -8,10 +8,19 @@
     "navigateToCourse": "Ir ao curso -",
     "courseDetail": {
       "introductionTitle": "Introdução ao curso",
-      "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>"
+      "introductionDescription": "Assista ao vídeo de introdução ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>",
+      "sessionsTitle": "Sessões deste curso",
+      "beginCourse": "Começar o curso",
+      "continueCourse": "Continuar o curso",
+      "otherCoursesTitle": "Ver outros cursos",
+      "accessCard": {
+        "title": "Aceder ao curso completo",
+        "body": "Cria uma conta gratuita para desbloquear todas as sessões e registar o teu progresso.",
+        "logIn": "Já tenho uma conta"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Vídeo",
+      "learnTitle": "Sobre esta sessão",
       "videoDescription": "Assita ao vídeo ou leia a <transcriptLink>transcrição do vídeo</transcriptLink>.",
       "activityTitle": "Atividade",
       "bonusTitle": "Conteúdo Extra",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "Se você estiver sob ameaça ou perigo iminente, vá para 'Ajuda imediata' no menu para encontrar o serviço de apoio adequado.",
         "startButton": "Enviar mensagem"
       },
-      "sessionComplete": "Sessão completa"
+      "sessionComplete": "Sessão completa",
+      "currentSession": "Sessão atual",
+      "currentCourse": "Curso atual",
+      "current": "Atual",
+      "nextSession": "Próxima sessão",
+      "closeSessions": "Fechar"
     },
     "sessionFeedback": {
       "title": "Como foi esta sessão?",
@@ -56,6 +70,8 @@
       "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."
     },
     "backToCourse": "Voltar para o Curso",
-    "backToLibrary": "Voltar para a biblioteca"
+    "backToCourseOverview": "Voltar para a visão geral do curso",
+    "backToLibrary": "Voltar para a biblioteca",
+    "backToSessions": "Voltar para as sessões"
   }
 }

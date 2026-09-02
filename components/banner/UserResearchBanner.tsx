@@ -3,6 +3,7 @@
 import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import logEvent from '@/lib/utils/logEvent';
+import { contentRailGutter } from '@/styles/common';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
@@ -28,7 +29,7 @@ const sectionContentStyle = {
   paddingInline: {
     xs: '1.5rem',
     sm: '2rem',
-    lg: 'calc((100vw - 1000px) / 2)',
+    lg: contentRailGutter(),
   },
 } as const;
 

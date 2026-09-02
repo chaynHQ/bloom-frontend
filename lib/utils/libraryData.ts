@@ -127,7 +127,7 @@ function themesForStory(story: LibraryStory): ThemeKey[] {
   return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
 }
 
-function parseMinutes(duration: unknown): number | undefined {
+export function parseMinutes(duration: unknown): number | undefined {
   const minutes = Number(duration);
   return Number.isFinite(minutes) && minutes > 0 ? minutes : undefined;
 }
@@ -145,15 +145,21 @@ function toPlainText(value: unknown): string {
 
 const AUTHENTICATED_PATH_HEADS = ['videos', 'conversations'];
 
-// Mirrors components/guards/AuthGuard.tsx. Takes an app path, not a Storyblok `full_slug` — a
-// translated slug is locale-prefixed (`de/videos/…`), which would hide the path head.
+// A conservative floor: with only a path to go on, every course lesson reads as needing an account.
+// The session page itself opens the first lesson of a Public course to logged-out visitors, and
+// `useLibraryItems` lifts the badge for those via `freeFirstSessionUuids`. Takes an app path, not a
+// Storyblok `full_slug` — a translated slug is locale-prefixed (`de/videos/…`), hiding the head.
 export function pathRequiresAccount(path: string): boolean {
   const segments = normaliseSlug(path).split('/');
   if (AUTHENTICATED_PATH_HEADS.includes(segments[0])) return true;
   return segments[0] === 'courses' && segments.length > 2;
 }
 
-export function storyToLibraryItem(story: LibraryStory, locale: string): LibraryItem {
+export function storyToLibraryItem(
+  story: LibraryStory,
+  locale: string,
+  freeFirstSessionUuids?: Set<string>,
+): LibraryItem {
   const content = story.content;
   const href = getDefaultFullSlug(normaliseSlug(story.full_slug), locale);
   const base = {
@@ -162,7 +168,7 @@ export function storyToLibraryItem(story: LibraryStory, locale: string): Library
     title: content.name,
     description: toPlainText(content.description),
     href,
-    requiresAccount: pathRequiresAccount(href),
+    requiresAccount: pathRequiresAccount(href) && !freeFirstSessionUuids?.has(story.uuid),
   };
 
   if (content.component === COURSE_COMPONENT) {

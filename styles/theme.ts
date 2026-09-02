@@ -1,6 +1,7 @@
 'use client';
 
 import type { Direction } from '@/lib/utils/getLocaleDirection';
+import { contentRailGutter } from '@/styles/common';
 import {
   alpha,
   createTheme,
@@ -106,6 +107,10 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       },
       error: {
         main: '#EA0050',
+      },
+      // Completed / success state, e.g. the session playlist tick.
+      success: {
+        main: '#4B9B47',
       },
       palePrimaryLight: '#F9eded',
       paleSecondaryLight: '#FFF8F4',
@@ -226,8 +231,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             [theme.breakpoints.up('lg')]: {
               paddingTop: 120,
               paddingBottom: 120,
-              paddingInlineStart: 'calc((100vw - 1000px) / 2) !important',
-              paddingInlineEnd: 'calc((100vw - 1000px) / 2) !important',
+              paddingInlineStart: `${contentRailGutter()} !important`,
+              paddingInlineEnd: `${contentRailGutter()} !important`,
             },
           },
         },

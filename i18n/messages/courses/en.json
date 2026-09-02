@@ -8,10 +8,19 @@
     "navigateToCourse": "Navigate to course -",
     "courseDetail": {
       "introductionTitle": "Course introduction",
-      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>"
+      "introductionDescription": "Watch the introduction video or read the <transcriptLink>video transcript</transcriptLink>",
+      "sessionsTitle": "Sessions in this course",
+      "beginCourse": "Begin course",
+      "continueCourse": "Continue course",
+      "otherCoursesTitle": "View other courses",
+      "accessCard": {
+        "title": "Access the full course",
+        "body": "Create a free account to unlock all sessions and log your progress.",
+        "logIn": "I already have an account"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "About this session",
       "videoDescription": "Watch the video or read the <transcriptLink>video transcript</transcriptLink>.",
       "activityTitle": "Activity",
       "bonusTitle": "Bonus content",
@@ -28,7 +37,12 @@
         "detailImmediateHelp": "If you’re in imminent threat or harm, please go to ‘Immediate help’ in the menu to find the right service to support you.",
         "startButton": "Message us"
       },
-      "sessionComplete": "Session complete"
+      "sessionComplete": "Session complete",
+      "currentSession": "Current session",
+      "currentCourse": "Current course",
+      "current": "Current",
+      "nextSession": "Next session",
+      "closeSessions": "Close"
     },
     "sessionFeedback": {
       "title": "How was this session?",
@@ -56,6 +70,8 @@
       "completeSessionError": "There was an error marking this session as complete. Try again a little later."
     },
     "backToCourse": "Back to course",
-    "backToLibrary": "Back to library"
+    "backToCourseOverview": "Back to course overview",
+    "backToLibrary": "Back to library",
+    "backToSessions": "Back to sessions"
   }
 }
