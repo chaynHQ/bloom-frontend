@@ -9,6 +9,10 @@ describe('A course session user', () => {
   });
 
   it('Should navigate to a session and complete it', () => {
+    // Test isolation resets the page to about:blank before this test runs, so the state
+    // from before() (visiting '/' and logging in) doesn't carry over without revisiting.
+    cy.visit('/');
+
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 8000 }).should('exist').click(); //navigate to the library
 
     cy.get('a[href*="healing-from-sexual-trauma"]', {
