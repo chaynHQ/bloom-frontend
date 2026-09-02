@@ -46,16 +46,16 @@ silently stops recording for migrated stories, or resource pages 404.
 
 These were confirmed with the product owner. If any change, revisit the affected phases.
 
-| # | Decision | Value used in this plan |
-|---|---|---|
-| 1 | Scope | **Full rename**: enums + Storyblok components + URL routes + GA event names. |
-| 2 | `written` type | **Build it now** — new Storyblok component, route, rendering, library mapping. |
-| 3 | Route shape | **Three format routes**: `/[locale]/video/[slug]`, `/[locale]/audio/[slug]`, `/[locale]/written/[slug]`. |
-| 4 | Component merge | **Merge** `resource_short_video` + `resource_single_video` → one `resource_video`. `resource_conversation` → `resource_audio`. New `resource_written`. |
-| 5 | Canonical type string | `video` / `audio` / `written` — identical in both repos, in the DB `resource.category` column, and as the GA `resource_category` param. |
-| 6 | GA event prefixes | `RESOURCE_VIDEO_*` / `RESOURCE_AUDIO_*` / `RESOURCE_WRITTEN_*`. |
-| 7 | `somatics` tag | Drop from code (remove the `with_tag` filter). Tag may stay in Storyblok for editorial use with no code meaning. |
-| 8 | Old URL redirects | Permanent (301). |
+| #   | Decision              | Value used in this plan                                                                                                                                |
+| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Scope                 | **Full rename**: enums + Storyblok components + URL routes + GA event names.                                                                           |
+| 2   | `written` type        | **Build it now** — new Storyblok component, route, rendering, library mapping.                                                                         |
+| 3   | Route shape           | **Three format routes**: `/[locale]/video/[slug]`, `/[locale]/audio/[slug]`, `/[locale]/written/[slug]`.                                               |
+| 4   | Component merge       | **Merge** `resource_short_video` + `resource_single_video` → one `resource_video`. `resource_conversation` → `resource_audio`. New `resource_written`. |
+| 5   | Canonical type string | `video` / `audio` / `written` — identical in both repos, in the DB `resource.category` column, and as the GA `resource_category` param.                |
+| 6   | GA event prefixes     | `RESOURCE_VIDEO_*` / `RESOURCE_AUDIO_*` / `RESOURCE_WRITTEN_*`.                                                                                        |
+| 7   | `somatics` tag        | Drop from code (remove the `with_tag` filter). Tag may stay in Storyblok for editorial use with no code meaning.                                       |
+| 8   | Old URL redirects     | Permanent (301).                                                                                                                                       |
 
 ### Decisions the implementing agent MUST get answered before starting
 
@@ -84,21 +84,21 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 
 ### The three types today
 
-| Product name | Storyblok `component` | Folder / route | Library `Format` | DB `resource.category` | GA event family (`eventPrefix`) |
-|---|---|---|---|---|---|
-| Shorts | `resource_short_video` | `shorts/` → `/[locale]/shorts/[slug]` | `video` | `short_video` | `RESOURCE_SHORT_VIDEO_*` (`eventPrefix="RESOURCE_SHORT"`) |
-| Conversations | `resource_conversation` | `conversations/` → `/[locale]/conversations/[slug]` | `audio` | `conversation` | `RESOURCE_CONVERSATION_*` (`eventPrefix="RESOURCE_CONVERSATION"` → emits `RESOURCE_CONVERSATION_AUDIO_*`) |
-| Somatics | `resource_single_video` **+ Storyblok tag `somatics`** | `videos/` → `/[locale]/videos/[slug]` | `video` | `single_video` | `RESOURCE_SINGLE_VIDEO_*` (`eventPrefix="RESOURCE_SINGLE_VIDEO"` → emits `RESOURCE_SINGLE_VIDEO_VIDEO_*`) |
-| _(new)_ Written | — | — | `written` (already in the `Format` union + `Library.contentTypes` i18n; no component mapped) | — | — |
+| Product name    | Storyblok `component`                                  | Folder / route                                      | Library `Format`                                                                             | DB `resource.category` | GA event family (`eventPrefix`)                                                                           |
+| --------------- | ------------------------------------------------------ | --------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------- |
+| Shorts          | `resource_short_video`                                 | `shorts/` → `/[locale]/shorts/[slug]`               | `video`                                                                                      | `short_video`          | `RESOURCE_SHORT_VIDEO_*` (`eventPrefix="RESOURCE_SHORT"`)                                                 |
+| Conversations   | `resource_conversation`                                | `conversations/` → `/[locale]/conversations/[slug]` | `audio`                                                                                      | `conversation`         | `RESOURCE_CONVERSATION_*` (`eventPrefix="RESOURCE_CONVERSATION"` → emits `RESOURCE_CONVERSATION_AUDIO_*`) |
+| Somatics        | `resource_single_video` **+ Storyblok tag `somatics`** | `videos/` → `/[locale]/videos/[slug]`               | `video`                                                                                      | `single_video`         | `RESOURCE_SINGLE_VIDEO_*` (`eventPrefix="RESOURCE_SINGLE_VIDEO"` → emits `RESOURCE_SINGLE_VIDEO_VIDEO_*`) |
+| _(new)_ Written | —                                                      | —                                                   | `written` (already in the `Format` union + `Library.contentTypes` i18n; no component mapped) | —                      | —                                                                                                         |
 
 ### Target mapping
 
-| Old component | Old route | Old category | Old event prefix | → New component | New route | New category | New event prefix |
-|---|---|---|---|---|---|---|---|
-| `resource_short_video` | `/shorts/[slug]` | `short_video` | `RESOURCE_SHORT_VIDEO_*` | `resource_video` | `/video/[slug]` | `video` | `RESOURCE_VIDEO_*` |
-| `resource_single_video` | `/videos/[slug]` | `single_video` | `RESOURCE_SINGLE_VIDEO_*` | `resource_video` | `/video/[slug]` | `video` | `RESOURCE_VIDEO_*` |
-| `resource_conversation` | `/conversations/[slug]` | `conversation` | `RESOURCE_CONVERSATION_*` | `resource_audio` | `/audio/[slug]` | `audio` | `RESOURCE_AUDIO_*` |
-| _(new)_ | — | — | — | `resource_written` | `/written/[slug]` | `written` | `RESOURCE_WRITTEN_*` |
+| Old component           | Old route               | Old category   | Old event prefix          | → New component    | New route         | New category | New event prefix     |
+| ----------------------- | ----------------------- | -------------- | ------------------------- | ------------------ | ----------------- | ------------ | -------------------- |
+| `resource_short_video`  | `/shorts/[slug]`        | `short_video`  | `RESOURCE_SHORT_VIDEO_*`  | `resource_video`   | `/video/[slug]`   | `video`      | `RESOURCE_VIDEO_*`   |
+| `resource_single_video` | `/videos/[slug]`        | `single_video` | `RESOURCE_SINGLE_VIDEO_*` | `resource_video`   | `/video/[slug]`   | `video`      | `RESOURCE_VIDEO_*`   |
+| `resource_conversation` | `/conversations/[slug]` | `conversation` | `RESOURCE_CONVERSATION_*` | `resource_audio`   | `/audio/[slug]`   | `audio`      | `RESOURCE_AUDIO_*`   |
+| _(new)_                 | —                       | —              | —                         | `resource_written` | `/written/[slug]` | `written`    | `RESOURCE_WRITTEN_*` |
 
 ### Known inconsistencies to fix along the way
 
@@ -124,20 +124,24 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 ### Every file that references the types
 
 **bloom-frontend — enums / constants**
+
 - `lib/constants/enums.ts` — `RESOURCE_CATEGORIES` (`SHORT_VIDEO`, `SINGLE_VIDEO`, `CONVERSATION`); `STORYBLOK_TAGS.SOMATICS`; `RELATED_CONTENT_CATEGORIES` union.
 - `lib/constants/events.ts` — all `RESOURCE_SHORT_VIDEO_*`, `RESOURCE_CONVERSATION_*`, `RESOURCE_SINGLE_VIDEO_*` constants (`_VIEWED`, `_PLAYED`, `_PAUSED`, `_FINISHED`, `_STARTED_REQUEST/_SUCCESS/_ERROR`, `_COMPLETE_REQUEST/_SUCCESS/_ERROR`, `_TRANSCRIPT_OPENED/_CLOSED`, `_VISIT_SESSION`).
 
 **bloom-frontend — routes / pages**
+
 - `app/[locale]/shorts/[slug]/page.tsx`
 - `app/[locale]/conversations/[slug]/page.tsx`
 - `app/[locale]/videos/[slug]/page.tsx`
 - `app/[locale]/[slug]/page.tsx` — `excludePaths` contains `'shorts'`, `'videos'`, `'conversations'`.
 
 **bloom-frontend — guards / access**
+
 - `components/guards/AuthGuard.tsx` — authenticated path heads include `'conversations'`, `'videos'` (not `'shorts'`).
 - `lib/utils/libraryData.ts` — `AUTHENTICATED_PATH_HEADS = ['videos', 'conversations']`, `pathRequiresAccount()`.
 
 **bloom-frontend — Storyblok page components**
+
 - `components/storyblok/StoryblokResourceShortPage.tsx` — `component: 'resource_short_video'`, `RESOURCE_CATEGORIES.SHORT_VIDEO` ×2, `RESOURCE_SHORT_VIDEO_VIEWED`, `<SignUpSection source="resource-short">`, `StoryblokResourceShortPageProps`.
 - `components/storyblok/StoryblokResourceConversationPage.tsx` — `component: 'resource_conversation'`, `RESOURCE_CATEGORIES.CONVERSATION` ×2, `RESOURCE_CONVERSATION_VIEWED`, `StoryblokResourceConversationPageProps`.
 - `components/storyblok/StoryblokResourceSingleVideoPage.tsx` — `component: 'resource_single_video'`, `RESOURCE_CATEGORIES.SINGLE_VIDEO` ×2, `RESOURCE_SINGLE_VIDEO_VIEWED`, `StoryblokResourceSingleVideoPageProps`.
@@ -147,6 +151,7 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 - `lib/storyblok.ts` + `lib/utils/richText.tsx` — register `resource_carousel` (the resource page components are NOT registered here; routed via app router).
 
 **bloom-frontend — resource player / header components**
+
 - `components/resources/ResourceShortVideo.tsx` — 8 `RESOURCE_SHORT_VIDEO_*` imports, `eventPrefix="RESOURCE_SHORT"`.
 - `components/resources/ResourceSingleVideo.tsx` — 8 `RESOURCE_SINGLE_VIDEO_*` imports, `eventPrefix="RESOURCE_SINGLE_VIDEO"`.
 - `components/resources/ResourceConversationAudio.tsx` — 8 `RESOURCE_CONVERSATION_*` imports, `eventPrefix="RESOURCE_CONVERSATION"`.
@@ -157,29 +162,34 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 - `components/resources/ResourceSingleVideo.tsx` / `ResourceShortVideo.tsx` also own the "this clip is from Session X / Course Y" block.
 
 **bloom-frontend — utils / hooks**
+
 - `lib/utils/getLibraryStories.ts` — `LibraryStories` shape `{ courses, courseSessions, shorts, somatics, conversations }`; parallel `getAllStoryblokStories` with `starts_with: 'shorts/'`, `starts_with: 'videos/' + with_tag: STORYBLOK_TAGS.SOMATICS`, `starts_with: 'conversations/'`.
 - `lib/utils/libraryData.ts` — `LibraryStories` interface; `FORMAT_BY_COMPONENT` (`resource_conversation: 'audio'`, `resource_short_video: 'video'`, `resource_single_video: 'video'`, `Session`/`session_iba: 'video'`); header comment; `Format` union (already `'audio' | 'written' | 'video' | 'activity'`); `FORMAT_KEYS`.
 - `lib/hooks/useLibraryItems.ts` — `const resourceStories = [...stories.shorts, ...stories.somatics, ...stories.conversations]`.
 - `lib/utils/getNextResourceButtonLabel.ts` — `/conversations/` → `'nextConversationButtonLabel'`, `/courses/` → `'nextSessionButtonLabel'`, else `'nextVideoButtonLabel'`.
 
 **bloom-frontend — cards / forms / store**
-- `components/cards/ResourceCard.tsx` — `t(\`relatedContent.resource_${category}\`)`; default image `src="/bloom_shorts.png"` + alt `'Bloom shorts default image'` (+ a TODO).
+
+- `components/cards/ResourceCard.tsx` — `t(\`relatedContent.resource_${category}\`)`; default image `src="/bloom_shorts.png"`+ alt`'Bloom shorts default image'` (+ a TODO).
 - `components/cards/RelatedContentCard.tsx` — `t(category)` (lowercased component name).
 - `components/forms/ResourceFeedbackForm.tsx` — `category: RESOURCE_CATEGORIES` prop; `RESOURCE_FEEDBACK_SUBMITTED` `{ category }`.
 - `lib/store/resourcesSlice.tsx` — `Resource.category: RESOURCE_CATEGORIES`.
 - `lib/api.ts` — no change (`startResource`/`completeResource`/`createResourceFeedback` keyed on uuid/id).
 
 **bloom-frontend — i18n** (`i18n/messages/<ns>/{en,de,es,fr,hi,pt,tr,ar}.json`)
+
 - `resources/*.json` `Resources`: `nextVideoButtonLabel`, `nextConversationButtonLabel`, `nextSessionButtonLabel`, `conversations`, `shorts`, `videos`, `sessionDetail`, `sessionButtonLabel`, `videoTranscriptLink`, `conversationTranscriptLink`, `relatedContent.resource_short_video`, `relatedContent.resource_single_video`, `relatedContent.resource_conversation`, `resourceFeedback.title` ("How was this session?").
 - `library/*.json` `Library.contentTypes` — already `{ course, audio, written, video, activity }`. **Verify `written` wording in all 8 locales** (only `en` = "Written" confirmed).
 - `scripts/checkTranslation.js` — auto-discovers keys; no code change, but CI fails on key-parity drift across locales.
 
 **bloom-frontend — static / SEO**
+
 - `public/sitemap.xml` — ~90 `<loc>` entries under `/shorts/`, `/conversations/`, `/videos/` (× locales). **No generator exists in the repo** — it is hand-maintained or externally produced (landmine L2).
 - `public/robots.txt` — no resource paths; no change.
 - `next.config.js` `redirects()` — no resource redirects today; add here.
 
 **bloom-frontend — tests**
+
 - `lib/utils/libraryData.test.ts` — `component: 'resource_conversation'`, `/videos/a-somatic-video`, `de/videos/somatic`.
 - `lib/hooks/useLibraryItems.test.ts` — `somatics: []`, `shorts: []` in mock `LibraryStories`.
 - `cypress/integration/user-content/shorts.cy.tsx` — "Shorts Flow".
@@ -189,6 +199,7 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 - `cypress/integration/system/sitemap.cy.tsx` — generic sitemap assertions.
 
 **bloom-backend**
+
 - `src/utils/constants.ts` — `RESOURCE_CATEGORIES` (`SHORT_VIDEO='short_video'`, `SINGLE_VIDEO='single_video'`, `CONVERSATION='conversation'`); `STORYBLOK_PAGE_COMPONENTS` (`RESOURCE_SINGLE_VIDEO`, `RESOURCE_SHORT_VIDEO`, `RESOURCE_CONVERSATION`).
 - `src/entities/resource.entity.ts` — `@Column() category` (varchar, per migration `1733160378757-bloom-backend.ts`).
 - `src/resource/dtos/create-resource.dto.ts` — `@IsEnum(RESOURCE_CATEGORIES) category`.
@@ -288,7 +299,7 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 - [ ] `src/webhooks/webhooks.service.ts` `updateOrCreateStoryData`:
   - Recognise the union of old + new resource components in the `if (…)` guard.
   - Map component → category: `resource_short_video | resource_single_video | resource_video →
-    'video'`; `resource_conversation | resource_audio → 'audio'`; `resource_written → 'written'`.
+'video'`; `resource_conversation | resource_audio → 'audio'`; `resource_written → 'written'`.
   - **Add `category` to the fields written on update**, not just create — so re-published
     stories in Phase 2.5 correct their `category`. (Derive it every time from the component;
     include it in `updatedStoryData` or in the `existingResource` merge.)
@@ -338,7 +349,7 @@ These are genuine product/infra choices that change the work. Ask a human; do no
     `resource_feedback`). Moving a story keeps its uuid; only `full_slug` changes.
   - Handle every locale's `translated_slugs`.
   - Emit a `{ uuid, locale, oldFullSlug, newFullSlug }` manifest → feeds Phase 3.8 redirects
-    + the sitemap regen.
+    - the sitemap regen.
 - [ ] Verify `related_content` / `related_session` / `related_course` / `resource_carousel.resources`
       are stored as story references (uuid-based) and survive the move. Remap any stored as raw
       slug strings.
@@ -452,8 +463,7 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 ### 3.7 Cards / forms / store
 
 - [ ] `components/cards/ResourceCard.tsx` — align the i18n key lookup with 3.9
-      (`t(\`relatedContent.${category}\`)` or similar); replace/keep `/bloom_shorts.png` default
-      + fix the alt string + TODO.
+      (`t(\`relatedContent.${category}\`)`or similar); replace/keep`/bloom_shorts.png` default + fix the alt string + TODO.
 - [ ] `components/cards/RelatedContentCard.tsx` — ensure `t(category)` keys exist for the new
       component/category names.
 - [ ] `components/forms/ResourceFeedbackForm.tsx` — type unchanged; `RESOURCE_FEEDBACK_SUBMITTED`
@@ -464,12 +474,8 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 
 ### 3.8 Redirects & sitemap
 
-- [ ] `next.config.js` `redirects()` — add, using the existing `LOCALE_PATTERN` style:
-      - `/shorts/:slug` + `/:locale/shorts/:slug` → `/video/:slug` (permanent).
-      - `/videos/:slug` + `/:locale/videos/:slug` → `/video/:slug` (permanent).
-      - `/conversations/:slug` + `/:locale/conversations/:slug` → `/audio/:slug` (permanent).
-      - If any individual slugs changed (not just the folder segment), add explicit per-slug
-        redirects generated from the Phase 2.7 manifest.
+- [ ] `next.config.js` `redirects()` — add, using the existing `LOCALE_PATTERN` style: - `/shorts/:slug` + `/:locale/shorts/:slug` → `/video/:slug` (permanent). - `/videos/:slug` + `/:locale/videos/:slug` → `/video/:slug` (permanent). - `/conversations/:slug` + `/:locale/conversations/:slug` → `/audio/:slug` (permanent). - If any individual slugs changed (not just the folder segment), add explicit per-slug
+      redirects generated from the Phase 2.7 manifest.
 - [ ] Regenerate `public/sitemap.xml` via the process found in Phase 0 (new `/video/`,
       `/audio/`, `/written/` URLs; drop the old ones).
 
@@ -547,20 +553,19 @@ These are genuine product/infra choices that change the work. Ask a human; do no
 - [ ] `sitemap.xml` lists the new URLs, not the old.
 - [ ] Related-content carousels on course/session/welcome pages still resolve.
 - [ ] The weekly Slack report renders the resource breakdown with the new labels.
-- [ ] `written` page renders, is reachable from the library, and (if applicable) "mark complete"
-      + feedback work.
+- [ ] `written` page renders, is reachable from the library, and (if applicable) "mark complete" + feedback work.
 
 ---
 
 ## Rollback
 
-| Layer | Rollback |
-|---|---|
-| bloom-backend deploy | Revert PR (webhook still understands old components — they were kept). Migration `down()` is lossy but safe (`category` is reporting-only). |
-| Storyblok migration | Reverse script: move stories back, restore `content.component`. Uuids preserved → backend re-syncs on publish. Old blocks still exist. Keep the manifest. |
+| Layer                 | Rollback                                                                                                                                                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| bloom-backend deploy  | Revert PR (webhook still understands old components — they were kept). Migration `down()` is lossy but safe (`category` is reporting-only).                                                                                                            |
+| Storyblok migration   | Reverse script: move stories back, restore `content.component`. Uuids preserved → backend re-syncs on publish. Old blocks still exist. Keep the manifest.                                                                                              |
 | bloom-frontend deploy | Revert PR. **Caveat:** if Storyblok is already migrated, the old frontend can't find stories in old folders → 404. So either roll back frontend + Storyblok together, or keep old folders populated until the new frontend is confirmed in production. |
-| Redirects | Remove from `next.config.js`. |
-| GA4 | No rollback for split history. Dashboards recover by repointing filters. |
+| Redirects             | Remove from `next.config.js`.                                                                                                                                                                                                                          |
+| GA4                   | No rollback for split history. Dashboards recover by repointing filters.                                                                                                                                                                               |
 
 The **safe ordering** keeps old Storyblok folders/blocks alive and the backend
 dual-compatible until the new frontend is verified in production, so any single layer can
