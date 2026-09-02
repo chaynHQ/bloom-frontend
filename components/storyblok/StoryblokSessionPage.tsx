@@ -285,6 +285,7 @@ const StoryblokSessionPage = ({
                     title={t('sessionFeedback.title')}
                     eventPrefix="SESSION_FEEDBACK"
                     eventData={eventData}
+                    initialExpanded
                   >
                     <SessionFeedbackForm sessionId={sessionId} />
                   </SessionContentCard>

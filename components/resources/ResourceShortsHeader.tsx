@@ -133,6 +133,7 @@ export const ResourceShortHeader = (props: ResourceShortHeaderProps) => {
               })}
             </Typography>
             <Button
+              qa-id="resource-short-related-session-button"
               href={getDefaultFullSlug(relatedSession.full_slug, locale)}
               component={i18nLink}
               onClick={redirectToSession}
