@@ -1,19 +1,38 @@
 {
   "Resources": {
-    "backToLibrary": "Revenir à la bibliothèque",
-    "nextVideoButtonLabel": "Vidéo suivante",
-    "nextConversationButtonLabel": "Conversation suivante",
-    "nextSessionButtonLabel": "Session suivante",
     "conversations": "Conversations",
     "shorts": "Courte",
     "videos": "Vidéos",
-    "completed": "Terminé",
-    "sessionDetail": "Cet extrait est de la Session : {sessionName}, de notre Cours : {courseName}",
+    "partOf": "Fait partie de {name}",
     "sessionButtonLabel": "Regarder la session complète",
-    "videoTranscriptLink": "Regardez la vidéo ou lisez la <link>transcription</link>.",
-    "conversationTranscriptLink": "Écoutez la conversation ou lisez la <link>transcription</link>.",
+    "mediaCard": {
+      "title": "En savoir plus sur {name}"
+    },
+    "audioPlayer": {
+      "play": "Lecture",
+      "pause": "Pause",
+      "back": "Reculer de {seconds} secondes",
+      "forward": "Avancer de {seconds} secondes",
+      "scrubber": "Naviguer dans l'audio"
+    },
+    "moment": {
+      "title": "Avez-vous besoin d'un moment ?",
+      "subtitle": "Si, à un moment de la session, vous avez besoin d'une pause, utilisez nos exercices d'ancrage ci-dessous.",
+      "groundingLabel": "Ancrage",
+      "activityLabel": "Activité"
+    },
+    "actions": {
+      "finish": "Terminer la session"
+    },
+    "complete": {
+      "title": "Session terminée",
+      "body": "Vous vous êtes accordé·e ce temps aujourd'hui. Prenez un moment avant de poursuivre.",
+      "cta": "Revenir aux sessions",
+      "close": "Fermer"
+    },
     "relatedContent": {
-      "title": "Contenu associé",
+      "title": "Envie d'explorer davantage ?",
+      "subtitle": "Jetez un œil à nos sessions associées ci-dessous, pour accompagner votre parcours de guérison.",
       "resource_short_video": "Regarder",
       "resource_single_video": "Regarder",
       "resource_conversation": "Écouter",
@@ -25,8 +44,9 @@
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {
-      "title": "Comment s’est déroulée la session? ",
-      "subtitle": "Nous aimerions connaître votre avis sur cette session. Vos retours nous aident à améliorer nos cours.",
+      "title": "Comment avez-vous trouvé cette session ?",
+      "close": "Fermer",
+      "subtitle": "Nous aimerions connaître votre avis sur cette session. Vos retours nous aident à améliorer nos sessions.",
       "feedbackTags": {
         "relatable": "Réaliste",
         "useful": "Utile",
@@ -36,11 +56,14 @@
         "not useful": "Inutile"
       },
       "textboxDefaultText": "Ajouter un commentaire...",
-      "sendButtonText": "Envoyer",
+      "sendButtonText": "Envoyer l'évaluation",
       "submissionText": "Merci d'avoir envoyé votre avis",
       "errors": {
         "feedbackTagError": "Veuillez sélectionner une note avant d'envoyer."
       }
+    },
+    "errors": {
+      "completeResourceError": "Une erreur s'est produite lors du marquage de cet élément comme terminé. Veuillez réessayer un peu plus tard."
     },
     "references": {
       "title": "Ressources",
@@ -49,6 +72,10 @@
       "articles": "Articles",
       "video_practices": "Pratiques vidéo",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Revenir aux sessions",
+    "hero": {
+      "eyebrow": "Session actuelle"
     }
   }
 }

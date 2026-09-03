@@ -67,7 +67,7 @@ const arrowStyle = {
   backgroundColor: 'primary.dark',
   color: 'common.white',
   '&:hover': { backgroundColor: 'primary.dark', opacity: 0.85 },
-  '&.Mui-disabled': { backgroundColor: 'primary.light', color: 'common.white' },
+  '&.Mui-disabled': { backgroundColor: 'primary.main', color: 'common.white' },
 } as const;
 
 const dotButtonStyle = {
@@ -87,7 +87,7 @@ const dotStyle = (active: boolean) =>
     width: active ? 22 : 8,
     height: 8,
     borderRadius: '100px',
-    backgroundColor: active ? 'primary.dark' : 'primary.light',
+    backgroundColor: active ? 'primary.dark' : 'primary.main',
     transition: 'width 150ms ease, background-color 150ms ease',
   }) as const;
 
@@ -118,13 +118,21 @@ export function CardCarousel({
   const trackRef = useRef<HTMLDivElement>(null);
   const [pages, setPages] = useState(1);
   const [page, setPage] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
   const measure = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
     const width = track.clientWidth || 1;
-    setPages(Math.max(1, Math.ceil(track.scrollWidth / width)));
-    setPage(Math.round(Math.abs(track.scrollLeft) / width));
+    const scrollLeft = Math.abs(track.scrollLeft);
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const pageCount = Math.max(1, Math.ceil(track.scrollWidth / width));
+    const nextAtEnd = maxScroll > 0 && scrollLeft >= maxScroll - 1;
+    setPages(pageCount);
+    setPage(nextAtEnd ? pageCount - 1 : Math.round(scrollLeft / width));
+    setAtStart(scrollLeft <= 1);
+    setAtEnd(nextAtEnd);
   }, []);
 
   useEffect(() => {
@@ -184,7 +192,7 @@ export function CardCarousel({
         <Box sx={controlsStyle}>
           <IconButton
             onClick={() => goToPage(page - 1)}
-            disabled={page === 0}
+            disabled={atStart}
             aria-label={tS('previous', { name })}
             sx={arrowStyle}
           >
@@ -209,7 +217,7 @@ export function CardCarousel({
           </Box>
           <IconButton
             onClick={() => goToPage(page + 1)}
-            disabled={page >= pages - 1}
+            disabled={atEnd}
             aria-label={tS('next', { name })}
             sx={arrowStyle}
           >

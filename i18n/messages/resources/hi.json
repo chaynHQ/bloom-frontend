@@ -1,19 +1,38 @@
 {
   "Resources": {
-    "backToLibrary": "Library par vapas jayein.",
-    "nextVideoButtonLabel": "Agla video",
-    "nextConversationButtonLabel": "Agli conversation",
-    "nextSessionButtonLabel": "Agla session",
     "conversations": "Bātcīt",
     "shorts": "Clips",
     "videos": "Videos",
-    "completed": "Pūra",
-    "sessionDetail": "Yah clip Session: {sessionName}, hamāre Course: {courseName} se hai",
+    "partOf": "{name} ka hissa",
     "sessionButtonLabel": "Pūrī session dekhen",
-    "videoTranscriptLink": "Video dekhen yā <link>transcript</link> paṛhen.",
-    "conversationTranscriptLink": "Bātchīt sune yā <link>transcript</link> paṛhen.",
+    "mediaCard": {
+      "title": "{name} ke baare mein jaanein"
+    },
+    "audioPlayer": {
+      "play": "Play",
+      "pause": "Pause",
+      "back": "{seconds} second peeche jayein",
+      "forward": "{seconds} second aage badhein",
+      "scrubber": "Audio mein aage-peeche jayein"
+    },
+    "moment": {
+      "title": "Kya aapko ek pal chahiye?",
+      "subtitle": "Agar session ke dauraan kabhi bhi aapko ek pal ki zaroorat ho, toh neeche diye gaye grounding exercises ka istemaal karein.",
+      "groundingLabel": "Grounding",
+      "activityLabel": "Activity"
+    },
+    "actions": {
+      "finish": "Session poora karein"
+    },
+    "complete": {
+      "title": "Session poora hua",
+      "body": "Aap aaj apne liye yahaan aaye. Aage badhne se pehle ek pal rukein.",
+      "cta": "Sessions par vapas jayein",
+      "close": "Band karein"
+    },
     "relatedContent": {
-      "title": "Related content",
+      "title": "Aur explore karna chahte hain?",
+      "subtitle": "Apni healing journey mein madad ke liye, neeche di gayi related sessions dekhen.",
       "resource_short_video": "Watch",
       "resource_single_video": "Watch",
       "resource_conversation": "Listen",
@@ -25,8 +44,9 @@
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {
-      "title": "Yeh session kaisa aapko kaisa laga?",
-      "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare courses ko behtar banane mein madad karti hai.",
+      "title": "Aapko yeh session kaisa laga?",
+      "close": "Band karein",
+      "subtitle": "Hum aapke is session ke bare mein vichaar jaan na chahte hain. Aapki feedback humare sessions ko behtar banane mein madad karti hai.",
       "feedbackTags": {
         "relatable": "Mein session ko samjh pai aur usse jud pai",
         "useful": "Faidemand",
@@ -36,11 +56,14 @@
         "not useful": "Zada faidemand nahi tha"
       },
       "textboxDefaultText": "Ek comment add karein...",
-      "sendButtonText": "Bhejein",
+      "sendButtonText": "Rating submit karein",
       "submissionText": "Aapke feedback ko bhejne ke liye dhanyavaad",
       "errors": {
         "feedbackTagError": "krpaya bhejane se pahale ek reting chunen."
       }
+    },
+    "errors": {
+      "completeResourceError": "Ise complete mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye."
     },
     "references": {
       "title": "Sansadhan",
@@ -49,6 +72,10 @@
       "articles": "Lekh",
       "video_practices": "Video abhyaas",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Sessions par vapas jayein",
+    "hero": {
+      "eyebrow": "Maujooda session"
     }
   }
 }

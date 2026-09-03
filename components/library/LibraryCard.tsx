@@ -1,17 +1,13 @@
 import { CardStatusBadge } from '@/components/cards/CardStatusBadge';
+import { FormatBadge } from '@/components/common/FormatBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { type ContentType, type LibraryItem } from '@/lib/utils/libraryData';
 import { cardShadow } from '@/styles/common';
-import type { SvgIconComponent } from '@mui/icons-material';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
-import ArticleRounded from '@mui/icons-material/ArticleRounded';
-import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
 import RouteRounded from '@mui/icons-material/RouteRounded';
-import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
-import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -20,14 +16,6 @@ import type { ReactNode } from 'react';
 // `illustrated` heads the card with the course illustration and drops the theme line and type
 // badge; `compact` is the text-only card.
 export type LibraryCardLayout = 'compact' | 'illustrated';
-
-const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
-  course: RouteRounded,
-  audio: VolumeUpRounded,
-  written: ArticleRounded,
-  video: SmartDisplayRounded,
-  activity: ExtensionRounded,
-};
 
 const cardStyle = {
   m: 0,
@@ -57,15 +45,15 @@ const imagePanelStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
-// Only a badged compact card insets its content to clear the corner badge; under `illustrated`
-// the badge sits over the image instead.
-const contentStyle = (layout: LibraryCardLayout, hasCornerBadge: boolean) =>
+// A compact card always reserves room at the top for the corner badge, so the title sits in the
+// same place whether or not a badge is present. Under `illustrated` the badge sits over the image.
+const contentStyle = (layout: LibraryCardLayout) =>
   ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
     p: 2,
-    pt: layout === 'compact' && hasCornerBadge ? 7 : 2,
+    pt: layout === 'compact' ? 6 : 2,
   }) as const;
 
 const themeStyle = {
@@ -78,36 +66,16 @@ const themeStyle = {
 
 const descriptionStyle = {
   color: 'grey.800',
-  mt: 1.5,
+  mt: 2,
   display: '-webkit-box',
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
 } as const;
 
-const typeBadgeStyle = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 0.5,
-  alignSelf: 'flex-start',
-  height: 32,
-  pl: 1,
-  pr: 1.5,
-  borderRadius: '8px',
-  border: '1px solid',
-} as const;
+const metaRowStyle = { display: 'flex', alignItems: 'flex-start', gap: 2 } as const;
 
-const typeBadgeLabelStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '0.875rem',
-  fontWeight: 500,
-  lineHeight: 1.4,
-  color: 'grey.700',
-} as const;
-
-const metaRowStyle = { display: 'flex', alignItems: 'center', gap: 2 } as const;
-
-const metaStyle = { display: 'flex', alignItems: 'center', gap: 0.5, color: 'grey.800' } as const;
+const metaStyle = { display: 'flex', gap: 0.5, color: 'grey.800' } as const;
 
 const metaLabelStyle = {
   fontFamily: 'headingFontFamily',
@@ -120,7 +88,7 @@ const spacerStyle = { flexGrow: 1 } as const;
 function Meta({ icon, text }: { icon: ReactNode; text: string }) {
   return (
     <Box sx={metaStyle}>
-      {icon}
+      <Box sx={{ mt: 0.25 }}>{icon}</Box>
       <Typography sx={metaLabelStyle}>{text}</Typography>
     </Box>
   );
@@ -140,7 +108,6 @@ export function LibraryCard({
   const t = useTranslations('Library');
   const isCourse = item.kind === 'course';
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
-  const BadgeIcon = CONTENT_TYPE_ICON[badgeType];
   const showAccountBadge = showAccountNeeded && !item.progress && item.requiresAccount;
   const isIllustrated = layout === 'illustrated' && Boolean(item.imageSrc);
 
@@ -171,32 +138,16 @@ export function LibraryCard({
           </Box>
         )}
 
-        <Box
-          sx={contentStyle(
-            isIllustrated ? 'illustrated' : 'compact',
-            Boolean(item.progress) || showAccountBadge,
-          )}
-        >
+        <Box sx={contentStyle(isIllustrated ? 'illustrated' : 'compact')}>
           {!isIllustrated && (
             <Typography variant="body2" sx={themeStyle}>
               {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
             </Typography>
           )}
-          <Typography variant="h4" sx={{ mb: 1.5 }}>
+          <Typography variant="h4" sx={{ mb: 1 }}>
             {item.title}
           </Typography>
-          {!isIllustrated && (
-            <Box
-              sx={{
-                ...typeBadgeStyle,
-                backgroundColor: isCourse ? 'secondary.light' : 'badgeBlue',
-                borderColor: isCourse ? 'secondary.main' : 'badgeBlueBorder',
-              }}
-            >
-              <BadgeIcon sx={{ fontSize: 16, color: 'grey.700' }} />
-              <Typography sx={typeBadgeLabelStyle}>{t(`contentTypes.${badgeType}`)}</Typography>
-            </Box>
-          )}
+          {!isIllustrated && <FormatBadge type={badgeType} />}
           <Typography variant="body2" sx={{ ...descriptionStyle, ...(isIllustrated && { mt: 0 }) }}>
             {item.description}
           </Typography>
@@ -223,7 +174,7 @@ export function LibraryCard({
               )
             )}
             <Box sx={spacerStyle} />
-            <ArrowForwardRounded sx={{ fontSize: 18, color: 'secondary.dark' }} />
+            <ArrowForwardRounded sx={{ fontSize: 18, color: 'secondary.dark', my: 'auto' }} />
           </Box>
         </Box>
       </CardActionArea>

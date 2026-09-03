@@ -1,19 +1,38 @@
 {
   "Resources": {
-    "backToLibrary": "Back to library",
-    "nextVideoButtonLabel": "Next video",
-    "nextConversationButtonLabel": "Next conversation",
-    "nextSessionButtonLabel": "Next session",
     "conversations": "Conversations",
     "shorts": "Shorts",
     "videos": "Videos",
-    "completed": "Completed",
-    "sessionDetail": "This clip is from Session: {sessionName}, from our Course: {courseName}",
+    "partOf": "Part of {name}",
     "sessionButtonLabel": "Watch full session",
-    "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
-    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
+    "mediaCard": {
+      "title": "Learn about {name}"
+    },
+    "audioPlayer": {
+      "play": "Play",
+      "pause": "Pause",
+      "back": "Rewind {seconds} seconds",
+      "forward": "Skip forward {seconds} seconds",
+      "scrubber": "Seek through the audio"
+    },
+    "moment": {
+      "title": "Do you need a moment?",
+      "subtitle": "If at any point during the session you need a moment, use our groundings below.",
+      "groundingLabel": "Grounding",
+      "activityLabel": "Activity"
+    },
+    "actions": {
+      "finish": "Finish session"
+    },
+    "complete": {
+      "title": "Session complete",
+      "body": "You showed up today. Take a moment before moving on.",
+      "cta": "Back to sessions",
+      "close": "Close"
+    },
     "relatedContent": {
-      "title": "Related content",
+      "title": "Want to explore more?",
+      "subtitle": "Have a look at our related sessions below, to help your healing journey.",
       "resource_short_video": "Watch",
       "resource_single_video": "Watch",
       "resource_conversation": "Listen",
@@ -25,8 +44,9 @@
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {
-      "title": "How was this session?",
-      "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
+      "title": "How did you find this session?",
+      "close": "Close",
+      "subtitle": "We’d love to hear how you found this session. Your feedback helps us to improve our sessions.",
       "feedbackTags": {
         "relatable": "Relatable",
         "useful": "Useful",
@@ -36,11 +56,14 @@
         "not useful": "Not useful"
       },
       "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
+      "sendButtonText": "Submit rating",
       "submissionText": "Thank you for submitting your feedback",
       "errors": {
         "feedbackTagError": "Please select a rating before sending."
       }
+    },
+    "errors": {
+      "completeResourceError": "There was an error marking this as complete. Try again a little later."
     },
     "references": {
       "title": "Resources",
@@ -49,6 +72,10 @@
       "articles": "Articles",
       "video_practices": "Video practices",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Back to sessions",
+    "hero": {
+      "eyebrow": "Current session"
     }
   }
 }

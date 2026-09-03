@@ -1,11 +1,10 @@
 'use client';
 
-import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
 import { CardCarousel } from '@/components/common/CardCarousel';
+import { LibraryCard } from '@/components/library/LibraryCard';
 import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
-import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
-import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import { Container, Typography } from '@mui/material';
+import { storyToLibraryItem, toLibraryStory } from '@/lib/utils/libraryData';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -26,97 +25,59 @@ export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'conten
 
 export interface StoryblokRelatedContentProps {
   relatedContent: StoryblokRelatedContentStory[];
-  relatedExercises: string[];
   userContentPartners: string[];
 }
 
 const containerStyle = {
-  paddingY: { xs: 7.5, md: 10, lg: 12.5 },
-  backgroundColor: 'secondary.main',
+  paddingY: { xs: 6, md: 8 },
+  backgroundColor: 'secondary.light',
 } as const;
 
-export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
-  const { relatedContent, relatedExercises, userContentPartners = [] } = props;
+export const StoryblokRelatedContent = ({
+  relatedContent,
+  userContentPartners = [],
+}: StoryblokRelatedContentProps) => {
   const locale = useLocale();
   const t = useTranslations('Resources.relatedContent');
-  const tExerciseNames = useTranslations('Shared.exerciseNames');
 
-  const relatedExercisesItems =
-    locale === 'de'
-      ? [] // exercises are not currently available in german so we'll return an empty list for 'de'
-      : relatedExercises.map((relatedExerciseId) => {
-          const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
-            ? EXERCISE_CATEGORIES.GROUNDING
-            : EXERCISE_CATEGORIES.ACTIVITIES;
+  const items = useMemo(() => {
+    const localeString = locale === 'en' ? 'default' : locale || 'default';
 
-          return {
-            id: relatedExerciseId,
-            name: tExerciseNames(relatedExerciseId),
-            href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
-            category: exerciseCategory,
-          };
-        });
+    return relatedContent
+      .filter((story) => {
+        const availableForLocale =
+          (story.content?.languages?.length ?? 0) > 0
+            ? story.content.languages.includes(localeString)
+            : true;
 
-  const filteredRelatedContent = useMemo(() => {
-    return relatedContent.filter((story) => {
-      const localeString = locale === 'en' ? 'default' : locale || 'default';
-      const storyAvailableForLocale =
-        story.content?.languages?.length > 0
-          ? story.content.languages.includes(localeString)
-          : true;
-
-      if (
-        story.content.component === 'resource_short_video' &&
-        story.content.included_for_partners?.length > 0
-      ) {
-        const partners = story.content.included_for_partners;
-        const storyIncludedForUserPartners = userContentPartners.some((partner) =>
-          partners.map((p: string) => p.toLowerCase()).includes(partner),
-        );
-        return storyAvailableForLocale && storyIncludedForUserPartners;
-      }
-
-      return storyAvailableForLocale;
-    });
+        if (
+          story.content.component === 'resource_short_video' &&
+          (story.content.included_for_partners?.length ?? 0) > 0
+        ) {
+          const partners = story.content.included_for_partners.map((p) => p.toLowerCase());
+          return availableForLocale && userContentPartners.some((p) => partners.includes(p));
+        }
+        return availableForLocale;
+      })
+      .map((story) => storyToLibraryItem(toLibraryStory(story as unknown as ISbStoryData), locale));
   }, [relatedContent, locale, userContentPartners]);
 
-  const items = filteredRelatedContent
-    .map((relatedContentItem) => (
-      <RelatedContentCard
-        key={`related_content_${relatedContentItem.id}`}
-        title={relatedContentItem.content.name}
-        href={getDefaultFullSlug(relatedContentItem.full_slug, locale)}
-        category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
-        duration={
-          relatedContentItem.content && 'duration' in relatedContentItem.content
-            ? relatedContentItem.content.duration
-            : undefined
-        }
-      />
-    ))
-    .concat(
-      relatedExercisesItems.map((relatedExerciseItem) => (
-        <RelatedContentCard
-          key={`related_exercise_${relatedExerciseItem.id}`}
-          title={relatedExerciseItem.name}
-          href={relatedExerciseItem.href}
-          category={relatedExerciseItem.category}
-        />
-      )),
-    );
+  if (items.length === 0) return null;
 
   return (
     <Container sx={containerStyle}>
-      <Typography
-        variant="h2"
-        sx={{
-          mb: 3.5,
-        }}
-      >
-        {t('title')}
-      </Typography>
+      {/* Wrapper carries the gap to the cards: the global `p:last-of-type` rule zeroes the
+          subtitle's own margin. */}
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h2" sx={{ mb: 0.5 }}>
+          {t('title')}
+        </Typography>
+        <Typography sx={{ color: 'grey.800' }}>{t('subtitle')}</Typography>
+      </Box>
       <CardCarousel label={t('title')} controls eventName={RELATED_CONTENT_CAROUSEL_PAGED}>
-        {items}
+        {items.map((item) => (
+          <LibraryCard key={item.id} item={item} />
+        ))}
       </CardCarousel>
     </Container>
   );

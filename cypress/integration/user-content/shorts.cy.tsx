@@ -23,9 +23,16 @@ describe('Shorts Flow', () => {
       .should('be.visible')
       .click();
 
+    cy.location('pathname', { timeout: 10000 }).should('include', '/courses/');
+
     // The related session isn't the course's first session, so the guest sees the sign-up gate
-    // card in place of the video, rather than a login dialog over a full preview.
-    cy.get('a[qa-id="access-full-course-login-link"]', { timeout: 10000 }).click();
+    // card in place of the video, rather than a login dialog over a full preview. The gate only
+    // renders once Firebase auth state has resolved the visitor as logged out, which can lag
+    // well past the default timeout on a fresh deployment — so wait it out like
+    // waitForAuthenticatedApp does for the signed-in case.
+    cy.get('[qa-id="access-full-course-card"]', { timeout: 30000 })
+      .find('a[qa-id="access-full-course-login-link"]')
+      .click();
 
     // User logs in
     cy.get('#email').type(email);

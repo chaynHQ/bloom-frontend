@@ -1,19 +1,38 @@
 {
   "Resources": {
-    "backToLibrary": "العودة إلى المكتبة",
-    "nextVideoButtonLabel": "الفيديو التالي",
-    "nextConversationButtonLabel": "المحادثة التالية",
-    "nextSessionButtonLabel": "الجلسة التالية",
     "conversations": "محادثات",
     "shorts": "مقاطع قصيرة",
     "videos": "فيديوهات",
-    "completed": "اكتملت",
-    "sessionDetail": "هذا المقطع من الجلسة: {sessionName}، من دورتنا: {courseName}",
+    "partOf": "جزء من {name}",
     "sessionButtonLabel": "مشاهدة الجلسة كاملة",
-    "videoTranscriptLink": "يمكنك مشاهدة الفيديو أو قراءة <link>النص المكتوب</link>.",
-    "conversationTranscriptLink": "يمكنك الإنصات إلى المحادثة أو قراءة <link>النص المكتوب</link>.",
+    "mediaCard": {
+      "title": "تعرّف أكثر على {name}"
+    },
+    "audioPlayer": {
+      "play": "تشغيل",
+      "pause": "إيقاف مؤقت",
+      "back": "الرجوع {seconds} ثوانٍ",
+      "forward": "التقديم {seconds} ثوانٍ",
+      "scrubber": "التنقل خلال المقطع الصوتي"
+    },
+    "moment": {
+      "title": "هل تحتاج إلى لحظة؟",
+      "subtitle": "إذا شعرت بالحاجة إلى لحظة في أي وقت خلال الجلسة، يمكنك الاستعانة بتمارين تثبيت الذات أدناه.",
+      "groundingLabel": "تثبيت الذات",
+      "activityLabel": "نشاط"
+    },
+    "actions": {
+      "finish": "إنهاء الجلسة"
+    },
+    "complete": {
+      "title": "اكتملت الجلسة",
+      "body": "لقد حضرت اليوم من أجل نفسك. خذ لحظة قبل أن تمضي قدمًا.",
+      "cta": "العودة إلى الجلسات",
+      "close": "إغلاق"
+    },
     "relatedContent": {
-      "title": "محتوى ذو صلة",
+      "title": "هل ترغب في استكشاف المزيد؟",
+      "subtitle": "يمكنك إلقاء نظرة على جلساتنا ذات الصلة أدناه لمساندتك في رحلة تعافيك.",
       "resource_short_video": "مشاهدة",
       "resource_single_video": "مشاهدة",
       "resource_conversation": "إنصات",
@@ -25,8 +44,9 @@
       "minuteLabel": "دقائق"
     },
     "resourceFeedback": {
-      "title": "كيف كانت هذه الجلسة؟",
-      "subtitle": "يسعدنا أن نعرف رأيك في هذا المحتوى التعليمي. تساعدنا ملاحظاتك على تحسين مواردنا.",
+      "title": "كيف وجدت هذه الجلسة؟",
+      "close": "إغلاق",
+      "subtitle": "يسعدنا أن نعرف رأيك في هذه الجلسة. تساعدنا ملاحظاتك على تحسين جلساتنا.",
       "feedbackTags": {
         "relatable": "أشعر بأنها تخصّني",
         "useful": "مفيدة",
@@ -36,11 +56,14 @@
         "not useful": "غير مفيدة"
       },
       "textboxDefaultText": "إضافة تعليق...",
-      "sendButtonText": "إرسال",
+      "sendButtonText": "إرسال التقييم",
       "submissionText": "شكرًا لك على إرسال ملاحظاتك",
       "errors": {
         "feedbackTagError": "يُرجى اختيار تقييم قبل الإرسال."
       }
+    },
+    "errors": {
+      "completeResourceError": "حدث خطأ أثناء وضع علامة الاكتمال. يُرجى المحاولة بعد قليل."
     },
     "references": {
       "title": "موارد",
@@ -49,6 +72,10 @@
       "articles": "مقالات",
       "video_practices": "تمارين بالفيديو",
       "audios": "بودكاست"
+    },
+    "backToSessions": "العودة إلى الجلسات",
+    "hero": {
+      "eyebrow": "الجلسة الحالية"
     }
   }
 }

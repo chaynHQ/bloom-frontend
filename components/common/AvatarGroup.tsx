@@ -9,10 +9,11 @@ export interface Avatar {
   alt: string;
 }
 
-export type AvatarGroupSize = 'small' | 'medium' | 'large';
+export type AvatarGroupSize = 'xsmall' | 'small' | 'medium' | 'large';
 export type AvatarGroupLayout = 'row' | 'cluster';
 
 const DIAMETER: Record<AvatarGroupSize, { xs: number; md: number }> = {
+  xsmall: { xs: 48, md: 48 },
   small: { xs: 56, md: 72 },
   medium: { xs: 88, md: 108 },
   large: { xs: 100, md: 120 },
@@ -34,17 +35,22 @@ const rowStyle = (alignment: string) =>
     justifyContent: INLINE_ALIGNMENT[alignment] ?? 'flex-start',
   }) as const;
 
-const rowAvatarStyle = (size: AvatarGroupSize, index: number, overlap: boolean) =>
+const rowAvatarStyle = (
+  size: AvatarGroupSize,
+  index: number,
+  overlap: boolean,
+  bordered: boolean,
+  frontAvatar: 'first' | 'last',
+) =>
   ({
     position: 'relative',
     width: DIAMETER[size],
     height: DIAMETER[size],
     borderRadius: '50%',
     overflow: 'hidden',
-    border: '3px solid',
-    borderColor: 'common.white',
-    marginInlineStart: index === 0 || !overlap ? 0 : { xs: -2, md: -3 },
-    zIndex: 10 - index,
+    ...(bordered && { border: '3px solid', borderColor: 'common.white' }),
+    marginInlineStart: index === 0 || !overlap ? 0 : size === 'xsmall' ? -1.5 : { xs: -2, md: -3 },
+    zIndex: frontAvatar === 'last' ? index : 10 - index,
   }) as const;
 
 const clusterStyle = (size: AvatarGroupSize, alignment: string) =>
@@ -78,6 +84,8 @@ export function AvatarGroup({
   alignment = 'left',
   layout = 'row',
   overlap = true,
+  bordered = true,
+  frontAvatar = 'first',
   qaId,
 }: {
   avatars: Avatar[];
@@ -85,6 +93,9 @@ export function AvatarGroup({
   alignment?: string;
   layout?: AvatarGroupLayout;
   overlap?: boolean;
+  bordered?: boolean;
+  // Which end of an overlapping row sits on top. Defaults to the first (leading) avatar.
+  frontAvatar?: 'first' | 'last';
   qaId?: string;
 }) {
   if (!avatars.length) return null;
@@ -100,7 +111,11 @@ export function AvatarGroup({
       {avatars.map((avatar, index) => (
         <Box
           key={`${avatar.src}-${index}`}
-          sx={isCluster ? clusterAvatarStyle(size, index) : rowAvatarStyle(size, index, overlap)}
+          sx={
+            isCluster
+              ? clusterAvatarStyle(size, index)
+              : rowAvatarStyle(size, index, overlap, bordered, frontAvatar)
+          }
         >
           <Image
             alt={avatar.alt}

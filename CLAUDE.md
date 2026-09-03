@@ -75,6 +75,13 @@ All course, session, page, and resource content comes from Storyblok. `lib/story
 
 MUI v7 with Emotion is the UI library. Theme is at `styles/theme.ts`. Fonts: Open Sans + Montserrat via `next/font`.
 
+### Code style
+
+- **Translate every user-facing string.** Copy comes from `next-intl` (`useTranslations` / `getTranslations`, messages in `i18n/messages/<namespace>/`). No string literals in components or pages. Keys must exist in all 8 locales — add English placeholders to the others and run `node scripts/checkTranslation.js`.
+- **Don't over-abstract.** A component used only by its parent can live in that parent file. Only lift it out when a second caller appears or the parent gets hard to read.
+- **Comments earn their place.** Explain a non-obvious _why_ (a design intent, a workaround, an ordering constraint). Delete comments that restate the code, and never leave AI/agent/change-log narration.
+- **Keep `sx` small.** Extract style objects to `const fooStyle = { … } as const` above the component (or a co-located `*.ts` / `styles/common.ts` for shared ones). Inline `sx` is fine for a one-off tweak like `sx={{ mb: 0 }}`.
+
 ### Key Integrations
 
 | Integration | Purpose                                                                                                                                                                                     | Config                                                   |

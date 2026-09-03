@@ -46,7 +46,7 @@ const logInStyle = {
 
 interface AccessFullCourseCardProps {
   // Where the card is shown, for the sign-up funnel event.
-  source: 'course' | 'session';
+  source: 'course' | 'session' | 'resource';
 }
 
 export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
