@@ -15,7 +15,7 @@ const cardColumnStyle = {
 const cardColumnRowStyle = {
   ...rowStyle,
   width: '100%',
-  marginTop: { xs: 2, md: 5 },
+  marginTop: { xs: 2, md: 4 },
 } as const;
 
 interface StoryblokTeamMembersCardsProps {

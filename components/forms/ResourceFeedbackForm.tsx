@@ -1,6 +1,5 @@
 'use client';
 
-import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateResourceFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
@@ -8,41 +7,20 @@ import logEvent from '@/lib/utils/logEvent';
 import { ResourceFeedback } from '@/lib/store/resourcesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
-import { staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  SxProps,
-  Theme,
-  Typography,
-} from '@mui/material';
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 
-const fieldBoxStyle: SxProps<Theme> = {
-  ...staticFieldLabelStyle,
-  '& .MuiFilledInput-root': {
-    backgroundColor: 'white',
-    borderRadius: '12px',
-    padding: '12px 12px',
-    '&:hover': {
-      backgroundColor: 'background.default',
-    },
-  },
-};
-
 const radioGroupStyle = {
   width: '100%',
-  py: { xs: 1, md: 2 },
+  justifyContent: 'center',
+  py: 1,
   label: {
     margin: 0,
-    minWidth: { xs: '31%', sm: 150 },
+    width: { xs: '33%', sm: 150 },
   },
 } as const;
 
@@ -63,17 +41,17 @@ const containerStyle = {
 interface ResourceFeedbackFormProps {
   resourceId: string;
   category: RESOURCE_CATEGORIES;
+  onSubmitted?: () => void;
 }
 
 const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
-  const { resourceId, category } = props;
+  const { resourceId, category, onSubmitted } = props;
 
   const t = useTranslations('Resources.resourceFeedback');
   const tS = useTranslations('Shared');
   const [sendFeedback] = useCreateResourceFeedbackMutation();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedFeedbackTag, setSelectedFeedbackTag] = useState<FEEDBACK_TAGS | null>(null);
-  const [feedbackDescription, setFeedbackDescription] = useState<string>('');
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [formError, setFormError] = useState<
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>
@@ -92,16 +70,15 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
     const feedbackData: ResourceFeedback = {
       resourceId: resourceId,
       feedbackTags: selectedFeedbackTag,
-      feedbackDescription: feedbackDescription,
+      feedbackDescription: '',
     };
 
-    if (true) {
-      await sendFeedback(feedbackData);
-    }
+    await sendFeedback(feedbackData);
 
     logEvent(RESOURCE_FEEDBACK_SUBMITTED, { category, feedbackTags: selectedFeedbackTag });
     setLoading(false);
     setFormSubmitSuccess(true);
+    onSubmitted?.();
   };
 
   if (formSubmitSuccess) {
@@ -127,16 +104,18 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
 
   return (
     <>
-      <Typography component="h2" variant="h2">
+      <Typography component="h2" variant="h4" sx={{ mb: 0.5 }}>
         {t('title')}
       </Typography>
-      <Typography>{t('subtitle')}</Typography>
+      <Typography variant="body2" sx={{ color: 'grey.700', mb: 2 }}>
+        {t('subtitle')}
+      </Typography>
       <form autoComplete="off" onSubmit={submitHandler}>
         <FormControl fullWidth component="fieldset">
           <RadioGroup
             row
             sx={radioGroupStyle}
-            aria-label="feature"
+            aria-label={t('title')}
             name="feedback-radio-buttons"
             value={selectedFeedbackTag}
             onChange={(e) => setSelectedFeedbackTag(e.target.value as FEEDBACK_TAGS)}
@@ -153,30 +132,15 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
           </RadioGroup>
         </FormControl>
 
-        <SanitizedTextField
-          id="feedbackDescription"
-          placeholder={t.rich('textboxDefaultText')?.toString()}
-          onChange={setFeedbackDescription}
-          value={feedbackDescription}
-          sx={fieldBoxStyle}
-          variant="filled"
-          fullWidth
-          multiline
-          rows={5}
-          slotProps={{ input: { disableUnderline: true }, inputLabel: { shrink: true } }}
-        />
-        {formError && (
-          <Typography
-            sx={{
-              color: 'error.main',
-              '&:last-of-type': { mb: 4 },
-            }}
-          >
-            {formError}
-          </Typography>
-        )}
+        {formError && <Typography sx={{ color: 'error.main', mb: 2 }}>{formError}</Typography>}
 
-        <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+        <LoadingButton
+          variant="contained"
+          color="error"
+          type="submit"
+          loading={loading}
+          sx={{ mt: 1 }}
+        >
           {t('sendButtonText')}
         </LoadingButton>
       </form>

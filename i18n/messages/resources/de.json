@@ -1,19 +1,38 @@
 {
   "Resources": {
-    "backToLibrary": "Zurück zur Bibliothek",
-    "nextVideoButtonLabel": "Nächstes Video",
-    "nextConversationButtonLabel": "Nächstes Gespräch",
-    "nextSessionButtonLabel": "Nächste Sitzung",
     "conversations": "Gespräche",
     "shorts": "Kurzfilme",
     "videos": "Videos",
-    "completed": "Abgeschlossen",
-    "sessionDetail": "Dieser Clip ist aus der Session: {sessionName}, aus unserem Kurs: {courseName}",
+    "partOf": "Teil von {name}",
     "sessionButtonLabel": "Ganze Sitzung ansehen",
-    "videoTranscriptLink": "Sehen Sie sich das Video an oder lesen Sie die <link>Transkription</link>.",
-    "conversationTranscriptLink": "Hören Sie sich das Gespräch an oder lesen Sie die <link>Transkription</link>.",
+    "mediaCard": {
+      "title": "Erfahre mehr über {name}"
+    },
+    "audioPlayer": {
+      "play": "Abspielen",
+      "pause": "Pause",
+      "back": "{seconds} Sekunden zurückspulen",
+      "forward": "{seconds} Sekunden vorspulen",
+      "scrubber": "Durch das Audio navigieren"
+    },
+    "moment": {
+      "title": "Brauchst du einen Moment?",
+      "subtitle": "Wenn du während der Session an irgendeinem Punkt einen Moment brauchst, nutze unsere Übungen zur Stabilisierung unten.",
+      "groundingLabel": "Stabilisierung",
+      "activityLabel": "Übung"
+    },
+    "actions": {
+      "finish": "Session beenden"
+    },
+    "complete": {
+      "title": "Session abgeschlossen",
+      "body": "Du warst heute hier. Nimm dir einen Moment, bevor du weitermachst.",
+      "cta": "Zurück zu den Sessions",
+      "close": "Schließen"
+    },
     "relatedContent": {
-      "title": "Verwandte Inhalte",
+      "title": "Möchtest du mehr entdecken?",
+      "subtitle": "Wirf einen Blick auf unsere verwandten Sessions unten – sie können dich auf deiner Heilungsreise begleiten.",
       "resource_short_video": "Ansehen",
       "resource_single_video": "Ansehen",
       "resource_conversation": "Listen",
@@ -25,8 +44,9 @@
       "minuteLabel": "Minuten"
     },
     "resourceFeedback": {
-      "title": "Wie war dieses Lernen?",
-      "subtitle": "Wir würden gerne hören, wie Sie dieses Lernen gefunden haben. Ihr Feedback hilft uns, unsere Ressourcen zu verbessern.",
+      "title": "Wie hast du diese Session erlebt?",
+      "close": "Schließen",
+      "subtitle": "Wir würden gerne deine Meinung zu dieser Session hören. Dein Feedback hilft uns, unsere Sessions zu verbessern.",
       "feedbackTags": {
         "relatable": "Nachvollziehbar",
         "useful": "Nützlich",
@@ -35,12 +55,15 @@
         "too complicated": "Zu kompliziert",
         "not useful": "Nicht nützlich"
       },
-      "textboxDefaultText": "Fügen Sie einen Kommentar hinzu...",
-      "sendButtonText": "Senden",
-      "submissionText": "Vielen Dank für Ihr Feedback",
+      "textboxDefaultText": "Füge einen Kommentar hinzu ...",
+      "sendButtonText": "Bewertung absenden",
+      "submissionText": "Vielen Dank für dein Feedback",
       "errors": {
-        "feedbackTagError": "Bitte wählen Sie eine Bewertung, bevor Sie senden."
+        "feedbackTagError": "Bitte wähle eine Bewertung aus, bevor du sie absendest."
       }
+    },
+    "errors": {
+      "completeResourceError": "Es ist ein Fehler dabei aufgetreten, dies als abgeschlossen zu markieren. Versuche es später noch einmal."
     },
     "references": {
       "title": "Ressourcen",
@@ -49,6 +72,10 @@
       "articles": "Artikel",
       "video_practices": "Video-Übungen",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Zurück zu den Sessions",
+    "hero": {
+      "eyebrow": "Aktuelle Session"
     }
   }
 }

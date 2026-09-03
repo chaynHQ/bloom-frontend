@@ -32,6 +32,7 @@ declare module '@mui/material/styles' {
     badgeBlue: string;
     badgeBlueBorder: string;
     supportArrowPanel: string;
+    audioTrack: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
@@ -54,6 +55,7 @@ declare module '@mui/material/styles' {
     badgeBlue?: string;
     badgeBlueBorder?: string;
     supportArrowPanel?: string;
+    audioTrack?: string;
   }
 
   interface TypographyVariants {
@@ -134,6 +136,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       badgeBlue: '#DFF0F5',
       badgeBlueBorder: '#CCE7F0',
       supportArrowPanel: '#F9E2E3',
+      // Rail and border of the resource audio player, sitting a shade under `sectionSurface`.
+      audioTrack: '#F7D9DB',
     },
     shape: {
       borderRadius: 20,
