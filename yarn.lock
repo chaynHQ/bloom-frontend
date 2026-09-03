@@ -3324,9 +3324,9 @@
     "@babel/runtime" "^7.12.5"
 
 "@tiptap/core@^3.22.3":
-  version "3.27.1"
-  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-3.27.1.tgz#704f7496e75781c10f82e39ed0cf6c6ddc2d1a05"
-  integrity sha512-rV6Qn4wmC6BxfF+4mu6bqGWj9vA4oXXhsrpXaJL2uhjxeHAGofjwcHof2X84VYzeyXgdlsGmqKie4TAppVXZUQ==
+  version "3.31.2"
+  resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-3.31.2.tgz#d4da9ae35a27700657b48bb28c15dffef6548eff"
+  integrity sha512-TB+8pLk1k+fCpuPQ6vGNNhSRlvIiOks79oWGykCVut2nbRpQ8GsORP9VK6Eahj2fzdQA96UQMIcK7AxoOZG/2w==
 
 "@tiptap/extension-blockquote@^3.22.3":
   version "3.27.1"
