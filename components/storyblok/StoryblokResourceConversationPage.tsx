@@ -39,7 +39,7 @@ export interface StoryblokResourceConversationPageProps {
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_exercises: string[];
+  related_grounding: ISbStoryData[];
   languages: string[];
   component: 'resource_conversation';
   included_for_partners: string[];
@@ -62,7 +62,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     team_members_section,
     page_sections,
     related_content,
-    related_exercises,
+    related_grounding,
     languages,
     included_for_partners,
   } = story.content as StoryblokResourceConversationPageProps;
@@ -121,6 +121,10 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     () => toResourceContributors(contributor_images, contributors_description),
     [contributor_images, contributors_description],
   );
+  const groundingIds = useMemo(
+    () => related_grounding?.map((groundingStory) => groundingStory.slug) ?? [],
+    [related_grounding],
+  );
 
   if (!userAccess) return <ContentUnavailable />;
 
@@ -136,7 +140,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         team_members_section,
         page_sections,
         related_content,
-        related_exercises,
+        related_grounding,
       })}
     >
       <ResourcePageLayout
@@ -159,7 +163,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedExercises={related_exercises}
+        relatedGrounding={groundingIds}
         relatedContent={related_content}
         userContentPartners={userHasAccessToPartnerContent(
           partnerAdmin?.partner,

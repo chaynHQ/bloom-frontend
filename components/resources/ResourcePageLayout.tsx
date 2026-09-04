@@ -53,7 +53,7 @@ export interface ResourcePageLayoutProps {
   // video, the "watch full session" link on a short).
   beforeSections?: ReactNode;
   pageSections?: SbBlokData[];
-  relatedExercises: string[];
+  relatedGrounding: string[];
   relatedContent: StoryblokRelatedContentStory[];
   userContentPartners: string[];
 }
@@ -77,7 +77,7 @@ export const ResourcePageLayout = ({
   teamMembersSection,
   beforeSections,
   pageSections,
-  relatedExercises,
+  relatedGrounding,
   relatedContent,
   userContentPartners,
 }: ResourcePageLayoutProps) => {
@@ -119,7 +119,7 @@ export const ResourcePageLayout = ({
           {beforeSections}
         </Box>
 
-        <ResourceGroundingSection exerciseIds={relatedExercises} />
+        <ResourceGroundingSection groundingIds={relatedGrounding} />
 
         <Divider sx={{ borderColor: 'sectionBorder' }} />
 
