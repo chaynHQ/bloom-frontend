@@ -67,9 +67,18 @@ const cardDescriptionStyle = {
   overflow: 'hidden',
 } as const;
 
-const durationRowStyle = { display: 'flex', alignItems: 'center', gap: 0.5, color: 'grey.800' } as const;
+const durationRowStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 0.5,
+  color: 'grey.800',
+} as const;
 
-const durationLabelStyle = { fontFamily: 'headingFontFamily', fontSize: '0.875rem', fontWeight: 500 } as const;
+const durationLabelStyle = {
+  fontFamily: 'headingFontFamily',
+  fontSize: '0.875rem',
+  fontWeight: 500,
+} as const;
 
 const loadMoreRowStyle = { display: 'flex', justifyContent: 'center', mt: 4 } as const;
 
@@ -100,7 +109,12 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
     // Grounding has no gating, unlike partner-curated resources — 'public' always applies here,
     // regardless of the visitor's own partner, or a partner user's cards vanish once auth resolves.
     const userPartners = [
-      ...userHasAccessToPartnerContent(partnerAdmin?.partner, partnerAccesses, referralPartner, userId),
+      ...userHasAccessToPartnerContent(
+        partnerAdmin?.partner,
+        partnerAccesses,
+        referralPartner,
+        userId,
+      ),
       'public',
     ];
     return filterResourcesForLocaleAndPartnerAccess(stories, locale, userPartners);
