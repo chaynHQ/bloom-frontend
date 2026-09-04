@@ -3,6 +3,8 @@
     "conversations": "Sohbetler",
     "shorts": "Kısa videolar",
     "videos": "Videolar",
+    "written": "Yazılı",
+    "activity": "Etkinlik",
     "partOf": "{name} kapsamında",
     "sessionButtonLabel": "Bölümün tamamını izle",
     "mediaCard": {
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Daha fazlasını keşfetmek ister misin?",
       "subtitle": "İyileşme yolculuğunda sana yardımcı olması için aşağıdaki ilgili bölümlerimize göz at.",
-      "resource_short_video": "İzle",
-      "resource_single_video": "İzle",
+      "short_video": "İzle",
+      "single_video": "İzle",
       "resource_conversation": "Dinle",
+      "audio": "Dinle",
+      "written": "Oku",
+      "activity": "Etkinlik",
       "course": "Kurs",
       "session": "Bölüm",
       "session_iba": "Bölüm",
@@ -76,6 +81,12 @@
     "backToSessions": "Bölümlere dön",
     "hero": {
       "eyebrow": "Mevcut bölüm"
+    },
+    "grounding": {
+      "close": "Kapat",
+      "exercisesCount": "{count, plural, one {# egzersiz} other {# egzersiz}}",
+      "loadMore": "Daha fazla göster",
+      "duration": "{minutes} dk"
     }
   }
 }

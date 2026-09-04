@@ -384,6 +384,7 @@ function buildNewComponents(src) {
     ['name', field(conv, 'name')],
     ['description', field(conv, 'description', { required: false })],
     ['body', bodyField()],
+    ['duration', field(conv, 'duration', { required: false })],
     ['seo_description', field(conv, 'seo_description')],
     ['languages', field(conv, 'languages')],
     ['included_for_partners', field(conv, 'included_for_partners')],
@@ -473,6 +474,19 @@ function planBodyWhitelist(component) {
   const schema = clone(component.schema);
   schema.body.component_whitelist = [...body.component_whitelist, ...missing];
   return { payload: { component: { ...component, schema } }, missing };
+}
+
+/**
+ * Add the `duration` field to an already-created `resource_grounding` component (it was missing
+ * from the original schema — added later once the grounding cards needed it). Values are left
+ * blank; the content team fills them in per-item. Returns null if the field already exists.
+ */
+function planGroundingDuration(component, convSchema) {
+  if (component.schema?.duration) return null;
+  const schema = clone(component.schema);
+  const maxPos = Math.max(-1, ...Object.values(schema).map((f) => f.pos ?? 0));
+  schema.duration = { ...field(convSchema, 'duration', { required: false }), pos: maxPos + 1 };
+  return { component: { ...component, schema } };
 }
 
 // ----------------------------- run ------------------------------
@@ -623,6 +637,30 @@ async function main() {
     console.log(`  body-wl    done    ${name} (+[${plan.missing.join(', ')}])`);
     manifest.components.bodyWhitelist.push({ name, missing: plan.missing, id: res.component.id });
     await sleep(PACE_MS);
+  }
+
+  // 5) Add the `duration` field to resource_grounding if it's missing (blank values — the
+  //    content team fills them in per-item).
+  {
+    const id = byName.resource_grounding?.id;
+    if (id) {
+      const { component } = await mapi('GET', `/components/${id}`);
+      const plan = planGroundingDuration(component, byName.resource_conversation.schema);
+      if (!plan) {
+        console.log('  duration   skip    resource_grounding (field already exists)');
+      } else {
+        manifest.payloads['PUT /components resource_grounding (duration field)'] = {
+          component: plan.component,
+        };
+        if (!live) {
+          console.log('  duration   plan    resource_grounding (+duration)');
+        } else {
+          const res = await mapi('PUT', `/components/${id}`, { component: plan.component });
+          console.log(`  duration   done    resource_grounding (id ${res.component.id})`);
+          await sleep(PACE_MS);
+        }
+      }
+    }
   }
 
   manifest.finishedAt = new Date().toISOString();

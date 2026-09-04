@@ -147,6 +147,8 @@ const StoryblokCoursePage = ({
       shorts: [],
       somatics: [],
       conversations: [],
+      written: [],
+      activity: [],
     }),
     [courseStories],
   );

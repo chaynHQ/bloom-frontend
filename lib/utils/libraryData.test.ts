@@ -78,6 +78,9 @@ describe('storyToLibraryItem', () => {
       ['resource_conversation', 'audio'],
       ['resource_short_video', 'video'],
       ['resource_single_video', 'video'],
+      ['resource_audio', 'audio'],
+      ['resource_written', 'written'],
+      ['resource_activity', 'activity'],
       ['Session', 'video'],
       ['session_iba', 'video'],
     ])('maps the %s component to the %s format', (component, format) => {
@@ -260,6 +263,23 @@ describe('storyToLibraryItem account requirement', () => {
     expect(storyToLibraryItem(lesson, 'en', new Set(['some-other-uuid'])).requiresAccount).toBe(
       true,
     );
+  });
+
+  // written/activity aren't gated by path, so the badge has to fall back to the story's own
+  // `login_required` (defaults true) instead.
+  it('reads the requirement from login_required for a path AuthGuard does not gate', () => {
+    expect(
+      storyToLibraryItem(
+        story({ component: 'resource_activity', login_required: true }, 'activity/thought-diaries'),
+        'en',
+      ).requiresAccount,
+    ).toBe(true);
+    expect(
+      storyToLibraryItem(
+        story({ component: 'resource_written', login_required: false }, 'written/a-piece'),
+        'en',
+      ).requiresAccount,
+    ).toBe(false);
   });
 });
 

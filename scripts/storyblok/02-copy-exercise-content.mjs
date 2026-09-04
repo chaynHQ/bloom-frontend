@@ -19,7 +19,13 @@
  *   · name = the item's title; body = the item's body richtext, both copied with every locale
  *     that has both a title and a body translated (some items are missing one locale).
  *   · languages = ['default', ...locales with a translation] (checked by the resource pages'
- *     `locale === 'en' || languages.includes(locale)` gate); included_for_partners = ['Public'].
+ *     `locale === 'en' || languages.includes(locale)` gate); included_for_partners = ['Public']
+ *     for grounding (its listing always treats every visitor as public — see GroundingPage.tsx)
+ *     and every partner for activity — the library/carousel partner filter only grants 'public'
+ *     tier to a visitor with no partner account, so an activity tagged 'Public' alone would drop
+ *     out of a partner user's library/related-content cards (it stays visible on its own page,
+ *     which has a separate 'Public' override) unless every partner is listed explicitly, matching
+ *     how existing shorts/conversations content is authored.
  *   · resource_activity also gets login_required = true (decision 1; today's flat /activities
  *     page is public, so this is a deliberate gating change — confirmed with product).
  *   · resource_grounding has no login_required field at all (decision 2 — always public).
@@ -60,6 +66,7 @@ const OUT_DIR = path.join(REPO_ROOT, '.storyblok-provision');
 
 const LOCALES = ['ar', 'de', 'es', 'fr', 'hi', 'pt', 'tr']; // non-English locales, per i18n/routing.ts
 const I18N = '__i18n__';
+const PARTNERS = ['Public', 'Badoo', 'Fruitz', 'Bumble']; // per lib/constants/partners.ts
 
 const SOURCES = [
   { flatSlug: 'grounding', folderSlug: 'grounding-exercises', component: 'resource_grounding' },
@@ -238,7 +245,7 @@ function buildStoryPayload(item, source, folderId) {
     name: item.title,
     body: item.body,
     languages: ['default', ...Object.keys(item.locales)],
-    included_for_partners: ['Public'],
+    included_for_partners: source.component === 'resource_activity' ? PARTNERS : ['Public'],
   };
   if (source.component === 'resource_activity') {
     content.login_required = true; // decision 1 — see file header

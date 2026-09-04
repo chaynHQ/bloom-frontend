@@ -48,6 +48,23 @@ function resourceCard(story: ISbStoryData, locale: string) {
           duration={duration}
         />
       );
+    case 'resource_audio':
+    case 'resource_written':
+    case 'resource_activity':
+      return (
+        <RelatedContentCard
+          title={story.name}
+          href={href}
+          category={
+            component === 'resource_audio'
+              ? RESOURCE_CATEGORIES.AUDIO
+              : component === 'resource_written'
+                ? RESOURCE_CATEGORIES.WRITTEN
+                : RESOURCE_CATEGORIES.ACTIVITY
+          }
+          duration={duration}
+        />
+      );
     default:
       return null;
   }

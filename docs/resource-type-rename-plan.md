@@ -125,6 +125,29 @@ The rule: **a consumer is deployed before the data it reads changes; data it sto
 
 ## Step 5 — Redesign grounding + activity pages (and add written, audio routes)
 
+**Done**, with the following deviations from the plan as originally written (all covered in
+detail in the implementation plan at the time — see git history for the exact rationale):
+
+- `getLibraryStories.ts` got `written/` + `activity/` queries only, not `audio/` — that folder
+  is guaranteed empty until step 7c moves conversations into it, so querying it now would be
+  dead code. One line to add in step 7.
+- `nextWrittenButtonLabel`/`nextActivityButtonLabel` i18n keys were **not** added — step 4
+  already deleted the "next resource" button feature entirely; resurrecting the keys for it
+  would be dead copy.
+- i18n key unification (`ResourceCard`/`RelatedContentCard`) landed as a bare-key rename:
+  `relatedContent.resource_short_video`/`resource_single_video` → `short_video`/`single_video`
+  across all 8 locales, matching `RelatedContentCard`'s existing bare-key convention.
+- Found and fixed a real bug while building on top of it: `StoryblokRelatedContent` assumed
+  `relatedContent` was always an array; a draft `resource_activity`/`resource_written` story
+  with no `related_content` set yet (normal pre-step-6-backfill) sent `undefined` and crashed
+  the page. Now defaults to `[]`.
+- `/grounding` does implement Figma's "Load more" pagination (`PAGE_SIZE = 9`, client-side
+  slice) — a working paginator was cheap enough to build even with only ~16 grounding stories
+  today, and it'll matter once the content team adds more.
+- `/activities` → `/library?format=activity` needed a small `LibraryPage.tsx` addition: a
+  `format` query-param deep-link seed, mirroring the existing `theme`/`type` ones.
+- `written.cy.tsx` was not written — no `resource_written` content exists in Storyblok yet
+  (content team authors it whenever, per this doc), so there's nothing to visit.
 - `lib/constants/enums.ts` / `events.ts` — add `RESOURCE_CATEGORIES.{AUDIO,WRITTEN,ACTIVITY}` and `RESOURCE_{AUDIO,WRITTEN,ACTIVITY}_*` + `RESOURCE_GROUNDING_VIEWED` (keep old constants until step 7).
 - `libraryData.ts` — `FORMAT_BY_COMPONENT` += `resource_audio/written/activity`; `Format` stays 4-wide (no `grounding`).
 - **Gating:** resource page reads `login_required`; when true + logged-out → preview + login overlay. Remove `video/audio/written/activity` from `AuthGuard.authenticatedPathHeads` and `libraryData.AUTHENTICATED_PATH_HEADS`; the library `requiresAccount` badge reads `login_required`.
@@ -135,7 +158,7 @@ The rule: **a consumer is deployed before the data it reads changes; data it sto
 - Page components `StoryblokResource{Audio,Written,Activity}Page.tsx` on the existing redesign primitives (`ResourceHero`, `ResourcePageLayout`, `ResourceActions`, `ResourceAudioPlayer`, `ResourceMediaCard`, `ResourceCompleteCard`, `ResourceFeedbackDialog`); written + activity wire into `resource-user` progress + feedback. (Written content is authored by the content team in `written/` any time after step 1; each publish creates its `resource` row via the step-1 webhook — spot-check the row exists before relying on progress.)
 - `ResourceCarousel` / `StoryblokResourceCarousel` / `StoryblokRelatedContent` — add `resource_audio` / `resource_written` / `resource_activity` cases (their `default` silently drops the card); `included_for_partners` filter applies to all types.
 - `ResourceCard` / `RelatedContentCard` — unify the i18n key (`relatedContent.${category}`); replace `/bloom_shorts.png` with a type-neutral default, fix the alt + drop the TODO.
-- `getLibraryStories.ts` — add `written/`, `activity/`, `audio/` queries (or collapse to one flat `resources` array — recommended); update `useLibraryItems.ts` and the `StoryblokCoursePage` `libraryStories` literal.
+- `getLibraryStories.ts` — add `written/`, `activity/`, `audio/` queries (or collapse to one flat `resources` array — recommended); update `useLibraryItems.ts` and the `StoryblokCoursePage` `libraryStories` literal. The library UI filters need to be added.
 - Redirects (`next.config.js`, bare + `/${LOCALE_PATTERN}/`, permanent) — all targets already exist when this deploys: `/activities` → filtered library view; `/activities?openacc=activity-x` → `/activity/activity-x` (folder-swap only — slug is the id); `/grounding` stays `/grounding` (the new route reads `?openacc`/`?id` itself).
 - i18n (8 locales): `Resources` += `written`, `activity`, `nextWrittenButtonLabel`, `nextActivityButtonLabel`, `relatedContent.resource_written/_activity`, grounding strings; verify `Library.contentTypes.written/.activity` (`ar`/`tr` per `translation-register-ar-tr`); `node scripts/checkTranslation.js`.
 - Tests: unit + `cypress/.../{written,activity,grounding}.cy.tsx`. `yarn cypress:headless`.

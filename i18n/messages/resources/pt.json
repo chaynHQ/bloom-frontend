@@ -3,6 +3,8 @@
     "conversations": "Conversas",
     "shorts": "Curtas",
     "videos": "Vídeos",
+    "written": "Texto",
+    "activity": "Atividade",
     "partOf": "Parte de {name}",
     "sessionButtonLabel": "Assistir à sessão completa",
     "mediaCard": {
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Quer explorar mais?",
       "subtitle": "Dê uma olhada nas nossas sessões relacionadas abaixo, para acompanhar a sua jornada de cura.",
-      "resource_short_video": "Assistir",
-      "resource_single_video": "Assistir",
+      "short_video": "Assistir",
+      "single_video": "Assistir",
       "resource_conversation": "Áudio",
+      "audio": "Ouvir",
+      "written": "Ler",
+      "activity": "Atividade",
       "course": "Curso",
       "session": "Sessão",
       "session_iba": "Sessão",
@@ -76,6 +81,12 @@
     "backToSessions": "Voltar para as sessões",
     "hero": {
       "eyebrow": "Sessão atual"
+    },
+    "grounding": {
+      "close": "Fechar",
+      "exercisesCount": "{count, plural, one {# exercício} other {# exercícios}}",
+      "loadMore": "Ver mais",
+      "duration": "{minutes} min"
     }
   }
 }
