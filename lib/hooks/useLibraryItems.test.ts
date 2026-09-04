@@ -74,6 +74,8 @@ const noStories: LibraryStories = {
   shorts: [],
   somatics: [],
   conversations: [],
+  written: [],
+  activity: [],
 };
 
 const renderLibrary = (stories: Partial<LibraryStories>, state: Partial<State> = {}) => {

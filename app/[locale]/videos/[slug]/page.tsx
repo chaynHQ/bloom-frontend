@@ -16,8 +16,7 @@ async function getStory(locale: string, slug: string) {
   return await getStoryblokStory(`videos/${slug}`, locale, {
     resolve_relations: [
       'resource_single_video.related_content',
-      'resource_single_video.related_session',
-      'resource_single_video.related_session.course',
+      'resource_single_video.related_grounding',
     ],
   });
 }

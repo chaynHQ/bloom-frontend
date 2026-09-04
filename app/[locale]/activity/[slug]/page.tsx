@@ -1,4 +1,4 @@
-import StoryblokResourceConversationPage from '@/components/storyblok/StoryblokResourceConversationPage';
+import StoryblokResourceActivityPage from '@/components/storyblok/StoryblokResourceActivityPage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
@@ -13,11 +13,8 @@ export const revalidate = 14400; // invalidate every 4 hours
 type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
-  return await getStoryblokStory(`conversations/${slug}`, locale, {
-    resolve_relations: [
-      'resource_conversation.related_content',
-      'resource_conversation.related_grounding',
-    ],
+  return await getStoryblokStory(`activity/${slug}`, locale, {
+    resolve_relations: ['resource_activity.related_content', 'resource_activity.related_grounding'],
   });
 }
 
@@ -30,7 +27,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   return generateMetadataBasic({
     title: story.content.name,
-    titleParent: t('conversations'),
+    titleParent: t('activity'),
     description: story.content.seo_description,
   });
 }
@@ -43,10 +40,10 @@ export async function generateStaticParams() {
 
   let sbParams: ISbStoriesParams = {
     version: STORYBLOK_ENVIRONMENT,
-    starts_with: 'conversations/',
+    starts_with: 'activity/',
     filter_query: {
       component: {
-        in: 'resource_conversation',
+        in: 'resource_activity',
       },
     },
   };
@@ -76,5 +73,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokResourceConversationPage story={story} />;
+  return <StoryblokResourceActivityPage story={story} />;
 }

@@ -42,7 +42,9 @@ export interface ResourcePageLayoutProps {
   eventData: Record<string, unknown>;
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
-  transcriptEvents: { opened: string; closed: string };
+  // Omitted for types with no transcript (written, activity) — TranscriptAccordion never
+  // mounts without `transcript`, so `onTranscriptToggle` never fires either.
+  transcriptEvents?: { opened: string; closed: string };
   // The audio player or video embed, already wired to the progress helpers.
   media: ReactNode;
   // Per-type hero overrides; anything unset falls back to the shared defaults.
@@ -53,7 +55,7 @@ export interface ResourcePageLayoutProps {
   // video, the "watch full session" link on a short).
   beforeSections?: ReactNode;
   pageSections?: SbBlokData[];
-  relatedExercises: string[];
+  relatedGrounding: string[];
   relatedContent: StoryblokRelatedContentStory[];
   userContentPartners: string[];
 }
@@ -77,7 +79,7 @@ export const ResourcePageLayout = ({
   teamMembersSection,
   beforeSections,
   pageSections,
-  relatedExercises,
+  relatedGrounding,
   relatedContent,
   userContentPartners,
 }: ResourcePageLayoutProps) => {
@@ -111,7 +113,9 @@ export const ResourcePageLayout = ({
             contributors={contributors}
             transcript={transcript}
             onTranscriptToggle={(open) => {
-              logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
+              if (transcriptEvents) {
+                logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
+              }
               if (open) start();
             }}
             media={media}
@@ -119,7 +123,7 @@ export const ResourcePageLayout = ({
           {beforeSections}
         </Box>
 
-        <ResourceGroundingSection exerciseIds={relatedExercises} />
+        <ResourceGroundingSection groundingIds={relatedGrounding} />
 
         <Divider sx={{ borderColor: 'sectionBorder' }} />
 

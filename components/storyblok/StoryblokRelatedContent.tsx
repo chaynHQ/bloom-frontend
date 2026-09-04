@@ -9,9 +9,12 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
+import { StoryblokResourceActivityPageProps } from './StoryblokResourceActivityPage';
+import { StoryblokResourceAudioPageProps } from './StoryblokResourceAudioPage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
 import { StoryblokResourceSingleVideoPageProps } from './StoryblokResourceSingleVideoPage';
+import { StoryblokResourceWrittenPageProps } from './StoryblokResourceWrittenPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
@@ -20,7 +23,10 @@ export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'conten
     | StoryblokSessionPageProps
     | StoryblokResourceConversationPageProps
     | StoryblokResourceShortPageProps
-    | StoryblokResourceSingleVideoPageProps;
+    | StoryblokResourceSingleVideoPageProps
+    | StoryblokResourceAudioPageProps
+    | StoryblokResourceWrittenPageProps
+    | StoryblokResourceActivityPageProps;
 }
 
 export interface StoryblokRelatedContentProps {
@@ -34,7 +40,7 @@ const containerStyle = {
 } as const;
 
 export const StoryblokRelatedContent = ({
-  relatedContent,
+  relatedContent = [],
   userContentPartners = [],
 }: StoryblokRelatedContentProps) => {
   const locale = useLocale();
@@ -50,11 +56,9 @@ export const StoryblokRelatedContent = ({
             ? story.content.languages.includes(localeString)
             : true;
 
-        if (
-          story.content.component === 'resource_short_video' &&
-          (story.content.included_for_partners?.length ?? 0) > 0
-        ) {
-          const partners = story.content.included_for_partners.map((p) => p.toLowerCase());
+        const includedForPartners = story.content.included_for_partners;
+        if (includedForPartners?.length) {
+          const partners = includedForPartners.map((p) => p.toLowerCase());
           return availableForLocale && userContentPartners.some((p) => partners.includes(p));
         }
         return availableForLocale;

@@ -206,13 +206,15 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const themeParam = searchParams.get('theme');
   const initialTheme = THEME_KEYS.find((theme) => theme === themeParam);
   const typeParam = searchParams.get('type');
+  const formatParam = searchParams.get('format');
+  const initialFormat = FORMAT_KEYS.find((format) => format === formatParam);
 
   const [keyword, setKeyword] = useState('');
   const [themes, setThemes] = useState<ThemeKey[]>(initialTheme ? [initialTheme] : []);
   const [kind, setKind] = useState<KindFilter>(
     KIND_KEYS.find((option) => option === typeParam) ?? 'all',
   );
-  const [formats, setFormats] = useState<Format[]>([]);
+  const [formats, setFormats] = useState<Format[]>(initialFormat ? [initialFormat] : []);
   const [lengths, setLengths] = useState<LengthBucket[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);

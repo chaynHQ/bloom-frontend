@@ -2,40 +2,37 @@
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
+import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
-import Video from '@/components/video/Video';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import {
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-  RESOURCE_SHORT_VIDEO_VIEWED,
-} from '@/lib/constants/events';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { RESOURCE_WRITTEN_VIEWED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
-import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
+import { RichTextOptions } from '@/lib/utils/richText';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { Box } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useEffect, useMemo } from 'react';
-import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 
-export interface StoryblokResourceShortPageProps {
+export interface StoryblokResourceWrittenPageProps {
   _uid: string;
   _editable: string;
   name: string;
   description: StoryblokRichtext;
+  header_image: { filename: string; alt: string };
   duration: string;
-  video: { url: string };
-  video_transcript: StoryblokRichtext;
+  body: StoryblokRichtext;
+  login_required: boolean;
   contributor_images?: { filename: string; alt: string }[];
   contributors_description?: string;
   team_members_section?: StoryblokTeamMembersSectionProps[];
@@ -43,25 +40,22 @@ export interface StoryblokResourceShortPageProps {
   related_content: StoryblokRelatedContentStory[];
   related_grounding: ISbStoryData[];
   languages: string[];
-  component: 'resource_short_video';
+  component: 'resource_written';
   included_for_partners: string[];
 }
 
-interface Props {
-  story: ISbStoryData;
-}
+const EVENT_PREFIX = 'RESOURCE_WRITTEN' as const;
 
-const EVENT_PREFIX = 'RESOURCE_SHORT_VIDEO' as const;
-
-const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
+const StoryblokResourceWrittenPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
     _editable,
     name,
     description,
-    video,
-    video_transcript,
+    header_image,
+    body,
+    login_required,
     contributor_images,
     contributors_description,
     team_members_section,
@@ -70,33 +64,25 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
     related_grounding,
     languages,
     included_for_partners,
-  } = story.content as StoryblokResourceShortPageProps;
+  } = story.content as StoryblokResourceWrittenPageProps;
   const storyUuid = story.uuid;
 
   const locale = useLocale();
-  const referralPartner = useCookieReferralPartner();
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const isUserLoading = useIsUserLoading();
 
-  const contentPartners = useMemo(
-    () =>
-      userHasAccessToPartnerContent(
-        partnerAdmin?.partner,
-        partnerAccesses,
-        referralPartner,
-        userId,
-      ),
-    [referralPartner, partnerAccesses, partnerAdmin, userId],
-  );
-
   const userAccess = useMemo(() => {
+    const isPublicContent = included_for_partners.some(
+      (partner) => partner.toLowerCase() === 'public',
+    );
     return (
-      hasAccessToPage(isLoggedIn, true, included_for_partners, partnerAccesses, partnerAdmin) &&
+      (isPublicContent ||
+        hasAccessToPage(isLoggedIn, true, included_for_partners, partnerAccesses, partnerAdmin)) &&
       (locale === LANGUAGES.en || languages.includes(locale))
     );
   }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
@@ -116,7 +102,7 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
 
   const eventData = useMemo(
     () => ({
-      resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
+      resource_category: RESOURCE_CATEGORIES.WRITTEN,
       resource_name: name,
       resource_storyblok_uuid: storyUuid,
       resource_progress: resourceProgress,
@@ -125,15 +111,21 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
   );
 
   useEffect(() => {
-    logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
+    logEvent(RESOURCE_WRITTEN_VIEWED, eventData);
   });
 
-  const { start, complete } = useResourceProgress({
+  const { start } = useResourceProgress({
     storyUuid,
     eventPrefix: EVENT_PREFIX,
     resourceProgress,
     eventData,
   });
+
+  // Written resources have no play button to hook "started" to — reading the page is the
+  // engagement signal, so progress starts as soon as it's viewed.
+  useEffect(() => {
+    start();
+  }, [start]);
 
   const contributors = useMemo(
     () => toResourceContributors(contributor_images, contributors_description),
@@ -149,6 +141,10 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
     return <ContentUnavailable />;
   }
 
+  // Waits out the same loading window as userAccess above, so a logged-in visitor doesn't see
+  // the login dialog flash open and close while their auth state is still resolving.
+  const requiresLogin = !isUserLoading && login_required && !isLoggedIn;
+
   return (
     <Box
       {...storyblokEditable({
@@ -156,49 +152,42 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
         _editable,
         name,
         description,
-        video,
-        video_transcript,
+        body,
+        login_required,
         team_members_section,
         page_sections,
         related_content,
         related_grounding,
       })}
     >
+      {requiresLogin && <LoginDialog />}
       <ResourcePageLayout
-        format="video"
+        format="written"
         name={name}
         storyUuid={storyUuid}
-        category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+        category={RESOURCE_CATEGORIES.WRITTEN}
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
         isLoggedIn={isLoggedIn}
         eventData={eventData}
         description={description}
-        transcript={video_transcript}
-        transcriptEvents={{
-          opened: RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-          closed: RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-        }}
+        hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
         relatedGrounding={groundingIds}
         relatedContent={related_content}
-        userContentPartners={contentPartners}
-        media={
-          <Video
-            url={video.url}
-            eventPrefix="RESOURCE_SHORT"
-            eventData={eventData}
-            setVideoStarted={() => start()}
-            setVideoFinished={() => complete()}
-            containerStyles={{ maxWidth: '100%', mt: 0 }}
-          />
-        }
+        userContentPartners={userHasAccessToPartnerContent(
+          partnerAdmin?.partner,
+          partnerAccesses,
+          null,
+          userId,
+        )}
+        media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>
   );
 };
 
-export default StoryblokResourceShortPage;
+export default StoryblokResourceWrittenPage;

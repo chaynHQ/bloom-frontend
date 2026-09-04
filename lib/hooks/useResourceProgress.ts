@@ -10,7 +10,12 @@ import { useCallback } from 'react';
 // The three resource types share one event-name shape: `<prefix>_STARTED_REQUEST`,
 // `<prefix>_COMPLETE_SUCCESS`, etc. Passing the prefix keeps this hook type-agnostic.
 export type ResourceEventPrefix =
-  'RESOURCE_CONVERSATION' | 'RESOURCE_SHORT_VIDEO' | 'RESOURCE_SINGLE_VIDEO';
+  | 'RESOURCE_CONVERSATION'
+  | 'RESOURCE_SHORT_VIDEO'
+  | 'RESOURCE_SINGLE_VIDEO'
+  | 'RESOURCE_AUDIO'
+  | 'RESOURCE_WRITTEN'
+  | 'RESOURCE_ACTIVITY';
 
 interface UseResourceProgressArgs {
   storyUuid: string;

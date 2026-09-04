@@ -48,21 +48,24 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
 
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
-  const [courses, courseSessions, shorts, somatics, conversations] = await Promise.all([
-    getCourseStories(locale),
-    getAllStoryblokStories(locale, {
-      ...baseProps(locale),
-      starts_with: 'courses/',
-      filter_query: { component: { in: 'Session,session_iba' } },
-    }),
-    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
-    getAllStoryblokStories(locale, {
-      ...baseProps(locale),
-      starts_with: 'videos/',
-      with_tag: STORYBLOK_TAGS.SOMATICS,
-    }),
-    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
-  ]);
+  const [courses, courseSessions, shorts, somatics, conversations, written, activity] =
+    await Promise.all([
+      getCourseStories(locale),
+      getAllStoryblokStories(locale, {
+        ...baseProps(locale),
+        starts_with: 'courses/',
+        filter_query: { component: { in: 'Session,session_iba' } },
+      }),
+      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
+      getAllStoryblokStories(locale, {
+        ...baseProps(locale),
+        starts_with: 'videos/',
+        with_tag: STORYBLOK_TAGS.SOMATICS,
+      }),
+      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
+      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
+      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
+    ]);
 
-  return { courses, courseSessions, shorts, somatics, conversations };
+  return { courses, courseSessions, shorts, somatics, conversations, written, activity };
 }

@@ -3,6 +3,8 @@
     "conversations": "Conversations",
     "shorts": "Shorts",
     "videos": "Videos",
+    "written": "Written",
+    "activity": "Activity",
     "partOf": "Part of {name}",
     "sessionButtonLabel": "Watch full session",
     "mediaCard": {
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Want to explore more?",
       "subtitle": "Have a look at our related sessions below, to help your healing journey.",
-      "resource_short_video": "Watch",
-      "resource_single_video": "Watch",
+      "short_video": "Watch",
+      "single_video": "Watch",
       "resource_conversation": "Listen",
+      "audio": "Listen",
+      "written": "Read",
+      "activity": "Activity",
       "course": "Course",
       "session": "Session",
       "session_iba": "Session",
@@ -76,6 +81,12 @@
     "backToSessions": "Back to sessions",
     "hero": {
       "eyebrow": "Current session"
+    },
+    "grounding": {
+      "close": "Close",
+      "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
+      "loadMore": "Load more",
+      "duration": "{minutes} min"
     }
   }
 }

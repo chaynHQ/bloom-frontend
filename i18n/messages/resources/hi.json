@@ -3,6 +3,8 @@
     "conversations": "Bātcīt",
     "shorts": "Clips",
     "videos": "Videos",
+    "written": "Likhit",
+    "activity": "Activity",
     "partOf": "{name} ka hissa",
     "sessionButtonLabel": "Pūrī session dekhen",
     "mediaCard": {
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Aur explore karna chahte hain?",
       "subtitle": "Apni healing journey mein madad ke liye, neeche di gayi related sessions dekhen.",
-      "resource_short_video": "Watch",
-      "resource_single_video": "Watch",
+      "short_video": "Watch",
+      "single_video": "Watch",
       "resource_conversation": "Listen",
+      "audio": "Sunein",
+      "written": "Padhein",
+      "activity": "Activity",
       "course": "Course",
       "session": "Session",
       "session_iba": "Session",
@@ -76,6 +81,12 @@
     "backToSessions": "Sessions par vapas jayein",
     "hero": {
       "eyebrow": "Maujooda session"
+    },
+    "grounding": {
+      "close": "Band karein",
+      "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
+      "loadMore": "Aur dikhaiye",
+      "duration": "{minutes} min"
     }
   }
 }

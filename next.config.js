@@ -83,6 +83,28 @@ module.exports = withBundleAnalyzer(
             permanent: true,
           },
           {
+            source: '/activities',
+            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.*)' }],
+            destination: '/activity/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/activities`,
+            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.*)' }],
+            destination: '/:locale/activity/:slug',
+            permanent: true,
+          },
+          {
+            source: '/activities',
+            destination: '/library?format=activity',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/activities`,
+            destination: '/:locale/library?format=activity',
+            permanent: true,
+          },
+          {
             source: '/about-our-courses',
             destination: '/library',
             permanent: false,

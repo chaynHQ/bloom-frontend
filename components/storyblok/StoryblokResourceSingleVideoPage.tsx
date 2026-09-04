@@ -44,7 +44,7 @@ export interface StoryblokResourceSingleVideoPageProps {
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_exercises: string[];
+  related_grounding: ISbStoryData[];
   references: StoryblokReferenceProps[];
   languages: string[];
   included_for_partners: string[];
@@ -68,7 +68,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     team_members_section,
     page_sections,
     related_content,
-    related_exercises,
+    related_grounding,
     references,
     languages,
     included_for_partners,
@@ -146,6 +146,10 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     () => references?.filter((r) => r.is_key_reference) ?? [],
     [references],
   );
+  const groundingIds = useMemo(
+    () => related_grounding?.map((groundingStory) => groundingStory.slug) ?? [],
+    [related_grounding],
+  );
 
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
@@ -166,7 +170,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         references,
         page_sections,
         related_content,
-        related_exercises,
+        related_grounding,
       })}
     >
       <ResourcePageLayout
@@ -189,7 +193,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedExercises={related_exercises}
+        relatedGrounding={groundingIds}
         relatedContent={related_content}
         userContentPartners={contentPartners}
         beforeSections={
