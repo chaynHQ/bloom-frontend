@@ -24,6 +24,13 @@ const dialogPaperStyle = {
   backgroundColor: 'sectionSurface',
 } as const;
 
+// Fills the paper so the sticky mobile close bar still anchors to its bottom edge.
+const dialogInnerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: 0,
+} as const;
+
 const contentAreaStyle = {
   p: { xs: 2, sm: 3 },
   display: 'flex',
@@ -102,40 +109,43 @@ export const GroundingExerciseDialog = ({ story, onClose }: GroundingExerciseDia
     <Dialog
       open
       onClose={onClose}
-      slotProps={{ paper: { sx: dialogPaperStyle, 'qa-id': 'grounding-exercise-dialog' } }}
+      slotProps={{ paper: { sx: dialogPaperStyle } }}
       sx={{ '& .MuiDialog-container': { alignItems: { xs: 'flex-end', sm: 'center' } } }}
     >
-      <Box sx={contentAreaStyle}>
-        <Box sx={closeButtonRowStyle}>
-          <IconButton
-            aria-label={t('grounding.close')}
+      {/* qa-id sits on this wrapper (not the card) so it spans the close controls too. */}
+      <Box qa-id="grounding-exercise-dialog" sx={dialogInnerStyle}>
+        <Box sx={contentAreaStyle}>
+          <Box sx={closeButtonRowStyle}>
+            <IconButton
+              aria-label={t('grounding.close')}
+              onClick={onClose}
+              sx={closeIconButtonStyle}
+              qa-id="grounding-exercise-close-button"
+            >
+              <CloseRounded />
+            </IconButton>
+          </Box>
+          <Box sx={cardStyle}>
+            <Box component="span" sx={badgeStyle}>
+              {tMoment('groundingLabel')}
+            </Box>
+            <Typography variant="h3" component="h2">
+              {name}
+            </Typography>
+            <Box>{render(body, RichTextOptions)}</Box>
+          </Box>
+        </Box>
+        <Box sx={mobileCloseBarStyle}>
+          <Button
+            variant="outlined"
+            fullWidth
             onClick={onClose}
-            sx={closeIconButtonStyle}
+            sx={mobileCloseButtonStyle}
             qa-id="grounding-exercise-close-button"
           >
-            <CloseRounded />
-          </IconButton>
+            {t('grounding.close')}
+          </Button>
         </Box>
-        <Box sx={cardStyle}>
-          <Box component="span" sx={badgeStyle}>
-            {tMoment('groundingLabel')}
-          </Box>
-          <Typography variant="h3" component="h2">
-            {name}
-          </Typography>
-          <Box>{render(body, RichTextOptions)}</Box>
-        </Box>
-      </Box>
-      <Box sx={mobileCloseBarStyle}>
-        <Button
-          variant="outlined"
-          fullWidth
-          onClick={onClose}
-          sx={mobileCloseButtonStyle}
-          qa-id="grounding-exercise-close-button"
-        >
-          {t('grounding.close')}
-        </Button>
       </Box>
     </Dialog>
   );

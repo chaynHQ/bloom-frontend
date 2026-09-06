@@ -28,7 +28,10 @@ describe('Grounding exercises', () => {
 
     cy.location('search').should('include', 'id=grounding-visual-breathing');
 
-    cy.get('[qa-id=grounding-exercise-dialog] button').contains(/close/i).click();
+    cy.get('[qa-id=grounding-exercise-dialog]')
+      .find('[qa-id=grounding-exercise-close-button]')
+      .filter(':visible')
+      .click();
 
     cy.get('[qa-id=grounding-exercise-dialog]').should('not.exist');
     cy.location('search').should('not.include', 'id=');
