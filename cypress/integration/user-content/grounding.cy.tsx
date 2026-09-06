@@ -4,6 +4,19 @@ describe('Grounding exercises', () => {
   it('opens an exercise from the card grid and closes it', () => {
     cy.visit('/grounding');
 
+    // The grid paginates at 9 cards; 'Visual breathing' sits past the first page, so page
+    // through until every card is shown before looking for it.
+    const revealAllCards = () => {
+      cy.get('body').then(($body) => {
+        if ($body.find('button:contains("Load more")').length) {
+          cy.contains('button', 'Load more').click();
+          revealAllCards();
+        }
+      });
+    };
+    cy.get('[qa-id=grounding-card]', { timeout: 10000 }).should('exist');
+    revealAllCards();
+
     cy.get('[qa-id=grounding-card]', { timeout: 10000 })
       .contains('Visual breathing')
       .should('be.visible')

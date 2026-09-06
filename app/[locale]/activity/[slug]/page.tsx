@@ -50,10 +50,14 @@ export async function generateStaticParams() {
 
   const { data } = await storyblokApi.get('cdn/links/', sbParams);
 
+  // On staging/preview the CMS is read in `draft`, where this migration's activity content still
+  // lives unpublished — so pre-render those too. Production reads `published` and never sees them.
+  const includeDrafts = STORYBLOK_ENVIRONMENT === 'draft';
+
   Object.keys(data.links).forEach((linkKey) => {
     const story = data.links[linkKey];
 
-    if (!story.slug || !story.published) return;
+    if (!story.slug || (!story.published && !includeDrafts)) return;
 
     const slug = story.slug.split('/')[1];
 

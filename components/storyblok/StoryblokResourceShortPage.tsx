@@ -4,11 +4,13 @@ import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import Video from '@/components/video/Video';
+import { Link as i18nLink } from '@/i18n/routing';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import {
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
   RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
   RESOURCE_SHORT_VIDEO_VIEWED,
+  RESOURCE_SHORT_VIDEO_VISIT_SESSION,
 } from '@/lib/constants/events';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
@@ -17,12 +19,14 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import { normaliseSlug } from '@/lib/utils/libraryData';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -42,6 +46,9 @@ export interface StoryblokResourceShortPageProps {
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
   related_grounding: ISbStoryData[];
+  // A field that historically flip-flopped between a single ref and an array; `resolve_relations`
+  // inlines it as a full story (or list of them).
+  related_session?: ISbStoryData | ISbStoryData[];
   languages: string[];
   component: 'resource_short_video';
   included_for_partners: string[];
@@ -68,11 +75,13 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
     page_sections,
     related_content,
     related_grounding,
+    related_session,
     languages,
     included_for_partners,
   } = story.content as StoryblokResourceShortPageProps;
   const storyUuid = story.uuid;
 
+  const t = useTranslations('Resources');
   const locale = useLocale();
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -144,6 +153,12 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
     [related_grounding],
   );
 
+  const relatedSessionHref = useMemo(() => {
+    const session = Array.isArray(related_session) ? related_session[0] : related_session;
+    if (!session || typeof session !== 'object' || !session.full_slug) return undefined;
+    return getDefaultFullSlug(normaliseSlug(session.full_slug), locale);
+  }, [related_session, locale]);
+
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
     return <ContentUnavailable />;
@@ -162,6 +177,7 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
         page_sections,
         related_content,
         related_grounding,
+        related_session,
       })}
     >
       <ResourcePageLayout
@@ -186,6 +202,21 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
         relatedGrounding={groundingIds}
         relatedContent={related_content}
         userContentPartners={contentPartners}
+        beforeSections={
+          relatedSessionHref && (
+            <Button
+              qa-id="resource-short-related-session-button"
+              component={i18nLink}
+              href={relatedSessionHref}
+              variant="contained"
+              color="primary"
+              onClick={() => logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, eventData)}
+              sx={{ alignSelf: 'flex-start' }}
+            >
+              {t('sessionButtonLabel')}
+            </Button>
+          )
+        }
         media={
           <Video
             url={video.url}

@@ -17,6 +17,7 @@ async function getStory(locale: string, slug: string) {
     resolve_relations: [
       'resource_short_video.related_content',
       'resource_short_video.related_grounding',
+      'resource_short_video.related_session',
     ],
   });
 }
