@@ -26,7 +26,8 @@
       "audio": "Áudio",
       "written": "Texto",
       "video": "Vídeo",
-      "activity": "Atividade"
+      "activity": "Atividade",
+      "grounding": "Aterramento"
     },
     "lengthHeading": "Duração",
     "lengths": {

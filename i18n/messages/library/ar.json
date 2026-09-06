@@ -26,7 +26,8 @@
       "audio": "صوت",
       "written": "مكتوب",
       "video": "فيديو",
-      "activity": "نشاط"
+      "activity": "نشاط",
+      "grounding": "تثبيت الذات"
     },
     "lengthHeading": "المدة",
     "lengths": {

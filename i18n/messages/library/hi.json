@@ -26,7 +26,8 @@
       "audio": "Audio",
       "written": "Likhit",
       "video": "Video",
-      "activity": "Activity"
+      "activity": "Activity",
+      "grounding": "Grounding"
     },
     "lengthHeading": "Samay",
     "lengths": {

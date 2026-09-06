@@ -26,7 +26,8 @@
       "audio": "Audio",
       "written": "Escrito",
       "video": "Vídeo",
-      "activity": "Actividad"
+      "activity": "Actividad",
+      "grounding": "Anclaje"
     },
     "lengthHeading": "Duración",
     "lengths": {

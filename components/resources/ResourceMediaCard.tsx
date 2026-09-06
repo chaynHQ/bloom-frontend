@@ -12,12 +12,18 @@ import { render, type StoryblokRichtext } from 'storyblok-rich-text-react-render
 const cardStyle = {
   display: 'flex',
   flexDirection: 'column',
-  gap: 2,
   p: 2,
   borderRadius: '16px',
   border: '1px solid',
   borderColor: 'cardBorder',
   backgroundColor: 'cardSurface',
+} as const;
+
+// The badge carries its own bottom spacing; the rest of the card is evenly spaced.
+const bodyStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
 } as const;
 
 const contributorRowStyle = {
@@ -56,32 +62,34 @@ export const ResourceMediaCard = ({
   return (
     <Box qa-id="resource-media-card" sx={cardStyle}>
       <FormatBadge type={format} />
-      <Typography variant="h3" component="h2" sx={{ mb: 0 }}>
-        {title}
-      </Typography>
-      {typeof description === 'string' ? (
-        <Typography>{description}</Typography>
-      ) : (
-        <Box>{render(description, RichTextOptions)}</Box>
-      )}
+      <Box sx={bodyStyle}>
+        <Typography variant="h3" component="h2" sx={{ mb: 0 }}>
+          {title}
+        </Typography>
+        {typeof description === 'string' ? (
+          <Typography>{description}</Typography>
+        ) : (
+          <Box>{render(description, RichTextOptions)}</Box>
+        )}
 
-      {contributors && contributors.avatars.length > 0 && (
-        <Box sx={contributorRowStyle}>
-          <AvatarGroup
-            avatars={contributors.avatars}
-            size="xsmall"
-            bordered={false}
-            frontAvatar="last"
-          />
-          <Typography sx={captionStyle}>{contributors.caption}</Typography>
-        </Box>
-      )}
+        {contributors && contributors.avatars.length > 0 && (
+          <Box sx={contributorRowStyle}>
+            <AvatarGroup
+              avatars={contributors.avatars}
+              size="xsmall"
+              bordered={false}
+              frontAvatar="last"
+            />
+            <Typography sx={captionStyle}>{contributors.caption}</Typography>
+          </Box>
+        )}
 
-      {media}
+        {media}
 
-      {transcript && (
-        <TranscriptAccordion content={transcript} name={name} onToggle={onTranscriptToggle} />
-      )}
+        {transcript && (
+          <TranscriptAccordion content={transcript} name={name} onToggle={onTranscriptToggle} />
+        )}
+      </Box>
     </Box>
   );
 };

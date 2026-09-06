@@ -11,7 +11,7 @@ export type KindFilter = 'all' | Kind;
 
 export const KIND_KEYS: KindFilter[] = ['all', 'course', 'session'];
 
-export type Format = 'audio' | 'written' | 'video' | 'activity';
+export type Format = 'audio' | 'written' | 'video' | 'activity' | 'grounding';
 
 export type ContentType = 'course' | Format;
 

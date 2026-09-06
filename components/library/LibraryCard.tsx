@@ -24,7 +24,9 @@ const cardStyle = {
   borderRadius: '16px',
   boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
+  // padding-box clip keeps the reserved transparent border from showing as a pale hairline.
   border: '1px solid transparent',
+  backgroundClip: 'padding-box',
   transition: 'border-color 150ms ease',
   '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
 } as const;
@@ -65,8 +67,7 @@ const themeStyle = {
 } as const;
 
 const descriptionStyle = {
-  color: 'grey.800',
-  mt: 2,
+  color: 'text.secondary',
   display: '-webkit-box',
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
@@ -139,7 +140,7 @@ export function LibraryCard({
         )}
 
         <Box sx={contentStyle(isIllustrated ? 'illustrated' : 'compact')}>
-          {!isIllustrated && (
+          {!isIllustrated && item.themes.length > 0 && (
             <Typography variant="body2" sx={themeStyle}>
               {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
             </Typography>
@@ -148,7 +149,7 @@ export function LibraryCard({
             {item.title}
           </Typography>
           {!isIllustrated && <FormatBadge type={badgeType} />}
-          <Typography variant="body2" sx={{ ...descriptionStyle, ...(isIllustrated && { mt: 0 }) }}>
+          <Typography variant="body2" sx={descriptionStyle}>
             {item.description}
           </Typography>
 

@@ -26,7 +26,8 @@
       "audio": "Audio",
       "written": "Written",
       "video": "Video",
-      "activity": "Activity"
+      "activity": "Activity",
+      "grounding": "Grounding"
     },
     "lengthHeading": "Length",
     "lengths": {
