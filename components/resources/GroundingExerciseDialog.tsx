@@ -102,16 +102,21 @@ export const GroundingExerciseDialog = ({ story, onClose }: GroundingExerciseDia
     <Dialog
       open
       onClose={onClose}
-      slotProps={{ paper: { sx: dialogPaperStyle } }}
+      slotProps={{ paper: { sx: dialogPaperStyle, 'qa-id': 'grounding-exercise-dialog' } }}
       sx={{ '& .MuiDialog-container': { alignItems: { xs: 'flex-end', sm: 'center' } } }}
     >
       <Box sx={contentAreaStyle}>
         <Box sx={closeButtonRowStyle}>
-          <IconButton aria-label={t('grounding.close')} onClick={onClose} sx={closeIconButtonStyle}>
+          <IconButton
+            aria-label={t('grounding.close')}
+            onClick={onClose}
+            sx={closeIconButtonStyle}
+            qa-id="grounding-exercise-close-button"
+          >
             <CloseRounded />
           </IconButton>
         </Box>
-        <Box sx={cardStyle} qa-id="grounding-exercise-dialog">
+        <Box sx={cardStyle}>
           <Box component="span" sx={badgeStyle}>
             {tMoment('groundingLabel')}
           </Box>
@@ -122,7 +127,13 @@ export const GroundingExerciseDialog = ({ story, onClose }: GroundingExerciseDia
         </Box>
       </Box>
       <Box sx={mobileCloseBarStyle}>
-        <Button variant="outlined" fullWidth onClick={onClose} sx={mobileCloseButtonStyle}>
+        <Button
+          variant="outlined"
+          fullWidth
+          onClick={onClose}
+          sx={mobileCloseButtonStyle}
+          qa-id="grounding-exercise-close-button"
+        >
           {t('grounding.close')}
         </Button>
       </Box>
