@@ -65,8 +65,8 @@
       "emailVerificationSpamCheck": "E-postayı göremiyorsan lütfen spam klasörünü kontrol et.",
       "sendVerificationEmail": "Doğrulama e-postası gönder",
       "resendVerificationEmail": "Doğrulama e-postasını tekrar gönder",
-      "passwordRequired": "Yeniden kimlik doğrulama için şifre gereklidir.",
-      "reauthenticationError": "Yeniden kimlik doğrulama başarısız oldu. Lütfen tekrar dene."
+      "passwordRequired": "Kimliğini yeniden doğrulamak için şifren gerekli.",
+      "reauthenticationError": "Kimlik doğrulama yeniden yapılamadı. Lütfen tekrar dene."
     },
     "verifyMFA": {
       "title": "İki adımlı doğrulamayı onayla",
