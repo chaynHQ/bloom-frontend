@@ -84,13 +84,13 @@ module.exports = withBundleAnalyzer(
           },
           {
             source: '/activities',
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.*)' }],
+            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
             destination: '/activity/:slug',
             permanent: true,
           },
           {
             source: `/${LOCALE_PATTERN}/activities`,
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.*)' }],
+            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
             destination: '/:locale/activity/:slug',
             permanent: true,
           },

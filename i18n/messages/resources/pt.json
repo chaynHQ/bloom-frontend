@@ -3,6 +3,7 @@
     "conversations": "Conversas",
     "shorts": "Curtas",
     "videos": "Vídeos",
+    "audio": "Áudio",
     "written": "Texto",
     "activity": "Atividade",
     "partOf": "Parte de {name}",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "Você precisa de um momento?",
       "subtitle": "Se em algum momento da sessão você precisar de uma pausa, use nossos exercícios de aterramento abaixo.",
-      "groundingLabel": "Aterramento",
-      "activityLabel": "Atividade"
+      "groundingLabel": "Aterramento"
     },
     "actions": {
       "finish": "Concluir sessão"
@@ -79,9 +79,7 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Voltar para as sessões",
-    "hero": {
-      "eyebrow": "Sessão atual"
-    },
+    "backToLibrary": "Voltar para a biblioteca",
     "grounding": {
       "close": "Fechar",
       "exercisesCount": "{count, plural, one {# exercício} other {# exercícios}}",

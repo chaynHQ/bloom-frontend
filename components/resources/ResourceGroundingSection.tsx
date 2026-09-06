@@ -5,6 +5,7 @@ import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
 import { cardShadow } from '@/styles/common';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 
 const cardStyle = {
@@ -41,22 +42,21 @@ const badgeStyle = {
 } as const;
 
 interface ResourceGroundingSectionProps {
-  groundingIds: string[];
+  groundingStories: ISbStoryData[];
 }
 
-export const ResourceGroundingSection = ({ groundingIds }: ResourceGroundingSectionProps) => {
+export const ResourceGroundingSection = ({ groundingStories }: ResourceGroundingSectionProps) => {
   const t = useTranslations('Resources.moment');
-  const tExerciseNames = useTranslations('Shared.exerciseNames');
   const locale = useLocale();
 
   // Exercises are not available in German, so that locale gets no "moment" section.
-  if (locale === 'de' || groundingIds.length === 0) return null;
+  if (locale === 'de' || groundingStories.length === 0) return null;
 
-  const items = groundingIds.map((id) => ({
-    id,
-    name: tExerciseNames(id),
+  const items = groundingStories.map((story) => ({
+    id: story.slug,
+    name: story.content.name as string,
     label: t('groundingLabel'),
-    href: `/grounding?id=${id}`,
+    href: `/grounding?id=${story.slug}`,
   }));
 
   return (

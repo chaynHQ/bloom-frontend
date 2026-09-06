@@ -11,9 +11,9 @@ import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { render, type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-// Matches Figma nodes 1117:37371 (desktop) / 1117:37542 (mobile): a pale `sectionSurface` sheet
-// holding a bordered `cardSurface` card, at both breakpoints. Desktop closes via a floating icon
-// in the sheet; mobile via a full-width button in its own bar below the card.
+// A pale `sectionSurface` sheet holding a bordered `cardSurface` card. Below `sm` it's a
+// bottom sheet closed by a full-width button in a sticky bar; from `sm` up it's a centred
+// dialog closed by a floating icon button.
 const dialogPaperStyle = {
   m: 0,
   width: { xs: '100%', sm: 'calc(100% - 48px)' },
@@ -83,8 +83,6 @@ const mobileCloseBarStyle = {
   boxShadow: '0px -2px 6px rgba(0,0,0,0.05), 0px 2px 10px rgba(0,0,0,0.15)',
 } as const;
 
-const mobileCloseButtonStyle = {} as const;
-
 interface GroundingExerciseDialogProps {
   story: ISbStoryData;
   onClose: () => void;
@@ -140,7 +138,6 @@ export const GroundingExerciseDialog = ({ story, onClose }: GroundingExerciseDia
             variant="outlined"
             fullWidth
             onClick={onClose}
-            sx={mobileCloseButtonStyle}
             qa-id="grounding-exercise-close-button"
           >
             {t('grounding.close')}

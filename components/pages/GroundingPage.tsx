@@ -29,8 +29,8 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 // Matches LibraryPage's card-grid page size, sized to fill whole rows of this grid's 3 columns.
 const PAGE_SIZE = 9;
 
-// Matches Figma's "Sessions" section background (background/secondary/2, #fff2eb) — without it
-// the section falls back to the page's plain default and the cardSurface cards barely contrast.
+// A tinted section background so the `cardSurface` cards have something to contrast against;
+// the page's default background is too close to the card colour.
 const sectionStyle = { backgroundColor: 'pageBackground', py: { xs: 4, md: 6 } } as const;
 
 const resultsCountWrapperStyle = { mb: 3 } as const;

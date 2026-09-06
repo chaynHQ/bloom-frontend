@@ -121,8 +121,8 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     () => toResourceContributors(contributor_images, contributors_description),
     [contributor_images, contributors_description],
   );
-  const groundingIds = useMemo(
-    () => related_grounding?.map((groundingStory) => groundingStory.slug) ?? [],
+  const relatedGrounding = useMemo(
+    () => (Array.isArray(related_grounding) ? related_grounding : []),
     [related_grounding],
   );
 
@@ -159,11 +159,12 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
           opened: RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
           closed: RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
         }}
+        onTranscriptStart={start}
         hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedGrounding={groundingIds}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={userHasAccessToPartnerContent(
           partnerAdmin?.partner,

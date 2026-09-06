@@ -1,6 +1,6 @@
 describe('Grounding exercises', () => {
   // Grounding is fully public — no login required, matching the resource_grounding schema
-  // (no login_required field) and the Figma design (CTA banners, not a login wall).
+  // (no login_required field); unauthenticated visitors get CTA banners, not a login wall.
   it('opens an exercise from the card grid and closes it', () => {
     cy.visit('/grounding');
 

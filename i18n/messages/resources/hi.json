@@ -3,6 +3,7 @@
     "conversations": "Bātcīt",
     "shorts": "Clips",
     "videos": "Videos",
+    "audio": "Audio",
     "written": "Likhit",
     "activity": "Activity",
     "partOf": "{name} ka hissa",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "Kya aapko ek pal chahiye?",
       "subtitle": "Agar session ke dauraan kabhi bhi aapko ek pal ki zaroorat ho, toh neeche diye gaye grounding exercises ka istemaal karein.",
-      "groundingLabel": "Grounding",
-      "activityLabel": "Activity"
+      "groundingLabel": "Grounding"
     },
     "actions": {
       "finish": "Session poora karein"
@@ -79,9 +79,7 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Sessions par vapas jayein",
-    "hero": {
-      "eyebrow": "Maujooda session"
-    },
+    "backToLibrary": "Library par vapas jayein",
     "grounding": {
       "close": "Band karein",
       "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",

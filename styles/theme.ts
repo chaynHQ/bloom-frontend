@@ -33,6 +33,7 @@ declare module '@mui/material/styles' {
     badgeBlueBorder: string;
     supportArrowPanel: string;
     audioTrack: string;
+    audioButton: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
@@ -56,6 +57,7 @@ declare module '@mui/material/styles' {
     badgeBlueBorder?: string;
     supportArrowPanel?: string;
     audioTrack?: string;
+    audioButton?: string;
   }
 
   interface TypographyVariants {
@@ -138,6 +140,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       supportArrowPanel: '#F9E2E3',
       // Rail and border of the resource audio player, sitting a shade under `sectionSurface`.
       audioTrack: '#F7D9DB',
+      // Play/pause button of the resource audio player — the Bloom mark red (see app/icon.svg),
+      // a softer raspberry than the magenta `primary.dark` CTA fill.
+      audioButton: '#DC3D52',
     },
     shape: {
       borderRadius: 20,

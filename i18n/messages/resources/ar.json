@@ -3,6 +3,7 @@
     "conversations": "محادثات",
     "shorts": "مقاطع قصيرة",
     "videos": "فيديوهات",
+    "audio": "صوتي",
     "written": "مكتوب",
     "activity": "نشاط",
     "partOf": "جزء من {name}",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "هل تحتاج إلى لحظة؟",
       "subtitle": "إذا شعرت بالحاجة إلى لحظة في أي وقت خلال الجلسة، يمكنك الاستعانة بتمارين تثبيت الذات أدناه.",
-      "groundingLabel": "تثبيت الذات",
-      "activityLabel": "نشاط"
+      "groundingLabel": "تثبيت الذات"
     },
     "actions": {
       "finish": "إنهاء الجلسة"
@@ -79,9 +79,7 @@
       "audios": "بودكاست"
     },
     "backToSessions": "العودة إلى الجلسات",
-    "hero": {
-      "eyebrow": "الجلسة الحالية"
-    },
+    "backToLibrary": "العودة إلى المكتبة",
     "grounding": {
       "close": "إغلاق",
       "exercisesCount": "{count, plural, zero {لا تمارين} one {تمرين واحد} two {تمرينان} few {# تمارين} many {# تمرينًا} other {# تمرين}}",

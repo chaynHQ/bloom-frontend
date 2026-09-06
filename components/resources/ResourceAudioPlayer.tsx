@@ -54,15 +54,23 @@ const controlsStyle = {
   gap: 4.5,
 } as const;
 
-const skipButtonStyle = { color: 'grey.800', '& svg': { fontSize: 30 } } as const;
+// `&&` doubles the class so these hold up against the `MuiDialog` theme override
+// (`.MuiDialog-root button { color: #000 }`) when the player is rendered inside a dialog —
+// e.g. an audio blok in a grounding exercise (StoryblokAudio → GroundingExerciseDialog).
+const skipButtonStyle = {
+  '& svg': { fontSize: 30 },
+  '&&': { color: 'grey.700' },
+} as const;
 
 const playButtonStyle = {
   width: 48,
   height: 48,
-  backgroundColor: 'primary.dark',
-  color: 'common.white',
   '& svg': { fontSize: 28 },
-  '&:hover': { backgroundColor: 'primary.dark', opacity: 0.9 },
+  '&&': {
+    backgroundColor: 'audioButton',
+    color: 'background.default',
+    '&:hover': { backgroundColor: 'audioButton', opacity: 0.9 },
+  },
 } as const;
 
 interface ResourceAudioPlayerProps {

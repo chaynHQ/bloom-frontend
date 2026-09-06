@@ -3,6 +3,7 @@
     "conversations": "Conversations",
     "shorts": "Shorts",
     "videos": "Videos",
+    "audio": "Audio",
     "written": "Written",
     "activity": "Activity",
     "partOf": "Part of {name}",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "Do you need a moment?",
       "subtitle": "If at any point during the session you need a moment, use our groundings below.",
-      "groundingLabel": "Grounding",
-      "activityLabel": "Activity"
+      "groundingLabel": "Grounding"
     },
     "actions": {
       "finish": "Finish session"
@@ -79,9 +79,7 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Back to sessions",
-    "hero": {
-      "eyebrow": "Current session"
-    },
+    "backToLibrary": "Back to library",
     "grounding": {
       "close": "Close",
       "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",

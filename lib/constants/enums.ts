@@ -31,7 +31,6 @@ export enum RESOURCE_CATEGORIES {
 
 export enum EXERCISE_CATEGORIES {
   GROUNDING = 'grounding',
-  ACTIVITIES = 'activities',
 }
 
 export type RELATED_CONTENT_CATEGORIES =

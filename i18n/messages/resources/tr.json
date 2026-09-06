@@ -3,6 +3,7 @@
     "conversations": "Sohbetler",
     "shorts": "Kısa videolar",
     "videos": "Videolar",
+    "audio": "Sesli",
     "written": "Yazılı",
     "activity": "Etkinlik",
     "partOf": "{name} kapsamında",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "Bir mola ister misin?",
       "subtitle": "Bölüm sırasında herhangi bir anda mola vermeye ihtiyaç duyarsan, aşağıdaki köklenme egzersizlerimizi kullan.",
-      "groundingLabel": "Köklenme",
-      "activityLabel": "Etkinlik"
+      "groundingLabel": "Köklenme"
     },
     "actions": {
       "finish": "Bölümü tamamla"
@@ -79,9 +79,7 @@
       "audios": "Podcast'ler"
     },
     "backToSessions": "Bölümlere dön",
-    "hero": {
-      "eyebrow": "Mevcut bölüm"
-    },
+    "backToLibrary": "Kütüphaneye dön",
     "grounding": {
       "close": "Kapat",
       "exercisesCount": "{count, plural, one {# egzersiz} other {# egzersiz}}",

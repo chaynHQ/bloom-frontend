@@ -146,8 +146,8 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     () => references?.filter((r) => r.is_key_reference) ?? [],
     [references],
   );
-  const groundingIds = useMemo(
-    () => related_grounding?.map((groundingStory) => groundingStory.slug) ?? [],
+  const relatedGrounding = useMemo(
+    () => (Array.isArray(related_grounding) ? related_grounding : []),
     [related_grounding],
   );
 
@@ -189,11 +189,12 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
           opened: RESOURCE_SINGLE_VIDEO_TRANSCRIPT_OPENED,
           closed: RESOURCE_SINGLE_VIDEO_TRANSCRIPT_CLOSED,
         }}
+        onTranscriptStart={start}
         hero={{ subtitle }}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedGrounding={groundingIds}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={contentPartners}
         beforeSections={

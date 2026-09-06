@@ -148,8 +148,8 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
     () => toResourceContributors(contributor_images, contributors_description),
     [contributor_images, contributors_description],
   );
-  const groundingIds = useMemo(
-    () => related_grounding?.map((groundingStory) => groundingStory.slug) ?? [],
+  const relatedGrounding = useMemo(
+    () => (Array.isArray(related_grounding) ? related_grounding : []),
     [related_grounding],
   );
 
@@ -196,10 +196,11 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
           opened: RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
           closed: RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
         }}
+        onTranscriptStart={start}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedGrounding={groundingIds}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={contentPartners}
         beforeSections={
@@ -209,7 +210,7 @@ const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
               component={i18nLink}
               href={relatedSessionHref}
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={() => logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, eventData)}
               sx={{ alignSelf: 'flex-start' }}
             >

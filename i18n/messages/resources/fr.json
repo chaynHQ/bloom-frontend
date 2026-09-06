@@ -3,6 +3,7 @@
     "conversations": "Conversations",
     "shorts": "Courte",
     "videos": "Vidéos",
+    "audio": "Audio",
     "written": "Écrit",
     "activity": "Activité",
     "partOf": "Fait partie de {name}",
@@ -20,8 +21,7 @@
     "moment": {
       "title": "Avez-vous besoin d'un moment ?",
       "subtitle": "Si, à un moment de la session, vous avez besoin d'une pause, utilisez nos exercices d'ancrage ci-dessous.",
-      "groundingLabel": "Ancrage",
-      "activityLabel": "Activité"
+      "groundingLabel": "Ancrage"
     },
     "actions": {
       "finish": "Terminer la session"
@@ -79,9 +79,7 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Revenir aux sessions",
-    "hero": {
-      "eyebrow": "Session actuelle"
-    },
+    "backToLibrary": "Retour à la bibliothèque",
     "grounding": {
       "close": "Fermer",
       "exercisesCount": "{count, plural, one {# exercice} other {# exercices}}",

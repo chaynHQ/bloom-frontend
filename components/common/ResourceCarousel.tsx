@@ -19,9 +19,19 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
+const RESOURCE_CATEGORY_BY_COMPONENT: Record<string, RESOURCE_CATEGORIES> = {
+  resource_short_video: RESOURCE_CATEGORIES.SHORT_VIDEO,
+  resource_single_video: RESOURCE_CATEGORIES.SINGLE_VIDEO,
+  resource_conversation: RESOURCE_CATEGORIES.CONVERSATION,
+  resource_audio: RESOURCE_CATEGORIES.AUDIO,
+  resource_written: RESOURCE_CATEGORIES.WRITTEN,
+  resource_activity: RESOURCE_CATEGORIES.ACTIVITY,
+};
+
 function resourceCard(story: ISbStoryData, locale: string) {
   const href = getDefaultFullSlug(story.full_slug, locale);
   const { component, name, duration, preview_image } = story.content;
+  const category = RESOURCE_CATEGORY_BY_COMPONENT[component as string];
 
   switch (component) {
     case 'resource_short_video':
@@ -29,25 +39,13 @@ function resourceCard(story: ISbStoryData, locale: string) {
       return (
         <ResourceCard
           title={name}
-          category={
-            component === 'resource_short_video'
-              ? RESOURCE_CATEGORIES.SHORT_VIDEO
-              : RESOURCE_CATEGORIES.SINGLE_VIDEO
-          }
+          category={category}
           href={href}
           duration={duration}
           image={preview_image}
         />
       );
     case 'resource_conversation':
-      return (
-        <RelatedContentCard
-          title={story.name}
-          href={href}
-          category={RESOURCE_CATEGORIES.CONVERSATION}
-          duration={duration}
-        />
-      );
     case 'resource_audio':
     case 'resource_written':
     case 'resource_activity':
@@ -55,13 +53,7 @@ function resourceCard(story: ISbStoryData, locale: string) {
         <RelatedContentCard
           title={story.name}
           href={href}
-          category={
-            component === 'resource_audio'
-              ? RESOURCE_CATEGORIES.AUDIO
-              : component === 'resource_written'
-                ? RESOURCE_CATEGORIES.WRITTEN
-                : RESOURCE_CATEGORIES.ACTIVITY
-          }
+          category={category}
           duration={duration}
         />
       );
