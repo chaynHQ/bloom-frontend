@@ -1,7 +1,7 @@
 import { type ContentType } from '@/lib/utils/libraryData';
 import type { SvgIconComponent } from '@mui/icons-material';
 import ArticleRounded from '@mui/icons-material/ArticleRounded';
-import ExtensionRounded from '@mui/icons-material/ExtensionRounded';
+import EditNoteRounded from '@mui/icons-material/EditNoteRounded';
 import RouteRounded from '@mui/icons-material/RouteRounded';
 import SmartDisplayRounded from '@mui/icons-material/SmartDisplayRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
@@ -13,7 +13,7 @@ export const CONTENT_TYPE_ICON: Record<ContentType, SvgIconComponent> = {
   audio: VolumeUpRounded,
   written: ArticleRounded,
   video: SmartDisplayRounded,
-  activity: ExtensionRounded,
+  activity: EditNoteRounded,
 };
 
 const badgeStyle = {

@@ -2,10 +2,10 @@
 
 import { CardCarousel } from '@/components/common/CardCarousel';
 import { Link as i18nLink } from '@/i18n/routing';
-import { EXERCISE_CATEGORIES } from '@/lib/constants/enums';
 import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
 import { cardShadow } from '@/styles/common';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 
 const cardStyle = {
@@ -42,28 +42,22 @@ const badgeStyle = {
 } as const;
 
 interface ResourceGroundingSectionProps {
-  exerciseIds: string[];
+  groundingStories: ISbStoryData[];
 }
 
-export const ResourceGroundingSection = ({ exerciseIds }: ResourceGroundingSectionProps) => {
+export const ResourceGroundingSection = ({ groundingStories }: ResourceGroundingSectionProps) => {
   const t = useTranslations('Resources.moment');
-  const tExerciseNames = useTranslations('Shared.exerciseNames');
   const locale = useLocale();
 
   // Exercises are not available in German, so that locale gets no "moment" section.
-  if (locale === 'de' || exerciseIds.length === 0) return null;
+  if (locale === 'de' || groundingStories.length === 0) return null;
 
-  const items = exerciseIds.map((id) => {
-    const category = id.startsWith('grounding-')
-      ? EXERCISE_CATEGORIES.GROUNDING
-      : EXERCISE_CATEGORIES.ACTIVITIES;
-    return {
-      id,
-      name: tExerciseNames(id),
-      label: category === EXERCISE_CATEGORIES.GROUNDING ? t('groundingLabel') : t('activityLabel'),
-      href: `/${category}?openacc=${id}`,
-    };
-  });
+  const items = groundingStories.map((story) => ({
+    id: story.slug,
+    name: story.content.name as string,
+    label: t('groundingLabel'),
+    href: `/grounding?id=${story.slug}`,
+  }));
 
   return (
     <Box qa-id="resource-moment">

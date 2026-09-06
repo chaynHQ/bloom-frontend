@@ -1,6 +1,6 @@
 'use client';
 
-import Audio from '@/components/video/Audio';
+import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -9,8 +9,6 @@ import { richtextContentStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { usePathname } from 'next/navigation';
-
-// See React Player Hydration issue https://github.com/cookpete/react-player/issues/1474
 
 interface StoryblokAudioProps {
   _uid: string;
@@ -38,7 +36,8 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
     marginInlineEnd: alignment === 'center' ? 'auto' : 0,
     marginBottom: 4,
   } as const;
-  const audioStarted = () => {
+
+  const handleStart = () => {
     if (pathname.includes('grounding')) {
       createEventLog({
         event: EVENT_LOG_NAME.GROUNDING_EXERCISE_STARTED,
@@ -46,14 +45,14 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
       });
     }
   };
+
   return (
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, audio_file, alignment })}>
-      <Audio
+      <ResourceAudioPlayer
         url={audio_file.filename}
-        setAudioStarted={audioStarted}
-        setAudioFinished={() => {}}
-        eventData={eventUserData}
         eventPrefix="STORYBLOK_AUDIO_PLAYER"
+        eventData={{ ...eventUserData }}
+        onStart={handleStart}
       />
     </Box>
   );

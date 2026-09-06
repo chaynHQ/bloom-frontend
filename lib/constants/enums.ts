@@ -24,11 +24,13 @@ export enum RESOURCE_CATEGORIES {
   SHORT_VIDEO = 'short_video',
   SINGLE_VIDEO = 'single_video',
   CONVERSATION = 'resource_conversation',
+  AUDIO = 'audio',
+  WRITTEN = 'written',
+  ACTIVITY = 'activity',
 }
 
 export enum EXERCISE_CATEGORIES {
   GROUNDING = 'grounding',
-  ACTIVITIES = 'activities',
 }
 
 export type RELATED_CONTENT_CATEGORIES =

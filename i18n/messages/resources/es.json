@@ -3,6 +3,9 @@
     "conversations": "Conversaciones",
     "shorts": "Cortos",
     "videos": "Vídeos",
+    "audio": "Audio",
+    "written": "Escrito",
+    "activity": "Actividad",
     "partOf": "Parte de {name}",
     "sessionButtonLabel": "Ver sesión completa",
     "mediaCard": {
@@ -18,8 +21,7 @@
     "moment": {
       "title": "¿Necesitas un momento?",
       "subtitle": "Si en cualquier momento de la sesión necesitas una pausa, usa nuestros ejercicios de anclaje que aparecen abajo.",
-      "groundingLabel": "Anclaje",
-      "activityLabel": "Actividad"
+      "groundingLabel": "Anclaje"
     },
     "actions": {
       "finish": "Finalizar sesión"
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "¿Quieres explorar más?",
       "subtitle": "Echa un vistazo a nuestras sesiones relacionadas más abajo, para acompañar tu proceso de sanación.",
-      "resource_short_video": "Ver",
-      "resource_single_video": "Ver",
+      "short_video": "Ver",
+      "single_video": "Ver",
       "resource_conversation": "Escuchar",
+      "audio": "Escuchar",
+      "written": "Leer",
+      "activity": "Actividad",
       "course": "Curso",
       "session": "Sesión",
       "session_iba": "Sesión",
@@ -74,8 +79,12 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Volver a las sesiones",
-    "hero": {
-      "eyebrow": "Sesión actual"
+    "backToLibrary": "Volver a la biblioteca",
+    "grounding": {
+      "close": "Cerrar",
+      "exercisesCount": "{count, plural, one {# ejercicio} other {# ejercicios}}",
+      "loadMore": "Ver más",
+      "duration": "{minutes} min"
     }
   }
 }

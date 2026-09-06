@@ -53,6 +53,10 @@ export async function generateStaticParams() {
     'shorts',
     'videos',
     'conversations',
+    'audio',
+    'written',
+    'activity',
+    'grounding',
     'policies',
   ];
 

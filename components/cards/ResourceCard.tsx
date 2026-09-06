@@ -68,6 +68,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
   const { title, href, duration, category, image } = props;
 
   const t = useTranslations('Resources');
+  const tS = useTranslations('Shared');
 
   return (
     <Card sx={cardStyle}>
@@ -85,7 +86,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
               src={image?.filename || '/bloom_shorts.png'}
               fill
               sizes={getImageSizes(360)}
-              alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
+              alt={image?.alt || tS('alt.resourceCardDefault')}
               style={{
                 objectFit: 'cover',
                 objectPosition: 'top',
@@ -111,7 +112,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
             }}
           >
             <Typography sx={categoryStyle}>
-              {t(`relatedContent.resource_${category}`)}
+              {t(`relatedContent.${category}`)}
               {duration && (
                 <span className="before-dot">
                   {` ${duration} ${t('relatedContent.minuteLabel')}`}

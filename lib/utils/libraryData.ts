@@ -68,6 +68,7 @@ export interface LibraryStory {
     coming_soon?: boolean;
     weeks?: { sessions?: unknown[] }[];
     image_with_background?: { filename?: string };
+    login_required?: boolean; // only on video/audio/written/activity blocks
   };
 }
 
@@ -83,6 +84,7 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
     coming_soon,
     weeks,
     image_with_background,
+    login_required,
   } = story.content;
 
   return {
@@ -99,6 +101,7 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
       coming_soon,
       weeks,
       image_with_background,
+      login_required,
     },
   };
 }
@@ -110,12 +113,17 @@ export interface LibraryStories {
   shorts: LibraryStory[];
   somatics: LibraryStory[];
   conversations: LibraryStory[];
+  written: LibraryStory[];
+  activity: LibraryStory[];
 }
 
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_conversation: 'audio',
   resource_short_video: 'video',
   resource_single_video: 'video',
+  resource_audio: 'audio',
+  resource_written: 'written',
+  resource_activity: 'activity',
   Session: 'video',
   session_iba: 'video',
 };
@@ -132,7 +140,7 @@ export function parseMinutes(duration: unknown): number | undefined {
   return Number.isFinite(minutes) && minutes > 0 ? minutes : undefined;
 }
 
-function toPlainText(value: unknown): string {
+export function toPlainText(value: unknown): string {
   if (typeof value === 'string') return value;
   if (!value || typeof value !== 'object') return '';
   const node = value as { text?: string; content?: unknown[] };
@@ -168,7 +176,11 @@ export function storyToLibraryItem(
     title: content.name,
     description: toPlainText(content.description),
     href,
-    requiresAccount: pathRequiresAccount(href) && !freeFirstSessionUuids?.has(story.uuid),
+    // written/activity/audio/video aren't gated by path (AuthGuard leaves the overlay to the page
+    // itself), so their own `login_required` is the only signal the badge has for them.
+    requiresAccount:
+      (pathRequiresAccount(href) || content.login_required === true) &&
+      !freeFirstSessionUuids?.has(story.uuid),
   };
 
   if (content.component === COURSE_COMPONENT) {

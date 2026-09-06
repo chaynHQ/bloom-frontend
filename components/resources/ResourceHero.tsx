@@ -25,17 +25,9 @@ const imageStyle = {
   backgroundColor: 'secondary.light',
 } as const;
 
-const eyebrowStyle = {
-  fontFamily: 'headingFontFamily',
-  fontWeight: 500,
-  color: 'grey.700',
-  mb: 0.5,
-} as const;
-
 interface ResourceHeroProps {
   title: string;
   progress: PROGRESS_STATUS;
-  eyebrow?: string;
   subtitle?: string;
   imageSrc?: string;
   imageAlt?: string;
@@ -44,7 +36,6 @@ interface ResourceHeroProps {
 export const ResourceHero = ({
   title,
   progress,
-  eyebrow,
   subtitle,
   imageSrc,
   imageAlt,
@@ -65,11 +56,6 @@ export const ResourceHero = ({
           />
         </Box>
         <Box sx={{ minWidth: 0 }}>
-          {eyebrow && (
-            <Typography component="div" variant="body2" sx={eyebrowStyle}>
-              {eyebrow}
-            </Typography>
-          )}
           <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
             {title}
           </Typography>

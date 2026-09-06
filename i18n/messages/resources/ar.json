@@ -3,6 +3,9 @@
     "conversations": "محادثات",
     "shorts": "مقاطع قصيرة",
     "videos": "فيديوهات",
+    "audio": "صوتي",
+    "written": "مكتوب",
+    "activity": "نشاط",
     "partOf": "جزء من {name}",
     "sessionButtonLabel": "مشاهدة الجلسة كاملة",
     "mediaCard": {
@@ -18,8 +21,7 @@
     "moment": {
       "title": "هل تحتاج إلى لحظة؟",
       "subtitle": "إذا شعرت بالحاجة إلى لحظة في أي وقت خلال الجلسة، يمكنك الاستعانة بتمارين تثبيت الذات أدناه.",
-      "groundingLabel": "تثبيت الذات",
-      "activityLabel": "نشاط"
+      "groundingLabel": "تثبيت الذات"
     },
     "actions": {
       "finish": "إنهاء الجلسة"
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "هل ترغب في استكشاف المزيد؟",
       "subtitle": "يمكنك إلقاء نظرة على جلساتنا ذات الصلة أدناه لمساندتك في رحلة تعافيك.",
-      "resource_short_video": "مشاهدة",
-      "resource_single_video": "مشاهدة",
+      "short_video": "مشاهدة",
+      "single_video": "مشاهدة",
       "resource_conversation": "إنصات",
+      "audio": "إنصات",
+      "written": "قراءة",
+      "activity": "نشاط",
       "course": "دورة",
       "session": "جلسة",
       "session_iba": "جلسة",
@@ -74,8 +79,12 @@
       "audios": "بودكاست"
     },
     "backToSessions": "العودة إلى الجلسات",
-    "hero": {
-      "eyebrow": "الجلسة الحالية"
+    "backToLibrary": "العودة إلى المكتبة",
+    "grounding": {
+      "close": "إغلاق",
+      "exercisesCount": "{count, plural, zero {لا تمارين} one {تمرين واحد} two {تمرينان} few {# تمارين} many {# تمرينًا} other {# تمرين}}",
+      "loadMore": "عرض المزيد",
+      "duration": "{minutes, plural, zero {# دقيقة} one {دقيقة واحدة} two {دقيقتان} few {# دقائق} many {# دقيقة} other {# دقيقة}}"
     }
   }
 }

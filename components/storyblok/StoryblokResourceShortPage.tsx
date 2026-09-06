@@ -1,7 +1,6 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import DirectionalIcon from '@/components/common/DirectionalIcon';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import Video from '@/components/video/Video';
@@ -18,12 +17,12 @@ import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
-import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import { normaliseSlug } from '@/lib/utils/libraryData';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
 import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import { Box, Button } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
@@ -46,7 +45,10 @@ export interface StoryblokResourceShortPageProps {
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_exercises: string[];
+  related_grounding: ISbStoryData[];
+  // A field that historically flip-flopped between a single ref and an array; `resolve_relations`
+  // inlines it as a full story (or list of them).
+  related_session?: ISbStoryData | ISbStoryData[];
   languages: string[];
   component: 'resource_short_video';
   included_for_partners: string[];
@@ -54,17 +56,11 @@ export interface StoryblokResourceShortPageProps {
 
 interface Props {
   story: ISbStoryData;
-  related_course?: ISbStoryData;
-  related_session?: ISbStoryData;
 }
 
 const EVENT_PREFIX = 'RESOURCE_SHORT_VIDEO' as const;
 
-const StoryblokResourceShortPage = ({
-  story: initialStory,
-  related_course,
-  related_session,
-}: Props) => {
+const StoryblokResourceShortPage = ({ story: initialStory }: Props) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
@@ -78,7 +74,8 @@ const StoryblokResourceShortPage = ({
     team_members_section,
     page_sections,
     related_content,
-    related_exercises,
+    related_grounding,
+    related_session,
     languages,
     included_for_partners,
   } = story.content as StoryblokResourceShortPageProps;
@@ -151,9 +148,16 @@ const StoryblokResourceShortPage = ({
     () => toResourceContributors(contributor_images, contributors_description),
     [contributor_images, contributors_description],
   );
+  const relatedGrounding = useMemo(
+    () => (Array.isArray(related_grounding) ? related_grounding : []),
+    [related_grounding],
+  );
 
-  const parentStory = related_session ?? related_course;
-  const parentHref = parentStory ? getDefaultFullSlug(parentStory.full_slug, locale) : undefined;
+  const relatedSessionHref = useMemo(() => {
+    const session = Array.isArray(related_session) ? related_session[0] : related_session;
+    if (!session || typeof session !== 'object' || !session.full_slug) return undefined;
+    return getDefaultFullSlug(normaliseSlug(session.full_slug), locale);
+  }, [related_session, locale]);
 
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
@@ -171,9 +175,9 @@ const StoryblokResourceShortPage = ({
         video_transcript,
         team_members_section,
         page_sections,
-        related_session,
         related_content,
-        related_exercises,
+        related_grounding,
+        related_session,
       })}
     >
       <ResourcePageLayout
@@ -192,34 +196,22 @@ const StoryblokResourceShortPage = ({
           opened: RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
           closed: RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
         }}
-        hero={{
-          eyebrow: parentStory ? t('partOf', { name: parentStory.content.name }) : undefined,
-        }}
+        onTranscriptStart={start}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
-        relatedExercises={related_exercises}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={contentPartners}
         beforeSections={
-          parentHref && (
+          relatedSessionHref && (
             <Button
               qa-id="resource-short-related-session-button"
+              component={i18nLink}
+              href={relatedSessionHref}
               variant="contained"
               color="secondary"
-              component={i18nLink}
-              href={parentHref}
-              onClick={() =>
-                logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, {
-                  ...eventData,
-                  session_name: parentStory?.content.name,
-                })
-              }
-              endIcon={
-                <DirectionalIcon>
-                  <ArrowForwardRounded />
-                </DirectionalIcon>
-              }
+              onClick={() => logEvent(RESOURCE_SHORT_VIDEO_VISIT_SESSION, eventData)}
               sx={{ alignSelf: 'flex-start' }}
             >
               {t('sessionButtonLabel')}

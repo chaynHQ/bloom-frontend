@@ -3,6 +3,9 @@
     "conversations": "Gespräche",
     "shorts": "Kurzfilme",
     "videos": "Videos",
+    "audio": "Audio",
+    "written": "Text",
+    "activity": "Übung",
     "partOf": "Teil von {name}",
     "sessionButtonLabel": "Ganze Sitzung ansehen",
     "mediaCard": {
@@ -18,8 +21,7 @@
     "moment": {
       "title": "Brauchst du einen Moment?",
       "subtitle": "Wenn du während der Session an irgendeinem Punkt einen Moment brauchst, nutze unsere Übungen zur Stabilisierung unten.",
-      "groundingLabel": "Stabilisierung",
-      "activityLabel": "Übung"
+      "groundingLabel": "Stabilisierung"
     },
     "actions": {
       "finish": "Session beenden"
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Möchtest du mehr entdecken?",
       "subtitle": "Wirf einen Blick auf unsere verwandten Sessions unten – sie können dich auf deiner Heilungsreise begleiten.",
-      "resource_short_video": "Ansehen",
-      "resource_single_video": "Ansehen",
+      "short_video": "Ansehen",
+      "single_video": "Ansehen",
       "resource_conversation": "Listen",
+      "audio": "Anhören",
+      "written": "Lesen",
+      "activity": "Übungen",
       "course": "Kurs",
       "session": "Sitzung",
       "session_iba": "Sitzung",
@@ -74,8 +79,12 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Zurück zu den Sessions",
-    "hero": {
-      "eyebrow": "Aktuelle Session"
+    "backToLibrary": "Zurück zur Bibliothek",
+    "grounding": {
+      "close": "Schließen",
+      "exercisesCount": "{count, plural, one {# Übung} other {# Übungen}}",
+      "loadMore": "Mehr laden",
+      "duration": "{minutes} Min."
     }
   }
 }

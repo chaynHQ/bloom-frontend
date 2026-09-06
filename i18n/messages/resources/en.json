@@ -3,6 +3,9 @@
     "conversations": "Conversations",
     "shorts": "Shorts",
     "videos": "Videos",
+    "audio": "Audio",
+    "written": "Written",
+    "activity": "Activity",
     "partOf": "Part of {name}",
     "sessionButtonLabel": "Watch full session",
     "mediaCard": {
@@ -18,8 +21,7 @@
     "moment": {
       "title": "Do you need a moment?",
       "subtitle": "If at any point during the session you need a moment, use our groundings below.",
-      "groundingLabel": "Grounding",
-      "activityLabel": "Activity"
+      "groundingLabel": "Grounding"
     },
     "actions": {
       "finish": "Finish session"
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Want to explore more?",
       "subtitle": "Have a look at our related sessions below, to help your healing journey.",
-      "resource_short_video": "Watch",
-      "resource_single_video": "Watch",
+      "short_video": "Watch",
+      "single_video": "Watch",
       "resource_conversation": "Listen",
+      "audio": "Listen",
+      "written": "Read",
+      "activity": "Activity",
       "course": "Course",
       "session": "Session",
       "session_iba": "Session",
@@ -74,8 +79,12 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Back to sessions",
-    "hero": {
-      "eyebrow": "Current session"
+    "backToLibrary": "Back to library",
+    "grounding": {
+      "close": "Close",
+      "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
+      "loadMore": "Load more",
+      "duration": "{minutes} min"
     }
   }
 }

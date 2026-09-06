@@ -83,7 +83,13 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
         ),
       );
 
-    const resourceStories = [...stories.shorts, ...stories.somatics, ...stories.conversations];
+    const resourceStories = [
+      ...stories.shorts,
+      ...stories.somatics,
+      ...stories.conversations,
+      ...stories.written,
+      ...stories.activity,
+    ];
     const sessionItems = accessible(resourceStories).map((story) =>
       withProgress(storyToLibraryItem(story, locale), resourcesProgress),
     );

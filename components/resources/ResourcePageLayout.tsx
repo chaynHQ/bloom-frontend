@@ -21,11 +21,11 @@ import StoryblokTeamMembersSection, {
   StoryblokTeamMembersSectionProps,
 } from '@/components/storyblok/StoryblokTeamMembersSection';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { useResourceProgress, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, Container, Divider } from '@mui/material';
-import { type SbBlokData } from '@storyblok/react/rsc';
+import { type ISbStoryData, type SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -42,18 +42,23 @@ export interface ResourcePageLayoutProps {
   eventData: Record<string, unknown>;
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
-  transcriptEvents: { opened: string; closed: string };
+  // Omitted for types with no transcript (written, activity) — TranscriptAccordion never
+  // mounts without `transcript`, so `onTranscriptToggle` never fires either.
+  transcriptEvents?: { opened: string; closed: string };
+  // Called the first time the transcript is opened, to mark the resource "started" for types
+  // whose media has no play event of its own to hook that to.
+  onTranscriptStart?: () => void;
   // The audio player or video embed, already wired to the progress helpers.
   media: ReactNode;
   // Per-type hero overrides; anything unset falls back to the shared defaults.
-  hero?: { imageSrc?: string; imageAlt?: string; eyebrow?: string; subtitle?: string };
+  hero?: { imageSrc?: string; imageAlt?: string; subtitle?: string };
   contributors?: { avatars: Avatar[]; caption: string };
   teamMembersSection?: StoryblokTeamMembersSectionProps;
   // Type-specific blocks that sit between the media card and the page sections (references on a
   // video, the "watch full session" link on a short).
   beforeSections?: ReactNode;
   pageSections?: SbBlokData[];
-  relatedExercises: string[];
+  relatedGrounding: ISbStoryData[];
   relatedContent: StoryblokRelatedContentStory[];
   userContentPartners: string[];
 }
@@ -71,32 +76,31 @@ export const ResourcePageLayout = ({
   description,
   transcript,
   transcriptEvents,
+  onTranscriptStart,
   media,
   hero,
   contributors,
   teamMembersSection,
   beforeSections,
   pageSections,
-  relatedExercises,
+  relatedGrounding,
   relatedContent,
   userContentPartners,
 }: ResourcePageLayoutProps) => {
   const t = useTranslations('Resources');
-  const { start } = useResourceProgress({ storyUuid, eventPrefix, resourceProgress, eventData });
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
 
   return (
     <>
       <Container sx={resourceContainerStyle}>
         <Box>
-          <BackLink qaId="resource-back-link" href="/library" label={t('backToSessions')} />
+          <BackLink qaId="resource-back-link" href="/library" label={t('backToLibrary')} />
           <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
         </Box>
 
         <ResourceHero
           title={name}
           progress={resourceProgress}
-          eyebrow={hero?.eyebrow ?? t('hero.eyebrow')}
           subtitle={hero?.subtitle}
           imageSrc={hero?.imageSrc}
           imageAlt={hero?.imageAlt}
@@ -111,15 +115,17 @@ export const ResourcePageLayout = ({
             contributors={contributors}
             transcript={transcript}
             onTranscriptToggle={(open) => {
-              logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
-              if (open) start();
+              if (transcriptEvents) {
+                logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
+              }
+              if (open) onTranscriptStart?.();
             }}
             media={media}
           />
           {beforeSections}
         </Box>
 
-        <ResourceGroundingSection exerciseIds={relatedExercises} />
+        <ResourceGroundingSection groundingStories={relatedGrounding} />
 
         <Divider sx={{ borderColor: 'sectionBorder' }} />
 

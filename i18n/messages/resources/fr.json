@@ -3,6 +3,9 @@
     "conversations": "Conversations",
     "shorts": "Courte",
     "videos": "Vidéos",
+    "audio": "Audio",
+    "written": "Écrit",
+    "activity": "Activité",
     "partOf": "Fait partie de {name}",
     "sessionButtonLabel": "Regarder la session complète",
     "mediaCard": {
@@ -18,8 +21,7 @@
     "moment": {
       "title": "Avez-vous besoin d'un moment ?",
       "subtitle": "Si, à un moment de la session, vous avez besoin d'une pause, utilisez nos exercices d'ancrage ci-dessous.",
-      "groundingLabel": "Ancrage",
-      "activityLabel": "Activité"
+      "groundingLabel": "Ancrage"
     },
     "actions": {
       "finish": "Terminer la session"
@@ -33,9 +35,12 @@
     "relatedContent": {
       "title": "Envie d'explorer davantage ?",
       "subtitle": "Jetez un œil à nos sessions associées ci-dessous, pour accompagner votre parcours de guérison.",
-      "resource_short_video": "Regarder",
-      "resource_single_video": "Regarder",
+      "short_video": "Regarder",
+      "single_video": "Regarder",
       "resource_conversation": "Écouter",
+      "audio": "Écouter",
+      "written": "Lire",
+      "activity": "Activités",
       "course": "Cours",
       "session": "Session",
       "session_iba": "Session",
@@ -74,8 +79,12 @@
       "audios": "Podcasts"
     },
     "backToSessions": "Revenir aux sessions",
-    "hero": {
-      "eyebrow": "Session actuelle"
+    "backToLibrary": "Retour à la bibliothèque",
+    "grounding": {
+      "close": "Fermer",
+      "exercisesCount": "{count, plural, one {# exercice} other {# exercices}}",
+      "loadMore": "Voir plus",
+      "duration": "{minutes} min"
     }
   }
 }
