@@ -30,7 +30,7 @@ interface FilterableStory {
 // Whether a story is visible to a viewer in the given locale: its language list must include the
 // locale (a story with none set is treated as source-language English), and its
 // `included_for_partners` must intersect the viewer's partners (an empty list means everyone).
-export function storyMatchesLocaleAndPartnerAccess(
+function storyMatchesLocaleAndPartnerAccess(
   story: FilterableStory,
   locale: string,
   userPartners: string[],

@@ -127,7 +127,12 @@ export const ResourceMediaCard = ({
         {media}
 
         {transcript && (
-          <TranscriptAccordion content={transcript} name={name} onToggle={onTranscriptToggle} />
+          <TranscriptAccordion
+            content={transcript}
+            name={name}
+            mediaType={format === 'audio' ? 'audio' : 'video'}
+            onToggle={onTranscriptToggle}
+          />
         )}
       </Box>
     </Box>

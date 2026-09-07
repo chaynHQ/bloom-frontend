@@ -1,6 +1,6 @@
 'use client';
 
-import DirectionalIcon from '@/components/common/DirectionalIcon';
+import { BackLink } from '@/components/common/BackLink';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
@@ -14,9 +14,8 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import illustrationActivites from '@/public/illustration_activites.svg';
 import notesExample from '@/public/notes_example.png';
-import { pageHeaderPaddingTop, rowStyle } from '@/styles/common';
+import { pageHeaderPaddingTop, pageHeaderPaddingTopMobile, rowStyle } from '@/styles/common';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import SmsFailedOutlined from '@mui/icons-material/SmsFailedOutlined';
 import {
   Accordion,
@@ -26,18 +25,16 @@ import {
   Card,
   CardContent,
   Container,
-  IconButton,
   Typography,
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useMemo } from 'react';
-import { backButtonStyle, backIconStyle } from '../layout/Header';
 
 const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
-  paddingTop: pageHeaderPaddingTop,
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop },
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
@@ -283,15 +280,7 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Container sx={headerContainerStyle}>
-        <IconButton
-          sx={backButtonStyle}
-          onClick={() => router.back()}
-          aria-label={tS('navigateBack')}
-        >
-          <DirectionalIcon>
-            <KeyboardArrowLeftIcon sx={backIconStyle} />
-          </DirectionalIcon>
-        </IconButton>
+        <BackLink label={tS('back')} onSelect={() => router.back()} inlineOnDesktop={false} />
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>
             <Typography variant="h1" component="h1">

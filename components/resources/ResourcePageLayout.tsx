@@ -22,6 +22,7 @@ import StoryblokTeamMembersSection, {
 } from '@/components/storyblok/StoryblokTeamMembersSection';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
@@ -98,6 +99,7 @@ export const ResourcePageLayout = ({
   userContentPartners,
 }: ResourcePageLayoutProps) => {
   const t = useTranslations('Resources');
+  const libraryHref = useLibraryReturnHref();
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
   const signInRequired = contentAccessStatus === 'signInRequired';
 
@@ -148,7 +150,7 @@ export const ResourcePageLayout = ({
   const header = (
     <>
       <Box>
-        <BackLink qaId="resource-back-link" href="/library" label={t('backToLibrary')} />
+        <BackLink qaId="resource-back-link" href={libraryHref} label={t('backToLibrary')} />
         <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
       </Box>
 

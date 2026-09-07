@@ -69,8 +69,6 @@
       "completeSessionError": "There was an error marking this session as complete. Try again a little later."
     },
     "backToCourse": "Back to course",
-    "backToCourseOverview": "Back to course overview",
-    "backToLibrary": "Back to library",
-    "backToSessions": "Back to sessions"
+    "backToLibrary": "Back to library"
   }
 }

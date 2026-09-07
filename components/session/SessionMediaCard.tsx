@@ -101,10 +101,9 @@ export const SessionMediaCard = ({
   return (
     <SessionContentCard
       qaId="session-media-card"
-      title={t('sessionDetail.learnTitle')}
+      format="video"
       eventPrefix="SESSION_VIDEO"
       eventData={eventData}
-      initialExpanded
     >
       {descriptionNode}
       <Video

@@ -1,8 +1,7 @@
 import { THEME_KEYS, toggle, type ThemeKey } from '@/lib/utils/libraryData';
-import { cardShadow, sectionDivider } from '@/styles/common';
+import { interactiveCardStyle, sectionDivider } from '@/styles/common';
 import { Box, Card, CardActionArea, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import type { Dispatch, SetStateAction } from 'react';
 import { SectionLabel } from './SectionLabel';
 
 const containerStyle = {
@@ -20,12 +19,13 @@ const gridStyle = {
 } as const;
 
 const cardStyle = {
+  ...interactiveCardStyle,
   m: 0,
   borderRadius: '8px',
   backgroundColor: 'cardSurface',
-  boxShadow: cardShadow,
 } as const;
 
+// The 2px border carries the active (selected) state; transparent when unselected.
 const cardActionAreaStyle = {
   p: 1.5,
   height: '100%',
@@ -36,7 +36,6 @@ const cardActionAreaStyle = {
   backgroundColor: 'cardSurface',
   borderRadius: '8px',
   border: '2px solid',
-  '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
 const cardLabelStyle = {
@@ -53,7 +52,7 @@ export function ThemeCards({
   setThemes,
 }: {
   themes: ThemeKey[];
-  setThemes: Dispatch<SetStateAction<ThemeKey[]>>;
+  setThemes: (next: ThemeKey[]) => void;
 }) {
   const t = useTranslations('Library');
 
@@ -69,7 +68,7 @@ export function ThemeCards({
           return (
             <Card key={theme} sx={cardStyle}>
               <CardActionArea
-                onClick={() => setThemes((p) => toggle(p, theme))}
+                onClick={() => setThemes(toggle(themes, theme))}
                 aria-pressed={active}
                 qa-id={`library-theme-${theme}`}
                 sx={{

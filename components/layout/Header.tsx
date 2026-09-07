@@ -1,6 +1,6 @@
 'use client';
 
-import DirectionalIcon from '@/components/common/DirectionalIcon';
+import { BackLink } from '@/components/common/BackLink';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { useRouter } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
@@ -8,15 +8,14 @@ import { TextNode } from '@/lib/types/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
 import {
-  breadcrumbButtonStyle,
   columnStyle,
   pageHeaderPaddingBottom,
   pageHeaderPaddingTop,
+  pageHeaderPaddingTopMobile,
   rowStyle,
 } from '@/styles/common';
 import theme from '@/styles/theme';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Container, IconButton, SxProps, Theme, Typography } from '@mui/material';
+import { Box, Container, SxProps, Theme, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
@@ -37,7 +36,7 @@ const headerContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
   minHeight: { xs: 300, md: 340 },
-  paddingTop: pageHeaderPaddingTop,
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop },
   paddingBottom: pageHeaderPaddingBottom,
   background: theme.palette.bloomGradientSoft,
 };
@@ -96,16 +95,6 @@ const leftMetaStyle = {
 
 const ctaStyle = { display: 'flex', flexWrap: 'wrap', gap: 2 } as const;
 
-export const backButtonStyle = {
-  ...breadcrumbButtonStyle,
-  display: { md: 'none' },
-  px: 'auto',
-} as const;
-
-export const backIconStyle = {
-  color: 'primary.dark',
-} as const;
-
 const Header = (props: HeaderProps) => {
   const {
     title,
@@ -146,16 +135,7 @@ const Header = (props: HeaderProps) => {
   return (
     <Container sx={headerContainerStyle}>
       {!children && (
-        <IconButton
-          sx={backButtonStyle}
-          onClick={() => router.back()}
-          aria-label={tS('navigateBack')}
-          size="small"
-        >
-          <DirectionalIcon>
-            <KeyboardArrowLeftIcon sx={backIconStyle} />
-          </DirectionalIcon>
-        </IconButton>
+        <BackLink label={tS('back')} onSelect={() => router.back()} inlineOnDesktop={false} />
       )}
       {children && <>{children}</>}
       <Box sx={centerWrapStyle}>

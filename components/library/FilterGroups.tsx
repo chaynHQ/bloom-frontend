@@ -1,7 +1,7 @@
 import { LENGTH_KEYS, toggle, type Format, type LengthBucket } from '@/lib/utils/libraryData';
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 
 const groupStyle = { mb: 4, '&:last-of-type': { mb: 0 } } as const;
 
@@ -78,9 +78,9 @@ export function FilterGroups({
 }: {
   formatOptions: Format[];
   formats: Format[];
-  setFormats: Dispatch<SetStateAction<Format[]>>;
+  setFormats: (next: Format[]) => void;
   lengths: LengthBucket[];
-  setLengths: Dispatch<SetStateAction<LengthBucket[]>>;
+  setLengths: (next: LengthBucket[]) => void;
   disabled: boolean;
 }) {
   const t = useTranslations('Library');
@@ -93,7 +93,7 @@ export function FilterGroups({
               key={option}
               label={t(`contentTypes.${option}`)}
               checked={formats.includes(option)}
-              onChange={() => setFormats((p) => toggle(p, option))}
+              onChange={() => setFormats(toggle(formats, option))}
               disabled={disabled}
             />
           ))}
@@ -106,7 +106,7 @@ export function FilterGroups({
             key={length}
             label={t(`lengths.${length}`)}
             checked={lengths.includes(length)}
-            onChange={() => setLengths((p) => toggle(p, length))}
+            onChange={() => setLengths(toggle(lengths, length))}
             disabled={disabled}
           />
         ))}

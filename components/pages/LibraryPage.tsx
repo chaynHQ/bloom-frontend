@@ -3,6 +3,7 @@
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
+import { usePathname, useRouter } from '@/i18n/routing';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
@@ -15,16 +16,20 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { rememberLibraryPath } from '@/lib/hooks/useLibraryReturnHref';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   filterLibraryItems,
   FORMAT_KEYS,
   KIND_KEYS,
+  libraryFiltersToQuery,
+  parseLibraryFilters,
   PROGRESS_STATUS_BY_ITEM_PROGRESS,
   THEME_KEYS,
   type Format,
   type KindFilter,
   type LengthBucket,
+  type LibraryFilters,
   type LibraryItem,
   type LibraryStories,
   type ThemeKey,
@@ -58,6 +63,8 @@ import { ThemeCards } from '../library/ThemeCards';
 const PAGE_SIZE = 8;
 
 const SEARCH_EVENT_DEBOUNCE_MS = 1000;
+
+const KEYWORD_URL_SYNC_MS = 300;
 
 const SIDEBAR_CONTENT = 264;
 const SIDEBAR_GUTTER = 3; // theme spacing units
@@ -202,23 +209,50 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const t = useTranslations('Library');
   const items = useLibraryItems(stories);
 
-  // Deep links seed the initial filter state; an unknown theme or type key is ignored.
+  // Filters live in the URL query string, so back navigation and reloads restore them while a
+  // fresh visit to /library starts clean. The search box keeps local state for responsiveness
+  // and is pushed to the URL on a debounce.
   const searchParams = useSearchParams();
-  const themeParam = searchParams.get('theme');
-  const initialTheme = THEME_KEYS.find((theme) => theme === themeParam);
-  const typeParam = searchParams.get('type');
-  const formatParam = searchParams.get('format');
-  const initialFormat = FORMAT_KEYS.find((format) => format === formatParam);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const [keyword, setKeyword] = useState('');
-  const [themes, setThemes] = useState<ThemeKey[]>(initialTheme ? [initialTheme] : []);
-  const [kind, setKind] = useState<KindFilter>(
-    KIND_KEYS.find((option) => option === typeParam) ?? 'all',
+  const {
+    kind,
+    themes,
+    formats,
+    lengths,
+    keyword: urlKeyword,
+  } = useMemo(
+    () => parseLibraryFilters(new URLSearchParams(searchParams.toString())),
+    [searchParams],
   );
-  const [formats, setFormats] = useState<Format[]>(initialFormat ? [initialFormat] : []);
-  const [lengths, setLengths] = useState<LengthBucket[]>([]);
+
+  const [keyword, setKeyword] = useState(urlKeyword);
+  const [prevUrlKeyword, setPrevUrlKeyword] = useState(urlKeyword);
+  if (urlKeyword !== prevUrlKeyword) {
+    setPrevUrlKeyword(urlKeyword);
+    setKeyword(urlKeyword);
+  }
+
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  const currentFilters = useMemo<LibraryFilters>(
+    () => ({ keyword, kind, themes, formats, lengths }),
+    [keyword, kind, themes, formats, lengths],
+  );
+
+  const writeFilters = useCallback(
+    (next: LibraryFilters) => {
+      const query = libraryFiltersToQuery(next);
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    },
+    [router, pathname],
+  );
+
+  const setThemes = (next: ThemeKey[]) => writeFilters({ ...currentFilters, themes: next });
+  const setFormats = (next: Format[]) => writeFilters({ ...currentFilters, formats: next });
+  const setLengths = (next: LengthBucket[]) => writeFilters({ ...currentFilters, lengths: next });
 
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmailRemindersFrequency = useTypedSelector(
@@ -242,23 +276,20 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
   const sessionFiltersDisabled = kind === 'course';
 
-  const selectKind = (next: KindFilter) => {
-    setKind(next);
-    if (next === 'course') {
-      setFormats([]);
-      setLengths([]);
-    }
-  };
+  const selectKind = (next: KindFilter) =>
+    writeFilters(
+      // Courses have no format or length, so switching to them drops those filters.
+      next === 'course'
+        ? { ...currentFilters, kind: next, formats: [], lengths: [] }
+        : { ...currentFilters, kind: next },
+    );
 
   const formatOptions = useMemo(
     () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
     [items],
   );
 
-  const results = useMemo(
-    () => filterLibraryItems(items, { keyword, kind, themes, formats, lengths }),
-    [items, keyword, themes, kind, formats, lengths],
-  );
+  const results = useMemo(() => filterLibraryItems(items, currentFilters), [items, currentFilters]);
 
   const resultsCount = results.length;
 
@@ -271,6 +302,19 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     setPrevFilterKey(filterKey);
     setVisibleCount(PAGE_SIZE);
   }
+
+  // Push a settled search term into the URL; the other filters write there on click.
+  useEffect(() => {
+    if (keyword === urlKeyword) return;
+    const timer = setTimeout(() => writeFilters(currentFilters), KEYWORD_URL_SYNC_MS);
+    return () => clearTimeout(timer);
+  }, [keyword, urlKeyword, currentFilters, writeFilters]);
+
+  // Remember where the visitor was browsing so a content page's "back to library" link returns here.
+  useEffect(() => {
+    const query = libraryFiltersToQuery(currentFilters);
+    rememberLibraryPath(query ? `/library?${query}` : '/library');
+  }, [currentFilters]);
 
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
@@ -351,10 +395,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const selectedThemes = THEME_KEYS.filter((theme) => themes.includes(theme));
   const filtersActive = Boolean(keyword) || formats.length > 0 || lengths.length > 0;
 
-  const clearFilters = () => {
-    setKeyword('');
-    setFormats([]);
-    setLengths([]);
+  const logFiltersCleared = () =>
     logEvent(LIBRARY_FILTERS_CLEARED, {
       library_formats: reportList(formats),
       library_lengths: reportList(lengths),
@@ -362,11 +403,16 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
       library_results_count: resultsCount,
       ...eventUserData,
     });
+
+  const clearFilters = () => {
+    logFiltersCleared();
+    setKeyword('');
+    writeFilters({ ...currentFilters, keyword: '', formats: [], lengths: [] });
   };
   const clearAll = () => {
-    clearFilters();
-    setThemes([]);
-    setKind('all');
+    logFiltersCleared();
+    setKeyword('');
+    writeFilters({ keyword: '', kind: 'all', themes: [], formats: [], lengths: [] });
   };
 
   return (

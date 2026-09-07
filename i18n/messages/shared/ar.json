@@ -12,8 +12,8 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "العودة للخلف",
     "navigateTo": "الانتقال إلى",
+    "back": "Back",
     "carousel": {
       "regionLabel": "دوّارة المحتوى",
       "previous": "{name}: السابق",
@@ -47,6 +47,9 @@
       "title": "النص المكتوب للفيديو",
       "closeModal": "إغلاق النص",
       "description": ""
+    },
+    "audioTranscript": {
+      "title": "النص المكتوب للمقطع الصوتي"
     },
     "currentSession": "الجلسة الحالية",
     "progressStatus": {

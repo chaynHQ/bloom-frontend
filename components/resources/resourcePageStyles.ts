@@ -1,4 +1,4 @@
-import { pageHeaderPaddingTop } from '@/styles/common';
+import { pageHeaderPaddingTop, pageHeaderPaddingTopMobile } from '@/styles/common';
 
 // The resource pages share the session pages' flat page background and full content rail. The
 // header, "moment" section and related content span the rail; only the media card and the
@@ -8,7 +8,8 @@ export const resourceContainerStyle = {
   flexDirection: 'column',
   gap: 4,
   backgroundColor: 'pageBackground',
-  paddingTop: { xs: '0.75rem !important', md: pageHeaderPaddingTop },
+  // Leaves room for the floating back button, which sits over the top of the header band.
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop },
   paddingBottom: { xs: '3rem !important', md: '5rem !important' },
 } as const;
 

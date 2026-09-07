@@ -69,8 +69,6 @@
       "completeSessionError": "Es ist ein Fehler dabei aufgetreten, dieses Session als abgeschlossen zu markieren. Versuche es später noch einmal. "
     },
     "backToCourse": "Zurück zum Kurs",
-    "backToCourseOverview": "Zurück zur Kursübersicht",
-    "backToLibrary": "Zurück zur Bibliothek",
-    "backToSessions": "Zurück zu den Sessions"
+    "backToLibrary": "Zurück zur Bibliothek"
   }
 }

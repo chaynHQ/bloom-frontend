@@ -1,8 +1,10 @@
 import {
   bucketOf,
   filterLibraryItems,
+  libraryFiltersToQuery,
   normaliseSlug,
   parentCourseSlug,
+  parseLibraryFilters,
   pathRequiresAccount,
   storyToLibraryItem,
   toggle,
@@ -407,5 +409,44 @@ describe('filterLibraryItems', () => {
     expect(
       filterLibraryItems([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
     ).toEqual(['first', 'second']);
+  });
+});
+
+describe('library filters <-> URL query', () => {
+  const empty: LibraryFilters = { keyword: '', kind: 'all', themes: [], formats: [], lengths: [] };
+
+  it('drops defaults and keeps set filters', () => {
+    expect(libraryFiltersToQuery(empty)).toBe('');
+    expect(
+      libraryFiltersToQuery({
+        keyword: '  somatics ',
+        kind: 'session',
+        themes: ['staying-safe', 'healing-journey'],
+        formats: ['audio'],
+        lengths: ['under10'],
+      }),
+    ).toBe(
+      'q=somatics&type=session&theme=staying-safe%2Chealing-journey&format=audio&length=under10',
+    );
+  });
+
+  it('round-trips a filter state through the query string', () => {
+    const filters: LibraryFilters = {
+      keyword: 'calm',
+      kind: 'course',
+      themes: ['setting-boundaries'],
+      formats: ['written', 'video'],
+      lengths: ['10to20', 'over20'],
+    };
+
+    expect(parseLibraryFilters(new URLSearchParams(libraryFiltersToQuery(filters)))).toEqual(
+      filters,
+    );
+  });
+
+  it('ignores unknown or malformed keys', () => {
+    expect(
+      parseLibraryFilters(new URLSearchParams('type=nonsense&theme=not-real,staying-safe&foo=bar')),
+    ).toEqual({ ...empty, themes: ['staying-safe'] });
   });
 });

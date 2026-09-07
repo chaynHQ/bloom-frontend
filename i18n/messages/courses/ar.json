@@ -69,8 +69,6 @@
       "completeSessionError": "حدث خطأ أثناء وضع علامة اكتمال على هذه الجلسة. يُرجى المحاولة بعد قليل."
     },
     "backToCourse": "العودة إلى الدورة",
-    "backToCourseOverview": "العودة إلى نظرة عامة على الدورة",
-    "backToLibrary": "العودة إلى المكتبة",
-    "backToSessions": "العودة إلى الجلسات"
+    "backToLibrary": "العودة إلى المكتبة"
   }
 }

@@ -190,6 +190,61 @@ describe('Library page', () => {
     });
   });
 
+  describe('Filter persistence', () => {
+    beforeEach(() => {
+      cy.viewport(1440, 900);
+      cy.visit('/library');
+      waitForLibrary();
+    });
+
+    const applyFilters = () => {
+      cy.get('[qa-id=library-kind-session]').click();
+      cy.get('[qa-id=library-search-input]').type('somatics');
+      cy.location('search').should((search) => {
+        const params = new URLSearchParams(search);
+        expect(params.get('type')).to.equal('session');
+        expect(params.get('q')).to.equal('somatics');
+      });
+      cards().should('have.length.greaterThan', 0);
+    };
+
+    const expectFiltersRestored = () => {
+      waitForLibrary();
+      cy.get('[qa-id=library-kind-session]').should('have.attr', 'aria-pressed', 'true');
+      cy.get('[qa-id=library-search-input]').should('have.value', 'somatics');
+    };
+
+    it('restores the filters on browser back', () => {
+      applyFilters();
+
+      cards().first().find('a').first().click();
+      cy.location('pathname').should('not.eq', '/library');
+
+      cy.go('back');
+      expectFiltersRestored();
+    });
+
+    it('restores the filters from a content page\'s "Back to library" link', () => {
+      applyFilters();
+
+      cards().first().find('a').first().click();
+      cy.get('[qa-id=resource-back-link]').click();
+
+      cy.location('pathname').should('eq', '/library');
+      expectFiltersRestored();
+    });
+
+    it('starts clean on a fresh visit to /library', () => {
+      cy.get('[qa-id=library-kind-course]').click();
+      cy.location('search').should('contain', 'type=course');
+
+      cy.visit('/library');
+      waitForLibrary();
+      cy.location('search').should('eq', '');
+      cy.get('[qa-id=library-kind-all]').should('have.attr', 'aria-pressed', 'true');
+    });
+  });
+
   describe('Progress on cards', () => {
     const email = `cypresstestemail+${Date.now()}@chayn.co`;
     const password = 'testtesttest';

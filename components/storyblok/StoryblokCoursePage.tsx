@@ -19,6 +19,7 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
@@ -87,6 +88,7 @@ const StoryblokCoursePage = ({
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
+  const libraryHref = useLibraryReturnHref();
   const locale = useLocale();
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -240,8 +242,8 @@ const StoryblokCoursePage = ({
             : t('courseDetail.continueCourse')
         }
         onCtaClick={handleCtaClick}
-        backHref="/library"
-        backLabel={t('backToSessions')}
+        backHref={libraryHref}
+        backLabel={t('backToLibrary')}
       />
       {video && (
         <Container sx={introSectionStyle}>

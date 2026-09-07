@@ -39,8 +39,18 @@ export const richtextContentStyle = {
 // "Leave this site" and breadcrumb buttons that float over the top of it.
 export const pageHeaderPaddingTop = '3.5rem !important';
 export const pageHeaderPaddingBottom = '3.5rem !important';
+export const pageHeaderPaddingTopMobile = '4.5rem !important';
 
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
+
+// Card hover: surface lifts to white (via the CardActionArea) and the shadow deepens.
+export const cardShadowHover = '0px 6px 10px 4px rgba(0,0,0,0.05), 0px 2px 3px 0px rgba(0,0,0,0.2)';
+
+export const interactiveCardStyle = {
+  boxShadow: cardShadow,
+  transition: 'box-shadow 150ms ease',
+  '&:hover': { boxShadow: cardShadowHover },
+} as const;
 
 // The small eyebrow label above a title — "Current session" on the session and resource heroes,
 // "Current course" on the session playlist. Design token "Label/Large": Montserrat 500, 14/20,

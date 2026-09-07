@@ -21,6 +21,7 @@ import {
   SESSION_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   getCourseSessions,
@@ -101,6 +102,7 @@ const StoryblokSessionPage = ({
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
+  const libraryHref = useLibraryReturnHref();
   const locale = useLocale();
 
   // Auth drives this page directly rather than through `useContentAccessStatus`: a public course's
@@ -242,11 +244,7 @@ const StoryblokSessionPage = ({
       <Container sx={sessionContainerStyle}>
         <Box component="main" sx={sessionMainStyle}>
           {/* The playlist sidebar carries the back link from `lg`; below that it sits inline here. */}
-          <BackLink
-            href={courseHref}
-            label={t('backToCourseOverview')}
-            sx={{ display: { lg: 'none' } }}
-          />
+          <BackLink href={courseHref} label={t('backToCourse')} sx={{ display: { lg: 'none' } }} />
           <SessionHero name={name} sessionProgress={sessionProgress} />
           {userAuthStatus === 'resolving' ? (
             <Box sx={sessionBodyLoadingStyle}>
@@ -280,10 +278,9 @@ const StoryblokSessionPage = ({
                 {showActivity && (
                   <SessionContentCard
                     qaId="session-activity"
-                    title={t('sessionDetail.activityTitle')}
+                    format="activity"
                     eventPrefix="SESSION_ACTIVITY"
                     eventData={eventData}
-                    initialExpanded
                   >
                     <>{render(activity, RichTextOptions)}</>
                   </SessionContentCard>
@@ -339,8 +336,8 @@ const StoryblokSessionPage = ({
             progressByUuid={progressByUuid}
             accountNeeded={isSignedOut}
             previewSessionUuid={previewSessionUuid}
-            backHref="/library"
-            backLabel={t('backToSessions')}
+            backHref={libraryHref}
+            backLabel={t('backToLibrary')}
             onSessionSelect={handlePlaylistSessionSelect}
             onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
           />

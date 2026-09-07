@@ -12,8 +12,8 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "Geri git",
     "navigateTo": "Şuraya git",
+    "back": "Back",
     "carousel": {
       "regionLabel": "İçerik karuseli",
       "previous": "{name}: önceki",
@@ -47,6 +47,9 @@
       "title": "Video metni",
       "closeModal": "Metni kapat",
       "description": ""
+    },
+    "audioTranscript": {
+      "title": "Ses metni"
     },
     "currentSession": "Mevcut bölüm",
     "progressStatus": {

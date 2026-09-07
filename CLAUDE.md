@@ -26,7 +26,7 @@ yarn cypress:headless-spec # Run a single spec: SPEC=<path> yarn cypress:headles
 
 To run a single Jest test file: `yarn test path/to/file.test.ts`
 
-Husky + Pre-commit run lint and format on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
+Husky + lint-staged run ESLint and Prettier on staged files on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
 
 ## Environment Setup
 

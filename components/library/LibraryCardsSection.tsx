@@ -43,10 +43,10 @@ const headerRowStyle = {
 
 const illustrationStyle = {
   position: 'relative',
-  display: { xs: 'none', sm: 'block' },
+  display: 'block',
   flexShrink: 0,
-  width: { sm: 120, md: 150 },
-  height: { sm: 120, md: 150 },
+  width: { xs: 80, sm: 120, md: 150 },
+  height: { xs: 80, sm: 120, md: 150 },
 } as const;
 
 export function LibraryCardsSection({

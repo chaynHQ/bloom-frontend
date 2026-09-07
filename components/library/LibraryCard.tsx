@@ -3,7 +3,7 @@ import { FormatBadge } from '@/components/common/FormatBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { type ContentType, type LibraryItem } from '@/lib/utils/libraryData';
-import { cardShadow } from '@/styles/common';
+import { interactiveCardStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
@@ -18,17 +18,12 @@ import type { ReactNode } from 'react';
 export type LibraryCardLayout = 'compact' | 'illustrated';
 
 const cardStyle = {
+  ...interactiveCardStyle,
   m: 0,
   height: '100%',
   position: 'relative',
   borderRadius: '16px',
-  boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
-  // padding-box clip keeps the reserved transparent border from showing as a pale hairline.
-  border: '1px solid transparent',
-  backgroundClip: 'padding-box',
-  transition: 'border-color 150ms ease',
-  '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
 } as const;
 
 const actionAreaStyle = {
@@ -37,7 +32,6 @@ const actionAreaStyle = {
   flexDirection: 'column',
   alignItems: 'stretch',
   backgroundColor: 'cardSurface',
-  '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
 const imagePanelStyle = {

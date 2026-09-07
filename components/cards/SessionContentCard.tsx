@@ -1,5 +1,7 @@
 'use client';
 
+import { FormatBadge } from '@/components/common/FormatBadge';
+import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
 import ExpandMoreRounded from '@mui/icons-material/ExpandMoreRounded';
 import { Box, ButtonBase, Collapse, Typography } from '@mui/material';
@@ -11,8 +13,6 @@ const cardStyle = {
   borderColor: 'cardBorder',
   backgroundColor: 'cardSurface',
   overflow: 'hidden',
-  transition: 'border-color 150ms ease',
-  '&:hover': { borderColor: 'secondary.dark' },
 } as const;
 
 // Hover washes the header in the brand tint; keyboard focus adds an inset ring, which the card's
@@ -68,14 +68,19 @@ const bodyStyle = {
   borderColor: 'cardBorder',
 } as const;
 
+const staticBodyStyle = { p: 2 } as const;
+
 interface SessionContentCardProps {
-  title: string;
+  title?: string;
   badge?: string;
   children: ReactNode;
   eventPrefix: string;
   eventData: { [key: string]: any };
   initialExpanded?: boolean;
   qaId?: string;
+  // Non-collapsible variant: always-open content led by a resource-type badge instead of a
+  // toggleable "about this session" / "activity" heading.
+  format?: ContentType;
 }
 
 const SessionContentCard = ({
@@ -86,6 +91,7 @@ const SessionContentCard = ({
   eventData,
   initialExpanded = false,
   qaId,
+  format,
 }: SessionContentCardProps) => {
   const [expanded, setExpanded] = useState(initialExpanded);
   const bodyId = useId();
@@ -94,6 +100,17 @@ const SessionContentCard = ({
     setExpanded(!expanded);
     logEvent(`${eventPrefix}_${!expanded ? 'EXPANDED' : 'COLLAPSED'}`, eventData);
   };
+
+  if (format) {
+    return (
+      <Box qa-id={qaId} sx={cardStyle}>
+        <Box sx={staticBodyStyle}>
+          <FormatBadge type={format} />
+          {children}
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box qa-id={qaId} sx={cardStyle}>

@@ -17,7 +17,7 @@ import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { parseMinutes, toPlainText } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
-import { cardShadow } from '@/styles/common';
+import { interactiveCardStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import { Box, Button, Card, CardActionArea, Container, Divider, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -44,11 +44,11 @@ const gridStyle = {
 } as const;
 
 const cardStyle = {
+  ...interactiveCardStyle,
   // The theme's global MuiCard override adds a 20px top margin below `md` (for cards stacked
   // outside a grid); it just doubles up with this grid's own `gap` here.
   mt: 0,
   borderRadius: '16px',
-  boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
 } as const;
 

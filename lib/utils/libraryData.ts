@@ -254,6 +254,32 @@ export function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 }
 
+// Filter state <-> URL query. Param names match the existing deep links (`type`, `theme`, `format`).
+export function libraryFiltersToQuery(filters: LibraryFilters): string {
+  const params = new URLSearchParams();
+  const keyword = filters.keyword.trim();
+  if (keyword) params.set('q', keyword);
+  if (filters.kind !== 'all') params.set('type', filters.kind);
+  if (filters.themes.length) params.set('theme', filters.themes.join(','));
+  if (filters.formats.length) params.set('format', filters.formats.join(','));
+  if (filters.lengths.length) params.set('length', filters.lengths.join(','));
+  return params.toString();
+}
+
+export function parseLibraryFilters(params: URLSearchParams): LibraryFilters {
+  const list = <T extends string>(key: string, allowed: readonly T[]): T[] => {
+    const raw = params.get(key)?.split(',') ?? [];
+    return allowed.filter((value) => raw.includes(value));
+  };
+  return {
+    keyword: params.get('q') ?? '',
+    kind: KIND_KEYS.find((key) => key === params.get('type')) ?? 'all',
+    themes: list('theme', THEME_KEYS),
+    formats: list('format', FORMAT_KEYS),
+    lengths: list('length', LENGTH_KEYS),
+  };
+}
+
 // `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS ('Started').
 export const PROGRESS_STATUS_BY_ITEM_PROGRESS: Record<
   NonNullable<LibraryItem['progress']> | 'none',

@@ -69,8 +69,6 @@
       "completeSessionError": "Iss session ko khatam mark karne mein error aa raha hai. Thodi der baad dubara prayas kariye. "
     },
     "backToCourse": "Course par vapas jayein.",
-    "backToCourseOverview": "Course overview par vapas jayein.",
-    "backToLibrary": "Library par vapas jayein.",
-    "backToSessions": "Sessions par vapas jayein."
+    "backToLibrary": "Library par vapas jayein."
   }
 }

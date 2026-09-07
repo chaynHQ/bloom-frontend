@@ -69,8 +69,6 @@
       "completeSessionError": "Bu bölüm tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
-    "backToCourseOverview": "Kurs özetine dön",
-    "backToLibrary": "Kütüphaneye dön",
-    "backToSessions": "Bölümlere dön"
+    "backToLibrary": "Kütüphaneye dön"
   }
 }

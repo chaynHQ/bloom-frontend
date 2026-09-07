@@ -4,22 +4,19 @@ import { CardStatusBadge, type CardProgress } from '@/components/cards/CardStatu
 import { FormatBadge } from '@/components/common/FormatBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { type CourseSession } from '@/lib/utils/courseSessions';
-import { cardShadow } from '@/styles/common';
+import { interactiveCardStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 const cardStyle = {
+  ...interactiveCardStyle,
   m: 0,
   flex: 1,
   minWidth: 0,
   position: 'relative',
   borderRadius: '16px',
-  boxShadow: cardShadow,
   backgroundColor: 'cardSurface',
-  border: '1px solid transparent',
-  transition: 'border-color 150ms ease',
-  '&:hover, &:focus-within': { borderColor: 'secondary.dark' },
 } as const;
 
 const actionAreaStyle = {
@@ -27,7 +24,6 @@ const actionAreaStyle = {
   flexDirection: 'column',
   alignItems: 'stretch',
   backgroundColor: 'cardSurface',
-  '&:hover': { backgroundColor: 'common.white' },
 } as const;
 
 // Top inset leaves room for the notched corner badge so it never overlaps the title.

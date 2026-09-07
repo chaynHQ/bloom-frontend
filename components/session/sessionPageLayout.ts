@@ -1,4 +1,8 @@
-import { contentRailGutter, pageHeaderPaddingTop } from '@/styles/common';
+import {
+  contentRailGutter,
+  pageHeaderPaddingTop,
+  pageHeaderPaddingTopMobile,
+} from '@/styles/common';
 
 // Shared by the full session page and the logged-out gate view so both keep the same two-column
 // shell. Full-bleed two-column from `lg`: the playlist pins to the inline start, the session
@@ -9,9 +13,9 @@ export const sessionContainerStyle = {
   alignItems: 'flex-start',
   gap: { lg: 3 },
   backgroundColor: 'pageBackground',
-  // Compact on mobile so the inline back link sits level with the fixed "Leave this site" button;
-  // from `lg` the header offset moves to `sessionMainStyle` so the playlist can sit near the top.
-  paddingTop: { xs: '0.75rem !important', lg: '1rem !important' },
+  // Below `lg` this clears the back link (a floating button below `md`, inline at `md`); from
+  // `lg` the header offset moves to `sessionMainStyle` so the playlist can sit near the top.
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop, lg: '1rem !important' },
   // No bottom padding below `lg`: the sticky course bar should meet the footer with no dead gap.
   paddingBottom: { xs: '0 !important', lg: '5rem !important' },
   paddingInlineStart: { lg: '1.5rem !important' },
