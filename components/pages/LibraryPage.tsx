@@ -29,7 +29,7 @@ import {
   type ThemeKey,
 } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import illustrationCourses from '@/public/illustration_courses.svg';
+import illustrationLibrary from '@/public/illustration_library.svg';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import TuneRounded from '@mui/icons-material/TuneRounded';
@@ -373,7 +373,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     <Box>
       <Header
         title={t('title')}
-        imageSrc={illustrationCourses}
+        imageSrc={illustrationLibrary}
         imageAlt="alt.personSitting"
         introduction={t('introduction')}
         cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}

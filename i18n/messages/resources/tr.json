@@ -12,9 +12,9 @@
       "title": "{name} hakkında bilgi edin"
     },
     "accessCard": {
-      "title": "Create a free account",
-      "body": "Bloom is always free and anonymous. Sign up to open every resource and pick up where you left off.",
-      "logIn": "I already have an account"
+      "title": "Ücretsiz bir hesap oluştur",
+      "body": "Bloom her zaman ücretsiz ve anonimdir. Tüm kaynaklara erişmek ve kaldığın yerden devam etmek için kaydol.",
+      "logIn": "Zaten bir hesabım var"
     },
     "audioPlayer": {
       "play": "Oynat",

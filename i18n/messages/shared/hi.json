@@ -95,7 +95,7 @@
       "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
       "dateSelector": "Illustration of a calendar with a heart in the middle",
       "change": "Ek chakra ka chitran - ke chakra mein teen sooraj unke beech mein teer. ",
-      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+      "notes": "Ek mobile ki illustration jisme screen par ek message bubble hai jisme heart hai",
       "confidential": "Illustration of a document with a lock in the corner",
       "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
       "fruitzLogo": "Fruitz logo",
@@ -103,8 +103,7 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Kitab ka icon",
       "articleIcon": "Lekh ka icon",
-      "videoIcon": "Video ka icon",
-      "notes": "Ek mobile ki illustration jisme screen par ek message bubble hai jisme heart hai"
+      "videoIcon": "Video ka icon"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/oHbPDvL2",
     "survivor": "Survivor",
@@ -125,13 +124,6 @@
         "title": "Notes from Bloom",
         "description": "Bloom se sahayata, hafte mein do baar seedhe aapke WhatsApp par."
       }
-    },
-    "loginDialog": {
-      "title": "Bloom mein login karein ya ek naya account banayein",
-      "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
-      "loginButton": "Log in",
-      "registerButton": "Account banayein",
-      "backButton": "Cancel"
     },
     "pwaBanner": {
       "mobileDescription": "Apne homescreen se access ke liye app ko install karein",

@@ -125,13 +125,6 @@
         "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
       }
     },
-    "loginDialog": {
-      "title": "Giriş yap ya da hesap oluştur",
-      "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
-      "loginButton": "Giriş yap",
-      "registerButton": "Hesap oluştur",
-      "backButton": "Geri dön"
-    },
     "pwaBanner": {
       "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
       "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",

@@ -5,9 +5,8 @@ import SessionContentCard from '@/components/cards/SessionContentCard';
 import { BackLink } from '@/components/common/BackLink';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
-import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
-import LoginDialog from '@/components/layout/LoginDialog';
 import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
+import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
 import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
 import { SessionActions } from '@/components/session/SessionActions';
 import { SessionChat } from '@/components/session/SessionChat';
@@ -22,7 +21,7 @@ import {
   SESSION_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   getCourseSessions,
   isFirstCourseSession,
@@ -33,7 +32,7 @@ import { getSessionCompletion } from '@/lib/utils/getSessionCompletion';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
-import { Box, Container } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
@@ -58,6 +57,8 @@ const cardsStyle = {
   },
   '& > *': { position: 'relative' },
 } as const;
+
+const sessionBodyLoadingStyle = { display: 'flex', justifyContent: 'center', py: 8 } as const;
 
 export interface StoryblokSessionPageProps {
   _uid: string;
@@ -102,12 +103,10 @@ const StoryblokSessionPage = ({
   const t = useTranslations('Courses');
   const locale = useLocale();
 
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
+  const userAuthStatus = useUserAuthStatus();
+  const isSignedIn = userAuthStatus === 'signedIn';
   useGetUserCoursesQuery(undefined, {
-    skip: !isLoggedIn,
+    skip: !isSignedIn,
   });
 
   const courses = useTypedSelector((state) => state.courses);
@@ -118,13 +117,13 @@ const StoryblokSessionPage = ({
   const userAccess = useMemo(() => {
     const coursePartners = course.content.included_for_partners;
     return hasAccessToPage(
-      isLoggedIn,
-      true, // setting true here to allow preview. The login overlay will block interaction
+      isSignedIn,
+      true, // allow the preview through; the signed-out gate below withholds the content itself
       coursePartners,
       partnerAccesses,
       partnerAdmin,
     );
-  }, [partnerAccesses, course.content.included_for_partners, isLoggedIn, partnerAdmin]);
+  }, [partnerAccesses, course.content.included_for_partners, isSignedIn, partnerAdmin]);
 
   // Derive session progress and ID from courses state
   const { sessionProgress, sessionId } = useMemo(
@@ -136,16 +135,15 @@ const StoryblokSessionPage = ({
   const sessions = useMemo(() => getCourseSessions(courseStory, locale), [courseStory, locale]);
   const courseHref = getDefaultFullSlug(course.full_slug, locale);
 
-  // A public course opens its first session to logged-out visitors as a full preview; later
-  // sessions show a sign-up gate. `!isUserLoading` keeps a signing-in user from flashing the
-  // logged-out treatment while auth settles. If the course fetch failed, `sessions` is empty so
-  // `isFirstSession` is false and the visitor fails closed to the gate.
+  // A public course opens its first session to signed-out visitors as a full preview; later
+  // sessions show a sign-up gate. A failed course fetch leaves `sessions` empty, so `isFirstSession`
+  // is false and the visitor fails closed to the gate.
   const isPublicCourse = (course.content.included_for_partners ?? []).includes('Public');
   const previewSessionUuid = isPublicCourse ? sessions[0]?.uuid : undefined;
   const isFirstSession = isFirstCourseSession(sessions, storyUuid);
-  const isLoggedOut = !isLoggedIn && !isUserLoading;
-  const isLoggedOutPreview = isLoggedOut && isPublicCourse && isFirstSession;
-  const isLoggedOutGate = isLoggedOut && isPublicCourse && !isFirstSession;
+  const isSignedOut = userAuthStatus === 'signedOut';
+  const isSignedOutPreview = isSignedOut && isPublicCourse && isFirstSession;
+  const isSignedOutGate = isSignedOut && isPublicCourse && !isFirstSession;
 
   const progressByUuid = useMemo(() => {
     const userCourse = courses?.find((c) => c.storyblokUuid === course.uuid);
@@ -184,10 +182,10 @@ const StoryblokSessionPage = ({
 
   const hasLoggedView = useRef(false);
   useEffect(() => {
-    if (hasLoggedView.current || isUserLoading) return;
+    if (hasLoggedView.current || userAuthStatus === 'resolving') return;
     hasLoggedView.current = true;
     logEvent(SESSION_VIEWED, eventData);
-  }, [eventData, isUserLoading]);
+  }, [eventData, userAuthStatus]);
 
   const handlePlaylistSessionSelect = (session: CourseSession) => {
     logEvent(SESSION_PLAYLIST_SESSION_CLICKED, {
@@ -198,17 +196,18 @@ const StoryblokSessionPage = ({
     });
   };
 
+  // Not entitled — this course is partner-only. Signed in ⇒ genuinely no access; signed out ⇒ the
+  // sign-up preview, whose "log in" link may still let a partner member through.
   if (!userAccess) {
-    // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
-    // showing "no access" before we can make the decision (e.g. on a partner deep-link).
-    if (isUserLoading) return <LoadingContainer />;
-    // AuthGuard no longer blocks session pages, so a logged-out visitor to a partner-only course
-    // needs the login prompt here — they may gain access once signed in.
+    if (userAuthStatus === 'resolving') return <LoadingContainer />;
+    if (isSignedIn) return <ContentUnavailable />;
     return (
-      <>
-        {!isLoggedIn && <LoginDialog />}
-        <ContentUnavailable />
-      </>
+      <Container sx={sessionContainerStyle}>
+        <Box component="main" sx={sessionMainStyle}>
+          <SessionHero name={name} sessionProgress={sessionProgress} />
+          <AccessFullCourseCard source="session" />
+        </Box>
+      </Container>
     );
   }
 
@@ -237,7 +236,11 @@ const StoryblokSessionPage = ({
             sx={{ display: { lg: 'none' } }}
           />
           <SessionHero name={name} sessionProgress={sessionProgress} />
-          {isLoggedOutGate ? (
+          {userAuthStatus === 'resolving' ? (
+            <Box sx={sessionBodyLoadingStyle}>
+              <CircularProgress color="error" />
+            </Box>
+          ) : isSignedOutGate ? (
             <AccessFullCourseCard source="session" />
           ) : (
             <>
@@ -249,7 +252,7 @@ const StoryblokSessionPage = ({
                   video_transcript={video_transcript}
                   storyUuid={storyUuid}
                   sessionProgress={sessionProgress}
-                  trackProgress={!isLoggedOutPreview}
+                  trackProgress={!isSignedOutPreview}
                   eventData={eventData}
                 />
                 {showActivity && (
@@ -276,9 +279,9 @@ const StoryblokSessionPage = ({
                 {showMultipleBonusContent && (
                   <MultipleBonusContent bonus={multipleBonusContent} eventData={eventData} />
                 )}
-                {/* Account-only, so hidden in the logged-out first-session preview — the sign-up
+                {/* Account-only, so hidden in the signed-out first-session preview — the sign-up
                     card below stands in for them. */}
-                {!isLoggedOutPreview && <SessionChat eventData={eventData} />}
+                {!isSignedOutPreview && <SessionChat eventData={eventData} />}
                 {sessionId && (
                   <SessionContentCard
                     qaId="session-feedback"
@@ -290,7 +293,7 @@ const StoryblokSessionPage = ({
                     <SessionFeedbackForm sessionId={sessionId} />
                   </SessionContentCard>
                 )}
-                {!isLoggedOutPreview && (
+                {!isSignedOutPreview && (
                   <SessionActions
                     storyUuid={storyUuid}
                     sessionProgress={sessionProgress}
@@ -299,7 +302,7 @@ const StoryblokSessionPage = ({
                   />
                 )}
               </Box>
-              {isLoggedOutPreview && <AccessFullCourseCard source="session" />}
+              {isSignedOutPreview && <AccessFullCourseCard source="session" />}
             </>
           )}
         </Box>
@@ -312,7 +315,7 @@ const StoryblokSessionPage = ({
             sessions={sessions}
             currentSessionUuid={storyUuid}
             progressByUuid={progressByUuid}
-            accountNeeded={!isLoggedIn}
+            accountNeeded={isSignedOut}
             previewSessionUuid={previewSessionUuid}
             backHref="/library"
             backLabel={t('backToSessions')}

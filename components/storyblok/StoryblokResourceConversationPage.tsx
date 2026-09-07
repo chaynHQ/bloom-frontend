@@ -1,8 +1,6 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import LoadingContainer from '@/components/common/LoadingContainer';
-import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
@@ -12,8 +10,9 @@ import {
   RESOURCE_CONVERSATION_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
 import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
@@ -75,20 +74,24 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
 
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
-  const requiresLogin = !isUserLoading && !isLoggedIn && login_required !== false;
+  const userAuthStatus = useUserAuthStatus();
+  const isSignedIn = userAuthStatus === 'signedIn';
 
-  const userAccess = useMemo(() => {
+  const hasPageAccess = useMemo(() => {
     return (
-      hasAccessToPage(isLoggedIn, true, included_for_partners, partnerAccesses, partnerAdmin) &&
+      hasAccessToPage(isSignedIn, true, included_for_partners, partnerAccesses, partnerAdmin) &&
       (locale === LANGUAGES.en || languages.includes(locale))
     );
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
+  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
+
+  // This block predates the `login_required` field, so gate by default until step 7's `resource_audio`.
+  const contentAccessStatus = useContentAccessStatus({
+    contentRequiresLogin: login_required !== false,
+    hasPageAccess,
+  });
 
   const { resourceProgress, resourceId } = useMemo(() => {
     const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
@@ -133,14 +136,8 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     [related_grounding],
   );
 
-  if (!userAccess) {
-    if (isUserLoading) return <LoadingContainer />;
-    return (
-      <>
-        {!isLoggedIn && <LoginDialog />}
-        <ContentUnavailable />
-      </>
-    );
+  if (contentAccessStatus === 'accessDenied') {
+    return <ContentUnavailable />;
   }
 
   return (
@@ -166,8 +163,8 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
-        isLoggedIn={isLoggedIn}
-        requiresLogin={requiresLogin}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
         eventData={eventData}
         description={description}
         transcript={audio_transcript}

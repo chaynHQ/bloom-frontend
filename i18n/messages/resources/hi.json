@@ -12,9 +12,9 @@
       "title": "{name} ke baare mein jaanein"
     },
     "accessCard": {
-      "title": "Create a free account",
-      "body": "Bloom is always free and anonymous. Sign up to open every resource and pick up where you left off.",
-      "logIn": "I already have an account"
+      "title": "Ek free account banaayein",
+      "body": "Bloom hamesha free aur anonymous hai. Sabhi resources kholne aur jahaan aapne chhoda tha wahaan se jaari rakhne ke liye sign up karein.",
+      "logIn": "Mera pehle se account hai"
     },
     "audioPlayer": {
       "play": "Play",

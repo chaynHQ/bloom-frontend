@@ -4,6 +4,7 @@ import { BackLink } from '@/components/common/BackLink';
 import ProgressStatus from '@/components/common/ProgressStatus';
 import { CourseCtaPanel } from '@/components/course/CourseCtaPanel';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
+import { type UserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { splitDuration } from '@/lib/utils/courseSessions';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -76,7 +77,7 @@ interface CourseHeroProps {
   sessionCount: number;
   courseMinutes?: number;
   courseProgress: PROGRESS_STATUS;
-  loggedIn: boolean;
+  userAuthStatus: UserAuthStatus;
   ctaHref?: string;
   ctaLabel: string;
   onCtaClick: () => void;
@@ -92,7 +93,7 @@ export function CourseHero({
   sessionCount,
   courseMinutes,
   courseProgress,
-  loggedIn,
+  userAuthStatus,
   ctaHref,
   ctaLabel,
   onCtaClick,
@@ -152,7 +153,7 @@ export function CourseHero({
         </Box>
 
         <CourseCtaPanel
-          loggedIn={loggedIn}
+          userAuthStatus={userAuthStatus}
           ctaHref={ctaHref}
           ctaLabel={ctaLabel}
           onCtaClick={onCtaClick}

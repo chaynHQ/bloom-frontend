@@ -2,8 +2,9 @@
 
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
 import { useResourceProgress, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
@@ -57,24 +58,23 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
 
   const locale = useLocale();
   const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
+  const userAuthStatus = useUserAuthStatus();
+  const isSignedIn = userAuthStatus === 'signedIn';
 
-  const userAccess = useMemo(() => {
+  const hasPageAccess = useMemo(() => {
     const isPublicContent = included_for_partners.some(
       (partner) => partner.toLowerCase() === 'public',
     );
     const availableForLocale = locale === LANGUAGES.en || languages.includes(locale);
     return (
       (isPublicContent ||
-        hasAccessToPage(isLoggedIn, true, included_for_partners, partnerAccesses, partnerAdmin)) &&
+        hasAccessToPage(isSignedIn, true, included_for_partners, partnerAccesses, partnerAdmin)) &&
       availableForLocale
     );
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
+  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
 
   const { resourceProgress, resourceId } = useMemo(() => {
     const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
@@ -103,10 +103,10 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   // the event is accurate rather than reflecting the pre-hydration state.
   const viewLogged = useRef(false);
   useEffect(() => {
-    if (viewLogged.current || isUserLoading) return;
+    if (viewLogged.current || userAuthStatus === 'resolving') return;
     viewLogged.current = true;
     logEvent(viewedEvent, eventData);
-  }, [isUserLoading, viewedEvent, eventData]);
+  }, [userAuthStatus, viewedEvent, eventData]);
 
   const { start, complete } = useResourceProgress({
     storyUuid,
@@ -130,18 +130,17 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     [partnerAdmin, partnerAccesses, userId],
   );
 
-  // Held back until the auth-loading window closes so a logged-in visitor never sees the login
-  // dialog flash open then dismiss while their session resolves.
-  const requiresLogin = !isUserLoading && Boolean(login_required) && !isLoggedIn;
+  const contentAccessStatus = useContentAccessStatus({
+    contentRequiresLogin: Boolean(login_required),
+    hasPageAccess,
+  });
 
   return {
     story,
     content,
     storyUuid,
-    isLoggedIn,
-    isUserLoading,
-    userAccess,
-    requiresLogin,
+    isSignedIn,
+    contentAccessStatus,
     resourceProgress,
     resourceId,
     eventData,

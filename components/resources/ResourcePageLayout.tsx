@@ -24,11 +24,13 @@ import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
-import { Box, Container, Divider } from '@mui/material';
+import { Box, CircularProgress, Container, Divider } from '@mui/material';
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+
+const mediaSlotLoadingStyle = { display: 'flex', justifyContent: 'center', py: 6 } as const;
 
 export interface ResourcePageLayoutProps {
   format: ContentType;
@@ -38,8 +40,11 @@ export interface ResourcePageLayoutProps {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   resourceId?: string;
-  isLoggedIn: boolean;
-  requiresLogin?: boolean;
+  isSignedIn: boolean;
+  // The page handles `'accessDenied'` before rendering the layout. `'resolving'` and
+  // `'signInRequired'` share one shell (hero + description) so the header never reflows — a spinner
+  // where the media goes, then either the real media or the sign-up card.
+  contentAccessStatus: 'resolving' | 'signInRequired' | 'accessGranted';
   eventData: Record<string, unknown>;
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
@@ -72,8 +77,8 @@ export const ResourcePageLayout = ({
   eventPrefix,
   resourceProgress,
   resourceId,
-  isLoggedIn,
-  requiresLogin = false,
+  isSignedIn,
+  contentAccessStatus,
   eventData,
   description,
   transcript,
@@ -109,10 +114,8 @@ export const ResourcePageLayout = ({
     </>
   );
 
-  // Logged-out visitor to a login-gated resource: show what the resource is about and the sign-up
-  // card, but not the media, transcript or progress actions. Related content still renders so they
-  // can keep exploring.
-  if (requiresLogin) {
+  // The shell: what the resource is about, with a spinner or the sign-up card where the media goes.
+  if (contentAccessStatus === 'resolving' || contentAccessStatus === 'signInRequired') {
     return (
       <>
         <Container sx={resourceContainerStyle}>
@@ -125,14 +128,22 @@ export const ResourcePageLayout = ({
               description={description}
               contributors={contributors}
             />
-            <AccessFullCourseCard source="resource" />
+            {contentAccessStatus === 'signInRequired' ? (
+              <AccessFullCourseCard source="resource" />
+            ) : (
+              <Box sx={mediaSlotLoadingStyle}>
+                <CircularProgress color="error" />
+              </Box>
+            )}
           </Box>
         </Container>
 
-        <StoryblokRelatedContent
-          relatedContent={relatedContent}
-          userContentPartners={userContentPartners}
-        />
+        {contentAccessStatus === 'signInRequired' && (
+          <StoryblokRelatedContent
+            relatedContent={relatedContent}
+            userContentPartners={userContentPartners}
+          />
+        )}
       </>
     );
   }
@@ -168,7 +179,7 @@ export const ResourcePageLayout = ({
         <Box sx={resourceCardColumnStyle}>
           {isCompleted ? (
             <ResourceCompleteCard />
-          ) : isLoggedIn ? (
+          ) : isSignedIn ? (
             <ResourceActions
               storyUuid={storyUuid}
               resourceId={resourceId}

@@ -1,8 +1,6 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import LoadingContainer from '@/components/common/LoadingContainer';
-import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
@@ -45,10 +43,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
   const {
     content,
     storyUuid,
-    isLoggedIn,
-    isUserLoading,
-    userAccess,
-    requiresLogin,
+    isSignedIn,
+    contentAccessStatus,
     resourceProgress,
     resourceId,
     eventData,
@@ -79,16 +75,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     related_grounding,
   } = content;
 
-  if (!userAccess) {
-    if (isUserLoading) return <LoadingContainer />;
-    // Partner-only content the visitor isn't entitled to (or a locale it isn't published in).
-    // Signing in may grant access, so a logged-out visitor still gets the prompt.
-    return (
-      <>
-        {!isLoggedIn && <LoginDialog />}
-        <ContentUnavailable />
-      </>
-    );
+  if (contentAccessStatus === 'accessDenied') {
+    return <ContentUnavailable />;
   }
 
   return (
@@ -115,8 +103,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
-        isLoggedIn={isLoggedIn}
-        requiresLogin={requiresLogin}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
         eventData={eventData}
         description={description}
         transcript={audio_transcript}

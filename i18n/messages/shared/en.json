@@ -125,13 +125,6 @@
         "description": "Support from Bloom, delivered to your WhatsApp twice a week."
       }
     },
-    "loginDialog": {
-      "title": "Login or Create an account",
-      "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
-      "loginButton": "Log in",
-      "registerButton": "Create account",
-      "backButton": "Go back"
-    },
     "pwaBanner": {
       "mobileDescription": "Install the app for access from your homescreen",
       "desktopDescription": "Install the app to access Bloom from your homescreen",

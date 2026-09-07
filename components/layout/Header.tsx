@@ -68,6 +68,8 @@ const headerStyle = ({ stackAt }: Variant): SxProps<Theme> => ({
   gap: { xs: 3, md: 5 },
 });
 
+const HEADER_IMAGE_MAX = 250;
+
 const rightHeaderStyle = ({ stackAt, imageWidth, stackedImageAlign }: Variant): SxProps<Theme> => ({
   position: 'relative',
   flexShrink: 0,
@@ -75,6 +77,8 @@ const rightHeaderStyle = ({ stackAt, imageWidth, stackedImageAlign }: Variant): 
   alignSelf: { xs: stackedImageAlign, [stackAt]: 'auto' },
   width: imageWidth,
   height: imageWidth,
+  maxWidth: HEADER_IMAGE_MAX,
+  maxHeight: HEADER_IMAGE_MAX,
 });
 
 const leftHeaderStyle = ({ stackAt }: Variant): SxProps<Theme> => ({

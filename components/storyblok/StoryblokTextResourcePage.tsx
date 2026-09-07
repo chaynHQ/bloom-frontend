@@ -1,8 +1,6 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import LoadingContainer from '@/components/common/LoadingContainer';
-import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
@@ -54,10 +52,8 @@ export const StoryblokTextResourcePage = ({
   const {
     content,
     storyUuid,
-    isLoggedIn,
-    isUserLoading,
-    userAccess,
-    requiresLogin,
+    isSignedIn,
+    contentAccessStatus,
     resourceProgress,
     resourceId,
     eventData,
@@ -91,14 +87,8 @@ export const StoryblokTextResourcePage = ({
     start();
   }, [start]);
 
-  if (!userAccess) {
-    if (isUserLoading) return <LoadingContainer />;
-    return (
-      <>
-        {!isLoggedIn && <LoginDialog />}
-        <ContentUnavailable />
-      </>
-    );
+  if (contentAccessStatus === 'accessDenied') {
+    return <ContentUnavailable />;
   }
 
   return (
@@ -124,8 +114,8 @@ export const StoryblokTextResourcePage = ({
         eventPrefix={eventPrefix}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
-        isLoggedIn={isLoggedIn}
-        requiresLogin={requiresLogin}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
         eventData={eventData}
         description={description}
         hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}

@@ -32,7 +32,7 @@ const cardStyle = {
 const introStyle = { display: 'flex', alignItems: 'center', gap: 1.5 } as const;
 const imageStyle = { position: 'relative', flexShrink: 0, width: 88, height: 77 } as const;
 const copyStyle = { display: 'flex', flexDirection: 'column', gap: 0.5 } as const;
-const titleStyle = { fontWeight: 600 } as const;
+const titleStyle = { fontWeight: 500 } as const;
 // The button fills the card; the theme caps buttons at 25rem, which is narrower than the card on
 // a wide mobile viewport.
 const ctaStyle = { maxWidth: 'none' } as const;

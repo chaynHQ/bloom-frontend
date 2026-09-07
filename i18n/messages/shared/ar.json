@@ -125,13 +125,6 @@
         "description": "دعم من Bloom يصل إلى WhatsApp مرتين أسبوعيًا."
       }
     },
-    "loginDialog": {
-      "title": "تسجيل الدخول أو إنشاء حساب",
-      "description": "بالتسجيل المجاني يمكنك الوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom",
-      "loginButton": "تسجيل الدخول",
-      "registerButton": "إنشاء حساب",
-      "backButton": "العودة"
-    },
     "pwaBanner": {
       "mobileDescription": "تثبيت التطبيق للوصول إليه من شاشتك الرئيسية",
       "desktopDescription": "تثبيت التطبيق للوصول إلى Bloom من شاشتك الرئيسية",

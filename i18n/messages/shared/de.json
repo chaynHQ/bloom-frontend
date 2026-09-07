@@ -125,13 +125,6 @@
         "description": "Unterstützung von Bloom – zweimal pro Woche direkt auf dein WhatsApp."
       }
     },
-    "loginDialog": {
-      "title": "Anmelden oder Konto erstellen",
-      "description": "Melden Sie sich kostenlos an, um auf alle unsere Inhalte zuzugreifen und alles zu entdecken, was Bloom zu bieten hat",
-      "loginButton": "Anmelden",
-      "registerButton": "Konto erstellen",
-      "backButton": "Stornieren"
-    },
     "pwaBanner": {
       "mobileDescription": "Installiere die App, um von deinem Startbildschirm aus darauf zuzugreifen",
       "desktopDescription": "Installiere die App, um von deinem Startbildschirm aus auf Bloom zuzugreifen",

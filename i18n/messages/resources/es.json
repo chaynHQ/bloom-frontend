@@ -12,9 +12,9 @@
       "title": "Aprende más sobre {name}"
     },
     "accessCard": {
-      "title": "Create a free account",
-      "body": "Bloom is always free and anonymous. Sign up to open every resource and pick up where you left off.",
-      "logIn": "I already have an account"
+      "title": "Crea una cuenta gratuita",
+      "body": "Bloom siempre es gratuito y anónimo. Regístrate para acceder a todos los recursos y retomar donde lo dejaste.",
+      "logIn": "Ya tengo una cuenta"
     },
     "audioPlayer": {
       "play": "Reproducir",

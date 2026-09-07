@@ -18,8 +18,8 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
   getCourseSessions,
@@ -91,14 +91,14 @@ const StoryblokCoursePage = ({
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
+  // One source for every auth-dependent part of the overview (CTA panel, lock badges, sign-up
+  // section, no-access guard), so they hold a placeholder while auth settles rather than flipping.
+  const userAuthStatus = useUserAuthStatus();
+  const isSignedIn = userAuthStatus === 'signedIn';
   const courses = useTypedSelector((state) => state.courses);
 
   useGetUserCoursesQuery(undefined, {
-    skip: !isLoggedIn,
+    skip: !isSignedIn,
   });
 
   // A public course opens its first session to logged-out visitors (see StoryblokSessionPage).
@@ -108,14 +108,14 @@ const StoryblokCoursePage = ({
   const userAccess = useMemo(() => {
     const storyPartners = included_for_partners;
     return hasAccessToPage(
-      isLoggedIn,
+      isSignedIn,
       true,
       storyPartners,
       partnerAccesses,
       partnerAdmin,
       referralPartner,
     );
-  }, [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isLoggedIn]);
+  }, [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isSignedIn]);
 
   // Derive course progress from courses state
   const courseProgress = useMemo(
@@ -167,13 +167,13 @@ const StoryblokCoursePage = ({
 
   const hasLoggedView = useRef(false);
   useEffect(() => {
-    if (hasLoggedView.current || isUserLoading) return;
+    if (hasLoggedView.current || userAuthStatus === 'resolving') return;
     hasLoggedView.current = true;
     logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, [eventData, isUserLoading]);
+  }, [eventData, userAuthStatus]);
 
-  // Logged out, the hero CTA is the "Access the full course" sign-up card, which logs its own
-  // event; this fires only for the logged-in "Begin/Continue course" button.
+  // Signed out, the hero CTA is the "Access the full course" sign-up card, which logs its own
+  // event; this fires only for the signed-in "Begin/Continue course" button.
   const handleCtaClick = () => {
     logEvent(COURSE_START_CLICKED, {
       ...eventData,
@@ -202,7 +202,7 @@ const StoryblokCoursePage = ({
   if (!userAccess) {
     // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
     // showing "no access" before we can make the access decision (e.g. on a partner deep-link).
-    if (isUserLoading) {
+    if (userAuthStatus === 'resolving') {
       return <LoadingContainer />;
     }
     return <ContentUnavailable />;
@@ -231,8 +231,8 @@ const StoryblokCoursePage = ({
         sessionCount={sessions.length}
         courseMinutes={courseMinutes}
         courseProgress={courseProgress}
-        loggedIn={isLoggedIn}
-        ctaHref={isLoggedIn ? nextSession?.href : undefined}
+        userAuthStatus={userAuthStatus}
+        ctaHref={isSignedIn ? nextSession?.href : undefined}
         ctaLabel={
           courseProgress === PROGRESS_STATUS.NOT_STARTED
             ? t('courseDetail.beginCourse')
@@ -255,12 +255,12 @@ const StoryblokCoursePage = ({
       <CourseSessionList
         sessions={sessions}
         progressByUuid={progressByUuid}
-        accountNeeded={!isLoggedIn}
-        firstSessionFree={!isLoggedIn && isPublicCourse}
+        accountNeeded={userAuthStatus === 'signedOut'}
+        firstSessionFree={userAuthStatus === 'signedOut' && isPublicCourse}
         onSessionSelect={handleSessionSelect}
       />
       <OtherCourses courses={otherCourses} onCourseSelect={handleOtherCourseSelect} />
-      {!isLoggedIn && <SignUpSection source="course" sectionAbove={false} />}
+      {userAuthStatus === 'signedOut' && <SignUpSection source="course" sectionAbove={false} />}
     </Box>
   );
 };
