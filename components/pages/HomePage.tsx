@@ -122,7 +122,6 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
               qa-id="home-hero-join-button"
               variant="contained"
               color="error"
-              size="large"
               component={i18nLink}
               href={registerPath}
               onClick={() => logCtaClick('join', PROMO_GET_STARTED_CLICKED)}

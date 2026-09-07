@@ -19,7 +19,7 @@ const readCount = () =>
 const filterRow = (label: string) => cy.get('label:visible').contains(label).closest('label');
 
 const waitForLibrary = () => {
-  cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');
+  cy.contains('Explore our library', { timeout: 30000 }).should('be.visible');
   cards().should('have.length.greaterThan', 0);
 };
 
@@ -118,13 +118,16 @@ describe('Library page', () => {
 
     it('"Single sessions" narrows the results to sessions only', () => {
       cy.get('[qa-id=library-kind-session]').click();
+      // Wait for the filter to land in the URL before reading the cards — the toggle and the
+      // results re-render off the same query-string state.
+      cy.get('[qa-id=library-kind-session]').should('have.attr', 'aria-pressed', 'true');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
       cards().each(($card) => expect($card.attr('data-kind')).to.equal('session'));
     });
 
     it('filters by content type, returning only sessions of that format', () => {
-      filterRow('Audio').find('input[type=checkbox]').check();
+      filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
       cards().each(($card) => {

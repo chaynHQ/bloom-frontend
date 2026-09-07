@@ -144,9 +144,6 @@
       "buttonText": "Abone ol"
     },
     "characterCount": "{current}/{max} karakter",
-    "scrollToSignUp": {
-      "button": "Ücretsiz kaydol"
-    },
     "signUpSection": {
       "title": "Seni düşünerek tasarlandı",
       "introduction": "Bloom senin için burada; kim olursan ol, nerede olursan ol.",

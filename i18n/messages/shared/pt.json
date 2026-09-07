@@ -144,9 +144,6 @@
       "buttonText": "Inscrever-se"
     },
     "characterCount": "{current}/{max} caracteres",
-    "scrollToSignUp": {
-      "button": "Inscreva-se grátis"
-    },
     "signUpSection": {
       "title": "Criado pensando em você",
       "introduction": "O Bloom está aqui para você, seja quem for e esteja onde estiver.",

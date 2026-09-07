@@ -92,8 +92,16 @@ export const sectionDivider = (edge: 'top' | 'bottom') =>
     },
   }) as const;
 
+// The distance the top nav row travels when it auto-hides on scroll. The AppBar and any
+// element pinned just below it (breadcrumb, "Leave this site") ride up by the same amount.
+export const navRetractTransform = {
+  xs: 'translateY(-52px)',
+  sm: 'translateY(-64px)',
+} as const;
+
 // Offset by `--top-banner-height`, published by UserResearchBanner when a banner sits between the
-// TopBar and the page body.
+// TopBar and the page body. When the top nav row auto-hides on scroll (`data-nav-hidden` on
+// <html>, set by TopBar), these buttons slide up with it.
 export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
@@ -105,6 +113,9 @@ export const breadcrumbPositionStyle = {
   },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
+  transition: 'transform 0.3s ease',
+  '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
+  'html[data-nav-hidden="true"] &': { transform: navRetractTransform },
 } as const;
 
 export const breadcrumbButtonStyle = {

@@ -144,9 +144,6 @@
       "buttonText": "Abonnieren"
     },
     "characterCount": "{current}/{max} Zeichen",
-    "scrollToSignUp": {
-      "button": "Kostenlos anmelden"
-    },
     "signUpSection": {
       "title": "Für dich gemacht",
       "introduction": "Bloom ist für dich da – wer du auch bist und wo du auch bist.",

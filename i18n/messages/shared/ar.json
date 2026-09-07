@@ -144,9 +144,6 @@
       "buttonText": "الاشتراك"
     },
     "characterCount": "{current}/{max} حرف",
-    "scrollToSignUp": {
-      "button": "التسجيل مجانًا"
-    },
     "signUpSection": {
       "title": "صُمّم من أجلك",
       "introduction": "Bloom هنا من أجلك، أيًّا كنت وأينما كنت.",

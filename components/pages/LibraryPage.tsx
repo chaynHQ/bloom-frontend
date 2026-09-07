@@ -35,7 +35,7 @@ import {
   type ThemeKey,
 } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import illustrationLibrary from '@/public/illustration_library.svg';
+import illustrationCourses from '@/public/illustration_courses.svg';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import TuneRounded from '@mui/icons-material/TuneRounded';
@@ -250,6 +250,22 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [router, pathname],
   );
 
+  // Merge just `q` onto the current URL via history.replaceState, not router.replace: a debounced
+  // write can't then clobber the other filters or cancel an in-flight navigation to a clicked
+  // result. `null` state lets Next sync useSearchParams (it skips the sync for its own __NA state).
+  const syncKeywordToUrl = useCallback((value: string) => {
+    const params = new URLSearchParams(window.location.search);
+    const trimmed = value.trim();
+    if (trimmed) params.set('q', trimmed);
+    else params.delete('q');
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      '',
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
+    );
+  }, []);
+
   const setThemes = (next: ThemeKey[]) => writeFilters({ ...currentFilters, themes: next });
   const setFormats = (next: Format[]) => writeFilters({ ...currentFilters, formats: next });
   const setLengths = (next: LengthBucket[]) => writeFilters({ ...currentFilters, lengths: next });
@@ -304,11 +320,18 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   }
 
   // Push a settled search term into the URL; the other filters write there on click.
+  const keywordSyncTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => {
     if (keyword === urlKeyword) return;
-    const timer = setTimeout(() => writeFilters(currentFilters), KEYWORD_URL_SYNC_MS);
-    return () => clearTimeout(timer);
-  }, [keyword, urlKeyword, currentFilters, writeFilters]);
+    keywordSyncTimer.current = setTimeout(() => syncKeywordToUrl(keyword), KEYWORD_URL_SYNC_MS);
+    return () => clearTimeout(keywordSyncTimer.current);
+  }, [keyword, urlKeyword, syncKeywordToUrl]);
+
+  // Flush the pending search term before navigating away so browser-back restores it.
+  const flushKeywordToUrl = () => {
+    clearTimeout(keywordSyncTimer.current);
+    if (keyword !== urlKeyword) syncKeywordToUrl(keyword);
+  };
 
   // Remember where the visitor was browsing so a content page's "back to library" link returns here.
   useEffect(() => {
@@ -419,7 +442,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     <Box>
       <Header
         title={t('title')}
-        imageSrc={illustrationLibrary}
+        imageSrc={illustrationCourses}
         imageAlt="alt.personSitting"
         introduction={t('introduction')}
         cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
@@ -548,7 +571,10 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                       key={item.id}
                       item={item}
                       showAccountNeeded={!isLoggedIn}
-                      onSelect={() => logItemClick(item, index)}
+                      onSelect={() => {
+                        flushKeywordToUrl();
+                        logItemClick(item, index);
+                      }}
                     />
                   ))}
                 </Box>

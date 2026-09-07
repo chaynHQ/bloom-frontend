@@ -144,9 +144,6 @@
       "buttonText": "Suscríbete"
     },
     "characterCount": "{current}/{max} caracteres",
-    "scrollToSignUp": {
-      "button": "Regístrate gratis"
-    },
     "signUpSection": {
       "title": "Creado pensando en ti",
       "introduction": "Bloom está aquí para ti, seas quien seas y estés donde estés.",

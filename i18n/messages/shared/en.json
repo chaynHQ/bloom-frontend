@@ -144,9 +144,6 @@
       "buttonText": "Subscribe"
     },
     "characterCount": "{current}/{max} characters",
-    "scrollToSignUp": {
-      "button": "Sign up for free"
-    },
     "signUpSection": {
       "title": "Built with you in mind",
       "introduction": "Bloom is here for you, whoever and wherever you are.",
