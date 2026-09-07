@@ -48,6 +48,7 @@
       "closeModal": "Transkript schließen",
       "description": "Lies das Transkript vom Video - "
     },
+    "currentSession": "Aktuelle Session",
     "progressStatus": {
       "started": "Angefangen",
       "completed": "Abgeschlossen",

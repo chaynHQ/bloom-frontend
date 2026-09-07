@@ -39,7 +39,7 @@
     "duration": "{minutes} min",
     "courseDuration": "~{hours} ghante {minutes} min",
     "courseDurationHoursOnly": "~{hours} ghante",
-    "partOfCourse": "{course} ka hissa",
+    "partOfCourse": "Course ka hissa: {course}",
     "accountNeeded": "Account chahiye",
     "loadMore": "Aur dikhaiye",
     "noResults": {

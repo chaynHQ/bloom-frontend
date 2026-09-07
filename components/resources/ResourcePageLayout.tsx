@@ -1,14 +1,13 @@
 'use client';
 
-import { AvatarGroup, type Avatar } from '@/components/common/AvatarGroup';
+import { type Avatar } from '@/components/common/AvatarGroup';
 import { BackLink } from '@/components/common/BackLink';
-import { FormatBadge } from '@/components/common/FormatBadge';
-import { TranscriptAccordion } from '@/components/common/TranscriptAccordion';
 import { SignUpCard } from '@/components/course/SignUpCard';
 import { ResourceActions } from '@/components/resources/ResourceActions';
 import { ResourceCompleteCard } from '@/components/resources/ResourceCompleteCard';
 import { ResourceGroundingSection } from '@/components/resources/ResourceGroundingSection';
 import { ResourceHero } from '@/components/resources/ResourceHero';
+import { ResourceMediaCard } from '@/components/resources/ResourceMediaCard';
 import {
   resourceCardColumnStyle,
   resourceContainerStyle,
@@ -26,68 +25,13 @@ import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
-import LockOutlined from '@mui/icons-material/LockOutlined';
-import { Box, Button, CircularProgress, Container, Divider, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Divider } from '@mui/material';
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const mediaSlotLoadingStyle = { display: 'flex', justifyContent: 'center', py: 6 } as const;
-
-// Wraps the media, transcript and contributors once access is granted. FormatBadge brings its own
-// bottom spacing, so the body below it is a separate evenly-spaced stack.
-const contentCardStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  p: 2,
-  borderRadius: '16px',
-  border: '1px solid',
-  borderColor: 'cardBorder',
-  backgroundColor: 'cardSurface',
-} as const;
-
-const contentBodyStyle = { display: 'flex', flexDirection: 'column', gap: 2 } as const;
-
-const contributorRowStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 1,
-  py: 1,
-  borderTop: '1px solid',
-  borderBottom: '1px solid',
-  borderColor: 'cardBorder',
-} as const;
-
-const captionStyle = { fontStyle: 'italic', color: 'grey.700' } as const;
-
-// FormatBadge carries its own bottom spacing; the row only needs a gap between the two badges.
-const badgeRowStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'flex-start',
-  gap: 1,
-} as const;
-
-const accountNeededBadgeStyle = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 0.5,
-  height: 32,
-  pl: 1,
-  pr: 1.5,
-  borderRadius: '8px',
-  border: '1px solid',
-  borderColor: 'cardBorder',
-  backgroundColor: 'panelSurface',
-} as const;
-
-const accountNeededLabelStyle = {
-  fontFamily: 'headingFontFamily',
-  fontSize: '0.875rem',
-  fontWeight: 500,
-  color: 'grey.700',
-} as const;
 
 export interface ResourcePageLayoutProps {
   format: ContentType;
@@ -99,11 +43,11 @@ export interface ResourcePageLayoutProps {
   resourceId?: string;
   isSignedIn: boolean;
   // The page handles `'accessDenied'` before rendering. `'resolving'` and `'signInRequired'` share
-  // the header so it never reflows — a spinner where the content goes, then the content or the
-  // sign-up card in its place.
+  // one shell (header + content card) so it never reflows — a spinner where the media goes, then
+  // the real media or the sign-up card in its place.
   contentAccessStatus: 'resolving' | 'signInRequired' | 'accessGranted';
   eventData: Record<string, unknown>;
-  // Shown in the header, below the title.
+  // Shown in the content card, below the badges.
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
   // Omitted for types with no transcript (written, activity).
@@ -117,7 +61,7 @@ export interface ResourcePageLayoutProps {
   hero?: { imageSrc?: string; imageAlt?: string; subtitle?: string };
   contributors?: { avatars: Avatar[]; caption: string };
   teamMembersSection?: StoryblokTeamMembersSectionProps;
-  // Type-specific blocks between the media and the page sections (e.g. references on a video).
+  // Type-specific blocks between the content card and the page sections (e.g. references on a video).
   beforeSections?: ReactNode;
   // Link to the full session this resource excerpts, if any.
   relatedSessionHref?: string;
@@ -154,19 +98,20 @@ export const ResourcePageLayout = ({
   userContentPartners,
 }: ResourcePageLayoutProps) => {
   const t = useTranslations('Resources');
-  const tLibrary = useTranslations('Library');
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
   const signInRequired = contentAccessStatus === 'signInRequired';
 
-  // Signed-out sign-up prompt: keyed to the full session when the resource excerpts one.
-  const signUpCard = relatedSessionHref ? (
-    <SignUpCard source="relatedSession" returnPath={relatedSessionHref} />
-  ) : (
-    <SignUpCard source="resource" format={format} />
-  );
+  // Signed-out sign-up prompt: keyed to the full session when the resource excerpts one. `embedded`
+  // when it stands in for the media inside the content card.
+  const signUpCard = (embedded?: boolean) =>
+    relatedSessionHref ? (
+      <SignUpCard source="relatedSession" returnPath={relatedSessionHref} embedded={embedded} />
+    ) : (
+      <SignUpCard source="resource" format={format} embedded={embedded} />
+    );
 
-  // Sits under the media: the "watch full session" link for signed-in visitors, the sign-up card
-  // in its place for signed-out ones.
+  // Sits under the content card: the "watch full session" link for signed-in visitors, the sign-up
+  // card in its place for signed-out ones.
   const relatedSessionSlot = !relatedSessionHref ? null : isSignedIn ? (
     <Button
       qa-id="resource-related-session-button"
@@ -180,7 +125,7 @@ export const ResourcePageLayout = ({
       {t('sessionButtonLabel')}
     </Button>
   ) : (
-    <SignUpCard source="relatedSession" returnPath={relatedSessionHref} />
+    signUpCard()
   );
 
   // The action panel below the grounding section — omitted for a signed-out visitor whose
@@ -197,23 +142,7 @@ export const ResourcePageLayout = ({
       eventData={eventData}
     />
   ) : relatedSessionHref ? null : (
-    <SignUpCard source="resource" format={format} />
-  );
-
-  // The resource-type badge, plus an "account needed" badge on the signed-out preview. Signed in,
-  // it heads the content card; signed out, it sits in the header below the description.
-  const badges = (
-    <Box sx={badgeRowStyle}>
-      <FormatBadge type={format} />
-      {signInRequired && (
-        <Box qa-id="resource-account-needed" sx={accountNeededBadgeStyle}>
-          <LockOutlined sx={{ fontSize: 14, color: 'grey.700' }} />
-          <Typography component="span" sx={accountNeededLabelStyle}>
-            {tLibrary('accountNeeded')}
-          </Typography>
-        </Box>
-      )}
-    </Box>
+    signUpCard()
   );
 
   const header = (
@@ -226,11 +155,9 @@ export const ResourcePageLayout = ({
       <ResourceHero
         title={name}
         progress={resourceProgress}
-        description={description}
         subtitle={hero?.subtitle}
         imageSrc={hero?.imageSrc}
         imageAlt={hero?.imageAlt}
-        badges={signInRequired ? badges : undefined}
       />
     </>
   );
@@ -241,13 +168,22 @@ export const ResourcePageLayout = ({
         <Container sx={resourceContainerStyle}>
           {header}
           <Box sx={resourceCardColumnStyle}>
-            {signInRequired ? (
-              signUpCard
-            ) : (
-              <Box sx={mediaSlotLoadingStyle}>
-                <CircularProgress color="error" />
-              </Box>
-            )}
+            <ResourceMediaCard
+              format={format}
+              name={name}
+              description={description}
+              contributors={contributors}
+              accountNeeded={signInRequired}
+              media={
+                signInRequired ? (
+                  signUpCard(true)
+                ) : (
+                  <Box sx={mediaSlotLoadingStyle}>
+                    <CircularProgress color="error" />
+                  </Box>
+                )
+              }
+            />
           </Box>
         </Container>
 
@@ -267,38 +203,20 @@ export const ResourcePageLayout = ({
         {header}
 
         <Box sx={resourceCardColumnStyle}>
-          <Box sx={contentCardStyle}>
-            {badges}
-            <Box sx={contentBodyStyle}>
-              {contributors && contributors.avatars.length > 0 && (
-                <Box sx={contributorRowStyle}>
-                  <AvatarGroup
-                    avatars={contributors.avatars}
-                    size="xsmall"
-                    bordered={false}
-                    frontAvatar="last"
-                  />
-                  <Typography sx={captionStyle}>{contributors.caption}</Typography>
-                </Box>
-              )}
-
-              {media}
-
-              {transcript && (
-                <TranscriptAccordion
-                  content={transcript}
-                  name={name}
-                  onToggle={(open) => {
-                    if (transcriptEvents) {
-                      logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
-                    }
-                    if (open) onTranscriptStart?.();
-                  }}
-                />
-              )}
-            </Box>
-          </Box>
-
+          <ResourceMediaCard
+            format={format}
+            name={name}
+            description={description}
+            contributors={contributors}
+            transcript={transcript}
+            onTranscriptToggle={(open) => {
+              if (transcriptEvents) {
+                logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
+              }
+              if (open) onTranscriptStart?.();
+            }}
+            media={media}
+          />
           {relatedSessionSlot}
           {beforeSections}
         </Box>

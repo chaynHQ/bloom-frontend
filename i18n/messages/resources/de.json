@@ -6,7 +6,6 @@
     "audio": "Audio",
     "written": "Text",
     "activity": "Übung",
-    "partOf": "Teil von {name}",
     "sessionButtonLabel": "Ganze Sitzung ansehen",
     "accessCard": {
       "title": {

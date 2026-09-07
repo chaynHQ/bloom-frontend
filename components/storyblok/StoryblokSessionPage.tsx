@@ -207,7 +207,17 @@ const StoryblokSessionPage = ({
       <Container sx={sessionContainerStyle}>
         <Box component="main" sx={sessionMainStyle}>
           <SessionHero name={name} sessionProgress={sessionProgress} />
-          <SignUpCard source="session" />
+          <SessionMediaCard
+            name={name}
+            description={description}
+            video={video}
+            video_transcript={video_transcript}
+            storyUuid={storyUuid}
+            sessionProgress={sessionProgress}
+            trackProgress={false}
+            eventData={eventData}
+            signUpCard={<SignUpCard source="session" embedded />}
+          />
         </Box>
       </Container>
     );
@@ -243,7 +253,17 @@ const StoryblokSessionPage = ({
               <CircularProgress color="error" />
             </Box>
           ) : isSignedOutGate ? (
-            <SignUpCard source="session" />
+            <SessionMediaCard
+              name={name}
+              description={description}
+              video={video}
+              video_transcript={video_transcript}
+              storyUuid={storyUuid}
+              sessionProgress={sessionProgress}
+              trackProgress={false}
+              eventData={eventData}
+              signUpCard={<SignUpCard source="session" embedded />}
+            />
           ) : (
             <>
               <Box sx={cardsStyle}>

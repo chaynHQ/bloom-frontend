@@ -15,6 +15,7 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   filterLibraryItems,
   FORMAT_KEYS,
@@ -219,21 +220,20 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
   );
-  const userToken = useTypedSelector((state) => state.user.token);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
+  const userAuthStatus = useUserAuthStatus();
+  const isLoggedIn = userAuthStatus === 'signedIn';
   const showEmailRemindersBanner =
     isLoggedIn && userEmailRemindersFrequency === EMAIL_REMINDERS_FREQUENCY.NEVER;
 
-  // A signed-in user briefly looks anonymous: partnerAccesses/createdAt arrive with getUser.
-  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
+  // Signed-in users briefly look anonymous while getUser is in flight; wait for that so the
+  // LIBRARY_VIEWED event carries accurate partner/account attribution.
+  const userSettled = userAuthStatus !== 'resolving';
 
   const eventUserData = useMemo(
     () => getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),

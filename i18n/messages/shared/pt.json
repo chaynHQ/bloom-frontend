@@ -48,6 +48,7 @@
       "closeModal": "Close transcript",
       "description": "Read the transcript for video - "
     },
+    "currentSession": "Sessão atual",
     "progressStatus": {
       "started": "Iniciado",
       "completed": "Finalizado",

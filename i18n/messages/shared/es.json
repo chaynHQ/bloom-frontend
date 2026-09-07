@@ -48,6 +48,7 @@
       "closeModal": "Cerrar transcripción",
       "description": "Lee la transcripción del video -"
     },
+    "currentSession": "Sesión actual",
     "progressStatus": {
       "started": "Empezado",
       "completed": "Completo",

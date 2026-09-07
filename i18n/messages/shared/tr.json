@@ -48,6 +48,7 @@
       "closeModal": "Metni kapat",
       "description": ""
     },
+    "currentSession": "Mevcut bölüm",
     "progressStatus": {
       "started": "Devam ediyor",
       "completed": "Tamamlandı",

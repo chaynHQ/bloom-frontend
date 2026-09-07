@@ -27,6 +27,10 @@ const cardStyle = {
   mx: 'auto',
 } as const;
 
+// When the card sits inside a content card (a resource / session preview) it drops its own frame
+// and leans on generous vertical padding to separate it from the description above.
+const embeddedStyle = { border: 'none', backgroundColor: 'transparent', py: 4 } as const;
+
 const introStyle = { display: 'flex', alignItems: 'center', gap: 1.5 } as const;
 const imageStyle = { position: 'relative', flexShrink: 0, width: 88, height: 77 } as const;
 const copyStyle = { display: 'flex', flexDirection: 'column', gap: 0.5 } as const;
@@ -43,16 +47,18 @@ const logInStyle = {
 } as const;
 
 interface SignUpCardProps {
-  // Where the card is shown, for the sign-up funnel event, and which copy to use. `course` and
-  // `session` share the course copy; `resource` takes a per-format title from `format`;
-  // `relatedSession` is the upsell on a resource that excerpts a full session.
+  // The placement this card sits in — the value reported on the sign-up funnel event. Copy follows
+  // from it: `course`/`session` use the course wording; `resource`/`relatedSession` use the
+  // resource wording (a per-`format` title, or a session-specific one for `relatedSession`).
   source: 'course' | 'session' | 'resource' | 'relatedSession';
   format?: ContentType;
   // Where "log in" returns the visitor; defaults to the current page.
   returnPath?: string;
+  // Drop the card frame when rendered inside a content card.
+  embedded?: boolean;
 }
 
-export function SignUpCard({ source, format, returnPath }: SignUpCardProps) {
+export function SignUpCard({ source, format, returnPath, embedded }: SignUpCardProps) {
   const tCourse = useTranslations('Courses.courseDetail.accessCard');
   const tResource = useTranslations('Resources.accessCard');
   const tS = useTranslations('Shared.signUpSection');
@@ -62,27 +68,20 @@ export function SignUpCard({ source, format, returnPath }: SignUpCardProps) {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  let title: string;
-  let body: string;
-  let logIn: string;
-  if (source === 'course' || source === 'session') {
-    title = tCourse('title');
-    body = tCourse('body');
-    logIn = tCourse('logIn');
-  } else if (source === 'relatedSession') {
-    title = tResource('relatedSession.title');
-    body = tResource('body');
-    logIn = tResource('logIn');
-  } else {
-    title = tResource(`title.${format ?? 'video'}`);
-    body = tResource('body');
-    logIn = tResource('logIn');
-  }
+  const isCourseCopy = source === 'course' || source === 'session';
+  const t = isCourseCopy ? tCourse : tResource;
+  const title = isCourseCopy
+    ? tCourse('title')
+    : source === 'relatedSession'
+      ? tResource('relatedSession.title')
+      : tResource(`title.${format ?? 'video'}`);
+  const body = t('body');
+  const logIn = t('logIn');
 
   const returnUrl = encodeURIComponent(returnPath ?? pathname);
 
   return (
-    <Box qa-id="access-full-course-card" sx={cardStyle}>
+    <Box qa-id="access-full-course-card" sx={{ ...cardStyle, ...(embedded && embeddedStyle) }}>
       <Box sx={introStyle}>
         <Box sx={imageStyle}>
           <Image

@@ -184,7 +184,9 @@ describe('Library page', () => {
         .should('exist');
 
       // Course lessons have no duration, so they name their course where a session reports length.
-      cards().first().should('contain', 'Part of Recovering from toxic and abusive relationships');
+      cards()
+        .first()
+        .should('contain', 'Part of course: Recovering from toxic and abusive relationships');
     });
   });
 

@@ -48,6 +48,7 @@
       "closeModal": "Transcript band karein",
       "description": "Video ki transcript padein - "
     },
+    "currentSession": "Maujooda session",
     "progressStatus": {
       "started": "Shuru ho gaya",
       "completed": "Poora hai",

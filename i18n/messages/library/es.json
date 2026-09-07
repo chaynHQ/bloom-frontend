@@ -39,7 +39,7 @@
     "duration": "{minutes} min",
     "courseDuration": "~{hours} h {minutes} min",
     "courseDurationHoursOnly": "~{hours} h",
-    "partOfCourse": "Parte de {course}",
+    "partOfCourse": "Parte del curso: {course}",
     "accountNeeded": "Se necesita una cuenta",
     "loadMore": "Ver más",
     "noResults": {

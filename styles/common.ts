@@ -42,6 +42,18 @@ export const pageHeaderPaddingBottom = '3.5rem !important';
 
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
 
+// The small eyebrow label above a title — "Current session" on the session and resource heroes,
+// "Current course" on the session playlist. Design token "Label/Large": Montserrat 500, 14/20,
+// grey.700 (#616161), no tracking.
+export const eyebrowLabelStyle = {
+  fontFamily: 'headingFontFamily',
+  fontWeight: 500,
+  fontSize: '0.875rem',
+  lineHeight: '1.25rem',
+  letterSpacing: 0,
+  color: 'grey.700',
+} as const;
+
 // The centred content rail the TopBar and standard pages align to; `wide` sections use the wider
 // one. `contentRailGutter` is the `lg` Container inline padding that locks content to that width.
 export const CONTENT_MAX_WIDTH = 1000;

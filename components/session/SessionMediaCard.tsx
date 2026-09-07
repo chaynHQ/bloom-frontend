@@ -17,7 +17,7 @@ import { RichTextOptions } from '@/lib/utils/richText';
 import { Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 interface SessionMediaCardProps {
@@ -30,6 +30,8 @@ interface SessionMediaCardProps {
   // The logged-out first-session preview passes false: no account, so no progress to record.
   trackProgress?: boolean;
   eventData: { [key: string]: any };
+  // Rendered in place of the video when the visitor can't open the session yet.
+  signUpCard?: ReactNode;
 }
 
 export const SessionMediaCard = ({
@@ -41,6 +43,7 @@ export const SessionMediaCard = ({
   sessionProgress,
   trackProgress = true,
   eventData,
+  signUpCard,
 }: SessionMediaCardProps) => {
   const t = useTranslations('Courses');
   const rollbar = useRollbar();
@@ -71,6 +74,28 @@ export const SessionMediaCard = ({
     callStartSession();
   }, [videoStarted, callStartSession, sessionProgress]);
 
+  const descriptionNode =
+    typeof description === 'string' ? (
+      <Typography>{description}</Typography>
+    ) : (
+      render(description, RichTextOptions)
+    );
+
+  if (signUpCard) {
+    return (
+      <SessionContentCard
+        qaId="session-media-card"
+        title={t('sessionDetail.learnTitle')}
+        eventPrefix="SESSION_VIDEO"
+        eventData={eventData}
+        initialExpanded
+      >
+        {descriptionNode}
+        {signUpCard}
+      </SessionContentCard>
+    );
+  }
+
   if (!video) return null;
 
   return (
@@ -81,11 +106,7 @@ export const SessionMediaCard = ({
       eventData={eventData}
       initialExpanded
     >
-      {typeof description === 'string' ? (
-        <Typography>{description}</Typography>
-      ) : (
-        render(description, RichTextOptions)
-      )}
+      {descriptionNode}
       <Video
         url={video.url}
         setVideoStarted={setVideoStarted}

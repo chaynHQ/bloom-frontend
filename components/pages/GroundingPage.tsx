@@ -12,6 +12,7 @@ import {
   GROUNDING_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { parseMinutes, toPlainText } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
@@ -91,16 +92,15 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   const locale = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const userId = useTypedSelector((state) => state.user.id);
-  const userToken = useTypedSelector((state) => state.user.token);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userContentPartners = useUserContentPartners();
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  // A signed-in user briefly looks anonymous: partnerAccesses/createdAt arrive with getUser.
-  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
+  const userAuthStatus = useUserAuthStatus();
+  const isLoggedIn = userAuthStatus === 'signedIn';
+  // Signed-in users briefly look anonymous while getUser is in flight; wait for that so the
+  // GROUNDING_VIEWED event below carries accurate partner/account attribution.
+  const userSettled = userAuthStatus !== 'resolving';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const viewLogged = useRef(false);
 

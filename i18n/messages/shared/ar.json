@@ -48,6 +48,7 @@
       "closeModal": "إغلاق النص",
       "description": ""
     },
+    "currentSession": "الجلسة الحالية",
     "progressStatus": {
       "started": "قيد المتابعة",
       "completed": "مكتملة",

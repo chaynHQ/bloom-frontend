@@ -4,6 +4,7 @@ import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import { SessionPlaylist } from '@/components/session/SessionPlaylist';
 import { mobileBottomNavHeight } from '@/lib/constants/banners';
 import { type CourseSession } from '@/lib/utils/courseSessions';
+import { eyebrowLabelStyle } from '@/styles/common';
 import KeyboardArrowUpRounded from '@mui/icons-material/KeyboardArrowUpRounded';
 import { Box, Button, ButtonBase, Drawer, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -142,7 +143,7 @@ export function SessionCourseNav({ onPlaylistOpen, ...playlistProps }: SessionCo
         sx={barStyle}
       >
         <Box component="span" sx={{ display: 'block', minWidth: 0 }}>
-          <Typography component="span" variant="body2" sx={{ display: 'block', color: 'grey.700' }}>
+          <Typography component="span" sx={{ ...eyebrowLabelStyle, display: 'block' }}>
             {t('sessionDetail.currentCourse')}
           </Typography>
           <Typography component="span" sx={barTitleStyle}>
