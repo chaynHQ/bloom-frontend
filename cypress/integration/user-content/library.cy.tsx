@@ -65,6 +65,17 @@ describe('Library page', () => {
       cy.get('[qa-id=library-kind-all]').should('have.attr', 'aria-pressed', 'true');
       cards().should('have.length', PAGE_SIZE);
     });
+
+    it('flags login-gated cards with an "Account needed" badge while logged out', () => {
+      // Course lessons are browsable in the library but only playable with an account.
+      cy.visit('/library?type=session');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-card-account-needed]')
+        .should('have.length.greaterThan', 0)
+        .first()
+        .should('contain', 'Account needed');
+    });
   });
 
   describe('Filtering', () => {
@@ -197,6 +208,14 @@ describe('Library page', () => {
       waitForLibrary();
 
       cy.get('[qa-id=library-card-progress]').should('not.exist');
+    });
+
+    it('drops the "Account needed" badge once the user has an account', () => {
+      cy.viewport(1440, 900);
+      cy.visit('/library?type=session');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-card-account-needed]').should('not.exist');
     });
 
     it('marks a completed session as Completed and its parent course as Started', () => {

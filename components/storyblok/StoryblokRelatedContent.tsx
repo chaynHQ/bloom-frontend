@@ -3,6 +3,7 @@
 import { CardCarousel } from '@/components/common/CardCarousel';
 import { LibraryCard } from '@/components/library/LibraryCard';
 import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { storyToLibraryItem, toLibraryStory } from '@/lib/utils/libraryData';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -45,6 +46,9 @@ export const StoryblokRelatedContent = ({
 }: StoryblokRelatedContentProps) => {
   const locale = useLocale();
   const t = useTranslations('Resources.relatedContent');
+  const userId = useTypedSelector((state) => state.user.id);
+  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const items = useMemo(() => {
     const localeString = locale === 'en' ? 'default' : locale || 'default';
@@ -80,7 +84,7 @@ export const StoryblokRelatedContent = ({
       </Box>
       <CardCarousel label={t('title')} controls eventName={RELATED_CONTENT_CAROUSEL_PAGED}>
         {items.map((item) => (
-          <LibraryCard key={item.id} item={item} />
+          <LibraryCard key={item.id} item={item} showAccountNeeded={!isLoggedIn} />
         ))}
       </CardCarousel>
     </Container>

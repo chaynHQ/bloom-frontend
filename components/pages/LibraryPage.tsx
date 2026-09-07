@@ -501,6 +501,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
                     <LibraryCard
                       key={item.id}
                       item={item}
+                      showAccountNeeded={!isLoggedIn}
                       onSelect={() => logItemClick(item, index)}
                     />
                   ))}
