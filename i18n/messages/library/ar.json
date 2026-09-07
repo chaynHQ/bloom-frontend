@@ -39,7 +39,7 @@
     "duration": "{minutes, plural, zero {# دقيقة} one {دقيقة واحدة} two {دقيقتان} few {# دقائق} many {# دقيقة} other {# دقيقة}}",
     "courseDuration": "حوالي {hours} ساعة و{minutes} دقيقة",
     "courseDurationHoursOnly": "حوالي {hours} ساعة",
-    "partOfCourse": "جزء من {course}",
+    "partOfCourse": "جزء من دورة: {course}",
     "accountNeeded": "يلزم إنشاء حساب",
     "loadMore": "عرض المزيد",
     "noResults": {

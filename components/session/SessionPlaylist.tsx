@@ -4,6 +4,7 @@ import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import { BackLink } from '@/components/common/BackLink';
 import { Link as i18nLink } from '@/i18n/routing';
 import { type CourseSession } from '@/lib/utils/courseSessions';
+import { eyebrowLabelStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import CheckRounded from '@mui/icons-material/CheckRounded';
 import LockOutlined from '@mui/icons-material/LockOutlined';
@@ -137,7 +138,7 @@ export function SessionPlaylist({
 
       {/* `div`, not the default `p`: the global `p:last-of-type { margin-bottom: 0 }` rule
           would otherwise cancel the gap below this label. */}
-      <Typography component="div" variant="body2" sx={{ color: 'grey.700', mb: 1.5 }}>
+      <Typography component="div" sx={{ ...eyebrowLabelStyle, mb: 1.5 }}>
         {t('sessionDetail.currentCourse')}
       </Typography>
       <Link

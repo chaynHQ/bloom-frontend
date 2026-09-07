@@ -40,8 +40,9 @@ describe('A course session user', () => {
     // The playlist lists every session in the course and marks the one being viewed.
     cy.get('[qa-id=session-playlist]').first().should('contain', 'What is sexual trauma?');
 
-    // Activity opens by default; bonus content starts collapsed and expands on click.
-    cy.get('[qa-id=session-activity] button').should('have.attr', 'aria-expanded', 'true');
+    // The activity section is always expanded with no accordion toggle; bonus content starts
+    // collapsed and expands on click.
+    cy.get('[qa-id=session-activity]').should('be.visible').find('button').should('not.exist');
 
     cy.get('[qa-id=session-bonus]')
       .first()

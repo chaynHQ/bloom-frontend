@@ -6,10 +6,21 @@
     "audio": "Sesli",
     "written": "Yazılı",
     "activity": "Etkinlik",
-    "partOf": "{name} kapsamında",
     "sessionButtonLabel": "Bölümün tamamını izle",
-    "mediaCard": {
-      "title": "{name} hakkında bilgi edin"
+    "accessCard": {
+      "title": {
+        "audio": "Bu sese eriş",
+        "video": "Bu videoya eriş",
+        "written": "Bu makaleye eriş",
+        "activity": "Bu etkinliğe eriş",
+        "course": "Bu kursa eriş",
+        "grounding": "Bu egzersize eriş"
+      },
+      "body": "Tüm bölümlerin kilidini açmak ve ilerlemeni kaydetmek için ücretsiz bir hesap oluştur.",
+      "logIn": "Zaten bir hesabım var",
+      "relatedSession": {
+        "title": "Bölümün tamamına eriş"
+      }
     },
     "audioPlayer": {
       "play": "Oynat",

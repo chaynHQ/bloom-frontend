@@ -12,8 +12,8 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "العودة للخلف",
     "navigateTo": "الانتقال إلى",
+    "back": "Back",
     "carousel": {
       "regionLabel": "دوّارة المحتوى",
       "previous": "{name}: السابق",
@@ -48,6 +48,10 @@
       "closeModal": "إغلاق النص",
       "description": ""
     },
+    "audioTranscript": {
+      "title": "النص المكتوب للمقطع الصوتي"
+    },
+    "currentSession": "الجلسة الحالية",
     "progressStatus": {
       "started": "قيد المتابعة",
       "completed": "مكتملة",
@@ -125,13 +129,6 @@
         "description": "دعم من Bloom يصل إلى WhatsApp مرتين أسبوعيًا."
       }
     },
-    "loginDialog": {
-      "title": "تسجيل الدخول أو إنشاء حساب",
-      "description": "بالتسجيل المجاني يمكنك الوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom",
-      "loginButton": "تسجيل الدخول",
-      "registerButton": "إنشاء حساب",
-      "backButton": "العودة"
-    },
     "pwaBanner": {
       "mobileDescription": "تثبيت التطبيق للوصول إليه من شاشتك الرئيسية",
       "desktopDescription": "تثبيت التطبيق للوصول إلى Bloom من شاشتك الرئيسية",
@@ -147,9 +144,6 @@
       "buttonText": "الاشتراك"
     },
     "characterCount": "{current}/{max} حرف",
-    "scrollToSignUp": {
-      "button": "التسجيل مجانًا"
-    },
     "signUpSection": {
       "title": "صُمّم من أجلك",
       "introduction": "Bloom هنا من أجلك، أيًّا كنت وأينما كنت.",

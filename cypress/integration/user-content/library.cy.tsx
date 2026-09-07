@@ -19,7 +19,7 @@ const readCount = () =>
 const filterRow = (label: string) => cy.get('label:visible').contains(label).closest('label');
 
 const waitForLibrary = () => {
-  cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');
+  cy.contains('Explore our library', { timeout: 30000 }).should('be.visible');
   cards().should('have.length.greaterThan', 0);
 };
 
@@ -65,6 +65,17 @@ describe('Library page', () => {
       cy.get('[qa-id=library-kind-all]').should('have.attr', 'aria-pressed', 'true');
       cards().should('have.length', PAGE_SIZE);
     });
+
+    it('flags login-gated cards with an "Account needed" badge while logged out', () => {
+      // Course lessons are browsable in the library but only playable with an account.
+      cy.visit('/library?type=session');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-card-account-needed]')
+        .should('have.length.greaterThan', 0)
+        .first()
+        .should('contain', 'Account needed');
+    });
   });
 
   describe('Filtering', () => {
@@ -107,13 +118,14 @@ describe('Library page', () => {
 
     it('"Single sessions" narrows the results to sessions only', () => {
       cy.get('[qa-id=library-kind-session]').click();
+      cy.get('[qa-id=library-kind-session]').should('have.attr', 'aria-pressed', 'true');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
       cards().each(($card) => expect($card.attr('data-kind')).to.equal('session'));
     });
 
     it('filters by content type, returning only sessions of that format', () => {
-      filterRow('Audio').find('input[type=checkbox]').check();
+      filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
       cards().each(($card) => {
@@ -173,7 +185,64 @@ describe('Library page', () => {
         .should('exist');
 
       // Course lessons have no duration, so they name their course where a session reports length.
-      cards().first().should('contain', 'Part of Recovering from toxic and abusive relationships');
+      cards()
+        .first()
+        .should('contain', 'Part of course: Recovering from toxic and abusive relationships');
+    });
+  });
+
+  describe('Filter persistence', () => {
+    beforeEach(() => {
+      cy.viewport(1440, 900);
+      cy.visit('/library');
+      waitForLibrary();
+    });
+
+    const applyFilters = () => {
+      cy.get('[qa-id=library-kind-session]').click();
+      cy.get('[qa-id=library-search-input]').type('somatics');
+      cy.location('search').should((search) => {
+        const params = new URLSearchParams(search);
+        expect(params.get('type')).to.equal('session');
+        expect(params.get('q')).to.equal('somatics');
+      });
+      cards().should('have.length.greaterThan', 0);
+    };
+
+    const expectFiltersRestored = () => {
+      waitForLibrary();
+      cy.get('[qa-id=library-kind-session]').should('have.attr', 'aria-pressed', 'true');
+      cy.get('[qa-id=library-search-input]').should('have.value', 'somatics');
+    };
+
+    it('restores the filters on browser back', () => {
+      applyFilters();
+
+      cards().first().find('a').first().click();
+      cy.location('pathname').should('not.eq', '/library');
+
+      cy.go('back');
+      expectFiltersRestored();
+    });
+
+    it('restores the filters from a content page\'s "Back to library" link', () => {
+      applyFilters();
+
+      cards().first().find('a').first().click();
+      cy.get('[qa-id=resource-back-link]').click();
+
+      cy.location('pathname').should('eq', '/library');
+      expectFiltersRestored();
+    });
+
+    it('starts clean on a fresh visit to /library', () => {
+      cy.get('[qa-id=library-kind-course]').click();
+      cy.location('search').should('contain', 'type=course');
+
+      cy.visit('/library');
+      waitForLibrary();
+      cy.location('search').should('eq', '');
+      cy.get('[qa-id=library-kind-all]').should('have.attr', 'aria-pressed', 'true');
     });
   });
 
@@ -197,6 +266,14 @@ describe('Library page', () => {
       waitForLibrary();
 
       cy.get('[qa-id=library-card-progress]').should('not.exist');
+    });
+
+    it('drops the "Account needed" badge once the user has an account', () => {
+      cy.viewport(1440, 900);
+      cy.visit('/library?type=session');
+      waitForLibrary();
+
+      cy.get('[qa-id=library-card-account-needed]').should('not.exist');
     });
 
     it('marks a completed session as Completed and its parent course as Started', () => {

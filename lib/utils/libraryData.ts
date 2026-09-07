@@ -153,10 +153,12 @@ export function toPlainText(value: unknown): string {
 
 const AUTHENTICATED_PATH_HEADS = ['videos', 'conversations'];
 
-// A conservative floor: with only a path to go on, every course lesson reads as needing an account.
-// The session page itself opens the first lesson of a Public course to logged-out visitors, and
-// `useLibraryItems` lifts the badge for those via `freeFirstSessionUuids`. Takes an app path, not a
-// Storyblok `full_slug` — a translated slug is locale-prefixed (`de/videos/…`), hiding the head.
+// A conservative floor for content whose story carries no `login_required` field: course lessons,
+// and the single-video / conversation resources under `videos/` and `conversations/` (the current
+// blocks predate the field; their pages gate by default). The session page opens the first lesson
+// of a Public course to logged-out visitors, and `useLibraryItems` lifts the badge for those via
+// `freeFirstSessionUuids`. Takes an app path, not a Storyblok `full_slug` — a translated slug is
+// locale-prefixed (`de/videos/…`), hiding the head.
 export function pathRequiresAccount(path: string): boolean {
   const segments = normaliseSlug(path).split('/');
   if (AUTHENTICATED_PATH_HEADS.includes(segments[0])) return true;
@@ -176,8 +178,8 @@ export function storyToLibraryItem(
     title: content.name,
     description: toPlainText(content.description),
     href,
-    // written/activity/audio/video aren't gated by path (AuthGuard leaves the overlay to the page
-    // itself), so their own `login_required` is the only signal the badge has for them.
+    // audio/written/activity (and the merged video block) carry `login_required` on the story, so
+    // that's the badge's signal for them; the older path-gated types fall back to `pathRequiresAccount`.
     requiresAccount:
       (pathRequiresAccount(href) || content.login_required === true) &&
       !freeFirstSessionUuids?.has(story.uuid),
@@ -250,6 +252,32 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
 
 export function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
+}
+
+// Filter state <-> URL query. Param names match the existing deep links (`type`, `theme`, `format`).
+export function libraryFiltersToQuery(filters: LibraryFilters): string {
+  const params = new URLSearchParams();
+  const keyword = filters.keyword.trim();
+  if (keyword) params.set('q', keyword);
+  if (filters.kind !== 'all') params.set('type', filters.kind);
+  if (filters.themes.length) params.set('theme', filters.themes.join(','));
+  if (filters.formats.length) params.set('format', filters.formats.join(','));
+  if (filters.lengths.length) params.set('length', filters.lengths.join(','));
+  return params.toString();
+}
+
+export function parseLibraryFilters(params: URLSearchParams): LibraryFilters {
+  const list = <T extends string>(key: string, allowed: readonly T[]): T[] => {
+    const raw = params.get(key)?.split(',') ?? [];
+    return allowed.filter((value) => raw.includes(value));
+  };
+  return {
+    keyword: params.get('q') ?? '',
+    kind: KIND_KEYS.find((key) => key === params.get('type')) ?? 'all',
+    themes: list('theme', THEME_KEYS),
+    formats: list('format', FORMAT_KEYS),
+    lengths: list('length', LENGTH_KEYS),
+  };
 }
 
 // `progress` is a translation key ('started'); analytics reports a PROGRESS_STATUS ('Started').

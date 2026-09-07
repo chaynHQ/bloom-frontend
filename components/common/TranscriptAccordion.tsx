@@ -51,13 +51,22 @@ interface TranscriptAccordionProps {
   content: StoryblokRichtext;
   // The media title, appended to the summary's aria-label to tell multiple transcripts apart.
   name: string;
+  // Summary label; defaults to the video wording. Pass 'audio' for an audio resource's transcript.
+  mediaType?: 'video' | 'audio';
   onToggle?: (open: boolean) => void;
   sx?: SxProps<Theme>;
 }
 
-export const TranscriptAccordion = ({ content, name, onToggle, sx }: TranscriptAccordionProps) => {
+export const TranscriptAccordion = ({
+  content,
+  name,
+  mediaType = 'video',
+  onToggle,
+  sx,
+}: TranscriptAccordionProps) => {
   const tS = useTranslations('Shared');
   const [open, setOpen] = useState(false);
+  const label = tS(mediaType === 'audio' ? 'audioTranscript.title' : 'videoTranscript.title');
 
   return (
     <Accordion
@@ -71,9 +80,9 @@ export const TranscriptAccordion = ({ content, name, onToggle, sx }: TranscriptA
     >
       <AccordionSummary
         expandIcon={<ExpandMoreRounded sx={{ color: 'grey.700' }} />}
-        aria-label={`${tS('videoTranscript.title')} ${name}`}
+        aria-label={`${label} ${name}`}
       >
-        <Typography sx={summaryLabelStyle}>{tS('videoTranscript.title')}</Typography>
+        <Typography sx={summaryLabelStyle}>{label}</Typography>
       </AccordionSummary>
       <AccordionDetails>{render(content, RichTextOptions)}</AccordionDetails>
     </Accordion>

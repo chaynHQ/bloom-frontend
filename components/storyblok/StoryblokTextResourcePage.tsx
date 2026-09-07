@@ -1,8 +1,6 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import LoadingContainer from '@/components/common/LoadingContainer';
-import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
@@ -54,15 +52,14 @@ export const StoryblokTextResourcePage = ({
   const {
     content,
     storyUuid,
-    isLoggedIn,
-    isUserLoading,
-    userAccess,
-    requiresLogin,
+    isSignedIn,
+    contentAccessStatus,
     resourceProgress,
     resourceId,
     eventData,
     contributors,
     relatedGrounding,
+    relatedSessionHref,
     userContentPartners,
     start,
   } = useStoryblokResourcePage<TextResourceContent>({
@@ -84,6 +81,7 @@ export const StoryblokTextResourcePage = ({
     page_sections,
     related_content,
     related_grounding,
+    related_session,
   } = content;
 
   // Reading the page is the only engagement signal, so progress starts as soon as it's viewed.
@@ -91,8 +89,7 @@ export const StoryblokTextResourcePage = ({
     start();
   }, [start]);
 
-  if (!userAccess) {
-    if (isUserLoading) return <LoadingContainer />;
+  if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;
   }
 
@@ -109,9 +106,9 @@ export const StoryblokTextResourcePage = ({
         page_sections,
         related_content,
         related_grounding,
+        related_session,
       })}
     >
-      {requiresLogin && <LoginDialog />}
       <ResourcePageLayout
         format={format}
         name={name}
@@ -120,7 +117,8 @@ export const StoryblokTextResourcePage = ({
         eventPrefix={eventPrefix}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
-        isLoggedIn={isLoggedIn}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
         eventData={eventData}
         description={description}
         hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}
@@ -130,6 +128,7 @@ export const StoryblokTextResourcePage = ({
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
         media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>

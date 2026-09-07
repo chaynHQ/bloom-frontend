@@ -1,4 +1,4 @@
-export const mobileBottomNavHeight = 100;
+export const mobileBottomNavHeight = 76;
 
 export const floatingBannerGap = 16;
 

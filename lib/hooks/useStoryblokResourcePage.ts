@@ -2,13 +2,16 @@
 
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
 import { useResourceProgress, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { Resource } from '@/lib/store/resourcesSlice';
+import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
+import { normaliseSlug } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
@@ -24,6 +27,8 @@ export interface ResourceStoryContent {
   contributor_images?: { filename: string; alt: string }[];
   contributors_description?: string;
   related_grounding?: ISbStoryData[];
+  // The session this resource excerpts. May resolve as a single inlined story or a list of them.
+  related_session?: ISbStoryData | ISbStoryData[];
 }
 
 interface UseStoryblokResourcePageArgs {
@@ -31,6 +36,9 @@ interface UseStoryblokResourcePageArgs {
   category: RESOURCE_CATEGORIES;
   eventPrefix: ResourceEventPrefix;
   viewedEvent: string;
+  // Used when a story has no `login_required` value yet. Blocks that predate the field and should
+  // gate until it lands (single video, conversation) pass `true`; the rest default to open.
+  loginRequiredByDefault?: boolean;
 }
 
 // Shared data/access/progress wiring for the `resource_*` pages. Everything below the media
@@ -41,6 +49,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   category,
   eventPrefix,
   viewedEvent,
+  loginRequiredByDefault = false,
 }: UseStoryblokResourcePageArgs) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const content = story.content as T;
@@ -52,29 +61,27 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     contributor_images,
     contributors_description,
     related_grounding,
+    related_session,
   } = content;
   const storyUuid = story.uuid;
 
   const locale = useLocale();
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
+  const userContentPartners = useUserContentPartners();
+  const userAuthStatus = useUserAuthStatus();
+  const isSignedIn = userAuthStatus === 'signedIn';
 
-  const userAccess = useMemo(() => {
-    const isPublicContent = included_for_partners.some(
-      (partner) => partner.toLowerCase() === 'public',
-    );
+  const hasPageAccess = useMemo(() => {
+    const isPublicContent = included_for_partners.some((p) => p.toLowerCase() === 'public');
     const availableForLocale = locale === LANGUAGES.en || languages.includes(locale);
     return (
       (isPublicContent ||
-        hasAccessToPage(isLoggedIn, true, included_for_partners, partnerAccesses, partnerAdmin)) &&
+        hasAccessToPage(isSignedIn, included_for_partners, partnerAccesses, partnerAdmin)) &&
       availableForLocale
     );
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
+  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
 
   const { resourceProgress, resourceId } = useMemo(() => {
     const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
@@ -99,14 +106,13 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     [category, name, storyUuid, resourceProgress],
   );
 
-  // Log the view once, after the auth/user load settles, so account and progress attribution on
-  // the event is accurate rather than reflecting the pre-hydration state.
+  // Log the view once, after auth settles, so account and progress attribution is accurate.
   const viewLogged = useRef(false);
   useEffect(() => {
-    if (viewLogged.current || isUserLoading) return;
+    if (viewLogged.current || userAuthStatus === 'resolving') return;
     viewLogged.current = true;
     logEvent(viewedEvent, eventData);
-  }, [isUserLoading, viewedEvent, eventData]);
+  }, [userAuthStatus, viewedEvent, eventData]);
 
   const { start, complete } = useResourceProgress({
     storyUuid,
@@ -125,28 +131,29 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     [related_grounding],
   );
 
-  const userContentPartners = useMemo(
-    () => userHasAccessToPartnerContent(partnerAdmin?.partner, partnerAccesses, null, userId),
-    [partnerAdmin, partnerAccesses, userId],
-  );
+  const relatedSessionHref = useMemo(() => {
+    const session = Array.isArray(related_session) ? related_session[0] : related_session;
+    if (!session || typeof session !== 'object' || !session.full_slug) return undefined;
+    return getDefaultFullSlug(normaliseSlug(session.full_slug), locale);
+  }, [related_session, locale]);
 
-  // Held back until the auth-loading window closes so a logged-in visitor never sees the login
-  // dialog flash open then dismiss while their session resolves.
-  const requiresLogin = !isUserLoading && Boolean(login_required) && !isLoggedIn;
+  const contentAccessStatus = useContentAccessStatus({
+    contentRequiresLogin: login_required == null ? loginRequiredByDefault : Boolean(login_required),
+    hasPageAccess,
+  });
 
   return {
     story,
     content,
     storyUuid,
-    isLoggedIn,
-    isUserLoading,
-    userAccess,
-    requiresLogin,
+    isSignedIn,
+    contentAccessStatus,
     resourceProgress,
     resourceId,
     eventData,
     contributors,
     relatedGrounding,
+    relatedSessionHref,
     userContentPartners,
     start,
     complete,

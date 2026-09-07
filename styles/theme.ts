@@ -531,6 +531,9 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         styleOverrides: {
           root: {
             backgroundColor: theme.palette.background.default,
+            transition: theme.transitions.create('background-color', {
+              duration: theme.transitions.duration.shortest,
+            }),
             '&:hover': { backgroundColor: theme.palette.common.white },
             '.Mui-disabled &:hover': { backgroundColor: theme.palette.common.white },
             '& .MuiTouchRipple-root span': {

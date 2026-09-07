@@ -106,8 +106,9 @@ export default function UserResearchBanner() {
 
   const showBanner = isBannerFeatureEnabled && isEnglish && bannerInteracted === false;
 
-  // Publishes this banner's height so the fixed back / "Leave site" buttons can clear it —
-  // see breadcrumbPositionStyle in styles/common.ts.
+  // Publishes how much of the banner is still visible below the fixed TopBar. The floating back /
+  // "Leave site" buttons offset by it, so they ride down with the banner as it scrolls away and
+  // settle just under the TopBar once it's gone — see breadcrumbPositionStyle in styles/common.ts.
   useEffect(() => {
     const section = sectionRef.current;
     const root = document.documentElement;
@@ -119,15 +120,33 @@ export default function UserResearchBanner() {
       return;
     }
 
-    const sync = () =>
-      root.style.setProperty(TOP_BANNER_HEIGHT_VARIABLE, `${section.offsetHeight}px`);
+    const sync = () => {
+      const topBarBottom =
+        document.querySelector('[qa-id="nav-bar"]')?.getBoundingClientRect().bottom ?? 0;
+      const visible = Math.max(
+        0,
+        Math.min(section.offsetHeight, section.getBoundingClientRect().bottom - topBarBottom),
+      );
+      root.style.setProperty(TOP_BANNER_HEIGHT_VARIABLE, `${visible}px`);
+    };
+
+    let frame = 0;
+    const scheduleSync = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(sync);
+    };
 
     sync();
     const observer = new ResizeObserver(sync);
     observer.observe(section);
+    window.addEventListener('scroll', scheduleSync, { passive: true });
+    window.addEventListener('resize', scheduleSync);
 
     return () => {
+      cancelAnimationFrame(frame);
       observer.disconnect();
+      window.removeEventListener('scroll', scheduleSync);
+      window.removeEventListener('resize', scheduleSync);
       clear();
     };
   }, [open, showBanner]);

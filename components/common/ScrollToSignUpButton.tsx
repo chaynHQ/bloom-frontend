@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const ScrollToSignUpButton = () => {
-  const t = useTranslations('Shared');
+  const t = useTranslations('Shared.signUpSection');
   const [isMounted, setIsMounted] = useState(false);
   const scrollToSignUp = useScrollToSignUp();
   const userLoading = useTypedSelector(
@@ -23,8 +23,8 @@ const ScrollToSignUpButton = () => {
   }
 
   return (
-    <Button variant="contained" color="secondary" onClick={scrollToSignUp}>
-      {t('scrollToSignUp.button')}
+    <Button variant="contained" color="error" onClick={scrollToSignUp}>
+      {t('cta')}
     </Button>
   );
 };

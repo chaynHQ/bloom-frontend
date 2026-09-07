@@ -3,7 +3,7 @@
 import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { Link as i18nLink } from '@/i18n/routing';
 import { isExternalHref } from '@/lib/utils/links';
-import { cardShadow } from '@/styles/common';
+import { interactiveCardStyle } from '@/styles/common';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import { Box, Card, CardActionArea, Typography } from '@mui/material';
 import Image, { type StaticImageData } from 'next/image';
@@ -22,10 +22,10 @@ const SIZE: Record<
 
 const cardStyle = (size: LinkCardSize) =>
   ({
+    ...interactiveCardStyle,
     m: 0,
     height: '100%',
     borderRadius: SIZE[size].radius,
-    boxShadow: cardShadow,
     overflow: 'hidden',
   }) as const;
 
@@ -37,7 +37,6 @@ const actionAreaStyle = (size: LinkCardSize, background: string) =>
     alignItems: 'stretch',
     minHeight: SIZE[size].minHeight,
     backgroundColor: background,
-    '&:hover': { backgroundColor: 'common.white' },
   }) as const;
 
 const bodyStyle = {

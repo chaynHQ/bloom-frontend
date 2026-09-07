@@ -8,7 +8,7 @@ describe('users signing up through partner channels can properly access partner-
   // The library renders only its first page, so search first and read the result count.
   const searchLibraryFor = (title: string) => {
     cy.visit('/library');
-    cy.contains('Explore the library', { timeout: 30000 }).should('be.visible');
+    cy.contains('Explore our library', { timeout: 30000 }).should('be.visible');
     cy.get('[qa-id=library-search-input]').clear().type(title);
   };
 

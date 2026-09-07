@@ -2,12 +2,13 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '@/lib/constants/events';
+import { useAutoHideOnScroll } from '@/lib/hooks/useAutoHideOnScroll';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import bloomLogo from '@/public/bloom_logo_white.svg';
-import { rowStyle, topBarSpacerStyle } from '@/styles/common';
+import { navRetractTransform, rowStyle, topBarSpacerStyle } from '@/styles/common';
 import {
   AppBar,
   Box,
@@ -20,7 +21,7 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import DesktopMainNav from './DesktopMainNav';
 import DesktopTopNav from './DesktopTopNav';
 import LanguageMenu from './LanguageMenu';
@@ -32,6 +33,17 @@ const isMaintenanceMode = getIsMaintenanceMode();
 const appBarStyle = {
   bgcolor: 'primary.dark',
   zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
+  transition: 'transform 0.3s ease',
+  '@media (prefers-reduced-motion: reduce)': {
+    transition: 'none',
+  },
+} as const;
+
+// Slides the top row (logo + menus) off the top of the viewport. On desktop the
+// DesktopMainNav strip below it stays put at the top edge; on mobile the whole
+// bar clears the screen.
+const hiddenAppBarStyle = {
+  transform: navRetractTransform,
 } as const;
 
 const appBarContainerStyles = {
@@ -62,6 +74,13 @@ const TopBar = () => {
   const tS = useTranslations('Shared');
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const navHidden = useAutoHideOnScroll();
+
+  // Lets fixed elements pinned below the nav (breadcrumb, "Leave this site") ride
+  // up with it — see breadcrumbPositionStyle in styles/common.ts.
+  useEffect(() => {
+    document.documentElement.dataset.navHidden = navHidden ? 'true' : 'false';
+  }, [navHidden]);
 
   const userLoading = useTypedSelector(
     (state) => state.user.authStateLoading || state.user.loading,
@@ -82,7 +101,7 @@ const TopBar = () => {
 
   return (
     <>
-      <AppBar qa-id="nav-bar" sx={appBarStyle} elevation={0}>
+      <AppBar qa-id="nav-bar" sx={[appBarStyle, navHidden && hiddenAppBarStyle]} elevation={0}>
         <Container sx={appBarContainerStyles}>
           <Link
             component={i18nLink}

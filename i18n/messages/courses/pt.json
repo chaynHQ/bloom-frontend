@@ -14,8 +14,8 @@
       "continueCourse": "Continuar o curso",
       "otherCoursesTitle": "Ver outros cursos",
       "accessCard": {
-        "title": "Aceder ao curso completo",
-        "body": "Cria uma conta gratuita para desbloquear todas as sessões e registar o teu progresso.",
+        "title": "Acesse o curso completo",
+        "body": "Crie uma conta gratuita para desbloquear todas as sessões e salvar o seu progresso.",
         "logIn": "Já tenho uma conta"
       }
     },
@@ -38,7 +38,6 @@
         "startButton": "Enviar mensagem"
       },
       "sessionComplete": "Sessão completa",
-      "currentSession": "Sessão atual",
       "currentCourse": "Curso atual",
       "current": "Atual",
       "nextSession": "Próxima sessão",
@@ -70,8 +69,6 @@
       "completeSessionError": "Ocorreu um erro ao marcar esta sessão como concluída. Tente novamente um pouco mais tarde."
     },
     "backToCourse": "Voltar para o Curso",
-    "backToCourseOverview": "Voltar para a visão geral do curso",
-    "backToLibrary": "Voltar para a biblioteca",
-    "backToSessions": "Voltar para as sessões"
+    "backToLibrary": "Voltar para a biblioteca"
   }
 }

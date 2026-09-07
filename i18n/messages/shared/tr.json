@@ -12,8 +12,8 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "Geri git",
     "navigateTo": "Şuraya git",
+    "back": "Back",
     "carousel": {
       "regionLabel": "İçerik karuseli",
       "previous": "{name}: önceki",
@@ -48,6 +48,10 @@
       "closeModal": "Metni kapat",
       "description": ""
     },
+    "audioTranscript": {
+      "title": "Ses metni"
+    },
+    "currentSession": "Mevcut bölüm",
     "progressStatus": {
       "started": "Devam ediyor",
       "completed": "Tamamlandı",
@@ -125,13 +129,6 @@
         "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
       }
     },
-    "loginDialog": {
-      "title": "Giriş yap ya da hesap oluştur",
-      "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
-      "loginButton": "Giriş yap",
-      "registerButton": "Hesap oluştur",
-      "backButton": "Geri dön"
-    },
     "pwaBanner": {
       "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
       "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",
@@ -147,9 +144,6 @@
       "buttonText": "Abone ol"
     },
     "characterCount": "{current}/{max} karakter",
-    "scrollToSignUp": {
-      "button": "Ücretsiz kaydol"
-    },
     "signUpSection": {
       "title": "Seni düşünerek tasarlandı",
       "introduction": "Bloom senin için burada; kim olursan ol, nerede olursan ol.",

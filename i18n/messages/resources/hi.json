@@ -6,10 +6,21 @@
     "audio": "Audio",
     "written": "Likhit",
     "activity": "Activity",
-    "partOf": "{name} ka hissa",
     "sessionButtonLabel": "Pūrī session dekhen",
-    "mediaCard": {
-      "title": "{name} ke baare mein jaanein"
+    "accessCard": {
+      "title": {
+        "audio": "Yeh audio access kariye",
+        "video": "Yeh video access kariye",
+        "written": "Yeh article access kariye",
+        "activity": "Yeh activity access kariye",
+        "course": "Yeh course access kariye",
+        "grounding": "Yeh grounding exercise access kariye"
+      },
+      "body": "Sabhi sessions unlock karne aur apni progress save karne ke liye ek free account banaiye.",
+      "logIn": "Mera pehle se account hai",
+      "relatedSession": {
+        "title": "Poori session access kariye"
+      }
     },
     "audioPlayer": {
       "play": "Play",

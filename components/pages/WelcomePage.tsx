@@ -157,7 +157,6 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
               qa-id="welcome-hero-cta"
               variant="contained"
               color="error"
-              size="large"
               component={i18nLink}
               href={isLoggedIn ? '/library' : registerPath}
               onClick={logHeroClick}

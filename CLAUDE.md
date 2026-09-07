@@ -26,7 +26,7 @@ yarn cypress:headless-spec # Run a single spec: SPEC=<path> yarn cypress:headles
 
 To run a single Jest test file: `yarn test path/to/file.test.ts`
 
-Husky + Pre-commit run lint and format on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
+Husky + lint-staged run ESLint and Prettier on staged files on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
 
 ## Environment Setup
 
@@ -48,7 +48,7 @@ Authentication is Firebase-based (`lib/firebase.ts`, `lib/auth.ts`). The `useLoa
 
 1. Firebase emits token → Redux `user.token` is set
 2. `useLoadUser` triggers `getUser` RTK Query call → populates all user slices
-3. `AuthGuard` (`components/guards/AuthGuard.tsx`) wraps the entire app in `BaseLayout` and redirects unauthenticated users. Pages under `admin`, `partner-admin`, `therapy`, `account`, `conversations`, `videos`, and course session paths require auth; everything else is public.
+3. `AuthGuard` (`components/guards/AuthGuard.tsx`) wraps the entire app in `BaseLayout`. Only `admin`, `partner-admin`, `therapy`, and `account` paths are private — it redirects unauthenticated visitors there to login. Everything else is public at the route level; course, session and resource pages gate their own content, rendering a sign-up preview (`useUserAuthStatus` / `useContentAccessStatus`, `ResourcePageLayout`'s `contentAccessStatus`) to signed-out visitors instead of a redirect or a modal.
 
 ### State Management
 

@@ -51,7 +51,10 @@ describe('A logged out visitor on a public course', () => {
     cy.visit(`/${courseSlug}`);
     cy.get('[qa-id=course-session-card]', { timeout: 8000 }).eq(1).click();
 
-    cy.get('[qa-id=access-full-course-card]').should('exist');
-    cy.get('[qa-id=session-media-card]').should('not.exist');
+    // The session content card frames the sign-up card in place of the video.
+    cy.get('[qa-id=session-media-card]').within(() => {
+      cy.get('[qa-id=access-full-course-card]').should('exist');
+    });
+    cy.get('.react-player').should('not.exist');
   });
 });

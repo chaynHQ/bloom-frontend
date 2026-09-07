@@ -4,6 +4,7 @@ import ProgressStatus from '@/components/common/ProgressStatus';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
+import { eyebrowLabelStyle } from '@/styles/common';
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -28,7 +29,6 @@ interface SessionHeroProps {
 }
 
 export const SessionHero = ({ name, sessionProgress }: SessionHeroProps) => {
-  const t = useTranslations('Courses');
   const tS = useTranslations('Shared');
 
   return (
@@ -37,8 +37,8 @@ export const SessionHero = ({ name, sessionProgress }: SessionHeroProps) => {
         <Box>
           {/* `div`, not the default `p`: the global `p:last-of-type { margin-bottom: 0 }` rule
               would otherwise cancel the gap below this label. */}
-          <Typography component="div" variant="body2" sx={{ color: 'grey.700', mb: 1.5 }}>
-            {t('sessionDetail.currentSession')}
+          <Typography component="div" sx={{ ...eyebrowLabelStyle, mb: 1.5 }}>
+            {tS('currentSession')}
           </Typography>
           <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
             {name}

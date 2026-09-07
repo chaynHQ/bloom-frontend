@@ -17,8 +17,8 @@ import {
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '@/lib/constants/events';
 import chatIcon from '@/public/chat_icon.svg';
-import courseIcon from '@/public/course_icon.svg';
 import groundingIcon from '@/public/grounding_icon.svg';
+import librarySignpostIcon from '@/public/courses_signpost.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
 import therapyIcon from '@/public/therapy_icon.svg';
 
@@ -51,10 +51,10 @@ const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
   {
     key: 'library',
     href: '/library',
-    icon: courseIcon,
+    icon: librarySignpostIcon,
     event: isMobile ? DRAWER_LIBRARY_CLICKED : SECONDARY_HEADER_LIBRARY_CLICKED,
     translationKey: 'library',
-    altTranslationKey: 'alt.courseIcon',
+    altTranslationKey: 'alt.libraryIcon',
     qaIdPrefix: 'library',
   },
   {

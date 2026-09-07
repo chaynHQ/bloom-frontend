@@ -12,8 +12,8 @@
       "wikiLink": "https://fr.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
     },
-    "navigateBack": "Revenir à la page précédente",
     "navigateTo": "Aller vers",
+    "back": "Back",
     "carousel": {
       "regionLabel": "Carrousel de contenus",
       "previous": "{name} : précédent",
@@ -48,6 +48,10 @@
       "closeModal": "Arrêter la transcription",
       "description": "Lire la transcription de la vidéo- "
     },
+    "audioTranscript": {
+      "title": "Transcription de l’audio"
+    },
+    "currentSession": "Session actuelle",
     "progressStatus": {
       "started": "Démarré",
       "completed": "Complet",
@@ -95,7 +99,7 @@
       "chooseTherapist": "Illustration du profil latéral du visage d'une personne, avec une fleur.",
       "dateSelector": "Illustration d'un calendrier avec un cœur au milieu",
       "change": "Illustration d'un cycle - trois soleils dans un cercle avec des flèches entre eux",
-      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+      "notes": "Illustration d'un téléphone avec une bulle de message contenant un cœur à l'écran",
       "confidential": "Illustration d'un document avec un cadenas dans un coin",
       "cookieCat": "Illustration d'un chat au repos avec un cookie",
       "fruitzLogo": "Logo de Fruitz",
@@ -103,8 +107,7 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Icône de livre",
       "articleIcon": "Icône d'article",
-      "videoIcon": "Icône de vidéo",
-      "notes": "Illustration d'un téléphone avec une bulle de message contenant un cœur à l'écran"
+      "videoIcon": "Icône de vidéo"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/WP73HFzz",
     "survivor": "Survivant·e",
@@ -126,13 +129,6 @@
         "description": "Le soutien de Bloom, directement sur ton WhatsApp, deux fois par semaine."
       }
     },
-    "loginDialog": {
-      "title": "Connectez-vous ou créez un compte",
-      "description": "Inscrivez-vous gratuitement pour accéder à tout notre contenu et explorer tout ce que Bloom a à offrir",
-      "loginButton": "Se connecter",
-      "registerButton": "Créer un compte",
-      "backButton": "Annuler"
-    },
     "pwaBanner": {
       "mobileDescription": "Installez l'application pour y accéder depuis votre écran d'accueil",
       "desktopDescription": "Installez l'application pour accéder à Bloom depuis votre écran d'accueil",
@@ -148,9 +144,6 @@
       "buttonText": "S'abonner"
     },
     "characterCount": "{current}/{max} caractères",
-    "scrollToSignUp": {
-      "button": "Inscris-toi gratuitement"
-    },
     "signUpSection": {
       "title": "Conçu pour toi",
       "introduction": "Bloom est là pour toi, qui que tu sois et où que tu sois.",

@@ -1,8 +1,9 @@
 'use client';
 
-import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
+import { SignUpCard } from '@/components/course/SignUpCard';
 import { Link as i18nLink } from '@/i18n/routing';
-import { Box, Button } from '@mui/material';
+import { type UserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import { Box, Button, Skeleton } from '@mui/material';
 
 // Positioning only — stays pinned beside the course copy as the page scrolls into the session list.
 const wrapperStyle = {
@@ -17,7 +18,7 @@ const wrapperStyle = {
 // its height drops it down so it sits alongside the title rather than the illustration.
 const CTA_ILLUSTRATION_OFFSET = 'calc(135px + 16px)';
 
-const loggedInPanelStyle = {
+const panelFrameStyle = {
   p: 2,
   borderRadius: '8px',
   border: '1px solid',
@@ -29,8 +30,9 @@ const loggedInPanelStyle = {
 const ctaButtonStyle = { maxWidth: 'none' } as const;
 
 interface CourseCtaPanelProps {
-  // Logged in: a "Begin/Continue course" button. Logged out: the "Access the full course" card.
-  loggedIn: boolean;
+  // `'signedIn'` → begin/continue button; `'signedOut'` → the "Access the full course" card;
+  // `'resolving'` → a button-height placeholder, so auth settling doesn't swap a whole card in/out.
+  userAuthStatus: UserAuthStatus;
   // The session to resume; absent when the course has no sessions yet (button just logs the click).
   ctaHref?: string;
   ctaLabel: string;
@@ -40,7 +42,7 @@ interface CourseCtaPanelProps {
 }
 
 export function CourseCtaPanel({
-  loggedIn,
+  userAuthStatus,
   ctaHref,
   ctaLabel,
   onCtaClick,
@@ -53,8 +55,12 @@ export function CourseCtaPanel({
         ...(offsetForIllustration && { mt: { md: CTA_ILLUSTRATION_OFFSET } }),
       }}
     >
-      {loggedIn ? (
-        <Box sx={loggedInPanelStyle}>
+      {userAuthStatus === 'resolving' ? (
+        <Box sx={panelFrameStyle}>
+          <Skeleton variant="rounded" height={40} sx={ctaButtonStyle} />
+        </Box>
+      ) : userAuthStatus === 'signedIn' ? (
+        <Box sx={panelFrameStyle}>
           <Button
             qa-id="course-cta"
             variant="contained"
@@ -68,7 +74,7 @@ export function CourseCtaPanel({
           </Button>
         </Box>
       ) : (
-        <AccessFullCourseCard source="course" />
+        <SignUpCard source="course" />
       )}
     </Box>
   );

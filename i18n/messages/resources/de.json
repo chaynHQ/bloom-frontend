@@ -6,10 +6,21 @@
     "audio": "Audio",
     "written": "Text",
     "activity": "Übung",
-    "partOf": "Teil von {name}",
     "sessionButtonLabel": "Ganze Sitzung ansehen",
-    "mediaCard": {
-      "title": "Erfahre mehr über {name}"
+    "accessCard": {
+      "title": {
+        "audio": "Zugang zu diesem Audio",
+        "video": "Zugang zu diesem Video",
+        "written": "Zugang zu diesem Artikel",
+        "activity": "Zugang zu dieser Übung",
+        "course": "Zugang zu diesem Kurs",
+        "grounding": "Zugang zu dieser Erdungsübung"
+      },
+      "body": "Erstelle ein kostenloses Konto, um alle Sessions freizuschalten und deinen Fortschritt zu speichern.",
+      "logIn": "Ich habe bereits ein Konto",
+      "relatedSession": {
+        "title": "Zugang zur gesamten Session"
+      }
     },
     "audioPlayer": {
       "play": "Abspielen",

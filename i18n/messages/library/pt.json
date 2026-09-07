@@ -4,8 +4,8 @@
       "title": "Biblioteca",
       "description": "Explore os cursos e as sessões individuais do Bloom em um só lugar."
     },
-    "title": "Explore a biblioteca",
-    "introduction": "Tudo o que o Bloom oferece em um só lugar — cursos guiados para percorrer passo a passo e sessões individuais que você pode explorar sempre que precisar.",
+    "title": "Explore nossa biblioteca",
+    "introduction": "Sessões e cursos do Bloom para ajudar você a aprender, refletir e elaborar o que viveu, em um espaço seguro e fortalecedor.",
     "exploreByTheme": "Explorar por tema",
     "filterHeading": "Filtrar a biblioteca",
     "filterButtonLabel": "Filtrar",
@@ -39,7 +39,7 @@
     "duration": "{minutes} min",
     "courseDuration": "~{hours} h {minutes} min",
     "courseDurationHoursOnly": "~{hours} h",
-    "partOfCourse": "Parte de {course}",
+    "partOfCourse": "Parte do curso: {course}",
     "accountNeeded": "É necessária uma conta",
     "loadMore": "Ver mais",
     "noResults": {

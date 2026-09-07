@@ -7,25 +7,17 @@ import useLoadUser from '@/lib/hooks/useLoadUser';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import { useLocale } from 'next-intl';
 import { ReactNode } from 'react';
-import LoginDialog from '../layout/LoginDialog';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
 import { SuperAdminGuard } from './SuperAdminGuard';
 import { TherapyAccessGuard } from './TherapyAccessGuard';
 
-const authenticatedPathHeads = [
-  'admin',
-  'partner-admin',
-  'therapy',
-  'account',
-  'conversations',
-  'videos',
-];
-const shouldNotShowPreview = ['admin', 'partner-admin', 'therapy', 'account'];
+const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
 
 // Adds required permissions guard to pages, redirecting where required permissions are missing.
 // New pages default to requiring authentication; public pages must be added to the array above.
-// Course overview and session pages guard themselves: StoryblokCoursePage / StoryblokSessionPage
-// own the "Public course, first session" preview and the sign-up gate for the rest.
+// Course, session and resource pages guard themselves: they render a preview (title, description,
+// sign-up card) to logged-out visitors rather than redirecting, so the content stays crawlable and
+// shareable. See StoryblokCoursePage / StoryblokSessionPage and ResourcePageLayout's `requiresLogin`.
 export function AuthGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const locale = useLocale();
@@ -63,18 +55,10 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     return <>{children}</>;
   }
 
-  // Page requires authenticated user
+  // Page requires an authenticated user, and every such page here is a private area (admin,
+  // partner-admin, therapy, account) with nothing to preview — redirect to login.
   if (unauthenticated && typeof window !== 'undefined') {
-    if (shouldNotShowPreview.includes(pathHead)) {
-      router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
-    } else {
-      return (
-        <>
-          <LoginDialog />
-          {children}
-        </>
-      );
-    }
+    router.replace({ pathname: '/auth/login', query: { return_url: pathname } }, { locale });
   }
 
   if (userId) {

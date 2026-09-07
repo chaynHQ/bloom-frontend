@@ -7,7 +7,7 @@ describe('Shorts Flow', () => {
     cy.createUser({ emailInput: email, passwordInput: password });
   });
 
-  it('Should allow a user to play a short, select a related session, log in, and continue to the session', () => {
+  it('Should allow a user to play a short, follow its related session prompt, log in, and continue to the session', () => {
     // User visits the home page
     cy.visit('/');
 
@@ -18,18 +18,10 @@ describe('Shorts Flow', () => {
     cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
     cy.wait(2000); // wait to ensure user plays the short
 
-    // User clicks through to the short's related session via the "Watch full session" button
-    cy.get('[qa-id="resource-short-related-session-button"]', { timeout: 10000 })
-      .should('be.visible')
-      .click();
-
-    cy.location('pathname', { timeout: 10000 }).should('include', '/courses/');
-
-    // The related session isn't the course's first session, so the guest sees the sign-up gate
-    // card in place of the video, rather than a login dialog over a full preview. The gate only
-    // renders once Firebase auth state has resolved the visitor as logged out, which can lag
-    // well past the default timeout on a fresh deployment — so wait it out like
-    // waitForAuthenticatedApp does for the signed-in case.
+    // Signed out, the short shows the "access the full session" sign-up card in place of a direct
+    // link; its "log in" link returns to the session after authenticating. The card only renders
+    // once Firebase has resolved the visitor as logged out, which can lag well past the default
+    // timeout on a fresh deployment.
     cy.get('[qa-id="access-full-course-card"]', { timeout: 30000 })
       .find('a[qa-id="access-full-course-login-link"]')
       .click();

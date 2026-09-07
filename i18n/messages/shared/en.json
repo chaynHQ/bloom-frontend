@@ -12,8 +12,8 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "Navigate back",
     "navigateTo": "Navigate to",
+    "back": "Back",
     "carousel": {
       "regionLabel": "Content carousel",
       "previous": "{name}: previous",
@@ -48,6 +48,10 @@
       "closeModal": "Close transcript",
       "description": ""
     },
+    "audioTranscript": {
+      "title": "Audio transcript"
+    },
+    "currentSession": "Current session",
     "progressStatus": {
       "started": "Started",
       "completed": "Completed",
@@ -125,13 +129,6 @@
         "description": "Support from Bloom, delivered to your WhatsApp twice a week."
       }
     },
-    "loginDialog": {
-      "title": "Login or Create an account",
-      "description": "Sign up for free to access all of our content and explore everything Bloom has to offer",
-      "loginButton": "Log in",
-      "registerButton": "Create account",
-      "backButton": "Go back"
-    },
     "pwaBanner": {
       "mobileDescription": "Install the app for access from your homescreen",
       "desktopDescription": "Install the app to access Bloom from your homescreen",
@@ -147,9 +144,6 @@
       "buttonText": "Subscribe"
     },
     "characterCount": "{current}/{max} characters",
-    "scrollToSignUp": {
-      "button": "Sign up for free"
-    },
     "signUpSection": {
       "title": "Built with you in mind",
       "introduction": "Bloom is here for you, whoever and wherever you are.",

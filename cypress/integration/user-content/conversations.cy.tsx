@@ -22,8 +22,8 @@ describe('Conversations Flow', () => {
       timeout: 10000,
     }).click();
 
-    // User is prompted to login
-    cy.get('a[qa-id="dialogLoginButton"]').click();
+    // Logged out, the audio player is replaced by the sign-up preview; follow its log-in link.
+    cy.get('a[qa-id="access-full-course-login-link"]', { timeout: 10000 }).click();
 
     // User logs in
     cy.get('#email').type(email);

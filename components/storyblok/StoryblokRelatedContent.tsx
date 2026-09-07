@@ -3,7 +3,9 @@
 import { CardCarousel } from '@/components/common/CardCarousel';
 import { LibraryCard } from '@/components/library/LibraryCard';
 import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { storyToLibraryItem, toLibraryStory } from '@/lib/utils/libraryData';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
 import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
@@ -45,26 +47,15 @@ export const StoryblokRelatedContent = ({
 }: StoryblokRelatedContentProps) => {
   const locale = useLocale();
   const t = useTranslations('Resources.relatedContent');
+  const isSignedIn = useUserAuthStatus() === 'signedIn';
 
-  const items = useMemo(() => {
-    const localeString = locale === 'en' ? 'default' : locale || 'default';
-
-    return relatedContent
-      .filter((story) => {
-        const availableForLocale =
-          (story.content?.languages?.length ?? 0) > 0
-            ? story.content.languages.includes(localeString)
-            : true;
-
-        const includedForPartners = story.content.included_for_partners;
-        if (includedForPartners?.length) {
-          const partners = includedForPartners.map((p) => p.toLowerCase());
-          return availableForLocale && userContentPartners.some((p) => partners.includes(p));
-        }
-        return availableForLocale;
-      })
-      .map((story) => storyToLibraryItem(toLibraryStory(story as unknown as ISbStoryData), locale));
-  }, [relatedContent, locale, userContentPartners]);
+  const items = useMemo(
+    () =>
+      filterStoriesForLocaleAndPartnerAccess(relatedContent, locale, userContentPartners).map(
+        (story) => storyToLibraryItem(toLibraryStory(story as unknown as ISbStoryData), locale),
+      ),
+    [relatedContent, locale, userContentPartners],
+  );
 
   if (items.length === 0) return null;
 
@@ -80,7 +71,7 @@ export const StoryblokRelatedContent = ({
       </Box>
       <CardCarousel label={t('title')} controls eventName={RELATED_CONTENT_CAROUSEL_PAGED}>
         {items.map((item) => (
-          <LibraryCard key={item.id} item={item} />
+          <LibraryCard key={item.id} item={item} showAccountNeeded={!isSignedIn} />
         ))}
       </CardCarousel>
     </Container>

@@ -6,10 +6,21 @@
     "audio": "Audio",
     "written": "Escrito",
     "activity": "Actividad",
-    "partOf": "Parte de {name}",
     "sessionButtonLabel": "Ver sesión completa",
-    "mediaCard": {
-      "title": "Aprende más sobre {name}"
+    "accessCard": {
+      "title": {
+        "audio": "Accede a este audio",
+        "video": "Accede a este video",
+        "written": "Accede a este artículo",
+        "activity": "Accede a esta actividad",
+        "course": "Accede a este curso",
+        "grounding": "Accede a este ejercicio"
+      },
+      "body": "Crea una cuenta gratuita para desbloquear todas las sesiones y guardar tu progreso.",
+      "logIn": "Ya tengo una cuenta",
+      "relatedSession": {
+        "title": "Accede a la sesión completa"
+      }
     },
     "audioPlayer": {
       "play": "Reproducir",

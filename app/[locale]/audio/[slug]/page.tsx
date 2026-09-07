@@ -14,7 +14,11 @@ type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
   return await getStoryblokStory(`audio/${slug}`, locale, {
-    resolve_relations: ['resource_audio.related_content', 'resource_audio.related_grounding'],
+    resolve_relations: [
+      'resource_audio.related_content',
+      'resource_audio.related_grounding',
+      'resource_audio.related_session',
+    ],
   });
 }
 

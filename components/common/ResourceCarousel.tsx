@@ -1,11 +1,9 @@
 'use client';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_CAROUSEL_PAGED } from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import filterResourcesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
@@ -63,21 +61,13 @@ function resourceCard(story: ISbStoryData, locale: string) {
 }
 
 const ResourceCarousel = ({ resources = [] }: ResourceCarouselProps) => {
-  const userId = useTypedSelector((state) => state.user.id);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const locale = useLocale(); // Get the current locale
-  const referralPartner = useCookieReferralPartner();
+  const locale = useLocale();
+  const userPartners = useUserContentPartners();
 
-  const carouselStories = useMemo(() => {
-    const userPartners = userHasAccessToPartnerContent(
-      partnerAdmin?.partner,
-      partnerAccesses,
-      referralPartner,
-      userId,
-    );
-    return filterResourcesForLocaleAndPartnerAccess(resources, locale, userPartners) || [];
-  }, [userId, partnerAccesses, locale, partnerAdmin?.partner, referralPartner, resources]);
+  const carouselStories = useMemo(
+    () => filterStoriesForLocaleAndPartnerAccess(resources, locale, userPartners),
+    [locale, userPartners, resources],
+  );
 
   if (resources.length < 1 || carouselStories.length === 0) {
     return <div></div>;

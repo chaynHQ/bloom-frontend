@@ -5,6 +5,7 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 // Calm fallback, shared with the session hero, for resource types whose CMS entry has no hero image.
 import illustrationDefault from '@/public/illustration_person4_peach.svg';
+import { eyebrowLabelStyle } from '@/styles/common';
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -56,6 +57,11 @@ export const ResourceHero = ({
           />
         </Box>
         <Box sx={{ minWidth: 0 }}>
+          {/* `div`, not the default `p`: the global `p:last-of-type { margin-bottom: 0 }` rule
+              would otherwise cancel the gap below this label. */}
+          <Typography component="div" sx={{ ...eyebrowLabelStyle, mb: 1.5 }}>
+            {tS('currentSession')}
+          </Typography>
           <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
             {title}
           </Typography>

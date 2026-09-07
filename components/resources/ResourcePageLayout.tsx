@@ -2,7 +2,7 @@
 
 import { type Avatar } from '@/components/common/AvatarGroup';
 import { BackLink } from '@/components/common/BackLink';
-import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
+import { SignUpCard } from '@/components/course/SignUpCard';
 import { ResourceActions } from '@/components/resources/ResourceActions';
 import { ResourceCompleteCard } from '@/components/resources/ResourceCompleteCard';
 import { ResourceGroundingSection } from '@/components/resources/ResourceGroundingSection';
@@ -20,15 +20,19 @@ import {
 import StoryblokTeamMembersSection, {
   StoryblokTeamMembersSectionProps,
 } from '@/components/storyblok/StoryblokTeamMembersSection';
+import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
-import { Box, Container, Divider } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Divider } from '@mui/material';
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
 import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+
+const mediaSlotLoadingStyle = { display: 'flex', justifyContent: 'center', py: 6 } as const;
 
 export interface ResourcePageLayoutProps {
   format: ContentType;
@@ -38,12 +42,16 @@ export interface ResourcePageLayoutProps {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   resourceId?: string;
-  isLoggedIn: boolean;
+  isSignedIn: boolean;
+  // The page handles `'accessDenied'` before rendering. `'resolving'` and `'signInRequired'` share
+  // one shell (header + content card) so it never reflows — a spinner where the media goes, then
+  // the real media or the sign-up card in its place.
+  contentAccessStatus: 'resolving' | 'signInRequired' | 'accessGranted';
   eventData: Record<string, unknown>;
+  // Shown in the content card, below the badges.
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
-  // Omitted for types with no transcript (written, activity) — TranscriptAccordion never
-  // mounts without `transcript`, so `onTranscriptToggle` never fires either.
+  // Omitted for types with no transcript (written, activity).
   transcriptEvents?: { opened: string; closed: string };
   // Called the first time the transcript is opened, to mark the resource "started" for types
   // whose media has no play event of its own to hook that to.
@@ -54,9 +62,10 @@ export interface ResourcePageLayoutProps {
   hero?: { imageSrc?: string; imageAlt?: string; subtitle?: string };
   contributors?: { avatars: Avatar[]; caption: string };
   teamMembersSection?: StoryblokTeamMembersSectionProps;
-  // Type-specific blocks that sit between the media card and the page sections (references on a
-  // video, the "watch full session" link on a short).
+  // Type-specific blocks between the content card and the page sections (e.g. references on a video).
   beforeSections?: ReactNode;
+  // Link to the full session this resource excerpts, if any.
+  relatedSessionHref?: string;
   pageSections?: SbBlokData[];
   relatedGrounding: ISbStoryData[];
   relatedContent: StoryblokRelatedContentStory[];
@@ -71,7 +80,8 @@ export const ResourcePageLayout = ({
   eventPrefix,
   resourceProgress,
   resourceId,
-  isLoggedIn,
+  isSignedIn,
+  contentAccessStatus,
   eventData,
   description,
   transcript,
@@ -82,34 +92,121 @@ export const ResourcePageLayout = ({
   contributors,
   teamMembersSection,
   beforeSections,
+  relatedSessionHref,
   pageSections,
   relatedGrounding,
   relatedContent,
   userContentPartners,
 }: ResourcePageLayoutProps) => {
   const t = useTranslations('Resources');
+  const libraryHref = useLibraryReturnHref();
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
+  const signInRequired = contentAccessStatus === 'signInRequired';
+
+  // Signed-out sign-up prompt: keyed to the full session when the resource excerpts one. `embedded`
+  // when it stands in for the media inside the content card.
+  const signUpCard = (embedded?: boolean) =>
+    relatedSessionHref ? (
+      <SignUpCard source="relatedSession" returnPath={relatedSessionHref} embedded={embedded} />
+    ) : (
+      <SignUpCard source="resource" format={format} embedded={embedded} />
+    );
+
+  // Sits under the content card: the "watch full session" link for signed-in visitors, the sign-up
+  // card in its place for signed-out ones.
+  const relatedSessionSlot = !relatedSessionHref ? null : isSignedIn ? (
+    <Button
+      qa-id="resource-related-session-button"
+      component={i18nLink}
+      href={relatedSessionHref}
+      variant="contained"
+      color="secondary"
+      onClick={() => logEvent(`${eventPrefix}_VISIT_SESSION`, eventData)}
+      sx={{ alignSelf: 'flex-start' }}
+    >
+      {t('sessionButtonLabel')}
+    </Button>
+  ) : (
+    signUpCard()
+  );
+
+  // The action panel below the grounding section — omitted for a signed-out visitor whose
+  // related-session card above has already made the sign-up case.
+  const bottomAction = isCompleted ? (
+    <ResourceCompleteCard />
+  ) : isSignedIn ? (
+    <ResourceActions
+      storyUuid={storyUuid}
+      resourceId={resourceId}
+      category={category}
+      eventPrefix={eventPrefix}
+      resourceProgress={resourceProgress}
+      eventData={eventData}
+    />
+  ) : relatedSessionHref ? null : (
+    signUpCard()
+  );
+
+  const header = (
+    <>
+      <Box>
+        <BackLink qaId="resource-back-link" href={libraryHref} label={t('backToLibrary')} />
+        <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
+      </Box>
+
+      <ResourceHero
+        title={name}
+        progress={resourceProgress}
+        subtitle={hero?.subtitle}
+        imageSrc={hero?.imageSrc}
+        imageAlt={hero?.imageAlt}
+      />
+    </>
+  );
+
+  if (contentAccessStatus !== 'accessGranted') {
+    return (
+      <>
+        <Container sx={resourceContainerStyle}>
+          {header}
+          <Box sx={resourceCardColumnStyle}>
+            <ResourceMediaCard
+              format={format}
+              name={name}
+              description={description}
+              contributors={contributors}
+              accountNeeded={signInRequired}
+              media={
+                signInRequired ? (
+                  signUpCard(true)
+                ) : (
+                  <Box sx={mediaSlotLoadingStyle}>
+                    <CircularProgress color="error" />
+                  </Box>
+                )
+              }
+            />
+          </Box>
+        </Container>
+
+        {signInRequired && (
+          <StoryblokRelatedContent
+            relatedContent={relatedContent}
+            userContentPartners={userContentPartners}
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <>
       <Container sx={resourceContainerStyle}>
-        <Box>
-          <BackLink qaId="resource-back-link" href="/library" label={t('backToLibrary')} />
-          <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
-        </Box>
-
-        <ResourceHero
-          title={name}
-          progress={resourceProgress}
-          subtitle={hero?.subtitle}
-          imageSrc={hero?.imageSrc}
-          imageAlt={hero?.imageAlt}
-        />
+        {header}
 
         <Box sx={resourceCardColumnStyle}>
           <ResourceMediaCard
             format={format}
-            title={t('mediaCard.title', { name })}
             name={name}
             description={description}
             contributors={contributors}
@@ -122,29 +219,18 @@ export const ResourcePageLayout = ({
             }}
             media={media}
           />
+          {relatedSessionSlot}
           {beforeSections}
         </Box>
 
         <ResourceGroundingSection groundingStories={relatedGrounding} />
 
-        <Divider sx={{ borderColor: 'sectionBorder' }} />
-
-        <Box sx={resourceCardColumnStyle}>
-          {isCompleted ? (
-            <ResourceCompleteCard />
-          ) : isLoggedIn ? (
-            <ResourceActions
-              storyUuid={storyUuid}
-              resourceId={resourceId}
-              category={category}
-              eventPrefix={eventPrefix}
-              resourceProgress={resourceProgress}
-              eventData={eventData}
-            />
-          ) : (
-            <AccessFullCourseCard source="resource" />
-          )}
-        </Box>
+        {bottomAction && (
+          <>
+            <Divider sx={{ borderColor: 'sectionBorder' }} />
+            <Box sx={resourceCardColumnStyle}>{bottomAction}</Box>
+          </>
+        )}
       </Container>
 
       {/* Full-bleed CMS sections keep their own layout, so they sit outside the page container. */}

@@ -39,8 +39,30 @@ export const richtextContentStyle = {
 // "Leave this site" and breadcrumb buttons that float over the top of it.
 export const pageHeaderPaddingTop = '3.5rem !important';
 export const pageHeaderPaddingBottom = '3.5rem !important';
+export const pageHeaderPaddingTopMobile = '4.5rem !important';
 
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
+
+// Card hover: surface lifts to white (via the CardActionArea) and the shadow deepens.
+export const cardShadowHover = '0px 6px 10px 4px rgba(0,0,0,0.05), 0px 2px 3px 0px rgba(0,0,0,0.2)';
+
+export const interactiveCardStyle = {
+  boxShadow: cardShadow,
+  transition: 'box-shadow 150ms ease',
+  '&:hover': { boxShadow: cardShadowHover },
+} as const;
+
+// The small eyebrow label above a title — "Current session" on the session and resource heroes,
+// "Current course" on the session playlist. Design token "Label/Large": Montserrat 500, 14/20,
+// grey.700 (#616161), no tracking.
+export const eyebrowLabelStyle = {
+  fontFamily: 'headingFontFamily',
+  fontWeight: 500,
+  fontSize: '0.875rem',
+  lineHeight: '1.25rem',
+  letterSpacing: 0,
+  color: 'grey.700',
+} as const;
 
 // The centred content rail the TopBar and standard pages align to; `wide` sections use the wider
 // one. `contentRailGutter` is the `lg` Container inline padding that locks content to that width.
@@ -70,8 +92,16 @@ export const sectionDivider = (edge: 'top' | 'bottom') =>
     },
   }) as const;
 
+// The distance the top nav row travels when it auto-hides on scroll. The AppBar and any
+// element pinned just below it (breadcrumb, "Leave this site") ride up by the same amount.
+export const navRetractTransform = {
+  xs: 'translateY(-52px)',
+  sm: 'translateY(-64px)',
+} as const;
+
 // Offset by `--top-banner-height`, published by UserResearchBanner when a banner sits between the
-// TopBar and the page body.
+// TopBar and the page body. When the top nav row auto-hides on scroll (`data-nav-hidden` on
+// <html>, set by TopBar), these buttons slide up with it.
 export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
@@ -83,6 +113,9 @@ export const breadcrumbPositionStyle = {
   },
   zIndex: 100,
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12);',
+  transition: 'transform 0.3s ease',
+  '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
+  'html[data-nav-hidden="true"] &': { transform: navRetractTransform },
 } as const;
 
 export const breadcrumbButtonStyle = {

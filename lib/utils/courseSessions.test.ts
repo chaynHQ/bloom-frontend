@@ -6,6 +6,7 @@ const session = (uuid: string, position: number): CourseSession => ({
   description: '',
   href: `/courses/a-course/session-${position}`,
   position,
+  hasVideo: true,
 });
 
 describe('isFirstCourseSession', () => {

@@ -27,7 +27,8 @@ describe('Cookie consent', () => {
 
   // The PWA install banner shares this bottom inline end slot, so the cookie banner must stay
   // inside the viewport and clear the mobile bottom nav on every screen size.
-  const bottomNavHeight = 100;
+  // mobileBottomNavHeight (76) + floatingBannerGap (16) from lib/constants/banners.
+  const bottomNavHeight = 92;
   const viewports: { name: string; size: [number, number]; hasBottomNav: boolean }[] = [
     { name: 'mobile', size: [375, 667], hasBottomNav: true },
     { name: 'tablet', size: [834, 1112], hasBottomNav: true },
