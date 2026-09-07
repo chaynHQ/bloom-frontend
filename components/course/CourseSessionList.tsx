@@ -2,6 +2,7 @@
 
 import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import { CourseSessionCard } from '@/components/cards/CourseSessionCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { type CourseSession } from '@/lib/utils/courseSessions';
 import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -100,12 +101,14 @@ export function CourseSessionList({
               </Box>
               {index < sessions.length - 1 && <Box sx={connectorStyle} />}
             </Box>
-            <CourseSessionCard
-              session={session}
-              progress={progressByUuid[session.uuid]}
-              accountNeeded={accountNeeded && !(firstSessionFree && index === 0)}
-              onSelect={() => onSessionSelect(session)}
-            />
+            <ScrollReveal fill sx={{ flex: 1, minWidth: 0 }}>
+              <CourseSessionCard
+                session={session}
+                progress={progressByUuid[session.uuid]}
+                accountNeeded={accountNeeded && !(firstSessionFree && index === 0)}
+                onSelect={() => onSessionSelect(session)}
+              />
+            </ScrollReveal>
           </Box>
         ))}
       </Box>

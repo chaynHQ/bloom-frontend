@@ -1,6 +1,7 @@
 'use client';
 
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
@@ -93,6 +94,8 @@ const searchFieldStyle = {
     borderRadius: '100px',
     backgroundColor: 'common.white',
     '& fieldset': { borderColor: 'inputBorder' },
+    '&:hover:not(.Mui-focused) fieldset': { borderColor: 'primary.dark' },
+    '&.Mui-focused fieldset': { borderColor: 'secondary.main', borderWidth: 2 },
   },
 } as const;
 
@@ -565,15 +568,16 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
               <>
                 <Box sx={cardGridStyle}>
                   {visibleResults.map((item, index) => (
-                    <LibraryCard
-                      key={item.id}
-                      item={item}
-                      showAccountNeeded={!isLoggedIn}
-                      onSelect={() => {
-                        flushKeywordToUrl();
-                        logItemClick(item, index);
-                      }}
-                    />
+                    <ScrollReveal fill key={item.id} delay={(index % PAGE_SIZE) * 15}>
+                      <LibraryCard
+                        item={item}
+                        showAccountNeeded={!isLoggedIn}
+                        onSelect={() => {
+                          flushKeywordToUrl();
+                          logItemClick(item, index);
+                        }}
+                      />
+                    </ScrollReveal>
                   ))}
                 </Box>
                 {hasMore && (

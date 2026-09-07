@@ -49,6 +49,7 @@ const StoryblokAvatarGroup = (props: StoryblokAvatarGroupProps) => {
         layout={layout}
         alignment={alignment}
         overlap={!separate}
+        bordered={false}
         qaId="storyblok-avatar-group"
       />
     </Box>

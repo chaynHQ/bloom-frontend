@@ -11,6 +11,7 @@ import {
 import theme from '@/styles/theme';
 import { Container, type SxProps, type Theme } from '@mui/material';
 import type { ReactNode } from 'react';
+import { ScrollReveal } from './ScrollReveal';
 
 interface PageSectionProps {
   children: ReactNode;
@@ -65,7 +66,14 @@ const PageSection = (props: PageSectionProps) => {
     }),
   };
 
-  return <Container sx={containerStyle}>{children}</Container>;
+  return (
+    <Container sx={containerStyle}>
+      {/* Mirror the container's flex context so alignment of the children is unchanged. */}
+      <ScrollReveal sx={{ ...columnStyle, alignItems: 'inherit', width: '100%' }}>
+        {children}
+      </ScrollReveal>
+    </Container>
+  );
 };
 
 export default PageSection;

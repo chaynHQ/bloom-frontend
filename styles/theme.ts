@@ -2,14 +2,7 @@
 
 import type { Direction } from '@/lib/utils/getLocaleDirection';
 import { contentRailGutter } from '@/styles/common';
-import {
-  alpha,
-  createTheme,
-  darken,
-  lighten,
-  responsiveFontSizes,
-  type Theme,
-} from '@mui/material/styles';
+import { alpha, createTheme, lighten, responsiveFontSizes, type Theme } from '@mui/material/styles';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here
 declare module '@mui/material/styles' {
@@ -79,6 +72,10 @@ const headingFontFamily = (direction: Direction) =>
 // Headings and card titles are pure black in the design; body copy sits at grey.800.
 const headingColor = '#000000';
 const bodyColor = '#424242';
+
+// Brand interaction shades of `primary.dark` (#EA0050). See Figma: Bloom Modularisation 2026 → CTAs.
+const brandFillHover = '#B8003D'; // contained hover; outlined border + label hover
+const outlinedLabel = '#D00047'; // outlined (primary) resting label
 
 /**
  * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
@@ -212,6 +209,20 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       },
     },
     components: {
+      // No ripple anywhere; keyboard focus is shown with a solid primary.dark outline instead.
+      MuiButtonBase: {
+        defaultProps: {
+          disableRipple: true,
+        },
+        styleOverrides: {
+          root: {
+            '&.Mui-focusVisible': {
+              outline: `2px solid ${theme.palette.primary.dark}`,
+              outlineOffset: 2,
+            },
+          },
+        },
+      },
       MuiContainer: {
         styleOverrides: {
           root: {
@@ -296,10 +307,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             '&:hover': {
               backgroundColor: lighten(theme.palette.primary.main, 0.1),
             },
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.primary.dark,
-              opacity: 0.1,
-            },
             '@media (min-width:900px)': {
               '&.MuiButton-sizeLarge': {
                 fontSize: '1.125rem',
@@ -328,14 +335,21 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           }),
         },
         variants: [
+          // Outlined brand button ("Secondary/Outlined" in Figma).
           {
             props: { variant: 'outlined', color: 'primary' },
             style: {
-              color: theme.palette.primary.dark,
+              color: outlinedLabel,
               borderColor: theme.palette.primary.dark,
               '&:hover': {
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: alpha(brandFillHover, 0.05),
+                borderColor: brandFillHover,
+                color: brandFillHover,
+              },
+              '&.Mui-disabled': {
+                color: outlinedLabel,
                 borderColor: theme.palette.primary.dark,
+                opacity: 0.5,
               },
             },
           },
@@ -357,10 +371,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               '&:hover': {
                 backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
               },
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.secondary.dark,
-                opacity: 0.1,
-              },
               '&.Mui-disabled': {
                 backgroundColor: lighten(theme.palette.secondary.main, 0.2),
                 color: theme.palette.grey[800],
@@ -372,52 +382,34 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             style: {
               color: '#000000',
               borderColor: theme.palette.secondary.dark,
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.secondary.dark,
-                opacity: 0.1,
-              },
               '&:hover': {
                 backgroundColor: theme.palette.secondary.light,
                 borderColor: theme.palette.secondary.dark,
               },
             },
           },
-          // Bloom's primary call-to-action. CMS buttons reach it via getButtonStyleProps. Hover
-          // darkens rather than lightens, which would drop the white label below its contrast floor.
+          // Bloom's primary call-to-action ("Primary On Light" in Figma). CMS buttons reach it via
+          // getButtonStyleProps. Hover darkens to the brand hover shade; disabled is the resting
+          // fill at half opacity. Focus outline comes from the global MuiButtonBase rule.
           {
             props: { variant: 'contained', color: 'error' },
             style: {
               borderColor: 'transparent',
               backgroundColor: theme.palette.primary.dark,
               color: theme.palette.common.white,
-              transition: theme.transitions.create(
-                ['background-color', 'box-shadow', 'transform'],
-                { duration: theme.transitions.duration.short },
-              ),
+              transition: theme.transitions.create('background-color', {
+                duration: theme.transitions.duration.short,
+              }),
               '&:hover': {
-                backgroundColor: darken(theme.palette.primary.dark, 0.2),
-                boxShadow: `0 4px 12px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
-                transform: 'translateY(-1px)',
+                backgroundColor: brandFillHover,
               },
               '&:active': {
-                backgroundColor: darken(theme.palette.primary.dark, 0.32),
-                boxShadow: `0 1px 3px 0 ${alpha(theme.palette.primary.dark, 0.3)}`,
-                transform: 'translateY(0)',
-              },
-              '&.Mui-focusVisible': {
-                outline: `2px solid ${theme.palette.primary.dark}`,
-                outlineOffset: 2,
-              },
-              // The themed primary.dark ripple is invisible on a primary.dark fill.
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.common.white,
-                opacity: 0.2,
+                backgroundColor: brandFillHover,
               },
               '&.Mui-disabled': {
-                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                backgroundColor: theme.palette.primary.dark,
                 color: `${theme.palette.common.white} !important`,
-                boxShadow: 'none',
-                transform: 'none',
+                opacity: 0.5,
               },
             },
           },
@@ -429,13 +421,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             '&:hover': {
               backgroundColor: theme.palette.primary.main,
             },
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.primary.main,
-              opacity: 0.2,
-            },
-          },
-          focusHighlight: {
-            backgroundColor: lighten(theme.palette.primary.main, 0.2),
           },
         },
       },
@@ -478,11 +463,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               fontWeight: 400,
 
               ':hover': { backgroundColor: theme.palette.background.default },
-
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.primary.main,
-                opacity: 0.2,
-              },
             },
           },
         },
@@ -536,8 +516,11 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             }),
             '&:hover': { backgroundColor: theme.palette.common.white },
             '.Mui-disabled &:hover': { backgroundColor: theme.palette.common.white },
-            '& .MuiTouchRipple-root span': {
-              display: 'none',
+            // The card clips its content, so the focus ring sits inset rather than around it.
+            '&.MuiCardActionArea-root.Mui-focusVisible': {
+              outline: `2px solid ${theme.palette.primary.dark}`,
+              outlineOffset: -2,
+              '.MuiCardActionArea-focusHighlight': { opacity: 0 },
             },
           },
           focusHighlight: {
@@ -590,14 +573,40 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           },
         },
       },
+      // Inputs: hover border is primary.dark, focus border is secondary.main.
       MuiInput: {
         styleOverrides: {
           underline: {
             ':after': {
-              borderColor: theme.palette.secondary.dark,
+              borderColor: theme.palette.secondary.main,
             },
             '&:hover:not(.Mui-disabled)::before': {
+              borderColor: theme.palette.primary.dark,
+            },
+          },
+        },
+      },
+      MuiFilledInput: {
+        styleOverrides: {
+          underline: {
+            ':after': {
               borderColor: theme.palette.secondary.main,
+            },
+            '&:hover:not(.Mui-disabled, .Mui-error)::before': {
+              borderColor: theme.palette.primary.dark,
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            '&:hover:not(.Mui-focused):not(.Mui-disabled) .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.dark,
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.secondary.main,
+              borderWidth: 2,
             },
           },
         },

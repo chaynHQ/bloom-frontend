@@ -62,7 +62,7 @@ const clusterStyle = (size: AvatarGroupSize, alignment: string) =>
     marginInlineEnd: alignment === 'center' ? 'auto' : 0,
   }) as const;
 
-const clusterAvatarStyle = (size: AvatarGroupSize, index: number) => {
+const clusterAvatarStyle = (size: AvatarGroupSize, index: number, bordered: boolean) => {
   const { top, insetInlineStart } = CLUSTER_PLACEMENT[index];
   return {
     position: 'absolute',
@@ -72,8 +72,7 @@ const clusterAvatarStyle = (size: AvatarGroupSize, index: number) => {
     height: DIAMETER[size],
     borderRadius: '50%',
     overflow: 'hidden',
-    border: '3px solid',
-    borderColor: 'common.white',
+    ...(bordered && { border: '2px solid', borderColor: 'common.white' }),
     zIndex: 10 - index,
   } as const;
 };
@@ -113,7 +112,7 @@ export function AvatarGroup({
           key={`${avatar.src}-${index}`}
           sx={
             isCluster
-              ? clusterAvatarStyle(size, index)
+              ? clusterAvatarStyle(size, index, bordered)
               : rowAvatarStyle(size, index, overlap, bordered, frontAvatar)
           }
         >

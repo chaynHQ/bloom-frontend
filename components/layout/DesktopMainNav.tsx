@@ -47,6 +47,11 @@ const tabStyle = {
     borderBottom: '2px solid',
     borderColor: 'primary.dark',
   },
+  // Inset so the ring stays inside the edge-to-edge tab strip.
+  '&.Mui-focusVisible': {
+    outline: `2px solid ${theme.palette.primary.dark}`,
+    outlineOffset: '-4px',
+  },
 } as const;
 
 export const DesktopMainNavIcon = ({ alt, src }: DesktopMainNavIconType) => (

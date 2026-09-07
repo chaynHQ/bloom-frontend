@@ -1,5 +1,6 @@
 'use client';
 
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { LibraryCard } from '@/components/library/LibraryCard';
 import { type LibraryItem } from '@/lib/utils/libraryData';
 import { Box, Container, Typography } from '@mui/material';
@@ -35,12 +36,13 @@ export function OtherCourses({ courses, onCourseSelect }: OtherCoursesProps) {
       </Typography>
       <Box sx={gridStyle}>
         {courses.map((course, index) => (
-          <LibraryCard
-            key={course.id}
-            item={course}
-            layout="illustrated"
-            onSelect={() => onCourseSelect(course, index)}
-          />
+          <ScrollReveal fill key={course.id} delay={(index % 2) * 15}>
+            <LibraryCard
+              item={course}
+              layout="illustrated"
+              onSelect={() => onCourseSelect(course, index)}
+            />
+          </ScrollReveal>
         ))}
       </Box>
     </Container>

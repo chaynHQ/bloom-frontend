@@ -81,6 +81,7 @@ const fundingContainerStyle = {
   paddingBottom: { xs: 5, md: 7 },
   backgroundColor: 'primary.dark',
   color: 'common.white',
+  '--focus-ring-color': '#fff',
 } as const;
 
 const fundingLogosContainerStyle = {

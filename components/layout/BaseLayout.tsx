@@ -30,7 +30,7 @@ import Script from 'next/script';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
-import UserResearchBanner from '../banner/UserResearchBanner';
+import RedesignNewsBanner from '../banner/RedesignNewsBanner';
 
 // 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
@@ -128,9 +128,12 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     </Suspense>
                     <TopBar />
                     {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
-                    <UserResearchBanner />
+                    <RedesignNewsBanner />
                     <LeaveSiteButton />
                     <DesktopPwaBanner />
+
+                    {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
+                    <MobileBottomNav />
 
                     <main>
                       <FruitzRetirementBanner />
@@ -139,7 +142,6 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     </main>
                     <Footer />
                     <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
-                    <MobileBottomNav />
                     <CookieBanner />
                     {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
                       <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />

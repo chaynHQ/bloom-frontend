@@ -1,3 +1,4 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
 import LibraryPage from '@/components/pages/LibraryPage';
 import { getLibraryStories } from '@/lib/utils/getLibraryStories';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
@@ -22,9 +23,10 @@ export default async function Page({ params }: { params: Params }) {
   const { locale } = await params;
   const stories = await getLibraryStories(locale);
 
-  // `useSearchParams` in LibraryPage needs a Suspense boundary above it.
+  // useSearchParams needs a Suspense boundary; the fallback needs real height, or the App
+  // Router measures an empty segment and skips its scroll-to-top when navigating here.
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingContainer />}>
       <LibraryPage stories={stories} />
     </Suspense>
   );

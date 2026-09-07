@@ -1,5 +1,6 @@
 'use client';
 
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { columnStyle, rowStyle } from '@/styles/common';
 import { Box } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
@@ -38,20 +39,16 @@ const StoryblokTeamMembersCards = (props: StoryblokTeamMembersCardsProps) => {
     >
       <Box sx={cardColumnStyle}>
         {leftTeamMemberCards.map((teamMemberCard) => (
-          <StoryblokTeamMemberCard
-            key={`${teamMemberCard._uid}_team_member`}
-            {...teamMemberCard}
-            cardExpandable={cards_expandable}
-          />
+          <ScrollReveal fill key={`${teamMemberCard._uid}_team_member`}>
+            <StoryblokTeamMemberCard {...teamMemberCard} cardExpandable={cards_expandable} />
+          </ScrollReveal>
         ))}
       </Box>
       <Box sx={cardColumnStyle}>
         {rightTeamMemberCards.map((teamMemberCard) => (
-          <StoryblokTeamMemberCard
-            key={`${teamMemberCard._uid}_team_member`}
-            {...teamMemberCard}
-            cardExpandable={cards_expandable}
-          />
+          <ScrollReveal fill key={`${teamMemberCard._uid}_team_member`}>
+            <StoryblokTeamMemberCard {...teamMemberCard} cardExpandable={cards_expandable} />
+          </ScrollReveal>
         ))}
       </Box>
     </Box>

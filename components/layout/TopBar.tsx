@@ -2,13 +2,20 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import { HEADER_HOME_LOGO_CLICKED, HEADER_LOGIN_CLICKED } from '@/lib/constants/events';
-import { useAutoHideOnScroll } from '@/lib/hooks/useAutoHideOnScroll';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useAutoHideOnScroll } from '@/lib/hooks/useAutoHideOnScroll';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
 import bloomLogo from '@/public/bloom_logo_white.svg';
-import { navRetractTransform, rowStyle, topBarSpacerStyle } from '@/styles/common';
+import {
+  contentRailGutter,
+  navBarControlStyle,
+  navRetractTransform,
+  navShadow,
+  onDarkNavItemFocusStyle,
+  topBarSpacerStyle,
+} from '@/styles/common';
 import {
   AppBar,
   Box,
@@ -32,7 +39,11 @@ const isMaintenanceMode = getIsMaintenanceMode();
 
 const appBarStyle = {
   bgcolor: 'primary.dark',
+  '--focus-ring-color': '#fff',
   zIndex: (theme: Theme) => theme.zIndex.drawer + 1,
+  // Desktop only: the nav (pink bar + tabs strip) casts a soft drop onto the page below.
+  // On mobile the tabs strip isn't rendered, so there's nothing to lift off the content.
+  boxShadow: { xs: 'none', md: navShadow },
   transition: 'transform 0.3s ease',
   '@media (prefers-reduced-motion: reduce)': {
     transition: 'none',
@@ -47,26 +58,43 @@ const hiddenAppBarStyle = {
 } as const;
 
 const appBarContainerStyles = {
-  ...rowStyle,
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
+  justifyContent: 'space-between',
   alignItems: 'center',
-  alignContent: 'center',
-  height: { xs: 52, sm: 64 },
-  padding: '0 !important',
+  gap: 1,
+  height: 64,
+  paddingBlock: '0 !important',
+  paddingInline: {
+    xs: '1rem !important',
+    md: '2rem !important',
+    lg: `${contentRailGutter()} !important`,
+  },
 } as const;
 
 const logoContainerStyle = {
   position: 'relative',
-  width: { xs: 80, sm: 120 },
-  marginInlineStart: { xs: 3, sm: 0 },
+  flexShrink: 0,
+  width: { xs: 88, sm: 100 },
   height: 48,
+  ...onDarkNavItemFocusStyle,
 } as const;
 
 const menusContainerStyle = {
-  ...rowStyle,
+  display: 'flex',
+  flexDirection: 'row',
   alignItems: 'center',
-  alignContent: 'center',
-  gap: { xs: 1, sm: 1.5 },
-  paddingInlineEnd: { xs: 2, sm: 0 },
+  flexShrink: 0,
+  gap: { xs: 1, sm: 2 },
+} as const;
+
+const loginButtonStyle = {
+  ...navBarControlStyle,
+  minWidth: 100,
+  bgcolor: 'common.white',
+  color: 'primary.dark',
+  '&:hover': { bgcolor: 'primary.light' },
 } as const;
 
 const TopBar = () => {
@@ -128,30 +156,21 @@ const TopBar = () => {
             {isSmallScreen && <LanguageMenu />}
             {!userLoading && userId && !isMaintenanceMode && <UserMenu />}
             {!isSmallScreen && <LanguageMenu />}
-            {!isMaintenanceMode && (
-              <>
-                {!userLoading && !userId && (
-                  <Button
-                    variant="contained"
-                    size={isSmallScreen ? 'small' : 'medium'}
-                    qa-id="login-menu-button"
-                    sx={{
-                      width: 'auto',
-                      height: { xs: 32, sm: 38 },
-                      marginInlineStart: 1,
-                      px: { xs: 1.5, sm: 2 },
-                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                    }}
-                    component={i18nLink}
-                    href="/auth/login"
-                    onClick={() => {
-                      logEvent(HEADER_LOGIN_CLICKED);
-                    }}
-                  >
-                    {t('login')}
-                  </Button>
-                )}
-              </>
+            {!isSmallScreen && !isMaintenanceMode && !userLoading && !userId && (
+              <Button
+                variant="contained"
+                size="small"
+                disableElevation
+                qa-id="login-menu-button"
+                sx={loginButtonStyle}
+                component={i18nLink}
+                href="/auth/login"
+                onClick={() => {
+                  logEvent(HEADER_LOGIN_CLICKED);
+                }}
+              >
+                {t('login')}
+              </Button>
             )}
             {isSmallScreen && <MobileTopNav />}
           </Box>

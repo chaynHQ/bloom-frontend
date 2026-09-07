@@ -43,6 +43,9 @@ export const pageHeaderPaddingTopMobile = '4.5rem !important';
 
 export const cardShadow = '0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 3px 1px rgba(0,0,0,0.08)';
 
+// Design token "Shadow 3" — the soft drop the desktop nav casts onto the page below it.
+export const navShadow = '0px 1px 3px 0px rgba(0,0,0,0.1), 0px 4px 8px 3px rgba(0,0,0,0.1)';
+
 // Card hover: surface lifts to white (via the CardActionArea) and the shadow deepens.
 export const cardShadowHover = '0px 6px 10px 4px rgba(0,0,0,0.05), 0px 2px 3px 0px rgba(0,0,0,0.2)';
 
@@ -92,10 +95,74 @@ export const sectionDivider = (edge: 'top' | 'bottom') =>
     },
   }) as const;
 
+// Keyboard-focus ring for items sitting on the magenta AppBar / nav drawer, where the global
+// primary.dark outline would be invisible.
+export const onDarkNavItemFocusStyle = {
+  '&.Mui-focusVisible, &:focus-visible': {
+    outline: '2px solid #fff',
+    outlineOffset: '2px',
+  },
+} as const;
+
+// Shared geometry for the nav bar's small pill buttons (language, log in).
+export const navBarControlStyle = {
+  minWidth: 'auto',
+  height: 34,
+  paddingBlock: 0,
+  paddingInline: 1.5,
+  borderRadius: '1000px',
+  lineHeight: '1.25rem',
+  '& .MuiSvgIcon-root': { fontSize: '1.25rem' },
+  ...onDarkNavItemFocusStyle,
+} as const;
+
+// Dropdown surface for the nav bar's language / account menus.
+export const navDropdownPaperStyle = {
+  marginTop: 1,
+  minWidth: 176,
+  borderRadius: 2,
+  backgroundColor: 'common.white',
+  border: '1px solid',
+  borderColor: 'sectionBorder',
+  boxShadow: navShadow,
+  '& .MuiMenuItem-root': { padding: 0 },
+  '& .MuiMenuItem-root .MuiButton-root': {
+    justifyContent: 'flex-start',
+    width: '100%',
+    paddingBlock: 1,
+    paddingInline: 2,
+    borderRadius: 0,
+    fontWeight: 400,
+    color: 'text.primary',
+  },
+  '& .MuiButtonBase-root.Mui-focusVisible, & .MuiButtonBase-root:focus-visible': {
+    outline: 'none',
+    boxShadow: 'none',
+  },
+  '& .MuiMenuItem-root:hover, & .MuiMenuItem-root.Mui-focusVisible, & .MuiMenuItem-root .MuiButton-root:hover':
+    {
+      backgroundColor: 'background.default',
+    },
+} as const;
+
+// Text link shared by the desktop top-nav row and the mobile drawer.
+export const navMenuLinkStyle = {
+  alignSelf: 'flex-start',
+  width: 'auto',
+  minHeight: 34,
+  paddingBlock: 0,
+  paddingInline: 1,
+  borderRadius: '1000px',
+  whiteSpace: 'nowrap',
+  color: 'common.white',
+  ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
+  ...onDarkNavItemFocusStyle,
+} as const;
+
 // The distance the top nav row travels when it auto-hides on scroll. The AppBar and any
 // element pinned just below it (breadcrumb, "Leave this site") ride up by the same amount.
 export const navRetractTransform = {
-  xs: 'translateY(-52px)',
+  xs: 'translateY(-64px)',
   sm: 'translateY(-64px)',
 } as const;
 
@@ -107,7 +174,7 @@ export const breadcrumbPositionStyle = {
   px: 2,
   insetInlineStart: { xs: 16, lg: '8%' },
   top: {
-    xs: 'calc(64px + var(--top-banner-height, 0px))',
+    xs: 'calc(80px + var(--top-banner-height, 0px))',
     sm: 'calc(80px + var(--top-banner-height, 0px))',
     md: 'calc(160px + var(--top-banner-height, 0px))',
   },
@@ -152,7 +219,7 @@ export const staticFieldLabelStyle = {
 
 // Matches the rendered AppBar height: the logo row, plus the DesktopMainNav tab strip from `md`.
 export const topBarSpacerStyle = {
-  height: { xs: '3.25rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8.5rem' },
+  height: { xs: '4rem', sm: '4rem', md: getIsMaintenanceMode() ? '4rem' : '8.5rem' },
 } as const;
 
 export const mobileBottomNavSpacerStyle = {

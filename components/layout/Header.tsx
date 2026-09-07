@@ -2,6 +2,7 @@
 
 import { BackLink } from '@/components/common/BackLink';
 import ProgressStatus from '@/components/common/ProgressStatus';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { useRouter } from '@/i18n/routing';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { TextNode } from '@/lib/types/types';
@@ -139,32 +140,34 @@ const Header = (props: HeaderProps) => {
       )}
       {children && <>{children}</>}
       <Box sx={centerWrapStyle}>
-        <Box sx={headerStyle(styles)}>
-          <Box sx={leftHeaderStyle(styles)}>
-            <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
-              {title}
-            </Typography>
-            <Box sx={leftMetaStyle}>
-              <Box>{getIntroduction()}</Box>
-              {progressStatus && <ProgressStatus status={progressStatus} />}
-              {cta && <Box sx={ctaStyle}>{cta}</Box>}
+        <ScrollReveal sx={{ width: '100%' }}>
+          <Box sx={headerStyle(styles)}>
+            <Box sx={leftHeaderStyle(styles)}>
+              <Typography variant="h1" component="h1" sx={{ mb: 0 }}>
+                {title}
+              </Typography>
+              <Box sx={leftMetaStyle}>
+                <Box>{getIntroduction()}</Box>
+                {progressStatus && <ProgressStatus status={progressStatus} />}
+                {cta && <Box sx={ctaStyle}>{cta}</Box>}
+              </Box>
             </Box>
+            {imageSrc && (
+              <Box sx={rightHeaderStyle(styles)}>
+                <Image
+                  alt={imageAltText}
+                  src={imageSrc}
+                  fill
+                  priority={variant === 'hero'}
+                  sizes={getImageSizes(styles.imageWidth)}
+                  style={{
+                    objectFit: 'contain',
+                  }}
+                />
+              </Box>
+            )}
           </Box>
-          {imageSrc && (
-            <Box sx={rightHeaderStyle(styles)}>
-              <Image
-                alt={imageAltText}
-                src={imageSrc}
-                fill
-                priority={variant === 'hero'}
-                sizes={getImageSizes(styles.imageWidth)}
-                style={{
-                  objectFit: 'contain',
-                }}
-              />
-            </Box>
-          )}
-        </Box>
+        </ScrollReveal>
       </Box>
     </Container>
   );

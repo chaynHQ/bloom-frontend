@@ -1,6 +1,7 @@
 'use client';
 
 import { LinkCard } from '@/components/common/LinkCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import chatIcon from '@/public/chat_icon.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
@@ -43,19 +44,20 @@ export function SupportSection({
       </Typography>
       <Typography sx={{ color: 'grey.800' }}>{t('introduction')}</Typography>
       <Box sx={gridStyle}>
-        {SUPPORT_CARDS.map(({ key, href, icon }) => (
-          <LinkCard
-            key={key}
-            title={t(`${key}.title`)}
-            description={t(`${key}.description`)}
-            iconSrc={icon}
-            href={href}
-            size="large"
-            background="panelSurface"
-            arrowColor="supportArrowPanel"
-            qaId={`support-card-${key}`}
-            onSelect={() => logEvent(eventName, { support_card: key, ...eventUserData })}
-          />
+        {SUPPORT_CARDS.map(({ key, href, icon }, index) => (
+          <ScrollReveal fill key={key} delay={(index % 2) * 15}>
+            <LinkCard
+              title={t(`${key}.title`)}
+              description={t(`${key}.description`)}
+              iconSrc={icon}
+              href={href}
+              size="large"
+              background="panelSurface"
+              arrowColor="supportArrowPanel"
+              qaId={`support-card-${key}`}
+              onSelect={() => logEvent(eventName, { support_card: key, ...eventUserData })}
+            />
+          </ScrollReveal>
         ))}
       </Box>
     </Container>

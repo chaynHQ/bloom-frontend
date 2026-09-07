@@ -22,6 +22,17 @@ a span {
   color: inherit !important;
 }
 
+/* Focus ring for bare anchors. Magenta surfaces (AppBar, nav drawer, footer funding
+   band) set --focus-ring-color: #fff so the ring stays visible. */
+:root {
+  --focus-ring-color: #ea0050;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
@@ -169,32 +170,34 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
         </Box>
 
         <Box sx={gridStyle}>
-          {displayedStories.map((story) => {
+          {displayedStories.map((story, index) => {
             const minutes = parseMinutes(story.content.duration);
             return (
-              <Card key={story.uuid} sx={cardStyle} qa-id="grounding-card">
-                <CardActionArea component={i18nLink} href={`/grounding?id=${story.slug}`}>
-                  <Box sx={cardContentStyle}>
-                    <Typography variant="h4" component="h3" sx={{ mb: 0 }}>
-                      {story.content.name}
-                    </Typography>
-                    <Typography sx={cardDescriptionStyle}>
-                      {toPlainText(story.content.description)}
-                    </Typography>
-                    {minutes != null && (
-                      <>
-                        <Divider sx={{ borderColor: 'cardBorder' }} />
-                        <Box sx={durationRowStyle}>
-                          <AccessTimeRounded sx={{ fontSize: 16 }} />
-                          <Typography sx={durationLabelStyle}>
-                            {t('grounding.duration', { minutes })}
-                          </Typography>
-                        </Box>
-                      </>
-                    )}
-                  </Box>
-                </CardActionArea>
-              </Card>
+              <ScrollReveal fill key={story.uuid} delay={(index % PAGE_SIZE) * 15}>
+                <Card sx={cardStyle} qa-id="grounding-card">
+                  <CardActionArea component={i18nLink} href={`/grounding?id=${story.slug}`}>
+                    <Box sx={cardContentStyle}>
+                      <Typography variant="h4" component="h3" sx={{ mb: 0 }}>
+                        {story.content.name}
+                      </Typography>
+                      <Typography sx={cardDescriptionStyle}>
+                        {toPlainText(story.content.description)}
+                      </Typography>
+                      {minutes != null && (
+                        <>
+                          <Divider sx={{ borderColor: 'cardBorder' }} />
+                          <Box sx={durationRowStyle}>
+                            <AccessTimeRounded sx={{ fontSize: 16 }} />
+                            <Typography sx={durationLabelStyle}>
+                              {t('grounding.duration', { minutes })}
+                            </Typography>
+                          </Box>
+                        </>
+                      )}
+                    </Box>
+                  </CardActionArea>
+                </Card>
+              </ScrollReveal>
             );
           })}
         </Box>

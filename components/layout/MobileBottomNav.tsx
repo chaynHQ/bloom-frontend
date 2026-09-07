@@ -10,6 +10,7 @@ import { getMainNavItems, MainNavItem } from '@/lib/navigation/navigationConfig'
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+import theme from '@/styles/theme';
 
 interface ProcessedMobileNavItem {
   label: string;
@@ -60,15 +61,10 @@ const navItemStyle = {
   position: 'relative',
   color: 'text.primary',
 
-  // Focus state for accessibility
-  '&:focus-visible': {
-    '& .nav-label': {
-      color: 'text.primary',
-      backgroundColor: 'white',
-      outline: '1px solid',
-      outlineColor: 'primary.dark',
-      outlineOffset: '2px',
-    },
+  '&.Mui-focusVisible, &:focus-visible': {
+    outline: `2px solid ${theme.palette.primary.dark}`,
+    outlineOffset: '-4px',
+    borderRadius: '8px',
   },
 
   // Selected (current page) state: a pink bar across the top edge of the item.

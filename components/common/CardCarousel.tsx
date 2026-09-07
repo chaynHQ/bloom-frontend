@@ -1,8 +1,10 @@
 'use client';
 
 import DirectionalIcon from '@/components/common/DirectionalIcon';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
+import theme from '@/styles/theme';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { Box, IconButton } from '@mui/material';
@@ -45,6 +47,12 @@ const trackStyle = (slidesPerView: SlidesPerView, gap: number) =>
     marginBlock: -1,
     scrollbarWidth: 'none',
     '&::-webkit-scrollbar': { display: 'none' },
+    // Inset so the ring never pushes past the track's negative side margins.
+    '&:focus-visible': {
+      outline: `2px solid ${theme.palette.primary.dark}`,
+      outlineOffset: '-2px',
+      borderRadius: '20px',
+    },
   }) as const;
 
 const slideStyle = {
@@ -182,9 +190,9 @@ export function CardCarousel({
         sx={trackStyle(slidesPerView, gap)}
       >
         {children.map((child, index) => (
-          <Box key={index} sx={slideStyle}>
+          <ScrollReveal fill key={index} delay={Math.min(index, 5) * 20} sx={slideStyle}>
             {child}
-          </Box>
+          </ScrollReveal>
         ))}
       </Box>
 

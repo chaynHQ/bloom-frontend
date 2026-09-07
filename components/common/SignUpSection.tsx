@@ -1,6 +1,7 @@
 'use client';
 
 import { IconFeature } from '@/components/common/IconFeature';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { Link as i18nLink } from '@/i18n/routing';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -73,31 +74,33 @@ export function SignUpSection({
       qa-id="sign-up-section"
       sx={containerStyle(sectionAbove, sectionBelow)}
     >
-      <Typography variant="h2">{t('title')}</Typography>
-      <Typography>{t('introduction')}</Typography>
+      <ScrollReveal sx={{ width: '100%' }}>
+        <Typography variant="h2">{t('title')}</Typography>
+        <Typography>{t('introduction')}</Typography>
 
-      <Box sx={featuresStyle}>
-        {FEATURES.map(({ key, icon }) => (
-          <IconFeature key={key} iconSrc={icon} label={t(key)} qaId={`sign-up-section-${key}`} />
-        ))}
-      </Box>
+        <Box sx={featuresStyle}>
+          {FEATURES.map(({ key, icon }) => (
+            <IconFeature key={key} iconSrc={icon} label={t(key)} qaId={`sign-up-section-${key}`} />
+          ))}
+        </Box>
 
-      <Button
-        qa-id="sign-up-section-cta"
-        variant="contained"
-        color="error"
-        component={i18nLink}
-        href={registerPath}
-        onClick={() =>
-          logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, {
-            sign_up_section_source: source,
-            ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
-          })
-        }
-        sx={{ mt: 4 }}
-      >
-        {t('cta')}
-      </Button>
+        <Button
+          qa-id="sign-up-section-cta"
+          variant="contained"
+          color="error"
+          component={i18nLink}
+          href={registerPath}
+          onClick={() =>
+            logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, {
+              sign_up_section_source: source,
+              ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+            })
+          }
+          sx={{ mt: 4 }}
+        >
+          {t('cta')}
+        </Button>
+      </ScrollReveal>
     </Container>
   );
 }

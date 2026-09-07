@@ -1,6 +1,7 @@
 'use client';
 
 import { LinkCard, type LinkCardSize } from '@/components/common/LinkCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import { STORYBLOK_LINK_CARD_CLICKED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
@@ -57,21 +58,23 @@ const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
       })}
       sx={{ height: '100%' }}
     >
-      <LinkCard
-        title={title}
-        description={description}
-        iconSrc={icon?.filename || undefined}
-        href={href}
-        external={external}
-        size={size}
-        background={background}
-        arrowColor={arrow_color}
-        hideArrow={hide_arrow}
-        qaId="storyblok-link-card"
-        onSelect={() =>
-          logEvent(STORYBLOK_LINK_CARD_CLICKED, { link_card_name: event_name || title })
-        }
-      />
+      <ScrollReveal fill sx={{ height: '100%' }}>
+        <LinkCard
+          title={title}
+          description={description}
+          iconSrc={icon?.filename || undefined}
+          href={href}
+          external={external}
+          size={size}
+          background={background}
+          arrowColor={arrow_color}
+          hideArrow={hide_arrow}
+          qaId="storyblok-link-card"
+          onSelect={() =>
+            logEvent(STORYBLOK_LINK_CARD_CLICKED, { link_card_name: event_name || title })
+          }
+        />
+      </ScrollReveal>
     </Box>
   );
 };

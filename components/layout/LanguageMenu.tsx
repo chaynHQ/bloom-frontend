@@ -3,6 +3,8 @@
 import { routing, usePathname, useRouter } from '@/i18n/routing';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
+import { navBarControlStyle, navDropdownPaperStyle } from '@/styles/common';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
@@ -11,9 +13,6 @@ import { MouseEvent, startTransition, useState } from 'react';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'transparent',
-  },
 } as const;
 
 const languageMap: { [key: string]: string } = {
@@ -28,24 +27,18 @@ const languageMap: { [key: string]: string } = {
 };
 
 const buttonStyle = {
-  height: { xs: 32, sm: 38 },
-  minWidth: { xs: 32, sm: 64 },
-  paddingX: { xs: 0.75, sm: 1 },
-  gap: { xs: 0.5, sm: 0.75 },
-  fontSize: { xs: '0.75rem', sm: '0.875rem' },
-  fontWeight: 400,
+  ...navBarControlStyle,
+  gap: 0.5,
   color: 'common.white',
-  ':hover': { backgroundColor: 'primary.light', color: 'primary.dark' },
-
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
+  borderColor: 'common.white',
+  ':hover': {
+    backgroundColor: 'primary.light',
+    borderColor: 'primary.light',
+    color: 'primary.dark',
   },
-  '& .MuiButton-startIcon': {
-    display: 'inline-flex',
-    mx: 0,
-    '& svg': { fontSize: { xs: '1.1rem', sm: '1.5rem' } },
-  },
+  '& .MuiButton-startIcon, & .MuiButton-endIcon': { mx: 0 },
+  '& .MuiButton-endIcon svg': { transition: 'transform 0.2s ease' },
+  '&[aria-expanded="true"] .MuiButton-endIcon svg': { transform: 'rotate(180deg)' },
 } as const;
 
 export default function LanguageMenu() {
@@ -88,10 +81,11 @@ export default function LanguageMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         aria-label={t('languageMenu')}
-        color="inherit"
+        variant="outlined"
+        size="small"
         onClick={handleClick}
         startIcon={<LanguageIcon />}
-        size="medium"
+        endIcon={<KeyboardArrowDownIcon />}
         sx={buttonStyle}
       >
         {languageMap[locale ? locale : 'en']}
@@ -100,10 +94,13 @@ export default function LanguageMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        elevation={1}
+        elevation={0}
         slotProps={{
           list: {
             id: 'language-menu',
+          },
+          paper: {
+            sx: navDropdownPaperStyle,
           },
         }}
       >

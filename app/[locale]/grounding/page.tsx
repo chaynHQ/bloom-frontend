@@ -1,3 +1,4 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
 import { GroundingPage } from '@/components/pages/GroundingPage';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getOptionalStoryblokStory, getStoryblokStories } from '@/lib/storyblok';
@@ -53,9 +54,10 @@ export default async function Page({ params }: { params: Params }) {
     getOptionalStoryblokStory('grounding', locale),
   ]);
 
-  // `useSearchParams` in GroundingPage needs a Suspense boundary above it.
+  // See the library page: useSearchParams needs a Suspense boundary, and the fallback needs
+  // real height or the App Router skips its scroll-to-top when navigating here.
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingContainer />}>
       <GroundingPage stories={stories} heroStory={heroStory} />
     </Suspense>
   );

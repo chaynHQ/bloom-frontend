@@ -36,10 +36,11 @@ const fieldBoxStyle: SxProps<Theme> = {
     padding: '12px',
     '&:hover': {
       backgroundColor: 'panelSurface',
+      borderColor: 'primary.dark',
     },
     '&.Mui-focused': {
       backgroundColor: 'panelSurface',
-      borderColor: 'secondary.dark',
+      borderColor: 'secondary.main',
     },
   },
 };

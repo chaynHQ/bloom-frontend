@@ -4,6 +4,7 @@ import AccountActionsCard from '@/components/cards/AccountActionsCard';
 import EmailRemindersSettingsCard from '@/components/cards/EmailRemindersSettingsCard';
 import EmailSettingsCard from '@/components/cards/EmailSettingsCard';
 import ProfileSettingsCard from '@/components/cards/ProfileSettingsCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import Header from '@/components/layout/Header';
 import phoneIllustration from '@/public/phone.svg';
 import { columnStyle, rowStyle } from '@/styles/common';
@@ -49,12 +50,20 @@ export default function SettingsPage() {
       />
       <Container sx={rowContainerStyle}>
         <Box sx={columnContainerStyle}>
-          <ProfileSettingsCard />
-          <EmailSettingsCard />
+          <ScrollReveal fill>
+            <ProfileSettingsCard />
+          </ScrollReveal>
+          <ScrollReveal fill>
+            <EmailSettingsCard />
+          </ScrollReveal>
         </Box>
         <Box sx={columnContainerStyle}>
-          <AccountActionsCard />
-          <EmailRemindersSettingsCard />
+          <ScrollReveal fill>
+            <AccountActionsCard />
+          </ScrollReveal>
+          <ScrollReveal fill>
+            <EmailRemindersSettingsCard />
+          </ScrollReveal>
         </Box>
       </Container>
     </Box>

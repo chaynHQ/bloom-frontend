@@ -1,6 +1,7 @@
 'use client';
 
 import SessionContentCard from '@/components/cards/SessionContentCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
@@ -18,15 +19,16 @@ interface MultipleBonusContentProps {
 const MultipleBonusContent = ({ bonus, eventData }: MultipleBonusContentProps) => (
   <>
     {bonus.map((bonusItem: BonusContent) => (
-      <SessionContentCard
-        key={bonusItem._uid}
-        qaId="session-bonus"
-        title={bonusItem.title}
-        eventPrefix="SESSION_BONUS_CONTENT"
-        eventData={eventData}
-      >
-        <>{render(bonusItem.content as StoryblokRichtext, RichTextOptions)}</>
-      </SessionContentCard>
+      <ScrollReveal fill key={bonusItem._uid}>
+        <SessionContentCard
+          qaId="session-bonus"
+          title={bonusItem.title}
+          eventPrefix="SESSION_BONUS_CONTENT"
+          eventData={eventData}
+        >
+          <>{render(bonusItem.content as StoryblokRichtext, RichTextOptions)}</>
+        </SessionContentCard>
+      </ScrollReveal>
     ))}
   </>
 );

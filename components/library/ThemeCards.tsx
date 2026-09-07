@@ -1,3 +1,4 @@
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import { THEME_KEYS, toggle, type ThemeKey } from '@/lib/utils/libraryData';
 import { interactiveCardStyle, sectionDivider } from '@/styles/common';
 import { Box, Card, CardActionArea, Container, Typography } from '@mui/material';
@@ -63,25 +64,27 @@ export function ThemeCards({
         onReset={themes.length ? () => setThemes([]) : undefined}
       />
       <Box sx={gridStyle}>
-        {THEME_KEYS.map((theme) => {
+        {THEME_KEYS.map((theme, index) => {
           const active = themes.includes(theme);
           return (
-            <Card key={theme} sx={cardStyle}>
-              <CardActionArea
-                onClick={() => setThemes(toggle(themes, theme))}
-                aria-pressed={active}
-                qa-id={`library-theme-${theme}`}
-                sx={{
-                  ...cardActionAreaStyle,
-                  borderColor: active ? 'primary.dark' : 'transparent',
-                }}
-              >
-                <Typography sx={cardLabelStyle}>{t(`themes.${theme}.label`)}</Typography>
-                <Typography variant="body2" sx={{ color: 'grey.800' }}>
-                  {t(`themes.${theme}.blurb`)}
-                </Typography>
-              </CardActionArea>
-            </Card>
+            <ScrollReveal fill key={theme} delay={Math.min(index, 6) * 15}>
+              <Card sx={cardStyle}>
+                <CardActionArea
+                  onClick={() => setThemes(toggle(themes, theme))}
+                  aria-pressed={active}
+                  qa-id={`library-theme-${theme}`}
+                  sx={{
+                    ...cardActionAreaStyle,
+                    borderColor: active ? 'primary.dark' : 'transparent',
+                  }}
+                >
+                  <Typography sx={cardLabelStyle}>{t(`themes.${theme}.label`)}</Typography>
+                  <Typography variant="body2" sx={{ color: 'grey.800' }}>
+                    {t(`themes.${theme}.blurb`)}
+                  </Typography>
+                </CardActionArea>
+              </Card>
+            </ScrollReveal>
           );
         })}
       </Box>

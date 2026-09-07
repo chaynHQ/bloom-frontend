@@ -19,13 +19,11 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { Event } from '@mui/icons-material';
+import { navDropdownPaperStyle } from '@/styles/common';
 import { navDrawerButtonStyle } from './MobileTopNav';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'transparent',
-  },
 } as const;
 
 export default function UserMenu() {
@@ -65,6 +63,7 @@ export default function UserMenu() {
         aria-label={t('userMenu')}
         id="user-menu-button"
         color="inherit"
+        size="small"
         onClick={handleClick}
         startIcon={<Person />}
         sx={navDrawerButtonStyle}
@@ -73,11 +72,13 @@ export default function UserMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        elevation={1}
-        sx={{ mt: 0.5 }}
+        elevation={0}
         slotProps={{
           list: {
             id: 'user-menu',
+          },
+          paper: {
+            sx: navDropdownPaperStyle,
           },
         }}
       >

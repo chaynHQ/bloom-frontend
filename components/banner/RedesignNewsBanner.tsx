@@ -1,6 +1,9 @@
 'use client';
 
-import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
+import {
+  REDESIGN_BANNER_DISMISSED,
+  REDESIGN_BANNER_FEEDBACK_CLICKED,
+} from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import logEvent from '@/lib/utils/logEvent';
 import { contentRailGutter } from '@/styles/common';
@@ -22,7 +25,7 @@ const sectionStyle = {
 
 const sectionContentStyle = {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: { xs: 'flex-start', md: 'center' },
   justifyContent: 'space-between',
   flexWrap: { xs: 'wrap', md: 'nowrap' },
   gap: { xs: 1.5, md: 3 },
@@ -35,19 +38,14 @@ const sectionContentStyle = {
 } as const;
 
 // The flex-basis drives the wrapping: the actions stay alongside the message until both no longer
-// fit, then drop to their own row. A fixed `100%` would force that break at every width.
+// fit, then drop to their own row.
 const messageStyle = {
-  flex: '1 1 10rem',
-  minWidth: { xs: 'auto', md: 0 },
+  flex: '1 1 12rem',
+  minWidth: 0,
   margin: 0,
   fontSize: { xs: '0.875rem', md: '0.9375rem' },
   lineHeight: 1.4,
-  whiteSpace: { xs: 'normal', md: 'nowrap' },
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
 } as const;
-
-const supportingTextStyle = { display: { xs: 'none', lg: 'inline' } } as const;
 
 const actionsStyle = {
   display: 'flex',
@@ -73,43 +71,42 @@ const dismissStyle = {
   '&:hover': { backgroundColor: 'secondary.dark' },
 } as const;
 
-const USER_RESEARCH_BANNER_INTERACTED = 'user_research_banner_interacted';
-const USER_RESEARCH_FORM_LINK =
-  'https://docs.google.com/forms/d/e/1FAIpQLSfBwYdXRKDX_IKtcShgYvNu835BqtI5PbIC-GrmBBVIZDpQgw/viewform?usp=sf_link';
+const REDESIGN_NEWS_BANNER_INTERACTED = 'redesign_news_banner_interacted';
 
 const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
 
-// The study runs in English only, so the banner is gated on the `en` locale and its copy is not
-// translated. Move to i18n/messages if the study opens up to other languages.
+const FEEDBACK_FORM_LINK =
+  'https://form.typeform.com/to/OY9Wdk4h?typeform-source=chayn.typeform.com';
+
+// Copy is not translated yet, so the banner is gated on the `en` locale. Move to i18n/messages
+// when it needs to reach other languages.
 const COPY = {
-  regionLabel: 'Bloom user research',
-  headline: 'Take part in Bloom research for $75',
-  supportingText: ' — test new designs and help us make Bloom better for survivors.',
-  accept: 'I\u2019m interested',
+  regionLabel: 'Bloom redesign news',
+  headline: 'Bloom had a makeover!',
+  supportingText:
+    ' All our content now lives in the Library, so it’s easier to find and filter \u{1F49C}',
+  feedback: 'Share feedback',
   dismiss: 'Dismiss',
 } as const;
 
-export default function UserResearchBanner() {
+export default function RedesignNewsBanner() {
   const [open, setOpen] = useState(true);
   const locale = useLocale();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // The dismissal cookie is client-only, so assume "not interacted" for SSR and the first paint:
   // the banner is then in the initial HTML and doesn't shove the page down once it resolves. A
-  // visitor who already interacted sees it collapse away rather than a reserved gap.
+  // visitor who already dismissed it sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
   useEffect(() => {
-    if (Cookies.get(USER_RESEARCH_BANNER_INTERACTED)) {
+    if (Cookies.get(REDESIGN_NEWS_BANNER_INTERACTED)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInteracted(true);
     }
   }, []);
 
-  const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
-  const isEnglish = locale === 'en';
-
-  const showBanner = isBannerFeatureEnabled && isEnglish;
+  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled() && locale === 'en';
 
   // Publishes how much of the banner is still visible below the fixed TopBar. The floating back /
   // "Leave site" buttons offset by it, so they ride down with the banner as it scrolls away and
@@ -156,23 +153,20 @@ export default function UserResearchBanner() {
     };
   }, [open, interacted, showBanner]);
 
-  const handleClickAccepted = () => {
-    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_INTERESTED);
-    setOpen(false);
-
-    window.open(USER_RESEARCH_FORM_LINK, '_blank', 'noopener,noreferrer');
+  const handleClickFeedback = () => {
+    logEvent(REDESIGN_BANNER_FEEDBACK_CLICKED);
+    window.open(FEEDBACK_FORM_LINK, '_blank', 'noopener,noreferrer');
   };
 
   const handleClickDeclined = () => {
-    Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');
-    logEvent(USER_BANNER_DISMISSED);
+    Cookies.set(REDESIGN_NEWS_BANNER_INTERACTED, 'true');
+    logEvent(REDESIGN_BANNER_DISMISSED);
     setOpen(false);
   };
 
   if (!showBanner) return null;
 
-  // Starts open; if the cookie effect finds a prior interaction it collapses away smoothly
+  // Starts open; if the cookie effect finds a prior dismissal it collapses away smoothly
   // rather than the banner (and the page under it) snapping into place.
   return (
     <Collapse in={open && !interacted} unmountOnExit>
@@ -182,9 +176,7 @@ export default function UserResearchBanner() {
             <Box component="strong" sx={{ fontWeight: 500 }}>
               {COPY.headline}
             </Box>
-            <Box component="span" sx={supportingTextStyle}>
-              {COPY.supportingText}
-            </Box>
+            {COPY.supportingText}
           </Typography>
           <Box sx={actionsStyle}>
             <Button
@@ -192,9 +184,9 @@ export default function UserResearchBanner() {
               color="secondary"
               size="small"
               sx={ctaStyle}
-              onClick={handleClickAccepted}
+              onClick={handleClickFeedback}
             >
-              {COPY.accept}
+              {COPY.feedback}
             </Button>
             <IconButton
               size="small"
