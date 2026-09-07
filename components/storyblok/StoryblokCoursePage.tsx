@@ -91,8 +91,10 @@ const StoryblokCoursePage = ({
   const referralPartner = useCookieReferralPartner();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  // One source for every auth-dependent part of the overview (CTA panel, lock badges, sign-up
-  // section, no-access guard), so they hold a placeholder while auth settles rather than flipping.
+  // Course & session pages drive the whole overview off `useUserAuthStatus`, not
+  // `useContentAccessStatus`: the overview always renders in full (hero, session list) with its
+  // sub-components adapting to auth, and a public course's first session plays for everyone — a
+  // rule the four-state content-access model can't express. See `useContentAccessStatus`.
   const userAuthStatus = useUserAuthStatus();
   const isSignedIn = userAuthStatus === 'signedIn';
   const courses = useTypedSelector((state) => state.courses);
@@ -104,18 +106,17 @@ const StoryblokCoursePage = ({
   // A public course opens its first session to logged-out visitors (see StoryblokSessionPage).
   const isPublicCourse = (included_for_partners ?? []).includes('Public');
 
-  // Derive user access from partner settings
-  const userAccess = useMemo(() => {
-    const storyPartners = included_for_partners;
-    return hasAccessToPage(
-      isSignedIn,
-      true,
-      storyPartners,
-      partnerAccesses,
-      partnerAdmin,
-      referralPartner,
-    );
-  }, [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isSignedIn]);
+  const userAccess = useMemo(
+    () =>
+      hasAccessToPage(
+        isSignedIn,
+        included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+        referralPartner,
+      ),
+    [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isSignedIn],
+  );
 
   // Derive course progress from courses state
   const courseProgress = useMemo(

@@ -4,6 +4,7 @@ import { Link as i18nLink, usePathname } from '@/i18n/routing';
 import { SIGN_UP_TODAY_BANNER_BUTTON_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useRegisterPath } from '@/lib/hooks/useRegisterPath';
+import { type ContentType } from '@/lib/utils/libraryData';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import illustration from '@/public/illustration_access_course.svg';
@@ -11,9 +12,6 @@ import { Box, Button, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-// `cardSurface` (not `pageBackground`) so the card reads as a card on both the pink course hero
-// and the pale session page, where the page itself is `pageBackground`. Caps at the course hero's
-// 360px rail and centres itself in a wider column (the session page).
 const cardStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -22,7 +20,7 @@ const cardStyle = {
   borderRadius: '8px',
   border: '1px solid',
   borderColor: 'cardBorder',
-  backgroundColor: 'cardSurface',
+  backgroundColor: 'pageBackground',
   width: { xs: '100%', md: 360 },
   maxWidth: '100%',
   alignSelf: 'center',
@@ -44,22 +42,44 @@ const logInStyle = {
   color: 'primary.dark',
 } as const;
 
-interface AccessFullCourseCardProps {
-  // Where the card is shown, for the sign-up funnel event — and which copy to use: a standalone
-  // resource has no course to "unlock all sessions" of, so it gets its own wording.
-  source: 'course' | 'session' | 'resource';
+interface SignUpCardProps {
+  // Where the card is shown, for the sign-up funnel event, and which copy to use. `course` and
+  // `session` share the course copy; `resource` takes a per-format title from `format`;
+  // `relatedSession` is the upsell on a resource that excerpts a full session.
+  source: 'course' | 'session' | 'resource' | 'relatedSession';
+  format?: ContentType;
+  // Where "log in" returns the visitor; defaults to the current page.
+  returnPath?: string;
 }
 
-export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
+export function SignUpCard({ source, format, returnPath }: SignUpCardProps) {
   const tCourse = useTranslations('Courses.courseDetail.accessCard');
   const tResource = useTranslations('Resources.accessCard');
-  const t = source === 'resource' ? tResource : tCourse;
   const tS = useTranslations('Shared.signUpSection');
   const registerPath = useRegisterPath();
   const pathname = usePathname();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+
+  let title: string;
+  let body: string;
+  let logIn: string;
+  if (source === 'course' || source === 'session') {
+    title = tCourse('title');
+    body = tCourse('body');
+    logIn = tCourse('logIn');
+  } else if (source === 'relatedSession') {
+    title = tResource('relatedSession.title');
+    body = tResource('body');
+    logIn = tResource('logIn');
+  } else {
+    title = tResource(`title.${format ?? 'video'}`);
+    body = tResource('body');
+    logIn = tResource('logIn');
+  }
+
+  const returnUrl = encodeURIComponent(returnPath ?? pathname);
 
   return (
     <Box qa-id="access-full-course-card" sx={cardStyle}>
@@ -75,10 +95,10 @@ export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
         </Box>
         <Box sx={copyStyle}>
           <Typography variant="h4" component="p" sx={titleStyle}>
-            {t('title')}
+            {title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'grey.700' }}>
-            {t('body')}
+            {body}
           </Typography>
         </Box>
       </Box>
@@ -103,10 +123,10 @@ export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
       <Link
         qa-id="access-full-course-login-link"
         component={i18nLink}
-        href={`/auth/login?return_url=${encodeURIComponent(pathname)}`}
+        href={`/auth/login?return_url=${returnUrl}`}
         sx={logInStyle}
       >
-        {t('logIn')}
+        {logIn}
       </Link>
     </Box>
   );

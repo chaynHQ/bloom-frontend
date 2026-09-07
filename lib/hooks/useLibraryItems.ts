@@ -2,8 +2,8 @@
 
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import filterStoriesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import {
   normaliseSlug,
   parentCourseSlug,
@@ -12,7 +12,7 @@ import {
   type LibraryStories,
   type LibraryStory,
 } from '@/lib/utils/libraryData';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 
@@ -30,24 +30,14 @@ function withProgress(item: LibraryItem, progress: ProgressRecord[]): LibraryIte
 // Filters the server-fetched stories by locale and partner access, then attaches Redux progress.
 export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
   const locale = useLocale();
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const coursesProgress = useTypedSelector((state) => state.courses);
   const resourcesProgress = useTypedSelector((state) => state.resources);
-  const referralPartner = useCookieReferralPartner();
-  const isLoggedIn = !authStateLoading && Boolean(userId);
+  const userPartners = useUserContentPartners();
+  const isSignedIn = useUserAuthStatus() === 'signedIn';
 
-  useGetUserCoursesQuery(undefined, { skip: !isLoggedIn });
+  useGetUserCoursesQuery(undefined, { skip: !isSignedIn });
 
   return useMemo(() => {
-    const userPartners = userHasAccessToPartnerContent(
-      partnerAdmin?.partner,
-      partnerAccesses,
-      referralPartner,
-      userId,
-    );
     const accessible = (list: LibraryStory[]) =>
       filterStoriesForLocaleAndPartnerAccess(list, locale, userPartners);
 
@@ -95,14 +85,5 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
     );
 
     return [...courseItems, ...sessionItems, ...courseSessionItems];
-  }, [
-    stories,
-    locale,
-    userId,
-    partnerAccesses,
-    partnerAdmin,
-    referralPartner,
-    coursesProgress,
-    resourcesProgress,
-  ]);
+  }, [stories, locale, userPartners, coursesProgress, resourcesProgress]);
 }

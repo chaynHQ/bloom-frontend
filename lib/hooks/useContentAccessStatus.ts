@@ -18,8 +18,9 @@ export type ContentAccessStatus = 'resolving' | 'signInRequired' | 'accessDenied
 interface UseContentAccessStatusArgs {
   // The story's CMS `login_required` flag.
   contentRequiresLogin: boolean;
-  // `hasAccessToPage(...)` plus the locale check, evaluated treating the visitor as signed-out
-  // while auth is still resolving.
+  // Whether the visitor's partner/locale entitlement lets them open this page — the caller's
+  // `hasAccessToPage(...)` (or the public-content shortcut) combined with its locale check,
+  // evaluated treating the visitor as signed-out while auth is still resolving.
   hasPageAccess: boolean;
 }
 

@@ -8,13 +8,20 @@
     "activity": "Activity",
     "partOf": "{name} ka hissa",
     "sessionButtonLabel": "Pūrī session dekhen",
-    "mediaCard": {
-      "title": "{name} ke baare mein jaanein"
-    },
     "accessCard": {
-      "title": "Ek free account banaayein",
-      "body": "Bloom hamesha free aur anonymous hai. Sabhi resources kholne aur jahaan aapne chhoda tha wahaan se jaari rakhne ke liye sign up karein.",
-      "logIn": "Mera pehle se account hai"
+      "title": {
+        "audio": "Yeh audio access kariye",
+        "video": "Yeh video access kariye",
+        "written": "Yeh article access kariye",
+        "activity": "Yeh activity access kariye",
+        "course": "Yeh course access kariye",
+        "grounding": "Yeh grounding exercise access kariye"
+      },
+      "body": "Sabhi sessions unlock karne aur apni progress save karne ke liye ek free account banaiye.",
+      "logIn": "Mera pehle se account hai",
+      "relatedSession": {
+        "title": "Poori session access kariye"
+      }
     },
     "audioPlayer": {
       "play": "Play",

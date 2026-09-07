@@ -1,6 +1,6 @@
 'use client';
 
-import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
+import { SignUpCard } from '@/components/course/SignUpCard';
 import { Link as i18nLink } from '@/i18n/routing';
 import { type UserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { Box, Button, Skeleton } from '@mui/material';
@@ -74,7 +74,7 @@ export function CourseCtaPanel({
           </Button>
         </Box>
       ) : (
-        <AccessFullCourseCard source="course" />
+        <SignUpCard source="course" />
       )}
     </Box>
   );

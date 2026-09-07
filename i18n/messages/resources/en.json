@@ -8,13 +8,20 @@
     "activity": "Activity",
     "partOf": "Part of {name}",
     "sessionButtonLabel": "Watch full session",
-    "mediaCard": {
-      "title": "Learn about {name}"
-    },
     "accessCard": {
-      "title": "Create a free account",
-      "body": "Bloom is always free and anonymous. Sign up to open every resource and pick up where you left off.",
-      "logIn": "I already have an account"
+      "title": {
+        "audio": "Access this audio",
+        "video": "Access this video",
+        "written": "Access this article",
+        "activity": "Access this activity",
+        "course": "Access this course",
+        "grounding": "Access this exercise"
+      },
+      "body": "Create a free account to unlock all sessions and log your progress.",
+      "logIn": "I already have an account",
+      "relatedSession": {
+        "title": "Access the full session"
+      }
     },
     "audioPlayer": {
       "play": "Play",

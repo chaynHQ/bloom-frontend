@@ -59,6 +59,7 @@ export const StoryblokTextResourcePage = ({
     eventData,
     contributors,
     relatedGrounding,
+    relatedSessionHref,
     userContentPartners,
     start,
   } = useStoryblokResourcePage<TextResourceContent>({
@@ -80,6 +81,7 @@ export const StoryblokTextResourcePage = ({
     page_sections,
     related_content,
     related_grounding,
+    related_session,
   } = content;
 
   // Reading the page is the only engagement signal, so progress starts as soon as it's viewed.
@@ -104,6 +106,7 @@ export const StoryblokTextResourcePage = ({
         page_sections,
         related_content,
         related_grounding,
+        related_session,
       })}
     >
       <ResourcePageLayout
@@ -125,6 +128,7 @@ export const StoryblokTextResourcePage = ({
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
         media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>

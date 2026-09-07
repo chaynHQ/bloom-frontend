@@ -1,6 +1,7 @@
 'use client';
 
 import { CardStatusBadge, type CardProgress } from '@/components/cards/CardStatusBadge';
+import { FormatBadge } from '@/components/common/FormatBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { type CourseSession } from '@/lib/utils/courseSessions';
 import { cardShadow } from '@/styles/common';
@@ -34,13 +35,12 @@ const contentStyle = {
   display: 'flex',
   flexDirection: 'column',
   px: 2,
-  pt: 5,
+  pt: 6,
   pb: 2,
 } as const;
 
 const descriptionStyle = {
   color: 'grey.800',
-  mt: 1.5,
   display: '-webkit-box',
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
@@ -89,12 +89,14 @@ export function CourseSessionCard({
           accountNeeded={accountNeeded}
         />
 
-        <Box sx={contentStyle}>
-          <Typography variant="h4" component="h3" sx={{ mb: 0.5 }}>
+        {/* Without a duration footer the copy takes extra bottom padding so the card stays balanced. */}
+        <Box sx={{ ...contentStyle, pb: session.minutes != null ? 2 : 4 }}>
+          <Typography variant="h4" component="h3" sx={{ mb: 1 }}>
             {session.name}
           </Typography>
+          {session.hasVideo && <FormatBadge type="video" />}
           {session.description && (
-            <Typography variant="body2" sx={descriptionStyle}>
+            <Typography variant="body2" sx={{ ...descriptionStyle, mt: session.hasVideo ? 0 : 1 }}>
               {session.description}
             </Typography>
           )}

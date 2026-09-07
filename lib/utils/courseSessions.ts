@@ -11,6 +11,7 @@ export interface CourseSession {
   href: string;
   position: number; // 1-based, continuous across weeks
   minutes?: number; // from the session's free-text `duration` field, absent when unset
+  hasVideo: boolean;
 }
 
 interface CourseWeek {
@@ -35,6 +36,7 @@ export function getCourseSessions(
       href: getDefaultFullSlug(session.full_slug, locale),
       position: index + 1,
       minutes: parseMinutes(session.content?.duration),
+      hasVideo: Boolean(session.content?.video?.url),
     }));
 }
 

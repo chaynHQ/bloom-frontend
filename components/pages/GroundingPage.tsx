@@ -12,11 +12,10 @@ import {
   GROUNDING_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import filterResourcesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { parseMinutes, toPlainText } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
 import { cardShadow } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import { Box, Button, Card, CardActionArea, Container, Divider, Typography } from '@mui/material';
@@ -98,27 +97,20 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const referralPartner = useCookieReferralPartner();
+  const userContentPartners = useUserContentPartners();
   const isLoggedIn = !authStateLoading && Boolean(userId);
   // A signed-in user briefly looks anonymous: partnerAccesses/createdAt arrive with getUser.
   const userSettled = !authStateLoading && (!userToken || Boolean(userId));
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const viewLogged = useRef(false);
 
-  const visibleStories = useMemo(() => {
+  const visibleStories = useMemo(
     // Grounding has no gating, unlike partner-curated resources — 'public' always applies here,
     // regardless of the visitor's own partner, or a partner user's cards vanish once auth resolves.
-    const userPartners = [
-      ...userHasAccessToPartnerContent(
-        partnerAdmin?.partner,
-        partnerAccesses,
-        referralPartner,
-        userId,
-      ),
-      'public',
-    ];
-    return filterResourcesForLocaleAndPartnerAccess(stories, locale, userPartners);
-  }, [stories, locale, partnerAccesses, partnerAdmin?.partner, referralPartner, userId]);
+    () =>
+      filterStoriesForLocaleAndPartnerAccess(stories, locale, [...userContentPartners, 'public']),
+    [stories, locale, userContentPartners],
+  );
 
   const openId = searchParams?.get('id') ?? searchParams?.get('openacc') ?? undefined;
   const openStory = openId ? visibleStories.find((story) => story.slug === openId) : undefined;

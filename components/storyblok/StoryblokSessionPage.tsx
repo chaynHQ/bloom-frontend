@@ -5,7 +5,7 @@ import SessionContentCard from '@/components/cards/SessionContentCard';
 import { BackLink } from '@/components/common/BackLink';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
-import { AccessFullCourseCard } from '@/components/course/AccessFullCourseCard';
+import { SignUpCard } from '@/components/course/SignUpCard';
 import SessionFeedbackForm from '@/components/forms/SessionFeedbackForm';
 import MultipleBonusContent, { BonusContent } from '@/components/session/MultipleBonusContent';
 import { SessionActions } from '@/components/session/SessionActions';
@@ -103,6 +103,9 @@ const StoryblokSessionPage = ({
   const t = useTranslations('Courses');
   const locale = useLocale();
 
+  // Auth drives this page directly rather than through `useContentAccessStatus`: a public course's
+  // first session is a full preview for signed-out visitors while later sessions show a gate — a
+  // split the four-state content-access model can't express. See `useContentAccessStatus`.
   const userAuthStatus = useUserAuthStatus();
   const isSignedIn = userAuthStatus === 'signedIn';
   useGetUserCoursesQuery(undefined, {
@@ -113,17 +116,16 @@ const StoryblokSessionPage = ({
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  // Derive user access from partner settings
-  const userAccess = useMemo(() => {
-    const coursePartners = course.content.included_for_partners;
-    return hasAccessToPage(
-      isSignedIn,
-      true, // allow the preview through; the signed-out gate below withholds the content itself
-      coursePartners,
-      partnerAccesses,
-      partnerAdmin,
-    );
-  }, [partnerAccesses, course.content.included_for_partners, isSignedIn, partnerAdmin]);
+  const userAccess = useMemo(
+    () =>
+      hasAccessToPage(
+        isSignedIn,
+        course.content.included_for_partners,
+        partnerAccesses,
+        partnerAdmin,
+      ),
+    [partnerAccesses, course.content.included_for_partners, isSignedIn, partnerAdmin],
+  );
 
   // Derive session progress and ID from courses state
   const { sessionProgress, sessionId } = useMemo(
@@ -205,7 +207,7 @@ const StoryblokSessionPage = ({
       <Container sx={sessionContainerStyle}>
         <Box component="main" sx={sessionMainStyle}>
           <SessionHero name={name} sessionProgress={sessionProgress} />
-          <AccessFullCourseCard source="session" />
+          <SignUpCard source="session" />
         </Box>
       </Container>
     );
@@ -241,7 +243,7 @@ const StoryblokSessionPage = ({
               <CircularProgress color="error" />
             </Box>
           ) : isSignedOutGate ? (
-            <AccessFullCourseCard source="session" />
+            <SignUpCard source="session" />
           ) : (
             <>
               <Box sx={cardsStyle}>
@@ -302,7 +304,7 @@ const StoryblokSessionPage = ({
                   />
                 )}
               </Box>
-              {isSignedOutPreview && <AccessFullCourseCard source="session" />}
+              {isSignedOutPreview && <SignUpCard source="session" />}
             </>
           )}
         </Box>

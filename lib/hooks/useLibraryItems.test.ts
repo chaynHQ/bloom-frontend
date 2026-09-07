@@ -101,7 +101,7 @@ const renderLibrary = (stories: Partial<LibraryStories>, state: Partial<State> =
 const titles = (items: { title: string }[]) => items.map((item) => item.title);
 
 // A signed-in user with access to the named partner. They are not also granted 'public' access —
-// see userHasAccessToPartnerContent.
+// see getUserContentPartners.
 const asPartnerUser = (partner: string): Partial<State> => ({
   user: { id: 'user-1', authStateLoading: false },
   partnerAccesses: [{ partner: { name: partner } }],

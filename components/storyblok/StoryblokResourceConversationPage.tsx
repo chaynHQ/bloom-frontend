@@ -3,138 +3,76 @@
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
-import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import {
   RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
   RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
   RESOURCE_CONVERSATION_VIEWED,
 } from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
-import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
-import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
-import { Resource } from '@/lib/store/resourcesSlice';
-import hasAccessToPage from '@/lib/utils/hasAccessToPage';
-import logEvent from '@/lib/utils/logEvent';
-import { toResourceContributors } from '@/lib/utils/resourceContributors';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import {
+  useStoryblokResourcePage,
+  type ResourceStoryContent,
+} from '@/lib/hooks/useStoryblokResourcePage';
 import { Box } from '@mui/material';
-import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale } from 'next-intl';
-import { useEffect, useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 
-export interface StoryblokResourceConversationPageProps {
+export interface StoryblokResourceConversationPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
-  name: string;
   description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
-  login_required?: boolean;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
-  contributor_images?: { filename: string; alt: string }[];
-  contributors_description?: string;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_grounding: ISbStoryData[];
-  languages: string[];
   component: 'resource_conversation';
-  included_for_partners: string[];
 }
 
 const EVENT_PREFIX = 'RESOURCE_CONVERSATION' as const;
 
+// `resource_conversation` merges into `resource_audio` in step 7, so it never gained the
+// `related_session` field the other resource types have — hence no `relatedSessionHref` here.
+
 const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISbStoryData }) => {
-  const story = useStoryblokState(initialStory) ?? initialStory;
+  const {
+    content,
+    storyUuid,
+    isSignedIn,
+    contentAccessStatus,
+    resourceProgress,
+    resourceId,
+    eventData,
+    contributors,
+    relatedGrounding,
+    userContentPartners,
+    start,
+    complete,
+  } = useStoryblokResourcePage<StoryblokResourceConversationPageProps>({
+    initialStory,
+    category: RESOURCE_CATEGORIES.CONVERSATION,
+    eventPrefix: EVENT_PREFIX,
+    viewedEvent: RESOURCE_CONVERSATION_VIEWED,
+    // Block predates the `login_required` field, so gate until it lands.
+    loginRequiredByDefault: true,
+  });
+
   const {
     _uid,
     _editable,
     name,
     description,
     header_image,
-    login_required,
     audio,
     audio_transcript,
-    contributor_images,
-    contributors_description,
     team_members_section,
     page_sections,
     related_content,
-    related_grounding,
-    languages,
-    included_for_partners,
-  } = story.content as StoryblokResourceConversationPageProps;
-  const storyUuid = story.uuid;
-
-  const locale = useLocale();
-  const userId = useTypedSelector((state) => state.user.id);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const resources = useTypedSelector((state) => state.resources);
-  const userAuthStatus = useUserAuthStatus();
-  const isSignedIn = userAuthStatus === 'signedIn';
-
-  const hasPageAccess = useMemo(() => {
-    return (
-      hasAccessToPage(isSignedIn, true, included_for_partners, partnerAccesses, partnerAdmin) &&
-      (locale === LANGUAGES.en || languages.includes(locale))
-    );
-  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
-
-  // This block predates the `login_required` field, so gate by default until step 7's `resource_audio`.
-  const contentAccessStatus = useContentAccessStatus({
-    contentRequiresLogin: login_required !== false,
-    hasPageAccess,
-  });
-
-  const { resourceProgress, resourceId } = useMemo(() => {
-    const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
-    if (userResource) {
-      return {
-        resourceProgress: userResource.completed
-          ? PROGRESS_STATUS.COMPLETED
-          : PROGRESS_STATUS.STARTED,
-        resourceId: userResource.id,
-      };
-    }
-    return { resourceProgress: PROGRESS_STATUS.NOT_STARTED, resourceId: undefined };
-  }, [resources, storyUuid]);
-
-  const eventData = useMemo(
-    () => ({
-      resource_category: RESOURCE_CATEGORIES.CONVERSATION,
-      resource_name: name,
-      resource_storyblok_uuid: storyUuid,
-      resource_progress: resourceProgress,
-    }),
-    [name, storyUuid, resourceProgress],
-  );
-
-  useEffect(() => {
-    logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
-  });
-
-  const { start, complete } = useResourceProgress({
-    storyUuid,
-    eventPrefix: EVENT_PREFIX,
-    resourceProgress,
-    eventData,
-  });
-
-  const contributors = useMemo(
-    () => toResourceContributors(contributor_images, contributors_description),
-    [contributor_images, contributors_description],
-  );
-  const relatedGrounding = useMemo(
-    () => (Array.isArray(related_grounding) ? related_grounding : []),
-    [related_grounding],
-  );
+  } = content;
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;
@@ -152,7 +90,6 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         team_members_section,
         page_sections,
         related_content,
-        related_grounding,
       })}
     >
       <ResourcePageLayout
@@ -179,12 +116,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         pageSections={page_sections}
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
-        userContentPartners={userHasAccessToPartnerContent(
-          partnerAdmin?.partner,
-          partnerAccesses,
-          null,
-          userId,
-        )}
+        userContentPartners={userContentPartners}
         media={
           <ResourceAudioPlayer
             url={audio.filename}

@@ -14,7 +14,11 @@ type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
   return await getStoryblokStory(`written/${slug}`, locale, {
-    resolve_relations: ['resource_written.related_content', 'resource_written.related_grounding'],
+    resolve_relations: [
+      'resource_written.related_content',
+      'resource_written.related_grounding',
+      'resource_written.related_session',
+    ],
   });
 }
 

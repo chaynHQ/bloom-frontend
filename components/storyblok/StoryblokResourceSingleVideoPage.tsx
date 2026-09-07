@@ -4,158 +4,85 @@ import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import References from '@/components/common/References';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import Video from '@/components/video/Video';
-import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import {
   RESOURCE_SINGLE_VIDEO_TRANSCRIPT_CLOSED,
   RESOURCE_SINGLE_VIDEO_TRANSCRIPT_OPENED,
   RESOURCE_SINGLE_VIDEO_VIEWED,
 } from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
-import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
-import { Resource } from '@/lib/store/resourcesSlice';
-import hasAccessToPage from '@/lib/utils/hasAccessToPage';
-import logEvent from '@/lib/utils/logEvent';
-import { toResourceContributors } from '@/lib/utils/resourceContributors';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import {
+  useStoryblokResourcePage,
+  type ResourceStoryContent,
+} from '@/lib/hooks/useStoryblokResourcePage';
 import { Box, Typography } from '@mui/material';
-import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 import { StoryblokReferenceProps } from './StoryblokTypes';
 
-export interface StoryblokResourceSingleVideoPageProps {
+export interface StoryblokResourceSingleVideoPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
-  name: string;
   subtitle: string;
   description: StoryblokRichtext;
   duration: string;
-  login_required?: boolean;
   video: { url: string };
   video_transcript: StoryblokRichtext;
-  contributor_images?: { filename: string; alt: string }[];
-  contributors_description?: string;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_grounding: ISbStoryData[];
   references: StoryblokReferenceProps[];
-  languages: string[];
-  included_for_partners: string[];
   component: 'resource_single_video';
 }
 
 const EVENT_PREFIX = 'RESOURCE_SINGLE_VIDEO' as const;
 
 const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbStoryData }) => {
-  const story = useStoryblokState(initialStory) ?? initialStory;
+  const t = useTranslations('Resources');
+  const {
+    content,
+    storyUuid,
+    isSignedIn,
+    contentAccessStatus,
+    resourceProgress,
+    resourceId,
+    eventData,
+    contributors,
+    relatedGrounding,
+    relatedSessionHref,
+    userContentPartners,
+    start,
+    complete,
+  } = useStoryblokResourcePage<StoryblokResourceSingleVideoPageProps>({
+    initialStory,
+    category: RESOURCE_CATEGORIES.SINGLE_VIDEO,
+    eventPrefix: EVENT_PREFIX,
+    viewedEvent: RESOURCE_SINGLE_VIDEO_VIEWED,
+    // Block predates the `login_required` field, so gate until it lands.
+    loginRequiredByDefault: true,
+  });
+
   const {
     _uid,
     _editable,
     name,
     subtitle,
     description,
-    login_required,
     video,
     video_transcript,
-    contributor_images,
-    contributors_description,
+    references,
     team_members_section,
     page_sections,
     related_content,
-    related_grounding,
-    references,
-    languages,
-    included_for_partners,
-  } = story.content as StoryblokResourceSingleVideoPageProps;
-  const storyUuid = story.uuid;
+    related_session,
+  } = content;
 
-  const t = useTranslations('Resources');
-  const locale = useLocale();
-  const referralPartner = useCookieReferralPartner();
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const resources = useTypedSelector((state) => state.resources);
-  const userId = useTypedSelector((state) => state.user.id);
-  const userAuthStatus = useUserAuthStatus();
-  const isSignedIn = userAuthStatus === 'signedIn';
-
-  const contentPartners = useMemo(
-    () =>
-      userHasAccessToPartnerContent(
-        partnerAdmin?.partner,
-        partnerAccesses,
-        referralPartner,
-        userId,
-      ),
-    [referralPartner, partnerAccesses, partnerAdmin, userId],
-  );
-
-  const hasPageAccess = useMemo(() => {
-    return (
-      hasAccessToPage(isSignedIn, true, included_for_partners, partnerAccesses, partnerAdmin) &&
-      (locale === LANGUAGES.en || languages.includes(locale))
-    );
-  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
-
-  // This block predates the `login_required` field, so gate by default until step 7's `resource_video`.
-  const contentAccessStatus = useContentAccessStatus({
-    contentRequiresLogin: login_required !== false,
-    hasPageAccess,
-  });
-
-  const { resourceProgress, resourceId } = useMemo(() => {
-    const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
-    if (userResource) {
-      return {
-        resourceProgress: userResource.completed
-          ? PROGRESS_STATUS.COMPLETED
-          : PROGRESS_STATUS.STARTED,
-        resourceId: userResource.id,
-      };
-    }
-    return { resourceProgress: PROGRESS_STATUS.NOT_STARTED, resourceId: undefined };
-  }, [resources, storyUuid]);
-
-  const eventData = useMemo(
-    () => ({
-      resource_category: RESOURCE_CATEGORIES.SINGLE_VIDEO,
-      resource_name: name,
-      resource_storyblok_uuid: storyUuid,
-      resource_progress: resourceProgress,
-    }),
-    [name, storyUuid, resourceProgress],
-  );
-
-  useEffect(() => {
-    logEvent(RESOURCE_SINGLE_VIDEO_VIEWED, eventData);
-  });
-
-  const { start, complete } = useResourceProgress({
-    storyUuid,
-    eventPrefix: EVENT_PREFIX,
-    resourceProgress,
-    eventData,
-  });
-
-  const contributors = useMemo(
-    () => toResourceContributors(contributor_images, contributors_description),
-    [contributor_images, contributors_description],
-  );
   const keyReferences = useMemo(
     () => references?.filter((r) => r.is_key_reference) ?? [],
     [references],
-  );
-  const relatedGrounding = useMemo(
-    () => (Array.isArray(related_grounding) ? related_grounding : []),
-    [related_grounding],
   );
 
   if (contentAccessStatus === 'accessDenied') {
@@ -176,7 +103,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         references,
         page_sections,
         related_content,
-        related_grounding,
+        related_session,
       })}
     >
       <ResourcePageLayout
@@ -203,7 +130,8 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         pageSections={page_sections}
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
-        userContentPartners={contentPartners}
+        userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
         beforeSections={
           keyReferences.length > 0 && (
             <Box>

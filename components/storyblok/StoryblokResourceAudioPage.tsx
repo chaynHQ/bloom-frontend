@@ -9,32 +9,30 @@ import {
   RESOURCE_AUDIO_TRANSCRIPT_OPENED,
   RESOURCE_AUDIO_VIEWED,
 } from '@/lib/constants/events';
-import { useStoryblokResourcePage } from '@/lib/hooks/useStoryblokResourcePage';
+import {
+  useStoryblokResourcePage,
+  type ResourceStoryContent,
+} from '@/lib/hooks/useStoryblokResourcePage';
 import { Box } from '@mui/material';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 
-export interface StoryblokResourceAudioPageProps {
+export interface StoryblokResourceAudioPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
-  name: string;
   description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
   login_required: boolean;
-  contributor_images?: { filename: string; alt: string }[];
-  contributors_description?: string;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
   related_grounding: ISbStoryData[];
-  languages: string[];
   component: 'resource_audio';
-  included_for_partners: string[];
 }
 
 const EVENT_PREFIX = 'RESOURCE_AUDIO' as const;
@@ -50,6 +48,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     eventData,
     contributors,
     relatedGrounding,
+    relatedSessionHref,
     userContentPartners,
     start,
     complete,
@@ -73,6 +72,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     page_sections,
     related_content,
     related_grounding,
+    related_session,
   } = content;
 
   if (contentAccessStatus === 'accessDenied') {
@@ -93,6 +93,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         page_sections,
         related_content,
         related_grounding,
+        related_session,
       })}
     >
       <ResourcePageLayout
@@ -120,6 +121,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
         media={
           <ResourceAudioPlayer
             url={audio.filename}
