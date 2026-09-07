@@ -3,7 +3,6 @@
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
-import { usePathname, useRouter } from '@/i18n/routing';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
@@ -213,8 +212,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   // fresh visit to /library starts clean. The search box keeps local state for responsiveness
   // and is pushed to the URL on a debounce.
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
 
   const {
     kind,
@@ -242,29 +239,30 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [keyword, kind, themes, formats, lengths],
   );
 
+  // history.replaceState rather than router.replace: filter clicks and the debounced search sync
+  // then can't race each other, and neither cancels an in-flight navigation to a clicked result.
+  // `null` state, not the current one — Next skips its useSearchParams sync for its own `__NA` state.
+  const replaceUrl = useCallback((query: string) => {
+    const path = window.location.pathname;
+    window.history.replaceState(null, '', query ? `${path}?${query}` : path);
+  }, []);
+
   const writeFilters = useCallback(
-    (next: LibraryFilters) => {
-      const query = libraryFiltersToQuery(next);
-      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-    },
-    [router, pathname],
+    (next: LibraryFilters) => replaceUrl(libraryFiltersToQuery(next)),
+    [replaceUrl],
   );
 
-  // Merge just `q` onto the current URL via history.replaceState, not router.replace: a debounced
-  // write can't then clobber the other filters or cancel an in-flight navigation to a clicked
-  // result. `null` state lets Next sync useSearchParams (it skips the sync for its own __NA state).
-  const syncKeywordToUrl = useCallback((value: string) => {
-    const params = new URLSearchParams(window.location.search);
-    const trimmed = value.trim();
-    if (trimmed) params.set('q', trimmed);
-    else params.delete('q');
-    const query = params.toString();
-    window.history.replaceState(
-      null,
-      '',
-      query ? `${window.location.pathname}?${query}` : window.location.pathname,
-    );
-  }, []);
+  // Merges `q` against the live URL so a delayed write can't drop a filter set since.
+  const syncKeywordToUrl = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(window.location.search);
+      const trimmed = value.trim();
+      if (trimmed) params.set('q', trimmed);
+      else params.delete('q');
+      replaceUrl(params.toString());
+    },
+    [replaceUrl],
+  );
 
   const setThemes = (next: ThemeKey[]) => writeFilters({ ...currentFilters, themes: next });
   const setFormats = (next: Format[]) => writeFilters({ ...currentFilters, formats: next });

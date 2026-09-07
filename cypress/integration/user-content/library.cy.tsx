@@ -118,8 +118,6 @@ describe('Library page', () => {
 
     it('"Single sessions" narrows the results to sessions only', () => {
       cy.get('[qa-id=library-kind-session]').click();
-      // Wait for the filter to land in the URL before reading the cards — the toggle and the
-      // results re-render off the same query-string state.
       cy.get('[qa-id=library-kind-session]').should('have.attr', 'aria-pressed', 'true');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
