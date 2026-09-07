@@ -1,4 +1,5 @@
 import { AuthGuard } from '@/components/guards/AuthGuard';
+import ConsentedAnalytics from '@/components/layout/ConsentedAnalytics';
 import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
@@ -26,7 +27,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Montserrat, Noto_Sans_Arabic, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
-import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
@@ -104,7 +104,20 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                 <StoryblokProvider>
                   <body>
                     {/*
-                      PWA installation events (like `beforeinstallprompt`) must be captured 
+                      Google Consent Mode default. Runs during HTML parse — before the GA tag,
+                      which <GoogleAnalytics/> loads after `</body>` — so GA sets no cookies until
+                      the visitor accepts. CookieBanner sends the `consent` `update` on accept/decline.
+                    */}
+                    <script
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}' +
+                          "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});" +
+                          "gtag('set','ads_data_redaction',true);",
+                      }}
+                    />
+                    {/*
+                      PWA installation events (like `beforeinstallprompt`) must be captured
                       before React hydration. These events fire only once and are lost if not 
                       handled early. That's why we include this script before hydration — 
                       to bind the event listener in time.
@@ -128,13 +141,13 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
                     <MobileBottomNav />
                     <CookieBanner />
-                    {!!process.env.NEXT_PUBLIC_HOTJAR_ID && ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
-                      <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+                    {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
+                      <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />
                     )}
                     <Analytics />
                   </body>
                   <GoogleAnalytics
-                    debugMode={true}
+                    debugMode={ENVIRONMENT !== ENVIRONMENTS.PRODUCTION}
                     gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
                   />
                 </StoryblokProvider>

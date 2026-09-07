@@ -85,13 +85,6 @@ const CookieBanner = () => {
   };
 
   useEffect(() => {
-    sendGAEvent('consent', 'default', {
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-    });
-  }, []);
-
-  useEffect(() => {
     const cookieConsent = getCookieConsentValue(ANALYTICS_CONSENT_COOKIE);
     if (cookieConsent && cookieConsent === 'true') {
       dispatch(setCookiesAccepted(true));
