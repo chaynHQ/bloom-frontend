@@ -81,7 +81,14 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
 
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
-    return <ContentUnavailable />;
+    // Partner-only content the visitor isn't entitled to (or a locale it isn't published in).
+    // Signing in may grant access, so a logged-out visitor still gets the prompt.
+    return (
+      <>
+        {!isLoggedIn && <LoginDialog />}
+        <ContentUnavailable />
+      </>
+    );
   }
 
   return (
@@ -100,7 +107,6 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         related_grounding,
       })}
     >
-      {requiresLogin && <LoginDialog />}
       <ResourcePageLayout
         format="audio"
         name={name}
@@ -110,6 +116,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         resourceProgress={resourceProgress}
         resourceId={resourceId}
         isLoggedIn={isLoggedIn}
+        requiresLogin={requiresLogin}
         eventData={eventData}
         description={description}
         transcript={audio_transcript}

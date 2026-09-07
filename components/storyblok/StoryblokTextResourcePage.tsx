@@ -93,7 +93,12 @@ export const StoryblokTextResourcePage = ({
 
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
-    return <ContentUnavailable />;
+    return (
+      <>
+        {!isLoggedIn && <LoginDialog />}
+        <ContentUnavailable />
+      </>
+    );
   }
 
   return (
@@ -111,7 +116,6 @@ export const StoryblokTextResourcePage = ({
         related_grounding,
       })}
     >
-      {requiresLogin && <LoginDialog />}
       <ResourcePageLayout
         format={format}
         name={name}
@@ -121,6 +125,7 @@ export const StoryblokTextResourcePage = ({
         resourceProgress={resourceProgress}
         resourceId={resourceId}
         isLoggedIn={isLoggedIn}
+        requiresLogin={requiresLogin}
         eventData={eventData}
         description={description}
         hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}

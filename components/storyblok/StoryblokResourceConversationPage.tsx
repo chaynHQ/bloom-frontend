@@ -1,6 +1,8 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import LoadingContainer from '@/components/common/LoadingContainer';
+import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
@@ -9,8 +11,9 @@ import {
   RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
   RESOURCE_CONVERSATION_VIEWED,
 } from '@/lib/constants/events';
-import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
+import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
@@ -32,6 +35,7 @@ export interface StoryblokResourceConversationPageProps {
   description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
+  login_required?: boolean;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
   contributor_images?: { filename: string; alt: string }[];
@@ -55,6 +59,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     name,
     description,
     header_image,
+    login_required,
     audio,
     audio_transcript,
     contributor_images,
@@ -75,6 +80,8 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const resources = useTypedSelector((state) => state.resources);
   const isLoggedIn = !authStateLoading && Boolean(userId);
+  const isUserLoading = useIsUserLoading();
+  const requiresLogin = !isUserLoading && !isLoggedIn && login_required !== false;
 
   const userAccess = useMemo(() => {
     return (
@@ -126,7 +133,15 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     [related_grounding],
   );
 
-  if (!userAccess) return <ContentUnavailable />;
+  if (!userAccess) {
+    if (isUserLoading) return <LoadingContainer />;
+    return (
+      <>
+        {!isLoggedIn && <LoginDialog />}
+        <ContentUnavailable />
+      </>
+    );
+  }
 
   return (
     <Box
@@ -152,6 +167,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         resourceProgress={resourceProgress}
         resourceId={resourceId}
         isLoggedIn={isLoggedIn}
+        requiresLogin={requiresLogin}
         eventData={eventData}
         description={description}
         transcript={audio_transcript}

@@ -11,6 +11,11 @@
     "mediaCard": {
       "title": "{name} hakkında bilgi edin"
     },
+    "accessCard": {
+      "title": "Create a free account",
+      "body": "Bloom is always free and anonymous. Sign up to open every resource and pick up where you left off.",
+      "logIn": "I already have an account"
+    },
     "audioPlayer": {
       "play": "Oynat",
       "pause": "Duraklat",

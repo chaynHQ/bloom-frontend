@@ -45,12 +45,15 @@ const logInStyle = {
 } as const;
 
 interface AccessFullCourseCardProps {
-  // Where the card is shown, for the sign-up funnel event.
+  // Where the card is shown, for the sign-up funnel event — and which copy to use: a standalone
+  // resource has no course to "unlock all sessions" of, so it gets its own wording.
   source: 'course' | 'session' | 'resource';
 }
 
 export function AccessFullCourseCard({ source }: AccessFullCourseCardProps) {
-  const t = useTranslations('Courses.courseDetail.accessCard');
+  const tCourse = useTranslations('Courses.courseDetail.accessCard');
+  const tResource = useTranslations('Resources.accessCard');
+  const t = source === 'resource' ? tResource : tCourse;
   const tS = useTranslations('Shared.signUpSection');
   const registerPath = useRegisterPath();
   const pathname = usePathname();

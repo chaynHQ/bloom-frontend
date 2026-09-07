@@ -3,6 +3,7 @@
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import References from '@/components/common/References';
+import LoginDialog from '@/components/layout/LoginDialog';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import Video from '@/components/video/Video';
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
@@ -11,10 +12,10 @@ import {
   RESOURCE_SINGLE_VIDEO_TRANSCRIPT_OPENED,
   RESOURCE_SINGLE_VIDEO_VIEWED,
 } from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useResourceProgress } from '@/lib/hooks/useResourceProgress';
-import { useTypedSelector } from '@/lib/hooks/store';
 import { Resource } from '@/lib/store/resourcesSlice';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import logEvent from '@/lib/utils/logEvent';
@@ -37,6 +38,7 @@ export interface StoryblokResourceSingleVideoPageProps {
   subtitle: string;
   description: StoryblokRichtext;
   duration: string;
+  login_required?: boolean;
   video: { url: string };
   video_transcript: StoryblokRichtext;
   contributor_images?: { filename: string; alt: string }[];
@@ -61,6 +63,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     name,
     subtitle,
     description,
+    login_required,
     video,
     video_transcript,
     contributor_images,
@@ -85,6 +88,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const isUserLoading = useIsUserLoading();
+  const requiresLogin = !isUserLoading && !isLoggedIn && login_required !== false;
 
   const contentPartners = useMemo(
     () =>
@@ -153,7 +157,12 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
 
   if (!userAccess) {
     if (isUserLoading) return <LoadingContainer />;
-    return <ContentUnavailable />;
+    return (
+      <>
+        {!isLoggedIn && <LoginDialog />}
+        <ContentUnavailable />
+      </>
+    );
   }
 
   return (
@@ -182,6 +191,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         resourceProgress={resourceProgress}
         resourceId={resourceId}
         isLoggedIn={isLoggedIn}
+        requiresLogin={requiresLogin}
         eventData={eventData}
         description={description}
         transcript={video_transcript}

@@ -43,7 +43,7 @@ interface ResourceMediaCardProps {
   title: string;
   name: string;
   description: string | StoryblokRichtext;
-  media: ReactNode;
+  media?: ReactNode;
   transcript?: StoryblokRichtext;
   contributors?: { avatars: Avatar[]; caption: string };
   onTranscriptToggle?: (open: boolean) => void;

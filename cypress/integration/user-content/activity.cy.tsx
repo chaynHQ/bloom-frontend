@@ -17,8 +17,9 @@ describe('Activity resource pages', () => {
 
     cy.contains('h2', 'Thought diaries', { timeout: 10000 }).should('be.visible');
 
-    // login_required defaults to true, so a logged-out visitor sees the login dialog
-    // over the preview rather than the full resource.
-    cy.get('[qa-id=dialogLoginButton]', { timeout: 10000 }).should('be.visible');
+    // login_required defaults to true, so a logged-out visitor gets the preview (title,
+    // description, sign-up card) in place of the resource body — no modal, page stays reachable.
+    cy.get('[qa-id=access-full-course-card]', { timeout: 10000 }).should('be.visible');
+    cy.get('[qa-id=dialogLoginButton]').should('not.exist');
   });
 });

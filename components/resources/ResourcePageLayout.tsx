@@ -39,6 +39,7 @@ export interface ResourcePageLayoutProps {
   resourceProgress: PROGRESS_STATUS;
   resourceId?: string;
   isLoggedIn: boolean;
+  requiresLogin?: boolean;
   eventData: Record<string, unknown>;
   description: string | StoryblokRichtext;
   transcript?: StoryblokRichtext;
@@ -72,6 +73,7 @@ export const ResourcePageLayout = ({
   resourceProgress,
   resourceId,
   isLoggedIn,
+  requiresLogin = false,
   eventData,
   description,
   transcript,
@@ -90,21 +92,55 @@ export const ResourcePageLayout = ({
   const t = useTranslations('Resources');
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
 
+  const header = (
+    <>
+      <Box>
+        <BackLink qaId="resource-back-link" href="/library" label={t('backToLibrary')} />
+        <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
+      </Box>
+
+      <ResourceHero
+        title={name}
+        progress={resourceProgress}
+        subtitle={hero?.subtitle}
+        imageSrc={hero?.imageSrc}
+        imageAlt={hero?.imageAlt}
+      />
+    </>
+  );
+
+  // Logged-out visitor to a login-gated resource: show what the resource is about and the sign-up
+  // card, but not the media, transcript or progress actions. Related content still renders so they
+  // can keep exploring.
+  if (requiresLogin) {
+    return (
+      <>
+        <Container sx={resourceContainerStyle}>
+          {header}
+          <Box sx={resourceCardColumnStyle}>
+            <ResourceMediaCard
+              format={format}
+              title={t('mediaCard.title', { name })}
+              name={name}
+              description={description}
+              contributors={contributors}
+            />
+            <AccessFullCourseCard source="resource" />
+          </Box>
+        </Container>
+
+        <StoryblokRelatedContent
+          relatedContent={relatedContent}
+          userContentPartners={userContentPartners}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <Container sx={resourceContainerStyle}>
-        <Box>
-          <BackLink qaId="resource-back-link" href="/library" label={t('backToLibrary')} />
-          <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
-        </Box>
-
-        <ResourceHero
-          title={name}
-          progress={resourceProgress}
-          subtitle={hero?.subtitle}
-          imageSrc={hero?.imageSrc}
-          imageAlt={hero?.imageAlt}
-        />
+        {header}
 
         <Box sx={resourceCardColumnStyle}>
           <ResourceMediaCard
