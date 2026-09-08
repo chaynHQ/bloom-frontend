@@ -1,6 +1,6 @@
 'use client';
 
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -34,6 +34,7 @@ export function PartnerAdminGuard({ children }: { children: ReactNode }) {
 
   const t = useTranslations('PartnerAdmin.accessGuard');
   const tS = useTranslations('Shared');
+  const { open: openContactDialog } = useContactDialog();
 
   if (!partnerAdminId || !partnerAdminIsActive) {
     return (
@@ -65,7 +66,13 @@ export function PartnerAdminGuard({ children }: { children: ReactNode }) {
         >
           {t.rich('introduction', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() =>
+                  openContactDialog({ type: 'contact', source: 'partner_admin_denied' })
+                }
+              >
                 {children}
               </Link>
             ),

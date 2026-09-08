@@ -1,9 +1,10 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useUpdateUserMutation } from '@/lib/api';
 import { logout } from '@/lib/auth';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '@/lib/constants/errors';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
@@ -26,6 +27,7 @@ const ProfileSettingsForm = () => {
   const [confirmationRequired, setIsConfirmationRequired] = useState<boolean>(false);
   const [emailInput, setEmailInput] = useState<string | null>(email);
   const [nameInput, setNameInput] = useState<string | null>(name);
+  const { open: openContactDialog } = useContactDialog();
 
   const diffExists = name !== nameInput || email !== emailInput;
 
@@ -51,7 +53,11 @@ const ProfileSettingsForm = () => {
       setError(
         t.rich('updateError', {
           link: (children) => (
-            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+            <Link
+              component="button"
+              type="button"
+              onClick={() => openContactDialog({ type: 'bug', source: 'profile_settings_error' })}
+            >
               {children}
             </Link>
           ),

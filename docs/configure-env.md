@@ -38,9 +38,6 @@ NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
 NEXT_PUBLIC_FF_USER_RESEARCH_BANNER=true
 NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER=true
 
-# FEEDBACK FORM
-NEXT_PUBLIC_FEEDBACK_FORM_URL=https://chayn.typeform.com/to/OY9Wdk4h?typeform-source=bloom.chayn.co
-
 # REQUIRED VARIABLES FOR CYPRESS INTEGRATION TESTING
 # SEE docs/configure-cypress.md FOR INSTRUCTIONS
 #--------------------------------------------------------------------
@@ -77,6 +74,9 @@ NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID=
 NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # Booking session forms
 NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # User data form webhooks
 NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # User data form webhooks
+NEXT_PUBLIC_ZAPIER_WEBHOOK_BUG_REPORT= # Bug report form → Slack + Notion (see docs/configure-zapier-contact-forms.md)
+NEXT_PUBLIC_ZAPIER_WEBHOOK_APP_FEEDBACK= # App feedback form → Slack + Notion
+NEXT_PUBLIC_ZAPIER_WEBHOOK_CONTACT= # General contact form → Slack + Notion
 NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
 ```
 

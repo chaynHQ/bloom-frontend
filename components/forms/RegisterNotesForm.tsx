@@ -1,8 +1,8 @@
 'use client';
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { Link as i18nLink } from '@/i18n/routing';
 import { useSubscribeToWhatsappMutation } from '@/lib/api';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '@/lib/constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -59,6 +59,7 @@ const RegisterNotesForm = () => {
   const t = useTranslations('Auth.form');
   const tWhatsapp = useTranslations('Whatsapp.form');
   const tNotes = useTranslations('Whatsapp.notes');
+  const { open: openContactDialog } = useContactDialog();
 
   const { loading, userLoading, formError, setFormError, handleSubmit } = useRegisterFormLogic();
 
@@ -107,7 +108,13 @@ const RegisterNotesForm = () => {
           setFormError(
             tWhatsapp.rich('subscribeErrors.internal', {
               contactLink: (children) => (
-                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={() =>
+                    openContactDialog({ type: 'bug', source: 'whatsapp_signup_error' })
+                  }
+                >
                   {children}
                 </Link>
               ),

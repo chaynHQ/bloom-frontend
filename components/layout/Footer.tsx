@@ -22,6 +22,7 @@ import { useMemo } from 'react';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 
 // Returns responsive style based on number of partners to display
 function getDescriptionContainerStyle(totalPartners: number) {
@@ -93,6 +94,8 @@ const fundingLogosContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
+  const tContact = useTranslations('Contact');
+  const { open: openContactDialog } = useContactDialog();
   const searchParams = useSearchParams();
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -177,6 +180,24 @@ const Footer = () => {
               }}
             >
               {tS('footer.trustCenter')}
+            </Link>
+            <Link
+              qa-id="footer-feedback-link"
+              component="button"
+              type="button"
+              onClick={() => openContactDialog({ type: 'feedback', source: 'footer_feedback' })}
+              sx={{ display: 'block', mt: 2, textAlign: 'start' }}
+            >
+              {tContact('feedback.triggerLabel')}
+            </Link>
+            <Link
+              qa-id="footer-contact-link"
+              component="button"
+              type="button"
+              onClick={() => openContactDialog({ type: 'contact', source: 'footer_contact' })}
+              sx={{ display: 'block', mt: 2, textAlign: 'start' }}
+            >
+              {tContact('contact.triggerLabel')}
             </Link>
           </Box>
           <Box sx={partnersContainerStyle}>

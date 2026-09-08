@@ -1,8 +1,10 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { Link as i18nLink } from '@/i18n/routing';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutlineOutlined';
+import ChatBubbleOutline from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import Logout from '@mui/icons-material/Logout';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
@@ -28,6 +30,8 @@ const menuItemStyle = {
 
 export default function UserMenu() {
   const t = useTranslations('Navigation');
+  const tContact = useTranslations('Contact');
+  const { open: openContactDialog } = useContactDialog();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
@@ -122,6 +126,17 @@ export default function UserMenu() {
             startIcon={<Settings />}
           >
             {t('accountSettings')}
+          </Button>
+        </MenuItem>
+        <MenuItem sx={menuItemStyle}>
+          <Button
+            startIcon={<ChatBubbleOutline />}
+            onClick={() => {
+              handleClose();
+              openContactDialog({ type: 'feedback', source: 'user_menu' });
+            }}
+          >
+            {tContact('feedback.triggerLabel')}
           </Button>
         </MenuItem>
         <MenuItem sx={menuItemStyle}>

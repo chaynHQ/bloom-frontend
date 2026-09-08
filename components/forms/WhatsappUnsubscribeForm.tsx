@@ -1,7 +1,8 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useUnsubscribeFromWhatsappMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import {
   WHATSAPP_UNSUBSCRIBE_ERROR,
   WHATSAPP_UNSUBSCRIBE_REQUEST,
@@ -22,6 +23,7 @@ import { useMemo, useState } from 'react';
 const WhatsappUnsubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const rollbar = useRollbar();
+  const { open: openContactDialog } = useContactDialog();
 
   const userActiveSubscriptions = useTypedSelector((state) => state.user.activeSubscriptions);
   const [unsubscribeFromWhatsapp] = useUnsubscribeFromWhatsappMutation();
@@ -59,7 +61,13 @@ const WhatsappUnsubscribeForm = () => {
       setFormError(
         t.rich('unsubscribeErrors.internal', {
           contactLink: (children) => (
-            <Link target="_blank" href={FEEDBACK_FORM_URL}>
+            <Link
+              component="button"
+              type="button"
+              onClick={() =>
+                openContactDialog({ type: 'bug', source: 'whatsapp_unsubscribe_error' })
+              }
+            >
               {children}
             </Link>
           ),

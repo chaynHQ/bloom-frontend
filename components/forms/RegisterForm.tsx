@@ -1,11 +1,11 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import {
   useGetAutomaticAccessCodeFeatureForPartnerQuery,
   useValidateCodeMutation,
 } from '@/lib/api';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { PARTNER_ACCESS_CODE_STATUS } from '@/lib/constants/enums';
 import {
   VALIDATE_ACCESS_CODE_ERROR,
@@ -48,6 +48,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const { codeParam, partnerName, partnerId, accessCodeRequired } = props;
   const t = useTranslations('Auth.form');
   const rollbar = useRollbar();
+  const { open: openContactDialog } = useContactDialog();
 
   const [codeInput, setCodeInput] = useState<string>(codeParam ?? '');
   const [nameInput, setNameInput] = useState<string>('');
@@ -87,7 +88,11 @@ const RegisterForm = (props: RegisterFormProps) => {
         setFormError(
           t.rich('codeErrors.internal', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'register_code_error' })}
+              >
                 {children}
               </Link>
             ),

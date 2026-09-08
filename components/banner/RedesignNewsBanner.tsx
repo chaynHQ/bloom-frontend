@@ -1,5 +1,6 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import {
   REDESIGN_BANNER_DISMISSED,
   REDESIGN_BANNER_FEEDBACK_CLICKED,
@@ -73,12 +74,10 @@ const REDESIGN_NEWS_BANNER_INTERACTED = 'redesign_news_banner_interacted';
 
 const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
 
-const FEEDBACK_FORM_LINK =
-  'https://form.typeform.com/to/OY9Wdk4h?typeform-source=chayn.typeform.com';
-
 export default function RedesignNewsBanner() {
   const [open, setOpen] = useState(true);
   const t = useTranslations('RedesignBanner');
+  const { open: openContactDialog } = useContactDialog();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // The dismissal cookie is client-only, so assume "not interacted" for SSR and the first paint:
@@ -142,7 +141,7 @@ export default function RedesignNewsBanner() {
 
   const handleClickFeedback = () => {
     logEvent(REDESIGN_BANNER_FEEDBACK_CLICKED);
-    window.open(FEEDBACK_FORM_LINK, '_blank', 'noopener,noreferrer');
+    openContactDialog({ type: 'feedback', source: 'redesign_banner' });
   };
 
   const handleClickDeclined = () => {

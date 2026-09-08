@@ -1,7 +1,8 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useSubscribeToWhatsappMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { WHATSAPP_SUBSCRIPTION_STATUS } from '@/lib/constants/enums';
 import {
   WHATSAPP_SUBSCRIBE_ERROR,
@@ -24,6 +25,7 @@ import PhoneInput from './PhoneInput';
 const WhatsappSubscribeForm = () => {
   const t = useTranslations('Whatsapp.form');
   const rollbar = useRollbar();
+  const { open: openContactDialog } = useContactDialog();
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,7 +62,13 @@ const WhatsappSubscribeForm = () => {
           setFormError(
             t.rich('subscribeErrors.alreadyExists', {
               contactLink: (children) => (
-                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={() =>
+                    openContactDialog({ type: 'contact', source: 'whatsapp_subscribe_exists' })
+                  }
+                >
                   {children}
                 </Link>
               ),
@@ -70,7 +78,13 @@ const WhatsappSubscribeForm = () => {
           setFormError(
             t.rich('subscribeErrors.internal', {
               contactLink: (children) => (
-                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={() =>
+                    openContactDialog({ type: 'bug', source: 'whatsapp_subscribe_error' })
+                  }
+                >
                   {children}
                 </Link>
               ),

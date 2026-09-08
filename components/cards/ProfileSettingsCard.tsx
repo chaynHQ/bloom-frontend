@@ -1,8 +1,7 @@
 'use client';
 
 import ProfileSettingsForm from '@/components/forms/ProfileSettingsForm';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
-import { Card, CardContent, Link, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
 const cardStyle = {
@@ -19,15 +18,7 @@ const ProfileSettingsCard = () => {
         <Typography variant="h2" component="h2">
           {t('profileSettings.title')}
         </Typography>
-        <Typography>
-          {t.rich('profileSettings.description', {
-            link: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
-                {children}
-              </Link>
-            ),
-          })}
-        </Typography>
+        <Typography>{t('profileSettings.description')}</Typography>
         <ProfileSettingsForm />
       </CardContent>
     </Card>

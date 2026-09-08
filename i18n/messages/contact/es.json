@@ -1,0 +1,93 @@
+{
+  "Contact": {
+    "shared": {
+      "close": "Cerrar",
+      "optionalTag": "Opcional",
+      "emailLabel": "Correo electrónico",
+      "emailHelp": "Solo si quieres que te respondamos. No lo usaremos para nada más.",
+      "sendButton": "Enviar",
+      "sendingButton": "Enviando…",
+      "doneButton": "Listo",
+      "reportProblemButton": "Informar de este problema",
+      "honeypotLabel": "Deja este campo vacío",
+      "notFoundPrompt": "¿Esperabas encontrar algo aquí? <link>Cuéntanoslo</link> para que podamos arreglar el enlace.",
+      "switchHeading": "¿No es el lugar adecuado? Prueba con una de estas opciones.",
+      "deviceConsent": {
+        "label": "Incluir la información de mi dispositivo para ayudar al equipo a revisarlo",
+        "show": "Ver qué se incluye",
+        "hide": "Ocultar detalles",
+        "items": "La página en la que estás, tu tipo de navegador y de dispositivo, tu idioma, el tamaño de pantalla y la zona horaria. Nunca tu dirección IP, tu nombre ni tu ubicación.",
+        "note": "Puedes enviar este formulario sin esa información."
+      },
+      "supportSignpost": {
+        "heading": "¿Buscas apoyo?",
+        "body": "Este formulario llega al equipo que crea Bloom, no a nuestro equipo de apoyo, y no se revisa a todas horas. Si quieres hablar con alguien sobre tu proceso de sanación o sobre lo que estás viviendo, estamos aquí para ti.",
+        "messagingLink": "Escribir al equipo de Bloom",
+        "urgentLink": "Conseguir ayuda urgente"
+      },
+      "success": {
+        "title": "Mensaje enviado",
+        "body": "Gracias por tomarte el tiempo de contárnoslo. Leemos todo lo que llega por aquí.",
+        "bodyWithEmail": "Gracias por contárnoslo. Si tenemos alguna pregunta, te escribiremos a {email}.",
+        "bugBody": "Gracias por informarnos. Detalles como estos nos ayudan a hacer que Bloom sea más fiable para todo el mundo."
+      },
+      "errors": {
+        "messageRequired": "Escribe unas palabras antes de enviar.",
+        "feedbackEmpty": "Elige una opción de arriba o añade un comentario para que sepamos a qué te refieres.",
+        "emailInvalid": "Ese correo electrónico no parece correcto.",
+        "submitFailed": "No hemos podido enviar tu mensaje en este momento. Inténtalo de nuevo en un momento o <link>escribe directamente al equipo</link>."
+      }
+    },
+    "bug": {
+      "triggerLabel": "Informar de un error",
+      "title": "Informar de un error",
+      "intro": "¿Algo no funciona bien? Cuéntanos qué viste y lo revisaremos.",
+      "messageLabel": "¿Qué salió mal?",
+      "messagePlaceholder": "p. ej. pulsé reproducir en el vídeo de una sesión y la pantalla se puso en blanco",
+      "expectedLabel": "¿Qué esperabas que pasara?",
+      "moreToggle": "Añadir más detalles",
+      "stepsLabel": "¿Qué estabas haciendo justo antes de que pasara?",
+      "stepsPlaceholder": "1. Abrí la biblioteca\n2. Filtré por «Cursos»\n3. Pulsé la primera tarjeta",
+      "blockingLabel": "¿Puedes seguir usando Bloom?",
+      "blockingOptions": {
+        "no": "No, no puedo continuar",
+        "yes": "Sí, en su mayor parte",
+        "unsure": "No lo tengo claro"
+      }
+    },
+    "feedback": {
+      "triggerLabel": "Dar tu opinión",
+      "title": "Comparte tu opinión",
+      "intro": "Siempre estamos mejorando Bloom. Cuéntanos qué tal te funciona: todo suma.",
+      "tagsLabel": "¿Qué te llamó la atención? Elige lo que encaje.",
+      "tags": {
+        "easy_to_use": "Fácil de usar",
+        "hard_to_navigate": "Difícil de navegar",
+        "helpful": "Útil",
+        "confusing": "Confuso",
+        "missing_something": "Le falta algo",
+        "something_broke": "Algo no funcionó"
+      },
+      "brokeNudge": "Si algo no funciona, un <link>informe de error</link> nos ayuda a arreglarlo más rápido.",
+      "commentLabel": "Cuéntanos más",
+      "commentPlaceholder": "Qué funciona bien, qué te resulta frustrante, qué te encantaría ver…"
+    },
+    "contact": {
+      "triggerLabel": "Contáctanos",
+      "title": "Contacta con el equipo de Bloom",
+      "intro": "¿Tienes una pregunta o algo que plantear sobre Bloom o tu cuenta? Envíalo aquí.",
+      "reasonLabel": "¿Sobre qué es?",
+      "reasonPlaceholder": "Elige un tema",
+      "reasons": {
+        "question": "Una pregunta general",
+        "account_login": "Mi cuenta o el inicio de sesión",
+        "access_code": "Un código de acceso",
+        "data_request": "Mis datos o mi privacidad",
+        "partner": "Una organización asociada de Bloom",
+        "other": "Otra cosa"
+      },
+      "messageLabel": "Tu mensaje",
+      "messagePlaceholder": "Cuéntanos qué te gustaría preguntar o compartir"
+    }
+  }
+}

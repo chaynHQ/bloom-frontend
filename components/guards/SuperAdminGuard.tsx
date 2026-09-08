@@ -1,13 +1,12 @@
 'use client';
 
 import { useRouter } from '@/i18n/routing';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { fullScreenContainerStyle } from '@/styles/common';
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
@@ -69,13 +68,7 @@ export function SuperAdminGuard({ children }: { children: ReactNode }) {
             mb: 2,
           }}
         >
-          {t.rich('introduction', {
-            contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
-                {children}
-              </Link>
-            ),
-          })}
+          {t('introduction')}
         </Typography>
       </Container>
     );

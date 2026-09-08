@@ -1,8 +1,9 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import Header from '@/components/layout/Header';
 import { useUpdateUserMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { USER_DISABLED_SERVICE_EMAILS } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
@@ -19,6 +20,7 @@ export default function DisableServiceEmailsPage() {
   );
   const [error, setError] = useState<ErrorDisplay>();
   const [updateUser, { isLoading: updateUserIsLoading }] = useUpdateUserMutation();
+  const { open: openContactDialog } = useContactDialog();
 
   // Track if we've already attempted to disable emails
   const hasAttemptedDisable = useRef(false);
@@ -34,7 +36,11 @@ export default function DisableServiceEmailsPage() {
           setError(
             t.rich('error', {
               link: (content) => (
-                <Link target="_blank" href={FEEDBACK_FORM_URL}>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={() => openContactDialog({ type: 'bug', source: 'disable_emails_error' })}
+                >
                   {content}
                 </Link>
               ),
@@ -42,13 +48,17 @@ export default function DisableServiceEmailsPage() {
           );
         });
     }
-  }, [userServiceEmailsPermission, updateUser, t]);
+  }, [userServiceEmailsPermission, updateUser, t, openContactDialog]);
 
   const headerProps = {
     title: t('title'),
     introduction: t.rich('description', {
       link: (content) => (
-        <Link target="_blank" href={FEEDBACK_FORM_URL}>
+        <Link
+          component="button"
+          type="button"
+          onClick={() => openContactDialog({ type: 'contact', source: 'disable_emails' })}
+        >
           {content}
         </Link>
       ),

@@ -1,0 +1,93 @@
+{
+  "Contact": {
+    "shared": {
+      "close": "Close",
+      "optionalTag": "Optional",
+      "emailLabel": "Email address",
+      "emailHelp": "Only if you'd like a reply. We won't use it for anything else.",
+      "sendButton": "Send",
+      "sendingButton": "Sending…",
+      "doneButton": "Done",
+      "reportProblemButton": "Report this problem",
+      "honeypotLabel": "Leave this field empty",
+      "notFoundPrompt": "Expected something here? <link>Let us know</link> so we can fix the link.",
+      "switchHeading": "Not the right place? Try one of these instead.",
+      "deviceConsent": {
+        "label": "Include my device info to help the team look into this",
+        "show": "See what's included",
+        "hide": "Hide details",
+        "items": "The page you're on, your browser and device type, your language, screen size and time zone. Never your IP address, your name, or your location.",
+        "note": "You can send this form without it."
+      },
+      "supportSignpost": {
+        "heading": "Looking for support?",
+        "body": "This form reaches the team who build Bloom — not our support team, and it isn't monitored around the clock. If you'd like to talk to someone about your healing or anything you're going through, we're here for you.",
+        "messagingLink": "Message the Bloom team",
+        "urgentLink": "Get urgent help"
+      },
+      "success": {
+        "title": "Message sent",
+        "body": "Thank you for taking the time to tell us. We read everything that comes through here.",
+        "bodyWithEmail": "Thank you for telling us. If we have any questions, we'll email you at {email}.",
+        "bugBody": "Thank you for the report. Details like these help us make Bloom more reliable for everyone."
+      },
+      "errors": {
+        "messageRequired": "Please add a few words before sending.",
+        "feedbackEmpty": "Choose an option above, or add a comment so we know what you mean.",
+        "emailInvalid": "That email address doesn't look right.",
+        "submitFailed": "We couldn't send your message just now. Please try again in a moment, or <link>email the team directly</link>."
+      }
+    },
+    "bug": {
+      "triggerLabel": "Report a bug",
+      "title": "Report a bug",
+      "intro": "Something not working right? Tell us what you saw and we'll look into it.",
+      "messageLabel": "What went wrong?",
+      "messagePlaceholder": "e.g. I tapped play on a session video and the screen went white",
+      "expectedLabel": "What did you expect to happen?",
+      "moreToggle": "Add more detail",
+      "stepsLabel": "What were you doing just before it happened?",
+      "stepsPlaceholder": "1. Opened the library\n2. Filtered by 'Courses'\n3. Tapped the first card",
+      "blockingLabel": "Can you still use Bloom?",
+      "blockingOptions": {
+        "no": "No, I'm stuck",
+        "yes": "Yes, mostly",
+        "unsure": "Not sure"
+      }
+    },
+    "feedback": {
+      "triggerLabel": "Give feedback",
+      "title": "Share your feedback",
+      "intro": "We're always improving Bloom. Tell us how it's working for you — every bit helps.",
+      "tagsLabel": "What stood out? Choose any that fit.",
+      "tags": {
+        "easy_to_use": "Easy to use",
+        "hard_to_navigate": "Hard to navigate",
+        "helpful": "Helpful",
+        "confusing": "Confusing",
+        "missing_something": "Missing something",
+        "something_broke": "Something didn't work"
+      },
+      "brokeNudge": "If something's broken, a <link>bug report</link> helps us fix it faster.",
+      "commentLabel": "Tell us more",
+      "commentPlaceholder": "What's working well, what's frustrating, what you'd love to see…"
+    },
+    "contact": {
+      "triggerLabel": "Contact us",
+      "title": "Contact the Bloom team",
+      "intro": "Have a question, or something to raise about Bloom or your account? Send it here.",
+      "reasonLabel": "What's it about?",
+      "reasonPlaceholder": "Choose a topic",
+      "reasons": {
+        "question": "A general question",
+        "account_login": "My account or signing in",
+        "access_code": "An access code",
+        "data_request": "My data or privacy",
+        "partner": "A Bloom partner organisation",
+        "other": "Something else"
+      },
+      "messageLabel": "Your message",
+      "messagePlaceholder": "Tell us what you'd like to ask or share"
+    }
+  }
+}

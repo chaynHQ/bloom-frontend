@@ -1,6 +1,6 @@
 'use client';
 
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -32,6 +32,7 @@ export function TherapyAccessGuard({ children }: { children: ReactNode }) {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const t = useTranslations('Therapy.accessGuard');
   const tS = useTranslations('Shared');
+  const { open: openContactDialog } = useContactDialog();
 
   const therapyAccess = partnerAccesses.find(
     (partnerAccess) => partnerAccess.featureTherapy === true,
@@ -67,7 +68,13 @@ export function TherapyAccessGuard({ children }: { children: ReactNode }) {
         >
           {t.rich('introduction', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() =>
+                  openContactDialog({ type: 'contact', source: 'therapy_access_denied' })
+                }
+              >
                 {children}
               </Link>
             ),

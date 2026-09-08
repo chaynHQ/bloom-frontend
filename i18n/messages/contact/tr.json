@@ -1,0 +1,93 @@
+{
+  "Contact": {
+    "shared": {
+      "close": "Kapat",
+      "optionalTag": "İsteğe bağlı",
+      "emailLabel": "E-posta adresi",
+      "emailHelp": "Yalnızca yanıt istiyorsan. Bunu başka hiçbir şey için kullanmayız.",
+      "sendButton": "Gönder",
+      "sendingButton": "Gönderiliyor…",
+      "doneButton": "Tamam",
+      "reportProblemButton": "Bu sorunu bildir",
+      "honeypotLabel": "Bu alanı boş bırak",
+      "notFoundPrompt": "Burada bir şey mi olmalıydı? Bağlantıyı düzeltebilmemiz için <link>bize bildir</link>.",
+      "switchHeading": "Doğru yer değil mi? Bunun yerine şunlardan birini dene.",
+      "deviceConsent": {
+        "label": "Ekibin konuyu incelemesine yardımcı olmak için cihaz bilgilerimi ekle",
+        "show": "Nelerin eklendiğini gör",
+        "hide": "Ayrıntıları gizle",
+        "items": "Bulunduğun sayfa, tarayıcı ve cihaz türün, dilin, ekran boyutun ve saat dilimin. IP adresin, adın veya konumun asla eklenmez.",
+        "note": "Bu formu bunlar olmadan da gönderebilirsin."
+      },
+      "supportSignpost": {
+        "heading": "Destek mi arıyorsun?",
+        "body": "Bu form, Bloom'u geliştiren ekibe ulaşır; destek ekibimize değil ve sürekli takip edilmiyor. İyileşme sürecin ya da yaşadıkların hakkında biriyle konuşmak istersen, senin için buradayız.",
+        "messagingLink": "Bloom ekibine mesaj gönder",
+        "urgentLink": "Acil yardım al"
+      },
+      "success": {
+        "title": "Mesaj gönderildi",
+        "body": "Bize anlatmaya zaman ayırdığın için teşekkürler. Buraya ulaşan her şeyi okuyoruz.",
+        "bodyWithEmail": "Bize bildirdiğin için teşekkürler. Bir sorumuz olursa {email} adresine e-posta göndeririz.",
+        "bugBody": "Bildirimin için teşekkürler. Bunun gibi ayrıntılar, Bloom'u herkes için daha güvenilir hâle getirmemize yardımcı oluyor."
+      },
+      "errors": {
+        "messageRequired": "Göndermeden önce birkaç kelime yaz.",
+        "feedbackEmpty": "Yukarıdan bir seçenek seç ya da ne demek istediğini anlamamız için bir yorum ekle.",
+        "emailInvalid": "Bu e-posta adresi doğru görünmüyor.",
+        "submitFailed": "Mesajını şu anda gönderemedik. Birazdan tekrar dene ya da <link>doğrudan ekibe e-posta gönder</link>."
+      }
+    },
+    "bug": {
+      "triggerLabel": "Hata bildir",
+      "title": "Hata bildir",
+      "intro": "Bir şey düzgün çalışmıyor mu? Ne gördüğünü anlat, biz de inceleyelim.",
+      "messageLabel": "Ne ters gitti?",
+      "messagePlaceholder": "ör. bir bölüm videosunda oynat'a dokundum ve ekran bembeyaz oldu",
+      "expectedLabel": "Ne olmasını bekliyordun?",
+      "moreToggle": "Daha fazla ayrıntı ekle",
+      "stepsLabel": "Bu olmadan hemen önce ne yapıyordun?",
+      "stepsPlaceholder": "1. Kütüphaneyi açtım\n2. \"Kurslar\"a göre filtreledim\n3. İlk karta dokundum",
+      "blockingLabel": "Bloom'u yine de kullanabiliyor musun?",
+      "blockingOptions": {
+        "no": "Hayır, devam edemiyorum",
+        "yes": "Evet, çoğunlukla",
+        "unsure": "Emin değilim"
+      }
+    },
+    "feedback": {
+      "triggerLabel": "Geri bildirim ver",
+      "title": "Geri bildirimini paylaş",
+      "intro": "Bloom'u sürekli geliştiriyoruz. Senin için nasıl çalıştığını anlat — her katkı değerli.",
+      "tagsLabel": "Ne dikkatini çekti? Uyan her şeyi seç.",
+      "tags": {
+        "easy_to_use": "Kullanımı kolay",
+        "hard_to_navigate": "Gezinmesi zor",
+        "helpful": "Faydalı",
+        "confusing": "Kafa karıştırıcı",
+        "missing_something": "Bir şey eksik",
+        "something_broke": "Bir şey çalışmadı"
+      },
+      "brokeNudge": "Bir şey bozuksa, bir <link>hata bildirimi</link> onu daha hızlı düzeltmemize yardımcı olur.",
+      "commentLabel": "Bize daha fazlasını anlat",
+      "commentPlaceholder": "Neyin iyi gittiğini, neyin sinir bozucu olduğunu, neyi görmek istediğini…"
+    },
+    "contact": {
+      "triggerLabel": "Bize ulaş",
+      "title": "Bloom ekibiyle iletişime geç",
+      "intro": "Bir sorun mu var ya da Bloom veya hesabınla ilgili dile getirmek istediğin bir şey mi? Buradan gönder.",
+      "reasonLabel": "Konu nedir?",
+      "reasonPlaceholder": "Bir konu seç",
+      "reasons": {
+        "question": "Genel bir soru",
+        "account_login": "Hesabım veya giriş yapma",
+        "access_code": "Bir erişim kodu",
+        "data_request": "Verilerim veya gizliliğim",
+        "partner": "Bir Bloom iş ortağı kuruluşu",
+        "other": "Başka bir şey"
+      },
+      "messageLabel": "Mesajın",
+      "messagePlaceholder": "Ne sormak veya paylaşmak istediğini bize anlat"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useAssignPartnerAccessMutation } from '@/lib/api';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { PARTNER_ACCESS_CODE_STATUS } from '@/lib/constants/enums';
 import {
   ASSIGN_NEW_PARTNER_ACCESS_ERROR,
@@ -32,6 +32,7 @@ const listItemStyle = {
 const ApplyCodeForm = () => {
   const t = useTranslations('Account.applyCode');
   const rollbar = useRollbar();
+  const { open: openContactDialog } = useContactDialog();
 
   const [codeInput, setCodeInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,7 +84,11 @@ const ApplyCodeForm = () => {
         setFormError(
           t.rich('form.codeErrors.internal', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'apply_code_error' })}
+              >
                 {children}
               </Link>
             ),

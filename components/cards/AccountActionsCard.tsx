@@ -1,9 +1,10 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import ConfirmDialog from '@/components/forms/ConfirmDialog';
 import { useRouter } from '@/i18n/routing';
 import { useDeleteUserMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import theme from '@/styles/theme';
 import { Box, Button, Card, CardContent, lighten, Link, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
@@ -20,6 +21,7 @@ const AccountActionsCard = () => {
   const router = useRouter();
   const [deleteUser] = useDeleteUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
+  const { open: openContactDialog } = useContactDialog();
 
   const [resetPasswordConfirmationRequired, setResetPasswordConfirmationRequired] =
     useState<boolean>(false);
@@ -47,7 +49,11 @@ const AccountActionsCard = () => {
         setError(
           t.rich('updateError', {
             link: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'delete_account_error' })}
+              >
                 {children}
               </Link>
             ),

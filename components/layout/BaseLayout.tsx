@@ -31,6 +31,7 @@ import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
 import RedesignNewsBanner from '../banner/RedesignNewsBanner';
+import { ContactDialogProvider } from '../contact/ContactDialogProvider';
 
 // 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
@@ -126,23 +127,25 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     <Suspense fallback={null}>
                       <ReferralPartnerTracker />
                     </Suspense>
-                    <TopBar />
-                    {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
-                    <RedesignNewsBanner />
-                    <LeaveSiteButton />
-                    <DesktopPwaBanner />
+                    <ContactDialogProvider>
+                      <TopBar />
+                      {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
+                      <RedesignNewsBanner />
+                      <LeaveSiteButton />
+                      <DesktopPwaBanner />
 
-                    {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
-                    <MobileBottomNav />
+                      {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
+                      <MobileBottomNav />
 
-                    <main>
-                      <FruitzRetirementBanner />
+                      <main>
+                        <FruitzRetirementBanner />
 
-                      <AuthGuard>{children}</AuthGuard>
-                    </main>
-                    <Footer />
-                    <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
-                    <CookieBanner />
+                        <AuthGuard>{children}</AuthGuard>
+                      </main>
+                      <Footer />
+                      <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
+                      <CookieBanner />
+                    </ContactDialogProvider>
                     {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
                       <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />
                     )}

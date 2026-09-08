@@ -1,0 +1,93 @@
+{
+  "Contact": {
+    "shared": {
+      "close": "Schließen",
+      "optionalTag": "Optional",
+      "emailLabel": "E-Mail-Adresse",
+      "emailHelp": "Nur, wenn du eine Antwort möchtest. Wir verwenden sie für nichts anderes.",
+      "sendButton": "Senden",
+      "sendingButton": "Wird gesendet …",
+      "doneButton": "Fertig",
+      "reportProblemButton": "Dieses Problem melden",
+      "honeypotLabel": "Dieses Feld bitte leer lassen",
+      "notFoundPrompt": "Hier sollte etwas sein? <link>Sag uns Bescheid</link>, damit wir den Link reparieren können.",
+      "switchHeading": "Nicht der richtige Ort? Probiere stattdessen eines davon.",
+      "deviceConsent": {
+        "label": "Meine Geräteinformationen mitschicken, damit das Team der Sache nachgehen kann",
+        "show": "Ansehen, was enthalten ist",
+        "hide": "Details ausblenden",
+        "items": "Die Seite, auf der du dich befindest, dein Browser- und Gerätetyp, deine Sprache, Bildschirmgröße und Zeitzone. Niemals deine IP-Adresse, deinen Namen oder deinen Standort.",
+        "note": "Du kannst dieses Formular auch ohne diese Angaben senden."
+      },
+      "supportSignpost": {
+        "heading": "Suchst du Unterstützung?",
+        "body": "Dieses Formular erreicht das Team, das Bloom entwickelt – nicht unser Support-Team, und es wird nicht rund um die Uhr betreut. Wenn du mit jemandem über deinen Heilungsprozess oder das, was dich gerade beschäftigt, sprechen möchtest, sind wir für dich da.",
+        "messagingLink": "Dem Bloom-Team schreiben",
+        "urgentLink": "Dringende Hilfe erhalten"
+      },
+      "success": {
+        "title": "Nachricht gesendet",
+        "body": "Danke, dass du dir die Zeit genommen hast, uns das mitzuteilen. Wir lesen alles, was hier ankommt.",
+        "bodyWithEmail": "Danke, dass du es uns mitgeteilt hast. Falls wir Fragen haben, melden wir uns per E-Mail unter {email}.",
+        "bugBody": "Danke für deine Meldung. Solche Hinweise helfen uns, Bloom für alle zuverlässiger zu machen."
+      },
+      "errors": {
+        "messageRequired": "Bitte schreib ein paar Worte, bevor du sendest.",
+        "feedbackEmpty": "Wähle oben eine Option aus oder schreib einen Kommentar, damit wir wissen, was du meinst.",
+        "emailInvalid": "Diese E-Mail-Adresse sieht nicht richtig aus.",
+        "submitFailed": "Wir konnten deine Nachricht gerade nicht senden. Bitte versuche es gleich noch einmal oder <link>schreib dem Team direkt eine E-Mail</link>."
+      }
+    },
+    "bug": {
+      "triggerLabel": "Fehler melden",
+      "title": "Fehler melden",
+      "intro": "Etwas funktioniert nicht richtig? Sag uns, was du beobachtet hast, und wir sehen es uns an.",
+      "messageLabel": "Was ist schiefgelaufen?",
+      "messagePlaceholder": "z. B. Ich habe bei einem Session-Video auf Play getippt und der Bildschirm wurde weiß",
+      "expectedLabel": "Was hättest du erwartet?",
+      "moreToggle": "Mehr Details hinzufügen",
+      "stepsLabel": "Was hast du direkt davor gemacht?",
+      "stepsPlaceholder": "1. Bibliothek geöffnet\n2. Nach „Kurse“ gefiltert\n3. Auf die erste Karte getippt",
+      "blockingLabel": "Kannst du Bloom trotzdem nutzen?",
+      "blockingOptions": {
+        "no": "Nein, ich komme nicht weiter",
+        "yes": "Ja, größtenteils",
+        "unsure": "Nicht sicher"
+      }
+    },
+    "feedback": {
+      "triggerLabel": "Feedback geben",
+      "title": "Teil uns dein Feedback mit",
+      "intro": "Wir verbessern Bloom ständig. Sag uns, wie es für dich funktioniert – jede Rückmeldung hilft.",
+      "tagsLabel": "Was ist dir aufgefallen? Wähle alles aus, was passt.",
+      "tags": {
+        "easy_to_use": "Einfach zu benutzen",
+        "hard_to_navigate": "Schwer zu navigieren",
+        "helpful": "Hilfreich",
+        "confusing": "Verwirrend",
+        "missing_something": "Da fehlt etwas",
+        "something_broke": "Etwas hat nicht funktioniert"
+      },
+      "brokeNudge": "Wenn etwas nicht funktioniert, hilft uns ein <link>Fehlerbericht</link>, es schneller zu beheben.",
+      "commentLabel": "Erzähl uns mehr",
+      "commentPlaceholder": "Was gut läuft, was frustrierend ist, was du dir wünschen würdest …"
+    },
+    "contact": {
+      "triggerLabel": "Kontakt aufnehmen",
+      "title": "Das Bloom-Team kontaktieren",
+      "intro": "Hast du eine Frage oder etwas zu Bloom oder deinem Konto anzumerken? Schick es uns hier.",
+      "reasonLabel": "Worum geht es?",
+      "reasonPlaceholder": "Wähle ein Thema",
+      "reasons": {
+        "question": "Eine allgemeine Frage",
+        "account_login": "Mein Konto oder die Anmeldung",
+        "access_code": "Ein Zugangscode",
+        "data_request": "Meine Daten oder Privatsphäre",
+        "partner": "Eine Bloom-Partnerorganisation",
+        "other": "Etwas anderes"
+      },
+      "messageLabel": "Deine Nachricht",
+      "messagePlaceholder": "Sag uns, was du fragen oder mitteilen möchtest"
+    }
+  }
+}

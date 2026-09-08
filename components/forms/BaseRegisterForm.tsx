@@ -1,9 +1,10 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { useAddUserMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { LANGUAGES } from '@/lib/constants/enums';
 import {
   CREATE_USER_ALREADY_EXISTS,
@@ -53,6 +54,7 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
   const rollbar = useRollbar();
   const dispatch = useAppDispatch();
   const t = useTranslations('Auth.form');
+  const { open: openContactDialog } = useContactDialog();
 
   const userLoading = useTypedSelector((state) => state.user.loading);
 
@@ -87,7 +89,11 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'register_error' })}
+              >
                 {children}
               </Link>
             ),
@@ -122,7 +128,11 @@ export const useRegisterFormLogic = (redirectPath: string = defaultSignupRedirec
         setFormError(
           t.rich('createUserError', {
             contactLink: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'register_error' })}
+              >
                 {children}
               </Link>
             ),

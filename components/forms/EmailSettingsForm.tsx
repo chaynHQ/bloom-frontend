@@ -1,7 +1,8 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useUpdateUserMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
@@ -21,6 +22,7 @@ const EmailSettingsForm = () => {
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [error, setError] = useState<ErrorDisplay>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const { open: openContactDialog } = useContactDialog();
 
   const contactPermission = useTypedSelector((state) => state.user.contactPermission);
   const serviceEmailsPermission = useTypedSelector((state) => state.user.serviceEmailsPermission);
@@ -46,7 +48,11 @@ const EmailSettingsForm = () => {
         setError(
           t.rich('updateError', {
             link: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'email_settings_error' })}
+              >
                 {children}
               </Link>
             ),
@@ -54,7 +60,7 @@ const EmailSettingsForm = () => {
         );
       }
     },
-    [updateUser, t, contactPermissionValue, serviceEmailsPermissionValue],
+    [updateUser, t, contactPermissionValue, serviceEmailsPermissionValue, openContactDialog],
   );
 
   return (

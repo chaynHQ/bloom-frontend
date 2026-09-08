@@ -1,10 +1,10 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { useRouter } from '@/i18n/routing';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
-import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import {
   CREATE_ACCOUNT_LINK_CLICKED,
@@ -38,6 +38,7 @@ const LoginForm = () => {
   const rollbar = useRollbar();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { open: openContactDialog } = useContactDialog();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -102,12 +103,16 @@ const LoginForm = () => {
     if (!userLoadError) return null;
     return t.rich('form.getUserError', {
       contactLink: (children) => (
-        <Link target="_blank" href={FEEDBACK_FORM_URL}>
+        <Link
+          component="button"
+          type="button"
+          onClick={() => openContactDialog({ type: 'bug', source: 'login_error' })}
+        >
           {children}
         </Link>
       ),
     });
-  }, [userLoadError, t]);
+  }, [userLoadError, t, openContactDialog]);
 
   // Track previous error to log only on change
   const prevUserLoadErrorRef = useRef(userLoadError);

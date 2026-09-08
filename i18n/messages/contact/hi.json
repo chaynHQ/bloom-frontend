@@ -1,0 +1,93 @@
+{
+  "Contact": {
+    "shared": {
+      "close": "Band karein",
+      "optionalTag": "Optional",
+      "emailLabel": "Email address",
+      "emailHelp": "Sirf tab jab aap jawab chahte hain. Hum ise aur kisi cheez ke liye istemaal nahi karenge.",
+      "sendButton": "Bhejein",
+      "sendingButton": "Bheja ja raha hai…",
+      "doneButton": "Ho gaya",
+      "reportProblemButton": "Is problem ki report karein",
+      "honeypotLabel": "Is field ko khaali chhod dein",
+      "notFoundPrompt": "Yahaan kuch hone ki ummeed thi? <link>Humein bataiye</link> taaki hum link theek kar sakein.",
+      "switchHeading": "Sahi jagah nahi? Iske bajaye inmein se koi ek try karein.",
+      "deviceConsent": {
+        "label": "Team ko is par gaur karne mein madad ke liye meri device ki jaankari shaamil karein",
+        "show": "Dekhein kya shaamil hai",
+        "hide": "Details chhupayein",
+        "items": "Aap jis page par hain, aapka browser aur device type, aapki bhasha, screen size aur time zone. Kabhi bhi aapka IP address, aapka naam, ya aapka location nahi.",
+        "note": "Aap yeh form iske bina bhi bhej sakte hain."
+      },
+      "supportSignpost": {
+        "heading": "Support dhoondh rahe hain?",
+        "body": "Yeh form us team tak pahunchta hai jo Bloom banaati hai — hamari support team tak nahi, aur ise har waqt monitor nahi kiya jaata. Agar aap apni healing ya jo kuch aap guzar rahe hain uske baare mein kisi se baat karna chahte hain, toh hum aapke liye yahaan hain.",
+        "messagingLink": "Bloom team ko message karein",
+        "urgentLink": "Turant madad payein"
+      },
+      "success": {
+        "title": "Message bhej diya gaya",
+        "body": "Humein batane ke liye samay nikaalne ka shukriya. Yahaan jo kuch bhi aata hai, hum sab padhte hain.",
+        "bodyWithEmail": "Humein batane ke liye shukriya. Agar hamare koi sawaal honge, toh hum aapko {email} par email karenge.",
+        "bugBody": "Report karne ke liye shukriya. Aise details Bloom ko sabke liye zyada reliable banane mein hamari madad karte hain."
+      },
+      "errors": {
+        "messageRequired": "Bhejne se pehle kuch shabd likhiye.",
+        "feedbackEmpty": "Upar se koi option chuniye, ya ek comment jodiye taaki hum samajh sakein aap kya kehna chahte hain.",
+        "emailInvalid": "Yeh email address sahi nahi lag raha.",
+        "submitFailed": "Hum abhi aapka message nahi bhej paaye. Kripya thodi der mein dobara koshish karein, ya <link>team ko seedhe email karein</link>."
+      }
+    },
+    "bug": {
+      "triggerLabel": "Bug report karein",
+      "title": "Bug report karein",
+      "intro": "Kuch theek se kaam nahi kar raha? Humein bataiye aapne kya dekha aur hum ise dekhenge.",
+      "messageLabel": "Kya galat hua?",
+      "messagePlaceholder": "jaise, maine ek session video par play tap kiya aur screen safed ho gayi",
+      "expectedLabel": "Aapko kya hone ki ummeed thi?",
+      "moreToggle": "Aur detail jodein",
+      "stepsLabel": "Yeh hone se theek pehle aap kya kar rahe the?",
+      "stepsPlaceholder": "1. Library kholi\n2. 'Courses' se filter kiya\n3. Pehle card par tap kiya",
+      "blockingLabel": "Kya aap phir bhi Bloom istemaal kar sakte hain?",
+      "blockingOptions": {
+        "no": "Nahi, kaam ruk gaya hai",
+        "yes": "Haan, zyadatar",
+        "unsure": "Pakka nahi"
+      }
+    },
+    "feedback": {
+      "triggerLabel": "Feedback dein",
+      "title": "Apna feedback share karein",
+      "intro": "Hum Bloom ko hamesha behtar bana rahe hain. Bataiye yeh aapke liye kaisa kaam kar raha hai — har baat maayne rakhti hai.",
+      "tagsLabel": "Kya khaas laga? Jo bhi sahi lage chuniye.",
+      "tags": {
+        "easy_to_use": "Istemaal mein aasaan",
+        "hard_to_navigate": "Navigate karna mushkil",
+        "helpful": "Madadgaar",
+        "confusing": "Uljhan bhara",
+        "missing_something": "Kuch kami hai",
+        "something_broke": "Kuch kaam nahi kiya"
+      },
+      "brokeNudge": "Agar kuch kharaab hai, toh ek <link>bug report</link> humein ise tezi se theek karne mein madad karti hai.",
+      "commentLabel": "Humein aur bataiye",
+      "commentPlaceholder": "Kya achha chal raha hai, kya pareshaan karta hai, aap kya dekhna chahenge…"
+    },
+    "contact": {
+      "triggerLabel": "Sampark karein",
+      "title": "Bloom team se sampark karein",
+      "intro": "Koi sawaal hai, ya Bloom ya apne account ke baare mein kuch kehna hai? Yahaan bhejiye.",
+      "reasonLabel": "Yeh kis baare mein hai?",
+      "reasonPlaceholder": "Ek topic chuniye",
+      "reasons": {
+        "question": "Ek aam sawaal",
+        "account_login": "Mera account ya sign in karna",
+        "access_code": "Ek access code",
+        "data_request": "Mera data ya privacy",
+        "partner": "Ek Bloom partner sanstha",
+        "other": "Kuch aur"
+      },
+      "messageLabel": "Aapka message",
+      "messagePlaceholder": "Bataiye aap kya poochhna ya share karna chahenge"
+    }
+  }
+}

@@ -1,8 +1,9 @@
 'use client';
 
+import { useContactDialog } from '@/components/contact/ContactDialogProvider';
 import { usePathname } from '@/i18n/routing';
 import { useUpdateUserMutation } from '@/lib/api';
-import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import { ErrorDisplay } from '@/lib/constants/common';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   EMAIL_REMINDERS_SET_ERROR,
@@ -97,6 +98,7 @@ const EmailRemindersSettingsForm = () => {
 
   const pathname = usePathname();
   const t = useTranslations('Account.accountSettings.emailRemindersSettings');
+  const { open: openContactDialog } = useContactDialog();
 
   // Handle input selection change - reset success/error states
   const handleSelectedInputChange = (value: EMAIL_REMINDERS_FREQUENCY) => {
@@ -131,7 +133,11 @@ const EmailRemindersSettingsForm = () => {
         setError(
           t.rich('updateError', {
             link: (children) => (
-              <Link target="_blank" href={FEEDBACK_FORM_URL}>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => openContactDialog({ type: 'bug', source: 'email_reminders_error' })}
+              >
                 {children}
               </Link>
             ),
@@ -140,7 +146,7 @@ const EmailRemindersSettingsForm = () => {
         logEvent(setOn ? EMAIL_REMINDERS_SET_ERROR : EMAIL_REMINDERS_UNSET_ERROR, eventData);
       }
     },
-    [updateUser, selectedInput, pathname, t],
+    [updateUser, selectedInput, pathname, t, openContactDialog],
   );
 
   const showUpdateLaterMessage = pathname !== '/account/settings' && !error;
