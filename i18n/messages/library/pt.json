@@ -48,15 +48,15 @@
       "action": "Limpar filtros"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Reconhecer a violência",
-        "blurb": "Dar nome à violência nos relacionamentos e no dia a dia",
-        "description": "A violência nem sempre é evidente. Explore como o abuso e a coerção podem aparecer nos relacionamentos e no dia a dia, e encontre palavras para experiências que têm sido difíceis de nomear."
+      "recognising-abuse": {
+        "label": "Reconhecer o abuso",
+        "blurb": "Dar nome ao abuso nos relacionamentos e no dia a dia",
+        "description": "O abuso nem sempre é evidente. Explore como ele pode aparecer nos relacionamentos e no dia a dia, e encontre palavras para experiências que têm sido difíceis de nomear."
       },
-      "why-harm-happens": {
-        "label": "Por que a violência acontece",
+      "why-abuse-happens": {
+        "label": "Por que o abuso acontece",
         "blurb": "Conheça as forças sociais e sistêmicas por trás do abuso",
-        "description": "O abuso não depende apenas das escolhas de uma pessoa. Entenda as forças sociais, culturais e sistêmicas que permitem que a violência aconteça — e por que nada disso é culpa sua."
+        "description": "O abuso não depende apenas das escolhas de uma pessoa. Entenda as forças sociais, culturais e sistêmicas que permitem que o abuso aconteça — e por que nada disso é culpa sua."
       },
       "body-after-trauma": {
         "label": "Seu corpo depois do trauma",

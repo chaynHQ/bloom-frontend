@@ -16,16 +16,16 @@ export type Format = 'audio' | 'written' | 'video' | 'activity' | 'grounding';
 export type ContentType = 'course' | Format;
 
 export type ThemeKey =
-  | 'recognising-harm'
-  | 'why-harm-happens'
+  | 'recognising-abuse'
+  | 'why-abuse-happens'
   | 'body-after-trauma'
   | 'setting-boundaries'
   | 'healing-journey'
   | 'staying-safe';
 
 export const THEME_KEYS: ThemeKey[] = [
-  'recognising-harm',
-  'why-harm-happens',
+  'recognising-abuse',
+  'why-abuse-happens',
   'body-after-trauma',
   'setting-boundaries',
   'healing-journey',

@@ -48,15 +48,15 @@
       "action": "Borrar filtros"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Reconocer el daño",
-        "blurb": "Poner nombre al daño en las relaciones y en la vida cotidiana",
-        "description": "El daño no siempre es evidente. Explora cómo pueden manifestarse el abuso y la coerción en las relaciones y en la vida cotidiana, y encuentra palabras para experiencias que ha sido difícil nombrar."
+      "recognising-abuse": {
+        "label": "Reconocer el abuso",
+        "blurb": "Poner nombre al abuso en las relaciones y en la vida cotidiana",
+        "description": "El abuso no siempre es evidente. Explora cómo puede manifestarse en las relaciones y en la vida cotidiana, y encuentra palabras para experiencias que ha sido difícil nombrar."
       },
-      "why-harm-happens": {
-        "label": "Por qué ocurre el daño",
+      "why-abuse-happens": {
+        "label": "Por qué ocurre el abuso",
         "blurb": "Conoce las fuerzas sociales y sistémicas que hay detrás del abuso",
-        "description": "El abuso no depende solo de las decisiones de una persona. Comprende las fuerzas sociales, culturales y sistémicas que permiten que ocurra el daño, y por qué nada de esto es culpa tuya."
+        "description": "El abuso no depende solo de las decisiones de una persona. Comprende las fuerzas sociales, culturales y sistémicas que permiten que ocurra el abuso, y por qué nada de esto es culpa tuya."
       },
       "body-after-trauma": {
         "label": "Tu cuerpo después del trauma",

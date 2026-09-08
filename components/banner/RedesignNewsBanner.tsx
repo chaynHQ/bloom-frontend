@@ -28,10 +28,10 @@ const sectionContentStyle = {
   justifyContent: 'space-between',
   flexWrap: { xs: 'wrap', md: 'nowrap' },
   gap: { xs: 1.5, md: 3 },
-  paddingBlock: { xs: 1.5, md: 1 },
-  paddingInline: { xs: '1rem', md: '2rem' },
+  paddingBlock: { xs: 1.5, md: 1.75 },
+  paddingInline: { xs: '1rem', md: '2.5rem' },
   width: { md: 'fit-content' },
-  maxWidth: 1400,
+  maxWidth: 1600,
   marginInline: 'auto',
 } as const;
 
@@ -41,7 +41,7 @@ const messageStyle = {
   flex: '1 1 12rem',
   minWidth: 0,
   margin: 0,
-  fontSize: { xs: '0.875rem', md: '0.9375rem' },
+  fontSize: { xs: '0.875rem', md: '1.0625rem' },
   lineHeight: 1.4,
 } as const;
 
@@ -53,10 +53,10 @@ const actionsStyle = {
 } as const;
 
 const ctaStyle = {
-  paddingInline: { xs: 2, md: 2.5 },
-  paddingBlock: 0.5,
+  paddingInline: { xs: 2, md: 3 },
+  paddingBlock: { xs: 0.5, md: 0.75 },
   minWidth: 'auto',
-  fontSize: '0.875rem',
+  fontSize: { xs: '0.875rem', md: '0.9375rem' },
   lineHeight: 1.5,
   whiteSpace: 'nowrap',
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',

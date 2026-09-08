@@ -6,7 +6,11 @@ import { Button } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
-const ScrollToSignUpButton = () => {
+interface Props {
+  labelKey?: 'cta' | 'ctaMessaging';
+}
+
+const ScrollToSignUpButton = ({ labelKey = 'cta' }: Props) => {
   const t = useTranslations('Shared.signUpSection');
   const [isMounted, setIsMounted] = useState(false);
   const scrollToSignUp = useScrollToSignUp();
@@ -24,7 +28,7 @@ const ScrollToSignUpButton = () => {
 
   return (
     <Button variant="contained" color="error" onClick={scrollToSignUp}>
-      {t('cta')}
+      {t(labelKey)}
     </Button>
   );
 };

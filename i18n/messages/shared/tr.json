@@ -150,7 +150,8 @@
       "multilingual": "Çok dilli",
       "freeAndAnonymous": "Ücretsiz ve anonim",
       "exploreAtYourPace": "Kendi hızında keşfet",
-      "cta": "Bloom'a katıl, her zaman ücretsiz"
+      "cta": "Bloom'a katıl, her zaman ücretsiz",
+      "ctaMessaging": "Mesaj göndermek için Bloom'a katıl"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Tekil bölümler",
-        "introduction": "Zararı fark etme, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
+        "introduction": "İstismarı anlama, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
         "browseAll": "Tüm bölümlere göz at"
       },
       "courses": {

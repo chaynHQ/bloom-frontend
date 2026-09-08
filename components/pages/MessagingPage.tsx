@@ -46,7 +46,7 @@ export default function MessagingPage({ story }: Props) {
     introduction: story.content.description,
     imageSrc: story.content.header_image.filename,
     translatedImageAlt: story.content.header_image.alt,
-    cta: !userId ? <ScrollToSignUpButton /> : undefined,
+    cta: !userId ? <ScrollToSignUpButton labelKey="ctaMessaging" /> : undefined,
   };
 
   return (

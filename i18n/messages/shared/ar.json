@@ -150,7 +150,8 @@
       "multilingual": "متعدّد اللغات",
       "freeAndAnonymous": "مجاني ومجهول الهوية",
       "exploreAtYourPace": "الاستكشاف بالوتيرة التي تناسبك",
-      "cta": "الانضمام إلى Bloom، مجاني دائمًا"
+      "cta": "الانضمام إلى Bloom، مجاني دائمًا",
+      "ctaMessaging": "الانضمام إلى Bloom لإرسال رسالة"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "الجلسات المنفردة",
-        "introduction": "جلسات حول التعرّف على الأذى، ووضع الحدود، والتعافي، وأكثر من ذلك.",
+        "introduction": "جلسات حول فهم الإساءة، ووضع الحدود، والتعافي، وأكثر من ذلك.",
         "browseAll": "تصفّح كل الجلسات"
       },
       "courses": {
