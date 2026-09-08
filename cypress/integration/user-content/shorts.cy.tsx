@@ -11,8 +11,14 @@ describe('Shorts Flow', () => {
     // User visits the home page
     cy.visit('/');
 
+    // User clicks on Library
+    cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
+
+    // The library only renders its first page of results, so search for the short.
+    cy.get('[qa-id=library-search-input]', { timeout: 10000 }).type('Sex after trauma');
+
     // User clicks on a short titled "Sex after trauma"
-    cy.contains('Sex after trauma', { timeout: 10000 }).should('be.visible').click();
+    cy.get('a[aria-label="Sex after trauma"]', { timeout: 10000 }).click();
 
     // User plays the short video by clicking the react-player preview
     cy.get('.react-player__preview', { timeout: 10000 }).should('be.visible').click();
