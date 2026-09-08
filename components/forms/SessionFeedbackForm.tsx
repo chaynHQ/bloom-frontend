@@ -28,18 +28,19 @@ import { useState } from 'react';
 // A subtle tinted fill plus a hairline sets the comment box apart from the card behind it.
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
+  mb: 2,
   '& .MuiFilledInput-root': {
-    backgroundColor: 'sectionSurface',
+    backgroundColor: 'background.default',
     border: '1px solid',
     borderColor: 'inputBorder',
     borderRadius: '12px',
     padding: '12px',
-    '&:hover': {
-      backgroundColor: 'panelSurface',
-      borderColor: 'primary.dark',
+    '&:hover, &.Mui-focused': {
+      backgroundColor: 'background.default',
+      borderColor: 'secondary.main',
     },
     '&.Mui-focused': {
-      backgroundColor: 'panelSurface',
+      backgroundColor: 'background.default',
       borderColor: 'secondary.main',
     },
   },
@@ -52,7 +53,7 @@ const radioGroupStyle = {
   display: 'grid',
   gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' },
   gap: 1,
-  py: 2.5,
+  py: 2,
   label: {
     margin: 0,
     padding: 1,
@@ -183,7 +184,13 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           </Typography>
         )}
 
-        <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+        <LoadingButton
+          variant="contained"
+          color="secondary"
+          type="submit"
+          loading={loading}
+          sx={{ ml: 'auto', display: 'block' }}
+        >
           {t('sendButtonText')}
         </LoadingButton>
       </form>

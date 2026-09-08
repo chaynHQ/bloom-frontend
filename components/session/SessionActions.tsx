@@ -92,10 +92,10 @@ export const SessionActions = ({
       {!isCompleted && (
         <Button
           qa-id="session-complete-button"
-          variant="contained"
-          color="secondary"
+          variant="outlined"
+          color="primary"
           onClick={completeSessionAction}
-          startIcon={<CheckCircleRounded color="error" />}
+          startIcon={<CheckCircleRounded />}
           disabled={isLoading}
         >
           {t('sessionDetail.sessionComplete')}
