@@ -1,9 +1,9 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutlineOutlined';
 import Logout from '@mui/icons-material/Logout';
-import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -18,8 +18,8 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
+import { navDropdownOrigin, navDropdownPaperStyle, navDropdownRootStyle } from '@/styles/common';
 import { Event } from '@mui/icons-material';
-import { navDropdownPaperStyle } from '@/styles/common';
 import { navDrawerButtonStyle } from './MobileTopNav';
 
 const menuItemStyle = {
@@ -65,7 +65,7 @@ export default function UserMenu() {
         color="inherit"
         size="small"
         onClick={handleClick}
-        startIcon={<Person />}
+        startIcon={<AccountCircle />}
         sx={navDrawerButtonStyle}
       />
       <Menu
@@ -73,6 +73,8 @@ export default function UserMenu() {
         open={open}
         onClose={handleClose}
         elevation={0}
+        sx={navDropdownRootStyle}
+        {...navDropdownOrigin}
         slotProps={{
           list: {
             id: 'user-menu',

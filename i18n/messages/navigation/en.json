@@ -29,5 +29,13 @@
     },
     "messaging": "Messaging",
     "grounding": "Grounding"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Bloom redesign news",
+    "headline": "Bloom had a makeover!",
+    "supportingText": "Courses, sessions and activities now live together in the Library, so they’re easier to browse and filter 💜",
+    "feedback": "Share feedback",
+    "feedbackShort": "Feedback",
+    "dismiss": "Dismiss"
   }
 }

@@ -29,5 +29,13 @@
     },
     "messaging": "Mesajlaşma",
     "grounding": "Köklenme"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Bloom yeniden tasarım haberleri",
+    "headline": "Bloom yenilendi!",
+    "supportingText": "Kurslar, bölümler ve etkinlikler artık Kütüphane’de bir arada; böylece göz atmak ve filtrelemek daha kolay 💜",
+    "feedback": "Geri bildirim gönder",
+    "feedbackShort": "Geri bildirim",
+    "dismiss": "Kapat"
   }
 }

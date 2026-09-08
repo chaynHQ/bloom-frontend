@@ -29,5 +29,13 @@
     },
     "messaging": "Messaging",
     "grounding": "Stabilisierung"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Neuigkeiten zum Bloom-Redesign",
+    "headline": "Bloom hat einen neuen Look!",
+    "supportingText": "Kurse, Sessions und Übungen findest du jetzt alle in der Bibliothek – so kannst du leichter stöbern und filtern 💜",
+    "feedback": "Feedback geben",
+    "feedbackShort": "Feedback",
+    "dismiss": "Schließen"
   }
 }

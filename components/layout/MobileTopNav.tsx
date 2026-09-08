@@ -26,8 +26,9 @@ export const navDrawerButtonStyle = {
   height: 34,
   borderRadius: '50%',
   ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
+  '&[aria-expanded="true"]': { backgroundColor: 'background.default', color: 'primary.dark' },
   '& .MuiButton-startIcon': { mx: 0 },
-  '& .MuiSvgIcon-root': { fontSize: '1.25rem' },
+  '& .MuiSvgIcon-root': { fontSize: '1.5rem' },
   ...onDarkNavItemFocusStyle,
 } as const;
 

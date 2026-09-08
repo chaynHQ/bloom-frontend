@@ -3,7 +3,12 @@
 import { routing, usePathname, useRouter } from '@/i18n/routing';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
-import { navBarControlStyle, navDropdownPaperStyle } from '@/styles/common';
+import {
+  navBarControlStyle,
+  navDropdownOrigin,
+  navDropdownPaperStyle,
+  navDropdownRootStyle,
+} from '@/styles/common';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
@@ -38,6 +43,11 @@ const buttonStyle = {
   },
   '& .MuiButton-startIcon, & .MuiButton-endIcon': { mx: 0 },
   '& .MuiButton-endIcon svg': { transition: 'transform 0.2s ease' },
+  '&[aria-expanded="true"]': {
+    backgroundColor: 'primary.light',
+    borderColor: 'primary.light',
+    color: 'primary.dark',
+  },
   '&[aria-expanded="true"] .MuiButton-endIcon svg': { transform: 'rotate(180deg)' },
 } as const;
 
@@ -95,12 +105,14 @@ export default function LanguageMenu() {
         open={open}
         onClose={handleClose}
         elevation={0}
+        sx={navDropdownRootStyle}
+        {...navDropdownOrigin}
         slotProps={{
           list: {
             id: 'language-menu',
           },
           paper: {
-            sx: navDropdownPaperStyle,
+            sx: [navDropdownPaperStyle, { minWidth: 140 }],
           },
         }}
       >

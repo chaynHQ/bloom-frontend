@@ -6,15 +6,14 @@ import {
 } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import logEvent from '@/lib/utils/logEvent';
-import { contentRailGutter } from '@/styles/common';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
-import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
-// Full-bleed background; the content aligns to the TopBar's inline gutters so it lines up with
-// the logo and nav (tighter than the page Container on mobile — see TopBar / styles/theme.ts).
+// Full-bleed background. On desktop the content box shrink-wraps to its natural one-line width
+// (`fit-content`), centred, and only widens up to the rail cap — past which the message wraps.
 const sectionStyle = {
   width: '100%',
   backgroundColor: 'secondary.main',
@@ -30,11 +29,10 @@ const sectionContentStyle = {
   flexWrap: { xs: 'wrap', md: 'nowrap' },
   gap: { xs: 1.5, md: 3 },
   paddingBlock: { xs: 1.5, md: 1 },
-  paddingInline: {
-    xs: '1rem',
-    md: '2rem',
-    lg: contentRailGutter(),
-  },
+  paddingInline: { xs: '1rem', md: '2rem' },
+  width: { md: 'fit-content' },
+  maxWidth: 1400,
+  marginInline: 'auto',
 } as const;
 
 // The flex-basis drives the wrapping: the actions stay alongside the message until both no longer
@@ -78,20 +76,9 @@ const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
 const FEEDBACK_FORM_LINK =
   'https://form.typeform.com/to/OY9Wdk4h?typeform-source=chayn.typeform.com';
 
-// Copy is not translated yet, so the banner is gated on the `en` locale. Move to i18n/messages
-// when it needs to reach other languages.
-const COPY = {
-  regionLabel: 'Bloom redesign news',
-  headline: 'Bloom had a makeover!',
-  supportingText:
-    ' All our content now lives in the Library, so it’s easier to find and filter \u{1F49C}',
-  feedback: 'Share feedback',
-  dismiss: 'Dismiss',
-} as const;
-
 export default function RedesignNewsBanner() {
   const [open, setOpen] = useState(true);
-  const locale = useLocale();
+  const t = useTranslations('RedesignBanner');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // The dismissal cookie is client-only, so assume "not interacted" for SSR and the first paint:
@@ -106,7 +93,7 @@ export default function RedesignNewsBanner() {
     }
   }, []);
 
-  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled() && locale === 'en';
+  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled();
 
   // Publishes how much of the banner is still visible below the fixed TopBar. The floating back /
   // "Leave site" buttons offset by it, so they ride down with the banner as it scrolls away and
@@ -170,13 +157,13 @@ export default function RedesignNewsBanner() {
   // rather than the banner (and the page under it) snapping into place.
   return (
     <Collapse in={open && !interacted} unmountOnExit>
-      <Box component="aside" ref={sectionRef} aria-label={COPY.regionLabel} sx={sectionStyle}>
+      <Box component="aside" ref={sectionRef} aria-label={t('regionLabel')} sx={sectionStyle}>
         <Box sx={sectionContentStyle}>
           <Typography sx={messageStyle}>
             <Box component="strong" sx={{ fontWeight: 500 }}>
-              {COPY.headline}
-            </Box>
-            {COPY.supportingText}
+              {t('headline')}
+            </Box>{' '}
+            {t('supportingText')}
           </Typography>
           <Box sx={actionsStyle}>
             <Button
@@ -186,11 +173,16 @@ export default function RedesignNewsBanner() {
               sx={ctaStyle}
               onClick={handleClickFeedback}
             >
-              {COPY.feedback}
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                {t('feedback')}
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+                {t('feedbackShort')}
+              </Box>
             </Button>
             <IconButton
               size="small"
-              aria-label={COPY.dismiss}
+              aria-label={t('dismiss')}
               sx={dismissStyle}
               onClick={handleClickDeclined}
             >

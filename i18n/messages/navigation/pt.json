@@ -29,5 +29,13 @@
     },
     "messaging": "Bate-papo",
     "grounding": "Aterramento"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Novidades do redesenho do Bloom",
+    "headline": "O Bloom está de cara nova!",
+    "supportingText": "Os cursos, as sessões e as atividades agora estão todos juntos na Biblioteca, para você explorar e filtrar com mais facilidade 💜",
+    "feedback": "Enviar comentários",
+    "feedbackShort": "Comentários",
+    "dismiss": "Fechar"
   }
 }

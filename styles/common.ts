@@ -116,22 +116,34 @@ export const navBarControlStyle = {
   ...onDarkNavItemFocusStyle,
 } as const;
 
+// Cancels the global MuiMenu top offset; the gap comes from navDropdownPaperStyle's marginTop.
+export const navDropdownRootStyle = {
+  '&.MuiMenu-root': { top: 0 },
+} as const;
+
+export const navDropdownOrigin = {
+  anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+  transformOrigin: { vertical: 'top', horizontal: 'right' },
+} as const;
+
 // Dropdown surface for the nav bar's language / account menus.
 export const navDropdownPaperStyle = {
   marginTop: 1,
-  minWidth: 176,
-  borderRadius: 2,
+  minWidth: 160,
+  borderRadius: '20px',
   backgroundColor: 'common.white',
   border: '1px solid',
   borderColor: 'sectionBorder',
   boxShadow: navShadow,
-  '& .MuiMenuItem-root': { padding: 0 },
+  overflow: 'hidden',
+  '& .MuiList-root': { padding: 0.75 },
+  '& .MuiMenuItem-root': { padding: 0, borderRadius: '100px' },
   '& .MuiMenuItem-root .MuiButton-root': {
     justifyContent: 'flex-start',
     width: '100%',
-    paddingBlock: 1,
-    paddingInline: 2,
-    borderRadius: 0,
+    paddingBlock: 0.75,
+    paddingInline: 1.75,
+    borderRadius: '100px',
     fontWeight: 400,
     color: 'text.primary',
   },

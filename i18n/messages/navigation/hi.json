@@ -29,5 +29,13 @@
     },
     "messaging": "Sandesh Seva",
     "grounding": "Stirtha"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Bloom redesign ki news",
+    "headline": "Bloom ka naya look aa gaya!",
+    "supportingText": "Courses, sessions aur activities ab sab ek saath Library mein hain, taaki inhe browse aur filter karna aasaan ho 💜",
+    "feedback": "Feedback dein",
+    "feedbackShort": "Feedback",
+    "dismiss": "Band karein"
   }
 }

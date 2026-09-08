@@ -19,7 +19,7 @@ import {
 } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
-import { setAuthStateLoading } from '@/lib/store/userSlice';
+import { setAuthStateLoading, setLoadError } from '@/lib/store/userSlice';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Link, Typography } from '@mui/material';
@@ -125,7 +125,8 @@ const LoginForm = () => {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await dispatch(setAuthStateLoading(true));
-    await setFormError('');
+    setFormError('');
+    dispatch(setLoadError(null)); // clear any error from a previous attempt
     logEvent(LOGIN_REQUEST);
 
     const { user, error } = await login(emailInput, passwordInput);

@@ -29,5 +29,13 @@
     },
     "messaging": "Messagerie",
     "grounding": "Exercices"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Actualités de la refonte de Bloom",
+    "headline": "Bloom fait peau neuve !",
+    "supportingText": "Les cours, les sessions et les activités sont désormais réunis dans la Bibliothèque : plus faciles à parcourir et à filtrer 💜",
+    "feedback": "Donner votre avis",
+    "feedbackShort": "Avis",
+    "dismiss": "Fermer"
   }
 }

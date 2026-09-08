@@ -29,5 +29,13 @@
     },
     "messaging": "Mensajería",
     "grounding": "Anclaje "
+  },
+  "RedesignBanner": {
+    "regionLabel": "Novedades del rediseño de Bloom",
+    "headline": "¡Bloom se ha renovado!",
+    "supportingText": "Los cursos, las sesiones y las actividades ahora están juntos en la Biblioteca, para que puedas explorarlos y filtrarlos más fácilmente 💜",
+    "feedback": "Enviar comentarios",
+    "feedbackShort": "Comentarios",
+    "dismiss": "Cerrar"
   }
 }

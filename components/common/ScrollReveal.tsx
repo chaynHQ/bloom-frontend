@@ -21,8 +21,10 @@ const revealStyle = (shown: boolean, delay: number, fill: boolean) =>
     transition: `opacity ${DURATION_MS}ms ${EASING}, transform ${DURATION_MS}ms ${EASING}`,
     transitionDelay: `${delay}ms`,
     // `fill` makes the wrapper a transparent pass-through so a single child still
-    // stretches to an equal-height grid cell or a flex row.
-    ...(fill && { display: 'flex', '& > *': { flexGrow: 1, minWidth: 0 } }),
+    // stretches to an equal-height grid cell or a flex row. `minWidth: 0` on the
+    // wrapper keeps it from blowing a `1fr` grid track or a flex row wider than its
+    // container when the card holds non-wrapping content.
+    ...(fill && { display: 'flex', minWidth: 0, '& > *': { flexGrow: 1, minWidth: 0 } }),
     '@media (prefers-reduced-motion: reduce)': {
       opacity: 1,
       transform: 'none',

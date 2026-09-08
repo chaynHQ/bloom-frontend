@@ -107,6 +107,9 @@ const filtersStyle = (open: boolean) =>
 const mobileFilterButtonStyle = {
   display: { xs: 'inline-flex', md: 'none' },
   flexShrink: 0,
+  height: 40,
+  minHeight: 0,
+  paddingInline: 1.75,
   borderRadius: '100px',
   backgroundColor: 'common.white',
 } as const;
