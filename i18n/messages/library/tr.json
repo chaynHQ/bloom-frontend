@@ -48,15 +48,15 @@
       "action": "Filtreleri temizle"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Zararı fark etmek",
-        "blurb": "İlişkilerde ve gündelik hayatta zararı adlandırmak",
-        "description": "Zarar her zaman açıkça görünmez. İstismarın ve zorlamanın ilişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet, adlandırması zor olan deneyimler için kelimeler bul."
+      "recognising-abuse": {
+        "label": "İstismarı fark etmek",
+        "blurb": "İlişkilerde ve gündelik hayatta istismarı adlandırmak",
+        "description": "İstismar her zaman açıkça görünmez. İlişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet, adlandırması zor olan deneyimler için kelimeler bul."
       },
-      "why-harm-happens": {
-        "label": "Zarar neden olur",
+      "why-abuse-happens": {
+        "label": "İstismar neden olur",
         "blurb": "İstismarın ardındaki toplumsal ve sistemsel güçleri öğren",
-        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. Zararın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri — ve bunların hiçbirinin neden senin suçun olmadığını — anla."
+        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. İstismarın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri — ve bunların hiçbirinin neden senin suçun olmadığını — anla."
       },
       "body-after-trauma": {
         "label": "Travma sonrası bedenin",

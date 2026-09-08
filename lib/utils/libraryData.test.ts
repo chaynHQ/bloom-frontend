@@ -373,7 +373,9 @@ describe('filterLibraryItems', () => {
     const multi = item({ id: 'multi', themes: ['staying-safe', 'healing-journey'] });
 
     expect(filterLibraryItems([multi], { ...noFilters, themes: ['staying-safe'] })).toHaveLength(1);
-    expect(filterLibraryItems([multi], { ...noFilters, themes: ['why-harm-happens'] })).toEqual([]);
+    expect(filterLibraryItems([multi], { ...noFilters, themes: ['why-abuse-happens'] })).toEqual(
+      [],
+    );
   });
 
   it('searches the title and the description, ignoring case and surrounding space', () => {

@@ -150,7 +150,8 @@
       "multilingual": "Mehrsprachig",
       "freeAndAnonymous": "Kostenlos und anonym",
       "exploreAtYourPace": "Entdecke in deinem eigenen Tempo",
-      "cta": "Bloom beitreten – immer kostenlos"
+      "cta": "Bloom beitreten – immer kostenlos",
+      "ctaMessaging": "Bloom beitreten, um eine Nachricht zu senden"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Einzelne Sessions",
-        "introduction": "Sessions über das Erkennen von Verletzungen, das Setzen von Grenzen, Heilung und mehr.",
+        "introduction": "Sessions über das Verstehen von Missbrauch, das Setzen von Grenzen, Heilung und mehr.",
         "browseAll": "Alle Sessions ansehen"
       },
       "courses": {

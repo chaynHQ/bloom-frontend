@@ -48,15 +48,15 @@
       "action": "Filters hataiye"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Hinsa ko pehchanna",
-        "blurb": "Rishton mein aur rozmarra zindagi mein hinsa ko naam dena",
-        "description": "Hinsa hamesha saaf dikhai nahi deti. Jaaniye ki rishton mein aur rozmarra zindagi mein abuse aur coercion kaise dikh sakte hain, aur un anubhavon ke liye shabd dhoondhiye jinhe naam dena mushkil raha hai."
+      "recognising-abuse": {
+        "label": "Abuse ko pehchanna",
+        "blurb": "Rishton mein aur rozmarra zindagi mein abuse ko naam dena",
+        "description": "Abuse hamesha saaf dikhai nahi deta. Jaaniye ki yeh rishton mein aur rozmarra zindagi mein kaise dikh sakta hai, aur un anubhavon ke liye shabd dhoondhiye jinhe naam dena mushkil raha hai."
       },
-      "why-harm-happens": {
-        "label": "Hinsa kyun hoti hai",
+      "why-abuse-happens": {
+        "label": "Abuse kyun hota hai",
         "blurb": "Abuse ke peeche ki samajik aur vyavasthagat vajahon ke bare mein jaaniye",
-        "description": "Abuse sirf ek vyakti ke faislon se nahi banta. Un samajik, sanskritik aur vyavasthagat shaktiyon ko samjhiye jo hinsa ko hone deti hain — aur yeh ki isme se kuch bhi aapki galti nahi hai."
+        "description": "Abuse sirf ek vyakti ke faislon se nahi banta. Un samajik, sanskritik aur vyavasthagat shaktiyon ko samjhiye jo abuse ko hone deti hain — aur yeh ki isme se kuch bhi aapki galti nahi hai."
       },
       "body-after-trauma": {
         "label": "Trauma ke baad aapka sharir",

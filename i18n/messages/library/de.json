@@ -48,15 +48,15 @@
       "action": "Filter zurücksetzen"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Gewalt erkennen",
-        "blurb": "Gewalt in Beziehungen und im Alltag benennen",
-        "description": "Gewalt ist nicht immer offensichtlich. Erfahre, wie Missbrauch und Zwang in Beziehungen und im Alltag aussehen können, und finde Worte für Erfahrungen, die sich bisher schwer benennen ließen."
+      "recognising-abuse": {
+        "label": "Missbrauch erkennen",
+        "blurb": "Missbrauch in Beziehungen und im Alltag benennen",
+        "description": "Missbrauch ist nicht immer offensichtlich. Erfahre, wie er in Beziehungen und im Alltag aussehen kann, und finde Worte für Erfahrungen, die sich bisher schwer benennen ließen."
       },
-      "why-harm-happens": {
-        "label": "Warum Gewalt geschieht",
-        "blurb": "Erfahre mehr über die gesellschaftlichen und strukturellen Ursachen von Gewalt",
-        "description": "Missbrauch entsteht nicht allein durch die Entscheidungen einer einzelnen Person. Verstehe die gesellschaftlichen, kulturellen und strukturellen Kräfte, die Gewalt ermöglichen – und warum nichts davon deine Schuld ist."
+      "why-abuse-happens": {
+        "label": "Warum Missbrauch geschieht",
+        "blurb": "Erfahre mehr über die gesellschaftlichen und strukturellen Ursachen von Missbrauch",
+        "description": "Missbrauch entsteht nicht allein durch die Entscheidungen einer einzelnen Person. Verstehe die gesellschaftlichen, kulturellen und strukturellen Kräfte, die Missbrauch ermöglichen – und warum nichts davon deine Schuld ist."
       },
       "body-after-trauma": {
         "label": "Dein Körper nach einem Trauma",

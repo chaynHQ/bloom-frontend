@@ -150,7 +150,8 @@
       "multilingual": "Multilingüe",
       "freeAndAnonymous": "Gratuito y anónimo",
       "exploreAtYourPace": "Explora a tu propio ritmo",
-      "cta": "Únete a Bloom, siempre gratis"
+      "cta": "Únete a Bloom, siempre gratis",
+      "ctaMessaging": "Únete a Bloom para enviar un mensaje"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Sesiones individuales",
-        "introduction": "Sesiones sobre reconocer el daño, poner límites, sanar y mucho más.",
+        "introduction": "Sesiones sobre entender el abuso, poner límites, sanar y mucho más.",
         "browseAll": "Ver todas las sesiones"
       },
       "courses": {

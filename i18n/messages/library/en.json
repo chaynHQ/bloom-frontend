@@ -48,15 +48,15 @@
       "action": "Clear filters"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Recognising harm",
-        "blurb": "Naming harm in relationships and everyday life",
-        "description": "Harm isn’t always obvious. Explore what abuse and coercion can look like in relationships and everyday life, and find language for experiences that have been hard to name."
+      "recognising-abuse": {
+        "label": "Recognising abuse",
+        "blurb": "Naming abuse in relationships and everyday life",
+        "description": "Abuse isn’t always obvious. Explore what it can look like in relationships and everyday life, and find language for experiences that have been hard to name."
       },
-      "why-harm-happens": {
-        "label": "Why harm happens",
+      "why-abuse-happens": {
+        "label": "Why abuse happens",
         "blurb": "Learn about the social and systemic forces behind abuse",
-        "description": "Abuse is shaped by more than one person’s choices. Understand the social, cultural, and systemic forces that allow harm to happen — and why none of it is your fault."
+        "description": "Abuse is shaped by more than one person’s choices. Understand the social, cultural, and systemic forces that allow abuse to happen — and why none of it is your fault."
       },
       "body-after-trauma": {
         "label": "Your body after trauma",

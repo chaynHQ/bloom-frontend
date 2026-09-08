@@ -48,15 +48,15 @@
       "action": "Effacer les filtres"
     },
     "themes": {
-      "recognising-harm": {
-        "label": "Reconnaître la violence",
-        "blurb": "Nommer la violence dans les relations et au quotidien",
-        "description": "La violence n’est pas toujours évidente. Découvre les formes que peuvent prendre les abus et le contrôle coercitif dans les relations et au quotidien, et trouve les mots pour des expériences difficiles à nommer."
+      "recognising-abuse": {
+        "label": "Reconnaître les abus",
+        "blurb": "Nommer les abus dans les relations et au quotidien",
+        "description": "Les abus ne sont pas toujours évidents. Découvre les formes qu’ils peuvent prendre dans les relations et au quotidien, et trouve les mots pour des expériences difficiles à nommer."
       },
-      "why-harm-happens": {
-        "label": "Pourquoi la violence existe",
-        "blurb": "Comprendre les forces sociales et systémiques à l’origine des violences",
-        "description": "La violence ne se résume pas aux choix d’une seule personne. Comprends les forces sociales, culturelles et systémiques qui la rendent possible — et pourquoi rien de tout cela n’est de ta faute."
+      "why-abuse-happens": {
+        "label": "Pourquoi les abus existent",
+        "blurb": "Comprendre les forces sociales et systémiques à l’origine des abus",
+        "description": "Les abus ne se résument pas aux choix d’une seule personne. Comprends les forces sociales, culturelles et systémiques qui les rendent possibles — et pourquoi rien de tout cela n’est de ta faute."
       },
       "body-after-trauma": {
         "label": "Ton corps après un traumatisme",

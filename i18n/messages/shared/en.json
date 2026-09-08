@@ -150,7 +150,8 @@
       "multilingual": "Multilingual",
       "freeAndAnonymous": "Free and anonymous",
       "exploreAtYourPace": "Explore at your own pace",
-      "cta": "Join Bloom, always free"
+      "cta": "Join Bloom, always free",
+      "ctaMessaging": "Join Bloom to send a message"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Individual sessions",
-        "introduction": "Sessions on understanding harm, setting boundaries, healing, and more.",
+        "introduction": "Sessions on understanding abuse, setting boundaries, healing, and more.",
         "browseAll": "Browse all sessions"
       },
       "courses": {

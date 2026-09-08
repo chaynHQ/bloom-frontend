@@ -150,7 +150,8 @@
       "multilingual": "Multilingue",
       "freeAndAnonymous": "Gratuit et anonyme",
       "exploreAtYourPace": "Explore à ton rythme",
-      "cta": "Rejoins Bloom, toujours gratuit"
+      "cta": "Rejoins Bloom, toujours gratuit",
+      "ctaMessaging": "Rejoins Bloom pour envoyer un message"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Sessions individuelles",
-        "introduction": "Des sessions sur reconnaître les violences, poser des limites, guérir, et bien plus encore.",
+        "introduction": "Des sessions sur comprendre les abus, poser des limites, guérir, et bien plus encore.",
         "browseAll": "Voir toutes les sessions"
       },
       "courses": {

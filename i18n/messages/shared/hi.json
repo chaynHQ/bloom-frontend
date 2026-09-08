@@ -150,7 +150,8 @@
       "multilingual": "Multilingual",
       "freeAndAnonymous": "Free aur anonymous",
       "exploreAtYourPace": "Apni speed se explore kariye",
-      "cta": "Bloom join kariye, hamesha free"
+      "cta": "Bloom join kariye, hamesha free",
+      "ctaMessaging": "Message bhejne ke liye Bloom join kariye"
     },
     "librarySections": {
       "continueLearning": {
@@ -158,7 +159,7 @@
       },
       "sessions": {
         "heading": "Single sessions",
-        "introduction": "Nuksaan ko pehchanne, boundaries banane, healing aur bahut kuch par sessions.",
+        "introduction": "Abuse ko samajhne, boundaries banane, healing aur bahut kuch par sessions.",
         "browseAll": "Sabhi sessions dekhiye"
       },
       "courses": {
