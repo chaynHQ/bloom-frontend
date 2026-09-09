@@ -200,9 +200,11 @@ detail in the implementation plan at the time — see git history for the exact 
 
 - Merge PR #1938 (epic-redesign — this ships the whole redesign, not a resource-only diff) to `develop` → staging → run the full redesign checklist **plus** the resource checklist below (written / activity / grounding; incl. `hi` locale related-content where `activities-mapping-fear-and-stress-in-our-bodies` has no `hi` translation — confirm the card drops, not errors) → `develop` → `main`.
 - **Post-verify, only after production is confirmed green:**
-  - `scripts/storyblok/04-delete-flat-pages.mjs` — (1) guard: `grounding-exercises/overview` (the `grounding_page` story from `02b`) must exist with a non-empty `title`; (2) `DELETE` the flat `activities` (339097530) and flat `grounding` (337379594) stories (`component: page`, no backend row, shadowed by the route + redirect — hero already lives in `overview`); (3) rename folder slug `grounding-exercises` → `grounding` (page becomes `grounding/overview`); (4) publish `grounding/overview`. Rename is transparent: grounding route + library select by `component` (never folder path), `related_grounding` refs are uuid-based, leaf `?id=` slugs unchanged, backend ignores `resource_grounding` / `grounding_page`. Snapshots all touched stories before writing. Child re-publish opt-in (`--republish-children`). Dry-run 2026-09-09 clean.
-  - Regenerate `public/sitemap.xml` — add `/activity/*` (6 locales), drop `/activities`, keep `/grounding`. Sitemap is hand-maintained; new `/written/*` / `/audio/*` / `/video/*` wait for step 7d.
-- Confirm again in production, then start step 7.
+  - `scripts/storyblok/03b-activities-to-related-content.mjs --write --yes` — **ran 2026-09-09**: 11 stories updated + republished (9 shorts + 2 conversations); re-run is a no-op (idempotent); spot-checked `shorts/what-is-assertiveness-` (`activities-thought-diaries` uuid appended, order preserved, `related_grounding` / `related_exercises` untouched).
+  - `scripts/storyblok/04-delete-flat-pages.mjs --write --yes` — **ran 2026-09-09**: published `grounding-exercises/overview` → deleted flat `activities` (339097530) + flat `grounding` (337379594) → renamed folder `grounding-exercises` → `grounding` → re-published `grounding/overview`. Verified via published CDN: 16 `resource_grounding` at `grounding/grounding-*`, `grounding/overview` = `grounding_page` (title "Grounding"), flat `grounding` + `activities` now 404. Script order: publish `overview` first so the route's `grounding-exercises/overview` fallback covers the delete→rename window; the route (`app/[locale]/grounding/page.tsx`) resolves `grounding/overview` ?? `grounding-exercises/overview` ?? `grounding`.
+  - `public/sitemap.xml` — **done**: replaced `/activities` with the 8 `/activity/<slug>` URLs, kept `/grounding`. (Bare URLs only, matching the flat page they replace; locale variants + `/written`,`/audio`,`/video` wait for the 7d regeneration.)
+- **⚠️ Frontend deploy dependency:** `04` deleted the flat `grounding` story, so the `grounding_page` support (`StoryblokGrounding` + the 3-way fallback route, PR #1956) must reach `main`. Until it does, prod `/grounding` renders **without a hero** (old `GroundingPage` has no `grounding/overview` fallback) — grid still works, no 404.
+- Confirm again in production once #1956 is live, then start step 7.
 
 ## Step 7 — Move conversations + shorts (+ somatic videos) into audio / video
 
@@ -312,3 +314,27 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 | bloom-frontend step 7a/7d | Revert PR — 7a's fallback fetch means the old routes still resolve whether or not content moved; 7d revert restores the fallback.                                                                |
 | Redirects                 | Remove from `next.config.js`.                                                                                                                                                                    |
 | GA4                       | No rollback for split history; repoint filters.                                                                                                                                                  |
+
+---
+
+## Appendix: Redesign cutover (separate track from the resource migration)
+
+Retiring the pre-redesign `home` / `welcome/*` Storyblok stories that the epic-redesign (#1938)
+left shadowed. Independent of steps 6–8; runs on its own after #1938 is stable in production.
+
+**Parallel-story state (2026-09-09):**
+
+| old (component `Welcome`)                              | new                                                         | action                                |
+| ------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------- |
+| `home` (id 116108207)                                  | `home-redesign` (id 207633548325725, `home_page`)           | delete old · rename new → `home`      |
+| `welcome/badoo` (117118857)                            | `welcome-redesign/badoo` (208001864393725, `welcome_page`)  | delete old · move new into `welcome/` |
+| `welcome/bumble` (115520566)                           | `welcome-redesign/bumble` (208001861288956, `welcome_page`) | delete old · move new into `welcome/` |
+| `welcome/fruitz` (299058863, **unpublished**, retired) | — none —                                                    | **left untouched**                    |
+
+**Order (gap-free with the transitional route deploy live):**
+
+1. **Frontend deploy (transitional)** — `app/[locale]/page.tsx` resolves `home-redesign` ?? `home` (accepting only a `home_page`); `app/[locale]/welcome/[partnerName]/page.tsx` resolves `welcome-redesign/<p>` ?? `welcome/<p>` and renders by `content.component` (`welcome_page` → `WelcomePage`, else `StoryblokWelcomePage`). Verify prod home + `/welcome/{badoo,bumble}` unchanged.
+2. **`scripts/storyblok/redesign-cutover.mjs --write --yes`** — deletes old `home` + `welcome/{badoo,bumble}`, renames `home-redesign` → `home`, moves `welcome-redesign/{badoo,bumble}` into `welcome/`, widens the `welcome` folder content types, deletes the emptied `welcome-redesign/` folder. Snapshots everything first; idempotent. Dry-run clean 2026-09-09.
+3. **Verify prod** — `/`, `/welcome/badoo`, `/welcome/bumble` still render the redesigned pages (now from `home` / `welcome/*`).
+4. **Frontend deploy (cleanup)** — `HOME_SLUG = 'home'` direct, drop both fallbacks, remove `home-redesign` from `[slug]/page.tsx` `excludePaths`, delete `components/storyblok/StoryblokWelcomePage.tsx` + its `welcome` entry in `lib/storyblok.ts`.
+5. **Storyblok cleanup (later)** — delete the old `Welcome` component. **Blocked until `welcome/fruitz` is resolved** (still the only story on `Welcome`). Decide separately: delete the retired Fruitz welcome page, or keep the component.
