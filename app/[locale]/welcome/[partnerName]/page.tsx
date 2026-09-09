@@ -13,9 +13,12 @@ export const dynamic = 'force-dynamic';
 
 type Params = Promise<{ locale: string; partnerName: string }>;
 
-// The redesign is a separate story so `welcome/<partner>` keeps serving until cutover, and a
-// partner without one (Fruitz, retired) is unaffected. At cutover: delete `welcome/<partner>`,
-// rename the redesign to take its place, and drop the fallback below.
+// Cutover in progress: the redesigned welcome pages (`welcome_page` component) live at
+// `welcome-redesign/<partner>` and move to `welcome/<partner>` (the old `Welcome`-component
+// story there is deleted first). Fruitz (retired, unpublished, no redesign) is untouched.
+// The route resolves whichever path holds the story and picks the component by its own
+// `content.component`, so it renders correctly before, during, and after the move. Once the
+// move is verified, drop `redesignSlug`/`getRedesignStory` and simplify.
 const redesignSlug = (partnerName: string) => `welcome-redesign/${partnerName}`;
 
 async function getStory(locale: string, partnerName: string) {
@@ -25,7 +28,9 @@ async function getStory(locale: string, partnerName: string) {
 }
 
 async function getRedesignStory(locale: string, partnerName: string) {
-  return await getOptionalStoryblokStory(redesignSlug(partnerName), locale);
+  return await getOptionalStoryblokStory(redesignSlug(partnerName), locale, {
+    resolve_relations: ['resource_carousel.resources'],
+  });
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
@@ -74,25 +79,17 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, partnerName } = await params;
 
-  const [redesignStory, libraryStories] = await Promise.all([
-    getRedesignStory(locale, partnerName),
+  const [story, libraryStories] = await Promise.all([
+    getRedesignStory(locale, partnerName).then((s) => s ?? getStory(locale, partnerName)),
     getLibraryStories(locale),
   ]);
 
-  if (redesignStory) {
-    return (
-      <WelcomePage
-        story={redesignStory}
-        libraryStories={libraryStories}
-        partnerName={partnerName}
-      />
-    );
-  }
-
-  const story = await getStory(locale, partnerName);
-
   if (!story) {
     notFound();
+  }
+
+  if (story.content.component === 'welcome_page') {
+    return <WelcomePage story={story} libraryStories={libraryStories} partnerName={partnerName} />;
   }
 
   return <StoryblokWelcomePage story={story} />;

@@ -220,7 +220,27 @@ async function main() {
     `  ok       hero page "${overviewFull.full_slug}" present (title: "${overviewFull.content.title}")`,
   );
 
-  // ---- 1 + 2. delete the flat pages -------------------------------------------------
+  // ---- 1. publish `overview` FIRST, at its current path ---------------------------
+  // The frontend route resolves `grounding/overview` ?? `grounding-exercises/overview` ??
+  // `grounding`. Publishing `overview` now means the middle fallback covers the window while
+  // the flat `grounding` page is deleted and the folder renamed — the route never 404s.
+  const overviewNeedsPublish = !overviewFull.published || overviewFull.unpublished_changes;
+  if (!overviewNeedsPublish) {
+    console.log(`  skip     "${overviewFull.full_slug}" already published`);
+    manifest.publishOverview = { id: overviewFull.id, status: 'already-published' };
+  } else if (!live) {
+    console.log(`  plan     PUBLISH "${overviewFull.full_slug}" (id ${overviewFull.id})`);
+    manifest.publishOverview = { id: overviewFull.id, status: 'planned' };
+  } else {
+    await mapi('PUT', `/stories/${overviewFull.id}?publish=1`, {
+      story: { content: overviewFull.content },
+    });
+    console.log(`  published "${overviewFull.full_slug}" (id ${overviewFull.id})`);
+    manifest.publishOverview = { id: overviewFull.id, status: 'published' };
+    await sleep(PACE_MS);
+  }
+
+  // ---- 2. delete the flat pages -------------------------------------------------
   for (const slug of FLAT_PAGE_SLUGS) {
     const stub = await findBySlugAnywhere(slug);
     if (!stub) {
@@ -243,7 +263,8 @@ async function main() {
     await mapi('DELETE', `/stories/${story.id}`);
     console.log(`  deleted  flat "${story.full_slug}" (id ${story.id})`);
     manifest.deletes.push({ slug, id: story.id, status: 'deleted' });
-    await sleep(PACE_MS);
+    // No sleep after deleting flat `grounding` — the folder rename below must follow it
+    // immediately so `grounding/` is claimable and `grounding/overview` resolves.
   }
 
   const snapPath = path.join(OUT_DIR, `04-delete-flat-pages.snapshot.${stamp}.json`);
@@ -285,20 +306,18 @@ async function main() {
     }
   }
 
-  // ---- 4. publish grounding/overview -----------------------------------------------
-  if (overviewFull.published && !overviewFull.unpublished_changes) {
-    console.log(`  skip     "${overviewFull.full_slug}" already published`);
-    manifest.publishOverview = { id: overviewFull.id, status: 'already-published' };
-  } else if (!live) {
-    console.log(`  plan     PUBLISH "${FOLDER_NEW_SLUG}/${PAGE_SLUG}" (id ${overviewFull.id})`);
-    manifest.publishOverview = { id: overviewFull.id, status: 'planned' };
-  } else {
+  // ---- 4. re-publish `overview` at its new path so the published full_slug updates ----
+  if (live) {
     const { story: fresh } = await mapi('GET', `/stories/${overviewFull.id}`);
     await mapi('PUT', `/stories/${overviewFull.id}?publish=1`, {
       story: { content: fresh.content },
     });
-    console.log(`  published "${FOLDER_NEW_SLUG}/${PAGE_SLUG}" (id ${overviewFull.id})`);
-    manifest.publishOverview = { id: overviewFull.id, status: 'published' };
+    console.log(`  published "${fresh.full_slug}" (id ${overviewFull.id})`);
+    manifest.publishOverview = {
+      id: overviewFull.id,
+      status: 'published',
+      finalFullSlug: fresh.full_slug,
+    };
     await sleep(PACE_MS);
   }
 
