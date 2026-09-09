@@ -1,6 +1,5 @@
 'use client';
 
-import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { SignUpSection } from '@/components/common/SignUpSection';
@@ -25,6 +24,7 @@ import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
   getCourseSessions,
   getCourseTotalMinutes,
+  sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
@@ -129,13 +129,10 @@ const StoryblokCoursePage = ({
   const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);
   const courseMinutes = useMemo(() => getCourseTotalMinutes(sessions), [sessions]);
 
-  const progressByUuid = useMemo(() => {
-    const userCourse = courses?.find((course) => course.storyblokUuid === storyUuid);
-    return (userCourse?.sessions ?? []).reduce<Record<string, CardProgress>>((map, session) => {
-      map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
-      return map;
-    }, {});
-  }, [courses, storyUuid]);
+  const progressByUuid = useMemo(
+    () => sessionProgressByUuid(courses ?? [], storyUuid),
+    [courses, storyUuid],
+  );
 
   // The next unfinished session, so a returning user picks up where they left off.
   const nextSession = useMemo(

@@ -1,9 +1,6 @@
 import StoryblokResourceActivityPage from '@/components/storyblok/StoryblokResourceActivityPage';
-import { routing } from '@/i18n/routing';
-import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { getStoryblokStory } from '@/lib/storyblok';
+import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
-import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -36,40 +33,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   });
 }
 
-export async function generateStaticParams() {
-  let paths: { slug: string; locale: string }[] = [];
-
-  const locales = routing.locales;
-  const storyblokApi = getStoryblokApi();
-
-  let sbParams: ISbStoriesParams = {
-    version: STORYBLOK_ENVIRONMENT,
-    starts_with: 'activity/',
-    filter_query: {
-      component: {
-        in: 'resource_activity',
-      },
-    },
-  };
-
-  const { data } = await storyblokApi.get('cdn/links/', sbParams);
-
-  // On staging/preview the CMS is read in `draft`, where this migration's activity content still
-  // lives unpublished — so pre-render those too. Production reads `published` and never sees them.
-  const includeDrafts = STORYBLOK_ENVIRONMENT === 'draft';
-
-  Object.keys(data.links).forEach((linkKey) => {
-    const story = data.links[linkKey];
-
-    if (!story.slug || (!story.published && !includeDrafts)) return;
-
-    const slug = story.slug.split('/')[1];
-
-    for (const locale of locales) {
-      paths.push({ slug, locale });
-    }
-  });
-  return paths;
+export function generateStaticParams() {
+  return resourceFolderStaticParams('activity');
 }
 
 export default async function Page({ params }: { params: Params }) {

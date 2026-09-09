@@ -1,6 +1,5 @@
 'use client';
 
-import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import SessionContentCard from '@/components/cards/SessionContentCard';
 import { BackLink } from '@/components/common/BackLink';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
@@ -26,6 +25,7 @@ import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   getCourseSessions,
   isFirstCourseSession,
+  sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
@@ -149,13 +149,10 @@ const StoryblokSessionPage = ({
   const isSignedOutPreview = isSignedOut && isPublicCourse && isFirstSession;
   const isSignedOutGate = isSignedOut && isPublicCourse && !isFirstSession;
 
-  const progressByUuid = useMemo(() => {
-    const userCourse = courses?.find((c) => c.storyblokUuid === course.uuid);
-    return (userCourse?.sessions ?? []).reduce<Record<string, CardProgress>>((map, session) => {
-      map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
-      return map;
-    }, {});
-  }, [courses, course.uuid]);
+  const progressByUuid = useMemo(
+    () => sessionProgressByUuid(courses ?? [], course.uuid),
+    [courses, course.uuid],
+  );
 
   const nextSession = useMemo(() => {
     const currentIndex = sessions.findIndex((session) => session.uuid === storyUuid);

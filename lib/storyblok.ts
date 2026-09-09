@@ -30,6 +30,7 @@ import {
   StoryblokClient,
   storyblokInit,
 } from '@storyblok/react/rsc';
+import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from './constants/common';
 import { serverInstance as rollbar } from './rollbar';
 
@@ -104,6 +105,32 @@ export const getOptionalStoryblokStory = async (
   locale: string | undefined,
   params?: Partial<ISbStoriesParams>,
 ) => getStoryblokStory(slug, locale, params, undefined, true);
+
+// `generateStaticParams` for a resource folder of one-level `[slug]` pages (audio, written,
+// activity, shorts, conversations). On preview/staging the CMS reads `draft`, where migrated
+// content may still be unpublished — pre-render those too; production reads `published` and
+// never sees them.
+export const resourceFolderStaticParams = async (
+  folder: string,
+): Promise<{ slug: string; locale: string }[]> => {
+  const storyblokApi = getStoryblokApi();
+  const { data } = await storyblokApi.get('cdn/links/', {
+    version: STORYBLOK_ENVIRONMENT,
+    starts_with: `${folder}/`,
+  });
+
+  const includeDrafts = STORYBLOK_ENVIRONMENT === 'draft';
+  const paths: { slug: string; locale: string }[] = [];
+
+  for (const key of Object.keys(data.links)) {
+    const story = data.links[key];
+    const slug: string | undefined = story.slug?.split('/')[1];
+    if (!slug || (!story.published && !includeDrafts)) continue;
+    for (const locale of routing.locales) paths.push({ slug, locale });
+  }
+
+  return paths;
+};
 
 export const getStoryblokStories = async (
   locale: string | undefined,
