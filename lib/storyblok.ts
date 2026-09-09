@@ -23,7 +23,6 @@ import StoryblokStatement from '@/components/storyblok/StoryblokStatement';
 import StoryblokTeamMemberCard from '@/components/storyblok/StoryblokTeamMemberCard';
 import StoryblokTeamMembersCards from '@/components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '@/components/storyblok/StoryblokVideo';
-import StoryblokWelcomePage from '@/components/storyblok/StoryblokWelcomePage';
 import {
   apiPlugin,
   ISbStoriesParams,
@@ -57,7 +56,6 @@ export const getStoryblokApi = storyblokInit({
     page: StoryblokPage,
     course: StoryblokCoursePage,
     session: StoryblokSessionPage,
-    welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
     grounding_page: StoryblokGrounding,
     resource_carousel: StoryblokResourceCarousel,

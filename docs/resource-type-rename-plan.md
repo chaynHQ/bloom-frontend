@@ -15,11 +15,10 @@
 - Backend preconditions (step 6 §0–1): status not re-confirmed in this session — **verify `bloom-backend` `develop` → `main` carries the webhook DTO fix + #1257 + #1258, and that prod publishes of themed resources return 200 with a `category` row**, before trusting anything published below.
 - Step 2 drafts published + `resource` rows: assumed done (03b/04 ran against published content) — spot-check if unsure.
 - `03b-activities-to-related-content.mjs` — **ran**. `04-delete-flat-pages.mjs` — **ran** (flat `activities` + `grounding` deleted, folder renamed `grounding-exercises` → `grounding`). `sitemap.xml` — **updated**.
-- `06-strip-activity-slug-prefix.mjs` — **ran** (2026-09-09): all 8 `activity/activities-*` slugs → `activity/*`, republished, verified on the published CDN. No 301s (deliberate). Frontend side (sitemap + cypress + this doc) is in **PR #1958** (`home-welcome-pages`), commit `a5019696`.
-- **⚠️ Open — highest priority:** PR #1958 must reach `main` promptly. Production `app/[locale]/activity/[slug]` has `dynamicParams = false`; the old `/activity/activities-*` paths **hard-404 on their next ISR refresh (≤4h)** now that Storyblok stopped resolving the old slugs, and the new `/activity/<slug>` paths don't exist in the prod build until #1958 redeploys it. **Resume check:** `curl -sL https://bloom.chayn.co/activity/thought-diaries` → 200, `/activity/activities-thought-diaries` → 404.
+- `06-strip-activity-slug-prefix.mjs` — **ran** (2026-09-09): all 8 `activity/activities-*` slugs → `activity/*`, republished, verified on the published CDN. No 301s (deliberate). Frontend side (sitemap + cypress + this doc) shipped in **PR #1958** (`home-welcome-pages`) → `develop` → `main` (#1959, `e4daab82`, Vercel prod deploy success). **Resume check:** `curl -sL https://bloom.chayn.co/activity/thought-diaries` → 200, `/activity/activities-thought-diaries` → 404.
 - Then: PR #1938 (epic-redesign) / #1956 (grounding page) confirmed in production → run the step-6 production verification → **start step 7**.
 
-**Redesign cutover (Appendix):** transitional route deploy **done**; `redesign-cutover.mjs` **not run yet**; frontend cleanup + `Welcome` component delete pending (blocked on `welcome/fruitz`). See the Appendix.
+**Redesign cutover (Appendix): DONE except the optional Storyblok component delete.** `redesign-cutover.mjs --write --yes` ran 2026-09-09 (home-redesign → home, welcome-redesign/{badoo,bumble} → welcome/, old `Welcome` stories deleted, `welcome-redesign/` folder deleted); `welcome/fruitz` deleted separately. Verified on the published CDN (home / welcome/badoo / welcome/bumble → 200). Frontend cleanup in **PR #1960** (`redesign-cutover-cleanup`). Only leftover: delete the old `Welcome` Storyblok **component** (id 2271418) once the soft-deleted Fruitz story is purged from trash — cosmetic.
 
 **Steps 7–8:** not started. Step 8's Storyblok script is now `07-cleanup` (`06-` is taken).
 
@@ -337,31 +336,25 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 
 ---
 
-## Appendix: Redesign cutover (separate track from the resource migration)
+## Appendix: Redesign cutover (separate track from the resource migration) — DONE
 
-Retiring the pre-redesign `home` / `welcome/*` Storyblok stories that the epic-redesign (#1938)
-left shadowed. Independent of steps 6–8; runs on its own after #1938 is stable in production.
+Retired the pre-redesign `home` / `welcome/*` Storyblok stories that the epic-redesign (#1938)
+left shadowed. **Completed 2026-09-09** — this section is kept as a record.
 
-**Parallel-story state (2026-09-09):**
+| old (component `Welcome`)    | new                                         | outcome                                    |
+| ---------------------------- | ------------------------------------------- | ------------------------------------------ |
+| `home` (116108207)           | `home-redesign` (207633548325725)           | old deleted · new renamed → `home`         |
+| `welcome/badoo` (117118857)  | `welcome-redesign/badoo` (208001864393725)  | old deleted · new moved → `welcome/badoo`  |
+| `welcome/bumble` (115520566) | `welcome-redesign/bumble` (208001861288956) | old deleted · new moved → `welcome/bumble` |
+| `welcome/fruitz` (299058863) | — none —                                    | deleted (retired, was unpublished)         |
 
-| old (component `Welcome`)                              | new                                                         | action                                |
-| ------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------- |
-| `home` (id 116108207)                                  | `home-redesign` (id 207633548325725, `home_page`)           | delete old · rename new → `home`      |
-| `welcome/badoo` (117118857)                            | `welcome-redesign/badoo` (208001864393725, `welcome_page`)  | delete old · move new into `welcome/` |
-| `welcome/bumble` (115520566)                           | `welcome-redesign/bumble` (208001861288956, `welcome_page`) | delete old · move new into `welcome/` |
-| `welcome/fruitz` (299058863, **unpublished**, retired) | — none —                                                    | **left untouched**                    |
+**No URL or analytics impact:** the redesigned pages always served at `/` and `/welcome/<partner>` (the routes resolved the `*-redesign` slug behind the stable path); the cutover only changed which Storyblok story backs those URLs. No route paths, redirects, GA `page_path`, or event renames.
 
-**No URL or analytics impact:** the redesigned pages already serve at `/` and `/welcome/<partner>` (the routes resolve the `*-redesign` slug behind the stable path), so the cutover changes only which Storyblok story backs those URLs. No route paths change, no redirects, no GA `page_path` changes, no event renames — nothing for step 8 / GA4 to repoint here.
+**What happened:**
 
-**Order (gap-free with the transitional route deploy live):**
+1. **Transitional route deploy** — shipped in PR #1958 → `develop` → `main` (#1959, `e4daab82`, Vercel prod success). `app/[locale]/page.tsx` resolved `home-redesign ?? home`; the welcome route resolved `welcome-redesign/<p> ?? welcome/<p>` and rendered by `content.component`.
+2. **`scripts/storyblok/redesign-cutover.mjs --write --yes`** — ran 2026-09-09. Deleted old `home` + `welcome/{badoo,bumble}`, renamed `home-redesign` → `home`, moved `welcome-redesign/{badoo,bumble}` into `welcome/`, deleted the emptied `welcome-redesign/` folder. Snapshot: `.storyblok-provision/redesign-cutover.snapshot.2026-09-09T16-00-02-573Z.json`.
+3. **Verified** on the published CDN: `home`, `welcome/badoo`, `welcome/bumble` → 200 with `home_page` / `welcome_page` components.
+4. **Frontend cleanup — PR #1960** (`redesign-cutover-cleanup`): `page.tsx` reads `home` directly; the welcome route reads `welcome/<partner>` directly (redesign-slug resolution + `Welcome`-component branch gone); `home-redesign` dropped from `[slug]/page.tsx` `excludePaths`; `StoryblokWelcomePage.tsx` + its `lib/storyblok.ts` registration + `storyblok.test.ts` mock deleted.
 
-1. **Frontend deploy (transitional)** — **DONE** (on `develop`; PR #1958 `home-welcome-pages` carries further work on this track). `app/[locale]/page.tsx` resolves `home-redesign` ?? `home` (accepting only a `home_page`); `app/[locale]/welcome/[partnerName]/page.tsx` resolves `welcome-redesign/<p>` ?? `welcome/<p>` and renders by `content.component` (`welcome_page` → `WelcomePage`, else `StoryblokWelcomePage`). Verify prod home + `/welcome/{badoo,bumble}` unchanged.
-2. **`scripts/storyblok/redesign-cutover.mjs --write --yes`** — **NOT RUN YET** (dry-run clean 2026-09-09). Deletes old `home` + `welcome/{badoo,bumble}`, renames `home-redesign` → `home`, moves `welcome-redesign/{badoo,bumble}` into `welcome/`, widens the `welcome` folder content types, deletes the emptied `welcome-redesign/` folder. Snapshots everything first; idempotent. **Precondition:** step 1's transitional route must be on `main` (production) first — otherwise prod `/` and `/welcome/*` 404 the moment the old stories are deleted.
-3. **Verify prod** — `/`, `/welcome/badoo`, `/welcome/bumble` still render the redesigned pages (now from `home` / `welcome/*`).
-4. **Frontend deploy (cleanup)** — drop the transitional scaffolding, all now dead once step 3 is verified:
-   - `app/[locale]/page.tsx` — delete `getHomeStory`; read `getStoryblokStory('home', locale)` directly.
-   - `app/[locale]/welcome/[partnerName]/page.tsx` — delete `redesignSlug` / `getRedesignStory`; `generateMetadata` + `Page` read `welcome/<partner>` directly. Once the old `Welcome` component is gone (step 5) the `content.component === 'welcome_page'` branch and the `StoryblokWelcomePage` fallback render also go — until then keep the branch (Fruitz is still `Welcome`).
-   - `app/[locale]/[slug]/page.tsx` — remove `home-redesign` from `excludePaths`.
-   - Delete `components/storyblok/StoryblokWelcomePage.tsx` + its `welcome` entry in `lib/storyblok.ts` + the `jest.mock` in `lib/storyblok.test.ts` — **only after** step 5 (Fruitz resolved), since that story still renders through it.
-   - Grep sweep for stragglers: `home-redesign`, `welcome-redesign`, `StoryblokWelcomePage`. `components/pages/HomePage.tsx` + `components/pages/WelcomePage.tsx` are the **new** redesign components — keep.
-5. **Storyblok cleanup (later)** — delete the old `Welcome` component. **Blocked until `welcome/fruitz` is resolved** (still the only story on `Welcome`). Decide separately: delete the retired Fruitz welcome page, or keep the component (if kept, the `StoryblokWelcomePage` fallback in the welcome route and its `lib/storyblok.ts` registration must stay too).
+**One optional leftover:** delete the old `Welcome` Storyblok **component** (id 2271418). Now unused (Fruitz — the last story on it — is deleted), but the soft-deleted Fruitz story may need purging from Storyblok's trash first. Cosmetic; no code depends on it. `generatePartnerPromoGetStartedEvent` / `generatePartnerPromoGoToCoursesEvent` in `events.ts` are now orphaned — fold into the step-8 GA cleanup.
