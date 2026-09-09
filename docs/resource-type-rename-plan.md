@@ -34,7 +34,7 @@ GA event prefixes become `RESOURCE_{VIDEO,AUDIO,WRITTEN,ACTIVITY,GROUNDING}_*`; 
 
 ### Needs a human
 
-Only: content-team review of the block schemas · the editorial-freeze announcement before step 7 · a GA4/Looker Studio owner for the step-8 repoint · confirm no editor workflow depends on the `somatics` tag. Everything else in Storyblok is scripted.
+Only: content-team review of the block schemas · confirm `resource_activity`'s partner scope (`['Public','Badoo','Fruitz','Bumble']` as copied vs `['Public']` in the plan) · the editorial-freeze announcement before step 7 · a GA4/Looker Studio owner for the step-8 repoint · confirm no editor workflow depends on the `somatics` tag · review of the full `epic-redesign` PR #1938 (step 6 ships all of it, not only resources). Everything else in Storyblok is scripted.
 
 ## Not affected
 
@@ -54,11 +54,11 @@ Every Storyblok change below is scripted — no manual CMS work.
 
 The rule: **a consumer is deployed before the data it reads changes; data it stops reading is removed only after that deploy is verified in production.**
 
-1. **Backend deploy** (step 1) — webhook recognises old **and** new components. Old content still resolves. _Additive._ **⚠️ Not yet shipped** — see step 1's backend section. Steps 2–3 below proceed without it by staying in draft (unpublished); nothing is published until this lands.
+1. **Backend deploy** (step 1) — webhook recognises old **and** new components. Old content still resolves. _Additive._ **⚠️ Merged to `develop` (staging) 2026-09-08 as PR #1257; NOT yet on `main` (production).** The production webhook still has no branch for `resource_activity` / `resource_written` — a publish there falls through and creates **no `resource` row, silently**. **Nothing new may be published until #1257 is on `main` and verified.** Steps 2–3 proceed meanwhile by staying in draft.
 2. **Storyblok: create blocks/folders** (step 1) — invisible to the running frontend. _Additive._ **Done.**
-3. **Storyblok: copy activity/grounding content + populate `related_grounding`** (steps 2–3) — new stories in new folders nothing queries yet; `related_grounding` is a field nothing reads yet; `related_exercises` left intact so the live frontend is unchanged. _Additive._ **Step 2 done as drafts** (24 stories, unpublished — publishing waits on the backend deploy in (1)); **step 3 done** (5 stories' `related_grounding` populated + republished — safe pre-backend-deploy since it only touches old, already-recognised components).
-4. **Frontend deploy** (step 6, = steps 4+5) — switches `ResourceGroundingSection` to `related_grounding` (populated in 3); ships `/grounding`, `/activity/[slug]`, `/written/[slug]` routes and the `/activities` → library redirect. Old `/shorts` `/videos` `/conversations` routes and the flat `/grounding` `/activities` Storyblok pages untouched (the latter now shadowed). **Step 4 code done** (not yet deployed — step 5 still to come, they ship together); **step 5 not started.**
-5. **Post-verify** (end of step 6) — only now: backfill activities into `related_content`, then delete the flat `/grounding` `/activities` Storyblok pages.
+3. **Storyblok: copy activity/grounding content + populate `related_grounding`** (steps 2–3) — new stories in new folders nothing queries yet; `related_grounding` is a field nothing reads yet; `related_exercises` left intact so the live frontend is unchanged. _Additive._ **Step 2 done as drafts** (24 stories, unpublished — publishing waits on the backend deploy in (1) reaching `main`); **step 3 done** (5 stories' `related_grounding` populated + republished — safe pre-backend-deploy since it only touches old, already-recognised components).
+4. **Frontend deploy** (step 6, = steps 4+5) — switches `ResourceGroundingSection` to `related_grounding` (populated in 3); ships `/grounding`, `/activity/[slug]`, `/written/[slug]` routes and the `/activities` → library redirect. Old `/shorts` `/videos` `/conversations` routes and the flat `/grounding` `/activities` Storyblok pages untouched (the latter now shadowed). **⚠️ Precondition: (1) on `main` + step 2 published + every `resource_activity` story confirmed to have a `resource` row.** Without it, `/activities` (a live page today) 301s to an empty `/library?format=activity` and `/activity/[slug]` 404s. **Step 4 + 5 code done** on `epic-redesign` (PR #1938, open) — "merge steps 4–5" = ship the whole redesign PR, not a resource-only diff.
+5. **Post-verify** (end of step 6) — only now: backfill activities into `related_content` (11 stories — see step 6), port the grounding hero off the flat page, delete the flat `/grounding` `/activities` Storyblok pages, rename `grounding-exercises/` → `grounding/`, regenerate the sitemap.
 6. **Frontend deploy** (step 7a) — `/video/[slug]` + `/audio/[slug]` accept both the new folder path and the old one as a fallback; old routes replaced by 301s. Every URL resolves whether or not its story has moved yet.
 7. **Backend migration** (step 7b) — rewrite `resource.category` values + tighten to a PG enum. Reporting-only; no user-facing effect.
 8. **Storyblok: move content** (step 7c) — each story's new URL already resolves and each old URL already 301s (both from 7a). No gap.
@@ -84,22 +84,24 @@ The rule: **a consumer is deployed before the data it reads changes; data it sto
 
 - One schema gap found against real content, fixed the same way (idempotent re-run, additive `PUT`): the `body` field's component whitelist on `resource_written` / `resource_activity` / `resource_grounding` was missing `audio` — the real grounding accordion items embed `audio` bloks (some also `video` / `image`). Fixed in `01-create-blocks.mjs`'s `bodyField()` + a convergence pass that widens already-created components; applied live.
 
-**bloom-backend (ship before any content is published) — ⚠️ NOT YET DEPLOYED:**
+**bloom-backend (ship before any content is published) — ⚠️ ON `develop` (staging) ONLY, PR #1257 merged 2026-09-08; NOT ON `main` (production):**
 
 - `src/utils/constants.ts` — add `VIDEO/AUDIO/WRITTEN/ACTIVITY` to `RESOURCE_CATEGORIES` and `RESOURCE_{VIDEO,AUDIO,WRITTEN,ACTIVITY}` to `STORYBLOK_PAGE_COMPONENTS` (keep old members). No `RESOURCE_GROUNDING` — grounding gets no row.
 - `src/webhooks/webhooks.service.ts` `updateOrCreateStoryData` — recognise old + new resource components (not `resource_grounding`); derive `category` from the component and **write it on update, not just create** (fixes the existing insert-only bug); keep the `undefined` fall-through for everything else.
 - `src/reporting/` — add the new event names + `RESOURCE_CATEGORY_LABELS` keys alongside the old ones; update specs; regenerate snapshots and review.
-- Deploy. Verify: publish a still-old resource story → backend logs success and the `resource` row carries the derived `category`.
-- **Until this ships, nothing new may be published** — the webhook doesn't yet recognise `resource_activity` etc., so a publish would either fail to create a `resource` row or (worse) hit the `undefined` fall-through. Step 2 accounts for this: content is created as **drafts**, never published, until this deploy is confirmed live.
+- **Promote `develop` → `main`.** Verify: publish a still-old resource story → backend logs success and the `resource` row carries the derived `category`. (Confirmed against prod `main`: the old webhook has no branch for `resource_activity` / `resource_written` / `resource_grounding` — it silently falls through, no row, no error.)
+- **Until this reaches `main`, nothing new may be published** — the production webhook doesn't recognise `resource_activity` etc., so a publish creates no `resource` row (silent), and `resource-user` / feedback then 404. Step 2 accounts for this: content is created as **drafts**, never published, until this deploy is confirmed live in production.
 
 ## Step 2 — Copy activity + grounding content into resources
 
-**Status: content copied as drafts; publish deferred to the backend deploy above.**
+**Status: content copied as drafts; publish deferred until backend PR #1257 is on `main` (production).**
+
+**Verified in Storyblok 2026-09-09:** `activity/` = 8 stories, all unpublished · `grounding-exercises/` = 16 stories, all unpublished · `written/` `audio/` `video/` empty · flat `grounding` (id 337379594) + `activities` (id 339097530) still published. Deviation from the plan text below: `resource_activity` drafts carry `included_for_partners: ['Public', 'Badoo', 'Fruitz', 'Bumble']` (not `['Public']`) and `languages` = all 8 (ar/tr included, unused by the frontend). `Public` is present so nothing is gated by partner — confirm this is intended; grounding drafts stayed `['Public']` only.
 
 - `scripts/storyblok/02-copy-exercise-content.mjs`: `GET` the flat `/activities` and `/grounding` stories, walk the `accordion` bloks embedded in their `page_sections[0].content` richtext (translations live as a full richtext-doc copy per locale on `content__i18n__<lang>`; items are matched across locales by `accordion_id`, not `_uid` — embedded-blok uids aren't stable across i18n copies), and `POST /stories` one per item into `activity/` (`resource_activity`) or `grounding-exercises/` (`resource_grounding`; renamed to `grounding/` in step 6) — **`slug` = the old accordion id verbatim, including the pre-existing `grouding-sound-of-claps` typo** (so `?openacc=<id>` and `?id=<id>` are the same string, no per-item redirect needed) — carrying `name`, `body`, and per-locale `name__i18n__<lang>` / `body__i18n__<lang>` for every locale that has both. `translated_slugs` is **not** set — the source pages carry none and the slug is locale-invariant, so there's nothing to carry. `languages` = `['default', ...locales translated]`; `included_for_partners` = `['Public']`; `resource_activity` also gets `login_required: true` (decision 1 — a deliberate gating change from today's public `/activities`, confirmed). Idempotent: skip a story that already exists (`--republish` to force-update one).
 - **Done, as drafts**: all 16 grounding + 8 activity items created (24 total; one item, `activities-mapping-fear-and-stress-in-our-bodies`, has no `hi` translation upstream and was copied without it). None published — see the step-1 backend note above.
 - Manifest `{ oldAccordionId, type, newSlug, newUuid, locales }` per item, plus full request payloads in dry-run mode — feeds steps 3 and 5. Latest: `.storyblok-provision/02-copy-exercise-content.*.json`.
-- **Still to do, once the backend step-1 deploy is confirmed live**: `node scripts/storyblok/02-copy-exercise-content.mjs --publish --write --yes` (re-publishes every existing draft; throttled, watch backend logs + Rollbar). Grounding produces no `resource` row (expected). **Then verify** every `resource_activity` story got a `resource` row (query the backend / DB by `storyblokUuid`) and re-publish any misses — `resource-user` and feedback endpoints return **404, not create-on-demand**, if the row is absent.
+- **Still to do, once backend PR #1257 is confirmed live on `main`**: `node scripts/storyblok/02-copy-exercise-content.mjs --publish --write --yes` (re-publishes every existing draft; throttled — 24 stories × up to 8 locales is a lot of webhook traffic; watch backend logs + Rollbar). Grounding produces no `resource` row (expected). **Then verify** every `resource_activity` story got a `resource` row (query the backend / DB by `storyblokUuid`) and re-publish any misses — `resource-user` and feedback endpoints return **404, not create-on-demand**, if the row is absent. **This verification is a hard gate on the step-6 frontend deploy.**
 
 ## Step 3 — Copy `related_exercises` references (grounding only, for now)
 
@@ -109,6 +111,7 @@ The rule: **a consumer is deployed before the data it reads changes; data it sto
 - Safe without the step-1 backend deploy: these are the pre-existing old-component stories, already recognised by the currently-deployed webhook; re-publishing only adds an inert field.
 - Ran live: **5 of 27 stories** had a `grounding-*` reference and were updated + republished — `shorts/sex-after-trauma`, `shorts/what-is-assertiveness-`, `shorts/rigid-vs-relaxed-boundaries`, `shorts/fear`, `shorts/enthusiastic-consent` (all `resource_short_video`; no `resource_single_video` or `resource_conversation` story references grounding today). Verified live: `related_grounding` set to the correct uuid(s), `related_exercises` and every other field untouched, still published.
 - **`activity-*` ids are not touched yet** — the live frontend's `related_content` renderer can't handle `resource_activity` refs until the step-6 deploy. They move into `related_content` in step 6's post-verify backfill.
+- **Full `related_exercises` scan 2026-09-09 (all 27 old stories):** 11 carry refs — **9 shorts + 2 conversations** (`conversations/stolen-faces-how-fake-images-leave-real-scars` → `activities-stream-of-consciousness-journaling`; `conversations/selling-dreams-the-dark-side-of-digital-influence` → `activities-trust-mapping`). No `resource_single_video` story has any. `related_exercises` values are stored as **slugs, not uuids** — step 6's `03b` must map slug → new-story uuid (from step 2's manifest) for the uuid-based `related_content` field. So step 6's backfill touches **11 stories, not just shorts** — the "5 of 27" above is grounding-only.
 - `related_exercises` left in place on every story (live frontend still reads it until the step-6 deploy).
 
 ## Step 4 — Point the frontend at `related_grounding`, drop `related_exercises` prop
@@ -173,17 +176,27 @@ detail in the implementation plan at the time — see git history for the exact 
 
 ## Step 6 — Deploy progress
 
-- Merge steps 4–5 to `develop` → staging → run the verification checklist for written / activity / grounding → `develop` → `main`.
+**Hard preconditions (verified missing 2026-09-09 — do these first, in order):**
+
+1. **Backend PR #1257 `develop` → `main`.** Verify in production: publish a still-old resource story → the `resource` row carries the derived `category`.
+2. **Publish step 2's 24 drafts** — `node scripts/storyblok/02-copy-exercise-content.mjs --publish --write --yes` (throttled; watch backend logs + Rollbar).
+3. **Confirm every published `resource_activity` story has a `resource` row** (query by `storyblokUuid`); re-publish misses. Grounding rows are not expected.
+4. **`scripts/storyblok/03b-activities-to-related-content.*`** — for the **11** old stories with `activity-*` refs in `related_exercises` (9 shorts + 2 conversations — see step 3), map each slug → new `resource_activity` uuid (step 2 manifest) and **append** (dedup, preserve order) into `related_content`; re-publish. Safe pre-frontend-deploy (inert field on old components). `--dry-run` first; write a manifest. _Script not yet written._
+5. **Port the grounding hero off the flat page** — `app/[locale]/grounding/page.tsx` + `GroundingPage` read the page hero (title, richtext intro, image, per-locale) from `getOptionalStoryblokStory('grounding')`, and `GroundingPage` renders the hero **only if that story exists**. Deleting the flat page (below) removes the hero. Fix: move the hero copy into i18n (`Header` accepts a `TextNode` intro + string `imageSrc`; grounding is fixed editorial copy) or into a non-colliding story (e.g. `grounding/_hero`) and repoint the fetch. Ships in the redesign deploy. The 3 flat-page call sites are all in `app/[locale]/grounding/page.tsx`.
+
+**Then:**
+
+- Merge PR #1938 (epic-redesign — this ships the whole redesign, not a resource-only diff) to `develop` → staging → run the full redesign checklist **plus** the resource checklist below (written / activity / grounding; incl. `hi` locale related-content where `activities-mapping-fear-and-stress-in-our-bodies` has no `hi` translation — confirm the card drops, not errors) → `develop` → `main`.
 - **Post-verify, only after production is confirmed green:**
-  - `scripts/storyblok/03b-activities-to-related-content.ts` — append the `activity-*` refs from `related_exercises` into `related_content` (the deployed frontend now renders them); re-publish.
-  - `scripts/storyblok/04-delete-flat-pages.ts` — `DELETE /stories/:id` for the flat `grounding` + `activities` stories (now shadowed by the new route + redirect), then `PUT /stories/:id` to rename the `grounding-exercises/` folder slug → `grounding/` (uuid-stable; `related_grounding` refs unaffected). If `getLibraryStories.ts` / the grounding route switch to `starts_with: 'grounding/'`, that frontend change ships in the same deploy as the rename.
+  - `scripts/storyblok/04-delete-flat-pages.*` — `DELETE /stories/:id` for the flat `grounding` (337379594) + `activities` (339097530) stories (`component: page`, no backend row, now shadowed by the new route + `/activities`→library redirect), **then** `PUT /stories/:id` to rename the `grounding-exercises/` folder slug → `grounding/`. The rename is transparent: the grounding route + library select by `component: resource_grounding` (never folder path), `related_grounding` refs are uuid-based, leaf slugs (used by `?id=`) unchanged, backend ignores `resource_grounding`. Delete must precede rename (sibling slug collision with the flat `grounding` story). _Script not yet written._ Confirm the hero migration (precondition 5) shipped **before** running this.
+  - Regenerate `public/sitemap.xml` — add `/activity/*` (6 locales), drop `/activities`, keep `/grounding`. Sitemap is hand-maintained; new `/written/*` / `/audio/*` / `/video/*` wait for step 7d.
 - Confirm again in production, then start step 7.
 
 ## Step 7 — Move conversations + shorts (+ somatic videos) into audio / video
 
 Ordered so no URL ever 404s: the new routes resolve the old folder path too, and the old routes 301 away, **before** any story moves.
 
-**Pre-flight (before writing 7a):** `scripts/storyblok/05a-collision-scan.ts` — list leaf slugs across `shorts/` + `videos/` (both merge into `video/`). Any leaf that appears in both, or already exists in `video/`, is a `full_slug` collision — Storyblok rejects the duplicate on move. Content team renames the loser **in its current folder** now; those specific old→new redirects go into 7a. After this, 7c changes only the folder segment, never the leaf.
+**Pre-flight (before writing 7a):** `scripts/storyblok/05a-collision-scan.ts` — list leaf slugs across `shorts/` + `videos/` (both merge into `video/`). Any leaf that appears in both, or already exists in `video/`, is a `full_slug` collision — Storyblok rejects the duplicate on move. Content team renames the loser **in its current folder** now; those specific old→new redirects go into 7a. After this, 7c changes only the folder segment, never the leaf. **Checked 2026-09-09: shorts (12) ∩ videos (9) = no leaf-slug collisions, `video/` + `audio/` empty. Re-run at step 7 — the content team may add colliding slugs before then.**
 
 ### 7a — Frontend: merged components + dual-path routes + redirects (deploy first)
 
@@ -246,6 +259,7 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 
 ## Landmines
 
+- **Flat `grounding` page is the grounding route's hero source** — `GroundingPage` renders its hero only if `getOptionalStoryblokStory('grounding')` resolves. Deleting the flat page in step 6 blanks the hero unless the copy is ported to i18n / a relocated story first (step 6 precondition 5).
 - **`login_required` default true hides today's public shorts** — the 7c move script sets `false` on every short (and any public somatic video) in the same `PUT` that moves it, so gating never regresses. The short page reads the field too: `login_required === true` gates, anything else (incl. the field's current absence) stays public. Per-story gating means the page component (not `AuthGuard`) renders the preview.
 - **`category` was insert-only** — fixed in step 1; without it, moved/re-published stories keep a stale category.
 - **`resource_short` vs `resource_short_video`** — `shorts` `generateStaticParams` filters the wrong string; fix when building the `video` route.
