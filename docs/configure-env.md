@@ -36,6 +36,7 @@ NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
 
 # FEATURE FLAGS
 NEXT_PUBLIC_FF_USER_RESEARCH_BANNER=true
+NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER=true
 
 # FEEDBACK FORM
 NEXT_PUBLIC_FEEDBACK_FORM_URL=https://chayn.typeform.com/to/OY9Wdk4h?typeform-source=bloom.chayn.co
@@ -96,6 +97,8 @@ If creating new environment variables, please tag Chayn staff developers in PR /
   In terms of use, the variable could be used to disable a course when it has not been translated to a particular language e.g. if the `healing-from-sexual-trauma/` course is ready in English but not in French, then the course can be enabled in storyblok but still disabled in french. To do this, the the french url slug `fr/courses/healing-from-sexual-trauma/` should be included in the environment variable. This means the course will be hidden in the French version of bloom but still visible to the English version of bloom. If multiple courses need to be disabled, the slugs will need to be separated by commas.
 
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed to gathering users for Bloom feedback. It is intended to be turned on temporarily, for saw 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
+
+- `NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER`: Enables a dismissible top banner announcing the redesign and the move of all content into the Library. English only, intended to run temporarily.
 
 #### Front Chat (1:1 Messaging):
 

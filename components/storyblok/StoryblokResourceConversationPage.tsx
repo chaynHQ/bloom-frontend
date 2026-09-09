@@ -1,44 +1,66 @@
 'use client';
 
-import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { RESOURCE_CONVERSATION_VIEWED } from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { Resource } from '@/lib/store/resourcesSlice';
-import hasAccessToPage from '@/lib/utils/hasAccessToPage';
-import logEvent from '@/lib/utils/logEvent';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { Box, Container } from '@mui/material';
-import { useStoryblokState } from '@storyblok/react';
-import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale } from 'next-intl';
-import { useEffect, useMemo } from 'react';
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
+import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import {
+  RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
+  RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
+  RESOURCE_CONVERSATION_VIEWED,
+} from '@/lib/constants/events';
+import {
+  useStoryblokResourcePage,
+  type ResourceStoryContent,
+} from '@/lib/hooks/useStoryblokResourcePage';
+import { Box } from '@mui/material';
+import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { ContentUnavailable } from '../common/ContentUnavailable';
-import { ResourceConversationHeader } from '../resources/ResourceConversationHeader';
-import DynamicComponent from './DynamicComponent';
-import { StoryblokPageSectionProps } from './StoryblokPageSection';
-import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 
-export interface StoryblokResourceConversationPageProps {
+export interface StoryblokResourceConversationPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
-  name: string;
   description: StoryblokRichtext;
   header_image: { filename: string; alt: string };
   duration: string;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
-  page_sections: StoryblokPageSectionProps[];
+  team_members_section?: StoryblokTeamMembersSectionProps[];
+  page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_exercises: string[];
-  languages: string[];
   component: 'resource_conversation';
-  included_for_partners: string[];
 }
 
+const EVENT_PREFIX = 'RESOURCE_CONVERSATION' as const;
+
+// `resource_conversation` merges into `resource_audio` in step 7, so it never gained the
+// `related_session` field the other resource types have — hence no `relatedSessionHref` here.
+
 const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISbStoryData }) => {
-  const story = useStoryblokState(initialStory) ?? initialStory;
+  const {
+    content,
+    storyUuid,
+    isSignedIn,
+    contentAccessStatus,
+    resourceProgress,
+    resourceId,
+    eventData,
+    contributors,
+    relatedGrounding,
+    userContentPartners,
+    start,
+    complete,
+  } = useStoryblokResourcePage<StoryblokResourceConversationPageProps>({
+    initialStory,
+    category: RESOURCE_CATEGORIES.CONVERSATION,
+    eventPrefix: EVENT_PREFIX,
+    viewedEvent: RESOURCE_CONVERSATION_VIEWED,
+    // Block predates the `login_required` field, so gate until it lands.
+    loginRequiredByDefault: true,
+  });
+
   const {
     _uid,
     _editable,
@@ -47,73 +69,14 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     header_image,
     audio,
     audio_transcript,
+    team_members_section,
     page_sections,
     related_content,
-    related_exercises,
-    languages,
-    included_for_partners,
-  } = story.content as StoryblokResourceConversationPageProps;
-  const storyUuid = story.uuid;
+  } = content;
 
-  const locale = useLocale();
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const resources = useTypedSelector((state) => state.resources);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-
-  const userAccess = useMemo(() => {
-    return (
-      hasAccessToPage(
-        isLoggedIn,
-        true, // setting true here to allow preview. The login overlay will block interaction
-        included_for_partners,
-        partnerAccesses,
-        partnerAdmin,
-      ) &&
-      (locale === LANGUAGES.en || languages.includes(locale))
-    );
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
-
-  const { resourceProgress, resourceId } = useMemo(() => {
-    const userResource = resources.find(
-      (resource: Resource) => resource.storyblokUuid === storyUuid,
-    );
-
-    if (userResource) {
-      return {
-        resourceProgress: userResource.completed
-          ? PROGRESS_STATUS.COMPLETED
-          : PROGRESS_STATUS.STARTED,
-        resourceId: userResource.id,
-      };
-    }
-    return {
-      resourceProgress: PROGRESS_STATUS.NOT_STARTED,
-      resourceId: undefined,
-    };
-  }, [resources, storyUuid]);
-
-  const eventData = useMemo(() => {
-    return {
-      resource_category: RESOURCE_CATEGORIES.CONVERSATION,
-      resource_name: name,
-      resource_storyblok_uuid: storyUuid,
-      resource_progress: resourceProgress,
-    };
-  }, [name, storyUuid, resourceProgress]);
-
-  useEffect(() => {
-    logEvent(RESOURCE_CONVERSATION_VIEWED, eventData);
-  });
-
-  const nextResourceHref = useMemo(() => {
-    const nextResourceSlug = related_content[0]?.full_slug;
-    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
-  }, [related_content]);
-
-  if (!userAccess) return <ContentUnavailable />;
+  if (contentAccessStatus === 'accessDenied') {
+    return <ContentUnavailable />;
+  }
 
   return (
     <Box
@@ -124,45 +87,46 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         description,
         audio,
         audio_transcript,
+        team_members_section,
         page_sections,
         related_content,
-        related_exercises,
       })}
     >
-      <ResourceConversationHeader
-        {...{
-          storyUuid,
-          name,
-          description,
-          header_image,
-          resourceProgress,
-          audio,
-          audio_transcript,
-          nextResourceHref,
-          eventData,
+      <ResourcePageLayout
+        format="audio"
+        name={name}
+        storyUuid={storyUuid}
+        category={RESOURCE_CATEGORIES.CONVERSATION}
+        eventPrefix={EVENT_PREFIX}
+        resourceProgress={resourceProgress}
+        resourceId={resourceId}
+        onComplete={complete}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
+        eventData={eventData}
+        description={description}
+        transcript={audio_transcript}
+        transcriptEvents={{
+          opened: RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
+          closed: RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
         }}
-      />
-      {page_sections?.length > 0 &&
-        page_sections.map((section: any, index: number) => (
-          <DynamicComponent key={`page_section_${index}`} blok={section} />
-        ))}
-      {resourceId && (
-        <Container sx={{ bgcolor: 'background.paper' }}>
-          <ResourceFeedbackForm
-            resourceId={resourceId}
-            category={RESOURCE_CATEGORIES.CONVERSATION}
-          />
-        </Container>
-      )}
-      <StoryblokRelatedContent
+        onTranscriptStart={start}
+        hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}
+        contributors={contributors}
+        teamMembersSection={team_members_section?.[0]}
+        pageSections={page_sections}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
-        relatedExercises={related_exercises}
-        userContentPartners={userHasAccessToPartnerContent(
-          partnerAdmin?.partner,
-          partnerAccesses,
-          null,
-          userId,
-        )}
+        userContentPartners={userContentPartners}
+        media={
+          <ResourceAudioPlayer
+            url={audio.filename}
+            eventPrefix={EVENT_PREFIX}
+            eventData={eventData}
+            onStart={start}
+            onFinish={complete}
+          />
+        }
       />
     </Box>
   );

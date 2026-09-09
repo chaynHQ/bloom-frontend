@@ -1,0 +1,83 @@
+{
+  "Library": {
+    "metadata": {
+      "title": "Kütüphane",
+      "description": "Bloom kurslarını ve tekil bölümlerini tek bir yerde keşfet."
+    },
+    "title": "Kütüphaneyi keşfet",
+    "introduction": "Bloom'daki her şey tek bir yerde — adım adım ilerleyebileceğin rehberli kurslar ve ihtiyaç duyduğun her an keşfedebileceğin tekil bölümler.",
+    "exploreByTheme": "Temaya göre keşfet",
+    "filterHeading": "Kütüphaneyi filtrele",
+    "filterButtonLabel": "Filtrele",
+    "searchPlaceholder": "Anahtar kelimelerle ara…",
+    "searchLabel": "Kütüphanede ara",
+    "reset": "Sıfırla",
+    "resultsHeading": "Kütüphane",
+    "resultsCount": "{count, plural, one {# sonuç} other {# sonuç}}",
+    "kindLabel": "İçerik türüne göre filtrele",
+    "kind": {
+      "all": "Tümü",
+      "course": "Kurslar",
+      "session": "Tekil bölümler"
+    },
+    "contentTypeHeading": "İçerik türü",
+    "contentTypes": {
+      "course": "Kurs",
+      "audio": "Ses",
+      "written": "Yazılı",
+      "video": "Video",
+      "activity": "Etkinlik",
+      "grounding": "Köklenme"
+    },
+    "lengthHeading": "Süre",
+    "lengths": {
+      "under10": "10 dk'dan kısa",
+      "10to20": "10–20 dk",
+      "over20": "20 dk'dan uzun"
+    },
+    "sessionCount": "{count, plural, one {# bölüm} other {# bölüm}}",
+    "duration": "{minutes} dk",
+    "courseDuration": "~{hours} saat {minutes} dk",
+    "courseDurationHoursOnly": "~{hours} saat",
+    "partOfCourse": "Kursun parçası: {course}",
+    "accountNeeded": "Hesap gerekli",
+    "loadMore": "Daha fazla göster",
+    "noResults": {
+      "title": "Bu filtreler için sonuç yok",
+      "body": "Bir iki filtreyi kaldırmayı ya da başka bir temayı keşfetmeyi dene — kütüphanede seni bekleyen daha çok şey var.",
+      "action": "Filtreleri temizle"
+    },
+    "themes": {
+      "recognising-abuse": {
+        "label": "İstismarı fark etmek",
+        "blurb": "İlişkilerde ve gündelik hayatta istismarı adlandırmak",
+        "description": "İstismar her zaman açıkça görünmez. İlişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet, adlandırması zor olan deneyimler için kelimeler bul."
+      },
+      "why-abuse-happens": {
+        "label": "İstismar neden olur",
+        "blurb": "İstismarın ardındaki toplumsal ve sistemsel güçleri öğren",
+        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. İstismarın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri — ve bunların hiçbirinin neden senin suçun olmadığını — anla."
+      },
+      "body-after-trauma": {
+        "label": "Travma sonrası bedenin",
+        "blurb": "Travma bedende nasıl yaşar",
+        "description": "Travma zihinde olduğu kadar bedende de yaşar. Sinir sisteminin yaşadıklarına nasıl tepki verdiğini ve kendini daha güvende hissetmenin nazik, bedene dayalı yollarını öğren."
+      },
+      "setting-boundaries": {
+        "label": "Sınır koymak",
+        "blurb": "Duygusal, fiziksel, cinsel ve dijital sınırlar",
+        "description": "Sınırlar hayatın her alanında iyilik halini korur. Duygusal, fiziksel, cinsel ve dijital sınırları nasıl fark edeceğini, koyacağını ve koruyacağını keşfet."
+      },
+      "healing-journey": {
+        "label": "İyileşme yolculuğun",
+        "blurb": "Yas, büyüme ve iyileşme içinde kendi yolunu bulmak",
+        "description": "İyileşme doğrusal değildir. Yas, büyüme ve iyileşmenin içinden geçmek için eşlik ve araçlar bul — sana doğru gelen hızda."
+      },
+      "staying-safe": {
+        "label": "Şimdi güvende kalmak",
+        "blurb": "Güvenlik planlaması ve süregelen istismarla baş etmek",
+        "description": "Hâlâ zararın içindeysen ya da ona yakınsan, önce güvenlik gelir. Güvenlik planı yapmak ve işlerin şu an güvensiz hissettirdiği anlarla baş etmek için pratik destek bul."
+      }
+    }
+  }
+}

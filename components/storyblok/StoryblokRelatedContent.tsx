@@ -1,17 +1,27 @@
 'use client';
 
-import { RelatedContentCard } from '@/components/cards/RelatedContentCard';
-import Carousel, { CarouselItemContainer } from '@/components/common/Carousel';
-import { EXERCISE_CATEGORIES, RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
-import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import { Container, Typography } from '@mui/material';
+import { CardCarousel } from '@/components/common/CardCarousel';
+import { LibraryCard } from '@/components/library/LibraryCard';
+import {
+  RELATED_RESOURCES_CARD_CLICKED,
+  RELATED_RESOURCES_CAROUSEL_PAGED,
+} from '@/lib/constants/events';
+import { useTypedSelector } from '@/lib/hooks/store';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import { storyToLibraryItem, toLibraryStory, type LibraryItem } from '@/lib/utils/libraryData';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
+import { Box, Container, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
+import { StoryblokResourceActivityPageProps } from './StoryblokResourceActivityPage';
+import { StoryblokResourceAudioPageProps } from './StoryblokResourceAudioPage';
 import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
 import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
 import { StoryblokResourceSingleVideoPageProps } from './StoryblokResourceSingleVideoPage';
+import { StoryblokResourceWrittenPageProps } from './StoryblokResourceWrittenPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 
 export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'content'> {
@@ -20,108 +30,72 @@ export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'conten
     | StoryblokSessionPageProps
     | StoryblokResourceConversationPageProps
     | StoryblokResourceShortPageProps
-    | StoryblokResourceSingleVideoPageProps;
+    | StoryblokResourceSingleVideoPageProps
+    | StoryblokResourceAudioPageProps
+    | StoryblokResourceWrittenPageProps
+    | StoryblokResourceActivityPageProps;
 }
 
 export interface StoryblokRelatedContentProps {
   relatedContent: StoryblokRelatedContentStory[];
-  relatedExercises: string[];
   userContentPartners: string[];
 }
 
 const containerStyle = {
-  paddingY: { xs: 7.5, md: 10, lg: 12.5 },
-  backgroundColor: 'secondary.main',
+  paddingY: { xs: 6, md: 8 },
+  backgroundColor: 'secondary.light',
 } as const;
 
-export const StoryblokRelatedContent = (props: StoryblokRelatedContentProps) => {
-  const { relatedContent, relatedExercises, userContentPartners = [] } = props;
+export const StoryblokRelatedContent = ({
+  relatedContent = [],
+  userContentPartners = [],
+}: StoryblokRelatedContentProps) => {
   const locale = useLocale();
   const t = useTranslations('Resources.relatedContent');
-  const tExerciseNames = useTranslations('Shared.exerciseNames');
+  const isSignedIn = useUserAuthStatus() === 'signedIn';
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
-  const relatedExercisesItems =
-    locale === 'de'
-      ? [] // exercises are not currently available in german so we'll return an empty list for 'de'
-      : relatedExercises.map((relatedExerciseId) => {
-          const exerciseCategory: EXERCISE_CATEGORIES = relatedExerciseId.includes('grounding-')
-            ? EXERCISE_CATEGORIES.GROUNDING
-            : EXERCISE_CATEGORIES.ACTIVITIES;
+  const items = useMemo(
+    () =>
+      filterStoriesForLocaleAndPartnerAccess(relatedContent, locale, userContentPartners).map(
+        (story) => storyToLibraryItem(toLibraryStory(story as unknown as ISbStoryData), locale),
+      ),
+    [relatedContent, locale, userContentPartners],
+  );
 
-          return {
-            id: relatedExerciseId,
-            name: tExerciseNames(relatedExerciseId),
-            href: `/${exerciseCategory}?openacc=${relatedExerciseId}`,
-            category: exerciseCategory,
-          };
-        });
+  if (items.length === 0) return null;
 
-  const filteredRelatedContent = useMemo(() => {
-    return relatedContent.filter((story) => {
-      const localeString = locale === 'en' ? 'default' : locale || 'default';
-      const storyAvailableForLocale =
-        story.content?.languages?.length > 0
-          ? story.content.languages.includes(localeString)
-          : true;
-
-      if (
-        story.content.component === 'resource_short_video' &&
-        story.content.included_for_partners?.length > 0
-      ) {
-        const partners = story.content.included_for_partners;
-        const storyIncludedForUserPartners = userContentPartners.some((partner) =>
-          partners.map((p: string) => p.toLowerCase()).includes(partner),
-        );
-        return storyAvailableForLocale && storyIncludedForUserPartners;
-      }
-
-      return storyAvailableForLocale;
+  const logCardClick = (item: LibraryItem, index: number) =>
+    logEvent(RELATED_RESOURCES_CARD_CLICKED, {
+      related_resource_name: item.title,
+      related_resource_storyblok_uuid: item.id,
+      related_resource_category: item.format ?? item.kind,
+      related_resource_position: index + 1,
+      ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
     });
-  }, [relatedContent, locale, userContentPartners]);
-
-  const items = filteredRelatedContent
-    .map((relatedContentItem) => (
-      <RelatedContentCard
-        key={`related_content_${relatedContentItem.id}`}
-        title={relatedContentItem.content.name}
-        href={getDefaultFullSlug(relatedContentItem.full_slug, locale)}
-        category={relatedContentItem.content?.component.toLowerCase() as RELATED_CONTENT_CATEGORIES}
-        duration={
-          relatedContentItem.content && 'duration' in relatedContentItem.content
-            ? relatedContentItem.content.duration
-            : undefined
-        }
-      />
-    ))
-    .concat(
-      relatedExercisesItems.map((relatedExerciseItem) => (
-        <RelatedContentCard
-          key={`related_exercise_${relatedExerciseItem.id}`}
-          title={relatedExerciseItem.name}
-          href={relatedExerciseItem.href}
-          category={relatedExerciseItem.category}
-        />
-      )),
-    );
 
   return (
     <Container sx={containerStyle}>
-      <Typography
-        variant="h2"
-        sx={{
-          mb: 3.5,
-        }}
-      >
-        {t('title')}
-      </Typography>
-      <Carousel
-        theme="primary"
-        items={items.map((item, index) => (
-          <CarouselItemContainer key={index} slidesPerScreen={[1, 2, 3]}>
-            {item}
-          </CarouselItemContainer>
+      {/* Wrapper carries the gap to the cards: the global `p:last-of-type` rule zeroes the
+          subtitle's own margin. */}
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h2" sx={{ mb: 0.5 }}>
+          {t('title')}
+        </Typography>
+        <Typography sx={{ color: 'grey.800' }}>{t('subtitle')}</Typography>
+      </Box>
+      <CardCarousel label={t('title')} controls eventName={RELATED_RESOURCES_CAROUSEL_PAGED}>
+        {items.map((item, index) => (
+          <LibraryCard
+            key={item.id}
+            item={item}
+            showAccountNeeded={!isSignedIn}
+            onSelect={() => logCardClick(item, index)}
+          />
         ))}
-      />
+      </CardCarousel>
     </Container>
   );
 };

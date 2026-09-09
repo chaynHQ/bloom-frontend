@@ -35,7 +35,7 @@
       "titleA": "Ce que vous attendez de Bloom",
       "descriptionALine1": "Merci pour vos réponses !",
       "descriptionALine2": "En tant que nouvel utilisateur·rice, nous aimerions connaître votre état d'esprit avant l'utilisation de nos services. Cela nous aide à mesurer l'impact de Bloom sur vous en tant que personnes survivantes et à nous concentrer sur les éléments positifs.",
-      "goToCourses": "Ignorer et passer aux cours",
+      "goToLibrary": "Accéder à la bibliothèque",
       "demographicForm": {
         "genderLabel": "Veuillez sélectionner une ou plusieurs options qui reflètent votre identité de genre",
         "genderHelpText": "Nous posons cette question pour mieux comprendre comment nos utilisateurs s'identifient en vue de concevoir des ressources encore plus inclusives et respectueuses. Vous pouvez sélectionner 'Préfére ne pas répondre'.",
@@ -75,7 +75,10 @@
           "7": "Je préfère ne pas répondre"
         },
         "submitLabel": "Envoyer",
-        "codeErrors": {}
+        "codeErrors": {
+          "one": "",
+          "other": ""
+        }
       },
       "baseForm": {
         "scaleDescriptionLine1": "Veuillez indiquer votre niveau d'accord avec les énoncés suivants :",
@@ -131,9 +134,9 @@
       "emailSettings": {
         "title": "Rester informé·es ",
         "description": "Dites-nous si nous pouvons vous envoyer des emails:",
+        "submitLabel": "Enregistrer les préférences d'email",
         "serviceEmailsPermissionLabel": "Concernant vos services ou les modifications apportées à votre compte",
         "contactPermissionLabel": "Lorsqu'un nouveau cours, un nouveau service ou une nouvelle langue est disponible",
-        "submitLabel": "Enregistrer les préférences d'email",
         "updateError": "Une erreur s'est produite lors de la mise à jour de votre compte Bloom. Réessayez en actualisant cette page, ou <link>contactez l'équipe Bloom.</link>"
       },
       "emailRemindersSettings": {

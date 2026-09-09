@@ -19,7 +19,6 @@
       "scriptNotLoaded": "O script do widget de agendamento não foi totalmente carregado.",
       "scriptLoadFailed": "Falha ao carregar o script de agendamento."
     },
-
     "therapyBookings": {
       "header": "Suas reservas de terapia",
       "bookingSummary": "Você tem <remainingTotal>{remainingTotal}</remainingTotal> sessões de terapia restantes, <upcomingTotal>{upcomingTotal}</upcomingTotal> agendadas.",
@@ -36,9 +35,9 @@
       "therapistLabel": "Terapeuta",
       "videoLinkLabel": "Link do vídeo",
       "videoLink": "Participe na chamada a partir do convite do calendário do Google Meet enviado por e-mail.",
-      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
       "noVideoLink": "Nenhum link fornecido",
       "cancelButton": "Cancelar",
+      "cancelError": "Erro ao cancelar a reserva. Tente novamente ou entre em contacto com a equipa.",
       "expand": "Expandir",
       "collapse": "Recolher",
       "cancelDialog": {

@@ -11,25 +11,31 @@
     "userMenu": "Kullanıcı ayarları menüsü",
     "home": "Ana sayfa",
     "admin": "Yönetim",
-    "about": "Hakkında",
+    "about": "Hakkımızda",
     "meetTheTeam": "Bloom ekibimiz",
     "immediateHelp": "Acil yardım",
     "therapy": "Terapi",
-    "courses": "Kurslar",
-    "applyCode": "Kod uygula",
+    "library": "Kütüphane",
+    "applyCode": "Kod ekle",
     "account": "Hesap",
     "secondaryNavigationMenu": "İkincil gezinme menüsü",
     "notes": "Notlar",
     "alt": {
+      "libraryIcon": "Bir yön levhası illüstrasyonu",
       "therapyIcon": "Çiçekli bir baş illüstrasyonu",
-      "courseIcon": "Bir oynat simgesi illüstrasyonu, sağa işaret eden bir üçgen. Önünde küçük bir güneş var",
       "notesIcon": "Ortasında bir kalp olan bir cep telefonu illüstrasyonu",
-      "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde düz çizgiler var.",
-      "activitiesIcon": "Kapağında küçük sarı bir alev olan bir kitap.",
+      "chatIcon": "Pembe bir arka plan üzerinde kesişen iki konuşma balonu. İlkinin içinde pembe bir kalp var. İkincisinde ise düz çizgiler var.",
       "groundingIcon": "Üzerinde küçük pembe çiçekler olan bir dal."
     },
     "messaging": "Mesajlaşma",
-    "grounding": "Topraklanma",
-    "activities": "Etkinlikler"
+    "grounding": "Köklenme"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Bloom yeniden tasarım haberleri",
+    "headline": "Bloom yenilendi!",
+    "supportingText": "Kurslar, bölümler ve etkinlikler artık Kütüphane’de bir arada; böylece göz atmak ve filtrelemek daha kolay 💜",
+    "feedback": "Geri bildirim gönder",
+    "feedbackShort": "Geri bildirim",
+    "dismiss": "Kapat"
   }
 }

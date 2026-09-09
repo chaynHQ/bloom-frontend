@@ -5,13 +5,16 @@ import { ReactNode } from 'react';
 import Placeholder from './Placeholder';
 import StoryblokAccordion from './StoryblokAccordion';
 import StoryblokAudio from './StoryblokAudio';
+import StoryblokAvatarGroup from './StoryblokAvatarGroup';
 import StoryblokButton from './StoryblokButton';
 import StoryblokCard from './StoryblokCard';
 import StoryblokCarousel from './StoryblokCarousel';
 import StoryblokImage from './StoryblokImage';
+import StoryblokLinkCard from './StoryblokLinkCard';
 import StoryblokNotesFromBloomPromo from './StoryblokNotesFromBloomPromo';
 import StoryblokPageSection from './StoryblokPageSection';
 import StoryblokQuote from './StoryblokQuote';
+import StoryblokQuoteCard from './StoryblokQuoteCard';
 import StoryblokResourceCarousel from './StoryblokResourceCarousel';
 import StoryblokRow from './StoryblokRow';
 import StoryblokRowColumnBlock from './StoryblokRowColumnBlock';
@@ -44,9 +47,11 @@ const components: Component[] = [
   { name: 'button', component: StoryblokButton },
   { name: 'statement', component: StoryblokStatement },
   { name: 'carousel', component: StoryblokCarousel },
-  { name: 'resource_carousel', component: StoryblokResourceCarousel },
   { name: 'notes_from_bloom_promo', component: StoryblokNotesFromBloomPromo },
   { name: 'team_members_section', component: StoryblokTeamMembersSection },
+  { name: 'link_card', component: StoryblokLinkCard },
+  { name: 'avatar_group', component: StoryblokAvatarGroup },
+  { name: 'quote_card', component: StoryblokQuoteCard },
 ];
 
 interface DynamicComponentProps {

@@ -60,20 +60,6 @@
       "submit": "Delete test accounts",
       "success": "Deleted {count} test accounts.",
       "error": "Error deleting test accounts: "
-    },
-    "syncFrontContacts": {
-      "title": "Sync Front contacts",
-      "description": "Re-sends every custom field to Front for all contacts — everyone imported from Crisp plus everyone who has signed up since. Repairs contacts whose sign up and last active dates show as 01/01/1970. Safe to run more than once.",
-      "counting": "Checking how many contacts need syncing…",
-      "coverage": "{count} contacts will be synced, covering everyone from {since} onwards.",
-      "running": "Syncing… {processed} of {total} contacts.",
-      "complete": "Finished. {processed} of {total} contacts processed.",
-      "failed": "Stopped after an error. {processed} of {total} contacts processed.",
-      "breakdown": "{updated} updated · {notFound} no longer in Front · {skipped} test accounts skipped · {failed} failed",
-      "lastError": "Most recent error: {error}",
-      "submit": "Start sync",
-      "submitRunning": "Sync in progress",
-      "error": "Error starting sync: "
     }
   }
 }

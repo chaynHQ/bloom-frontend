@@ -1,28 +1,33 @@
 {
   "Courses": {
-    "title": "Kurslarımız",
-    "introduction": "Bloom kursları, travmayla başa çıkmamıza yardımcı olmak için bize özel bilgiler, araçlar ve destekleyici sözler sunar. Yaşadıklarımızı ve bunların bizi nasıl etkilemiş olabileceğini öğrenmemiz, üzerine düşünmemiz ve işlememiz için bizi teşvik ederler — hepsi güvenli ve güçlendirici bir alanda.",
-    "session": "Seans",
+    "session": "Bölüm",
     "course": "Kurs",
-    "courses": "Kurslar",
     "expand": "Genişlet",
     "expandSummary": "Şunun özetini genişlet:",
-    "navigateToSession": "Seansa git -",
+    "navigateToSession": "Bölüme git -",
     "navigateToCourse": "Kursa git -",
-    "noCourses": "Şu anda gösterilecek kurs yok. Bu doğru görünmüyorsa, daha sonra tekrar dene ya da Bloom ekibiyle iletişime geç.",
     "courseDetail": {
       "introductionTitle": "Kurs tanıtımı",
-      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku"
+      "introductionDescription": "Tanıtım videosunu izle ya da <transcriptLink>video metnini</transcriptLink> oku",
+      "sessionsTitle": "Bu kurstaki bölümler",
+      "beginCourse": "Kursa başla",
+      "continueCourse": "Kursa devam et",
+      "otherCoursesTitle": "Diğer kursları gör",
+      "accessCard": {
+        "title": "Kursun tamamına eriş",
+        "body": "Tüm bölümlerin kilidini açmak ve ilerlemeni kaydetmek için ücretsiz bir hesap oluştur.",
+        "logIn": "Zaten bir hesabım var"
+      }
     },
     "sessionDetail": {
-      "videoTitle": "Video",
+      "learnTitle": "Bu bölüm hakkında",
       "videoDescription": "Videoyu izle ya da <transcriptLink>video metnini</transcriptLink> oku.",
       "activityTitle": "Etkinlik",
       "bonusTitle": "Bonus içerik",
       "chat": {
-        "title": "Bizimle düşün",
-        "description": "Bu seansa dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
-        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi edin:",
+        "title": "Birlikte düşünelim",
+        "description": "Bu bölüme dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
+        "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi al:",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
         "detailIntro": "Unutma:",
         "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
@@ -32,11 +37,15 @@
         "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
         "startButton": "Bize mesaj gönder"
       },
-      "sessionComplete": "Seans tamamlandı"
+      "sessionComplete": "Bölüm tamamlandı",
+      "currentCourse": "Mevcut kurs",
+      "current": "Mevcut",
+      "nextSession": "Sonraki bölüm",
+      "closeSessions": "Kapat"
     },
     "sessionFeedback": {
-      "title": "Bu seans nasıldı?",
-      "subtitle": "Bu seansı nasıl bulduğunu çok merak ediyoruz. Geri bildirimin kurslarımızı geliştirmemize yardımcı olur.",
+      "title": "Bu bölüm nasıldı?",
+      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kurslarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
         "relatable": "Bana yakın",
         "useful": "Faydalı",
@@ -54,18 +63,12 @@
     },
     "accessGuard": {
       "title": "Kurs içeriği mevcut değil",
-      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kurslarına</contactLink> geri dön."
+      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kütüphaneye</contactLink> geri dön."
     },
     "errors": {
-      "completeSessionError": "Bu seans tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
+      "completeSessionError": "Bu bölüm tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "backToCourse": "Kursa dön",
-    "backToCourses": "Kurslara dön",
-    "conversationsHeading": "Sohbetler",
-    "conversationsDescription": "Güçlü hikâyeler aracılığıyla, mitlere meydan okurken, düşünmeye teşvik ederken ve zararı ve iyileşmeyi anlamanın yeni yollarını açarken bizi dinle.",
-    "shortsHeading": "Kısalar",
-    "shortsDescription": "Vaktin mi kısıtlı ya da nereden başlayacağından emin değil misin? Kısalar, Bloom'un öğrenme seanslarına 2–3 dakikalık bakışlardır; iyileşme yolculuğumuz için içgörü, güven ve araçlar sunarlar.",
-    "somaticsHeading": "Somatik: Beden temelli iyileşme",
-    "somaticsDescription": "Nazik, beden temelli yaklaşımların şiddetten, stresten ve korkudan iyileşmeyi nasıl destekleyebileceğini keşfet. Bu kaynak koleksiyonu; bedenlerimizle yeniden bağ kurmamıza, dayanıklılık geliştirmemize ve güvenliğin ve rahatlığın nasıl hissettirebileceğini keşfetmemize yardımcı olacak açık, pratik bir rehberlik sunar."
+    "backToLibrary": "Kütüphaneye dön"
   }
 }

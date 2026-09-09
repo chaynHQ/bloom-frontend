@@ -35,9 +35,9 @@
       "therapistLabel": "Terapeuta",
       "videoLinkLabel": "Enlace del vídeo",
       "videoLink": "Únete a la llamada desde la invitación del calendario de Google Meet enviada por correo electrónico.",
-      "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
       "noVideoLink": "No se proporcionó ningún enlace",
       "cancelButton": "Cancelar",
+      "cancelError": "Error al cancelar la reserva. Inténtalo de nuevo o ponte en contacto con el equipo.",
       "expand": "Expandir",
       "collapse": "Contraer",
       "cancelDialog": {

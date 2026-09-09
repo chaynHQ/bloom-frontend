@@ -20,7 +20,11 @@ const getFileByPath = (dir, fileName) => {
   return require(filePath);
 };
 
-const directories = fs.readdirSync(path.join(__dirname, '..', 'i18n', 'messages'));
+// withFileTypes so stray files (e.g. macOS .DS_Store) don't crash the readdir below
+const directories = fs
+  .readdirSync(path.join(__dirname, '..', 'i18n', 'messages'), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name);
 
 let allTranslationsValid = true;
 let verifiedLanguages = [];

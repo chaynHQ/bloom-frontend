@@ -2,7 +2,6 @@
   "Shared": {
     "bloom": "Bloom",
     "references": "Sansadhan",
-
     "metadata": {
       "title": "Apne healing ke safar par humein join kariye",
       "description": "Bloom aapke sath hai, taki aap apne ghavon se ubhraein, behtar banein aur aagey badein ek behtar future ke liye. Ye aapko Chayn dwara laya gaya hai, jo duniya bhar ke bache logon aur sahyogion dwara chalaya jane wala ek vishv vyaapi gair-laabhkar sanstha hai.",
@@ -13,8 +12,14 @@
       "wikiLink": "https://hi.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.com/search?q=%E0%A4%AA%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A4%BE+%E0%A4%AC%E0%A4%9A%E0%A5%8D%E0%A4%9A%E0%A4%BE+%E0%A4%AA%E0%A4%B6%E0%A5%81+memes&sca_esv=c4520c9ea19d39e2&sca_upv=1&udm=2&biw=1277&bih=659&sxsrf=ADLYWIJoTLyEWIrJrVKtvC--b54j8mJHgA%3A1715343868084&ei=_BE-Zv3QBL3bseMP1d28iAY&ved=0ahUKEwj9vrLviYOGAxW9bWwGHdUuD2EQ4dUDCBA&uact=5&oq=%E0%A4%AA%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B0%E0%A4%BE+%E0%A4%AC%E0%A4%9A%E0%A5%8D%E0%A4%9A%E0%A4%BE+%E0%A4%AA%E0%A4%B6%E0%A5%81+memes"
     },
-    "navigateBack": "Pichhle prishth par nevigēt kareñ",
     "navigateTo": "Pichhle prishth par nevigēt kareñ",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "Content carousel",
+      "previous": "{name}: pichhla",
+      "next": "{name}: agla",
+      "goToPage": "{name}: {pages} mein se {page} par jaiye"
+    },
     "footer": {
       "fundedByTitle": "Yeh kaam fund kiya gaya hai by",
       "chaynDescription": "Bloom aapke liye <link>Chayn</link> dwara laya gaya hai, jo ek veshvik non-profit sanstha hai, jise duniya bhar ke survivors aur samarthak chalate hai. Vo ling-adharit hinsa se guzre hue logon ki healing ke liye sansadhan banate hain. ",
@@ -40,9 +45,13 @@
     },
     "videoTranscript": {
       "title": "Video ki transcript",
-      "description": "Video ki transcript padein - ",
-      "closeModal": "Transcript band karein"
+      "closeModal": "Transcript band karein",
+      "description": "Video ki transcript padein - "
     },
+    "audioTranscript": {
+      "title": "Audio ki transcript"
+    },
+    "currentSession": "Maujooda session",
     "progressStatus": {
       "started": "Shuru ho gaya",
       "completed": "Poora hai",
@@ -62,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - Page nahi mila",
-      "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya courses ke page par vapis jayen.",
+      "authenticatedDescription": "Yeh page nahi mila. URL ko check karein ya library ke page par vapis jayen.",
       "unauthenticatedDescription": "Yeh page nahi mila. URL check kariya ya fir welcome page par vapis jaiye",
-      "authenticatedRedirectButton": "Courses ke page par vapis jaiye",
+      "authenticatedRedirectButton": "Library ke page par vapis jaiye",
       "unauthenticatedRedirectButton": "Welcome page par vapis jaiye."
     },
     "alt": {
@@ -85,10 +94,12 @@
       "leafMixBee": "Illustration of two leaves with a bee hovering above",
       "leafMixDots": "Illustration of 3 leaves with a flower in the middle, and dots shooting from the flower.",
       "personTea": "Chai pakde baithe vyakti ka chitran",
+      "resourceCardDefault": "Bloom resource card ka chitran",
       "personSitting": "baithe vyakti ka chitran",
       "chooseTherapist": "Illustration of a side profile of a person's face, with a flower",
       "dateSelector": "Illustration of a calendar with a heart in the middle",
       "change": "Ek chakra ka chitran - ke chakra mein teen sooraj unke beech mein teer. ",
+      "notes": "Ek mobile ki illustration jisme screen par ek message bubble hai jisme heart hai",
       "confidential": "Illustration of a document with a lock in the corner",
       "cookieCat": "Chitra mein ek billi araam kar rahi hai ek biscuit ke saath. ",
       "fruitzLogo": "Fruitz logo",
@@ -106,44 +117,17 @@
       "acceptLabel": "Cookies sweekaar kariye",
       "declineLabel": "Cookies asweekar karein"
     },
-    "signUpTodayPromo": {
-      "title": "Free account ke liye aaj he sign up karein",
-      "description1": "Bloom ek online platform hai jo apko apke ghavon se ubharne aur heal hone mein madad karta hai. Bloom par bahut sar alag alag suvidhaye hain - \nVideo courses, vichar sambhanti activities, aur toh aur aap humari team se seedha message par baat kar sakte hain.",
-      "description2": "Sign up kariye aur vo sara content dekhiye jo Bloom aapko offer karta hai.",
-      "button": "Shuru karte hain"
-    },
-    "loginDialog": {
-      "title": "Bloom mein login karein ya ek naya account banayein",
-      "description": "Hamaaree sabhee saamagree tak pahunchane aur Bloom dvaara pesh kee jaane vaalee har cheej ka pata lagaane ke lie nihshulk sain ap karen",
-      "loginButton": "Log in",
-      "registerButton": "Account banayein",
-      "backButton": "Cancel"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "Personal diary",
-      "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
-      "activities-timelines": "Timelines",
-      "activities-trust-mapping": "Trust mapping",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Darr aur tanav ko apne shareer mein samjhna",
-      "activities-letter-to-a-part-of-my-body": "Mere shareer ke ek hisse ko khatt",
-      "activities-accelerators-and-brakes": "Accelerators aur brakes",
-      "activities-ideal-sexual-being": "Aadarsh sexual insaan",
-      "grounding-visual-breathing": "Picture ke saath saans lena",
-      "grounding-slow-breathing": "Slow breathing",
-      "grounding-box-breathing": "Box breathing",
-      "grounding-drifting-clouds-meditation": "Tension free — chalte badal",
-      "grounding-positive-coping-statement": "Positive shabd",
-      "grounding-finger-focus": "Unglio ka dhyaan kariyes",
-      "grounding-day-walkthrough": "Mene din mein kya kiya?",
-      "grounding-what-can-you-hear": "Kya tum mujhe sun sakte ho?",
-      "grounding-listen-to-your-voice": "Apni awaaz ko suno",
-      "grounding-calming-colours": "Sukoon ke rang",
-      "grounding-coming-back-to-your-safe-space": "Apni safe space mein wapis ana",
-      "grounding-best-check-in": "BEST check-in",
-      "grounding-compassionate-body-scan": "Sahanbhooti se shareer ko mehsoos karna",
-      "grounding-touching-and-feeling-textures": "Textures ko mehsoos karna",
-      "grouding-sound-of-claps": "Taaliyo ki awaz",
-      "grounding-affirming-ourselves": "Jaadu ki jhappi!"
+    "supportSection": {
+      "title": "Sahayata paiye",
+      "introduction": "Kya aap kisi se baat karna chahenge? Bloom ki support services jab bhi aapko zaroorat ho, aapke liye maujood hain.",
+      "messaging": {
+        "title": "1-to-1 messaging",
+        "description": "Aapke sawaalon aur vichaaron ke soch-samajh kar diye gaye jawaab, humari multilingual team se, 1–2 dinon ke andar."
+      },
+      "notes": {
+        "title": "Notes from Bloom",
+        "description": "Bloom se sahayata, hafte mein do baar seedhe aapke WhatsApp par."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "Apne homescreen se access ke liye app ko install karein",
@@ -159,9 +143,30 @@
       "description": "Apane vhaatsep par seedhe saptaah mein do baar sandesh praapt karen",
       "buttonText": "Sadasyata len"
     },
-    "characterCount": "{current}/{max} अक्षर",
-    "scrollToSignUp": {
-      "button": "Muft mein sign up karein"
+    "characterCount": "{current}/{max} akshar",
+    "signUpSection": {
+      "title": "Aapko dhyan mein rakh kar banaya gaya",
+      "introduction": "Bloom aapke liye yahan hai — aap jo bhi hain aur jahan bhi hain.",
+      "multilingual": "Multilingual",
+      "freeAndAnonymous": "Free aur anonymous",
+      "exploreAtYourPace": "Apni speed se explore kariye",
+      "cta": "Bloom join kariye, hamesha free",
+      "ctaMessaging": "Message bhejne ke liye Bloom join kariye"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Wahin se shuru kariye jahan chhoda tha"
+      },
+      "sessions": {
+        "heading": "Single sessions",
+        "introduction": "Abuse ko samajhne, boundaries banane, healing aur bahut kuch par sessions.",
+        "browseAll": "Sabhi sessions dekhiye"
+      },
+      "courses": {
+        "heading": "Courses",
+        "introduction": "Shuruaat ke liye ek guided jagah. Har course aapko apni raftaar se sessions ki ek series se le jaata hai.",
+        "browseAll": "Sabhi courses dekhiye"
+      }
     }
   }
 }

@@ -27,6 +27,7 @@
         "unsupportedImage": "Only JPG, PNG, GIF or WebP images are supported.",
         "fileTooLarge": "Files must be under 25 MB.",
         "uploadFailed": "Upload failed. Please try again.",
+        "imageBlocked": "This image has been blocked because it didn't pass our safety standards. If you think this is a mistake, please write a message to explain why.",
         "micPermission": "Microphone access was denied. To record a voice note, allow microphone access in your browser settings and try again.",
         "micUnavailable": "Could not access your microphone. Please check it is connected and try again."
       }

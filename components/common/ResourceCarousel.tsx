@@ -1,90 +1,106 @@
 'use client';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import {
+  RELATED_RESOURCES_CARD_CLICKED,
+  RELATED_RESOURCES_CAROUSEL_PAGED,
+} from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import filterResourcesForLocaleAndPartnerAccess from '@/lib/utils/filterStoryByLanguageAndPartnerAccess';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
+import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerContentAccess';
 import { Box } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 import { RelatedContentCard } from '../cards/RelatedContentCard';
 import { ResourceCard } from '../cards/ResourceCard';
-import Carousel, { CarouselItemContainer } from './Carousel';
+import { CardCarousel } from './CardCarousel';
 
 export interface ResourceCarouselProps {
   resourceTypes?: string[];
-  title?: string;
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-const ResourceCarousel = ({
-  title = 'resource-category-carousel',
-  resources = [],
-}: ResourceCarouselProps) => {
-  const userId = useTypedSelector((state) => state.user.id);
+const RESOURCE_CATEGORY_BY_COMPONENT: Record<string, RESOURCE_CATEGORIES> = {
+  resource_short_video: RESOURCE_CATEGORIES.SHORT_VIDEO,
+  resource_single_video: RESOURCE_CATEGORIES.SINGLE_VIDEO,
+  resource_conversation: RESOURCE_CATEGORIES.CONVERSATION,
+  resource_audio: RESOURCE_CATEGORIES.AUDIO,
+  resource_written: RESOURCE_CATEGORIES.WRITTEN,
+  resource_activity: RESOURCE_CATEGORIES.ACTIVITY,
+};
+
+function resourceCard(story: ISbStoryData, locale: string, onSelect: () => void) {
+  const href = getDefaultFullSlug(story.full_slug, locale);
+  const { component, name, duration, preview_image } = story.content;
+  const category = RESOURCE_CATEGORY_BY_COMPONENT[component as string];
+
+  switch (component) {
+    case 'resource_short_video':
+    case 'resource_single_video':
+      return (
+        <ResourceCard
+          title={name}
+          category={category}
+          href={href}
+          duration={duration}
+          image={preview_image}
+          onSelect={onSelect}
+        />
+      );
+    case 'resource_conversation':
+    case 'resource_audio':
+    case 'resource_written':
+    case 'resource_activity':
+      return (
+        <RelatedContentCard
+          title={story.name}
+          href={href}
+          category={category}
+          duration={duration}
+          onSelect={onSelect}
+        />
+      );
+    default:
+      return null;
+  }
+}
+
+const ResourceCarousel = ({ resources = [] }: ResourceCarouselProps) => {
+  const locale = useLocale();
+  const userPartners = useUserContentPartners();
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const locale = useLocale(); // Get the current locale
-  const referralPartner = useCookieReferralPartner();
 
-  const carouselStories = useMemo(() => {
-    const userPartners = userHasAccessToPartnerContent(
-      partnerAdmin?.partner,
-      partnerAccesses,
-      referralPartner,
-      userId,
-    );
-    return filterResourcesForLocaleAndPartnerAccess(resources, locale, userPartners) || [];
-  }, [userId, partnerAccesses, locale, partnerAdmin?.partner, referralPartner, resources]);
+  const carouselStories = useMemo(
+    () => filterStoriesForLocaleAndPartnerAccess(resources, locale, userPartners),
+    [locale, userPartners, resources],
+  );
 
   if (resources.length < 1 || carouselStories.length === 0) {
     return <div></div>;
   }
 
+  const logCardClick = (story: ISbStoryData, index: number) =>
+    logEvent(RELATED_RESOURCES_CARD_CLICKED, {
+      related_resource_name: story.name,
+      related_resource_storyblok_uuid: story.uuid,
+      related_resource_category:
+        RESOURCE_CATEGORY_BY_COMPONENT[story.content.component as string] ?? null,
+      related_resource_position: index + 1,
+      ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+    });
+
   return (
     <Box sx={{ width: '100%' }}>
-      <Carousel
-        title={title}
-        theme="primary"
-        items={carouselStories.map((story, index) => {
-          return (
-            (story.content.component === 'resource_short_video' && (
-              <CarouselItemContainer key={index}>
-                <ResourceCard
-                  title={story.content.name}
-                  category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-                  href={getDefaultFullSlug(story.full_slug, locale)}
-                  duration={story.content.duration}
-                  image={story.content.preview_image}
-                />
-              </CarouselItemContainer>
-            )) ||
-            (story.content.component === 'resource_single_video' && (
-              <CarouselItemContainer key={index}>
-                <ResourceCard
-                  title={story.content.name}
-                  category={RESOURCE_CATEGORIES.SINGLE_VIDEO}
-                  href={getDefaultFullSlug(story.full_slug, locale)}
-                  duration={story.content.duration}
-                  image={story.content.preview_image}
-                />
-              </CarouselItemContainer>
-            )) ||
-            (story.content.component === 'resource_conversation' && (
-              <CarouselItemContainer key={index}>
-                <RelatedContentCard
-                  title={story.name}
-                  href={getDefaultFullSlug(story.full_slug, locale)}
-                  category={RESOURCE_CATEGORIES.CONVERSATION}
-                  duration={story.content.duration}
-                />
-              </CarouselItemContainer>
-            ))
-          );
+      <CardCarousel controls eventName={RELATED_RESOURCES_CAROUSEL_PAGED}>
+        {carouselStories.flatMap((story, index) => {
+          const card = resourceCard(story, locale, () => logCardClick(story, index));
+          return card ? [<Box key={index}>{card}</Box>] : [];
         })}
-      />
+      </CardCarousel>
     </Box>
   );
 };

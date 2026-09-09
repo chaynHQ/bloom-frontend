@@ -205,7 +205,8 @@ const Video = ({
         },
       } as Config);
 
-  const containerStyle = { ...containerStyles, maxWidth: 514 } as const;
+  // 514 is the default cap; a caller can widen (or remove) it via containerStyles.
+  const containerStyle = { maxWidth: 514, ...containerStyles } as const;
 
   // Custom play icon for light mode
   const customPlayIcon: ReactElement = (

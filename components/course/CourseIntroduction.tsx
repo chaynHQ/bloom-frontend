@@ -16,7 +16,8 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 const containerStyle = {
   ...rowStyle,
   flexDirection: { xs: 'column', md: 'row' },
-  gap: 5,
+  alignItems: { md: 'flex-start' },
+  gap: { xs: 3, md: 4 },
 } as const;
 
 const introductionContainerStyle = {
@@ -56,14 +57,10 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
   return (
     <Box sx={containerStyle}>
       <Box sx={introductionContainerStyle}>
-        <Typography component="h2" variant="h2">
+        <Typography component="h2" variant="h2" sx={{ mb: 1.5 }}>
           {t('courseDetail.introductionTitle')}
         </Typography>
-        <Typography
-          sx={{
-            mb: 4,
-          }}
-        >
+        <Typography sx={{ mb: 0 }}>
           {t.rich('courseDetail.introductionDescription', {
             transcriptLink: (children) => (
               <MuiLink

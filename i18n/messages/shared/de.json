@@ -12,8 +12,14 @@
       "wikiLink": "https://de.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJ_WsZuFDezBprx4GPA4oUEAH2UZw:1715343638849&q=niedliche+Baby-Tier-Memes&uds=ADvngMiEaejYwuOeiZQu02lS_613m53Jb2QEm8sIUuolXf3u5OLiSr-sQwXpK0Sb8RbyS-qLiD9mvYA5iSmWzg__ItxGzUTx_1pIgkZZ1Bae8Bk-_c5k6avMEj6k-Ivg5X7Nqj5QfpS4372pKVvXnZGHa_NohbeQ4etJVuaadD1nAdlnscB1U8GPvLL2nKEkXW0XcSW5APhEyjJMG5UykrXheZ-ItO50_AvOLOqiAee7F4qjxZseR6ulih0nXf4ObzFDOJCrhKVK4kZhwMwjCXAOYhXndL2v6djwxuzMXUpQQfjbIlH05Jz8GimYdP3ajbGny331kzEs&udm=2&prmd=ivsnmbtz&sa=X&ved=2ahUKEwi3kouCiYOGAxX-cmwGHbBFDvAQtKgLegQIFRAB&biw=1277&bih=659&dpr=1.5"
     },
-    "navigateBack": "Zurück zur vorherigen Seite",
     "navigateTo": "Navigieren Sie zur",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "Inhalte-Karussell",
+      "previous": "{name}: zurück",
+      "next": "{name}: weiter",
+      "goToPage": "{name}: zu {page} von {pages}"
+    },
     "footer": {
       "fundedByTitle": "Mit finanzieller Unterstützung von",
       "chaynDescription": "Bloom wird Dir präsentiert von <link>Chayn</link>, einer globalen gemeinnützigen Organisation, die von Überlebenden und Unterstützenden aus aller Welt geleitet wird und die für Überlebende geschlechtsspezifischer Gewalt Ressourcen zur Heilung entwickelt.",
@@ -39,9 +45,13 @@
     },
     "videoTranscript": {
       "title": "Video-Transcript",
-      "description": "Lies das Transkript vom Video - ",
-      "closeModal": "Transkript schließen"
+      "closeModal": "Transkript schließen",
+      "description": "Lies das Transkript vom Video - "
     },
+    "audioTranscript": {
+      "title": "Audiotranskript"
+    },
+    "currentSession": "Aktuelle Session",
     "progressStatus": {
       "started": "Angefangen",
       "completed": "Abgeschlossen",
@@ -61,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - Seite nicht gefunden",
-      "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Kursseite.",
+      "authenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück zur Bibliotheksseite.",
       "unauthenticatedDescription": "Diese Seite konnte nicht gefunden werden. Überprüfe die URL oder geh zurück auf die Startseite.",
-      "authenticatedRedirectButton": "Zurück zur Kursseite",
+      "authenticatedRedirectButton": "Zurück zur Bibliotheksseite",
       "unauthenticatedRedirectButton": "Zurück zur Startseite"
     },
     "alt": {
@@ -84,10 +94,12 @@
       "leafMixBee": "Illustration von zwei Blättern über deinen eine Biene schwebt",
       "leafMixDots": "Illustration von 3 Blättern mit einer Blume in der Mitte und Punkten, die aus der der Blume fliegen. ",
       "personTea": "Illustration einer sitzenden Person, die eine Tasse Tee hält",
+      "resourceCardDefault": "Illustration einer Bloom-Ressourcenkarte",
       "personSitting": "Illustration einer sitzenden Person",
       "chooseTherapist": "Illustration eines Gesichts im Seitenprofil, mit einer Blume",
       "dateSelector": "Illustration eines Kalenders mit einem Herz in der Mitte",
       "change": "Illustration eines Zyklus - drei Sonnen im Kreis mit Pfeilen zwischen ihnen",
+      "notes": "Illustration einer Notes",
       "confidential": "Illustration eines Dokuments mit einem Schloss in der Ecke",
       "cookieCat": "Illustration einer ruhenden Katze mit einem Keks",
       "fruitzLogo": "Fruitz Logo",
@@ -95,8 +107,7 @@
       "bloomHomeIllustration": "Person sitting crossed legged with symbols floating around such as a video icon, flower, message icon and a persons head with a flower",
       "bookIcon": "Buch-Symbol",
       "articleIcon": "Artikel-Symbol",
-      "videoIcon": "Video-Symbol",
-      "notes": "Illustration einer Notes"
+      "videoIcon": "Video-Symbol"
     },
     "feedbackTypeform": "https://chayn.typeform.com/to/OY9Wdk4h",
     "survivor": "Überlebende:r",
@@ -106,44 +117,17 @@
       "acceptLabel": "Cookies akzeptieren",
       "declineLabel": "Cookies ablehnen"
     },
-    "signUpTodayPromo": {
-      "title": "Melden Sie sich noch heute für ein kostenloses Konto an.",
-      "description1": "Bloom ist eine Online-Plattform, die dich bei der Heilung von Traumata unterstützt. Von Videokursen und reflektierenden Aktivitäten bis hin zur direkten Kommunikation mit unserem Team gibt es viele verschiedene Möglichkeiten, sich mit Bloom zu beschäftigen.",
-      "description2": "Registriere dich unten, um Zugriff auf all unsere Inhalte zu erhalten und alles zu erkunden, was Bloom zu bieten hat.",
-      "button": "Loslegen"
-    },
-    "loginDialog": {
-      "title": "Anmelden oder Konto erstellen",
-      "description": "Melden Sie sich kostenlos an, um auf alle unsere Inhalte zuzugreifen und alles zu entdecken, was Bloom zu bieten hat",
-      "loginButton": "Anmelden",
-      "registerButton": "Konto erstellen",
-      "backButton": "Stornieren"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "Thought diaries",
-      "activities-stream-of-consciousness-journaling": "Stream-of-consciousness journaling",
-      "activities-timelines": "Timelines",
-      "activities-trust-mapping": "Trust mapping",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Mapping fear and stress in our bodies",
-      "activities-letter-to-a-part-of-my-body": "Letter to a part of my body",
-      "activities-accelerators-and-brakes": "Accelerators and brakes",
-      "activities-ideal-sexual-being": "Ideal sexual being",
-      "grounding-visual-breathing": "Visual breathing",
-      "grounding-slow-breathing": "Slow breathing",
-      "grounding-box-breathing": "Box breathing",
-      "grounding-drifting-clouds-meditation": "Drifting clouds meditation",
-      "grounding-positive-coping-statement": "Positive coping statement",
-      "grounding-finger-focus": "Finger focus",
-      "grounding-day-walkthrough": "Day walkthrough",
-      "grounding-what-can-you-hear": "What can you hear",
-      "grounding-listen-to-your-voice": "Listen to your voice",
-      "grounding-calming-colours": "Calming colours",
-      "grounding-coming-back-to-your-safe-space": "Coming back to your safe space",
-      "grounding-best-check-in": "BEST check-in",
-      "grounding-compassionate-body-scan": "Compassionate body scan",
-      "grounding-touching-and-feeling-textures": "Touching and feeling textures",
-      "grouding-sound-of-claps": "Sound of claps",
-      "grounding-affirming-ourselves": "Affirming ourselves (firm pressure)"
+    "supportSection": {
+      "title": "Unterstützung finden",
+      "introduction": "Möchtest du lieber mit jemandem sprechen? Blooms Unterstützungsangebote sind für dich da, wann immer du sie brauchst.",
+      "messaging": {
+        "title": "1-zu-1-Nachrichten",
+        "description": "Achtsame Antworten auf deine Fragen und Gedanken – von unserem mehrsprachigen Team, innerhalb von 1–2 Tagen."
+      },
+      "notes": {
+        "title": "Notes von Bloom",
+        "description": "Unterstützung von Bloom – zweimal pro Woche direkt auf dein WhatsApp."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "Installiere die App, um von deinem Startbildschirm aus darauf zuzugreifen",
@@ -160,8 +144,29 @@
       "buttonText": "Abonnieren"
     },
     "characterCount": "{current}/{max} Zeichen",
-    "scrollToSignUp": {
-      "button": "Kostenlos anmelden"
+    "signUpSection": {
+      "title": "Für dich gemacht",
+      "introduction": "Bloom ist für dich da – wer du auch bist und wo du auch bist.",
+      "multilingual": "Mehrsprachig",
+      "freeAndAnonymous": "Kostenlos und anonym",
+      "exploreAtYourPace": "Entdecke in deinem eigenen Tempo",
+      "cta": "Bloom beitreten – immer kostenlos",
+      "ctaMessaging": "Bloom beitreten, um eine Nachricht zu senden"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Mach dort weiter, wo du aufgehört hast"
+      },
+      "sessions": {
+        "heading": "Einzelne Sessions",
+        "introduction": "Sessions über das Verstehen von Missbrauch, das Setzen von Grenzen, Heilung und mehr.",
+        "browseAll": "Alle Sessions ansehen"
+      },
+      "courses": {
+        "heading": "Kurse",
+        "introduction": "Ein geführter Ort für den Anfang. Jeder Kurs führt dich in deinem eigenen Tempo durch eine Reihe von Sessions.",
+        "browseAll": "Alle Kurse ansehen"
+      }
     }
   }
 }

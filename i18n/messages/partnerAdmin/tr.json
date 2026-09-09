@@ -7,7 +7,7 @@
       "liveChatAccess": "Kurslara ve mesajlaşmaya erişim",
       "therapyAccess": "Kurslara, mesajlaşmaya ve altı terapi seansına erişim",
       "resultLink": "Lütfen kullanıcıya, e-posta adresini kullanarak kaydolabileceği ilgili bağlantıya gitmesini söyle.",
-      "resultCode": "Kaydolduktan sonra hesap simgesine tıklayıp 'Kod uygula' seçeneğini seçebilir ve şu kodu kullanabilir: <partnerAccessCode></partnerAccessCode>",
+      "resultCode": "Kaydolduktan sonra hesap simgesine tıklayıp 'Kod ekle' seçeneğini seçebilir ve şu kodu kullanabilir: <partnerAccessCode></partnerAccessCode>",
       "form": {
         "featuresLabel": "Bu kullanıcıya sunulan destek türünü seç",
         "featureCoursesLabel": "Yalnızca kurslar",

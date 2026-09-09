@@ -27,6 +27,7 @@
         "unsupportedImage": "Keval JPG, PNG, GIF ya WebP chhaviyan samarthit hain.",
         "fileTooLarge": "Failen 25 MB se kam honi chahiye.",
         "uploadFailed": "Upload vifal hua. Kripya punah prayas karein.",
+        "imageBlocked": "Is chhavi ko block kar diya gaya hai kyunki yeh hamare suraksha maandandon par khari nahi utri. Agar aapko lagta hai ki yeh ek galti hai, to kripya humein ek message likhkar iska kaaran batayein.",
         "micPermission": "Microphone ki anumati aswikar kar di gayi. Voice note record karne ke liye, apne browser settings mein microphone ki anumati dein aur punah prayas karein.",
         "micUnavailable": "Aapke microphone tak pahunch nahi ho saki. Kripya jaanchein ki yeh juda hua hai aur punah prayas karein."
       }

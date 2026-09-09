@@ -1,9 +1,9 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutlineOutlined';
 import Logout from '@mui/icons-material/Logout';
-import Person from '@mui/icons-material/Person';
 import Settings from '@mui/icons-material/SettingsOutlined';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -18,14 +18,12 @@ import {
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
+import { navDropdownOrigin, navDropdownPaperStyle, navDropdownRootStyle } from '@/styles/common';
 import { Event } from '@mui/icons-material';
 import { navDrawerButtonStyle } from './MobileTopNav';
 
 const menuItemStyle = {
   ':hover': { backgroundColor: 'transparent' },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'transparent',
-  },
 } as const;
 
 export default function UserMenu() {
@@ -65,19 +63,24 @@ export default function UserMenu() {
         aria-label={t('userMenu')}
         id="user-menu-button"
         color="inherit"
+        size="small"
         onClick={handleClick}
-        startIcon={<Person />}
+        startIcon={<AccountCircle />}
         sx={navDrawerButtonStyle}
       />
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        elevation={1}
-        sx={{ mt: 0.5 }}
+        elevation={0}
+        sx={navDropdownRootStyle}
+        {...navDropdownOrigin}
         slotProps={{
           list: {
             id: 'user-menu',
+          },
+          paper: {
+            sx: navDropdownPaperStyle,
           },
         }}
       >

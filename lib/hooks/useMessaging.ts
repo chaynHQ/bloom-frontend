@@ -272,7 +272,10 @@ export function useMessaging(): UseMessagingResult {
           headers: { Authorization: `Bearer ${token}` },
           body: form,
         });
-        if (!response.ok) throw new Error(`UPLOAD_FAILED_${response.status}`);
+        if (!response.ok)
+          throw new Error(
+            response.status === 422 ? 'IMAGE_BLOCKED' : `UPLOAD_FAILED_${response.status}`,
+          );
         upsertMessage({ ...optimistic, status: 'sent' });
         logEvent(CHAT_MESSAGE_SENT, { kind });
       } catch (err) {

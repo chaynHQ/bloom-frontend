@@ -1,25 +1,57 @@
 {
   "Resources": {
-    "backToConversations": "Voltar às conversas",
-    "backToShorts": "Voltar às curtas",
-    "backToVideos": "Voltar aos vídeos",
-    "backToSomatics": "Voltar aos somática",
-    "nextVideoButtonLabel": "Próximo vídeo",
-    "nextConversationButtonLabel": "Próxima conversa",
-    "nextSessionButtonLabel": "Próxima sessão",
     "conversations": "Conversas",
     "shorts": "Curtas",
     "videos": "Vídeos",
-    "completed": "Concluído",
-    "sessionDetail": "Este clipe é da Sessão: {sessionName}, do nosso Curso: {courseName}",
+    "audio": "Áudio",
+    "written": "Texto",
+    "activity": "Atividade",
     "sessionButtonLabel": "Assistir à sessão completa",
-    "videoTranscriptLink": "Assista ao vídeo ou leia a <link>transcrição</link>.",
-    "conversationTranscriptLink": "Ouça a conversa ou leia a <link>transcrição</link>.",
+    "accessCard": {
+      "title": {
+        "audio": "Acesse este áudio",
+        "video": "Acesse este vídeo",
+        "written": "Acesse este artigo",
+        "activity": "Acesse esta atividade",
+        "course": "Acesse este curso",
+        "grounding": "Acesse este exercício"
+      },
+      "body": "Crie uma conta gratuita para desbloquear todas as sessões e salvar o seu progresso.",
+      "logIn": "Já tenho uma conta",
+      "relatedSession": {
+        "title": "Acesse a sessão completa"
+      }
+    },
+    "audioPlayer": {
+      "play": "Reproduzir",
+      "pause": "Pausar",
+      "back": "Retroceder {seconds} segundos",
+      "forward": "Avançar {seconds} segundos",
+      "scrubber": "Navegar pelo áudio"
+    },
+    "moment": {
+      "title": "Você precisa de um momento?",
+      "subtitle": "Se em algum momento da sessão você precisar de uma pausa, use nossos exercícios de aterramento abaixo.",
+      "groundingLabel": "Aterramento"
+    },
+    "actions": {
+      "finish": "Concluir sessão"
+    },
+    "complete": {
+      "title": "Sessão concluída",
+      "body": "Você reservou este tempo hoje. Respire um momento antes de seguir em frente.",
+      "cta": "Voltar para as sessões",
+      "close": "Fechar"
+    },
     "relatedContent": {
-      "title": "Conteúdo relacionado",
-      "resource_short_video": "Assistir",
-      "resource_single_video": "Assistir",
+      "title": "Quer explorar mais?",
+      "subtitle": "Dê uma olhada nas nossas sessões relacionadas abaixo, para acompanhar a sua jornada de cura.",
+      "short_video": "Assistir",
+      "single_video": "Assistir",
       "resource_conversation": "Áudio",
+      "audio": "Ouvir",
+      "written": "Ler",
+      "activity": "Atividade",
       "course": "Curso",
       "session": "Sessão",
       "session_iba": "Sessão",
@@ -28,8 +60,9 @@
       "minuteLabel": "minutos"
     },
     "resourceFeedback": {
-      "title": "Como foi este aprendizado?",
-      "subtitle": "Adoraríamos saber como você encontrou este aprendizado. Seu feedback nos ajuda a melhorar nossos recursos.",
+      "title": "O que você achou desta sessão?",
+      "close": "Fechar",
+      "subtitle": "Adoraríamos saber o que você achou desta sessão. Seu feedback nos ajuda a melhorar nossas sessões.",
       "feedbackTags": {
         "relatable": "Compreensível",
         "useful": "Útil",
@@ -39,11 +72,14 @@
         "not useful": "Não útil"
       },
       "textboxDefaultText": "Adicione um comentário...",
-      "sendButtonText": "Enviar",
+      "sendButtonText": "Enviar avaliação",
       "submissionText": "Obrigado por enviar seu feedback",
       "errors": {
         "feedbackTagError": "Por favor, selecione uma avaliação antes de enviar."
       }
+    },
+    "errors": {
+      "completeResourceError": "Ocorreu um erro ao marcar isto como concluído. Tente novamente um pouco mais tarde."
     },
     "references": {
       "title": "Recursos",
@@ -52,6 +88,14 @@
       "articles": "Artigos",
       "video_practices": "Práticas em vídeo",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Voltar para as sessões",
+    "backToLibrary": "Voltar para a biblioteca",
+    "grounding": {
+      "close": "Fechar",
+      "exercisesCount": "{count, plural, one {# exercício} other {# exercícios}}",
+      "loadMore": "Ver mais",
+      "duration": "{minutes} min"
     }
   }
 }

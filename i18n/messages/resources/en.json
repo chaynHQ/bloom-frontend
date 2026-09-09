@@ -1,25 +1,57 @@
 {
   "Resources": {
-    "backToConversations": "Back to conversations",
-    "backToShorts": "Back to shorts",
-    "backToVideos": "Back to videos",
-    "backToSomatics": "Back to somatics",
-    "nextVideoButtonLabel": "Next video",
-    "nextConversationButtonLabel": "Next conversation",
-    "nextSessionButtonLabel": "Next session",
     "conversations": "Conversations",
     "shorts": "Shorts",
     "videos": "Videos",
-    "completed": "Completed",
-    "sessionDetail": "This clip is from Session: {sessionName}, from our Course: {courseName}",
+    "audio": "Audio",
+    "written": "Written",
+    "activity": "Activity",
     "sessionButtonLabel": "Watch full session",
-    "videoTranscriptLink": "Watch the video or read the <link>transcript</link>.",
-    "conversationTranscriptLink": "Listen to the conversation or read the <link>transcript</link>.",
+    "accessCard": {
+      "title": {
+        "audio": "Access this audio",
+        "video": "Access this video",
+        "written": "Access this article",
+        "activity": "Access this activity",
+        "course": "Access this course",
+        "grounding": "Access this exercise"
+      },
+      "body": "Create a free account to unlock all sessions and log your progress.",
+      "logIn": "I already have an account",
+      "relatedSession": {
+        "title": "Access the full session"
+      }
+    },
+    "audioPlayer": {
+      "play": "Play",
+      "pause": "Pause",
+      "back": "Rewind {seconds} seconds",
+      "forward": "Skip forward {seconds} seconds",
+      "scrubber": "Seek through the audio"
+    },
+    "moment": {
+      "title": "Do you need a moment?",
+      "subtitle": "If at any point during the session you need a moment, use our groundings below.",
+      "groundingLabel": "Grounding"
+    },
+    "actions": {
+      "finish": "Finish session"
+    },
+    "complete": {
+      "title": "Session complete",
+      "body": "You showed up today. Take a moment before moving on.",
+      "cta": "Back to sessions",
+      "close": "Close"
+    },
     "relatedContent": {
-      "title": "Related content",
-      "resource_short_video": "Watch",
-      "resource_single_video": "Watch",
+      "title": "Want to explore more?",
+      "subtitle": "Have a look at our related sessions below, to help your healing journey.",
+      "short_video": "Watch",
+      "single_video": "Watch",
       "resource_conversation": "Listen",
+      "audio": "Listen",
+      "written": "Read",
+      "activity": "Activity",
       "course": "Course",
       "session": "Session",
       "session_iba": "Session",
@@ -28,8 +60,9 @@
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {
-      "title": "How was this session?",
-      "subtitle": "We’d love to hear how you found this learning. Your feedback helps us to improve our resources.",
+      "title": "How did you find this session?",
+      "close": "Close",
+      "subtitle": "We’d love to hear how you found this session. Your feedback helps us to improve our sessions.",
       "feedbackTags": {
         "relatable": "Relatable",
         "useful": "Useful",
@@ -39,11 +72,14 @@
         "not useful": "Not useful"
       },
       "textboxDefaultText": "Add a comment...",
-      "sendButtonText": "Send",
+      "sendButtonText": "Submit rating",
       "submissionText": "Thank you for submitting your feedback",
       "errors": {
         "feedbackTagError": "Please select a rating before sending."
       }
+    },
+    "errors": {
+      "completeResourceError": "There was an error marking this as complete. Try again a little later."
     },
     "references": {
       "title": "Resources",
@@ -52,6 +88,14 @@
       "articles": "Articles",
       "video_practices": "Video practices",
       "audios": "Podcasts"
+    },
+    "backToSessions": "Back to sessions",
+    "backToLibrary": "Back to library",
+    "grounding": {
+      "close": "Close",
+      "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
+      "loadMore": "Load more",
+      "duration": "{minutes} min"
     }
   }
 }

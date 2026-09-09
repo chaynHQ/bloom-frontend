@@ -4,7 +4,10 @@ import AccountActionsCard from '@/components/cards/AccountActionsCard';
 import EmailRemindersSettingsCard from '@/components/cards/EmailRemindersSettingsCard';
 import EmailSettingsCard from '@/components/cards/EmailSettingsCard';
 import ProfileSettingsCard from '@/components/cards/ProfileSettingsCard';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
 import Header from '@/components/layout/Header';
+import { SETTINGS_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import phoneIllustration from '@/public/phone.svg';
 import { columnStyle, rowStyle } from '@/styles/common';
 import { Box, Container } from '@mui/material';
@@ -27,6 +30,7 @@ const columnContainerStyle = {
 
 export default function SettingsPage() {
   const t = useTranslations('Account.accountSettings');
+  useLogEventOnce(SETTINGS_VIEWED, {});
 
   const headerProps = {
     title: t('title'),
@@ -49,12 +53,20 @@ export default function SettingsPage() {
       />
       <Container sx={rowContainerStyle}>
         <Box sx={columnContainerStyle}>
-          <ProfileSettingsCard />
-          <EmailSettingsCard />
+          <ScrollReveal fill>
+            <ProfileSettingsCard />
+          </ScrollReveal>
+          <ScrollReveal fill>
+            <EmailSettingsCard />
+          </ScrollReveal>
         </Box>
         <Box sx={columnContainerStyle}>
-          <AccountActionsCard />
-          <EmailRemindersSettingsCard />
+          <ScrollReveal fill>
+            <AccountActionsCard />
+          </ScrollReveal>
+          <ScrollReveal fill>
+            <EmailRemindersSettingsCard />
+          </ScrollReveal>
         </Box>
       </Container>
     </Box>
