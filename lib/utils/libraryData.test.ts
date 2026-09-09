@@ -112,6 +112,12 @@ describe('storyToLibraryItem', () => {
     ]);
   });
 
+  it('maps the pre-rename harm theme slugs to their -abuse replacements', () => {
+    expect(
+      storyToLibraryItem(story({ themes: ['recognising-harm', 'why-harm-happens'] }), 'en').themes,
+    ).toEqual(['recognising-abuse', 'why-abuse-happens']);
+  });
+
   it('flattens a rich-text description to the plain text the card and search need', () => {
     const richText = {
       type: 'doc',
@@ -450,5 +456,11 @@ describe('library filters <-> URL query', () => {
     expect(
       parseLibraryFilters(new URLSearchParams('type=nonsense&theme=not-real,staying-safe&foo=bar')),
     ).toEqual({ ...empty, themes: ['staying-safe'] });
+  });
+
+  it('accepts the pre-rename harm theme slugs in a deep link', () => {
+    expect(
+      parseLibraryFilters(new URLSearchParams('theme=recognising-harm,why-harm-happens')),
+    ).toEqual({ ...empty, themes: ['recognising-abuse', 'why-abuse-happens'] });
   });
 });

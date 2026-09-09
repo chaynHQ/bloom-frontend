@@ -23,7 +23,8 @@ import { filterStoriesForLocaleAndPartnerAccess } from '@/lib/utils/partnerConte
 import { interactiveCardStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import { Box, Button, Card, CardActionArea, Container, Divider, Typography } from '@mui/material';
-import { ISbStoryData } from '@storyblok/react/rsc';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
@@ -85,12 +86,24 @@ const durationLabelStyle = {
 
 const loadMoreRowStyle = { display: 'flex', justifyContent: 'center', mt: 4 } as const;
 
-interface GroundingPageProps {
-  stories: ISbStoryData[];
-  heroStory?: ISbStoryData;
+interface GroundingPageContent {
+  _uid?: string;
+  _editable?: string;
+  title?: string;
+  description?: StoryblokRichtext;
+  seo_description?: string;
+  header_image?: { filename: string; alt: string };
 }
 
-export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
+interface StoryblokGroundingProps {
+  // The `grounding_page` story — hero copy + SEO. `stories` is the list of `resource_grounding`
+  // exercise stories, fetched server-side by the /grounding route.
+  story: ISbStoryData;
+  stories: ISbStoryData[];
+}
+
+const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGroundingProps) => {
+  const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Resources');
   const locale = useLocale();
   const router = useRouter();
@@ -105,6 +118,9 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   // GROUNDING_VIEWED event below carries accurate partner/account attribution.
   const userSettled = userAuthStatus !== 'resolving';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const { _uid, _editable, title, description, seo_description, header_image } = (story?.content ??
+    {}) as GroundingPageContent;
 
   const visibleStories = useMemo(
     // Grounding has no gating, unlike partner-curated resources — 'public' always applies here,
@@ -132,12 +148,12 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   // Last slug opened from a card, to tell card-opens from deep-link opens.
   const [cardOpenedSlug, setCardOpenedSlug] = useState<string | undefined>(undefined);
 
-  const logExerciseClick = (story: ISbStoryData, index: number) => {
-    setCardOpenedSlug(story.slug);
+  const logExerciseClick = (exerciseStory: ISbStoryData, index: number) => {
+    setCardOpenedSlug(exerciseStory.slug);
     logEvent(GROUNDING_EXERCISE_CLICKED, {
       grounding_context: 'grounding_page',
-      grounding_exercise_name: story.content.name,
-      grounding_exercise_storyblok_uuid: story.uuid,
+      grounding_exercise_name: exerciseStory.content.name,
+      grounding_exercise_storyblok_uuid: exerciseStory.uuid,
       grounding_exercise_position: index + 1,
       grounding_results_count: resultsCount,
       ...eventUserData,
@@ -154,22 +170,16 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
     });
   };
 
-  const heroContent = heroStory?.content as
-    | {
-        title: string;
-        description?: StoryblokRichtext;
-        header_image?: { filename: string; alt: string };
-      }
-    | undefined;
-
   return (
-    <>
-      {heroContent && (
+    <Box
+      {...storyblokEditable({ _uid, _editable, title, description, seo_description, header_image })}
+    >
+      {title && (
         <Header
-          title={heroContent.title}
-          introduction={heroContent.description}
-          imageSrc={heroContent.header_image?.filename}
-          translatedImageAlt={heroContent.header_image?.alt}
+          title={title}
+          introduction={description}
+          imageSrc={header_image?.filename}
+          translatedImageAlt={header_image?.alt}
           cta={!isLoggedIn ? <SignUpButton source="grounding" /> : undefined}
         />
       )}
@@ -184,22 +194,22 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
         </Box>
 
         <Box sx={gridStyle}>
-          {displayedStories.map((story, index) => {
-            const minutes = parseMinutes(story.content.duration);
+          {displayedStories.map((exerciseStory, index) => {
+            const minutes = parseMinutes(exerciseStory.content.duration);
             return (
-              <ScrollReveal fill key={story.uuid} delay={(index % PAGE_SIZE) * 15}>
+              <ScrollReveal fill key={exerciseStory.uuid} delay={(index % PAGE_SIZE) * 15}>
                 <Card sx={cardStyle} qa-id="grounding-card">
                   <CardActionArea
                     component={i18nLink}
-                    href={`/grounding?id=${story.slug}`}
-                    onClick={() => logExerciseClick(story, index)}
+                    href={`/grounding?id=${exerciseStory.slug}`}
+                    onClick={() => logExerciseClick(exerciseStory, index)}
                   >
                     <Box sx={cardContentStyle}>
                       <Typography variant="h4" component="h3" sx={{ mb: 0 }}>
-                        {story.content.name}
+                        {exerciseStory.content.name}
                       </Typography>
                       <Typography sx={cardDescriptionStyle}>
-                        {toPlainText(story.content.description)}
+                        {toPlainText(exerciseStory.content.description)}
                       </Typography>
                       {minutes != null && (
                         <>
@@ -239,6 +249,8 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
           onClose={() => router.replace('/grounding')}
         />
       )}
-    </>
+    </Box>
   );
 };
+
+export default StoryblokGrounding;

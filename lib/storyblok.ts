@@ -5,6 +5,7 @@ import StoryblokButton from '@/components/storyblok/StoryblokButton';
 import StoryblokCard from '@/components/storyblok/StoryblokCard';
 import StoryblokCarousel from '@/components/storyblok/StoryblokCarousel';
 import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
+import StoryblokGrounding from '@/components/storyblok/StoryblokGrounding';
 import StoryblokImage from '@/components/storyblok/StoryblokImage';
 import StoryblokLinkCard from '@/components/storyblok/StoryblokLinkCard';
 import StoryblokMeetTheTeamPage from '@/components/storyblok/StoryblokMeetTheTeamPage';
@@ -58,6 +59,7 @@ export const getStoryblokApi = storyblokInit({
     session: StoryblokSessionPage,
     welcome: StoryblokWelcomePage,
     meet_the_team: StoryblokMeetTheTeamPage,
+    grounding_page: StoryblokGrounding,
     resource_carousel: StoryblokResourceCarousel,
     notes_from_bloom_promo: StoryblokNotesFromBloomPromo,
     link_card: StoryblokLinkCard,
