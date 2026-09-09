@@ -28,7 +28,7 @@ interface DesktopMainNavIconType {
 
 const tabsStyle = {
   display: { xs: 'none', md: 'flex' },
-  backgroundColor: theme.palette.palePrimaryLight,
+  backgroundColor: theme.palette.sectionSurface,
 } as const;
 
 const tabStyle = {
@@ -46,6 +46,11 @@ const tabStyle = {
   ':hover': {
     borderBottom: '2px solid',
     borderColor: 'primary.dark',
+  },
+  // Inset so the ring stays inside the edge-to-edge tab strip.
+  '&.Mui-focusVisible': {
+    outline: `2px solid ${theme.palette.primary.dark}`,
+    outlineOffset: '-4px',
   },
 } as const;
 

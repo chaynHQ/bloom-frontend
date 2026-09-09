@@ -4,9 +4,9 @@ import SanitizedTextField from '@/components/common/SanitizedTextField';
 import { useCreateSessionFeedbackMutation } from '@/lib/api';
 import { FEEDBACK_TAGS } from '@/lib/constants/enums';
 import { SESSION_FEEDBACK_SUBMITTED } from '@/lib/constants/events';
-import logEvent from '@/lib/utils/logEvent';
 import { SessionFeedback } from '@/lib/store/coursesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { staticFieldLabelStyle } from '@/styles/common';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -25,30 +25,45 @@ import Image from 'next/image';
 import * as React from 'react';
 import { useState } from 'react';
 
+// A subtle tinted fill plus a hairline sets the comment box apart from the card behind it.
 const fieldBoxStyle: SxProps<Theme> = {
   ...staticFieldLabelStyle,
+  mb: 2,
   '& .MuiFilledInput-root': {
-    backgroundColor: 'white',
+    backgroundColor: 'background.default',
+    border: '1px solid',
+    borderColor: 'inputBorder',
     borderRadius: '12px',
-    padding: '12px 12px',
-    '&:hover': {
+    padding: '12px',
+    '&:hover, &.Mui-focused': {
       backgroundColor: 'background.default',
+      borderColor: 'secondary.main',
+    },
+    '&.Mui-focused': {
+      backgroundColor: 'background.default',
+      borderColor: 'secondary.main',
     },
   },
 };
 
+// A fixed column count keeps every option on a single line rather than letting the longer
+// labels ("Too complicated") wrap inside a narrow flex track.
 const radioGroupStyle = {
   width: '100%',
-  padding: '20px 0px',
+  display: 'grid',
+  gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' },
+  gap: 1,
+  py: 2,
   label: {
     margin: 0,
     padding: 1,
-    width: { xs: '50%', sm: '33%', md: '16.5%' },
+    width: '100%',
   },
 } as const;
 
 interface SessionFeedbackFormProps {
   sessionId: string;
+  eventData?: Record<string, unknown>;
 }
 
 const imageContainerStyle = {
@@ -97,7 +112,11 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
       await sendFeedback(feedbackData);
     }
 
-    logEvent(SESSION_FEEDBACK_SUBMITTED, { feedbackTags: selectedFeedbackTag });
+    logEvent(SESSION_FEEDBACK_SUBMITTED, {
+      ...props.eventData,
+      feedback_tag: selectedFeedbackTag,
+      feedbackTags: selectedFeedbackTag, // kept for continuity
+    });
     setLoading(false);
     setFormSubmitSuccess(true);
   };
@@ -125,14 +144,10 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
 
   return (
     <>
-      <Typography component="h2" variant="h2">
-        {t('title')}
-      </Typography>
       <Typography>{t('subtitle')}</Typography>
       <form autoComplete="off" onSubmit={submitHandler}>
         <FormControl fullWidth component="fieldset">
           <RadioGroup
-            row
             sx={radioGroupStyle}
             aria-label="feature"
             name="feedback-radio-buttons"
@@ -174,7 +189,13 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           </Typography>
         )}
 
-        <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+        <LoadingButton
+          variant="contained"
+          color="secondary"
+          type="submit"
+          loading={loading}
+          sx={{ ml: 'auto', display: 'block' }}
+        >
           {t('sendButtonText')}
         </LoadingButton>
       </form>

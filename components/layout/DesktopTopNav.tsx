@@ -5,17 +5,16 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { getTopNavItems } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+import { navMenuLinkStyle } from '@/styles/common';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 
 const listStyle = {
   display: { xs: 'none', md: 'flex' },
-  flexDirection: { xs: 'column', md: 'row' },
-  height: '100%',
-  marginInlineStart: { xs: 0, md: 0.5 },
-  marginInlineEnd: { xs: 0, md: 0.5 },
-  gap: { xs: 2, md: 0 },
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginInline: 0,
   color: 'common.white',
 } as const;
 
@@ -27,20 +26,7 @@ const listItemStyle = {
 const listItemTextStyle = {
   span: {
     fontSize: 16,
-  },
-} as const;
-
-const listButtonStyle = {
-  borderRadius: 20,
-  fontFamily: 'Monterrat, sans-serif',
-  paddingY: 0.5,
-
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
-  },
-  ':hover': {
-    color: 'primary.dark',
+    lineHeight: '24px',
   },
 } as const;
 
@@ -65,7 +51,7 @@ const DesktopTopNav = (props: DesktopTopNavProps) => {
       {navigationLinks.map((link) => (
         <ListItem sx={listItemStyle} key={link.key} disablePadding>
           <ListItemButton
-            sx={listButtonStyle}
+            sx={navMenuLinkStyle}
             component={i18nLink}
             href={link.href}
             qa-id={link.qaId}

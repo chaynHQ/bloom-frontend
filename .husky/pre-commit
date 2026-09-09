@@ -1,1 +1,1 @@
-yarn format:precommit
+npx lint-staged

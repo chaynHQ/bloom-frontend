@@ -50,6 +50,7 @@ interface ResourceCardProps {
   duration?: string;
   image?: { filename: string; alt: string };
   category: RELATED_CONTENT_CATEGORIES;
+  onSelect?: () => void;
 }
 
 const categoryStyle = {
@@ -65,13 +66,14 @@ const categoryStyle = {
 } as const;
 
 export const ResourceCard = (props: ResourceCardProps) => {
-  const { title, href, duration, category, image } = props;
+  const { title, href, duration, category, image, onSelect } = props;
 
   const t = useTranslations('Resources');
+  const tS = useTranslations('Shared');
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
+      <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink} onClick={onSelect}>
         <CardContent sx={cardContentStyle}>
           <Box
             sx={{
@@ -85,7 +87,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
               src={image?.filename || '/bloom_shorts.png'}
               fill
               sizes={getImageSizes(360)}
-              alt={image?.alt || 'Bloom shorts default image'} // TODO create a message for this image
+              alt={image?.alt || tS('alt.resourceCardDefault')}
               style={{
                 objectFit: 'cover',
                 objectPosition: 'top',
@@ -111,7 +113,7 @@ export const ResourceCard = (props: ResourceCardProps) => {
             }}
           >
             <Typography sx={categoryStyle}>
-              {t(`relatedContent.resource_${category}`)}
+              {t(`relatedContent.${category}`)}
               {duration && (
                 <span className="before-dot">
                   {` ${duration} ${t('relatedContent.minuteLabel')}`}

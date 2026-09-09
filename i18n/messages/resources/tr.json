@@ -1,25 +1,57 @@
 {
   "Resources": {
-    "backToConversations": "Sohbetlere geri dön",
-    "backToShorts": "Kısa videolara geri dön",
-    "backToVideos": "Videolara geri dön",
-    "backToSomatics": "Somatik çalışmalara geri dön",
-    "nextVideoButtonLabel": "Sıradaki video",
-    "nextConversationButtonLabel": "Sıradaki sohbet",
-    "nextSessionButtonLabel": "Sıradaki bölüm",
     "conversations": "Sohbetler",
     "shorts": "Kısa videolar",
     "videos": "Videolar",
-    "completed": "Tamamlandı",
-    "sessionDetail": "Bu klip, {courseName} kursumuzun {sessionName} bölümünden alınmıştır",
+    "audio": "Sesli",
+    "written": "Yazılı",
+    "activity": "Etkinlik",
     "sessionButtonLabel": "Bölümün tamamını izle",
-    "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
-    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
+    "accessCard": {
+      "title": {
+        "audio": "Bu sese eriş",
+        "video": "Bu videoya eriş",
+        "written": "Bu makaleye eriş",
+        "activity": "Bu etkinliğe eriş",
+        "course": "Bu kursa eriş",
+        "grounding": "Bu egzersize eriş"
+      },
+      "body": "Tüm bölümlerin kilidini açmak ve ilerlemeni kaydetmek için ücretsiz bir hesap oluştur.",
+      "logIn": "Zaten bir hesabım var",
+      "relatedSession": {
+        "title": "Bölümün tamamına eriş"
+      }
+    },
+    "audioPlayer": {
+      "play": "Oynat",
+      "pause": "Duraklat",
+      "back": "{seconds} saniye geri sar",
+      "forward": "{seconds} saniye ileri sar",
+      "scrubber": "Ses içinde gezin"
+    },
+    "moment": {
+      "title": "Bir mola ister misin?",
+      "subtitle": "Bölüm sırasında herhangi bir anda mola vermeye ihtiyaç duyarsan, aşağıdaki köklenme egzersizlerimizi kullan.",
+      "groundingLabel": "Köklenme"
+    },
+    "actions": {
+      "finish": "Bölümü tamamla"
+    },
+    "complete": {
+      "title": "Bölüm tamamlandı",
+      "body": "Bugün kendin için buradaydın. Devam etmeden önce bir an dur.",
+      "cta": "Bölümlere dön",
+      "close": "Kapat"
+    },
     "relatedContent": {
-      "title": "İlgili içerik",
-      "resource_short_video": "İzle",
-      "resource_single_video": "İzle",
+      "title": "Daha fazlasını keşfetmek ister misin?",
+      "subtitle": "İyileşme yolculuğunda sana yardımcı olması için aşağıdaki ilgili bölümlerimize göz at.",
+      "short_video": "İzle",
+      "single_video": "İzle",
       "resource_conversation": "Dinle",
+      "audio": "Dinle",
+      "written": "Oku",
+      "activity": "Etkinlik",
       "course": "Kurs",
       "session": "Bölüm",
       "session_iba": "Bölüm",
@@ -28,8 +60,9 @@
       "minuteLabel": "dakika"
     },
     "resourceFeedback": {
-      "title": "Bu bölüm nasıldı?",
-      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı oluyor.",
+      "title": "Bu bölümü nasıl buldun?",
+      "close": "Kapat",
+      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin bölümlerimizi geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
         "relatable": "Bana yakın",
         "useful": "Faydalı",
@@ -39,11 +72,14 @@
         "not useful": "Faydalı değil"
       },
       "textboxDefaultText": "Yorum ekle...",
-      "sendButtonText": "Gönder",
+      "sendButtonText": "Değerlendirmeyi gönder",
       "submissionText": "Geri bildirimin için teşekkürler",
       "errors": {
         "feedbackTagError": "Göndermeden önce lütfen bir değerlendirme seç."
       }
+    },
+    "errors": {
+      "completeResourceError": "Bu, tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "references": {
       "title": "Kaynaklar",
@@ -52,6 +88,14 @@
       "articles": "Makaleler",
       "video_practices": "Video çalışmaları",
       "audios": "Podcast'ler"
+    },
+    "backToSessions": "Bölümlere dön",
+    "backToLibrary": "Kütüphaneye dön",
+    "grounding": {
+      "close": "Kapat",
+      "exercisesCount": "{count, plural, one {# egzersiz} other {# egzersiz}}",
+      "loadMore": "Daha fazla göster",
+      "duration": "{minutes} dk"
     }
   }
 }

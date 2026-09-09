@@ -5,6 +5,7 @@ import { FRUITZ_RETIREMENT_BANNER_DISMISSED } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
+import { contentRailGutter } from '@/styles/common';
 import { Alert, AlertTitle, Button, Collapse, Container, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
@@ -53,6 +54,12 @@ export const FruitzRetirementBanner = () => {
     backgroundColor: isFruitzWelcomePage ? 'white' : 'primary.main',
     pt: '2rem !important',
     pb: '0 !important',
+    // Align to the TopBar's gutters (tighter than the page Container on mobile).
+    paddingInline: {
+      xs: '1rem !important',
+      md: '2rem !important',
+      lg: `${contentRailGutter()} !important`,
+    },
   } as const;
 
   if (!showBanner) return null;

@@ -12,8 +12,14 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "Geri git",
     "navigateTo": "Şuraya git",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "İçerik karuseli",
+      "previous": "{name}: önceki",
+      "next": "{name}: sonraki",
+      "goToPage": "{name}: {pages} içinden {page}. sayfaya git"
+    },
     "footer": {
       "fundedByTitle": "Finanse eden",
       "chaynDescription": "Bloom'u sana <link>Chayn</link> sunuyor: dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, kâr amacı gütmeyen küresel bir kuruluş. Chayn, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturuyor.",
@@ -42,6 +48,10 @@
       "closeModal": "Metni kapat",
       "description": ""
     },
+    "audioTranscript": {
+      "title": "Ses metni"
+    },
+    "currentSession": "Mevcut bölüm",
     "progressStatus": {
       "started": "Devam ediyor",
       "completed": "Tamamlandı",
@@ -61,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - Sayfa bulunamadı",
-      "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kurslar sayfasına geri dön.",
+      "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kütüphane sayfasına geri dön.",
       "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
-      "authenticatedRedirectButton": "Kurslar sayfasına dön",
+      "authenticatedRedirectButton": "Kütüphane sayfasına dön",
       "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
     },
     "alt": {
@@ -84,6 +94,7 @@
       "leafMixBee": "Üzerinde bir arının uçuştuğu iki yaprak illüstrasyonu",
       "leafMixDots": "Ortasında bir çiçek olan 3 yaprak ve çiçekten fışkıran noktalar illüstrasyonu.",
       "personTea": "Oturmuş, çay tutan bir kişi illüstrasyonu",
+      "resourceCardDefault": "Bloom kaynak kartı illüstrasyonu",
       "personSitting": "Oturan bir kişi illüstrasyonu",
       "chooseTherapist": "Bir kişinin yandan yüz profili ve bir çiçek illüstrasyonu",
       "dateSelector": "Ortasında bir kalp olan bir takvim illüstrasyonu",
@@ -106,44 +117,17 @@
       "acceptLabel": "Çerezleri kabul et",
       "declineLabel": "Çerezleri reddet"
     },
-    "signUpTodayPromo": {
-      "title": "Bugün ücretsiz bir hesap aç",
-      "description1": "Bloom, travmadan iyileşirken sana destek olan çevrimiçi bir platformdur. Video kurslarından ve düşündürücü etkinliklerden ekibimizle doğrudan mesajlaşmaya kadar Bloom ile etkileşim kurmanın pek çok farklı yolu var.",
-      "description2": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için bugün kaydol!",
-      "button": "Başla"
-    },
-    "loginDialog": {
-      "title": "Giriş yap ya da hesap oluştur",
-      "description": "Tüm içeriğimize erişmek ve Bloom'un sunduğu her şeyi keşfetmek için ücretsiz kaydol",
-      "loginButton": "Giriş yap",
-      "registerButton": "Hesap oluştur",
-      "backButton": "Geri dön"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "Düşünce günlükleri",
-      "activities-stream-of-consciousness-journaling": "Bilinç akışıyla günlük tutma",
-      "activities-timelines": "Zaman çizelgeleri",
-      "activities-trust-mapping": "Güven haritalama",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Bedenimizdeki korku ve stresi haritalama",
-      "activities-letter-to-a-part-of-my-body": "Bedenimin bir parçasına mektup",
-      "activities-accelerators-and-brakes": "Gaz ve fren",
-      "activities-ideal-sexual-being": "İdeal cinsel benlik",
-      "grounding-visual-breathing": "Görsel nefes alma",
-      "grounding-slow-breathing": "Yavaş nefes alma",
-      "grounding-box-breathing": "Kutu nefesi",
-      "grounding-drifting-clouds-meditation": "Süzülen bulutlar meditasyonu",
-      "grounding-positive-coping-statement": "Olumlu başa çıkma ifadesi",
-      "grounding-finger-focus": "Parmakla odaklama",
-      "grounding-day-walkthrough": "Günü zihinden geçirme",
-      "grounding-what-can-you-hear": "Ne duyuyorsun?",
-      "grounding-listen-to-your-voice": "Sesini dinle",
-      "grounding-calming-colours": "Sakinleştirici renkler",
-      "grounding-coming-back-to-your-safe-space": "Güvenli alanına geri dönmek",
-      "grounding-best-check-in": "BEST kendini yoklama",
-      "grounding-compassionate-body-scan": "Şefkatli beden taraması",
-      "grounding-touching-and-feeling-textures": "Dokunarak dokuları hissetme",
-      "grouding-sound-of-claps": "Alkış sesi",
-      "grounding-affirming-ourselves": "Kendimizi olumlama (sıkı baskı)"
+    "supportSection": {
+      "title": "Destek al",
+      "introduction": "Biriyle konuşmayı mı tercih edersin? Bloom'un destek hizmetleri ihtiyaç duyduğun her an burada.",
+      "messaging": {
+        "title": "Birebir mesajlaşma",
+        "description": "Sorularına ve düşüncelerine, çok dilli ekibimizden 1–2 gün içinde özenli yanıtlar."
+      },
+      "notes": {
+        "title": "Bloom'dan Notlar",
+        "description": "Bloom'dan destek, haftada iki kez doğrudan WhatsApp'ına."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
@@ -160,8 +144,29 @@
       "buttonText": "Abone ol"
     },
     "characterCount": "{current}/{max} karakter",
-    "scrollToSignUp": {
-      "button": "Ücretsiz kaydol"
+    "signUpSection": {
+      "title": "Seni düşünerek tasarlandı",
+      "introduction": "Bloom senin için burada; kim olursan ol, nerede olursan ol.",
+      "multilingual": "Çok dilli",
+      "freeAndAnonymous": "Ücretsiz ve anonim",
+      "exploreAtYourPace": "Kendi hızında keşfet",
+      "cta": "Bloom'a katıl, her zaman ücretsiz",
+      "ctaMessaging": "Mesaj göndermek için Bloom'a katıl"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Kaldığın yerden devam et"
+      },
+      "sessions": {
+        "heading": "Tekil bölümler",
+        "introduction": "İstismarı anlama, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
+        "browseAll": "Tüm bölümlere göz at"
+      },
+      "courses": {
+        "heading": "Kurslar",
+        "introduction": "Başlamak için rehberli bir yer. Her kurs seni kendi hızında bir dizi bölümden geçirir.",
+        "browseAll": "Tüm kurslara göz at"
+      }
     }
   }
 }

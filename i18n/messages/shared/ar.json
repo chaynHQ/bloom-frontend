@@ -12,8 +12,14 @@
       "wikiLink": "https://en.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.co.uk/search?tbm=isch&sa=1&ei=esSCW4LPH4WugQaZsbqoDw&q=cute+baby+animal+memes&oq=cute+baby+animal+memes&gs_l="
     },
-    "navigateBack": "العودة للخلف",
     "navigateTo": "الانتقال إلى",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "دوّارة المحتوى",
+      "previous": "{name}: السابق",
+      "next": "{name}: التالي",
+      "goToPage": "{name}: الانتقال إلى {page} من {pages}"
+    },
     "footer": {
       "fundedByTitle": "بتمويل من",
       "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجيات وناجون وحليفات وحلفاء من حول العالم، وتنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
@@ -42,6 +48,10 @@
       "closeModal": "إغلاق النص",
       "description": ""
     },
+    "audioTranscript": {
+      "title": "النص المكتوب للمقطع الصوتي"
+    },
+    "currentSession": "الجلسة الحالية",
     "progressStatus": {
       "started": "قيد المتابعة",
       "completed": "مكتملة",
@@ -61,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - الصفحة غير موجودة",
-      "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الدورات.",
+      "authenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة المكتبة.",
       "unauthenticatedDescription": "تعذّر العثور على هذه الصفحة. يُرجى التحقّق من الرابط أو العودة إلى صفحة الترحيب.",
-      "authenticatedRedirectButton": "العودة إلى صفحة الدورات",
+      "authenticatedRedirectButton": "العودة إلى صفحة المكتبة",
       "unauthenticatedRedirectButton": "العودة إلى صفحة الترحيب"
     },
     "alt": {
@@ -84,6 +94,7 @@
       "leafMixBee": "رسم توضيحي لورقتين تحوم فوقهما نحلة",
       "leafMixDots": "رسم توضيحي لثلاث أوراق مع زهرة في المنتصف، ونقاط تنطلق من الزهرة.",
       "personTea": "رسم توضيحي لشخص جالس يحمل كوب شاي",
+      "resourceCardDefault": "رسم توضيحي لبطاقة مورد من بلوم",
       "personSitting": "رسم توضيحي لشخص جالس",
       "chooseTherapist": "رسم توضيحي لوجه شخص من الجانب، مع زهرة",
       "dateSelector": "رسم توضيحي لتقويم يظهر في وسطه قلب",
@@ -106,44 +117,17 @@
       "acceptLabel": "قبول ملفات تعريف الارتباط",
       "declineLabel": "رفض ملفات تعريف الارتباط"
     },
-    "signUpTodayPromo": {
-      "title": "إنشاء حساب مجاني اليوم",
-      "description1": "Bloom منصّة عبر الإنترنت لدعمك في أثناء تعافيك من الصدمة. من الدورات المصوّرة والأنشطة التأمّلية إلى المراسلة المباشرة مع فريقنا، هناك طرق متنوّعة كثيرة للتفاعل مع Bloom.",
-      "description2": "ما عليك سوى التسجيل اليوم للوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom!",
-      "button": "لنبدأ"
-    },
-    "loginDialog": {
-      "title": "تسجيل الدخول أو إنشاء حساب",
-      "description": "بالتسجيل المجاني يمكنك الوصول إلى جميع محتوياتنا واستكشاف كل ما يقدّمه Bloom",
-      "loginButton": "تسجيل الدخول",
-      "registerButton": "إنشاء حساب",
-      "backButton": "العودة"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "مذكرات الأفكار",
-      "activities-stream-of-consciousness-journaling": "تدوين اليوميات بتيّار الوعي",
-      "activities-timelines": "الخطوط الزمنية",
-      "activities-trust-mapping": "رسم خريطة الثقة",
-      "activities-mapping-fear-and-stress-in-our-bodies": "رسم خريطة الخوف والتوتّر في أجسادنا",
-      "activities-letter-to-a-part-of-my-body": "رسالة إلى جزء من جسدي",
-      "activities-accelerators-and-brakes": "المسرّعات والمكابح",
-      "activities-ideal-sexual-being": "الكينونة الجنسية المثالية",
-      "grounding-visual-breathing": "التنفّس البصري",
-      "grounding-slow-breathing": "التنفّس البطيء",
-      "grounding-box-breathing": "التنفّس الصندوقي",
-      "grounding-drifting-clouds-meditation": "تأمّل الغيوم المتنقّلة",
-      "grounding-positive-coping-statement": "عبارة تكيّف إيجابية",
-      "grounding-finger-focus": "تركيز الأصابع",
-      "grounding-day-walkthrough": "استعراض اليوم",
-      "grounding-what-can-you-hear": "ماذا تسمع؟",
-      "grounding-listen-to-your-voice": "الإنصات إلى صوتك",
-      "grounding-calming-colours": "الألوان المهدّئة",
-      "grounding-coming-back-to-your-safe-space": "العودة إلى مساحتك الآمنة",
-      "grounding-best-check-in": "وقفة تفقّد BEST",
-      "grounding-compassionate-body-scan": "مسح الجسد بتعاطف",
-      "grounding-touching-and-feeling-textures": "لمس الملمس والإحساس به",
-      "grouding-sound-of-claps": "صوت التصفيق",
-      "grounding-affirming-ourselves": "تأكيد ذواتنا (ضغط ثابت)"
+    "supportSection": {
+      "title": "الحصول على الدعم",
+      "introduction": "هل تفضّل التحدّث إلى شخص ما؟ خدمات الدعم في Bloom متاحة كلما احتجت إليها.",
+      "messaging": {
+        "title": "المراسلة الفردية",
+        "description": "ردود مدروسة على الأسئلة والتأمّلات، من فريقنا متعدّد اللغات، خلال يوم إلى يومين."
+      },
+      "notes": {
+        "title": "ملاحظات من Bloom",
+        "description": "دعم من Bloom يصل إلى WhatsApp مرتين أسبوعيًا."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "تثبيت التطبيق للوصول إليه من شاشتك الرئيسية",
@@ -160,8 +144,29 @@
       "buttonText": "الاشتراك"
     },
     "characterCount": "{current}/{max} حرف",
-    "scrollToSignUp": {
-      "button": "التسجيل مجانًا"
+    "signUpSection": {
+      "title": "صُمّم من أجلك",
+      "introduction": "Bloom هنا من أجلك، أيًّا كنت وأينما كنت.",
+      "multilingual": "متعدّد اللغات",
+      "freeAndAnonymous": "مجاني ومجهول الهوية",
+      "exploreAtYourPace": "الاستكشاف بالوتيرة التي تناسبك",
+      "cta": "الانضمام إلى Bloom، مجاني دائمًا",
+      "ctaMessaging": "الانضمام إلى Bloom لإرسال رسالة"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "المتابعة من حيث توقفت"
+      },
+      "sessions": {
+        "heading": "الجلسات المنفردة",
+        "introduction": "جلسات حول فهم الإساءة، ووضع الحدود، والتعافي، وأكثر من ذلك.",
+        "browseAll": "تصفّح كل الجلسات"
+      },
+      "courses": {
+        "heading": "الدورات",
+        "introduction": "نقطة بداية مصحوبة بالإرشاد. تأخذك كل دورة عبر مجموعة من الجلسات بالوتيرة التي تناسبك.",
+        "browseAll": "تصفّح كل الدورات"
+      }
     }
   }
 }

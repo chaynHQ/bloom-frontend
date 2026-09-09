@@ -12,8 +12,14 @@
       "wikiLink": "https://pt.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIKu4_qLMnpogZMNXdIfy1dD3fLhhw:1715344128608&q=memes+bonitos+de+animais+beb%C3%AAs"
     },
-    "navigateBack": "Voltar para a página anterior",
     "navigateTo": "Navegar para",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "Carrossel de conteúdos",
+      "previous": "{name}: anterior",
+      "next": "{name}: seguinte",
+      "goToPage": "{name}: ir para {page} de {pages}"
+    },
     "footer": {
       "fundedByTitle": "Fundado por",
       "chaynDescription": "O Bloom é oferecido a você pela <link>Chayn</link>, uma organização global sem fins lucrativos, administrada por pessoas sobreviventes e aliadas de todo o mundo, que cria recursos para apoiar no processo de recuperação de sobreviventes de violência baseada em gênero.",
@@ -42,10 +48,14 @@
       "closeModal": "Close transcript",
       "description": "Read the transcript for video - "
     },
+    "audioTranscript": {
+      "title": "Transcrição do áudio"
+    },
+    "currentSession": "Sessão atual",
     "progressStatus": {
-      "started": "Started",
+      "started": "Iniciado",
       "completed": "Finalizado",
-      "notStarted": "Not started"
+      "notStarted": "Não iniciado"
     },
     "meetTheTeam": {
       "fullBioButton": "Ler a biografia completa de {name}",
@@ -61,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - Página não encontrada",
-      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página de cursos.",
+      "authenticatedDescription": "Página não encontrada. Verifique a url ou volte para a página da biblioteca.",
       "unauthenticatedDescription": "Página não encontrada. Verifique a  url ou volte à página inicial.",
-      "authenticatedRedirectButton": "Retornar à página de cursos",
+      "authenticatedRedirectButton": "Retornar à página da biblioteca",
       "unauthenticatedRedirectButton": "Voltar à página inicial"
     },
     "alt": {
@@ -84,11 +94,12 @@
       "leafMixBee": "Ilustração de duas folhas com uma abelha voando acima",
       "leafMixDots": "Ilustração de 3 folhas com uma flor no meio e pontos saindo da flor.",
       "personTea": "Ilustração de uma pessoa sentada, segurando uma xícara de chá",
+      "resourceCardDefault": "Ilustração de um cartão de recurso da Bloom",
       "personSitting": "Ilustração de uma pessoa sentada",
       "chooseTherapist": "Ilustração do rosto de uma pessoa de perfil, com uma flor",
       "dateSelector": "Ilustração de um calendário com um coração no meio",
       "change": "Ilustração de um ciclo- três sóis em um círculo com flechas entre eles",
-      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+      "notes": "Ilustração de um telemóvel com um balão de mensagem com um coração no ecrã",
       "confidential": "Ilustração de um documento com um cadeado em um dos cantos",
       "cookieCat": "Ilustração de um gato descansando com um biscoito",
       "fruitzLogo": "Logotipo do Fruitz",
@@ -106,44 +117,17 @@
       "acceptLabel": "Aceitar Cookies",
       "declineLabel": "Rejeitar Cookies"
     },
-    "signUpTodayPromo": {
-      "title": "Inscreva-se para uma conta gratuita hoje",
-      "description1": "Bloom é uma plataforma online para te apoiar enquanto você se recupera de traumas. Desde cursos em vídeo e atividades reflexivas até a troca de mensagens diretas com nossa equipe, há muitas maneiras diferentes de interagir com o Bloom.",
-      "description2": "Inscreva-se abaixo para ter acesso a todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer!",
-      "button": "Comece"
-    },
-    "loginDialog": {
-      "title": "Faça login ou crie uma conta",
-      "description": "Inscreva-se gratuitamente para acessar todo o nosso conteúdo e explorar tudo o que o Bloom tem a oferecer",
-      "loginButton": "Entrar",
-      "registerButton": "Criar conta",
-      "backButton": "Cancelar"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "Diários de reflexão",
-      "activities-stream-of-consciousness-journaling": "Diário de fluxo de consciência",
-      "activities-timelines": "Linhas do tempo",
-      "activities-trust-mapping": "Mapeamento de confiança",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Mapeando o medo e o estresse em nossos corpos",
-      "activities-letter-to-a-part-of-my-body": "Carta para uma parte de meu corpo",
-      "activities-accelerators-and-brakes": "Aceleradores e freios",
-      "activities-ideal-sexual-being": "Tipo ideal de sexualidade",
-      "grounding-visual-breathing": "Respiração visual",
-      "grounding-slow-breathing": "Respiração lenta",
-      "grounding-box-breathing": "Respiração em caixa",
-      "grounding-drifting-clouds-meditation": "Meditação sem preocupações — nuvens flutuante",
-      "grounding-positive-coping-statement": "Declaração de enfrentamento positivo ",
-      "grounding-finger-focus": "Concentre-se nos dedos",
-      "grounding-day-walkthrough": "Visão geral do dia",
-      "grounding-what-can-you-hear": "Você pode me ouvir?",
-      "grounding-listen-to-your-voice": "Escute a sua voz",
-      "grounding-calming-colours": "Cores calmantes",
-      "grounding-coming-back-to-your-safe-space": "Voltando para o seu espaço seguro",
-      "grounding-best-check-in": "BEST check-in",
-      "grounding-compassionate-body-scan": "Scan Corporal Compassivo",
-      "grounding-touching-and-feeling-textures": "Tocando e sentindo texturas",
-      "grouding-sound-of-claps": "Som de palmas",
-      "grounding-affirming-ourselves": "Nos reafirmarmos (pressão firme)"
+    "supportSection": {
+      "title": "Buscar apoio",
+      "introduction": "Prefere conversar com alguém? Os serviços de apoio do Bloom estão aqui sempre que você precisar.",
+      "messaging": {
+        "title": "Mensagens individuais",
+        "description": "Respostas cuidadosas às suas perguntas e reflexões, da nossa equipe multilíngue, em 1 a 2 dias."
+      },
+      "notes": {
+        "title": "Notas do Bloom",
+        "description": "Apoio do Bloom, direto no seu WhatsApp, duas vezes por semana."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "Instala o aplicativo para acessar a partir da tela inicial",
@@ -160,8 +144,29 @@
       "buttonText": "Inscrever-se"
     },
     "characterCount": "{current}/{max} caracteres",
-    "scrollToSignUp": {
-      "button": "Inscreva-se grátis"
+    "signUpSection": {
+      "title": "Criado pensando em você",
+      "introduction": "O Bloom está aqui para você, seja quem for e esteja onde estiver.",
+      "multilingual": "Multilingue",
+      "freeAndAnonymous": "Gratuito e anônimo",
+      "exploreAtYourPace": "Explore no seu ritmo",
+      "cta": "Junte-se ao Bloom, sempre gratuito",
+      "ctaMessaging": "Junte-se ao Bloom para enviar uma mensagem"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Retome de onde parou"
+      },
+      "sessions": {
+        "heading": "Sessões individuais",
+        "introduction": "Sessões sobre entender o abuso, definir limites, curar e muito mais.",
+        "browseAll": "Ver todas as sessões"
+      },
+      "courses": {
+        "heading": "Cursos",
+        "introduction": "Um ponto de partida acompanhado. Cada curso leva você por um conjunto de sessões no seu próprio ritmo.",
+        "browseAll": "Ver todos os cursos"
+      }
     }
   }
 }

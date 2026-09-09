@@ -26,7 +26,7 @@ yarn cypress:headless-spec # Run a single spec: SPEC=<path> yarn cypress:headles
 
 To run a single Jest test file: `yarn test path/to/file.test.ts`
 
-Husky + Pre-commit run lint and format on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
+Husky + lint-staged run ESLint and Prettier on staged files on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
 
 ## Environment Setup
 
@@ -48,7 +48,7 @@ Authentication is Firebase-based (`lib/firebase.ts`, `lib/auth.ts`). The `useLoa
 
 1. Firebase emits token → Redux `user.token` is set
 2. `useLoadUser` triggers `getUser` RTK Query call → populates all user slices
-3. `AuthGuard` (`components/guards/AuthGuard.tsx`) wraps the entire app in `BaseLayout` and redirects unauthenticated users. Pages under `admin`, `partner-admin`, `therapy`, `account`, `conversations`, `videos`, and course session paths require auth; everything else is public.
+3. `AuthGuard` (`components/guards/AuthGuard.tsx`) wraps the entire app in `BaseLayout`. Only `admin`, `partner-admin`, `therapy`, and `account` paths are private — it redirects unauthenticated visitors there to login. Everything else is public at the route level; course, session and resource pages gate their own content, rendering a sign-up preview (`useUserAuthStatus` / `useContentAccessStatus`, `ResourcePageLayout`'s `contentAccessStatus`) to signed-out visitors instead of a redirect or a modal.
 
 ### State Management
 
@@ -74,6 +74,13 @@ All course, session, page, and resource content comes from Storyblok. `lib/story
 - TopBar, Footer, MobileBottomNav, CookieBanner
 
 MUI v7 with Emotion is the UI library. Theme is at `styles/theme.ts`. Fonts: Open Sans + Montserrat via `next/font`.
+
+### Code style
+
+- **Translate every user-facing string.** Copy comes from `next-intl` (`useTranslations` / `getTranslations`, messages in `i18n/messages/<namespace>/`). No string literals in components or pages. Keys must exist in all 8 locales — add English placeholders to the others and run `node scripts/checkTranslation.js`.
+- **Don't over-abstract.** A component used only by its parent can live in that parent file. Only lift it out when a second caller appears or the parent gets hard to read.
+- **Comments earn their place.** Explain a non-obvious _why_ (a design intent, a workaround, an ordering constraint). Delete comments that restate the code, and never leave AI/agent/change-log narration.
+- **Keep `sx` small.** Extract style objects to `const fooStyle = { … } as const` above the component (or a co-located `*.ts` / `styles/common.ts` for shared ones). Inline `sx` is fine for a one-off tweak like `sx={{ mb: 0 }}`.
 
 ### Key Integrations
 

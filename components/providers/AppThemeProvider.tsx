@@ -2,7 +2,7 @@
 
 import { Direction } from '@/lib/utils/getLocaleDirection';
 import { getTheme } from '@/styles/theme';
-import { ThemeProvider } from '@mui/material';
+import { GlobalStyles, ThemeProvider } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface AppThemeProviderProps {
@@ -16,5 +16,14 @@ interface AppThemeProviderProps {
  * passes the (serializable) direction string and this component resolves it.
  */
 export default function AppThemeProvider({ direction, children }: AppThemeProviderProps) {
-  return <ThemeProvider theme={getTheme(direction)}>{children}</ThemeProvider>;
+  const theme = getTheme(direction);
+
+  return (
+    <ThemeProvider theme={theme}>
+      {/* There is no CssBaseline, so without this inherited text — CMS rich text especially —
+          falls back to browser black rather than the palette's body colour. */}
+      <GlobalStyles styles={{ body: { color: theme.palette.text.primary } }} />
+      {children}
+    </ThemeProvider>
+  );
 }

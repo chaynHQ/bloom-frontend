@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
-// This enables us to redirect a user to the correct sign up page later (e.g. in SignUpBanner)
+// This enables us to redirect a user to the correct sign up page later (e.g. in SignUpSection)
 // Referrals are detected from welcome/register paths and from a partner name in UTM link data.
 export default function useReferralPartner() {
   const pathname = usePathname();

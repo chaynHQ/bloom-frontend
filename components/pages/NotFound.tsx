@@ -2,6 +2,8 @@
 
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { Link as i18nLink } from '@/i18n/routing';
+import { NOT_FOUND_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import bloomHead from '@/public/illustration_bloom_head.svg';
@@ -22,6 +24,10 @@ export default function NotFoundPage() {
   const t = useTranslations('Shared');
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
+
+  useLogEventOnce(NOT_FOUND_VIEWED, {
+    not_found_path: typeof window === 'undefined' ? null : window.location.pathname,
+  });
 
   if (userLoading) {
     return <LoadingContainer />;
@@ -48,7 +54,7 @@ export default function NotFoundPage() {
         variant="contained"
         color="secondary"
         component={i18nLink}
-        href={userId ? '/courses' : '/login'}
+        href={userId ? '/library' : '/login'}
       >
         {userId
           ? t('notFound.authenticatedRedirectButton')

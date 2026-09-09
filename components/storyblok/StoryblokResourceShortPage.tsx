@@ -1,58 +1,62 @@
 'use client';
 
-import { SignUpBanner } from '@/components/banner/SignUpBanner';
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
-import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
-import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { RESOURCE_SHORT_VIDEO_VIEWED } from '@/lib/constants/events';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
-import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
-import { useTypedSelector } from '@/lib/hooks/store';
-import { Resource } from '@/lib/store/resourcesSlice';
-import hasAccessToPage from '@/lib/utils/hasAccessToPage';
-import logEvent from '@/lib/utils/logEvent';
-import userHasAccessToPartnerContent from '@/lib/utils/userHasAccessToPartnerContent';
-import { Box, Container } from '@mui/material';
-import { useStoryblokState } from '@storyblok/react';
-import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useLocale } from 'next-intl';
-import { useEffect, useMemo } from 'react';
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
+import Video from '@/components/video/Video';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import {
+  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
+  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
+  RESOURCE_SHORT_VIDEO_VIEWED,
+} from '@/lib/constants/events';
+import {
+  useStoryblokResourcePage,
+  type ResourceStoryContent,
+} from '@/lib/hooks/useStoryblokResourcePage';
+import { Box } from '@mui/material';
+import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { ContentUnavailable } from '../common/ContentUnavailable';
-import LoadingContainer from '../common/LoadingContainer';
-import { ResourceShortHeader } from '../resources/ResourceShortsHeader';
-import DynamicComponent from './DynamicComponent';
-import { StoryblokPageSectionProps } from './StoryblokPageSection';
-import { StoryblokRelatedContent, StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
+import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 
-export interface StoryblokResourceShortPageProps {
+export interface StoryblokResourceShortPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
-  name: string;
   description: StoryblokRichtext;
   duration: string;
   video: { url: string };
   video_transcript: StoryblokRichtext;
-  page_sections: StoryblokPageSectionProps[];
+  team_members_section?: StoryblokTeamMembersSectionProps[];
+  page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  related_exercises: string[];
-  languages: string[];
   component: 'resource_short_video';
-  included_for_partners: string[];
 }
 
-interface Props {
-  story: ISbStoryData;
-  related_course?: ISbStoryData;
-  related_session?: ISbStoryData;
-}
+const EVENT_PREFIX = 'RESOURCE_SHORT_VIDEO' as const;
 
-const StoryblokResourceShortPage = ({
-  story: initialStory,
-  related_course,
-  related_session,
-}: Props) => {
-  const story = useStoryblokState(initialStory) ?? initialStory;
+const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const {
+    content,
+    storyUuid,
+    isSignedIn,
+    contentAccessStatus,
+    resourceProgress,
+    resourceId,
+    eventData,
+    contributors,
+    relatedGrounding,
+    relatedSessionHref,
+    relatedSessionName,
+    userContentPartners,
+    start,
+    complete,
+  } = useStoryblokResourcePage<StoryblokResourceShortPageProps>({
+    initialStory,
+    category: RESOURCE_CATEGORIES.SHORT_VIDEO,
+    eventPrefix: EVENT_PREFIX,
+    viewedEvent: RESOURCE_SHORT_VIDEO_VIEWED,
+  });
+
   const {
     _uid,
     _editable,
@@ -60,86 +64,13 @@ const StoryblokResourceShortPage = ({
     description,
     video,
     video_transcript,
+    team_members_section,
     page_sections,
     related_content,
-    related_exercises,
-    languages,
-    included_for_partners,
-  } = story.content as StoryblokResourceShortPageProps;
-  const storyUuid = story.uuid;
+    related_session,
+  } = content;
 
-  const locale = useLocale();
-  const referralPartner = useCookieReferralPartner();
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const resources = useTypedSelector((state) => state.resources);
-  const userId = useTypedSelector((state) => state.user.id);
-  const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
-  const isLoggedIn = !authStateLoading && Boolean(userId);
-  const isUserLoading = useIsUserLoading();
-
-  const getContentPartners = useMemo(() => {
-    return userHasAccessToPartnerContent(
-      partnerAdmin?.partner,
-      partnerAccesses,
-      referralPartner,
-      userId,
-    );
-  }, [referralPartner, partnerAccesses, partnerAdmin, userId]);
-
-  const userAccess = useMemo(() => {
-    return (
-      hasAccessToPage(
-        isLoggedIn,
-        true, // setting true here to allow preview. The login overlay will block interaction
-        included_for_partners,
-        partnerAccesses,
-        partnerAdmin,
-      ) &&
-      (locale === LANGUAGES.en || languages.includes(locale))
-    );
-  }, [partnerAccesses, included_for_partners, isLoggedIn, partnerAdmin, locale, languages]);
-
-  const { resourceProgress, resourceId } = useMemo(() => {
-    const userResource = resources.find(
-      (resource: Resource) => resource.storyblokUuid === storyUuid,
-    );
-
-    if (userResource) {
-      return {
-        resourceProgress: userResource.completed
-          ? PROGRESS_STATUS.COMPLETED
-          : PROGRESS_STATUS.STARTED,
-        resourceId: userResource.id,
-      };
-    }
-    return {
-      resourceProgress: PROGRESS_STATUS.NOT_STARTED,
-      resourceId: undefined,
-    };
-  }, [resources, storyUuid]);
-
-  const eventData = useMemo(() => {
-    return {
-      resource_category: RESOURCE_CATEGORIES.SHORT_VIDEO,
-      resource_name: name,
-      resource_storyblok_uuid: storyUuid,
-      resource_progress: resourceProgress,
-    };
-  }, [name, storyUuid, resourceProgress]);
-
-  useEffect(() => {
-    logEvent(RESOURCE_SHORT_VIDEO_VIEWED, eventData);
-  });
-
-  const nextResourceHref = useMemo(() => {
-    const nextResourceSlug = related_content[0]?.full_slug;
-    return nextResourceSlug ? `/${nextResourceSlug}` : undefined;
-  }, [related_content]);
-
-  if (!userAccess) {
-    // Wait for the signed-in user's partner accesses to load before deciding there is no access.
-    if (isUserLoading) return <LoadingContainer />;
+  if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;
   }
 
@@ -152,48 +83,50 @@ const StoryblokResourceShortPage = ({
         description,
         video,
         video_transcript,
+        team_members_section,
         page_sections,
-        related_session,
         related_content,
-        related_exercises,
+        related_session,
       })}
     >
-      <ResourceShortHeader
-        {...{
-          storyUuid,
-          name,
-          resourceProgress,
-          // during the migration from multiple related sessions to a single related session
-          // I am leaving this array option
-          relatedSession: related_session,
-          relatedCourse: related_course,
-          video,
-          video_transcript,
-          nextResourceHref,
-          eventData,
-          cta: !isLoggedIn ? <ScrollToSignUpButton /> : undefined,
+      <ResourcePageLayout
+        format="video"
+        name={name}
+        storyUuid={storyUuid}
+        category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+        eventPrefix={EVENT_PREFIX}
+        resourceProgress={resourceProgress}
+        resourceId={resourceId}
+        onComplete={complete}
+        isSignedIn={isSignedIn}
+        contentAccessStatus={contentAccessStatus}
+        eventData={eventData}
+        description={description}
+        transcript={video_transcript}
+        transcriptEvents={{
+          opened: RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
+          closed: RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
         }}
-      />
-      {page_sections?.length > 0 &&
-        page_sections.map((section: any, index: number) => (
-          <DynamicComponent key={`page_section_${index}`} blok={section} />
-        ))}
-      {resourceId && (
-        <Container sx={{ bgcolor: 'background.paper' }}>
-          <ResourceFeedbackForm
-            resourceId={resourceId}
-            category={RESOURCE_CATEGORIES.SHORT_VIDEO}
-          />
-        </Container>
-      )}
-
-      <StoryblokRelatedContent
+        onTranscriptStart={start}
+        contributors={contributors}
+        teamMembersSection={team_members_section?.[0]}
+        pageSections={page_sections}
+        relatedGrounding={relatedGrounding}
         relatedContent={related_content}
-        relatedExercises={related_exercises}
-        userContentPartners={getContentPartners}
+        userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
+        relatedSessionName={relatedSessionName}
+        media={
+          <Video
+            url={video.url}
+            eventPrefix="RESOURCE_SHORT"
+            eventData={eventData}
+            setVideoStarted={() => start()}
+            setVideoFinished={() => complete()}
+            containerStyles={{ maxWidth: '100%', mt: 0 }}
+          />
+        }
       />
-
-      {!isLoggedIn && <SignUpBanner />}
     </Box>
   );
 };
