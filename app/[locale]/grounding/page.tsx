@@ -1,7 +1,7 @@
 import LoadingContainer from '@/components/common/LoadingContainer';
 import StoryblokGrounding from '@/components/storyblok/StoryblokGrounding';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { getOptionalStoryblokStory, getStoryblokStories } from '@/lib/storyblok';
+import { getStoryblokStories, getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
@@ -13,14 +13,8 @@ import { Suspense } from 'react';
 const PER_PAGE = 100;
 const MAX_PAGES = 5;
 
-// The `grounding_page` story. Its slug is `grounding/overview` once step 6 moves the flat
-// `grounding` page onto the new component (04-delete-flat-pages.mjs) — until then the flat
-// `grounding` story still serves the hero copy, so try both.
 async function getGroundingPageStory(locale: string): Promise<ISbStoryData | undefined> {
-  return (
-    (await getOptionalStoryblokStory('grounding/overview', locale)) ??
-    (await getOptionalStoryblokStory('grounding', locale))
-  );
+  return await getStoryblokStory('grounding/overview', locale);
 }
 
 async function getGroundingStories(locale: string): Promise<ISbStoryData[]> {

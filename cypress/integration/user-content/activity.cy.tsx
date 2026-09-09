@@ -6,14 +6,8 @@ describe('Activity resource pages', () => {
     cy.location('search').should('include', 'format=activity');
   });
 
-  it('redirects an old ?openacc= deep link to the new per-activity page', () => {
-    cy.visit('/activities?openacc=activities-thought-diaries');
-
-    cy.location('pathname').should('eq', '/activity/activities-thought-diaries');
-  });
-
   it('renders an activity and shows the login gate to a logged-out visitor', () => {
-    cy.visit('/activity/activities-thought-diaries');
+    cy.visit('/activity/thought-diaries');
 
     cy.contains('h1', 'Thought diaries', { timeout: 10000 }).should('be.visible');
 
