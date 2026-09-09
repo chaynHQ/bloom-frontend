@@ -2,7 +2,7 @@
 
 import { CardCarousel } from '@/components/common/CardCarousel';
 import { LibraryCard } from '@/components/library/LibraryCard';
-import { RELATED_CONTENT_CAROUSEL_PAGED } from '@/lib/constants/events';
+import { RELATED_GROUNDING_CAROUSEL_PAGED } from '@/lib/constants/events';
 import { parseMinutes, toPlainText, type LibraryItem } from '@/lib/utils/libraryData';
 import { Box, Divider, Typography } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -10,9 +10,13 @@ import { useLocale, useTranslations } from 'next-intl';
 
 interface ResourceGroundingSectionProps {
   groundingStories: ISbStoryData[];
+  onExerciseSelect?: (story: ISbStoryData, index: number) => void;
 }
 
-export const ResourceGroundingSection = ({ groundingStories }: ResourceGroundingSectionProps) => {
+export const ResourceGroundingSection = ({
+  groundingStories,
+  onExerciseSelect,
+}: ResourceGroundingSectionProps) => {
   const t = useTranslations('Resources.moment');
   const locale = useLocale();
 
@@ -42,9 +46,15 @@ export const ResourceGroundingSection = ({ groundingStories }: ResourceGrounding
         </Typography>
         <Typography sx={{ maxWidth: 683, color: 'grey.800' }}>{t('subtitle')}</Typography>
       </Box>
-      <CardCarousel label={t('title')} controls eventName={RELATED_CONTENT_CAROUSEL_PAGED}>
-        {items.map((item) => (
-          <LibraryCard key={item.id} item={item} />
+      <CardCarousel label={t('title')} controls eventName={RELATED_GROUNDING_CAROUSEL_PAGED}>
+        {items.map((item, index) => (
+          <LibraryCard
+            key={item.id}
+            item={item}
+            onSelect={
+              onExerciseSelect ? () => onExerciseSelect(groundingStories[index], index) : undefined
+            }
+          />
         ))}
       </CardCarousel>
     </Box>

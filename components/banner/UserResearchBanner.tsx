@@ -1,6 +1,10 @@
 'use client';
 
-import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
+import {
+  USER_BANNER_DISMISSED,
+  USER_BANNER_INTERESTED,
+  USER_BANNER_VIEWED,
+} from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import { useTopBannerHeight } from '@/lib/hooks/useTopBannerHeight';
 import logEvent from '@/lib/utils/logEvent';
@@ -98,17 +102,21 @@ export default function UserResearchBanner() {
   // visitor who already interacted sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
-  useEffect(() => {
-    if (Cookies.get(USER_RESEARCH_BANNER_INTERACTED)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setInteracted(true);
-    }
-  }, []);
-
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isEnglish = locale === 'en';
 
   const showBanner = isBannerFeatureEnabled && isEnglish;
+
+  const viewLogged = useRef(false);
+  useEffect(() => {
+    if (Cookies.get(USER_RESEARCH_BANNER_INTERACTED)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInteracted(true);
+    } else if (showBanner && !viewLogged.current) {
+      viewLogged.current = true;
+      logEvent(USER_BANNER_VIEWED);
+    }
+  }, [showBanner]);
 
   useTopBannerHeight(sectionRef, showBanner && open && !interacted);
 

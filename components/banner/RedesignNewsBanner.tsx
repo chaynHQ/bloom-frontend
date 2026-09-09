@@ -3,6 +3,7 @@
 import {
   REDESIGN_BANNER_DISMISSED,
   REDESIGN_BANNER_FEEDBACK_CLICKED,
+  REDESIGN_BANNER_VIEWED,
 } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
 import { useTopBannerHeight } from '@/lib/hooks/useTopBannerHeight';
@@ -85,14 +86,18 @@ export default function RedesignNewsBanner() {
   // visitor who already dismissed it sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
+  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled();
+
+  const viewLogged = useRef(false);
   useEffect(() => {
     if (Cookies.get(REDESIGN_NEWS_BANNER_INTERACTED)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInteracted(true);
+    } else if (showBanner && !viewLogged.current) {
+      viewLogged.current = true;
+      logEvent(REDESIGN_BANNER_VIEWED);
     }
-  }, []);
-
-  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled();
+  }, [showBanner]);
 
   useTopBannerHeight(sectionRef, showBanner && open && !interacted);
 

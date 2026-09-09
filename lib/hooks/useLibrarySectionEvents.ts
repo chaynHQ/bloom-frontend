@@ -1,30 +1,32 @@
 'use client';
 
+import { COURSE_CARD_CLICKED, RESOURCE_CARD_CLICKED } from '@/lib/constants/events';
 import { PROGRESS_STATUS_BY_ITEM_PROGRESS, type LibraryItem } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
 import { useCallback } from 'react';
 
-export function useLibrarySectionEvents(prefix: string, eventData: object) {
+export function useLibrarySectionEvents(surface: string, eventData: object) {
   const logCardClick = useCallback(
-    (eventName: string, section: string) => (item: LibraryItem, index: number) => {
-      logEvent(eventName, {
-        [`${prefix}_section`]: section,
-        [`${prefix}_item_name`]: item.title,
-        [`${prefix}_item_storyblok_uuid`]: item.id,
-        [`${prefix}_item_kind`]: item.kind,
-        [`${prefix}_item_format`]: item.format ?? null,
-        [`${prefix}_item_progress`]: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
-        [`${prefix}_item_position`]: index + 1, // 1-based rank within the section
+    (section: string) => (item: LibraryItem, index: number) => {
+      logEvent(item.kind === 'course' ? COURSE_CARD_CLICKED : RESOURCE_CARD_CLICKED, {
+        card_surface: surface,
+        card_section: section,
+        card_item_name: item.title,
+        card_item_storyblok_uuid: item.id,
+        card_item_kind: item.kind,
+        card_item_format: item.format ?? null,
+        card_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
+        card_item_position: index + 1, // 1-based rank within the section
         ...eventData,
       });
     },
-    [prefix, eventData],
+    [surface, eventData],
   );
 
   const logBrowseAll = useCallback(
     (eventName: string, section: string) => () =>
-      logEvent(eventName, { [`${prefix}_section`]: section, ...eventData }),
-    [prefix, eventData],
+      logEvent(eventName, { card_surface: surface, card_section: section, ...eventData }),
+    [surface, eventData],
   );
 
   return { logCardClick, logBrowseAll };

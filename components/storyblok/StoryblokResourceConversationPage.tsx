@@ -100,6 +100,7 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
+        onComplete={complete}
         isSignedIn={isSignedIn}
         contentAccessStatus={contentAccessStatus}
         eventData={eventData}

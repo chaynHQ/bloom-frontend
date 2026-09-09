@@ -12,13 +12,14 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import {
   COURSE_OTHER_COURSE_CLICKED,
   COURSE_OVERVIEW_VIEWED,
-  COURSE_SESSION_CLICKED,
   COURSE_START_CLICKED,
+  SESSION_CARD_CLICKED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
@@ -34,7 +35,7 @@ import { Box, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const OTHER_COURSES_SHOWN = 2;
@@ -62,6 +63,7 @@ export interface StoryblokCoursePageProps {
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
   included_for_partners: string[];
   languages: string[]; // TODO: implement this field - currently uses FF_DISABLED_COURSES env var
+  themes?: string[];
   component: 'Course';
 }
 
@@ -84,6 +86,7 @@ const StoryblokCoursePage = ({
     video_transcript,
     weeks,
     included_for_partners,
+    themes,
   } = story.content as StoryblokCoursePageProps;
   const storyUuid = story.uuid;
 
@@ -141,15 +144,7 @@ const StoryblokCoursePage = ({
   );
 
   const libraryStories = useMemo(
-    () => ({
-      courses: courseStories,
-      courseSessions: [],
-      shorts: [],
-      somatics: [],
-      conversations: [],
-      written: [],
-      activity: [],
-    }),
+    () => ({ courses: courseStories, courseSessions: [], resources: [] }),
     [courseStories],
   );
   const otherCourses = useLibraryItems(libraryStories)
@@ -161,16 +156,12 @@ const StoryblokCoursePage = ({
       course_name: name,
       course_storyblok_uuid: storyUuid,
       course_progress: courseProgress,
+      course_themes: Array.isArray(themes) && themes.length ? themes.join(',') : 'none',
     }),
-    [name, storyUuid, courseProgress],
+    [name, storyUuid, courseProgress, themes],
   );
 
-  const hasLoggedView = useRef(false);
-  useEffect(() => {
-    if (hasLoggedView.current || userAuthStatus === 'resolving') return;
-    hasLoggedView.current = true;
-    logEvent(COURSE_OVERVIEW_VIEWED, eventData);
-  }, [eventData, userAuthStatus]);
+  useLogEventOnce(COURSE_OVERVIEW_VIEWED, eventData, userAuthStatus !== 'resolving');
 
   // Signed out, the hero CTA is the "Access the full course" sign-up card, which logs its own
   // event; this fires only for the signed-in "Begin/Continue course" button.
@@ -182,8 +173,9 @@ const StoryblokCoursePage = ({
   };
 
   const handleSessionSelect = (session: CourseSession) => {
-    logEvent(COURSE_SESSION_CLICKED, {
+    logEvent(SESSION_CARD_CLICKED, {
       ...eventData,
+      card_surface: 'course',
       session_name: session.name,
       session_storyblok_uuid: session.uuid,
       session_position: session.position,
@@ -225,6 +217,7 @@ const StoryblokCoursePage = ({
     >
       <CourseHero
         name={name}
+        courseUuid={storyUuid}
         description={description}
         imageSrc={image_with_background?.filename}
         imageAlt={image_with_background?.alt}

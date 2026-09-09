@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from '@/i18n/routing';
+import { Link as i18nLink, usePathname } from '@/i18n/routing';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -97,7 +97,6 @@ const navLabelStyle = {
 } as const;
 
 const MobileBottomNav = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations('Navigation');
 
@@ -123,11 +122,6 @@ const MobileBottomNav = () => {
     qaId: `mobile-nav-${item.qaIdPrefix}-button`,
   }));
 
-  const handleNavClick = (navItem: ProcessedMobileNavItem) => {
-    router.push(navItem.href);
-    logEvent(navItem.event);
-  };
-
   return (
     <Box
       component="nav"
@@ -142,12 +136,13 @@ const MobileBottomNav = () => {
           return (
             <ButtonBase
               key={navItem.href}
+              component={i18nLink}
+              href={navItem.href}
               className={isActive ? 'selected' : ''}
               sx={navItemStyle}
-              onClick={() => handleNavClick(navItem)}
+              onClick={() => logEvent(navItem.event)}
               aria-label={navItem.ariaLabel}
               aria-current={isActive ? 'page' : undefined}
-              aria-pressed={isActive}
               qa-id={navItem.qaId}
               disableRipple={true}
             >

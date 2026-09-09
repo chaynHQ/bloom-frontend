@@ -71,11 +71,7 @@ const lessonStory = (
 const noStories: LibraryStories = {
   courses: [],
   courseSessions: [],
-  shorts: [],
-  somatics: [],
-  conversations: [],
-  written: [],
-  activity: [],
+  resources: [],
 };
 
 const renderLibrary = (stories: Partial<LibraryStories>, state: Partial<State> = {}) => {
@@ -219,7 +215,7 @@ describe('useLibraryItems locale', () => {
     const english = story({ uuid: 'en', name: 'English', languages: ['default'] });
 
     // Locale 'en' maps to Storyblok's 'default'.
-    expect(titles(renderLibrary({ shorts: [german, english] }))).toEqual(['English']);
+    expect(titles(renderLibrary({ resources: [german, english] }))).toEqual(['English']);
   });
 
   it('matches a non-English locale against its own language code', () => {
@@ -240,7 +236,7 @@ describe('useLibraryItems locale', () => {
         }),
     );
 
-    const items = renderHook(() => useLibraryItems({ ...noStories, shorts: [german, english] }))
+    const items = renderHook(() => useLibraryItems({ ...noStories, resources: [german, english] }))
       .result.current;
 
     expect(titles(items)).toEqual(['German only']);
@@ -286,7 +282,7 @@ describe('useLibraryItems progress', () => {
     const short = story({ uuid: 'short', name: 'A short' });
 
     const items = renderLibrary(
-      { shorts: [short] },
+      { resources: [short] },
       { ...asPublicUser, resources: [{ storyblokUuid: 'short', completed: false }] },
     );
 
@@ -296,6 +292,6 @@ describe('useLibraryItems progress', () => {
   it('leaves progress unset for an item the user has not touched', () => {
     const short = story({ uuid: 'short', name: 'A short' });
 
-    expect(renderLibrary({ shorts: [short] }, asPublicUser)[0].progress).toBeUndefined();
+    expect(renderLibrary({ resources: [short] }, asPublicUser)[0].progress).toBeUndefined();
   });
 });

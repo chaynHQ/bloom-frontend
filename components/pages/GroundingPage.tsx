@@ -1,17 +1,19 @@
 'use client';
 
 import { ScrollReveal } from '@/components/common/ScrollReveal';
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
 import Header from '@/components/layout/Header';
 import { GroundingExerciseDialog } from '@/components/resources/GroundingExerciseDialog';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import {
+  GROUNDING_EXERCISE_CLICKED,
   GROUNDING_LOAD_MORE_CLICKED,
   GROUNDING_SUPPORT_CARD_CLICKED,
   GROUNDING_VIEWED,
 } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
@@ -24,7 +26,7 @@ import { Box, Button, Card, CardActionArea, Container, Divider, Typography } fro
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 // Matches LibraryPage's card-grid page size, sized to fill whole rows of this grid's 3 columns.
@@ -103,7 +105,6 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   // GROUNDING_VIEWED event below carries accurate partner/account attribution.
   const userSettled = userAuthStatus !== 'resolving';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const viewLogged = useRef(false);
 
   const visibleStories = useMemo(
     // Grounding has no gating, unlike partner-curated resources — 'public' always applies here,
@@ -121,14 +122,27 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
   const displayedStories = visibleStories.slice(0, visibleCount);
   const hasMore = resultsCount > visibleCount;
 
-  useEffect(() => {
-    // Wait for auth to settle so account_type/partner attribution on this event is accurate,
-    // and log only once — matches LibraryPage's LIBRARY_VIEWED pattern.
-    if (!userSettled || viewLogged.current) return;
-    viewLogged.current = true;
-    logEvent(GROUNDING_VIEWED, { grounding_results_count: resultsCount, ...eventUserData });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userSettled, eventUserData]);
+  // Wait for auth to settle so account_type/partner attribution on this event is accurate.
+  useLogEventOnce(
+    GROUNDING_VIEWED,
+    { grounding_results_count: resultsCount, grounding_logged_in: isLoggedIn, ...eventUserData },
+    userSettled,
+  );
+
+  // Last slug opened from a card, to tell card-opens from deep-link opens.
+  const [cardOpenedSlug, setCardOpenedSlug] = useState<string | undefined>(undefined);
+
+  const logExerciseClick = (story: ISbStoryData, index: number) => {
+    setCardOpenedSlug(story.slug);
+    logEvent(GROUNDING_EXERCISE_CLICKED, {
+      grounding_context: 'grounding_page',
+      grounding_exercise_name: story.content.name,
+      grounding_exercise_storyblok_uuid: story.uuid,
+      grounding_exercise_position: index + 1,
+      grounding_results_count: resultsCount,
+      ...eventUserData,
+    });
+  };
 
   const loadMore = () => {
     const nextVisible = visibleCount + PAGE_SIZE;
@@ -156,7 +170,7 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
           introduction={heroContent.description}
           imageSrc={heroContent.header_image?.filename}
           translatedImageAlt={heroContent.header_image?.alt}
-          cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
+          cta={!isLoggedIn ? <SignUpButton source="grounding" /> : undefined}
         />
       )}
 
@@ -175,7 +189,11 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
             return (
               <ScrollReveal fill key={story.uuid} delay={(index % PAGE_SIZE) * 15}>
                 <Card sx={cardStyle} qa-id="grounding-card">
-                  <CardActionArea component={i18nLink} href={`/grounding?id=${story.slug}`}>
+                  <CardActionArea
+                    component={i18nLink}
+                    href={`/grounding?id=${story.slug}`}
+                    onClick={() => logExerciseClick(story, index)}
+                  >
                     <Box sx={cardContentStyle}>
                       <Typography variant="h4" component="h3" sx={{ mb: 0 }}>
                         {story.content.name}
@@ -215,7 +233,11 @@ export const GroundingPage = ({ stories, heroStory }: GroundingPageProps) => {
       {!isLoggedIn && <SignUpSection source="grounding" />}
 
       {openStory && (
-        <GroundingExerciseDialog story={openStory} onClose={() => router.replace('/grounding')} />
+        <GroundingExerciseDialog
+          story={openStory}
+          openMethod={cardOpenedSlug === openStory.slug ? 'card' : 'deep_link'}
+          onClose={() => router.replace('/grounding')}
+        />
       )}
     </>
   );

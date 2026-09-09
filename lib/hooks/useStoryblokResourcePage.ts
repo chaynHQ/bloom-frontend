@@ -3,6 +3,7 @@
 import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useResourceProgress, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
@@ -10,12 +11,11 @@ import { Resource } from '@/lib/store/resourcesSlice';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { normaliseSlug } from '@/lib/utils/libraryData';
-import logEvent from '@/lib/utils/logEvent';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
 // The fields every resource-page story shares; individual pages cast `content` to their own,
 // wider prop interface for the rest.
@@ -23,6 +23,7 @@ export interface ResourceStoryContent {
   name: string;
   languages: string[];
   included_for_partners: string[];
+  themes?: string[];
   login_required?: boolean;
   contributor_images?: { filename: string; alt: string }[];
   contributors_description?: string;
@@ -57,6 +58,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     name,
     languages,
     included_for_partners,
+    themes,
     login_required,
     contributor_images,
     contributors_description,
@@ -102,17 +104,13 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
       resource_name: name,
       resource_storyblok_uuid: storyUuid,
       resource_progress: resourceProgress,
+      resource_themes: Array.isArray(themes) && themes.length ? themes.join(',') : 'none',
     }),
-    [category, name, storyUuid, resourceProgress],
+    [category, name, storyUuid, resourceProgress, themes],
   );
 
   // Log the view once, after auth settles, so account and progress attribution is accurate.
-  const viewLogged = useRef(false);
-  useEffect(() => {
-    if (viewLogged.current || userAuthStatus === 'resolving') return;
-    viewLogged.current = true;
-    logEvent(viewedEvent, eventData);
-  }, [userAuthStatus, viewedEvent, eventData]);
+  useLogEventOnce(viewedEvent, eventData, userAuthStatus !== 'resolving');
 
   const { start, complete } = useResourceProgress({
     storyUuid,
@@ -131,10 +129,15 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     [related_grounding],
   );
 
-  const relatedSessionHref = useMemo(() => {
+  const { relatedSessionHref, relatedSessionName } = useMemo(() => {
     const session = Array.isArray(related_session) ? related_session[0] : related_session;
-    if (!session || typeof session !== 'object' || !session.full_slug) return undefined;
-    return getDefaultFullSlug(normaliseSlug(session.full_slug), locale);
+    if (!session || typeof session !== 'object' || !session.full_slug) {
+      return { relatedSessionHref: undefined, relatedSessionName: undefined };
+    }
+    return {
+      relatedSessionHref: getDefaultFullSlug(normaliseSlug(session.full_slug), locale),
+      relatedSessionName: session.name,
+    };
   }, [related_session, locale]);
 
   const contentAccessStatus = useContentAccessStatus({
@@ -154,6 +157,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     contributors,
     relatedGrounding,
     relatedSessionHref,
+    relatedSessionName,
     userContentPartners,
     start,
     complete,

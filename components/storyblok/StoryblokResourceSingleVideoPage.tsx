@@ -53,6 +53,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
     contributors,
     relatedGrounding,
     relatedSessionHref,
+    relatedSessionName,
     userContentPartners,
     start,
     complete,
@@ -114,6 +115,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
+        onComplete={complete}
         isSignedIn={isSignedIn}
         contentAccessStatus={contentAccessStatus}
         eventData={eventData}
@@ -132,6 +134,7 @@ const StoryblokResourceSingleVideoPage = ({ story: initialStory }: { story: ISbS
         relatedContent={related_content}
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
+        relatedSessionName={relatedSessionName}
         beforeSections={
           keyReferences.length > 0 && (
             <Box>

@@ -2,6 +2,8 @@
 
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
+import { RESET_PASSWORD_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '@/styles/common';
@@ -27,6 +29,9 @@ export default function ResetPasswordPage() {
   const t = useTranslations('Auth');
   const searchParams = useSearchParams();
   const oobCodeParam = searchParams.get('oobCode');
+  useLogEventOnce(RESET_PASSWORD_VIEWED, {
+    reset_password_stage: oobCodeParam ? 'set' : 'request',
+  });
 
   const headerProps = {
     partnerLogoSrc: bloomLogo,

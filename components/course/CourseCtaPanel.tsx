@@ -39,6 +39,8 @@ interface CourseCtaPanelProps {
   onCtaClick: () => void;
   // The course hero image pushes the panel down to line up with the title rather than the image.
   offsetForIllustration: boolean;
+  courseName: string;
+  courseUuid: string;
 }
 
 export function CourseCtaPanel({
@@ -47,6 +49,8 @@ export function CourseCtaPanel({
   ctaLabel,
   onCtaClick,
   offsetForIllustration,
+  courseName,
+  courseUuid,
 }: CourseCtaPanelProps) {
   return (
     <Box
@@ -74,7 +78,7 @@ export function CourseCtaPanel({
           </Button>
         </Box>
       ) : (
-        <SignUpCard source="course" />
+        <SignUpCard source="course" contentName={courseName} contentUuid={courseUuid} />
       )}
     </Box>
   );

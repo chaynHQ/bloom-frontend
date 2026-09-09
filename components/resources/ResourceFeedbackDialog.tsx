@@ -2,9 +2,12 @@
 
 import ResourceFeedbackForm from '@/components/forms/ResourceFeedbackForm';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { RESOURCE_FEEDBACK_DISMISSED, RESOURCE_FEEDBACK_VIEWED } from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import { Box, Dialog, IconButton } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useEffect, useRef } from 'react';
 
 // Bottom-anchored sheet on mobile, centred dialog on desktop.
 const dialogPaperStyle = {
@@ -23,6 +26,7 @@ interface ResourceFeedbackDialogProps {
   onClose: () => void;
   resourceId: string;
   category: RESOURCE_CATEGORIES;
+  eventData?: Record<string, unknown>;
 }
 
 export const ResourceFeedbackDialog = ({
@@ -30,20 +34,35 @@ export const ResourceFeedbackDialog = ({
   onClose,
   resourceId,
   category,
+  eventData,
 }: ResourceFeedbackDialogProps) => {
   const t = useTranslations('Resources.resourceFeedback');
+
+  // Suppresses the dismiss event on the form's own auto-close after a submission.
+  const submitted = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    submitted.current = false;
+    logEvent(RESOURCE_FEEDBACK_VIEWED, { ...eventData, category });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const handleClose = () => {
+    if (!submitted.current) logEvent(RESOURCE_FEEDBACK_DISMISSED, { ...eventData, category });
+    onClose();
+  };
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       slotProps={{ paper: { sx: dialogPaperStyle } }}
       sx={{ '& .MuiDialog-container': { alignItems: { xs: 'flex-end', sm: 'center' } } }}
     >
       <Box sx={bodyStyle}>
         <IconButton
           aria-label={t('close')}
-          onClick={onClose}
+          onClick={handleClose}
           sx={{ position: 'absolute', top: 8, insetInlineEnd: 8 }}
         >
           <CloseRounded />
@@ -51,7 +70,11 @@ export const ResourceFeedbackDialog = ({
         <ResourceFeedbackForm
           resourceId={resourceId}
           category={category}
-          onSubmitted={() => setTimeout(onClose, 1200)}
+          eventData={eventData}
+          onSubmitted={() => {
+            submitted.current = true;
+            setTimeout(onClose, 1200);
+          }}
         />
       </Box>
     </Dialog>

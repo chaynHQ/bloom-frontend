@@ -22,8 +22,9 @@ import StoryblokTeamMembersSection, {
 } from '@/components/storyblok/StoryblokTeamMembersSection';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { GROUNDING_EXERCISE_CLICKED } from '@/lib/constants/events';
 import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
-import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { type CompleteResource, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, Button, CircularProgress, Container, Divider } from '@mui/material';
@@ -42,6 +43,9 @@ export interface ResourcePageLayoutProps {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   resourceId?: string;
+  // Marks the resource finished from the bottom action panel. Shares the hook instance the page
+  // already wired to the media player, so there's one `useResourceProgress` per resource.
+  onComplete: CompleteResource;
   isSignedIn: boolean;
   // The page handles `'accessDenied'` before rendering. `'resolving'` and `'signInRequired'` share
   // one shell (header + content card) so it never reflows — a spinner where the media goes, then
@@ -66,6 +70,7 @@ export interface ResourcePageLayoutProps {
   beforeSections?: ReactNode;
   // Link to the full session this resource excerpts, if any.
   relatedSessionHref?: string;
+  relatedSessionName?: string;
   pageSections?: SbBlokData[];
   relatedGrounding: ISbStoryData[];
   relatedContent: StoryblokRelatedContentStory[];
@@ -80,6 +85,7 @@ export const ResourcePageLayout = ({
   eventPrefix,
   resourceProgress,
   resourceId,
+  onComplete,
   isSignedIn,
   contentAccessStatus,
   eventData,
@@ -93,6 +99,7 @@ export const ResourcePageLayout = ({
   teamMembersSection,
   beforeSections,
   relatedSessionHref,
+  relatedSessionName,
   pageSections,
   relatedGrounding,
   relatedContent,
@@ -107,9 +114,21 @@ export const ResourcePageLayout = ({
   // when it stands in for the media inside the content card.
   const signUpCard = (embedded?: boolean) =>
     relatedSessionHref ? (
-      <SignUpCard source="relatedSession" returnPath={relatedSessionHref} embedded={embedded} />
+      <SignUpCard
+        source="relatedSession"
+        returnPath={relatedSessionHref}
+        embedded={embedded}
+        contentName={name}
+        contentUuid={storyUuid}
+      />
     ) : (
-      <SignUpCard source="resource" format={format} embedded={embedded} />
+      <SignUpCard
+        source="resource"
+        format={format}
+        embedded={embedded}
+        contentName={name}
+        contentUuid={storyUuid}
+      />
     );
 
   // Sits under the content card: the "watch full session" link for signed-in visitors, the sign-up
@@ -121,7 +140,13 @@ export const ResourcePageLayout = ({
       href={relatedSessionHref}
       variant="contained"
       color="secondary"
-      onClick={() => logEvent(`${eventPrefix}_VISIT_SESSION`, eventData)}
+      onClick={() =>
+        logEvent(`${eventPrefix}_VISIT_SESSION`, {
+          ...eventData,
+          related_session_name: relatedSessionName ?? null,
+          related_session_href: relatedSessionHref,
+        })
+      }
       sx={{ alignSelf: 'flex-start' }}
     >
       {t('sessionButtonLabel')}
@@ -136,12 +161,10 @@ export const ResourcePageLayout = ({
     <ResourceCompleteCard />
   ) : isSignedIn ? (
     <ResourceActions
-      storyUuid={storyUuid}
       resourceId={resourceId}
       category={category}
-      eventPrefix={eventPrefix}
-      resourceProgress={resourceProgress}
       eventData={eventData}
+      onComplete={onComplete}
     />
   ) : relatedSessionHref ? null : (
     signUpCard()
@@ -223,7 +246,18 @@ export const ResourcePageLayout = ({
           {beforeSections}
         </Box>
 
-        <ResourceGroundingSection groundingStories={relatedGrounding} />
+        <ResourceGroundingSection
+          groundingStories={relatedGrounding}
+          onExerciseSelect={(story, index) =>
+            logEvent(GROUNDING_EXERCISE_CLICKED, {
+              ...eventData,
+              grounding_context: 'resource_moment',
+              grounding_exercise_name: story.content.name,
+              grounding_exercise_storyblok_uuid: story.uuid,
+              grounding_exercise_position: index + 1,
+            })
+          }
+        />
 
         {bottomAction && (
           <>

@@ -110,11 +110,9 @@ export interface LibraryStories {
   courses: LibraryStory[];
   // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
   courseSessions: LibraryStory[];
-  shorts: LibraryStory[];
-  somatics: LibraryStory[];
-  conversations: LibraryStory[];
-  written: LibraryStory[];
-  activity: LibraryStory[];
+  // Every standalone resource, flattened across format folders (shorts, somatic videos,
+  // conversations, written, activity).
+  resources: LibraryStory[];
 }
 
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
