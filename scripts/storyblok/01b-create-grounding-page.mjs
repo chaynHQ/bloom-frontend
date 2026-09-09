@@ -150,6 +150,11 @@ async function listComponents() {
 
 const clone = (v) => JSON.parse(JSON.stringify(v));
 
+// `page`'s `seo_description` caps at 300, but the real translated grounding copy runs to ~390
+// (German) — a soft SEO guideline, not a technical limit, and search engines just truncate. Cap
+// high enough that every existing translation publishes.
+const SEO_DESCRIPTION_MAX_LENGTH = 500;
+
 function buildSchema(pageSchema) {
   const schema = {};
   FIELDS_FROM_PAGE.forEach((key, i) => {
@@ -161,6 +166,7 @@ function buildSchema(pageSchema) {
   });
   // The grounding page hero image is decorative; don't force editors to set one.
   if (schema.header_image) schema.header_image.required = false;
+  if (schema.seo_description) schema.seo_description.max_length = SEO_DESCRIPTION_MAX_LENGTH;
   return schema;
 }
 
@@ -209,6 +215,13 @@ async function main() {
         changed = true;
         console.log(`  converge add field ${key}`);
       }
+    }
+    // Widen an already-created seo_description that's still on `page`'s tighter cap.
+    const sd = merged.schema.seo_description;
+    if (sd && (sd.max_length ?? Infinity) < SEO_DESCRIPTION_MAX_LENGTH) {
+      sd.max_length = SEO_DESCRIPTION_MAX_LENGTH;
+      changed = true;
+      console.log(`  converge seo_description max_length → ${SEO_DESCRIPTION_MAX_LENGTH}`);
     }
     if (!changed) {
       console.log(`  skip     component "${COMPONENT_NAME}" already has every standard field`);

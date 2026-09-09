@@ -32,6 +32,17 @@ export const THEME_KEYS: ThemeKey[] = [
   'staying-safe',
 ];
 
+// `recognising-harm` / `why-harm-happens` were renamed to `-abuse`. Published Storyblok stories and
+// old `?theme=` deep links can still carry the old slugs; map them so labels and filters resolve.
+const LEGACY_THEME_KEYS: Record<string, ThemeKey> = {
+  'recognising-harm': 'recognising-abuse',
+  'why-harm-happens': 'why-abuse-happens',
+};
+
+function canonicalTheme(theme: string): string {
+  return LEGACY_THEME_KEYS[theme] ?? theme;
+}
+
 export type LengthBucket = 'under10' | '10to20' | 'over20';
 export const LENGTH_KEYS: LengthBucket[] = ['under10', '10to20', 'over20'];
 
@@ -130,7 +141,9 @@ const DEFAULT_THEME: ThemeKey = 'healing-journey';
 
 function themesForStory(story: LibraryStory): ThemeKey[] {
   const themes = story.content.themes;
-  return Array.isArray(themes) && themes.length ? (themes as ThemeKey[]) : [DEFAULT_THEME];
+  return Array.isArray(themes) && themes.length
+    ? (themes.map(canonicalTheme) as ThemeKey[])
+    : [DEFAULT_THEME];
 }
 
 export function parseMinutes(duration: unknown): number | undefined {
@@ -266,7 +279,7 @@ export function libraryFiltersToQuery(filters: LibraryFilters): string {
 
 export function parseLibraryFilters(params: URLSearchParams): LibraryFilters {
   const list = <T extends string>(key: string, allowed: readonly T[]): T[] => {
-    const raw = params.get(key)?.split(',') ?? [];
+    const raw = (params.get(key)?.split(',') ?? []).map(canonicalTheme);
     return allowed.filter((value) => raw.includes(value));
   };
   return {
