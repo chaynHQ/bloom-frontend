@@ -63,6 +63,7 @@ const radioGroupStyle = {
 
 interface SessionFeedbackFormProps {
   sessionId: string;
+  eventData?: Record<string, unknown>;
 }
 
 const imageContainerStyle = {
@@ -111,7 +112,11 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
       await sendFeedback(feedbackData);
     }
 
-    logEvent(SESSION_FEEDBACK_SUBMITTED, { feedbackTags: selectedFeedbackTag });
+    logEvent(SESSION_FEEDBACK_SUBMITTED, {
+      ...props.eventData,
+      feedback_tag: selectedFeedbackTag,
+      feedbackTags: selectedFeedbackTag, // kept for continuity
+    });
     setLoading(false);
     setFormSubmitSuccess(true);
   };

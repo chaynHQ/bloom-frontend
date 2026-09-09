@@ -67,5 +67,9 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
       getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
     ]);
 
-  return { courses, courseSessions, shorts, somatics, conversations, written, activity };
+  return {
+    courses,
+    courseSessions,
+    resources: [...shorts, ...somatics, ...conversations, ...written, ...activity],
+  };
 }

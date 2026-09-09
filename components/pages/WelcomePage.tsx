@@ -14,7 +14,6 @@ import {
   generatePartnerPromoGoToCoursesEvent,
   WELCOME_BROWSE_ALL_CLICKED,
   WELCOME_CAROUSEL_PAGED,
-  WELCOME_CONTENT_CARD_CLICKED,
   WELCOME_SUPPORT_CARD_CLICKED,
   WELCOME_VIEWED,
 } from '@/lib/constants/events';
@@ -22,7 +21,9 @@ import { getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -61,12 +62,12 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const userToken = useTypedSelector((state) => state.user.token);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
+  const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
   const partnerSlug = partnerName.toLowerCase();
   const content = story.content;
@@ -98,14 +99,11 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('welcome', eventData);
 
   // Wait for getUser before logging, so a signed-in visitor isn't reported as anonymous.
-  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
-  const viewLogged = useRef(false);
-  useEffect(() => {
-    if (!userSettled || viewLogged.current) return;
-    viewLogged.current = true;
-    logEvent(WELCOME_VIEWED, { welcome_logged_in: isLoggedIn, ...eventData });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userSettled, eventData]);
+  useLogEventOnce(
+    WELCOME_VIEWED,
+    { welcome_logged_in: isLoggedIn, ...eventData },
+    userAuthStatus !== 'resolving',
+  );
 
   const partnerContent = getPartnerContent(partnerName);
 
@@ -181,7 +179,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
         showAccountNeeded={!isLoggedIn}
         browseLabel={t('sessions.browseAll')}
         browseHref="/library?type=session"
-        onCardSelect={logCardClick(WELCOME_CONTENT_CARD_CLICKED, 'sessions')}
+        onCardSelect={logCardClick('sessions')}
         onBrowseAll={logBrowseAll(WELCOME_BROWSE_ALL_CLICKED, 'sessions')}
       />
 
@@ -195,7 +193,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
         browseLabel={t('courses.browseAll')}
         browseHref="/library?type=course"
         divided={sessions.length > 0}
-        onCardSelect={logCardClick(WELCOME_CONTENT_CARD_CLICKED, 'courses')}
+        onCardSelect={logCardClick('courses')}
         onBrowseAll={logBrowseAll(WELCOME_BROWSE_ALL_CLICKED, 'courses')}
       />
 

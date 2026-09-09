@@ -1,6 +1,6 @@
 'use client';
 
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import Header from '@/components/layout/Header';
 import { usePathname } from '@/i18n/routing';
@@ -49,7 +49,9 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
         introduction={headerProps.introduction}
         imageSrc={headerProps.imageSrc}
         translatedImageAlt={headerProps.translatedImageAlt}
-        cta={isPartiallyPublicPage && !isLoggedIn ? <ScrollToSignUpButton /> : undefined}
+        cta={
+          isPartiallyPublicPage && !isLoggedIn ? <SignUpButton source="content-page" /> : undefined
+        }
       />
       {!isLoggedIn && isPartiallyPublicPage && <NotesFromBloomPromo />}
       {!isLoggedIn && isPartiallyPublicPage && <SignUpSection source="content-page" />}

@@ -10,8 +10,6 @@ import { Link as i18nLink } from '@/i18n/routing';
 import {
   HOME_BROWSE_ALL_CLICKED,
   HOME_CAROUSEL_PAGED,
-  HOME_CONTENT_CARD_CLICKED,
-  HOME_CONTINUE_CARD_CLICKED,
   HOME_HERO_CTA_CLICKED,
   HOME_SUPPORT_CARD_CLICKED,
   HOME_VIEWED,
@@ -20,7 +18,9 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useRegisterPath } from '@/lib/hooks/useRegisterPath';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import illustrationSignpost from '@/public/courses_signpost.svg';
@@ -29,7 +29,7 @@ import { Box, Button } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
 interface Props {
   story: ISbStoryData | undefined;
@@ -44,10 +44,10 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const userToken = useTypedSelector((state) => state.user.token);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const registerPath = useRegisterPath();
+  const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
 
   const eventUserData = useMemo(
@@ -59,18 +59,15 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('home', eventUserData);
 
   // Wait for getUser before logging, so a signed-in visitor isn't reported as anonymous.
-  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
-  const viewLogged = useRef(false);
-  useEffect(() => {
-    if (!userSettled || viewLogged.current) return;
-    viewLogged.current = true;
-    logEvent(HOME_VIEWED, {
+  useLogEventOnce(
+    HOME_VIEWED,
+    {
       home_logged_in: isLoggedIn,
       home_in_progress_count: inProgress.length,
       ...eventUserData,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userSettled, eventUserData]);
+    },
+    userAuthStatus !== 'resolving',
+  );
 
   if (!story) {
     return <NoDataAvailable />;
@@ -142,7 +139,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
         items={inProgress}
         background="paleSecondaryLight"
         carouselEventName={HOME_CAROUSEL_PAGED}
-        onCardSelect={logCardClick(HOME_CONTINUE_CARD_CLICKED, 'continue')}
+        onCardSelect={logCardClick('continue')}
       />
 
       <LibraryCardsSection
@@ -155,7 +152,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
         showAccountNeeded={!isLoggedIn}
         browseLabel={t('sessions.browseAll')}
         browseHref="/library?type=session"
-        onCardSelect={logCardClick(HOME_CONTENT_CARD_CLICKED, 'sessions')}
+        onCardSelect={logCardClick('sessions')}
         onBrowseAll={logBrowseAll(HOME_BROWSE_ALL_CLICKED, 'sessions')}
       />
 
@@ -169,7 +166,7 @@ export default function HomePage({ story: initialStory, libraryStories }: Props)
         browseLabel={t('courses.browseAll')}
         browseHref="/library?type=course"
         divided={sessions.length > 0}
-        onCardSelect={logCardClick(HOME_CONTENT_CARD_CLICKED, 'courses')}
+        onCardSelect={logCardClick('courses')}
         onBrowseAll={logBrowseAll(HOME_BROWSE_ALL_CLICKED, 'courses')}
       />
 

@@ -3,6 +3,8 @@
 import { BackLink } from '@/components/common/BackLink';
 import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
+import { LOGIN_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
 import { pageHeaderPaddingTop, pageHeaderPaddingTopMobile } from '@/styles/common';
@@ -45,6 +47,7 @@ export default function LoginPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
+  useLogEventOnce(LOGIN_VIEWED, {});
 
   const headerProps = {
     imageSrc: illustrationLeafMix,

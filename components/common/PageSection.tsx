@@ -49,10 +49,10 @@ const PageSection = (props: PageSectionProps) => {
       paddingInlineEnd: { lg: `${contentRailGutter(CONTENT_MAX_WIDTH_WIDE)} !important` },
     }),
     ...(width === 'full' && {
-      paddingInlineStart: { xs: 0, ms: 0, md: 0, lg: 0 },
-      paddingInlineEnd: { xs: 0, ms: 0, md: 0, lg: 0 },
-      paddingTop: { xs: 0, ms: 0, md: 0, lg: 0 },
-      paddingBottom: { xs: 0, ms: 0, md: 0, lg: 0 },
+      paddingInlineStart: { xs: 0, sm: 0, md: 0, lg: 0 },
+      paddingInlineEnd: { xs: 0, sm: 0, md: 0, lg: 0 },
+      paddingTop: { xs: 0, sm: 0, md: 0, lg: 0 },
+      paddingBottom: { xs: 0, sm: 0, md: 0, lg: 0 },
     }),
     // Gradient tokens have to go through `background`; flat ones through `backgroundColor`.
     ...(color &&

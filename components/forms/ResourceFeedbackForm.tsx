@@ -41,11 +41,12 @@ const containerStyle = {
 interface ResourceFeedbackFormProps {
   resourceId: string;
   category: RESOURCE_CATEGORIES;
+  eventData?: Record<string, unknown>;
   onSubmitted?: () => void;
 }
 
 const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
-  const { resourceId, category, onSubmitted } = props;
+  const { resourceId, category, eventData, onSubmitted } = props;
 
   const t = useTranslations('Resources.resourceFeedback');
   const tS = useTranslations('Shared');
@@ -75,7 +76,12 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
 
     await sendFeedback(feedbackData);
 
-    logEvent(RESOURCE_FEEDBACK_SUBMITTED, { category, feedbackTags: selectedFeedbackTag });
+    logEvent(RESOURCE_FEEDBACK_SUBMITTED, {
+      ...eventData,
+      feedback_tag: selectedFeedbackTag,
+      category, // kept for continuity
+      feedbackTags: selectedFeedbackTag, // kept for continuity
+    });
     setLoading(false);
     setFormSubmitSuccess(true);
     onSubmitted?.();

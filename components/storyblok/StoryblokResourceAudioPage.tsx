@@ -49,6 +49,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     contributors,
     relatedGrounding,
     relatedSessionHref,
+    relatedSessionName,
     userContentPartners,
     start,
     complete,
@@ -104,6 +105,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
+        onComplete={complete}
         isSignedIn={isSignedIn}
         contentAccessStatus={contentAccessStatus}
         eventData={eventData}
@@ -122,6 +124,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         relatedContent={related_content}
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
+        relatedSessionName={relatedSessionName}
         media={
           <ResourceAudioPlayer
             url={audio.filename}

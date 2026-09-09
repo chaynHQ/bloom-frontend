@@ -1,8 +1,8 @@
 'use client';
 
 import { ResourceFeedbackDialog } from '@/components/resources/ResourceFeedbackDialog';
-import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { useResourceProgress, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { type CompleteResource } from '@/lib/hooks/useResourceProgress';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -20,24 +20,19 @@ const barStyle = {
 } as const;
 
 interface ResourceActionsProps {
-  storyUuid: string;
   resourceId?: string;
   category: RESOURCE_CATEGORIES;
-  eventPrefix: ResourceEventPrefix;
-  resourceProgress: PROGRESS_STATUS;
   eventData: Record<string, unknown>;
+  onComplete: CompleteResource;
 }
 
 export const ResourceActions = ({
-  storyUuid,
   resourceId,
   category,
-  eventPrefix,
-  resourceProgress,
   eventData,
+  onComplete,
 }: ResourceActionsProps) => {
   const t = useTranslations('Resources');
-  const { complete } = useResourceProgress({ storyUuid, eventPrefix, resourceProgress, eventData });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -45,7 +40,7 @@ export const ResourceActions = ({
   const markComplete = async () => {
     setLoading(true);
     setError(null);
-    const { ok } = await complete();
+    const { ok } = await onComplete('manual');
     setLoading(false);
 
     if (!ok) {
@@ -78,6 +73,7 @@ export const ResourceActions = ({
           onClose={() => setFeedbackOpen(false)}
           resourceId={resourceId}
           category={category}
+          eventData={eventData}
         />
       )}
     </Box>

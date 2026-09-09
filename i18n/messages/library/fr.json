@@ -2,10 +2,10 @@
   "Library": {
     "metadata": {
       "title": "Bibliothèque",
-      "description": "Découvre les cours et les sessions individuelles de Bloom, réunis au même endroit."
+      "description": "Découvrez les cours et les sessions individuelles de Bloom, réunis au même endroit."
     },
-    "title": "Explore notre bibliothèque",
-    "introduction": "Des sessions et des cours de Bloom, pour t’aider à apprendre, à réfléchir et à cheminer avec ce que tu as vécu, dans un espace sûr où puiser de la force.",
+    "title": "Explorez notre bibliothèque",
+    "introduction": "Des sessions et des cours de Bloom, pour vous aider à apprendre, à réfléchir et à cheminer avec ce que vous avez vécu, dans un espace sûr où puiser de la force.",
     "exploreByTheme": "Explorer par thème",
     "filterHeading": "Filtrer la bibliothèque",
     "filterButtonLabel": "Filtrer",
@@ -44,39 +44,39 @@
     "loadMore": "Voir plus",
     "noResults": {
       "title": "Aucun résultat pour ces filtres",
-      "body": "Essaie d’enlever un ou deux filtres, ou explore un autre thème — la bibliothèque a encore beaucoup à t’offrir.",
+      "body": "Essayez d’enlever un ou deux filtres, ou explorez un autre thème — la bibliothèque a encore beaucoup à vous offrir.",
       "action": "Effacer les filtres"
     },
     "themes": {
       "recognising-abuse": {
         "label": "Reconnaître les abus",
         "blurb": "Nommer les abus dans les relations et au quotidien",
-        "description": "Les abus ne sont pas toujours évidents. Découvre les formes qu’ils peuvent prendre dans les relations et au quotidien, et trouve les mots pour des expériences difficiles à nommer."
+        "description": "Les abus ne sont pas toujours évidents. Découvrez les formes qu’ils peuvent prendre dans les relations et au quotidien, et trouvez les mots pour des expériences difficiles à nommer."
       },
       "why-abuse-happens": {
         "label": "Pourquoi les abus existent",
         "blurb": "Comprendre les forces sociales et systémiques à l’origine des abus",
-        "description": "Les abus ne se résument pas aux choix d’une seule personne. Comprends les forces sociales, culturelles et systémiques qui les rendent possibles — et pourquoi rien de tout cela n’est de ta faute."
+        "description": "Les abus ne se résument pas aux choix d’une seule personne. Comprenez les forces sociales, culturelles et systémiques qui les rendent possibles — et pourquoi rien de tout cela n’est de votre faute."
       },
       "body-after-trauma": {
-        "label": "Ton corps après un traumatisme",
+        "label": "Votre corps après un traumatisme",
         "blurb": "Comment le traumatisme habite le corps",
-        "description": "Le traumatisme vit autant dans le corps que dans l’esprit. Découvre comment ton système nerveux réagit à ce que tu as vécu, et des approches douces, centrées sur le corps, pour te sentir plus en sécurité."
+        "description": "Le traumatisme vit autant dans le corps que dans l’esprit. Découvrez comment votre système nerveux réagit à ce que vous avez vécu, et des approches douces, centrées sur le corps, pour vous sentir plus en sécurité."
       },
       "setting-boundaries": {
         "label": "Poser ses limites",
         "blurb": "Limites émotionnelles, physiques, sexuelles et numériques",
-        "description": "Les limites protègent ton bien-être dans tous les domaines de la vie. Découvre comment reconnaître, poser et maintenir des limites émotionnelles, physiques, sexuelles et numériques."
+        "description": "Les limites protègent votre bien-être dans tous les domaines de la vie. Découvrez comment reconnaître, poser et maintenir des limites émotionnelles, physiques, sexuelles et numériques."
       },
       "healing-journey": {
-        "label": "Ton chemin de guérison",
+        "label": "Votre chemin de guérison",
         "blurb": "Avancer à travers le deuil, la croissance et la reconstruction",
-        "description": "La guérison n’est pas linéaire. Trouve du soutien et des outils pour traverser le deuil, la croissance et la reconstruction, au rythme qui te convient."
+        "description": "La guérison n’est pas linéaire. Trouvez du soutien et des outils pour traverser le deuil, la croissance et la reconstruction, au rythme qui vous convient."
       },
       "staying-safe": {
         "label": "Rester en sécurité maintenant",
         "blurb": "Plan de sécurité et stratégies face à une violence en cours",
-        "description": "Si tu es encore en danger ou proche de l’être, la sécurité passe avant tout. Trouve un soutien concret pour préparer un plan de sécurité et pour faire face aux moments où les choses ne semblent pas sûres."
+        "description": "Si vous êtes encore en danger ou proche de l’être, la sécurité passe avant tout. Trouvez un soutien concret pour préparer un plan de sécurité et pour faire face aux moments où les choses ne semblent pas sûres."
       }
     }
   }

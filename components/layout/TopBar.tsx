@@ -177,14 +177,7 @@ const TopBar = () => {
         </Container>
         {!isSmallScreen && !isMaintenanceMode && <DesktopMainNav />}
       </AppBar>
-      <Box
-        sx={[
-          {
-            marginTop: 0,
-          },
-          ...(Array.isArray(topBarSpacerStyle) ? topBarSpacerStyle : [topBarSpacerStyle]),
-        ]}
-      />
+      <Box sx={{ marginTop: 0, ...topBarSpacerStyle }} />
     </>
   );
 };

@@ -1,7 +1,12 @@
 'use client';
 
-import { USER_BANNER_DISMISSED, USER_BANNER_INTERESTED } from '@/lib/constants/events';
+import {
+  USER_BANNER_DISMISSED,
+  USER_BANNER_INTERESTED,
+  USER_BANNER_VIEWED,
+} from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
+import { useTopBannerHeight } from '@/lib/hooks/useTopBannerHeight';
 import logEvent from '@/lib/utils/logEvent';
 import { contentRailGutter } from '@/styles/common';
 import CloseIcon from '@mui/icons-material/Close';
@@ -77,8 +82,6 @@ const USER_RESEARCH_BANNER_INTERACTED = 'user_research_banner_interacted';
 const USER_RESEARCH_FORM_LINK =
   'https://docs.google.com/forms/d/e/1FAIpQLSfBwYdXRKDX_IKtcShgYvNu835BqtI5PbIC-GrmBBVIZDpQgw/viewform?usp=sf_link';
 
-const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
-
 // The study runs in English only, so the banner is gated on the `en` locale and its copy is not
 // translated. Move to i18n/messages if the study opens up to other languages.
 const COPY = {
@@ -99,62 +102,23 @@ export default function UserResearchBanner() {
   // visitor who already interacted sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
-  useEffect(() => {
-    if (Cookies.get(USER_RESEARCH_BANNER_INTERACTED)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setInteracted(true);
-    }
-  }, []);
-
   const isBannerFeatureEnabled = FeatureFlag.isUserResearchBannerEnabled();
   const isEnglish = locale === 'en';
 
   const showBanner = isBannerFeatureEnabled && isEnglish;
 
-  // Publishes how much of the banner is still visible below the fixed TopBar. The floating back /
-  // "Leave site" buttons offset by it, so they ride down with the banner as it scrolls away and
-  // settle just under the TopBar once it's gone — see breadcrumbPositionStyle in styles/common.ts.
+  const viewLogged = useRef(false);
   useEffect(() => {
-    const section = sectionRef.current;
-    const root = document.documentElement;
-
-    const clear = () => root.style.removeProperty(TOP_BANNER_HEIGHT_VARIABLE);
-
-    if (!section || !open || interacted) {
-      clear();
-      return;
+    if (Cookies.get(USER_RESEARCH_BANNER_INTERACTED)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInteracted(true);
+    } else if (showBanner && !viewLogged.current) {
+      viewLogged.current = true;
+      logEvent(USER_BANNER_VIEWED);
     }
+  }, [showBanner]);
 
-    const sync = () => {
-      const topBarBottom =
-        document.querySelector('[qa-id="nav-bar"]')?.getBoundingClientRect().bottom ?? 0;
-      const visible = Math.max(
-        0,
-        Math.min(section.offsetHeight, section.getBoundingClientRect().bottom - topBarBottom),
-      );
-      root.style.setProperty(TOP_BANNER_HEIGHT_VARIABLE, `${visible}px`);
-    };
-
-    let frame = 0;
-    const scheduleSync = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(sync);
-    };
-
-    sync();
-    const observer = new ResizeObserver(sync);
-    observer.observe(section);
-    window.addEventListener('scroll', scheduleSync, { passive: true });
-    window.addEventListener('resize', scheduleSync);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener('scroll', scheduleSync);
-      window.removeEventListener('resize', scheduleSync);
-      clear();
-    };
-  }, [open, interacted, showBanner]);
+  useTopBannerHeight(sectionRef, showBanner && open && !interacted);
 
   const handleClickAccepted = () => {
     Cookies.set(USER_RESEARCH_BANNER_INTERACTED, 'true');

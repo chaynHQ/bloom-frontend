@@ -7,7 +7,7 @@ import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
 import { useCallback } from 'react';
 
-// The three resource types share one event-name shape: `<prefix>_STARTED_REQUEST`,
+// Every resource type shares one event-name shape: `<prefix>_STARTED_REQUEST`,
 // `<prefix>_COMPLETE_SUCCESS`, etc. Passing the prefix keeps this hook type-agnostic.
 export type ResourceEventPrefix =
   | 'RESOURCE_CONVERSATION'
@@ -16,6 +16,9 @@ export type ResourceEventPrefix =
   | 'RESOURCE_AUDIO'
   | 'RESOURCE_WRITTEN'
   | 'RESOURCE_ACTIVITY';
+
+// The `complete` callback returned below: resolves `{ ok }` so callers can surface a retry.
+export type CompleteResource = (method?: 'media_complete' | 'manual') => Promise<{ ok: boolean }>;
 
 interface UseResourceProgressArgs {
   storyUuid: string;
@@ -50,20 +53,24 @@ export function useResourceProgress({
     }
   }, [isLoggedIn, resourceProgress, eventPrefix, eventData, startResource, storyUuid, rollbar]);
 
-  const complete = useCallback(async () => {
-    if (!isLoggedIn || resourceProgress === PROGRESS_STATUS.COMPLETED) return { ok: true };
+  const complete = useCallback(
+    async (method: 'media_complete' | 'manual' = 'media_complete') => {
+      if (!isLoggedIn || resourceProgress === PROGRESS_STATUS.COMPLETED) return { ok: true };
 
-    logEvent(`${eventPrefix}_COMPLETE_REQUEST`, eventData);
-    const response = await completeResource({ storyblokUuid: storyUuid });
+      const completeEventData = { ...eventData, resource_completion_method: method };
+      logEvent(`${eventPrefix}_COMPLETE_REQUEST`, completeEventData);
+      const response = await completeResource({ storyblokUuid: storyUuid });
 
-    if (response.data) {
-      logEvent(`${eventPrefix}_COMPLETE_SUCCESS`, eventData);
-      return { ok: true };
-    }
-    logEvent(`${eventPrefix}_COMPLETE_ERROR`, eventData);
-    rollbar.error('Resource complete error', response.error);
-    return { ok: false };
-  }, [isLoggedIn, resourceProgress, eventPrefix, eventData, completeResource, storyUuid, rollbar]);
+      if (response.data) {
+        logEvent(`${eventPrefix}_COMPLETE_SUCCESS`, completeEventData);
+        return { ok: true };
+      }
+      logEvent(`${eventPrefix}_COMPLETE_ERROR`, completeEventData);
+      rollbar.error('Resource complete error', response.error);
+      return { ok: false };
+    },
+    [isLoggedIn, resourceProgress, eventPrefix, eventData, completeResource, storyUuid, rollbar],
+  );
 
   return { start, complete };
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import { type CardProgress } from '@/components/cards/CardStatusBadge';
 import SessionContentCard from '@/components/cards/SessionContentCard';
 import { BackLink } from '@/components/common/BackLink';
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
@@ -16,16 +15,17 @@ import { SessionMediaCard } from '@/components/session/SessionMediaCard';
 import { sessionContainerStyle, sessionMainStyle } from '@/components/session/sessionPageLayout';
 import { useGetUserCoursesQuery } from '@/lib/api';
 import {
+  SESSION_CARD_CLICKED,
   SESSION_PLAYLIST_OPENED,
-  SESSION_PLAYLIST_SESSION_CLICKED,
   SESSION_VIEWED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
   getCourseSessions,
   isFirstCourseSession,
+  sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
@@ -37,7 +37,7 @@ import { Box, CircularProgress, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const cardsStyle = {
@@ -74,6 +74,7 @@ export interface StoryblokSessionPageProps {
   activity: StoryblokRichtext;
   bonus: StoryblokRichtext | BonusContent[];
   languages: string[];
+  themes?: string[];
   component: 'Session' | 'session_iba';
   included_for_partners: string[];
 }
@@ -98,11 +99,11 @@ const StoryblokSessionPage = ({
     video_outro,
     activity,
     bonus,
+    themes,
   } = story.content as StoryblokSessionPageProps;
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
-  const libraryHref = useLibraryReturnHref();
   const locale = useLocale();
 
   // Auth drives this page directly rather than through `useContentAccessStatus`: a public course's
@@ -149,13 +150,10 @@ const StoryblokSessionPage = ({
   const isSignedOutPreview = isSignedOut && isPublicCourse && isFirstSession;
   const isSignedOutGate = isSignedOut && isPublicCourse && !isFirstSession;
 
-  const progressByUuid = useMemo(() => {
-    const userCourse = courses?.find((c) => c.storyblokUuid === course.uuid);
-    return (userCourse?.sessions ?? []).reduce<Record<string, CardProgress>>((map, session) => {
-      map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
-      return map;
-    }, {});
-  }, [courses, course.uuid]);
+  const progressByUuid = useMemo(
+    () => sessionProgressByUuid(courses ?? [], course.uuid),
+    [courses, course.uuid],
+  );
 
   const nextSession = useMemo(() => {
     const currentIndex = sessions.findIndex((session) => session.uuid === storyUuid);
@@ -178,22 +176,19 @@ const StoryblokSessionPage = ({
       session_name: name,
       session_storyblok_uuid: storyUuid,
       session_progress: sessionProgress,
+      session_themes: Array.isArray(themes) && themes.length ? themes.join(',') : 'none',
       course_name: course.name,
       course_storyblok_uuid: course.uuid,
     }),
-    [name, storyUuid, sessionProgress, course.name, course.uuid],
+    [name, storyUuid, sessionProgress, themes, course.name, course.uuid],
   );
 
-  const hasLoggedView = useRef(false);
-  useEffect(() => {
-    if (hasLoggedView.current || userAuthStatus === 'resolving') return;
-    hasLoggedView.current = true;
-    logEvent(SESSION_VIEWED, eventData);
-  }, [eventData, userAuthStatus]);
+  useLogEventOnce(SESSION_VIEWED, eventData, userAuthStatus !== 'resolving');
 
   const handlePlaylistSessionSelect = (session: CourseSession) => {
-    logEvent(SESSION_PLAYLIST_SESSION_CLICKED, {
+    logEvent(SESSION_CARD_CLICKED, {
       ...eventData,
+      card_surface: 'playlist',
       selected_session_name: session.name,
       selected_session_storyblok_uuid: session.uuid,
       selected_session_position: session.position,
@@ -218,7 +213,9 @@ const StoryblokSessionPage = ({
             sessionProgress={sessionProgress}
             trackProgress={false}
             eventData={eventData}
-            signUpCard={<SignUpCard source="session" embedded />}
+            signUpCard={
+              <SignUpCard source="session" embedded contentName={name} contentUuid={storyUuid} />
+            }
           />
         </Box>
       </Container>
@@ -260,7 +257,9 @@ const StoryblokSessionPage = ({
               sessionProgress={sessionProgress}
               trackProgress={false}
               eventData={eventData}
-              signUpCard={<SignUpCard source="session" embedded />}
+              signUpCard={
+                <SignUpCard source="session" embedded contentName={name} contentUuid={storyUuid} />
+              }
             />
           ) : (
             <>
@@ -309,7 +308,7 @@ const StoryblokSessionPage = ({
                     eventData={eventData}
                     initialExpanded
                   >
-                    <SessionFeedbackForm sessionId={sessionId} />
+                    <SessionFeedbackForm sessionId={sessionId} eventData={eventData} />
                   </SessionContentCard>
                 )}
                 {!isSignedOutPreview && (
@@ -321,7 +320,9 @@ const StoryblokSessionPage = ({
                   />
                 )}
               </Box>
-              {isSignedOutPreview && <SignUpCard source="session" />}
+              {isSignedOutPreview && (
+                <SignUpCard source="session" contentName={name} contentUuid={storyUuid} />
+              )}
             </>
           )}
         </Box>
@@ -336,8 +337,8 @@ const StoryblokSessionPage = ({
             progressByUuid={progressByUuid}
             accountNeeded={isSignedOut}
             previewSessionUuid={previewSessionUuid}
-            backHref={libraryHref}
-            backLabel={t('backToLibrary')}
+            backHref={courseHref}
+            backLabel={t('backToCourse')}
             onSessionSelect={handlePlaylistSessionSelect}
             onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
           />

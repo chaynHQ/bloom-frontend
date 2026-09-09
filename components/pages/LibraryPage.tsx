@@ -2,7 +2,7 @@
 
 import { EmailRemindersSettingsBanner } from '@/components/banner/EmailRemindersSettingsBanner';
 import { ScrollReveal } from '@/components/common/ScrollReveal';
-import ScrollToSignUpButton from '@/components/common/ScrollToSignUpButton';
+import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
@@ -14,6 +14,7 @@ import {
   LIBRARY_SUPPORT_CARD_CLICKED,
   LIBRARY_VIEWED,
 } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { rememberLibraryPath } from '@/lib/hooks/useLibraryReturnHref';
@@ -270,10 +271,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     [replaceUrl],
   );
 
-  const setThemes = (next: ThemeKey[]) => writeFilters({ ...currentFilters, themes: next });
-  const setFormats = (next: Format[]) => writeFilters({ ...currentFilters, formats: next });
-  const setLengths = (next: LengthBucket[]) => writeFilters({ ...currentFilters, lengths: next });
-
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const userEmailRemindersFrequency = useTypedSelector(
     (state) => state.user.emailRemindersFrequency,
@@ -296,13 +293,60 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
   const sessionFiltersDisabled = kind === 'course';
 
-  const selectKind = (next: KindFilter) =>
-    writeFilters(
-      // Courses have no format or length, so switching to them drops those filters.
+  // One analytics event per filter interaction — which group, which value, added or removed — so
+  // "what do people filter for" is a single group-by on library_filter_value. results_count comes
+  // from the incoming filters, since the URL (and the state derived from it) hasn't updated yet.
+  const logFilterChange = (
+    group: 'theme' | 'format' | 'length' | 'kind',
+    value: string,
+    action: 'add' | 'remove',
+    next: LibraryFilters,
+  ) =>
+    logEvent(LIBRARY_FILTERED, {
+      library_filter_group: group,
+      library_filter_value: value,
+      library_filter_action: action,
+      library_results_count: filterLibraryItems(items, next).length,
+      ...eventUserData,
+    });
+
+  const setListFilter = (
+    group: 'theme' | 'format' | 'length',
+    prev: readonly string[],
+    next: readonly string[],
+    nextFilters: LibraryFilters,
+  ) => {
+    next
+      .filter((value) => !prev.includes(value))
+      .forEach((value) => logFilterChange(group, value, 'add', nextFilters));
+    prev
+      .filter((value) => !next.includes(value))
+      .forEach((value) => logFilterChange(group, value, 'remove', nextFilters));
+    writeFilters(nextFilters);
+  };
+
+  const setThemes = (next: ThemeKey[]) =>
+    setListFilter('theme', themes, next, { ...currentFilters, themes: next });
+  const setFormats = (next: Format[]) =>
+    setListFilter('format', formats, next, { ...currentFilters, formats: next });
+  const setLengths = (next: LengthBucket[]) =>
+    setListFilter('length', lengths, next, { ...currentFilters, lengths: next });
+
+  const selectKind = (next: KindFilter) => {
+    // Courses have no format or length, so switching to them drops those filters.
+    const nextFilters =
       next === 'course'
         ? { ...currentFilters, kind: next, formats: [], lengths: [] }
-        : { ...currentFilters, kind: next },
+        : { ...currentFilters, kind: next };
+    // On a remove, report the kind being cleared rather than the literal "all".
+    logFilterChange(
+      'kind',
+      next === 'all' ? kind : next,
+      next === 'all' ? 'remove' : 'add',
+      nextFilters,
     );
+    writeFilters(nextFilters);
+  };
 
   const formatOptions = useMemo(
     () => FORMAT_KEYS.filter((format) => items.some((item) => item.format === format)),
@@ -313,7 +357,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
   const resultsCount = results.length;
 
-  // The whole filter state as one string: what filter events report, and the pagination reset key.
+  // The whole filter state as one string — the key that resets pagination when any filter changes.
   const filterState = `${kind}|${themes.join(',')}|${formats.join(',')}|${lengths.join(',')}`;
   const filterKey = `${keyword}|${filterState}`;
 
@@ -346,18 +390,20 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const visibleResults = results.slice(0, visibleCount);
   const hasMore = results.length > visibleCount;
 
-  const viewLogged = useRef(false);
-  useEffect(() => {
-    if (!userSettled || viewLogged.current) return;
-    viewLogged.current = true;
-    logEvent(LIBRARY_VIEWED, {
+  useLogEventOnce(
+    LIBRARY_VIEWED,
+    {
       library_kind: kind,
       library_themes: reportList(themes),
+      library_formats: reportList(formats),
+      library_lengths: reportList(lengths),
+      library_search_active: Boolean(urlKeyword),
+      library_logged_in: isLoggedIn,
       library_results_count: resultsCount,
       ...eventUserData,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userSettled, eventUserData]);
+    },
+    userSettled,
+  );
 
   // The search term is never sent to analytics — only its length and the result count.
   const loggedSearch = useRef('');
@@ -379,20 +425,6 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     return () => clearTimeout(timer);
   }, [keyword, resultsCount, eventUserData]);
 
-  const loggedFilterState = useRef(filterState);
-  useEffect(() => {
-    if (loggedFilterState.current === filterState) return;
-    loggedFilterState.current = filterState;
-    logEvent(LIBRARY_FILTERED, {
-      library_kind: kind,
-      library_themes: reportList(themes),
-      library_formats: reportList(formats),
-      library_lengths: reportList(lengths),
-      library_results_count: resultsCount,
-      ...eventUserData,
-    });
-  }, [filterState, kind, themes, formats, lengths, resultsCount, eventUserData]);
-
   const logItemClick = useCallback(
     (item: LibraryItem, index: number) => {
       logEvent(LIBRARY_ITEM_CLICKED, {
@@ -400,6 +432,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         library_item_storyblok_uuid: item.id,
         library_item_kind: item.kind,
         library_item_format: item.format ?? null,
+        library_item_themes: reportList(item.themes),
         library_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
         library_item_position: index + 1, // 1-based rank in the filtered results
         library_results_count: resultsCount,
@@ -449,7 +482,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         imageSrc={illustrationCourses}
         imageAlt="alt.personSitting"
         introduction={t('introduction')}
-        cta={!isLoggedIn ? <ScrollToSignUpButton /> : undefined}
+        cta={!isLoggedIn ? <SignUpButton source="library" /> : undefined}
       />
 
       <ThemeCards themes={themes} setThemes={setThemes} />

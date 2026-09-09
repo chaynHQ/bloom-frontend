@@ -9,6 +9,8 @@ import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm'
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { useRouter } from '@/i18n/routing';
 import { useGetSubscriptionsUserQuery } from '@/lib/api';
+import { NOTES_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
@@ -147,6 +149,7 @@ export default function NotesPage({ story }: Props) {
     [userActiveSubscriptions],
   );
   const userId = useTypedSelector((state) => state.user.id);
+  useLogEventOnce(NOTES_VIEWED, { notes_logged_in: Boolean(userId) });
 
   useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,

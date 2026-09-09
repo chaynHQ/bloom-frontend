@@ -1,7 +1,7 @@
 'use client';
 
 import { EXERCISE_CATEGORIES } from '@/lib/constants/enums';
-import { RESOURCE_GROUNDING_VIEWED } from '@/lib/constants/events';
+import { RESOURCE_GROUNDING_CLOSED, RESOURCE_GROUNDING_VIEWED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import CloseRounded from '@mui/icons-material/CloseRounded';
@@ -86,20 +86,28 @@ const mobileCloseBarStyle = {
 interface GroundingExerciseDialogProps {
   story: ISbStoryData;
   onClose: () => void;
+  openMethod: 'card' | 'deep_link';
 }
 
-export const GroundingExerciseDialog = ({ story, onClose }: GroundingExerciseDialogProps) => {
+export const GroundingExerciseDialog = ({
+  story,
+  onClose,
+  openMethod,
+}: GroundingExerciseDialogProps) => {
   const t = useTranslations('Resources');
   const tMoment = useTranslations('Resources.moment');
   const { name, body } = story.content as { name: string; body: StoryblokRichtext };
 
   useEffect(() => {
-    logEvent(RESOURCE_GROUNDING_VIEWED, {
+    const eventData = {
       resource_category: EXERCISE_CATEGORIES.GROUNDING,
       resource_name: name,
       resource_storyblok_uuid: story.uuid,
-    });
-    // Fire once per opened exercise, not on every re-render.
+      grounding_open_method: openMethod,
+    };
+    logEvent(RESOURCE_GROUNDING_VIEWED, eventData);
+    return () => logEvent(RESOURCE_GROUNDING_CLOSED, eventData);
+    // Once per opened exercise, not on every re-render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [story.uuid]);
 

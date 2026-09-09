@@ -60,8 +60,10 @@ export const StoryblokTextResourcePage = ({
     contributors,
     relatedGrounding,
     relatedSessionHref,
+    relatedSessionName,
     userContentPartners,
     start,
+    complete,
   } = useStoryblokResourcePage<TextResourceContent>({
     initialStory,
     category,
@@ -117,6 +119,7 @@ export const StoryblokTextResourcePage = ({
         eventPrefix={eventPrefix}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
+        onComplete={complete}
         isSignedIn={isSignedIn}
         contentAccessStatus={contentAccessStatus}
         eventData={eventData}
@@ -129,6 +132,7 @@ export const StoryblokTextResourcePage = ({
         relatedContent={related_content}
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
+        relatedSessionName={relatedSessionName}
         media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>

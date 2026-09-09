@@ -6,11 +6,13 @@ import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
 import {
   generatePartnerPromoGetStartedEvent,
   generatePartnerPromoGoToCoursesEvent,
+  WELCOME_VIEWED,
 } from '@/lib/constants/events';
 import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
-import logEvent from '@/lib/utils/logEvent';
+import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
@@ -79,10 +81,26 @@ const StoryblokWelcomePage = ({ story: initialStory }: { story: ISbStoryData }) 
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const userToken = useTypedSelector((state) => state.user.token);
+  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
+  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
+  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
   const isLoggedIn = !authStateLoading && !!userId;
+
+  // Mirrors the redesigned WelcomePage so the two stay comparable during the migration.
+  const userSettled = !authStateLoading && (!userToken || Boolean(userId));
+  useLogEventOnce(
+    WELCOME_VIEWED,
+    {
+      welcome_partner: storySlug,
+      welcome_logged_in: isLoggedIn,
+      ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
+    },
+    userSettled,
+  );
 
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');

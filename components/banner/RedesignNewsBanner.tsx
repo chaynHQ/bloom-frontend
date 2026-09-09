@@ -3,8 +3,10 @@
 import {
   REDESIGN_BANNER_DISMISSED,
   REDESIGN_BANNER_FEEDBACK_CLICKED,
+  REDESIGN_BANNER_VIEWED,
 } from '@/lib/constants/events';
 import { FeatureFlag } from '@/lib/featureFlag';
+import { useTopBannerHeight } from '@/lib/hooks/useTopBannerHeight';
 import logEvent from '@/lib/utils/logEvent';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
@@ -71,8 +73,6 @@ const dismissStyle = {
 
 const REDESIGN_NEWS_BANNER_INTERACTED = 'redesign_news_banner_interacted';
 
-const TOP_BANNER_HEIGHT_VARIABLE = '--top-banner-height';
-
 const FEEDBACK_FORM_LINK =
   'https://form.typeform.com/to/OY9Wdk4h?typeform-source=chayn.typeform.com';
 
@@ -86,59 +86,20 @@ export default function RedesignNewsBanner() {
   // visitor who already dismissed it sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
+  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled();
+
+  const viewLogged = useRef(false);
   useEffect(() => {
     if (Cookies.get(REDESIGN_NEWS_BANNER_INTERACTED)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInteracted(true);
+    } else if (showBanner && !viewLogged.current) {
+      viewLogged.current = true;
+      logEvent(REDESIGN_BANNER_VIEWED);
     }
-  }, []);
+  }, [showBanner]);
 
-  const showBanner = FeatureFlag.isRedesignNewsBannerEnabled();
-
-  // Publishes how much of the banner is still visible below the fixed TopBar. The floating back /
-  // "Leave site" buttons offset by it, so they ride down with the banner as it scrolls away and
-  // settle just under the TopBar once it's gone — see breadcrumbPositionStyle in styles/common.ts.
-  useEffect(() => {
-    const section = sectionRef.current;
-    const root = document.documentElement;
-
-    const clear = () => root.style.removeProperty(TOP_BANNER_HEIGHT_VARIABLE);
-
-    if (!section || !open || interacted) {
-      clear();
-      return;
-    }
-
-    const sync = () => {
-      const topBarBottom =
-        document.querySelector('[qa-id="nav-bar"]')?.getBoundingClientRect().bottom ?? 0;
-      const visible = Math.max(
-        0,
-        Math.min(section.offsetHeight, section.getBoundingClientRect().bottom - topBarBottom),
-      );
-      root.style.setProperty(TOP_BANNER_HEIGHT_VARIABLE, `${visible}px`);
-    };
-
-    let frame = 0;
-    const scheduleSync = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(sync);
-    };
-
-    sync();
-    const observer = new ResizeObserver(sync);
-    observer.observe(section);
-    window.addEventListener('scroll', scheduleSync, { passive: true });
-    window.addEventListener('resize', scheduleSync);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener('scroll', scheduleSync);
-      window.removeEventListener('resize', scheduleSync);
-      clear();
-    };
-  }, [open, interacted, showBanner]);
+  useTopBannerHeight(sectionRef, showBanner && open && !interacted);
 
   const handleClickFeedback = () => {
     logEvent(REDESIGN_BANNER_FEEDBACK_CLICKED);

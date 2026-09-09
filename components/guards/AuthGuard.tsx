@@ -17,7 +17,8 @@ const authenticatedPathHeads = ['admin', 'partner-admin', 'therapy', 'account'];
 // New pages default to requiring authentication; public pages must be added to the array above.
 // Course, session and resource pages guard themselves: they render a preview (title, description,
 // sign-up card) to logged-out visitors rather than redirecting, so the content stays crawlable and
-// shareable. See StoryblokCoursePage / StoryblokSessionPage and ResourcePageLayout's `requiresLogin`.
+// shareable. See StoryblokCoursePage / StoryblokSessionPage and useStoryblokResourcePage's
+// `loginRequiredByDefault` / ResourcePageLayout's `contentAccessStatus`.
 export function AuthGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const locale = useLocale();

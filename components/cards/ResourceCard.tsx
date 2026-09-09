@@ -50,6 +50,7 @@ interface ResourceCardProps {
   duration?: string;
   image?: { filename: string; alt: string };
   category: RELATED_CONTENT_CATEGORIES;
+  onSelect?: () => void;
 }
 
 const categoryStyle = {
@@ -65,14 +66,14 @@ const categoryStyle = {
 } as const;
 
 export const ResourceCard = (props: ResourceCardProps) => {
-  const { title, href, duration, category, image } = props;
+  const { title, href, duration, category, image, onSelect } = props;
 
   const t = useTranslations('Resources');
   const tS = useTranslations('Shared');
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink}>
+      <CardActionArea href={href} sx={{ height: '100%' }} component={i18nLink} onClick={onSelect}>
         <CardContent sx={cardContentStyle}>
           <Box
             sx={{

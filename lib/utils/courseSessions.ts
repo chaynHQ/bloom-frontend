@@ -1,6 +1,9 @@
+import { type Course } from '@/lib/store/coursesSlice';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import { parseMinutes } from '@/lib/utils/libraryData';
 import { ISbStoryData } from '@storyblok/react/rsc';
+
+export type SessionProgress = 'started' | 'completed';
 
 // A course's sessions as both the course overview and the session playlist present them:
 // flattened across the course's weeks and numbered continuously.
@@ -55,4 +58,16 @@ export function getCourseTotalMinutes(sessions: CourseSession[]): number | undef
 // Splits a minute total for the hour/minute translation forms (e.g. "~2hrs 30mins").
 export function splitDuration(totalMinutes: number): { hours: number; minutes: number } {
   return { hours: Math.floor(totalMinutes / 60), minutes: totalMinutes % 60 };
+}
+
+// Each of a course's session uuids mapped to its progress, for the session cards' status badge.
+export function sessionProgressByUuid(
+  courses: Course[],
+  courseUuid: string,
+): Record<string, SessionProgress> {
+  const course = courses.find((c) => c.storyblokUuid === courseUuid);
+  return (course?.sessions ?? []).reduce<Record<string, SessionProgress>>((map, session) => {
+    map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
+    return map;
+  }, {});
 }

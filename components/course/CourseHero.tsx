@@ -71,6 +71,7 @@ const metaStyle = {
 
 interface CourseHeroProps {
   name: string;
+  courseUuid: string;
   description: StoryblokRichtext;
   imageSrc?: string;
   imageAlt?: string;
@@ -87,6 +88,7 @@ interface CourseHeroProps {
 
 export function CourseHero({
   name,
+  courseUuid,
   description,
   imageSrc,
   imageAlt,
@@ -158,6 +160,8 @@ export function CourseHero({
           ctaLabel={ctaLabel}
           onCtaClick={onCtaClick}
           offsetForIllustration={Boolean(imageSrc)}
+          courseName={name}
+          courseUuid={courseUuid}
         />
       </Box>
     </Container>

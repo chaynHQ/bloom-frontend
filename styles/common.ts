@@ -178,9 +178,9 @@ export const navRetractTransform = {
   sm: 'translateY(-64px)',
 } as const;
 
-// Offset by `--top-banner-height`, published by UserResearchBanner when a banner sits between the
-// TopBar and the page body. When the top nav row auto-hides on scroll (`data-nav-hidden` on
-// <html>, set by TopBar), these buttons slide up with it.
+// Offset by `--top-banner-height`, published by the top banner (RedesignNewsBanner /
+// UserResearchBanner) when one sits between the TopBar and the page body. When the top nav row
+// auto-hides on scroll (`data-nav-hidden` on <html>, set by TopBar), these buttons slide up with it.
 export const breadcrumbPositionStyle = {
   position: 'fixed',
   px: 2,
