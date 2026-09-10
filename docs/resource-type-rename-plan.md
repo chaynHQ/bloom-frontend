@@ -20,7 +20,7 @@
 
 **Redesign cutover (Appendix): DONE except the optional Storyblok component delete.** `redesign-cutover.mjs --write --yes` ran 2026-09-09 (home-redesign → home, welcome-redesign/{badoo,bumble} → welcome/, old `Welcome` stories deleted, `welcome-redesign/` folder deleted); `welcome/fruitz` deleted separately. Verified on the published CDN (home / welcome/badoo / welcome/bumble → 200). Frontend cleanup in **PR #1960** (`redesign-cutover-cleanup`). Only leftover: delete the old `Welcome` Storyblok **component** (id 2271418) once the soft-deleted Fruitz story is purged from trash — cosmetic.
 
-**Step 7:** **7a done** (this branch — frontend merged components + dual-path routes + redirects; see the 7a section for what shipped and its deviations). **7b in progress** in `bloom-backend`. **7c / 7d not started** — 7c needs `scripts/storyblok/05a-collision-scan` + `05-move-content` written (neither exists yet); re-run the collision scan at 7c since the content team may have added colliding leaf slugs since 2026-09-09.
+**Step 7 (2026-09-10):** **7a done** (branch `resource-types-step-7a` — merged `resource_video` / `resource_audio` pages + routes, `/shorts` `/videos` `/conversations` → 301, media-event cleanup; **no fallback scaffolding** — see the 7a section). **7b in progress** in `bloom-backend`. **7c / 7d not started** — 7c needs `scripts/storyblok/05a-collision-scan` + `05-move-content` written (neither exists yet); re-run the collision scan at 7c, and trigger a prod rebuild after it so `/video` + `/audio` static params pick up the moved stories.
 
 **Step 8:** not started. Step 8's Storyblok script is now `07-cleanup` (`06-` is taken).
 
@@ -75,11 +75,10 @@ The rule: **a consumer is deployed before the data it reads changes; data it sto
 3. **Storyblok: copy activity/grounding content + populate `related_grounding`** (steps 2–3) — new stories in new folders nothing queries yet; `related_grounding` is a field nothing reads yet; `related_exercises` left intact so the live frontend is unchanged. _Additive._ **Step 2 done as drafts** (24 stories, unpublished — publishing waits on the backend deploy in (1) reaching `main`); **step 3 done** (5 stories' `related_grounding` populated + republished — safe pre-backend-deploy since it only touches old, already-recognised components).
 4. **Frontend deploy** (step 6, = steps 4+5) — switches `ResourceGroundingSection` to `related_grounding` (populated in 3); ships `/grounding`, `/activity/[slug]`, `/written/[slug]` routes and the `/activities` → library redirect. Old `/shorts` `/videos` `/conversations` routes and the flat `/grounding` `/activities` Storyblok pages untouched (the latter now shadowed). **⚠️ Precondition: (1) on `main` + step 2 published + every `resource_activity` story confirmed to have a `resource` row.** Without it, `/activities` (a live page today) 301s to an empty `/library?format=activity` and `/activity/[slug]` 404s. **Step 4 + 5 code done** on `epic-redesign` (PR #1938, open) — "merge steps 4–5" = ship the whole redesign PR, not a resource-only diff.
 5. **Post-verify** (end of step 6) — only now: backfill activities into `related_content` (11 stories — see step 6), port the grounding hero off the flat page, delete the flat `/grounding` `/activities` Storyblok pages, rename `grounding-exercises/` → `grounding/`, regenerate the sitemap.
-6. **Frontend deploy** (step 7a) — `/video/[slug]` + `/audio/[slug]` accept both the new folder path and the old one as a fallback; old routes replaced by 301s. Every URL resolves whether or not its story has moved yet.
+6. **Frontend deploy** (step 7a) — merged `resource_video` / `resource_audio` pages, `/video/[slug]` + `/audio/[slug]` routes (new-folder only, no fallback), old routes replaced by 301s. **Gap accepted:** the new routes 404 (and the 301s land there) until step 7c moves content and a prod rebuild regenerates their static params.
 7. **Backend migration** (step 7b) — rewrite `resource.category` values + tighten to a PG enum. Reporting-only; no user-facing effect.
-8. **Storyblok: move content** (step 7c) — each story's new URL already resolves and each old URL already 301s (both from 7a). No gap.
-9. **Frontend deploy** (step 7d) — drop the old-path fallback, restore static generation, regenerate the sitemap.
-10. **Cleanup** (step 8) — after the GA transition window: delete old blocks, folders, enum members, i18n keys.
+8. **Storyblok: move content** (step 7c) — republishes each story onto `resource_video` / `resource_audio` under the new folder; the webhook then upserts its `resource` row. **Trigger a prod rebuild afterwards** so `/video` + `/audio` `generateStaticParams` pick the stories up.
+9. **Cleanup** (step 8) — after the GA transition window: regenerate the sitemap, delete old blocks, folders, enum members, i18n keys, the pre-merge component maps, `STORYBLOK_TAGS`, `AUTHENTICATED_PATH_HEADS`. (The old "step 7d — drop transition scaffolding" is gone: 7a shipped none.)
 
 ---
 
@@ -288,14 +287,9 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 - After each batch, re-publish is picked up by the step-1 webhook → `resource` row's `slug` + `category` updated on the spot. Spot-check a few rows.
 - Editorial freeze announced; publish in throttled batches; watch logs + Rollbar. Each moved story: new URL already resolves, old URL already 301s → new URL → served via the 7a fallback until the ISR cache refreshes.
 
-### 7d — Frontend: drop the transition scaffolding (deploy after 7c is verified)
+### 7d — ~~Frontend: drop the transition scaffolding~~ (SUPERSEDED)
 
-- Remove the old-folder fallback fetch and the old `resolve_relations` keys; `dynamicParams = false` + real `generateStaticParams`.
-- `ResourceCarousel` / `StoryblokResourceCarousel` / `StoryblokRelatedContent` — drop the old-component cases. i18n — drop old `relatedContent.*` keys.
-- `getLibraryStories.ts` — drop the `shorts/` `videos/` `conversations/` queries; `FORMAT_BY_COMPONENT` — remove old keys.
-- Confirm from the 7c manifest that every `oldFullSlug`→`newFullSlug` differs only in the folder segment (it should — collisions were pre-resolved); the 7a folder redirects then cover everything.
-- Regenerate `public/sitemap.xml` (new URLs only).
-- Deploy → staging → verify → `main`.
+**Not needed.** 7a shipped no fallback fetch, no dual `resolve_relations`, `dynamicParams` already `false`. The one required post-7c action is a **prod rebuild** so `/video` + `/audio` `generateStaticParams` pick up the moved stories. Everything else this step listed (drop old-component carousel/library maps, old i18n keys, regenerate the sitemap) moves to step 8, gated on the GA transition window. Confirm from the 7c manifest that every `oldFullSlug`→`newFullSlug` differs only in the folder segment so the 7a folder redirects cover everything.
 
 ## Step 8 — Remove old folders, entity types, and references
 
@@ -321,8 +315,8 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 - **`full_slug` collisions on the video merge** — if a leaf slug exists in both `shorts/` and `videos/`, the move `PUT` is rejected. Pre-flight scan + rename-in-place before 7a (step 7 pre-flight).
 - **`resource-user` / feedback are not create-on-demand** — they 404 if no `resource` row exists for the `storyblokUuid`. Every new `resource_activity` / `resource_written` story must be confirmed to have produced a row (webhook) before it's linked anywhere users can complete it.
 - **`ResourceCarousel` / `StoryblokRelatedContent` fail silently** — an untaught `component` renders no card (empty carousel → `<div/>`). 7a must teach the new components while keeping the old.
-- **`dynamicParams = false` + ISR on resource pages** — a moved story's old path hard-404s once its cache refreshes. Step 7a's dual-path fetch + 301s (deployed before any move) close the gap; `dynamicParams` only goes back to `false` in 7d.
-- **no sitemap generator in the repo** — `public/sitemap.xml` is hand/externally maintained; regenerate it from the 7c manifest (or find the real process) in step 7d.
+- **`dynamicParams = false` + ISR on `/video` + `/audio`** — until 7c republishes stories into the new folders **and a prod rebuild runs**, those routes 404 and the `/shorts` `/videos` `/conversations` 301s land on the 404. This is the accepted ~5-minute gap (7a shipped no fallback). Old `/shorts/:slug` etc. still 404 the same way if 7c's rebuild is skipped.
+- **no sitemap generator in the repo** — `public/sitemap.xml` is hand/externally maintained; regenerate it from the 7c manifest (or find the real process) in step 8.
 - **Storyblok script safety** — every script is `--dry-run`-first, throttled ≤3 req/s, and writes a manifest; a bad `PUT` to a component `schema` can corrupt every story of that type, so diff the schema payload before the live run.
 - **`ar`/`tr` key parity** — `checkTranslation.js` fails on drift even where values stay English.
 - **partner welcome pages** embed `resource_carousel` with hand-picked refs — re-verify resolution after every folder move (uuid refs should survive).
@@ -343,15 +337,15 @@ ALTER TABLE "resource" ALTER COLUMN "category" TYPE "public"."resource_category_
 
 ## Rollback
 
-| Layer                     | Rollback                                                                                                                                                                                         |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| bloom-backend             | Revert PR — webhook still understands old components (kept until step 8). Migration `down()` lossy but safe.                                                                                     |
-| Storyblok steps 2–3       | New stories are additive — unpublish/delete. Flat pages untouched until step 6's post-verify.                                                                                                    |
-| bloom-frontend steps 4–6  | Revert PR — new folders hold no old content, no 404 risk for existing URLs.                                                                                                                      |
-| Storyblok step 7c         | `05-move-content.ts --reverse` off the manifest (restore `parent_id` + `component`); uuids preserved → backend re-syncs on publish. 7a is still deployed, so old URLs keep resolving throughout. |
-| bloom-frontend step 7a/7d | Revert PR — 7a's fallback fetch means the old routes still resolve whether or not content moved; 7d revert restores the fallback.                                                                |
-| Redirects                 | Remove from `next.config.js`.                                                                                                                                                                    |
-| GA4                       | No rollback for split history; repoint filters.                                                                                                                                                  |
+| Layer                    | Rollback                                                                                                                                                                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| bloom-backend            | Revert PR — webhook still understands old components (kept until step 8). Migration `down()` lossy but safe.                                                                                                                               |
+| Storyblok steps 2–3      | New stories are additive — unpublish/delete. Flat pages untouched until step 6's post-verify.                                                                                                                                              |
+| bloom-frontend steps 4–6 | Revert PR — new folders hold no old content, no 404 risk for existing URLs.                                                                                                                                                                |
+| Storyblok step 7c        | `05-move-content.ts --reverse` off the manifest (restore `parent_id` + `component`); uuids preserved → backend re-syncs on publish. Then a prod rebuild so `/video` + `/audio` static params drop the reverted stories (or revert 7a too). |
+| bloom-frontend step 7a   | Revert PR — restores `/shorts` `/videos` `/conversations` routes + old page components; removes the 301s and the `/video` `/audio` routes. Safe as long as content has not moved yet; if 7c already ran, reverse it first (row above).     |
+| Redirects                | Remove from `next.config.js`.                                                                                                                                                                                                              |
+| GA4                      | No rollback for split history; repoint filters.                                                                                                                                                                                            |
 
 ---
 
