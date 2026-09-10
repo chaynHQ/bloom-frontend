@@ -58,8 +58,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.AUDIO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_AUDIO_VIEWED,
-    // Conversations gate today; step 7c moves them onto this block. Fail safe (gated) if a story
-    // arrives without an explicit `login_required`.
+    // Fail safe: gate a story that carries no explicit `login_required`.
     loginRequiredByDefault: true,
   });
 

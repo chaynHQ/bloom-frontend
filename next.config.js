@@ -104,10 +104,10 @@ module.exports = withBundleAnalyzer(
             destination: '/:locale/library?format=activity',
             permanent: true,
           },
-          // The shorts + somatic-video + conversation merge (step 7). The leaf slug is unchanged
-          // (the step 7 pre-flight scan confirmed no collisions), so a single folder-swap rule
-          // covers every story. If that scan turns up a collision before 7c, its per-slug rename
-          // redirects go above these.
+          // shorts + somatic videos merged into video/, conversations into audio/. Only the
+          // folder segment changes — the leaf slug is preserved on the move, so one rule per old
+          // folder covers every story. A per-slug rename (slug collision on the move) would need
+          // its own redirect above these.
           {
             source: '/shorts/:slug',
             destination: '/video/:slug',

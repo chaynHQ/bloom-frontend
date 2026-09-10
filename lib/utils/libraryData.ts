@@ -131,7 +131,7 @@ const FORMAT_BY_COMPONENT: Record<string, Format> = {
   resource_audio: 'audio',
   resource_written: 'written',
   resource_activity: 'activity',
-  // Old component names, kept until step 7c has moved every story onto video / audio.
+  // Pre-merge component names — a story keeps one until its folder move republishes it.
   resource_short_video: 'video',
   resource_single_video: 'video',
   resource_conversation: 'audio',

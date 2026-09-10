@@ -81,7 +81,7 @@ describe('storyToLibraryItem', () => {
       ['resource_audio', 'audio'],
       ['resource_written', 'written'],
       ['resource_activity', 'activity'],
-      // Old component names, still mapped until step 7c has moved every story.
+      // Pre-merge component names, still mapped.
       ['resource_conversation', 'audio'],
       ['resource_short_video', 'video'],
       ['resource_single_video', 'video'],

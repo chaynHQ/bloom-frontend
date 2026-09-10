@@ -64,8 +64,7 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.VIDEO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_VIDEO_VIEWED,
-    // Gate unless a story explicitly opts out — step 7c sets `login_required: false` on the public
-    // shorts as it moves them; a story that somehow arrives without the flag fails safe (gated).
+    // Fail safe: gate a story that carries no explicit `login_required`.
     loginRequiredByDefault: true,
   });
 

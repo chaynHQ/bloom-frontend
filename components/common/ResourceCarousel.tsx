@@ -22,8 +22,8 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-// The old `resource_short_video` / `resource_single_video` / `resource_conversation` names are
-// kept until step 7c has moved every story onto `resource_video` / `resource_audio`.
+// `resource_short_video` / `resource_single_video` / `resource_conversation` are the pre-merge
+// component names; a story keeps one until its folder move republishes it.
 const RESOURCE_CATEGORY_BY_COMPONENT: Record<string, RESOURCE_CATEGORIES> = {
   resource_video: RESOURCE_CATEGORIES.VIDEO,
   resource_short_video: RESOURCE_CATEGORIES.VIDEO,

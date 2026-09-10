@@ -94,10 +94,9 @@ export const getStoryblokStory = async (
   }
 };
 
-// `generateStaticParams` for a resource folder of one-level `[slug]` pages (audio, written,
-// activity, shorts, conversations). On preview/staging the CMS reads `draft`, where migrated
-// content may still be unpublished — pre-render those too; production reads `published` and
-// never sees them.
+// `generateStaticParams` for a resource folder of one-level `[slug]` pages (video, audio,
+// written, activity). On preview/staging the CMS reads `draft`, where migrated content may still
+// be unpublished — pre-render those too; production reads `published` and never sees them.
 export const resourceFolderStaticParams = async (
   folder: string,
 ): Promise<{ slug: string; locale: string }[]> => {
