@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "Aur explore karna chahte hain?",
       "subtitle": "Apni healing journey mein madad ke liye, neeche di gayi related sessions dekhen.",
-      "short_video": "Watch",
-      "single_video": "Watch",
       "video": "Watch",
-      "resource_conversation": "Listen",
       "audio": "Sunein",
       "written": "Padhein",
       "activity": "Activity",
@@ -55,7 +52,6 @@
       "session": "Session",
       "session_iba": "Session",
       "grounding": "Grounding",
-      "activities": "Activity",
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {

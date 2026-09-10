@@ -22,7 +22,7 @@ describe('Video Flow', () => {
     cy.wait(2000);
   });
 
-  it('gates a somatic video behind sign-up, then plays it after logging in', () => {
+  it('gates a private video behind sign-up, then plays it after logging in', () => {
     cy.visit('/');
 
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();

@@ -25,8 +25,8 @@ the backend event-log names live in `EVENT_LOG_NAME` in [`lib/constants/enums.ts
 ## Conventions
 
 - **Param names are `snake_case`**, prefixed by domain (`resource_`, `library_`, `session_`, `course_`,
-  `home_`, `grounding_`, `card_` for cross-surface card clicks, …). A handful of pre-redesign events keep legacy `camelCase` / bare keys
-  (`sessionId`, `feedbackTags`, `count`, `active`, `partner`, `message`) for dashboard continuity — noted below.
+  `home_`, `grounding_`, `card_` for cross-surface card clicks, …). A few older events keep legacy `camelCase` / bare keys
+  (`sessionId`, `feedbackTags`, `count`, `active`, `partner`, `message`) for dashboard continuity.
 - **Event-user data** — most non-trivial events spread `getEventUserData(...)`: `account_type`, `registered_at`,
   and (when the user has partner access) `partner`, `partner_live_chat`, `partner_therapy`,
   `partner_therapy_remaining`, `partner_therapy_redeemed`, `partner_activated_at`.
@@ -76,7 +76,7 @@ the backend event-log names live in `EVENT_LOG_NAME` in [`lib/constants/enums.ts
 | `VALIDATE_ACCESS_CODE_REQUEST/SUCCESS/ERROR/INVALID`                           | `RegisterForm`                                                        | `partner`, `message`               |
 | `GET_STARTED_WITH_<PARTNER>_CLICKED`                                           | `generateGetStartedPartnerEvent` — **defined, not currently emitted** | —                                  |
 | `PARTNERSHIP_PROMO_<PARTNER>_LOGO_CLICKED`                                     | `RegisterPage` partner logos                                          | —                                  |
-| `<PARTNER>_PROMO_GET_STARTED_CLICKED`, `<PARTNER>_PROMO_GO_TO_COURSES_CLICKED` | legacy `StoryblokWelcomePage` / redesigned `WelcomePage` hero CTA     | event-user data, `welcome_partner` |
+| `<PARTNER>_PROMO_GET_STARTED_CLICKED`, `<PARTNER>_PROMO_GO_TO_COURSES_CLICKED` | `WelcomePage` hero CTA                                                | event-user data, `welcome_partner` |
 
 ## Navigation
 
@@ -112,17 +112,16 @@ The card click is `COURSE_CARD_CLICKED` or `RESOURCE_CARD_CLICKED` depending on 
 
 ## Welcome (partner)
 
-`WELCOME_VIEWED` fires from **both** the redesigned `WelcomePage` and the legacy `StoryblokWelcomePage`
-so the two are comparable during the migration. Card / browse events from `useLibrarySectionEvents('welcome', …)`
+`WELCOME_VIEWED` fires from `WelcomePage`. Card / browse events from `useLibrarySectionEvents('welcome', …)`
 carry the same `card_*` params as [Home](#home) with `card_surface = welcome`.
 
-| Event                                           | Fires                                               | Key params                                             |
-| ----------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------ |
-| `WELCOME_VIEWED`                                | `WelcomePage` / `StoryblokWelcomePage` (after auth) | `welcome_partner`, `welcome_logged_in`                 |
-| `COURSE_CARD_CLICKED` / `RESOURCE_CARD_CLICKED` | sessions / courses card                             | `card_surface = welcome`, `card_section` + card params |
-| `WELCOME_BROWSE_ALL_CLICKED`                    | section "browse all"                                | `card_surface = welcome`, `card_section`               |
-| `WELCOME_SUPPORT_CARD_CLICKED`                  | `SupportSection` card                               | `support_card`                                         |
-| `WELCOME_CAROUSEL_PAGED`                        | `CardCarousel` page change                          | `carousel_page`, `carousel_pages`                      |
+| Event                                           | Fires                      | Key params                                             |
+| ----------------------------------------------- | -------------------------- | ------------------------------------------------------ |
+| `WELCOME_VIEWED`                                | `WelcomePage` (after auth) | `welcome_partner`, `welcome_logged_in`                 |
+| `COURSE_CARD_CLICKED` / `RESOURCE_CARD_CLICKED` | sessions / courses card    | `card_surface = welcome`, `card_section` + card params |
+| `WELCOME_BROWSE_ALL_CLICKED`                    | section "browse all"       | `card_surface = welcome`, `card_section`               |
+| `WELCOME_SUPPORT_CARD_CLICKED`                  | `SupportSection` card      | `support_card`                                         |
+| `WELCOME_CAROUSEL_PAGED`                        | `CardCarousel` page change | `carousel_page`, `carousel_pages`                      |
 
 ## Library
 
@@ -210,22 +209,6 @@ The media sub-events carry the media word twice — `RESOURCE_VIDEO_VIDEO_STARTE
 `RESOURCE_AUDIO_AUDIO_STARTED` — because the family prefix (`RESOURCE_VIDEO`) and the player component
 suffix (`_VIDEO_STARTED` from `<Video>`) are both present. This is the intended, consistent form.
 `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY` have no media sub-events (text content).
-
-### Current state in this branch
-
-The `RESOURCE_AUDIO_*`, `RESOURCE_WRITTEN_*`, `RESOURCE_ACTIVITY_*` families are live and canonical
-(added in step 5, serving the `/audio`, `/written`, `/activity` routes). The **`RESOURCE_VIDEO_*`**
-family does not exist yet — the `/shorts` and `/videos` routes still emit the interim
-`RESOURCE_SHORT_VIDEO_*` and `RESOURCE_SINGLE_VIDEO_*` families, and `/conversations` still emits
-`RESOURCE_CONVERSATION_*`. Step 7 consolidates:
-
-- `/shorts` + `/videos` → one `/video` route, one **`RESOURCE_VIDEO_*`** family, `resource_category = video`.
-  (`RESOURCE_SHORT_VIDEO_*` and `RESOURCE_SINGLE_VIDEO_*` retired.)
-- `/conversations` → `/audio`, emitting the **existing `RESOURCE_AUDIO_*`** family, `resource_category = audio`.
-  (`RESOURCE_CONVERSATION_*` retired.)
-- `RESOURCE_WRITTEN_*` and `RESOURCE_ACTIVITY_*` are unchanged.
-- The `shorts` page's `<Video eventPrefix="RESOURCE_SHORT">` (an interim quirk) becomes
-  `eventPrefix="RESOURCE_VIDEO"` → `RESOURCE_VIDEO_VIDEO_STARTED`.
 
 ## Card clicks
 
@@ -367,118 +350,3 @@ Written via `createEventLog` to bloom-backend (not GA). Names in `EVENT_LOG_NAME
 | `LOGGED_IN`                  | `LoginForm` on successful login                                                        |
 | `LOGGED_OUT`                 | `useLoadUser` on logout                                                                |
 | `GROUNDING_EXERCISE_STARTED` | `Video` / `StoryblokAudio` when media on a `/grounding` path starts — `metadata.title` |
-
----
-
-## Changes in the `epic-redesign` branch
-
-### New events
-
-**Page views** — `LOGIN_VIEWED`, `REGISTER_VIEWED`, `RESET_PASSWORD_VIEWED`, `SETTINGS_VIEWED`, `NOTES_VIEWED`,
-`MESSAGING_VIEWED`, `HOME_VIEWED`, `LIBRARY_VIEWED`, `WELCOME_VIEWED`, `GROUNDING_VIEWED`, `NOT_FOUND_VIEWED`.
-
-**Account** — `DELETE_ACCOUNT_REQUEST / _SUCCESS / _ERROR`.
-
-**Card clicks** — `COURSE_CARD_CLICKED`, `RESOURCE_CARD_CLICKED`, `SESSION_CARD_CLICKED` (named by card
-type, `card_surface` for context — see [Card clicks](#card-clicks)).
-
-**Home** — `HOME_HERO_CTA_CLICKED`, `HOME_BROWSE_ALL_CLICKED`, `HOME_SUPPORT_CARD_CLICKED`, `HOME_CAROUSEL_PAGED`.
-
-**Welcome** — `WELCOME_BROWSE_ALL_CLICKED`, `WELCOME_SUPPORT_CARD_CLICKED`, `WELCOME_CAROUSEL_PAGED`
-(redesigned page carries `welcome_partner` instead of per-partner event names).
-
-**Library** — `LIBRARY_SEARCHED`, `LIBRARY_FILTERED`, `LIBRARY_FILTERS_CLEARED`, `LIBRARY_LOAD_MORE_CLICKED`,
-`LIBRARY_ITEM_CLICKED`, `LIBRARY_SUPPORT_CARD_CLICKED`.
-
-**Courses / sessions** — `COURSE_START_CLICKED`, `COURSE_OTHER_COURSE_CLICKED`,
-`SESSION_PLAYLIST_OPENED`, `SESSION_NEXT_CLICKED`,
-`SESSION_CHAT_EXPANDED/COLLAPSED`, `SESSION_FEEDBACK_EXPANDED/COLLAPSED`.
-
-**Resources** — the canonical `RESOURCE_AUDIO_*`, `RESOURCE_WRITTEN_*`, `RESOURCE_ACTIVITY_*` families
-(step 5; `RESOURCE_VIDEO_*` follows in step 7); `RESOURCE_GROUNDING_VIEWED`, `RESOURCE_GROUNDING_CLOSED`;
-`RESOURCE_FEEDBACK_VIEWED`, `RESOURCE_FEEDBACK_DISMISSED`.
-
-**Grounding** — `GROUNDING_LOAD_MORE_CLICKED`, `GROUNDING_SUPPORT_CARD_CLICKED`, `GROUNDING_EXERCISE_CLICKED`.
-
-**Sign-up** — `SIGN_UP_UNLOCK_BUTTON_CLICKED / _LOGIN_CLICKED`, `SIGN_UP_HERO_BUTTON_CLICKED`.
-
-**Carousels / cards** — `RELATED_RESOURCES_CARD_CLICKED`, `RELATED_RESOURCES_CAROUSEL_PAGED`,
-`RELATED_GROUNDING_CAROUSEL_PAGED`, `STORYBLOK_CAROUSEL_PAGED`, `STORYBLOK_LINK_CARD_CLICKED`.
-
-**Banners** — `REDESIGN_BANNER_VIEWED / _DISMISSED / _FEEDBACK_CLICKED`, `USER_BANNER_VIEWED`.
-
-### Renamed
-
-| Before                                                                                    | After                                           | Reason                                                                                                                                                    |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `COURSE_LIST_VIEWED`                                                                      | `LIBRARY_VIEWED`                                | courses list → library                                                                                                                                    |
-| `DRAWER_COURSES_CLICKED`                                                                  | `DRAWER_LIBRARY_CLICKED`                        | nav rename                                                                                                                                                |
-| `SECONDARY_HEADER_COURSES_CLICKED`                                                        | `SECONDARY_HEADER_LIBRARY_CLICKED`              | nav rename                                                                                                                                                |
-| `DRAWER_ACTIVITIES_CLICKED`, `SECONDARY_HEADER_ACTIVITIES_CLICKED`                        | _(removed)_                                     | activities folded into the library; the format filter arrival shows in `LIBRARY_VIEWED.library_formats`                                                   |
-| `HOME_CONTENT_CARD_CLICKED`, `HOME_CONTINUE_CARD_CLICKED`, `WELCOME_CONTENT_CARD_CLICKED` | `COURSE_CARD_CLICKED` / `RESOURCE_CARD_CLICKED` | drop "content"; one event per card type, `card_surface` + `card_section` for context                                                                      |
-| `COURSE_SESSION_CLICKED`, `SESSION_PLAYLIST_SESSION_CLICKED`                              | `SESSION_CARD_CLICKED`                          | one course-session card event, `card_surface` (`course` \| `playlist`)                                                                                    |
-| `RELATED_CONTENT_CARD_CLICK`                                                              | `RELATED_RESOURCES_CARD_CLICKED`                | drop "content"; keep related-resources / related-grounding split; `_CLICK` → `_CLICKED`. **Restarts this GA4 series** (the only one shipped to `develop`) |
-| `RELATED_CONTENT_CAROUSEL_PAGED`, `RESOURCE_CAROUSEL_PAGED`                               | `RELATED_RESOURCES_CAROUSEL_PAGED`              | one related-resources carousel event                                                                                                                      |
-| _(grounding carousel, was `RELATED_CONTENT_CAROUSEL_PAGED`)_                              | `RELATED_GROUNDING_CAROUSEL_PAGED`              | new, keeps grounding distinct                                                                                                                             |
-| `CONTENT_SIGN_UP_PROMPT_CTA_CLICKED`                                                      | `SIGN_UP_UNLOCK_BUTTON_CLICKED`                 | drop "content"; join the `SIGN_UP_*` family                                                                                                               |
-| `CONTENT_SIGN_UP_PROMPT_LOGIN_CLICKED`                                                    | `SIGN_UP_UNLOCK_LOGIN_CLICKED`                  | same; params `content_*` → `unlock_item_*`                                                                                                                |
-
-### Param changes
-
-- Resource / session / course events now carry `*_themes`.
-- `RESOURCE_FEEDBACK_SUBMITTED` / `SESSION_FEEDBACK_SUBMITTED` — now carry full content context and
-  `feedback_tag` (snake_case); the old `category` / `feedbackTags` keys are kept for dashboard continuity.
-- `${PREFIX}_COMPLETE_*` — added `resource_completion_method` (`media_complete` \| `manual`).
-- `${PREFIX}_VISIT_SESSION` — added `related_session_name`, `related_session_href` (previously `eventData` only;
-  the pre-redesign short-video event's `shorts_name` / `session_name` are replaced by these).
-- `RELATED_RESOURCES_CARD_CLICKED` (was `RELATED_CONTENT_CARD_CLICK`) — renamed for the resource/grounding
-  split; was event-user data only, now carries `related_resource_name` / uuid / category / position, and
-  fires from `ResourceCard` too (previously silent).
-- `LIBRARY_VIEWED` — added `library_formats`, `library_lengths`, `library_search_active`, `library_logged_in`.
-- `LIBRARY_ITEM_CLICKED` — added `library_item_themes`.
-- `LIBRARY_FILTERED` — now fires once per filter interaction, carrying `library_filter_group` /
-  `library_filter_value` / `library_filter_action`, instead of one event per state change carrying the
-  whole comma-joined filter set. "What do users filter for" becomes a single group-by on
-  `library_filter_value`. Clearing filters now emits only `LIBRARY_FILTERS_CLEARED` (it previously also
-  fired a redundant `LIBRARY_FILTERED` with the emptied set).
-- `GROUNDING_VIEWED` — added `grounding_logged_in`.
-- `SIGN_UP_TODAY_BANNER_BUTTON_CLICKED` — the standalone `SignUpBanner` was removed; the name now belongs to
-  the `SignUpSection` CTA and carries `sign_up_section_source`. Content-gate sign-ups use the dedicated
-  `SIGN_UP_UNLOCK_*` family instead.
-
-### Deferred to step 7 (fast-follow)
-
-- Consolidate the interim video/conversation families into the canonical four
-  (`RESOURCE_VIDEO_*`, `RESOURCE_AUDIO_*`, `RESOURCE_WRITTEN_*`, `RESOURCE_ACTIVITY_*` — each separate,
-  each with its own `resource_category` value):
-  - `RESOURCE_SHORT_VIDEO_*` + `RESOURCE_SINGLE_VIDEO_*` → a single new `RESOURCE_VIDEO_*` family
-    (`resource_category = video`).
-  - `RESOURCE_CONVERSATION_*` → the existing `RESOURCE_AUDIO_*` family (`resource_category = audio`).
-  - `RESOURCE_WRITTEN_*` and `RESOURCE_ACTIVITY_*` are already canonical — unchanged.
-- Point the merged `/video` route's `<Video>` at `eventPrefix="RESOURCE_VIDEO"` (the `/shorts` page
-  currently passes `"RESOURCE_SHORT"`) so it emits `RESOURCE_VIDEO_VIDEO_STARTED` consistently.
-- Drop the deprecated `GET_USER_*` events and the unused `EXERCISE_CATEGORIES` import.
-
-### Infrastructure
-
-- GA now runs under **Google Consent Mode v2** — no analytics cookies or retained hits until the visitor
-  accepts. Hotjar only loads after consent. `debugMode` was removed from `<GoogleAnalytics>`.
-- `*_VIEWED` events moved to `useLogEventOnce` — they fire **once** after auth settles, where several
-  pre-redesign view events fired on every render.
-
-### Known gaps / follow-ups
-
-Found in an independent before/after audit against `develop` (`f7924896`); none block the redesign but
-worth a fast-follow:
-
-- **`NOTES_VIEWED` is not auth-gated** — `notes_logged_in` can be wrong for a signed-in visitor mid-load.
-  Gate it on auth-settled like `MESSAGING_VIEWED`.
-- **`DELETE_ACCOUNT_*` payloads are bare** — add event-user data to all three and a `message` to `_ERROR`,
-  for parity with `EMAIL_REMINDERS_*` and the other `*_ERROR` events.
-- **`SETTINGS_VIEWED`** sends `{}` — no event-user data, so settings-page views can't be segmented by
-  partner / account type like every other authed page view.
-- **`RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY` `${PREFIX}_VISIT_SESSION`** is wired (`StoryblokTextResourcePage`
-  passes `relatedSessionHref`) but only fires if the story sets `related_session`; expected to be rare.
-- **Grounding overlay media** emits only the backend `GROUNDING_EXERCISE_STARTED` plus whatever the
-  embedded `StoryblokVideo` / `StoryblokAudio` bloks fire (`STORYBLOK_*` family) — there is no
-  grounding-specific GA media event, matching the pre-redesign flat page.

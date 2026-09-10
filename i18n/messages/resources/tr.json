@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "Daha fazlasını keşfetmek ister misin?",
       "subtitle": "İyileşme yolculuğunda sana yardımcı olması için aşağıdaki ilgili bölümlerimize göz at.",
-      "short_video": "İzle",
-      "single_video": "İzle",
       "video": "İzle",
-      "resource_conversation": "Dinle",
       "audio": "Dinle",
       "written": "Oku",
       "activity": "Etkinlik",
@@ -55,7 +52,6 @@
       "session": "Bölüm",
       "session_iba": "Bölüm",
       "grounding": "Köklenme",
-      "activities": "Etkinlik",
       "minuteLabel": "dakika"
     },
     "resourceFeedback": {

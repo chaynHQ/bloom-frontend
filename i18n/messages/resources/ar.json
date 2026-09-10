@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "هل ترغب في استكشاف المزيد؟",
       "subtitle": "يمكنك إلقاء نظرة على جلساتنا ذات الصلة أدناه لمساندتك في رحلة تعافيك.",
-      "short_video": "مشاهدة",
-      "single_video": "مشاهدة",
       "video": "مشاهدة",
-      "resource_conversation": "إنصات",
       "audio": "إنصات",
       "written": "قراءة",
       "activity": "نشاط",
@@ -55,7 +52,6 @@
       "session": "جلسة",
       "session_iba": "جلسة",
       "grounding": "تثبيت الذات",
-      "activities": "نشاط",
       "minuteLabel": "دقائق"
     },
     "resourceFeedback": {

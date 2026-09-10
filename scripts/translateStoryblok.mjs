@@ -6,7 +6,7 @@
  *
  * Why this lives in bloom-frontend: the pages it translates (home, welcome/*,
  * policies/*, meet-the-team, messaging, therapy/book-session, subscription/whatsapp,
- * grounding/* + activities/* exercises, and generic single pages) are frontend-only
+ * grounding/* + activity/* exercises, and generic single pages) are frontend-only
  * Storyblok stories. bloom-backend only stores Storyblok *uuids* for courses/resources.
  *
  * SAFETY MODEL (read before running):
@@ -24,8 +24,8 @@
  *      new fields get translated, and inside a rich-text field that's only partly translated, just
  *      the still-English leaves are translated in place (existing professional translations kept).
  *      --overwrite forces a full re-translation. Default target locales: all non-English locales.
- *   6. Course/session and short/conversation/video stories are refused (media not
- *      localised). Grounding/activities exercises ARE translatable and allowed.
+ *   6. Course/session and video/audio resource stories are refused (media not
+ *      localised). Grounding and activity exercises ARE translatable and allowed.
  *   7. Every fetched story is snapshotted to disk before any write, and Storyblok
  *      keeps per-story version history, so rollback is always possible.
  *
@@ -84,12 +84,11 @@ const RTL_LOCALES = new Set(['ar', 'ur', 'fa', 'he']);
 
 // Stories we must never translate — media-bearing content whose video/audio is not
 // available in these locales — by slug prefix…
-const EXCLUDED_PREFIXES = ['courses/', 'video/', 'audio/', 'videos/', 'shorts/', 'conversations/'];
+const EXCLUDED_PREFIXES = ['courses/', 'video/', 'audio/'];
 // …and by content type / root component (defence in depth + catches anything not under
-// the folders above). Covers courses, sessions and the media resource types.
-// Grounding/activities EXERCISES live INLINE inside the `grounding`/`activities` `page`
-// stories (accordion/row_column blocks), so they are translated as part of those pages;
-// their embedded audio/video assets are left untouched.
+// the folders above). Covers courses, sessions and the video/audio resource types.
+// Grounding and activity exercises are their own stories and ARE translatable — their
+// embedded audio/video assets are left untouched.
 const EXCLUDED_COMPONENTS = new Set([
   'course',
   'Course',
@@ -99,9 +98,6 @@ const EXCLUDED_COMPONENTS = new Set([
   'week',
   'resource_video',
   'resource_audio',
-  'resource_short_video',
-  'resource_single_video',
-  'resource_conversation',
 ]);
 
 // policies/* is legal content — included in --all only with --include-policies, and should

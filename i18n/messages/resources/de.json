@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "Möchtest du mehr entdecken?",
       "subtitle": "Wirf einen Blick auf unsere verwandten Sessions unten – sie können dich auf deiner Heilungsreise begleiten.",
-      "short_video": "Ansehen",
-      "single_video": "Ansehen",
       "video": "Ansehen",
-      "resource_conversation": "Listen",
       "audio": "Anhören",
       "written": "Lesen",
       "activity": "Übungen",
@@ -55,7 +52,6 @@
       "session": "Sitzung",
       "session_iba": "Sitzung",
       "grounding": "Stabilisierung",
-      "activities": "Übungen",
       "minuteLabel": "Minuten"
     },
     "resourceFeedback": {

@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "¿Quieres explorar más?",
       "subtitle": "Echa un vistazo a nuestras sesiones relacionadas más abajo, para acompañar tu proceso de sanación.",
-      "short_video": "Ver",
-      "single_video": "Ver",
       "video": "Ver",
-      "resource_conversation": "Escuchar",
       "audio": "Escuchar",
       "written": "Leer",
       "activity": "Actividad",
@@ -55,7 +52,6 @@
       "session": "Sesión",
       "session_iba": "Sesión",
       "grounding": "Anclaje",
-      "activities": "Actividad",
       "minuteLabel": "minutos"
     },
     "resourceFeedback": {

@@ -84,18 +84,6 @@ module.exports = withBundleAnalyzer(
           },
           {
             source: '/activities',
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
-            destination: '/activity/:slug',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/activities`,
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
-            destination: '/:locale/activity/:slug',
-            permanent: true,
-          },
-          {
-            source: '/activities',
             destination: '/library?format=activity',
             permanent: true,
           },
@@ -104,10 +92,7 @@ module.exports = withBundleAnalyzer(
             destination: '/:locale/library?format=activity',
             permanent: true,
           },
-          // shorts + somatic videos merged into video/, conversations into audio/. Only the
-          // folder segment changes — the leaf slug is preserved on the move, so one rule per old
-          // folder covers every story. A per-slug rename (slug collision on the move) would need
-          // its own redirect above these.
+          // Video resources live under /video, audio under /audio; these keep older links working.
           {
             source: '/shorts/:slug',
             destination: '/video/:slug',
