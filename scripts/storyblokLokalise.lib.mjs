@@ -28,7 +28,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.join(__dirname, '..');
 
 export const I18N = '__i18n__';
-export const KEY_DELIM = '::';
+// `|` and not `::` on purpose: Lokalise treats `::` in a key name as a nesting separator
+// (web UI, structured JSON, round-trip download), which would shred our composite keys.
+// `|` has no special meaning in Lokalise key names. Storyblok slugs / _uids / field names
+// never contain it.
+export const KEY_DELIM = '|';
 
 /** Every locale Bloom supports except the English source (see i18n/routing.ts). */
 export const ALL_LANGS = ['de', 'fr', 'es', 'pt', 'hi', 'ar', 'tr'];
@@ -321,12 +325,18 @@ export function* iterTranslatableFields(content, schemaMap, refLangs = ALL_LANGS
 /* ----------------------------- keys ----------------------------- */
 
 /** Stable, human-readable key. Anchored on the owner blok's _uid so it survives
- *  sibling reordering. `<slug>::<ownerUid>::<field>[::<leafIndex>]`
+ *  sibling reordering. `<slug>|<ownerUid>|<field>[|<leafIndex>]`
  *  (The inverse mapping is not by parsing the key — `manifest.json` records every
  *  key's slug / ownerUid / field / leafIndex explicitly.) */
 export function segmentKey({ slug, ownerUid, field, leafIndex }) {
   const base = [slug, ownerUid, field].join(KEY_DELIM);
   return leafIndex == null ? base : `${base}${KEY_DELIM}${leafIndex}`;
+}
+
+/** `<slug>|<ownerUid>|<field>` — groups a rich-text field's leaf keys, and matches
+ *  `manifest.fields`. */
+export function fieldKeyOf(slug, ownerUid, field) {
+  return [slug, ownerUid, field].join(KEY_DELIM);
 }
 
 /* ----------------------------- misc ----------------------------- */

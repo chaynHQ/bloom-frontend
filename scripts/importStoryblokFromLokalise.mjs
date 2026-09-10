@@ -36,6 +36,7 @@ import path from 'node:path';
 import {
   REPO_ROOT,
   I18N,
+  KEY_DELIM,
   loadDotEnv,
   mapi,
   getStory,
@@ -43,6 +44,7 @@ import {
   getComponentSchemaMap,
   collectRichTextLeaves,
   placeholdersIn,
+  fieldKeyOf,
   findByUid,
   ensureDir,
   readJson,
@@ -102,7 +104,9 @@ function parseArgs(argv) {
   return args;
 }
 
-/** Flatten a Lokalise JSON export to { key: string }. Accepts plain, {translation}, nested. */
+/** Flatten a Lokalise JSON export to { key: string }. Accepts plain `{key: "…"}`,
+ *  Structured JSON `{key: {translation: "…"}}`, and (defensively) nested objects —
+ *  if Lokalise ever nests, the path is re-joined with our delimiter. */
 function flattenLokalise(obj) {
   const out = {};
   const isLeafObj = (v) => v && typeof v === 'object' && typeof v.translation === 'string';
@@ -116,7 +120,7 @@ function flattenLokalise(obj) {
       return;
     }
     if (node && typeof node === 'object' && !Array.isArray(node)) {
-      for (const k of Object.keys(node)) walk(node[k], prefix ? `${prefix}::${k}` : k);
+      for (const k of Object.keys(node)) walk(node[k], prefix ? `${prefix}${KEY_DELIM}${k}` : k);
     }
   };
   walk(obj, '');
@@ -186,16 +190,39 @@ async function main() {
   // Which stories are touched? And which incoming keys aren't in the manifest at all?
   const wantSlugs = new Set();
   const unknownKeys = new Set();
+  let totalIncoming = 0;
+  let matchedIncoming = 0;
   for (const lang of langs) {
     for (const key of Object.keys(incoming[lang])) {
+      totalIncoming++;
       const seg = manifest.segments[key];
       if (!seg) {
         unknownKeys.add(`[${lang}] ${key}`);
         continue;
       }
+      matchedIncoming++;
       if (args.slugs.length && !args.slugs.includes(seg.slug)) continue;
       wantSlugs.add(seg.slug);
     }
+  }
+  const matchRate = totalIncoming ? matchedIncoming / totalIncoming : 0;
+  if (totalIncoming && matchedIncoming === 0) {
+    console.error(
+      `\n✗ 0 of ${totalIncoming} incoming keys matched this manifest.\n` +
+        `  The Lokalise export probably nested the keys (download as "JSON flat", with no key\n` +
+        `  separator / nesting option), keys were renamed, or this manifest is from a different\n` +
+        `  export. Nothing was written. Compare a sample key:\n` +
+        `    incoming: ${Object.keys(incoming[langs[0]])[0]}\n` +
+        `    manifest: ${Object.keys(manifest.segments)[0]}`,
+    );
+    process.exit(1);
+  }
+  if (totalIncoming && matchRate < 0.5) {
+    console.warn(
+      `\n⚠  Only ${matchedIncoming}/${totalIncoming} incoming keys are in the manifest ` +
+        `(${Math.round(matchRate * 100)}%). Fine for a partial export; otherwise check the ` +
+        `"not in the manifest" list below.`,
+    );
   }
 
   const tally = { write: 0, blank: 0, noop: 0, unknownKey: unknownKeys.size };
@@ -220,7 +247,7 @@ async function main() {
         const seg = manifest.segments[key];
         if (!seg || seg.slug !== slug) continue;
         if (args.slugs.length && !args.slugs.includes(slug)) continue;
-        const fieldKey = [seg.slug, seg.ownerUid, seg.field].join('::');
+        const fieldKey = fieldKeyOf(seg.slug, seg.ownerUid, seg.field);
         if (!byField.has(fieldKey)) byField.set(fieldKey, []);
         byField.get(fieldKey).push({ lang, key, seg, val: rawVal });
       }

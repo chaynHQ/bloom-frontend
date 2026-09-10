@@ -19,7 +19,8 @@
  *   UNTRANSLATED.md       human report of what is still missing, per language, per story.
  *   README.md             pointer to docs/storyblok-lokalise-roundtrip.md
  *
- * KEY FORMAT:  <full_slug>::<ownerBlokUid>::<field>[::<leafIndex>]
+ * KEY FORMAT:  <full_slug>|<ownerBlokUid>|<field>[|<leafIndex>]
+ *   • delimiter is "|" — Lokalise splits "::" into nested keys, which would break the mapping.
  *   • ownerBlokUid = _uid of the blok holding the field → survives sibling reordering.
  *   • leafIndex    = 0-based position of a text node in the field's rich-text (deterministic,
  *                    matches translateStoryblok.mjs). Absent for plain string fields.
@@ -40,6 +41,7 @@ import path from 'node:path';
 import {
   REPO_ROOT,
   KEY_DELIM,
+  ALL_LANGS,
   loadDotEnv,
   listAllStories,
   getStory,
@@ -51,6 +53,7 @@ import {
   isTranslatableText,
   placeholdersIn,
   segmentKey,
+  fieldKeyOf,
   ensureDir,
   writeJson,
 } from './storyblokLokalise.lib.mjs';
@@ -118,7 +121,7 @@ async function main() {
     spaceId: process.env.STORYBLOK_SPACE_ID,
     langs: args.langs,
     keyDelimiter: KEY_DELIM,
-    keyFormat: '<full_slug>::<ownerBlokUid>::<field>[::<leafIndex>]',
+    keyFormat: `<full_slug>${KEY_DELIM}<ownerBlokUid>${KEY_DELIM}<field>[${KEY_DELIM}<leafIndex>]`,
     exportedFrom: 'management-api draft (== published unless unpublishedChanges is true)',
     stories: {},
     fields: {},
@@ -187,8 +190,9 @@ async function main() {
       storySegs++;
     };
 
-    for (const f of iterTranslatableFields(content, schemaMap, args.langs)) {
-      const fieldKey = [slug, f.ownerUid, f.field].join(KEY_DELIM);
+    // Discover translatable fields against ALL locales (maximal), emit only args.langs.
+    for (const f of iterTranslatableFields(content, schemaMap, ALL_LANGS)) {
+      const fieldKey = fieldKeyOf(slug, f.ownerUid, f.field);
 
       if (f.kind === 'non-text') {
         manifest.skippedNonTextFields.push({

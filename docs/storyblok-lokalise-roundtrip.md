@@ -52,8 +52,13 @@ parent field.
 The export walks each story and emits one **segment** per translatable leaf:
 
 ```
-KEY = <full_slug>::<ownerBlokUid>::<field>[::<leafIndex>]
+KEY = <full_slug>|<ownerBlokUid>|<field>[|<leafIndex>]
 ```
+
+The delimiter is `|`, **not** `::` — Lokalise treats `::` in a key name as a nesting
+separator (web UI, Structured JSON, and the round-trip download), which would shred these
+composite keys. `|` has no special meaning in Lokalise key names, and Storyblok
+slugs / `_uid`s / field names never contain it.
 
 | part           | meaning                                                                                                                                                                                                                                                                           |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -65,10 +70,10 @@ KEY = <full_slug>::<ownerBlokUid>::<field>[::<leafIndex>]
 Example:
 
 ```
-grounding/grounding-box-breathing::92616aec-…::name                     → "Box breathing"
-grounding/grounding-box-breathing::92616aec-…::description::0           → "A steady four-count breath…"
-grounding/grounding-box-breathing::92616aec-…::body::0                  → "Before you get started…"
-therapy/book-session::e876e86a-…::content::13                           → "…{partnerName}…"
+grounding/grounding-box-breathing|92616aec-…|name             → "Box breathing"
+grounding/grounding-box-breathing|92616aec-…|description|0     → "A steady four-count breath…"
+grounding/grounding-box-breathing|92616aec-…|body|0           → "Before you get started…"
+therapy/book-session|e876e86a-…|content|13                    → "…{partnerName}…"
 ```
 
 ### Segmentation is per text node
@@ -104,18 +109,18 @@ You only need to do this once; afterwards it's upload → work → download.
 
 1. New Lokalise project (or an existing one). Base language **English**; add **Turkish** and
    **Arabic**.
-2. **Upload → `en.json`**, format **JSON**. Settings:
+2. **Upload → `en.json`**, format **JSON (flat)**. Settings:
    - **"Detect ICU plurals"** — leave **off**. Our keys contain none; `therapy/book-session`
      uses `{partnerName}` which is a plain placeholder, not a plural.
    - **"Replace line breaks with `\n`"** — off.
-   - **Nested keys / key separator** — our keys are already flat strings containing `::` and
-     `/`; Lokalise will not split them because the JSON itself is flat. Don't set a custom
-     separator.
+   - **No nested-key / key-separator option.** The file is flat and the keys use `|`, which
+     Lokalise leaves alone. (Never set the separator to `|` or `/` — that would split them.)
    - Assign to language **English**.
    - Optionally tick **"Front / Tag keys"** with a tag like `storyblok-export`.
    - _Alternative:_ upload `keys-structured.json` as format **Structured JSON** instead — same
-     keys, but you also get the sentence context as **notes** and a per-page **tag**
-     (`grounding/grounding-box-breathing`, `resource_activity`, …) so translators can filter
+     keys (they contain no `::` so they stay flat), but you also get the sentence context as
+     **notes** and a per-page **tag** (`grounding/grounding-box-breathing`, `resource_activity`,
+     …) so translators can filter
      to one page at a time. Recommended.
 3. **Upload → `tr.json`** as language **Turkish**, then **`ar.json`** as **Arabic**, format
    **JSON**, **same key names**. Turn **on** "Fill existing translations" and (your call)
@@ -135,11 +140,14 @@ value whose placeholders don't match (see §6).
 
 **Download / Export → JSON**, one file per language:
 
-- Format **JSON** (plain key: value). _(Structured JSON also works — the importer reads the
-  `translation` field.)_
+- Format **JSON, flat** (plain `key: value`). _(Structured JSON also works — the importer
+  reads the `translation` field.)_
 - **"Include all platform keys"** on; **"Empty translations: skip / leave empty"** — either is
   fine, the importer skips blanks.
-- **Do not** enable "nest keys" / a key separator — keep them flat.
+- **Do not** enable "nest keys" / set a key separator — the keys must come back flat and
+  identical (`grounding/grounding-box-breathing|<uid>|body|0`). The importer aborts if **zero**
+  incoming keys match the manifest (the classic symptom of a nested export) and prints a
+  sample of each side to compare.
 - **Do not** rename keys in Lokalise. A renamed key can't be mapped back and is reported as
   `key not in manifest`.
 
