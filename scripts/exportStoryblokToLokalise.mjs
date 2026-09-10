@@ -306,6 +306,7 @@ async function main() {
   }
   fs.writeFileSync(path.join(args.out, 'UNTRANSLATED.md'), md.join('\n') + '\n');
 
+  const langFileList = args.langs.map((l) => `\`${l}.json\``).join(', ');
   fs.writeFileSync(
     path.join(args.out, 'README.md'),
     [
@@ -318,12 +319,12 @@ async function main() {
       '| --- | --- |',
       '| `en.json` | Lokalise **base language** upload (plain JSON) |',
       '| `keys-structured.json` | optional richer base upload — sentence context as *notes*, per-page *tag* (Lokalise format **Structured JSON**) |',
-      '| `tr.json`, `ar.json` | existing translations, same keys (plain JSON). `""` = not translated yet |',
+      `| ${langFileList} | existing translations, same keys (plain JSON). \`""\` = not translated yet |`,
       '| `manifest.json` | **the contract** — key → exact Storyblok location + English snapshot. Keep it unchanged; the importer needs it. Commit it. |',
       '| `UNTRANSLATED.md` | gaps per language / per story |',
       '',
       '```bash',
-      '# after editing in Lokalise, download tr.json / ar.json into ./storyblok-lokalise/incoming/',
+      `# after editing in Lokalise, download ${langFileList} into ./storyblok-lokalise/incoming/`,
       'node scripts/importStoryblokFromLokalise.mjs --in ./storyblok-lokalise/incoming            # dry-run',
       'node scripts/importStoryblokFromLokalise.mjs --in ./storyblok-lokalise/incoming --write --yes',
       'node scripts/importStoryblokFromLokalise.mjs --in ./storyblok-lokalise/incoming --write --yes --publish',
