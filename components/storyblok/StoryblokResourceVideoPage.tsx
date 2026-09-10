@@ -142,7 +142,7 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
         beforeSections={
           keyReferences.length > 0 && (
             <Box>
-              <Typography sx={{ mb: 1 }}>{t('references.keyReferences')}</Typography>
+              <Typography sx={{ pb: 1 }}>{t('references.keyReferences')}</Typography>
               <References references={keyReferences} />
             </Box>
           )
