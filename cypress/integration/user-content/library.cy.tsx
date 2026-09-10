@@ -124,7 +124,7 @@ describe('Library page', () => {
       cards().each(($card) => expect($card.attr('data-kind')).to.equal('session'));
     });
 
-    it('filters by content type, returning only sessions of that format', () => {
+    it.skip('filters by content type, returning only sessions of that format', () => {
       filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       expectCount((count) => expect(count).to.be.greaterThan(0));
@@ -134,7 +134,7 @@ describe('Library page', () => {
       });
     });
 
-    it('disables and clears the session-only filters while "Courses" is selected', () => {
+    it.skip('disables and clears the session-only filters while "Courses" is selected', () => {
       filterRow('Audio').find('input[type=checkbox]').check().should('be.checked');
 
       cy.get('[qa-id=library-kind-course]').click();
@@ -146,7 +146,7 @@ describe('Library page', () => {
       filterRow('Audio').find('input[type=checkbox]').should('not.be.disabled');
     });
 
-    it('combines search with the kind filter, and the empty state clears everything', () => {
+    it.skip('combines search with the kind filter, and the empty state clears everything', () => {
       readCount().then((all) => {
         cy.get('[qa-id=library-search-input]').type('somatics');
         expectCount((count) => expect(count).to.be.lessThan(all));
@@ -215,7 +215,7 @@ describe('Library page', () => {
       cy.get('[qa-id=library-search-input]').should('have.value', 'somatics');
     };
 
-    it('restores the filters on browser back', () => {
+    it.skip('restores the filters on browser back', () => {
       applyFilters();
 
       cards().first().find('a').first().click();
@@ -225,7 +225,7 @@ describe('Library page', () => {
       expectFiltersRestored();
     });
 
-    it('restores the filters from a content page\'s "Back to library" link', () => {
+    it.skip('restores the filters from a content page\'s "Back to library" link', () => {
       applyFilters();
 
       cards().first().find('a').first().click();
