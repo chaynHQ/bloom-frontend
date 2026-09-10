@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "محادثات",
-    "shorts": "مقاطع قصيرة",
-    "videos": "فيديوهات",
+    "video": "فيديو",
     "audio": "صوتي",
     "written": "مكتوب",
     "activity": "نشاط",
@@ -48,6 +46,7 @@
       "subtitle": "يمكنك إلقاء نظرة على جلساتنا ذات الصلة أدناه لمساندتك في رحلة تعافيك.",
       "short_video": "مشاهدة",
       "single_video": "مشاهدة",
+      "video": "مشاهدة",
       "resource_conversation": "إنصات",
       "audio": "إنصات",
       "written": "قراءة",

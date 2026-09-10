@@ -21,9 +21,7 @@ export enum COURSE_CATEGORIES {
 }
 
 export enum RESOURCE_CATEGORIES {
-  SHORT_VIDEO = 'short_video',
-  SINGLE_VIDEO = 'single_video',
-  CONVERSATION = 'resource_conversation',
+  VIDEO = 'video',
   AUDIO = 'audio',
   WRITTEN = 'written',
   ACTIVITY = 'activity',

@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Sohbetler",
-    "shorts": "Kısa videolar",
-    "videos": "Videolar",
+    "video": "Video",
     "audio": "Sesli",
     "written": "Yazılı",
     "activity": "Etkinlik",
@@ -48,6 +46,7 @@
       "subtitle": "İyileşme yolculuğunda sana yardımcı olması için aşağıdaki ilgili bölümlerimize göz at.",
       "short_video": "İzle",
       "single_video": "İzle",
+      "video": "İzle",
       "resource_conversation": "Dinle",
       "audio": "Dinle",
       "written": "Oku",

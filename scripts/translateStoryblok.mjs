@@ -84,7 +84,7 @@ const RTL_LOCALES = new Set(['ar', 'ur', 'fa', 'he']);
 
 // Stories we must never translate — media-bearing content whose video/audio is not
 // available in these locales — by slug prefix…
-const EXCLUDED_PREFIXES = ['courses/', 'videos/', 'shorts/', 'conversations/'];
+const EXCLUDED_PREFIXES = ['courses/', 'video/', 'audio/', 'videos/', 'shorts/', 'conversations/'];
 // …and by content type / root component (defence in depth + catches anything not under
 // the folders above). Covers courses, sessions and the media resource types.
 // Grounding/activities EXERCISES live INLINE inside the `grounding`/`activities` `page`
@@ -97,6 +97,8 @@ const EXCLUDED_COMPONENTS = new Set([
   'Session',
   'session_iba',
   'week',
+  'resource_video',
+  'resource_audio',
   'resource_short_video',
   'resource_single_video',
   'resource_conversation',

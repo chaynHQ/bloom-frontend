@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Gespräche",
-    "shorts": "Kurzfilme",
-    "videos": "Videos",
+    "video": "Video",
     "audio": "Audio",
     "written": "Text",
     "activity": "Übung",
@@ -48,6 +46,7 @@
       "subtitle": "Wirf einen Blick auf unsere verwandten Sessions unten – sie können dich auf deiner Heilungsreise begleiten.",
       "short_video": "Ansehen",
       "single_video": "Ansehen",
+      "video": "Ansehen",
       "resource_conversation": "Listen",
       "audio": "Anhören",
       "written": "Lesen",

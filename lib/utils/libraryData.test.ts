@@ -77,12 +77,14 @@ describe('storyToLibraryItem', () => {
 
   describe('sessions', () => {
     it.each([
-      ['resource_conversation', 'audio'],
-      ['resource_short_video', 'video'],
-      ['resource_single_video', 'video'],
+      ['resource_video', 'video'],
       ['resource_audio', 'audio'],
       ['resource_written', 'written'],
       ['resource_activity', 'activity'],
+      // Old component names, still mapped until step 7c has moved every story.
+      ['resource_conversation', 'audio'],
+      ['resource_short_video', 'video'],
+      ['resource_single_video', 'video'],
       ['Session', 'video'],
       ['session_iba', 'video'],
     ])('maps the %s component to the %s format', (component, format) => {

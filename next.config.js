@@ -104,6 +104,40 @@ module.exports = withBundleAnalyzer(
             destination: '/:locale/library?format=activity',
             permanent: true,
           },
+          // The shorts + somatic-video + conversation merge (step 7). The leaf slug is unchanged
+          // (the step 7 pre-flight scan confirmed no collisions), so a single folder-swap rule
+          // covers every story. If that scan turns up a collision before 7c, its per-slug rename
+          // redirects go above these.
+          {
+            source: '/shorts/:slug',
+            destination: '/video/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/shorts/:slug`,
+            destination: '/:locale/video/:slug',
+            permanent: true,
+          },
+          {
+            source: '/videos/:slug',
+            destination: '/video/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/videos/:slug`,
+            destination: '/:locale/video/:slug',
+            permanent: true,
+          },
+          {
+            source: '/conversations/:slug',
+            destination: '/audio/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/conversations/:slug`,
+            destination: '/:locale/audio/:slug',
+            permanent: true,
+          },
           {
             source: '/about-our-courses',
             destination: '/library',

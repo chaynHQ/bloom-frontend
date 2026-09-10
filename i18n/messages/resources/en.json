@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Conversations",
-    "shorts": "Shorts",
-    "videos": "Videos",
+    "video": "Video",
     "audio": "Audio",
     "written": "Written",
     "activity": "Activity",
@@ -48,6 +46,7 @@
       "subtitle": "Have a look at our related sessions below, to help your healing journey.",
       "short_video": "Watch",
       "single_video": "Watch",
+      "video": "Watch",
       "resource_conversation": "Listen",
       "audio": "Listen",
       "written": "Read",

@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Conversas",
-    "shorts": "Curtas",
-    "videos": "Vídeos",
+    "video": "Vídeo",
     "audio": "Áudio",
     "written": "Texto",
     "activity": "Atividade",
@@ -48,6 +46,7 @@
       "subtitle": "Dê uma olhada nas nossas sessões relacionadas abaixo, para acompanhar a sua jornada de cura.",
       "short_video": "Assistir",
       "single_video": "Assistir",
+      "video": "Assistir",
       "resource_conversation": "Áudio",
       "audio": "Ouvir",
       "written": "Ler",

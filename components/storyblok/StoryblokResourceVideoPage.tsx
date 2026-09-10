@@ -1,40 +1,52 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
+import References from '@/components/common/References';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
 import Video from '@/components/video/Video';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import {
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
-  RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-  RESOURCE_SHORT_VIDEO_VIEWED,
+  RESOURCE_VIDEO_TRANSCRIPT_CLOSED,
+  RESOURCE_VIDEO_TRANSCRIPT_OPENED,
+  RESOURCE_VIDEO_VIEWED,
 } from '@/lib/constants/events';
 import {
   useStoryblokResourcePage,
   type ResourceStoryContent,
 } from '@/lib/hooks/useStoryblokResourcePage';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
+import { StoryblokReferenceProps } from './StoryblokTypes';
 
-export interface StoryblokResourceShortPageProps extends ResourceStoryContent {
+// `resource_video` is the merge of the old `resource_short_video` and `resource_single_video`
+// blocks (step 7). During the transition a story may still carry either old component name — the
+// fields below are a superset of both, and this page renders it regardless.
+export interface StoryblokResourceVideoPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
+  subtitle?: string;
   description: StoryblokRichtext;
   duration: string;
   video: { url: string };
   video_transcript: StoryblokRichtext;
+  references?: StoryblokReferenceProps[];
+  login_required?: boolean;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  component: 'resource_short_video';
+  related_grounding?: ISbStoryData[];
+  component: 'resource_video' | 'resource_short_video' | 'resource_single_video';
 }
 
-const EVENT_PREFIX = 'RESOURCE_SHORT_VIDEO' as const;
+const EVENT_PREFIX = 'RESOURCE_VIDEO' as const;
 
-const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const t = useTranslations('Resources');
   const {
     content,
     storyUuid,
@@ -50,25 +62,37 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
     userContentPartners,
     start,
     complete,
-  } = useStoryblokResourcePage<StoryblokResourceShortPageProps>({
+  } = useStoryblokResourcePage<StoryblokResourceVideoPageProps>({
     initialStory,
-    category: RESOURCE_CATEGORIES.SHORT_VIDEO,
+    category: RESOURCE_CATEGORIES.VIDEO,
     eventPrefix: EVENT_PREFIX,
-    viewedEvent: RESOURCE_SHORT_VIDEO_VIEWED,
+    viewedEvent: RESOURCE_VIDEO_VIEWED,
+    // Shorts have always been public and only gain an explicit `login_required` when step 7c moves
+    // them; the old somatic-video block predates the field and gates by default. Keep both true to
+    // form until every story carries the flag.
+    loginRequiredByDefault: initialStory.content.component !== 'resource_short_video',
   });
 
   const {
     _uid,
     _editable,
     name,
+    subtitle,
     description,
     video,
     video_transcript,
+    references,
+    login_required,
     team_members_section,
     page_sections,
     related_content,
     related_session,
   } = content;
+
+  const keyReferences = useMemo(
+    () => references?.filter((r) => r.is_key_reference) ?? [],
+    [references],
+  );
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;
@@ -80,9 +104,12 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
         _uid,
         _editable,
         name,
+        subtitle,
         description,
         video,
         video_transcript,
+        references,
+        login_required,
         team_members_section,
         page_sections,
         related_content,
@@ -93,7 +120,7 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
         format="video"
         name={name}
         storyUuid={storyUuid}
-        category={RESOURCE_CATEGORIES.SHORT_VIDEO}
+        category={RESOURCE_CATEGORIES.VIDEO}
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
@@ -104,10 +131,11 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
         description={description}
         transcript={video_transcript}
         transcriptEvents={{
-          opened: RESOURCE_SHORT_VIDEO_TRANSCRIPT_OPENED,
-          closed: RESOURCE_SHORT_VIDEO_TRANSCRIPT_CLOSED,
+          opened: RESOURCE_VIDEO_TRANSCRIPT_OPENED,
+          closed: RESOURCE_VIDEO_TRANSCRIPT_CLOSED,
         }}
         onTranscriptStart={start}
+        hero={{ subtitle }}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
@@ -116,10 +144,18 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
         relatedSessionName={relatedSessionName}
+        beforeSections={
+          keyReferences.length > 0 && (
+            <Box>
+              <Typography sx={{ mb: 1 }}>{t('references.keyReferences')}</Typography>
+              <References references={keyReferences} />
+            </Box>
+          )
+        }
         media={
           <Video
             url={video.url}
-            eventPrefix="RESOURCE_SHORT"
+            eventPrefix={EVENT_PREFIX}
             eventData={eventData}
             setVideoStarted={() => start()}
             setVideoFinished={() => complete()}
@@ -131,4 +167,4 @@ const StoryblokResourceShortPage = ({ story: initialStory }: { story: ISbStoryDa
   );
 };
 
-export default StoryblokResourceShortPage;
+export default StoryblokResourceVideoPage;

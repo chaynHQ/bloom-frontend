@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Bātcīt",
-    "shorts": "Clips",
-    "videos": "Videos",
+    "video": "Video",
     "audio": "Audio",
     "written": "Likhit",
     "activity": "Activity",
@@ -48,6 +46,7 @@
       "subtitle": "Apni healing journey mein madad ke liye, neeche di gayi related sessions dekhen.",
       "short_video": "Watch",
       "single_video": "Watch",
+      "video": "Watch",
       "resource_conversation": "Listen",
       "audio": "Sunein",
       "written": "Padhein",

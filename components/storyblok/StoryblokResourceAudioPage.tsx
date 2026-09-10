@@ -27,12 +27,13 @@ export interface StoryblokResourceAudioPageProps extends ResourceStoryContent {
   duration: string;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
-  login_required: boolean;
+  login_required?: boolean;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
   related_grounding: ISbStoryData[];
-  component: 'resource_audio';
+  // A story still on the old `resource_conversation` block until step 7c moves it.
+  component: 'resource_audio' | 'resource_conversation';
 }
 
 const EVENT_PREFIX = 'RESOURCE_AUDIO' as const;
@@ -58,6 +59,9 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.AUDIO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_AUDIO_VIEWED,
+    // The old `resource_conversation` block predates `login_required`, so gate until step 7c
+    // moves the story onto `resource_audio` with an explicit value.
+    loginRequiredByDefault: true,
   });
 
   const {

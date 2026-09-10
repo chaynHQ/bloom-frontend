@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Conversaciones",
-    "shorts": "Cortos",
-    "videos": "Vídeos",
+    "video": "Vídeo",
     "audio": "Audio",
     "written": "Escrito",
     "activity": "Actividad",
@@ -48,6 +46,7 @@
       "subtitle": "Echa un vistazo a nuestras sesiones relacionadas más abajo, para acompañar tu proceso de sanación.",
       "short_video": "Ver",
       "single_video": "Ver",
+      "video": "Ver",
       "resource_conversation": "Escuchar",
       "audio": "Escuchar",
       "written": "Leer",

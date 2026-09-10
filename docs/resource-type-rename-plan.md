@@ -20,7 +20,9 @@
 
 **Redesign cutover (Appendix): DONE except the optional Storyblok component delete.** `redesign-cutover.mjs --write --yes` ran 2026-09-09 (home-redesign → home, welcome-redesign/{badoo,bumble} → welcome/, old `Welcome` stories deleted, `welcome-redesign/` folder deleted); `welcome/fruitz` deleted separately. Verified on the published CDN (home / welcome/badoo / welcome/bumble → 200). Frontend cleanup in **PR #1960** (`redesign-cutover-cleanup`). Only leftover: delete the old `Welcome` Storyblok **component** (id 2271418) once the soft-deleted Fruitz story is purged from trash — cosmetic.
 
-**Steps 7–8:** not started. Step 8's Storyblok script is now `07-cleanup` (`06-` is taken).
+**Step 7:** **7a done** (this branch — frontend merged components + dual-path routes + redirects; see the 7a section for what shipped and its deviations). **7b in progress** in `bloom-backend`. **7c / 7d not started** — 7c needs `scripts/storyblok/05a-collision-scan` + `05-move-content` written (neither exists yet); re-run the collision scan at 7c since the content team may have added colliding leaf slugs since 2026-09-09.
+
+**Step 8:** not started. Step 8's Storyblok script is now `07-cleanup` (`06-` is taken).
 
 ## End state
 
@@ -230,6 +232,19 @@ Ordered so no URL ever 404s: the new routes resolve the old folder path too, and
 **Pre-flight (before writing 7a):** `scripts/storyblok/05a-collision-scan.ts` — list leaf slugs across `shorts/` + `videos/` (both merge into `video/`). Any leaf that appears in both, or already exists in `video/`, is a `full_slug` collision — Storyblok rejects the duplicate on move. Content team renames the loser **in its current folder** now; those specific old→new redirects go into 7a. After this, 7c changes only the folder segment, never the leaf. **Checked 2026-09-09: shorts (12) ∩ videos (9) = no leaf-slug collisions, `video/` + `audio/` empty. Re-run at step 7 — the content team may add colliding slugs before then.**
 
 ### 7a — Frontend: merged components + dual-path routes + redirects (deploy first)
+
+**Done** (branch `resource-types-step-7a`), with these deviations from the plan text below:
+
+- `RESOURCE_CATEGORIES` is now `{ VIDEO, AUDIO, WRITTEN, ACTIVITY }` — `SHORT_VIDEO`/`SINGLE_VIDEO`/`CONVERSATION` gone, and the enum-value drift (`CONVERSATION = 'resource_conversation'`) is resolved: the GA `resource_category` is `video` / `audio` from now on, for stories still on the old component too.
+- `events.ts` media sub-events corrected to `RESOURCE_VIDEO_VIDEO_*` / `RESOURCE_AUDIO_AUDIO_*` (family prefix + `<Video>`/`<ResourceAudioPlayer>` suffix) — the old `RESOURCE_AUDIO_STARTED` etc. doc constants were already stale. Progress/transcript constants stay single-word (`RESOURCE_VIDEO_STARTED_REQUEST`). Old→new comment map added; conversation constants deleted (audio set already existed from step 5).
+- `StoryblokResourceAudioPage` already existed (step 5) — the "rename" was just deleting `StoryblokResourceConversationPage` + its route and adding `loginRequiredByDefault: true` to the audio page for the transition window (the old `resource_conversation` block predates the field).
+- `StoryblokResourceVideoPage` sets `loginRequiredByDefault` per component: `false` for a story still on `resource_short_video` (shorts have always been public; 7c sets the explicit flag), `true` otherwise (somatic videos gated by default until 7c).
+- `nextConversationButtonLabel` / `conversationTranscriptLink` — **not touched**: the redesign (steps 4–5) already deleted the "next resource" button and the transcript-link copy. i18n change was just `Resources.{shorts,videos,conversations}` → `Resources.video` (+ `Resources.audio` from step 5) and `relatedContent.video` added; old `relatedContent` keys kept until 7d.
+- `StoryblokResourceCarousel.tsx` needed no change (it only forwards to `ResourceCarousel`).
+- `library.cy` left as-is: the `somatics` search still resolves (the story is still in `videos/` until 7c, and the word is in its title). Fix it in 7d when the folder/tag go.
+- `public/sitemap.xml` **not** regenerated (deferred to 7d per the deploy sequence); stale `/shorts/*` `/conversations/*` entries 301 to the new URLs meanwhile.
+- `scripts/translateStoryblok.mjs` — `video/` `audio/` prefixes + `resource_video` `resource_audio` components added to its exclude sets (media resources are never auto-translated).
+- No per-slug collision redirects were added (the 2026-09-09 scan found none). **Re-run the scan at 7c** and add any renames above the folder-swap rules in `next.config.js` before moving content.
 
 - `enums.ts` — drop `SHORT_VIDEO/SINGLE_VIDEO/CONVERSATION`, `STORYBLOK_TAGS.SOMATICS` usage. `events.ts` — `RESOURCE_SHORT_VIDEO_*` + `RESOURCE_SINGLE_VIDEO_*` → `RESOURCE_VIDEO_*`; `RESOURCE_CONVERSATION_*` → `RESOURCE_AUDIO_*`; drop the stale non-`_AUDIO_` conversation constants; add an old→new comment map.
 - Merge `StoryblokResourceShortPage` + `StoryblokResourceSingleVideoPage` → `StoryblokResourceVideoPage` (`EVENT_PREFIX = 'RESOURCE_VIDEO'`); rename `StoryblokResourceConversationPage` → `StoryblokResourceAudioPage`. Fix the `eventPrefix` passed to `<Video>`/`<Audio>` so it equals `EVENT_PREFIX` (today the short page passes `"RESOURCE_SHORT"`) → clean `RESOURCE_VIDEO_VIDEO_STARTED` / `RESOURCE_AUDIO_AUDIO_STARTED`.

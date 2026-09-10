@@ -1,5 +1,4 @@
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
 import { toLibraryStory, type LibraryStories, type LibraryStory } from './libraryData';
@@ -46,30 +45,58 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
   });
 }
 
+const dedupeByUuid = (stories: LibraryStory[]): LibraryStory[] => {
+  const seen = new Set<string>();
+  return stories.filter((story) => {
+    if (seen.has(story.uuid)) return false;
+    seen.add(story.uuid);
+    return true;
+  });
+};
+
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
-  const [courses, courseSessions, shorts, somatics, conversations, written, activity] =
-    await Promise.all([
-      getCourseStories(locale),
-      getAllStoryblokStories(locale, {
-        ...baseProps(locale),
-        starts_with: 'courses/',
-        filter_query: { component: { in: 'Session,session_iba' } },
-      }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
-      getAllStoryblokStories(locale, {
-        ...baseProps(locale),
-        starts_with: 'videos/',
-        with_tag: STORYBLOK_TAGS.SOMATICS,
-      }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
-    ]);
+  // `video/` + `audio/` are queried alongside the old `shorts/` `videos/` `conversations/`
+  // folders until step 7c finishes moving stories; a story caught mid-move can appear in both,
+  // hence the uuid dedupe. The old-folder queries drop in step 7d. The `somatics` tag filter is
+  // gone: after the merge every `videos/` story is just a video.
+  const [
+    courses,
+    courseSessions,
+    video,
+    audio,
+    shorts,
+    somaticVideos,
+    conversations,
+    written,
+    activity,
+  ] = await Promise.all([
+    getCourseStories(locale),
+    getAllStoryblokStories(locale, {
+      ...baseProps(locale),
+      starts_with: 'courses/',
+      filter_query: { component: { in: 'Session,session_iba' } },
+    }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'video/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'audio/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'videos/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
+  ]);
 
   return {
     courses,
     courseSessions,
-    resources: [...shorts, ...somatics, ...conversations, ...written, ...activity],
+    resources: dedupeByUuid([
+      ...video,
+      ...audio,
+      ...shorts,
+      ...somaticVideos,
+      ...conversations,
+      ...written,
+      ...activity,
+    ]),
   };
 }

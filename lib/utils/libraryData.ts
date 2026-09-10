@@ -127,12 +127,14 @@ export interface LibraryStories {
 }
 
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
-  resource_conversation: 'audio',
-  resource_short_video: 'video',
-  resource_single_video: 'video',
+  resource_video: 'video',
   resource_audio: 'audio',
   resource_written: 'written',
   resource_activity: 'activity',
+  // Old component names, kept until step 7c has moved every story onto video / audio.
+  resource_short_video: 'video',
+  resource_single_video: 'video',
+  resource_conversation: 'audio',
   Session: 'video',
   session_iba: 'video',
 };

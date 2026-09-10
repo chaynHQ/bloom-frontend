@@ -18,9 +18,7 @@ import { useMemo } from 'react';
 import { StoryblokCoursePageProps } from './StoryblokCoursePage';
 import { StoryblokResourceActivityPageProps } from './StoryblokResourceActivityPage';
 import { StoryblokResourceAudioPageProps } from './StoryblokResourceAudioPage';
-import { StoryblokResourceConversationPageProps } from './StoryblokResourceConversationPage';
-import { StoryblokResourceShortPageProps } from './StoryblokResourceShortPage';
-import { StoryblokResourceSingleVideoPageProps } from './StoryblokResourceSingleVideoPage';
+import { StoryblokResourceVideoPageProps } from './StoryblokResourceVideoPage';
 import { StoryblokResourceWrittenPageProps } from './StoryblokResourceWrittenPage';
 import { StoryblokSessionPageProps } from './StoryblokSessionPage';
 
@@ -28,9 +26,7 @@ export interface StoryblokRelatedContentStory extends Omit<ISbStoryData, 'conten
   content:
     | StoryblokCoursePageProps
     | StoryblokSessionPageProps
-    | StoryblokResourceConversationPageProps
-    | StoryblokResourceShortPageProps
-    | StoryblokResourceSingleVideoPageProps
+    | StoryblokResourceVideoPageProps
     | StoryblokResourceAudioPageProps
     | StoryblokResourceWrittenPageProps
     | StoryblokResourceActivityPageProps;
