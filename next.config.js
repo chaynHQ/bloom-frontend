@@ -84,24 +84,43 @@ module.exports = withBundleAnalyzer(
           },
           {
             source: '/activities',
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
-            destination: '/activity/:slug',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/activities`,
-            has: [{ type: 'query', key: 'openacc', value: '(?<slug>.+)' }],
-            destination: '/:locale/activity/:slug',
-            permanent: true,
-          },
-          {
-            source: '/activities',
             destination: '/library?format=activity',
             permanent: true,
           },
           {
             source: `/${LOCALE_PATTERN}/activities`,
             destination: '/:locale/library?format=activity',
+            permanent: true,
+          },
+          // Video resources live under /video, audio under /audio; these keep older links working.
+          {
+            source: '/shorts/:slug',
+            destination: '/video/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/shorts/:slug`,
+            destination: '/:locale/video/:slug',
+            permanent: true,
+          },
+          {
+            source: '/videos/:slug',
+            destination: '/video/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/videos/:slug`,
+            destination: '/:locale/video/:slug',
+            permanent: true,
+          },
+          {
+            source: '/conversations/:slug',
+            destination: '/audio/:slug',
+            permanent: true,
+          },
+          {
+            source: `/${LOCALE_PATTERN}/conversations/:slug`,
+            destination: '/:locale/audio/:slug',
             permanent: true,
           },
           {

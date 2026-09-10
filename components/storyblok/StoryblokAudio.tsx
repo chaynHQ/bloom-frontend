@@ -50,7 +50,7 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
     <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, audio_file, alignment })}>
       <ResourceAudioPlayer
         url={audio_file.filename}
-        eventPrefix="STORYBLOK_AUDIO_PLAYER"
+        eventPrefix="STORYBLOK_AUDIO"
         eventData={{ ...eventUserData }}
         onStart={handleStart}
       />

@@ -37,8 +37,8 @@ interface UseStoryblokResourcePageArgs {
   category: RESOURCE_CATEGORIES;
   eventPrefix: ResourceEventPrefix;
   viewedEvent: string;
-  // Used when a story has no `login_required` value yet. Blocks that predate the field and should
-  // gate until it lands (single video, conversation) pass `true`; the rest default to open.
+  // Fallback when a story carries no `login_required` value: `true` gates it, the default leaves
+  // it open.
   loginRequiredByDefault?: boolean;
 }
 

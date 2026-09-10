@@ -1,44 +1,49 @@
 'use client';
 
 import { ContentUnavailable } from '@/components/common/ContentUnavailable';
-import { ResourceAudioPlayer } from '@/components/resources/ResourceAudioPlayer';
+import References from '@/components/common/References';
 import { ResourcePageLayout } from '@/components/resources/ResourcePageLayout';
+import Video from '@/components/video/Video';
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import {
-  RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
-  RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
-  RESOURCE_CONVERSATION_VIEWED,
+  RESOURCE_VIDEO_TRANSCRIPT_CLOSED,
+  RESOURCE_VIDEO_TRANSCRIPT_OPENED,
+  RESOURCE_VIDEO_VIEWED,
 } from '@/lib/constants/events';
 import {
   useStoryblokResourcePage,
   type ResourceStoryContent,
 } from '@/lib/hooks/useStoryblokResourcePage';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ISbStoryData, SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
+import { StoryblokReferenceProps } from './StoryblokTypes';
 
-export interface StoryblokResourceConversationPageProps extends ResourceStoryContent {
+export interface StoryblokResourceVideoPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
+  subtitle?: string;
   description: StoryblokRichtext;
-  header_image: { filename: string; alt: string };
   duration: string;
-  audio: { filename: string };
-  audio_transcript: StoryblokRichtext;
+  video: { url: string };
+  video_transcript: StoryblokRichtext;
+  references?: StoryblokReferenceProps[];
+  login_required?: boolean;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
-  component: 'resource_conversation';
+  related_grounding?: ISbStoryData[];
+  component: 'resource_video';
 }
 
-const EVENT_PREFIX = 'RESOURCE_CONVERSATION' as const;
+const EVENT_PREFIX = 'RESOURCE_VIDEO' as const;
 
-// `resource_conversation` merges into `resource_audio` in step 7, so it never gained the
-// `related_session` field the other resource types have — hence no `relatedSessionHref` here.
-
-const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+  const t = useTranslations('Resources');
   const {
     content,
     storyUuid,
@@ -49,15 +54,17 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     eventData,
     contributors,
     relatedGrounding,
+    relatedSessionHref,
+    relatedSessionName,
     userContentPartners,
     start,
     complete,
-  } = useStoryblokResourcePage<StoryblokResourceConversationPageProps>({
+  } = useStoryblokResourcePage<StoryblokResourceVideoPageProps>({
     initialStory,
-    category: RESOURCE_CATEGORIES.CONVERSATION,
+    category: RESOURCE_CATEGORIES.VIDEO,
     eventPrefix: EVENT_PREFIX,
-    viewedEvent: RESOURCE_CONVERSATION_VIEWED,
-    // Block predates the `login_required` field, so gate until it lands.
+    viewedEvent: RESOURCE_VIDEO_VIEWED,
+    // Fail safe: gate a story that carries no explicit `login_required`.
     loginRequiredByDefault: true,
   });
 
@@ -65,14 +72,22 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
     _uid,
     _editable,
     name,
+    subtitle,
     description,
-    header_image,
-    audio,
-    audio_transcript,
+    video,
+    video_transcript,
+    references,
+    login_required,
     team_members_section,
     page_sections,
     related_content,
+    related_session,
   } = content;
+
+  const keyReferences = useMemo(
+    () => references?.filter((r) => r.is_key_reference) ?? [],
+    [references],
+  );
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;
@@ -84,19 +99,23 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         _uid,
         _editable,
         name,
+        subtitle,
         description,
-        audio,
-        audio_transcript,
+        video,
+        video_transcript,
+        references,
+        login_required,
         team_members_section,
         page_sections,
         related_content,
+        related_session,
       })}
     >
       <ResourcePageLayout
-        format="audio"
+        format="video"
         name={name}
         storyUuid={storyUuid}
-        category={RESOURCE_CATEGORIES.CONVERSATION}
+        category={RESOURCE_CATEGORIES.VIDEO}
         eventPrefix={EVENT_PREFIX}
         resourceProgress={resourceProgress}
         resourceId={resourceId}
@@ -105,26 +124,37 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
         contentAccessStatus={contentAccessStatus}
         eventData={eventData}
         description={description}
-        transcript={audio_transcript}
+        transcript={video_transcript}
         transcriptEvents={{
-          opened: RESOURCE_CONVERSATION_TRANSCRIPT_OPENED,
-          closed: RESOURCE_CONVERSATION_TRANSCRIPT_CLOSED,
+          opened: RESOURCE_VIDEO_TRANSCRIPT_OPENED,
+          closed: RESOURCE_VIDEO_TRANSCRIPT_CLOSED,
         }}
         onTranscriptStart={start}
-        hero={{ imageSrc: header_image?.filename || undefined, imageAlt: header_image?.alt }}
+        hero={{ subtitle }}
         contributors={contributors}
         teamMembersSection={team_members_section?.[0]}
         pageSections={page_sections}
         relatedGrounding={relatedGrounding}
         relatedContent={related_content}
         userContentPartners={userContentPartners}
+        relatedSessionHref={relatedSessionHref}
+        relatedSessionName={relatedSessionName}
+        beforeSections={
+          keyReferences.length > 0 && (
+            <Box>
+              <Typography sx={{ mb: 1 }}>{t('references.keyReferences')}</Typography>
+              <References references={keyReferences} />
+            </Box>
+          )
+        }
         media={
-          <ResourceAudioPlayer
-            url={audio.filename}
+          <Video
+            url={video.url}
             eventPrefix={EVENT_PREFIX}
             eventData={eventData}
-            onStart={start}
-            onFinish={complete}
+            setVideoStarted={() => start()}
+            setVideoFinished={() => complete()}
+            containerStyles={{ maxWidth: '100%', mt: 0 }}
           />
         }
       />
@@ -132,4 +162,4 @@ const StoryblokResourceConversationPage = ({ story: initialStory }: { story: ISb
   );
 };
 
-export default StoryblokResourceConversationPage;
+export default StoryblokResourceVideoPage;

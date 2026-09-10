@@ -110,7 +110,7 @@ export const SessionMediaCard = ({
         url={video.url}
         setVideoStarted={setVideoStarted}
         eventData={eventData}
-        eventPrefix="SESSION"
+        eventPrefix="SESSION_VIDEO"
         containerStyles={{ mt: 2, maxWidth: '100%' }}
       />
       {video_transcript && (

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!story) return;
 
   return generateMetadataBasic({
-    // The redesign moved the hero headline into `title`, so the document title has its own field.
+    // `title` is the hero headline; `seo_title` overrides the document title when set.
     title: story.content.seo_title || story.content.title,
     description: story.content.seo_description,
   });

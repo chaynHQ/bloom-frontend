@@ -30,13 +30,13 @@ const COURSE_SLUG = 'courses/a-course';
 
 // A Storyblok story trimmed to the fields the hook reads. Public and English by default.
 const story = (overrides: Record<string, unknown> & { uuid?: string; full_slug?: string } = {}) => {
-  const { uuid = 'story-uuid', full_slug = 'shorts/a-short', ...content } = overrides;
+  const { uuid = 'story-uuid', full_slug = 'video/a-video', ...content } = overrides;
   return {
     uuid,
     full_slug,
     content: {
-      name: 'A short',
-      component: 'resource_short_video',
+      name: 'A video',
+      component: 'resource_video',
       languages: ['default'],
       included_for_partners: ['Public'],
       themes: ['healing-journey'],

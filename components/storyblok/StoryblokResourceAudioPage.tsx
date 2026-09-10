@@ -27,7 +27,7 @@ export interface StoryblokResourceAudioPageProps extends ResourceStoryContent {
   duration: string;
   audio: { filename: string };
   audio_transcript: StoryblokRichtext;
-  login_required: boolean;
+  login_required?: boolean;
   team_members_section?: StoryblokTeamMembersSectionProps[];
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
@@ -58,6 +58,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.AUDIO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_AUDIO_VIEWED,
+    // Fail safe: gate a story that carries no explicit `login_required`.
+    loginRequiredByDefault: true,
   });
 
   const {

@@ -1,4 +1,4 @@
-import StoryblokResourceShortPage from '@/components/storyblok/StoryblokResourceShortPage';
+import StoryblokResourceVideoPage from '@/components/storyblok/StoryblokResourceVideoPage';
 import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getTranslations } from 'next-intl/server';
@@ -10,11 +10,11 @@ export const revalidate = 14400; // invalidate every 4 hours
 type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
-  return await getStoryblokStory(`shorts/${slug}`, locale, {
+  return await getStoryblokStory(`video/${slug}`, locale, {
     resolve_relations: [
-      'resource_short_video.related_content',
-      'resource_short_video.related_grounding',
-      'resource_short_video.related_session',
+      'resource_video.related_content',
+      'resource_video.related_grounding',
+      'resource_video.related_session',
     ],
   });
 }
@@ -28,13 +28,13 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   return generateMetadataBasic({
     title: story.content.name,
-    titleParent: t('shorts'),
+    titleParent: t('video'),
     description: story.content.seo_description,
   });
 }
 
 export function generateStaticParams() {
-  return resourceFolderStaticParams('shorts');
+  return resourceFolderStaticParams('video');
 }
 
 export default async function Page({ params }: { params: Params }) {
@@ -46,5 +46,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokResourceShortPage story={story} />;
+  return <StoryblokResourceVideoPage story={story} />;
 }

@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Gespräche",
-    "shorts": "Kurzfilme",
-    "videos": "Videos",
+    "video": "Video",
     "audio": "Audio",
     "written": "Text",
     "activity": "Übung",
@@ -46,9 +44,7 @@
     "relatedContent": {
       "title": "Möchtest du mehr entdecken?",
       "subtitle": "Wirf einen Blick auf unsere verwandten Sessions unten – sie können dich auf deiner Heilungsreise begleiten.",
-      "short_video": "Ansehen",
-      "single_video": "Ansehen",
-      "resource_conversation": "Listen",
+      "video": "Ansehen",
       "audio": "Anhören",
       "written": "Lesen",
       "activity": "Übungen",
@@ -56,7 +52,6 @@
       "session": "Sitzung",
       "session_iba": "Sitzung",
       "grounding": "Stabilisierung",
-      "activities": "Übungen",
       "minuteLabel": "Minuten"
     },
     "resourceFeedback": {

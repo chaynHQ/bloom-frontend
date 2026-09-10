@@ -1,5 +1,4 @@
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { STORYBLOK_TAGS } from '@/lib/constants/enums';
 import { getStoryblokStories } from '@/lib/storyblok';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
 import { toLibraryStory, type LibraryStories, type LibraryStory } from './libraryData';
@@ -48,28 +47,22 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
 
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
-  const [courses, courseSessions, shorts, somatics, conversations, written, activity] =
-    await Promise.all([
-      getCourseStories(locale),
-      getAllStoryblokStories(locale, {
-        ...baseProps(locale),
-        starts_with: 'courses/',
-        filter_query: { component: { in: 'Session,session_iba' } },
-      }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
-      getAllStoryblokStories(locale, {
-        ...baseProps(locale),
-        starts_with: 'videos/',
-        with_tag: STORYBLOK_TAGS.SOMATICS,
-      }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
-      getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
-    ]);
+  const [courses, courseSessions, video, audio, written, activity] = await Promise.all([
+    getCourseStories(locale),
+    getAllStoryblokStories(locale, {
+      ...baseProps(locale),
+      starts_with: 'courses/',
+      filter_query: { component: { in: 'Session,session_iba' } },
+    }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'video/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'audio/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
+    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
+  ]);
 
   return {
     courses,
     courseSessions,
-    resources: [...shorts, ...somatics, ...conversations, ...written, ...activity],
+    resources: [...video, ...audio, ...written, ...activity],
   };
 }

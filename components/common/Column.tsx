@@ -25,7 +25,7 @@ const COLUMN_WIDTHS: Record<string, { xs: string; md: string }> = {
 };
 
 // `fill` treats the authored width as a share of the row rather than a fixed percentage, so the
-// columns tile its full width. Off by default — pre-redesign stories assume fixed percentages.
+// columns tile its full width. Off by default — most stories assume fixed percentages.
 const fillWidth = (size: { xs: string; md: string }) => ({
   width: { xs: size.xs, md: 'auto' },
   flexBasis: { md: 0 },

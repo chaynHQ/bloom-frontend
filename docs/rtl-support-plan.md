@@ -227,7 +227,7 @@ resources, whatsapp`) under `i18n/messages/*/`. Add the two imports per locale i
       visual check per major template (home, course, session, therapy booking, account, messaging).
 - [ ] **7.4 Manual RTL visual pass** (the real bug-finder). Walk every top-level route in `ar`:
       home, courses + course/[slug], session pages, therapy + book-session (Simplybook iframe),
-      account + sub-pages, auth (login/register/reset), conversations/shorts/videos, messaging,
+      account + sub-pages, auth (login/register/reset), video/audio resources, messaging,
       meet-the-team, welcome/[partner], policies, admin & partner-admin. Check: text alignment,
       icon/chevron direction, modals/drawers anchoring, sliders, carousels, chat bubble sides, fixed
       buttons (LeaveSiteButton, PWA banners, MobileBottomNav), and font rendering.

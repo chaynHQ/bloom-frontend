@@ -127,9 +127,9 @@ export const ResourceAudioPlayer = ({
     if (!hasStarted.current) {
       hasStarted.current = true;
       onStart?.();
-      logEvent(`${eventPrefix}_AUDIO_STARTED`, { ...eventData, audio_duration: duration });
+      logEvent(`${eventPrefix}_STARTED`, { ...eventData, audio_duration: duration });
     } else {
-      logEvent(`${eventPrefix}_AUDIO_PLAYED`, eventPayload());
+      logEvent(`${eventPrefix}_PLAYED`, eventPayload());
     }
   };
 
@@ -137,7 +137,7 @@ export const ResourceAudioPlayer = ({
     setPlaying(false);
     // The `ended` event also fires a pause; let `handleEnded` own that transition.
     if (audioRef.current && !audioRef.current.ended) {
-      logEvent(`${eventPrefix}_AUDIO_PAUSED`, eventPayload());
+      logEvent(`${eventPrefix}_PAUSED`, eventPayload());
     }
   };
 
@@ -146,7 +146,7 @@ export const ResourceAudioPlayer = ({
     if (hasFinished.current) return;
     hasFinished.current = true;
     onFinish?.();
-    logEvent(`${eventPrefix}_AUDIO_FINISHED`, { ...eventData, audio_duration: duration });
+    logEvent(`${eventPrefix}_FINISHED`, { ...eventData, audio_duration: duration });
   };
 
   return (
