@@ -16,7 +16,7 @@ import {
 
 // A Storyblok story, trimmed to the fields the library reads. `content` is loose: the real
 // payloads differ per component.
-const story = (content: Record<string, unknown>, full_slug = 'shorts/what-are-boundaries') =>
+const story = (content: Record<string, unknown>, full_slug = 'video/what-are-boundaries') =>
   ({
     uuid: 'uuid-1',
     full_slug,
@@ -81,10 +81,6 @@ describe('storyToLibraryItem', () => {
       ['resource_audio', 'audio'],
       ['resource_written', 'written'],
       ['resource_activity', 'activity'],
-      // Pre-merge component names, still mapped.
-      ['resource_conversation', 'audio'],
-      ['resource_short_video', 'video'],
-      ['resource_single_video', 'video'],
       ['Session', 'video'],
       ['session_iba', 'video'],
     ])('maps the %s component to the %s format', (component, format) => {
@@ -203,8 +199,8 @@ describe('toLibraryStory', () => {
   it('survives a story missing the optional fields', () => {
     const projected = toLibraryStory({
       uuid: 'uuid-2',
-      full_slug: 'shorts/a-short',
-      content: { name: 'A short', component: 'resource_short_video' },
+      full_slug: 'video/a-short',
+      content: { name: 'A short', component: 'resource_video' },
     } as unknown as Parameters<typeof toLibraryStory>[0]);
 
     expect(projected.content.name).toBe('A short');
@@ -238,30 +234,31 @@ describe('parentCourseSlug', () => {
 
 // A conservative floor: every course lesson path reads as needing an account. AuthGuard no longer
 // blocks session pages — the session page itself opens the first lesson of a Public course — and
-// useLibraryItems lifts the badge for those first lessons via `freeFirstSessionUuids`.
+// useLibraryItems lifts the badge for those first lessons via `freeFirstSessionUuids`. Resources
+// carry `login_required` on the story, so they are not path-gated here.
 describe('pathRequiresAccount', () => {
   it.each([
     ['/courses/managing-anxiety', false, 'a course overview is public'],
-    ['/shorts/what-are-boundaries', false, 'a short is public'],
+    ['/video/what-are-boundaries', false, 'a resource is gated by login_required, not its path'],
     ['/courses/managing-anxiety/what-is-anxiety', true, 'a course lesson needs an account'],
-    ['/videos/a-somatic-video', true, 'a somatic video needs an account'],
-    ['/conversations/a-conversation', true, 'an audio conversation needs an account'],
   ])('%s → %s (%s)', (path, expected) => {
     expect(pathRequiresAccount(path)).toBe(expected);
   });
 });
 
 describe('storyToLibraryItem account requirement', () => {
-  // A translated story's full_slug carries its locale (`de/videos/…`). The requirement is read
-  // from the app path, after the locale has been stripped — otherwise every non-English card
-  // would look public.
-  it('reads the requirement past a locale prefix', () => {
+  // A translated course lesson's full_slug carries its locale (`de/courses/…`). The requirement is
+  // read from the app path, after the locale has been stripped — otherwise every non-English
+  // lesson card would look public.
+  it('reads the course-lesson requirement past a locale prefix', () => {
     expect(
-      storyToLibraryItem(story({ component: 'resource_conversation' }, 'de/videos/somatic'), 'de')
-        .requiresAccount,
+      storyToLibraryItem(
+        story({ component: 'Session' }, 'de/courses/managing-anxiety/what-is-anxiety'),
+        'de',
+      ).requiresAccount,
     ).toBe(true);
     expect(
-      storyToLibraryItem(story({ component: 'resource_short_video' }, 'de/shorts/a-short'), 'de')
+      storyToLibraryItem(story({ component: 'Course' }, 'de/courses/managing-anxiety'), 'de')
         .requiresAccount,
     ).toBe(false);
   });
@@ -275,9 +272,8 @@ describe('storyToLibraryItem account requirement', () => {
     );
   });
 
-  // written/activity aren't gated by path, so the badge has to fall back to the story's own
-  // `login_required` (defaults true) instead.
-  it('reads the requirement from login_required for a path AuthGuard does not gate', () => {
+  // Resources aren't gated by path — the badge reads the story's own `login_required`.
+  it('reads the requirement from login_required for a resource', () => {
     expect(
       storyToLibraryItem(
         story({ component: 'resource_activity', login_required: true }, 'activity/thought-diaries'),

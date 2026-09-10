@@ -44,10 +44,7 @@
     "relatedContent": {
       "title": "Quer explorar mais?",
       "subtitle": "Dê uma olhada nas nossas sessões relacionadas abaixo, para acompanhar a sua jornada de cura.",
-      "short_video": "Assistir",
-      "single_video": "Assistir",
       "video": "Assistir",
-      "resource_conversation": "Áudio",
       "audio": "Ouvir",
       "written": "Ler",
       "activity": "Atividade",
@@ -55,7 +52,6 @@
       "session": "Sessão",
       "session_iba": "Sessão",
       "grounding": "Aterramento",
-      "activities": "Atividade",
       "minuteLabel": "minutos"
     },
     "resourceFeedback": {

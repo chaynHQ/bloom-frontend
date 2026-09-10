@@ -285,8 +285,8 @@ export const generatePartnerPromoGetStartedEvent = (partner: string) =>
 export const generatePartnerPromoGoToCoursesEvent = (partner: string) =>
   `${partner.toUpperCase()}_PROMO_GO_TO_COURSES_CLICKED`;
 
-// The redesigned welcome page carries a `welcome_partner` property rather than baking the partner
-// into the event name, so the pages stay comparable with each other and with the home page.
+// The welcome page carries a `welcome_partner` property rather than baking the partner into the
+// event name, so the pages stay comparable with each other and with the home page.
 export const WELCOME_VIEWED = 'WELCOME_VIEWED';
 export const WELCOME_BROWSE_ALL_CLICKED = 'WELCOME_BROWSE_ALL_CLICKED';
 export const WELCOME_SUPPORT_CARD_CLICKED = 'WELCOME_SUPPORT_CARD_CLICKED';

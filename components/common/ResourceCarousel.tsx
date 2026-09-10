@@ -22,14 +22,9 @@ export interface ResourceCarouselProps {
   // Either you can pass the data down if you already have it or you can pull from the storyblok API
   resources?: ISbStoryData[];
 }
-// `resource_short_video` / `resource_single_video` / `resource_conversation` are the pre-merge
-// component names; a story keeps one until its folder move republishes it.
 const RESOURCE_CATEGORY_BY_COMPONENT: Record<string, RESOURCE_CATEGORIES> = {
   resource_video: RESOURCE_CATEGORIES.VIDEO,
-  resource_short_video: RESOURCE_CATEGORIES.VIDEO,
-  resource_single_video: RESOURCE_CATEGORIES.VIDEO,
   resource_audio: RESOURCE_CATEGORIES.AUDIO,
-  resource_conversation: RESOURCE_CATEGORIES.AUDIO,
   resource_written: RESOURCE_CATEGORIES.WRITTEN,
   resource_activity: RESOURCE_CATEGORIES.ACTIVITY,
 };
@@ -41,8 +36,6 @@ function resourceCard(story: ISbStoryData, locale: string, onSelect: () => void)
 
   switch (component) {
     case 'resource_video':
-    case 'resource_short_video':
-    case 'resource_single_video':
       return (
         <ResourceCard
           title={name}
@@ -54,7 +47,6 @@ function resourceCard(story: ISbStoryData, locale: string, onSelect: () => void)
         />
       );
     case 'resource_audio':
-    case 'resource_conversation':
     case 'resource_written':
     case 'resource_activity':
       return (

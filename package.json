@@ -38,10 +38,6 @@
     "check:links": "node ./scripts/checkLinks.mjs",
     "translate:storyblok": "node ./scripts/translateStoryblok.mjs",
     "fix:storyblok": "node ./scripts/fixStoryblokTranslations.mjs",
-    "storyblok:create-blocks": "node ./scripts/storyblok/01-create-blocks.mjs",
-    "storyblok:copy-exercise-content": "node ./scripts/storyblok/02-copy-exercise-content.mjs",
-    "storyblok:remap-related-exercises": "node ./scripts/storyblok/03-remap-related-exercises.mjs",
-    "storyblok:add-related-session": "node ./scripts/storyblok/04-add-related-session.mjs",
     "postinstall": "husky",
     "prepare": "husky",
     "knip": "knip"
