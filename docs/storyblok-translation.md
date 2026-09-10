@@ -18,6 +18,10 @@ yarn translate:storyblok --slug grounding --langs de --engine file   # one page,
 > untranslated per page/locale (read-only), and **`yarn fix:storyblok`**
 > (`scripts/fixStoryblokTranslations.mjs`) safely _corrects_ translations that already exist
 > (see [Correcting translations that already exist](#correcting-translations-that-already-exist-qa-fixes)).
+>
+> To QA / edit these same translations in **Lokalise** and write the result back, use the
+> round-trip flow instead: `yarn export:storyblok-lokalise` / `yarn import:storyblok-lokalise`,
+> documented in [`docs/storyblok-lokalise-roundtrip.md`](./storyblok-lokalise-roundtrip.md).
 
 ## Hard-won learnings baked into the script
 
