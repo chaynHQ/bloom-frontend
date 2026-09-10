@@ -98,22 +98,12 @@ export const COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED = 'COURSE_INTRO_TRANSCRIPT_OPE
 export const COURSE_INTRO_VIDEO_TRANSCRIPT_CLOSED = 'COURSE_INTRO_TRANSCRIPT_CLOSED';
 
 // Resource media events. Each of the four resource families reports under its own prefix
-// (`RESOURCE_VIDEO` / `RESOURCE_AUDIO` / `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY`); the media
-// player appends its own `_VIDEO_*` / `_AUDIO_*` suffix, so a video's play event reads
-// `RESOURCE_VIDEO_VIDEO_STARTED`. The progress and transcript events are emitted from the prefix
-// (`${prefix}_STARTED_REQUEST`, …) and so are not imported by name.
-//
-// Renamed at the shorts + somatic-video + conversation merge (step 7):
-//   RESOURCE_SHORT_VIDEO_*  → RESOURCE_VIDEO_*
-//   RESOURCE_SINGLE_VIDEO_* → RESOURCE_VIDEO_*
-//   RESOURCE_CONVERSATION_* → RESOURCE_AUDIO_*
-// bloom-backend `reporting.events.ts` keeps the old names alongside the new for the GA
-// transition window, then drops them.
+// (`RESOURCE_VIDEO` / `RESOURCE_AUDIO` / `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY`)
 export const RESOURCE_VIDEO_VIEWED = 'RESOURCE_VIDEO_VIEWED';
-export const RESOURCE_VIDEO_VIDEO_STARTED = 'RESOURCE_VIDEO_VIDEO_STARTED'; // Applied via eventPrefix (<Video>)
-export const RESOURCE_VIDEO_VIDEO_PLAYED = 'RESOURCE_VIDEO_VIDEO_PLAYED'; // Applied via eventPrefix (<Video>)
-export const RESOURCE_VIDEO_VIDEO_PAUSED = 'RESOURCE_VIDEO_VIDEO_PAUSED'; // Applied via eventPrefix (<Video>)
-export const RESOURCE_VIDEO_VIDEO_FINISHED = 'RESOURCE_VIDEO_VIDEO_FINISHED'; // Applied via eventPrefix (<Video>)
+export const RESOURCE_VIDEO_STARTED = 'RESOURCE_VIDEO_STARTED'; // Applied via eventPrefix (<Video>)
+export const RESOURCE_VIDEO_PLAYED = 'RESOURCE_VIDEO_PLAYED'; // Applied via eventPrefix (<Video>)
+export const RESOURCE_VIDEO_PAUSED = 'RESOURCE_VIDEO_PAUSED'; // Applied via eventPrefix (<Video>)
+export const RESOURCE_VIDEO_FINISHED = 'RESOURCE_VIDEO_FINISHED'; // Applied via eventPrefix (<Video>)
 export const RESOURCE_VIDEO_STARTED_REQUEST = 'RESOURCE_VIDEO_STARTED_REQUEST';
 export const RESOURCE_VIDEO_STARTED_SUCCESS = 'RESOURCE_VIDEO_STARTED_SUCCESS';
 export const RESOURCE_VIDEO_STARTED_ERROR = 'RESOURCE_VIDEO_STARTED_ERROR';
@@ -125,10 +115,10 @@ export const RESOURCE_VIDEO_TRANSCRIPT_CLOSED = 'RESOURCE_VIDEO_TRANSCRIPT_CLOSE
 export const RESOURCE_VIDEO_VISIT_SESSION = 'RESOURCE_VIDEO_VISIT_SESSION'; // Applied via eventPrefix
 
 export const RESOURCE_AUDIO_VIEWED = 'RESOURCE_AUDIO_VIEWED';
-export const RESOURCE_AUDIO_AUDIO_STARTED = 'RESOURCE_AUDIO_AUDIO_STARTED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
-export const RESOURCE_AUDIO_AUDIO_PLAYED = 'RESOURCE_AUDIO_AUDIO_PLAYED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
-export const RESOURCE_AUDIO_AUDIO_PAUSED = 'RESOURCE_AUDIO_AUDIO_PAUSED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
-export const RESOURCE_AUDIO_AUDIO_FINISHED = 'RESOURCE_AUDIO_AUDIO_FINISHED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
+export const RESOURCE_AUDIO_STARTED = 'RESOURCE_AUDIO_STARTED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
+export const RESOURCE_AUDIO_PLAYED = 'RESOURCE_AUDIO_PLAYED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
+export const RESOURCE_AUDIO_PAUSED = 'RESOURCE_AUDIO_PAUSED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
+export const RESOURCE_AUDIO_FINISHED = 'RESOURCE_AUDIO_FINISHED'; // Applied via eventPrefix (<ResourceAudioPlayer>)
 export const RESOURCE_AUDIO_STARTED_REQUEST = 'RESOURCE_AUDIO_STARTED_REQUEST';
 export const RESOURCE_AUDIO_STARTED_SUCCESS = 'RESOURCE_AUDIO_STARTED_SUCCESS';
 export const RESOURCE_AUDIO_STARTED_ERROR = 'RESOURCE_AUDIO_STARTED_ERROR';

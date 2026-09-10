@@ -1,32 +1,22 @@
 import StoryblokResourceAudioPage from '@/components/storyblok/StoryblokResourceAudioPage';
-import { getOptionalStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
+import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-// Transitional route: `audio/` fills when step 7c moves `conversations/*` into it. Until then a
-// request can be for a story still in `conversations/`, so fall back to it and resolve relations
-// under the old component name too. `dynamicParams` goes back to `false` with a real
-// `generateStaticParams` in step 7d, once every story has moved.
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;
 
-const RESOLVE_RELATIONS = [
-  'resource_audio.related_content',
-  'resource_audio.related_grounding',
-  'resource_audio.related_session',
-  'resource_conversation.related_content',
-  'resource_conversation.related_grounding',
-];
-
 async function getStory(locale: string, slug: string) {
-  const params = { resolve_relations: RESOLVE_RELATIONS };
-  return (
-    (await getOptionalStoryblokStory(`audio/${slug}`, locale, params)) ??
-    (await getOptionalStoryblokStory(`conversations/${slug}`, locale, params))
-  );
+  return await getStoryblokStory(`audio/${slug}`, locale, {
+    resolve_relations: [
+      'resource_audio.related_content',
+      'resource_audio.related_grounding',
+      'resource_audio.related_session',
+    ],
+  });
 }
 
 export async function generateMetadata({ params }: { params: Params }) {

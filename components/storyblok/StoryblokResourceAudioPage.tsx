@@ -32,8 +32,7 @@ export interface StoryblokResourceAudioPageProps extends ResourceStoryContent {
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
   related_grounding: ISbStoryData[];
-  // A story still on the old `resource_conversation` block until step 7c moves it.
-  component: 'resource_audio' | 'resource_conversation';
+  component: 'resource_audio';
 }
 
 const EVENT_PREFIX = 'RESOURCE_AUDIO' as const;
@@ -59,8 +58,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.AUDIO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_AUDIO_VIEWED,
-    // The old `resource_conversation` block predates `login_required`, so gate until step 7c
-    // moves the story onto `resource_audio` with an explicit value.
+    // Conversations gate today; step 7c moves them onto this block. Fail safe (gated) if a story
+    // arrives without an explicit `login_required`.
     loginRequiredByDefault: true,
   });
 

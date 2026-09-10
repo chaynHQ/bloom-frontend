@@ -23,9 +23,6 @@ import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
 import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection';
 import { StoryblokReferenceProps } from './StoryblokTypes';
 
-// `resource_video` is the merge of the old `resource_short_video` and `resource_single_video`
-// blocks (step 7). During the transition a story may still carry either old component name — the
-// fields below are a superset of both, and this page renders it regardless.
 export interface StoryblokResourceVideoPageProps extends ResourceStoryContent {
   _uid: string;
   _editable: string;
@@ -40,7 +37,7 @@ export interface StoryblokResourceVideoPageProps extends ResourceStoryContent {
   page_sections: SbBlokData[];
   related_content: StoryblokRelatedContentStory[];
   related_grounding?: ISbStoryData[];
-  component: 'resource_video' | 'resource_short_video' | 'resource_single_video';
+  component: 'resource_video';
 }
 
 const EVENT_PREFIX = 'RESOURCE_VIDEO' as const;
@@ -67,10 +64,9 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
     category: RESOURCE_CATEGORIES.VIDEO,
     eventPrefix: EVENT_PREFIX,
     viewedEvent: RESOURCE_VIDEO_VIEWED,
-    // Shorts have always been public and only gain an explicit `login_required` when step 7c moves
-    // them; the old somatic-video block predates the field and gates by default. Keep both true to
-    // form until every story carries the flag.
-    loginRequiredByDefault: initialStory.content.component !== 'resource_short_video',
+    // Gate unless a story explicitly opts out — step 7c sets `login_required: false` on the public
+    // shorts as it moves them; a story that somehow arrives without the flag fails safe (gated).
+    loginRequiredByDefault: true,
   });
 
   const {

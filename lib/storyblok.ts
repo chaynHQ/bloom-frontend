@@ -71,8 +71,6 @@ export const getStoryblokStory = async (
   locale: string | undefined,
   params?: Partial<ISbStoriesParams>,
   uuids?: string,
-  // Set by getOptionalStoryblokStory; see there.
-  optional = false,
 ) => {
   if (!slug && !uuids) {
     throw new Error('No slug provided');
@@ -91,20 +89,10 @@ export const getStoryblokStory = async (
 
     return data?.story as ISbStoryData;
   } catch (error) {
-    if (!optional) {
-      rollbar.error('Error getting storyblok data for page', error as Error, { slug, sbParams });
-    }
+    rollbar.error('Error getting storyblok data for page', error as Error, { slug, sbParams });
     return undefined;
   }
 };
-
-// For a slug the caller probes for rather than depends on. A story that is allowed not to exist
-// should not report its absence to Rollbar as an error.
-export const getOptionalStoryblokStory = async (
-  slug: string,
-  locale: string | undefined,
-  params?: Partial<ISbStoriesParams>,
-) => getStoryblokStory(slug, locale, params, undefined, true);
 
 // `generateStaticParams` for a resource folder of one-level `[slug]` pages (audio, written,
 // activity, shorts, conversations). On preview/staging the CMS reads `draft`, where migrated

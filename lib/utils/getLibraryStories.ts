@@ -45,32 +45,9 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
   });
 }
 
-const dedupeByUuid = (stories: LibraryStory[]): LibraryStory[] => {
-  const seen = new Set<string>();
-  return stories.filter((story) => {
-    if (seen.has(story.uuid)) return false;
-    seen.add(story.uuid);
-    return true;
-  });
-};
-
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {
-  // `video/` + `audio/` are queried alongside the old `shorts/` `videos/` `conversations/`
-  // folders until step 7c finishes moving stories; a story caught mid-move can appear in both,
-  // hence the uuid dedupe. The old-folder queries drop in step 7d. The `somatics` tag filter is
-  // gone: after the merge every `videos/` story is just a video.
-  const [
-    courses,
-    courseSessions,
-    video,
-    audio,
-    shorts,
-    somaticVideos,
-    conversations,
-    written,
-    activity,
-  ] = await Promise.all([
+  const [courses, courseSessions, video, audio, written, activity] = await Promise.all([
     getCourseStories(locale),
     getAllStoryblokStories(locale, {
       ...baseProps(locale),
@@ -79,9 +56,6 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
     }),
     getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'video/' }),
     getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'audio/' }),
-    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'shorts/' }),
-    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'videos/' }),
-    getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'conversations/' }),
     getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'written/' }),
     getAllStoryblokStories(locale, { ...baseProps(locale), starts_with: 'activity/' }),
   ]);
@@ -89,14 +63,6 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
   return {
     courses,
     courseSessions,
-    resources: dedupeByUuid([
-      ...video,
-      ...audio,
-      ...shorts,
-      ...somaticVideos,
-      ...conversations,
-      ...written,
-      ...activity,
-    ]),
+    resources: [...video, ...audio, ...written, ...activity],
   };
 }
