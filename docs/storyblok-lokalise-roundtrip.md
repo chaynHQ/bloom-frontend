@@ -36,8 +36,10 @@ The exclusion is enforced in `storyblokLokalise.lib.mjs` (`EXCLUDED_PREFIXES`,
 already have their own `check:translations` flow.
 
 **Languages:** the export defaults to `tr, ar` (`--langs de,fr,…` to change). English is
-always emitted as the source. `de/fr/es/pt/hi` were left out on purpose — as of this writing
-they are only partly translated for the grounding/activity content and were not the focus.
+always emitted as the source. The tooling is fully language-agnostic — see
+§11 for reusing it on `de/fr/es/pt/hi` or a brand-new locale. `de/fr/es/pt/hi` were left
+out of the committed baseline on purpose: they are only 50–85 % translated for this content
+and carry a lot of pre-existing structural drift (§11).
 
 ---
 
@@ -171,16 +173,16 @@ yarn import:storyblok-lokalise --in ./storyblok-lokalise/incoming --write --yes 
 
 Useful flags:
 
-| flag                    | effect                                                                 |
-| ----------------------- | ---------------------------------------------------------------------- |
-| `--manifest <path>`     | default `./storyblok-lokalise/manifest.json`                           |
-| `--in <dir>`            | folder holding `tr.json` / `ar.json` (names must be the locale codes)  |
-| `--file tr=<path>`      | point at one file explicitly (repeatable)                              |
-| `--langs tr`            | restrict to some of the languages present                              |
-| `--slug home,messaging` | restrict to some stories                                               |
-| `--write --yes`         | actually PUT (drafts). `--yes` guards against an accidental `--write`. |
-| `--publish`             | after writing, publish the stories that changed (only those)           |
-| `--overwrite-divergent` | last resort — see §6                                                   |
+| flag                    | effect                                                                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--manifest <path>`     | default `./storyblok-lokalise/manifest.json`                                                                                                                 |
+| `--in <dir>`            | folder holding `tr.json` / `ar.json` (names must be the locale codes)                                                                                        |
+| `--file tr=<path>`      | point at one file explicitly (repeatable)                                                                                                                    |
+| `--langs tr`            | restrict to some of the languages present                                                                                                                    |
+| `--slug home,messaging` | restrict to some stories                                                                                                                                     |
+| `--write --yes`         | actually PUT (drafts). `--yes` guards against an accidental `--write`.                                                                                       |
+| `--publish`             | after writing, publish the stories that changed (only those)                                                                                                 |
+| `--overwrite-divergent` | re-clone a rich-text field from English when its existing translation's structure has drifted — normal for `de/fr/es/pt/hi` (§11), a last resort for `tr/ar` |
 
 Every story it writes is snapshotted to `.storyblok-translation/<slug>.beforeimport.json`
 first, and Storyblok keeps per-story version history, so rollback is always possible.
@@ -197,13 +199,13 @@ written: 14   no-op: 640   blank: 30   unknown key: 0   skipped: 3
 - **unknown key** — key not in the manifest (stale export, or renamed in Lokalise). Listed.
 - **skipped** — needs a human. Grouped by reason:
 
-| reason                           | meaning                                                                                                 | what to do                                                                                                                                                                                                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `source-changed`                 | the English for this field changed in Storyblok since the export                                        | re-run the export, re-upload to Lokalise (Lokalise keeps your translations for unchanged keys), re-download, re-import                                                                                       |
-| `owner-blok-missing`             | the blok (`_uid`) was deleted & recreated                                                               | that content is effectively new — translate it fresh (`translateStoryblok.mjs` or a new export)                                                                                                              |
-| `placeholder-mismatch`           | the translation dropped/added a `{placeholder}`                                                         | fix the translation in Lokalise, re-download                                                                                                                                                                 |
-| `existing-translation-divergent` | Storyblok already has a partial translation for this rich-text field whose structure no longer lines up | `--overwrite-divergent` re-clones the field from English and applies the incoming values (**loses any existing edits in that one field for that one language**). Prefer fixing by hand if the field matters. |
-| `field-not-in-manifest`          | key parsed but its field group isn't in the manifest                                                    | stale manifest — re-export                                                                                                                                                                                   |
+| reason                           | meaning                                                                                                                                                      | what to do                                                                                                                                                                                                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `source-changed`                 | the English for this field changed in Storyblok since the export                                                                                             | re-run the export, re-upload to Lokalise (Lokalise keeps your translations for unchanged keys), re-download, re-import                                                                                                                                                  |
+| `owner-blok-missing`             | the blok (`_uid`) was deleted & recreated                                                                                                                    | that content is effectively new — translate it fresh (`translateStoryblok.mjs` or a new export)                                                                                                                                                                         |
+| `placeholder-mismatch`           | the translation dropped/added a `{placeholder}`                                                                                                              | fix the translation in Lokalise, re-download                                                                                                                                                                                                                            |
+| `existing-translation-divergent` | Storyblok already has a translation for this rich-text field whose leaf structure no longer matches the English (English was edited after it was translated) | `--overwrite-divergent` re-clones the field from English and applies the incoming values. For `de/fr/es/pt/hi` this is expected and correct (§11). For `tr/ar` it's rare — check the field by hand first, since the existing translation for it is otherwise discarded. |
+| `field-not-in-manifest`          | key parsed but its field group isn't in the manifest                                                                                                         | stale manifest — re-export                                                                                                                                                                                                                                              |
 
 ---
 
@@ -299,3 +301,35 @@ STORYBLOK_OAUTH_TOKEN=...     # Personal access token / OAuth with write scope f
 STORYBLOK_SPACE_ID=...        # numeric
 # STORYBLOK_MAPI_BASE=https://mapi.storyblok.com/v1   # EU default; set for US spaces
 ```
+
+---
+
+## 11. Reusing this for other languages
+
+The scripts don't care which languages — `--langs de,fr,es,pt,hi` (or any single code) on
+the export, and the import writes whatever files you hand it. But the _experience_ differs by
+how much of that language already exists in Storyblok:
+
+| situation                              | what the export looks like                                                                                                                                                                               | import path                                                                                                                                                                                                                                           |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`tr` / `ar`** (this baseline)        | ~99 % filled, 0 structural drift — a clean QA pass                                                                                                                                                       | plain `--write`                                                                                                                                                                                                                                       |
+| **`de` / `fr` / `es` / `pt` / `hi`**   | 50–85 % filled, **and 15–40 % of segments show blank because their old translation was made against an earlier English and the leaf structure has since drifted** (`state: "divergent"` in the manifest) | translators fill the blanks; on import those fields report `existing-translation-divergent` — re-run with **`--overwrite-divergent`**, which is the _right_ move here (the old text is stale; you're replacing it with the complete Lokalise version) |
+| **a brand-new locale** (e.g. add `it`) | 100 % blank = a full translation job                                                                                                                                                                     | imports cleanly — nothing to diverge from                                                                                                                                                                                                             |
+
+Steps for a new language, e.g. German:
+
+```bash
+git checkout -b storyblok-lokalise-de              # keep the tr/ar baseline untouched
+yarn export:storyblok-lokalise --langs de          # overwrites storyblok-lokalise/*
+# upload storyblok-lokalise/en.json + de.json to Lokalise, translate, download to incoming/de.json
+yarn import:storyblok-lokalise --in ./storyblok-lokalise/incoming --langs de           # dry-run
+yarn import:storyblok-lokalise --in ./storyblok-lokalise/incoming --langs de --overwrite-divergent --write --yes
+```
+
+Re-exporting **overwrites `storyblok-lokalise/`** — branch first (or `--out ./tmp/lok-de`) if
+you want to keep the current tr/ar baseline in place.
+
+One export ↔ one Lokalise upload ↔ one import against _that_ `manifest.json`. As long as the
+English hasn't changed in Storyblok, keys are stable across re-exports and an older Lokalise
+project still lines up — but the source-drift guard (§6) is what actually protects you, so
+trust the dry-run summary over that assumption.
