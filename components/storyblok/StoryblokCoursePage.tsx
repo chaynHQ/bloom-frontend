@@ -40,9 +40,9 @@ import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const OTHER_COURSES_SHOWN = 2;
 
-// The redesign has no slot for the course intro video, but courses that have one still need to
-// surface it. Full-width rules on the top edge of this section and the session list separate the
-// three bands; the padding around the intro/sessions rule is symmetric (video ↔ rule ↔ heading).
+// Dedicated band for the course intro video, shown only for courses that have one. Full-width
+// rules on the top edge of this section and the session list separate the three bands; the
+// padding around the intro/sessions rule is symmetric (video ↔ rule ↔ heading).
 const introSectionStyle = {
   backgroundColor: 'secondary.light',
   borderTop: '1px solid',

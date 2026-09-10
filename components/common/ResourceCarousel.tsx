@@ -23,9 +23,7 @@ export interface ResourceCarouselProps {
   resources?: ISbStoryData[];
 }
 const RESOURCE_CATEGORY_BY_COMPONENT: Record<string, RESOURCE_CATEGORIES> = {
-  resource_short_video: RESOURCE_CATEGORIES.SHORT_VIDEO,
-  resource_single_video: RESOURCE_CATEGORIES.SINGLE_VIDEO,
-  resource_conversation: RESOURCE_CATEGORIES.CONVERSATION,
+  resource_video: RESOURCE_CATEGORIES.VIDEO,
   resource_audio: RESOURCE_CATEGORIES.AUDIO,
   resource_written: RESOURCE_CATEGORIES.WRITTEN,
   resource_activity: RESOURCE_CATEGORIES.ACTIVITY,
@@ -37,8 +35,7 @@ function resourceCard(story: ISbStoryData, locale: string, onSelect: () => void)
   const category = RESOURCE_CATEGORY_BY_COMPONENT[component as string];
 
   switch (component) {
-    case 'resource_short_video':
-    case 'resource_single_video':
+    case 'resource_video':
       return (
         <ResourceCard
           title={name}
@@ -49,7 +46,6 @@ function resourceCard(story: ISbStoryData, locale: string, onSelect: () => void)
           onSelect={onSelect}
         />
       );
-    case 'resource_conversation':
     case 'resource_audio':
     case 'resource_written':
     case 'resource_activity':

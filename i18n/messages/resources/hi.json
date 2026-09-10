@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Bātcīt",
-    "shorts": "Clips",
-    "videos": "Videos",
+    "video": "Video",
     "audio": "Audio",
     "written": "Likhit",
     "activity": "Activity",
@@ -46,9 +44,7 @@
     "relatedContent": {
       "title": "Aur explore karna chahte hain?",
       "subtitle": "Apni healing journey mein madad ke liye, neeche di gayi related sessions dekhen.",
-      "short_video": "Watch",
-      "single_video": "Watch",
-      "resource_conversation": "Listen",
+      "video": "Watch",
       "audio": "Sunein",
       "written": "Padhein",
       "activity": "Activity",
@@ -56,7 +52,6 @@
       "session": "Session",
       "session_iba": "Session",
       "grounding": "Grounding",
-      "activities": "Activity",
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {

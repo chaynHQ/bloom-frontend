@@ -50,10 +50,10 @@ yarn translate:storyblok --slug grounding --langs de --engine file   # one page,
   field already translated in a reference language. Rich-text is translated fully inline
   (text nodes + embedded component fields).
 - **In scope (`--all`):** `home`, `welcome/*`, `meet-the-team`, `messaging`,
-  `therapy/book-session`, `subscription/whatsapp`, `grounding/*` + `activities/*`
+  `therapy/book-session`, `subscription/whatsapp`, `grounding/*` + `activity/*`
   exercises, and generic single pages.
-- **Refused:** `courses/*`, `videos/*`, `shorts/*`, `conversations/*`, and any `course`
-  / `session` component — their video/audio isn't available in these locales.
+- **Refused:** `courses/*`, `video/*`, `audio/*`, and any `course` / `session`
+  component — their video/audio isn't available in these locales.
 - **`policies/*`:** excluded from `--all` by default (legal text → prefer professional
   translation). Opt in with `--include-policies`, and review carefully.
 - **Never touched:** assets/images, URLs, link `href`s, option values, `_uid`,

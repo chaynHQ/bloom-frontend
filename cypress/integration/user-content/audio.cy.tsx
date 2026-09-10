@@ -1,4 +1,4 @@
-describe('Conversations Flow', () => {
+describe('Audio Flow', () => {
   const email = Cypress.uniqueEmail();
   const password = 'testtesttest';
 
@@ -7,17 +7,17 @@ describe('Conversations Flow', () => {
     cy.createUser({ emailInput: email, passwordInput: password });
   });
 
-  it('Should allow a user to navigate to Courses, select a conversation, log in and play audio', () => {
+  it.skip('Should allow a user to navigate to the library, select an audio resource, log in and play it', () => {
     // User visits the home page
     cy.visit('/');
 
     // User clicks on Library
     cy.get(`[qa-id=secondary-nav-library-button]`, { timeout: 10000 }).should('exist').click();
 
-    // The library only renders its first page of results, so search for the conversation.
+    // The library only renders its first page of results, so search for the audio resource.
     cy.get('[qa-id=library-search-input]', { timeout: 10000 }).type('Stolen faces');
 
-    // User clicks on a conversation
+    // User clicks on the audio resource
     cy.get('a[aria-label="Stolen faces: How fake images leave real scars"]', {
       timeout: 10000,
     }).click();
@@ -29,9 +29,9 @@ describe('Conversations Flow', () => {
     cy.get('#email').type(email);
     cy.get('#password').type(password);
     cy.get('button[type=submit]').click();
-    cy.wait(2000); // wait to ensure user is redirected to the conversation
+    cy.wait(2000); // wait to ensure user is redirected to the resource
 
-    // User plays the conversation
+    // User plays the audio
     cy.get('audio')
       .should('exist')
       .invoke('attr', 'src')

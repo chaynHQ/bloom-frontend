@@ -83,7 +83,7 @@ const CourseIntroduction = (props: CourseIntroductionProps) => {
       <Video
         url={video.url}
         eventData={eventData}
-        eventPrefix="COURSE_INTRO"
+        eventPrefix="COURSE_INTRO_VIDEO"
         containerStyles={{ width: { xs: '100%' }, flex: 1 }}
       />
     </Box>

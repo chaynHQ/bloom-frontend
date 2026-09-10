@@ -4,7 +4,7 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 
 const COURSE_COMPONENT = 'Course';
 
-// A "session" is a course lesson, a short, a somatic video, or an audio conversation.
+// A "session" is a course lesson or a standalone video/audio resource.
 export type Kind = 'course' | 'session';
 
 export type KindFilter = 'all' | Kind;
@@ -32,8 +32,8 @@ export const THEME_KEYS: ThemeKey[] = [
   'staying-safe',
 ];
 
-// `recognising-harm` / `why-harm-happens` were renamed to `-abuse`. Published Storyblok stories and
-// old `?theme=` deep links can still carry the old slugs; map them so labels and filters resolve.
+// Some published stories and older `?theme=` deep links use `recognising-harm` / `why-harm-happens`
+// for these two themes; map them to the current slugs so labels and filters resolve.
 const LEGACY_THEME_KEYS: Record<string, ThemeKey> = {
   'recognising-harm': 'recognising-abuse',
   'why-harm-happens': 'why-abuse-happens',
@@ -121,15 +121,12 @@ export interface LibraryStories {
   courses: LibraryStory[];
   // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
   courseSessions: LibraryStory[];
-  // Every standalone resource, flattened across format folders (shorts, somatic videos,
-  // conversations, written, activity).
+  // Every standalone resource, flattened across the format folders (video, audio, written, activity).
   resources: LibraryStory[];
 }
 
 const FORMAT_BY_COMPONENT: Record<string, Format> = {
-  resource_conversation: 'audio',
-  resource_short_video: 'video',
-  resource_single_video: 'video',
+  resource_video: 'video',
   resource_audio: 'audio',
   resource_written: 'written',
   resource_activity: 'activity',
@@ -162,17 +159,14 @@ export function toPlainText(value: unknown): string {
   return '';
 }
 
-const AUTHENTICATED_PATH_HEADS = ['videos', 'conversations'];
-
-// A conservative floor for content whose story carries no `login_required` field: course lessons,
-// and the single-video / conversation resources under `videos/` and `conversations/` (the current
-// blocks predate the field; their pages gate by default). The session page opens the first lesson
-// of a Public course to logged-out visitors, and `useLibraryItems` lifts the badge for those via
-// `freeFirstSessionUuids`. Takes an app path, not a Storyblok `full_slug` — a translated slug is
-// locale-prefixed (`de/videos/…`), hiding the head.
+// A conservative floor for content whose story carries no `login_required` field: a course lesson
+// (`courses/<course>/<session>`). The session page opens the first lesson of a Public course to
+// logged-out visitors, and `useLibraryItems` lifts the badge for those via `freeFirstSessionUuids`.
+// Takes an app path, not a Storyblok `full_slug` — a translated slug is locale-prefixed
+// (`de/courses/…`), hiding the head. Every resource format now carries `login_required` on the
+// story, so resources are gated by that field alone.
 export function pathRequiresAccount(path: string): boolean {
   const segments = normaliseSlug(path).split('/');
-  if (AUTHENTICATED_PATH_HEADS.includes(segments[0])) return true;
   return segments[0] === 'courses' && segments.length > 2;
 }
 
@@ -189,8 +183,7 @@ export function storyToLibraryItem(
     title: content.name,
     description: toPlainText(content.description),
     href,
-    // audio/written/activity (and the merged video block) carry `login_required` on the story, so
-    // that's the badge's signal for them; the older path-gated types fall back to `pathRequiresAccount`.
+    // Resources carry `login_required` on the story; course lessons fall back to `pathRequiresAccount`.
     requiresAccount:
       (pathRequiresAccount(href) || content.login_required === true) &&
       !freeFirstSessionUuids?.has(story.uuid),

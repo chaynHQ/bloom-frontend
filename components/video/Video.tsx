@@ -134,7 +134,7 @@ const Video = ({
         metadata: { title: title || url },
       });
     }
-    logEvent(`${eventPrefix}_VIDEO_STARTED`, { ...eventData, video_duration: videoDuration });
+    logEvent(`${eventPrefix}_STARTED`, { ...eventData, video_duration: videoDuration });
   }, [
     pathname,
     createEventLog,
@@ -149,14 +149,14 @@ const Video = ({
   const videoEnded = useCallback(() => {
     if (videoCompleted) return;
     setVideoFinished?.(true);
-    logEvent(`${eventPrefix}_VIDEO_FINISHED`, { ...eventData, video_duration: videoDuration });
+    logEvent(`${eventPrefix}_FINISHED`, { ...eventData, video_duration: videoDuration });
     setVideoCompleted(true);
   }, [videoCompleted, setVideoFinished, eventPrefix, eventData, videoDuration]);
 
   const videoPausedOrPlayed = useCallback(
     (played: boolean) => {
       const playedPercentage = Math.round((videoTimePlayed / videoDuration) * 100);
-      logEvent(played ? `${eventPrefix}_VIDEO_PLAYED` : `${eventPrefix}_VIDEO_PAUSED`, {
+      logEvent(played ? `${eventPrefix}_PLAYED` : `${eventPrefix}_PAUSED`, {
         ...eventData,
         video_duration: videoDuration,
         video_current_time: videoTimePlayed,

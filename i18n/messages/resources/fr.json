@@ -1,8 +1,6 @@
 {
   "Resources": {
-    "conversations": "Conversations",
-    "shorts": "Courte",
-    "videos": "Vidéos",
+    "video": "Vidéo",
     "audio": "Audio",
     "written": "Écrit",
     "activity": "Activité",
@@ -46,9 +44,7 @@
     "relatedContent": {
       "title": "Envie d'explorer davantage ?",
       "subtitle": "Jetez un œil à nos sessions associées ci-dessous, pour accompagner votre parcours de guérison.",
-      "short_video": "Regarder",
-      "single_video": "Regarder",
-      "resource_conversation": "Écouter",
+      "video": "Regarder",
       "audio": "Écouter",
       "written": "Lire",
       "activity": "Activités",
@@ -56,7 +52,6 @@
       "session": "Session",
       "session_iba": "Session",
       "grounding": "Ancrage",
-      "activities": "Activités",
       "minuteLabel": "minutes"
     },
     "resourceFeedback": {

@@ -42,17 +42,12 @@ export async function generateStaticParams() {
 
   const excludePaths: string[] = [
     'home',
-    // Rendered at `/` by the home route, not as a page of its own. Remove at cutover, when this
-    // story is renamed to `home`.
-    'home-redesign',
     'welcome',
     'meet-the-team',
     'courses',
     'about-our-courses',
     'messaging',
-    'shorts',
-    'videos',
-    'conversations',
+    'video',
     'audio',
     'written',
     'activity',

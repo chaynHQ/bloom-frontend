@@ -21,9 +21,7 @@ export enum COURSE_CATEGORIES {
 }
 
 export enum RESOURCE_CATEGORIES {
-  SHORT_VIDEO = 'short_video',
-  SINGLE_VIDEO = 'single_video',
-  CONVERSATION = 'resource_conversation',
+  VIDEO = 'video',
   AUDIO = 'audio',
   WRITTEN = 'written',
   ACTIVITY = 'activity',
@@ -77,10 +75,6 @@ export enum PROGRESS_STATUS {
   STARTED = 'Started',
   COMPLETED = 'Completed',
   NOT_STARTED = 'Not started',
-}
-
-export enum STORYBLOK_TAGS {
-  SOMATICS = 'somatics',
 }
 
 export enum STORYBLOK_COLORS {
